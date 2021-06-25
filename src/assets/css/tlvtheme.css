@@ -1,0 +1,22 @@
+:root {
+    --primary:#0038FF;
+    --bgWhite: #FFFFFF;
+    --bgGreen: #28C686;
+    --bgBlack: #000000;
+    --lightGrey: #E5E5E5;
+    --textWhite: #FFFFFF;
+    --textBlack: #000000;
+    --textSecondary: #737B7D;
+    --textGreen: #4DB205;
+    --btnPrimary: #0038FF;
+    --border: #E5E5E5;
+    --fw100: 100;
+    --fw200: 200;
+    --fw300: 300;
+    --fw400: 400;
+    --fw500: 500;
+    --fw600: 600;
+    --fw700: 700;
+    --fw800: 800;
+    --fw900: 900;
+}

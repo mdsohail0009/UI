@@ -1,0 +1,43 @@
+/* -----Colors------- */
+:root {
+    --primary:#0b0c0c;
+    --primary-10: ##141414;
+    --secondary: #009CF3;
+    --textprimary: #FFFFFF;
+    --textsecondary: #adadad;
+    --textdescription : rgba(0,0,0,0.65);
+    --bodybg: #1f1f1f;
+    --textlightcolor: #BBB9B9;
+    --white: #0b0c0c;
+    --white-75: #141414;
+    --black : #FFFFFF;
+    --green :#0CFA6B;
+    --black-80 : rgba(0,0,0,0.8);
+    --black-50 : rgba(0,0,0,0.5);
+    --btnlight: #DEDFE1;
+    --boxshadow: 0 2px 10px rgb(20,20,20,0.5);
+    --bghover: rgba(0, 0, 0, 0.05);
+    --hover: #242424;
+    --transparent: transparent;
+    --line: #e9e5df;
+    --grey:#f9f9f9;
+    --bordergrey: #3d3d3d;
+    --border: #172f5d;
+    --red: #EF1936;
+    --btn-primary: #009CF3;
+    --btn-lt-blue: #3d3d3d;
+    --select: #3d3d3d;
+    --f-9: 9px;
+    --f-10: 10px;
+    --f-11: 11px;
+    --f-12: 12px;
+    --f-14: 14px;
+    --f-16: 16px;
+    --f-18: 18px;
+    --f-20: 20px;
+    --f-24: 24px;
+    --fw-500:500;
+    --fw-600:600;
+    --border-radius: 0.8rem;
+    --spriteIcons: url(../images/neo-darktheme.svg);
+  }

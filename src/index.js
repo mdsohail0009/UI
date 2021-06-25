@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import App from './components/app.component/App';
 import reportWebVitals from './reportWebVitals';
-
+import 'antd/dist/antd.css'
+import './assets/css/dark-theme.css';
+import './assets/css/tlv.css';
+import './assets/css/tlvtheme.css';
 ReactDOM.render(
   <React.StrictMode>
     <App />

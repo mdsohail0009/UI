@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+.ant-layout, body{background-color: var(--bgWhite);}
+.ant-btn{border-radius: 6px; font-weight: var(--fw500);}
+.btn-primary{background-color: var(--btnPrimary) !important;}
+body{font-family: 'Montserrat', sans-serif !important;}
+.tlv-logo{height: 32px;}
+.tlv-header{background-color: var(--lightGrey) !important;position: fixed; z-index: 1; width: 100%;}
+.tlv-header ul{background-color: transparent; border-bottom: 0;height: 46px; line-height: 46px !important;}
+.tlv-header ul li{font-weight: 500;color: var(--textSecondary)}
+.tlv-header .main-menu li{border-radius: 5px;}
+.tlv-header .main-menu li.ant-menu-item-selected, .tlv-header .main-menu li:hover{background-color: var(--primary) !important; color: var(--textWhite) !important;}
+.tlv-header li::after, .tlv-header li:hover:after{border: none !important;}
+.ant-modal.megamenu{top: 0 !important;bottom: 0 !important;width: 100% !important;max-width: 100%;}
+.megamenu-backdrop{background-color: var(--bgBlack);}
+.megamenu .ant-modal-content{box-shadow: none; background-color: transparent;min-height: calc(100vh - 70px); max-height: calc(100vh - 70px);}
+.megamenu .ant-modal-header{border: none; padding: 32px; background-color: transparent;}
+.megamenu .ant-modal-close{top: 16px; right: 16px;}
+.megamenu-title{display: flex; justify-content: space-between; padding-right: 90px; }
+.megamenu-label{font-size: 3rem !important;}
+.megamenu-link a, .megamenu-sublink a{font-size: 1.5rem; color: var(--textWhite); display: block;}
+.megamenu-sublink a{font-size: 14px; margin-bottom: 24px;}
+.megamenu-link a:hover, .megamenu-sublink a:hover{color: var(--textSecondary);}
+.megamenu-divider{height: 5px;background-color: var(--bgWhite); margin: 60px 0;}
+.secureDropdown .ant-dropdown-menu{background-color: var(--bgBlack); padding: 24px 36px; border-radius: 10px; min-width: 318px; max-width: 318px;}
+.secureDropdown .ant-dropdown-arrow{border-color: var(--bgBlack) !important;}
+.icon{background: url(../../assets/images/tlv/tlv-icons.svg) no-repeat; display: inline-block; vertical-align: middle;}
+.icon.xl{width: 32px; height: 32px;}
+.icon.xl.closewhite{background-position: -2px -243px;}
+.icon.lg{width: 26px; height: 26px;}
+.icon.lg.drawer-close{background-position: -1px -112px;}
+.icon.md{width: 20px; height: 20px;}
+.icon.md.bell{background-position: -1px 0;}
+.icon.md.gear{background-position: -30px 0;}
+.icon.md.downarrow{background-position: -59px -2px;}
+.header-right li{margin-left: 22px; padding: 0 !important;}
+.header-dropdown{font-size: 24px; color: var(--textBlack) !important;}
+.mid-menu{display: flex; align-items: center;}
+.box{background-color: var(--bgWhite); border: 1px solid var(--border); border-radius: 10px;overflow: hidden; margin-bottom: 28px;}
+.main-container{padding: 24px 16px; margin: auto;}
+.trade-btn{border-radius: 6px; background-color: var(--bgGreen) !important;border-color: var(--bgGreen) !important;padding: 2px 5px 2px 3px; line-height: 20px;}
+.trade-btn span + span{margin-left: 3px !important;}
+.summary-count{display: inline-block;vertical-align: top;}
+/* Buy/sell */
+
+/* Footer */
+.footer-links a{font-size: 14px; color: var(--textSecondary); font-weight: var(--fw500);}
+/* Coins */
+.coin{width: 30px; height: 30px;background: url(../../assets/images/tlv/cryptos.svg) no-repeat; display: inline-block; vertical-align: middle;}
+.coin.btc{background-position: -1px -1px;}
+.coin.eth{background-position: -37px -1px;}
+.coin.usdt{background-position: -73px -1px;}
+.coin.ada{background-position: -109px -1px;}
+.coin.doge{background-position: -145px -1px;}
+.coin.xrp{background-position: -180px -1px;}
+.coin.usdc{background-position: -37px -1px;}
+.coin.dot{background-position: -73px -1px;}
+.coin.ltc{background-position: -109px -1px;}
+.coin.xlm{background-position: -145px -1px;}
+.coin.bch{background-position: -180px -1px;}
+@media (min-width: 320px){
+    .tlv-header{padding: 0 16px !important;}
+    .header-dropdown{margin-right: 24px;}
+    .megamenu-label{margin-top: 24px;}
+    .header-right{display: none;}
+    .mobile-header-right{display: block;float: right;margin-top: 5px;}
+    .sidebar-push{margin: 108px 0 0;}
+    .footer-links a{margin: 0 0 16px 0; display: block;}
+    .side-drawer .ant-drawer-content-wrapper{width: 100% !important;}
+}
+@media (max-width: 767px){
+    .mid-menu{margin: 0 -16px;padding: 0 16px; background-color: var(--bgWhite);}
+}
+@media (min-width: 768px){
+    .tlv-header{display: flex;height: 70px;align-items: center; justify-content: space-between; }
+    .tlv-header{padding: 24px 16px !important;}
+    .markets-panel{margin-right: 16px;}
+    .megamenu-label{margin-top: 0px;}
+    .sidebar-push{margin: 62px 0 0;}
+    .header-right.mobile-header-right{display: none;}
+    .header-right{display: block;}
+    .footer-links{display: flex; justify-content: space-between; align-items: center;}
+    .footer-links a{margin: 0 34px 0 0; display: inline-block;}
+    .lng-btn{padding: 6px 10px;}
+    .side-drawer .ant-drawer-content-wrapper{width: 600px !important;}
+    .side-drawer .ant-drawer-body{padding: 24px 80px; background-color: var(--bgWhite);}
+}
+@media (min-width: 992px){
+    .tlv-header{padding: 24px 32px !important;height: 98px;}
+    .markets-panel{margin-right: 40px;}
+    .tlv-header .main-menu li{margin: 0 4px;}
+    .sidebar-push{margin: 98px 0 0;}
+}
+@media (min-width: 1200px){
+    .main-container{max-width: 1232px; }
+}
+@media (min-width: 1920px){
+    .main-container{max-width: 1500px; }
+}
