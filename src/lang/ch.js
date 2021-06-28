@@ -1,16 +1,15 @@
 export default {
-  // title: '標題',
-  // copy: {
-  //   p1: '帶有 <b>html</b> 的段落',
-  //   p2: '帶有可點擊 %(link)s 的段落',
-  // },
-  // link: '關聯',
-  // placeholder: '帶佔位符的輸入',
-
-  buy_neo_at_true_cost: '以真實成本購買 近地天體',
-  john_doe:'約翰·多伊',
-  see_all_link:"%(link)s",
-  see_all:'查看全部',
-  search_wih_account_name:'用賬戶名搜索'
-
+  header_title: ' 帶佔位符的輸入',
+  Portfolio_title: '文件夾',
+  suissebase_title: '瑞士基地',
+  suissebase_subtitle: '您可以使用的钱包',
+  markets_title: '市场',
+  markets_subtitle: '将您的加密货币交易成任何货币',
+  deposit: '订金',
+  withdraw: '提取',
+  load_more: '加载更多 ...',
+  ftr_home: '家',
+  ftr_careers: '职业',
+  ftr_tc_p: '勒根与政策',
+  search_currency: '搜索货币',
 }

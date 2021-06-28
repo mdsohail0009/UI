@@ -1,3 +1,7 @@
+.d-flex{display: flex;}
+.p-relative{position: relative !important;}
+
+
 /*----Font Sizes----*/
 .fs-10{font-size: 10px !important;}
 .fs-12{font-size: 12px !important;}
@@ -5,12 +9,12 @@
 .fs-16{font-size: 16px !important;}
 .fs-18{font-size: 18px !important;}
 .fs-20{font-size: 20px !important;}
-.fs-22{font-size: 22px !important;}
 .fs-24{font-size: 24px !important;}
 .fs-26{font-size: 26px !important;}
 .fs-28{font-size: 28px !important;}
 .fs-30{font-size: 30px !important;}
 .fs-36{font-size: 36px !important;}
+.fs-40{font-size: 40px !important;}
 
 /*--Font Weights--*/
 .fw-100{font-weight: var(--fw100) !important;}
@@ -30,26 +34,51 @@
 .text-upper{text-transform: uppercase !important;}
 .text-captz{text-transform: capitalize !important;}
 .text-lower{text-transform: lowercase !important;}
+.align-center{align-items: center;}
+.justify-content{justify-content: space-between;}
 
 /*--Text Colors--*/
 .text-white{color: var(--textWhite) !important;}
-.text-black{color: var(--textBlack) !important;}
-.text-secondary{color: var(--textSecondary) !important;}
+.text-white-30{color: var(--textWhite30) !important;}
+.text-textDark{color: var(--textBlack) !important;}
 .text-green{color: var(--textGreen) !important;}
+.text-red{color: var(--textRed) !important;}
+.text-secondary{color: var(--textSecondary) !important;}
 
 /*----Padding Utilities----*/
 .p-24{padding: 24px !important;}
+.p-28{padding: 28px;}
+.py-8{padding-top: 8px !important; padding-bottom: 8px !important;}
+.p-16{padding: 16px !important;}
+.pt-16{padding-top: 16px !important;}
+.py-16{padding-top: 16px !important; padding-bottom: 16px !important;}
+.px-16{padding-left: 16px !important; padding-right: 16px !important;}
+.px-24{padding-left: 24px !important; padding-right: 24px !important;}
 .pt-24{padding-top: 24px !important;}
 .py-24{padding-top: 24px !important; padding-bottom: 24px !important;}
-.px-24{padding-left: 24px !important; padding-right: 24px !important;}
-.p-28{padding: 28px;}
+.py-36{padding-top: 24px !important; padding-bottom: 36px !important;}
+
 
 /*----Margin Utilities----*/
+.m-0{margin: 0 !important;}
 .mb-0{margin-bottom: 0 !important;}
 .mt-4{margin-top: 4px;}
 .mb-4{margin-bottom: 4px !important;}
 .mr-8{margin-right: 8px !important;}
+.mt-8{margin-top: 8px !important;}
+.mt-12{margin-top: 12px !important;}
+.ml-8{margin-left: 8px !important;}
 .ml-12{margin-left: 12px !important;}
+.ml-16{margin-left: 16px !important;}
 .ml-auto{margin-left: auto !important;}
+.mt-16{margin-top: 16px !important;}
+.mt-24{margin-top: 24px !important;}
 .mb-16{margin-bottom: 16px !important;}
 .mb-24{margin-bottom: 24px !important;}
+.mb-36{margin-bottom: 36px !important;}
+
+
+@media (max-width: 991px){
+    .visible-xs{visibility: visible;}
+    .hidden-xs{visibility: hidden;}
+}

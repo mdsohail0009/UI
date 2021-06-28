@@ -1,0 +1,27 @@
+:root {
+    --bgDarkGrey:#313C46;
+    --bgDarkGrey-95:rgba(49,60,70,0.75);
+    --bgGrey: #515A64;
+    --bgGreen: #389738;
+    --bgDarkGreen: #4DB205;
+    --bgBlack: #000000;
+    --bgWhite: #FFFFFF;
+    --textWhite: #FFFFFF;
+    --textWhite30: #FAFCFE;
+    --textSecondary: #adadad;
+    --textDark: #0E0E2C;
+    --textGreen: #389738;
+    --textRed: #FF3A1A;
+    --btnGrad1: #B30F1E;
+    --btnGrad2: #0038FF;
+    --borderGrey: #313C46;
+    --fw100: 100;
+    --fw200: 200;
+    --fw300: 300;
+    --fw400: 400;
+    --fw500: 500;
+    --fw600: 600;
+    --fw700: 700;
+    --fw800: 800;
+    --fw900: 900;
+}
