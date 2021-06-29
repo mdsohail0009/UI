@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Typography, Row, Col, Divider, Dropdown, Avatar, Drawer } from 'antd';
+import { Layout, Menu, Modal, Typography, Row, Col, Divider, Dropdown, Avatar, Drawer, Radio, Tabs } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import logo from '../assets/images/logo.png';
 import logoWhite from '../assets/images/logo-white.png';
 import megamenu from '../assets/images/megamenu.png';
 import counterpart from 'counterpart';
+import CryptoList from '../components/shared/cryptolist';
 import Translate from 'react-translate-component';
 import en from '../lang/en';
 import ch from '../lang/ch';
@@ -19,6 +19,7 @@ counterpart.setLocale('en');
 
 const { Header } = Layout;
 const { Title, Paragraph, Text } = Typography;
+const { TabPane } = Tabs;
 const menu = (
     <Menu>
         <Row>
@@ -32,7 +33,10 @@ const menu = (
         <Avatar size={30} className="mr-8"></Avatar><span className="text-white">Protect your account<RightOutlined className="ml-12" /></span>
     </Menu>
 );
-
+const options = [
+    { label: 'Buy', value: 'Buy' },
+    { label: 'Sell', value: 'Sell' },
+];
 class tlvHeader extends Component {
     constructor(props) {
         super(props);
@@ -40,6 +44,7 @@ class tlvHeader extends Component {
             megamenu: false,
             lang: 'en',
             buyDrawer: false,
+            buyToggle: 'Buy',
         }
     }
     showMegaMenu = () => {
@@ -62,6 +67,11 @@ class tlvHeader extends Component {
             buyDrawer: false
         })
     }
+    handleBuySellToggle = e => {
+        this.setState({
+            buyToggle: e.target.value,
+        });
+    };
     render() {
         return (
             <>
@@ -105,14 +115,35 @@ class tlvHeader extends Component {
                             <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
                         </Menu>
                         <Drawer
-                            title={[<div className="side-drawer-header"><span className="icon md close-white c-pointer" /><div className="text-center fs-14"><Paragraph className="mb-0 text-white-30 fw-600 text-upper">Buy Assets</Paragraph><Paragraph className="text-white-50 mb-0 fw-300">In the past 24 hours</Paragraph></div><span className="icon md search-white c-pointer" /></div>]}
+                            title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /><div className="text-center fs-14"><Paragraph className="mb-0 text-white-30 fw-600 text-upper">Buy Assets</Paragraph><Paragraph className="text-white-50 mb-0 fw-300">In the past 24 hours</Paragraph></div><span className="icon md search-white c-pointer" /></div>]}
                             placement="right"
                             closable={true}
                             visible={this.state.buyDrawer}
                             closeIcon={null}
                             className="side-drawer"
                         >
-
+                            <Radio.Group
+                                options={options}
+                                onChange={this.handleBuySellToggle}
+                                value={this.state.buyToggle}
+                                optionType="button"
+                                buttonStyle="solid"
+                                size="large"
+                                className="buysell-toggle"
+                            />
+                            <Title className="text-white-30 fs-36 fw-200 mb-16">Purchase a Crypto</Title>
+                            <Paragraph className="fs-16 text-secondary">Your wallet is empty, you don’t have any assets to make transactions. Follow this link and <Link className="text-yellow"><u>Deposit</u></Link> some cash.</Paragraph>
+                            <Tabs className="crypto-list-tabs">
+                                <TabPane tab="All" key="1">
+                                    <CryptoList />
+                                </TabPane>
+                                <TabPane tab="Gainers" key="2">
+                                    <CryptoList />
+                                </TabPane>
+                                <TabPane tab="Losers" key="3">
+                                    <CryptoList />
+                                </TabPane>
+                            </Tabs>
                         </Drawer>
                     </Header>
                 </Layout >
