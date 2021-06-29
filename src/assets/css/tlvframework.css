@@ -46,6 +46,7 @@
 .text-green{color: var(--textGreen) !important;}
 .text-red{color: var(--textRed) !important;}
 .text-secondary{color: var(--textSecondary) !important;}
+.text-yellow{color: var(--textYellow) !important;}
 .bggrey{background-color: var(--bgGrey) !important;}
 
 /*----Padding Utilities----*/
