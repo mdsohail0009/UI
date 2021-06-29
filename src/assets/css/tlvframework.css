@@ -1,5 +1,6 @@
 .d-flex{display: flex;}
 .p-relative{position: relative !important;}
+.c-pointer{cursor: pointer !important;}
 
 
 /*----Font Sizes----*/
@@ -40,6 +41,7 @@
 /*--Text Colors--*/
 .text-white{color: var(--textWhite) !important;}
 .text-white-30{color: var(--textWhite30) !important;}
+.text-white-50{color: var(--textWhite50) !important;}
 .text-textDark{color: var(--textBlack) !important;}
 .text-green{color: var(--textGreen) !important;}
 .text-red{color: var(--textRed) !important;}
