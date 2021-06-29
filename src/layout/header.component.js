@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Typography, Row, Col, Divider, Dropdown, Avatar, Drawer, Radio, Tabs,Switch } from 'antd';
+import { Layout, Menu, Modal, Typography, Row, Col, Divider, Dropdown, Avatar, Drawer, Radio, Tabs, Card, Button ,Switch } from 'antd';
 import { RightOutlined, UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
@@ -10,6 +10,7 @@ import Translate from 'react-translate-component';
 import en from '../lang/en';
 import ch from '../lang/ch';
 import my from '../lang/my';
+import WalletList from '../components/shared/walletList';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -106,14 +107,14 @@ class tlvHeader extends Component {
                             <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
                         </Menu>
                         <Drawer
-                            title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /><div className="text-center fs-14"><Paragraph className="mb-0 text-white-30 fw-600 text-upper">Buy Assets</Paragraph><Paragraph className="text-white-50 mb-0 fw-300">In the past 24 hours</Paragraph></div><span className="icon md search-white c-pointer" /></div>]}
+                            title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /><div className="text-center fs-14"><Translate className="mb-0 text-white-30 fw-600 text-upper" content="buy_assets" component={Paragraph} /><Translate className="text-white-50 mb-0 fw-300" content="past_hours" component={Paragraph} /></div><span className="icon md search-white c-pointer" /></div>]}
                             placement="right"
                             closable={true}
                             visible={this.state.buyDrawer}
                             closeIcon={null}
                             className="side-drawer"
                         >
-                            <Radio.Group
+                            {/* <Radio.Group
                                 options={options}
                                 onChange={this.handleBuySellToggle}
                                 value={this.state.buyToggle}
@@ -122,8 +123,8 @@ class tlvHeader extends Component {
                                 size="large"
                                 className="buysell-toggle"
                             />
-                            <Title className="text-white-30 fs-36 fw-200 mb-16">Purchase a Crypto</Title>
-                            <Paragraph className="fs-16 text-secondary">Your wallet is empty, you don’t have any assets to make transactions. Follow this link and <Link className="text-yellow"><u>Deposit</u></Link> some cash.</Paragraph>
+                            <Translate content="purchase_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-16" />
+                            <Translate content="purchase_a_cryto_txt" component={Paragraph} className="fs-16 text-secondary" />
                             <Tabs className="crypto-list-tabs">
                                 <TabPane tab="All" key="1">
                                     <CryptoList />
@@ -134,7 +135,22 @@ class tlvHeader extends Component {
                                 <TabPane tab="Losers" key="3">
                                     <CryptoList />
                                 </TabPane>
-                            </Tabs>
+                            </Tabs> */}
+                            <Card className="crypto-card mb-36" bordered={false}>
+                                <span className="coin md eth-white"></span>
+                                <Text className="fs-24 text-white crypto-name ml-24">Ethereum</Text>
+                                <div className="crypto-details mt-36">
+                                    <Text className="crypto-percent text-white fw-700">25<sup className="fs-24 text-white fw-700" style={{ verticalAlign: 'Middle', marginLeft: 14 }}>%</sup></Text>
+                                    <div className="fs-16 text-white-30 fw-200 text-right">
+                                        <div>1.0147668 ETH</div>
+                                        <div>$ 41.07</div>
+                                    </div>
+                                </div>
+                            </Card>
+                            <Paragraph className="text-upper fw-600 mb-0 text-aqua">Find with your favoite wallet</Paragraph>
+                            <WalletList isArrow={true} />
+                            <Paragraph className="fs-14 text-white-30 fw-200 text-center">Please refresh to get a new price</Paragraph>
+                            <Button size="large" block className="pop-btn" icon={<span className="icon md load" />}>Confirm(18s)</Button>
                         </Drawer>
                     </Header>
                 </Layout >
@@ -204,32 +220,36 @@ class tlvHeader extends Component {
                             <Link>Swap Services</Link>
                             <Link>Deposit and Withdraw</Link>
                         </Col>
-                        <Col lg={6} xl={5} >
-                            <Link>Corporate Wallet</Link>
-                            <Link>Mass Payments</Link>
+                    </Row> */}
+                    {/* <Row gutter={[16, 16]} className="megamenu-sublink">
+                        <Col lg={1} xl={1} />
+                        <Col lg={5} xl={4}>
+                            <Title className="fs-36 text-white mb-16 fw-500">Learn</Title>
+                            <Link>What is Cryptocurrency?</Link>
+                            <Link>What is Staking?</Link>
+                            <Link>Who is Satoshi?</Link>
+                            <Link>View All</Link>
                         </Col>
-                        <Col lg={6} xl={5} />
-                    </Row>
-                    <Divider className="megamenu-divider" />
-                    <Row gutter={[16, 16]} className="megamenu-link "  >
-                        <Col lg={6} xl={4}>
-                            <Title className="text-white megamenu-label mb-16 fw-500">Spend</Title>
-                            <Paragraph className="text-white-30 fs-16 mb-24">Use our Visa and Mastercards to convert, spend your crypto and traditional currency in real life.</Paragraph>
+                        <Col lg={5} xl={4}>
+                            <Title className="fs-36 text-white mb-16 fw-500">Explore</Title>
+                            <Link>Everything</Link>
+                            <Link>Education</Link>
+                            <Link>News</Link>
+                            <Link>Get more crypto</Link>
                         </Col>
-                        <Col lg={6} xl={5} className="pt-24 mobile-none">
-                        <img src={megamenu} alt="logo" />
+                        <Col lg={7} xl={4}>
+                            <Title className="fs-36 text-white mb-16 fw-500">Security</Title>
+                            <Paragraph className="text-white fs-14">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
+                            <Paragraph className="text-white fs-14">Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.</Paragraph>
                         </Col>
-                        <Col lg={6} xl={5}>
-                        <Title className=" text-white mb-16  megamenu-label  fw-500">Connect</Title>
+                        <Col xl={2} />
+                        <Col lg={5} xl={3}>
+                            <Title className="fs-36 text-white mb-16 fw-500">Connect</Title>
+                            <Link>Meet Our Team</Link>
                             <Link>Report A Bug</Link>
                             <Link>FAQ</Link>
-                            <Link>Chat</Link>
-                        </Col>
-
-                        <Col lg={6} xl={5} >
-                        <Title className="fs-36 text-white mb-16 fw-500">Security</Title>
-                            <Paragraph className="text-white fs-16">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
-                            <Paragraph className="text-white fs-16">Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.</Paragraph>
+                            <Link>Contact Us</Link>
+                            <Link >Sign In</Link>
                         </Col>
                         <Col lg={6} xl={5} />
                     </Row>

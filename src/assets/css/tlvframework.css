@@ -47,6 +47,7 @@
 .text-red{color: var(--textRed) !important;}
 .text-secondary{color: var(--textSecondary) !important;}
 .text-yellow{color: var(--textYellow) !important;}
+.text-aqua{color: var(--textAqua) !important;}
 .bggrey{background-color: var(--bgGrey) !important;}
 
 /*----Padding Utilities----*/
@@ -81,6 +82,7 @@
 .ml-auto{margin-left: auto !important;}
 .mt-16{margin-top: 16px !important;}
 .mt-24{margin-top: 24px !important;}
+.mt-36{margin-top: 36px !important;}
 .mb-16{margin-bottom: 16px !important;}
 .mb-24{margin-bottom: 24px !important;}
 .mb-36{margin-bottom: 36px !important;}
