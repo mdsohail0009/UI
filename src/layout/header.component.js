@@ -74,25 +74,13 @@ class tlvHeader extends Component {
                                 <li className=""><Translate content="header_title" component="p" className="text-white mb-0 fs-18" />
                                 </li>
                             </ul>
-                        </div>
-                        <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
+                            <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
                             <Menu.Item key="5">Security</Menu.Item>
                             <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
                             <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
                         </Menu>
-                        {/* <div className="mid-menu">
-                        <a className="ant-dropdown-link header-dropdown" onClick={this.showMegaMenu}>
-                            Home<span className="icon md downarrow ml-12" />
-                        </a>
+                        </div>
                        
-                        <Menu theme="light" mode="horizontal" className="main-menu">
-                            <Menu.Item key="1" onClick={this.props.onShowBuyDrawer}>Buy / Sell</Menu.Item>
-                            <Menu.Item key="2">Swap</Menu.Item>
-                            <Menu.Item key="3">Send / Receive</Menu.Item>
-                            <Menu.Item key="4">Cards</Menu.Item>
-                        </Menu>
-                        <BuySell />
-                    </div> */}
                         <Menu theme="light" mode="horizontal" className="header-right" defaultSelectedKeys={['1']}>
                             <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item>
                             <Menu.Item key="2" className="list-item">Swap</Menu.Item>
@@ -187,50 +175,14 @@ class tlvHeader extends Component {
                         </Col>
 
                         <Col lg={6} xl={5} >
-                        <Title className="fs-36 text-white mb-16 fw-500">Security</Title>
+                        <Title className="fs-36 text-white mb-16 fw-500 text-green">Security</Title>
                             <Paragraph className="text-white fs-16">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
                             <Paragraph className="text-white fs-16">Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.</Paragraph>
                         </Col>
                         <Col lg={6} xl={5} />
                     </Row>
                     </div>
-                    {/* <Row>
-                        <Col lg={1} xl={1} />
-                        <Col lg={23} xl={16}>
-                            <Divider className="megamenu-divider" />
-                        </Col>
-                    </Row> */}
-                    {/* <Row gutter={[16, 16]} className="megamenu-sublink">
-                        <Col lg={1} xl={1} />
-                        <Col lg={5} xl={4}>
-                            <Title className="fs-36 text-white mb-16 fw-500">Learn</Title>
-                            <Link>What is Cryptocurrency?</Link>
-                            <Link>What is Staking?</Link>
-                            <Link>Who is Satoshi?</Link>
-                            <Link>View All</Link>
-                        </Col>
-                        <Col lg={5} xl={4}>
-                            <Title className="fs-36 text-white mb-16 fw-500">Explore</Title>
-                            <Link>Everything</Link>
-                            <Link>Education</Link>
-                            <Link>News</Link>
-                            <Link>Get more crypto</Link>
-                        </Col>
-                        <Col lg={7} xl={4}>
-                            <Title className="fs-36 text-white mb-16 fw-500">Security</Title>
-                            <Paragraph className="text-white fs-14">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
-                            <Paragraph className="text-white fs-14">Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.</Paragraph>
-                        </Col>
-                        <Col xl={2} />
-                        <Col lg={5} xl={3}>
-                            <Title className="fs-36 text-white mb-16 fw-500">Connect</Title>
-                            <Link>Meet Our Team</Link>
-                            <Link>Report A Bug</Link>
-                            <Link>FAQ</Link>
-                            <Link>Contact Us</Link>
-                            <Link >Sign In</Link>
-                        </Col>
-                    </Row> */}
+                   
                 </Modal>
             </>
         );
