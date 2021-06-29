@@ -8,8 +8,8 @@ const config = {
       gain: '1',
       up: true,
       loss: 0.68,
-      totalcoin:1000,
-      shortcode:'USD'
+      totalcoin: 1000,
+      shortcode: 'USD'
     },
     {
       title: 'ethereum',
@@ -18,8 +18,8 @@ const config = {
       gain: '1',
       up: true,
       loss: 0.68,
-      totalcoin:1000,
-      shortcode:'ETH'
+      totalcoin: 1000,
+      shortcode: 'ETH'
     },
     {
       title: 'Bitcoin',
@@ -28,8 +28,8 @@ const config = {
       gain: '1',
       loss: 0.68,
       up: false,
-      totalcoin:1000,
-      shortcode:'BTC'
+      totalcoin: 1000,
+      shortcode: 'BTC'
     },
     {
       title: 'Stellar',
@@ -38,8 +38,8 @@ const config = {
       gain: '1',
       loss: 0.68,
       up: true,
-      totalcoin:1000,
-      shortcode:'XLM'
+      totalcoin: 1000,
+      shortcode: 'XLM'
     },
     {
       title: 'Us dollar',
@@ -48,8 +48,8 @@ const config = {
       gain: '1',
       loss: 0.68,
       up: false,
-      totalcoin:1000,
-      shortcode:'USD'
+      totalcoin: 1000,
+      shortcode: 'USD'
 
 
     },
@@ -60,8 +60,8 @@ const config = {
       gain: '1',
       loss: 0.68,
       up: true,
-      totalcoin:1000,
-      shortcode:'BTC'
+      totalcoin: 1000,
+      shortcode: 'BTC'
     },
     {
       title: 'act',
@@ -70,8 +70,8 @@ const config = {
       gain: '1',
       loss: 0.68,
       up: true,
-      totalcoin:1000,
-      shortcode:'ADA'
+      totalcoin: 1000,
+      shortcode: 'ADA'
     },
     {
       title: 'dat',
@@ -80,8 +80,8 @@ const config = {
       gain: '1',
       loss: 0.68,
       up: true,
-      totalcoin:1000,
-      shortcode:'DAT'
+      totalcoin: 1000,
+      shortcode: 'DAT'
     },
     {
       title: 'bitcoincash',
@@ -90,10 +90,27 @@ const config = {
       gain: '1',
       loss: 0.68,
       up: false,
-      totalcoin:4000,
-      shortcode:'BCH'
+      totalcoin: 4000,
+      shortcode: 'BCH'
     }
   ],
+  walletList: [
+    {
+      coin: 'usd-d',
+      title: 'US Dollar Wallet',
+      isArrow: true,
+    },
+    {
+      coin: 'eur',
+      title: 'Euro Wallet',
+      isArrow: true,
+    },
+    {
+      coin: 'gbp',
+      title: 'Pound Sterlling Wallet',
+      isArrow: true,
+    }
+  ]
 }
 
 export default config;

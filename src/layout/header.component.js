@@ -10,6 +10,7 @@ import Translate from 'react-translate-component';
 import en from '../lang/en';
 import ch from '../lang/ch';
 import my from '../lang/my';
+import WalletList from '../components/shared/walletList';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -144,19 +145,21 @@ class tlvHeader extends Component {
                                     <CryptoList />
                                 </TabPane>
                             </Tabs> */}
-                            <Card className="crypto-card mb-24" bordered={false}>
+                            <Card className="crypto-card mb-36" bordered={false}>
                                 <span className="coin md eth-white"></span>
                                 <Text className="fs-24 text-white crypto-name ml-24">Ethereum</Text>
-                                <div>
-                                    <Text className="fs-60 text-white fw-700">25<sup className="fs-24 text-white fw-700">%</sup></Text>
+                                <div className="crypto-details mt-36">
+                                    <Text className="crypto-percent text-white fw-700">25<sup className="fs-24 text-white fw-700" style={{ verticalAlign: 'Middle', marginLeft: 14 }}>%</sup></Text>
                                     <div className="fs-16 text-white-30 fw-200 text-right">
                                         <div>1.0147668 ETH</div>
                                         <div>$ 41.07</div>
                                     </div>
                                 </div>
                             </Card>
+                            <Paragraph className="text-upper fw-600 mb-0 text-aqua">Find with your favoite wallet</Paragraph>
+                            <WalletList isArrow={true} />
                             <Paragraph className="fs-14 text-white-30 fw-200 text-center">Please refresh to get a new price</Paragraph>
-                            <Button size="large" block className="pop-btn">Confirm(18s)</Button>
+                            <Button size="large" block className="pop-btn" icon={<span className="icon md load" />}>Confirm(18s)</Button>
                         </Drawer>
                     </Header>
                 </Layout >
