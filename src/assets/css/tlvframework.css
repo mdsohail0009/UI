@@ -53,10 +53,13 @@
 .pt-16{padding-top: 16px !important;}
 .py-16{padding-top: 16px !important; padding-bottom: 16px !important;}
 .px-16{padding-left: 16px !important; padding-right: 16px !important;}
+.py-20{padding-top: 20px !important; padding-bottom: 20px !important;}
 .px-24{padding-left: 24px !important; padding-right: 24px !important;}
 .pt-24{padding-top: 24px !important;}
 .py-24{padding-top: 24px !important; padding-bottom: 24px !important;}
 .py-36{padding-top: 24px !important; padding-bottom: 36px !important;}
+.pb-0{padding-bottom: 0 !important;}
+.pt-0{padding-top: 0 !important;}
 
 
 /*----Margin Utilities----*/
@@ -70,6 +73,7 @@
 .ml-8{margin-left: 8px !important;}
 .ml-12{margin-left: 12px !important;}
 .ml-16{margin-left: 16px !important;}
+.ml-24{margin-left: 24px !important;}
 .ml-auto{margin-left: auto !important;}
 .mt-16{margin-top: 16px !important;}
 .mt-24{margin-top: 24px !important;}

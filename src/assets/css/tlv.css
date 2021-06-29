@@ -6,6 +6,7 @@ body, h1, h2, h3, h4, h5, h6, a, p div{font-family: 'SF Pro Text' !important;}
 .ant-input-search .ant-input-group .ant-input-group-addon {background-color: var(--bgDarkGrey) !important; border-radius: 0 30px 30px 0;}
 .ant-input-search .ant-input-group-addon .ant-btn{background-color: transparent; border: none; width: 42px;}
 .markets-panel .ant-list-split .ant-list-item, .portfolio-list .ant-list-split .ant-list-item{border-color: var(--borderGrey) !important; padding: 16px 0}
+.portfolio-list .ant-list-split .ant-list-item:first-child{border-top: 1px solid #f0f0f0;}
 .btn-primary{background-color: var(--btnPrimary) !important;}
 .login-user{justify-content: space-between;align-items: center;}
 .header-logo{list-style: none;display: inline-flex;padding-right: 0 !important;align-items: center;margin-bottom: 0;}
@@ -16,8 +17,7 @@ body, h1, h2, h3, h4, h5, h6, a, p div{font-family: 'SF Pro Text' !important;}
 background-image: linear-gradient(99.09deg, var(--btnGrad1) 0%, var(--btnGrad2) 100%);
 filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));padding: 6px 12px;margin: 0px;border-radius: 5px;color: var(--textWhite);border:0;
 line-height: 16px;min-height: 36px;min-width:90px}
-.outline-btn{padding: 6px 12px;margin: 0px;border-radius: 5px;color: var(--textSecondary);border:1px solid var(--textDark);
-line-height: 16px;min-height: 36px;min-width:90px}
+.custom-btn.outline-btn{color: var(--textWhite);border:1px solid var(--textDark);background: transparent !important;}
 .custom-btn.prime{background-image: linear-gradient(99.09deg, var(--btnGrad1) 0%, var(--btnGrad2) 100%);filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));}
 .custom-btn.prime:hover{background-image: linear-gradient(99.09deg, var(--btnGrad2) 0%, var(--btnGrad1) 100%); transition: 0.3s ease-in-out;}
 .custom-btn.sec{background-image: none; background: transparent;border: 1px solid #5C5C77;}
@@ -46,7 +46,7 @@ line-height: 16px;min-height: 36px;min-width:90px}
 .megamenu-divider{height: 5px;background-color: var(--bgWhite); margin: 60px 0;}
 .secureDropdown .ant-dropdown-menu{background-color: var(--bgBlack); padding: 24px 36px; border-radius: 10px; min-width: 318px; max-width: 318px;}
 .secureDropdown .ant-dropdown-arrow{border-color: var(--bgBlack) !important;}
-.icon{background: url(../../assets/images/tlv-icons.svg) no-repeat; display: inline-block; vertical-align: middle;}
+.icon{background: url(../images/tlv-icons.svg) no-repeat; display: inline-block; vertical-align: middle;}
 .icon.xl{width: 32px; height: 32px;}
 .icon.xl.closewhite{background-position: -2px -243px;}
 .icon.lg{width: 26px; height: 26px;}
