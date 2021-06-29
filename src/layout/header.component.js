@@ -18,7 +18,7 @@ counterpart.setLocale('en');
 
 
 const { Header } = Layout;
-const { Title, Paragraph } = Typography;
+const { Title, Paragraph, Text } = Typography;
 const menu = (
     <Menu>
         <Row>
@@ -53,7 +53,6 @@ class tlvHeader extends Component {
         })
     }
     showBuyDrawer = () => {
-        debugger;
         this.setState({
             buyDrawer: true
         })
@@ -106,14 +105,14 @@ class tlvHeader extends Component {
                             <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
                         </Menu>
                         <Drawer
-                            title={null}
+                            title={[<div className="side-drawer-header"><span className="icon md close-white c-pointer" /><div className="text-center fs-14"><Paragraph className="mb-0 text-white-30 fw-600 text-upper">Buy Assets</Paragraph><Paragraph className="text-white-50 mb-0 fw-300">In the past 24 hours</Paragraph></div><span className="icon md search-white c-pointer" /></div>]}
                             placement="right"
                             closable={true}
                             visible={this.state.buyDrawer}
-                            closeIcon={<span className="icon lg drawer-close" onClick={this.closeBuyDrawer} />}
+                            closeIcon={null}
                             className="side-drawer"
                         >
-                            test
+
                         </Drawer>
                     </Header>
                 </Layout >

@@ -58,6 +58,8 @@ line-height: 16px;min-height: 36px;min-width:90px}
 .icon.md.gear{background-position: -30px 0;}
 .icon.md.hamburger{background-position: -64px -1px;}
 .icon.md.downarrow{background-position: -59px -2px;}
+.icon.md.close-white{background-position: -168px 0px;}
+.icon.md.search-white{background-position: -197px 0px;}
 .icon.sm{width: 12px; height: 12px;}
 .icon.sm.downarrow{background-position: -107px -4px;}
 .icon.sm.uparrow{background-position: -87px -4px;}
@@ -70,8 +72,10 @@ line-height: 16px;min-height: 36px;min-width:90px}
 .trade-btn{border-radius: 6px; background-color: var(--bgGreen) !important;border-color: var(--bgGreen) !important; line-height: 20px;}
 
 /* Buy/sell */
-.side-drawer .ant-drawer-body{background-color: var(--bgGrey);}
+.side-drawer .ant-drawer-body, .side-drawer .ant-drawer-header{background-color: var(--bgGrey);}
 .side-drawer .ant-drawer-mask{background-color: var(--bgDarkGrey-95);}
+.side-drawer .ant-drawer-header{border: none;}
+.side-drawer .side-drawer-header{display: flex; align-items: center; justify-content: space-between; padding: 30px 100px 30px 30px;}
 /* Footer */
 .footer-links a{font-size: 14px; color: var(--textSecondary); font-weight: var(--fw500);}
 .selct-lang{width: 42px; height: 40px;border-radius: 50%;background-color: var(--bgDarkGreen);color: var(--textWhite);box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
