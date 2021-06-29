@@ -145,30 +145,45 @@ class tlvHeader extends Component {
                     wrapClassName="megamenu-backdrop"
                     className="megamenu"
                     closeIcon={<span className="icon xl closewhite" />}
-                >
-                    <div style={{paddingRight:'30px', paddingLeft:'30px'}}>
-                    <Row gutter={[16, 16]} className="megamenu-link " style={{ paddingRight: '15px', paddingLeft: '15px', marginLeft: 'auto', marginRight: "auto" }}  >
+                    >
+                    <div className="mega-menu">
+                    <Row gutter={[16, 16]} className="megamenu-link"   >
                         <Col lg={6} xl={4}>
                             <Title className="text-white megamenu-label mb-16 fw-500">Start</Title>
                             <Paragraph className="text-white-30 fs-16 mb-24">We are a platform that connects banks, payment systems, and people.</Paragraph>
+                             <div className="mobile-megalinks">
+                             <Link>The Dashboard</Link>
+                            <Link>Your Portfolio</Link> 
+                             </div>
                         </Col>
                         <Col lg={6} xl={5}>
                             <Title className="text-white megamenu-label  fw-500 mb-24">Personal</Title>
                             <Link className="pt-24"> Wallets</Link>
                           <Paragraph className="text-white-30 fs-16 mb-0">Full control of your private keys.</Paragraph>
-                            
+                          <div className="mobile-megalinks">
+                            <Link>Cards</Link>
+                            <Link>Exchange</Link>
+                             </div> 
                         </Col>
                         <Col lg={6} xl={5}>
                             <Title className="text-white megamenu-label  fw-500">Crypto</Title>
+                            <div className="mobile-megalinks">
+                            <Link >Buy and Sell</Link>
+                            <Link>Swap Services</Link>
+                            <Link>Deposit and Withdraw</Link>
+                             </div> 
                         </Col>
-
                         <Col lg={6} xl={5} >
                             <Title className="text-white megamenu-label  fw-500">Business</Title>
                             <Paragraph className="text-white-30 fs-16">User can create a separate account such as a corporate segregated wallet system.</Paragraph>
+                            <div className="mobile-megalinks">
+                            <Link>Corporate Wallet</Link>
+                            <Link>Mass Payments</Link>
+                             </div> 
                         </Col>
                         <Col lg={6} xl={5} />
                     </Row>
-                    <Row gutter={[16, 16]} className="megamenu-link " style={{ paddingRight: '15px', paddingLeft: '15px', marginLeft: 'auto', marginRight: "auto" }}  >
+                    <Row gutter={[16, 16]} className="megamenu-link mobile-none ">
                     <Col lg={6} xl={4}>
                             <Link>The Dashboard</Link>
                             <Link>Your Portfolio</Link>
@@ -190,12 +205,12 @@ class tlvHeader extends Component {
                         <Col lg={6} xl={5} />
                     </Row>
                     <Divider className="megamenu-divider" />
-                    <Row gutter={[16, 16]} className="megamenu-link " style={{ paddingRight: '15px', paddingLeft: '15px', marginLeft: 'auto', marginRight: "auto" }}  >
+                    <Row gutter={[16, 16]} className="megamenu-link "  >
                         <Col lg={6} xl={4}>
                             <Title className="text-white megamenu-label mb-16 fw-500">Spend</Title>
                             <Paragraph className="text-white-30 fs-16 mb-24">Use our Visa and Mastercards to convert, spend your crypto and traditional currency in real life.</Paragraph>
                         </Col>
-                        <Col lg={6} xl={5} className="pt-24">
+                        <Col lg={6} xl={5} className="pt-24 mobile-none">
                         <img src={megamenu} alt="logo" />
                         </Col>
                         <Col lg={6} xl={5}>
@@ -206,7 +221,7 @@ class tlvHeader extends Component {
                         </Col>
 
                         <Col lg={6} xl={5} >
-                        <Title className="fs-36 text-white mb-16 fw-500 text-green">Security</Title>
+                        <Title className="fs-36 text-white mb-16 fw-500">Security</Title>
                             <Paragraph className="text-white fs-16">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
                             <Paragraph className="text-white fs-16">Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.</Paragraph>
                         </Col>

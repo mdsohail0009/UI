@@ -39,7 +39,11 @@ line-height: 16px;min-height: 36px;min-width:90px}
 .ant-modal.megamenu{top: 0 !important;bottom: 0 !important;width: 100% !important;max-width: 100%;}
 .megamenu-backdrop, .megamenu .ant-modal-header{background-color: var(--bgGrey);}
 .megamenu .ant-modal-header{border: none;}
+.megamenu-title{display: flex; justify-content: space-between; padding-right: 60px;align-items:center ; }
 .megamenu .ant-modal-content{box-shadow: none; background-color: var(--bgGrey) !important;min-height: calc(100vh - 70px); max-height: calc(100vh - 70px);}
+.megamenu-link a, .megamenu-sublink a{font-size: 18px; color: var(--textWhite30); display: block;}
+.megamenu-sublink a{font-size: 14px; margin-bottom: 24px;}
+.megamenu-link a:hover, .megamenu-sublink a:hover{color: var(--texthover);}
 .secureDropdown .ant-dropdown-menu{background-color: var(--bgBlack); padding: 24px 36px; border-radius: 10px; min-width: 318px; max-width: 318px;}
 .secureDropdown .ant-dropdown-arrow{border-color: var(--bgBlack) !important;}
 .icon{background: url(../images/tlv-icons.svg) no-repeat; display: inline-block; vertical-align: middle;}
@@ -121,6 +125,8 @@ appearance: none; padding-left: 10px;cursor: pointer;}
     .mid-menu{margin: 0 -16px;padding: 0 16px; background-color: var(--bgWhite);}
     .header-logo{padding-left: 0  !important;}
     .mobile-none{display: none}
+    .mobile-megalinks{display: block;}
+    .megamenu-label{font-size: 24px !important;}
 }
 @media (min-width: 768px){
     .tlv-header{display: flex;height: 70px;align-items: center; justify-content: space-between; }
@@ -137,16 +143,15 @@ appearance: none; padding-left: 10px;cursor: pointer;}
     .summary-count{margin-left: 50px; margin-right: 16px;}
     .portfolio-count{display: inline-flex;}
     .megamenu-title .tlv-logo{padding-left: 34px !important;}
-   
     .megamenu .ant-modal-header{border: none; padding: 24px 32px;}
     .megamenu .ant-modal-body{background-color: var(--bgGrey) !important}
     .megamenu .ant-modal-close{top: 13px; right: 30px;}
-    .megamenu-title{display: flex; justify-content: space-between; padding-right: 60px;align-items:center ; }
     .megamenu-label{font-size: 33px !important;}
-    .megamenu-link a, .megamenu-sublink a{font-size: 18px; color: var(--textWhite30); display: block;}
-    .megamenu-sublink a{font-size: 14px; margin-bottom: 24px;}
-    .megamenu-link a:hover, .megamenu-sublink a:hover{color: var(--texthover);}
+   
     .megamenu-divider{height: 2px;background-color: var(--bgWhite); margin: 30px 0;}
+    .megamenu-link{padding-left: 15px;padding-right: 15px; margin: 0 auto;}
+    .mega-menu{padding-right: 30px; padding-left: 30px;}
+    .mobile-megalinks{display: none;}
 }
 @media (min-width: 992px){
     .tlv-header{padding: 24px 32px !important;
