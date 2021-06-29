@@ -23,29 +23,6 @@ class Home extends Component {
         visible: false,
         childrenDrawer: false,
     };
-    showDrawer = () => {
-        this.setState({
-            visible: true,
-        });
-    };
-
-    onClose = () => {
-        this.setState({
-            visible: false,
-        });
-    };
-
-    showChildrenDrawer = () => {
-        this.setState({
-            childrenDrawer: true,
-        });
-    };
-
-    onChildrenDrawerClose = () => {
-        this.setState({
-            childrenDrawer: false,
-        });
-    };
     render() {
         return (
             <div className="main-container">
@@ -87,41 +64,6 @@ class Home extends Component {
                         </Carousel>
                         <Coins />
                         <YourPortfolio/>
-                        {/* <img src={graph} width="100%" className="mb-16" /> */}
-                        {/* <div className="box portfolio-list">
-                            <Title className="fs-24 text-white mb-0">Your Portfolio</Title>
-                            <List
-                                itemLayout="horizontal"
-                                dataSource={config.tlvCoinsList}
-                                renderItem={item => (
-                                    <List.Item className="" extra={
-                                        <div>
-                                            <Button className="custom-btn fs-14 btn-primary  ml-16" onClick={this.showDrawer}>Buy</Button>
-                                            <Drawer className="custom-drawer text-white"
-                                                title={<div className="d-flex">
-                                                    <ArrowLeftOutlined className="text-white" />
-                                                    <div className="">
-                                                     <div>Buy ETH</div>
-                                                     <div>1ETH - $2,495.31</div>
-                                                 </div>
-                                                 <div>
-                                                     
-                                                 </div>
-                                                </div>}
-                                                width={500} closable={false} onClose={this.onClose} visible={this.state.visible}>fdhf</Drawer>
-                                            <Button className="outline-btn fs-14 btn-primary ml-12">Sell</Button></div>
-                                    }>
-                                        <List.Item.Meta
-                                            avatar={<span className={`coin ${item.coin}`} />}
-                                            title={<div className="fs-18 fw-600 text-captz text-white mb-0 mt-8">{item.title}</div>}
-                                        />
-                                        <Text className="fs-16 text-secondary fw-600 text-right ml-12">-2%</Text>
-                                        <Text className="fs-16 text-secondary  fw-600 text-right  ml-12">1.10 XML</Text>
-                                    </List.Item>
-                                )}
-                            />
-
-                        </div> */}
                     </Col>
                 </Row>
             </div>
