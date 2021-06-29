@@ -8,6 +8,8 @@ const config = {
       gain: '1',
       up: true,
       loss: 0.68,
+      totalcoin:1000,
+      shortcode:'USD'
     },
     {
       title: 'ethereum',
@@ -16,6 +18,8 @@ const config = {
       gain: '1',
       up: true,
       loss: 0.68,
+      totalcoin:1000,
+      shortcode:'ETH'
     },
     {
       title: 'Bitcoin',
@@ -24,6 +28,8 @@ const config = {
       gain: '1',
       loss: 0.68,
       up: false,
+      totalcoin:1000,
+      shortcode:'BTC'
     },
     {
       title: 'Stellar',
@@ -31,7 +37,9 @@ const config = {
       price: '45,428.98',
       gain: '1',
       loss: 0.68,
-      up: true
+      up: true,
+      totalcoin:1000,
+      shortcode:'XLM'
     },
     {
       title: 'Us dollar',
@@ -40,6 +48,10 @@ const config = {
       gain: '1',
       loss: 0.68,
       up: false,
+      totalcoin:1000,
+      shortcode:'USD'
+
+
     },
     {
       title: 'oxbtc',
@@ -47,7 +59,9 @@ const config = {
       price: '45,428.98',
       gain: '1',
       loss: 0.68,
-      up: true
+      up: true,
+      totalcoin:1000,
+      shortcode:'BTC'
     },
     {
       title: 'act',
@@ -55,7 +69,9 @@ const config = {
       price: '45,428.98',
       gain: '1',
       loss: 0.68,
-      up: true
+      up: true,
+      totalcoin:1000,
+      shortcode:'ADA'
     },
     {
       title: 'dat',
@@ -63,7 +79,9 @@ const config = {
       price: '45,428.98',
       gain: '1',
       loss: 0.68,
-      up: true
+      up: true,
+      totalcoin:1000,
+      shortcode:'DAT'
     },
     {
       title: 'bitcoincash',
@@ -71,7 +89,9 @@ const config = {
       price: '45,428.98',
       gain: '1',
       loss: 0.68,
-      up: false
+      up: false,
+      totalcoin:4000,
+      shortcode:'BCH'
     }
   ],
 }

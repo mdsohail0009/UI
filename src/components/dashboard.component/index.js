@@ -11,6 +11,7 @@ import Translate from 'react-translate-component';
 import CryptoList from '../shared/cryptolist';
 import Portfolio from '../shared/portfolio';
 import Coins from '../shared/coins';
+import YourPortfolio from '../shared/yourportfolio';
 
 const { Search } = Input;
 const { Title, Paragraph, Text } = Typography;
@@ -85,8 +86,9 @@ class Home extends Component {
                             </div>
                         </Carousel>
                         <Coins />
+                        <YourPortfolio/>
                         {/* <img src={graph} width="100%" className="mb-16" /> */}
-                        <div className="box portfolio-list">
+                        {/* <div className="box portfolio-list">
                             <Title className="fs-24 text-white mb-0">Your Portfolio</Title>
                             <List
                                 itemLayout="horizontal"
@@ -98,13 +100,13 @@ class Home extends Component {
                                             <Drawer className="custom-drawer text-white"
                                                 title={<div className="d-flex">
                                                     <ArrowLeftOutlined className="text-white" />
-                                                    {/* <div className="">
+                                                    <div className="">
                                                      <div>Buy ETH</div>
                                                      <div>1ETH - $2,495.31</div>
                                                  </div>
                                                  <div>
                                                      
-                                                 </div> */}
+                                                 </div>
                                                 </div>}
                                                 width={500} closable={false} onClose={this.onClose} visible={this.state.visible}>fdhf</Drawer>
                                             <Button className="outline-btn fs-14 btn-primary ml-12">Sell</Button></div>
@@ -119,7 +121,7 @@ class Home extends Component {
                                 )}
                             />
 
-                        </div>
+                        </div> */}
                     </Col>
                 </Row>
             </div>
