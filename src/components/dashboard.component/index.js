@@ -41,7 +41,7 @@ class Home extends Component {
                     <Col xs={24} md={12} xl={14}>
                         <Portfolio
                             crypto="Bitcoin"
-                            crypto_value='$60,000.00'
+                            crypto_value='60,000.00 USD'
                             crypto_usd="1.0147658 USD"
                             crypto_stock="7.41 %" />
 

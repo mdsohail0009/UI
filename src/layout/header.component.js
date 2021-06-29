@@ -148,7 +148,7 @@ class tlvHeader extends Component {
                                 <span className="coin md eth-white"></span>
                                 <Text className="fs-24 text-white crypto-name ml-24">Ethereum</Text>
                                 <div>
-                                    <Text className="fs-60 text-white fw-700">25<sup className="fs-24 text-white fw-500">%</sup></Text>
+                                    <Text className="fs-60 text-white fw-700">25<sup className="fs-24 text-white fw-700">%</sup></Text>
                                     <div className="fs-16 text-white-30 fw-200 text-right">
                                         <div>1.0147668 ETH</div>
                                         <div>$ 41.07</div>
