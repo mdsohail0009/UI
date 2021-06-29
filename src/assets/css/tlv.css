@@ -44,6 +44,8 @@ line-height: 16px;min-height: 36px;min-width:90px}
 .megamenu-link a, .megamenu-sublink a{font-size: 18px; color: var(--textWhite30); display: block;}
 .megamenu-sublink a{font-size: 14px; margin-bottom: 24px;}
 .megamenu-link a:hover, .megamenu-sublink a:hover{color: var(--texthover);}
+.custom-toggle.ant-switch{background-color: var(--bgBlack) !important;}
+.custom-toggle.ant-switch-checked{background-color: red !important;}
 .secureDropdown .ant-dropdown-menu{background-color: var(--bgBlack); padding: 24px 36px; border-radius: 10px; min-width: 318px; max-width: 318px;}
 .secureDropdown .ant-dropdown-arrow{border-color: var(--bgBlack) !important;}
 .icon{background: url(../images/tlv-icons.svg) no-repeat; display: inline-block; vertical-align: middle;}

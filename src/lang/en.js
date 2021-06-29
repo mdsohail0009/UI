@@ -15,4 +15,5 @@ export default {
   ftr_careers: 'Careers',
   ftr_tc_p: 'Legan & Policy',
   search_currency: 'Search Currency',
+  
 }

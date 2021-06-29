@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Typography, Row, Col, Divider, Dropdown, Avatar, Drawer, Radio, Tabs } from 'antd';
-import { RightOutlined } from '@ant-design/icons';
+import { Layout, Menu, Modal, Typography, Row, Col, Divider, Dropdown, Avatar, Drawer, Radio, Tabs,Switch } from 'antd';
+import { RightOutlined, UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
 import megamenu from '../assets/images/megamenu.png';
@@ -47,6 +47,9 @@ class tlvHeader extends Component {
             buyToggle: 'Buy',
         }
     }
+   onChange(checked) {
+        console.log(`switch to ${checked}`);
+      }
     showMegaMenu = () => {
         this.setState({
             megamenu: true
@@ -85,12 +88,12 @@ class tlvHeader extends Component {
                                 </li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
-                            <Menu.Item key="5">Security</Menu.Item>
-                            <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
-                            <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
-                        </Menu>
+                                <Menu.Item key="5">Security</Menu.Item>
+                                <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
+                                <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
+                            </Menu>
                         </div>
-                       
+
                         <Menu theme="light" mode="horizontal" className="header-right" defaultSelectedKeys={['1']}>
                             <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item>
                             <Menu.Item key="2" className="list-item">Swap</Menu.Item>
@@ -145,8 +148,11 @@ class tlvHeader extends Component {
                     wrapClassName="megamenu-backdrop"
                     className="megamenu"
                     closeIcon={<span className="icon xl closewhite" />}
-                    >
-                    <div className="mega-menu">
+                >
+
+                    {/* before login megamenu */}
+
+                    {/* <div className="mega-menu">
                     <Row gutter={[16, 16]} className="megamenu-link"   >
                         <Col lg={6} xl={4}>
                             <Title className="text-white megamenu-label mb-16 fw-500">Start</Title>
@@ -227,8 +233,106 @@ class tlvHeader extends Component {
                         </Col>
                         <Col lg={6} xl={5} />
                     </Row>
+                    </div> */}
+
+                    {/* mega menu login after */}
+
+                    <div className="mega-menu">
+                        <Row gutter={16} className="megamenu-link">
+                            <Col lg={6} xl={5}>
+                                <Title className="text-white megamenu-label mb-16 fw-500">Preferences</Title>
+                                <Avatar size={60} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+                                <Paragraph className="text-white-30 fs-16 mb-0">Michael Quiapos</Paragraph>
+                                <Paragraph className="text-secondary fs-14">Great. i will have a look...</Paragraph>
+                            </Col>
+                            <Col lg={6} xl={4}>
+                                <Title className="text-white megamenu-label  fw-500 mb-24">Wallet</Title>
+                                <div className="mobile-megalinks">
+                                <Link>Address Book</Link>
+                                <Link>Invite Friends</Link>
+                                <Link>Buy Crypto</Link>
+                                <Link>Light Theme <Switch  onChange={this.onChange}size="small" className="custom-toggle" /></Link>
+                                </div>
+                            </Col>
+
+                            <Col lg={6} xl={5}>
+                                <Title className="text-white megamenu-label  fw-500">Localization</Title>
+                                <Paragraph className="text-white-30 fs-16 fw-400">User can create a separate account such as a corporate segregated wallet system.</Paragraph>
+                                <div className="mobile-megalinks">
+                                <div className="d-flex justify-content">
+                                    <p className="text-white-30 fs-18 mb-0">Language</p>
+                                    <p className="text-white-30 fs-18 mb-0">lang</p>
+                                </div>
+                                <div className="d-flex justify-content">
+                                    <p className="text-white-30 fs-18 mb-0">Currency</p>
+                                    <p className="text-white-30 fs-18 mb-0"> USD</p>
+                                </div>
+                                </div>
+                            </Col>
+                            <Col lg={6} xl={1} className=" mobile-none "/>
+                            <Col lg={6} xl={5} >
+                                <Title className="text-white megamenu-label  fw-500">Support</Title>
+                                <div className="mobile-megalinks">
+                                <Link>Help Center</Link>
+                                <Link>About</Link>
+                                <Link>Social Networks</Link>
+                                </div>
+                            </Col>
+                            <Col lg={6} xl={5}  className=" mobile-none " />
+                        </Row>
+                        <Row gutter={[16, 16]} className="megamenu-link mobile-none ">
+                            <Col lg={6} xl={5} className=" mobile-none ">
+                            </Col>
+                            <Col lg={6} xl={4}>
+                                <Link>Address Book</Link>
+                                <Link>Invite Friends</Link>
+                                <Link>Buy Crypto</Link>
+                                <Link>Light Theme <Switch  onChange={this.onChange}size="small" className="custom-toggle" /></Link>
+                            </Col>
+                            <Col lg={6} xl={5}>
+                                <div className="d-flex justify-content">
+                                    <p className="text-white-30 fs-18 mb-0">Language</p>
+                                    <p className="text-white-30 fs-18 mb-0">lang</p>
+                                </div>
+                                <div className="d-flex justify-content">
+                                    <p className="text-white-30 fs-18 mb-0">Currency</p>
+                                    <p className="text-white-30 fs-18 mb-0"> USD</p>
+                                </div> </Col>
+                            <Col lg={6} xl={1}  />
+                            <Col lg={6} xl={5} >
+                                <Link>Help Center</Link>
+                                <Link>About</Link>
+                                <Link>Social Networks</Link>
+                            </Col>
+                            <Col lg={6} xl={4} className=" mobile-none " />
+                        </Row>
+                        <Divider className="megamenu-divider mobile-none" />
+                        <Row gutter={[16, 16]} className="megamenu-link "  >
+                            <Col lg={6} xl={4} className=" mobile-none ">
+                               
+                            </Col>
+                            <Col lg={6} xl={5} className="pt-24 mobile-none">
+                               
+                            </Col>
+                            <Col lg={6} xl={5}>
+                                <Title className=" text-white mb-16  megamenu-label  fw-500">Connect</Title>
+                                <Link>Report A Bug</Link>
+                                <Link>FAQ</Link>
+                                <Link>Chat</Link>
+                            </Col>
+
+                            <Col lg={6} xl={5} >
+                                <Title className="fs-36 text-white mb-16  megamenu-label fw-500 ">Security</Title>
+                                <Paragraph className="text-white fs-16">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
+                                <Link>Backup Wallet</Link>
+                                <Link>Reset Wallet</Link>
+                                <Link>Always ask pin <Switch onChange={this.onChange} size="small"className="custom-toggle"/></Link>
+                                <Link>Activate face ID <Switch defaultChecked onChange={this.onChange} size="small"className="custom-toggle"/></Link>
+                                <Link>Activate biometry <Switch defaultChecked  onChange={this.onChange} size="small" className="custom-toggle"/></Link>
+                            </Col>
+                            <Col lg={6} xl={5} />
+                        </Row>
                     </div>
-                   
                 </Modal>
             </>
         );
