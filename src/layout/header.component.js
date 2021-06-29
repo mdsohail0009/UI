@@ -79,7 +79,7 @@ class tlvHeader extends Component {
                     <Header className="p-0 tlv-header">
                         <div className="login-user d-flex">
                             <ul className="header-logo">
-                                <li className="px-16" ><a><img src={logoWhite} alt="logo" className="tlv-logo" /></a></li>
+                                <li className="pr-16" ><a><img src={logoWhite} alt="logo" className="tlv-logo" /></a></li>
                                 <li className="px-16"><a className="icon md hamburger" onClick={this.showMegaMenu} /></li>
                                 <li className=""><Translate content="header_title" component="p" className="text-white mb-0 fs-18" />
                                 </li>
@@ -148,7 +148,9 @@ class tlvHeader extends Component {
                     </Header>
                 </Layout >
                 <Modal
-                    title={[<div className="megamenu-title fs-24 text-white"><img src={logoWhite} alt="logo" className="tlv-logo" /><Link className="text-white">Sign in</Link></div>]}
+                    title={[<div className="megamenu-title fs-24 text-white">
+                        <img src={logoWhite} alt="logo" className="tlv-logo px-16" />
+                        <Link className="text-white">Sign in</Link></div>]}
                     visible={this.state.megamenu}
                     onCancel={this.closeMegaMenu}
                     footer={null}
@@ -156,38 +158,80 @@ class tlvHeader extends Component {
                     className="megamenu"
                     closeIcon={<span className="icon xl closewhite" />}
                 >
-                    <Row gutter={[16, 16]} className="megamenu-link">
-                        <Col lg={1} xl={1} />
+                    <div style={{paddingRight:'30px', paddingLeft:'30px'}}>
+                    <Row gutter={[16, 16]} className="megamenu-link " style={{ paddingRight: '15px', paddingLeft: '15px', marginLeft: 'auto', marginRight: "auto" }}  >
                         <Col lg={6} xl={4}>
                             <Title className="text-white megamenu-label mb-16 fw-500">Start</Title>
-                            <Paragraph className="text-white fs-14 mb-24">We are a platform that connects banks, payment systems, and people.</Paragraph>
+                            <Paragraph className="text-white-30 fs-16 mb-24">We are a platform that connects banks, payment systems, and people.</Paragraph>
+                        </Col>
+                        <Col lg={6} xl={5}>
+                            <Title className="text-white megamenu-label  fw-500 mb-24">Personal</Title>
+                            <Link className="pt-24"> Wallets</Link>
+                          <Paragraph className="text-white-30 fs-16 mb-0">Full control of your private keys.</Paragraph>
+                            
+                        </Col>
+                        <Col lg={6} xl={5}>
+                            <Title className="text-white megamenu-label  fw-500">Crypto</Title>
+                        </Col>
+
+                        <Col lg={6} xl={5} >
+                            <Title className="text-white megamenu-label  fw-500">Business</Title>
+                            <Paragraph className="text-white-30 fs-16">User can create a separate account such as a corporate segregated wallet system.</Paragraph>
+                        </Col>
+                        <Col lg={6} xl={5} />
+                    </Row>
+                    <Row gutter={[16, 16]} className="megamenu-link " style={{ paddingRight: '15px', paddingLeft: '15px', marginLeft: 'auto', marginRight: "auto" }}  >
+                    <Col lg={6} xl={4}>
                             <Link>The Dashboard</Link>
                             <Link>Your Portfolio</Link>
                         </Col>
                         <Col lg={6} xl={5}>
-                            <Title className="text-white megamenu-label mb-16 fw-500">Buy and Sell</Title>
-                            <Paragraph className="text-white fs-14 mb-24">Use our Visa and Mastercards to convert, spend your crypto and traditional currency in real life.</Paragraph>
-                            <Link>Send and Receive</Link>
-                            <Link>Swap</Link>
-                        </Col>
-                        <Col lg={6} xl={4}>
-                            <Title className="text-white megamenu-label mb-16 fw-500">Spend</Title>
-                            <Paragraph className="text-white fs-14 mb-24">Use our Visa and Mastercards to convert, spend your crypto and traditional currency in real life.</Paragraph>
                             <Link>Cards</Link>
                             <Link>Exchange</Link>
                         </Col>
-                        <Col xl={1} />
-                        <Col lg={3} xl={3} className="pt-24">
-                            <img src={megamenu} alt="logo" />
+                        <Col lg={6} xl={5}>
+                           
+                        <Link >Buy and Sell</Link>
+                            <Link>Swap Services</Link>
+                            <Link>Deposit and Withdraw</Link>
                         </Col>
+                        <Col lg={6} xl={5} >
+                            <Link>Corporate Wallet</Link>
+                            <Link>Mass Payments</Link>
+                        </Col>
+                        <Col lg={6} xl={5} />
                     </Row>
-                    <Row>
+                    <Divider className="megamenu-divider" />
+                    <Row gutter={[16, 16]} className="megamenu-link " style={{ paddingRight: '15px', paddingLeft: '15px', marginLeft: 'auto', marginRight: "auto" }}  >
+                        <Col lg={6} xl={4}>
+                            <Title className="text-white megamenu-label mb-16 fw-500">Spend</Title>
+                            <Paragraph className="text-white-30 fs-16 mb-24">Use our Visa and Mastercards to convert, spend your crypto and traditional currency in real life.</Paragraph>
+                        </Col>
+                        <Col lg={6} xl={5} className="pt-24">
+                        <img src={megamenu} alt="logo" />
+                        </Col>
+                        <Col lg={6} xl={5}>
+                        <Title className=" text-white mb-16  megamenu-label  fw-500">Connect</Title>
+                            <Link>Report A Bug</Link>
+                            <Link>FAQ</Link>
+                            <Link>Chat</Link>
+                        </Col>
+
+                        <Col lg={6} xl={5} >
+                        <Title className="fs-36 text-white mb-16 fw-500">Security</Title>
+                            <Paragraph className="text-white fs-16">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
+                            <Paragraph className="text-white fs-16">Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.</Paragraph>
+                        </Col>
+                        <Col lg={6} xl={5} />
+                    </Row>
+                    </div>
+                    {/* <Row>
                         <Col lg={1} xl={1} />
                         <Col lg={23} xl={16}>
                             <Divider className="megamenu-divider" />
                         </Col>
-                    </Row>
-                    <Row gutter={[16, 16]} className="megamenu-sublink">
+                    </Row> */}
+                    {/* <Row gutter={[16, 16]} className="megamenu-sublink">
                         <Col lg={1} xl={1} />
                         <Col lg={5} xl={4}>
                             <Title className="fs-36 text-white mb-16 fw-500">Learn</Title>
@@ -217,7 +261,7 @@ class tlvHeader extends Component {
                             <Link>Contact Us</Link>
                             <Link >Sign In</Link>
                         </Col>
-                    </Row>
+                    </Row> */}
                 </Modal>
             </>
         );
