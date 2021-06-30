@@ -22,5 +22,7 @@ export default {
   all: 'All',
   gainers: 'Gainers',
   losers: 'Losers',
- 
+  db_slider_title: 'Get $10 in free crypto',
+  db_slider_desc: 'Setup a recurring buy of $50 or more and get $10 after your both 4th and 8th buys',
+  db_slider_btn: 'Set up recurring buy',
 }
