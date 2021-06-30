@@ -473,7 +473,7 @@ class tlvHeader extends Component {
                     </div>
                     <div className="bottom-fix">
                         <Button size="large" block className="pop-btn" onClick={this.depositCrypto}>CONFIRM BILLING ADDRESS</Button>
-                        <Button type="text" size="large" className="text-center text-white pop-cancel" >Cancel</Button>
+                        <Button type="text" size="large" className="text-center text-white pop-cancel fw-400" >Cancel</Button>
                     </div>
                 </Drawer>
                 <Drawer
@@ -498,14 +498,13 @@ class tlvHeader extends Component {
                             <Paragraph className="text-secondary mb-0 fw-300 fs-12" > Use a credit or debit card</Paragraph>
                         </div>
                     </div>
-                    <div className="d-flex align-center c-pointer" onClick={this.depositCrypto}>
+                    <div className="d-flex align-center c-pointer">
                         <Avatar size={45} style={{ backgroundColor: "#5d5b6e" }} />
                         <div className="ml-16">
                             <Paragraph className="mb-0 text-white-30 fw-600">Deposit</Paragraph>
                             <Paragraph className="text-secondary mb-0 fw-300 fs-12" >Deposit from an address or existing wallet</Paragraph>
                         </div>
                     </div>
-
                 </Drawer>
                 <Drawer
                     title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
