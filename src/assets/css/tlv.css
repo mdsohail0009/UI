@@ -80,6 +80,7 @@ line-height: 16px;min-height: 36px;min-width:90px}
 .side-drawer .ant-drawer-mask{background-color: var(--bgDarkGrey-95);}
 .side-drawer .ant-drawer-header, .crypto-list-tabs .ant-tabs-nav::before{border: none;}
 .side-drawer .side-drawer-header{padding: 30px 100px 30px 30px;}
+.side-drawer-header.custom-drawer-header{padding: 30px 46px 30px 0px !important;}
 .buysell-toggle{border-radius: 20px; background: var(--bgDarkGrey); padding: 10px;display: block;margin: 0 72px 50px 30px}
 .buysell-toggle .ant-radio-button-wrapper{border-radius: 15px;border: none;background: transparent;color: var(--textWhite30);text-transform: uppercase;font-weight: 600;padding: 22px 64px; line-height: 0;}
 .buysell-toggle .ant-radio-button{border-radius: 15px;font-size: 12px;}
@@ -94,6 +95,7 @@ line-height: 16px;min-height: 36px;min-width:90px}
 .crypto-list-tabs .ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textDark); background: var(--bgYellow); border-radius: 30px;}
 .crypto-list-tabs .ant-tabs-ink-bar{display: none;}
 .pop-btn, .pop-btn:hover, .pop-btn:focus, .pop-btn:active{background-color: var(--bgYellow);color: var(--textDark); border-color: var(--bgYellow); border-radius: 40px;height: 57px; text-transform: uppercase;font-weight: 700;}
+.pop-cancel{background-color: transparent;color: var(--bgWhite); border-color: transparent; border-radius: 40px;height: 57px; text-transform: uppercase;text-align: center;width:100%}
 .cancel-btn{height: 57px; text-transform: uppercase;font-weight: 700;text-align: center;}
 .crypto-card{border-radius: 25px;box-shadow: 0 8px 16px rgba(20,0,4,0.2);background-color: var(--bgOrient); padding: 6px;}
 .crypto-name{display: inline-block; vertical-align: middle;}
@@ -178,3 +180,5 @@ appearance: none; padding-left: 10px;cursor: pointer;}
 @media (min-width: 1920px){
     .main-container{max-width: 1500px; }
 }
+.billing-address{border: 1px solid var(--bgWhite);border-radius: 20px; padding: 30px;margin: 30px 14px 30px 0;}
+.bottom-fix{position: fixed;top: 472px;right: 96px;}
