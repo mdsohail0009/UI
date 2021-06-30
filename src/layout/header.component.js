@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Typography, Row, Col, Divider, Dropdown, Avatar, Drawer, Radio, Tabs, Card, Button ,Switch } from 'antd';
+import { Layout, Menu, Modal, Typography, Row, Col, Divider, Dropdown, Avatar, Drawer, Radio, Tabs, Card, Button, Switch } from 'antd';
 import { RightOutlined, UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
@@ -48,9 +48,9 @@ class tlvHeader extends Component {
             buyToggle: 'Buy',
         }
     }
-   onChange(checked) {
+    onChange(checked) {
         console.log(`switch to ${checked}`);
-      }
+    }
     showMegaMenu = () => {
         this.setState({
             megamenu: true
@@ -80,13 +80,12 @@ class tlvHeader extends Component {
         return (
             <>
                 <Layout className="layout">
-                    <Header className="p-0 tlv-header">
-                        <div className="login-user d-flex">
+                    <Header className="tlv-header">
+                        <div className="login-user">
                             <ul className="header-logo">
-                                <li className="pr-16" ><a><img src={logoWhite} alt="logo" className="tlv-logo" /></a></li>
-                                <li className="px-16"><a className="icon md hamburger" onClick={this.showMegaMenu} /></li>
-                                <li className=""><Translate content="header_title" component="p" className="text-white mb-0 fs-18" />
-                                </li>
+                                <li className="pr-30 p-relative"><Link><img src={logoWhite} alt="logo" className="tlv-logo" /></Link></li>
+                                <li className="px-36"><span className="icon md hamburger c-pointer" onClick={this.showMegaMenu} /></li>
+                                <li><Translate content="header_title" component="p" className="text-white-30 mb-0 fs-24" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
                                 <Menu.Item key="5">Security</Menu.Item>
@@ -94,7 +93,6 @@ class tlvHeader extends Component {
                                 <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
                             </Menu>
                         </div>
-
                         <Menu theme="light" mode="horizontal" className="header-right" defaultSelectedKeys={['1']}>
                             <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item>
                             <Menu.Item key="2" className="list-item">Swap</Menu.Item>
@@ -103,8 +101,8 @@ class tlvHeader extends Component {
                             <Dropdown overlay={menu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown">
                                 <Menu.Item key="5">Security</Menu.Item>
                             </Dropdown>
-                            <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
-                            <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
+                            <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
+                            <Menu.Item key="7"><span className="icon md gear ml-4" /></Menu.Item>
                         </Menu>
                         <Drawer
                             title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /><div className="text-center fs-14"><Translate className="mb-0 text-white-30 fw-600 text-upper" content="buy_assets" component={Paragraph} /><Translate className="text-white-50 mb-0 fw-300" content="past_hours" component={Paragraph} /></div><span className="icon md search-white c-pointer" /></div>]}
@@ -268,10 +266,10 @@ class tlvHeader extends Component {
                             <Col lg={6} xl={4}>
                                 <Title className="text-white megamenu-label  fw-500 mb-24">Wallet</Title>
                                 <div className="mobile-megalinks">
-                                <Link>Address Book</Link>
-                                <Link>Invite Friends</Link>
-                                <Link>Buy Crypto</Link>
-                                <Link>Light Theme <Switch  onChange={this.onChange}size="small" className="custom-toggle" /></Link>
+                                    <Link>Address Book</Link>
+                                    <Link>Invite Friends</Link>
+                                    <Link>Buy Crypto</Link>
+                                    <Link>Light Theme <Switch onChange={this.onChange} size="small" className="custom-toggle" /></Link>
                                 </div>
                             </Col>
 
@@ -279,26 +277,26 @@ class tlvHeader extends Component {
                                 <Title className="text-white megamenu-label  fw-500">Localization</Title>
                                 <Paragraph className="text-white-30 fs-16 fw-400">User can create a separate account such as a corporate segregated wallet system.</Paragraph>
                                 <div className="mobile-megalinks">
-                                <div className="d-flex justify-content">
-                                    <p className="text-white-30 fs-18 mb-0">Language</p>
-                                    <p className="text-white-30 fs-18 mb-0">lang</p>
-                                </div>
-                                <div className="d-flex justify-content">
-                                    <p className="text-white-30 fs-18 mb-0">Currency</p>
-                                    <p className="text-white-30 fs-18 mb-0"> USD</p>
-                                </div>
+                                    <div className="d-flex justify-content">
+                                        <p className="text-white-30 fs-18 mb-0">Language</p>
+                                        <p className="text-white-30 fs-18 mb-0">lang</p>
+                                    </div>
+                                    <div className="d-flex justify-content">
+                                        <p className="text-white-30 fs-18 mb-0">Currency</p>
+                                        <p className="text-white-30 fs-18 mb-0"> USD</p>
+                                    </div>
                                 </div>
                             </Col>
-                            <Col lg={6} xl={1} className=" mobile-none "/>
+                            <Col lg={6} xl={1} className=" mobile-none " />
                             <Col lg={6} xl={5} >
                                 <Title className="text-white megamenu-label  fw-500">Support</Title>
                                 <div className="mobile-megalinks">
-                                <Link>Help Center</Link>
-                                <Link>About</Link>
-                                <Link>Social Networks</Link>
+                                    <Link>Help Center</Link>
+                                    <Link>About</Link>
+                                    <Link>Social Networks</Link>
                                 </div>
                             </Col>
-                            <Col lg={6} xl={5}  className=" mobile-none " />
+                            <Col lg={6} xl={5} className=" mobile-none " />
                         </Row>
                         <Row gutter={[16, 16]} className="megamenu-link mobile-none ">
                             <Col lg={6} xl={5} className=" mobile-none ">
@@ -307,7 +305,7 @@ class tlvHeader extends Component {
                                 <Link>Address Book</Link>
                                 <Link>Invite Friends</Link>
                                 <Link>Buy Crypto</Link>
-                                <Link>Light Theme <Switch  onChange={this.onChange}size="small" className="custom-toggle" /></Link>
+                                <Link>Light Theme <Switch onChange={this.onChange} size="small" className="custom-toggle" /></Link>
                             </Col>
                             <Col lg={6} xl={5}>
                                 <div className="d-flex justify-content">
@@ -318,7 +316,7 @@ class tlvHeader extends Component {
                                     <p className="text-white-30 fs-18 mb-0">Currency</p>
                                     <p className="text-white-30 fs-18 mb-0"> USD</p>
                                 </div> </Col>
-                            <Col lg={6} xl={1}  />
+                            <Col lg={6} xl={1} />
                             <Col lg={6} xl={5} >
                                 <Link>Help Center</Link>
                                 <Link>About</Link>
@@ -329,10 +327,10 @@ class tlvHeader extends Component {
                         <Divider className="megamenu-divider mobile-none" />
                         <Row gutter={[16, 16]} className="megamenu-link "  >
                             <Col lg={6} xl={4} className=" mobile-none ">
-                               
+
                             </Col>
                             <Col lg={6} xl={5} className="pt-24 mobile-none">
-                               
+
                             </Col>
                             <Col lg={6} xl={5}>
                                 <Title className=" text-white mb-16  megamenu-label  fw-500">Connect</Title>
@@ -346,9 +344,9 @@ class tlvHeader extends Component {
                                 <Paragraph className="text-white fs-16">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
                                 <Link>Backup Wallet</Link>
                                 <Link>Reset Wallet</Link>
-                                <Link>Always ask pin <Switch onChange={this.onChange} size="small"className="custom-toggle"/></Link>
-                                <Link>Activate face ID <Switch defaultChecked onChange={this.onChange} size="small"className="custom-toggle"/></Link>
-                                <Link>Activate biometry <Switch defaultChecked  onChange={this.onChange} size="small" className="custom-toggle"/></Link>
+                                <Link>Always ask pin <Switch onChange={this.onChange} size="small" className="custom-toggle" /></Link>
+                                <Link>Activate face ID <Switch defaultChecked onChange={this.onChange} size="small" className="custom-toggle" /></Link>
+                                <Link>Activate biometry <Switch defaultChecked onChange={this.onChange} size="small" className="custom-toggle" /></Link>
                             </Col>
                             <Col lg={6} xl={5} />
                         </Row>
