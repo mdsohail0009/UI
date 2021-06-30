@@ -49,6 +49,7 @@ class tlvHeader extends Component {
             payDrawer: false,
             payCardsDrawer: false,
             cardsDetails: false,
+            billingAddress:false,
             initLoading: true,
         }
     }
@@ -73,7 +74,7 @@ class tlvHeader extends Component {
     closeBuyDrawer = () => {
         this.setState({
             buyDrawer: false,
-            payDrawer: false,
+            payDrawer: false, 
             billingAddress: false,
             depositCrypto: false,
             payCardsDrawer: false,
@@ -392,7 +393,7 @@ class tlvHeader extends Component {
                     </div>
                 </Modal>
                 <Drawer
-                    title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
+                    title={[<div className="side-drawer-header"><ArrowLeftOutlined className="text-white c-pointer"  onClick={this.closeBuyDrawer}  />
                         <div className="text-center fs-14">
                             <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Buy ETH</Paragraph>
                             <Paragraph className="text-white-50 mb-0 fw-300" > Buy ETH to your Wallet</Paragraph></div>
@@ -434,16 +435,15 @@ class tlvHeader extends Component {
                     <Button size="large" block className="pop-btn" onClick={this.showPayCardDrawer} >Pay 0,00701 ETH</Button>
                     <Button type="text" size="large" >Cancel</Button>
                 </Drawer>
-                {/* <Button size="large" block className="pop-btn" onClick={this.billingAddress}>Pay 0,00701 ETH</Button>
-                    <Button type="text" size="large" >Cancel</Button>
-                </Drawer> */}
+               
+              
 
                 {/* Change billing address */}
                 <Drawer
-                    title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white"  onClick={this.billingAddress}  />                       
-                    <div className="text-center fs-14">
-                    <Paragraph className="text-white-50 mb-0 fs-14 fw-500" > CHANGE BILLING ADDRESS</Paragraph></div>
-                    <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /></div>]}
+                    title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white"  onClick={this.billingAddress} />
+                        <div className="text-center fs-14">
+                            <Paragraph className="text-white-50 mb-0 fs-14 fw-500" > CHANGE BILLING ADDRESS</Paragraph></div>
+                        <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /></div>]}
                     placement="right"
                     closable={true}
                     visible={this.state.billingAddress}
@@ -482,7 +482,7 @@ class tlvHeader extends Component {
                             <Paragraph className="text-secondary mb-0 fw-300 fs-12" > Use a credit or debit card</Paragraph>
                         </div>
                     </div>
-                    <div className="d-flex align-center c-pointer" onClick={this.billingAddress}>
+                    <div className="d-flex align-center c-pointer" onClick={this.depositCrypto}>
                         <Avatar size={45} style={{ backgroundColor: "#5d5b6e" }} />
                         <div className="ml-16">
                             <Paragraph className="mb-0 text-white-30 fw-600">Deposit</Paragraph>
@@ -505,10 +505,12 @@ class tlvHeader extends Component {
                     closeIcon={null}
                     className="side-drawer"
                 >
+                    <Button size="large" block className="pop-btn" onClick={this.billingAddress}>Pay 0,00701 ETH</Button>
+                    <Button type="text" size="large" >Cancel</Button>
                 </Drawer>
                 {/* DEPOSIT to crypto */}
                 <Drawer
-                    title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white"  onClick={this.billingAddress}  />                       
+                    title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white"  onClick={this.closeBuyDrawer}  />                       
                     <div className="text-center fs-14">
                     <Paragraph className="mb-0 text-white-30 fw-600 text-upper">DEPOSIT</Paragraph>
                     <Paragraph className="text-white-50 mb-0 fw-300" > Select a Currency</Paragraph></div>
