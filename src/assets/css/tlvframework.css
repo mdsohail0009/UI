@@ -1,7 +1,7 @@
-.d-flex{display: flex;}
+.d-flex{display: flex !important;}
 .p-relative{position: relative !important;}
 .c-pointer{cursor: pointer !important;}
-
+.d-block{display: block !important;}
 
 /*----Font Sizes----*/
 .fs-10{font-size: 10px !important;}
