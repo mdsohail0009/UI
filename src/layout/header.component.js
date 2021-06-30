@@ -88,13 +88,12 @@ class tlvHeader extends Component {
         return (
             <>
                 <Layout className="layout">
-                    <Header className="p-0 tlv-header">
-                        <div className="login-user d-flex">
+                    <Header className="tlv-header">
+                        <div className="login-user">
                             <ul className="header-logo">
-                                <li className="pr-16" ><a><img src={logoWhite} alt="logo" className="tlv-logo" /></a></li>
-                                <li className="px-16"><a className="icon md hamburger" onClick={this.showMegaMenu} /></li>
-                                <li className=""><Translate content="header_title" component="p" className="text-white mb-0 fs-18" />
-                                </li>
+                                <li className="pr-30 p-relative"><Link><img src={logoWhite} alt="logo" className="tlv-logo" /></Link></li>
+                                <li className="px-36"><span className="icon md hamburger c-pointer" onClick={this.showMegaMenu} /></li>
+                                <li><Translate content="header_title" component="p" className="text-white-30 mb-0 fs-24" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
                                 <Menu.Item key="5">Security</Menu.Item>
@@ -102,7 +101,6 @@ class tlvHeader extends Component {
                                 <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
                             </Menu>
                         </div>
-
                         <Menu theme="light" mode="horizontal" className="header-right" defaultSelectedKeys={['1']}>
                             <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item>
                             <Menu.Item key="2" className="list-item">Swap</Menu.Item>
@@ -111,8 +109,8 @@ class tlvHeader extends Component {
                             <Dropdown overlay={menu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown">
                                 <Menu.Item key="5">Security</Menu.Item>
                             </Dropdown>
-                            <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
-                            <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
+                            <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
+                            <Menu.Item key="7"><span className="icon md gear ml-4" /></Menu.Item>
                         </Menu>
                         <Drawer
                             title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /><div className="text-center fs-14"><Translate className="mb-0 text-white-30 fw-600 text-upper" content="buy_assets" component={Paragraph} /><Translate className="text-white-50 mb-0 fw-300" content="past_hours" component={Paragraph} /></div><span className="icon md search-white c-pointer" /></div>]}
