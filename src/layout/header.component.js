@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Modal, Typography, Row, Col, Divider, Dropdown, Avatar, Drawer, Radio, Tabs, Card, Button, Switch, Input } from 'antd';
-import { RightOutlined, UserOutlined, InfoCircleFilled, CheckOutlined } from '@ant-design/icons';
+import { RightOutlined, UserOutlined, InfoCircleFilled, CheckOutlined,ArrowLeftOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
 import megamenu from '../assets/images/megamenu.png';
@@ -16,7 +16,6 @@ counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
 counterpart.setLocale('en');
-
 
 const { Header } = Layout;
 const { Title, Paragraph, Text } = Typography;
@@ -76,6 +75,11 @@ class tlvHeader extends Component {
     showPayDrawer = () => {
         this.setState({
             payDrawer: true
+        })
+    }
+    billingAddress = () => {
+        this.setState({
+            billingAddress: true
         })
     }
 
@@ -400,8 +404,31 @@ class tlvHeader extends Component {
                             I agree to Suissebase’s <Link to="" className="text-yellow">Terms of Service</Link> and its return, refund and cancellation policy.
                         </Paragraph>
                     </div>
-                    <Button size="large" block className="pop-btn" >Pay 0,00701 ETH</Button>
+                    <Button size="large" block className="pop-btn" onClick={this.billingAddress}>Pay 0,00701 ETH</Button>
                     <Button type="text" size="large" >Cancel</Button>
+                </Drawer>
+
+                {/* Change billing address */}
+                <Drawer
+                    title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white"  onClick={this.billingAddress}  />                       
+                    <div className="text-center fs-14">
+                    <Paragraph className="text-white-50 mb-0 fs-14 fw-500" > CHANGE BILLING ADDRESS</Paragraph></div>
+                    <span onClick={this.billingAddress} className="icon md close-white c-pointer" /></div>]}
+                    placement="right"
+                    closable={true}
+                    visible={this.state.billingAddress}
+                    closeIcon={null}
+                    className="side-drawer text-white"
+                >
+                    <Title className="text-white fw-400" level={3}>Billing Address</Title>
+                    <div className="billing-address">
+                        <Paragraph className="text-white mt-8">Your delivary address</Paragraph>
+                        <Paragraph className="text-white fw-300 mt-8">UNIT 527 TOWER 4, SMDC Grace Residences, Cayetano Blvd. Brgy. Ususan, Taguig City 1630 PH</Paragraph>
+                    </div>
+                    <div className="bottom-fix">
+                        <Button size="large" block className="pop-btn">CONFIRM BILLING ADDRESS</Button>
+                        <Button type="text" size="large" className="text-center text-white pop-cancel" >Cancel</Button>
+                    </div>
                 </Drawer>
             </>
         );
