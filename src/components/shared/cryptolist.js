@@ -34,7 +34,7 @@ class CryptoList extends Component {
                     <List.Item>
                         <Skeleton loading={item.loading} active>
                             <List.Item.Meta
-                                avatar={<span className={`coin ${item.coin}`} />}
+                                avatar={<span className={`coin ${item.coin} mr-4`} />}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}
                             />
                             <div className="fs-16 text-right">
