@@ -507,18 +507,19 @@ class tlvHeader extends Component {
                     <Input className="cust-input mb-16" defaultValue="Michael Quiapos"/>
                     <label className="text-white-50">Card number</label>
                     <Input className="cust-input mb-16" defaultValue="5443 84000 0902 5339"/>
-                    <div className="d-flex justify-content align-center">
+                    <div className="d-flex justify-content align-center mb-16">
                     <div className="mr-16">
                     <label className="text-white-50">Expiry</label>
-                    <Input className="cust-input mb-16" defaultValue="5443 84000 0902 5339"/>
+                    <Input className="cust-input mb-16" defaultValue="5/12"/>
                     </div>
                     <div className="ml-16">
                     <label className="text-white-50">CVV</label>
-                    <Input className="cust-input mb-16" defaultValue="5443 84000 0902 5339"/>
-                    </div></div>
-                    <Paragraph className="text-center"> <Link  className="text-white-50 fs-16 ">Type your Billing Address</Link></Paragraph>
-                   
+                    <Input className="cust-input mb-16" defaultValue="544"/>
                     </div>
+                    </div>
+                    <Paragraph className="text-center"> <Link className="text-white-50 fs-16 ">Type your Billing Address</Link></Paragraph>
+                    </div>
+                    
                     <Button size="large" block className="pop-btn" onClick={this.billingAddress}>Confirm</Button>
                   
                 </Drawer>
