@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Modal, Typography, Row, Col, Divider, Dropdown, Avatar, Drawer, Radio, Tabs, Card, Button, Switch, Input } from 'antd';
-import { RightOutlined, UserOutlined, InfoCircleFilled, CheckOutlined,ArrowLeftOutlined } from '@ant-design/icons';
+import { RightOutlined, UserOutlined, InfoCircleFilled, CheckOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
 import megamenu from '../assets/images/megamenu.png';
@@ -46,6 +46,8 @@ class tlvHeader extends Component {
             buyDrawer: false,
             buyToggle: 'Buy',
             payDrawer: false,
+            payCardsDrawer: false,
+            cardsDetails: false
         }
     }
     onChange(checked) {
@@ -71,12 +73,28 @@ class tlvHeader extends Component {
             buyDrawer: false,
             payDrawer: false,
             billingAddress: false,
-            depositCrypto: false
+            depositCrypto: false,
+            payCardsDrawer: false,
+            cardsDetails: false
         })
     }
     showPayDrawer = () => {
         this.setState({
-            payDrawer: true
+            payDrawer: true,
+            buyDrawer: false
+        })
+    }
+    showPayCardDrawer = () => {
+        this.setState({
+            payCardsDrawer: true,
+
+        })
+    }
+    showCardDrawer = () => {
+        this.setState({
+            cardsDetails: true,
+            payCardsDrawer: false,
+
         })
     }
     billingAddress = () => {
@@ -89,7 +107,6 @@ class tlvHeader extends Component {
             depositCrypto: true
         })
     }
-
     handleBuySellToggle = e => {
         this.setState({
             buyToggle: e.target.value,
@@ -373,10 +390,10 @@ class tlvHeader extends Component {
                 </Modal>
                 <Drawer
                     title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
-                    <div className="text-center fs-14">
-                    <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Buy ETH</Paragraph>
-                    <Paragraph className="text-white-50 mb-0 fw-300" > Buy ETH to your Wallet</Paragraph></div>
-                    <span className="icon md search-white c-pointer" /></div>]}
+                        <div className="text-center fs-14">
+                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Buy ETH</Paragraph>
+                            <Paragraph className="text-white-50 mb-0 fw-300" > Buy ETH to your Wallet</Paragraph></div>
+                        <span className="icon md search-white c-pointer" /></div>]}
                     placement="right"
                     closable={true}
                     visible={this.state.payDrawer}
@@ -411,9 +428,12 @@ class tlvHeader extends Component {
                             I agree to Suissebase’s <Link to="" className="text-yellow">Terms of Service</Link> and its return, refund and cancellation policy.
                         </Paragraph>
                     </div>
-                    <Button size="large" block className="pop-btn" onClick={this.billingAddress}>Pay 0,00701 ETH</Button>
+                    <Button size="large" block className="pop-btn" onClick={this.showPayCardDrawer} >Pay 0,00701 ETH</Button>
                     <Button type="text" size="large" >Cancel</Button>
                 </Drawer>
+                {/* <Button size="large" block className="pop-btn" onClick={this.billingAddress}>Pay 0,00701 ETH</Button>
+                    <Button type="text" size="large" >Cancel</Button>
+                </Drawer> */}
 
                 {/* Change billing address */}
                 <Drawer
@@ -437,7 +457,52 @@ class tlvHeader extends Component {
                         <Button type="text" size="large" className="text-center text-white pop-cancel" >Cancel</Button>
                     </div>
                 </Drawer>
+                <Drawer
+                    title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
+                        <div className="text-center fs-14">
+                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">LINK A CARD OR DEPOSIT</Paragraph>
+                            <Paragraph className="text-white-50 mb-0 fw-300" > Select from below </Paragraph>
+                        </div>
+                        <span className="icon md search-white c-pointer" />
+                    </div>]}
+                    placement="right"
+                    closable={true}
+                    visible={this.state.payCardsDrawer}
+                    closeIcon={null}
+                    className="side-drawer"
+                >
+                    <div className="d-flex  align-center mb-24 c-pointer" onClick={this.showCardDrawer}>
+                        <Avatar size={45} style={{ backgroundColor: "#5d5b6e" }}
+                        />
+                        <div className="ml-16">
+                            <Paragraph className="mb-0 text-white-30 fw-600">Credit Card</Paragraph>
+                            <Paragraph className="text-secondary mb-0 fw-300 fs-12" > Use a credit or debit card</Paragraph>
+                        </div>
+                    </div>
+                    <div className="d-flex align-center c-pointer">
+                        <Avatar size={45} style={{ backgroundColor: "#5d5b6e" }} />
+                        <div className="ml-16">
+                            <Paragraph className="mb-0 text-white-30 fw-600">Deposit</Paragraph>
+                            <Paragraph className="text-secondary mb-0 fw-300 fs-12" >Deposit from an address or existing wallet</Paragraph>
+                        </div>
+                    </div>
 
+                </Drawer>
+                <Drawer
+                    title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
+                        <div className="text-center fs-14">
+                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Credit Card</Paragraph>
+
+                        </div>
+                        <span className="icon md close-white c-pointer" />
+                    </div>]}
+                    placement="right"
+                    closable={true}
+                    visible={this.state.cardsDetails}
+                    closeIcon={null}
+                    className="side-drawer"
+                >
+                </Drawer>
                 <Drawer
                     title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white"  onClick={this.billingAddress}  />                       
                     <div className="text-center fs-14">
@@ -451,7 +516,7 @@ class tlvHeader extends Component {
                     className="side-drawer text-white"
                 >
                     <CryptoList />
-                </Drawer>
+                    </Drawer>
             </>
         );
     }

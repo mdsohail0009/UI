@@ -48,6 +48,7 @@
 .text-secondary{color: var(--textSecondary) !important;}
 .text-yellow{color: var(--textYellow) !important;}
 .text-aqua{color: var(--textAqua) !important;}
+.text-purple{color: var(--textpurple) !important;}
 .bggrey{background-color: var(--bgGrey) !important;}
 
 /*----Padding Utilities----*/
