@@ -23,15 +23,14 @@ const { Title, Paragraph, Text } = Typography;
 const { TabPane } = Tabs;
 const menu = (
     <Menu>
-        <Row>
-            <Col span={18}>
-                <Title className="fs-36 text-white mb-16 fw-500">Security</Title>
-                <Paragraph className="text-white fs-14">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
-            </Col>
-            <Col span={6}><Avatar size={62}></Avatar></Col>
-        </Row>
-        <Paragraph className="text-white fs-14">Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.</Paragraph>
-        <Avatar size={30} className="mr-8"></Avatar><span className="text-white">Protect your account<RightOutlined className="ml-12" /></span>
+        <Title className="fs-24 text-white mb-16 fw-500">Security</Title>
+        <ul className="pl-0 drpdwn-list">
+            <li><Link>2FA<span className="icon sm r-arrow-o-white ml-auto" /></Link></li>
+            <li><Link>Change Password<span className="icon sm r-arrow-o-white ml-auto" /></Link></li>
+            <li><Paragraph className="text-white fs-14">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
+                <Paragraph className="text-white fs-14">Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.</Paragraph></li>
+            <li><Link>Protect your account<span className="icon sm r-arrow-o-white ml-auto" /></Link></li>
+        </ul>
     </Menu>
 );
 const options = [
@@ -120,7 +119,7 @@ class tlvHeader extends Component {
         return (
             <>
                 <Layout className="layout">
-                    <Header className="tlv-header">
+                    <Header className="tlv-header" id="area">
                         <div className="login-user">
                             <ul className="header-logo">
                                 <li className="pr-30 p-relative"><Link><img src={logoWhite} alt="logo" className="tlv-logo" /></Link></li>
@@ -138,7 +137,7 @@ class tlvHeader extends Component {
                             <Menu.Item key="2" className="list-item">Swap</Menu.Item>
                             <Menu.Item key="3" className="list-item">Send / Receive</Menu.Item>
                             <Menu.Item key="4" className="list-item">Mass Payments</Menu.Item>
-                            <Dropdown overlay={menu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown">
+                            <Dropdown overlay={menu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Menu.Item key="5">Security</Menu.Item>
                             </Dropdown>
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
@@ -519,25 +518,25 @@ class tlvHeader extends Component {
                     closeIcon={null}
                     className="side-drawer"
                 >   <div className="form">
-                    <label className="text-white-50">Name on card</label>
-                    <Input className="cust-input mb-16" defaultValue="Michael Quiapos"/>
-                    <label className="text-white-50">Card number</label>
-                    <Input className="cust-input mb-16" defaultValue="5443 84000 0902 5339"/>
-                    <div className="d-flex justify-content align-center mb-16">
-                    <div className="mr-16">
-                    <label className="text-white-50">Expiry</label>
-                    <Input className="cust-input mb-16" defaultValue="5/12"/>
+                        <label className="text-white-50">Name on card</label>
+                        <Input className="cust-input mb-16" defaultValue="Michael Quiapos" />
+                        <label className="text-white-50">Card number</label>
+                        <Input className="cust-input mb-16" defaultValue="5443 84000 0902 5339" />
+                        <div className="d-flex justify-content align-center mb-16">
+                            <div className="mr-16">
+                                <label className="text-white-50">Expiry</label>
+                                <Input className="cust-input mb-16" defaultValue="5/12" />
+                            </div>
+                            <div className="ml-16">
+                                <label className="text-white-50">CVV</label>
+                                <Input className="cust-input mb-16" defaultValue="544" />
+                            </div>
+                        </div>
+                        <Paragraph className="text-center"> <Link className="text-white-50 fs-16 ">Type your Billing Address</Link></Paragraph>
                     </div>
-                    <div className="ml-16">
-                    <label className="text-white-50">CVV</label>
-                    <Input className="cust-input mb-16" defaultValue="544"/>
-                    </div>
-                    </div>
-                    <Paragraph className="text-center"> <Link className="text-white-50 fs-16 ">Type your Billing Address</Link></Paragraph>
-                    </div>
-                    
+
                     <Button size="large" block className="pop-btn" onClick={this.billingAddress}>Confirm</Button>
-                  
+
                 </Drawer>
                 {/* DEPOSIT to crypto */}
                 <Drawer
