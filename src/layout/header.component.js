@@ -69,7 +69,9 @@ class tlvHeader extends Component {
     closeBuyDrawer = () => {
         this.setState({
             buyDrawer: false,
-            payDrawer: false
+            payDrawer: false,
+            billingAddress: false,
+            depositCrypto: false
         })
     }
     showPayDrawer = () => {
@@ -80,6 +82,11 @@ class tlvHeader extends Component {
     billingAddress = () => {
         this.setState({
             billingAddress: true
+        })
+    }
+    depositCrypto = () => {
+        this.setState({
+            depositCrypto: true
         })
     }
 
@@ -413,7 +420,7 @@ class tlvHeader extends Component {
                     title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white"  onClick={this.billingAddress}  />                       
                     <div className="text-center fs-14">
                     <Paragraph className="text-white-50 mb-0 fs-14 fw-500" > CHANGE BILLING ADDRESS</Paragraph></div>
-                    <span onClick={this.billingAddress} className="icon md close-white c-pointer" /></div>]}
+                    <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /></div>]}
                     placement="right"
                     closable={true}
                     visible={this.state.billingAddress}
@@ -426,9 +433,24 @@ class tlvHeader extends Component {
                         <Paragraph className="text-white fw-300 mt-8">UNIT 527 TOWER 4, SMDC Grace Residences, Cayetano Blvd. Brgy. Ususan, Taguig City 1630 PH</Paragraph>
                     </div>
                     <div className="bottom-fix">
-                        <Button size="large" block className="pop-btn">CONFIRM BILLING ADDRESS</Button>
+                        <Button size="large" block className="pop-btn" onClick={this.depositCrypto}>CONFIRM BILLING ADDRESS</Button>
                         <Button type="text" size="large" className="text-center text-white pop-cancel" >Cancel</Button>
                     </div>
+                </Drawer>
+
+                <Drawer
+                    title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white"  onClick={this.billingAddress}  />                       
+                    <div className="text-center fs-14">
+                    <Paragraph className="mb-0 text-white-30 fw-600 text-upper">DEPOSIT</Paragraph>
+                    <Paragraph className="text-white-50 mb-0 fw-300" > Select a Currency</Paragraph></div>
+                    <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /></div>]}
+                    placement="right"
+                    closable={true}
+                    visible={this.state.depositCrypto}
+                    closeIcon={null}
+                    className="side-drawer text-white"
+                >
+                    <CryptoList />
                 </Drawer>
             </>
         );
