@@ -54,9 +54,12 @@
 .p-16{padding: 16px !important;}
 .p-24{padding: 24px !important;}
 .p-28{padding: 28px;}
-.pt-0{padding-top: 0 !important;}
+.py-4{padding-top: 4px !important; padding-bottom: 4px !important;}
+.py-8{padding-top: 8px !important; padding-bottom: 8px !important;}
+.p-16{padding: 16px !important;}
 .pt-16{padding-top: 16px !important;}
 .pt-24{padding-top: 24px !important;}
+.pt-0{padding-top: 0 !important;}
 .pb-0{padding-bottom: 0 !important;}
 .pr-30{padding-right: 30px !important;}
 .px-0{padding-left: 0 !important; padding-right: 0 !important;}

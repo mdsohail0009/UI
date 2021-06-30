@@ -22,4 +22,5 @@ export default {
   all: 'All',
   gainers: 'Gainers',
   losers: 'Losers',
+ 
 }
