@@ -81,7 +81,7 @@ line-height: 16px;min-height: 36px;min-width:90px}
 .side-drawer .ant-drawer-body, .side-drawer .ant-drawer-header{background-color: var(--bgGrey);}
 .side-drawer .ant-drawer-mask{background-color: var(--bgDarkGrey-95);}
 .side-drawer .ant-drawer-header, .crypto-list-tabs .ant-tabs-nav::before{border: none;}
-.side-drawer .side-drawer-header{padding: 30px 100px 30px 30px;}
+.side-drawer .side-drawer-header{padding: 30px 70px 30px 30px;}
 .side-drawer-header.custom-drawer-header{padding: 30px 46px 30px 0px !important;}
 .buysell-toggle{border-radius: 20px; background: var(--bgDarkGrey); padding: 10px;display: block;margin: 0 72px 50px 30px}
 .buysell-toggle .ant-radio-button-wrapper{border-radius: 15px;border: none;background: transparent;color: var(--textWhite30);text-transform: uppercase;font-weight: 600;padding: 22px 64px; line-height: 0;}
@@ -129,6 +129,7 @@ appearance: none; padding-left: 10px;cursor: pointer;}
 
 .custom-input{font-size: 32px;color: var(--textWhite30);font-weight:200;padding-left: 0;text-align: center;}
 .pay-list{display: flex;justify-content: space-between;align-items: center; border-bottom: 1px solid var(--borderLight);}
+.cust-input{background: transparent;border-radius: 30px;height: 42px;border: 1px solid var(--borderLight);color: var(--textWhite50); text-align: center;}
 @media (min-width: 320px){
     .tlv-header{padding: 0 16px !important;}
     .header-dropdown{margin-right: 24px;}

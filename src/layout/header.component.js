@@ -495,7 +495,6 @@ class tlvHeader extends Component {
                     title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
                         <div className="text-center fs-14">
                             <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Credit Card</Paragraph>
-
                         </div>
                         <span className="icon md close-white c-pointer" />
                     </div>]}
@@ -504,9 +503,25 @@ class tlvHeader extends Component {
                     visible={this.state.cardsDetails}
                     closeIcon={null}
                     className="side-drawer"
-                >
-                    <Button size="large" block className="pop-btn" onClick={this.billingAddress}>Pay 0,00701 ETH</Button>
-                    <Button type="text" size="large" >Cancel</Button>
+                >   <div className="form">
+                    <label className="text-white-50">Name on card</label>
+                    <Input className="cust-input mb-16" defaultValue="Michael Quiapos"/>
+                    <label className="text-white-50">Card number</label>
+                    <Input className="cust-input mb-16" defaultValue="5443 84000 0902 5339"/>
+                    <div className="d-flex justify-content align-center">
+                    <div className="mr-16">
+                    <label className="text-white-50">Expiry</label>
+                    <Input className="cust-input mb-16" defaultValue="5443 84000 0902 5339"/>
+                    </div>
+                    <div className="ml-16">
+                    <label className="text-white-50">CVV</label>
+                    <Input className="cust-input mb-16" defaultValue="5443 84000 0902 5339"/>
+                    </div></div>
+                    <Paragraph className="text-center"> <Link  className="text-white-50 fs-16 ">Type your Billing Address</Link></Paragraph>
+                   
+                    </div>
+                    <Button size="large" block className="pop-btn" onClick={this.billingAddress}>Confirm</Button>
+                  
                 </Drawer>
                 {/* DEPOSIT to crypto */}
                 <Drawer
