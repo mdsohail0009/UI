@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Typography, Row, Col, Divider, Dropdown, Avatar, Drawer, Radio, Tabs, Card, Button, Switch, Input } from 'antd';
+import { Layout, List,Skeleton, Menu, Modal, Typography, Row, Col, Divider, Dropdown, Avatar, Drawer, Radio, Tabs, Card, Button, Switch, Input } from 'antd';
 import { RightOutlined, UserOutlined, InfoCircleFilled, CheckOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
+import config from '../config/config';
 import megamenu from '../assets/images/megamenu.png';
 import counterpart from 'counterpart';
 import CryptoList from '../components/shared/cryptolist';
@@ -47,7 +48,8 @@ class tlvHeader extends Component {
             buyToggle: 'Buy',
             payDrawer: false,
             payCardsDrawer: false,
-            cardsDetails: false
+            cardsDetails: false,
+            initLoading: true,
         }
     }
     onChange(checked) {
@@ -113,6 +115,7 @@ class tlvHeader extends Component {
         });
     };
     render() {
+        const { initLoading, loading } = this.state;
         return (
             <>
                 <Layout className="layout">
@@ -479,7 +482,7 @@ class tlvHeader extends Component {
                             <Paragraph className="text-secondary mb-0 fw-300 fs-12" > Use a credit or debit card</Paragraph>
                         </div>
                     </div>
-                    <div className="d-flex align-center c-pointer">
+                    <div className="d-flex align-center c-pointer" onClick={this.billingAddress}>
                         <Avatar size={45} style={{ backgroundColor: "#5d5b6e" }} />
                         <div className="ml-16">
                             <Paragraph className="mb-0 text-white-30 fw-600">Deposit</Paragraph>
@@ -503,6 +506,7 @@ class tlvHeader extends Component {
                     className="side-drawer"
                 >
                 </Drawer>
+                {/* DEPOSIT to crypto */}
                 <Drawer
                     title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white"  onClick={this.billingAddress}  />                       
                     <div className="text-center fs-14">
@@ -515,7 +519,20 @@ class tlvHeader extends Component {
                     closeIcon={null}
                     className="side-drawer text-white"
                 >
-                    <CryptoList />
+                   <List
+                itemLayout="horizontal"
+                dataSource={config.tlvCoinsList}
+                renderItem={item => (
+                    <List.Item>
+                        <Skeleton loading={item.loading} active>
+                            <List.Item.Meta
+                                avatar={<span className={`coin ${item.coin} mr-4`} />}
+                                title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}
+                            />
+                            </Skeleton>
+                    </List.Item>
+                )}
+            />
                     </Drawer>
             </>
         );
