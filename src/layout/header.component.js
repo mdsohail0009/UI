@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
 import config from '../config/config';
 import megamenu from '../assets/images/megamenu.png';
+import sacnner from '../assets/images/sacnner.svg';
 import counterpart from 'counterpart';
 import CryptoList from '../components/shared/cryptolist';
 import Translate from 'react-translate-component';
@@ -77,7 +78,8 @@ class tlvHeader extends Component {
             billingAddress: false,
             depositCrypto: false,
             payCardsDrawer: false,
-            cardsDetails: false
+            cardsDetails: false,
+            depositScanner: false,
         })
     }
     showPayDrawer = () => {
@@ -107,6 +109,11 @@ class tlvHeader extends Component {
     depositCrypto = () => {
         this.setState({
             depositCrypto: true
+        })
+    }
+    depositScanner = () => {
+        this.setState({
+            depositScanner: true
         })
     }
     handleBuySellToggle = e => {
@@ -448,7 +455,7 @@ class tlvHeader extends Component {
                         </Paragraph>
                     </div>
                     <Button size="large" block className="pop-btn" onClick={this.showPayCardDrawer} >Pay 0,00701 ETH</Button>
-                    <Button type="text" size="large" >Cancel</Button>
+                    <Button type="text" size="large" className="text-center text-white pop-cancel fw-400" >Cancel</Button>
                 </Drawer>
 
 
@@ -565,6 +572,45 @@ class tlvHeader extends Component {
                             </List.Item>
                         )}
                     />
+                </Drawer>
+                {/* <List
+                itemLayout="horizontal"
+                dataSource={config.tlvCoinsList}
+                renderItem={item => (
+                    <List.Item onClick={this.depositScanner}>
+                        <Skeleton loading={item.loading} active>
+                            <List.Item.Meta
+                                avatar={<span className={`coin ${item.coin} mr-4`} />}
+                                title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}
+                            />
+                            </Skeleton>
+                    </List.Item>
+                )} />
+            </Drawer> */}
+            {/* DEPOSIT to Scanner */}
+            <Drawer
+                title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white"  onClick={this.closeBuyDrawer}  />                       
+                <div className="text-center fs-14">
+                <Paragraph className="mb-0 text-white-30 fw-600 text-upper">DEPOSIT ETH</Paragraph>
+                <Paragraph className="text-white-50 mb-0 fw-300" > Select a Currency</Paragraph></div>
+                <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /></div>]}
+                    placement="right"
+                    closable={true}
+                    visible={this.state.depositScanner}
+                    closeIcon={null}
+                    className="side-drawer text-white" >
+                        <div className="scanner-img">
+                            <img src={sacnner} style={{ width: '164px', height: '164px' }} />
+                        </div>
+                        <div className="address-bg mt-24">
+                            <Paragraph className="mb-0 fw-400">Address</Paragraph>
+                            <Paragraph className="mb-0 fs-14 fw-500" >TAQgcJD9p29m77EnXweijpHegPUSnxkdQW</Paragraph>
+                        </div>
+
+                        <div className="mt-36 pt-24">
+                        <Button size="large" block className="pop-btn">COPY</Button>
+                        <Button type="text" size="large" className="text-center text-white pop-cancel fw-400" >Share</Button>
+                    </div>
                 </Drawer>
             </>
         );

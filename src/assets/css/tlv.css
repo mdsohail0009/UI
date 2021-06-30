@@ -190,3 +190,5 @@ appearance: none; padding-left: 10px;cursor: pointer;}
 }
 .billing-address{border: 1px solid var(--bgWhite);border-radius: 20px; padding: 30px;margin: 30px 14px 30px 0;}
 .bottom-fix{position: fixed;top: 472px;right: 96px;}
+.scanner-img{display: flex;background: var(--bgWhite); width: 190px; padding: 12px;margin: auto;}
+.address-bg{background: var(--bgWhite);padding: 12px;width: 420px;}
