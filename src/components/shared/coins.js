@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { List, Skeleton, Row, Col, Typography } from 'antd';
 import Translate from 'react-translate-component';
-import chart from '../../assets/images/chart.png';
+import graphbtc from '../../assets/images/graph-btc.png';
+import grapheth from '../../assets/images/graph-eth.png';
+import graphgbp from '../../assets/images/graph-gbp.png';
 
 class Coins extends Component {
     state = {
@@ -11,25 +13,25 @@ class Coins extends Component {
         return (
             <>
                 <Row gutter={16}>
-                    <Col  xs={24} md={8} xl={8}>
-                        <div className="d-flex align-center">
+                    <Col xs={24} md={8} xl={8}>
+                        <div className="d-flex align-center p-16">
                             <span className="coin md btc-white" />
-                            <Paragraph className="text-white-30 fs-20 mb-0 fw-400 ml-12">Bitcoin</Paragraph>
+                            <Paragraph className="text-white-30 fs-24 m-0 fw-300 ml-12">Bitcoin</Paragraph>
                         </div>
-                        <img src={chart} width="100%" className="mb-16" />
+                        <img src={graphbtc} width="100%" className="mb-24" />
                     </Col>
                     <Col xs={24} md={8} xl={8}>
-                        <div className="d-flex align-center">
+                        <div className="d-flex align-center p-16">
                             <span className="coin md eth-white" />
-                            <Paragraph className="text-white-30 fs-20 mb-0 fw-400 ml-12">ETH</Paragraph>
+                            <Paragraph className="text-white-30 fs-24 m-0 fw-300 ml-12">ETH</Paragraph>
                         </div>
-                        <img src={chart} width="100%" className="mb-16" /></Col>
+                        <img src={grapheth} width="100%" className="mb-24" /></Col>
                     <Col xs={24} md={8} xl={8}>
-                        <div className="d-flex align-center">
-                            <span className="coin md usdt-white" />
-                            <Paragraph className="text-white-30 fs-20 mb-0 fw-400 ml-12">USDT</Paragraph>
+                        <div className="d-flex align-center p-16">
+                            <span className="coin md usdt-white " />
+                            <Paragraph className="text-white-30 fs-24 m-0 fw-300 ml-12">USDT</Paragraph>
                         </div>
-                        <img src={chart} width="100%" className="mb-16" />
+                        <img src={graphgbp} width="100%" className="mb-24" />
                     </Col>
                 </Row>
             </>

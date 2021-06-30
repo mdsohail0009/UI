@@ -79,7 +79,6 @@
 .mb-16{margin-bottom: 16px !important;}
 .mb-24{margin-bottom: 24px !important;}
 .mb-36{margin-bottom: 36px !important;}
-.mr-8{margin-right: 8px !important;}
 .mt-4{margin-top: 4px;}
 .mt-8{margin-top: 8px !important;}
 .mt-12{margin-top: 12px !important;}
@@ -91,8 +90,11 @@
 .ml-12{margin-left: 12px !important;}
 .ml-16{margin-left: 16px !important;}
 .ml-24{margin-left: 24px !important;}
+.ml-36{margin-left: 36px !important;}
 .ml-auto{margin-left: auto !important;}
 .mr-4{margin-right: 4px;}
+.mr-8{margin-right: 8px !important;}
+.mr-16{margin-right: 16px !important;}
 .mx-4{margin-left: 4px !important;margin-right: 4px !important;}
 .mx-24{margin-left: 24px !important;margin-right: 24px !important;}
 

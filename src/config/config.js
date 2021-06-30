@@ -78,7 +78,7 @@ const config = {
       coin: 'dat',
       price: '45,428.98',
       gain: '1',
-      loss: 0.68,
+      loss: 1,
       up: true,
       totalcoin: 1000,
       shortcode: 'DAT'
@@ -109,6 +109,36 @@ const config = {
       coin: 'gbp',
       title: 'Pound Sterlling Wallet',
       isArrow: true,
+    }
+  ],
+  portfilioList: [
+    {
+      title: 'dat',
+      coin: 'dat',
+      gain: '5',
+      loss: '1',
+      up: true,
+    },
+    {
+      title: 'bitcoincash',
+      coin: 'bch',
+      gain: '1',
+      loss: '-1',
+      up: false,
+    },
+    {
+      title: 'oxbtc',
+      coin: 'oxbtc',
+      gain: '2',
+      loss: '1',
+      up: true,
+    },
+    {
+      title: 'Us dollar',
+      coin: 'usd-d',
+      gain: '1',
+      loss: '-5',
+      up: false,
     }
   ]
 }

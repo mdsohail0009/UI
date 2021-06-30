@@ -38,36 +38,24 @@ class YourPortfolio extends Component {
         const { Title, Paragraph, Text } = Typography;
         return (
             <div className="box portfolio-list">
-                <Translate content="your_portfolio" component={Title} className="fs-24 text-white py-20 pt-0" />
+                <Translate content="your_portfolio" component={Title} className="fs-24 text-white mb-36 mt-0" />
                 <List
                     itemLayout="horizontal"
-                    dataSource={config.tlvCoinsList}
+                    dataSource={config.portfilioList}
                     renderItem={item => (
                         <List.Item className="" extra={
                             <div className="ml-16 mobile-none">
-                                <Translate content="buy" component={Button} type="primary" onClick={this.showDrawer} className="custom-btn prime fs-14 btn-primary  ml-24" />
-                                <Translate content="sell" component={Button} className="custom-btn outline-btn fs-14 ml-12" />
-                                <Drawer className="custom-drawer text-white"
-                                    title={<div className="d-flex">
-                                        <ArrowLeftOutlined className="text-white" />
-                                        {/* <div className="">
-                                     <div>Buy ETH</div>
-                                     <div>1ETH - $2,495.31</div>
-                                 </div>
-                                 <div>
-                                     
-                                 </div> */}
-                                    </div>}
-                                    width={500} closable={false} onClose={this.onClose} visible={this.state.visible}>fdhf</Drawer>
+                                <Translate content="buy" component={Button} type="primary" onClick={this.showDrawer} className="custom-btn prime ml-36" />
+                                <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" />
                             </div>
                         }>
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin}`} />}
-                                title={<div className="fs-18 fw-300   text-upper text-white mb-0 mt-8">{item.coin}</div>}
+                                title={<div className="fs-18 fw-300 text-upper text-white mb-0 mt-8">{item.coin}</div>}
                             />
-                            {item.up ? <span className="icon sm uparrow " /> : <span className="icon sm downarrow ml-12" />}
-                            <div className={item.up ? 'text-green ml-12' : 'text-red ml-12'}>-{item.loss}</div>
-                            <div className="fs-16  text-white-30 fw-300 ml-24  text-upper ">{item.totalcoin} {item.shortcode}</div>
+                            {item.up ? <span className="icon md gain" /> : <span className="icon md lose ml-12" />}
+                            <div className={`ml-8 fs-24 ${item.up ? 'text-green' : 'text-red'}`}>{item.up ? item.gain : item.loss}%</div>
+                            {/* <div className="fs-16 text-white-30 fw-300 ml-24  text-upper ">{item.totalcoin} {item.shortcode}</div> */}
                         </List.Item>
                     )}
                 />

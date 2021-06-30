@@ -41,29 +41,29 @@ class Home extends Component {
                     <Col xs={24} md={12} xl={14}>
                         <Portfolio
                             crypto="Bitcoin"
-                            crypto_value='60,000.00 USD'
-                            crypto_usd="1.0147658 USD"
-                            crypto_stock="7.41 %" />
+                            crypto_value='60,000.00'
+                            crypto_usd="1.0147658 BTC"
+                            crypto_stock="7.41%" />
 
-                        <Carousel autoplay className="mb-16">
+                        <Carousel autoplay className="mb-24">
                             <div className="p-28 carousel-card">
-                                <Title className="fs-24 text-black mb-4">Get $10 in free crypto</Title>
-                                <Paragraph className="fs-16 text-black mb-24">Setup a recurring buy of $50 or more and get $10 after your both 4th and 8th buys</Paragraph>
-                                <Button className="custom-btn fs-14 prime mb-24">Set up recurring buy</Button>
+                                <Translate content="db_slider_title" component={Title} className="fs-24 text-black mb-4" />
+                                <Translate content="db_slider_desc" component={Paragraph} className="fs-16 text-black mb-24" />
+                                <Translate content="db_slider_btn" component={Button} type="primary" className="custom-btn fs-14 prime mb-24" />
                             </div>
                             <div className="p-28 carousel-card">
-                                <Title className="fs-24 text-black mb-4">Get $10 in free crypto</Title>
-                                <Paragraph className="fs-16 text-black mb-24">Setup a recurring buy of $50 or more and get $10 after your both 4th and 8th buys</Paragraph>
-                                <Button className="custom-btn fs-14 prime mb-24">Set up recurring buy</Button>
+                                <Translate content="db_slider_title" component={Title} className="fs-24 text-black mb-4" />
+                                <Translate content="db_slider_desc" component={Paragraph} className="fs-16 text-black mb-24" />
+                                <Translate content="db_slider_btn" component={Button} type="primary" className="custom-btn fs-14 prime mb-24" />
                             </div>
                             <div className="p-28 carousel-card">
-                                <Title className="fs-24 text-black mb-4">Get $10 in free crypto</Title>
-                                <Paragraph className="fs-16 text-black mb-24">Setup a recurring buy of $50 or more and get $10 after your both 4th and 8th buys</Paragraph>
-                                <Button className="custom-btn fs-14 prime mb-24">Set up recurring buy</Button>
+                                <Translate content="db_slider_title" component={Title} className="fs-24 text-black mb-4" />
+                                <Translate content="db_slider_desc" component={Paragraph} className="fs-16 text-black mb-24" />
+                                <Translate content="db_slider_btn" component={Button} type="primary" className="custom-btn fs-14 prime mb-24" />
                             </div>
                         </Carousel>
+                        <YourPortfolio />
                         <Coins />
-                        <YourPortfolio/>
                     </Col>
                 </Row>
             </div>

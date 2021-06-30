@@ -22,4 +22,7 @@ export default {
   all: '全部',
   gainers: '赢家',
   losers: '失败者',
+  db_slider_title: '获得 $10 个免费加密货币',
+  db_slider_desc: '设置重复购买 $50 次或更多，并在第 $4 次和第 8 次购买后获得 10 次',
+  db_slider_btn: '设置定期购买',
 }
