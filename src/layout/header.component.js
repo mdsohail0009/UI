@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Typography, Row, Col, Divider, Dropdown, Avatar, Drawer, Radio, Tabs, Card, Button ,Switch } from 'antd';
-import { RightOutlined, UserOutlined } from '@ant-design/icons';
+import { Layout, Menu, Modal, Typography, Row, Col, Divider, Dropdown, Avatar, Drawer, Radio, Tabs, Card, Button, Switch, Input } from 'antd';
+import { RightOutlined, UserOutlined, InfoCircleFilled, CheckOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
 import megamenu from '../assets/images/megamenu.png';
@@ -46,11 +46,12 @@ class tlvHeader extends Component {
             lang: 'en',
             buyDrawer: false,
             buyToggle: 'Buy',
+            payDrawer: false,
         }
     }
-   onChange(checked) {
+    onChange(checked) {
         console.log(`switch to ${checked}`);
-      }
+    }
     showMegaMenu = () => {
         this.setState({
             megamenu: true
@@ -68,9 +69,16 @@ class tlvHeader extends Component {
     }
     closeBuyDrawer = () => {
         this.setState({
-            buyDrawer: false
+            buyDrawer: false,
+            payDrawer: false
         })
     }
+    showPayDrawer = () => {
+        this.setState({
+            payDrawer: true
+        })
+    }
+
     handleBuySellToggle = e => {
         this.setState({
             buyToggle: e.target.value,
@@ -150,7 +158,7 @@ class tlvHeader extends Component {
                             <Paragraph className="text-upper fw-600 mb-0 text-aqua">Find with your favoite wallet</Paragraph>
                             <WalletList isArrow={true} />
                             <Paragraph className="fs-14 text-white-30 fw-200 text-center">Please refresh to get a new price</Paragraph>
-                            <Button size="large" block className="pop-btn" icon={<span className="icon md load" />}>Confirm(18s)</Button>
+                            <Button size="large" block className="pop-btn" onClick={this.showPayDrawer} icon={<span className="icon md load" />}>Confirm(18s)</Button>
                         </Drawer>
                     </Header>
                 </Layout >
@@ -268,10 +276,10 @@ class tlvHeader extends Component {
                             <Col lg={6} xl={4}>
                                 <Title className="text-white megamenu-label  fw-500 mb-24">Wallet</Title>
                                 <div className="mobile-megalinks">
-                                <Link>Address Book</Link>
-                                <Link>Invite Friends</Link>
-                                <Link>Buy Crypto</Link>
-                                <Link>Light Theme <Switch  onChange={this.onChange}size="small" className="custom-toggle" /></Link>
+                                    <Link>Address Book</Link>
+                                    <Link>Invite Friends</Link>
+                                    <Link>Buy Crypto</Link>
+                                    <Link>Light Theme <Switch onChange={this.onChange} size="small" className="custom-toggle" /></Link>
                                 </div>
                             </Col>
 
@@ -279,26 +287,26 @@ class tlvHeader extends Component {
                                 <Title className="text-white megamenu-label  fw-500">Localization</Title>
                                 <Paragraph className="text-white-30 fs-16 fw-400">User can create a separate account such as a corporate segregated wallet system.</Paragraph>
                                 <div className="mobile-megalinks">
-                                <div className="d-flex justify-content">
-                                    <p className="text-white-30 fs-18 mb-0">Language</p>
-                                    <p className="text-white-30 fs-18 mb-0">lang</p>
-                                </div>
-                                <div className="d-flex justify-content">
-                                    <p className="text-white-30 fs-18 mb-0">Currency</p>
-                                    <p className="text-white-30 fs-18 mb-0"> USD</p>
-                                </div>
+                                    <div className="d-flex justify-content">
+                                        <p className="text-white-30 fs-18 mb-0">Language</p>
+                                        <p className="text-white-30 fs-18 mb-0">lang</p>
+                                    </div>
+                                    <div className="d-flex justify-content">
+                                        <p className="text-white-30 fs-18 mb-0">Currency</p>
+                                        <p className="text-white-30 fs-18 mb-0"> USD</p>
+                                    </div>
                                 </div>
                             </Col>
-                            <Col lg={6} xl={1} className=" mobile-none "/>
+                            <Col lg={6} xl={1} className=" mobile-none " />
                             <Col lg={6} xl={5} >
                                 <Title className="text-white megamenu-label  fw-500">Support</Title>
                                 <div className="mobile-megalinks">
-                                <Link>Help Center</Link>
-                                <Link>About</Link>
-                                <Link>Social Networks</Link>
+                                    <Link>Help Center</Link>
+                                    <Link>About</Link>
+                                    <Link>Social Networks</Link>
                                 </div>
                             </Col>
-                            <Col lg={6} xl={5}  className=" mobile-none " />
+                            <Col lg={6} xl={5} className=" mobile-none " />
                         </Row>
                         <Row gutter={[16, 16]} className="megamenu-link mobile-none ">
                             <Col lg={6} xl={5} className=" mobile-none ">
@@ -307,7 +315,7 @@ class tlvHeader extends Component {
                                 <Link>Address Book</Link>
                                 <Link>Invite Friends</Link>
                                 <Link>Buy Crypto</Link>
-                                <Link>Light Theme <Switch  onChange={this.onChange}size="small" className="custom-toggle" /></Link>
+                                <Link>Light Theme <Switch onChange={this.onChange} size="small" className="custom-toggle" /></Link>
                             </Col>
                             <Col lg={6} xl={5}>
                                 <div className="d-flex justify-content">
@@ -318,7 +326,7 @@ class tlvHeader extends Component {
                                     <p className="text-white-30 fs-18 mb-0">Currency</p>
                                     <p className="text-white-30 fs-18 mb-0"> USD</p>
                                 </div> </Col>
-                            <Col lg={6} xl={1}  />
+                            <Col lg={6} xl={1} />
                             <Col lg={6} xl={5} >
                                 <Link>Help Center</Link>
                                 <Link>About</Link>
@@ -329,10 +337,10 @@ class tlvHeader extends Component {
                         <Divider className="megamenu-divider mobile-none" />
                         <Row gutter={[16, 16]} className="megamenu-link "  >
                             <Col lg={6} xl={4} className=" mobile-none ">
-                               
+
                             </Col>
                             <Col lg={6} xl={5} className="pt-24 mobile-none">
-                               
+
                             </Col>
                             <Col lg={6} xl={5}>
                                 <Title className=" text-white mb-16  megamenu-label  fw-500">Connect</Title>
@@ -346,14 +354,57 @@ class tlvHeader extends Component {
                                 <Paragraph className="text-white fs-16">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
                                 <Link>Backup Wallet</Link>
                                 <Link>Reset Wallet</Link>
-                                <Link>Always ask pin <Switch onChange={this.onChange} size="small"className="custom-toggle"/></Link>
-                                <Link>Activate face ID <Switch defaultChecked onChange={this.onChange} size="small"className="custom-toggle"/></Link>
-                                <Link>Activate biometry <Switch defaultChecked  onChange={this.onChange} size="small" className="custom-toggle"/></Link>
+                                <Link>Always ask pin <Switch onChange={this.onChange} size="small" className="custom-toggle" /></Link>
+                                <Link>Activate face ID <Switch defaultChecked onChange={this.onChange} size="small" className="custom-toggle" /></Link>
+                                <Link>Activate biometry <Switch defaultChecked onChange={this.onChange} size="small" className="custom-toggle" /></Link>
                             </Col>
                             <Col lg={6} xl={5} />
                         </Row>
                     </div>
                 </Modal>
+                <Drawer
+                    title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
+                    <div className="text-center fs-14">
+                    <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Buy ETH</Paragraph>
+                    <Paragraph className="text-white-50 mb-0 fw-300" > Buy ETH to your Wallet</Paragraph></div>
+                    <span className="icon md search-white c-pointer" /></div>]}
+                    placement="right"
+                    closable={true}
+                    visible={this.state.payDrawer}
+                    closeIcon={null}
+                    className="side-drawer"
+                >
+
+                    <Input style={{ marginBottom: 0 }} defaultValue="0,0070 ETH" bordered={false} placeholder="ETH" className="custom-input" />
+                    <Paragraph className="text-white-50 fw-300 text-center fs-16" ><span className="text-secondary">USD</span> 20,00</Paragraph>
+                    <div className="pay-list py-4">
+                        <Paragraph className="text-white-50">Exchange Rate</Paragraph>
+                        <Paragraph className="text-secondary  fw-300"><span className="text-white-50">1 </span>ETH = USD <span className="text-white-50">2,849.76</span></Paragraph>
+                    </div>
+                    <div className="pay-list py-4">
+                        <Paragraph className="text-white-50 mt-8">Amount</Paragraph>
+                        <Paragraph className="text-secondary  fw-300 mt-8">ETH <span className="text-white-50">0,0070125</span></Paragraph>
+                    </div>
+                    <div className="pay-list py-4">
+                        <Paragraph className="text-white-50 mt-8">Suissebase Fee <InfoCircleFilled /></Paragraph>
+                        <Paragraph className="text-green  fw-300 mt-8">USD 0,000</Paragraph>
+                    </div>
+                    <div className="pay-list py-4 mb-8">
+                        <Paragraph className="text-white-50 mt-8">Estimated Total</Paragraph>
+                        <Paragraph className="text-secondary  fw-300 mt-8"><span className="text-white-50">0.0070125</span> ETH (USD<span className="text-white-50"> 20,00</span>)</Paragraph>
+                    </div>
+                    <Paragraph className="fs-12 text-secondary text-center mt-16">
+                        Your final amount might change due to market activity.
+                    </Paragraph>
+                    <div className="d-flex px-36 py-36 pt-0" >
+                        <CheckOutlined className="fs-20 text-yellow" />
+                        <Paragraph className="fs-14 text-secondary mb-16 px-16">
+                            I agree to Suissebase’s <Link to="" className="text-yellow">Terms of Service</Link> and its return, refund and cancellation policy.
+                        </Paragraph>
+                    </div>
+                    <Button size="large" block className="pop-btn" >Pay 0,00701 ETH</Button>
+                    <Button type="text" size="large" >Cancel</Button>
+                </Drawer>
             </>
         );
     }

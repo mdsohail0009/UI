@@ -92,6 +92,7 @@ line-height: 16px;min-height: 36px;min-width:90px}
 .crypto-list-tabs .ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textDark); background: var(--bgYellow); border-radius: 30px;}
 .crypto-list-tabs .ant-tabs-ink-bar{display: none;}
 .pop-btn, .pop-btn:hover, .pop-btn:focus, .pop-btn:active{background-color: var(--bgYellow);color: var(--textDark); border-color: var(--bgYellow); border-radius: 40px;height: 57px; text-transform: uppercase;font-weight: 700;}
+.cancel-btn{height: 57px; text-transform: uppercase;font-weight: 700;text-align: center;}
 .crypto-card{border-radius: 25px;box-shadow: 0 8px 16px rgba(20,0,4,0.2);background-color: var(--bgOrient); padding: 6px;}
 .crypto-name{display: inline-block; vertical-align: middle;}
 .crypto-percent{font-size: 60px; line-height: normal;}
@@ -120,6 +121,9 @@ appearance: none; padding-left: 10px;cursor: pointer;}
 .coin.md.eth-white{background-position: -63px -493px;box-shadow: none !important;}
 .coin.md.usdt-white{background-position: -112px -492px;box-shadow: none !important;}
 
+
+.custom-input{font-size: 32px;color: var(--textWhite30);font-weight:200;padding-left: 0;text-align: center;}
+.pay-list{display: flex;justify-content: space-between;align-items: center; border-bottom: 1px solid var(--borderLight);}
 @media (min-width: 320px){
     .tlv-header{padding: 0 16px !important;}
     .header-dropdown{margin-right: 24px;}

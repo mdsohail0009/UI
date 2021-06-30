@@ -53,6 +53,7 @@
 /*----Padding Utilities----*/
 .p-24{padding: 24px !important;}
 .p-28{padding: 28px;}
+.py-4{padding-top: 4px !important; padding-bottom: 4px !important;}
 .py-8{padding-top: 8px !important; padding-bottom: 8px !important;}
 .p-16{padding: 16px !important;}
 .pt-16{padding-top: 16px !important;}
@@ -60,9 +61,10 @@
 .px-16{padding-left: 16px !important; padding-right: 16px !important;}
 .py-20{padding-top: 20px !important; padding-bottom: 20px !important;}
 .px-24{padding-left: 24px !important; padding-right: 24px !important;}
+.px-36{padding-left: 36px !important; padding-right: 36px !important;}
 .pt-24{padding-top: 24px !important;}
 .py-24{padding-top: 24px !important; padding-bottom: 24px !important;}
-.py-36{padding-top: 24px !important; padding-bottom: 36px !important;}
+.py-36{padding-top: 36px !important; padding-bottom: 36px !important;}
 .pb-0{padding-bottom: 0 !important;}
 .pt-0{padding-top: 0 !important;}
 
