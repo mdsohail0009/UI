@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, List,Skeleton, Menu, Modal, Typography, Row, Col, Divider, Dropdown, Avatar, Drawer, Radio, Tabs, Card, Button, Switch, Input } from 'antd';
+import { Layout, List, Skeleton, Menu, Modal, Typography, Row, Col, Divider, Dropdown, Avatar, Drawer, Radio, Tabs, Card, Button, Switch, Input } from 'antd';
 import { RightOutlined, UserOutlined, InfoCircleFilled, CheckOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
@@ -49,7 +49,7 @@ class tlvHeader extends Component {
             payDrawer: false,
             payCardsDrawer: false,
             cardsDetails: false,
-            billingAddress:false,
+            billingAddress: false,
             initLoading: true,
         }
     }
@@ -74,7 +74,7 @@ class tlvHeader extends Component {
     closeBuyDrawer = () => {
         this.setState({
             buyDrawer: false,
-            payDrawer: false, 
+            payDrawer: false,
             billingAddress: false,
             depositCrypto: false,
             payCardsDrawer: false,
@@ -175,9 +175,11 @@ class tlvHeader extends Component {
                                 </TabPane>
                             </Tabs> */}
                             <Card className="crypto-card mb-36" bordered={false}>
-                                <span className="coin md eth-white"></span>
-                                <Text className="fs-24 text-white crypto-name ml-24">Ethereum</Text>
-                                <div className="crypto-details mt-36">
+                                <span>
+                                    <span className="coin md eth-white" />
+                                    <Text className="fs-24 text-white crypto-name ml-24">Ethereum</Text>
+                                </span>
+                                <div className="crypto-details">
                                     <Text className="crypto-percent text-white fw-700">25<sup className="fs-24 text-white fw-700" style={{ verticalAlign: 'Middle', marginLeft: 14 }}>%</sup></Text>
                                     <div className="fs-16 text-white-30 fw-200 text-right">
                                         <div>1.0147668 ETH</div>
@@ -185,7 +187,21 @@ class tlvHeader extends Component {
                                     </div>
                                 </div>
                             </Card>
-                            <Paragraph className="text-upper fw-600 mb-0 text-aqua">Find with your favoite wallet</Paragraph>
+                            <div className="d-flex align-center mb-36">
+                                <span>
+                                    <Input className="fs-36 fw-200 text-white-30 text-center enter-val pb-0"
+                                        placeholder="USD $0"
+                                        bordered={false}
+                                    />
+                                    <Text className="fs-14 text-white-30 fw-200 text-center d-block">0.00701 ETH</Text>
+                                </span>
+                                <span>
+                                    <span className="icon sm uparw-o-white d-block c-pointer mb-4" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
+                                </span>
+                            </div>
+
+
+                            <Paragraph className="text-upper fw-600 mb-0 text-aqua pt-16">Find with your favoite wallet</Paragraph>
                             <WalletList isArrow={true} />
                             <Paragraph className="fs-14 text-white-30 fw-200 text-center">Please refresh to get a new price</Paragraph>
                             <Button size="large" block className="pop-btn" onClick={this.showPayDrawer} icon={<span className="icon md load" />}>Confirm(18s)</Button>
@@ -393,7 +409,7 @@ class tlvHeader extends Component {
                     </div>
                 </Modal>
                 <Drawer
-                    title={[<div className="side-drawer-header"><ArrowLeftOutlined className="text-white c-pointer"  onClick={this.closeBuyDrawer}  />
+                    title={[<div className="side-drawer-header"><ArrowLeftOutlined className="text-white c-pointer" onClick={this.closeBuyDrawer} />
                         <div className="text-center fs-14">
                             <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Buy ETH</Paragraph>
                             <Paragraph className="text-white-50 mb-0 fw-300" > Buy ETH to your Wallet</Paragraph></div>
@@ -435,12 +451,12 @@ class tlvHeader extends Component {
                     <Button size="large" block className="pop-btn" onClick={this.showPayCardDrawer} >Pay 0,00701 ETH</Button>
                     <Button type="text" size="large" >Cancel</Button>
                 </Drawer>
-               
-              
+
+
 
                 {/* Change billing address */}
                 <Drawer
-                    title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white"  onClick={this.billingAddress} />
+                    title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white" onClick={this.billingAddress} />
                         <div className="text-center fs-14">
                             <Paragraph className="text-white-50 mb-0 fs-14 fw-500" > CHANGE BILLING ADDRESS</Paragraph></div>
                         <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /></div>]}
@@ -510,32 +526,32 @@ class tlvHeader extends Component {
                 </Drawer>
                 {/* DEPOSIT to crypto */}
                 <Drawer
-                    title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white"  onClick={this.closeBuyDrawer}  />                       
-                    <div className="text-center fs-14">
-                    <Paragraph className="mb-0 text-white-30 fw-600 text-upper">DEPOSIT</Paragraph>
-                    <Paragraph className="text-white-50 mb-0 fw-300" > Select a Currency</Paragraph></div>
-                    <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /></div>]}
+                    title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white" onClick={this.closeBuyDrawer} />
+                        <div className="text-center fs-14">
+                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">DEPOSIT</Paragraph>
+                            <Paragraph className="text-white-50 mb-0 fw-300" > Select a Currency</Paragraph></div>
+                        <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /></div>]}
                     placement="right"
                     closable={true}
                     visible={this.state.depositCrypto}
                     closeIcon={null}
                     className="side-drawer text-white"
                 >
-                   <List
-                itemLayout="horizontal"
-                dataSource={config.tlvCoinsList}
-                renderItem={item => (
-                    <List.Item>
-                        <Skeleton loading={item.loading} active>
-                            <List.Item.Meta
-                                avatar={<span className={`coin ${item.coin} mr-4`} />}
-                                title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}
-                            />
-                            </Skeleton>
-                    </List.Item>
-                )}
-            />
-                    </Drawer>
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={config.tlvCoinsList}
+                        renderItem={item => (
+                            <List.Item>
+                                <Skeleton loading={item.loading} active>
+                                    <List.Item.Meta
+                                        avatar={<span className={`coin ${item.coin} mr-4`} />}
+                                        title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}
+                                    />
+                                </Skeleton>
+                            </List.Item>
+                        )}
+                    />
+                </Drawer>
             </>
         );
     }
