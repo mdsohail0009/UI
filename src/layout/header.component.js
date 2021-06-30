@@ -449,7 +449,7 @@ class tlvHeader extends Component {
                         </Paragraph>
                     </div>
                     <Button size="large" block className="pop-btn" onClick={this.showPayCardDrawer} >Pay 0,00701 ETH</Button>
-                    <Button type="text" size="large" >Cancel</Button>
+                    <Button type="text" size="large" className="text-center text-white pop-cancel fw-400" >Cancel</Button>
                 </Drawer>
 
 
