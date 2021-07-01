@@ -36,12 +36,13 @@ class Footer extends Component {
         // return <AntFooter style={{ textAlign: 'center' }}>{labels.company} @copy; {new Date().getFullYear()} Created by {labels.company}</AntFooter>
         return <AntFooter style={{ backgroundColor: 'transparent', padding: 0 }}>
             <div className="main-container footer-links">
-                <div>
+                <div className="d-flex justify-content align-center">
                     <Translate content="ftr_home" component={Typography.Link}>Home</Translate>
                     <Translate content="ftr_careers" component={Typography.Link}>Careers</Translate>
                     <Translate content="ftr_tc_p" component={Typography.Link}>Legan & Policy</Translate>
-                    <Typography.Link>Suissebase<sup className="fs-10">TM</sup> {new Date().getFullYear()}</Typography.Link>
+                    <Typography.Link className="mobile-none">Suissebase<sup className="fs-10">TM</sup> {new Date().getFullYear()}</Typography.Link>
                 </div>
+                
                 <div>
                     <Button type="primary" shape="circle" className={this.themeBtnClr()} size="large" onClick={() => this.handleTheme}>{this.state.darkTheme ? 'DRK' : 'LHT'}</Button>
                     <select value={this.state.lang} onChange={this.onLangChange} className="selct-lang ml-8 f-12" removeIcon={true}>

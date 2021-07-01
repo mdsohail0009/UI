@@ -151,7 +151,7 @@ appearance: none; padding-left: 10px;cursor: pointer;}
     .header-right{display: none;}
     .mobile-header-right{display: block;float: right;}
     .sidebar-push{margin: 62px 0 0;}
-    .footer-links a{margin: 0 0 16px 0; display: block;}
+    /* .footer-links a{margin: 0 0 16px 0; display: block;} */
     .side-drawer .ant-drawer-content-wrapper{width: 100% !important;}
     
 }
