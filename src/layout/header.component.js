@@ -38,6 +38,10 @@ const options = [
     { label: 'Buy', value: 'Buy' },
     { label: 'Sell', value: 'Sell' },
 ];
+const depostOptions = [
+    { label: 'From Crypto', value: 'From Crypto' },
+    { label: 'From Fiat', value: 'From Fiat' },
+];
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -46,6 +50,7 @@ class Header extends Component {
             lang: 'en',
             buyDrawer: false,
             buyToggle: 'Buy',
+            depositToggle: 'From Crypto',
             payDrawer: false,
             payCardsDrawer: false,
             cardsDetails: false,
@@ -119,6 +124,11 @@ class Header extends Component {
     handleBuySellToggle = e => {
         this.setState({
             buyToggle: e.target.value,
+        });
+    };
+    handleDepositToggle = e => {
+        this.setState({
+            depositToggle: e.target.value,
         });
     };
     render() {
@@ -531,9 +541,9 @@ class Header extends Component {
 
                 {/* Change billing address */}
                 <Drawer
-                    title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white" onClick={this.billingAddress} />
+                    title={[<div className="side-drawer-header"><span className="icon md lftarw-white c-pointer" onClick={this.billingAddress} />
                         <div className="text-center fs-14">
-                            <Paragraph className="text-white-50 mb-0 fs-14 fw-500" > CHANGE BILLING ADDRESS</Paragraph></div>
+                            <Paragraph className="text-white-50 mb-0 fs-14 fw-500">CHANGE BILLING ADDRESS</Paragraph></div>
                         <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /></div>]}
                     placement="right"
                     closable={true}
@@ -541,13 +551,13 @@ class Header extends Component {
                     closeIcon={null}
                     className="side-drawer text-white"
                 >
-                    <Title className="text-white fw-400" level={3}>Billing Address</Title>
-                    <div className="billing-address">
-                        <Paragraph className="text-white mt-8">Your delivary address</Paragraph>
-                        <Paragraph className="text-white fw-300 mt-8">UNIT 527 TOWER 4, SMDC Grace Residences, Cayetano Blvd. Brgy. Ususan, Taguig City 1630 PH</Paragraph>
+                    <Title className="fs-36 text-white-30 fw-200 mb-36" level={3}>Billing Address</Title>
+                    <div className="billing-address text-white fs-16 fw-200">
+                        <div className="mb-16">Your delivary address</div>
+                        <div className="mb-16">UNIT 527 TOWER 4, SMDC Grace Residences, Cayetano Blvd. Brgy. Ususan, Taguig City 1630 PH</div>
                     </div>
-                    <Button size="large" block className="pop-btn" onClick={this.depositCrypto}>CONFIRM BILLING ADDRESS</Button>
-                    <Button type="text" size="large" className="text-center text-white pop-cancel fw-400" >Cancel</Button>
+                    <Button size="large" block className="pop-btn" style={{ marginTop: '190px' }} onClick={this.depositCrypto}>CONFIRM BILLING ADDRESS</Button>
+                    <Button type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block>Cancel</Button>
                 </Drawer>
                 <Drawer
                     title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md lftarw-white c-pointer" />
@@ -579,7 +589,7 @@ class Header extends Component {
                     </div>
                 </Drawer>
                 <Drawer
-                    title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
+                    title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md lftarw-white c-pointer" />
                         <div className="text-center fs-14">
                             <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Credit Card</Paragraph>
                         </div>
@@ -591,29 +601,27 @@ class Header extends Component {
                     closeIcon={null}
                     className="side-drawer"
                 >   <div className="form">
-                        <label className="text-white-50">Name on card</label>
-                        <Input className="cust-input mb-16" defaultValue="Michael Quiapos" />
-                        <label className="text-white-50">Card number</label>
-                        <Input className="cust-input mb-16" defaultValue="5443 84000 0902 5339" />
-                        <div className="d-flex justify-content align-center mb-16">
+                        <label className="input-label">Name on card</label>
+                        <Input className="cust-input" defaultValue="Michael Quiapos" />
+                        <label className="input-label">Card number</label>
+                        <Input className="cust-input" defaultValue="5443 84000 0902 5339" />
+                        <div className="d-flex justify-content align-center">
                             <div className="mr-16">
-                                <label className="text-white-50">Expiry</label>
-                                <Input className="cust-input mb-16" defaultValue="5/12" />
+                                <label className="input-label">Expiry</label>
+                                <Input className="cust-input" defaultValue="5/12" />
                             </div>
                             <div className="ml-16">
-                                <label className="text-white-50">CVV</label>
-                                <Input className="cust-input mb-16" defaultValue="544" />
+                                <label className="input-label">CVV</label>
+                                <Input className="cust-input" defaultValue="544" />
                             </div>
                         </div>
-                        <Paragraph className="text-center"> <Link className="text-white-50 fs-16 ">Type your Billing Address</Link></Paragraph>
+                        <div className="text-center mt-16"><Link className="text-white fs-16"><u>Type your Billing Address</u></Link></div>
                     </div>
-
-                    <Button size="large" block className="pop-btn" onClick={this.billingAddress}>Confirm</Button>
-
+                    <Button size="large" block className="pop-btn" style={{ marginTop: '180px' }} onClick={this.billingAddress}>Confirm</Button>
                 </Drawer>
                 {/* DEPOSIT to crypto */}
                 <Drawer
-                    title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white" onClick={this.closeBuyDrawer} />
+                    title={[<div className="side-drawer-header"><span className="icon md lftarw-white c-pointer" onClick={this.closeBuyDrawer} />
                         <div className="text-center fs-14">
                             <Paragraph className="mb-0 text-white-30 fw-600 text-upper">DEPOSIT</Paragraph>
                             <Paragraph className="text-white-50 mb-0 fw-300" > Select a Currency</Paragraph></div>
@@ -624,6 +632,15 @@ class Header extends Component {
                     closeIcon={null}
                     className="side-drawer text-white"
                 >
+                    <Radio.Group
+                        options={depostOptions}
+                        onChange={this.handleDepositToggle}
+                        value={this.state.depositToggle}
+                        optionType="button"
+                        buttonStyle="solid"
+                        size="large"
+                        className="buysell-toggle"
+                    />
                     <List onClick={this.depositScanner}
                         itemLayout="horizontal"
                         dataSource={config.tlvCoinsList}
