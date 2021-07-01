@@ -167,7 +167,6 @@ class Header extends Component {
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
                             <Menu.Item key="7"><span className="icon md gear ml-4" /></Menu.Item>
                         </Menu>
-
                     </menuHeader>
                 </Layout >
                 <Modal
@@ -541,9 +540,12 @@ class Header extends Component {
                         <label className="input-label">Card number</label>
                         <Input className="cust-input" defaultValue="5443 84000 0902 5339" />
                         <div className="d-flex justify-content align-center">
-                            <div className="mr-16">
+                            <div className="mr-16 ">
                                 <label className="input-label">Expiry</label>
-                                <Input className="cust-input" defaultValue="5/12" />
+                                <div className="expiry-input">
+                                    <Input placeholder="MM" maxLength="2" bordered={false} className="fs-16 text-white-30 text-right" />/
+                                    <Input placeholder="YY" maxLength="2" bordered={false} className="fs-16 text-white-30" />
+                                </div>
                             </div>
                             <div className="ml-16">
                                 <label className="input-label">CVV</label>
