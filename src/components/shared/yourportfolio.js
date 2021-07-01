@@ -38,13 +38,13 @@ class YourPortfolio extends Component {
         const { Title, Paragraph, Text } = Typography;
         return (
             <div className="box portfolio-list">
-                <Translate content="your_portfolio" component={Title} className="fs-24 text-white mb-36 mt-0" />
+                <Translate content="your_portfolio" component={Title} className="fs-24 text-white mb-36 mt-0 fw-600" />
                 <List
                     itemLayout="horizontal"
                     dataSource={config.portfilioList}
                     renderItem={item => (
                         <List.Item className="" extra={
-                            <div className="ml-16 mobile-none">
+                            <div className="ml-16 crypto-btns">
                                 <Translate content="buy" component={Button} type="primary" onClick={this.showDrawer} className="custom-btn prime ml-36" />
                                 <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" />
                             </div>

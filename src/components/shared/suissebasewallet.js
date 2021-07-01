@@ -27,8 +27,8 @@ class SuissebaseWallet extends Component {
     render() {
         return (
             <>
-                <Translate content="suissebase_title" component={Title} className="fs-24 fw-700 mb-0 text-white-30" />
-                <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16" />
+                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 mb-0 text-white-30" />
+                <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16 fw-200" />
                 <List
                     itemLayout="horizontal"
                     dataSource={suisseWalletList}

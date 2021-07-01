@@ -16,7 +16,7 @@ class Portfolio extends Component {
 
         return (
             <div className="mb-24">
-                <Translate content="Portfolio_title" component={Title} level={3} className="fs-24 fw-700 mb-0 text-white-30" />
+                <Translate content="Portfolio_title" component={Title} level={3} className="fs-24 fw-600 mb-0 text-white-30" />
                 <div className="portfolio-count py-36 pb-0">
                     {/* <div className="d-flex align-center">
                         <span className="coin lg btc" />

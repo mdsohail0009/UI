@@ -14,13 +14,13 @@ body, h1, h2, h3, h4, h5, h6, a, p div{font-family: 'SF Pro Text' !important;}
 .login-user, .crypto-details, .side-drawer .side-drawer-header, .pay-list{display: flex;justify-content: space-between;align-items: center;}
 .header-logo{list-style: none;display: inline-flex;padding-right: 0 !important;align-items: center;margin-bottom: 0;}
 .tlv-logo{height: 32px;}
-.header-logo li:first-child::after{content: '';position: absolute;width: 1px;height: 27px;right: 0;top: 20px;background-color: var(--bgWhite);}
+.header-logo li:first-child::after{content: '';position: absolute;width: 1px;height: 27px;right: 0;top: 5px;background-color: var(--bgWhite);}
 .tlv-header .list-item.ant-menu-item .ant-menu-title-content{padding:6px 12px;}
 .tlv-header .list-item.ant-menu-item-selected .ant-menu-title-content, .tlv-header .list-item.ant-menu-item-active .ant-menu-title-content{
 background-image: linear-gradient(99.09deg, var(--btnGrad1) 0%, var(--btnGrad2) 100%);
-filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));padding: 8px 12px;margin: 0px;border-radius: 5px;border:0;
-line-height: 16px;min-height: 36px;min-width:90px}
-.custom-btn{border-radius: 5px;border:0;line-height: 16px;min-height: 36px;min-width:90px;font-weight: 300;font-size: 16px;filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));transition: 0.5s ease;color: var(--textWhite);}
+filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));margin: 0px;border-radius: 5px;border:0;
+line-height: 16px;min-width:90px}
+.custom-btn{border-radius: 5px;border:0;line-height: 16px;min-width:90px;font-weight: 300;font-size: 16px;filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));transition: 0.5s ease;color: var(--textWhite);}
 .custom-btn.outline{border-color: var(--bgDarkGrey) !important;}
 .custom-btn.prime{background-image: linear-gradient(99.09deg, var(--btnGrad1) 0%, var(--btnGrad2) 100%);}
 .custom-btn.prime:hover{background-image: linear-gradient(99.09deg, var(--btnGrad2) 0%, var(--btnGrad1) 100%); background-position: right center;background-size: 200% auto;}
@@ -164,7 +164,7 @@ appearance: none; padding-left: 10px;cursor: pointer;}
 }
 @media (max-width: 991px){
     .mobile-list .ant-list-item{display: block; border-bottom: 1px solid  var(--borderLight) !important;}
-    .mobile-list .custom-btn{min-width:50%;}
+    .mobile-list .custom-btn, .crypto-btns .custom-btn{min-width:50%;}
     .mobile-list .custom-btn:first-child{margin-left: 0 !important;}
     .mobile-list .crypto-btns{display: flex;padding-top: 16px;}
     .sidebar-push {margin: 100px 0 0;}
