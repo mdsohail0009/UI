@@ -69,12 +69,9 @@ line-height: 16px;min-height: 36px;min-width:90px}
 .icon.md.close-white{background-position: -168px 0;}
 .icon.md.search-white{background-position: -197px 0;}
 .icon.md.load{background-position: -242px 0;float: right; margin-top: 2px;}
-<<<<<<< HEAD
 .icon.md.info{background-position:-404px -1px;}
 .icon.md.lftarw-white{background-position: -377px -4px;}
-=======
 .icon.lg.chat{background-position: -376px -1px ;}
->>>>>>> 04a3ac25c228bc9b0f5da82aa5fd7be2a99e4f8f
 .icon.sm{width: 12px; height: 12px;}
 .icon.sm.downarrow{background-position: -107px -4px;}
 .icon.sm.uparrow{background-position: -87px -4px;}
@@ -82,8 +79,6 @@ line-height: 16px;min-height: 36px;min-width:90px}
 .icon.sm.r-arrow-o-white{background-position:-222px -5px;}
 .icon.sm.uparw-o-white{background-position:-332px -6px;}
 .icon.sm.dwnarw-o-white{background-position:-355px -5px;}
-
-
 .header-right li{padding: 0 !important;margin: 0 6px; font-size: 16px; color: var(--textWhite30) !important;}
 .header-dropdown{font-size: 24px; color: var(--textBlack) !important;}
 .mid-menu{display: flex; align-items: center;}
