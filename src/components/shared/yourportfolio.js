@@ -54,7 +54,7 @@ class YourPortfolio extends Component {
                                 title={<div className="fs-18 fw-300 text-upper text-white mb-0 mt-8">{item.coin}</div>}
                             />
 
-                            <div style={{ width: 80 }} className={`text-left fs-24 ${item.up ? 'text-green' : 'text-red'}`}>{item.up ? <span className="icon md gain mr-8" /> : <span className="icon md lose mr-8" />}{item.up ? item.gain : item.loss}%</div>
+                            <div style={{ width: 80 }} className={`text-right fs-24 ${item.up ? 'text-green' : 'text-red'}`}>{item.up ? <span className="icon md gain mr-8" /> : <span className="icon md lose mr-8" />}{item.up ? item.gain : item.loss}%</div>
                             {/* <div className="fs-16 text-white-30 fw-300 ml-24  text-upper ">{item.totalcoin} {item.shortcode}</div> */}
                         </List.Item>
                     )}

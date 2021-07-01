@@ -157,14 +157,20 @@ appearance: none; padding-left: 10px;cursor: pointer;}
     .mobile-megalinks{display: block;}
     .megamenu-label{font-size: 24px !important;}
     .mb-d-none{display: none;}
+    .sidebar-push{margin: 62px 0 0;}
+}
+@media (max-width: 991px){
+    .mobile-list .ant-list-item{display: block; border-bottom: 1px solid  var(--borderLight) !important;}
+    .mobile-list .custom-btn{min-width:50%;}
+    .mobile-list .custom-btn:first-child{margin-left: 0 !important;}
+    .mobile-list .crypto-btns{display: flex;padding-top: 16px;}
+    .sidebar-push {margin: 100px 0 0;}
+    .mobile-header-right {display: block;float: right;}
 }
 @media (min-width: 768px){
     .tlv-header{display: flex;height: 100px;align-items: center; justify-content: space-between;padding: 30px 16px !important;}
     .markets-panel{margin-right: 16px;}
     .megamenu-label{margin-top: 0px;}
-    .sidebar-push{margin: 62px 0 0;}
-    .header-right.mobile-header-right, .mobile-megalinks{display: none;}
-    .header-right{display: block;}
     .footer-links{display: flex; justify-content: space-between; align-items: center;}
     .footer-links a{margin: 0 34px 0 0; display: inline-block;}
     .side-drawer .ant-drawer-content-wrapper{width: 510px !important;}
@@ -187,6 +193,8 @@ appearance: none; padding-left: 10px;cursor: pointer;}
     .markets-panel{margin-right: 40px;}
     .tlv-header .main-menu li{margin: 0 4px;}
     .sidebar-push{margin: 100px 0 0;}
+    .header-right{display: block;}
+    .header-right.mobile-header-right, .mobile-megalinks{display: none;}
 }
 @media (min-width: 1200px){
     .main-container{max-width: 1232px; padding: 55px 16px 24px;}

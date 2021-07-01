@@ -39,7 +39,7 @@ class CryptoList extends Component {
                             />
                             <div className="fs-16 text-right">
                                 <div className="text-white-30 fw-600">${item.price}</div>
-                                <div className={item.up ? 'text-green' : 'text-red'}>-{item.loss}</div>
+                                <div className={item.up ? 'text-green' : 'text-red'}>-{item.loss} % </div>
                             </div>
                             {item.up ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}
                         </Skeleton>
