@@ -210,5 +210,5 @@ appearance: none; padding-left: 10px;cursor: pointer;}
     .mega-menu{max-width: 1320px;}
 }
 .billing-address{border: 1px solid var(--borderLight);border-radius: 30px; padding: 28px 40px;}
-.scanner-img{display: flex;background: var(--bgWhite); width: 190px; padding: 12px;margin: auto;}
-.address-bg{background: var(--bgWhite);padding: 12px;width: 420px;}
+.scanner-img{width: 242px; height: 242px; margin: auto;}
+.crypto-address{background-color: var(--bgWhite);padding: 8px;margin: 30px 30px 12px;}
