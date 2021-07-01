@@ -619,9 +619,9 @@ class Header extends Component {
                     </div>
                     <Button size="large" block className="pop-btn" style={{ marginTop: '180px' }} onClick={this.billingAddress}>Confirm</Button>
                 </Drawer>
-                {/* DEPOSIT to crypto */}
-                <Drawer
-                    title={[<div className="side-drawer-header"><span className="icon md lftarw-white c-pointer" onClick={this.closeBuyDrawer} />
+                 {/* DEPOSIT to crypto */}
+                 <Drawer
+                    title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white" onClick={this.closeBuyDrawer} />
                         <div className="text-center fs-14">
                             <Paragraph className="mb-0 text-white-30 fw-600 text-upper">DEPOSIT</Paragraph>
                             <Paragraph className="text-white-50 mb-0 fw-300" > Select a Currency</Paragraph></div>
@@ -633,14 +633,14 @@ class Header extends Component {
                     className="side-drawer text-white"
                 >
                     <Radio.Group
-                        options={depostOptions}
-                        onChange={this.handleDepositToggle}
-                        value={this.state.depositToggle}
-                        optionType="button"
-                        buttonStyle="solid"
-                        size="large"
-                        className="buysell-toggle"
-                    />
+                                options={options}
+                                onChange={this.handleBuySellToggle}
+                                value={this.state.buyToggle}
+                                optionType="button"
+                                buttonStyle="solid"
+                                size="large"
+                                className="buysell-toggle crypto-toggle mx-0"
+                            />
                     <List onClick={this.depositScanner}
                         itemLayout="horizontal"
                         dataSource={config.tlvCoinsList}
@@ -655,6 +655,8 @@ class Header extends Component {
                             </List.Item>
                         )}
                     />
+
+                {/* <WalletList isArrow={true} /> */}
                 </Drawer>
                 {/* <List
                 itemLayout="horizontal"
@@ -685,11 +687,11 @@ class Header extends Component {
                     <div className="scanner-img">
                         <img src={sacnner} style={{ width: '164px', height: '164px' }} />
                     </div>
-                    <div className="address-bg mt-24">
-                        <Paragraph className="mb-0 fw-400">Address</Paragraph>
-                        <Paragraph className="mb-0 fs-14 fw-500" >TAQgcJD9p29m77EnXweijpHegPUSnxkdQW</Paragraph>
+                    <div className="mt-24 address-bg">
+                        <Paragraph className="mb-0 text-white fw-300">Address</Paragraph>
+                        <Paragraph className="mb-0 fs-14 text-white fw-400" >TAQgcJD9p29m77EnXweijpHegPUSnxkdQW</Paragraph>
                     </div>
-
+                    <Paragraph className="fs-14 text-white-30 fw-200 text-center mt-12">Please make sure your delivary address is correct</Paragraph>
                     <div className="mt-36 pt-24">
                         <Button size="large" block className="pop-btn">COPY</Button>
                         <Button type="text" size="large" className="text-center text-white pop-cancel fw-400" >Share</Button>
