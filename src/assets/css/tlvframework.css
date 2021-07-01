@@ -44,6 +44,7 @@
 .text-white-50{color: var(--textWhite50) !important;}
 .text-textDark{color: var(--textBlack) !important;}
 .text-green{color: var(--textGreen) !important;}
+.text-darkgreen{color: var(--textDarkGreen) !important;}
 .text-red{color: var(--textRed) !important;}
 .text-secondary{color: var(--textSecondary) !important;}
 .text-yellow{color: var(--textYellow) !important;}
@@ -52,6 +53,7 @@
 .bggrey{background-color: var(--bgGrey) !important;}
 
 /*----Padding Utilities----*/
+.p-0{padding: 0 !important;}
 .p-16{padding: 16px !important;}
 .p-24{padding: 24px !important;}
 .p-28{padding: 28px;}
@@ -99,6 +101,7 @@
 .mr-16{margin-right: 16px !important;}
 .mx-4{margin-left: 4px !important;margin-right: 4px !important;}
 .mx-24{margin-left: 24px !important;margin-right: 24px !important;}
+.my-16{margin-top: 16px !important;margin-bottom: 16px !important;}
 
 @media (max-width: 991px){
     .visible-xs{visibility: visible;}
