@@ -69,12 +69,9 @@ line-height: 16px;min-height: 36px;min-width:90px}
 .icon.md.close-white{background-position: -168px 0;}
 .icon.md.search-white{background-position: -197px 0;}
 .icon.md.load{background-position: -242px 0;float: right; margin-top: 2px;}
-<<<<<<< HEAD
 .icon.md.info{background-position:-404px -1px;}
 .icon.md.lftarw-white{background-position: -377px -4px;}
-=======
-.icon.lg.chat{background-position: -376px -1px ;}
->>>>>>> 04a3ac25c228bc9b0f5da82aa5fd7be2a99e4f8f
+.icon.lg.chat{background-position: -429px -1px;}
 .icon.sm{width: 12px; height: 12px;}
 .icon.sm.downarrow{background-position: -107px -4px;}
 .icon.sm.uparrow{background-position: -87px -4px;}
