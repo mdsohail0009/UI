@@ -550,12 +550,12 @@ class Header extends Component {
                     <Button type="text" size="large" className="text-center text-white pop-cancel fw-400" >Cancel</Button>
                 </Drawer>
                 <Drawer
-                    title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
+                    title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md lftarw-white c-pointer" />
                         <div className="text-center fs-14">
                             <Paragraph className="mb-0 text-white-30 fw-600 text-upper">LINK A CARD OR DEPOSIT</Paragraph>
                             <Paragraph className="text-white-50 mb-0 fw-300" > Select from below </Paragraph>
                         </div>
-                        <span className="icon md search-white c-pointer" />
+                        <span />
                     </div>]}
                     placement="right"
                     closable={true}
@@ -563,19 +563,18 @@ class Header extends Component {
                     closeIcon={null}
                     className="side-drawer"
                 >
-                    <div className="d-flex  align-center mb-24 c-pointer" onClick={this.showCardDrawer}>
-                        <Avatar size={45} style={{ backgroundColor: "#5d5b6e" }}
-                        />
-                        <div className="ml-16">
-                            <Paragraph className="mb-0 text-white-30 fw-600">Credit Card</Paragraph>
-                            <Paragraph className="text-secondary mb-0 fw-300 fs-12" > Use a credit or debit card</Paragraph>
+                    <div className="d-flex align-center mb-24 mt-36 c-pointer" onClick={this.showCardDrawer}>
+                        <span className="coin btc" />
+                        <div className="ml-24">
+                            <Paragraph className="mb-0 fs-14 text-white-30 fw-300">Credit Card</Paragraph>
+                            <Paragraph className="mb-0 fs-12 text-white-30 fw-300"> Use a credit or debit card</Paragraph>
                         </div>
                     </div>
                     <div className="d-flex align-center c-pointer" onClick={this.depositCrypto}>
-                        <Avatar size={45} style={{ backgroundColor: "#5d5b6e" }} />
-                        <div className="ml-16">
-                            <Paragraph className="mb-0 text-white-30 fw-600">Deposit</Paragraph>
-                            <Paragraph className="text-secondary mb-0 fw-300 fs-12" >Deposit from an address or existing wallet</Paragraph>
+                        <span className="coin btc" />
+                        <div className="ml-24">
+                            <Paragraph className="mb-0 fs-14 text-white-30 fw-300">Deposit</Paragraph>
+                            <Paragraph className="mb-0 fs-12 text-white-30 fw-300" >Deposit from an address or existing wallet</Paragraph>
                         </div>
                     </div>
                 </Drawer>
