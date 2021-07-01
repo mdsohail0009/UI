@@ -477,10 +477,8 @@ class tlvHeader extends Component {
                         <Paragraph className="text-white mt-8">Your delivary address</Paragraph>
                         <Paragraph className="text-white fw-300 mt-8">UNIT 527 TOWER 4, SMDC Grace Residences, Cayetano Blvd. Brgy. Ususan, Taguig City 1630 PH</Paragraph>
                     </div>
-                    <div className="bottom-fix">
                         <Button size="large" block className="pop-btn" onClick={this.depositCrypto}>CONFIRM BILLING ADDRESS</Button>
                         <Button type="text" size="large" className="text-center text-white pop-cancel fw-400" >Cancel</Button>
-                    </div>
                 </Drawer>
                 <Drawer
                     title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
