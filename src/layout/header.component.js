@@ -181,7 +181,7 @@ class tlvHeader extends Component {
                                 </TabPane>
                             </Tabs> */}
                             <Card className="crypto-card mb-36" bordered={false}>
-                                <span>
+                                <span className="d-flex">
                                     <span className="coin md eth-white" />
                                     <Text className="fs-24 text-white crypto-name ml-24">Ethereum</Text>
                                 </span>
@@ -477,8 +477,8 @@ class tlvHeader extends Component {
                         <Paragraph className="text-white mt-8">Your delivary address</Paragraph>
                         <Paragraph className="text-white fw-300 mt-8">UNIT 527 TOWER 4, SMDC Grace Residences, Cayetano Blvd. Brgy. Ususan, Taguig City 1630 PH</Paragraph>
                     </div>
-                        <Button size="large" block className="pop-btn" onClick={this.depositCrypto}>CONFIRM BILLING ADDRESS</Button>
-                        <Button type="text" size="large" className="text-center text-white pop-cancel fw-400" >Cancel</Button>
+                    <Button size="large" block className="pop-btn" onClick={this.depositCrypto}>CONFIRM BILLING ADDRESS</Button>
+                    <Button type="text" size="large" className="text-center text-white pop-cancel fw-400" >Cancel</Button>
                 </Drawer>
                 <Drawer
                     title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
@@ -556,7 +556,7 @@ class tlvHeader extends Component {
                     closeIcon={null}
                     className="side-drawer text-white"
                 >
-                    <List  onClick={this.depositScanner}
+                    <List onClick={this.depositScanner}
                         itemLayout="horizontal"
                         dataSource={config.tlvCoinsList}
                         renderItem={item => (
@@ -585,27 +585,27 @@ class tlvHeader extends Component {
                     </List.Item>
                 )} />
             </Drawer> */}
-            {/* DEPOSIT to Scanner */}
-            <Drawer
-                title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white"  onClick={this.closeBuyDrawer}  />                       
-                <div className="text-center fs-14">
-                <Paragraph className="mb-0 text-white-30 fw-600 text-upper">DEPOSIT ETH</Paragraph>
-                <Paragraph className="text-white-50 mb-0 fw-300" > Select a Currency</Paragraph></div>
-                <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /></div>]}
+                {/* DEPOSIT to Scanner */}
+                <Drawer
+                    title={[<div className="side-drawer-header custom-drawer-header"><ArrowLeftOutlined className="text-white" onClick={this.closeBuyDrawer} />
+                        <div className="text-center fs-14">
+                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">DEPOSIT ETH</Paragraph>
+                            <Paragraph className="text-white-50 mb-0 fw-300" > Select a Currency</Paragraph></div>
+                        <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /></div>]}
                     placement="right"
                     closable={true}
                     visible={this.state.depositScanner}
                     closeIcon={null}
                     className="side-drawer text-white" >
-                        <div className="scanner-img">
-                            <img src={sacnner} style={{ width: '164px', height: '164px' }} />
-                        </div>
-                        <div className="address-bg mt-24">
-                            <Paragraph className="mb-0 fw-400">Address</Paragraph>
-                            <Paragraph className="mb-0 fs-14 fw-500" >TAQgcJD9p29m77EnXweijpHegPUSnxkdQW</Paragraph>
-                        </div>
+                    <div className="scanner-img">
+                        <img src={sacnner} style={{ width: '164px', height: '164px' }} />
+                    </div>
+                    <div className="address-bg mt-24">
+                        <Paragraph className="mb-0 fw-400">Address</Paragraph>
+                        <Paragraph className="mb-0 fs-14 fw-500" >TAQgcJD9p29m77EnXweijpHegPUSnxkdQW</Paragraph>
+                    </div>
 
-                        <div className="mt-36 pt-24">
+                    <div className="mt-36 pt-24">
                         <Button size="large" block className="pop-btn">COPY</Button>
                         <Button type="text" size="large" className="text-center text-white pop-cancel fw-400" >Share</Button>
                     </div>
