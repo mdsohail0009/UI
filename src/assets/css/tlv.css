@@ -100,6 +100,7 @@ line-height: 16px;min-width:90px}
 .buysell-toggle .ant-radio-button-wrapper::before, .crypto-card .ant-card-body::before, .crypto-card .ant-card-body::after{content: none;}
 .crypto-list-tabs .ant-tabs-content-holder{max-height: calc(100vh - 480px); overflow-y: auto; padding-right: 10px;}
 .crypto-list-tabs .ant-list-item, .wallet-list .ant-list-item{border-color: var(--borderLight);}
+.crypto-toggle .ant-radio-button-wrapper{padding: 22px 44px !important;}
 .wallet-list li a{display: inline-flex; align-items: center;flex-grow: 1;}
 .wallet-list h4{margin-bottom: 0;}
 .crypto-list-tabs .ant-tabs-tab{font-size: 16px; margin: 0; padding-bottom: 0;}
