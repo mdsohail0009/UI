@@ -100,8 +100,10 @@
 .mr-8{margin-right: 8px !important;}
 .mr-16{margin-right: 16px !important;}
 .mx-4{margin-left: 4px !important;margin-right: 4px !important;}
+.mx-12{margin-left: 12px !important;margin-right: 12px !important;}
 .mx-24{margin-left: 24px !important;margin-right: 24px !important;}
 .my-16{margin-top: 16px !important;margin-bottom: 16px !important;}
+.mx-0{margin-left: 0 !important;margin-right: 0 !important;}
 
 @media (max-width: 991px){
     .visible-xs{visibility: visible;}

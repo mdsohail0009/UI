@@ -35,8 +35,8 @@ const menu = (
     </Menu>
 );
 const options = [
-    { label: 'Buy', value: 'Buy' },
-    { label: 'Sell', value: 'Sell' },
+    { label: 'From Crypto', value: 'Buy' },
+    { label: 'From Fait', value: 'Sell' },
 ];
 const depostOptions = [
     { label: 'From Crypto', value: 'From Crypto' },
@@ -639,7 +639,7 @@ class Header extends Component {
                         optionType="button"
                         buttonStyle="solid"
                         size="large"
-                        className="buysell-toggle"
+                        className="buysell-toggle crypto-toggle mx-12"
                     />
                     <List onClick={this.depositScanner}
                         itemLayout="horizontal"
