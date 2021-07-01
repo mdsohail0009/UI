@@ -502,7 +502,7 @@ class tlvHeader extends Component {
                             <Paragraph className="text-secondary mb-0 fw-300 fs-12" > Use a credit or debit card</Paragraph>
                         </div>
                     </div>
-                    <div className="d-flex align-center c-pointer">
+                    <div className="d-flex align-center c-pointer" onClick={this.depositCrypto}>
                         <Avatar size={45} style={{ backgroundColor: "#5d5b6e" }} />
                         <div className="ml-16">
                             <Paragraph className="mb-0 text-white-30 fw-600">Deposit</Paragraph>

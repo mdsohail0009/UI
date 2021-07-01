@@ -103,7 +103,7 @@ line-height: 16px;min-height: 36px;min-width:90px}
 .crypto-list-tabs .ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textDark); background: var(--bgYellow); border-radius: 30px;}
 .crypto-list-tabs .ant-tabs-ink-bar{display: none;}
 .pop-btn, .pop-btn:hover, .pop-btn:focus, .pop-btn:active{background-color: var(--bgYellow);color: var(--textDark); border-color: var(--bgYellow); border-radius: 40px;height: 57px; text-transform: uppercase;font-weight: 700;}
-.pop-cancel{background-color: transparent;color: var(--bgWhite); border-color: transparent; border-radius: 40px;height: 57px; text-transform: uppercase;text-align: center;width:100%}
+.pop-cancel{background-color: transparent;color: var(--bgWhite); border-color: transparent; border-radius: 40px;height: 57px;text-align: center;width:100%}
 .cancel-btn{height: 57px; text-transform: uppercase;font-weight: 700;text-align: center;}
 .crypto-card{border-radius: 25px;box-shadow: 0 8px 16px rgba(20,0,4,0.2);background-color: var(--bgOrient);}
 .crypto-card .ant-card-body{width: 418px;height: 231px; display: flex; flex-direction: column;justify-content: space-between;}
