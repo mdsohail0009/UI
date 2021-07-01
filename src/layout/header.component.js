@@ -558,7 +558,7 @@ class tlvHeader extends Component {
                     closeIcon={null}
                     className="side-drawer text-white"
                 >
-                    <List
+                    <List  onClick={this.depositScanner}
                         itemLayout="horizontal"
                         dataSource={config.tlvCoinsList}
                         renderItem={item => (
