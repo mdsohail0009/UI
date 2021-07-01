@@ -13,6 +13,8 @@ import en from '../lang/en';
 import ch from '../lang/ch';
 import my from '../lang/my';
 import WalletList from '../components/shared/walletList';
+import BuyCrypto from '../components/buysell.component/buyComponent';
+import BuyToggle from '../components/buysell.component/buyToggle';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -162,68 +164,7 @@ class Header extends Component {
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
                             <Menu.Item key="7"><span className="icon md gear ml-4" /></Menu.Item>
                         </Menu>
-                        <Drawer
-                            title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /><div className="text-center fs-14"><Translate className="mb-0 text-white-30 fw-600 text-upper" content="buy_assets" component={Paragraph} /><Translate className="text-white-50 mb-0 fw-300" content="past_hours" component={Paragraph} /></div><span className="icon md search-white c-pointer" /></div>]}
-                            placement="right"
-                            closable={true}
-                            visible={this.state.buyDrawer}
-                            closeIcon={null}
-                            className="side-drawer"
-                        >
-                            {/* <Radio.Group
-                                options={options}
-                                onChange={this.handleBuySellToggle}
-                                value={this.state.buyToggle}
-                                optionType="button"
-                                buttonStyle="solid"
-                                size="large"
-                                className="buysell-toggle"
-                            />
-                            <Translate content="purchase_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-16" />
-                            <Translate content="purchase_a_cryto_txt" component={Paragraph} className="fs-16 text-secondary" />
-                            <Tabs className="crypto-list-tabs">
-                                <TabPane tab="All" key="1">
-                                    <CryptoList />
-                                </TabPane>
-                                <TabPane tab="Gainers" key="2">
-                                    <CryptoList />
-                                </TabPane>
-                                <TabPane tab="Losers" key="3">
-                                    <CryptoList />
-                                </TabPane>
-                            </Tabs> */}
-                            <Card className="crypto-card mb-36" bordered={false}>
-                                <span className="d-flex">
-                                    <span className="coin md eth-white" />
-                                    <Text className="fs-24 text-white crypto-name ml-24">Ethereum</Text>
-                                </span>
-                                <div className="crypto-details">
-                                    <Text className="crypto-percent text-white fw-700">25<sup className="fs-24 text-white fw-700" style={{ verticalAlign: 'Middle', marginLeft: 14 }}>%</sup></Text>
-                                    <div className="fs-16 text-white-30 fw-200 text-right">
-                                        <div>1.0147668 ETH</div>
-                                        <div>$ 41.07</div>
-                                    </div>
-                                </div>
-                            </Card>
-                            <div className="enter-val-container">
-                                <div className="text-center">
-                                    <Input className="fs-36 fw-100 text-white-30 text-center enter-val p-0"
-                                        placeholder="0.00"
-                                        bordered={false}
-                                        prefix="USD"
-                                        style={{ maxWidth: 160 }}
-                                    />
-                                    <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">0.00701 ETH</Text>
-                                </div>
-                                <span className="mt-24" style={{ marginLeft: 80 }}>
-                                    <span className="icon sm uparw-o-white d-block c-pointer mb-4" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
-                                </span>
-                            </div>
-                            <Paragraph className="text-upper fw-600 mb-0 text-aqua pt-16">Find with your favoite wallet</Paragraph>
-                            <WalletList isArrow={true} />
-                            <Paragraph className="fs-14 text-white-30 fw-200 text-center mb-16">Please refresh to get a new price</Paragraph>
-                            <Button size="large" block className="pop-btn" onClick={this.showPayDrawer} icon={<span className="icon md load" />}>Confirm(18s)</Button>
-                        </Drawer>
+                       
                     </menuHeader>
                 </Layout >
                 <Modal
@@ -495,6 +436,18 @@ class Header extends Component {
                         </div>
                     </Carousel>
                 </Modal>
+                <Drawer
+                            title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /><div className="text-center fs-14"><Translate className="mb-0 text-white-30 fw-600 text-upper" content="buy_assets" component={Paragraph} /><Translate className="text-white-50 mb-0 fw-300" content="past_hours" component={Paragraph} /></div><span className="icon md search-white c-pointer" /></div>]}
+                            placement="right"
+                            closable={true}
+                            visible={this.state.buyDrawer}
+                            closeIcon={null}
+                            className="side-drawer"
+                        >
+                          {/* <BuyToggle/> */}
+                           {/* <BuyCrypto /> */}
+                          
+                        </Drawer>
                 <Drawer
                     title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md lftarw-white c-pointer" />
                         <div className="text-center fs-14">
