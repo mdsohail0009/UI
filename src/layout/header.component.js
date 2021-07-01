@@ -13,8 +13,6 @@ import en from '../lang/en';
 import ch from '../lang/ch';
 import my from '../lang/my';
 import WalletList from '../components/shared/walletList';
-import BuyCrypto from '../components/buysell.component/buyComponent';
-import BuyToggle from '../components/buysell.component/buyToggle';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -164,7 +162,6 @@ class Header extends Component {
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
                             <Menu.Item key="7"><span className="icon md gear ml-4" /></Menu.Item>
                         </Menu>
-                       
                     </menuHeader>
                 </Layout >
                 <Modal
@@ -437,17 +434,18 @@ class Header extends Component {
                     </Carousel>
                 </Modal>
                 <Drawer
-                            title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /><div className="text-center fs-14"><Translate className="mb-0 text-white-30 fw-600 text-upper" content="buy_assets" component={Paragraph} /><Translate className="text-white-50 mb-0 fw-300" content="past_hours" component={Paragraph} /></div><span className="icon md search-white c-pointer" /></div>]}
-                            placement="right"
-                            closable={true}
-                            visible={this.state.buyDrawer}
-                            closeIcon={null}
-                            className="side-drawer"
-                        >
-                          {/* <BuyToggle/> */}
-                           {/* <BuyCrypto /> */}
-                          
-                        </Drawer>
+
+                    title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /><div className="text-center fs-14"><Translate className="mb-0 text-white-30 fw-600 text-upper" content="buy_assets" component={Paragraph} /><Translate className="text-white-50 mb-0 fw-300" content="past_hours" component={Paragraph} /></div><span className="icon md search-white c-pointer" /></div>]}
+                    placement="right"
+                    closable={true}
+                    visible={this.state.buyDrawer}
+                    closeIcon={null}
+                    className="side-drawer"
+                >
+                    {/* <BuyToggle/> */}
+                    {/* <BuyCrypto /> */}
+
+                </Drawer>
                 <Drawer
                     title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md lftarw-white c-pointer" />
                         <div className="text-center fs-14">
@@ -559,9 +557,12 @@ class Header extends Component {
                         <label className="input-label">Card number</label>
                         <Input className="cust-input" defaultValue="5443 84000 0902 5339" />
                         <div className="d-flex justify-content align-center">
-                            <div className="mr-16">
+                            <div className="mr-16 ">
                                 <label className="input-label">Expiry</label>
-                                <Input className="cust-input" defaultValue="5/12" />
+                                <div className="expiry-input">
+                                    <Input placeholder="MM" maxLength="2" bordered={false} className="fs-16 text-white-30 text-right" />/
+                                    <Input placeholder="YY" maxLength="2" bordered={false} className="fs-16 text-white-30" />
+                                </div>
                             </div>
                             <div className="ml-16">
                                 <label className="input-label">CVV</label>

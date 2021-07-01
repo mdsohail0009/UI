@@ -143,7 +143,9 @@ appearance: none; padding-left: 10px;cursor: pointer;}
 .coin.md.eth-white{background-position: -47px -404px}
 .coin.md.usdt-white{background-position: -92px -404px}
 .pay-list{padding: 20px 0; border-bottom: 1px solid var(--borderLight);}
-.cust-input{background: transparent;border-radius: 30px;height: 50px;border: 1px solid var(--borderLight);color: var(--textWhite30); text-align: center;margin-bottom: 20px;font-size: 16px;}
+.expiry-input{width: 200px;}
+.expiry-input input{width: 50px; padding: 0 4px;height: 50px;}
+.cust-input, .expiry-input{background: transparent;border-radius: 30px;height: 50px;border: 1px solid var(--borderLight);color: var(--textWhite30); text-align: center;margin-bottom: 20px;font-size: 16px;}
 .input-label{color: var(--textWhite30); font-size: 14px;font-weight: 200;margin-left: 12px;margin-bottom: 8px !important; display: block;}
 @media (min-width: 320px){
     .tlv-header{padding: 0 16px !important;}
