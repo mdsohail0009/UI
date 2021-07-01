@@ -15,6 +15,9 @@ import my from '../lang/my';
 import WalletList from '../components/shared/walletList';
 import BuyCrypto from '../components/buysell.component/buyComponent';
 import BuyToggle from '../components/buysell.component/buyToggle';
+import Summary from '../components/buysell.component/Summary';
+import BillingAddress from '../components/buysell.component/BillingAddress';
+import BillType from '../components/buysell.component/BillType';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -164,7 +167,7 @@ class Header extends Component {
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
                             <Menu.Item key="7"><span className="icon md gear ml-4" /></Menu.Item>
                         </Menu>
-                       
+
                     </menuHeader>
                 </Layout >
                 <Modal
@@ -437,18 +440,24 @@ class Header extends Component {
                     </Carousel>
                 </Modal>
                 <Drawer
-                            title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /><div className="text-center fs-14"><Translate className="mb-0 text-white-30 fw-600 text-upper" content="buy_assets" component={Paragraph} /><Translate className="text-white-50 mb-0 fw-300" content="past_hours" component={Paragraph} /></div><span className="icon md search-white c-pointer" /></div>]}
-                            placement="right"
-                            closable={true}
-                            visible={this.state.buyDrawer}
-                            closeIcon={null}
-                            className="side-drawer"
-                        >
-                          {/* <BuyToggle/> */}
-                           {/* <BuyCrypto /> */}
-                          
-                        </Drawer>
-                <Drawer
+                    title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /><div className="text-center fs-14"><Translate className="mb-0 text-white-30 fw-600 text-upper" content="buy_assets" component={Paragraph} /><Translate className="text-white-50 mb-0 fw-300" content="past_hours" component={Paragraph} /></div><span className="icon md search-white c-pointer" /></div>]}
+                    placement="right"
+                    closable={true}
+                    visible={this.state.buyDrawer}
+                    closeIcon={null}
+                    className="side-drawer"
+                >
+                    {/* <BuyToggle/> */}
+                    {/* <BuyCrypto /> */}
+                    {/* <Summary /> */}
+                    {/* <BillingAddress/> */}
+                    <BillType/>
+
+                </Drawer>
+
+{/* Buy Summary */}
+
+                {/* <Drawer
                     title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md lftarw-white c-pointer" />
                         <div className="text-center fs-14">
                             <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Buy ETH</Paragraph>
@@ -460,40 +469,12 @@ class Header extends Component {
                     closeIcon={null}
                     className="side-drawer"
                 >
-                    <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>0,0070 ETH</div>
-                    <div className="text-white-50 fw-300 text-center fs-14 mb-16">USD 20,00</div>
-                    <div className="pay-list fs-14">
-                        <Text className="fw-400 text-white">Exchange Rate</Text>
-                        <Text className="fw-300 text-white-30">1 ETH = USD 2.849.76</Text>
-                    </div>
-                    <div className="pay-list fs-14">
-                        <Text className="fw-400 text-white">Amount</Text>
-                        <Text className="fw-300 text-white-30">ETH 0,0070125</Text>
-                    </div>
-                    <div className="pay-list fs-14">
-                        <Text className="fw-400 text-white">Suissebase Fee<Tooltip title="Suissebase Fee"><span className="icon md info c-pointer ml-4" /></Tooltip></Text>
-                        <Text className="text-darkgreen fw-400">USD 0,000</Text>
-                    </div>
-                    <div className="pay-list fs-14">
-                        <Text className="fw-400 text-white">Estimated Total</Text>
-                        <Text className="fw-300 text-white-30">0.0070125 ETH (USD 20,00)</Text>
-                    </div>
-                    <Paragraph className="fs-12 text-white-30 text-center my-16">
-                        Your final amount might change due to market activity.
-                    </Paragraph>
-                    <div className="d-flex p-16 mb-36">
-                        <span className="icon lg check-ylw" />
-                        <Text className="fs-14 text-white-30 ml-16" style={{ flex: 1 }}>
-                            I agree to Suissebase’s <Link to="" className="text-white-30"><u>Terms of Service</u></Link> and its return, refund and cancellation policy.
-                        </Text>
-                    </div>
-                    <Button size="large" block className="pop-btn" onClick={this.showPayCardDrawer} >Pay 0,00701 ETH</Button>
-                    <Button type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block>Cancel</Button>
-                </Drawer>
+                    <Summary />
+                </Drawer> */}
 
 
-                {/* Change billing address */}
-                <Drawer
+{/* Change billing address */}
+                {/* <Drawer
                     title={[<div className="side-drawer-header"><span className="icon md lftarw-white c-pointer" onClick={this.billingAddress} />
                         <div className="text-center fs-14">
                             <Paragraph className="text-white-50 mb-0 fs-14 fw-500">CHANGE BILLING ADDRESS</Paragraph></div>
@@ -511,7 +492,8 @@ class Header extends Component {
                     </div>
                     <Button size="large" block className="pop-btn" style={{ marginTop: '190px' }} onClick={this.depositCrypto}>CONFIRM BILLING ADDRESS</Button>
                     <Button type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block>Cancel</Button>
-                </Drawer>
+                </Drawer> */}
+{/* credit card or deposite*/}
                 <Drawer
                     title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md lftarw-white c-pointer" />
                         <div className="text-center fs-14">
