@@ -7,7 +7,7 @@ import connectStateProps from '../../utils/state.connect';
 import Summary from './summary';
 import { setStep } from '../../reducers/buysellReducer';
 import { processSteps as config } from './config';
-import WireTransfer from './WireTransfer';
+import WireTransfer from './wireTransfer';
 
 const { Title, Paragraph } = Typography
 class BuySell extends Component {
@@ -36,8 +36,8 @@ class BuySell extends Component {
             closeIcon={null}
             className="side-drawer"
         >
-            {/* {this.renderContent()} */}
-            <WireTransfer />
+            {this.renderContent()}
+            {/* <WireTransfer /> */}
         </Drawer>);
     }
 }
