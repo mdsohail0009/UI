@@ -30,4 +30,11 @@ export default {
   find_with_wallet: 'Cari Dengan dompet anda',
   refresh_newprice: 'Segarkan untuk mendapatkan harga baru',
   confirm_btn_text: 'Sahkan (18s)',
+  exchange_rate: 'Kadar pertukaran',
+  amount: 'Jumlah',
+  suissebase_fee: 'Yuran Suissebase',
+  estimated_total: 'Anggaran Jumlah',
+  summary_hint_text: 'Jumlah akhir anda mungkin berubah kerana aktiviti pasaran.',
+  pay: 'Bayar',
+  cancel: 'Batal',
 }

@@ -30,4 +30,11 @@ export default {
   find_with_wallet: '用你的钱包找',
   refresh_newprice: '请刷新以获取新价格',
   confirm_btn_text: '确认 (18s)',
+  exchange_rate: '汇率',
+  amount: '数量',
+  suissebase_fee: '瑞士基地 费用',
+  estimated_total: '估计总数',
+  summary_hint_text: '您的最终金额可能会因市场活动而发生变化.',
+  pay: '支付',
+  cancel: '取消',
 }

@@ -30,4 +30,11 @@ export default {
   find_with_wallet: 'Find With your wallet',
   refresh_newprice: 'Please refresh to get new price',
   confirm_btn_text: 'Confirm (18s)',
+  exchange_rate: 'Exchange Rate',
+  amount: 'Amount',
+  suissebase_fee: 'Suissebase Fee',
+  estimated_total: 'Estimated Total',
+  summary_hint_text: 'Your final amount might change due to market activity.',
+  pay: 'Pay',
+  cancel: 'Cancel',
 }

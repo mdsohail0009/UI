@@ -17,12 +17,12 @@ let initialState = {
     stepTitles: {
         buycrypto: "buy_assets",
         selectcrypto: "selected_crypto",
-        summary: "sell"
+        summary: "selected_crypto"
     },
     stepSubTitles: {
         buycrypto: "past_hours",
         selectcrypto: "crypto_compare_val",
-        summary: ''
+        summary: "crypto_compare_val"
     }
 }
 const buySellReducer = (state = initialState, action) => {
