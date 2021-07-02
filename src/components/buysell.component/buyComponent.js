@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Drawer, Typography,Button ,Card, Input} from 'antd';
+import { Drawer, Typography, Button, Card, Input } from 'antd';
 import config from '../../config/config';
 import WalletList from '../shared/walletList';
+import { setStep } from '../../reducers/buysellReducer';
+import { connect } from 'react-redux';
 
 class BuyCrypto extends Component {
     constructor(props) {
@@ -12,7 +14,7 @@ class BuyCrypto extends Component {
         }
     }
     showPayDrawer = () => {
-       console.log(this.state);
+        console.log(this.state);
     }
 
     render() {
@@ -49,10 +51,19 @@ class BuyCrypto extends Component {
                 <Paragraph className="text-upper fw-600 mb-0 text-aqua pt-16">Find with your favoite wallet</Paragraph>
                 <WalletList isArrow={true} />
                 <Paragraph className="fs-14 text-white-30 fw-200 text-center mb-16">Please refresh to get a new price</Paragraph>
-                <Button size="large" block className="pop-btn" onClick={this.showPayDrawer} icon={<span className="icon md load" />}>Confirm(18s)</Button>
+                <Button size="large" block className="pop-btn" onClick={()=>this.props.changeStep('step2') } icon={<span className="icon md load" />}>Confirm(18s)</Button>
             </>
         )
     }
 }
-
-export default BuyCrypto;
+const connectStateToProps = ({ buySell, oidc }) => {
+    return { buySell }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        }
+    }
+}
+export default connect(connectStateToProps, connectDispatchToProps)(BuyCrypto);
