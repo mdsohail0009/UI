@@ -10,7 +10,7 @@ const options = [
     { label: 'Sell', value: 'Sell' },
 ];
 
-class BuyToggle extends Component {
+class BuyCrypto extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -55,4 +55,4 @@ class BuyToggle extends Component {
     }
 }
 
-export default BuyToggle;
+export default BuyCrypto;

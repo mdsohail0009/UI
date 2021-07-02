@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
-import BuyCrypto from './buyComponent';
+import BuyCrypto from './buyCrypto';
 import connectStateProps from '../../utils/state.connect';
 import Summary from './summary'
 import BillType from './billType';
+import SelectCrypto from './selectCrypto';
 import { setStep } from '../../reducers/buysellReducer';
 import { processSteps as config } from './config';
 import DepositFiat from './depositFiat'
@@ -29,7 +30,9 @@ class BuySell extends Component {
             summary: <Summary />,
             billtype: <BillType/>,
             addcard: <AddCard/>,
-            depositcrypto: <DepositCrypto/>
+            depositcrypto: <DepositCrypto/>,
+            selectcrypto: <SelectCrypto />,
+           
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }

@@ -5,7 +5,7 @@ import WalletList from '../shared/walletList';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 
-class BuyCrypto extends Component {
+class SelectCrypto extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -51,7 +51,7 @@ class BuyCrypto extends Component {
                 <Paragraph className="text-upper fw-600 mb-0 text-aqua pt-16">Find with your favoite wallet</Paragraph>
                 <WalletList isArrow={true} />
                 <Paragraph className="fs-14 text-white-30 fw-200 text-center mb-16">Please refresh to get a new price</Paragraph>
-                <Button size="large" block className="pop-btn" onClick={()=>this.props.changeStep('step2') } icon={<span className="icon md load" />}>Confirm(18s)</Button>
+                <Button size="large" block className="pop-btn" onClick={() => this.props.changeStep('step3')} icon={<span className="icon md load" />}>Confirm(18s)</Button>
             </>
         )
     }
@@ -66,4 +66,4 @@ const connectDispatchToProps = dispatch => {
         }
     }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(BuyCrypto);
+export default connect(connectStateToProps, connectDispatchToProps)(SelectCrypto);

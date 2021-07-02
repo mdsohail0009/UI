@@ -24,11 +24,11 @@ const securityMenu = (
     <Menu>
         <Title className="fs-24 text-white my-16 fw-500 mx-30">Security</Title>
         <ul className="pl-0 drpdwn-list">
-            <li><Link>2FA<span className="icon md rarrow-white ml-auto" /></Link></li>
-            <li><Link>Change Password<span className="icon md rarrow-white ml-auto" /></Link></li>
+            <li><Link>2FA<span className="icon md rarrow-white" /></Link></li>
+            <li><Link>Change Password<span className="icon md rarrow-white" /></Link></li>
             <li className="no-hover"><Paragraph className="text-white fs-14 pt-16">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
                 <Paragraph className="text-white fs-14">Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.</Paragraph></li>
-            <li><Link>Protect your account<span className="icon md rarrow-white ml-auto" /></Link></li>
+            <li><Link>Protect your account<span className="icon md rarrow-white" /></Link></li>
         </ul>
     </Menu>
 );
@@ -36,17 +36,17 @@ const settingMenu = (
     <Menu>
         <Title className="fs-24 text-white my-16 fw-500 mx-30">Settings</Title>
         <ul className="pl-0 drpdwn-list">
-            <li><Link to="">General<span className="icon md rarrow-white ml-auto" /></Link></li>
-            <li><Link to="">Privacy Policy<span className="icon md rarrow-white ml-auto" /></Link></li>
-            <li><Link to="">Terms of Service<span className="icon md rarrow-white ml-auto" /></Link></li>
-            <li><Link to="">About<span className="icon md rarrow-white ml-auto" /></Link></li>
-            <li><Link to="">Wallet Version<span className="icon md rarrow-white ml-auto" /></Link></li>
-            <li><Link to="">Preferences<span className="icon md rarrow-white ml-auto" /></Link></li>
-            <li><Link to="">Language<span className="icon md rarrow-white ml-auto" /></Link></li>
-            <li><Link to="">Local Currency<span className="icon md rarrow-white ml-auto" /></Link></li>
-            <li><Link to="">Notifications<span className="icon md rarrow-white ml-auto" /></Link></li>
-            <li><Link to="">Themes<span className="icon md rarrow-white ml-auto" /></Link></li>
-            <li><Link to="">Logout<span className="icon md rarrow-white ml-auto" /></Link></li>
+            <li><Link to="">General<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Privacy Policy<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Terms of Service<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">About<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Wallet Version<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Preferences<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Language<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Local Currency<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Notifications<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Themes<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Logout<span className="icon md rarrow-white" /></Link></li>
         </ul>
     </Menu>
 );
