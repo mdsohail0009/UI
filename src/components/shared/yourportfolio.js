@@ -44,8 +44,8 @@ class YourPortfolio extends Component {
                     dataSource={config.portfilioList}
                     renderItem={item => (
                         <List.Item className="" extra={
-                            <div className="ml-16 crypto-btns">
-                                <Translate content="buy" component={Button} type="primary" onClick={this.showDrawer} className="custom-btn prime ml-36" />
+                            <div className="crypto_btns">
+                                <Translate content="buy" component={Button} type="primary" onClick={this.showDrawer} className="custom-btn prime" />
                                 <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" />
                             </div>
                         }>

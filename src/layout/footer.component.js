@@ -42,14 +42,16 @@ class Footer extends Component {
                     <Translate content="ftr_tc_p" component={Typography.Link}>Legan & Policy</Translate>
                     <Typography.Link className="mobile-none">Suissebase<sup className="fs-10">TM</sup> {new Date().getFullYear()}</Typography.Link>
                 </div>
-                
-                <div>
+                <div className="copyright-block">
+                <Typography.Link className="copyright">Suissebase<sup className="fs-10">TM</sup> {new Date().getFullYear()}</Typography.Link>
+                <span>
                     <Button type="primary" shape="circle" className={this.themeBtnClr()} size="large" onClick={() => this.handleTheme}>{this.state.darkTheme ? 'DRK' : 'LHT'}</Button>
                     <select value={this.state.lang} onChange={this.onLangChange} className="selct-lang ml-8 f-12" removeIcon={true}>
                         <option value="en">EN</option>
                         <option value="ch">英语</option>
                         <option value="my">MY</option>
                     </select>
+                </span>
                 </div>
             </div>
         </AntFooter>
