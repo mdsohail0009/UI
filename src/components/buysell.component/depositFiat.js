@@ -45,4 +45,5 @@ class DepositFiat extends Component {
     }
 }
 
+
 export default DepositFiat;
