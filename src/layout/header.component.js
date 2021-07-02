@@ -63,6 +63,15 @@ class Header extends Component {
             billingAddress: false,
             initLoading: true,
         }
+        this.next = this.next.bind(this);
+        this.previous = this.previous.bind(this);
+        this.carousel = React.createRef();
+    }
+    next() {
+        this.carousel.next();
+    }
+    previous() {
+        this.carousel.prev();
     }
     onChange(checked) {
         console.log(`switch to ${checked}`);
@@ -173,7 +182,10 @@ class Header extends Component {
                 <Modal
                     title={[<div className="megamenu-title fs-24 text-white">
                         <img src={logoWhite} alt="logo" className="tlv-logo px-16" />
-                        <Link className="text-white">Sign in</Link></div>]}
+                        <div><span className="icon sm r-arrow-o-white mr-16 c-pointer" style={{ transform: 'rotate(180deg)' }} onClick={this.previous} ></span>
+                            <span className="icon sm r-arrow-o-white c-pointer ml-24" onClick={this.next}></span>
+                            <Link className="text-white ml-16">Sign in</Link></div>
+                    </div>]}
                     visible={this.state.megamenu}
                     onCancel={this.closeMegaMenu}
                     footer={null}
@@ -272,7 +284,7 @@ class Header extends Component {
                     </div> */}
 
                     {/* mega menu login after */}
-                    <Carousel dots="false" className="mb-24">
+                    <Carousel dots={false} className="mb-24 menu-carousel" ref={node => (this.carousel = node)}>
                         <div className="mega-menu">
                             <Row gutter={[16, 16]} className="megamenu-link"   >
                                 <Col xl={5}>
@@ -330,10 +342,10 @@ class Header extends Component {
                             <Divider className="megamenu-divider mobile-none" />
                             <Row gutter={[16, 16]} className="megamenu-link">
 
-                                <Col lg={5} xl={5}>
+                                <Col lg={5} xl={5} className="mobile-none">
 
                                 </Col>
-                                <Col lg={5} xl={4}>
+                                <Col lg={5} xl={4}  className="mobile-none">
 
                                 </Col>
                                 <Col lg={7} xl={6}>
@@ -439,144 +451,7 @@ class Header extends Component {
                         </div>
                     </Carousel>
                 </Modal>
-               <BuySell showDrawer={this.state.buyDrawer} onClose={()=>this.closeBuyDrawer()} />
-
-                <Drawer
-                    title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md lftarw-white c-pointer" />
-                        <div className="text-center fs-14">
-                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">LINK A CARD OR DEPOSIT</Paragraph>
-                            <Paragraph className="text-white-50 mb-0 fw-300" > Select from below </Paragraph>
-                        </div>
-                        <span />
-                    </div>]}
-                    placement="right"
-                    closable={true}
-                    visible={this.state.payCardsDrawer}
-                    closeIcon={null}
-                    className="side-drawer"
-                >
-                    <div className="d-flex align-center mb-24 mt-36 c-pointer" onClick={this.showCardDrawer}>
-                        <span className="coin btc" />
-                        <div className="ml-24">
-                            <Paragraph className="mb-0 fs-14 text-white-30 fw-300">Credit Card</Paragraph>
-                            <Paragraph className="mb-0 fs-12 text-white-30 fw-300"> Use a credit or debit card</Paragraph>
-                        </div>
-                    </div>
-                    <div className="d-flex align-center c-pointer" onClick={this.depositCrypto}>
-                        <span className="coin btc" />
-                        <div className="ml-24">
-                            <Paragraph className="mb-0 fs-14 text-white-30 fw-300">Deposit</Paragraph>
-                            <Paragraph className="mb-0 fs-12 text-white-30 fw-300" >Deposit from an address or existing wallet</Paragraph>
-                        </div>
-                    </div>
-                </Drawer>
-                <Drawer
-                    title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md lftarw-white c-pointer" />
-                        <div className="text-center fs-14">
-                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Credit Card</Paragraph>
-                        </div>
-                        <span className="icon md close-white c-pointer" />
-                    </div>]}
-                    placement="right"
-                    closable={true}
-                    visible={this.state.cardsDetails}
-                    closeIcon={null}
-                    className="side-drawer"
-                >   <div className="form">
-                        <label className="input-label">Name on card</label>
-                        <Input className="cust-input" defaultValue="Michael Quiapos" />
-                        <label className="input-label">Card number</label>
-                        <Input className="cust-input" defaultValue="5443 84000 0902 5339" />
-                        <div className="d-flex justify-content align-center">
-                            <div className="mr-16 ">
-                                <label className="input-label">Expiry</label>
-                                <div className="expiry-input">
-                                    <Input placeholder="MM" maxLength="2" bordered={false} className="fs-16 text-white-30 text-right" />/
-                                    <Input placeholder="YY" maxLength="2" bordered={false} className="fs-16 text-white-30" />
-                                </div>
-                            </div>
-                            <div className="ml-16">
-                                <label className="input-label">CVV</label>
-                                <Input className="cust-input" defaultValue="544" />
-                            </div>
-                        </div>
-                        <div className="text-center mt-16"><Link className="text-white fs-16"><u>Type your Billing Address</u></Link></div>
-                    </div>
-                    <Button size="large" block className="pop-btn" style={{ marginTop: '180px' }} onClick={this.billingAddress}>Confirm</Button>
-                </Drawer>
-                {/* DEPOSIT to crypto */}
-                <Drawer
-                    title={[<div className="side-drawer-header"><span className="icon md lftarw-white c-pointer" onClick={this.closeBuyDrawer} />
-                        <div className="text-center fs-14">
-                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">DEPOSIT</Paragraph>
-                            <Paragraph className="text-white-50 mb-0 fw-300" > Select a Currency</Paragraph></div>
-                        <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /></div>]}
-                    placement="right"
-                    closable={true}
-                    visible={this.state.depositCrypto}
-                    closeIcon={null}
-                    className="side-drawer text-white"
-                >
-                    <Radio.Group
-                        options={depostOptions}
-                        onChange={this.handleDepositToggle}
-                        value={this.state.depositToggle}
-                        optionType="button"
-                        buttonStyle="solid"
-                        size="large"
-                        className="buysell-toggle crypto-toggle mx-12"
-                    />
-                    <List onClick={this.depositScanner}
-                        itemLayout="horizontal"
-                        dataSource={config.tlvCoinsList}
-                        className="wallet-list"
-                        renderItem={item => (
-                            <List.Item>
-                                <List.Item.Meta
-                                    avatar={<span className={`coin ${item.coin} mr-4`} />}
-                                    title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}
-                                />
-                            </List.Item>
-                        )}
-                    />
-                </Drawer>
-                {/* <List
-                itemLayout="horizontal"
-                dataSource={config.tlvCoinsList}
-                renderItem={item => (
-                    <List.Item onClick={this.depositScanner}>
-                        <Skeleton loading={item.loading} active>
-                            <List.Item.Meta
-                                avatar={<span className={`coin ${item.coin} mr-4`} />}
-                                title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}
-                            />
-                            </Skeleton>
-                    </List.Item>
-                )} />
-            </Drawer> */}
-                {/* DEPOSIT to Scanner */}
-                <Drawer
-                    title={[<div className="side-drawer-header"><span className="icon md lftarw-white c-pointer" onClick={this.closeBuyDrawer} />
-                        <div className="text-center fs-14">
-                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">DEPOSIT ETH</Paragraph>
-                            <Paragraph className="text-white-50 mb-0 fw-300" > Select a Currency</Paragraph></div>
-                        <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" /></div>]}
-                    placement="right"
-                    closable={true}
-                    visible={this.state.depositScanner}
-                    closeIcon={null}
-                    className="side-drawer text-white" >
-                    <div className="scanner-img">
-                        <img src={sacnner} />
-                    </div>
-                    <div className="crypto-address">
-                        <div className="mb-0 fw-400 text-secondary">Address</div>
-                        <div className="mb-0 fs-14 fw-500 text-textDark">TAQgcJD9p29m77EnXweijpHegPUSnxkdQW</div>
-                    </div>
-                    <Paragraph className="text-center f-12 text-white">Please make sure your delivery address is correct.</Paragraph>
-                    <Button size="large" block className="pop-btn" style={{ marginTop: '100px' }}>COPY</Button>
-                    <Button type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block>Share</Button>
-                </Drawer>
+                <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeBuyDrawer()} />
             </>
         );
     }
