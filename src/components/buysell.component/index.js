@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Drawer, Typography } from 'antd';
-import BillType from './billType';
 import Translate from 'react-translate-component';
 import BuyCrypto from './buyComponent';
 import connectStateProps from '../../utils/state.connect';
-import Summary from './summary';
+import Summary from './summary'
 import { setStep } from '../../reducers/buysellReducer';
 import { processSteps as config } from './config';
 import DepositFiat from './depositFiat'
@@ -37,9 +36,7 @@ class BuySell extends Component {
             closeIcon={null}
             className="side-drawer"
         >
-            {/* {this.renderContent()} */}
-            <DepositFiat />
-            {/* <WireTransfer /> */}
+            {this.renderContent()}
         </Drawer>);
     }
 }
