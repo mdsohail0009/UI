@@ -12,7 +12,7 @@ import DepositFiat from './depositFiat'
 import WireTransfer from './wireTransfer';
 import AddCard from './addCard';
 import DepositCrypto from './depositCrypto';
-import BillingAddress from './billingAddress'
+import BillingAddress from './billingAddress';
 import AddressScanner from './addressScanner'
 const { Title, Paragraph } = Typography
 class BuySell extends Component {
