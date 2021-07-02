@@ -40,7 +40,7 @@ line-height: 16px;min-width:90px}
 .tlv-header li::after, .tlv-header li:hover:after{border: none !important;}
 .ant-modal.megamenu{top: 0 !important;bottom: 0 !important;width: 100% !important;max-width: 100%;}
 .megamenu-backdrop, .megamenu .ant-modal-header{background-color: var(--bgGloom);}
-.megamenu .ant-modal-header, .drpdwn-list li:last-child{border: none;}
+.megamenu .ant-modal-header, .drpdwn-list li:last-child a{border: none;}
 .megamenu-title{display: flex; justify-content: space-between; padding-right: 60px;align-items:center ; }
 .megamenu .ant-modal-content{box-shadow: none; background-color: var(--bgGloom) !important;min-height: calc(100vh - 70px); max-height: calc(100vh - 70px);}
 .megamenu-link a, .megamenu-sublink a{font-size: 18px; color: var(--textWhite30); display: block;font-weight: 300;}
@@ -48,11 +48,16 @@ line-height: 16px;min-width:90px}
 .megamenu-link a:hover, .megamenu-sublink a:hover{color: var(--texthover);}
 .custom-toggle.ant-switch{background-color: var(--bgBlack) !important;}
 .custom-toggle.ant-switch-checked{background-color: red !important;}
-.secureDropdown .ant-dropdown-menu{background-color: var(--bgGloom); padding: 30px; border-radius: 10px; min-width: 318px; max-width: 318px;}
+.secureDropdown .ant-dropdown-menu{background-color: var(--bgGloom); border-radius: 10px; min-width: 300px; max-width: 300px; padding: 24px 0;}
 .secureDropdown .ant-dropdown-arrow{border-color: var(--bgGloom) !important;}
 .drpdwn-list{list-style: none;}
-.drpdwn-list li{font-size: 14px; padding: 12px 0; border-bottom: 1px solid var(--bgDarkGrey);}
-.drpdwn-list li a{color: var(--textWhite);display: flex; align-items: center;}
+.drpdwn-list li{font-size: 14px; padding: 0 30px; transition: 0.3s ease;}
+.drpdwn-list li:hover{background-color: var(--bgDarkGrey);}
+.drpdwn-list li a{color: var(--textWhite);display: flex; align-items: center;border-bottom: 1px solid var(--bgDarkGrey); padding: 10px 0;}
+.drpdwn-list li:last-child a{border-top: 1px solid var(--bgDarkGrey)}
+.drpdwn-list li.no-hover:hover{background-color: transparent !important;}
+.drpdwn-list li span.icon{transition: margin 0.3s ease-in;}
+.drpdwn-list li:hover span.icon{margin-right: -3px ;}
 .icon{background: url(../images/tlv-icons.svg) no-repeat; display: inline-block; vertical-align: middle;}
 .icon.xl{width: 32px; height: 32px;}
 .icon.xl.closewhite{background-position: -2px -243px;}
