@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Typography,Button, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
+import { setStep } from '../../reducers/buysellReducer';
+import { connect } from 'react-redux';
 
 class Summary extends Component {
     constructor(props) {
@@ -44,11 +46,20 @@ class Summary extends Component {
                             I agree to Suissebase’s <Link to="" className="text-white-30"><u>Terms of Service</u></Link> and its return, refund and cancellation policy.
                         </Text>
                     </div>
-                    <Button size="large" block className="pop-btn" onClick={this.showPayCardDrawer} >Pay 0,00701 ETH</Button>
+                    <Button size="large" block className="pop-btn" onClick={()=>this.props.changeStep('step3') } >Pay 0,00701 ETH</Button>
                     <Button type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block>Cancel</Button>
                 </>
         )
     }
 }
-
-export default Summary;
+const connectStateToProps = ({ buySell, oidc }) => {
+    return { buySell }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        }
+    }
+}
+export default connect(connectStateToProps, connectDispatchToProps) (Summary);
