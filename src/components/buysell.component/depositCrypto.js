@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
-
+import { Drawer, Typography, Button, Radio, Tabs,List } from 'antd';
+import config from '../../config/config';
+const depostOptions = [
+    { label: 'From Crypto', value: 'From Crypto' },
+    { label: 'From Fiat', value: 'From Fiat' },
+];
 class depositCrypto extends Component {
-    state = {}
+    state = {
+        buyToggle: 'From Fiat'
+    }
+    handleDepositToggle = e => {
+        console.log(this.state);
+    }
     render() {
         return (
             <>
