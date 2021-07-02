@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Drawer, Typography, Button, Radio, Tabs } from 'antd';
 import config from '../../config/config';
 import WalletList from '../shared/walletList';
-import Translate from 'react-translate-component';
 import CryptoList from '../shared/cryptolist';
 import { Link } from "react-router-dom";
+import Translate from 'react-translate-component';
 
 const depostOptions = [
     { label: 'From Crypto', value: 'From Crypto' },
@@ -19,7 +19,7 @@ class DepositFiat extends Component {
     }
 
     render() {
-        const { Paragraph } = Typography;
+        const { Paragraph, Text } = Typography;
         return (
             <>
                 <Radio.Group
@@ -32,13 +32,13 @@ class DepositFiat extends Component {
                     className="buysell-toggle"
                 />
                 <WalletList />
-                <Paragraph className="mb-0 mt-36 fs-14 text-white fw-500">WIRE TRANSFER METHOD</Paragraph>
+                <Translate className="mb-0 mt-36 fs-14 text-white fw-500 text-upper" content="wire_transfer_mthd" component={Paragraph} />
                 <div className="d-flex align-center mt-16 c-pointer" onClick={this.wiriTransfer}>
                     <span className="coin btc" />
                     <div className="ml-16"><Paragraph className="mb-0 fs-14 text-white-30 fw-300">Fidor Bank AG</Paragraph>
-                        <Paragraph className="mb-0 fs-12 text-white-30 fw-300"> EUR</Paragraph>
+                        <Paragraph className="mb-0 fs-12 text-white-30 fw-300">EUR</Paragraph>
                     </div>
-                    <div className="recomnd-tag fs-12 text-white-30 fw-300 ml-auto">RECOMMENDED</div>
+                    <Translate className="recomnd-tag fs-12 text-white-30 fw-300 ml-auto" content="recommended" component={Text} />
                 </div>
             </>
         )

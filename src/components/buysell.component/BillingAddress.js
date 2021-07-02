@@ -1,32 +1,33 @@
 import React, { Component } from 'react';
-import { Typography,Button, Tooltip } from 'antd';
+import { Typography, Button, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
+import Translate from 'react-translate-component';
 
 class BillingAddress extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           
+
         }
     }
     showPayDrawer = () => {
-       console.log(this.state);
+        console.log(this.state);
     }
 
     render() {
-        const { Title, Paragraph, Text } = Typography;
+        const { Title, Text } = Typography;
         return (
             <>
-                <Title className="fs-36 text-white-30 fw-200 mb-36" level={3}>Billing Address</Title>
-                    <div className="billing-address text-white fs-16 fw-200">
-                        <div className="mb-16">Your delivary address</div>
-                        <div className="mb-16">UNIT 527 TOWER 4, SMDC Grace Residences, Cayetano Blvd. Brgy. Ususan, Taguig City 1630 PH</div>
-                    </div>
-                    <Button size="large" block className="pop-btn" style={{ marginTop: '190px' }}onClick={()=>this.props.changeStep('step5') }>CONFIRM BILLING ADDRESS</Button>
-                    <Button type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block>Cancel</Button>
-               </>
+                <Translate className="fs-36 text-white-30 fw-200 mb-36" level={3} content="billing_address" component={Title} />
+                <div className="billing-address text-white fs-16 fw-200">
+                    <Translate className="mb-16 d-block text-white fs-16 fw-200" content="delivery_address" component={Text} />
+                    <div className="mb-16">UNIT 527 TOWER 4, SMDC Grace Residences, Cayetano Blvd. Brgy. Ususan, Taguig City 1630 PH</div>
+                </div>
+                <Translate size="large" block className="pop-btn" style={{ marginTop: '190px' }} onClick={() => this.props.changeStep('step5')} content="confirm_billing_address" component={Button} />
+                <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block content="cancel" component={Button} />
+            </>
         )
     }
 }
