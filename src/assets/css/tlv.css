@@ -20,6 +20,9 @@ body, h1, h2, h3, h4, h5, h6, a, p div{font-family: 'SF Pro Text' !important;}
 background-image: linear-gradient(99.09deg, var(--btnGrad1) 0%, var(--btnGrad2) 100%);
 filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));margin: 0px;border-radius: 5px;border:0;
 line-height: 16px;min-width:90px}
+.ant-card-body:hover{    border-radius: 25px;
+    background-image: linear-gradient(99.09deg, var(--btnGrad1) 0%, var(--btnGrad2) 100%);
+    filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));}
 .custom-btn{border-radius: 5px;border:0;line-height: 16px;min-width:90px;font-weight: 300;font-size: 16px;filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));transition: 0.5s ease;color: var(--textWhite);}
 .custom-btn.outline{border-color: var(--bgDarkGrey) !important;}
 .custom-btn.prime{background-image: linear-gradient(99.09deg, var(--btnGrad1) 0%, var(--btnGrad2) 100%);}
@@ -230,3 +233,4 @@ appearance: none; padding-left: 10px;cursor: pointer;}
     .main-container{max-width: 1320px; }
     .mega-menu{max-width: 1320px;}
 }
+.recomoned-bg{background: var(--texthover);font-size: 12px;padding: 0 2px;line-height: 1.2;color: var(--textWhite);float: right;}
