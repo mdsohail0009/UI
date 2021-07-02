@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Typography, Button, Tooltip } from "antd";
-import { Link } from "react-router-dom";
 
 class WireTransfer extends Component {
+    state = {}
     render() {
         const { Title, Paragraph, Text } = Typography;
         return (<>

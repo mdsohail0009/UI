@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography,Button ,Radio, Tabs} from 'antd';
+import { Drawer, Typography, Button, Radio, Tabs } from 'antd';
 import config from '../../config/config';
 import WalletList from '../shared/walletList';
 import Translate from 'react-translate-component';
@@ -9,10 +9,7 @@ const options = [
     { label: 'Buy', value: 'Buy' },
     { label: 'Sell', value: 'Sell' },
 ];
-const depostOptions = [
-    { label: 'From Crypto', value: 'From Crypto' },
-    { label: 'From Fiat', value: 'From Fiat' },
-];
+
 class BuyToggle extends Component {
     constructor(props) {
         super(props);
@@ -23,7 +20,7 @@ class BuyToggle extends Component {
         }
     }
     handleBuySellToggle = e => {
-       console.log(this.state);
+        console.log(this.state);
     }
 
     render() {
@@ -31,29 +28,29 @@ class BuyToggle extends Component {
         const { Title, Paragraph, Text } = Typography;
         return (
             <>
-             <Radio.Group
-                                options={options}
-                                onChange={this.handleBuySellToggle}
-                                value={this.state.buyToggle}
-                                optionType="button"
-                                buttonStyle="solid"
-                                size="large"
-                                className="buysell-toggle"
-                            />
-                            <Translate content="purchase_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-16" />
-                            <Translate content="purchase_a_cryto_txt" component={Paragraph} className="fs-16 text-secondary" />
-                            <Tabs className="crypto-list-tabs">
-                                <TabPane tab="All" key="1">
-                                    <CryptoList />
-                                </TabPane>
-                                <TabPane tab="Gainers" key="2">
-                                    <CryptoList />
-                                </TabPane>
-                                <TabPane tab="Losers" key="3">
-                                    <CryptoList />
-                                </TabPane>
-                            </Tabs>
-               </>
+                <Radio.Group
+                    options={options}
+                    onChange={this.handleBuySellToggle}
+                    value={this.state.buyToggle}
+                    optionType="button"
+                    buttonStyle="solid"
+                    size="large"
+                    className="buysell-toggle"
+                />
+                <Translate content="purchase_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-16" />
+                <Translate content="purchase_a_cryto_txt" component={Paragraph} className="fs-16 text-secondary" />
+                <Tabs className="crypto-list-tabs">
+                    <TabPane tab="All" key="1">
+                        <CryptoList />
+                    </TabPane>
+                    <TabPane tab="Gainers" key="2">
+                        <CryptoList />
+                    </TabPane>
+                    <TabPane tab="Losers" key="3">
+                        <CryptoList />
+                    </TabPane>
+                </Tabs>
+            </>
         )
     }
 }

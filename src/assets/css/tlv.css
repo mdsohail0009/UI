@@ -91,8 +91,8 @@ line-height: 16px;min-width:90px}
 .side-drawer .ant-drawer-mask{background-color: var(--bgDarkGrey-95);}
 .side-drawer .ant-drawer-header, .crypto-list-tabs .ant-tabs-nav::before{border: none;}
 .side-drawer-header.custom-drawer-header{padding: 30px 46px 30px 0px !important;}
-.buysell-toggle{border-radius: 20px; background: var(--bgDarkGrey); padding: 10px;display: block;margin: 0 72px 50px 30px}
-.buysell-toggle .ant-radio-button-wrapper{border-radius: 15px;border: none;background: transparent;color: var(--textWhite30);text-transform: uppercase;font-weight: 600;padding: 22px 29px; min-width: 115px;line-height: 0;font-size: 14px;}
+.buysell-toggle{border-radius: 20px; background: var(--bgDarkGrey); padding: 10px;display: block;margin: 0 16px 50px 30px}
+.buysell-toggle .ant-radio-button-wrapper{border-radius: 15px;border: none;background: transparent;color: var(--textWhite30);text-transform: uppercase;font-weight: 600;padding: 22px 43px; min-width: 115px;line-height: 0;font-size: 14px;}
 .buysell-toggle .ant-radio-button{border-radius: 15px;font-size: 12px;}
 .buysell-toggle .ant-radio-button-checked{background: var(--bgYellow);border-left: none;}
 .buysell-toggle .ant-radio-button-wrapper-checked{color: var(--textDark) !important;}
