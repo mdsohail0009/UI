@@ -23,14 +23,14 @@ class BillType extends Component {
         const { Title, Paragraph, Text } = Typography;
         return (
             <>
-                <div className="d-flex align-center mb-24 mt-36 c-pointer" onClick={()=>this.props.changeStep('step4') }>
+                <div className="d-flex align-center mb-24 mt-36 c-pointer" onClick={()=>this.props.changeStep('step5') }>
                     <span className="coin btc"/>
                     <div className="ml-24">
                         <Paragraph className="mb-0 fs-14 text-white-30 fw-300">Credit Card</Paragraph>
                         <Paragraph className="mb-0 fs-12 text-white-30 fw-300"> Use a credit or debit card</Paragraph>
                     </div>
                 </div>
-                <div className="d-flex align-center c-pointer" onClick={()=>this.props.changeStep('step5') }>
+                <div className="d-flex align-center c-pointer" onClick={()=>this.props.changeStep('step6') }>
                     <span className="coin btc" />
                     <div className="ml-24">
                         <Paragraph className="mb-0 fs-14 text-white-30 fw-300">Deposit</Paragraph>
