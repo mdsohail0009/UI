@@ -4,6 +4,7 @@ import config from '../../config/config';
 import WalletList from '../shared/walletList';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
+import Translate from 'react-translate-component';
 
 class SelectCrypto extends Component {
     constructor(props) {
@@ -48,10 +49,10 @@ class SelectCrypto extends Component {
                         <span className="icon sm uparw-o-white d-block c-pointer mb-4" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
                     </span>
                 </div>
-                <Paragraph className="text-upper fw-600 mb-0 text-aqua pt-16">Find with your favoite wallet</Paragraph>
+                <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-0 text-aqua pt-16" />
                 <WalletList isArrow={true} />
-                <Paragraph className="fs-14 text-white-30 fw-200 text-center mb-16">Please refresh to get a new price</Paragraph>
-                <Button size="large" block className="pop-btn" onClick={() => this.props.changeStep('step3')} icon={<span className="icon md load" />}>Confirm(18s)</Button>
+                <Translate content="refresh_newprice" component={Paragraph} className="fs-14 text-white-30 fw-200 text-center mb-16" />
+                <Translate content="confirm_btn_text" component={Button} size="large" block className="pop-btn" onClick={() => this.props.changeStep('step3')} icon={<span className="icon md load" />} />
             </>
         )
     }

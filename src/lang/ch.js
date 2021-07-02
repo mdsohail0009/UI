@@ -25,4 +25,9 @@ export default {
   db_slider_title: '获得 $10 个免费加密货币',
   db_slider_desc: '设置重复购买 $50 次或更多，并在第 $4 次和第 8 次购买后获得 10 次',
   db_slider_btn: '设置定期购买',
+  selected_crypto: '買 eth',
+  crypto_compare_val: '1 ETH - $2,495.31 ',
+  find_with_wallet: '用你的钱包找',
+  refresh_newprice: '请刷新以获取新价格',
+  confirm_btn_text: '确认 (18s)',
 }

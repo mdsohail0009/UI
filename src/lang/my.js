@@ -25,4 +25,9 @@ export default {
   db_slider_title: 'Get $10 in free crypto',
   db_slider_desc: 'Sediakan pembelian berulang $ 50 atau lebih dan dapatkan $ 10 setelah kedua-dua pembelian ke-4 dan ke-8 anda',
   db_slider_btn: 'Siapkan pembelian berulang',
+  selected_crypto: 'Beli eth',
+  crypto_compare_val: '1 ETH - $2,495.31 ',
+  find_with_wallet: 'Cari Dengan dompet anda',
+  refresh_newprice: 'Segarkan untuk mendapatkan harga baru',
+  confirm_btn_text: 'Sahkan (18s)',
 }

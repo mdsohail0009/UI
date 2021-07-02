@@ -25,4 +25,9 @@ export default {
   db_slider_title: 'Get $10 in free crypto',
   db_slider_desc: 'Setup a recurring buy of $50 or more and get $10 after your both 4th and 8th buys',
   db_slider_btn: 'Set up recurring buy',
+  selected_crypto: 'Buy eth',
+  crypto_compare_val: '1 ETH - $2,495.31 ',
+  find_with_wallet: 'Find With your wallet',
+  refresh_newprice: 'Please refresh to get new price',
+  confirm_btn_text: 'Confirm (18s)',
 }
