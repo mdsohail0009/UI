@@ -4,5 +4,8 @@ const firebaseServer = create({
     headers: {
         "AUthorization": "key=" + REACT_APP_FIREBASE_AUTH
     }
+});
+const apiClient = create({
+    baseURL:""
 })
-export { firebaseServer }
+export { firebaseServer,apiClient }
