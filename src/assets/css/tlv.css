@@ -11,7 +11,7 @@ body, h1, h2, h3, h4, h5, h6, a, p div{font-family: 'SF Pro Text' !important;}
 .markets-panel .ant-list-split .ant-list-item, .portfolio-list .ant-list-split .ant-list-item{border-color: var(--borderGrey) !important; padding: 16px 5px;}
 .portfolio-list .ant-list-split .ant-list-item:first-child{border-top: 1px solid #f0f0f0;}
 .btn-primary{background-color: var(--btnPrimary) !important;}
-.login-user, .crypto-details, .side-drawer .side-drawer-header, .pay-list{display: flex;justify-content: space-between;align-items: center;}
+.login-user, .crypto-details, .side-drawer .side-drawer-header, .pay-list, .wire-trans{display: flex;justify-content: space-between;align-items: center;}
 .header-logo{list-style: none;display: inline-flex;padding-right: 0 !important;align-items: center;margin-bottom: 0;}
 .tlv-logo{height: 32px;}
 .header-logo li:first-child::after{content: '';position: absolute;width: 1px;height: 27px;right: 0;top: 5px;background-color: var(--bgWhite);}
@@ -119,6 +119,10 @@ line-height: 16px;min-width:90px}
 .enter-val{width: auto;}
 .enter-val input{background-color: transparent;line-height: normal; font-size: 36px; color: var(--textWhite30);font-weight: var(--fw-300);}
 .enter-val input::placeholder{color: var(--textWhite30);}
+.billing-address{border: 1px solid var(--borderLight);border-radius: 30px; padding: 28px 40px;}
+.scanner-img{width: 242px; height: 242px; margin: auto;}
+.crypto-address{background-color: var(--bgWhite);padding: 8px;margin: 30px 30px 12px;}
+.recomnd-tag{background-color: var(--bgBlue);border-radius: 3px; padding: 1px 5px;}
 /* Footer */
 .footer-links a{font-size: 14px; color: var(--textSecondary); font-weight: var(--fw500);}
 .selct-lang{width: 42px; height: 40px;border-radius: 50%;background-color: var(--bgDarkGreen);color: var(--textWhite);box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
@@ -153,9 +157,7 @@ appearance: none; padding-left: 10px;cursor: pointer;}
     .header-right{display: none;}
     .mobile-header-right{display: block;float: right;}
     .sidebar-push{margin: 62px 0 0;}
-    /* .footer-links a{margin: 0 0 16px 0; display: block;} */
     .side-drawer .ant-drawer-content-wrapper{width: 95% !important;}
-    
 }
 @media (max-width: 767px){
     .mid-menu{margin: 0 -16px;padding: 0 16px; background-color: var(--bgWhite);}
@@ -213,6 +215,3 @@ appearance: none; padding-left: 10px;cursor: pointer;}
     .main-container{max-width: 1320px; }
     .mega-menu{max-width: 1320px;}
 }
-.billing-address{border: 1px solid var(--borderLight);border-radius: 30px; padding: 28px 40px;}
-.scanner-img{width: 242px; height: 242px; margin: auto;}
-.crypto-address{background-color: var(--bgWhite);padding: 8px;margin: 30px 30px 12px;}
