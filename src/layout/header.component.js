@@ -63,6 +63,15 @@ class Header extends Component {
             billingAddress: false,
             initLoading: true,
         }
+        this.next = this.next.bind(this);
+        this.previous = this.previous.bind(this);
+        this.carousel = React.createRef();
+    }
+    next() {
+        this.carousel.next();
+    }
+    previous() {
+        this.carousel.prev();
     }
     onChange(checked) {
         console.log(`switch to ${checked}`);
@@ -173,7 +182,10 @@ class Header extends Component {
                 <Modal
                     title={[<div className="megamenu-title fs-24 text-white">
                         <img src={logoWhite} alt="logo" className="tlv-logo px-16" />
-                        <Link className="text-white">Sign in</Link></div>]}
+                        <div><span className="icon sm r-arrow-o-white mr-16 c-pointer" style={{ transform: 'rotate(180deg)' }} onClick={this.previous} ></span>
+                            <span className="icon sm r-arrow-o-white c-pointer ml-24" onClick={this.next}></span>
+                            <Link className="text-white ml-16">Sign in</Link></div>
+                    </div>]}
                     visible={this.state.megamenu}
                     onCancel={this.closeMegaMenu}
                     footer={null}
@@ -272,7 +284,7 @@ class Header extends Component {
                     </div> */}
 
                     {/* mega menu login after */}
-                    <Carousel dots="false" className="mb-24">
+                    <Carousel dots={false} className="mb-24 menu-carousel" ref={node => (this.carousel = node)}>
                         <div className="mega-menu">
                             <Row gutter={[16, 16]} className="megamenu-link"   >
                                 <Col xl={5}>
@@ -330,10 +342,10 @@ class Header extends Component {
                             <Divider className="megamenu-divider mobile-none" />
                             <Row gutter={[16, 16]} className="megamenu-link">
 
-                                <Col lg={5} xl={5}>
+                                <Col lg={5} xl={5} className="mobile-none">
 
                                 </Col>
-                                <Col lg={5} xl={4}>
+                                <Col lg={5} xl={4}  className="mobile-none">
 
                                 </Col>
                                 <Col lg={7} xl={6}>
@@ -439,7 +451,7 @@ class Header extends Component {
                         </div>
                     </Carousel>
                 </Modal>
-               <BuySell showDrawer={this.state.buyDrawer} onClose={()=>this.closeBuyDrawer()} />
+                <BuySell showDrawer={this.state.buyDrawer} onClose={()=>this.closeBuyDrawer()} />
 
                 <Drawer
                     title={[<div className="side-drawer-header"><span onClick={this.closeBuyDrawer} className="icon md lftarw-white c-pointer" />

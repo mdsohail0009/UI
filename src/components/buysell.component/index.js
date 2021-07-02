@@ -19,7 +19,6 @@ class BuySell extends Component {
         }
     }
     renderContent = () => {
-        debugger
         const stepcodes = {
             buycrypto:<BuyCrypto/>,
             summary:<Summary/>
