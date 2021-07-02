@@ -84,6 +84,7 @@ line-height: 16px;min-width:90px}
 .icon.sm.r-arrow-o-white{background-position:-222px -5px;}
 .icon.sm.uparw-o-white{background-position:-332px -6px;}
 .icon.sm.dwnarw-o-white{background-position:-355px -5px;}
+.icon.md.rarrow-white{background-position:-217px -1px;}
 .header-right li{padding: 0 !important;margin: 0 6px; font-size: 16px; color: var(--textWhite30) !important;}
 .header-dropdown{font-size: 24px; color: var(--textBlack) !important;}
 .mid-menu{display: flex; align-items: center;}
