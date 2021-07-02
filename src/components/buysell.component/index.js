@@ -6,7 +6,9 @@ import BuyCrypto from './buyComponent';
 import connectStateProps from '../../utils/state.connect';
 import Summary from './summary';
 import { setStep } from '../../reducers/buysellReducer';
-import {processSteps as config} from './config'
+import { processSteps as config } from './config';
+import WireTransfer from './WireTransfer';
+
 const { Title, Paragraph } = Typography
 class BuySell extends Component {
     state = {
@@ -20,8 +22,8 @@ class BuySell extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            buycrypto:<BuyCrypto/>,
-            summary:<Summary/>
+            buycrypto: <BuyCrypto />,
+            summary: <Summary />
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }
@@ -34,7 +36,8 @@ class BuySell extends Component {
             closeIcon={null}
             className="side-drawer"
         >
-          {this.renderContent()}
+            {/* {this.renderContent()} */}
+            <WireTransfer />
         </Drawer>);
     }
 }
