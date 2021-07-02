@@ -14,9 +14,15 @@ const clearStep = (payload) => {
 }
 let initialState = {
     stepcode: "step1",
-    stepTitles:{
-        buycrypto:"buy_assets",
-        summary:"sell"
+    stepTitles: {
+        buycrypto: "buy_assets",
+        selectcrypto: "selected_crypto",
+        summary: "sell"
+    },
+    stepSubTitles: {
+        buycrypto: "past_hours",
+        selectcrypto: "crypto_compare_val",
+        summary: ''
     }
 }
 const buySellReducer = (state = initialState, action) => {
@@ -33,4 +39,4 @@ const buySellReducer = (state = initialState, action) => {
 
 }
 export default buySellReducer;
-export {setStep,clearStep}
+export { setStep, clearStep }
