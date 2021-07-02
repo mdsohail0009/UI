@@ -56,7 +56,7 @@ line-height: 16px;min-width:90px}
 .drpdwn-list li a{color: var(--textWhite);display: flex; align-items: center;border-bottom: 1px solid var(--bgDarkGrey); padding: 10px 0;}
 .drpdwn-list li:last-child a{border-top: 1px solid var(--bgDarkGrey)}
 .drpdwn-list li.no-hover:hover{background-color: transparent !important;}
-.drpdwn-list li span.icon{transition: margin 0.3s ease-in;}
+.drpdwn-list li span.icon{transition: margin 0.3s ease-in; margin-left: auto;}
 .drpdwn-list li:hover span.icon{margin-right: -3px ;}
 .icon{background: url(../images/tlv-icons.svg) no-repeat; display: inline-block; vertical-align: middle;}
 .icon.xl{width: 32px; height: 32px;}
