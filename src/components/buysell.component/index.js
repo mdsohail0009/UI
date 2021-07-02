@@ -3,7 +3,7 @@ import { Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
 import BuyCrypto from './buyComponent';
 import connectStateProps from '../../utils/state.connect';
-import Summary from './Summary'
+import Summary from './summary'
 import { setStep } from '../../reducers/buysellReducer';
 import { processSteps as config } from './config';
 import DepositFiat from './depositFiat'
