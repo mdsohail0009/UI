@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Drawer, Typography , Input, Button} from 'antd';
 import { Link } from 'react-router-dom';
+import { setStep } from '../../reducers/buysellReducer';
+import { connect } from 'react-redux';
 class addCard extends Component {
     state = {}
     render() {
@@ -24,7 +26,7 @@ class addCard extends Component {
                             <Input className="cust-input" defaultValue="544" />
                         </div>
                     </div>
-                    <div className="text-center mt-16"><Link className="text-white fs-16"><u>Type your Billing Address</u></Link></div>
+                    <div className="text-center mt-16" onClick={()=>this.props.changeStep('step7') }><Link className="text-white fs-16"><u>Type your Billing Address</u></Link></div>
                 </form>
                 <Button size="large" block className="pop-btn" style={{ marginTop: '180px' }} onClick={this.billingAddress}>Confirm</Button>
             </>
@@ -32,4 +34,14 @@ class addCard extends Component {
     }
 }
 
-export default addCard;
+const connectStateToProps = ({ buySell, oidc }) => {
+    return { buySell }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        }
+    }
+}
+export default connect(connectStateToProps, connectDispatchToProps)(addCard);

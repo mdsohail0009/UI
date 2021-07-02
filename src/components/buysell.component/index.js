@@ -12,7 +12,8 @@ import DepositFiat from './depositFiat'
 import WireTransfer from './wireTransfer';
 import AddCard from './addCard';
 import DepositCrypto from './depositCrypto';
-
+import BillingAddress from './billingAddress'
+import AddressScanner from './addressScanner'
 const { Title, Paragraph } = Typography
 class BuySell extends Component {
     state = {
@@ -33,6 +34,10 @@ class BuySell extends Component {
             depositcrypto: <DepositCrypto />,
             selectcrypto: <SelectCrypto />,
             summary: <Summary />,
+            billingaddress:<BillingAddress/>,
+            addressscanner:<AddressScanner/>,
+            depositfiat:<DepositFiat/>
+            
 
         }
         return stepcodes[config[this.props.buySell.stepcode]]
