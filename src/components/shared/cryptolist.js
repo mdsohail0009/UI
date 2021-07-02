@@ -3,6 +3,8 @@ import config from '../../config/config';
 import { Link } from 'react-router-dom';
 import { List, Skeleton } from 'antd';
 import Translate from 'react-translate-component';
+import { setStep } from '../../reducers/buysellReducer';
+import { connect } from 'react-redux';
 
 class CryptoList extends Component {
     state = {
@@ -30,9 +32,10 @@ class CryptoList extends Component {
                 itemLayout="horizontal"
                 dataSource={config.tlvCoinsList}
                 loadMore={loadMore}
+                className="crypto-list"
                 renderItem={item => (
                     <List.Item>
-                        <Skeleton loading={item.loading} active>
+                        <Link onClick={() => this.props.changeStep('step2')}>
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin} mr-4`} />}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}
@@ -42,7 +45,7 @@ class CryptoList extends Component {
                                 <div className={item.up ? 'text-green' : 'text-red'}>-{item.loss} % </div>
                             </div>
                             {item.up ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}
-                        </Skeleton>
+                        </Link>
                     </List.Item>
                 )}
             />
@@ -50,4 +53,15 @@ class CryptoList extends Component {
     }
 }
 
-export default CryptoList;
+const connectStateToProps = ({ buySell, oidc }) => {
+    return { buySell }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        }
+    }
+}
+
+export default connect(connectStateToProps, connectDispatchToProps)(CryptoList);
