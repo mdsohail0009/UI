@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Drawer, Typography } from 'antd';
-import BillType from './BillType';
+import BillType from './billType';
 import Translate from 'react-translate-component';
 import BuyCrypto from './buyComponent';
 import connectStateProps from '../../utils/state.connect';
-import Summary from './Summary';
+import Summary from './summary';
 import { setStep } from '../../reducers/buysellReducer';
 import { processSteps as config } from './config';
 import DepositFiat from './depositFiat'
+import WireTransfer from './wireTransfer';
 
 const { Title, Paragraph } = Typography
 class BuySell extends Component {
@@ -38,6 +39,7 @@ class BuySell extends Component {
         >
             {/* {this.renderContent()} */}
             <DepositFiat />
+            {/* <WireTransfer /> */}
         </Drawer>);
     }
 }

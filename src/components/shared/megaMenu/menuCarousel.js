@@ -1,145 +1,27 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Typography, Dropdown, Tabs,Row, Col, Divider, Avatar, Carousel, Switch } from 'antd';
+import { Typography, Row, Col, Divider, Avatar, Carousel, Switch } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import logoWhite from '../assets/images/logo-white.png';
-import counterpart from 'counterpart';
-import Translate from 'react-translate-component';
-import en from '../lang/en';
-import ch from '../lang/ch';
-import my from '../lang/my';
-import BuySell from '../components/buysell.component';
-import BusinessMenu from '../components/shared/megaMenu/businessMegamenu';
-import menuCarousel from '../components/shared/megaMenu/menuCarousel';
 
-counterpart.registerTranslations('en', en);
-counterpart.registerTranslations('ch', ch);
-counterpart.registerTranslations('my', my);
-counterpart.setLocale('en');
 
-const { menuHeader } = Layout;
-const { Title, Paragraph, Text } = Typography;
-const { TabPane } = Tabs;
-const menu = (
-    <Menu>
-        <Title className="fs-24 text-white mb-16 fw-500">Security</Title>
-        <ul className="pl-0 drpdwn-list">
-            <li><Link>2FA<span className="icon sm r-arrow-o-white ml-auto" /></Link></li>
-            <li><Link>Change Password<span className="icon sm r-arrow-o-white ml-auto" /></Link></li>
-            <li><Paragraph className="text-white fs-14">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
-                <Paragraph className="text-white fs-14">Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.</Paragraph></li>
-            <li><Link>Protect your account<span className="icon sm r-arrow-o-white ml-auto" /></Link></li>
-        </ul>
-    </Menu>
-);
-class Header extends Component {
+class menuCarousel extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            megamenu: false,
-            lang: 'en',
-            buyDrawer: false,
-            buyToggle: 'Buy',
-            depositToggle: 'From Crypto',
-            payDrawer: false,
-            payCardsDrawer: false,
-            cardsDetails: false,
-            billingAddress: false,
-            initLoading: true,
         }
-        this.next = this.next.bind(this);
-        this.previous = this.previous.bind(this);
-        this.carousel = React.createRef();
     }
-    next() {
-        this.carousel.next();
+    depositCrypto = () => {
+        console.log(this.state);
     }
-    previous() {
-        this.carousel.prev();
-    }
-    onChange(checked) {
-        console.log(`switch to ${checked}`);
-    }
-    showMegaMenu = () => {
-        this.setState({
-            megamenu: true
-        })
-    }
-    closeMegaMenu = () => {
-        this.setState({
-            megamenu: false
-        })
-    }
-    showBuyDrawer = () => {
-        this.setState({
-            buyDrawer: true
-        })
-    }
-    closeBuyDrawer = () => {
-        this.setState({
-            buyDrawer: false,
-            payDrawer: false,
-            billingAddress: false,
-            depositCrypto: false,
-            payCardsDrawer: false,
-            cardsDetails: false,
-            depositScanner: false,
-        })
+    showCardDrawer = () => {
+        console.log(this.state);
     }
     render() {
-        const { initLoading, loading } = this.state;
+        const { Title, Paragraph, Text } = Typography;
         return (
             <>
-                <Layout className="layout">
-                    <menuHeader className="tlv-header" id="area">
-                        <div className="login-user">
-                            <ul className="header-logo">
-                                <li className="pr-30 p-relative"><Link><img src={logoWhite} alt="logo" className="tlv-logo" /></Link></li>
-                                <li className="px-36"><span className="icon md hamburger c-pointer" onClick={this.showMegaMenu} /></li>
-                                <li className="mb-d-none"><Translate content="header_title" component="p" className="text-white-30 mb-0 fs-24" /></li>
-                            </ul>
-                            <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
-                                <Dropdown overlay={menu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                    <Menu.Item key="5">Security</Menu.Item>
-                                </Dropdown>
-                                <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
-                                <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
-                            </Menu>
-                        </div>
-                        <Menu theme="light" mode="horizontal" className="header-right" defaultSelectedKeys={['1']}>
-                            <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item>
-                            <Menu.Item key="2" className="list-item">Swap</Menu.Item>
-                            <Menu.Item key="3" className="list-item">Send / Receive</Menu.Item>
-                            <Menu.Item key="4" className="list-item">Mass Payments</Menu.Item>
-                            <Dropdown overlay={menu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                <Menu.Item key="5">Security</Menu.Item>
-                            </Dropdown>
-                            <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
-                            <Menu.Item key="7"><span className="icon md gear ml-4" /></Menu.Item>
-                        </Menu>
-                    </menuHeader>
-                </Layout >
-                <Modal
-                    title={[<div className="megamenu-title fs-24 text-white">
-                        <img src={logoWhite} alt="logo" className="tlv-logo px-16" />
-                        <div><span className="icon sm r-arrow-o-white mr-16 c-pointer" style={{ transform: 'rotate(180deg)' }} onClick={this.previous} ></span>
-                            <span className="icon sm r-arrow-o-white c-pointer ml-24" onClick={this.next}></span>
-                            <Link className="text-white ml-16">Sign in</Link></div>
-                    </div>]}
-                    visible={this.state.megamenu}
-                    onCancel={this.closeMegaMenu}
-                    footer={null}
-                    wrapClassName="megamenu-backdrop"
-                    className="megamenu"
-                    closeIcon={<span className="icon xl closewhite" />}
-                >
-
-                    {/* before login megamenu */}
-
-                    {/* <BusinessMenu/> */}
-
-                    {/* mega menu login after */}
-                    <Carousel dots={false} className="mb-24 menu-carousel" ref={node => (this.carousel = node)}>
+              
+                        <Carousel dots={false} className="mb-24 menu-carousel" ref={node => (this.carousel = node)}>
                         <div className="mega-menu">
                             <Row gutter={[16, 16]} className="megamenu-link"   >
                                 <Col xl={5}>
@@ -304,11 +186,10 @@ class Header extends Component {
                             </Row>
                         </div>
                     </Carousel>
-                </Modal>
-                <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeBuyDrawer()} />
+                   
             </>
-        );
+        )
     }
 }
 
-export default Header;
+export default menuCarousel;
