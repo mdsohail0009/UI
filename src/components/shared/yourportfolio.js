@@ -51,10 +51,10 @@ class YourPortfolio extends Component {
                         }>
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin}`} />}
-                                title={<div className="fs-18 fw-300 text-upper text-white mb-0 mt-8">{item.coin}</div>}
+                                title={<div className="fs-18 fw-300 text-upper text-white mb-0 mt-12">{item.coin}</div>}
                             />
 
-                            <div className={`text-right fs-24 ${item.up ? 'text-green' : 'text-red'}`}>{item.up ? <span className="icon md gain mr-12" /> : <span className="icon md lose mr-12" />}{item.up ? item.gain : item.loss}%</div>
+                            <div className={`text-right fs-20 ${item.up ? 'text-green' : 'text-red'}`}>{item.up ? <span className="icon md gain mr-8" /> : <span className="icon md lose mr-8" />}{item.up ? item.gain : item.loss}%</div>
                             {/* <div className="fs-16 text-white-30 fw-300 ml-24  text-upper ">{item.totalcoin} {item.shortcode}</div> */}
                         </List.Item>
                     )}
