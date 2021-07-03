@@ -95,10 +95,10 @@ class Header extends Component {
             buyDrawer: true
         })
     }
-    showSendDrawer=()=>{
+    showSendDrawer = () => {
         this.setState({
             sendDrawer: true
-        })   
+        })
     }
     closeBuyDrawer = () => {
         this.setState({
@@ -109,7 +109,7 @@ class Header extends Component {
             payCardsDrawer: false,
             cardsDetails: false,
             depositScanner: false,
-            sendDrawer:false
+            sendDrawer: false
         })
     }
     render() {
@@ -129,7 +129,9 @@ class Header extends Component {
                                     <Menu.Item key="5">Security</Menu.Item>
                                 </Dropdown>
                                 <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
-                                <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
+                                <Dropdown overlay={settingMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                                    <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
+                                </Dropdown>
                             </Menu>
                         </div>
                         <Menu theme="light" mode="horizontal" className="header-right" defaultSelectedKeys={['1']}>
@@ -334,7 +336,7 @@ class Header extends Component {
                     </Carousel>
                 </Modal>
                 <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeBuyDrawer()} />
-                <SendReceive  showDrawer={this.state.sendDrawer} onClose={() => this.closeBuyDrawer()}/>
+                <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeBuyDrawer()} />
             </>
         );
     }

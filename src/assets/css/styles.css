@@ -137,7 +137,8 @@ line-height: 16px;min-width:90px}
 .round-pills .ant-radio-button-wrapper-checked{background-color: var(--bgYellow) !important; color: var(--textDark) !important;}
 .round-pills .ant-radio-button-wrapper::before{content: none;}
 /* Footer */
-.footer-links a{font-size: 14px; color: var(--textSecondary); font-weight: var(--fw500);}
+.footer-links a{font-size: 14px; color: var(--textWhite30); font-weight: var(--fw500);}
+.footer-links a:hover{color: var(--textAqua);}
 .selct-lang, .selct-lang:hover, .selct-lang:active, .selct-lang:focus{width: 42px; height: 40px;border-radius: 50%;background-color: var(--bgDarkGreen);border: none;color: var(--textWhite);box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);}
 .theme-btn{box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25)}
 .theme-dark, .theme-dark:hover, .theme-dark:focus{background-color: var(--bgWhite) !important;color: var(--textBlack);border-color: var(--bgWhite);}
