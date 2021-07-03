@@ -65,6 +65,9 @@ export default {
   wire_transfer: '电汇',
   swift: '迅速',
   no_fee: '不收费',
-  sell_btc:"不收费C",
-  select_wallet:"请确保您的收货地址正确无误"
+  sell_btc: "不收费C",
+  select_wallet: "请确保您的收货地址正确无误",
+  confirm_sell: "确认出售您的加密货币",
+  sell_compare_val: '1 BTC - $34,818.98',
+  preview: '预习',
 }

@@ -65,6 +65,9 @@ export default {
   wire_transfer: 'Pindahan wayar',
   swift: 'pantas',
   no_fee: 'Tiada yuran',
-  sell_btc:"Sell BTC",
-  select_wallet:"sell from you wallet"
+  sell_btc: "Jual BTC",
+  select_wallet: "jual dari dompet anda",
+  confirm_sell: "Sahkan menjual Crypto anda",
+  sell_compare_val: '1 BTC - $34,818.98',
+  preview: 'Pratonton',
 }

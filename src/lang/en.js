@@ -65,7 +65,9 @@ export default {
   wire_transfer: 'Wire transfer',
   swift: 'swift',
   no_fee: 'No fee',
-  sell_btc:"Sell BTC",
-  select_wallet:"sell from you wallet",
-  confirm_sell:"Confirm selling your Crypto"
+  sell_btc: "Sell BTC",
+  select_wallet: "sell from you wallet",
+  confirm_sell: "Confirm selling your Crypto",
+  sell_compare_val: '1 BTC - $34,818.98',
+  preview: 'Preview',
 }
