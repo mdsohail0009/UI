@@ -23,9 +23,9 @@ class SelectCrypto extends Component {
         return (
             <>
                 <Card className="crypto-card mb-36" bordered={false}>
-                    <span className="d-flex">
-                        <span className="coin md eth-white" />
-                        <Text className="fs-24 text-white crypto-name ml-24">Ethereum</Text>
+                    <span className="d-flex align-center">
+                        <span className="coin lg eth-white" />
+                        <Text className="fs-24 text-white crypto-name ml-8">Ethereum</Text>
                     </span>
                     <div className="crypto-details">
                         <Text className="crypto-percent text-white fw-700">25<sup className="fs-24 text-white fw-700" style={{ verticalAlign: 'Middle', marginLeft: 14 }}>%</sup></Text>

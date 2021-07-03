@@ -106,9 +106,9 @@ line-height: 16px;min-width:90px}
 .sellcrypto-container{max-height: calc(100vh - 370px);overflow-y: auto; padding-right: 10px;}
 .crypto-list-tabs.scroll-thumb .ant-tabs-content-holder::-webkit-scrollbar-thumb, .sellcrypto-container::-webkit-scrollbar-thumb, .sellcrypto-container::-webkit-scrollbar-thumb{background-color: var(--bgDarkGrey);}
 .crypto-list-tabs .ant-list-item, .wallet-list .ant-list-item{border-color: var(--borderLight);}
-.crypto-toggle .ant-radio-button-wrapper{padding: 22px 44px !important;}
 .wallet-list li a, .crypto-list li a{display: inline-flex; align-items: center;flex-grow: 1;}
 .wallet-list h4{margin-bottom: 0;}
+.crypto-toggle .ant-radio-button-wrapper{padding: 22px;}
 .crypto-list-tabs .ant-tabs-tab{font-size: 16px; margin: 0; padding-bottom: 0;}
 .crypto-list-tabs .ant-tabs-tab-btn{padding: 3px 34px;color: var(--textYellow);}
 .crypto-list-tabs .ant-tabs-tab-btn:focus{color: var(--textYellow);}

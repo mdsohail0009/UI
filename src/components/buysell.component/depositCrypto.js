@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Button, Radio, Tabs,List } from 'antd';
+import { Drawer, Typography, Button, Radio, Tabs, List } from 'antd';
 import config from '../../config/config';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -9,7 +9,7 @@ const depostOptions = [
 ];
 class depositCrypto extends Component {
     state = {
-        buyToggle: 'From Fiat'
+        depositToggle: 'From Crypto'
     }
     handleDepositToggle = e => {
         console.log(this.state);
@@ -18,16 +18,13 @@ class depositCrypto extends Component {
         return (
             <>
                 <Radio.Group
-                    options={depostOptions}
-                    // onClick={()=>this.props.changeStep('step9')}
-                    onChange={this.handleDepositToggle}
-                    value={this.state.depositToggle}
-                    optionType="button"
-                    buttonStyle="solid"
-                    size="large"
-                    className="buysell-toggle crypto-toggle mx-12"
-                />
-                <List  onClick={()=>this.props.changeStep('step8') }
+                    defaultValue={1}
+                    onChange={this.handleBuySellToggle}
+                    className="buysell-toggle crypto-toggle">
+                    <Radio.Button value={1}>From Crypto</Radio.Button>
+                    <Radio.Button value={2}>From Fiat</Radio.Button>
+                </Radio.Group>
+                <List onClick={() => this.props.changeStep('step8')}
                     itemLayout="horizontal"
                     dataSource={config.tlvCoinsList}
                     className="wallet-list"
