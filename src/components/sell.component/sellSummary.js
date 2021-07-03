@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-import { Drawer, Typography, Button, Card, Input, Tooltip } from 'antd';
-=======
-import { Drawer, Typography, Button, Card, Input, Tooltip,Space } from 'antd';
->>>>>>> 391fe8f9e8627ab8473441005e83fa856f4b445d
+import { Typography, Button, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 
-
 class SellSummary extends Component {
-
     render() {
-        const { Title, Paragraph, Text } = Typography;
+        const { Paragraph, Text } = Typography;
         return (
             <>
                 <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>USD $106.79</div>
@@ -44,9 +38,7 @@ class SellSummary extends Component {
                 </div>
                 <Button size="large" block className="pop-btn" onClick={() => this.props.changeStep('success')}>Confirm Now</Button>
                 <Button type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block>Cancel</Button>
-
             </>
-
         )
     }
 }
