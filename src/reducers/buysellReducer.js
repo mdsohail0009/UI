@@ -25,7 +25,8 @@ let initialState = {
         addressscanner: "deposit",
         depositfiat: "deposit",
         selectedcrypto: "sell_btc",
-        sellsummary: "sell_btc"
+        sellsummary: "sell_btc",
+        wiretransfor:"wire_transfer"
     },
     stepSubTitles: {
         buycrypto: "past_hours",
@@ -38,7 +39,8 @@ let initialState = {
         addressscanner: "select_a_currency",
         depositfiat: "select_a_currency",
         selectedcrypto: "sell_compare_val",
-        sellsummary: "confirm_sell"
+        sellsummary: "confirm_sell",
+        wiretransfor:"select_a_method"
     }
 }
 const buySellReducer = (state = initialState, action) => {

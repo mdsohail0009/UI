@@ -10,7 +10,9 @@ export const processSteps = {
     step9:'depositfiat',
     step10:'selectedcrypto',
     step11:'sellsummary',
-    success:'successmsg'
+    step12:'wiretransfor',
+    success:'successmsg',
+    
 
 
 }
