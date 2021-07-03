@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import App from './components/app.component/App';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.css'
-import './assets/css/tlv.css';
-import './assets/css/tlvtheme.css';
-import './assets/css/tlvframework.css';
-import './assets/css/tlv-dark-theme.css';
+import './assets/css/styles.css';
+// import './assets/css/light-theme.css';
+import './assets/css/framework.css';
+// // import './assets/css/dark-theme.css';
 ReactDOM.render(
   <React.StrictMode>
     <App />

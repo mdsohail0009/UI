@@ -18,15 +18,15 @@
 .fs-40{font-size: 40px !important;}
 
 /*--Font Weights--*/
-.fw-100{font-weight: var(--fw100) !important;}
-.fw-200{font-weight: var(--fw200) !important;}
-.fw-300{font-weight: var(--fw300) !important;}
-.fw-400{font-weight: var(--fw400) !important;}
-.fw-500{font-weight: var(--fw500) !important;}
-.fw-600{font-weight: var(--fw600) !important;}
-.fw-700{font-weight: var(--fw700) !important;}
-.fw-800{font-weight: var(--fw800) !important;}
-.fw-900{font-weight: var(--fw900) !important;}
+.fw-100{font-weight: 100 !important;}
+.fw-200{font-weight: 200 !important;}
+.fw-300{font-weight: 300 !important;}
+.fw-400{font-weight: 400 !important;}
+.fw-500{font-weight: 500 !important;}
+.fw-600{font-weight: 600 !important;}
+.fw-700{font-weight: 700 !important;}
+.fw-800{font-weight: 800 !important;}
+.fw-900{font-weight: 900 !important;}
 
 /*--Alignments--*/
 .text-center{text-align: center !important;}
