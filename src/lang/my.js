@@ -70,4 +70,10 @@ export default {
   confirm_sell: "Sahkan menjual Crypto anda",
   sell_compare_val: '1 BTC - $34,818.98',
   preview: 'Pratonton',
+  sell_btc: "Sell BTC",
+  select_wallet: "sell from you wallet",
+  success_msg: "Terima kasih",
+  success_decr: "Pesanan anda telah berjaya",
+  confirm_msg: 'Menunggu pengesahan',
+  confirm_decr: "Pesanan anda telah dibuat Sahkan"
 }

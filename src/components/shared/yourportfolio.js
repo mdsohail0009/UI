@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { CaretDownOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 import { List, Button, Input, Carousel, Drawer, Dropdown, Typography } from 'antd';
 import Translate from 'react-translate-component';
-
+import { setStep } from '../../reducers/buysellReducer';
+import { connect } from 'react-redux';
 
 class YourPortfolio extends Component {
     state = {
@@ -45,7 +46,7 @@ class YourPortfolio extends Component {
                     renderItem={item => (
                         <List.Item className="" extra={
                             <div className="crypto_btns">
-                                <Translate content="buy" component={Button} type="primary" onClick={this.showDrawer} className="custom-btn prime" />
+                                <Translate content="buy" component={Button} type="primary" onClick={() => this.props.changeStep('step10')} className="custom-btn prime" />
                                 <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" />
                             </div>
                         }>
@@ -64,5 +65,14 @@ class YourPortfolio extends Component {
         );
     }
 }
-
-export default YourPortfolio;
+const connectStateToProps = ({ buySell, oidc }) => {
+    return { buySell }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        }
+    }
+}
+export default connect(connectStateToProps, connectDispatchToProps)(YourPortfolio);

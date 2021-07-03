@@ -37,6 +37,7 @@
 .text-lower{text-transform: lowercase !important;}
 .align-center{align-items: center;}
 .justify-content{justify-content: space-between;}
+.text-underline{text-decoration: underline !important;}
 
 /*--Text Colors--*/
 .text-white{color: var(--textWhite) !important;}

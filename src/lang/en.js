@@ -70,4 +70,8 @@ export default {
   confirm_sell: "Confirm selling your Crypto",
   sell_compare_val: '1 BTC - $34,818.98',
   preview: 'Preview',
+  success_msg: "Thank You",
+  success_decr: "Your order has been placed succesfully",
+  confirm_msg: 'Waiting for Confirmation',
+  confirm_decr: "Your order has been placed Confirm"
 }

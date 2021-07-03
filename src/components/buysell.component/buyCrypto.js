@@ -9,19 +9,19 @@ import SellToggle from '../sell.component/sellCrypto'
 
 
 class BuyCrypto extends Component {
-   state = {
-            buyDrawer: false,
-            crypto: config.tlvCoinsList,
-            buyToggle: 'Buy',
-            buysell: false
-        }
-    
+    state = {
+        buyDrawer: false,
+        crypto: config.tlvCoinsList,
+        buyToggle: 'Buy',
+        buysell: false
+    }
+
     handleBuySellToggle = e => {
         // console.log(this.state);
         debugger;
         this.setState({
-            buysell: e.target.value === 1
-          });
+            buysell: e.target.value === 2
+        });
     }
 
     render() {
@@ -38,21 +38,23 @@ class BuyCrypto extends Component {
                     <Radio.Button value={2}>Sell</Radio.Button>
                 </Radio.Group>
                 {buysell ?
-                <>
-               <Translate content="purchase_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-16" />
-                    <Translate content="purchase_a_cryto_txt" component={Paragraph} className="fs-16 text-secondary" />
-                    <Tabs className="crypto-list-tabs">
-                        <TabPane tab="All" key="1">
-                            <CryptoList />
-                        </TabPane>
-                        <TabPane tab="Gainers" key="2">
-                            <CryptoList />
-                        </TabPane>
-                        <TabPane tab="Losers" key="3">
-                            <CryptoList />
-                        </TabPane>
-                    </Tabs></>:
-                    <SellToggle />}
+                    <SellToggle />
+                    :
+                    <>
+                        <Translate content="purchase_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-16" />
+                        <Translate content="purchase_a_cryto_txt" component={Paragraph} className="fs-16 text-secondary" />
+                        <Tabs className="crypto-list-tabs">
+                            <TabPane tab="All" key="1">
+                                <CryptoList />
+                            </TabPane>
+                            <TabPane tab="Gainers" key="2">
+                                <CryptoList />
+                            </TabPane>
+                            <TabPane tab="Losers" key="3">
+                                <CryptoList />
+                            </TabPane>
+                        </Tabs></>
+                }
             </>
         )
     }

@@ -70,4 +70,8 @@ export default {
   confirm_sell: "确认出售您的加密货币",
   sell_compare_val: '1 BTC - $34,818.98',
   preview: '预习',
+  success_msg: "謝謝你",
+  success_decr: "您的訂單已成功下單",
+  confirm_msg: '等待确认中',
+  confirm_decr: "您的订单已下 确认"
 }
