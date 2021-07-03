@@ -7,5 +7,9 @@ export const processSteps = {
     step6: "depositcrypto",
     step7:'billingaddress',
     step8:'addressscanner',
-    step9:'depositfiat'
+    step9:'depositfiat',
+    step10:'selectedcrypto',
+    step11:'sellsummary'
+
+
 }

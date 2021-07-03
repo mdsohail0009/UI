@@ -65,4 +65,6 @@ export default {
   wire_transfer: '电汇',
   swift: '迅速',
   no_fee: '不收费',
+  sell_btc:"不收费C",
+  select_wallet:"请确保您的收货地址正确无误"
 }

@@ -65,4 +65,6 @@ export default {
   wire_transfer: 'Pindahan wayar',
   swift: 'pantas',
   no_fee: 'Tiada yuran',
+  sell_btc:"Sell BTC",
+  select_wallet:"sell from you wallet"
 }

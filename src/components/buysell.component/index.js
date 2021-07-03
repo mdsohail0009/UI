@@ -13,7 +13,10 @@ import WireTransfer from './wireTransfer';
 import AddCard from './addCard';
 import DepositCrypto from './depositCrypto';
 import BillingAddress from './billingAddress';
-import AddressScanner from './addressScanner'
+import AddressScanner from './addressScanner';
+import SellSummary from '../sell.component/sellSummary';
+import SelectSellCrypto from '../sell.component/selectCrypto'
+
 const { Title, Paragraph } = Typography
 class BuySell extends Component {
     state = {
@@ -36,7 +39,9 @@ class BuySell extends Component {
             summary: <Summary />,
             billingaddress: <BillingAddress />,
             addressscanner: <AddressScanner />,
-            depositfiat: <DepositFiat />
+            depositfiat: <DepositFiat />,
+            selectedcrypto:<SelectSellCrypto/>,
+            sellsummary:<SellSummary/>
 
 
         }

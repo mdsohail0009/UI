@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { Drawer, Typography, Button, Card, Input } from 'antd';
+import WalletList from '../shared/walletList';
+import { Link } from 'react-router-dom';
+import { setStep } from '../../reducers/buysellReducer';
+import { connect } from 'react-redux';
 
-
-class CurrencyDestination extends Component {
+class SelectSellCrypto extends Component {
     
     render() {
         const { Title, Paragraph, Text } = Typography;
@@ -51,10 +54,20 @@ class CurrencyDestination extends Component {
                 )}
             /> */}
                             
-                            <Button size="large" block className="pop-btn">PREVIEW</Button>
+            <Button size="large" block className="pop-btn" onClick={() => this.props.changeStep('step11')}>PREVIEW</Button>
             </>
 
         )
     }
 }
-export default CurrencyDestination;
+const connectStateToProps = ({ buySell, oidc }) => {
+    return { buySell }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        }
+    }
+}
+export default connect(connectStateToProps, connectDispatchToProps)(SelectSellCrypto);
