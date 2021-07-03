@@ -15,11 +15,11 @@ const clearStep = (payload) => {
 let initialState = {
     stepcode: "step1",
     stepTitles: {
-        depositcrypto: "deposit",
+        depositecrypto: "deposit",
         
     },
     stepSubTitles: {
-        depositcrypto: "select_a_currency",
+        depositecrypto: "select_a_currency",
         
     }
 }

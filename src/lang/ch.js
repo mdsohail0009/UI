@@ -16,6 +16,8 @@ export default {
   ftr_tc_p: '勒根与政策',
   search_currency: '搜索货币',
   buy_assets: '购买资产',
+  deposite_a_cryto_txt:'Get crypto by simply sharing your QR Address',
+  deposite_a_crypto: 'Purchase a Crypto',
   past_hours: '在过去的 24 小时内',
   purchase_a_crypto: '购买加密货币',
   purchase_a_cryto_txt: '你的钱包是空的，你没有任何资产可以进行交易。点击此链接并存入一些现金。',

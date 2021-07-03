@@ -4,8 +4,9 @@ import Translate from 'react-translate-component';
 import connectStateProps from '../../utils/state.connect';
 import { setStep } from '../../reducers/sendreceiveReducer';
 import { sendreceiveSteps as config } from './config';
-import DepositCrypto from '../buysell.component/depositCrypto';
-
+import DepositeCrypto from '../send.component/depositeToggle';
+import SelectSellCrypto from '../sell.component/selectCrypto';
+import AddressScanner from '../buysell.component/addressScanner';
 const { Title, Paragraph } = Typography
 class SendReceive extends Component {
     state = {
@@ -19,7 +20,9 @@ class SendReceive extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            buycrypto:<DepositCrypto />
+            depositecrypto:<DepositeCrypto />,
+            withdraw:<SelectSellCrypto/>,
+            scanner:<AddressScanner/>
 
 
         }

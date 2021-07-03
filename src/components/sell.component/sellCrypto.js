@@ -19,8 +19,6 @@ class SellToggle extends Component {
         const { Title, Paragraph, Text } = Typography;
         return (
             <>
-                <Paragraph className="mb-0 text-white-30 fw-200 fs-36">Sell your Crypto for Cash</Paragraph>
-                <Paragraph className="text-secondary fw-300 fs-16">Easily buy and sell Crypto straight from your Wallet.</Paragraph>
                 <div className="sellcrypto-container">
                     <Card className="crypto-card select mb-16 c-pointer" bordered={false} onClick={() => this.props.changeStep('step10')} >
                         <span className="d-flex align-center">

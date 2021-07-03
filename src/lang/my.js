@@ -17,6 +17,8 @@ export default {
   search_currency: 'Cari Mata Wang',
   buy_assets: 'Beli Aset',
   past_hours: 'Dalam 24 jam yang lalu',
+  deposite_a_cryto_txt:'Get crypto by simply sharing your QR Address',
+  deposite_a_crypto: 'Purchase a Crypto',
   purchase_a_crypto: 'Beli Crypto',
   purchase_a_cryto_txt: 'Dompet anda kosong, anda tidak mempunyai aset untuk membuat transaksi. Ikuti pautan ini dan Deposit sejumlah wang.',
   all: 'semua',

@@ -17,6 +17,8 @@ export default {
   search_currency: 'Search Currency',
   buy_assets: 'Buy Assets',
   past_hours: 'In the past 24 hours',
+  deposite_a_crypto:'Deposite a Crypto',
+  deposite_a_cryto_txt:'Get crypto by simply sharing your QR Address',
   purchase_a_crypto: 'Purchase a Crypto',
   purchase_a_cryto_txt: 'Your wallet is empty, you don’t have any assets to make transactions. Follow this link and Deposit some cash.',
   all: 'All',
