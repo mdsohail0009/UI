@@ -10,7 +10,7 @@ export default {
   withdraw: 'Withdraw',
   buy: 'Buy',
   sell: 'Sell',
-  load_more: 'load more ...',
+  load_more: 'Load more ...',
   ftr_home: 'Home',
   ftr_careers: 'Careers',
   ftr_tc_p: 'Legan & Policy',

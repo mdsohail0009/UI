@@ -39,7 +39,7 @@ class BuyCrypto extends Component {
                 />
                 <Translate content="purchase_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-16" />
                 <Translate content="purchase_a_cryto_txt" component={Paragraph} className="fs-16 text-secondary" />
-                <Tabs className="crypto-list-tabs">
+                <Tabs className="crypto-list-tabs scroll-thumb">
                     <TabPane tab="All" key="1">
                         <CryptoList />
                     </TabPane>
