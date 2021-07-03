@@ -66,5 +66,7 @@ export default {
   swift: 'pantas',
   no_fee: 'Tiada yuran',
   sell_btc:"Sell BTC",
-  select_wallet:"sell from you wallet"
+  select_wallet:"sell from you wallet",
+  success_msg:"Terima kasih",
+  success_decr:"Pesanan anda telah berjaya"
 }

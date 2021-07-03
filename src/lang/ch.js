@@ -66,5 +66,7 @@ export default {
   swift: '迅速',
   no_fee: '不收费',
   sell_btc:"不收费C",
-  select_wallet:"请确保您的收货地址正确无误"
+  select_wallet:"请确保您的收货地址正确无误",
+  success_msg:"謝謝你",
+  success_decr:"您的訂單已成功下單"
 }

@@ -16,6 +16,7 @@ import BillingAddress from './billingAddress';
 import AddressScanner from './addressScanner';
 import SellSummary from '../sell.component/sellSummary';
 import SelectSellCrypto from '../sell.component/selectCrypto'
+import SuccessMsg from '../shared/success'
 
 const { Title, Paragraph } = Typography
 class BuySell extends Component {
@@ -41,7 +42,8 @@ class BuySell extends Component {
             addressscanner: <AddressScanner />,
             depositfiat: <DepositFiat />,
             selectedcrypto:<SelectSellCrypto/>,
-            sellsummary:<SellSummary/>
+            sellsummary:<SellSummary/>,
+            successmsg:<SuccessMsg/>
 
 
         }

@@ -67,5 +67,9 @@ export default {
   no_fee: 'No fee',
   sell_btc:"Sell BTC",
   select_wallet:"sell from you wallet",
-  confirm_sell:"Confirm selling your Crypto"
+  confirm_sell:"Confirm selling your Crypto",
+  success_msg:"Thank You",
+  success_decr:"Your order has been placed succesfully",
+  confirm_msg:'Waiting for Confirmation',
+  confirm_decr:"Your order has been placed Confirm"
 }

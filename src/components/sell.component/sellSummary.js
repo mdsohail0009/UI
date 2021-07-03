@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Button, Card, Input,Tooltip } from 'antd';
+import { Drawer, Typography, Button, Card, Input, Tooltip,Space } from 'antd';
 import { Link } from 'react-router-dom';
+import { setStep } from '../../reducers/buysellReducer';
+import { connect } from 'react-redux';
+
 
 class SellSummary extends Component {
-    
+
     render() {
         const { Title, Paragraph, Text } = Typography;
         return (
             <>
-                <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>USD $106.79</div>
+               <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>USD $106.79</div>
                     <div className="text-white-50 fw-300 text-center fs-14 mb-16">0.00287116 BTC</div>
                     <div className="pay-list fs-14">
                         <Text className="fw-400 text-white">Exchange Rate</Text>
@@ -35,12 +38,24 @@ class SellSummary extends Component {
                             I agree to Suissebase’s <Link to="" className="text-white-30"><u>Terms of Service</u></Link> and its return, refund and cancellation policy.
                         </Text>
                     </div>
-                    <Button size="large" block className="pop-btn" onClick={this.showPayCardDrawer} >Confirm Now</Button>
-                    <Button type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block>Cancel</Button>
-
+                    <Button size="large" block className="pop-btn"onClick={() => this.props.changeStep('success')}>Confirm Now</Button>
+                    <Button type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block>Cancel</Button> 
+      
             </>
 
         )
     }
 }
-export default SellSummary;
+
+const connectStateToProps = ({ buySell, oidc }) => {
+    return { buySell }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        }
+    }
+}
+export default connect(connectStateToProps, connectDispatchToProps)(SellSummary);
+
