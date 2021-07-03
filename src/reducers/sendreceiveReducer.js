@@ -16,10 +16,14 @@ let initialState = {
     stepcode: "step1",
     stepTitles: {
         depositecrypto: "deposit",
+        withdraw:'withdraw',
+        withdrawaddress:'withdraw',
         
     },
     stepSubTitles: {
         depositecrypto: "select_a_currency",
+        withdraw:'select_a_currency',
+        withdrawaddress:'select_a_currency',
         
     }
 }
