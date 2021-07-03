@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk'
 import authReducer from '../reducers/authReducer';
 import buySellReducer from '../reducers/buysellReducer'
+import SendReceive from '../reducers/sendreceiveReducer'
 const persistConfig = {
     key: "root",
     storage,
@@ -12,7 +13,8 @@ const persistConfig = {
 }
 const rootReducer = combineReducers({
     oidc: authReducer,
-    buySell:buySellReducer
+    buySell:buySellReducer,
+    sendReceive:SendReceive,
 })
 const reducer = persistReducer(persistConfig, rootReducer)
 let store = createStore(
