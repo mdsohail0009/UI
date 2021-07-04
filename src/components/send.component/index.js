@@ -49,7 +49,6 @@ class SendReceive extends Component {
             className="side-drawer"
         >
             {this.renderContent()}
-            <VerifyIDentity />
         </Drawer>);
     }
 }
