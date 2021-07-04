@@ -16,15 +16,17 @@ let initialState = {
     stepcode: "step1",
     stepTitles: {
         depositecrypto: "deposit",
-        withdraw:'withdraw',
-        withdrawaddress:'withdraw',
-        
+        withdraw: 'withdraw',
+        scanner: 'deposit',
+        withdrawaddress: 'withdraw',
+
     },
     stepSubTitles: {
         depositecrypto: "select_a_currency",
-        withdraw:'select_a_currency',
-        withdrawaddress:'select_a_currency',
-        
+        withdraw: 'select_a_currency',
+        scanner: 'usd_available',
+        withdrawaddress: 'send_wallet_fiat',
+
     }
 }
 const sendReceiveReducer = (state = initialState, action) => {

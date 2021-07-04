@@ -17,8 +17,8 @@ export default {
   search_currency: 'Cari Mata Wang',
   buy_assets: 'Beli Aset',
   past_hours: 'Dalam 24 jam yang lalu',
-  deposite_a_cryto_txt:'Get crypto by simply sharing your QR Address',
-  deposite_a_crypto: 'Purchase a Crypto',
+  deposite_a_crypto: 'Mendepositkan Crypto',
+  deposite_a_cryto_txt: 'Dapatkan crypto dengan hanya berkongsi Alamat QR anda',
   purchase_a_crypto: 'Beli Crypto',
   purchase_a_cryto_txt: 'Dompet anda kosong, anda tidak mempunyai aset untuk membuat transaksi. Ikuti pautan ini dan Deposit sejumlah wang.',
   all: 'semua',
@@ -77,5 +77,10 @@ export default {
   success_msg: "Terima kasih",
   success_decr: "Pesanan anda telah berjaya",
   confirm_msg: 'Menunggu pengesahan',
-  confirm_decr: "Pesanan anda telah dibuat Sahkan"
+  confirm_decr: "Pesanan anda telah dibuat Sahkan",
+  withdraw_a_crypto: "Tarik Kripto",
+  withdraw_a_crypto_text: 'Tarik balik dan depositkan untuk dompet crypto anda.',
+  usd_available: "USD 106.79 ada",
+  send_wallet_fiat: 'Hantar dari dompet anda dan ke fiat',
+  verify_identity: 'Sahkan identiti anda',
 }

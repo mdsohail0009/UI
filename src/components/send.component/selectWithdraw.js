@@ -29,8 +29,8 @@ class SelectWithdraw extends Component {
                         <Input className="fs-36 fw-100 text-white-30 text-center enter-val p-0"
                             placeholder="106.79"
                             bordered={false}
-                            prefix="USD"
-                            style={{ maxWidth: 206 }}
+                            prefix="$"
+                            style={{ maxWidth: 186 }}
                         />
                         <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">0.00287116 BTC</Text>
                     </div>

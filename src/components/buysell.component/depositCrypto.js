@@ -21,7 +21,7 @@ class depositCrypto extends Component {
                     <Radio.Button value={1}>From Crypto</Radio.Button>
                     <Radio.Button value={2}>From Fiat</Radio.Button>
                 </Radio.Group>
-                <div className="sellcrypto-container">
+                <div className="sellcrypto-container auto-scroll">
                     <List onClick={() => this.props.changeStep('step8')}
                         itemLayout="horizontal"
                         dataSource={config.tlvCoinsList}

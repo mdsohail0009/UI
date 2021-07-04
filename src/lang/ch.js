@@ -16,8 +16,8 @@ export default {
   ftr_tc_p: '勒根与政策',
   search_currency: '搜索货币',
   buy_assets: '购买资产',
-  deposite_a_cryto_txt:'Get crypto by simply sharing your QR Address',
-  deposite_a_crypto: 'Purchase a Crypto',
+  deposite_a_cryto_txt: '只需分享您的 QR 地址即可获得加密货币',
+  deposite_a_crypto: '购买加密货币',
   past_hours: '在过去的 24 小时内',
   purchase_a_crypto: '购买加密货币',
   purchase_a_cryto_txt: '你的钱包是空的，你没有任何资产可以进行交易。点击此链接并存入一些现金。',
@@ -75,5 +75,10 @@ export default {
   success_msg: "謝謝你",
   success_decr: "您的訂單已成功下單",
   confirm_msg: '等待确认中',
-  confirm_decr: "您的订单已下 确认"
+  confirm_decr: "您的订单已下 确认",
+  withdraw_a_crypto: "提取加密货币",
+  withdraw_a_crypto_text: '为您的加密钱包提款和存款。',
+  usd_available: "USD 106.79 可用的",
+  send_wallet_fiat: '从你的钱包发送到法定货币',
+  verify_identity: '验证您的身份',
 }

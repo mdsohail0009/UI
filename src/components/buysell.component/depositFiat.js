@@ -25,7 +25,7 @@ class DepositFiat extends Component {
                     <Radio.Button value={1}>From Crypto</Radio.Button>
                     <Radio.Button value={2}>From Fiat</Radio.Button>
                 </Radio.Group>
-                <div className="sellcrypto-container">
+                <div className="sellcrypto-container auto-scroll">
                     <WalletList />
                     <Translate className="mb-0 mt-36 fs-14 text-white fw-500 text-upper" content="wire_transfer_mthd" component={Paragraph} />
                     <div className="d-flex align-center mt-16 c-pointer" onClick={this.wiriTransfer}>

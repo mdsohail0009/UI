@@ -17,8 +17,8 @@ export default {
   search_currency: 'Search Currency',
   buy_assets: 'Buy Assets',
   past_hours: 'In the past 24 hours',
-  deposite_a_crypto:'Deposite a Crypto',
-  deposite_a_cryto_txt:'Get crypto by simply sharing your QR Address',
+  deposite_a_crypto: 'Deposite a Crypto',
+  deposite_a_cryto_txt: 'Get crypto by simply sharing your QR Address',
   purchase_a_crypto: 'Purchase a Crypto',
   purchase_a_cryto_txt: 'Your wallet is empty, you don’t have any assets to make transactions. Follow this link and Deposit some cash.',
   all: 'All',
@@ -75,5 +75,10 @@ export default {
   success_msg: "Thank You",
   success_decr: "Your order has been placed succesfully",
   confirm_msg: 'Waiting for Confirmation',
-  confirm_decr: "Your order has been placed Confirm"
+  confirm_decr: "Your order has been placed Confirm",
+  withdraw_a_crypto: "Withdraw a Crypto",
+  withdraw_a_crypto_text: 'Withdraw and deposit for your crypto wallet.',
+  usd_available: "USD 106.79 available",
+  send_wallet_fiat: 'Send from your wallet and into fiat',
+  verify_identity: 'Verify your identity',
 }

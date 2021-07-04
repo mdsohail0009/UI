@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Radio, Card , List, Skeleton} from 'antd';
+import { Typography, Radio, Card, List, Skeleton } from 'antd';
 import config from '../../config/config';
 import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/sendreceiveReducer';
@@ -55,9 +55,9 @@ class DepositeCrypto extends Component {
 
                 {sendreceive ?
                     <>
-                        <Translate content="purchase_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-16" />
-                        <Translate content="purchase_a_cryto_txt" component={Paragraph} className="fs-16 text-white-30" />
-                        <div className="sellcrypto-container">
+                        <Translate content="withdraw_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-8" />
+                        <Translate content="withdraw_a_crypto_text" component={Paragraph} className="fs-16 text-secondary" />
+                        <div className="dep-withdraw auto-scroll">
                             <Card className="crypto-card select mb-16 c-pointer" bordered={false} onClick={() => this.props.changeStep('step2')} >
                                 <span className="d-flex align-center">
                                     <span className="coin lg btc-white" />
@@ -89,13 +89,13 @@ class DepositeCrypto extends Component {
                     :
                     <>
                         <Translate content="deposite_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-16" />
-                        <Translate content="deposite_a_cryto_txt" component={Paragraph} className="fs-16 text-white-30" />
-                        <div className="sellcrypto-container">
+                        <Translate content="deposite_a_cryto_txt" component={Paragraph} className="fs-16 text-secondary" />
+                        <div className="sellcrypto-container auto-scroll">
                             <List
                                 itemLayout="horizontal"
                                 dataSource={config.tlvCoinsList}
                                 loadMore={loadMore}
-                                className="crypto-list"
+                                className="wallet-list"
                                 renderItem={item => (
                                     <List.Item>
                                         <Link onClick={() => this.props.changeStep('step3')}>

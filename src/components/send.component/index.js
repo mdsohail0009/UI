@@ -8,7 +8,8 @@ import DepositeCrypto from '../send.component/depositeToggle';
 import SelectWithdraw from './selectWithdraw';
 import ScanQR from './scan';
 import WithdrawAddress from './withdrawAddress'
-import SellSummary from '../sell.component/sellSummary'
+import SellSummary from '../sell.component/sellSummary';
+import VerifyIDentity from './verifyIdentity';
 const { Title, Paragraph } = Typography
 class SendReceive extends Component {
     state = {
@@ -22,11 +23,12 @@ class SendReceive extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            depositecrypto:<DepositeCrypto />,
-            withdraw:<SelectWithdraw/>,
-            scanner:<ScanQR/>,
-            withdrawaddress:<WithdrawAddress/>,
-            withdrawsummary:<SellSummary/>
+            depositecrypto: <DepositeCrypto />,
+            withdraw: <SelectWithdraw />,
+            scanner: <ScanQR />,
+            withdrawaddress: <WithdrawAddress />,
+            withdrawsummary: <SellSummary />,
+            verifyidentity: <VerifyIDentity />
 
 
         }
@@ -47,6 +49,7 @@ class SendReceive extends Component {
             className="side-drawer"
         >
             {this.renderContent()}
+            <VerifyIDentity />
         </Drawer>);
     }
 }

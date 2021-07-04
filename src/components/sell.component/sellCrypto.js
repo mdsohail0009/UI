@@ -19,7 +19,7 @@ class SellToggle extends Component {
         const { Title, Paragraph, Text } = Typography;
         return (
             <>
-                <div className="sellcrypto-container">
+                <div className="sellcrypto-container auto-scroll">
                     <Card className="crypto-card select mb-16 c-pointer" bordered={false} onClick={() => this.props.changeStep('step10')} >
                         <span className="d-flex align-center">
                             <span className="coin lg btc-white" />
