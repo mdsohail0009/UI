@@ -81,4 +81,7 @@ export default {
   usd_available: "USD 106.79 可用的",
   send_wallet_fiat: '从你的钱包发送到法定货币',
   verify_identity: '验证您的身份',
+  withdraw_Btc:'提現比特幣',
+  withdraw_summary_sub:'從你的錢包發送到法定貨幣。',
+  verify_identity:'Verify your Identity'
 }

@@ -10,6 +10,7 @@ import ScanQR from './scan';
 import WithdrawAddress from './withdrawAddress'
 import SellSummary from '../sell.component/sellSummary';
 import VerifyIDentity from './verifyIdentity';
+import WithdrawSummary from './withdrawSummary';
 const { Title, Paragraph } = Typography
 class SendReceive extends Component {
     state = {
@@ -27,8 +28,8 @@ class SendReceive extends Component {
             withdraw: <SelectWithdraw />,
             scanner: <ScanQR />,
             withdrawaddress: <WithdrawAddress />,
-            withdrawsummary: <SellSummary />,
-            verifyidentity: <VerifyIDentity />
+            verifyidentity: <VerifyIDentity />,
+            withdrawsummary:<WithdrawSummary/>
 
 
         }

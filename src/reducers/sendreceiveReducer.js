@@ -19,6 +19,8 @@ let initialState = {
         withdraw: 'withdraw',
         scanner: 'deposit',
         withdrawaddress: 'withdraw',
+        withdrawsummary:'withdraw_Btc',
+        verifyidentity:'verify_identity'
 
     },
     stepSubTitles: {
@@ -26,6 +28,7 @@ let initialState = {
         withdraw: 'select_a_currency',
         scanner: 'usd_available',
         withdrawaddress: 'send_wallet_fiat',
+        withdrawsummary:'withdraw_summary_sub'
 
     }
 }
