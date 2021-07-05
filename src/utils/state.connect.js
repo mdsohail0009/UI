@@ -1,7 +1,7 @@
 const { connect } = require("react-redux")
 
-const mapStateToProps = ({ oidc, buySell, sendReceive }) => {
-    return { profile: oidc.profile, user: oidc.user, buySell ,sendReceive }
+const mapStateToProps = ({ oidc, buySell, sendReceive, swapStore }) => {
+    return { profile: oidc.profile, user: oidc.user, buySell ,sendReceive,swapStore }
 }
 const mapDispatchToProps = dispatch=>{
     return {dispatch}
