@@ -43,7 +43,7 @@ class SelectFiat extends Component {
                 <Radio.Button value="all">ALL</Radio.Button>
             </Radio.Group>
             
-            <Button size="large" block className="pop-btn" onClick={() => this.props.changeStep('step11')}>PREVIEW</Button>
+            <Button size="large" block className="pop-btn" >PREVIEW</Button>
         </>
         );
     }
