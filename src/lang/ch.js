@@ -90,4 +90,7 @@ export default {
   purchase_fiat: '购买菲亚特',
   purchase_fiat_text: '你的钱包是空的，你没有任何资产可以进行交易。点击此链接并存入一些现金.',
   link_newcard: '链接新卡',
+  swap_title: '新掉期',
+  swap_desc: '立即將您的加密貨幣兌換成我們在您錢包中提供的任何貨幣',
+  pick: '挑選',
 }

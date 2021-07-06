@@ -86,7 +86,9 @@ line-height: 16px;min-width:90px}
 .icon.sm.uparw-o-white{background-position:-332px -6px;}
 .icon.sm.dwnarw-o-white{background-position:-355px -5px;}
 .icon.md.rarrow-white{background-position:-217px -1px;}
+.icon.md.signal-white{background-position: -28px -37px;width: 25px !important;height: 25px !important;}
 .icon.md.arrow-right{background-position:-122px -1px;transform: rotate(90deg);}
+.icon.md.arrow-left{background-position:-124px 0px;transform: rotate(-90deg);}
 .header-right li{padding: 0 !important;margin: 0 6px; font-size: 16px; color: var(--textWhite30) !important;}
 .header-dropdown{font-size: 24px; color: var(--textBlack) !important;}
 .mid-menu{display: flex; align-items: center;}
@@ -99,7 +101,7 @@ line-height: 16px;min-width:90px}
 .side-drawer .ant-drawer-mask{background-color: var(--bgDarkGrey-95);}
 .side-drawer .ant-drawer-header, .crypto-list-tabs .ant-tabs-nav::before{border: none;}
 .side-drawer-header.custom-drawer-header{padding: 30px 46px 30px 0px !important;}
-.buysell-toggle{border-radius: 20px; background: var(--bgDarkGrey); padding: 10px;display: block;margin: 0 44px 50px 44px}
+.buysell-toggle{border-radius: 20px; background: var(--bgDarkGrey); padding: 10px;display: block;margin: 0 40px 50px 40px}
 .buysell-toggle .ant-radio-button-wrapper{border-radius: 15px;border: none;background: transparent;color: var(--textYellow);text-transform: uppercase;font-weight: 600;padding: 22px 43px; min-width: 160px;line-height: 0;font-size: 14px;text-align: center;}
 .buysell-toggle .ant-radio-button{border-radius: 15px;font-size: 12px;}
 .buysell-toggle .ant-radio-button-checked{background: var(--bgYellow);border-left: none;}
@@ -126,6 +128,7 @@ line-height: 16px;min-width:90px}
 .crypto-card{border-radius: 25px;box-shadow: 0 8px 16px rgba(20,0,4,0.2);background-color:var(--bgOrient);}
 .crypto-card.normal-card{background-color: var(--bgDark) !important;box-shadow:none;}
 .crypto-card.select{background-image: url(../images/select-card-bg.png);background-size: cover;border-radius: 1.8rem;}
+.crypto-card.fiatcard{background-image: url(../images/fiatcard-bg.png);background-size: cover;border-radius: 1.8rem;}
 .crypto-card .ant-card-body{height: 231px; display: flex; flex-direction: column;justify-content: space-between;}
 .crypto-percent{font-size: 60px; line-height: normal;}
 .enter-val-container{display: flex; align-items: flex-start;justify-content: flex-end;margin-right: 35px;}
@@ -170,6 +173,11 @@ line-height: 16px;min-width:90px}
 .coin.lg.usdt-white{background-position: -92px -404px}
 .coin.md.btc-white{background-position: 1px -405px}
 .coin.md.eth-white{background-position: -41px -405px}
+.coin-circle{width: 52px !important;height: 52px !important;}
+.coin.md.usdtbg-white{background-position: -79px -1112px;}
+.coin.md.eurotbg-white{background-position: -14px -1112px;}
+.coin.md.visa-white{background-position: -12px -1045px;width: 58px !important;}
+.coin.md.mastercard-white{background-position: -76px -1045px;width: 58px !important;}
 
 .pay-list{padding: 20px 0; border-bottom: 1px solid var(--borderLight);}
 .expiry-input{width: 200px;}
@@ -181,7 +189,17 @@ line-height: 16px;min-width:90px}
 .swapfrom-card{background-color: #1B4156;  border-bottom-right-radius: 0 !important; }
 .swapreceive-card{background-color: #1E526E;  border-top-right-radius: 0 !important;box-shadow: var(--bgDark) -0.05px 4.95px 0; }
 .card-input{padding:0 !important; font-size: 24px; line-height: 24px; color:var(--textWhite30);}
-@media (min-width: 320px){
+.icon.swapfrom-arrow{
+    position: absolute; bottom: 0; right:0;width:43px;height: 43px; background-position: -54px -272px;
+}
+.icon.swapto-arrow{
+    position: absolute; top: 0; right:0;width:43px;height: 43px;margin-right: 12px; background-position: -3px -287px;
+}
+.crypto-search.ant-input-search .ant-input-group input{background-color: var(--bgDark) !important;text-align: center;
+height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-radius: 20px 0px 0 20px;}
+.crypto-search.ant-input-search .ant-input-group .ant-input-group-addon{background-color: var(--bgDark) !important;border-radius: 0 20px 20px 0;}
+.crypto-search .anticon-search{font-size: 18px; color: var(--textWhite);margin-right: 12px !important;}
+    @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}
     .megamenu-label{margin-top: 24px;}
@@ -256,3 +274,4 @@ line-height: 16px;min-width:90px}
     .mega-menu{max-width: 1320px;}
 }
 .recomoned-bg{background: var(--texthover);font-size: 12px;padding: 0 2px;line-height: 1.2;color: var(--textWhite);float: right;}
+.text-width{width: 250px;}

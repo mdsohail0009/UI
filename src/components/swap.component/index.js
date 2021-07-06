@@ -6,6 +6,7 @@ import { setStep } from '../../reducers/swapReducer';
 import { swapobj as config } from './config';
 import SwapCoins from './swapCoins';
 import SwapSummary from './swapSummary'
+import SelectCrypto from './selectcrypto';
 
 const { Title, Paragraph } = Typography
 class SwapCrypto extends Component {
@@ -22,6 +23,7 @@ class SwapCrypto extends Component {
         const stepcodes = {
             swapcoins:<SwapCoins />,
             swapsummary:<SwapSummary />,
+            selectcrypto:<SelectCrypto swapfrom="true"/>
         
 
         }

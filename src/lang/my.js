@@ -92,4 +92,7 @@ export default {
   purchase_fiat: 'Beli Fiat',
   purchase_fiat_text: 'Dompet anda kosong, anda tidak mempunyai aset untuk membuat transaksi. Ikuti pautan ini dan Deposit sejumlah wang.',
   link_newcard: 'Paut kad baru',
+  swap_title: 'Pertukaran Baru',
+  swap_desc: 'tukar kripto anda dengan segera ke dalam mata wang yang kami tawarkan di dompet anda',
+  pick: 'pilih'
 }
