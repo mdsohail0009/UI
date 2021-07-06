@@ -86,4 +86,7 @@ export default {
   verify_identity: '验证您的身份',
   suissebase_personal: '瑞士基地 个人的',
   avail_wallet_weprovide: '我们提供的可用钱包',
+  swap_title: '新掉期',
+  swap_desc: '立即將您的加密貨幣兌換成我們在您錢包中提供的任何貨幣',
+  pick:'挑選',
 }

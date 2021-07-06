@@ -23,7 +23,7 @@ class SwapCrypto extends Component {
         const stepcodes = {
             swapcoins:<SwapCoins />,
             swapsummary:<SwapSummary />,
-            selectcrypto:<SelectCrypto/>
+            selectcrypto:<SelectCrypto swapfrom="true"/>
         
 
         }
