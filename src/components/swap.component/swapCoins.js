@@ -12,10 +12,11 @@ class SwapCoins extends Component {
         const { Paragraph, Text } = Typography;
         return (
             <div>
-                <div className="scanner-img">
+                {/* <div className="scanner-img">
                     <img src={sacnner} />
                 </div>
-                <Translate size="large" block className="pop-btn" style={{ marginTop: '100px' }} content="cancel" component={Button} onClick={() => this.props.changeStep('step4')} />
+                <Translate size="large" block className="pop-btn" style={{ marginTop: '100px' }} content="cancel" component={Button} onClick={() => this.props.changeStep('step4')} /> */}
+            
             </div>
         )
     }

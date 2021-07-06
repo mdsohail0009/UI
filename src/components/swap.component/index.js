@@ -4,7 +4,8 @@ import Translate from 'react-translate-component';
 import connectStateProps from '../../utils/state.connect';
 import { setStep } from '../../reducers/swapReducer';
 import { swapobj as config } from './config';
-import SwapCoins from './swapCoins'
+import SwapCoins from './swapCoins';
+import SwapSummary from './swapSummary'
 
 const { Title, Paragraph } = Typography
 class SwapCrypto extends Component {
@@ -19,7 +20,7 @@ class SwapCrypto extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            swapcoins:<SwapCoins/>
+            swapcoins:<SwapSummary />
 
         }
         return stepcodes[config[this.props.swapStore.stepcode]]
