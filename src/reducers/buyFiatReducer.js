@@ -17,13 +17,14 @@ let initialState = {
     stepTitles: {
         buyfiat: "suissebase_personal",
         addcard: 'link_newcard',
-        selectFiat: 'select fiat'
+        selectFiat: 'withdraw',
     },
     stepSubTitles: {
         buyfiat: "avail_wallet_weprovide",
         addcard: null,
-        selectFiat: 'select fiat'
+        selectFiat: 'select_wallet'
     }
+    
 }
 const BuyFiatReducer = (state = initialState, action) => {
     switch (action.type) {
