@@ -42,10 +42,10 @@ class BuySell extends Component {
             billingaddress: <BillingAddress />,
             addressscanner: <AddressScanner />,
             depositfiat: <DepositFiat />,
-            selectedcrypto:<SelectSellCrypto/>,
-            sellsummary:<SellSummary/>,
-            successmsg:<SuccessMsg/>,
-            wiretransfor:<WireTransfer/>
+            selectedcrypto: <SelectSellCrypto />,
+            sellsummary: <SellSummary />,
+            successmsg: <SuccessMsg />,
+            wiretransfor: <WireTransfer />
 
 
         }

@@ -13,6 +13,7 @@ import BusinessMenu from '../components/shared/megaMenu/businessMegamenu';
 import menuCarousel from '../components/shared/megaMenu/menuCarousel';
 import SendReceive from '../components/send.component'
 import SwapCrypto from '../components/swap.component'
+import MassPayment from '../components/buyfiat.component'
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -60,7 +61,7 @@ class Header extends Component {
             lang: 'en',
             buyDrawer: false,
             sendDrawer: false,
-            swapDrawer:false,
+            swapDrawer: false,
             buyToggle: 'Buy',
             depositToggle: 'From Crypto',
             payDrawer: false,
@@ -68,6 +69,7 @@ class Header extends Component {
             cardsDetails: false,
             billingAddress: false,
             initLoading: true,
+            buyFiatDrawer: false,
         }
         this.next = this.next.bind(this);
         this.previous = this.previous.bind(this);
@@ -107,6 +109,11 @@ class Header extends Component {
             swapDrawer: true
         })
     }
+    showBuyFiatDrawer = () => {
+        this.setState({
+            buyFiatDrawer: true,
+        })
+    }
     closeDrawer = () => {
         this.setState({
             buyDrawer: false,
@@ -117,7 +124,8 @@ class Header extends Component {
             cardsDetails: false,
             depositScanner: false,
             sendDrawer: false,
-            swapDrawer:false
+            swapDrawer: false,
+            buyFiat_Drawer: false,
         })
     }
     render() {
@@ -144,9 +152,9 @@ class Header extends Component {
                         </div>
                         <Menu theme="light" mode="horizontal" className="header-right" defaultSelectedKeys={['1']}>
                             <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item>
-                            <Menu.Item key="2" className="list-item"  onClick={this.showSwapDrawer}>Swap</Menu.Item>
+                            <Menu.Item key="2" className="list-item" onClick={this.showSwapDrawer}>Swap</Menu.Item>
                             <Menu.Item key="3" className="list-item" onClick={this.showSendDrawer}>Send / Receive</Menu.Item>
-                            <Menu.Item key="4" className="list-item">Mass Payments</Menu.Item>
+                            <Menu.Item key="4" className="list-item" onClick={this.showBuyFiatDrawer}>Mass Payments</Menu.Item>
                             <Dropdown overlay={securityMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Menu.Item key="5">Security</Menu.Item>
                             </Dropdown>
@@ -345,7 +353,8 @@ class Header extends Component {
                 </Modal>
                 <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
                 <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
-                <SwapCrypto showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()}/>
+                <SwapCrypto showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
+                <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
             </>
         );
     }
