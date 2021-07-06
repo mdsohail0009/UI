@@ -86,4 +86,8 @@ export default {
   verify_identity: '验证您的身份',
   suissebase_personal: '瑞士基地 个人的',
   avail_wallet_weprovide: '我们提供的可用钱包',
+  wallet_in_usd: '钱包在 USD',
+  purchase_fiat: '购买菲亚特',
+  purchase_fiat_text: '你的钱包是空的，你没有任何资产可以进行交易。点击此链接并存入一些现金.',
+  link_newcard: '链接新卡',
 }

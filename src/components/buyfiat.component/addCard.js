@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
+import Paragraph from 'antd/lib/skeleton/Paragraph';
 
 class addCard extends Component {
     state = {}

@@ -88,4 +88,8 @@ export default {
   verify_identity: 'Sahkan Identiti anda',
   suissebase_personal: 'Suissebase Peribadi',
   avail_wallet_weprovide: 'Dompet yang ada kami sediakan',
+  wallet_in_usd: 'Dompet masuk USD',
+  purchase_fiat: 'Beli Fiat',
+  purchase_fiat_text: 'Dompet anda kosong, anda tidak mempunyai aset untuk membuat transaksi. Ikuti pautan ini dan Deposit sejumlah wang.',
+  link_newcard: 'Paut kad baru',
 }

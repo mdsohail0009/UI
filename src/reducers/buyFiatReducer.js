@@ -16,9 +16,13 @@ let initialState = {
     stepcode: "step1",
     stepTitles: {
         buyfiat: "suissebase_personal",
+        addcard: 'link_newcard',
+        selectFiat: 'select fiat'
     },
     stepSubTitles: {
         buyfiat: "avail_wallet_weprovide",
+        addcard: null,
+        selectFiat: 'select fiat'
     }
 }
 const BuyFiatReducer = (state = initialState, action) => {
