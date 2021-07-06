@@ -176,8 +176,8 @@ line-height: 16px;min-width:90px}
 .coin-circle{width: 52px !important;height: 52px !important;}
 .coin.md.usdtbg-white{background-position: -79px -1112px;}
 .coin.md.eurotbg-white{background-position: -14px -1112px;}
-.coin.md.visa-white{background-position: -12px -1045px;width: 58px !important;}
-.coin.md.mastercard-white{background-position: -76px -1045px;width: 58px !important;}
+.coin.md.visa-white{background-position: -12px -1040px;width: 58px !important;}
+.coin.md.mastercard-white{background-position: -76px -1042px;width: 58px !important;}
 
 .pay-list{padding: 20px 0; border-bottom: 1px solid var(--borderLight);}
 .expiry-input{width: 200px;}

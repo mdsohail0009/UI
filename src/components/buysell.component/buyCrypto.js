@@ -41,7 +41,7 @@ class BuyCrypto extends Component {
                 <>
                  <Paragraph className="mb-0 text-white-30 fw-200 fs-36">Sell your Crypto for Cash</Paragraph>
                  <Paragraph className="text-secondary fw-300 fs-16">Easily buy and sell Crypto straight from your Wallet.</Paragraph>
-                    <SellToggle /></>
+                    <SellToggle /></> 
                     :
                     <>
                         <Translate content="purchase_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-16" />
