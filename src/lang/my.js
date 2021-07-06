@@ -83,7 +83,9 @@ export default {
   usd_available: "USD 106.79 ada",
   send_wallet_fiat: 'Hantar dari dompet anda dan ke fiat',
   verify_identity: 'Sahkan identiti anda',
-  withdraw_Btc:'Tarik balik BTC',
-  withdraw_summary_sub:' Hantar dari dompet anda dan ke fiat.',
-  verify_identity:'Verify your Identity'
+  withdraw_Btc: 'Tarik balik BTC',
+  withdraw_summary_sub: ' Hantar dari dompet anda dan ke fiat.',
+  verify_identity: 'Sahkan Identiti anda',
+  suissebase_personal: 'Suissebase Peribadi',
+  avail_wallet_weprovide: 'Dompet yang ada kami sediakan',
 }

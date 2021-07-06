@@ -15,10 +15,10 @@ const clearStep = (payload) => {
 let initialState = {
     stepcode: "step1",
     stepTitles: {
-        buyfiat: "Suissebase Personal",
+        buyfiat: "suissebase_personal",
     },
     stepSubTitles: {
-        buyfiat: "Available wallet we provide",
+        buyfiat: "avail_wallet_weprovide",
     }
 }
 const BuyFiatReducer = (state = initialState, action) => {

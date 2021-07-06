@@ -81,7 +81,9 @@ export default {
   usd_available: "USD 106.79 available",
   send_wallet_fiat: 'Send from your wallet and into fiat',
   verify_identity: 'Verify your identity',
-  withdraw_Btc:'Withdraw BTC',
-  withdraw_summary_sub:' Send from your wallet and into fiat.',
-  verify_identity:'Verify your Identity'
+  withdraw_Btc: 'Withdraw BTC',
+  withdraw_summary_sub: ' Send from your wallet and into fiat.',
+  verify_identity: 'Verify your Identity',
+  suissebase_personal: 'Suissebase Personal',
+  avail_wallet_weprovide: 'Available wallet we provide',
 }
