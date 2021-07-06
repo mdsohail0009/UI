@@ -12,6 +12,8 @@ import AddCard from '../buysell.component/addCard';
 class MassPayment extends Component {
     state = {
         visible: false,
+        withdrow: false,
+        withdrowclose: true
     }
     handleMenuClick = e => {
         if (e.key === '3') {
@@ -40,6 +42,7 @@ class MassPayment extends Component {
         return stepcodes[config[this.props.buyFiat.stepcode]]
     }
     render() {
+        const { withdrow,withdrowclose } = this.state;
         const menu = (
             <Menu onClick={this.handleMenuClick}>
               <Menu.Item key="1">Withdraw</Menu.Item>
@@ -56,13 +59,13 @@ class MassPayment extends Component {
                             <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                             <Translate className="text-white-50 mb-0 fw-300" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                         </div>
-                        {/* <span className="icon md close-white c-pointer" onClick={this.closeDrawer} /> */}
+                        {withdrowclose &&<span className="icon md close-white c-pointer" onClick={this.closeDrawer} /> }
 
-                        <Dropdown overlay={menu} onVisibleChange={this.handleVisibleChange}
+                        {withdrow &&<Dropdown overlay={menu} onVisibleChange={this.handleVisibleChange}
                             visible={this.state.visible} >
                                 <a className="text-white toggle-bg" onClick={e => e.preventDefault()}><EllipsisOutlined className="fw-600" onClick={e => e.preventDefault()} /></a>
                             {/* <a className="icon md lftarw-white" onClick={e => e.preventDefault()}></a> */}
-                        </Dropdown>
+                        </Dropdown>}
                         
                     </div>
                 ]}

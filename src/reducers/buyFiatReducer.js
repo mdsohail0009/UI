@@ -22,7 +22,7 @@ let initialState = {
     stepSubTitles: {
         buyfiat: "avail_wallet_weprovide",
         addcard: null,
-        selectfiat: 'select_wallet'
+        selectfiat: "select_wallet",
     }
     
 }

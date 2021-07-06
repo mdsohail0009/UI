@@ -6,7 +6,9 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 
 class SelectFiat extends Component {
-    state = {}
+    state = {
+        withdrow: "true",
+    }
     render() {
         const { Text } = Typography;
         return (
