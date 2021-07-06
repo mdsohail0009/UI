@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Typography, Button } from 'antd';
 import SavedCards from '../shared/savedCards';
-import { Drawer, Typography, Button, Card, Input, Radio } from 'antd';
-import WalletList from '../shared/walletList';
-import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 
