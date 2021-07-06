@@ -99,7 +99,7 @@ line-height: 16px;min-width:90px}
 .side-drawer .ant-drawer-mask{background-color: var(--bgDarkGrey-95);}
 .side-drawer .ant-drawer-header, .crypto-list-tabs .ant-tabs-nav::before{border: none;}
 .side-drawer-header.custom-drawer-header{padding: 30px 46px 30px 0px !important;}
-.buysell-toggle{border-radius: 20px; background: var(--bgDarkGrey); padding: 10px;display: block;margin: 0 44px 50px 44px}
+.buysell-toggle{border-radius: 20px; background: var(--bgDarkGrey); padding: 10px;display: block;margin: 0 40px 50px 40px}
 .buysell-toggle .ant-radio-button-wrapper{border-radius: 15px;border: none;background: transparent;color: var(--textYellow);text-transform: uppercase;font-weight: 600;padding: 22px 43px; min-width: 160px;line-height: 0;font-size: 14px;text-align: center;}
 .buysell-toggle .ant-radio-button{border-radius: 15px;font-size: 12px;}
 .buysell-toggle .ant-radio-button-checked{background: var(--bgYellow);border-left: none;}
@@ -126,6 +126,7 @@ line-height: 16px;min-width:90px}
 .crypto-card{border-radius: 25px;box-shadow: 0 8px 16px rgba(20,0,4,0.2);background-color:var(--bgOrient);}
 .crypto-card.normal-card{background-color: var(--bgDark) !important;box-shadow:none;}
 .crypto-card.select{background-image: url(../images/select-card-bg.png);background-size: cover;border-radius: 1.8rem;}
+.crypto-card.fiatcard{background-image: url(../images/fiatcard-bg.png);background-size: cover;border-radius: 1.8rem;}
 .crypto-card .ant-card-body{height: 231px; display: flex; flex-direction: column;justify-content: space-between;}
 .crypto-percent{font-size: 60px; line-height: normal;}
 .enter-val-container{display: flex; align-items: flex-start;justify-content: flex-end;margin-right: 35px;}
@@ -153,6 +154,7 @@ line-height: 16px;min-width:90px}
 .theme-dark, .theme-dark:hover, .theme-dark:focus{background-color: var(--bgWhite) !important;color: var(--textBlack);border-color: var(--bgWhite);}
 /* Coins */
 .coin{width: 43px; height: 43px;background: url(../../assets/images/crypto-icons.svg) no-repeat; display: inline-block; vertical-align: text-top; box-shadow: 0 8px 16px rgba(20,0,4,0.2); border-radius: 6px;}
+.bg-circle{background-color: var(--bgCircle);border-radius: 50%;padding: 22px;}
 .coin.bch{background-position: -1px -1px;}
 .coin.eth{background-position: -55px -1px;}
 .coin.btc{background-position: -108px -1px;}
@@ -170,6 +172,7 @@ line-height: 16px;min-width:90px}
 .coin.lg.usdt-white{background-position: -92px -404px}
 .coin.md.btc-white{background-position: 1px -405px}
 .coin.md.eth-white{background-position: -41px -405px}
+.coin.md.usdtmd-white{background-position: -93px -404px;}
 
 .pay-list{padding: 20px 0; border-bottom: 1px solid var(--borderLight);}
 .expiry-input{width: 200px;}
