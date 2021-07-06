@@ -12,21 +12,23 @@ class SwapCoins extends Component {
         const { Paragraph, Text } = Typography;
         return (
             <div>
-                <div className="swap swapfrom-card ">
+                <div className="swap swapfrom-card p-relative">
                     <div>
                         <Paragraph className="mb-0 text-white-30 fs-14 fw-100">Swap From</Paragraph>
                         <Input className="card-input"  defaultValue="0.00549635" bordered={false} placeholder="0.0" />
                         <Paragraph className="mb-0 text-white-30 fs-12 fw-100">Balance - 2.547813980005 BTC</Paragraph>
                     </div>
-                    <div className="d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step1')} >
+                    <div className="d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step3')} >
                         <div>
                         <span className="coin md btc-white"></span>
                         <Paragraph className="mb-0 text-white-30 fs-12 fw-100 text-center">Bitcoin</Paragraph>
                         </div>
                         <span className="icon md arrow-right ml-16"></span>
+                        <span className="icon swapfrom-arrow"></span>
                     </div>
                 </div>
-                <div className="swap swapreceive-card ">
+              
+                <div className="swap swapreceive-card p-relative">
                     <div>
                         <Paragraph className="mb-0 text-white-30 fs-14 fw-100">To Receive</Paragraph>
                         <Input className="card-input"  defaultValue="0.10183318" bordered={false} placeholder="0.0" />
@@ -34,6 +36,7 @@ class SwapCoins extends Component {
                     </div>
                     <div className="d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step1')} >
                         <div>
+                        <span className="icon swapto-arrow"></span>
                         <span className="coin md eth-white"></span>
                         <Paragraph className="mb-0 text-white-30 fs-12 fw-100 text-center">Ethereum</Paragraph>
                         </div>

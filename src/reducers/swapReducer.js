@@ -18,11 +18,13 @@ const clearStep = (payload) => {
 let initialState = {
     stepcode: 'step1',
     stepTitles: {
-        swapcoins:"swap_title"
+        swapcoins:"swap_title",
+        selectcrypto:'swap_title'
    },
   
    stepSubTitles:  {
-    swapcoins:"swap_desc"
+    swapcoins:"swap_desc",
+    selectcrypto:'swap_desc'
 }
 }
 
