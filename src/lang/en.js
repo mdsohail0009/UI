@@ -86,5 +86,6 @@ export default {
   withdraw_summary_sub: ' Send from your wallet and into fiat.',
   verify_identity: 'Verify your Identity',
   swap_title: 'New Swap',
-  swap_desc: 'instantly exchange your crypto into any currency we offer in your wallet'
+  swap_desc: 'instantly exchange your crypto into any currency we offer in your wallet',
+  pick:'pick'
 }

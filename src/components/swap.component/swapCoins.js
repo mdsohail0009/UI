@@ -51,7 +51,7 @@ class SwapCoins extends Component {
               Price 1BTC = 16.41933713 ETH
                 </Paragraph>
                 </div>
-                <Translate size="large" block className="pop-btn" style={{ marginTop: '100px' }} content="preview" component={Button} onClick={() => this.props.changeStep('step4')} />
+                <Translate size="large" block className="pop-btn" style={{ marginTop: '100px' }} content="preview" component={Button} onClick={() => this.props.changeStep('step2')} />
             </div>
         )
     }
