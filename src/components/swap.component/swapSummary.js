@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Button, Tooltip, Input } from 'antd';
+import Translate from 'react-translate-component';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -25,11 +26,12 @@ class SwapSummary extends Component {
                 </div>
 
                 <div className="pay-list fs-14">
-                    <Text className="fw-400 text-white">Exchange Rate</Text>
+                    {/* <Text className="fw-400 text-white">Exchange Rate</Text> */}
+                    <Translate className="fw-400 text-white" content="exchange_rate" component={Text}/>
                     <Text className="fw-300 text-white-30">1 BTC = 41.363.47 USD</Text>
                 </div>
                 <div className="pay-list fs-14">
-                    <Text className="fw-400 text-white">Amount</Text>
+                    <Translate className="fw-400 text-white" content="amount" component={Text} />
                     <Text className="fw-300 text-white-30">USD 106.79</Text>
                 </div>
                 <div className="pay-list fs-14">
