@@ -28,7 +28,7 @@ class BuyFiat extends Component {
 
                 <Card className="crypto-card fiatcard mb-36" bordered={false}>
                     <span className="d-flex align-center">
-                        <span className="bg-circle coin md usdtmd-white" />
+                        <span className="coin-circle coin md usdtbg-white" />
                         <Text className="fs-24 text-white crypto-name ml-8">USD</Text>
                     </span>
                     <div className="crypto-details">
@@ -40,15 +40,22 @@ class BuyFiat extends Component {
                     </div>
                 </Card>
                 <Card className="crypto-card select mb-36" bordered={false}>
+                    <div className="d-flex justify-content align-center">
                     <span className="d-flex align-center">
-                        <span className="bg-circle coin md usdtmd-white" />
-                        <Text className="fs-24 text-white crypto-name ml-8">USD</Text>
+                        <span className="coin-circle coin md eurotbg-white" />
+                        <Text className="fs-24 text-white crypto-name ml-8">EUR</Text>
                     </span>
-                    <div className="crypto-details">
+                    <span className="icon md c-pointer signal-white" />
+                    </div>
+                    <div className="crypto-details d-flex justify-content align-center">
                        
                         <div className=" fw-200">
                             <div className="text-white-50 fs-14">Current Balance</div>
                             <div className="fs-24 text-white fw-500">$5,200.00</div>
+                        </div>
+                        <div>
+                            <span className="coin-circle coin md visa-white" /> 
+                            <span className="coin-circle coin md mastercard-white" />
                         </div>
                     </div>
                 </Card>
