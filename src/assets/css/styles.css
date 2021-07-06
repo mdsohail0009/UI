@@ -256,3 +256,4 @@ line-height: 16px;min-width:90px}
     .mega-menu{max-width: 1320px;}
 }
 .recomoned-bg{background: var(--texthover);font-size: 12px;padding: 0 2px;line-height: 1.2;color: var(--textWhite);float: right;}
+.text-width{width: 250px;}
