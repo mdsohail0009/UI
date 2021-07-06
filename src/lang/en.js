@@ -80,10 +80,11 @@ export default {
   withdraw_a_crypto_text: 'Withdraw and deposit for your crypto wallet.',
   usd_available: "USD 106.79 available",
   send_wallet_fiat: 'Send from your wallet and into fiat',
-  verify_identity: 'Verify your identity',
+  suissebase_personal: 'Suissebase Personal',
+  avail_wallet_weprovide: 'Available wallet we provide',
   withdraw_Btc: 'Withdraw BTC',
   withdraw_summary_sub: ' Send from your wallet and into fiat.',
   verify_identity: 'Verify your Identity',
-  suissebase_personal: 'Suissebase Personal',
-  avail_wallet_weprovide: 'Available wallet we provide',
+  swap_title: 'New Swap',
+  swap_desc: 'instantly exchange your crypto into any currency we offer in your wallet'
 }
