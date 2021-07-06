@@ -22,8 +22,8 @@ class MassPayment extends Component {
     renderContent = () => {
         const stepcodes = {
             buyfiat: <BuyFiat />,
-            addcard: <AddCard handleClick={() => this.onHhandleClick()} />,
             selectfiat: <SelectFiat />,
+            addcard: <AddCard />,
         }
         return stepcodes[config[this.props.buyFiat.stepcode]]
     }

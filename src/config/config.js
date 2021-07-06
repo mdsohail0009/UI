@@ -163,6 +163,13 @@ const config = {
       profit: '0.72',
       currency: '£',
     }
+  ],
+  savedCards: [
+    {
+      cardType: 'visa',
+      cardNumber: 'Visa....5339',
+      confirm: 'Confirmation need',
+    }
   ]
 }
 
