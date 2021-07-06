@@ -1,27 +1,32 @@
 const SET_STEP = "setStep";
-const CLEAR_STEP ="clearStep"
+const CLEAR_STEP = "clearStep"
 
-const setStep =(payload) => {
-    return{
-        type:SET_STEP,
+const setStep = (payload) => {
+    return {
+        type: SET_STEP,
         payload
     }
 }
 
-const clearStep =(payload) => {
-    return{
-        type:CLEAR_STEP,
+const clearStep = (payload) => {
+    return {
+        type: CLEAR_STEP,
         payload
     }
 }
 
-let initialState ={
-   stepcode:'step1' ,
-   stepTitles:"",
-   stepSubTitles:""
+let initialState = {
+    stepcode: 'step1',
+    stepTitles: {
+        swapcoins:"swap_title"
+   },
+  
+   stepSubTitles:  {
+    swapcoins:"swap_desc"
+}
 }
 
-const SwapReducer =(state = initialState, action ) =>{
+const SwapReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_STEP:
             state = { ...state, stepcode: action.payload };
@@ -35,4 +40,4 @@ const SwapReducer =(state = initialState, action ) =>{
 }
 
 export default SwapReducer;
-export {setStep, clearStep }
+export { setStep, clearStep }
