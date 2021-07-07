@@ -98,5 +98,9 @@ export default {
   swap_to:'Untuk menerima',
   pick: 'pilih',
   confirm_swap:'Sahkan Pertukaran',
-  total:'jumlah'
+  total:'jumlah',
+  confirm_transaction:'Sahkan Transaksi',
+  confirm_transaction_decs:'Dompet dalam USD',
+  add_fund:'Add Funds'
+
 }

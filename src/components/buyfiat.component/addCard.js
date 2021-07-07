@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Drawer, Typography, Input, Button, label } from 'antd';
 import { Link } from 'react-router-dom';
-import { setStep } from '../../reducers/buysellReducer';
+import { setStep } from '../../reducers/buyFiatReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import Paragraph from 'antd/lib/skeleton/Paragraph';
@@ -30,17 +30,17 @@ class addCard extends Component {
                             <Input className="cust-input" defaultValue="544" />
                         </div>
                     </div>
-                    <Translate className="text-center mt-16 text-white fs-16" content="type_billing_address" component={Paragraph} />
+                    <Translate className="text-center mt-16 text-white fs-16 c-pointer" content="type_billing_address" component={Paragraph} />
                 </form>
-                <Translate content="confirm_btn_text" component={Button} size="large" block className="pop-btn" style={{ marginTop: '180px' }} onClick={this.billingAddress} />
+                <Translate content="confirm_btn_text" component={Button} size="large" block className="pop-btn" style={{ marginTop: '180px' }} onClick={() => this.props.changeStep("step6")}/>
                 <Translate content="cancel" component={Button} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
             </>
         );
     }
 }
 
-const connectStateToProps = ({ buySell, oidc }) => {
-    return { buySell }
+const connectStateToProps = ({ buyFiat , oidc }) => {
+    return { buyFiat }
 }
 const connectDispatchToProps = dispatch => {
     return {

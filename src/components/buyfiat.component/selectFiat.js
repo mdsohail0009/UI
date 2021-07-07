@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Typography, Button, Input } from 'antd';
 import SavedCards from '../shared/savedCards';
-import { setStep } from '../../reducers/buysellReducer';
+import { setStep } from '../../reducers/buyFiatReducer';
 import { connect } from 'react-redux';
 
 class SelectFiat extends Component {
@@ -39,7 +39,7 @@ class SelectFiat extends Component {
                     bordered={false}
                     prefix="USD"
                 />
-                <Button size="large" block className="pop-btn" style={{ marginTop: '55px' }}>Preview Swap</Button>
+                <Button size="large" block className="pop-btn" style={{ marginTop: '55px' }} onClick={() => this.props.changeStep("step5")}>Preview Swap</Button>
             </>
         );
     }
