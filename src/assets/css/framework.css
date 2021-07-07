@@ -38,6 +38,7 @@
 .align-center{align-items: center;}
 .justify-content{justify-content: space-between;}
 .text-underline{text-decoration: underline !important;}
+.valign-initial{vertical-align: initial;}
 
 /*--Text Colors--*/
 .text-white{color: var(--textWhite) !important;}
