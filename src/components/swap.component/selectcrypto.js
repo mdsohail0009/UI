@@ -34,8 +34,8 @@ class SelectCrypto extends Component {
                     )}
                 />
             </div>
-            <Translate size="large" className="pop-btn active" style={{ marginTop: '10px' ,width:'50%', borderRadius:'30px 0 0 30px' ,background:'#e0bb02', color:'#fff'}} content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} />
-            <Translate size="large" className="pop-btn" style={{ marginTop: '10px',width:'50%', borderRadius:'0 30px 30px 0' }} content="pick" component={Button} onClick={() => this.props.changeStep('step1')} />
+            <Translate size="large" className="custon-btngroup cancel-btngroup" content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} />
+            <Translate size="large" className="custon-btngroup pick-btn" content="pick" component={Button} onClick={() => this.props.changeStep('step1')} />
         </>)
     }
 }

@@ -92,6 +92,8 @@ export default {
   link_newcard: '链接新卡',
   swap_title: '新掉期',
   swap_desc: '立即將您的加密貨幣兌換成我們在您錢包中提供的任何貨幣',
+  swap_from:'交換自',
+  swap_to:'接受',
   pick: '挑選',
   select_wallet: "从你的钱包里卖",
   confirm_swap:'確認交換',

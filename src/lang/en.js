@@ -87,6 +87,8 @@ export default {
   verify_identity: 'Verify your Identity',
   swap_title: 'New Swap',
   swap_desc: 'instantly exchange your crypto into any currency we offer in your wallet',
+  swap_from:'Swap From',
+  swap_to:'To Receive',
   wallet_in_usd: 'Wallet in USD',
   purchase_fiat: 'Purchase a Fiat',
   purchase_fiat_text: 'Your wallet is empty, you don’t have any assets to make transactions. Follow this link and Deposit some cash.',
