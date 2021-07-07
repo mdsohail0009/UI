@@ -9,6 +9,7 @@ import BuyFiat from './buyFiat';
 import SelectFiat from './selectFiat';
 import AddCard from '../buysell.component/addCard';
 import SelectWallet from './selectWallet';
+import FiatSummary from './buyfiatSummary';
 
 class MassPayment extends Component {
     state = {
@@ -29,6 +30,7 @@ class MassPayment extends Component {
             selectfiat: <SelectFiat />,
             addcard: <AddCard />,
             selectwallet: <SelectWallet />,
+            faitsummary:<FiatSummary/>
         }
         return stepcodes[config[this.props.buyFiat.stepcode]]
     }

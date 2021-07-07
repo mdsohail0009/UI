@@ -3,4 +3,5 @@ export const buyFiatSteps = {
     step2: "selectfiat",
     step3: "addcard",
     step4: "selectwallet",
+    step5:'faitsummary'
 }

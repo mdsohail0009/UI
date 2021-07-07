@@ -97,5 +97,7 @@ export default {
   pick: '挑選',
   select_wallet: "从你的钱包里卖",
   confirm_swap:'確認交換',
-  total:'全部的'
+  total:'全部的',
+  confirm_transaction:'確認交易',
+  confirm_transaction_decs:'美元錢包'
 }

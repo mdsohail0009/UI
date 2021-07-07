@@ -39,7 +39,7 @@ class SelectFiat extends Component {
                     bordered={false}
                     prefix="USD"
                 />
-                <Button size="large" block className="pop-btn" style={{ marginTop: '55px' }} onClick={() => this.props.changeStep("step3")}>Preview Swap</Button>
+                <Button size="large" block className="pop-btn" style={{ marginTop: '55px' }} onClick={() => this.props.changeStep("step5")}>Preview Swap</Button>
             </>
         );
     }

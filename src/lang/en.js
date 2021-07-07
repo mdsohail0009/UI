@@ -95,5 +95,7 @@ export default {
   link_newcard: 'Link new card',
   pick: 'pick',
   confirm_swap:'Confirm Swap',
-  total:'Total'
+  total:'Total',
+  confirm_transaction:'Confirm Transaction',
+  confirm_transaction_decs:'Wallet in USD'
 }
