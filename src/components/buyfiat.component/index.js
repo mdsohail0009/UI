@@ -36,9 +36,11 @@ class MassPayment extends Component {
     }
     render() {
         const menu = (
-            <Menu onClick={this.handleMenuClick}>
-                <Menu.Item key="1">Withdraw</Menu.Item>
-                <Menu.Item key="2">Fait</Menu.Item>
+            <Menu>
+                <ul className="drpdwn-list pl-0">
+                    <li><a>Withdraw</a></li>
+                    <li><a>Fiat</a></li>
+                </ul>
             </Menu>
         );
         const { withdraw } = this.state;
@@ -50,11 +52,10 @@ class MassPayment extends Component {
                         <span onClick={this.closeDrawer} className="icon md lftarw-white c-pointer" />
                         <div className="text-center fs-14">
                             <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
-                            <Translate className="text-white-50 mb-0 fw-300" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                            <Translate className="text-white-50 mb-0 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                         </div>
-                        <Dropdown overlay={menu} onVisibleChange={this.handleVisibleChange}
-                            visible={this.state.visible} >
-                            <a className="text-white pop-drpdwn-toogle" onClick={e => e.preventDefault()}><span className="icon md settings" onClick={e => e.preventDefault()} /></a>
+                        <Dropdown overlay={menu} overlayClassName="secureDropdown" arrow>
+                            <a className="pop-drpdwn-toogle" onClick={e => e.preventDefault()}><span className="icon md h-more" /></a>
                         </Dropdown>
 
                     </div>

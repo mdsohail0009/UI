@@ -3,6 +3,8 @@ import config from '../../config/config';
 import { Link } from 'react-router-dom';
 import { List, Skeleton, Typography } from 'antd';
 import Translate from 'react-translate-component';
+import { setStep } from '../../reducers/buysellReducer';
+import { connect } from 'react-redux';
 
 const { Text } = Typography;
 class SavedCards extends Component {
@@ -15,12 +17,12 @@ class SavedCards extends Component {
                     className="d-flex align-center c-pointer"
                     style={{
                         justifyContent: 'space-between',
-                        lineHeight: '40px',
                     }}
+                    onClick={() => this.props.changeStep("step3")}
                 >
                     <span>
-                        <span className="icon sm add ml-36" />
-                        <Text className="text-green fs-16 ml-16 fw-500">Link New Card</Text>
+                        <span className="icon sm add ml-24 valign-initial" />
+                        <Text className="text-darkgreen fs-16 ml-16 fw-500">Link New Card</Text>
                     </span>
                     <span className="icon sm r-arrow-o-white" />
                 </div>
@@ -35,7 +37,7 @@ class SavedCards extends Component {
                     <List.Item style={{ borderWidth: '0px' }}>
                         <Link>
                             <List.Item.Meta
-                                avatar={<span className={`coin md ${item.cardType}-white mr-4`} />}
+                                avatar={<span className={`coin md ${item.cardType}-white`} />}
                                 title={<div className="fw-300 fs-14"><div className="text-white-30">{item.cardNumber}</div><div className="text-yellow">{item.confirm}</div></div>}
                             />
                             <span className="icon sm r-arrow-o-white" />
@@ -47,4 +49,15 @@ class SavedCards extends Component {
     }
 }
 
-export default SavedCards;
+const connectStateToProps = ({ buyFiat, oidc }) => {
+    return { buyFiat }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        }
+    }
+}
+
+export default connect(connectStateToProps, connectDispatchToProps)(SavedCards);

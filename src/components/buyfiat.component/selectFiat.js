@@ -18,7 +18,7 @@ class SelectFiat extends Component {
                             <span className="coin-circle coin md usdtbg-white" />
                             <Text className="fs-24 text-white crypto-name ml-8">USD</Text>
                         </span>
-                        <span className="icon md c-pointer signal-white" />
+                        <span className="icon md signal-white mt-8" />
                     </div>
                     <div className="crypto-card-bottom">
                         <div>
@@ -31,11 +31,11 @@ class SelectFiat extends Component {
                         </div>
                     </div>
                 </Card>
-                <Text className="fs-16 text-white fw-300">Fund with card</Text>
+                <Text className="fs-16 text-white fw-300 mb-8 d-block">Fund with card</Text>
                 <SavedCards />
                 <Text className="fs-16 text-white fw-300 mt-36 d-block">How much would you like to add?</Text>
                 <Input className="fs-36 fw-100 text-white-30 text-left enter-val p-0"
-                    placeholder="$0.00"
+                    placeholder="0.00"
                     bordered={false}
                     prefix="USD"
                 />
