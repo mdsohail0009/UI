@@ -7,7 +7,7 @@ import connectStateProps from '../../utils/state.connect';
 import Translate from 'react-translate-component';
 import BuyFiat from './buyFiat';
 import SelectFiat from './selectFiat';
-import AddCard from '../buysell.component/addCard';
+import AddCard from './addCard';
 import SelectWallet from './selectWallet';
 import FiatSummary from './buyfiatSummary';
 import BillingAddress from '../buysell.component/BillingAddress'
