@@ -47,7 +47,7 @@ class SelectWallet extends Component {
                     <Radio.Button value="half">Half</Radio.Button>
                     <Radio.Button value="all">ALL</Radio.Button>
                 </Radio.Group>
-                <Button size="large" block className="pop-btn" style={{ marginTop: '100px' }}>PREVIEW</Button>
+                <Button size="large" block className="pop-btn" style={{ marginTop: '100px' }} onClick={() => this.props.changeStep('step5')} >PREVIEW</Button>
             </>
         );
     }
