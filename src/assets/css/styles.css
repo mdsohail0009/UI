@@ -184,8 +184,8 @@ line-height: 16px;min-width:90px}
 .coin.md.btc-white{background-position: 1px -405px}
 .coin.md.eth-white{background-position: -48px -405px}
 .coin-circle{width: 52px !important;height: 52px !important;}
-.coin.md.usdtbg-white{background-position: -79px -1112px;}
-.coin.md.eurotbg-white{background-position: -14px -1112px;}
+.coin.md.usd-white{background-position: -79px -1112px;}
+.coin.md.eur-white{background-position: -14px -1112px;}
 .coin.md.visa-white{background-position: -15px -1053px;width: 56px !important; height: 35px !important;}
 .coin.md.mastercard-white{background-position: -83px -1055px;width: 54px !important;height: 35px !important;}
 

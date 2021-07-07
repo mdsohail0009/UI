@@ -12,7 +12,7 @@ class SelectWallet extends Component {
                 <Card className="crypto-card fiatcard mb-36" bordered={false}>
                     <div className="crypto-card-top">
                         <span className="d-flex align-center">
-                            <span className="coin-circle coin md usdtbg-white" />
+                            <span className="coin-circle coin md usd-white" />
                             <Text className="fs-24 text-white crypto-name ml-8">USD</Text>
                         </span>
                         <span className="icon md c-pointer signal-white" />
