@@ -4,8 +4,9 @@ import config from '../../config/config';
 import WalletList from '../shared/walletList';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
+import Translate from 'react-translate-component';
 
-class BuyCrypto extends Component {
+class SelectCrypto extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,9 +23,9 @@ class BuyCrypto extends Component {
         return (
             <>
                 <Card className="crypto-card mb-36" bordered={false}>
-                    <span className="d-flex">
-                        <span className="coin md eth-white" />
-                        <Text className="fs-24 text-white crypto-name ml-24">Ethereum</Text>
+                    <span className="d-flex align-center">
+                        <span className="coin lg eth-white" />
+                        <Text className="fs-24 text-white crypto-name ml-8">Ethereum</Text>
                     </span>
                     <div className="crypto-details">
                         <Text className="crypto-percent text-white fw-700">25<sup className="fs-24 text-white fw-700" style={{ verticalAlign: 'Middle', marginLeft: 14 }}>%</sup></Text>
@@ -48,10 +49,10 @@ class BuyCrypto extends Component {
                         <span className="icon sm uparw-o-white d-block c-pointer mb-4" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
                     </span>
                 </div>
-                <Paragraph className="text-upper fw-600 mb-0 text-aqua pt-16">Find with your favoite wallet</Paragraph>
+                <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-0 text-aqua pt-16" />
                 <WalletList isArrow={true} />
-                <Paragraph className="fs-14 text-white-30 fw-200 text-center mb-16">Please refresh to get a new price</Paragraph>
-                <Button size="large" block className="pop-btn" onClick={()=>this.props.changeStep('step2') } icon={<span className="icon md load" />}>Confirm(18s)</Button>
+                <Translate content="refresh_newprice" component={Paragraph} className="fs-14 text-white-30 fw-200 text-center mb-16" />
+                <Translate content="confirm_btn_text" component={Button} size="large" block className="pop-btn" onClick={() => this.props.changeStep('step3')} icon={<span className="icon md load" />} />
             </>
         )
     }
@@ -66,4 +67,4 @@ const connectDispatchToProps = dispatch => {
         }
     }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(BuyCrypto);
+export default connect(connectStateToProps, connectDispatchToProps)(SelectCrypto);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Typography, Dropdown, Tabs,Row, Col, Divider, Avatar, Carousel, Switch } from 'antd';
+import { Layout, Menu, Modal, Typography, Dropdown, Tabs, Row, Col, Divider, Avatar, Carousel, Switch } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
@@ -11,6 +11,9 @@ import my from '../lang/my';
 import BuySell from '../components/buysell.component';
 import BusinessMenu from '../components/shared/megaMenu/businessMegamenu';
 import menuCarousel from '../components/shared/megaMenu/menuCarousel';
+import SendReceive from '../components/send.component'
+import SwapCrypto from '../components/swap.component'
+import MassPayment from '../components/buyfiat.component'
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -20,15 +23,33 @@ counterpart.setLocale('en');
 const { menuHeader } = Layout;
 const { Title, Paragraph, Text } = Typography;
 const { TabPane } = Tabs;
-const menu = (
+const securityMenu = (
     <Menu>
-        <Title className="fs-24 text-white mb-16 fw-500">Security</Title>
+        <Title className="fs-24 text-white my-16 fw-500 mx-30">Security</Title>
         <ul className="pl-0 drpdwn-list">
-            <li><Link>2FA<span className="icon sm r-arrow-o-white ml-auto" /></Link></li>
-            <li><Link>Change Password<span className="icon sm r-arrow-o-white ml-auto" /></Link></li>
-            <li><Paragraph className="text-white fs-14">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
+            <li><Link>2FA<span className="icon md rarrow-white" /></Link></li>
+            <li><Link>Change Password<span className="icon md rarrow-white" /></Link></li>
+            <li className="no-hover"><Paragraph className="text-white fs-14 pt-16">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
                 <Paragraph className="text-white fs-14">Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.</Paragraph></li>
-            <li><Link>Protect your account<span className="icon sm r-arrow-o-white ml-auto" /></Link></li>
+            <li><Link>Protect your account<span className="icon md rarrow-white" /></Link></li>
+        </ul>
+    </Menu>
+);
+const settingMenu = (
+    <Menu>
+        <Title className="fs-24 text-white my-16 fw-500 mx-30">Settings</Title>
+        <ul className="pl-0 drpdwn-list">
+            <li><Link to="">General<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Privacy Policy<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Terms of Service<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">About<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Wallet Version<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Preferences<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Language<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Local Currency<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Notifications<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Themes<span className="icon md rarrow-white" /></Link></li>
+            <li><Link to="">Logout<span className="icon md rarrow-white" /></Link></li>
         </ul>
     </Menu>
 );
@@ -39,6 +60,8 @@ class Header extends Component {
             megamenu: false,
             lang: 'en',
             buyDrawer: false,
+            sendDrawer: false,
+            swapDrawer: false,
             buyToggle: 'Buy',
             depositToggle: 'From Crypto',
             payDrawer: false,
@@ -46,6 +69,7 @@ class Header extends Component {
             cardsDetails: false,
             billingAddress: false,
             initLoading: true,
+            buyFiatDrawer: false,
         }
         this.next = this.next.bind(this);
         this.previous = this.previous.bind(this);
@@ -75,7 +99,22 @@ class Header extends Component {
             buyDrawer: true
         })
     }
-    closeBuyDrawer = () => {
+    showSendDrawer = () => {
+        this.setState({
+            sendDrawer: true
+        })
+    }
+    showSwapDrawer = () => {
+        this.setState({
+            swapDrawer: true
+        })
+    }
+    showBuyFiatDrawer = () => {
+        this.setState({
+            buyFiatDrawer: true,
+        })
+    }
+    closeDrawer = () => {
         this.setState({
             buyDrawer: false,
             payDrawer: false,
@@ -84,6 +123,9 @@ class Header extends Component {
             payCardsDrawer: false,
             cardsDetails: false,
             depositScanner: false,
+            sendDrawer: false,
+            swapDrawer: false,
+            buyFiatDrawer: false,
         })
     }
     render() {
@@ -99,23 +141,27 @@ class Header extends Component {
                                 <li className="mb-d-none"><Translate content="header_title" component="p" className="text-white-30 mb-0 fs-24" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
-                                <Dropdown overlay={menu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                                <Dropdown overlay={securityMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                     <Menu.Item key="5">Security</Menu.Item>
                                 </Dropdown>
                                 <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
-                                <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
+                                <Dropdown overlay={settingMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                                    <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
+                                </Dropdown>
                             </Menu>
                         </div>
                         <Menu theme="light" mode="horizontal" className="header-right" defaultSelectedKeys={['1']}>
                             <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item>
-                            <Menu.Item key="2" className="list-item">Swap</Menu.Item>
-                            <Menu.Item key="3" className="list-item">Send / Receive</Menu.Item>
-                            <Menu.Item key="4" className="list-item">Mass Payments</Menu.Item>
-                            <Dropdown overlay={menu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                            <Menu.Item key="2" className="list-item" onClick={this.showSwapDrawer}>Swap</Menu.Item>
+                            <Menu.Item key="3" className="list-item" onClick={this.showSendDrawer}>Send / Receive</Menu.Item>
+                            <Menu.Item key="4" className="list-item" onClick={this.showBuyFiatDrawer}>Mass Payments</Menu.Item>
+                            <Dropdown overlay={securityMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Menu.Item key="5">Security</Menu.Item>
                             </Dropdown>
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
-                            <Menu.Item key="7"><span className="icon md gear ml-4" /></Menu.Item>
+                            <Dropdown overlay={settingMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                                <Menu.Item key="7"><span className="icon md gear ml-4" /></Menu.Item>
+                            </Dropdown>
                         </Menu>
                     </menuHeader>
                 </Layout >
@@ -199,7 +245,7 @@ class Header extends Component {
                                 <Col lg={5} xl={5} className="mobile-none">
 
                                 </Col>
-                                <Col lg={5} xl={4}  className="mobile-none">
+                                <Col lg={5} xl={4} className="mobile-none">
 
                                 </Col>
                                 <Col lg={7} xl={6}>
@@ -211,7 +257,7 @@ class Header extends Component {
                                     <Link >Sign In</Link>
 
                                 </Col>
-                               
+
                                 <Col lg={5} xl={6}>
                                     <Title className=" text-white mb-16 fw-500 megamenu-label ">Security</Title>
                                     <Paragraph className="text-white fs-14 fw-400">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
@@ -305,7 +351,10 @@ class Header extends Component {
                         </div>
                     </Carousel>
                 </Modal>
-                <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeBuyDrawer()} />
+                <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
+                <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
+                <SwapCrypto showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
+                <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
             </>
         );
     }
