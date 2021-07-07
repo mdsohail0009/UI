@@ -19,8 +19,8 @@ class SavedCards extends Component {
                     }}
                 >
                     <span>
-                        <span className="icon sm r-arrow-o-white ml-36" />
-                        <Text className="text-red fs-16 ml-16 fw-500">Link New Card</Text>
+                        <span className="icon sm add ml-36" />
+                        <Text className="text-green fs-16 ml-16 fw-500">Link New Card</Text>
                     </span>
                     <span className="icon sm r-arrow-o-white" />
                 </div>
