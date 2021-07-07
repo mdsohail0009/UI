@@ -41,7 +41,8 @@ class FiatSummary extends Component {
                         I agree to Suissebase’s <Link to="" className="text-white-30"><u>Terms of Service</u></Link> and its return, refund and cancellation policy.
                     </Text>
                 </div>
-                <Translate size="large" block className="pop-btn"  content="confirm_swap" component={Button} />
+                <Translate size="large" block className="pop-btn"  content="add_fund" component={Button} onClick={() => this.props.changeStep('step3')} />
+                <Translate content="cancel" component={Button} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
             </>
         )
     }

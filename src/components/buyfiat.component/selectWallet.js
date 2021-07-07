@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Typography, Button, Input, Radio } from 'antd';
-import { setStep } from '../../reducers/buysellReducer';
+import { setStep } from '../../reducers/buyFiatReducer';
 import { connect } from 'react-redux';
 
 class SelectWallet extends Component {

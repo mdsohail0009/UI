@@ -99,5 +99,6 @@ export default {
   confirm_swap:'確認交換',
   total:'全部的',
   confirm_transaction:'確認交易',
-  confirm_transaction_decs:'美元錢包'
+  confirm_transaction_decs:'美元錢包',
+  add_fund:'Add Funds'
 }

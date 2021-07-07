@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Typography, Button, Input } from 'antd';
 import SavedCards from '../shared/savedCards';
-import { setStep } from '../../reducers/buysellReducer';
+import { setStep } from '../../reducers/buyFiatReducer';
 import { connect } from 'react-redux';
 
 class SelectFiat extends Component {

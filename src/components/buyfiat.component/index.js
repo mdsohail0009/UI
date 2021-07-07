@@ -10,7 +10,7 @@ import SelectFiat from './selectFiat';
 import AddCard from '../buysell.component/addCard';
 import SelectWallet from './selectWallet';
 import FiatSummary from './buyfiatSummary';
-
+import BillingAddress from '../buysell.component/billingAddress'
 class MassPayment extends Component {
     state = {
         withdraw: false,
@@ -30,7 +30,8 @@ class MassPayment extends Component {
             selectfiat: <SelectFiat />,
             addcard: <AddCard />,
             selectwallet: <SelectWallet />,
-            faitsummary:<FiatSummary/>
+            faitsummary:<FiatSummary/>,
+            billingaddress:<BillingAddress/>
         }
         return stepcodes[config[this.props.buyFiat.stepcode]]
     }

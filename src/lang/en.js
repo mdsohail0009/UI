@@ -97,5 +97,6 @@ export default {
   confirm_swap:'Confirm Swap',
   total:'Total',
   confirm_transaction:'Confirm Transaction',
-  confirm_transaction_decs:'Wallet in USD'
+  confirm_transaction_decs:'Wallet in USD',
+  add_fund:'Add Funds'
 }
