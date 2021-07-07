@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Drawer, Typography } from 'antd';
-import BillType from './billType';
 import Translate from 'react-translate-component';
 import BuyCrypto from './buyComponent';
 import connectStateProps from '../../utils/state.connect';
