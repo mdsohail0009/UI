@@ -3,6 +3,8 @@ import { Radio, Typography, Card } from 'antd';
 import { Link } from 'react-router-dom';
 import FiatList from '../shared/fiatList';
 import Translate from 'react-translate-component';
+import { setStep } from '../../reducers/buysellReducer';
+import { connect } from 'react-redux';
 
 class BuyFiat extends Component {
     state = {
@@ -28,14 +30,14 @@ class BuyFiat extends Component {
                 </Radio.Group>
                 {buyFiat ? <>
                     <Paragraph className="mb-0 text-white-30 fw-200 fs-36">Sell your Fiat for Cash</Paragraph>
-                    <Paragraph className="text-secondary fw-300 fs-16 mb-36">Need to replenish your wallet? Follow this link and  <Link to="" className="text-yellow">Deposit</Link> some cash.</Paragraph>
-                    <Card className="crypto-card fiatcard mb-36" bordered={false}>
+                    <Paragraph className="text-secondary fw-300 fs-16 mb-36 mr-16">Need to replenish your wallet? Follow this link and  <Link to="" className="text-yellow text-underline">Deposit</Link> some cash.</Paragraph>
+                    <Card className="crypto-card fiatcard mb-36 c-pointer" bordered={false} onClick={() => this.props.changeStep('step4')}>
                         <div className="crypto-card-top">
                             <span className="d-flex align-center">
                                 <span className="coin-circle coin md usdtbg-white" />
                                 <Text className="fs-24 text-white crypto-name ml-8">USD</Text>
                             </span>
-                            <span className="icon md c-pointer signal-white" />
+                            <span className="icon md signal-white" />
                         </div>
                         <div className="crypto-card-bottom">
                             <div>
@@ -48,13 +50,13 @@ class BuyFiat extends Component {
                             </div>
                         </div>
                     </Card>
-                    <Card className="crypto-card select mb-36" bordered={false}>
+                    <Card className="crypto-card select mb-36 c-pointer" bordered={false}>
                         <div className="crypto-card-top">
                             <span className="d-flex align-center">
                                 <span className="coin-circle coin md usdtbg-white" />
                                 <Text className="fs-24 text-white crypto-name ml-8">USD</Text>
                             </span>
-                            <span className="icon md c-pointer signal-white" />
+                            <span className="icon md signal-white" />
                         </div>
                         <div className="crypto-card-bottom">
                             <div>
@@ -80,4 +82,15 @@ class BuyFiat extends Component {
     }
 }
 
-export default BuyFiat;
+const connectStateToProps = ({ buyFiat, oidc }) => {
+    return { buyFiat }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        }
+    }
+}
+
+export default connect(connectStateToProps, connectDispatchToProps)(BuyFiat);

@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import { Card, Typography, Button, Input } from 'antd';
-import SavedCards from '../shared/savedCards';
+import { Card, Typography, Button, Input, Radio } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 
-class SelectFiat extends Component {
-    state = {
-        withdrow: "true",
-    }
+class SelectWallet extends Component {
+    state = {}
     render() {
         const { Text } = Typography
         return (
@@ -31,20 +28,30 @@ class SelectFiat extends Component {
                         </div>
                     </div>
                 </Card>
-                <Text className="fs-16 text-white fw-300">Fund with card</Text>
-                <SavedCards />
-                <Text className="fs-16 text-white fw-300 mt-36 d-block">How much would you like to add?</Text>
-                <Input className="fs-36 fw-100 text-white-30 text-left enter-val p-0"
-                    placeholder="$0.00"
-                    bordered={false}
-                    prefix="USD"
-                />
-                <Button size="large" block className="pop-btn" style={{ marginTop: '55px' }} onClick={() => this.props.changeStep("step3")}>Preview Swap</Button>
+                <div className="enter-val-container">
+                    <div className="text-center">
+                        <Input className="fs-36 fw-100 text-white-30 text-center enter-val p-0"
+                            placeholder="0.00"
+                            bordered={false}
+                            prefix="$"
+                            style={{ maxWidth: 120 }}
+                        />
+                        <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">0.00 BTC</Text>
+                    </div>
+                    <span className="mt-16 val-updown">
+                        <span className="icon sm uparw-o-white d-block c-pointer mb-4" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
+                    </span>
+                </div>
+                <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
+                    <Radio.Button value="min">Min</Radio.Button>
+                    <Radio.Button value="half">Half</Radio.Button>
+                    <Radio.Button value="all">ALL</Radio.Button>
+                </Radio.Group>
+                <Button size="large" block className="pop-btn" style={{ marginTop: '100px' }}>PREVIEW</Button>
             </>
         );
     }
 }
-
 
 const connectStateToProps = ({ buyFiat, oidc }) => {
     return { buyFiat }
@@ -56,4 +63,5 @@ const connectDispatchToProps = dispatch => {
         }
     }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(SelectFiat);
+
+export default connect(connectStateToProps, connectDispatchToProps)(SelectWallet);

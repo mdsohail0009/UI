@@ -18,13 +18,13 @@ let initialState = {
         buyfiat: "suissebase_personal",
         selectfiat: "suissebase_personal",
         addcard: 'link_newcard',
-        selectfiat: 'withdraw',
+        selectwallet: 'withdraw',
     },
     stepSubTitles: {
         buyfiat: "avail_wallet_weprovide",
         selectfiat: "wallet_in_usd",
         addcard: null,
-        selectfiat: "select_wallet",
+        selectwallet: "select_wallet",
     }
 
 }
