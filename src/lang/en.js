@@ -99,4 +99,5 @@ export default {
   confirm_transaction: 'Confirm Transaction',
   confirm_transaction_decs: 'Wallet in USD',
   add_fund: 'Add Funds',
+  confirm_text: 'Swapping 0.00549635 BTC for 0.10183318 ETH',
 }

@@ -94,13 +94,14 @@ export default {
   link_newcard: 'Paut kad baru',
   swap_title: 'Pertukaran Baru',
   swap_desc: 'tukar kripto anda dengan segera ke dalam mata wang yang kami tawarkan di dompet anda',
-  swap_from:'Tukar Dari',
-  swap_to:'Untuk menerima',
+  swap_from: 'Tukar Dari',
+  swap_to: 'Untuk menerima',
   pick: 'pilih',
-  confirm_swap:'Sahkan Pertukaran',
-  total:'jumlah',
-  confirm_transaction:'Sahkan Transaksi',
-  confirm_transaction_decs:'Dompet dalam USD',
-  add_fund:'Add Funds'
+  confirm_swap: 'Sahkan Pertukaran',
+  total: 'jumlah',
+  confirm_transaction: 'Sahkan Transaksi',
+  confirm_transaction_decs: 'Dompet dalam USD',
+  add_fund: 'Tambah dana',
+  confirm_text: 'Pertukaran 0.00549635 BTC untuk 0.10183318 ETH',
 
 }
