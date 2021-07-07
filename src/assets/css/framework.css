@@ -66,6 +66,7 @@
 .pt-24{padding-top: 24px !important;}
 .pt-0{padding-top: 0 !important;}
 .pb-0{padding-bottom: 0 !important;}
+.pb-8{padding-bottom: 8px !important;}
 .pl-0{padding-left: 0 !important;}
 .pr-30{padding-right: 30px !important;}
 .px-0{padding-left: 0 !important; padding-right: 0 !important;}
@@ -103,12 +104,13 @@
 .mr-8{margin-right: 8px !important;}
 .mr-12{margin-right: 12px !important;}
 .mr-16{margin-right: 16px !important;}
+.mx-0{margin-left: 0 !important;margin-right: 0 !important;}
 .mx-4{margin-left: 4px !important;margin-right: 4px !important;}
 .mx-12{margin-left: 12px !important;margin-right: 12px !important;}
 .mx-24{margin-left: 24px !important;margin-right: 24px !important;}
 .mx-30{margin-left: 30px !important;margin-right: 30px !important;}
 .my-16{margin-top: 16px !important;margin-bottom: 16px !important;}
-.mx-0{margin-left: 0 !important;margin-right: 0 !important;}
+.my-36{margin-top: 36px !important;margin-bottom: 36px !important;}
 
 @media (max-width: 991px){
     .visible-xs{visibility: visible;}
