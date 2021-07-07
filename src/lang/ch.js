@@ -94,4 +94,6 @@ export default {
   swap_desc: '立即將您的加密貨幣兌換成我們在您錢包中提供的任何貨幣',
   pick: '挑選',
   select_wallet: "从你的钱包里卖",
+  confirm_swap:'確認交換',
+  total:'全部的'
 }

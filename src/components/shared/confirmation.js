@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import confirm from '../../assets/images/confirm.png';
 import { Drawer, Typography, Button, Card, Input, Tooltip,Space } from 'antd';
 import { Link } from 'react-router-dom';
+import Translate from 'react-translate-component';
 
 class ConfirmMsg extends Component {
     render() {

@@ -91,5 +91,7 @@ export default {
   purchase_fiat: 'Purchase a Fiat',
   purchase_fiat_text: 'Your wallet is empty, you don’t have any assets to make transactions. Follow this link and Deposit some cash.',
   link_newcard: 'Link new card',
-  pick: 'pick'
+  pick: 'pick',
+  confirm_swap:'Confirm Swap',
+  total:'Total'
 }
