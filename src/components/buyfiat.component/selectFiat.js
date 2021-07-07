@@ -69,15 +69,15 @@ class SelectFiat extends Component {
 
                 <Button size="large" block className="pop-btn" >PREVIEW</Button> */}
 
-                <Button size="large" block className="pop-btn" style={{ marginTop: '55px' }} onClick={this.billingAddress}>Preview Swap</Button>
+                <Button size="large" block className="pop-btn" style={{ marginTop: '55px' }} onClick={this.props.changeStep('step2')}>Preview Swap</Button>
             </>
         );
     }
 }
 
 
-const connectStateToProps = ({ buySell, oidc }) => {
-    return { buySell }
+const connectStateToProps = ({ buyFiat, oidc }) => {
+    return { buyFiat }
 }
 const connectDispatchToProps = dispatch => {
     return {
