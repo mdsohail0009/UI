@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Typography } from 'antd';
+import { Typography, Input, Button } from 'antd';
 import { Link } from 'react-router-dom';
+import sacnner from '../../assets/images/sacnner.png';
+import Translate from 'react-translate-component';
 
 class VerifyIDentity extends Component {
     state = {}
     render() {
-        const { Title, Paragraph } = Typography;
+        const { Title, Paragraph, Text } = Typography;
         return (
             <>
                 <Title className="text-white-30 fs-36 fw-200 mb-8">Let's get you verified</Title>
@@ -17,14 +19,28 @@ class VerifyIDentity extends Component {
                         <Paragraph className="fs-16 fw-300 text-white-30">Make sure it's not expired of physically damaged</Paragraph>
                     </div>
                 </div>
-                <div className="d-flex mb-36">
+                <div className="d-flex">
                     <span className="icon md phone mt-4" />
                     <div className="ml-16">
                         <Paragraph className="fs-16 fw-600 text-white-30 mb-0">User a smartphone</Paragraph>
                         <Paragraph className="fs-16 fw-300 text-white-30">You need a smartphone in order to continue</Paragraph>
                     </div>
                 </div>
-                <Paragraph className="fs-16 text-white-30 fw-300 pr-30">Read more about your personal data processing <Link className="text-yellow">Privacy Policy</Link>. Don’t have a smartphone? <Link className="text-white-30"><u>Continue with your current device</u></Link></Paragraph>
+                <div className="verify-options mb-36">
+                    <Paragraph className="fs-16 fw-600 text-white-30 mb-0">Option 1: Scan the QR code</Paragraph>
+                    <Paragraph className="fs-16 fw-300 text-white-30">Scan the QR code with your camera app</Paragraph>
+                    <div className="text-center">
+                        <img src={sacnner} alt="" className="confirm-icon" />
+                    </div>
+                    <Paragraph className="fs-16 fw-600 text-white-30 mb-0">Option 2: Send link via SMS</Paragraph>
+                    <Paragraph className="fs-16 fw-300 text-white-30">We’ll text a secure link to your mobile at no extra cost.</Paragraph>
+                    <form className="form">
+                        <Input className="cust-input" placeholder="Philippines (+63)" />
+                        <Input className="cust-input" placeholder="Your phone number" />
+                        <Button size="large" block className="pop-btn">Next</Button>
+                    </form>
+                </div>
+                <Paragraph className="fs-16 text-white-30 fw-300 pr-30">Read more about your personal data processing <Link className="text-yellow text-underline">Privacy Policy</Link>. Don’t have a smartphone? <Link className="text-white-30"><u>Continue with your current device</u></Link></Paragraph>
             </>
         );
     }

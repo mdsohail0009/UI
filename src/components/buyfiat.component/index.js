@@ -10,7 +10,7 @@ import SelectFiat from './selectFiat';
 import AddCard from './addCard';
 import SelectWallet from './selectWallet';
 import FiatSummary from './buyfiatSummary';
-import BillingAddress from '../buysell.component/BillingAddress'
+import BillingAddress from '../buysell.component/billingAddress'
 class MassPayment extends Component {
     state = {
         withdraw: false,

@@ -20,7 +20,7 @@ let initialState = {
         addcard: 'link_newcard',
         selectwallet: 'withdraw',
         faitsummary:'confirm_transaction',
-        billingaddress:'withdraw'
+        billingaddress:'change_billing_address'
     },
     stepSubTitles: {
         buyfiat: "avail_wallet_weprovide",
@@ -28,7 +28,7 @@ let initialState = {
         addcard: null,
         selectwallet: "select_wallet",
         faitsummary:'confirm_transaction_decs',
-        billingaddress:'withdraw'
+        billingaddress:null
     }
 
 }
