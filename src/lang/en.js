@@ -3,7 +3,7 @@ export default {
   Portfolio_title: 'Portfolio',
   your_portfolio: 'Your Portfolio',
   suissebase_title: 'Suissebase',
-  suissebase_subtitle: 'Wallets available to you',
+  suissebase_subtitle: 'Wallets available to you.',
   markets_title: 'Markets',
   markets_subtitle: 'Trade your crypto into any currency',
   deposit: 'Deposit',
