@@ -13,7 +13,7 @@ const suisseWalletList = [
     },
     {
         title: 'eur',
-        coin: 'eur',
+        coin: 'EUR',
         price: '€ 2,500',
     },
     {
@@ -26,12 +26,12 @@ const suisseWalletList = [
 class SuissebaseWallet extends Component {
     state = {
         sendReceiveDrawer: false,
-        valNum : 1
+        valNum: 1
     }
     showSendReceiveDrawer = (e) => {
         this.setState({
             valNum: e
-        },()=>{
+        }, () => {
             this.setState({
                 sendReceiveDrawer: true
             })
@@ -60,8 +60,8 @@ class SuissebaseWallet extends Component {
                                 description={<Paragraph className="fs-16 text-white-30 fw-200 m-0" style={{ lineHeight: '12px' }}>{item.price}</Paragraph>}
                             />
                             <div className="crypto-btns">
-                                <Translate content="deposit"  onClick={() => this.showSendReceiveDrawer(1)} component={Button} type="primary" className="custom-btn prime" />
-                                <Translate content="withdraw"  onClick={() => this.showSendReceiveDrawer(2)} component={Button} className="custom-btn sec ml-16" />
+                                <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1)} component={Button} type="primary" className="custom-btn prime" />
+                                <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2)} component={Button} className="custom-btn sec ml-16" />
                             </div>
                         </List.Item>}
                 />

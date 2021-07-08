@@ -6,6 +6,7 @@ import Translate from 'react-translate-component';
 import CryptoList from '../shared/cryptolist';
 import CurrencyDestination from '../sell.component/selectCrypto'
 import SellToggle from '../sell.component/sellCrypto'
+import { Link } from 'react-router-dom';
 
 
 class BuyCrypto extends Component {
@@ -15,10 +16,7 @@ class BuyCrypto extends Component {
         buyToggle: 'Buy',
         buysell: false
     }
-
     handleBuySellToggle = e => {
-        // console.log(this.state);
-        debugger;
         this.setState({
             buysell: e.target.value === 2
         });
@@ -27,7 +25,7 @@ class BuyCrypto extends Component {
     render() {
         const { TabPane } = Tabs;
         const { Title, Paragraph, Text } = Typography;
-        const {buysell} = this.state
+        const { buysell } = this.state
         return (
             <>
                 <Radio.Group
@@ -38,14 +36,14 @@ class BuyCrypto extends Component {
                     <Radio.Button value={2}>Sell</Radio.Button>
                 </Radio.Group>
                 {buysell ?
-                <>
-                 <Paragraph className="mb-0 text-white-30 fw-200 fs-36">Sell your Crypto for Cash</Paragraph>
-                 <Paragraph className="text-secondary fw-300 fs-16">Easily buy and sell Crypto straight from your Wallet.</Paragraph>
-                    <SellToggle /></> 
+                    <>
+                        <Paragraph className="mb-0 text-white-30 fw-200 fs-36">Sell your Crypto for Cash</Paragraph>
+                        <Paragraph className="text-secondary fw-300 fs-16">Easily buy and sell Crypto straight from your Wallet.</Paragraph>
+                        <SellToggle /></>
                     :
                     <>
                         <Translate content="purchase_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-16" />
-                        <Translate content="purchase_a_cryto_txt" component={Paragraph} className="fs-16 text-secondary" />
+                        <Paragraph className="fs-16 text-secondary">Your wallet is empty, you don’t have any assets to make transactions. Follow this link and <Link to="" className="text-yellow text-underline">Deposit</Link> some cash.</Paragraph>
                         <Tabs className="crypto-list-tabs">
                             <TabPane tab="All" key="1">
                                 <CryptoList />
