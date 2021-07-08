@@ -34,13 +34,14 @@ class BuyCrypto extends Component {
                     defaultValue={1}
                     onChange={this.handleBuySellToggle}
                     className="buysell-toggle">
-                    <Radio.Button value={1}>Buy</Radio.Button>
-                    <Radio.Button value={2}>Sell</Radio.Button>
+                    <Translate content="buy" component={Radio.Button} value={1} />
+                    <Translate content="sell" component={Radio.Button} value={2} />
                 </Radio.Group>
                 {buysell ?
                 <>
-                 <Paragraph className="mb-0 text-white-30 fw-200 fs-36">Sell your Crypto for Cash</Paragraph>
-                 <Paragraph className="text-secondary fw-300 fs-16">Easily buy and sell Crypto straight from your Wallet.</Paragraph>
+                 {/* <Paragraph className="mb-0 text-white-30 fw-200 fs-36">Sell your Crypto for Cash</Paragraph> */}
+                 <Translate content="sell_your_crypto_for_cash" component={Paragraph} className="mb-0 text-white-30 fw-200 fs-36" />
+                 <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-secondary fw-300 fs-16" />
                     <SellToggle /></> 
                     :
                     <>

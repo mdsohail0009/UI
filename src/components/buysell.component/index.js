@@ -18,7 +18,6 @@ import SellSummary from '../sell.component/sellSummary';
 import SelectSellCrypto from '../sell.component/selectCrypto'
 import SuccessMsg from '../shared/success';
 
-
 const { Title, Paragraph } = Typography
 class BuySell extends Component {
     state = {
