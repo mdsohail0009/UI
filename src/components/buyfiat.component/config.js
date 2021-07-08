@@ -4,5 +4,7 @@ export const buyFiatSteps = {
     step3: "addcard",
     step4: "selectwallet",
     step5:'faitsummary',
-    step6:'billingaddress'
+    step6:'billingaddress',
+    confirm: 'confirmation',
+    success: 'success'
 }

@@ -10,7 +10,8 @@ import SelectFiat from './selectFiat';
 import AddCard from './addCard';
 import SelectWallet from './selectWallet';
 import FiatSummary from './buyfiatSummary';
-import BillingAddress from '../buysell.component/billAddress'
+import BillingAddress from '../buysell.component/billAddress';
+import ConfirmMsg from '../shared/confirmation'
 class MassPayment extends Component {
     state = {
         withdraw: false,
@@ -30,12 +31,26 @@ class MassPayment extends Component {
             selectfiat: <SelectFiat />,
             addcard: <AddCard />,
             selectwallet: <SelectWallet />,
-            faitsummary:<FiatSummary/>,
-            billingaddress:<BillingAddress/>
+            faitsummary: <FiatSummary />,
+            billingaddress: <BillingAddress />,
+            confirmation: <ConfirmMsg />
         }
         return stepcodes[config[this.props.buyFiat.stepcode]]
     }
-    render() {
+    renderTitle = () => {
+        debugger;
+        const stepcodes = {
+            buyfiat: <span />,
+            selectfiat: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            addcard: <span onClick={() => this.props.dispatch(setStep("step2"))} className="icon md lftarw-white c-pointer" />,
+            selectwallet: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            faitsummary: <span />,
+            billingaddress: <span />,
+            confirmation: <span />,
+        }
+        return stepcodes[config[this.props.buySell.stepcode]]
+    }
+    renderIcon = () => {
         const menu = (
             <Menu>
                 <ul className="drpdwn-list pl-0">
@@ -44,20 +59,35 @@ class MassPayment extends Component {
                 </ul>
             </Menu>
         );
+        const stepcodes = {
+            buyfiat: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            selectfiat: <span/>,
+            addcard: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            selectwallet: <Dropdown overlay={menu} overlayClassName="secureDropdown" arrow>
+                           <a className="pop-drpdwn-toogle" onClick={e => e.preventDefault()}><span className="icon md h-more" /></a>
+                          </Dropdown>,
+            faitsummary:<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            billingaddress: <sapn/>,
+            confirmation: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />
+        }
+        return stepcodes[config[this.props.buySell.stepcode]]
+    }
+    render() {
         const { withdraw } = this.state;
         const { Paragraph } = Typography
         return (
             <Drawer
                 title={[
                     <div className="side-drawer-header">
-                        <span onClick={this.closeDrawer} className="icon md lftarw-white c-pointer" />
+                        {this.renderTitle()}
                         <div className="text-center fs-14">
                             <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                             <Translate className="text-white-50 mb-0 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                         </div>
-                        <Dropdown overlay={menu} overlayClassName="secureDropdown" arrow>
+                        {this.renderIcon()}
+                        {/* <Dropdown overlay={menu} overlayClassName="secureDropdown" arrow>
                             <a className="pop-drpdwn-toogle" onClick={e => e.preventDefault()}><span className="icon md h-more" /></a>
-                        </Dropdown>
+                        </Dropdown> */}
                     </div>
                 ]}
                 placement="right"
