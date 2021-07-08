@@ -44,7 +44,7 @@ class FiatSummary extends Component {
                     </span>
                 </div>
                 <Translate size="large" block className="pop-btn" content="add_fund" component={Button} onClick={() => this.props.changeStep('step3')} />
-                <Translate content="cancel" component={Button} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
+                <Translate content="cancel" component={Button} type="text" size="large"  onClick={() => this.props.changeStep('step2')} className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
             </>
         )
     }
