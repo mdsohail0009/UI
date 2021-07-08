@@ -5,7 +5,7 @@ export const processSteps = {
     step4: "billtype",
     step5: "addcard",
     step6: "depositcrypto",
-    step7:'billingaddress',
+    step7:'billingaddress', 
     step8:'addressscanner',
     step9:'depositfiat',
     step10:'selectedcrypto',

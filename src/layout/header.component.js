@@ -125,7 +125,7 @@ class Header extends Component {
             depositScanner: false,
             sendDrawer: false,
             swapDrawer: false,
-            buyFiat_Drawer: false,
+            buyFiatDrawer: false,
         })
     }
     render() {

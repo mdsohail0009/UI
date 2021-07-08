@@ -140,6 +140,36 @@ const config = {
       loss: '-5',
       up: false,
     }
+  ],
+  fiatList: [
+    {
+      title: 'USD',
+      coin: 'usd-d',
+      balance: '5,000.00',
+      profit: '1.00',
+      currency: '$',
+    },
+    {
+      title: 'Eur',
+      coin: 'eur',
+      balance: '2,500.00',
+      profit: '0.84',
+      currency: '€',
+    },
+    {
+      title: 'gbp',
+      coin: 'gbp',
+      balance: '2,500.00',
+      profit: '0.72',
+      currency: '£',
+    }
+  ],
+  savedCards: [
+    {
+      cardType: 'visa',
+      cardNumber: 'Visa....5339',
+      confirm: 'Confirmation need',
+    }
   ]
 }
 

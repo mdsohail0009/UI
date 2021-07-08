@@ -88,7 +88,20 @@ export default {
   verify_identity: 'Sahkan Identiti anda',
   suissebase_personal: 'Suissebase Peribadi',
   avail_wallet_weprovide: 'Dompet yang ada kami sediakan',
+  wallet_in_usd: 'Dompet masuk USD',
+  purchase_fiat: 'Beli Fiat',
+  purchase_fiat_text: 'Dompet anda kosong, anda tidak mempunyai aset untuk membuat transaksi. Ikuti pautan ini dan Deposit sejumlah wang.',
+  link_newcard: 'Paut kad baru',
   swap_title: 'Pertukaran Baru',
   swap_desc: 'tukar kripto anda dengan segera ke dalam mata wang yang kami tawarkan di dompet anda',
-  pick:'pilih'
+  swap_from: 'Tukar Dari',
+  swap_to: 'Untuk menerima',
+  pick: 'pilih',
+  confirm_swap: 'Sahkan Pertukaran',
+  total: 'jumlah',
+  confirm_transaction: 'Sahkan Transaksi',
+  confirm_transaction_decs: 'Dompet dalam USD',
+  add_fund: 'Tambah dana',
+  confirm_text: 'Pertukaran 0.00549635 BTC untuk 0.10183318 ETH',
+
 }
