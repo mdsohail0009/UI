@@ -108,7 +108,7 @@ export default {
   sell_your_fiat_for_cash: 'Jual Fiat anda dengan Wang Tunai',
   menu_buy_sell: 'Jual beli',
   menu_swap: 'Tukar',
-  menu_send_receive: 'Hantar terima',
+  menu_send_receive: 'Deposit / Pengeluaran',
   menu_mass_pay: 'Pembayaran Massa',
   security: 'Keselamatan',
 

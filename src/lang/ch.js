@@ -16,7 +16,7 @@ export default {
   ftr_tc_p: '勒根与政策',
   search_currency: '搜索货币',
   buy_assets: '购买资产',
-  past_hours:'在过去的 24 小时内',
+  past_hours: '在过去的 24 小时内',
   deposite_a_crypto: '购买加密货币',
   deposite_a_cryto_txt: '只需分享您的 QR 地址即可获得加密货币',
   purchase_a_crypto: '购买加密货币',
@@ -108,7 +108,7 @@ export default {
   sell_your_fiat_for_cash: '出售您的法定货币以换取现金',
   menu_buy_sell: '买卖',
   menu_swap: '交换',
-  menu_send_receive: '发送/接收',
+  menu_send_receive: '存款/取款',
   menu_mass_pay: '批量付款',
   security: '安全',
 }

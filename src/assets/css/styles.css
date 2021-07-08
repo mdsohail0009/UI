@@ -188,12 +188,15 @@ line-height: 16px;min-width:90px}
 .coin.lg.eth-white{background-position: -47px -767px}
 .coin.lg.usdt-white{background-position: -92px -404px}
 .coin-circle{width: 52px !important;height: 52px !important;}
+.coin.md.usd{background-position: -79px -1112px}
 .coin.md.btc-white{background-position: 1px -405px}
 .coin.md.eth-white{background-position: -48px -405px}
 .coin.md.usdt-white{background-position: -93px -405px}
 .coin.md.eur-white{background-position: -14px -1112px;}
 .coin.md.visa-white{background-position: -15px -1053px;width: 56px !important; height: 35px !important;}
 .coin.md.mastercard-white{background-position: -83px -1055px;width: 54px !important;height: 35px !important;}
+.coin.credit-white{background-position: -488px -2px;box-shadow: none;}
+.coin.deposit-white{background-position: -542px 0;box-shadow: none;}
 
 .pay-list{padding: 20px 0; border-bottom: 1px solid var(--borderLight);}
 .expiry-input{width: 200px;}
