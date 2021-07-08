@@ -24,7 +24,7 @@ class SendReceive extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            depositecrypto: <DepositeCrypto />,
+            depositecrypto: <DepositeCrypto activeTab = {this.props.valNum} />,
             withdraw: <SelectWithdraw />,
             scanner: <ScanQR />,
             withdrawaddress: <WithdrawAddress />,

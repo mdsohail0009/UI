@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Typography, List, Button } from 'antd';
 import config from '../../config/config';
 import Translate from 'react-translate-component';
+import SendReceive from '../../components/send.component'
 
 const { Title, Paragraph } = Typography;
 const suisseWalletList = [
@@ -23,7 +24,24 @@ const suisseWalletList = [
 ]
 
 class SuissebaseWallet extends Component {
-    state = {}
+    state = {
+        sendReceiveDrawer: false,
+        valNum : 1
+    }
+    showSendReceiveDrawer = (e) => {
+        this.setState({
+            valNum: e
+        },()=>{
+            this.setState({
+                sendReceiveDrawer: true
+            })
+        })
+    }
+    closeDrawer = () => {
+        this.setState({
+            sendReceiveDrawer: false
+        })
+    }
     render() {
         return (
             <>
@@ -35,18 +53,19 @@ class SuissebaseWallet extends Component {
                     bordered={false}
                     className="mx-24 mobile-list"
                     renderItem={item =>
-                        <List.Item className="py-8 px-0">
+                        <List.Item className="py-10 px-0">
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin} mr-4`} />}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0">{item.title}</div>}
                                 description={<Paragraph className="fs-16 text-white-30 fw-200 m-0" style={{ lineHeight: '12px' }}>{item.price}</Paragraph>}
                             />
                             <div className="crypto-btns">
-                                <Translate content="deposit" component={Button} type="primary" className="custom-btn prime" />
-                                <Translate content="withdraw" component={Button} className="custom-btn sec ml-16" />
+                                <Translate content="deposit"  onClick={() => this.showSendReceiveDrawer(1)} component={Button} type="primary" className="custom-btn prime" />
+                                <Translate content="withdraw"  onClick={() => this.showSendReceiveDrawer(2)} component={Button} className="custom-btn sec ml-16" />
                             </div>
                         </List.Item>}
                 />
+                <SendReceive showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
 
             </>
         );

@@ -26,6 +26,7 @@ class DepositeCrypto extends Component {
     }
 
     render() {
+        console.log('propssssssssssss depositeToggle' , this.props)
         const { initLoading, loading } = this.state;
         const loadMore =
             !loading ? (
@@ -46,7 +47,7 @@ class DepositeCrypto extends Component {
         return (
             <>
                 <Radio.Group
-                    defaultValue={1}
+                    defaultValue={this.props.activeTab||1}
                     onChange={this.handleBuySellToggle}
                     className="buysell-toggle crypto-toggle text-upper">
                     <Radio.Button value={1}>Deposit</Radio.Button>
