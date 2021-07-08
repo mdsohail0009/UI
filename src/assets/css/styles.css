@@ -115,13 +115,14 @@ line-height: 16px;min-width:90px}
 .sellcrypto-container{max-height: calc(100vh - 375px);}
 .dep-withdraw{max-height: calc(100vh - 385px);}
 .auto-scroll{overflow-y: auto; padding-right: 10px;}
-.crypto-list-tabs.scroll-thumb .ant-tabs-content-holder::-webkit-scrollbar-thumb, .sellcrypto-container::-webkit-scrollbar-thumb, .sellcrypto-container::-webkit-scrollbar-thumb{background-color: var(--bgDarkGrey);}
+.crypto-list-tabs.scroll-thumb .ant-tabs-content-holder::-webkit-scrollbar-thumb, .crypto-list-tabs .ant-tabs-content-holder::-webkit-scrollbar-thumb, .sellcrypto-container::-webkit-scrollbar-thumb{background-color: var(--bgDarkGrey);}
 .crypto-list-tabs .ant-list-item, .wallet-list .ant-list-item{border-color: var(--borderLight);}
+.wallet-list .ant-list-item:hover{background-color: var(--bgBlu);}
 .wallet-list li a, .crypto-list li a{display: inline-flex; align-items: center;flex-grow: 1;}
 .wallet-list h4{margin-bottom: 0;}
 .crypto-toggle .ant-radio-button-wrapper{padding: 22px;}
 .crypto-list-tabs .ant-tabs-tab{font-size: 16px; margin: 0; padding-bottom: 0;}
-.crypto-list-tabs .ant-tabs-tab-btn{padding: 3px 34px;color: var(--textYellow);}
+.crypto-list-tabs .ant-tabs-tab-btn{padding: 3px 33px;color: var(--textYellow);}
 .crypto-list-tabs .ant-tabs-tab-btn:focus{color: var(--textYellow);}
 .crypto-list-tabs .ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textDark); background: var(--bgYellow); border-radius: 30px;}
 .crypto-list-tabs .ant-tabs-ink-bar{display: none;}
@@ -130,7 +131,7 @@ line-height: 16px;min-width:90px}
 .pop-cancel{background-color: transparent;color: var(--textWhite30); border-color: transparent; border-radius: 40px;height: 57px;}
 .cancel-btn{height: 57px; text-transform: uppercase;font-weight: 700;text-align: center;}
 .custon-btngroup{height: 57px; text-transform: uppercase; border:0;font-weight: 700;text-align: center; margin-top: 10px; width:50%}
-.pick-btn{ border-radius:0 30px 30px 0; background-color: var(--bgYellow);}
+.pick-btn{ border-radius:0 30px 30px 0; background-color: var(--bgYellow);box-shadow: 0 4px var(--bgDark);}
 .pick-btn:hover, .pick-btn:focus, .pick-btn:active{background-color:var(--bgDarkYellow);color: var(--textDark);  }
 .cancel-btngroup:hover{background-color: var(--bgYellow);color: var(--textDark); }
 .cancel-btngroup{ border-radius:30px 0 0 30px;background-color:var(--bgDarkYellow); color:var(--textWhite);}
