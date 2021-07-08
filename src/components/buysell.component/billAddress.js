@@ -26,7 +26,7 @@ class BillingAddress extends Component {
                     <div className="mb-16">UNIT 527 TOWER 4, SMDC Grace Residences, Cayetano Blvd. Brgy. Ususan, Taguig City 1630 PH</div>
                 </div>
                 <Translate size="large" block className="pop-btn" style={{ marginTop: '190px' }} onClick={() => this.props.changeStep('step5')} content="confirm_billing_address" component={Button} />
-                <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block content="cancel" component={Button} />
+                <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" onClick={() => this.props.changeStep('step1')} block content="cancel" component={Button} />
             </>
         )
     }

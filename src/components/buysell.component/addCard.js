@@ -29,7 +29,9 @@ class addCard extends Component {
                             <Input className="cust-input" defaultValue="544" />
                         </div>
                     </div>
-                    <Translate className="text-center mt-16 text-white fs-16" onClick={() => this.props.changeStep('step7')} content="type_billing_address" component={Paragraph} />
+                    <div className="text-center mt-16">
+                        <Translate className="text-underline text-white fs-16 fw-200" onClick={() => this.props.changeStep('step7')} content="type_billing_address" component={Link} />
+                    </div>
                 </form>
                 <Translate content="confirm_btn_text" component={Button} size="large" block className="pop-btn" style={{ marginTop: '180px' }} onClick={this.billingAddress} />
             </>

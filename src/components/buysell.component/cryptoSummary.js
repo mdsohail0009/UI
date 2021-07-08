@@ -47,7 +47,7 @@ class Summary extends Component {
                     </Text>
                 </div>
                 <Button size="large" block className="pop-btn" onClick={() => this.props.changeStep('step4')} >Pay 0,00701 ETH</Button>
-                <Translate content="cancel" component={Button} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
+                <Translate content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
             </>
         )
     }

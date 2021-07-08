@@ -25,14 +25,14 @@ class BillType extends Component {
         return (
             <>
                 <div className="d-flex align-center mb-24 mt-36 c-pointer" onClick={() => this.props.changeStep('step5')}>
-                    <span className="coin btc" />
+                    <span className="coin credit-white" />
                     <div className="ml-24">
                         <Translate className="mb-0 fs-14 text-white-30 fw-300" content="credit_card" component={Paragraph} />
                         <Translate className="mb-0 fs-12 text-white-30 fw-300" content="credit_card_text" component={Paragraph} />
                     </div>
                 </div>
                 <div className="d-flex align-center c-pointer" onClick={() => this.props.changeStep('step6')}>
-                    <span className="coin btc" />
+                    <span className="coin deposit-white" />
                     <div className="ml-24">
                         <Translate className="mb-0 fs-14 text-white-30 fw-300" content="deposit" component={Paragraph} />
                         <Translate className="mb-0 fs-12 text-white-30 fw-300" content="desosit_text" component={Paragraph} />
