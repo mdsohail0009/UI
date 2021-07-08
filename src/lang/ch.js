@@ -102,4 +102,5 @@ export default {
   confirm_transaction_decs: '美元錢包',
   add_fund: 'Add Funds',
   confirm_text: '交换 0.00549635 BTC 为了 0.10183318 ETH',
+  deposite_Btc:'从你的钱包里卖'
 }

@@ -103,5 +103,6 @@ export default {
   confirm_transaction_decs: 'Dompet dalam USD',
   add_fund: 'Tambah dana',
   confirm_text: 'Pertukaran 0.00549635 BTC untuk 0.10183318 ETH',
+  deposite_Btc:'Tambah dana'
 
 }
