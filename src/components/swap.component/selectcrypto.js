@@ -25,7 +25,7 @@ class SelectCrypto extends Component {
                     dataSource={config.tlvCoinsList}
                     className="wallet-list c-pointer"
                     renderItem={item => (
-                        <List.Item>
+                        <List.Item className="px-4">
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin} mr-4`} />}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}

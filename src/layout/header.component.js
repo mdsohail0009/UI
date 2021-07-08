@@ -29,8 +29,8 @@ const securityMenu = (
         <ul className="pl-0 drpdwn-list">
             <li><Link>2FA<span className="icon md rarrow-white" /></Link></li>
             <li><Link>Change Password<span className="icon md rarrow-white" /></Link></li>
-            <li className="no-hover"><Paragraph className="text-white fs-14 pt-16">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
-                <Paragraph className="text-white fs-14">Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.</Paragraph></li>
+            <li className="no-hover"><Paragraph className="text-white fs-14 pt-16">CURRENT SECURITY LEVEL<br /><span className="text-green fw-900">Medium</span></Paragraph>
+                <Paragraph className="text-white fs-14" style={{ paddingRight: '78px' }}>Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.</Paragraph></li>
             <li><Link>Protect your account<span className="icon md rarrow-white" /></Link></li>
         </ul>
     </Menu>
@@ -151,11 +151,10 @@ class Header extends Component {
                             </Menu>
                         </div>
                         <Menu theme="light" mode="horizontal" className="header-right" defaultSelectedKeys={['1']}>
-                            {/* <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item> */}
-                            <Translate content="menu_buy_sell" component={Menu.Item} key="1" onClick={this.showBuyDrawer} className="list-item" />
-                            <Translate content="menu_swap" component={Menu.Item} key="2" onClick={this.showSwapDrawer} className="list-item" />
-                            <Translate content="menu_send_receive" component={Menu.Item} key="3" onClick={this.showSendDrawer} className="list-item" />
-                            <Translate content="menu_mass_pay" component={Menu.Item} key="4" onClick={this.showBuyFiatDrawer} className="list-item" />
+                            <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item>
+                            <Menu.Item key="2" className="list-item" onClick={this.showSwapDrawer}>Swap</Menu.Item>
+                            <Menu.Item key="3" className="list-item" onClick={this.showSendDrawer}>Deposit / Withdraw</Menu.Item>
+                            <Menu.Item key="4" className="list-item" onClick={this.showBuyFiatDrawer}>Mass Payments</Menu.Item>
                             <Dropdown overlay={securityMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Translate key="5" content="security" component={Menu.Item} />
                             </Dropdown>

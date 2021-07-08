@@ -26,6 +26,7 @@ class DepositeCrypto extends Component {
     }
 
     render() {
+        console.log('propssssssssssss depositeToggle', this.props)
         const { initLoading, loading } = this.state;
         const loadMore =
             !loading ? (
@@ -46,7 +47,7 @@ class DepositeCrypto extends Component {
         return (
             <>
                 <Radio.Group
-                    defaultValue={1}
+                    defaultValue={this.props.activeTab || 1}
                     onChange={this.handleBuySellToggle}
                     className="buysell-toggle crypto-toggle text-upper">
                     <Radio.Button value={1}>Deposit</Radio.Button>
@@ -97,17 +98,17 @@ class DepositeCrypto extends Component {
                                 loadMore={loadMore}
                                 className="wallet-list"
                                 renderItem={item => (
-                                    <List.Item>
+                                    <List.Item className="px-4">
                                         <Link onClick={() => this.props.changeStep('step3')}>
                                             <List.Item.Meta
                                                 avatar={<span className={`coin ${item.coin} mr-4`} />}
                                                 title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}
                                             />
-                                            <div className="fs-16 text-right">
+                                            {/* <div className="fs-16 text-right">
                                                 <div className="text-white-30 fw-600">${item.price}</div>
                                                 <div className={item.up ? 'text-green' : 'text-red'}>-{item.loss} % </div>
                                             </div>
-                                            {item.up ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}
+                                            {item.up ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />} */}
                                         </Link>
                                     </List.Item>
                                 )}

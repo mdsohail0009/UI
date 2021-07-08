@@ -58,7 +58,6 @@ class MassPayment extends Component {
                         <Dropdown overlay={menu} overlayClassName="secureDropdown" arrow>
                             <a className="pop-drpdwn-toogle" onClick={e => e.preventDefault()}><span className="icon md h-more" /></a>
                         </Dropdown>
-
                     </div>
                 ]}
                 placement="right"
