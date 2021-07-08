@@ -3,8 +3,8 @@ import { Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
 import BuyCrypto from './buyCrypto';
 import connectStateProps from '../../utils/state.connect';
-import Summary from './Summary';
-import BillType from './BillType';
+import Summary from './cryptoSummary';
+import BillType from './payOption';
 import SelectCrypto from './selectCrypto';
 import { setStep } from '../../reducers/buysellReducer';
 import { processSteps as config } from './config';
@@ -12,7 +12,7 @@ import DepositFiat from './depositFiat'
 import WireTransfer from './wireTransfer';
 import AddCard from './addCard';
 import DepositCrypto from './depositCrypto';
-import BillingAddress from './BillingAddress';
+import BillingAddress from './billAddress';
 import AddressScanner from './addressScanner';
 import SellSummary from '../sell.component/sellSummary';
 import SelectSellCrypto from '../sell.component/selectCrypto'

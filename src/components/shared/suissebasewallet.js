@@ -53,7 +53,7 @@ class SuissebaseWallet extends Component {
                     bordered={false}
                     className="mx-24 mobile-list"
                     renderItem={item =>
-                        <List.Item className="py-8 px-0">
+                        <List.Item className="py-10 px-0">
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin} mr-4`} />}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0">{item.title}</div>}

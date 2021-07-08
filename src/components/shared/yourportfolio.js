@@ -13,14 +13,15 @@ class YourPortfolio extends Component {
     state = {
         loading: false,
         initLoading: true,
-        portfolioData:[],buyDrawer:false
+        portfolioData: [],
+        buyDrawer: false
     }
     componentDidMount() {
         this.loadCryptos();
     }
-    loadCryptos=async()=>{
-        let res=await apiCalls.getportfolio()
-        this.setState({portfolioData:res.data})
+    loadCryptos = async () => {
+        let res = await apiCalls.getportfolio()
+        this.setState({ portfolioData: res.data })
     }
     showBuyDrawer = () => {
         this.setState({
@@ -44,7 +45,7 @@ class YourPortfolio extends Component {
                         <List.Item className="" extra={
                             <div className="crypto_btns">
                                 <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer()} className="custom-btn prime" />
-                                <Translate content="sell" component={Button} className="custom-btn sec outline ml-16"  onClick={() => this.showBuyDrawer()}/>
+                                <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer()} />
                             </div>
                         }>
                             <List.Item.Meta
@@ -57,7 +58,7 @@ class YourPortfolio extends Component {
                         </List.Item>
                     )}
                 />
- <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
+                <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
             </div>
         );
     }
