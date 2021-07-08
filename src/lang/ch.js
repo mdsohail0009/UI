@@ -100,6 +100,7 @@ export default {
   confirm_transaction_decs: '美元錢包',
   add_fund: 'Add Funds',
   confirm_text: '交换 0.00549635 BTC 为了 0.10183318 ETH',
+  deposite_Btc:'从你的钱包里卖',
   sell_btc: '出售比特币',
   select_wallet: "从你的钱包里卖",
   sell_your_crypto_for_cash: '出售您的加密货币以换取现金',

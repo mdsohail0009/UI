@@ -5,5 +5,5 @@ export const sendreceiveSteps = {
   step4: 'withdrawaddress',
   step5: "withdrawsummary",
   step6: "verifyidentity",
-  step7: "withdrawscan"
+  step7: "withdrawscan",
 }
