@@ -7,7 +7,7 @@ import { swapobj as config } from './config';
 import SwapCoins from './swapCoins';
 import SwapSummary from './swapSummary'
 import SelectCrypto from './selectcrypto';
-import ConfirmMsg from '../shared/confirmation'
+import Success from './success';
 
 const { Title, Paragraph } = Typography
 class SwapCrypto extends Component {
@@ -25,7 +25,7 @@ class SwapCrypto extends Component {
             swapcoins: <SwapCoins />,
             swapsummary: <SwapSummary />,
             selectcrypto: <SelectCrypto swapfrom="true" />,
-            confirmation: <ConfirmMsg />
+            confirmation: <Success />
 
 
         }

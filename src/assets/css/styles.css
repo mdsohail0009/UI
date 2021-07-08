@@ -90,6 +90,7 @@ line-height: 16px;min-width:90px}
 .icon.sm.uparw-o-white{background-position:-332px -6px;}
 .icon.sm.dwnarw-o-white{background-position:-355px -5px;}
 .icon.sm.add{background-position:-32px -40px;}
+.icon.md.diag-arrow{background-position:-111px -36px;}
 .icon.md.rarrow-white{background-position:-217px -1px;}
 .icon.md.signal-white{background-position: -68px -112px;width: 25px !important;height: 25px !important;}
 .icon.md.h-more{background-position:-53px -37px;}
@@ -169,15 +170,15 @@ line-height: 16px;min-width:90px}
 .theme-dark, .theme-dark:hover, .theme-dark:focus{background-color: var(--bgWhite) !important;color: var(--textBlack);border-color: var(--bgWhite);}
 /* Coins */
 .coin{width: 43px; height: 43px;background: url(../../assets/images/crypto-icons.svg) no-repeat; display: inline-block; box-shadow: 0 8px 16px rgba(20,0,4,0.2); border-radius: 6px;}
-.coin.bch{background-position: -1px -1px;}
-.coin.eth{background-position: -55px -1px;}
-.coin.btc{background-position: -108px -1px;}
+.coin.DOT{background-position: -1px -1px;}
+.coin.ETH{background-position: -55px -1px;}
+.coin.BTC{background-position: -108px -1px;}
 .coin.xlm{background-position: -162px -1px;}
 .coin.usd-d{background-position: -216px -1px;}
 .coin.oxbtc{background-position: -108px -1px;}
 .coin.act{background-position: -270px -1px;}
-.coin.dat{background-position: -324px -1px;}
-.coin.eur{background-position: -378px -1px;}
+.coin.DOT{background-position: -324px -1px;}
+.coin.EUR{background-position: -378px -1px;}
 .coin.gbp{background-position: -432px -1px;}
 .coin.md{width: 40px; height: 40px; box-shadow: none;}
 .coin.lg{width: 52px; height: 52px;box-shadow: none;}

@@ -1,28 +1,29 @@
 import React, { Component } from 'react';
 import config from '../../config/config';
 import { Link } from 'react-router-dom';
-import { List, Skeleton,Drawer,Typography } from 'antd';
+import { List, Skeleton, Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import apiCalls from '../../api/apiCalls'
 import SelectCrypto from '../sell.component/selectCrypto';
+import connectStateProps from '../../utils/state.connect';
 
 class CryptoList extends Component {
     state = {
         loading: false,
-        initLoading: true,coinsList:[]
+        initLoading: true, coinsList: []
     }
     componentDidMount() {
         this.loadCryptos();
     }
-    loadCryptos=async()=>{
-        let res=await apiCalls.getCryptos()
-        this.setState({coinsList:res.data})
+    loadCryptos = async () => {
+        let res = await apiCalls.getCryptos()
+        this.setState({ coinsList: res.data })
     }
     renderContent = () => {
         return <SelectCrypto />
-    } 
+    }
     showBuyDrawer = () => {
         this.setState({
             showDrawer: true
@@ -58,9 +59,9 @@ class CryptoList extends Component {
                 className="crypto-list"
                 renderItem={item => (
                     <List.Item>
-                        <Link onClick={() => this.showBuyDrawer()}>
+                        <Link onClick={() => this.props.dispatch(setStep("step2"))}>
                             <List.Item.Meta
-                                avatar={<span className={`coin ${item.coin} mr-4`} />}
+                                avatar={<span className={`coin ${item.walletCode} mr-4`} />}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.walletCode}</div>}
                             />
                             <div className="fs-16 text-right">
@@ -73,22 +74,22 @@ class CryptoList extends Component {
                 )}
             />
             <Drawer
-            title={[<div className="side-drawer-header">
-            <span onClick={()=>this.closeDrawer()} className="icon md lftarw-white c-pointer" />
-            <div className="text-center fs-14 px-16">
-                <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Buy DOT</Paragraph>
-                <Paragraph className="text-white-50 mb-0 fw-300 swap-subtitlte" ></Paragraph></div>
-            <span className="icon md close-white c-pointer" onClick={()=>this.closeDrawer()} /></div>]}
-            placement="right"
-            closable={true}
-            visible={this.state.showDrawer}
-            closeIcon={null}
-            className="side-drawer"
-        >
-            {this.renderContent()}
-        </Drawer></>
+                title={[<div className="side-drawer-header">
+                    <span onClick={() => this.closeDrawer()} className="icon md lftarw-white c-pointer" />
+                    <div className="text-center fs-14 px-16">
+                        <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Buy DOT</Paragraph>
+                        <Paragraph className="text-white-50 mb-0 fw-300 swap-subtitlte" ></Paragraph></div>
+                    <span className="icon md close-white c-pointer" onClick={() => this.closeDrawer()} /></div>]}
+                placement="right"
+                closable={true}
+                visible={this.state.showDrawer}
+                closeIcon={null}
+                className="side-drawer"
+            >
+                {this.renderContent()}
+            </Drawer></>
         );
     }
 }
 
-export default CryptoList;
+export default connectStateProps(CryptoList);
