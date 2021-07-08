@@ -58,14 +58,14 @@ class Footer extends Component {
                     <Typography.Link className="copyright">Suissebase<sup className="fs-10">TM</sup> {new Date().getFullYear()}</Typography.Link>
                     <span>
                         <Button type="primary" shape="circle" className={this.themeBtnClr()} size="large" onClick={() => this.handleTheme}>{this.state.darkTheme ? 'DRK' : 'LHT'}</Button>
-                        <Dropdown placement="topRight" className="secureDrpdwn" overlayClassName="secureDropdown" overlay={languageMenu} trigger={['click']} arrow>
+                        {/* <Dropdown placement="topRight" className="secureDrpdwn" overlayClassName="secureDropdown" overlay={languageMenu} trigger={['click']} arrow>
                             <Button shape="circle" className="selct-lang ml-8 text-center fs-14 fw-200" size="large" onClick={() => this.handleTheme}>EN</Button>
-                        </Dropdown>
-                        {/* <select value={this.state.lang} onChange={this.onLangChange} className="selct-lang ml-8 f-12" removeIcon={true}>
+                        </Dropdown> */}
+                        <select value={this.state.lang} onChange={this.onLangChange} className="selct-lang ml-8 f-12" removeIcon={true}>
                             <option value="en">EN</option>
                             <option value="ch">英语</option>
                             <option value="my">MY</option>
-                        </select> */}
+                        </select>
                     </span>
                 </div>
             </div>

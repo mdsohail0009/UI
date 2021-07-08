@@ -3,7 +3,7 @@ export default {
   Portfolio_title: '文件夾',
   your_portfolio: '您的投資組合',
   suissebase_title: '瑞士基地',
-  suissebase_subtitle: '您可以使用的钱包',
+  suissebase_subtitle: '您可以使用的钱包。',
   markets_title: '市场',
   markets_subtitle: '将您的加密货币交易成任何货币',
   deposit: '订金',
