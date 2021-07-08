@@ -25,11 +25,11 @@ class BuyFiat extends Component {
                     defaultValue={1}
                     onChange={this.handleBuyFiatToggle}
                     className="buysell-toggle crypto-toggle">
-                    <Radio.Button value={1}>Add Fund</Radio.Button>
-                    <Radio.Button value={2}>Withdraw</Radio.Button>
+                    <Translate content="add_fund" component={Radio.Button} value={1} />
+                    <Translate content="withdraw" component={Radio.Button} value={2} />
                 </Radio.Group>
                 {buyFiat ? <>
-                    <Paragraph className="mb-0 text-white-30 fw-200 fs-36">Sell your Fiat for Cash</Paragraph>
+                    <Translate className="mb-0 text-white-30 fw-200 fs-36" content="sell_your_fiat_for_cash" component={Paragraph} />
                     <Paragraph className="text-secondary fw-300 fs-16 mb-36 mr-16">Need to replenish your wallet? Follow this link and  <Link to="" className="text-yellow text-underline">Deposit</Link> some cash.</Paragraph>
                     <div className="sellcrypto-container auto-scroll">
                         <Card className="crypto-card fiatcard mb-36 c-pointer" bordered={false} onClick={() => this.props.changeStep('step4')}>

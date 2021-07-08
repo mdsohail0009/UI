@@ -100,6 +100,15 @@ export default {
   confirm_transaction_decs: 'Wallet in USD',
   add_fund: 'Add Funds',
   confirm_text: 'Swapping 0.00549635 BTC for 0.10183318 ETH',
-  deposite_Btc:'Deposite BTC'
-
+  deposite_Btc:'Deposite BTC',
+  sell_btc: "Sell BTC",
+  select_wallet: "sell from you wallet",
+  sell_your_crypto_for_cash:'Sell your Crypto for Cash',
+  sell_your_crypto_for_cash_text: 'Easily buy and sell Crypto straight from your Wallet.',
+  sell_your_fiat_for_cash: 'Sell your Fiat for Cash',
+  menu_buy_sell: 'Buy / Sell',
+  menu_swap: 'Swap',
+  menu_send_receive: 'Send / Receive',
+  menu_mass_pay: 'Mass Payments',
+  security: 'Security',
 }

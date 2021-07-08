@@ -19,7 +19,6 @@ import SelectSellCrypto from '../sell.component/selectCrypto'
 import SuccessMsg from '../shared/success';
 import { connect } from 'react-redux';
 
-
 const { Title, Paragraph } = Typography
 class BuySell extends Component {
     state = {

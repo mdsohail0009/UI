@@ -151,12 +151,13 @@ class Header extends Component {
                             </Menu>
                         </div>
                         <Menu theme="light" mode="horizontal" className="header-right" defaultSelectedKeys={['1']}>
-                            <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item>
-                            <Menu.Item key="2" className="list-item" onClick={this.showSwapDrawer}>Swap</Menu.Item>
-                            <Menu.Item key="3" className="list-item" onClick={this.showSendDrawer}>Deposit / Withdraw</Menu.Item>
-                            <Menu.Item key="4" className="list-item" onClick={this.showBuyFiatDrawer}>Mass Payments</Menu.Item>
+                            {/* <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item> */}
+                            <Translate content="menu_buy_sell" component={Menu.Item} key="1" onClick={this.showBuyDrawer} className="list-item" />
+                            <Translate content="menu_swap" component={Menu.Item} key="2" onClick={this.showSwapDrawer} className="list-item" />
+                            <Translate content="menu_send_receive" component={Menu.Item} key="3" onClick={this.showSendDrawer} className="list-item" />
+                            <Translate content="menu_mass_pay" component={Menu.Item} key="4" onClick={this.showBuyFiatDrawer} className="list-item" />
                             <Dropdown overlay={securityMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                <Menu.Item key="5">Security</Menu.Item>
+                                <Translate key="5" content="security" component={Menu.Item} />
                             </Dropdown>
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
                             <Dropdown overlay={settingMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>

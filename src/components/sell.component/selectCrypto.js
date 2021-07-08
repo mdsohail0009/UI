@@ -34,7 +34,7 @@ class SelectSellCrypto extends Component {
                         />
                         <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">0.00287116 BTC</Text>
                     </div>
-                    <span className="mt-24" style={{ marginLeft: 80 }}>
+                    <span className="mt-8 val-updown">
                         <span className="icon sm uparw-o-white d-block c-pointer mb-4" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
                     </span>
                 </div>
@@ -43,7 +43,7 @@ class SelectSellCrypto extends Component {
                     <Radio.Button value="half">Half</Radio.Button>
                     <Radio.Button value="all">ALL</Radio.Button>
                 </Radio.Group>
-                <WalletList isArrow={true} />
+                <WalletList />
                 <Button size="large" block className="pop-btn" onClick={() => this.props.changeStep('step11')}>PREVIEW</Button>
             </>
 

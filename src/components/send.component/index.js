@@ -10,6 +10,7 @@ import ScanQR from './scan';
 import WithdrawAddress from './withdrawAddress'
 import SellSummary from '../sell.component/sellSummary';
 import VerifyIDentity from './verifyIdentity';
+import WithdrawScan from './withdrawScan';
 import WithdrawSummary from './withdrawSummary';
 import AddressScanner from './addressScanner'
 const { Title, Paragraph } = Typography
@@ -25,13 +26,14 @@ class SendReceive extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            depositecrypto: <DepositeCrypto activeTab = {this.props.valNum} />,
+            depositecrypto: <DepositeCrypto activeTab={this.props.valNum} />,
             withdraw: <SelectWithdraw />,
-            depositescanner:<AddressScanner/>,
             scanner: <ScanQR/>,
             withdrawaddress: <WithdrawAddress />,
             verifyidentity: <VerifyIDentity />,
-            withdrawsummary:<WithdrawSummary/>
+            withdrawsummary: <WithdrawSummary />,
+            withdrawscan: <WithdrawScan />
+
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
     }
@@ -40,7 +42,7 @@ class SendReceive extends Component {
             depositecrypto:<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdraw: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             scanner: <span onClick={() => this.props.dispatch(setStep("step4"))} className="icon md lftarw-white c-pointer" />,
-            depositescanner: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            withdrawscan: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             withdrawaddress: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             verifyidentity: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdrawsummary:<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
@@ -52,7 +54,7 @@ class SendReceive extends Component {
             depositecrypto:  <span className="icon md search-white c-pointer" />,
             withdraw:<span  className="icon md notify-icon c-pointer" />,
             scanner: <span/>,
-            depositescanner: <span/>,
+            withdrawscan: <span/>,
             withdrawaddress: <span/>,
             verifyidentity: <span/>,
             withdrawsummary:<span/>,
