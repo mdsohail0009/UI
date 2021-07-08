@@ -10,6 +10,7 @@ import ScanQR from './scan';
 import WithdrawAddress from './withdrawAddress'
 import SellSummary from '../sell.component/sellSummary';
 import VerifyIDentity from './verifyIdentity';
+import WithdrawScan from './withdrawScan';
 import WithdrawSummary from './withdrawSummary';
 const { Title, Paragraph } = Typography
 class SendReceive extends Component {
@@ -24,13 +25,13 @@ class SendReceive extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            depositecrypto: <DepositeCrypto activeTab = {this.props.valNum} />,
+            depositecrypto: <DepositeCrypto activeTab={this.props.valNum} />,
             withdraw: <SelectWithdraw />,
             scanner: <ScanQR />,
             withdrawaddress: <WithdrawAddress />,
             verifyidentity: <VerifyIDentity />,
-            withdrawsummary:<WithdrawSummary/>
-
+            withdrawsummary: <WithdrawSummary />,
+            withdrawscan: <WithdrawScan />
 
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]

@@ -114,9 +114,10 @@ line-height: 16px;min-width:90px}
 .buysell-toggle .ant-radio-button-wrapper::before, .crypto-card .ant-card-body::before, .crypto-card .ant-card-body::after{content: none;}
 .crypto-list-tabs .ant-tabs-content-holder{max-height: calc(100vh - 480px); overflow-y: auto; padding-right: 10px;}
 .sellcrypto-container{max-height: calc(100vh - 375px);}
+.verify-container{max-height: calc(100vh - 140px);}
 .dep-withdraw{max-height: calc(100vh - 385px);}
 .auto-scroll{overflow-y: auto; padding-right: 10px;}
-.crypto-list-tabs.scroll-thumb .ant-tabs-content-holder::-webkit-scrollbar-thumb, .crypto-list-tabs .ant-tabs-content-holder::-webkit-scrollbar-thumb, .sellcrypto-container::-webkit-scrollbar-thumb{background-color: var(--bgDarkGrey);}
+.auto-scroll::-webkit-scrollbar-thumb{background-color: var(--bgDarkGrey);}
 .crypto-list-tabs .ant-list-item, .wallet-list .ant-list-item{border-color: var(--borderLight);}
 .wallet-list .ant-list-item:hover{background-color: var(--bgBlu);}
 .wallet-list li a, .crypto-list li a{display: inline-flex; align-items: center;flex-grow: 1;}
@@ -156,7 +157,7 @@ line-height: 16px;min-width:90px}
 /* Sell */
 .round-pills{display: flex;justify-content: space-between;text-align: center; margin-bottom: 70px;}
 .default-radio{display: flex !important; justify-content: flex-start !important;margin-bottom: 16px;}
-.default-radio .ant-radio-button-wrapper{background-color: transparent !important; color: var(--textWhite) !important;border-radius: 30px;min-width: 120px; line-height: 30px;border: none;font-size: 12px;font-weight: 500;text-align: center;}
+.default-radio .ant-radio-button-wrapper{background-color: transparent !important; color: var(--textWhite) !important;border-radius: 30px;min-width: 120px; line-height: 32px;border: none;font-size: 12px;font-weight: 500;text-align: center;}
 .round-pills .ant-radio-button-wrapper{background-color: var(--bgDark);height: 26px; border-radius: 30px;min-width: 120px; line-height: 26px;color: var(--textYellow);border: none;font-size: 12px;font-weight: 500;}
 .round-pills .ant-radio-button-wrapper-checked, .default-radio .ant-radio-button-wrapper-checked{background-color: var(--bgYellow) !important; color: var(--textDark) !important;}
 .round-pills .ant-radio-button-wrapper::before, .default-radio .ant-radio-button-wrapper::before{content: none;}
@@ -183,6 +184,7 @@ line-height: 16px;min-width:90px}
 .coin.md{width: 40px; height: 40px; box-shadow: none;}
 .coin.lg{width: 52px; height: 52px;box-shadow: none;}
 .coin.lg.btc-white{background-position: 5px -767px;}
+.select .coin.lg.btc-white{background-position: -3px -909px;}
 .coin.lg.eth-white{background-position: -47px -767px}
 .coin.lg.usdt-white{background-position: -92px -404px}
 .coin-circle{width: 52px !important;height: 52px !important;}
