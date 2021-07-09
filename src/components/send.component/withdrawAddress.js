@@ -17,7 +17,7 @@ class WithdrawAddress extends Component {
 
                 <div className="d-flex justify-content align-center">
                     <Radio.Group defaultValue="half" buttonStyle="outline" className=" default-radio" >
-                        <Translate value="min" content="assets" className="fs-16 fw-400" component={Radio.Button} />
+                        <Translate value="min" content="assets" className="fs-16 fw-400" component={Radio.Button} onClick={() => this.props.changeStep('step2')} />
                         <Translate value="half" content="address" className="fs-16 fw-400" component={Radio.Button} />
                     </Radio.Group>
                     <div className="icon-delete c-pointer">

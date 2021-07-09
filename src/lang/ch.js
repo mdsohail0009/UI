@@ -17,7 +17,7 @@ export default {
   search_currency: '搜索货币',
   buy_assets: '购买资产',
   past_hours: '在过去的 24 小时内',
-  deposite_a_crypto: '购买加密货币',
+  deposite_a_crypto: '存入加密货币',
   deposite_a_cryto_txt: '只需分享您的 QR 地址即可获得加密货币',
   purchase_a_crypto: '购买加密货币',
   purchase_a_cryto_txt: '你的钱包是空的，你没有任何资产可以进行交易。点击此链接并存入一些现金。',
