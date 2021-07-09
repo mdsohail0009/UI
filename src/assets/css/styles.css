@@ -119,7 +119,7 @@ line-height: 16px;min-width:90px}
 .auto-scroll{overflow-y: auto; padding-right: 10px;}
 .auto-scroll::-webkit-scrollbar-thumb{background-color: var(--bgDarkGrey);}
 .crypto-list-tabs .ant-list-item, .wallet-list .ant-list-item{border-color: var(--borderLight);}
-.wallet-list .ant-list-item:hover{background-color: var(--bgBlu);}
+.wallet-list .ant-list-item:hover, .wallet-list .ant-list-item.select{background-color: var(--bgBlu);}
 .wallet-list li a, .crypto-list li a{display: inline-flex; align-items: center;flex-grow: 1;}
 .wallet-list h4{margin-bottom: 0;}
 .crypto-toggle .ant-radio-button-wrapper{padding: 22px;}
