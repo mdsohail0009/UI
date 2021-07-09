@@ -5,7 +5,7 @@ import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
 
-class SelectCrypto extends Component {
+class ToReceive extends Component {
     state = {
         addClass: false,
     }
@@ -24,7 +24,7 @@ class SelectCrypto extends Component {
 
         return (<>
             <Search placeholder="Search for a Currency" onSearch={this.onSearch} className="crypto-search fs-14" />
-            <Paragraph className="text-upper fs-14 text-center text-white-30 c-pointer mt-36 mb-0 fw-500">Swap From<span className="icon sm rightarrow ml-12 mb-4" /></Paragraph>
+            <Paragraph className="text-upper fs-14 text-center text-white-30 c-pointer mt-36 fw-500 mb-0"><span className="icon sm leftarrow mr-12 mb-4" />To Receive</Paragraph>
             <div className="sellcrypto-container auto-scroll">
                 <List
                     itemLayout="horizontal"
@@ -55,4 +55,4 @@ const connectDispatchToProps = dispatch => {
         }
     }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(SelectCrypto);
+export default connect(connectStateToProps, connectDispatchToProps)(ToReceive);

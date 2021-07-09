@@ -33,7 +33,7 @@ class SwapCoins extends Component {
                         <Input className="card-input" defaultValue="0.10183318" bordered={false} placeholder="0.0" />
                         <Text className="text-white-30 mt-4 fs-12 fw-100">Balance - 2.547813980005 ETH</Text>
                     </div>
-                    <div className="d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step3')} >
+                    <div className="d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step4')} >
                         <div className="text-center crypto-coin">
                             <span className="icon swapto-arrow"></span>
                             <span className="coin md eth-white"></span>

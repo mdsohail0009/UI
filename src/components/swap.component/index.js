@@ -9,6 +9,7 @@ import SwapSummary from './swapSummary'
 import SelectCrypto from './selectcrypto';
 import Success from './success';
 import SwapConfirm from './swapConfirm';
+import ToReceive from './toReceive';
 
 const { Title, Paragraph } = Typography
 class SwapCrypto extends Component {
@@ -26,6 +27,7 @@ class SwapCrypto extends Component {
             swapcoins: <SwapCoins />,
             swapsummary: <SwapSummary />,
             selectcrypto: <SelectCrypto swapfrom="true" />,
+            toreceive: <ToReceive />,
             confirmation: <SwapConfirm />
 
 
@@ -37,6 +39,7 @@ class SwapCrypto extends Component {
             swapcoins: <span />,
             swapsummary: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             selectcrypto: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            toreceive: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             confirmation: <span />,
         }
         return stepcodes[config[this.props.buySell.stepcode]]
@@ -46,6 +49,7 @@ class SwapCrypto extends Component {
             swapcoins: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             swapsummary: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             selectcrypto: <span />,
+            toreceive: <span />,
             confirmation: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
 
         }
