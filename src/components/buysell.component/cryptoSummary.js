@@ -5,6 +5,16 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 
+const LinkValue = (props) => {
+    return (
+      <Translate className="text-yellow text-underline c-pointer"
+        content={props.content}
+        component={Link}
+        to="./#"
+      />
+    )
+  }
+
 class Summary extends Component {
     constructor(props) {
         super(props);
@@ -18,6 +28,7 @@ class Summary extends Component {
 
     render() {
         const { Title, Paragraph, Text } = Typography;
+        const link = <LinkValue content="terms_service" />;
         return (
             <>
                 <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>0,0070 ETH</div>
@@ -41,12 +52,10 @@ class Summary extends Component {
                 </div>
                 <Translate className="fs-12 text-white-30 text-center my-16" content="summary_hint_text" component={Paragraph} />
                 <div className="d-flex p-16 mb-36">
-                    <span className="icon lg check-ylw"/>
-                    <Text className="fs-14 text-white-30 ml-16" style={{ flex: 1 }}>
-                        I agree to Suissebase’s <Link to="" className="text-white-30"><u>Terms of Service</u></Link> and its return, refund and cancellation policy.
-                    </Text>
+                    <span className="icon lg check-ylw" />
+                    <Translate content="agree_to_suissebase" with={{link}} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
                 </div>
-                <Button size="large" block className="pop-btn" onClick={() => this.props.changeStep('step4')} >Pay 0,00701 ETH</Button>
+                <Translate content="pay" component={Button} size="large" block className="pop-btn" onClick={() => this.props.changeStep('step4')} />
                 <Translate content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
             </>
         )

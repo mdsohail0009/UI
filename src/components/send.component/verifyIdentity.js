@@ -3,6 +3,9 @@ import { Typography, Input, Button, Select } from 'antd';
 import { Link } from 'react-router-dom';
 import sacnner from '../../assets/images/sacnner.png';
 import Translate from 'react-translate-component';
+import connectStateProps from '../../utils/state.connect';
+import { setStep } from '../../reducers/sendreceiveReducer';
+
 const { Option } = Select;
 class VerifyIDentity extends Component {
     state = {}
@@ -40,7 +43,7 @@ class VerifyIDentity extends Component {
                             <Option value="india">India(+91)</Option>
                         </Select>
                         <Input className="cust-input" placeholder="Your phone number" />
-                        <Button size="large" block className="pop-btn">Next</Button>
+                        <Button size="large" block className="pop-btn" onClick={() => this.props.dispatch(setStep("step1"))}>Next</Button>
                     </form>
                 </div>
                 <Paragraph className="fs-16 text-white-30 fw-300 pr-30">Read more about your personal data processing <Link className="text-yellow text-underline">Privacy Policy</Link>. Don’t have a smartphone? <Link className="text-white-30"><u>Continue with your current device</u></Link></Paragraph>
@@ -49,4 +52,4 @@ class VerifyIDentity extends Component {
     }
 }
 
-export default VerifyIDentity;
+export default connectStateProps(VerifyIDentity);

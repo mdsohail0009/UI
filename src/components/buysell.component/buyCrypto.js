@@ -10,7 +10,15 @@ import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 
-
+const LinkValue = (props) => {
+    return (
+      <Translate className="text-yellow text-underline c-pointer"
+        content={props.content}
+        component={Link}
+        to="./#"
+      />
+    )
+  }
 class BuyCrypto extends Component {
     state = {
         buyDrawer: false,
@@ -26,8 +34,9 @@ class BuyCrypto extends Component {
 
     render() {
         const { TabPane } = Tabs;
+        const link = <LinkValue content="deposit" />;
         const { Title, Paragraph, Text } = Typography;
-        const { buysell } = this.state
+        const { buysell } = this.state;
         return (
             <>
                 <Radio.Group
@@ -46,7 +55,7 @@ class BuyCrypto extends Component {
                     :
                     <>
                         <Translate content="purchase_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-16" />
-                        <Paragraph className="fs-16 text-secondary">Your wallet is empty, you don’t have any assets to make transactions. Follow this link and <Link  onClick={() => this.props.changeStep('step6')} className="text-yellow text-underline">Deposit</Link> some cash.</Paragraph>
+                        <Translate content="deposit_link" with={{link}} component={Paragraph} className="fs-16 text-secondary" />                       
                         <Tabs className="crypto-list-tabs">
                             <TabPane tab="All" key="1">
                                 <CryptoList />

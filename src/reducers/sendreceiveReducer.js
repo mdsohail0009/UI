@@ -17,17 +17,17 @@ let initialState = {
     stepTitles: {
         depositecrypto: "deposit",
         withdraw: 'withdraw',
-        scanner: 'deposit',
+        scanner: 'scan_your_crypto',
         withdrawaddress: 'withdraw',
         withdrawsummary: 'withdraw_Btc',
         verifyidentity: 'verify_identity',
-        withdrawscan: 'withdraw',
+        withdrawscan: 'deposit',
 
     },
     stepSubTitles: {
         depositecrypto: "select_a_currency",
         withdraw: 'select_a_currency',
-        scanner: 'usd_available',
+        scanner: 'center_qr',
         withdrawaddress: 'send_wallet_fiat',
         withdrawsummary: 'withdraw_summary_sub',
         withdrawscan: 'withdraw_summary_sub',

@@ -36,7 +36,7 @@ class Home extends Component {
                             <Translate content="markets_subtitle" component={Paragraph} className="text-white-30 fs-16 fw-200" />
                             {/* <Translate content="search_currency" component={Search} size="middle" bordered={false} enterButton className="mt-24" /> */}
                             <Search placeholder="Search Currency" size="middle" bordered={false} enterButton className="mt-24" />
-                            <CryptoList />
+                            <CryptoList isShowDrawer={true}/>
                         </div>
                     </Col>
                     <Col xs={24} md={12} xl={14}>

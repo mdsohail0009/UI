@@ -43,14 +43,14 @@ class SwapCoins extends Component {
                     </div>
                 </div>
                 <div className="p-16 mt-24 text-center fw-200">
-                    <Paragraph className="fs-16 text-white-30 mb-0">
+                    <Paragraph className="fs-16 text-white-30 mb-0 l-height-normal">
                         Available 0.00549635 BTC
                     </Paragraph>
-                    <Paragraph className="fs-16 text-white-30">
+                    <Paragraph className="fs-16 text-white-30 l-height-normal">
                         Price 1BTC = 16.41933713 ETH
                     </Paragraph>
                 </div>
-                <Translate size="large" block className="pop-btn" style={{ marginTop: '100px' }} content="preview" component={Button} onClick={() => this.props.changeStep('step2')} />
+                <Translate size="large" block className="pop-btn" style={{ marginTop: '100px' }} content="preview_swap" component={Button} onClick={() => this.props.changeStep('step2')} />
             </div>
         )
     }

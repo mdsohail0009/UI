@@ -14,6 +14,7 @@ import menuCarousel from '../components/shared/megaMenu/menuCarousel';
 import SendReceive from '../components/send.component'
 import SwapCrypto from '../components/swap.component'
 import MassPayment from '../components/buyfiat.component'
+import { userManager } from '../authentication';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -49,7 +50,7 @@ const settingMenu = (
             <li><Link to="">Local Currency<span className="icon md rarrow-white" /></Link></li>
             <li><Link to="">Notifications<span className="icon md rarrow-white" /></Link></li>
             <li><Link to="">Themes<span className="icon md rarrow-white" /></Link></li>
-            <li><Link to="">Logout<span className="icon md rarrow-white" /></Link></li>
+            <li onClick={()=>userManager.signoutRedirect()}><Link to="">Logout<span className="icon md rarrow-white" /></Link></li>
         </ul>
     </Menu>
 );
@@ -220,9 +221,12 @@ class Header extends Component {
                                             <Title className="text-white megamenu-label  fw-500">Crypto</Title>
                                         </div>
                                         <div className="item-wrapper">
-                                            <Link >Buy and Sell</Link>
-                                            <Link>Swap Services</Link>
-                                            <Link>Deposit and Withdraw</Link>
+                                            <Link onClick={() => { this.closeMegaMenu(); this.showBuyDrawer();}}>Buy and Sell</Link>
+                                            {/* <Translate content="buy_sell" onClick={() => { this.closeMegaMenu(); this.showBuyDrawer();}} className="text-white-30 fs-16 fw-300 c-pointer menu-items" /> */}
+                                            <Link onClick={() => { this.closeMegaMenu(); this.showSwapDrawer();}}>Swap Services</Link>
+                                            {/* <Translate content="swap_services" onClick={() => { this.closeMegaMenu(); this.showSwapDrawer();}} className="text-white-30 fs-16 fw-300 c-pointer menu-items" /> */}
+                                            <Link onClick={() => { this.closeMegaMenu(); this.showSendDrawer();}}>Deposit and Withdraw</Link>
+                                            {/* <Translate content="deposit_and_withdraw"  onClick={() => { this.closeMegaMenu(); this.showSendDrawer();}} className="text-white-30 fs-16 fw-300 c-pointer menu-items" /> */}
                                         </div>
                                     </div>
                                 </Col>
@@ -233,8 +237,8 @@ class Header extends Component {
                                             <Paragraph className="text-white-30 fs-16 fw-300">User can create a separate account such as a corporate segregated wallet system.</Paragraph>
                                         </div>
                                         <div className="item-wrapper">
-                                            <Link>Corporate Wallet</Link>
-                                            <Link>Mass Payments</Link>
+                                            <div className="text-white-30 fs-16 fw-300">Corporate Wallet</div>
+                                            <Link onClick={() => { this.closeMegaMenu(); this.showBuyFiatDrawer();}}>Mass Payments</Link>
                                         </div>
                                     </div>
                                 </Col>
@@ -251,11 +255,11 @@ class Header extends Component {
                                 </Col>
                                 <Col lg={7} xl={6}>
                                     <Title className=" text-white megamenu-label  mb-16 fw-500">Connect</Title>
-                                    <Link>Meet Our Team</Link>
-                                    <Link>Report A Bug</Link>
-                                    <Link>FAQ</Link>
-                                    <Link>Contact Us</Link>
-                                    <Link >Sign In</Link>
+                                    <div className="text-white-30 fs-16 fw-300">Meet Our Team</div>
+                                    <div className="text-white-30 fs-16 fw-300">Report A Bug</div>
+                                    <div className="text-white-30 fs-16 fw-300">FAQ</div>
+                                    <div className="text-white-30 fs-16 fw-300">Contact Us</div>
+                                    <div className="text-white-30 fs-16 fw-300" >Sign In</div>
 
                                 </Col>
 
