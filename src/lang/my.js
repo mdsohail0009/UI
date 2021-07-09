@@ -111,5 +111,17 @@ export default {
   menu_send_receive: 'Deposit / Pengeluaran',
   menu_mass_pay: 'Pembayaran Massa',
   security: 'Keselamatan',
+  current_balance: 'Baki terkini',
+  min: 'Min',
+  half: 'Separuh',
+  assets: 'Aset',
+  address: 'Alamat',
+  confirm_now: 'Sahkan Sekarang',
+  buy_sell_address: 'UNIT 527 TOWER 4, SMDC Grace Residences, Cayetano Blvd. Brgy. Ususan, Taguig City 1630 PH',
+  withdraw_to: 'Tarik balik ke',
+  btc_address: 'Alamat Binance BTC',
+  fund_with_card: 'Dana dengan kad',
+  fund_with_card_text: 'Berapa banyak yang anda mahu tambah?',
+  preview_swap: 'Pertukaran Pratonton',
 
 }

@@ -14,8 +14,11 @@ class addCard extends Component {
                 <form className="form">
                     <Translate className="input-label" content="name_on_card" component={Text} />
                     <Input className="cust-input" defaultValue="Michael Quiapos" />
-                    <Translate className="input-label" content="card_number" component={Text} />
-                    <Input className="cust-input" defaultValue="5443 84000 0902 5339" />
+                    <div className="p-relative">
+                        <Translate className="input-label" content="card_number" component={Text} />
+                        <Input className="cust-input" defaultValue="5443 84000 0902 5339" />
+                        <Text className="error-text fs-12 text-error">Card type not supported</Text>
+                    </div>
                     <div className="d-flex justify-content align-center">
                         <div className="mr-16 ">
                             <Translate className="input-label" content="expiry" component={Text} />
