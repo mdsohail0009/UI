@@ -149,4 +149,5 @@ export default {
   qption1_answer: 'Scan the QR code with your camera app',
   qption2: 'Option 2: Send link via SMS',
   qption2_answer: 'We’ll text a secure link to your mobile at no extra cost.',
+  return_to_fiat: 'Return to Fiat',
 }

@@ -149,4 +149,5 @@ export default {
   qption1_answer: '使用您的相机应用程序扫描二维码',
   qption2: '选项 2：通过短信发送链接',
   qption2_answer: '我们将向您的手机发送安全链接，无需额外费用。',
+  return_to_fiat: '重返菲亚特',
 }

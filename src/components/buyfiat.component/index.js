@@ -11,7 +11,7 @@ import AddCard from './addCard';
 import SelectWallet from './selectWallet';
 import FiatSummary from './buyfiatSummary';
 import BillingAddress from '../buysell.component/billAddress';
-import ConfirmMsg from '../shared/confirmation'
+import ConfirmMsg from './confirm'
 class MassPayment extends Component {
     state = {
         withdraw: false,

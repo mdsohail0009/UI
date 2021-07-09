@@ -149,4 +149,5 @@ export default {
   qption1_answer: 'Imbas kod QR dengan aplikasi kamera anda',
   qption2: 'Pilihan 2: Hantar pautan melalui SMS',
   qption2_answer: 'Kami akan menghantar pautan selamat ke telefon bimbit anda tanpa kos tambahan.',
+  return_to_fiat: 'Kembali ke Fiat',
 }
