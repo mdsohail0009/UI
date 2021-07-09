@@ -221,6 +221,7 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .crypto-search .anticon-search{font-size: 18px; color: var(--textWhite);margin-right: 12px !important;}
 .confirm-icon{width: 124px; height: 124px; margin-bottom:50px;}
 .verify-options{padding: 24px 70px;}
+.loader{position: fixed;top: 0; right: 0; bottom: 0; left: 0;display: flex; align-items: center;font-size: 36px;color: var(--textWhite);background-color: var(--bgDarkGrey);justify-content: center;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}
