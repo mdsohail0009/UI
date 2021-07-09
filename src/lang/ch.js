@@ -100,7 +100,7 @@ export default {
   confirm_transaction_decs: '美元錢包',
   add_fund: '增加资金',
   confirm_text: '交换 0.00549635 BTC 为了 0.10183318 ETH',
-  deposite_Btc:'从你的钱包里卖',
+  deposite_Btc: '从你的钱包里卖',
   sell_btc: '出售比特币',
   select_wallet: "从你的钱包里卖",
   sell_your_crypto_for_cash: '出售您的加密货币以换取现金',
@@ -123,4 +123,7 @@ export default {
   fund_with_card: '有卡基金',
   fund_with_card_text: '你想加多少？',
   preview_swap: '预览交换',
+  scan_your_crypto: '扫描您的 BTC',
+  center_qr: '将 QR 扫描仪居中',
+  close: '关闭',
 }

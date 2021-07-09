@@ -100,7 +100,7 @@ export default {
   confirm_transaction_decs: 'Wallet in USD',
   add_fund: 'Add Funds',
   confirm_text: 'Swapping 0.00549635 BTC for 0.10183318 ETH',
-  deposite_Btc:'Deposite BTC',
+  deposite_Btc: 'Deposite BTC',
   sell_btc: "Sell BTC",
   select_wallet: "sell from you wallet",
   sell_your_crypto_for_cash: 'Sell your Crypto for Cash',
@@ -123,4 +123,7 @@ export default {
   fund_with_card: 'Fund with card',
   fund_with_card_text: 'How much would you like to add?',
   preview_swap: 'Preview Swap',
+  scan_your_crypto: 'Scan your BTC',
+  center_qr: 'Center the QR Scanner',
+  close: 'Close',
 }

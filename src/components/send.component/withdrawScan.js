@@ -5,6 +5,7 @@ import { setStep } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import sacnner from '../../assets/images/sacnner.png';
 import Translate from 'react-translate-component';
+import { HighlightOutlined, SmileOutlined, SmileFilled } from '@ant-design/icons';
 
 class WithdrawScan extends Component {
     state = {}
