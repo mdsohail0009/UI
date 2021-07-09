@@ -13,23 +13,25 @@ class VerifyIDentity extends Component {
         const { Title, Paragraph, Text } = Typography;
         return (
             <div className="verify-container auto-scroll">
-                <Title className="text-white-30 fs-36 fw-200 mb-8">Let's get you verified</Title>
-                <Paragraph className="fs-16 text-white-30 fw-300">Suissebase.ch would need to confirm your identity a process is powered by our partner.</Paragraph>
+                <Translate content="lets_verified" component={Title} className="text-white-30 fs-36 fw-200 mb-8" />
+                <Translate content="confirm_your_identity" component={Paragraph} className="fs-16 text-white-30 fw-300" />
                 <div className="d-flex mt-36 mb-16">
                     <span className="icon md card mt-4" />
                     <div className="ml-16">
-                        <Paragraph className="fs-16 fw-600 text-white-30 mb-0">Prepare a valid document</Paragraph>
-                        <Paragraph className="fs-16 fw-300 text-white-30">Make sure it's not expired of physically damaged</Paragraph>
+                        <Translate content="prepare_valid" component={Paragraph} className="fs-16 fw-600 text-white-30 mb-0" />
+                        <Translate content="make_sure" component={Paragraph} className="fs-16 fw-300 text-white-30" />
                     </div>
                 </div>
                 <div className="d-flex">
                     <span className="icon md phone mt-4" />
                     <div className="ml-16">
-                        <Paragraph className="fs-16 fw-600 text-white-30 mb-0">User a smartphone</Paragraph>
-                        <Paragraph className="fs-16 fw-300 text-white-30">You need a smartphone in order to continue</Paragraph>
+                        <Translate content="user_smartphone" component={Paragraph} className="fs-16 fw-600 text-white-30 mb-0" />
+                        <Translate content="you_need_smartphone" component={Paragraph} className="fs-16 fw-300 text-white-30" />
                     </div>
                 </div>
                 <div className="verify-options mb-36">
+                    <Translate content="qption1" component={Paragraph} className="fs-16 fw-600 text-white-30 mb-0" />
+                    <Translate content="qption2" component={Paragraph} className="fs-16 fw-300 text-white-30" />
                     <Paragraph className="fs-16 fw-600 text-white-30 mb-0">Option 1: Scan the QR code</Paragraph>
                     <Paragraph className="fs-16 fw-300 text-white-30">Scan the QR code with your camera app</Paragraph>
                     <div className="text-center">

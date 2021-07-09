@@ -18,7 +18,7 @@ class WalletList extends Component {
                 style={{ borderBottom: '1px solid var(--borderLight)' }}
                 renderItem={item => (
                     <List.Item className="px-4" >
-                        <Link  onClick={() => this.props.changeStep("step11")}>
+                        <Link>
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin}`} />}
                                 title={<><div className="fs-16 fw-400 text-white">{item.title}</div>

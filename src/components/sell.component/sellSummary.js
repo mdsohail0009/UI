@@ -7,13 +7,13 @@ import Translate from 'react-translate-component';
 
 const LinkValue = (props) => {
     return (
-      <Translate className="text-yellow text-underline c-pointer"
-        content={props.content}
-        component={Link}
-        to="./#"
-      />
+        <Translate className="text-yellow text-underline c-pointer"
+            content={props.content}
+            component={Link}
+            to="./#"
+        />
     )
-  }
+}
 class SellSummary extends Component {
     render() {
         const { Paragraph, Text } = Typography;
@@ -41,10 +41,10 @@ class SellSummary extends Component {
                 <Translate className="fs-12 text-white-30 text-center my-16" content="summary_hint_text" component={Paragraph} />
                 <div className="d-flex p-16 mb-36">
                     <span className="icon lg check-ylw" />
-                    <Translate content="agree_to_suissebase" with={{link}} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
+                    <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
                 </div>
                 <Translate size="large" block className="pop-btn" onClick={() => this.props.changeStep('success')} content="confirm_now" component={Button} />
-                <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block content="cancel" component={Button} />
+                <Translate type="text" size="large" onClick={() => this.props.changeStep('step1')} className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block content="cancel" component={Button} />
             </>
         )
     }
