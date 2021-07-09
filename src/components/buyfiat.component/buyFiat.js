@@ -42,7 +42,7 @@ class BuyFiat extends Component {
                             </div>
                             <div className="crypto-card-bottom">
                                 <div>
-                                    <div className="text-white-50 fs-14 fw-200">Current Balance</div>
+                                    <Translate className="text-white-50 fs-14 fw-200 mb-0" content="current_balance" component={Paragraph} />
                                     <div className="fs-24 text-white fw-500">$5,200.00</div>
                                 </div>
                                 <div>
@@ -61,7 +61,7 @@ class BuyFiat extends Component {
                             </div>
                             <div className="crypto-card-bottom">
                                 <div>
-                                    <div className="text-white-50 fs-14 fw-200">Current Balance</div>
+                                    <Translate className="text-white-50 fs-14 fw-200 mb-0" content="current_balance" component={Paragraph} />
                                     <div className="fs-24 text-white fw-500">$2,500.00</div>
                                 </div>
                                 <div>

@@ -8,13 +8,23 @@ import { connect } from 'react-redux';
 class SelectCrypto extends Component {
     state = {
         swapfrom: "",
-        swapto: ""
+        swapto: "",
+        addClass: false,
     }
     onSearch = value => console.log(value);
+    selectToggle() {
+        //const selectItem = config.tlvCoinsList.filter((item) => item.id !== config.tlvCoinsList.id)
+        this.setState({ addClass: !this.state.addClass });
+    }
     render() {
         const { swapto, swapfrom } = this.state;
         const { Search } = Input;
         const { Paragraph, Text } = Typography;
+        let activeClass = ['px-4'];
+        if (this.state.addClass) {
+            activeClass.push('select');
+        }
+
         return (<>
             <Search placeholder="Search for a Currency" onSearch={this.onSearch} className="crypto-search fs-14" />
             {!swapfrom && <Paragraph className="text-upper fs-14 text-center text-white-30 c-pointer mt-36 mb-0 fw-500">Swap From<span className="icon sm rightarrow ml-12 mb-4" /></Paragraph>}
@@ -25,7 +35,7 @@ class SelectCrypto extends Component {
                     dataSource={config.tlvCoinsList}
                     className="wallet-list c-pointer"
                     renderItem={item => (
-                        <List.Item className="px-4">
+                        <List.Item className={activeClass.join(' ')} onClick={this.selectToggle.bind(this)} >
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin} mr-4`} />}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}
