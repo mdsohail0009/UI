@@ -8,6 +8,7 @@ import SwapCoins from './swapCoins';
 import SwapSummary from './swapSummary'
 import SelectCrypto from './selectcrypto';
 import Success from './success';
+import SwapConfirm from './swapConfirm';
 
 const { Title, Paragraph } = Typography
 class SwapCrypto extends Component {
@@ -25,40 +26,39 @@ class SwapCrypto extends Component {
             swapcoins: <SwapCoins />,
             swapsummary: <SwapSummary />,
             selectcrypto: <SelectCrypto swapfrom="true" />,
-            confirmation: <Success />
+            confirmation: <SwapConfirm />
 
 
         }
         return stepcodes[config[this.props.swapStore.stepcode]]
     }
     renderTitle = () => {
-        debugger;
         const stepcodes = {
-        swapcoins: <span/>,
-        swapsummary: <span onClick={() =>this.props.dispatch(setStep("step1"))}  className="icon md lftarw-white c-pointer" />,
-        selectcrypto: <span onClick={() =>this.props.dispatch(setStep("step1"))}  className="icon md lftarw-white c-pointer" />,
-        confirmation:  <span />,
+            swapcoins: <span />,
+            swapsummary: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            selectcrypto: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            confirmation: <span />,
+        }
+        return stepcodes[config[this.props.buySell.stepcode]]
     }
-    return stepcodes[config[this.props.buySell.stepcode]]
-}
-renderIcon = () => {
-    const stepcodes = {
-        swapcoins: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
-        swapsummary: <span/>,
-        selectcrypto:  <span/>,
-        confirmation: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
-    
-}
-return stepcodes[config[this.props.buySell.stepcode]]
-}
+    renderIcon = () => {
+        const stepcodes = {
+            swapcoins: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
+            swapsummary: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
+            selectcrypto: <span />,
+            confirmation: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
+
+        }
+        return stepcodes[config[this.props.buySell.stepcode]]
+    }
     render() {
         return (<Drawer
             title={[<div className="side-drawer-header">
-                 {this.renderTitle()}
+                {this.renderTitle()}
                 <div className="text-center fs-14 px-16">
                     <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props.swapStore.stepTitles[config[this.props.swapStore.stepcode]]} component={Paragraph} />
                     <Translate className="text-white-50 mb-0 fw-300 swap-subtitlte" content={this.props.swapStore.stepSubTitles[config[this.props.swapStore.stepcode]]} component={Paragraph} /></div>
-                    {this.renderIcon()}</div>]}
+                {this.renderIcon()}</div>]}
             placement="right"
             closable={true}
             visible={this.props.showDrawer}

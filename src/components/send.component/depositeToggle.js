@@ -19,7 +19,6 @@ class DepositeCrypto extends Component {
 
     handleBuySellToggle = e => {
         // console.log(this.state);
-        debugger;
         this.setState({
             sendreceive: e.target.value === 2
         });
@@ -50,8 +49,8 @@ class DepositeCrypto extends Component {
                     defaultValue={this.props.activeTab || 1}
                     onChange={this.handleBuySellToggle}
                     className="buysell-toggle crypto-toggle text-upper">
-                    <Radio.Button value={1}>Deposit</Radio.Button>
-                    <Radio.Button value={2}>Withdraw</Radio.Button>
+                    <Translate value={1} content="deposit" component={Radio.Button} />
+                    <Translate value={2} content="withdraw" component={Radio.Button} />
                 </Radio.Group>
 
                 {sendreceive ?
@@ -90,7 +89,7 @@ class DepositeCrypto extends Component {
                     :
                     <>
                         <Translate content="deposite_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-16" />
-                        <Translate content="deposite_a_cryto_txt" component={Paragraph} className="fs-16 text-secondary" />
+                        <Translate content="deposite_a_cryto_txt" component={Paragraph} className="fs-16 text-white-30 fw-200" />
                         <div className="sellcrypto-container auto-scroll">
                             <List
                                 itemLayout="horizontal"

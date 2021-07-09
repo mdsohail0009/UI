@@ -12,7 +12,7 @@ class SwapSummary extends Component {
             <>
                 <div className="enter-val-container">
                     <div className="text-center">
-                        <Input className="enter-val p-0 fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '28px' }}
+                        <Input className="enter-val p-0 fs-36 text-white-30 fw-200" style={{ lineHeight: '28px' }}
                             bordered={false}
                             suffix="ETH"
                             placeholder="0.101833"
@@ -35,10 +35,10 @@ class SwapSummary extends Component {
                 </div>
                 <div className="pay-list fs-16">
                     {/* <Translate className="fw-400 text-white" content="suissebase_fee" component={Text} ><Tooltip title="Suissebase Fee"><span className="icon md info c-pointer ml-4" /></Tooltip></Translate> */}
-                    <Text className="fw-400 text-white">Suissebase Fee<Tooltip title="Suissebase Fee"><span className="icon md info c-pointer ml-4" /></Tooltip></Text>
+                    <Text className="fw-400 text-white">Suissebase Fee<Tooltip title="Suissebase Fee"><span className="icon md info c-pointer ml-12" /></Tooltip></Text>
                     <Text className="text-darkgreen fw-400">USD $2.71</Text>
                 </div>
-                <div className="pay-list fs-16 mb-24">
+                <div className="pay-list fs-16 mb-16">
                     <Translate className="fw-400 text-white" content="total" component={Text} />
                     <Text className="fw-300 text-white-30">0.00279935 BTC (USD 104.08)</Text>
                 </div>

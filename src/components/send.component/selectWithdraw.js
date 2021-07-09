@@ -4,6 +4,7 @@ import WalletList from '../shared/walletList';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
+import Translate from 'react-translate-component';
 
 const assetsList = [
     {
@@ -44,13 +45,13 @@ class SelectWithdraw extends Component {
                     </span>
                 </div>
                 <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
-                    <Radio.Button value="min">Min</Radio.Button>
-                    <Radio.Button value="half">Half</Radio.Button>
-                    <Radio.Button value="all">ALL</Radio.Button>
+                    <Translate value="min" content="min" component={Radio.Button} />
+                    <Translate value="half" content="half" component={Radio.Button} />
+                    <Translate value="all" content="all" component={Radio.Button} />
                 </Radio.Group>
-                <Radio.Group defaultValue="min" buttonStyle="outline" className="default-radio"  >
-                    <Radio.Button value="min" className="fs-16 fw-400">Assets</Radio.Button>
-                    <Radio.Button value="half" className="fs-16 fw-400" onClick={() => this.props.changeStep('step4')}>Address</Radio.Button>
+                <Radio.Group defaultValue="min" buttonStyle="outline" className="default-radio">
+                    <Translate value="min" content="assets" className="fs-16 fw-400" component={Radio.Button} />
+                    <Translate value="half" content="address" className="fs-16 fw-400" component={Radio.Button} onClick={() => this.props.changeStep('step4')} />
                 </Radio.Group>
                 <List
                     itemLayout="horizontal"
@@ -70,8 +71,9 @@ class SelectWithdraw extends Component {
 
                     )}
                 />
-                <Button size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.props.changeStep('step5')}>PREVIEW</Button>
+                <Translate content="preview" component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.props.changeStep('step5')} />
             </>
+
 
         )
     }
