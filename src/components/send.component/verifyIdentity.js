@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Typography, Input, Button } from 'antd';
+import { Typography, Input, Button, Select } from 'antd';
 import { Link } from 'react-router-dom';
 import sacnner from '../../assets/images/sacnner.png';
 import Translate from 'react-translate-component';
+import connectStateProps from '../../utils/state.connect';
+import { setStep } from '../../reducers/sendreceiveReducer';
 
+const { Option } = Select;
 class VerifyIDentity extends Component {
     state = {}
     render() {
@@ -35,9 +38,12 @@ class VerifyIDentity extends Component {
                     <Paragraph className="fs-16 fw-600 text-white-30 mb-0">Option 2: Send link via SMS</Paragraph>
                     <Paragraph className="fs-16 fw-300 text-white-30">We’ll text a secure link to your mobile at no extra cost.</Paragraph>
                     <form className="form">
-                        <Input className="cust-input" placeholder="Philippines (+63)" />
+                        <Select defaultValue="philippines" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={false} suffixIcon={<span className="icon md uparrow" />}>
+                            <Option value="philippines">Philippines(+63)</Option>
+                            <Option value="india">India(+91)</Option>
+                        </Select>
                         <Input className="cust-input" placeholder="Your phone number" />
-                        <Button size="large" block className="pop-btn">Next</Button>
+                        <Button size="large" block className="pop-btn" onClick={() => this.props.dispatch(setStep("step1"))}>Next</Button>
                     </form>
                 </div>
                 <Paragraph className="fs-16 text-white-30 fw-300 pr-30">Read more about your personal data processing <Link className="text-yellow text-underline">Privacy Policy</Link>. Don’t have a smartphone? <Link className="text-white-30"><u>Continue with your current device</u></Link></Paragraph>
@@ -46,4 +52,4 @@ class VerifyIDentity extends Component {
     }
 }
 
-export default VerifyIDentity;
+export default connectStateProps(VerifyIDentity);

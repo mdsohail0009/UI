@@ -100,7 +100,7 @@ export default {
   confirm_transaction_decs: 'Dompet dalam USD',
   add_fund: 'Tambah dana',
   confirm_text: 'Pertukaran 0.00549635 BTC untuk 0.10183318 ETH',
-  deposite_Btc:'Tambah dana',
+  deposite_Btc: 'Tambah dana',
   sell_btc: "Jual BTC",
   select_wallet: "jual dari dompet anda",
   sell_your_crypto_for_cash: 'Jual Crypto anda dengan Wang Tunai',
@@ -133,4 +133,7 @@ export default {
   transaction_submitted: 'Transaksi Dihantar',
   swapped_btc: 'Tukar 0.00549635 BTC untuk 0.10183318 ETH',
   bank_frick: 'Bank Frick',
+  scan_your_crypto: 'Imbas kad anda BTC',
+  center_qr: 'Pusatkan Pengimbas QR',
+  close: 'Tutup',
 }

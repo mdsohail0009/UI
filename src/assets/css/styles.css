@@ -119,7 +119,7 @@ line-height: 16px;min-width:90px}
 .auto-scroll{overflow-y: auto; padding-right: 10px;}
 .auto-scroll::-webkit-scrollbar-thumb{background-color: var(--bgDarkGrey);}
 .crypto-list-tabs .ant-list-item, .wallet-list .ant-list-item{border-color: var(--borderLight);}
-.wallet-list .ant-list-item:hover{background-color: var(--bgBlu);}
+.wallet-list .ant-list-item:hover, .wallet-list .ant-list-item.select{background-color: var(--bgBlu);}
 .wallet-list li a, .crypto-list li a{display: inline-flex; align-items: center;flex-grow: 1;}
 .wallet-list h4{margin-bottom: 0;}
 .crypto-toggle .ant-radio-button-wrapper{padding: 22px;}
@@ -129,7 +129,8 @@ line-height: 16px;min-width:90px}
 .crypto-list-tabs .ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textDark); background: var(--bgYellow); border-radius: 30px;}
 .crypto-list-tabs .ant-tabs-ink-bar{display: none;}
 .pop-btn{font-size: 14px;}
-.pop-btn, .pop-btn:hover, .pop-btn:focus, .pop-btn:active{background-color: var(--bgYellow);color: var(--textDark); border-color: var(--bgYellow); border-radius: 40px;height: 57px; text-transform: uppercase;font-weight: 700;}
+.pop-btn{background-color: var(--bgYellow); border-color: var(--bgYellow); border-radius: 40px;height: 57px; text-transform: uppercase;font-weight: 700; transition: 0.3s ease;}
+.pop-btn:hover, .pop-btn:focus, .pop-btn:active{background-color: var(--bgDarkYellow);color: var(--textDark);border-color: var(--bgDarkYellow);}
 .pop-cancel{background-color: transparent;color: var(--textWhite30); border-color: transparent; border-radius: 40px;height: 57px;}
 .cancel-btn{height: 57px; text-transform: uppercase;font-weight: 700;text-align: center;}
 .custon-btngroup{height: 57px; text-transform: uppercase; border:0;font-weight: 700;text-align: center; margin-top: 10px; width:50%}
@@ -139,8 +140,8 @@ line-height: 16px;min-width:90px}
 .cancel-btngroup{ border-radius:30px 0 0 30px;background-color:var(--bgDarkYellow); color:var(--textWhite);}
 .crypto-card{border-radius: 25px;box-shadow: 0 8px 16px rgba(20,0,4,0.2);background-color:var(--bgOrient);background-position: center center;}
 .crypto-card.normal-card{background-color: var(--bgDark) !important;box-shadow:none;}
-.crypto-card.select{background-image: url(../images/select-card-bg.png);background-size: 102%;border-radius: 1.8rem;}
-.crypto-card.fiatcard{background-image: url(../images/fiatcard-bg.png);background-size: 102%;border-radius: 1.8rem;}
+.crypto-card.select{background-image: url(../images/select-card-bg.png);background-size: cover;border-radius: 1.8rem;}
+.crypto-card.fiatcard{background-image: url(../images/fiatcard-bg.png);background-size: cover;border-radius: 1.8rem;}
 .crypto-card .ant-card-body{height: 231px; display: flex; flex-direction: column;justify-content: space-between; padding: 33px;}
 .crypto-card-top, .crypto-card-bottom{display: flex; align-items: center;justify-content: space-between;}
 .crypto-card-top{align-items: flex-start;}
@@ -203,6 +204,9 @@ line-height: 16px;min-width:90px}
 .expiry-input input{width: 50px; padding: 0 4px;height: 50px;}
 .cust-input, .expiry-input,.cust-input .ant-input{background: transparent;border-radius: 30px;height: 50px;border: 1px solid var(--borderLight);color: var(--textWhite30); text-align: center;margin-bottom: 20px;font-size: 16px;padding: 0 16px !important; }
 .input-label{color: var(--textWhite30); font-size: 14px;font-weight: 200;margin-left: 12px;margin-bottom: 8px !important; display: block;}
+.error-text{position: absolute; right: 0; top: 4px;color: var(--textError);}
+.cust-input .ant-select-selector{background-color: transparent;}
+.cust-input .ant-select-selection-item, .cust-input .ant-select-selector{line-height: 50px !important; height: 50px !important;}
 /* swap */
 .swap{border-radius:25px; display: flex; justify-content: space-between; align-items: center; padding: 16px 24px;}
 .swapfrom-card{background-color: var(--bgPitch);  border-bottom-right-radius: 0 !important; }

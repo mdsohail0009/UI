@@ -7,6 +7,8 @@ import CryptoList from '../shared/cryptolist';
 import CurrencyDestination from '../sell.component/selectCrypto'
 import SellToggle from '../sell.component/sellCrypto'
 import { Link } from 'react-router-dom';
+import { setStep } from '../../reducers/buysellReducer';
+import { connect } from 'react-redux';
 
 const LinkValue = (props) => {
     return (
@@ -53,7 +55,7 @@ class BuyCrypto extends Component {
                     :
                     <>
                         <Translate content="purchase_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-16" />
-                        <Translate content="deposit_link" with={{link}} component={Paragraph} className="fs-16 text-secondary" />
+                        <Translate content="deposit_link" with={{link}} component={Paragraph} className="fs-16 text-secondary" />                       
                         <Tabs className="crypto-list-tabs">
                             <TabPane tab="All" key="1">
                                 <CryptoList />
@@ -70,5 +72,14 @@ class BuyCrypto extends Component {
         )
     }
 }
-
-export default BuyCrypto;
+const connectStateToProps = ({ buySell, oidc }) => {
+    return { buySell }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        }
+    }
+}
+export default connect(connectStateToProps, connectDispatchToProps)(BuyCrypto);
