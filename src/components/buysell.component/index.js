@@ -64,7 +64,7 @@ class BuySell extends Component {
             selectedcrypto: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             sellsummary: <span onClick={() => this.props.dispatch(setStep("step10"))} className="icon md lftarw-white c-pointer" />,
             successmsg: null,
-            wiretransfor: <span onClick={() => this.props.dispatch(setStep("step11"))} className="icon md lftarw-white c-pointer" />
+            wiretransfor: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }

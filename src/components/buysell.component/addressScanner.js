@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button } from 'antd';
+import { Typography, Button, message } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -8,6 +8,9 @@ import Translate from 'react-translate-component';
 
 class addressScanner extends Component {
     state = {}
+    success = () => {
+        message.success('Address was copied!');
+    };
     render() {
         const { Paragraph, Text } = Typography;
         return (
@@ -20,8 +23,8 @@ class addressScanner extends Component {
                     <div className="mb-0 fs-14 fw-500 text-textDark">TAQgcJD9p29m77EnXweijpHegPUSnxkdQW</div>
                 </div>
                 <Translate className="text-center f-12 text-white" content="address_hint_text" component={Paragraph} />
-                <Translate size="large" block className="pop-btn" style={{ marginTop: '100px' }} onClick={() => this.props.changeStep('step9')} content="copy" component={Button} />
-                <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block content="share" onClick={() => this.props.changeStep('step9')} component={Button} />
+                <Translate size="large" block className="pop-btn" style={{ marginTop: '100px' }} onClick={this.success} content="copy" component={Button} />
+                <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block content="share" onClick={() => this.props.changeStep('step1')} component={Button} />
             </div>
         )
     }

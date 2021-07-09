@@ -44,7 +44,7 @@ class MassPayment extends Component {
             addcard: <span onClick={() => this.props.dispatch(setStep("step2"))} className="icon md lftarw-white c-pointer" />,
             selectwallet: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             faitsummary: <span />,
-            billingaddress: <span />,
+            billingaddress: <span onClick={() => this.props.dispatch(setStep("step3"))} className="icon md lftarw-white c-pointer" />,
             confirmation: <span />,
         }
         return stepcodes[config[this.props.buySell.stepcode]]
@@ -60,13 +60,13 @@ class MassPayment extends Component {
         );
         const stepcodes = {
             buyfiat: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
-            selectfiat: <span/>,
+            selectfiat: <span />,
             addcard: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             selectwallet: <Dropdown overlay={menu} overlayClassName="secureDropdown" arrow>
-                           <a className="pop-drpdwn-toogle" onClick={e => e.preventDefault()}><span className="icon md h-more" /></a>
-                          </Dropdown>,
-            faitsummary:<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
-            billingaddress: <sapn/>,
+                <a className="pop-drpdwn-toogle" onClick={e => e.preventDefault()}><span className="icon md h-more" /></a>
+            </Dropdown>,
+            faitsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            billingaddress: <sapn />,
             confirmation: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />
         }
         return stepcodes[config[this.props.buySell.stepcode]]
