@@ -38,7 +38,6 @@ class MassPayment extends Component {
         return stepcodes[config[this.props.buyFiat.stepcode]]
     }
     renderTitle = () => {
-        debugger;
         const stepcodes = {
             buyfiat: <span />,
             selectfiat: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
