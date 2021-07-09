@@ -3,13 +3,14 @@ import { Card, Typography, Button, Input } from 'antd';
 import SavedCards from '../shared/savedCards';
 import { setStep } from '../../reducers/buyFiatReducer';
 import { connect } from 'react-redux';
+import Translate from 'react-translate-component';
 
 class SelectFiat extends Component {
     state = {
         withdrow: "true",
     }
     render() {
-        const { Text } = Typography
+        const { Text,Paragraph } = Typography
         return (
             <>
                 <Card className="crypto-card fiatcard mb-36" bordered={false}>
@@ -22,7 +23,7 @@ class SelectFiat extends Component {
                     </div>
                     <div className="crypto-card-bottom">
                         <div>
-                            <div className="text-white-50 fs-14 fw-200">Current Balance</div>
+                            <Translate className="text-white-50 fs-14 fw-200 mb-0" content="current_balance" component={Paragraph}  />
                             <div className="fs-24 text-white fw-500">$5,200.00</div>
                         </div>
                         <div>
@@ -31,15 +32,15 @@ class SelectFiat extends Component {
                         </div>
                     </div>
                 </Card>
-                <Text className="fs-16 text-white fw-300 mb-8 d-block">Fund with card</Text>
+                <Translate className="fs-16 text-white fw-300 mb-8 d-block" content="fund_with_card" component={Text} />
                 <SavedCards />
-                <Text className="fs-16 text-white fw-300 mt-36 d-block">How much would you like to add?</Text>
+                <Translate className="fs-16 text-white fw-300 mt-36 d-block" content="fund_with_card_text" component={Text} />
                 <Input className="fs-36 fw-100 text-white-30 text-left enter-val p-0"
                     placeholder="0.00"
                     bordered={false}
                     prefix="USD"
                 />
-                <Button size="large" block className="pop-btn" style={{ marginTop: '55px' }} onClick={() => this.props.changeStep("step5")}>Preview Swap</Button>
+                <Translate size="large" block className="pop-btn" style={{ marginTop: '55px' }} onClick={() => this.props.changeStep("step5")} content="preview_swap" component={Button} />
             </>
         );
     }

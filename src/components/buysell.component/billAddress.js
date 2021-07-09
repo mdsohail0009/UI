@@ -17,13 +17,14 @@ class BillingAddress extends Component {
     }
 
     render() {
-        const { Title, Text } = Typography;
+        const { Title, Text, Paragraph} = Typography;
         return (
             <>
                 <Translate className="fs-36 text-white-30 fw-200 mb-36" level={3} content="billing_address" component={Title} />
                 <div className="billing-address text-white fs-16 fw-200">
                     <Translate className="mb-16 d-block text-white fs-16 fw-200" content="delivery_address" component={Text} />
-                    <div className="mb-16">UNIT 527 TOWER 4, SMDC Grace Residences, Cayetano Blvd. Brgy. Ususan, Taguig City 1630 PH</div>
+                    <Translate className="mb-16 text-white fs-16 fw-200" content="buy_sell_address" component={Paragraph} />
+                    
                 </div>
                 <Translate size="large" block className="pop-btn" style={{ marginTop: '190px' }} onClick={() => this.props.changeStep('step5')} content="confirm_billing_address" component={Button} />
                 <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" onClick={() => this.props.changeStep('step1')} block content="cancel" component={Button} />

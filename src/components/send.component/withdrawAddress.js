@@ -14,11 +14,12 @@ class WithdrawAddress extends Component {
         const { Paragraph, Text } = Typography;
         return (
             <>
+            
                 <div className="d-flex justify-content align-center">
-                    <Radio.Group defaultValue="half" buttonStyle="outline" className="default-radio" >
-                        <Radio.Button value="min" className="fs-16 fw-400">Assets</Radio.Button>
-                        <Radio.Button value="half" className="fs-16 fw-400">Address</Radio.Button>
-                    </Radio.Group>
+                <Radio.Group defaultValue="half" buttonStyle="outline" className=" default-radio" >
+                <Translate value="min" content="assets" className="fs-16 fw-400" component={Radio.Button} />
+                <Translate value="half" content="address" className="fs-16 fw-400" component={Radio.Button} />
+                </Radio.Group>
                     <div className="icon-delete c-pointer">
                         <DeleteOutlined />
                     </div>

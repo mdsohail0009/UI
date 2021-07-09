@@ -4,6 +4,7 @@ import config from '../../config/config';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import DepositFiat from './depositFiat'
+import Translate from 'react-translate-component';
 
 class depositCrypto extends Component {
     state = {
@@ -25,8 +26,8 @@ class depositCrypto extends Component {
                     defaultValue={1}
                     onChange={this.handleBuySellToggle}
                     className="buysell-toggle crypto-toggle">
-                    <Radio.Button value={1}>From Crypto</Radio.Button>
-                    <Radio.Button value={2}>From Fiat</Radio.Button>
+                        <Translate value="min" content="from_crypto" value={1} component={Radio.Button} />
+                        <Translate value="half" content="from_fiat" value={2} component={Radio.Button} />
                 </Radio.Group>
                 {depositeFiat ?
                     <DepositFiat /> :
