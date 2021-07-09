@@ -76,13 +76,13 @@ class BuySell extends Component {
             addcard: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             depositcrypto: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             selectcrypto: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
-            summary: <span/>,
+            summary: <span />,
             billingaddress: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             addressscanner: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             depositfiat: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             selectedcrypto: <span />,
             sellsummary: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
-            successmsg:  <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
+            successmsg: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             wiretransfor: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
         }
         return stepcodes[config[this.props.buySell.stepcode]]
