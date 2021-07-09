@@ -89,7 +89,7 @@ class DepositeCrypto extends Component {
                     :
                     <>
                         <Translate content="deposite_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-16" />
-                        <Translate content="deposite_a_cryto_txt" component={Paragraph} className="fs-16 text-secondary" />
+                        <Translate content="deposite_a_cryto_txt" component={Paragraph} className="fs-16 text-white-30 fw-200" />
                         <div className="sellcrypto-container auto-scroll">
                             <List
                                 itemLayout="horizontal"
