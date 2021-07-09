@@ -44,6 +44,7 @@ class BusinessMenu extends Component {
                                         <Paragraph className="text-white-30 fs-14 mb-0 fw-300">Full control of your private keys.</Paragraph>
                                     </div>
                                     <div className="item-wrapper">
+                                        {/* <p>Cards</p> */}
                                         <Link>Cards</Link>
                                         <Link>Exchange</Link>
                                     </div>
