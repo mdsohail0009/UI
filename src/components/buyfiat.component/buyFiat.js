@@ -35,7 +35,7 @@ class BuyFiat extends Component {
                         <Card className="crypto-card fiatcard mb-36 c-pointer" bordered={false} onClick={() => this.props.changeStep('step4')}>
                             <div className="crypto-card-top">
                                 <span className="d-flex align-center">
-                                    <span className="coin-circle coin md usd-white" />
+                                    <span className="coin-circle coin md usd" />
                                     <Text className="fs-24 text-white crypto-name ml-8">USD</Text>
                                 </span>
                                 <span className="icon md signal-white" />

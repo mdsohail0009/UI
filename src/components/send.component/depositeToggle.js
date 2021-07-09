@@ -99,7 +99,7 @@ class DepositeCrypto extends Component {
                                 className="wallet-list"
                                 renderItem={item => (
                                     <List.Item className="px-4">
-                                        <Link onClick={() => this.props.changeStep('step3')}>
+                                        <Link onClick={() => this.props.changeStep('step7')}>
                                             <List.Item.Meta
                                                 avatar={<span className={`coin ${item.coin} mr-4`} />}
                                                 title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}

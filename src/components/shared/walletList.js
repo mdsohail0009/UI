@@ -13,8 +13,9 @@ class WalletList extends Component {
                 itemLayout="horizontal"
                 className="wallet-list mb-36"
                 dataSource={config.walletList}
+                style={{ borderBottom: '1px solid var(--borderLight)' }}
                 renderItem={item => (
-                    <List.Item>
+                    <List.Item className="px-4">
                         <Link>
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin}`} />}

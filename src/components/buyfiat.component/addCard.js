@@ -30,16 +30,18 @@ class addCard extends Component {
                             <Input className="cust-input" defaultValue="544" />
                         </div>
                     </div>
-                    <Translate className="text-center mt-16 text-white fs-16 c-pointer" content="type_billing_address" component={Paragraph}  onClick={() => this.props.changeStep("step6")}  />
+                    <div className="text-center mt-16">
+                        <Translate className="text-white fs-16 c-pointer text-underline" content="type_billing_address" component={Link} onClick={() => this.props.changeStep("step6")} />
+                    </div>
                 </form>
-                <Translate content="confirm_btn_text" component={Button} size="large" block className="pop-btn" style={{ marginTop: '180px' }} onClick={() => this.props.changeStep("confirm")}/>
-                <Translate content="cancel" component={Button} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block onClick={() => this.props.changeStep("step5")}/>
+                <Translate content="confirm_btn_text" component={Button} size="large" block className="pop-btn" style={{ marginTop: '180px' }} onClick={() => this.props.changeStep("confirm")} />
+                <Translate content="cancel" component={Button} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block onClick={() => this.props.changeStep("step5")} />
             </>
         );
     }
 }
 
-const connectStateToProps = ({ buyFiat , oidc }) => {
+const connectStateToProps = ({ buyFiat, oidc }) => {
     return { buyFiat }
 }
 const connectDispatchToProps = dispatch => {

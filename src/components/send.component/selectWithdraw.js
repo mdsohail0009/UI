@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Button, Card, Input, Radio } from 'antd';
+import { Drawer, Typography, Button, Card, Input, Radio, List } from 'antd';
 import WalletList from '../shared/walletList';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 
+const assetsList = [
+    {
+        address: "1CTEjSuGFv1DwpkGWxfC5qck1iHACw…",
+        network: "BTC Binance Address",
+    }
+]
 class SelectWithdraw extends Component {
-
     render() {
         const { Text } = Typography;
         return (
@@ -25,7 +30,7 @@ class SelectWithdraw extends Component {
                         </div>
                     </div>
                 </Card>
-                <div className="enter-val-container">
+                <div className="enter-val-container mr-0">
                     <div className="text-center">
                         <Input className="fs-36 fw-100 text-white-30 text-center enter-val p-0"
                             placeholder="106.79"
@@ -35,7 +40,7 @@ class SelectWithdraw extends Component {
                         />
                         <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">0.00287116 BTC</Text>
                     </div>
-                    <span className="mt-24" style={{ marginLeft: 80 }}>
+                    <span className="mt-8 val-updown">
                         <span className="icon sm uparw-o-white d-block c-pointer mb-4" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
                     </span>
                 </div>
@@ -45,11 +50,30 @@ class SelectWithdraw extends Component {
                     <Translate value="all" content="all" component={Radio.Button} />
                 </Radio.Group>
                 <Radio.Group defaultValue="min" buttonStyle="outline" className="default-radio">
-                    <Translate value="min" content="assets" component={Radio.Button} />
-                    <Translate value="half" content="address" component={Radio.Button} />
+                    <Translate value="min" content="assets" className="fs-16 fw-400" component={Radio.Button} />
+                    <Translate value="half" content="address" className="fs-16 fw-400" component={Radio.Button} onClick={() => this.props.changeStep('step4')} />
                 </Radio.Group>
-                <Translate content="preview" component={Button} size="large" block className="pop-btn" onClick={() => this.props.changeStep('step4')} />
+                <List
+                    itemLayout="horizontal"
+                    className="wallet-list my-36"
+                    dataSource={assetsList}
+                    style={{ borderBottom: '1px solid var(--borderLight)' }}
+                    renderItem={item => (
+                        <List.Item className="px-8">
+                            <Link>
+                                <List.Item.Meta
+                                    title={<><div className="fs-16 fw-200 text-white">{item.address}</div>
+                                        <div className="fs-16 fw-200 text-white">{item.network}</div></>}
+                                />
+                                <span className="icon sm r-arrow-o-white" />
+                            </Link>
+                        </List.Item>
+
+                    )}
+                />
+                <Translate content="preview" component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.props.changeStep('step5')} />
             </>
+
 
         )
     }

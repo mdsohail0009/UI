@@ -45,7 +45,7 @@ class SelectCrypto extends Component {
                         />
                         <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">0.00701 ETH</Text>
                     </div>
-                    <span className="mt-24" style={{ marginLeft: 80 }}>
+                    <span className="mt-24 val-updown">
                         <span className="icon sm uparw-o-white d-block c-pointer mb-4" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
                     </span>
                 </div>

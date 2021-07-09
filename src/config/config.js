@@ -151,7 +151,7 @@ const config = {
     },
     {
       title: 'Eur',
-      coin: 'eur',
+      coin: 'EUR',
       balance: '2,500.00',
       profit: '0.84',
       currency: '€',

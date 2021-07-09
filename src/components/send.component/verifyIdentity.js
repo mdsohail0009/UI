@@ -9,7 +9,7 @@ class VerifyIDentity extends Component {
     render() {
         const { Title, Paragraph, Text } = Typography;
         return (
-            <>
+            <div className="verify-container auto-scroll">
                 <Title className="text-white-30 fs-36 fw-200 mb-8">Let's get you verified</Title>
                 <Paragraph className="fs-16 text-white-30 fw-300">Suissebase.ch would need to confirm your identity a process is powered by our partner.</Paragraph>
                 <div className="d-flex mt-36 mb-16">
@@ -41,7 +41,7 @@ class VerifyIDentity extends Component {
                     </form>
                 </div>
                 <Paragraph className="fs-16 text-white-30 fw-300 pr-30">Read more about your personal data processing <Link className="text-yellow text-underline">Privacy Policy</Link>. Don’t have a smartphone? <Link className="text-white-30"><u>Continue with your current device</u></Link></Paragraph>
-            </>
+            </div>
         );
     }
 }
