@@ -16,8 +16,8 @@ class WithdrawAddress extends Component {
             <>
             <div className="d-flex justify-content align-center">
             <Radio.Group defaultValue="min" buttonStyle="outline" className=" default-radio" >
-                    <Radio.Button value="min">Assets</Radio.Button>
-                    <Radio.Button value="half">Address</Radio.Button>
+                <Translate value="min" content="assets" component={Radio.Button} />
+                <Translate value="half" content="address" component={Radio.Button} />
                 </Radio.Group>
                 <div className="icon-delete">
                 <DeleteOutlined />

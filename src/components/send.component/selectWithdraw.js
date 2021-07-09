@@ -4,6 +4,7 @@ import WalletList from '../shared/walletList';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
+import Translate from 'react-translate-component';
 
 class SelectWithdraw extends Component {
 
@@ -39,15 +40,15 @@ class SelectWithdraw extends Component {
                     </span>
                 </div>
                 <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
-                    <Radio.Button value="min">Min</Radio.Button>
-                    <Radio.Button value="half">Half</Radio.Button>
-                    <Radio.Button value="all">ALL</Radio.Button>
+                    <Translate value="min" content="min" component={Radio.Button} />
+                    <Translate value="half" content="half" component={Radio.Button} />
+                    <Translate value="all" content="all" component={Radio.Button} />
                 </Radio.Group>
-                <Radio.Group defaultValue="min" buttonStyle="outline" className="default-radio"  >
-                    <Radio.Button value="min" >Assets</Radio.Button>
-                    <Radio.Button value="half">Address</Radio.Button>
+                <Radio.Group defaultValue="min" buttonStyle="outline" className="default-radio">
+                    <Translate value="min" content="assets" component={Radio.Button} />
+                    <Translate value="half" content="address" component={Radio.Button} />
                 </Radio.Group>
-                <Button size="large" block className="pop-btn" onClick={() => this.props.changeStep('step4')}>PREVIEW</Button>
+                <Translate content="preview" component={Button} size="large" block className="pop-btn" onClick={() => this.props.changeStep('step4')} />
             </>
 
         )

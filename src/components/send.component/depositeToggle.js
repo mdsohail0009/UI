@@ -50,8 +50,8 @@ class DepositeCrypto extends Component {
                     defaultValue={this.props.activeTab || 1}
                     onChange={this.handleBuySellToggle}
                     className="buysell-toggle crypto-toggle text-upper">
-                    <Radio.Button value={1}>Deposit</Radio.Button>
-                    <Radio.Button value={2}>Withdraw</Radio.Button>
+                    <Translate value={1} content="deposit" component={Radio.Button} />
+                    <Translate value={2} content="withdraw" component={Radio.Button} />
                 </Radio.Group>
 
                 {sendreceive ?

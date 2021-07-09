@@ -4,6 +4,7 @@ import WalletList from '../shared/walletList';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
+import Translate from 'react-translate-component';
 
 class SelectSellCrypto extends Component {
 
@@ -39,12 +40,12 @@ class SelectSellCrypto extends Component {
                     </span>
                 </div>
                 <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
-                    <Radio.Button value="min">Min</Radio.Button>
-                    <Radio.Button value="half">Half</Radio.Button>
-                    <Radio.Button value="all">ALL</Radio.Button>
+                    <Translate value="min" content="min" component={Radio.Button} />
+                    <Translate value="half" content="half" component={Radio.Button} />
+                    <Translate value="all" content="all" component={Radio.Button} />
                 </Radio.Group>
                 <WalletList isArrow={true} />
-                <Button size="large" block className="pop-btn" onClick={() => this.props.changeStep('step11')}>PREVIEW</Button>
+                <Translate content="preview" component={Button} size="large" block className="pop-btn" onClick={() => this.props.changeStep('step11')} />
             </>
 
         )

@@ -22,7 +22,7 @@ class SavedCards extends Component {
                 >
                     <span>
                         <span className="icon sm add ml-24 valign-initial" />
-                        <Text className="text-darkgreen fs-16 ml-16 fw-500">Link New Card</Text>
+                        <Translate className="text-darkgreen fs-16 ml-16 fw-500" content="link_newcard" component={Text} />
                     </span>
                     <span className="icon sm r-arrow-o-white" />
                 </div>
