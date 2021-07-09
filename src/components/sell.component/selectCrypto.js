@@ -44,13 +44,8 @@ class SelectSellCrypto extends Component {
                     <Translate value="half" content="half" component={Radio.Button} />
                     <Translate value="all" content="all" component={Radio.Button} />
                 </Radio.Group>
-<<<<<<< HEAD
-                <WalletList isArrow={true} />
-                <Translate content="preview" component={Button} size="large" block className="pop-btn" onClick={() => this.props.changeStep('step11')} />
-=======
                 <WalletList />
-                <Button size="large" block className="pop-btn" onClick={() => this.props.changeStep('step11')}>PREVIEW</Button>
->>>>>>> 79bee1ea4acf6ee15ecea1dcd828198df7d928cf
+                <Translate content="preview" component={Button} size="large" block className="pop-btn" onClick={() => this.props.changeStep('step11')} />
             </>
 
         )
