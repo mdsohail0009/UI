@@ -10,7 +10,7 @@ import SelectFiat from './selectFiat';
 import AddCard from './addCard';
 import SelectWallet from './selectWallet';
 import FiatSummary from './buyfiatSummary';
-import BillingAddress from '../buysell.component/billAddress';
+import BillingAddress from './fiatBillingAddress';
 import ConfirmMsg from './confirm'
 class MassPayment extends Component {
     state = {
@@ -53,8 +53,8 @@ class MassPayment extends Component {
         const menu = (
             <Menu>
                 <ul className="drpdwn-list pl-0">
-                    <li><a>Withdraw</a></li>
-                    <li><a>Fiat</a></li>
+                    <li onClick={() => this.props.dispatch(setStep("step1"))}><a>Withdraw</a></li>
+                    <li onClick={() => this.props.dispatch(setStep("step1"))}><a>Fiat</a></li>
                 </ul>
             </Menu>
         );
