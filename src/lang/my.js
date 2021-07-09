@@ -123,5 +123,14 @@ export default {
   fund_with_card: 'Dana dengan kad',
   fund_with_card_text: 'Berapa banyak yang anda mahu tambah?',
   preview_swap: 'Pertukaran Pratonton',
-
+  pay: 'Bayar 0,00701 ETH',
+  deposit_link: 'Saya bersetuju dengan Suissebase %(link)s',
+  link: 'link',
+  agree_to_suissebase: 'Saya bersetuju dengan Suissebase %(link)s dan polisi pengembalian, pembayaran balik dan pembatalannya.',
+  terms_service: 'Syarat Perkhidmatan',
+  return_to_buy_sell: 'Kembali ke Beli / Jual',
+  fidor_bank: 'Fidor Bank AG',
+  transaction_submitted: 'Transaksi Dihantar',
+  swapped_btc: 'Tukar 0.00549635 BTC untuk 0.10183318 ETH',
+  bank_frick: 'Bank Frick',
 }

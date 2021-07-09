@@ -5,9 +5,19 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 
+const LinkValue = (props) => {
+    return (
+      <Translate className="text-yellow text-underline c-pointer"
+        content={props.content}
+        component={Link}
+        to="./#"
+      />
+    )
+  }
 class WithdrawSummary extends Component {
     render() {
         const { Paragraph, Text } = Typography;
+        const link = <LinkValue content="terms_service" />;
         return (
             <>
                 <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>0.00249745 BTC</div>
@@ -38,9 +48,7 @@ class WithdrawSummary extends Component {
                 </div>
                 <div className="d-flex p-16 mb-36">
                     <span className="icon lg check-ylw" />
-                    <Text className="fs-14 text-white-30 ml-16" style={{ flex: 1 }}>
-                        I agree to Suissebase’s <Link to="" className="text-white-30"><u>Terms of Service</u></Link> and its return, refund and cancellation policy.
-                    </Text>
+                    <Translate content="agree_to_suissebase" with={{link}} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
                 </div>
                 <Translate size="large" block className="pop-btn" onClick={() => this.props.changeStep('step6')} content="confirm_now" component={Button} />
                 <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block content="cancel" component={Button} />

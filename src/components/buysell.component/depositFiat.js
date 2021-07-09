@@ -25,7 +25,8 @@ class DepositFiat extends Component {
                     <Translate className="mb-0 mt-36 fs-14 text-white fw-500 text-upper" content="wire_transfer_mthd" component={Paragraph} />
                     <div className="d-flex align-center mt-16 c-pointer" onClick={() => this.props.changeStep('step12')}>
                         <span className="coin deposit-white" />
-                        <div className="ml-16"><Paragraph className="mb-0 fs-14 text-white-30 fw-300">Fidor Bank AG</Paragraph>
+                        <div className="ml-16">
+                            <Translate className="mb-0 fs-14 text-white-30 fw-300" content="fidor_bank" component={Paragraph} />
                             <Paragraph className="mb-0 fs-12 text-white-30 fw-300">EUR</Paragraph>
                         </div>
                         <Translate className="recomnd-tag fs-12 text-white-30 fw-300 ml-auto text-upper" content="recommended" component={Text} />

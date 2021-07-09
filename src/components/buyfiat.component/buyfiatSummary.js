@@ -5,9 +5,20 @@ import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buyFiatReducer';
 import { connect } from 'react-redux';
 
+const LinkValue = (props) => {
+    return (
+      <Translate className="text-yellow text-underline c-pointer"
+        content={props.content}
+        component={Link}
+        to="./#"
+      />
+    )
+  }
+
 class FiatSummary extends Component {
     render() {
         const { Paragraph, Text } = Typography;
+        const link = <LinkValue content="terms_service" />;
         return (
             <>
                 <div className="mb-24">
@@ -38,9 +49,7 @@ class FiatSummary extends Component {
                     <span className="icon lg check-ylw mb-16" />
                     <span className="ml-16" style={{ flex: 1 }}>
                         <Translate className="fs-16 text-white-30 mb-16" content="summary_hint_text" component={Paragraph} />
-                        <Text className="fs-14 text-white-30">
-                            I agree to Suissebase’s <Link to="" className="text-yellow text-underline">Terms of Service</Link> and its return, refund and cancellation policy.
-                        </Text>
+                        <Translate content="agree_to_suissebase" with={{link}} component={Paragraph} className="fs-14 text-white-30" />
                     </span>
                 </div>
                 <Translate size="large" block className="pop-btn" content="add_fund" component={Button} onClick={() => this.props.changeStep('step3')} />
