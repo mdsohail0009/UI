@@ -5,6 +5,8 @@ import Content from './content.component';
 import { store } from '../store';
 import Header from '../layout/header.component';
 import Footer from './footer.component';
+import connectStateProps from '../utils/state.connect';
+import { userManager } from '../authentication';
 
 
 class Layout extends Component {
@@ -13,17 +15,23 @@ class Layout extends Component {
     }
     componentDidMount() {
         const { user } = store.getState().oidc;
-        this.setState({ user })
+        this.setState({ user });
+        if(!this.props.user || this.props.user.expired){
+            userManager.signinRedirect();
+        }
     }
     render() {
-        return <>
-            <AntLayout>
-                <Header />
-                <Content />
-                <Footer />
-            </AntLayout>
-        </>
+        if (!this.props.user || this.props.user.expired){
+            return <div>Loading....</div>
+        }
+            return <>
+                <AntLayout>
+                    <Header />
+                    <Content />
+                    <Footer />
+                </AntLayout>
+            </>
     }
 }
 
-export default Layout;
+export default connectStateProps(Layout);

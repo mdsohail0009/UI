@@ -10,7 +10,7 @@ const Login = React.lazy(() => import('../authentication/login.component'));
 class RoutingComponent extends Component {
   render() {
     return <Switch>
-      <React.Suspense fallback={<p>Loading...</p>}>
+      <React.Suspense fallback={<div className="loader">Loading...</div>}>
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/callback" component={CallbackPage} />
         <ReactRoute path="/login" component={Login} />

@@ -36,7 +36,7 @@ class addCard extends Component {
                         <Translate className="text-underline text-white fs-16 fw-200" onClick={() => this.props.changeStep('step7')} content="type_billing_address" component={Link} />
                     </div>
                 </form>
-                <Translate content="confirm_btn_text" component={Button} size="large" block className="pop-btn" style={{ marginTop: '180px' }} onClick={this.billingAddress} />
+                <Translate content="confirm_btn_text" component={Button} size="large" block className="pop-btn" style={{ marginTop: '180px' }} onClick={() => this.props.changeStep('success')} />
             </>
         );
     }
