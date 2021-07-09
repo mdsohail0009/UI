@@ -6,6 +6,7 @@ import { loadUser, OidcProvider } from 'redux-oidc';
 import { useEffect, useState } from "react";
 import { userManager } from "../../authentication";
 import { onMessageListener } from "../../utils/firebase";
+import SumSub from "../shared/sumsub";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -22,6 +23,7 @@ function App() {
     <Provider store={store}>
       <OidcProvider userManager={userManager} store={store}>
         <Router basename={process.env.PUBLIC_URL}>
+        <SumSub></SumSub>
           {loading ? <span>Loading....</span> : <Layout />}
         </Router>
       </OidcProvider>

@@ -9,4 +9,12 @@ const apiClient = create({
     baseURL:"https://cefiapi.azurewebsites.net/api/v1"
       
 })
-export { firebaseServer,apiClient }
+const sumSubClient = create({
+    baseURL:"https://test-api.sumsub.com/",
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-App-Token': 'tst:vGf24U2YVIWhDsXuo7DfWJI0'
+    }
+})
+export { firebaseServer,apiClient,sumSubClient }
