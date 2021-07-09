@@ -14,6 +14,7 @@ import menuCarousel from '../components/shared/megaMenu/menuCarousel';
 import SendReceive from '../components/send.component'
 import SwapCrypto from '../components/swap.component'
 import MassPayment from '../components/buyfiat.component'
+import { userManager } from '../authentication';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -49,7 +50,7 @@ const settingMenu = (
             <li><Link to="">Local Currency<span className="icon md rarrow-white" /></Link></li>
             <li><Link to="">Notifications<span className="icon md rarrow-white" /></Link></li>
             <li><Link to="">Themes<span className="icon md rarrow-white" /></Link></li>
-            <li><Link to="">Logout<span className="icon md rarrow-white" /></Link></li>
+            <li onClick={()=>userManager.signoutRedirect()}><Link to="">Logout<span className="icon md rarrow-white" /></Link></li>
         </ul>
     </Menu>
 );
