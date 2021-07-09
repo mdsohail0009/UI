@@ -19,7 +19,6 @@ class DepositeCrypto extends Component {
 
     handleBuySellToggle = e => {
         // console.log(this.state);
-        debugger;
         this.setState({
             sendreceive: e.target.value === 2
         });

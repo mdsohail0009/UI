@@ -32,7 +32,6 @@ class SwapCrypto extends Component {
         return stepcodes[config[this.props.swapStore.stepcode]]
     }
     renderTitle = () => {
-        debugger;
         const stepcodes = {
         swapcoins: <span/>,
         swapsummary: <span onClick={() =>this.props.dispatch(setStep("step1"))}  className="icon md lftarw-white c-pointer" />,
