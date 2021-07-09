@@ -5,7 +5,15 @@ import FiatList from '../shared/fiatList';
 import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-
+const LinkValue = (props) => {
+    return (
+      <Translate className="text-yellow text-underline c-pointer"
+        content={props.content}
+        component={Link}
+        to="./#"
+      />
+    )
+  }
 class BuyFiat extends Component {
     state = {
         buyFiat: false,
@@ -18,7 +26,8 @@ class BuyFiat extends Component {
     }
     render() {
         const { Paragraph, Title, Text } = Typography;
-        const { buyFiat } = this.state
+        const link = <LinkValue content="deposit" />;
+        const { buyFiat } = this.state;
         return (
             <>
                 <Radio.Group
@@ -30,7 +39,8 @@ class BuyFiat extends Component {
                 </Radio.Group>
                 {buyFiat ? <>
                     <Translate className="mb-0 text-white-30 fw-200 fs-36" content="sell_your_fiat_for_cash" component={Paragraph} />
-                    <Paragraph className="text-secondary fw-300 fs-16 mb-36 mr-16">Need to replenish your wallet? Follow this link and  <Link to="" className="text-yellow text-underline">Deposit</Link> some cash.</Paragraph>
+                    <Translate className="text-secondary fw-300 fs-16 mb-36 mr-16" with={{link}} content="need_to_replenish" component={Paragraph} />
+                   
                     <div className="sellcrypto-container auto-scroll">
                         <Card className="crypto-card fiatcard mb-36 c-pointer" bordered={false} onClick={() => this.props.changeStep('step4')}>
                             <div className="crypto-card-top">
