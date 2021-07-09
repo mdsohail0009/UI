@@ -21,7 +21,7 @@ class addressScanner extends Component {
                 </div>
                 <Translate className="text-center f-12 text-white" content="address_hint_text" component={Paragraph} />
                 <Translate size="large" block className="pop-btn" style={{ marginTop: '100px' }} onClick={() => this.props.changeStep('step9')} content="copy" component={Button} />
-                <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block content="share" component={Button} />
+                <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block content="share" onClick={() => this.props.changeStep('step9')} component={Button} />
             </div>
         )
     }

@@ -24,9 +24,8 @@ class BillingAddress extends Component {
                 <div className="billing-address text-white fs-16 fw-200">
                     <Translate className="mb-16 d-block text-white fs-16 fw-200" content="delivery_address" component={Text} />
                     <Translate className="mb-16 text-white fs-16 fw-200" content="buy_sell_address" component={Paragraph} />
-                    
                 </div>
-                <Translate size="large" block className="pop-btn" style={{ marginTop: '190px' }} onClick={() => this.props.changeStep('step5')} content="confirm_billing_address" component={Button} />
+                <Translate size="large" block className="pop-btn" style={{ marginTop: '190px'}} onClick={() => this.props.changeStep('step5')} content="confirm_billing_address" component={Button} />
                 <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" onClick={() => this.props.changeStep('step1')} block content="cancel" component={Button} />
             </>
         )

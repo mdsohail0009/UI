@@ -41,7 +41,7 @@ class Summary extends Component {
                 </div>
                 <Translate className="fs-12 text-white-30 text-center my-16" content="summary_hint_text" component={Paragraph} />
                 <div className="d-flex p-16 mb-36">
-                    <span className="icon lg check-ylw" />
+                    <span className="icon lg check-ylw"/>
                     <Text className="fs-14 text-white-30 ml-16" style={{ flex: 1 }}>
                         I agree to Suissebase’s <Link to="" className="text-white-30"><u>Terms of Service</u></Link> and its return, refund and cancellation policy.
                     </Text>
