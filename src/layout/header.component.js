@@ -26,13 +26,24 @@ const { Title, Paragraph, Text } = Typography;
 const { TabPane } = Tabs;
 const securityMenu = (
     <Menu>
-        <Title className="fs-24 text-white my-16 fw-500 mx-30">Security</Title>
+        <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="security" component={Title} />
         <ul className="pl-0 drpdwn-list">
             <li><Link>2FA<span className="icon md rarrow-white" /></Link></li>
-            <li><Link>Change Password<span className="icon md rarrow-white" /></Link></li>
-            <li className="no-hover"><Paragraph className="text-white fs-14 pt-16">CURRENT SECURITY LEVEL<br /><span className="text-green fw-900">Medium</span></Paragraph>
-                <Paragraph className="text-white fs-14" style={{ paddingRight: '78px' }}>Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.</Paragraph></li>
-            <li><Link>Protect your account<span className="icon md rarrow-white" /></Link></li>
+            <li className="d-flex justify-content align-center">
+            <Translate content="change_password" component={Link} />
+            <span className="icon md rarrow-white" />
+                </li>
+            <li className="no-hover">
+                 <div className="">
+                    <Translate className="text-white fs-14 pt-16 mb-0" content="current_security_level" component={Paragraph} />
+                    <Translate className="text-green fw-900" content="medium" component={Paragraph} />
+                 </div>
+                <Translate className="text-white fs-14" style={{ paddingRight: '78px' }} content="current_security_text" component={Paragraph} />
+            </li>
+            <li className="d-flex justify-content align-center">
+                <Translate content="protect_your_account" component={Link} />
+                <span className="icon md rarrow-white" />
+            </li>
         </ul>
     </Menu>
 );
