@@ -14,6 +14,7 @@ import menuCarousel from '../components/shared/megaMenu/menuCarousel';
 import SendReceive from '../components/send.component'
 import SwapCrypto from '../components/swap.component'
 import MassPayment from '../components/buyfiat.component'
+import { userManager } from '../authentication';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -49,7 +50,7 @@ const settingMenu = (
             <li><Link to="">Local Currency<span className="icon md rarrow-white" /></Link></li>
             <li><Link to="">Notifications<span className="icon md rarrow-white" /></Link></li>
             <li><Link to="">Themes<span className="icon md rarrow-white" /></Link></li>
-            <li><Link to="">Logout<span className="icon md rarrow-white" /></Link></li>
+            <li onClick={()=>userManager.signoutRedirect()}><Link to="">Logout<span className="icon md rarrow-white" /></Link></li>
         </ul>
     </Menu>
 );
@@ -188,53 +189,61 @@ class Header extends Component {
                     {/* mega menu login after */}
                     <Carousel dots={false} className="mb-24 menu-carousel" ref={node => (this.carousel = node)}>
                         <div className="mega-menu">
-                            <Row gutter={[16, 16]} className="megamenu-link"   >
+                            <Row gutter={16} className="megamenu-link"   >
                                 <Col xl={5}>
                                     <div className="wrapper">
                                         <div className="item-wrapper">
-                                            <Title className="text-white megamenu-label mb-16 fw-500">Start</Title>
+                                            <Title className="text-white megamenu-label mb-16 fw-500 mt-0">Start</Title>
                                             <Paragraph className="text-white-30 fs-16 mb-24 fw-300">We are a platform that connects banks, payment systems, and people.</Paragraph>
                                         </div>
                                         <div className="item-wrapper">
-                                            <Link to="/dashboard" onClick={()=>{this.setState({...this.state,megamenu:false})}}>The Dashboard</Link>
+                                        <Link to="/dashboard" onClick={()=>{this.setState({...this.state,megamenu:false})}}>The Dashboard</Link>
                                             <Link to="/dashboard" onClick={()=>{this.setState({...this.state,megamenu:false})}}>Your Portfolio</Link>
+                                            {/* <Link>The Dashboard</Link>
+                                            <Link>Your Portfolio</Link> */}
                                         </div>
                                     </div>
                                 </Col>
                                 <Col xl={4}>
                                     <div className="wrapper">
                                         <div className="item-wrapper">
-                                            <Title className="text-white megamenu-label  fw-500 mb-24">Personal</Title>
-                                            <Link className="pt-24"> Wallets</Link>
+                                            <Title className="text-white megamenu-label  fw-500 mb-24 mt-0">Personal</Title>
+                                            {/* <Link className="pt-24"> Wallets</Link> */}
+                                            <p className="fs-18 text-white-30 fw-200 mb-0">Wallets</p>
                                             <Paragraph className="text-white-30 fs-16 mb-0 fw-300">Full control of your private keys.</Paragraph>
                                         </div>
                                         <div className="item-wrapper">
-                                            <Link>Cards</Link>
-                                            <Link>Exchange</Link>
+                                            <p className="fs-18 text-white-30 fw-200 mb-0">Cards</p>
+                                            <p className="fs-18 text-white-30 fw-200 mb-0">Exchange</p>
+                                            {/* <Link>Cards</Link>
+                                            <Link>Exchange</Link> */}
                                         </div>
                                     </div>
                                 </Col>
                                 <Col xl={6}>
                                     <div className="wrapper">
                                         <div className="item-wrapper">
-                                            <Title className="text-white megamenu-label  fw-500">Crypto</Title>
+                                            <Title className="text-white megamenu-label  fw-500 mt-0">Crypto</Title>
                                         </div>
                                         <div className="item-wrapper">
-                                            <Link >Buy and Sell</Link>
-                                            <Link>Swap Services</Link>
-                                            <Link>Deposit and Withdraw</Link>
+                                            <Link onClick={() => { this.closeMegaMenu(); this.showBuyDrawer();}}>Buy and Sell</Link>
+                                            {/* <Translate content="buy_sell" onClick={() => { this.closeMegaMenu(); this.showBuyDrawer();}} className="text-white-30 fs-16 fw-300 c-pointer menu-items" /> */}
+                                            <Link onClick={() => { this.closeMegaMenu(); this.showSwapDrawer();}}>Swap Services</Link>
+                                            {/* <Translate content="swap_services" onClick={() => { this.closeMegaMenu(); this.showSwapDrawer();}} className="text-white-30 fs-16 fw-300 c-pointer menu-items" /> */}
+                                            <Link onClick={() => { this.closeMegaMenu(); this.showSendDrawer();}}>Deposit and Withdraw</Link>
+                                            {/* <Translate content="deposit_and_withdraw"  onClick={() => { this.closeMegaMenu(); this.showSendDrawer();}} className="text-white-30 fs-16 fw-300 c-pointer menu-items" /> */}
                                         </div>
                                     </div>
                                 </Col>
                                 <Col xl={6} >
                                     <div className="wrapper">
                                         <div className="item-wrapper">
-                                            <Title className="text-white megamenu-label  fw-500">Business</Title>
+                                            <Title className="text-white megamenu-label  fw-500 mt-0">Business</Title>
                                             <Paragraph className="text-white-30 fs-16 fw-300">User can create a separate account such as a corporate segregated wallet system.</Paragraph>
                                         </div>
                                         <div className="item-wrapper">
-                                            <Link>Corporate Wallet</Link>
-                                            <Link>Mass Payments</Link>
+                                            <p className="text-white-30 fs-18 fw-200 mb-0">Corporate Wallet</p>
+                                            <Link onClick={() => { this.closeMegaMenu(); this.showBuyFiatDrawer();}}>Mass Payments</Link>
                                         </div>
                                     </div>
                                 </Col>
@@ -250,17 +259,17 @@ class Header extends Component {
 
                                 </Col>
                                 <Col lg={7} xl={6}>
-                                    <Title className=" text-white megamenu-label  mb-16 fw-500">Connect</Title>
-                                    <Link>Meet Our Team</Link>
-                                    <Link>Report A Bug</Link>
-                                    <Link>FAQ</Link>
-                                    <Link>Contact Us</Link>
-                                    <Link >Sign In</Link>
+                                    <Title className=" text-white megamenu-label  mb-16 fw-500 mt-0">Connect</Title>
+                                    <div className="text-white-30 fs-16 fw-300">Meet Our Team</div>
+                                    <div className="text-white-30 fs-16 fw-300">Report A Bug</div>
+                                    <div className="text-white-30 fs-16 fw-300">FAQ</div>
+                                    <div className="text-white-30 fs-16 fw-300">Contact Us</div>
+                                    <div className="text-white-30 fs-16 fw-300" >Sign In</div>
 
                                 </Col>
 
                                 <Col lg={5} xl={6}>
-                                    <Title className=" text-white mb-16 fw-500 megamenu-label ">Security</Title>
+                                    <Title className=" text-white mb-16 fw-500 megamenu-label mt-0">Security</Title>
                                     <Paragraph className="text-white fs-14 fw-400">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
                                     <Paragraph className="text-white fs-14 fw-400">Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.</Paragraph>
                                 </Col>
@@ -272,7 +281,7 @@ class Header extends Component {
                                 <Col xl={5}>
                                     <div className="wrapper">
                                         <div className="item-wrapper">
-                                            <Title className="text-white megamenu-label mb-16 fw-500">Preferences</Title>
+                                            <Title className="text-white megamenu-label mb-16 fw-500 mt-0">Preferences</Title>
                                             <Avatar size={60} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
                                             <Paragraph className="text-white-30 fs-16 mb-0">Michael Quiapos</Paragraph>
                                             <Paragraph className="text-secondary fs-14">Great. i will have a look...</Paragraph>
@@ -281,11 +290,14 @@ class Header extends Component {
                                 </Col>
                                 <Col xl={4}>
                                     <div className="wrapper">
-                                        <Title className="text-white megamenu-label  fw-500 mb-24 item-wrapper">Wallet</Title>
+                                        <Title className="text-white megamenu-label  fw-500 mb-24 item-wrapper mt-0 ">Wallet</Title>
                                         <div className="item-wrapper">
-                                            <Link>Address Book</Link>
+                                        <p className="fs-18 text-white-30 fw-200 mb-0">Address Book</p>
+                                        <p className="fs-18 text-white-30 fw-200 mb-0">Invite Friends</p>
+                                        <Link onClick={()=>{this.setState({...this.state,megamenu:false});this.showBuyDrawer()}}>Buy Crypto</Link>
+                                            {/* <Link>Address Book</Link>
                                             <Link>Invite Friends</Link>
-                                            <Link onClick={()=>{this.setState({...this.state,megamenu:false});this.showBuyDrawer()}}>Buy Crypto</Link>
+                                            <Link>Buy Crypto</Link> */}
                                             <Paragraph className="fs-18 mb-0 text-white-30 fw-300">Light Theme <Switch onChange={this.onChange} size="small" className="custom-toggle" /></Paragraph>
                                         </div>
                                     </div>
@@ -298,12 +310,12 @@ class Header extends Component {
                                         </div>
                                         <div className="item-wrapper">
                                             <div className="d-flex justify-content">
-                                                <p className="text-white-30 fs-18 mb-0">Language</p>
-                                                <p className="text-white-30 fs-18 mb-0">lang</p>
+                                                <p className="text-white-30 fs-18 mb-0 fw-200">Language</p>
+                                                <p className="text-white-30 fs-18 mb-0  fw-200">lang</p>
                                             </div>
                                             <div className="d-flex justify-content">
-                                                <p className="text-white-30 fs-18 mb-0">Currency</p>
-                                                <p className="text-white-30 fs-18 mb-0"> USD</p>
+                                                <p className="text-white-30 fs-18 mb-0  fw-200">Currency</p>
+                                                <p className="text-white-30 fs-18 mb-0  fw-200"> USD</p>
                                             </div>
                                         </div>
                                     </div>
@@ -315,9 +327,12 @@ class Header extends Component {
                                             <Title className="text-white megamenu-label  fw-500">Support</Title>
                                         </div>
                                         <div className="item-wrapper">
-                                            <Link>Help Center</Link>
+                                            {/* <Link>Help Center</Link>
                                             <Link>About</Link>
-                                            <Link>Social Networks</Link>
+                                            <Link>Social Networks</Link> */}
+                                        <p className="fs-18 text-white-30 fw-200 mb-0">Help Center</p>
+                                        <p className="fs-18 text-white-30 fw-200 mb-0">About</p>
+                                        <p className="fs-18 text-white-30 fw-200 mb-0">Social Networks</p>
                                         </div>
                                     </div>
                                 </Col>
@@ -333,16 +348,21 @@ class Header extends Component {
                                 </Col>
                                 <Col xl={6}>
                                     <Title className=" text-white mb-16  megamenu-label  fw-500">Connect</Title>
-                                    <Link>Report A Bug</Link>
+                                    <p className="fs-18 text-white-30 fw-200 mb-0">Report A Bug</p>
+                                    <p className="fs-18 text-white-30 fw-200 mb-0">FAQ</p>
+                                    <p className="fs-18 text-white-30 fw-200 mb-0">Chat <span className="icon lg chat"></span></p>
+                                    {/* <Link>Report A Bug</Link>
                                     <Link>FAQ</Link>
-                                    <Link>Chat <span className="icon lg chat"></span></Link>
+                                    <Link>Chat <span className="icon lg chat"></span></Link> */}
                                 </Col>
                                 <Col xl={1} className=" mobile-none " />
                                 <Col xl={6} >
                                     <Title className=" text-yellow mb-16  megamenu-label fw-500 ">Security</Title>
                                     <Paragraph className="text-white fs-16">CURRENT SECURITY LEVEL<br /><span className="text-yellow fw-700">Medium </span>to see your status</Paragraph>
-                                    <Link>Backup Wallet</Link>
-                                    <Link>Reset Wallet</Link>
+                                    <p className="fs-18 text-white-30 fw-200 mb-0">Backup Wallet</p>
+                                    <p className="fs-18 text-white-30 fw-200 mb-0">Reset Wallet</p>
+                                    {/* <Link>Backup Wallet</Link>
+                                    <Link>Reset Wallet</Link> */}
                                     <Paragraph className="fs-18 mb-0 text-white-30 fw-300">Always ask pin <Switch onChange={this.onChange} size="small" className="custom-toggle ml-12" /></Paragraph >
                                     <Paragraph className="fs-18 mb-0 text-white-30 fw-300">Activate face ID <Switch defaultChecked onChange={this.onChange} size="small" className="custom-toggle  ml-12" /></Paragraph>
                                     <Paragraph className="fs-18 mb-0 text-white-30 fw-300">Activate biometry <Switch defaultChecked onChange={this.onChange} size="small" className="custom-toggle  ml-12" /></Paragraph >

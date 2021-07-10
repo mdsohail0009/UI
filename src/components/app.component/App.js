@@ -22,7 +22,7 @@ function App() {
     <Provider store={store}>
       <OidcProvider userManager={userManager} store={store}>
         <Router basename={process.env.PUBLIC_URL}>
-          {loading ? <span>Loading....</span> : <Layout />}
+          {loading ? <div className="loader">Loading....</div> : <Layout />}
         </Router>
       </OidcProvider>
     </Provider>

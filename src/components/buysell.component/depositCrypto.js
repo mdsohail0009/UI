@@ -13,7 +13,6 @@ class depositCrypto extends Component {
     }
     handleBuySellToggle = e => {
         // console.log(this.state);
-        debugger;
         this.setState({
             depositeFiat: e.target.value === 2
         });
@@ -26,18 +25,18 @@ class depositCrypto extends Component {
                     defaultValue={1}
                     onChange={this.handleBuySellToggle}
                     className="buysell-toggle crypto-toggle">
-                        <Translate value="min" content="from_crypto" value={1} component={Radio.Button} />
-                        <Translate value="half" content="from_fiat" value={2} component={Radio.Button} />
+                    <Translate value="min" content="from_crypto" value={1} component={Radio.Button} />
+                    <Translate value="half" content="from_fiat" value={2} component={Radio.Button} />
                 </Radio.Group>
                 {depositeFiat ?
                     <DepositFiat /> :
                     <div className="sellcrypto-container auto-scroll">
-                        <List onClick={() => this.props.changeStep('step8')}
+                        <List
                             itemLayout="horizontal"
                             dataSource={config.tlvCoinsList}
                             className="wallet-list"
                             renderItem={item => (
-                                <List.Item className="px-4">
+                                <List.Item className="px-4 c-pointer" onClick={() => this.props.changeStep('step8')}>
                                     <List.Item.Meta
                                         avatar={<span className={`coin ${item.coin} mr-4`} />}
                                         title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}

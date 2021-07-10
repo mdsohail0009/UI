@@ -59,12 +59,12 @@ class CryptoList extends Component {
                 className="crypto-list"
                 renderItem={item => (
                     <List.Item>
-                        <Link onClick={() => this.props.dispatch(setStep("step2"))}>
+                        <Link onClick={() => {this.props.isShowDrawer?this.showBuyDrawer():this.props.dispatch(setStep("step2"))}}>
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.walletCode} mr-4`} />}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.walletCode}</div>}
                             />
-                            <div className="fs-16 text-right">
+                            <div className="text-right coin-typo">
                                 <div className="text-white-30 fw-600">${item.transactionFee}</div>
                                 <div className={item.up ? 'text-red' : 'text-green'}>-{item.percent_change_1h} % </div>
                             </div>
@@ -87,7 +87,8 @@ class CryptoList extends Component {
                 className="side-drawer"
             >
                 {this.renderContent()}
-            </Drawer></>
+            </Drawer>
+            </>
         );
     }
 }

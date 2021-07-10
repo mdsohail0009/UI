@@ -35,7 +35,7 @@ class SavedCards extends Component {
                 className="crypto-list"
                 renderItem={item => (
                     <List.Item style={{ borderWidth: '0px' }}>
-                        <Link>
+                        <Link onClick={() => this.props.changeStep('step5')}>
                             <List.Item.Meta
                                 avatar={<span className={`coin md ${item.cardType}-white`} />}
                                 title={<div className="fw-300 fs-14"><div className="text-white-30">{item.cardNumber}</div><div className="text-yellow">{item.confirm}</div></div>}
