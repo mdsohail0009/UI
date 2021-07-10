@@ -19,7 +19,7 @@ class SelectSellCrypto extends Component {
                     </span>
                     <div className="crypto-details">
                         <Text className="crypto-percent text-white fw-700">65<sup className="fs-24 text-white fw-700" style={{ verticalAlign: 'Middle', marginLeft: 14 }}>%</sup></Text>
-                        <div className="fs-16 text-white-30 fw-200 text-right">
+                        <div className="fs-16 text-white-30 fw-200 crypto-amount">
                             <div className="text-yellow">1.0147668 <Text className="text-secondary">ETH</Text></div>
                             <div className="text-yellow"><Text className="text-secondary">$</Text> 41.07</div>
                         </div>
