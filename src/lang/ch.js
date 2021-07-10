@@ -170,4 +170,5 @@ export default {
   preferences: '首选项',
   wallet_version: '钱包版',
   about: '关于',
+  USD_wallet: '美元钱包',
 }

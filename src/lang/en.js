@@ -91,7 +91,7 @@ export default {
   swap_to: 'To Receive',
   wallet_in_usd: 'Wallet in USD',
   purchase_fiat: 'Purchase a Fiat',
-  purchase_fiat_text: 'Your wallet is empty, you don’t have any assets to make transactions. Follow this link and Deposit some cash.',
+  purchase_fiat_text: 'Your wallet is empty, you don’t have any assets to make transactions. Follow this link and %(link)s  some cash.',
   link_newcard: 'Link new card',
   pick: 'pick',
   confirm_swap: 'Confirm Swap',
@@ -170,4 +170,5 @@ export default {
   preferences: 'Preferences',
   wallet_version: 'Wallet Version',
   about: 'About',
+  USD_wallet: 'USD Wallet',
 }

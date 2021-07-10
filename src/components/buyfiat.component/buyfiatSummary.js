@@ -27,7 +27,7 @@ class FiatSummary extends Component {
                 </div>
                 <div className="mb-24">
                     <Translate className="fw-100 text-upper text-white-30 fs-16" content="to" component={Text} />
-                    <div className="fw-300 fs-24 text-white-30 l-height-normal">USD Wallet</div>
+                    <Translate className="fw-300 fs-24 text-white-30 l-height-normal mb-0" content="USD_wallet" component={Paragraph} />
                 </div>
                 <div className="mb-24">
                     <Translate className="fw-100 text-white-30 fs-16" content="current_balance" component={Text} />

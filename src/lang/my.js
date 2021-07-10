@@ -170,4 +170,5 @@ export default {
   preferences: 'Keutamaan',
   wallet_version: 'Versi Dompet',
   about: 'Mengenai',
+  USD_wallet: 'Dompet USD',
 }
