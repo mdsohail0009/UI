@@ -140,13 +140,15 @@ line-height: 16px;min-width:90px}
 .cancel-btngroup:hover{background-color: var(--bgYellow);color: var(--textDark); }
 .cancel-btngroup{ border-radius:30px 0 0 30px;background-color:var(--bgDarkYellow); color:var(--textWhite);}
 .crypto-card{border-radius: 25px;box-shadow: 0 8px 16px rgba(20,0,4,0.2);background-color:var(--bgOrient);background-position: center center;}
+.crypto-card .ant-card-body{display: flex; flex-direction: column;justify-content: space-between;}
 .crypto-card.normal-card{background-color: var(--bgDark) !important;box-shadow:none;}
 .crypto-card.select{background-image: url(../images/select-card-bg.png);background-size: cover;border-radius: 1.8rem;}
 .crypto-card.fiatcard{background-image: url(../images/fiatcard-bg.png);background-size: cover;border-radius: 1.8rem;}
 .crypto-card-top{display: flex; align-items: center;justify-content: space-between;}
 .crypto-card-top{align-items: flex-start;}
-.crypto-percent{font-size: 60px; line-height: normal;}
 .enter-val-container{display: flex; align-items: flex-start;justify-content: center; position: relative;}
+.crypto-details{display: flex;justify-content: space-between;align-items: center;}
+.crypto-details .crypto-amount{text-align: right;}
 .enter-val{width: auto;}
 .val-updown{position: absolute;right: 0;top: 0;}
 .enter-val input{background-color: transparent;line-height: normal; font-size: 36px; color: var(--textWhite30);font-weight: var(--fw-300);}
@@ -230,16 +232,16 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .side-drawer .ant-drawer-content-wrapper{width: 95% !important;}
     .buysell-toggle{ margin: 0 0 30px !important;}
     .buysell-toggle .ant-radio-button-wrapper{min-width:142px !important; }
-    .crypto-details{display: block; margin-top: 16px;}
-    .crypto-details .crypto-amount{margin-top: 16px;}
+    .crypto-percent{font-size: 36px;}
+    .crypto-percent .percent{font-size: 16px;vertical-align: middle;margin-left: 1px;}
+    .crypto-card .ant-card-body{height: 190px;}
 }
 @media (min-width: 576px){
     .round-pills{display: flex;justify-content: space-between;text-align: center; margin-bottom: 70px;}
     .crypto-card-bottom{display: flex; align-items: center;justify-content: space-between;}
-    .crypto-card .ant-card-body{padding: 33px;}
-    .crypto-details{display: flex;justify-content: space-between;align-items: center;}
-    .crypto-details .crypto-amount{text-align: right;}
-    .crypto-card .ant-card-body{height: 231px; display: flex; flex-direction: column;justify-content: space-between;}
+    .crypto-card .ant-card-body{padding: 33px;height: 231px;}
+    .crypto-percent{font-size: 60px;line-height: normal;}
+    .crypto-percent .percent{font-size: 24px}
 }
 @media (max-width: 767px){
     .mid-menu{margin: 0 -16px;padding: 0 16px; background-color: var(--bgWhite);}
@@ -254,10 +256,9 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .swap-subtitlte{width:230px}
     .enter-val-container{margin-right: 25px;justify-content: flex-start;}
     .pay-list .ant-typography{display: block;}
-    
-    .buysell-toggle .ant-radio-button-wrapper{min-width:138px !important; }
     .crypto-card .ant-card-body .crypto-card-top{margin-bottom: 12px;}
     .mb-space{margin-top: 12px;}
+    .coin.lg{transform: scale(0.8);}
 }
 @media (max-width: 991px){
     .mobile-list .ant-list-item{display: block; border-bottom: 1px solid  var(--borderLight) !important;}
@@ -269,12 +270,7 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .sidebar-push {margin: 100px 0 0;}
     .mobile-header-right {display: block;float: right;}
     .crypto_btns{display: flex; width: 100%; padding-top: 16px; margin-left: 0 !important; margin-right: 16px !important;}
-    .buysell-toggle{ margin: 0 0 50px !important;}
-    .buysell-toggle .ant-radio-button-wrapper{min-width:138px !important; }
     .swap-arrow{margin-left:6px;}
-    .side-drawer .side-drawer-header {
-        padding: 30px 70px 30px 30px;
-    }
 }
 @media (min-width: 768px){
     .tlv-header{display: flex;height: 100px;align-items: center; justify-content: space-between;padding: 30px 16px !important;}
@@ -298,9 +294,8 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .copyright{display: none !important;}
     .swap-subtitlte{width:250px}
     .enter-val-container{margin-right: 35px;}
-    
     .buysell-toggle{ margin: 0 30px 50px !important;}
-    .buysell-toggle .ant-radio-button-wrapper{min-width:170px !important; }
+    .buysell-toggle .ant-radio-button-wrapper{min-width:175px !important; }
     .tlv-header{border-radius: 0 0 30px 30px;}
     .pay-list{display: flex;justify-content: space-between;align-items: center;}
     .verify-options{padding: 24px 70px;}
@@ -318,6 +313,7 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .crypto_btns .custom-btn.prime{margin-left: 36px  !important;}
     .coin-typo{font-size: 16px !important;}
     .swap-arrow{margin-left:36px;}
+    .side-drawer .side-drawer-header{padding: 30px 70px 30px 30px;}
 }
 @media (min-width: 1200px){
     .main-container{max-width: 1232px; padding: 55px 16px 24px;}

@@ -10,20 +10,20 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
     const { user } = state?.oidc;
     window.scrollTo(0, 0)
     useEffect(() => {
-        if (!user || user.expired) {
-            const { loginMethod } = config;
-            switch (loginMethod) {
-                case "self":
-                    rest.history.push("/login")
-                    break;
-                case "identity":
-                    userManager.signinRedirect();
-                    break;
-                default:
-                    userManager.signinRedirect();
-            }
+        // if (!user || user.expired) {
+        //     const { loginMethod } = config;
+        //     switch (loginMethod) {
+        //         case "self":
+        //             rest.history.push("/login")
+        //             break;
+        //         case "identity":
+        //             userManager.signinRedirect();
+        //             break;
+        //         default:
+        //             userManager.signinRedirect();
+        //     }
 
-        }
+        // }
     }, [])
     return (
         <Route {...rest} render={
