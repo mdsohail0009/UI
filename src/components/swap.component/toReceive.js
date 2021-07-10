@@ -7,31 +7,30 @@ import { connect } from 'react-redux';
 
 class ToReceive extends Component {
     state = {
-        addClass: false,
+        addLinks: null,
     }
     onSearch = value => console.log(value);
-    selectToggle() {
-        //const selectItem = config.tlvCoinsList.filter((item) => item.id !== config.tlvCoinsList.id)
-        this.setState({ addClass: !this.state.addClass });
-    }
+    selectToggle = id => {
+        debugger;
+        this.setState({ addLinks: id });
+      };
     render() {
         const { Search } = Input;
         const { Paragraph, Text } = Typography;
-        let activeClass = ['px-4'];
-        if (this.state.addClass) {
-            activeClass.push('select');
-        }
+        const {addLinks }= this.state;
 
         return (<>
             <Search placeholder="Search for a Currency" onSearch={this.onSearch} className="crypto-search fs-14" />
             <Paragraph className="text-upper fs-14 text-center text-white-30 c-pointer mt-36 fw-500 mb-0"><span className="icon sm leftarrow mr-12 mb-4" />To Receive</Paragraph>
             <div className="sellcrypto-container auto-scroll">
-                <List
+            <List
                     itemLayout="horizontal"
                     dataSource={config.tlvCoinsList}
                     className="wallet-list c-pointer"
+                   
                     renderItem={item => (
-                        <List.Item className={activeClass.join(' ')} onClick={this.selectToggle.bind(this)} >
+                        <List.Item className={  (item.id === addLinks ? " select" : "")}  key={item.id}
+                         onClick={() => this.selectToggle(item.id)} >
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin} mr-4`} />}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}

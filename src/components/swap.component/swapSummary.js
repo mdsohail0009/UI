@@ -18,7 +18,7 @@ class SwapSummary extends Component {
                             placeholder="0.101833"
                             style={{ maxWidth: 253, lineHeight: '0.1' }}
                         />
-                        <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">USD 200.00</Text>
+                        <Text className="fs-14 text-white-30 fw-200 text-center d-block">USD 200.00</Text>
                     </div>
                     <span className="mt-8 val-updown">
                         <span className="icon sm uparw-o-white d-block c-pointer mb-4" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
