@@ -83,7 +83,7 @@ class BuyFiat extends Component {
                     </div>
                 </>
                     : <>
-                        <Translate className="mb-0 text-white-30 fw-200 fs-36 mb-16" content="purchase_fiat" component={Title} />
+                        <Translate className="mb-0 text-white-30 fw-200 fs-36" content="purchase_fiat" component={Title} />
                         <Paragraph className="text-secondary fw-300 fs-16">Your wallet is empty, you don’t have any assets to make transactions. Follow this link and <Link onClick={() => this.props.changeStep('step2')} className="text-yellow text-underline">Deposit</Link> some cash.</Paragraph>
                         <div className="markets-panel mt-36">
                             <FiatList />
