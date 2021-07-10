@@ -189,5 +189,16 @@ export default {
   contact_us: 'Contact Us',
   sign_in: 'Sign In',
   security_text: 'Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.',
-  
+  michael_quiapos: 'Michael Quiapos',
+  great: 'Great. i will have a look...',
+  address_book: 'Address Book',
+  invite_friends: 'Invite Friends',
+  light_theme: 'Light Theme',
+  localization: 'Localization',
+  localization_text: 'User can create a separate account such as a corporate segregated wallet system.',
+  lang: 'lang',
+  currency: 'Currency',
+  support: 'Support',
+  help_center:'Help Center',
+  social_networks: 'Social Networks',
 }

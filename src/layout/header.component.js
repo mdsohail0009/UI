@@ -325,40 +325,43 @@ class Header extends Component {
                                 <Col xl={5}>
                                     <div className="wrapper">
                                         <div className="item-wrapper">
-                                            <Title className="text-white megamenu-label mb-16 fw-500 mt-0">Preferences</Title>
+                                            <Translate className="text-white megamenu-label mb-16 fw-500 mt-0" content="preferences" component={Title} />
                                             <Avatar size={60} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
-                                            <Paragraph className="text-white-30 fs-16 mb-0">Michael Quiapos</Paragraph>
-                                            <Paragraph className="text-secondary fs-14">Great. i will have a look...</Paragraph>
+                                            <Translate className="text-white-30 fs-16 mb-0" content="michael_quiapos" component={Paragraph} />
+                                            <Translate className="text-secondary fs-14" content="great" component={Paragraph} />
                                         </div>
                                     </div>
                                 </Col>
                                 <Col xl={4}>
                                     <div className="wrapper">
-                                        <Title className="text-white megamenu-label  fw-500 mb-24 item-wrapper mt-0 ">Wallet</Title>
+                                    <Translate className="text-white megamenu-label fw-500 mb-24 item-wrapper mt-0 " content="wallets" component={Title} />
                                         <div className="item-wrapper">
-                                        <p className="fs-18 text-white-30 fw-200 mb-0">Address Book</p>
-                                        <p className="fs-18 text-white-30 fw-200 mb-0">Invite Friends</p>
+                                        <Translate className="fs-18 text-white-30 fw-200 mb-0" content="address_book" component={Paragraph} />
+                                        <Translate className="fs-18 text-white-30 fw-200 mb-0" content="invite_friends" component={Paragraph} />
                                         <Link onClick={()=>{this.setState({...this.state,megamenu:false});this.showBuyDrawer()}}>Buy Crypto</Link>
                                             {/* <Link>Address Book</Link>
                                             <Link>Invite Friends</Link>
                                             <Link>Buy Crypto</Link> */}
-                                            <Paragraph className="fs-18 mb-0 text-white-30 fw-300">Light Theme <Switch onChange={this.onChange} size="small" className="custom-toggle" /></Paragraph>
+                                            <div className="d-flex">
+                                            <Translate className="fs-18 text-white-30 fw-200 mb-0" content="light_theme" component={Paragraph} />
+                                            <Switch onChange={this.onChange} size="small" className="custom-toggle" />
+                                            </div>
                                         </div>
                                     </div>
                                 </Col>
                                 <Col xl={6}>
                                     <div className="wrapper">
                                         <div className="item-wrapper">
-                                            <Title className="text-white megamenu-label  fw-500">Localization</Title>
-                                            <Paragraph className="text-white-30 fs-16 fw-400">User can create a separate account such as a corporate segregated wallet system.</Paragraph>
+                                            <Translate className="text-white megamenu-label fw-500" content="localization" component={Title} />
+                                            <Translate className="text-white-30 fs-16 fw-400" content="localization_text" component={Paragraph} />
                                         </div>
                                         <div className="item-wrapper">
                                             <div className="d-flex justify-content">
-                                                <p className="text-white-30 fs-18 mb-0 fw-200">Language</p>
-                                                <p className="text-white-30 fs-18 mb-0  fw-200">lang</p>
+                                                <Translate className="text-white-30 fs-18 mb-0 fw-200" content="language" component={Paragraph} />
+                                                <Translate className="text-white-30 fs-18 mb-0 fw-200" content="lang" component={Paragraph} />
                                             </div>
                                             <div className="d-flex justify-content">
-                                                <p className="text-white-30 fs-18 mb-0  fw-200">Currency</p>
+                                                <Translate className="text-white-30 fs-18 mb-0 fw-200" content="currency" component={Paragraph} />
                                                 <p className="text-white-30 fs-18 mb-0  fw-200"> USD</p>
                                             </div>
                                         </div>
@@ -368,15 +371,15 @@ class Header extends Component {
                                 <Col xl={6} >
                                     <div className="wrapper">
                                         <div className="item-wrapper">
-                                            <Title className="text-white megamenu-label  fw-500">Support</Title>
+                                            <Translate className="text-white megamenu-label fw-500" content="support" component={Title} />
                                         </div>
                                         <div className="item-wrapper">
                                             {/* <Link>Help Center</Link>
                                             <Link>About</Link>
                                             <Link>Social Networks</Link> */}
-                                        <p className="fs-18 text-white-30 fw-200 mb-0">Help Center</p>
-                                        <p className="fs-18 text-white-30 fw-200 mb-0">About</p>
-                                        <p className="fs-18 text-white-30 fw-200 mb-0">Social Networks</p>
+                                        <Translate className="fs-18 text-white-30 fw-200 mb-0" content="help_center" component={Paragraph} />
+                                        <Translate className="fs-18 text-white-30 fw-200 mb-0" content="about" component={Paragraph} />
+                                        <Translate className="fs-18 text-white-30 fw-200 mb-0" content="social_networks" component={Paragraph} />
                                         </div>
                                     </div>
                                 </Col>
@@ -391,8 +394,12 @@ class Header extends Component {
 
                                 </Col>
                                 <Col xl={6}>
-                                    <Title className=" text-white mb-16  megamenu-label  fw-500">Connect</Title>
-                                    <p className="fs-18 text-white-30 fw-200 mb-0">Report A Bug</p>
+                                    <Translate className=" text-white mb-16  megamenu-label fw-500" content="connect" component={Title} />
+                                    <Translate className="fs-18 text-white-30 fw-200 mb-0" content="report_a_bug" component={Paragraph} />
+                                    <Translate className="fs-18 text-white-30 fw-200 mb-0" content="FAQ" component={Paragraph} />
+                                    <div className="d-flex">
+                                    <Translate className="fs-18 text-white-30 fw-200 mb-0" content="chat" component={Paragraph} />
+                                    <span className="icon lg chat"></span></div>
                                     <p className="fs-18 text-white-30 fw-200 mb-0">FAQ</p>
                                     <p className="fs-18 text-white-30 fw-200 mb-0">Chat <span className="icon lg chat"></span></p>
                                     {/* <Link>Report A Bug</Link>
