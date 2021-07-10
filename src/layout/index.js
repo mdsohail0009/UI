@@ -16,21 +16,21 @@ class Layout extends Component {
     componentDidMount() {
         const { user } = store.getState().oidc;
         this.setState({ user });
-        if(!this.props.user || this.props.user.expired){
-            userManager.signinRedirect();
-        }
+        // if (!this.props.user || this.props.user.expired) {
+        //     userManager.signinRedirect();
+        // }
     }
     render() {
-        if (!this.props.user || this.props.user.expired){
-            return <div>Loading....</div>
-        }
-            return <>
-                <AntLayout>
-                    <Header />
-                    <Content />
-                    <Footer />
-                </AntLayout>
-            </>
+        // if (!this.props.user || this.props.user.expired){
+        //     return <div>Loading....</div>
+        // }
+        return <>
+            <AntLayout>
+                <Header />
+                <Content />
+                <Footer />
+            </AntLayout>
+        </>
     }
 }
 

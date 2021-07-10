@@ -28,7 +28,7 @@ class WithdrawAddress extends Component {
                     <label className="input-label text-secondary">To</label>
                     <Input className="cust-input text-white-50 fw-300" defaultValue="Mobile,email or address" suffix={<img src={sacnner} className="c-pointer" style={{ width: '20px' }} onClick={() => this.props.changeStep('step3')} />} />
                     <div className="p-relative">
-                        <Translate content="note" className="input-label text-secondary mb-0" component={Paragraph} />
+                        <Translate content="note" className="input-label text-secondary" component={Paragraph} />
                         <Input className="cust-input text-white-50  fw-300" defaultValue="Add an optional Note" />
                         <Translate content="card_supported" className="fs-12 error-text" component={Text} />
                     </div>

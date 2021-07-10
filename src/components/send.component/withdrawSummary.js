@@ -6,26 +6,26 @@ import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 const LinkValue = (props) => {
     return (
-      <Translate className="text-yellow text-underline c-pointer"
-        content={props.content}
-        component={Link}
-        to="./#"
-      />
+        <Translate className="text-yellow text-underline c-pointer"
+            content={props.content}
+            component={Link}
+            to="./#"
+        />
     )
-  }
+}
 class WithdrawSummary extends Component {
     render() {
         const { Paragraph, Text } = Typography;
         const link = <LinkValue content="terms_service" />;
         return (
             <>
-                <div className="enter-val-container">
+                <div className="enter-val-container mr-0">
                     <div className="text-center">
                         <Input className="enter-val p-0 fs-36 text-white-30 fw-200" style={{ lineHeight: '28px' }}
                             bordered={false}
                             suffix="BTC"
                             placeholder="0.002497"
-                            style={{ maxWidth: 253, lineHeight: '0.1' }}
+                            style={{ maxWidth: 240, lineHeight: '0.1' }}
                         />
                         <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">USD 200.00</Text>
                     </div>
@@ -59,7 +59,7 @@ class WithdrawSummary extends Component {
                 </div>
                 <div className="d-flex p-16 mb-36">
                     <span className="icon lg check-ylw" />
-                    <Translate content="agree_to_suissebase" with={{link}} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
+                    <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
                 </div>
                 <Translate size="large" block className="pop-btn" onClick={() => this.props.changeStep('step6')} content="confirm_now" component={Button} />
                 <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block content="cancel" onClick={() => this.props.changeStep('step1')} component={Button} />
