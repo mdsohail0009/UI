@@ -23,7 +23,7 @@ class SwapCoins extends Component {
                             <span className="coin md btc-white"></span>
                             <Paragraph className="mb-0 text-white-30 fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>Bitcoin</Paragraph>
                         </div>
-                        <span className="icon sm rightarrow ml-36"></span>
+                        <span className="icon sm rightarrow swap-arrow"></span>
                         <span className="icon swapfrom-arrow"></span>
                     </div>
                 </div>
@@ -39,7 +39,7 @@ class SwapCoins extends Component {
                             <span className="coin md eth-white"></span>
                             <Paragraph className="mb-0 text-white-30 fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>Ethereum</Paragraph>
                         </div>
-                        <span className="icon sm rightarrow ml-36"></span>
+                        <span className="icon sm rightarrow swap-arrow"></span>
                     </div>
                 </div>
                 <div className="p-16 mt-24 text-center fw-200">
