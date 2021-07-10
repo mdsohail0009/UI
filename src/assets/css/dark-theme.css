@@ -32,4 +32,5 @@
     --borderGrey: #313C46;
     --borderLight: #9797AA;
     --bgCircle: #19B06C;
+    --lightThemeIcons: url(../../assets/images/dark-theme-icons.svg);
 }
