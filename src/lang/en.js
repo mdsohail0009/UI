@@ -179,5 +179,15 @@ export default {
   cards: 'Cards',
   exchange: 'Exchange',
   business: 'Business',
-  business_text: 'User can create a separate account such as a corporate segregated wallet system.'
+  business_text: 'User can create a separate account such as a corporate segregated wallet system.',
+  crypto: 'Crypto',
+  corporate_wallet: 'Corporate Wallet',
+  connect: 'Connect',
+  meet_our_team: 'Meet Our Team',
+  report_a_bug: 'Report A Bug',
+  FAQ: 'FAQ',
+  contact_us: 'Contact Us',
+  sign_in: 'Sign In',
+  security_text: 'Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.',
+  
 }

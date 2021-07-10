@@ -253,19 +253,20 @@ class Header extends Component {
                                     <div className="wrapper">
                                         <div className="item-wrapper">
                                             <Translate className="text-white megamenu-label fw-500 mb-24 mt-0" content="personal" component={Title} />
-                                            <Translate className="text-white megamenu-label fw-500 mb-24 mt-0" content="wallets" component={Text} />
-                                            <Translate className="text-white megamenu-label fw-500 mb-24 mt-0" content="wallets_text" component={Text} />
+                                            {/* <Link className="pt-24"> Wallets</Link> */}
+                                            <Translate className="fs-18 text-white-30 fw-200 mb-0" content="wallets" component={Paragraph} />
+                                            <Translate className="text-white-30 fs-16 mb-0 fw-300" content="wallets_text" component={Paragraph} />
                                         </div>
                                         <div className="item-wrapper">
-                                            <Translate className="fs-18 text-white-30 fw-200 mb-0" content="cards" component={Text} />
-                                            <Translate className="fs-18 text-white-30 fw-200 mb-0" content="exchange" component={Text} />
+                                            <Translate className="fs-18 text-white-30 fw-200 mb-0" content="cards" component={Paragraph} />
+                                            <Translate className="fs-18 text-white-30 fw-200 mb-0" content="exchange" component={Paragraph} />
                                         </div>
                                     </div>
                                 </Col>
                                 <Col xl={6}>
                                     <div className="wrapper">
                                         <div className="item-wrapper">
-                                            <Title className="text-white megamenu-label  fw-500 mt-0">Crypto</Title>
+                                            <Translate className="text-white megamenu-label fw-500 mt-0" content="crypto" component={Title} />
                                         </div>
                                         <div className="item-wrapper">
                                             <Link onClick={() => { this.closeMegaMenu(); this.showBuyDrawer();}}>Buy and Sell</Link>
@@ -280,11 +281,11 @@ class Header extends Component {
                                 <Col xl={6} >
                                     <div className="wrapper">
                                         <div className="item-wrapper">
-                                            <Translate className="text-white megamenu-label  fw-500 mt-0" content="business" component={Title} />
-                                            <Translate className="text-white-30 fs-16 fw-300" content="business_text" component={Text} />
+                                            <Translate className="text-white megamenu-label fw-500 mt-0" content="business" component={Title} />
+                                            <Translate className="text-white-30 fs-16 fw-300" content="business_text" component={Paragraph} />
                                         </div>
                                         <div className="item-wrapper">
-                                            <p className="text-white-30 fs-18 fw-200 mb-0">Corporate Wallet</p>
+                                            <Translate className="text-white-30 fs-18 fw-200 mb-0" content="corporate_wallet" component={Paragraph} />
                                             <Link onClick={() => { this.closeMegaMenu(); this.showBuyFiatDrawer();}}>Mass Payments</Link>
                                         </div>
                                     </div>
@@ -301,19 +302,20 @@ class Header extends Component {
 
                                 </Col>
                                 <Col lg={7} xl={6}>
-                                    <Title className=" text-white megamenu-label  mb-16 fw-500 mt-0">Connect</Title>
-                                    <div className="text-white-30 fs-16 fw-300">Meet Our Team</div>
-                                    <div className="text-white-30 fs-16 fw-300">Report A Bug</div>
-                                    <div className="text-white-30 fs-16 fw-300">FAQ</div>
-                                    <div className="text-white-30 fs-16 fw-300">Contact Us</div>
-                                    <div className="text-white-30 fs-16 fw-300" >Sign In</div>
+                                    <Translate className="text-white megamenu-label  mb-16 fw-500 mt-0" content="connect" component={Title} />
+                                    <Translate className="text-white-30 fs-16 fw-300" content="meet_our_team" component={Paragraph} />
+                                    <Translate className="text-white-30 fs-16 fw-300" content="report_a_bug" component={Paragraph} />
+                                    <Translate className="text-white-30 fs-16 fw-300" content="FAQ" component={Paragraph} />
+                                    <Translate className="text-white-30 fs-16 fw-300" content="contact_us" component={Paragraph} />
+                                    <Translate className="text-white-30 fs-16 fw-300" content="sign_in" component={Paragraph} />
 
                                 </Col>
 
                                 <Col lg={5} xl={6}>
-                                    <Title className=" text-white mb-16 fw-500 megamenu-label mt-0">Security</Title>
-                                    <Paragraph className="text-white fs-14 fw-400">CURRENT SECURITY LEVEL<br /><span className="text-green fw-700">Medium</span></Paragraph>
-                                    <Paragraph className="text-white fs-14 fw-400">Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.</Paragraph>
+                                    <Translate className="text-white mb-16 fw-500 megamenu-label mt-0" content="security" component={Title} />
+                                    <Translate className="text-white fs-14 fw-400 mb-0" content="current_security_level" component={Paragraph} />
+                                    <Translate className="text-green fw-700 " content="medium" component={Paragraph} />
+                                    <Translate className="text-white fs-14 fw-400" content="security_text" component={Paragraph} />
                                 </Col>
                                 <Col xl={3} />
                             </Row>
