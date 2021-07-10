@@ -21,6 +21,15 @@ counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
 counterpart.setLocale('en');
 
+const LinkValue = (props) => {
+    return (
+        <Translate className="text-yellow fw-700 fs-16 d-inlineblock" 
+            content={props.content}
+            component={Link}
+            // to="./#"
+        />
+    )
+}
 const { menuHeader } = Layout;
 const { Title, Paragraph, Text } = Typography;
 const { TabPane } = Tabs;
@@ -175,6 +184,7 @@ class Header extends Component {
     }
     render() {
         const { initLoading, loading } = this.state;
+        const link = <LinkValue content="medium" />;
         return (
             <>
                 <Layout className="layout">
@@ -342,9 +352,9 @@ class Header extends Component {
                                             {/* <Link>Address Book</Link>
                                             <Link>Invite Friends</Link>
                                             <Link>Buy Crypto</Link> */}
-                                            <div className="d-flex">
+                                            <div className="d-flex align-center">
                                             <Translate className="fs-18 text-white-30 fw-200 mb-0" content="light_theme" component={Paragraph} />
-                                            <Switch onChange={this.onChange} size="small" className="custom-toggle" />
+                                            <Switch onChange={this.onChange} size="small" className="custom-toggle ml-12" />
                                             </div>
                                         </div>
                                     </div>
@@ -397,26 +407,33 @@ class Header extends Component {
                                     <Translate className=" text-white mb-16  megamenu-label fw-500" content="connect" component={Title} />
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="report_a_bug" component={Paragraph} />
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="FAQ" component={Paragraph} />
-                                    <div className="d-flex">
+                                    <div className="d-flex align-center">
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="chat" component={Paragraph} />
                                     <span className="icon lg chat"></span></div>
-                                    <p className="fs-18 text-white-30 fw-200 mb-0">FAQ</p>
-                                    <p className="fs-18 text-white-30 fw-200 mb-0">Chat <span className="icon lg chat"></span></p>
                                     {/* <Link>Report A Bug</Link>
                                     <Link>FAQ</Link>
                                     <Link>Chat <span className="icon lg chat"></span></Link> */}
                                 </Col>
                                 <Col xl={1} className=" mobile-none " />
                                 <Col xl={6} >
-                                    <Title className=" text-yellow mb-16  megamenu-label fw-500 ">Security</Title>
-                                    <Paragraph className="text-white fs-16">CURRENT SECURITY LEVEL<br /><span className="text-yellow fw-700">Medium </span>to see your status</Paragraph>
-                                    <p className="fs-18 text-white-30 fw-200 mb-0">Backup Wallet</p>
-                                    <p className="fs-18 text-white-30 fw-200 mb-0">Reset Wallet</p>
+                                    <Translate className=" text-yellow mb-16 megamenu-label fw-500" content="security" component={Title} />
+                                    <Translate content="medium_text" with={{link}} component={Paragraph} className="text-white fs-16" />
+                                    <Translate className="fs-18 text-white-30 fw-200 mb-0" content="backup_wallet" component={Paragraph} />
+                                    <Translate className="fs-18 text-white-30 fw-200 mb-0" content="reset_wallet" component={Paragraph} />
                                     {/* <Link>Backup Wallet</Link>
                                     <Link>Reset Wallet</Link> */}
-                                    <Paragraph className="fs-18 mb-0 text-white-30 fw-300">Always ask pin <Switch onChange={this.onChange} size="small" className="custom-toggle ml-12" /></Paragraph >
-                                    <Paragraph className="fs-18 mb-0 text-white-30 fw-300">Activate face ID <Switch defaultChecked onChange={this.onChange} size="small" className="custom-toggle  ml-12" /></Paragraph>
-                                    <Paragraph className="fs-18 mb-0 text-white-30 fw-300">Activate biometry <Switch defaultChecked onChange={this.onChange} size="small" className="custom-toggle  ml-12" /></Paragraph >
+                                    <div className="d-flex align-center">
+                                    <Translate className="fs-18 mb-0 text-white-30 fw-300" content="always_ask_pin" component={Paragraph} />
+                                    <Switch onChange={this.onChange} size="small" className="custom-toggle ml-12" />
+                                    </div>
+                                    <div className="d-flex align-center">
+                                    <Translate className="fs-18 mb-0 text-white-30 fw-300" content="activate_face" component={Paragraph} />
+                                    <Switch defaultChecked onChange={this.onChange} size="small" className="custom-toggle ml-12" />
+                                    </div>
+                                    <div className="d-flex align-center">
+                                    <Translate className="fs-18 mb-0 text-white-30 fw-300" content="activate_biometry" component={Paragraph} />
+                                    <Switch defaultChecked onChange={this.onChange} size="small" className="custom-toggle ml-12" />
+                                    </div>
                                 </Col>
                                 <Col xl={2} className=" mobile-none " />
                             </Row>

@@ -208,4 +208,10 @@ export default {
   support: 'Support',
   help_center:'Help Center',
   social_networks: 'Social Networks',
+  medium_text: 'CURRENT SECURITY LEVEL %(link)s to see your status',
+  backup_wallet: 'Backup Wallet',
+  reset_wallet: 'Reset Wallet',
+  always_ask_pin: 'Always ask pin',
+  activate_face: 'Activate face ID',
+  activate_biometry: 'Activate biometry',
 }
