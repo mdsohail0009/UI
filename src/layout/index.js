@@ -16,12 +16,12 @@ class Layout extends Component {
     componentDidMount() {
         const { user } = store.getState().oidc;
         this.setState({ user });
-        if (!this.props.user || this.props.user.expired) {
+        if ((!this.props.user || this.props.user.expired) && !window.location.pathname.includes('callback')) {
             userManager.signinRedirect();
         }
     }
     render() {
-        if (!this.props.user || this.props.user.expired) {
+        if ((!this.props.user || this.props.user.expired)&& !window.location.pathname.includes('callback')) {
             return <div>Loading....</div>
         }
         return <>
