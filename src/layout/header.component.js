@@ -49,19 +49,52 @@ const securityMenu = (
 );
 const settingMenu = (
     <Menu>
-        <Title className="fs-24 text-white my-16 fw-500 mx-30">Settings</Title>
+        <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="settings" component={Title} />
         <ul className="pl-0 drpdwn-list">
-            <li><Link to="">General<span className="icon md rarrow-white" /></Link></li>
-            <li><Link to="">Privacy Policy<span className="icon md rarrow-white" /></Link></li>
-            <li><Link to="">Terms of Service<span className="icon md rarrow-white" /></Link></li>
-            <li><Link to="">About<span className="icon md rarrow-white" /></Link></li>
-            <li><Link to="">Wallet Version<span className="icon md rarrow-white" /></Link></li>
-            <li><Link to="">Preferences<span className="icon md rarrow-white" /></Link></li>
-            <li><Link to="">Language<span className="icon md rarrow-white" /></Link></li>
-            <li><Link to="">Local Currency<span className="icon md rarrow-white" /></Link></li>
-            <li><Link to="">Notifications<span className="icon md rarrow-white" /></Link></li>
-            <li><Link to="">Themes<span className="icon md rarrow-white" /></Link></li>
-            <li onClick={()=>userManager.signoutRedirect()}><Link to="">Logout<span className="icon md rarrow-white" /></Link></li>
+            <li className="d-flex justify-content align-center">
+                <Translate content="general" component={Link} />
+                <span className="icon md rarrow-white" />
+            </li>
+            <li className="d-flex justify-content align-center">
+                <Translate content="privacy_policy" component={Link} />
+                <span className="icon md rarrow-white" />
+            </li>
+            <li className="d-flex justify-content align-center">
+                <Translate content="terms_service" component={Link} />
+                <span className="icon md rarrow-white" />
+            </li>
+            <li className="d-flex justify-content align-center">
+                <Translate content="about" component={Link} />
+                <span className="icon md rarrow-white" />
+            </li>
+            <li className="d-flex justify-content align-center">
+                <Translate content="wallet_version" component={Link} />
+                <span className="icon md rarrow-white" />
+            </li>
+            <li className="d-flex justify-content align-center">
+                <Translate content="preferences" component={Link} />
+                <span className="icon md rarrow-white" />
+            </li>
+            <li className="d-flex justify-content align-center">
+                <Translate content="language" component={Link} />
+                <span className="icon md rarrow-white" />
+            </li>
+            <li className="d-flex justify-content align-center">
+                <Translate content="local_currency" component={Link} />
+                <span className="icon md rarrow-white" />
+            </li>
+            <li className="d-flex justify-content align-center">
+                <Translate content="notifications" component={Link} />
+                <span className="icon md rarrow-white" />
+            </li>
+            <li className="d-flex justify-content align-center">
+                <Translate content="themes" component={Link} />
+                <span className="icon md rarrow-white" />
+            </li>
+            <li className="d-flex justify-content align-center" onClick={()=>userManager.signoutRedirect()}>
+                <Translate content="logout" component={Link} />
+                <span className="icon md rarrow-white" />
+            </li>
         </ul>
     </Menu>
 );
