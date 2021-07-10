@@ -169,7 +169,7 @@ class Header extends Component {
                 </Layout >
                 <Modal
                     title={[<div className="megamenu-title fs-24 text-white">
-                        <img src={logoWhite} alt="logo" className="tlv-logo px-16" />
+                        <img src={logoWhite} alt="logo" className="tlv-logo" />
                         <div><span className="icon sm r-arrow-o-white mr-16 c-pointer" style={{ transform: 'rotate(180deg)' }} onClick={this.previous} ></span>
                             <span className="icon sm r-arrow-o-white c-pointer ml-24" onClick={this.next}></span>
                             <Link className="text-white ml-16">Sign in</Link></div>

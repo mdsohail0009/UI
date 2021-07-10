@@ -2,6 +2,7 @@ const config = {
   loginMethod: "identity", // self , identity
   tlvCoinsList: [
     {
+      id:1,
       title: 'bitcoincash',
       coin: 'bch',
       price: '45,428.98',
@@ -12,6 +13,7 @@ const config = {
       shortcode: 'USD'
     },
     {
+      id:2,
       title: 'ethereum',
       coin: 'eth',
       price: '45,428.98',
@@ -22,6 +24,7 @@ const config = {
       shortcode: 'ETH'
     },
     {
+      id:3,
       title: 'Bitcoin',
       coin: 'btc',
       price: '45,428.98',
@@ -32,6 +35,7 @@ const config = {
       shortcode: 'BTC'
     },
     {
+      id:4,
       title: 'Stellar',
       coin: 'xlm',
       price: '45,428.98',
@@ -42,6 +46,7 @@ const config = {
       shortcode: 'XLM'
     },
     {
+      id:5,
       title: 'Us dollar',
       coin: 'usd-d',
       price: '45,428.98',
@@ -50,8 +55,6 @@ const config = {
       up: false,
       totalcoin: 1000,
       shortcode: 'USD'
-
-
     },
     {
       title: 'oxbtc',
