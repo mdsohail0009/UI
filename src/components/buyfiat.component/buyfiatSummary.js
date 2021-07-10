@@ -35,7 +35,7 @@ class FiatSummary extends Component {
                 </div>
                 <div className="mb-36">
                     <Translate className="fw-100 text-white-30 text-upper fs-16" content="admin_fee" component={Text} />
-                    <Translate className="fw-300 fs-24 text-darkgreen l-height-normal" content="free" component={Text} />
+                    <Translate className="fw-300 fs-24 text-darkgreen l-height-normal" content="free" component={Paragraph} />
                 </div>
                 <div className="fiat-total">
                     <Translate className="fw-100 text-white mb-0 fs-36" content="total" component={Paragraph} />
