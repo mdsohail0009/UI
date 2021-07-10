@@ -160,7 +160,7 @@ line-height: 16px;min-width:90px}
 /* Sell */
 .default-radio{display: flex !important; justify-content: flex-start !important;margin-bottom: 16px;}
 .default-radio .ant-radio-button-wrapper{background-color: transparent !important; color: var(--textWhite) !important;border-radius: 30px;min-width: 120px; line-height: 32px;border: none;font-size: 12px;font-weight: 500;text-align: center;}
-.round-pills .ant-radio-button-wrapper{background-color: var(--bgDark);height: 26px; border-radius: 30px;min-width: 120px; line-height: 26px;color: var(--textYellow);border: none;font-size: 12px;font-weight: 500;margin: 0 16px 16px 0;}
+.round-pills .ant-radio-button-wrapper{background-color: var(--bgDark);height: 26px; border-radius: 30px;min-width: 120px; line-height: 26px;color: var(--textYellow);border: none;font-size: 12px;font-weight: 500;margin: 0 16px 16px 0;text-align: center;}
 .round-pills .ant-radio-button-wrapper-checked, .default-radio .ant-radio-button-wrapper-checked{background-color: var(--bgYellow) !important; color: var(--textDark) !important;}
 .round-pills .ant-radio-button-wrapper::before, .default-radio .ant-radio-button-wrapper::before{content: none;}
 .icon-delete{width:35px;height: 35px; border: 1px solid var(--borderGrey); border-radius: 50%;}
@@ -233,15 +233,15 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .buysell-toggle{ margin: 0 0 30px !important;}
     .buysell-toggle .ant-radio-button-wrapper{min-width:142px !important; }
     .crypto-percent{font-size: 36px;}
-    .crypto-percent .percent{font-size: 16px;vertical-align: middle;margin-left: 1px;}
+    .crypto-percent .percent{font-size: 16px;vertical-align: middle;margin-left: 4px;}
     .crypto-card .ant-card-body{height: 190px;}
 }
 @media (min-width: 576px){
-    .round-pills{ margin-bottom: 70px;}
+    .round-pills{ margin-bottom: 40px;}
     .fiat-total{display: flex;justify-content: space-between;text-align: center;}
     .crypto-card .ant-card-body{padding: 33px;height: 231px;}
     .crypto-percent{font-size: 60px;line-height: normal;}
-    .crypto-percent .percent{font-size: 24px}
+    .crypto-percent .percent{font-size: 24px;margin-left: 16px;}
 }
 @media (max-width: 767px){
     .mid-menu{margin: 0 -16px;padding: 0 16px; background-color: var(--bgWhite);}

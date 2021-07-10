@@ -26,7 +26,7 @@ class SellToggle extends Component {
                             <Text className="fs-24 text-white crypto-name ml-8">Bitcoin</Text>
                         </span>
                         <div className="crypto-details">
-                            <Text className="crypto-percent text-white fw-700">65<sup className="fs-24 text-white fw-700" style={{ verticalAlign: 'Middle', marginLeft: 14 }}>%</sup></Text>
+                            <Text className="crypto-percent text-white fw-700">65<sup className="percent text-white fw-700">%</sup></Text>
                             <div className="fs-16 text-white-30 fw-200 crypto-amount">
                                 <div className="text-yellow">1.0147668 <Text className="text-secondary">ETH</Text></div>
                                 <div className="text-yellow"><Text className="text-secondary">$</Text> 41.07</div>
@@ -39,7 +39,7 @@ class SellToggle extends Component {
                             <Text className="fs-24 text-white crypto-name ml-8">Ethereum</Text>
                         </span>
                         <div className="crypto-details">
-                            <Text className="crypto-percent text-white fw-700">25<sup className="fs-24 text-white fw-700" style={{ verticalAlign: 'Middle', marginLeft: 14 }}>%</sup></Text>
+                            <Text className="crypto-percent text-white fw-700">25<sup className="percent text-white fw-700">%</sup></Text>
                             <div className="fs-16 text-white-30 fw-200 crypto-amount">
                                 <div className="text-yellow">1.0147668 <Text className="text-secondary">ETH</Text></div>
                                 <div className="text-yellow"><Text className="text-secondary">$</Text> 41.07</div>
