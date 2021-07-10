@@ -107,8 +107,8 @@ class BusinessMenu extends Component {
                         </Col>
                         <Col lg={5} xl={6}>
                             <Translate className="text-white mb-16 fw-500  megamenu-label mt-0" content="connect" component={Title} />
-                            <Translate className="text-white-30 fs-18 fw-200 mb-0" content="report_Bug" component={Paragraph} />
-                            <Translate className="text-white-30 fs-18 fw-200 mb-0" content="faq" component={Paragraph} />
+                            <Translate className="text-white-30 fs-18 fw-200 mb-0" content="report_a_bug" component={Paragraph} />
+                            <Translate className="text-white-30 fs-18 fw-200 mb-0" content="FAQ" component={Paragraph} />
                             <div className="d-flex">
                                 <Translate className="text-white-30 fs-18 fw-200 mb-0" content="chat" component={Paragraph} /> <span className="icon lg chat ml-8"></span>
                             </div>
@@ -117,7 +117,7 @@ class BusinessMenu extends Component {
                         <Col lg={5} xl={6}>
                         <Translate className="text-white mb-16 fw-500  megamenu-label mt-0" content="security" component={Title} />
                             {/* <Title className=" text-white mb-16 fw-500 megamenu-label ">Security</Title> */}
-                            <Translate className="text-white fs-14 fw-300 mb-0" content="current_security" component={Paragraph} />
+                            <Translate className="text-white fs-14 fw-300 mb-0" content="current_security_level" component={Paragraph} />
                             <Translate className="text-green fw-700 mr-4" content="sign_in" component={Text} />
                             <Translate className="text-white fs-14 fw-300" content="status" component={Text} />
 
