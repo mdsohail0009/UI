@@ -237,10 +237,11 @@ class Header extends Component {
                                 <Col xl={5}>
                                     <div className="wrapper">
                                         <div className="item-wrapper">
-                                            <Title className="text-white megamenu-label mb-16 fw-500 mt-0">Start</Title>
-                                            <Paragraph className="text-white-30 fs-16 mb-24 fw-300">We are a platform that connects banks, payment systems, and people.</Paragraph>
+                                            <Translate className="text-white megamenu-label mb-16 fw-500 mt-0" content="start" component={Title} />
+                                            <Translate className="text-white-30 fs-16 mb-24 fw-300" content="start_text" component={Paragraph} />
                                         </div>
                                         <div className="item-wrapper">
+
                                         <Link to="/dashboard" onClick={()=>{this.setState({...this.state,megamenu:false})}}>The Dashboard</Link>
                                             <Link to="/dashboard" onClick={()=>{this.setState({...this.state,megamenu:false})}}>Your Portfolio</Link>
                                             {/* <Link>The Dashboard</Link>
@@ -251,16 +252,13 @@ class Header extends Component {
                                 <Col xl={4}>
                                     <div className="wrapper">
                                         <div className="item-wrapper">
-                                            <Title className="text-white megamenu-label  fw-500 mb-24 mt-0">Personal</Title>
-                                            {/* <Link className="pt-24"> Wallets</Link> */}
-                                            <p className="fs-18 text-white-30 fw-200 mb-0">Wallets</p>
-                                            <Paragraph className="text-white-30 fs-16 mb-0 fw-300">Full control of your private keys.</Paragraph>
+                                            <Translate className="text-white megamenu-label fw-500 mb-24 mt-0" content="personal" component={Title} />
+                                            <Translate className="text-white megamenu-label fw-500 mb-24 mt-0" content="wallets" component={Text} />
+                                            <Translate className="text-white megamenu-label fw-500 mb-24 mt-0" content="wallets_text" component={Text} />
                                         </div>
                                         <div className="item-wrapper">
-                                            <p className="fs-18 text-white-30 fw-200 mb-0">Cards</p>
-                                            <p className="fs-18 text-white-30 fw-200 mb-0">Exchange</p>
-                                            {/* <Link>Cards</Link>
-                                            <Link>Exchange</Link> */}
+                                            <Translate className="fs-18 text-white-30 fw-200 mb-0" content="cards" component={Text} />
+                                            <Translate className="fs-18 text-white-30 fw-200 mb-0" content="exchange" component={Text} />
                                         </div>
                                     </div>
                                 </Col>
@@ -282,8 +280,8 @@ class Header extends Component {
                                 <Col xl={6} >
                                     <div className="wrapper">
                                         <div className="item-wrapper">
-                                            <Title className="text-white megamenu-label  fw-500 mt-0">Business</Title>
-                                            <Paragraph className="text-white-30 fs-16 fw-300">User can create a separate account such as a corporate segregated wallet system.</Paragraph>
+                                            <Translate className="text-white megamenu-label  fw-500 mt-0" content="business" component={Title} />
+                                            <Translate className="text-white-30 fs-16 fw-300" content="business_text" component={Text} />
                                         </div>
                                         <div className="item-wrapper">
                                             <p className="text-white-30 fs-18 fw-200 mb-0">Corporate Wallet</p>

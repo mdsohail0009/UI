@@ -171,4 +171,13 @@ export default {
   wallet_version: 'Wallet Version',
   about: 'About',
   USD_wallet: 'USD Wallet',
+  start: 'Start',
+  start_text: 'We are a platform that connects banks, payment systems, and people.',
+  personal: 'Personal',
+  wallets: 'Wallets',
+  wallets_text: 'Full control of your private keys.',
+  cards: 'Cards',
+  exchange: 'Exchange',
+  business: 'Business',
+  business_text: 'User can create a separate account such as a corporate segregated wallet system.'
 }
