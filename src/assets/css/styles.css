@@ -46,9 +46,9 @@ line-height: 16px;min-width:90px}
 .megamenu .ant-modal-header, .drpdwn-list li:last-child a{border: none;}
 .megamenu-title{display: flex; justify-content: space-between; padding-right: 60px;align-items:center ; }
 .megamenu .ant-modal-content{box-shadow: none; background-color: var(--bgGloom) !important;min-height: calc(100vh - 70px); max-height: calc(100vh - 70px);}
-.megamenu-link a, .megamenu-sublink a{font-size: 18px; color: var(--textWhite30); display: block;font-weight: 300;}
+.megamenu-link a, .megamenu-sublink a,.megamenu-link .menu_Link{font-size: 18px; color: var(--textWhite30); display: block;font-weight: 300;cursor: pointer;margin-bottom: 0;}
 .megamenu-sublink a{font-size: 14px; margin-bottom: 24px;}
-.megamenu-link a:hover, .megamenu-sublink a:hover{color: var(--textAqua) !important;}
+.megamenu-link a:hover, .megamenu-sublink a:hover,.megamenu-link .menu_Link:hover{color: var(--textAqua) !important;}
 .custom-toggle.ant-switch{background-color: var(--bgBlack) !important;}
 .custom-toggle.ant-switch-checked{background-color: var(--textError) !important;}
 .secureDropdown .ant-dropdown-menu{background-color: var(--bgGloom); border-radius: 10px; min-width: 300px; max-width: 300px; padding: 24px 0;}
