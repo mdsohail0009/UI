@@ -214,4 +214,9 @@ export default {
   always_ask_pin: '总是问针',
   activate_face: '激活人脸识别',
   activate_biometry: '激活生物识别',
+  buy_and_sell: '买和卖',
+  swap_services: '掉期服务',
+  deposit_and_withdraw: '存款和取款',
+  the_dashboard: '仪表板',
+  buy_crypto: '购买加密货币',
 }

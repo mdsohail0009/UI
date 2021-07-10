@@ -214,4 +214,9 @@ export default {
   always_ask_pin: 'Always ask pin',
   activate_face: 'Activate face ID',
   activate_biometry: 'Activate biometry',
+  buy_and_sell: 'Buy and Sell',
+  swap_services: 'Swap Services',
+  deposit_and_withdraw: 'Deposit and Withdraw',
+  the_dashboard: 'The Dashboard',
+  buy_crypto: 'Buy Crypto',
 }

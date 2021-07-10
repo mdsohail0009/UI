@@ -214,4 +214,9 @@ export default {
   always_ask_pin: 'Selalu tanya pin',
   activate_face: 'Aktifkan ID wajah',
   activate_biometry: 'Aktifkan biometri',
+  buy_and_sell: 'Beli dan jual',
+  swap_services: 'Perkhidmatan Pertukaran',
+  deposit_and_withdraw: 'Deposit dan Pengeluaran',
+  the_dashboard: 'Papan Pemuka',
+  buy_crypto: 'Beli Crypto',
 }

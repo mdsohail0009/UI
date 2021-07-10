@@ -226,7 +226,7 @@ class Header extends Component {
                         <img src={logoWhite} alt="logo" className="tlv-logo" />
                         <div><span className="icon sm r-arrow-o-white mr-16 c-pointer" style={{ transform: 'rotate(180deg)' }} onClick={this.previous} ></span>
                             <span className="icon sm r-arrow-o-white c-pointer ml-24" onClick={this.next}></span>
-                            <Link className="text-white ml-16">Sign in</Link></div>
+                            <Translate content="sign_in" className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link ml-16" /></div>
                     </div>]}
                     visible={this.state.megamenu}
                     onCancel={this.closeMegaMenu}
@@ -251,11 +251,8 @@ class Header extends Component {
                                             <Translate className="text-white-30 fs-16 mb-24 fw-300" content="start_text" component={Paragraph} />
                                         </div>
                                         <div className="item-wrapper">
-
-                                        <Link to="/dashboard" onClick={()=>{this.setState({...this.state,megamenu:false})}}>The Dashboard</Link>
-                                            <Link to="/dashboard" onClick={()=>{this.setState({...this.state,megamenu:false})}}>Your Portfolio</Link>
-                                            {/* <Link>The Dashboard</Link>
-                                            <Link>Your Portfolio</Link> */}
+                                        <Translate content="the_dashboard" to="/dashboard" onClick={()=>{this.setState({...this.state,megamenu:false})}} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
+                                        <Translate content="your_portfolio" to="/dashboard" onClick={()=>{this.setState({...this.state,megamenu:false})}} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
                                         </div>
                                     </div>
                                 </Col>
@@ -279,12 +276,9 @@ class Header extends Component {
                                             <Translate className="text-white megamenu-label fw-500 mt-0" content="crypto" component={Title} />
                                         </div>
                                         <div className="item-wrapper">
-                                            <Link onClick={() => { this.closeMegaMenu(); this.showBuyDrawer();}}>Buy and Sell</Link>
-                                            {/* <Translate content="buy_sell" onClick={() => { this.closeMegaMenu(); this.showBuyDrawer();}} className="text-white-30 fs-16 fw-300 c-pointer menu-items" /> */}
-                                            <Link onClick={() => { this.closeMegaMenu(); this.showSwapDrawer();}}>Swap Services</Link>
-                                            {/* <Translate content="swap_services" onClick={() => { this.closeMegaMenu(); this.showSwapDrawer();}} className="text-white-30 fs-16 fw-300 c-pointer menu-items" /> */}
-                                            <Link onClick={() => { this.closeMegaMenu(); this.showSendDrawer();}}>Deposit and Withdraw</Link>
-                                            {/* <Translate content="deposit_and_withdraw"  onClick={() => { this.closeMegaMenu(); this.showSendDrawer();}} className="text-white-30 fs-16 fw-300 c-pointer menu-items" /> */}
+                                            <Translate content="buy_and_sell" onClick={() => { this.closeMegaMenu(); this.showBuyDrawer();}} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
+                                            <Translate content="swap_services" onClick={() => { this.closeMegaMenu(); this.showSwapDrawer();}} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
+                                            <Translate content="deposit_and_withdraw"  onClick={() => { this.closeMegaMenu(); this.showSendDrawer();}} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" /> 
                                         </div>
                                     </div>
                                 </Col>
@@ -296,7 +290,7 @@ class Header extends Component {
                                         </div>
                                         <div className="item-wrapper">
                                             <Translate className="text-white-30 fs-18 fw-200 mb-0" content="corporate_wallet" component={Paragraph} />
-                                            <Link onClick={() => { this.closeMegaMenu(); this.showBuyFiatDrawer();}}>Mass Payments</Link>
+                                            <Translate content="menu_mass_pay" onClick={() => { this.closeMegaMenu(); this.showBuyFiatDrawer();}} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
                                         </div>
                                     </div>
                                 </Col>
@@ -348,10 +342,7 @@ class Header extends Component {
                                         <div className="item-wrapper">
                                         <Translate className="fs-18 text-white-30 fw-200 mb-0" content="address_book" component={Paragraph} />
                                         <Translate className="fs-18 text-white-30 fw-200 mb-0" content="invite_friends" component={Paragraph} />
-                                        <Link onClick={()=>{this.setState({...this.state,megamenu:false});this.showBuyDrawer()}}>Buy Crypto</Link>
-                                            {/* <Link>Address Book</Link>
-                                            <Link>Invite Friends</Link>
-                                            <Link>Buy Crypto</Link> */}
+                                        <Translate content="buy_crypto" onClick={()=>{this.setState({...this.state,megamenu:false});this.showBuyDrawer()}} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
                                             <div className="d-flex align-center">
                                             <Translate className="fs-18 text-white-30 fw-200 mb-0" content="light_theme" component={Paragraph} />
                                             <Switch onChange={this.onChange} size="small" className="custom-toggle ml-12" />
