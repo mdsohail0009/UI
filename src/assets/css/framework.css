@@ -11,11 +11,9 @@
 .fs-16{font-size: 16px !important;}
 .fs-18{font-size: 18px !important;}
 .fs-20{font-size: 20px !important;}
-.fs-24{font-size: 24px !important;}
 .fs-26{font-size: 26px !important;}
 .fs-28{font-size: 28px !important;}
 .fs-30{font-size: 30px !important;}
-.fs-36{font-size: 36px !important;}
 .fs-40{font-size: 40px !important;}
 
 /*--Font Weights--*/
@@ -121,9 +119,11 @@
 
 @media (min-width: 320px){
     .fs-36{font-size: 28px !important;}
+    .fs-24{font-size: 18px !important;}
 }
 @media (min-width: 576px){
     .fs-36{font-size: 36px !important;}
+    .fs-24{font-size: 24px !important;}
 }
 
 @media (max-width: 991px){
