@@ -22,28 +22,25 @@ class FiatSummary extends Component {
         return (
             <>
                 <div className="mb-24">
-                    <Text className="fw-200 text-white-30 mb-0 text-upper fs-16">From</Text>
-                    {/* <Translate className="fw-100 text-white mb-0 fs-16" content="exchange_rate" component={Paragraph} /> */}
+                    <Translate className="fw-200 text-white-30 mb-0 text-upper fs-16" content="from" component={Text} /> 
                     <div className="fw-300 fs-24 text-white-30 l-height-normal">Visa ....1453</div>
                 </div>
                 <div className="mb-24">
-                    {/* <Translate className="fw-100 text-white mb-0 fs-16" content="amount" component={Paragraph} /> */}
-                    <Text className="fw-100 text-upper text-white-30 fs-16">To</Text>
+                    <Translate className="fw-100 text-upper text-white-30 fs-16" content="to" component={Text} /> 
                     <div className="fw-300 fs-24 text-white-30 l-height-normal">USD Wallet</div>
                 </div>
                 <div className="mb-24">
-                    {/* <Translate className="fw-100 text-white mb-0 fs-16" content="suissebase_fee" component={Paragraph} ><Tooltip title="Suissebase Fee"><span className="icon md info c-pointer ml-4" /></Tooltip></Translate> */}
-                    <Text className="fw-100 text-white-30 fs-16">Current Balance</Text>
+                    <Translate className="fw-100 text-white-30 fs-16" content="current_balance" component={Text} />
                     <div className=" fw-300 fs-24 text-white-30 l-height-normal">USD $5.71,00</div>
                 </div>
                 <div className="mb-36">
-                    {/* <Translate className="fw-100 text-white mb-0 fs-16" content="total" component={Paragraph} /> */}
-                    <Text className="fw-100 text-white-30 text-upper fs-16">Admin Fee</Text>
-                    <div className="fw-300 fs-24 text-darkgreen l-height-normal">Free</div>
+                    <Translate className="fw-100 text-white-30 text-upper fs-16" content="admin_fee" component={Text} />
+                    <Translate className="fw-300 fs-24 text-darkgreen l-height-normal" content="free" component={Text} />
                 </div>
-                <Text className="fw-100 text-white mb-0 fs-36">Total</Text>
-                <Text className="fw-100 text-white mb-0 fs-36" style={{ marginLeft: '80px' }}>USD $200,00</Text>
-
+                <div className="d-flex justify-content">
+                <Translate className="fw-100 text-white mb-0 fs-36" content="total" component={Text} />
+                <Text className="fw-100 text-white mb-0 fs-36">USD 200,00</Text>
+                </div>
 
                 <div className="d-flex p-16 mb-36 align-end">
                     <span className="icon lg check-ylw mb-16" />

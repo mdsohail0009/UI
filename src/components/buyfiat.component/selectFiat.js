@@ -26,7 +26,7 @@ class SelectFiat extends Component {
                             <Translate className="text-white-50 fs-14 fw-200 mb-0" content="current_balance" component={Paragraph}  />
                             <div className="fs-24 text-white fw-500">$5,200.00</div>
                         </div>
-                        <div>
+                        <div className="mb-space">
                             <span className="coin-circle coin md visa-white" />
                             <span className="coin-circle coin md mastercard-white ml-12" />
                         </div>

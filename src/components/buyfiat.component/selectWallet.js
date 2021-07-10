@@ -21,10 +21,9 @@ class SelectWallet extends Component {
                     <div className="crypto-card-bottom">
                         <div>
                         <Translate className="text-white-50 fs-14 fw-200 mb-0" content="current_balance" component={Paragraph} />
-                            {/* <div className="text-white-50 fs-14 fw-200">Current Balance</div> */}
                             <div className="fs-24 text-white fw-500">$5,200.00</div>
                         </div>
-                        <div>
+                        <div className="mb-space">
                             <span className="coin-circle coin md visa-white" />
                             <span className="coin-circle coin md mastercard-white ml-12" />
                         </div>

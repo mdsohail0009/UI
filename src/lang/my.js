@@ -150,4 +150,8 @@ export default {
   qption2: 'Pilihan 2: Hantar pautan melalui SMS',
   qption2_answer: 'Kami akan menghantar pautan selamat ke telefon bimbit anda tanpa kos tambahan.',
   return_to_fiat: 'Kembali ke Fiat',
+  admin_fee: 'Bayaran Pentadbiran',
+  free: 'Percuma',
+  to: 'Ke',
+  from: 'Dari',
 }
