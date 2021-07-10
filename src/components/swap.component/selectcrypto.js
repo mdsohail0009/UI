@@ -31,7 +31,7 @@ class SelectCrypto extends Component {
                     className="wallet-list c-pointer"
                    
                     renderItem={item => (
-                        <List.Item className={ item.className + (item .id === addLinks ? " select" : "")}  key={item.id}
+                        <List.Item className={ (item.id === addLinks ? " select" : "")}  key={item.id}
                          onClick={() => this.selectToggle(item.id)} >
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin} mr-4`} />}
