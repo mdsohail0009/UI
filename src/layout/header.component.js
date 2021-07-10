@@ -196,8 +196,8 @@ class Header extends Component {
                                             <Paragraph className="text-white-30 fs-16 mb-24 fw-300">We are a platform that connects banks, payment systems, and people.</Paragraph>
                                         </div>
                                         <div className="item-wrapper">
-                                            <Link>The Dashboard</Link>
-                                            <Link>Your Portfolio</Link>
+                                            <Link to="/dashboard" onClick={()=>{this.setState({...this.state,megamenu:false})}}>The Dashboard</Link>
+                                            <Link to="/dashboard" onClick={()=>{this.setState({...this.state,megamenu:false})}}>Your Portfolio</Link>
                                         </div>
                                     </div>
                                 </Col>
@@ -285,7 +285,7 @@ class Header extends Component {
                                         <div className="item-wrapper">
                                             <Link>Address Book</Link>
                                             <Link>Invite Friends</Link>
-                                            <Link>Buy Crypto</Link>
+                                            <Link onClick={()=>{this.setState({...this.state,megamenu:false});this.showBuyDrawer()}}>Buy Crypto</Link>
                                             <Paragraph className="fs-18 mb-0 text-white-30 fw-300">Light Theme <Switch onChange={this.onChange} size="small" className="custom-toggle" /></Paragraph>
                                         </div>
                                     </div>
