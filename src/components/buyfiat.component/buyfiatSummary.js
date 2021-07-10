@@ -7,13 +7,13 @@ import { connect } from 'react-redux';
 
 const LinkValue = (props) => {
     return (
-      <Translate className="text-yellow text-underline c-pointer"
-        content={props.content}
-        component={Link}
-        to="./#"
-      />
+        <Translate className="text-yellow text-underline c-pointer"
+            content={props.content}
+            component={Link}
+            to="./#"
+        />
     )
-  }
+}
 
 class FiatSummary extends Component {
     render() {
@@ -22,11 +22,11 @@ class FiatSummary extends Component {
         return (
             <>
                 <div className="mb-24">
-                    <Translate className="fw-200 text-white-30 mb-0 text-upper fs-16" content="from" component={Text} /> 
+                    <Translate className="fw-200 text-white-30 mb-0 text-upper fs-16" content="from" component={Text} />
                     <div className="fw-300 fs-24 text-white-30 l-height-normal">Visa ....1453</div>
                 </div>
                 <div className="mb-24">
-                    <Translate className="fw-100 text-upper text-white-30 fs-16" content="to" component={Text} /> 
+                    <Translate className="fw-100 text-upper text-white-30 fs-16" content="to" component={Text} />
                     <div className="fw-300 fs-24 text-white-30 l-height-normal">USD Wallet</div>
                 </div>
                 <div className="mb-24">
@@ -37,20 +37,20 @@ class FiatSummary extends Component {
                     <Translate className="fw-100 text-white-30 text-upper fs-16" content="admin_fee" component={Text} />
                     <Translate className="fw-300 fs-24 text-darkgreen l-height-normal" content="free" component={Text} />
                 </div>
-                <div className="d-flex justify-content">
-                <Translate className="fw-100 text-white mb-0 fs-36" content="total" component={Text} />
-                <Text className="fw-100 text-white mb-0 fs-36">USD 200,00</Text>
+                <div className="fiat-total">
+                    <Translate className="fw-100 text-white mb-0 fs-36" content="total" component={Paragraph} />
+                    <Paragraph className="fw-100 text-white mb-0 fs-36">USD 200,00</Paragraph>
                 </div>
 
                 <div className="d-flex p-16 mb-36 align-end">
                     <span className="icon lg check-ylw mb-16" />
                     <span className="ml-16" style={{ flex: 1 }}>
                         <Translate className="fs-16 text-white-30 mb-16" content="summary_hint_text" component={Paragraph} />
-                        <Translate content="agree_to_suissebase" with={{link}} component={Paragraph} className="fs-14 text-white-30" />
+                        <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30" />
                     </span>
                 </div>
                 <Translate size="large" block className="pop-btn" content="add_fund" component={Button} onClick={() => this.props.changeStep('step3')} />
-                <Translate content="cancel" component={Button} type="text" size="large"  onClick={() => this.props.changeStep('step2')} className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
+                <Translate content="cancel" component={Button} type="text" size="large" onClick={() => this.props.changeStep('step2')} className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
             </>
         )
     }

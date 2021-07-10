@@ -7,13 +7,13 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 const LinkValue = (props) => {
     return (
-      <Translate className="text-yellow text-underline c-pointer"
-        content={props.content} onClick={() => this.props.changeStep('step2')}
-        component={Link}
-        to="./#"
-      />
+        <Translate className="text-yellow text-underline c-pointer"
+            content={props.content} onClick={() => this.props.changeStep('step2')}
+            component={Link}
+            to="./#"
+        />
     )
-  }
+}
 class BuyFiat extends Component {
     state = {
         buyFiat: false,
@@ -39,8 +39,8 @@ class BuyFiat extends Component {
                 </Radio.Group>
                 {buyFiat ? <>
                     <Translate className="mb-0 text-white-30 fw-200 fs-36" content="sell_your_fiat_for_cash" component={Paragraph} />
-                    <Translate className="text-secondary fw-300 fs-16 mb-36 mr-16" with={{link}} content="need_to_replenish" component={Paragraph} />
-                   
+                    <Translate className="text-secondary fw-300 fs-16 mb-36 mr-16" with={{ link }} content="need_to_replenish" component={Paragraph} />
+
                     <div className="sellcrypto-container auto-scroll">
                         <Card className="crypto-card fiatcard mb-36 c-pointer" bordered={false} onClick={() => this.props.changeStep('step4')}>
                             <div className="crypto-card-top">
@@ -55,7 +55,7 @@ class BuyFiat extends Component {
                                     <Translate className="text-white-50 fs-14 fw-200 mb-0" content="current_balance" component={Paragraph} />
                                     <div className="fs-24 text-white fw-500">$5,200.00</div>
                                 </div>
-                                <div className="mb-space">
+                                <div className="card-icons">
                                     <span className="coin-circle coin md visa-white" />
                                     <span className="coin-circle coin md mastercard-white ml-12" />
                                 </div>
@@ -74,7 +74,7 @@ class BuyFiat extends Component {
                                     <Translate className="text-white-50 fs-14 fw-200 mb-0" content="current_balance" component={Paragraph} />
                                     <div className="fs-24 text-white fw-500">$2,500.00</div>
                                 </div>
-                                <div className="mb-space">
+                                <div className="card-icons">
                                     <span className="coin-circle coin md visa-white" />
                                     <span className="coin-circle coin md mastercard-white ml-12" />
                                 </div>

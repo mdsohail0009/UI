@@ -10,7 +10,7 @@ class SelectFiat extends Component {
         withdrow: "true",
     }
     render() {
-        const { Text,Paragraph } = Typography
+        const { Text, Paragraph } = Typography
         return (
             <>
                 <Card className="crypto-card fiatcard mb-36" bordered={false}>
@@ -23,10 +23,10 @@ class SelectFiat extends Component {
                     </div>
                     <div className="crypto-card-bottom">
                         <div>
-                            <Translate className="text-white-50 fs-14 fw-200 mb-0" content="current_balance" component={Paragraph}  />
+                            <Translate className="text-white-50 fs-14 fw-200 mb-0" content="current_balance" component={Paragraph} />
                             <div className="fs-24 text-white fw-500">$5,200.00</div>
                         </div>
-                        <div className="mb-space">
+                        <div className="card-icons">
                             <span className="coin-circle coin md visa-white" />
                             <span className="coin-circle coin md mastercard-white ml-12" />
                         </div>

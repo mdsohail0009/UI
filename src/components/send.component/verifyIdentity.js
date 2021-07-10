@@ -31,9 +31,7 @@ class VerifyIDentity extends Component {
                 </div>
                 <div className="verify-options mb-36">
                     <Translate content="qption1" component={Paragraph} className="fs-16 fw-600 text-white-30 mb-0" />
-                    <Translate content="qption2" component={Paragraph} className="fs-16 fw-300 text-white-30" />
-                    <Paragraph className="fs-16 fw-600 text-white-30 mb-0">Option 1: Scan the QR code</Paragraph>
-                    <Paragraph className="fs-16 fw-300 text-white-30">Scan the QR code with your camera app</Paragraph>
+                    <Translate content="qption1_answer" component={Paragraph} className="fs-16 fw-300 text-white-30" />
                     <div className="text-center">
                         <img src={sacnner} alt="" className="confirm-icon" />
                     </div>
