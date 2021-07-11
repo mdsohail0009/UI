@@ -5,7 +5,6 @@ import { profileSuccess } from "../reducers/authReducer";
 import { userManager } from "./index";
 class CallbackPage extends React.Component {
     handleSuccess = (user) => {
-        debugger
         this.handleRedirect(user)
     }
     handleRedirect = (user) => {
@@ -24,7 +23,7 @@ class CallbackPage extends React.Component {
                     console.error(error);
                 }}
             >
-                <div>Loading .....</div>
+                <div className="loader">Loading .....</div>
             </CallbackComponent>
         );
     }

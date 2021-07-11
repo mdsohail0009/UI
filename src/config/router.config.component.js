@@ -12,7 +12,7 @@ class RoutingComponent extends Component {
     return <Switch>
       <React.Suspense fallback={<div className="loader">Loading...</div>}>
         <Route path="/dashboard" component={Dashboard} />
-        <Route path="/callback" component={CallbackPage} />
+        <ReactRoute path="/callback" component={CallbackPage} />
         <ReactRoute path="/login" component={Login} />
         <Route path="" component={Dashboard} />
       </React.Suspense>

@@ -7,22 +7,17 @@ import Header from '../layout/header.component';
 import Footer from './footer.component';
 import connectStateProps from '../utils/state.connect';
 import { userManager } from '../authentication';
-
-
 class Layout extends Component {
     state = {
-        user: null
     }
     componentDidMount() {
-        const { user } = store.getState().oidc;
-        this.setState({ user });
         if ((!this.props.user || this.props.user.expired) && !window.location.pathname.includes('callback')) {
             userManager.signinRedirect();
         }
     }
     render() {
-        if ((!this.props.user || this.props.user.expired)&& !window.location.pathname.includes('callback')) {
-            return <div>Loading....</div>
+        if ((!this.props.user || this.props.user.expired) && !window.location.pathname.includes('callback')) {
+            return <div className="loader">Loading....</div>
         }
         return <>
             <AntLayout>
