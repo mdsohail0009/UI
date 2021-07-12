@@ -27,9 +27,9 @@ class Home extends Component {
     render() {
         return (
             <div className="main-container">
-                <div className="mb-24">
+                {/* <div className="mb-24">
                     <AlertConfirmation />
-                </div>
+                </div> */}
                 <Row justify="center">
                     <Col xs={24} md={12} xl={10}>
                         <div className="markets-panel mb-36">
