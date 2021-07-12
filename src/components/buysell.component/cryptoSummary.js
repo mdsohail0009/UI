@@ -7,13 +7,13 @@ import Translate from 'react-translate-component';
 
 const LinkValue = (props) => {
     return (
-      <Translate className="text-yellow text-underline c-pointer"
-        content={props.content}
-        component={Link}
-        to="./#"
-      />
+        <Translate className="text-yellow text-underline c-pointer"
+            content={props.content}
+            component={Link}
+            to="./#"
+        />
     )
-  }
+}
 
 class Summary extends Component {
     constructor(props) {
@@ -31,15 +31,15 @@ class Summary extends Component {
         const link = <LinkValue content="terms_service" />;
         return (
             <>
-                <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>0,0070 ETH</div>
-                <div className="text-white-50 fw-300 text-center fs-14 mb-16">USD 20,00</div>
+                <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>0.0070 ETH</div>
+                <div className="text-white-50 fw-300 text-center fs-14 mb-16">USD 20.00</div>
                 <div className="pay-list fs-14">
                     <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
-                    <Text className="fw-300 text-white-30">1 ETH = USD 2.849.76</Text>
+                    <Text className="fw-300 text-white-30">1 ETH = USD 2,849.76</Text>
                 </div>
                 <div className="pay-list fs-14">
                     <Translate className="fw-400 text-white" content="amount" component={Text} />
-                    <Text className="fw-300 text-white-30">ETH 0,0070125</Text>
+                    <Text className="fw-300 text-white-30">ETH 0.0070125</Text>
                 </div>
                 <div className="pay-list fs-14">
                     {/*  */}
@@ -48,12 +48,12 @@ class Summary extends Component {
                 </div>
                 <div className="pay-list fs-14">
                     <Translate className="fw-400 text-white" content="estimated_total" component={Text} />
-                    <Text className="fw-300 text-white-30">0.0070125 ETH (USD 20,00)</Text>
+                    <Text className="fw-300 text-white-30">0.0070125 ETH (USD 20.00)</Text>
                 </div>
                 <Translate className="fs-12 text-white-30 text-center my-16" content="summary_hint_text" component={Paragraph} />
                 <div className="d-flex p-16 mb-36">
                     <span className="icon lg check-ylw" />
-                    <Translate content="agree_to_suissebase" with={{link}} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
+                    <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
                 </div>
                 <Translate content="pay" component={Button} size="large" block className="pop-btn" onClick={() => this.props.changeStep('step4')} />
                 <Translate content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />

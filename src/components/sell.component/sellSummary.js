@@ -24,7 +24,7 @@ class SellSummary extends Component {
                 <div className="text-white-50 fw-300 text-center fs-14 mb-16">0.00287116 BTC</div>
                 <div className="pay-list fs-14">
                     <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
-                    <Text className="fw-300 text-white-30">1 BTC = 41.363.47 USD</Text>
+                    <Text className="fw-300 text-white-30">1 BTC = 41,363.47 USD</Text>
                 </div>
                 <div className="pay-list fs-14">
                     <Translate className="fw-400 text-white" content="amount" component={Text} />

@@ -27,7 +27,7 @@ class SwapSummary extends Component {
 
                 <div className="pay-list fs-16">
                     <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
-                    <Text className="fw-300 text-white-30">1 BTC = 41.363.47 USD</Text>
+                    <Text className="fw-300 text-white-30">1 BTC = 41,363.47 USD</Text>
                 </div>
                 <div className="pay-list fs-16">
                     <Translate className="fw-400 text-white" content="amount" component={Text} />
