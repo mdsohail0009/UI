@@ -37,10 +37,12 @@ const securityMenu = (
     <Menu>
         <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="security" component={Title} />
         <ul className="pl-0 drpdwn-list">
-            <li><Link>2FA<span className="icon md rarrow-white" /></Link></li>
-            <li className="d-flex justify-content align-center">
+            <li><Link className="dropdown-flex">2FA<span className="icon md rarrow-white" /></Link></li>
+            <li className="">
+                <div className="dropdown-flex">
                 <Translate content="change_password" component={Link} />
                 <span className="icon md rarrow-white" />
+                </div>
             </li>
             <li className="no-hover">
                 <div className="">
@@ -49,9 +51,11 @@ const securityMenu = (
                 </div>
                 <Translate className="text-white fs-14" style={{ paddingRight: '78px' }} content="current_security_text" component={Paragraph} />
             </li>
-            <li className="d-flex justify-content align-center">
+            <li>
+                <div className="dropdown-flex-top">
                 <Translate content="protect_your_account" component={Link} />
                 <span className="icon md rarrow-white" />
+                </div>
             </li>
         </ul>
     </Menu>
@@ -60,45 +64,65 @@ const settingMenu = (
     <Menu>
         <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="settings" component={Title} />
         <ul className="pl-0 drpdwn-list">
-            <li className="d-flex justify-content align-center">
+            <li>
+                <div className="dropdown-flex">
                 <Translate content="general" component={Link} />
                 <span className="icon md rarrow-white" />
+                </div>
             </li>
-            <li className="d-flex justify-content align-center">
+            <li>
+            <div className="dropdown-flex">
                 <Translate content="privacy_policy" component={Link} />
                 <span className="icon md rarrow-white" />
+                </div>
             </li>
-            <li className="d-flex justify-content align-center">
+            <li>
+            <div className="dropdown-flex">
                 <Translate content="terms_service" component={Link} />
                 <span className="icon md rarrow-white" />
+                </div>
             </li>
-            <li className="d-flex justify-content align-center">
+            <li>
+            <div className="dropdown-flex">
                 <Translate content="about" component={Link} />
                 <span className="icon md rarrow-white" />
+                </div>
             </li>
-            <li className="d-flex justify-content align-center">
+            <li>
+            <div className="dropdown-flex">
                 <Translate content="wallet_version" component={Link} />
                 <span className="icon md rarrow-white" />
+                </div>
             </li>
-            <li className="d-flex justify-content align-center">
+            <li>
+            <div className="dropdown-flex">
                 <Translate content="preferences" component={Link} />
                 <span className="icon md rarrow-white" />
+                </div>
             </li>
-            <li className="d-flex justify-content align-center">
+            <li>
+            <div className="dropdown-flex">
                 <Translate content="language" component={Link} />
                 <span className="icon md rarrow-white" />
+                </div>
             </li>
-            <li className="d-flex justify-content align-center">
+            <li>
+            <div className="dropdown-flex">
                 <Translate content="local_currency" component={Link} />
                 <span className="icon md rarrow-white" />
+                </div>
             </li>
-            <li className="d-flex justify-content align-center">
+            <li>
+            <div className="dropdown-flex">
                 <Translate content="notifications" component={Link} />
                 <span className="icon md rarrow-white" />
+                </div>
             </li>
-            <li className="d-flex justify-content align-center">
+            <li>
+            <div className="dropdown-flex">
                 <Translate content="themes" component={Link} />
                 <span className="icon md rarrow-white" />
+                </div>
             </li>
             <li className="d-flex justify-content align-center" onClick={() => userManager.signoutRedirect()}>
                 <Translate content="logout" component={Link} />

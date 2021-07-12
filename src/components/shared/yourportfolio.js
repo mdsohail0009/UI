@@ -37,7 +37,7 @@ class YourPortfolio extends Component {
         return (
             <div className="box portfolio-list">
                 <Translate content="your_portfolio" component={Title} className="fs-24 text-white mb-36 mt-0 fw-600" />
-                <List
+                <List  className="mobile-list"
                     itemLayout="horizontal"
                     dataSource={this.state.portfolioData}
                     renderItem={item => (

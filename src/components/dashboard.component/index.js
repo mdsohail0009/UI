@@ -12,6 +12,7 @@ import CryptoList from '../shared/cryptolist';
 import Portfolio from '../shared/portfolio';
 import Coins from '../shared/coins';
 import YourPortfolio from '../shared/yourportfolio';
+import AlertConfirmation from '../shared/alertconfirmation';
 
 const { Search } = Input;
 const { Title, Paragraph, Text } = Typography;
@@ -26,6 +27,9 @@ class Home extends Component {
     render() {
         return (
             <div className="main-container">
+                <div className="mb-24">
+                    <AlertConfirmation />
+                </div>
                 <Row justify="center">
                     <Col xs={24} md={12} xl={10}>
                         <div className="markets-panel mb-36">
