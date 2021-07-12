@@ -188,13 +188,11 @@ class Header extends Component {
         const depostWithdrawMenu = (
             <Menu>
                 <ul className="pl-0 drpdwn-list">
-                    <li className="d-flex justify-content align-center c-pointer" onClick={this.showSendDrawer}>
-                        <Link>Withdraw</Link>
-                        <span className="icon md rarrow-white" />
+                    <li onClick={this.showSendDrawer}>
+                        <Link>Crypto <span className="icon md rarrow-white" /></Link>
                     </li>
-                    <li className="d-flex justify-content align-center c-pointer" onClick={this.showBuyFiatDrawer}>
-                        <Link>Fiat</Link>
-                        <span className="icon md rarrow-white" />
+                    <li onClick={this.showBuyFiatDrawer}>
+                        <Link>Fiat <span className="icon md rarrow-white" /></Link>
                     </li>
                 </ul>
             </Menu>
@@ -223,7 +221,7 @@ class Header extends Component {
                             {/* <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item> */}
                             <Translate content="menu_buy_sell" component={Menu.Item} key="1" onClick={this.showBuyDrawer} className="list-item" />
                             <Translate content="menu_swap" component={Menu.Item} key="2" onClick={this.showSwapDrawer} className="list-item" />
-                            <Dropdown overlay={depostWithdrawMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                            <Dropdown overlay={depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Translate content="menu_send_receive" component={Menu.Item} key="3" className="mr-16" />
                             </Dropdown>
                             {/* <Translate content="menu_mass_pay" component={Menu.Item} key="4" onClick={this.showBuyFiatDrawer} className="list-item" /> */}
