@@ -23,10 +23,10 @@ counterpart.setLocale('en');
 
 const LinkValue = (props) => {
     return (
-        <Translate className="text-yellow fw-700 fs-16 d-inlineblock" 
+        <Translate className="text-yellow fw-700 fs-16 d-inlineblock"
             content={props.content}
             component={Link}
-            // to="./#"
+        // to="./#"
         />
     )
 }
@@ -39,14 +39,14 @@ const securityMenu = (
         <ul className="pl-0 drpdwn-list">
             <li><Link>2FA<span className="icon md rarrow-white" /></Link></li>
             <li className="d-flex justify-content align-center">
-            <Translate content="change_password" component={Link} />
-            <span className="icon md rarrow-white" />
-                </li>
+                <Translate content="change_password" component={Link} />
+                <span className="icon md rarrow-white" />
+            </li>
             <li className="no-hover">
-                 <div className="">
+                <div className="">
                     <Translate className="text-white fs-14 pt-16 mb-0" content="current_security_level" component={Paragraph} />
                     <Translate className="text-green fw-900" content="medium" component={Paragraph} />
-                 </div>
+                </div>
                 <Translate className="text-white fs-14" style={{ paddingRight: '78px' }} content="current_security_text" component={Paragraph} />
             </li>
             <li className="d-flex justify-content align-center">
@@ -100,7 +100,7 @@ const settingMenu = (
                 <Translate content="themes" component={Link} />
                 <span className="icon md rarrow-white" />
             </li>
-            <li className="d-flex justify-content align-center" onClick={()=>userManager.signoutRedirect()}>
+            <li className="d-flex justify-content align-center" onClick={() => userManager.signoutRedirect()}>
                 <Translate content="logout" component={Link} />
                 <span className="icon md rarrow-white" />
             </li>
@@ -185,6 +185,20 @@ class Header extends Component {
     render() {
         const { initLoading, loading } = this.state;
         const link = <LinkValue content="medium" />;
+        const depostWithdrawMenu = (
+            <Menu>
+                <ul className="pl-0 drpdwn-list">
+                    <li className="d-flex justify-content align-center c-pointer" onClick={this.showSendDrawer}>
+                        <Link>Withdraw</Link>
+                        <span className="icon md rarrow-white" />
+                    </li>
+                    <li className="d-flex justify-content align-center c-pointer" onClick={this.showBuyFiatDrawer}>
+                        <Link>Fiat</Link>
+                        <span className="icon md rarrow-white" />
+                    </li>
+                </ul>
+            </Menu>
+        )
         return (
             <>
                 <Layout className="layout">
@@ -209,8 +223,10 @@ class Header extends Component {
                             {/* <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item> */}
                             <Translate content="menu_buy_sell" component={Menu.Item} key="1" onClick={this.showBuyDrawer} className="list-item" />
                             <Translate content="menu_swap" component={Menu.Item} key="2" onClick={this.showSwapDrawer} className="list-item" />
-                            <Translate content="menu_send_receive" component={Menu.Item} key="3" onClick={this.showSendDrawer} className="list-item" />
-                            <Translate content="menu_mass_pay" component={Menu.Item} key="4" onClick={this.showBuyFiatDrawer} className="list-item" />
+                            <Dropdown overlay={depostWithdrawMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                                <Translate content="menu_send_receive" component={Menu.Item} key="3" className="mr-16" />
+                            </Dropdown>
+                            {/* <Translate content="menu_mass_pay" component={Menu.Item} key="4" onClick={this.showBuyFiatDrawer} className="list-item" /> */}
                             <Dropdown overlay={securityMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Translate key="5" content="security" component={Menu.Item} />
                             </Dropdown>
@@ -251,8 +267,8 @@ class Header extends Component {
                                             <Translate className="text-white-30 fs-16 mb-24 fw-300" content="start_text" component={Paragraph} />
                                         </div>
                                         <div className="item-wrapper">
-                                        <Translate content="the_dashboard" to="/dashboard" onClick={()=>{this.setState({...this.state,megamenu:false})}} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
-                                        <Translate content="your_portfolio" to="/dashboard" onClick={()=>{this.setState({...this.state,megamenu:false})}} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
+                                            <Translate content="the_dashboard" to="/dashboard" onClick={() => { this.setState({ ...this.state, megamenu: false }) }} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
+                                            <Translate content="your_portfolio" to="/dashboard" onClick={() => { this.setState({ ...this.state, megamenu: false }) }} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
                                         </div>
                                     </div>
                                 </Col>
@@ -276,9 +292,9 @@ class Header extends Component {
                                             <Translate className="text-white megamenu-label fw-500 mt-0" content="crypto" component={Title} />
                                         </div>
                                         <div className="item-wrapper">
-                                            <Translate content="buy_and_sell" onClick={() => { this.closeMegaMenu(); this.showBuyDrawer();}} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
-                                            <Translate content="swap_services" onClick={() => { this.closeMegaMenu(); this.showSwapDrawer();}} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
-                                            <Translate content="deposit_and_withdraw"  onClick={() => { this.closeMegaMenu(); this.showSendDrawer();}} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" /> 
+                                            <Translate content="buy_and_sell" onClick={() => { this.closeMegaMenu(); this.showBuyDrawer(); }} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
+                                            <Translate content="swap_services" onClick={() => { this.closeMegaMenu(); this.showSwapDrawer(); }} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
+                                            <Translate content="deposit_and_withdraw" onClick={() => { this.closeMegaMenu(); this.showSendDrawer(); }} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
                                         </div>
                                     </div>
                                 </Col>
@@ -290,7 +306,7 @@ class Header extends Component {
                                         </div>
                                         <div className="item-wrapper">
                                             <Translate className="text-white-30 fs-18 fw-200 mb-0" content="corporate_wallet" component={Paragraph} />
-                                            <Translate content="menu_mass_pay" onClick={() => { this.closeMegaMenu(); this.showBuyFiatDrawer();}} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
+                                            <Translate content="menu_mass_pay" onClick={() => { this.closeMegaMenu(); this.showBuyFiatDrawer(); }} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
                                         </div>
                                     </div>
                                 </Col>
@@ -338,14 +354,14 @@ class Header extends Component {
                                 </Col>
                                 <Col xl={4}>
                                     <div className="wrapper">
-                                    <Translate className="text-white megamenu-label fw-500 mb-24 item-wrapper mt-0 " content="wallets" component={Title} />
+                                        <Translate className="text-white megamenu-label fw-500 mb-24 item-wrapper mt-0 " content="wallets" component={Title} />
                                         <div className="item-wrapper">
-                                        <Translate className="fs-18 text-white-30 fw-200 mb-0" content="address_book" component={Paragraph} />
-                                        <Translate className="fs-18 text-white-30 fw-200 mb-0" content="invite_friends" component={Paragraph} />
-                                        <Translate content="buy_crypto" onClick={()=>{this.setState({...this.state,megamenu:false});this.showBuyDrawer()}} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
+                                            <Translate className="fs-18 text-white-30 fw-200 mb-0" content="address_book" component={Paragraph} />
+                                            <Translate className="fs-18 text-white-30 fw-200 mb-0" content="invite_friends" component={Paragraph} />
+                                            <Translate content="buy_crypto" onClick={() => { this.setState({ ...this.state, megamenu: false }); this.showBuyDrawer() }} className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link" />
                                             <div className="d-flex align-center">
-                                            <Translate className="fs-18 text-white-30 fw-200 mb-0" content="light_theme" component={Paragraph} />
-                                            <Switch onChange={this.onChange} size="small" className="custom-toggle ml-12" />
+                                                <Translate className="fs-18 text-white-30 fw-200 mb-0" content="light_theme" component={Paragraph} />
+                                                <Switch onChange={this.onChange} size="small" className="custom-toggle ml-12" />
                                             </div>
                                         </div>
                                     </div>
@@ -378,9 +394,9 @@ class Header extends Component {
                                             {/* <Link>Help Center</Link>
                                             <Link>About</Link>
                                             <Link>Social Networks</Link> */}
-                                        <Translate className="fs-18 text-white-30 fw-200 mb-0" content="help_center" component={Paragraph} />
-                                        <Translate className="fs-18 text-white-30 fw-200 mb-0" content="about" component={Paragraph} />
-                                        <Translate className="fs-18 text-white-30 fw-200 mb-0" content="social_networks" component={Paragraph} />
+                                            <Translate className="fs-18 text-white-30 fw-200 mb-0" content="help_center" component={Paragraph} />
+                                            <Translate className="fs-18 text-white-30 fw-200 mb-0" content="about" component={Paragraph} />
+                                            <Translate className="fs-18 text-white-30 fw-200 mb-0" content="social_networks" component={Paragraph} />
                                         </div>
                                     </div>
                                 </Col>
@@ -399,8 +415,8 @@ class Header extends Component {
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="report_a_bug" component={Paragraph} />
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="FAQ" component={Paragraph} />
                                     <div className="d-flex align-center">
-                                    <Translate className="fs-18 text-white-30 fw-200 mb-0" content="chat" component={Paragraph} />
-                                    <span className="icon lg chat"></span></div>
+                                        <Translate className="fs-18 text-white-30 fw-200 mb-0" content="chat" component={Paragraph} />
+                                        <span className="icon lg chat"></span></div>
                                     {/* <Link>Report A Bug</Link>
                                     <Link>FAQ</Link>
                                     <Link>Chat <span className="icon lg chat"></span></Link> */}
@@ -408,22 +424,22 @@ class Header extends Component {
                                 <Col xl={1} className=" mobile-none " />
                                 <Col xl={6} >
                                     <Translate className=" text-yellow mb-16 megamenu-label fw-500" content="security" component={Title} />
-                                    <Translate content="medium_text" with={{link}} component={Paragraph} className="text-white fs-16" />
+                                    <Translate content="medium_text" with={{ link }} component={Paragraph} className="text-white fs-16" />
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="backup_wallet" component={Paragraph} />
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="reset_wallet" component={Paragraph} />
                                     {/* <Link>Backup Wallet</Link>
                                     <Link>Reset Wallet</Link> */}
                                     <div className="d-flex align-center">
-                                    <Translate className="fs-18 mb-0 text-white-30 fw-300" content="always_ask_pin" component={Paragraph} />
-                                    <Switch onChange={this.onChange} size="small" className="custom-toggle ml-12" />
+                                        <Translate className="fs-18 mb-0 text-white-30 fw-300" content="always_ask_pin" component={Paragraph} />
+                                        <Switch onChange={this.onChange} size="small" className="custom-toggle ml-12" />
                                     </div>
                                     <div className="d-flex align-center">
-                                    <Translate className="fs-18 mb-0 text-white-30 fw-300" content="activate_face" component={Paragraph} />
-                                    <Switch defaultChecked onChange={this.onChange} size="small" className="custom-toggle ml-12" />
+                                        <Translate className="fs-18 mb-0 text-white-30 fw-300" content="activate_face" component={Paragraph} />
+                                        <Switch defaultChecked onChange={this.onChange} size="small" className="custom-toggle ml-12" />
                                     </div>
                                     <div className="d-flex align-center">
-                                    <Translate className="fs-18 mb-0 text-white-30 fw-300" content="activate_biometry" component={Paragraph} />
-                                    <Switch defaultChecked onChange={this.onChange} size="small" className="custom-toggle ml-12" />
+                                        <Translate className="fs-18 mb-0 text-white-30 fw-300" content="activate_biometry" component={Paragraph} />
+                                        <Switch defaultChecked onChange={this.onChange} size="small" className="custom-toggle ml-12" />
                                     </div>
                                 </Col>
                                 <Col xl={2} className=" mobile-none " />
