@@ -282,7 +282,7 @@ class Header extends Component {
                     <Carousel dots={false} className="mb-24 menu-carousel" ref={node => (this.carousel = node)}>
                         <div className="mega-menu">
                             <Row gutter={16} className="megamenu-link"   >
-                                <Col xl={5}>
+                                <Col md={16} lg={16} xl={5}>
                                     <div className="wrapper">
                                         <div className="item-wrapper">
                                             <Translate className="text-white megamenu-label mb-16 fw-500 mt-0" content="start" component={Title} />
@@ -294,7 +294,7 @@ class Header extends Component {
                                         </div>
                                     </div>
                                 </Col>
-                                <Col xl={4}>
+                                <Col md={16} lg={16} xl={4}>
                                     <div className="wrapper">
                                         <div className="item-wrapper">
                                             <Translate className="text-white megamenu-label fw-500 mb-24 mt-0" content="personal" component={Title} />
@@ -308,7 +308,7 @@ class Header extends Component {
                                         </div>
                                     </div>
                                 </Col>
-                                <Col xl={6}>
+                                <Col md={16} lg={16} xl={6}>
                                     <div className="wrapper">
                                         <div className="item-wrapper">
                                             <Translate className="text-white megamenu-label fw-500 mt-0" content="crypto" component={Title} />
@@ -320,7 +320,7 @@ class Header extends Component {
                                         </div>
                                     </div>
                                 </Col>
-                                <Col xl={6} >
+                                <Col md={16} lg={16} xl={6} >
                                     <div className="wrapper">
                                         <div className="item-wrapper">
                                             <Translate className="text-white megamenu-label fw-500 mt-0" content="business" component={Title} />
@@ -337,13 +337,13 @@ class Header extends Component {
                             <Divider className="megamenu-divider mobile-none" />
                             <Row gutter={[16, 16]} className="megamenu-link">
 
-                                <Col lg={5} xl={5} className="mobile-none">
+                                <Col lg={5} xl={5} className="mobile-none p-0">
 
                                 </Col>
-                                <Col lg={5} xl={4} className="mobile-none">
+                                <Col lg={5} xl={4} className="mobile-none p-0">
 
                                 </Col>
-                                <Col lg={7} xl={6}>
+                                <Col md={16} lg={16} lg={7} xl={6}>
                                     <Translate className="text-white megamenu-label  mb-16 fw-500 mt-0" content="connect" component={Title} />
                                     <Translate className="text-white-30 fs-16 fw-300" content="meet_our_team" component={Paragraph} />
                                     <Translate className="text-white-30 fs-16 fw-300" content="report_a_bug" component={Paragraph} />
@@ -353,7 +353,7 @@ class Header extends Component {
 
                                 </Col>
 
-                                <Col lg={5} xl={6}>
+                                <Col md={16} lg={5} xl={6}>
                                     <Translate className="text-white mb-16 fw-500 megamenu-label mt-0" content="security" component={Title} />
                                     <Translate className="text-white fs-14 fw-400 mb-0" content="current_security_level" component={Paragraph} />
                                     <Translate className="text-green fw-700 " content="medium" component={Paragraph} />
@@ -364,7 +364,7 @@ class Header extends Component {
                         </div>
                         <div className="mega-menu">
                             <Row gutter={16} className="megamenu-link">
-                                <Col xl={5}>
+                                <Col md={16} lg={16} xl={5}>
                                     <div className="wrapper">
                                         <div className="item-wrapper">
                                             <Translate className="text-white megamenu-label mb-16 fw-500 mt-0" content="preferences" component={Title} />
@@ -374,7 +374,7 @@ class Header extends Component {
                                         </div>
                                     </div>
                                 </Col>
-                                <Col xl={4}>
+                                <Col md={16} lg={16} xl={4}>
                                     <div className="wrapper">
                                         <Translate className="text-white megamenu-label fw-500 mb-24 item-wrapper mt-0 " content="wallets" component={Title} />
                                         <div className="item-wrapper">
@@ -388,7 +388,7 @@ class Header extends Component {
                                         </div>
                                     </div>
                                 </Col>
-                                <Col xl={6}>
+                                <Col lg={16} xl={6}>
                                     <div className="wrapper">
                                         <div className="item-wrapper">
                                             <Translate className="text-white megamenu-label fw-500" content="localization" component={Title} />
@@ -406,8 +406,8 @@ class Header extends Component {
                                         </div>
                                     </div>
                                 </Col>
-                                <Col xl={1} className=" mobile-none " />
-                                <Col xl={6} >
+                                <Col xl={1} className=" mobile-none p-0" />
+                                <Col md={16} lg={16} xl={6} >
                                     <div className="wrapper">
                                         <div className="item-wrapper">
                                             <Translate className="text-white megamenu-label fw-500" content="support" component={Title} />
@@ -422,17 +422,17 @@ class Header extends Component {
                                         </div>
                                     </div>
                                 </Col>
-                                <Col xl={2} className=" mobile-none " />
+                                <Col xl={2} className=" mobile-none p-0" />
                             </Row>
                             <Divider className="megamenu-divider mobile-none" />
                             <Row gutter={[16, 16]} className="megamenu-link "  >
-                                <Col xl={5} className=" mobile-none ">
+                                <Col xl={5} className=" mobile-none p-0">
 
                                 </Col>
                                 <Col xl={4} className="pt-24 mobile-none">
 
                                 </Col>
-                                <Col xl={6}>
+                                <Col md={16} lg={16} xl={6}>
                                     <Translate className=" text-white mb-16  megamenu-label fw-500" content="connect" component={Title} />
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="report_a_bug" component={Paragraph} />
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="FAQ" component={Paragraph} />
@@ -443,8 +443,8 @@ class Header extends Component {
                                     <Link>FAQ</Link>
                                     <Link>Chat <span className="icon lg chat"></span></Link> */}
                                 </Col>
-                                <Col xl={1} className=" mobile-none " />
-                                <Col xl={6} >
+                                <Col lg={16} xl={1} className=" mobile-none p-0" />
+                                <Col md={16} lg={16} xl={6} >
                                     <Translate className=" text-yellow mb-16 megamenu-label fw-500" content="security" component={Title} />
                                     <Translate content="medium_text" with={{ link }} component={Paragraph} className="text-white fs-16" />
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="backup_wallet" component={Paragraph} />
@@ -464,7 +464,7 @@ class Header extends Component {
                                         <Switch defaultChecked onChange={this.onChange} size="small" className="custom-toggle ml-12" />
                                     </div>
                                 </Col>
-                                <Col xl={2} className=" mobile-none " />
+                                <Col xl={2} className=" mobile-none p-0" />
                             </Row>
                         </div>
                     </Carousel>
