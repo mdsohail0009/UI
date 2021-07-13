@@ -15,7 +15,7 @@ class FiatList extends Component {
                 dataSource={config.fiatList}
                 className="wallet-list"
                 renderItem={item => (
-                    <List.Item className="px-4">
+                    <List.Item className="px-8">
                         <Link onClick={() => this.props.changeStep('step2')}>
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin} mr-4`} />}

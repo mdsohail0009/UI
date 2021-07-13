@@ -37,8 +37,8 @@ class SavedCards extends Component {
                     <List.Item style={{ borderWidth: '0px' }}>
                         <Link onClick={() => this.props.changeStep('step5')}>
                             <List.Item.Meta
-                                avatar={<span className={`coin md ${item.cardType}-white`} />}
-                                title={<div className="fw-300 fs-14"><div className="text-white-30">{item.cardNumber}</div><div className="text-yellow">{item.confirm}</div></div>}
+                                avatar={<span className={`coin md ${item.cardType}-black`} />}
+                                title={<div className="fw-300 fs-14"><div className="text-white-30">{item.cardNumber}</div><div className="text-defaultylw">{item.confirm}</div></div>}
                             />
                             <span className="icon sm r-arrow-o-white" />
                         </Link>
