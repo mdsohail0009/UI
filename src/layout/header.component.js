@@ -345,11 +345,11 @@ class Header extends Component {
                                 </Col>
                                 <Col lg={7} xl={6}>
                                     <Translate className="text-white megamenu-label  mb-16 fw-500 mt-0" content="connect" component={Title} />
-                                    <Translate className="text-white-30 fs-16 fw-300" content="meet_our_team" component={Paragraph} />
-                                    <Translate className="text-white-30 fs-16 fw-300" content="report_a_bug" component={Paragraph} />
-                                    <Translate className="text-white-30 fs-16 fw-300" content="FAQ" component={Paragraph} />
-                                    <Translate className="text-white-30 fs-16 fw-300" content="contact_us" component={Paragraph} />
-                                    <Translate className="text-white-30 fs-16 fw-300" content="sign_in" component={Paragraph} />
+                                    <Translate className="text-white-30 fs-18 fw-300 mb-0" content="meet_our_team" component={Paragraph} />
+                                    <Translate className="text-white-30 fs-18 fw-300 mb-0" content="report_a_bug" component={Paragraph} />
+                                    <Translate className="text-white-30 fs-18 fw-300 mb-0" content="FAQ" component={Paragraph} />
+                                    <Translate className="text-white-30 fs-18 fw-300 mb-0" content="contact_us" component={Paragraph} />
+                                    <Translate className="text-white-30 fs-18 fw-300 mb-0" content="sign_in" component={Paragraph} />
 
                                 </Col>
 
