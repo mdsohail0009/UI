@@ -1,8 +1,8 @@
 :root {
-    --bgDark: #0E0E2C;
+    --bgDark: #ECF1F4;
     --bgDarkGrey:#ECF1F4;
     --bgDarkGrey-95:rgba(49,60,70,0.75);
-    --bgGrey: #FAFCFE;
+    --bgGrey: #FFFFFF;
     --bgGreen: #389738;
     --bgDarkGreen: #4DB205;
     --bgBlack: #000000;
@@ -12,8 +12,8 @@
     --bgOrient: #1E526E;
     --bgGloom: #FFFFFF;
     --bgBlue: #1E90FF;
-    --bgPitch: #1B4156;
-    --bgBlu: #296281;
+    --bgPitch: #ececec;
+    --bgBlu: #ecf1f4;
     --textPureWhite: #FFFFFF;
     --textWhite: #000000;
     --textWhite30: #243540;
@@ -21,7 +21,8 @@
     --textSecondary: #9797AA;
     --textDark: #0E0E2C;
     --textGreen: #389738;
-    --textYellow: #FFDB1A;
+    --textYellow: #0E0E2C;
+    --textDefautlYlw: #FFDB1A;
     --textRed: #FF3A1A;
     --textAqua: #2AAECC;
     --textpurple:#5C5C77;
@@ -31,7 +32,7 @@
     --btnGrad2: #0038FF;
     --btnBorder: #5C5C77;
     --borderGrey: #E9F3FF;
-    --borderLight: #9797AA;
+    --borderLight: #CECECE;
     --bgCircle: #19B06C;
     --lightThemeIcons: url(../../assets/images/light-theme-icons.svg);
 }
