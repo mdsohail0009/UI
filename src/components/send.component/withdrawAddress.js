@@ -6,7 +6,6 @@ import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import Paragraph from 'antd/lib/skeleton/Paragraph';
-import sacnner from '../../assets/images/sacnner.png';
 
 class WithdrawAddress extends Component {
     state = {}
@@ -26,10 +25,10 @@ class WithdrawAddress extends Component {
                 </div>
                 <form className="form">
                     <label className="input-label text-secondary">To</label>
-                    <Input className="cust-input text-white-50 fw-300" defaultValue="Mobile,email or address" suffix={<img src={sacnner} className="c-pointer" style={{ width: '20px' }} onClick={() => this.props.changeStep('step3')} />} />
+                    <Input className="cust-input text-white-50 fw-300" placeholder="Mobile,email or address" suffix={<span className="icon md qrcode c-pointer" onClick={() => this.props.changeStep('step3')} />} />
                     <div className="p-relative">
                         <Translate content="note" className="input-label text-secondary" component={Paragraph} />
-                        <Input className="cust-input text-white-50  fw-300" defaultValue="Add an optional Note" />
+                        <Input className="cust-input text-white-50  fw-300" placeholder="Add an optional Note" />
                         <Translate content="card_supported" className="fs-12 error-text" component={Text} />
                     </div>
 

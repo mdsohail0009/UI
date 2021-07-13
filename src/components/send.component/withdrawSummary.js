@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 const LinkValue = (props) => {
     return (
-        <Translate className="text-yellow text-underline c-pointer"
+        <Translate className="text-defaultylw text-underline c-pointer"
             content={props.content}
             component={Link}
             to="./#"

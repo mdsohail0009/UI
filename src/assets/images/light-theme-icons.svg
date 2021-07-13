@@ -176,4 +176,8 @@
 </g>
 <path fill="none" stroke="#4DB205" stroke-width="3" stroke-linecap="square" d="M117.479,38.24h9.841 M127.32,38.24v9.684
 	 M125.939,39.62L113.32,51.88"/>
+<path fill="none" d="M245,87h24v24h-24V87z"/>
+<path fill="#243540" d="M154,49v-1h-3v-3h3v2h2v2h-1v2h-2v2h-2v-3h2v-1H154z M159,53h-4v-2h2v-2h2V53z M141,35h8v8h-8V35z M143,37v4
+	h4v-4H143z M151,35h8v8h-8V35z M153,37v4h4v-4H153z M141,45h8v8h-8V45z M143,47v4h4v-4H143z M156,45h3v2h-3V45z M144,38h2v2h-2V38z
+	 M144,48h2v2h-2V48z M154,38h2v2h-2V38z"/>
 </svg>
