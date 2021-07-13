@@ -3,6 +3,7 @@ import { Layout, Menu, Modal, Typography, Dropdown, Tabs, Row, Col, Divider, Ava
 import { UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
+import logoColor from '../assets/images/logo-color.png';
 import counterpart from 'counterpart';
 import Translate from 'react-translate-component';
 import en from '../lang/en';
@@ -40,8 +41,8 @@ const securityMenu = (
             <li><Link className="dropdown-flex">2FA<span className="icon md rarrow-white" /></Link></li>
             <li className="">
                 <div className="dropdown-flex">
-                <Translate content="change_password" component={Link} />
-                <span className="icon md rarrow-white" />
+                    <Translate content="change_password" component={Link} />
+                    <span className="icon md rarrow-white" />
                 </div>
             </li>
             <li className="no-hover">
@@ -53,8 +54,8 @@ const securityMenu = (
             </li>
             <li>
                 <div className="dropdown-flex-top">
-                <Translate content="protect_your_account" component={Link} />
-                <span className="icon md rarrow-white" />
+                    <Translate content="protect_your_account" component={Link} />
+                    <span className="icon md rarrow-white" />
                 </div>
             </li>
         </ul>
@@ -66,62 +67,62 @@ const settingMenu = (
         <ul className="pl-0 drpdwn-list">
             <li>
                 <div className="dropdown-flex">
-                <Translate content="general" component={Link} />
-                <span className="icon md rarrow-white" />
+                    <Translate content="general" component={Link} />
+                    <span className="icon md rarrow-white" />
                 </div>
             </li>
             <li>
-            <div className="dropdown-flex">
-                <Translate content="privacy_policy" component={Link} />
-                <span className="icon md rarrow-white" />
+                <div className="dropdown-flex">
+                    <Translate content="privacy_policy" component={Link} />
+                    <span className="icon md rarrow-white" />
                 </div>
             </li>
             <li>
-            <div className="dropdown-flex">
-                <Translate content="terms_service" component={Link} />
-                <span className="icon md rarrow-white" />
+                <div className="dropdown-flex">
+                    <Translate content="terms_service" component={Link} />
+                    <span className="icon md rarrow-white" />
                 </div>
             </li>
             <li>
-            <div className="dropdown-flex">
-                <Translate content="about" component={Link} />
-                <span className="icon md rarrow-white" />
+                <div className="dropdown-flex">
+                    <Translate content="about" component={Link} />
+                    <span className="icon md rarrow-white" />
                 </div>
             </li>
             <li>
-            <div className="dropdown-flex">
-                <Translate content="wallet_version" component={Link} />
-                <span className="icon md rarrow-white" />
+                <div className="dropdown-flex">
+                    <Translate content="wallet_version" component={Link} />
+                    <span className="icon md rarrow-white" />
                 </div>
             </li>
             <li>
-            <div className="dropdown-flex">
-                <Translate content="preferences" component={Link} />
-                <span className="icon md rarrow-white" />
+                <div className="dropdown-flex">
+                    <Translate content="preferences" component={Link} />
+                    <span className="icon md rarrow-white" />
                 </div>
             </li>
             <li>
-            <div className="dropdown-flex">
-                <Translate content="language" component={Link} />
-                <span className="icon md rarrow-white" />
+                <div className="dropdown-flex">
+                    <Translate content="language" component={Link} />
+                    <span className="icon md rarrow-white" />
                 </div>
             </li>
             <li>
-            <div className="dropdown-flex">
-                <Translate content="local_currency" component={Link} />
-                <span className="icon md rarrow-white" />
+                <div className="dropdown-flex">
+                    <Translate content="local_currency" component={Link} />
+                    <span className="icon md rarrow-white" />
                 </div>
             </li>
             <li>
-            <div className="dropdown-flex">
-                <Translate content="notifications" component={Link} />
-                <span className="icon md rarrow-white" />
+                <div className="dropdown-flex">
+                    <Translate content="notifications" component={Link} />
+                    <span className="icon md rarrow-white" />
                 </div>
             </li>
             <li>
-            <div className="dropdown-flex">
-                <Translate content="themes" component={Link} />
-                <span className="icon md rarrow-white" />
+                <div className="dropdown-flex">
+                    <Translate content="themes" component={Link} />
+                    <span className="icon md rarrow-white" />
                 </div>
             </li>
             <li className="d-flex justify-content align-center" onClick={() => userManager.signoutRedirect()}>
@@ -227,7 +228,7 @@ class Header extends Component {
                     <menuHeader className="tlv-header" id="area">
                         <div className="login-user">
                             <ul className="header-logo">
-                                <li className="pr-30 p-relative"><Link><img src={logoWhite} alt="logo" className="tlv-logo" /></Link></li>
+                                <li className="pr-30 p-relative"><Link><img src={logoColor} alt="logo" className="tlv-logo" /></Link></li>
                                 <li className="px-36"><span className="icon md hamburger c-pointer" onClick={this.showMegaMenu} /></li>
                                 <li className="mb-d-none"><Translate content="header_title" component="p" className="text-white-30 mb-0 fs-24" /></li>
                             </ul>
