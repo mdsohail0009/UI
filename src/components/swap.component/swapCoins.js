@@ -14,14 +14,14 @@ class SwapCoins extends Component {
             <div>
                 <div className="swap swapfrom-card p-relative">
                     <div>
-                        <Translate className="text-white-30 fs-14 fw-100" content="swap_from" component={Text} />
+                        <Translate className="text-purewhite fs-14 fw-100" content="swap_from" component={Text} />
                         <Input className="card-input" defaultValue="0.00549635" bordered={false} placeholder="0.0" />
-                        <Text className="text-white-30 mt-4 fs-12 fw-100">Balance - 2.547813980005 BTC</Text>
+                        <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - 2.547813980005 BTC</Text>
                     </div>
                     <div className="d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step3')} >
                         <div className="text-center crypto-coin">
                             <span className="coin md btc-white"></span>
-                            <Paragraph className="mb-0 text-white-30 fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>Bitcoin</Paragraph>
+                            <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>Bitcoin</Paragraph>
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>
                         <span className="icon swapfrom-arrow"></span>
@@ -29,15 +29,15 @@ class SwapCoins extends Component {
                 </div>
                 <div className="swap swapreceive-card p-relative">
                     <div>
-                        <Translate className="text-white-30 fs-14 fw-100" content="swap_to" component={Text} />
+                        <Translate className="text-purewhite fs-14 fw-100" content="swap_to" component={Text} />
                         <Input className="card-input" defaultValue="0.10183318" bordered={false} placeholder="0.0" />
-                        <Text className="text-white-30 mt-4 fs-12 fw-100">Balance - 2.547813980005 ETH</Text>
+                        <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - 2.547813980005 ETH</Text>
                     </div>
                     <div className="d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step4')} >
                         <div className="text-center crypto-coin">
                             <span className="icon swapto-arrow"></span>
                             <span className="coin md eth-white"></span>
-                            <Paragraph className="mb-0 text-white-30 fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>Ethereum</Paragraph>
+                            <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>Ethereum</Paragraph>
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>
                     </div>
