@@ -177,7 +177,7 @@ line-height: 16px;min-width:90px}
 .theme-btn{box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25)}
 .theme-dark, .theme-dark:hover, .theme-dark:focus{background-color: var(--bgWhite) !important;color: var(--textBlack);border-color: var(--bgWhite);}
 /* Coins */
-.coin{width: 43px; height: 43px;background: url(../../assets/images/crypto-icons.svg) no-repeat; display: inline-block; box-shadow: 0 8px 16px rgba(20,0,4,0.15); border-radius: 6px;}
+.coin{width: 43px; height: 43px;background: var(--cryptoIcons) no-repeat; display: inline-block; box-shadow: 0 8px 16px rgba(20,0,4,0.15); border-radius: 6px;}
 .coin.DOT{background-position: -1px -1px;}
 .coin.ETH{background-position: -55px -1px;}
 .coin.BTC{background-position: -108px -1px;}
@@ -201,6 +201,7 @@ line-height: 16px;min-width:90px}
 .coin.md.usdt-white{background-position: -93px -405px}
 .coin.md.eur-white{background-position: -14px -1112px;}
 .coin.md.visa-white{background-position: -15px -1053px;width: 56px !important; height: 35px !important;}
+.coin.md.visa-black{background-position: -150px -1053px;width: 56px !important; height: 35px !important;}
 .coin.md.mastercard-white{background-position: -83px -1055px;width: 54px !important;height: 35px !important;}
 .coin.credit-white{background-position: -488px -2px;box-shadow: none;}
 .coin.deposit-white{background-position: -542px 0;box-shadow: none;}
@@ -339,6 +340,6 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .alert-popup li{padding: 0;}
 .alert-popup{background: #E7F2E1;border-radius: 4px;border-radius: 6px;}
 .alert-popup .ant-card-body{padding: 12px;}
-.alert-popup .alert-close svg{color: #000);}
+.alert-popup .alert-close svg{color: #000}
 .alert-success{width: 20px;height: 20px;}
 .close-icon{background-position: -143px -35px;}
