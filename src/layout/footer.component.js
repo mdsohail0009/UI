@@ -58,10 +58,10 @@ function Footer() {
                 <Translate content="ftr_home" component={Typography.Link}>Home</Translate>
                 <Translate content="ftr_careers" component={Typography.Link}>Careers</Translate>
                 <Translate content="ftr_tc_p" component={Typography.Link}>Legan & Policy</Translate>
-                <Typography.Link className="mobile-none">Suissebase<sup className="fs-10">TM</sup> {new Date().getFullYear()}</Typography.Link>
+                <Typography className="mobile-none">Suissebase<sup className="fs-10">TM</sup> {new Date().getFullYear()}</Typography>
             </div>
             <div className="copyright-block">
-                <Typography.Link className="copyright">Suissebase<sup className="fs-10">TM</sup> {new Date().getFullYear()}</Typography.Link>
+                <Typography className="copyright">Suissebase<sup className="fs-10">TM</sup> {new Date().getFullYear()}</Typography>
                 <span>
                     <Button type="primary" shape="circle" size="large" className='darkTheme' onClick={handleTheme}> {currentTheme}</Button>
                     {/* <Dropdown placement="topRight" className="secureDrpdwn" overlayClassName="secureDropdown" overlay={languageMenu} trigger={['click']} arrow>
