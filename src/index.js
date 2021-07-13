@@ -5,12 +5,13 @@ import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.css'
 import './assets/css/styles.css';
 import './assets/css/framework.css';
-import './assets/css/dark-theme.css';
+//import './assets/css/dark-theme.css';
+import './assets/css/light-theme.css';
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
 ReactDOM.render(
   <React.StrictMode>
-   <ThemeSwitcherProvider defaultTheme="LHT" themeMap={{DRT:"./assets/css/dark-theme.css",LHT:"./assets/css/light-theme.css"}}>
-    <App />
+    <ThemeSwitcherProvider defaultTheme="LHT" themeMap={{ DRT: "./assets/css/dark-theme.css", LHT: "./assets/css/light-theme.css" }}>
+      <App />
     </ThemeSwitcherProvider>
   </React.StrictMode>,
   document.getElementById('root')

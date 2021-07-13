@@ -41,6 +41,7 @@
 .valign-initial{vertical-align: initial;}
 
 /*--Text Colors--*/
+.text-purewhite{color: var(--textPureWhite) !important;}
 .text-white{color: var(--textWhite) !important;}
 .text-white-30{color: var(--textWhite30) !important;}
 .text-white-50{color: var(--textWhite50) !important;}
