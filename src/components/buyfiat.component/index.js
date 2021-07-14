@@ -27,7 +27,7 @@ class MassPayment extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            buyfiat: <BuyFiat />,
+            buyfiat: <BuyFiat activeTab={this.props.valNum}/>,
             selectfiat: <SelectFiat />,
             addcard: <AddCard />,
             selectwallet: <SelectWallet />,

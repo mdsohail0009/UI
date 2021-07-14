@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Typography, List, Button } from 'antd';
 import config from '../../config/config';
 import Translate from 'react-translate-component';
-import SendReceive from '../../components/send.component'
+import MassPayment from '../../components/buyfiat.component'
 
 const { Title, Paragraph } = Typography;
 const suisseWalletList = [
@@ -65,7 +65,7 @@ class SuissebaseWallet extends Component {
                             </div>
                         </List.Item>}
                 />
-                <SendReceive showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
+                <MassPayment showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
 
             </>
         );
