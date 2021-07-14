@@ -36,7 +36,7 @@ export default {
   amount: 'Amount',
   suissebase_fee: 'Suissebase Fee',
   estimated_total: 'Estimated Total',
-  summary_hint_text: 'Your final amount might change due to market activity.',
+  summary_hint_text: 'Your final amount might be changed with in 10 seconds.',
   pay: 'Pay',
   cancel: 'Cancel',
   link_a_card: 'Link a Card or Receive',

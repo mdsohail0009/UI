@@ -33,11 +33,10 @@ class SwapSummary extends Component {
                     <Translate className="fw-400 text-white" content="amount" component={Text} />
                     <Text className="fw-300 text-white-30">USD 106.79</Text>
                 </div>
-                <div className="pay-list fs-16">
-                    {/* <Translate className="fw-400 text-white" content="suissebase_fee" component={Text} ><Tooltip title="Suissebase Fee"><span className="icon md info c-pointer ml-4" /></Tooltip></Translate> */}
+                {/* <div className="pay-list fs-16">
                     <Text className="fw-400 text-white">Suissebase Fee<Tooltip title="Suissebase Fee"><span className="icon md info c-pointer ml-12" /></Tooltip></Text>
                     <Text className="text-darkgreen fw-400">USD $2.71</Text>
-                </div>
+                </div> */}
                 <div className="pay-list fs-16 mb-16">
                     <Translate className="fw-400 text-white" content="total" component={Text} />
                     <Text className="fw-300 text-white-30">0.00279935 BTC (USD 104.08)</Text>

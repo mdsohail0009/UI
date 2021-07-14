@@ -36,7 +36,7 @@ export default {
   amount: '数量',
   suissebase_fee: '瑞士基地 费用',
   estimated_total: '估计总数',
-  summary_hint_text: '您的最终金额可能会因市场活动而发生变化.',
+  summary_hint_text: '您的最终金额可能会在 10 秒内更改.',
   pay: '支付',
   cancel: '取消',
   link_a_card: '链接卡片或接收',

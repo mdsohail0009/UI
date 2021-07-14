@@ -36,7 +36,7 @@ export default {
   amount: 'Jumlah',
   suissebase_fee: 'Yuran Suissebase',
   estimated_total: 'Anggaran Jumlah',
-  summary_hint_text: 'Jumlah akhir anda mungkin berubah kerana aktiviti pasaran.',
+  summary_hint_text: 'Jumlah akhir anda mungkin berubah dalam masa 10 saat.',
   pay: 'Bayar',
   cancel: 'Batal',
   link_a_card: 'Pautkan Kad atau Terima',
