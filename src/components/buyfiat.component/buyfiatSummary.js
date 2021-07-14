@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Tooltip, Input,Checkbox } from 'antd';
+import { Typography, Button, Tooltip, Input, Checkbox } from 'antd';
 import Translate from 'react-translate-component';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buyFiatReducer';
@@ -44,10 +44,14 @@ class FiatSummary extends Component {
 
                 <div className="d-flex p-16 mb-36 align-end">
                     <span className="icon lg check-ylw mb-16" />
-                    <span className="ml-16" style={{ flex: 1 }}>
+                    <span className="ml-16 agree-check" style={{ flex: 1 }}>
                         <Translate className="fs-16 text-white-30 mb-16" content="summary_hint_text" component={Paragraph} />
                         <div className="text-center text-underline"><Link className="text-white"> Refresh</Link></div>
-                        <Checkbox defaultChecked={false} ><Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30" /></Checkbox>
+                        <label>
+                            <input type="checkbox" id="agree-check" />
+                            <span for="agree-check" />
+                        </label>
+                        <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30" />
                     </span>
                 </div>
                 <Translate size="large" block className="pop-btn" content="add_fund" component={Button} onClick={() => this.props.changeStep('step3')} />
