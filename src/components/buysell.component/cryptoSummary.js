@@ -50,6 +50,7 @@ class Summary extends Component {
                     <Text className="fw-300 text-white-30">0.0070125 ETH (USD 20.00)</Text>
                 </div>
                 <Translate className="fs-12 text-white-30 text-center my-16" content="summary_hint_text" component={Paragraph} />
+                <div className="text-center text-underline text-white"><Link className="text-white"> Refresh</Link></div>
                 <div className="d-flex p-16 mb-36">
                     <Checkbox defaultChecked={false} ><Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} /></Checkbox>
                     

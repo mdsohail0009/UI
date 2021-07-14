@@ -42,6 +42,7 @@ class SwapSummary extends Component {
                     <Text className="fw-300 text-white-30">0.00279935 BTC (USD 104.08)</Text>
                 </div>
                 <Translate className="fs-14 text-white-30 text-center mb-36 fw-200" content="summary_hint_text" component={Paragraph} />
+                <div className="text-center text-underline"><Link className="text-white"> Refresh</Link></div>
                 <Translate size="large" block className="pop-btn" onClick={() => this.props.changeStep('confirm')} style={{ marginTop: '100px' }} content="confirm_swap" component={Button} />
             </>
         )

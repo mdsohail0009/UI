@@ -1,35 +1,23 @@
 import React, { Component } from 'react';
-import { List } from 'antd';
+import { List,Select } from 'antd';
 import config from '../../config/config';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-
+const { Option } = Select;
 class WalletList extends Component {
     state = {
         isArrow: true,
     }
     render() {
         return (
-            <List
-                itemLayout="horizontal"
-                className="wallet-list mb-36"
-                dataSource={config.walletList}
-                style={{ borderBottom: '1px solid var(--borderLight)' }}
-                renderItem={item => (
-                    <List.Item className="px-4" >
-                        <Link>
-                            <List.Item.Meta
-                                avatar={<span className={`coin ${item.coin}`} />}
-                                title={<><div className="fs-16 fw-400 text-white">{item.title}</div>
-                                    <div className="fs-16 fw-400 text-upper text-white">{item.coin}</div></>}
-                            />
-                            <span className="icon sm r-arrow-o-white" />
-                        </Link>
-                    </List.Item>
-
-                )}
-            />
+            <form className="form">
+            <Select defaultValue="Select Currency" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={false} suffixIcon={<span className="icon md uparrow" />}>
+                <Option value="US Dollar">US Dollar</Option>
+                <Option value="Euro">Euro</Option>
+                <Option value="Pound Sterlling">Pound Sterlling</Option>
+             </Select> 
+             </form>
         );
     }
 }

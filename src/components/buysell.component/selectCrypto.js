@@ -51,16 +51,10 @@ class SelectCrypto extends Component {
                         <span className="icon sm uparw-o-white d-block c-pointer mb-4" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
                     </span>
                 </div>
-                <Select defaultValue="Find with your wallet" className="find-wallet"
-          style={{ width: '100%' }} >
-          <Option value="US Dollar">US Dollar</Option>
-          <Option value="Euro">Euro</Option>
-          <Option value="Pound Sterlling">Pound Sterlling</Option>
-          
-        </Select> 
-                {/* <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-0 text-aqua pt-16" />
-                <WalletList isArrow={true} /> */}
-                <Translate content="refresh_newprice" component={Paragraph} className="mb-24 fs-14 text-white-30 fw-200 text-center mb-16" />
+               
+                <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-16 text-aqua pt-16" />
+                <WalletList isArrow={true} className="mb-4" />
+                <Translate content="refresh_newprice" component={Paragraph} className="mb-36 fs-14 text-white-30 fw-200 text-center mb-16" />
                 <Translate content="confirm_btn_text" component={Button} size="large" block className="pop-btn" onClick={() => this.props.changeStep('step3')} icon={<span className="icon md load" />} />
             </>
         )
