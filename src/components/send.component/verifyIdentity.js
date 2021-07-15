@@ -41,7 +41,7 @@ class VerifyIDentity extends Component {
                         <Select defaultValue="philippines" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={false} suffixIcon={<span className="icon md uparrow" />}>
                             <Option value="philippines">Philippines(+63)</Option>
                             <Option value="india">India(+91)</Option>
-                        </Select>
+                        </Select> 
                         <Input className="cust-input" placeholder="Your phone number" />
                         <Button size="large" block className="pop-btn" onClick={() => this.props.dispatch(setStep("step1"))}>Next</Button>
                     </form>
