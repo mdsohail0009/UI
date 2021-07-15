@@ -24,6 +24,11 @@ class BuySell extends Component {
     state = {
 
     }
+
+    // componentDidMount(){
+    //     getportfolio();
+    //     getMemberfiat()
+    // }
     closeBuyDrawer = () => {
         this.props.dispatch(setStep("step1"))
         if (this.props.onClose) {
