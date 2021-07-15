@@ -286,7 +286,7 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .footer-links{display: flex; justify-content: space-between; align-items: center;}
     .footer-links a{margin: 0 34px 0 0; display: inline-block;}
     .side-drawer .ant-drawer-content-wrapper{width: 510px !important;}
-    .side-drawer .ant-drawer-body{padding: 0 58px 20px 20px;}
+    .side-drawer .ant-drawer-body{padding: 0 20px 20px 20px;}
     .portfolio-count{display: inline-flex;}
     .megamenu-title .tlv-logo{padding-left: 34px !important;}
     .megamenu .ant-modal-header{border: none; padding: 24px 32px;}
@@ -307,7 +307,7 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .pay-list{display: flex;justify-content: space-between;align-items: center;}
     .verify-options{padding: 24px 70px;}
     .side-drawer .side-drawer-header {
-        padding: 30px 70px 30px 30px;
+        padding: 30px 30px 30px 30px;
     }
 }
 @media (min-width: 992px){
@@ -318,12 +318,11 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .sidebar-push{margin: 100px 0 0;}
     .header-right{display: block;}
     .header-right.mobile-header-right, .mobile-megalinks{display: none;}
-    .side-drawer .side-drawer-header{padding: 30px 70px 30px 30px;}
+    .side-drawer .side-drawer-header{padding: 30px 30px 30px 30px;}
     .crypto_btns{margin-left: 16px !important;}
     .crypto_btns .custom-btn.prime{margin-left: 36px  !important;}
     .coin-typo{font-size: 16px !important;}
     .swap-arrow{margin-left:36px;}
-    .side-drawer .side-drawer-header{padding: 30px 70px 30px 30px;}
 }
 @media (min-width: 1200px){
     .main-container{max-width: 1232px; padding: 55px 16px 24px;}
