@@ -8,6 +8,7 @@ import buySellReducer from '../reducers/buysellReducer'
 import SendReceive from '../reducers/sendreceiveReducer'
 import SwapReducer from '../reducers/swapReducer';
 import BuyFiat from '../reducers/buyFiatReducer';
+import CryptoReducer from '../components/buysell.component/crypto.reducer';
 
 const persistConfig = {
     key: "root",
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
     sendReceive: SendReceive,
     swapStore: SwapReducer,
     buyFiat: BuyFiat,
+    sellData:CryptoReducer
 })
 const reducer = persistReducer(persistConfig, rootReducer)
 let store = createStore(

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Tooltip, Input } from 'antd';
+import { Typography, Button, Tooltip, Input, Checkbox } from 'antd';
 import Translate from 'react-translate-component';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buyFiatReducer';
@@ -41,13 +41,18 @@ class FiatSummary extends Component {
                     <Translate className="fw-100 text-white mb-0 fs-36" content="total" component={Paragraph} />
                     <Paragraph className="fw-100 text-white mb-0 fs-36">USD 200,00</Paragraph>
                 </div>
+                <Translate className="fs-14 text-center text-white-30 mt-24" content="summary_hint_text" component={Paragraph} />
+                <div className="text-center text-underline my-24"><Link className="text-white"> Refresh</Link></div>
+                <div className="d-flex p-16 mt-16 mb-36 agree-check">
+                    <label>
+                        <input type="checkbox" id="agree-check" />
+                        <span for="agree-check" />
+                    </label>
+                    {/* <Translate className="fs-16 text-white-30 mb-16" content="summary_hint_text" component={Paragraph} />
+                        <div className="text-center text-underline my-36"><Link className="text-white"> Refresh</Link></div> */}
 
-                <div className="d-flex p-16 mb-36 align-end">
-                    <span className="icon lg check-ylw mb-16" />
-                    <span className="ml-16" style={{ flex: 1 }}>
-                        <Translate className="fs-16 text-white-30 mb-16" content="summary_hint_text" component={Paragraph} />
-                        <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30" />
-                    </span>
+                    <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 ml-16 text-white-30 mb-0" />
+
                 </div>
                 <Translate size="large" block className="pop-btn" content="add_fund" component={Button} onClick={() => this.props.changeStep('step3')} />
                 <Translate content="cancel" component={Button} type="text" size="large" onClick={() => this.props.changeStep('step2')} className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />

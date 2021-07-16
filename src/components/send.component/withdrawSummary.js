@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Tooltip, Input } from 'antd';
+import { Typography, Button, Tooltip, Input, Checkbox } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -57,9 +57,11 @@ class WithdrawSummary extends Component {
                         1CTEjSuGFv1DwpkGWxfC5qcK1iHAcW
                     </Paragraph>
                 </div>
-                <div className="d-flex p-16 mb-36">
-                    <span className="icon lg check-ylw" />
-                    <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
+                <div className="d-flex p-16 mb-36 agree-check">
+                    <label>
+                        <input type="checkbox" id="agree-check" />
+                        <span for="agree-check" />
+                    </label><Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
                 </div>
                 <Translate size="large" block className="pop-btn" onClick={() => this.props.changeStep('step6')} content="confirm_now" component={Button} />
                 <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block content="cancel" onClick={() => this.props.changeStep('step1')} component={Button} />

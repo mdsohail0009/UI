@@ -5,14 +5,14 @@ import WalletList from '../shared/walletList';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-// const { Option } = Select;
+const { Option } = Select;
 class SelectCrypto extends Component {
     constructor(props) {
         super(props);
         this.state = {
             buyDrawer: false,
             crypto: config.tlvCoinsList,
-            // wallets: config.walletList,
+             wallets: config.walletList,
         }
     }
     showPayDrawer = () => {
@@ -21,8 +21,7 @@ class SelectCrypto extends Component {
 
     render() {
         const { Title, Paragraph, Text } = Typography;
-    //   const { selectedItems } = this.state;
-    //   const filteredOptions = Option.filter(o => !selectedItems.includes(o));
+        const { Option } = Select;
         return (
             <>
                 <Card className="crypto-card select mb-36" bordered={false}>
@@ -52,22 +51,10 @@ class SelectCrypto extends Component {
                         <span className="icon sm uparw-o-white d-block c-pointer mb-4" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
                     </span>
                 </div>
-                {/* <Select
-        mode="multiple"
-        placeholder="Inserted are removed"
-        value={selectedItems}
-        onChange={this.handleChange}
-        style={{ width: '100%' }}
-      >
-        {wallets.map(item => (
-          <Select.Option key={item} value={item}>
-            {item}
-          </Select.Option>
-        ))}
-      </Select> */}
-                <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-0 text-aqua pt-16" />
-                <WalletList isArrow={true} />
-                <Translate content="refresh_newprice" component={Paragraph} className="fs-14 text-white-30 fw-200 text-center mb-16" />
+               
+                <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua pt-16" />
+                <WalletList isArrow={true} className="mb-4" />
+                <Translate content="refresh_newprice" component={Paragraph} className="mb-36 fs-14 text-white-30 fw-200 text-center mb-16" />
                 <Translate content="confirm_btn_text" component={Button} size="large" block className="pop-btn" onClick={() => this.props.changeStep('step3')} icon={<span className="icon md load" />} />
             </>
         )

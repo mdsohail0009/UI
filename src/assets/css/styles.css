@@ -136,7 +136,7 @@ line-height: 16px;min-width:90px}
 .crypto-list-tabs .ant-tabs-ink-bar{display: none;}
 .pop-btn{font-size: 14px;}
 .pop-btn{background-color: var(--bgYellow); border-color: var(--bgYellow); border-radius: 40px;height: 57px; text-transform: uppercase;font-weight: 700; transition: 0.3s ease;}
-.pop-btn:hover, .pop-btn:focus, .pop-btn:active{background-color: transparent;color: var(--textDark);border-color: var(--bgYellow);}
+.pop-btn:hover, .pop-btn:focus, .pop-btn:active{background-color: var(--bgDarkYellow);color: var(--textDark);border-color: var(--bgYellow);}
 .pop-cancel{background-color: transparent;color: var(--textWhite30); border-color: transparent; border-radius: 40px;height: 57px;}
 .cancel-btn{height: 57px; text-transform: uppercase;font-weight: 700;text-align: center;}
 .custon-btngroup{height: 57px; text-transform: uppercase; border:0;font-weight: 700;text-align: center; margin-top: 10px; width:50%}
@@ -286,7 +286,7 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .footer-links{display: flex; justify-content: space-between; align-items: center;}
     .footer-links a{margin: 0 34px 0 0; display: inline-block;}
     .side-drawer .ant-drawer-content-wrapper{width: 510px !important;}
-    .side-drawer .ant-drawer-body{padding: 0 58px 20px 20px;}
+    .side-drawer .ant-drawer-body{padding: 0 20px 20px 20px;}
     .portfolio-count{display: inline-flex;}
     .megamenu-title .tlv-logo{padding-left: 34px !important;}
     .megamenu .ant-modal-header{border: none; padding: 24px 32px;}
@@ -307,7 +307,7 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .pay-list{display: flex;justify-content: space-between;align-items: center;}
     .verify-options{padding: 24px 70px;}
     .side-drawer .side-drawer-header {
-        padding: 30px 70px 30px 30px;
+        padding: 30px 30px 30px 30px;
     }
 }
 @media (min-width: 992px){
@@ -318,12 +318,11 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .sidebar-push{margin: 100px 0 0;}
     .header-right{display: block;}
     .header-right.mobile-header-right, .mobile-megalinks{display: none;}
-    .side-drawer .side-drawer-header{padding: 30px 70px 30px 30px;}
+    .side-drawer .side-drawer-header{padding: 30px 30px 30px 30px;}
     .crypto_btns{margin-left: 16px !important;}
     .crypto_btns .custom-btn.prime{margin-left: 36px  !important;}
     .coin-typo{font-size: 16px !important;}
     .swap-arrow{margin-left:36px;}
-    .side-drawer .side-drawer-header{padding: 30px 70px 30px 30px;}
 }
 @media (min-width: 1200px){
     .main-container{max-width: 1232px; padding: 55px 16px 24px;}
@@ -343,3 +342,21 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .alert-popup .alert-close svg{color: #000}
 .alert-success{width: 20px;height: 20px;}
 .close-icon{background-position: -143px -35px;}
+.find-wallet .ant-select-selector{height: 50px !important;border: 1px solid var(--borderLight);border-radius: 30px !important;background: transparent !important;color: #fff;}
+.find-wallet .ant-select-selection-item{line-height: 3.5 !important;}
+.find-wallet .ant-select-arrow{color: var(--bgWhite); margin-right: 5px;}
+.find-wallet .ant-select-selector{padding: 0 20px !important;}
+.ant-checkbox-checked .ant-checkbox-inner{border: 1px solid var(--bgDarkYellow);border-color: var(--bgDarkYellow);background-color: var(--bgDarkYellow);}
+.ant-checkbox-wrapper:hover .ant-checkbox-inner, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner, .ant-checkbox-checked::after{border: 1px solid var(--textSecondary);border-color: var(--textSecondary);}
+.agree-check input[type=checkbox]{display: none;}
+.agree-check input[type=checkbox]+span{    display: inline-block;
+    width: 26px;
+    height: 26px;
+    vertical-align: text-top;
+    cursor: pointer;
+    background: var(--lightThemeIcons);
+    background-position: -36px -143px;
+}
+.agree-check input[type=checkbox]:checked+span{background-position: -36px -111px;}
+.cust-input.ant-select{position: relative;}
+.cust-input.ant-select::after{content: '';position: absolute;top: 12px; right: 16px; width: 20px; height: 20px; background: var(--lightThemeIcons);background-position: -350px 0;}

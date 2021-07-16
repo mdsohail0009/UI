@@ -4,12 +4,13 @@ import config from '../../config/config';
 import WalletList from '../shared/walletList';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
+import {getMemberCoins,updateCoinDetails} from '../buysell.component/crypto.reducer'
 
-const options = [
-    { label: 'Buy', value: 'Buy' },
-    { label: 'Sell', value: 'Sell' },
-];
+
 class SellToggle extends Component {
+    componentDidMount(){
+        this.props.fetchMemberCoins()
+    }
     handleBuySellToggle = e => {
         this.setState({
             buyToggle: e.target.value,
@@ -19,46 +20,37 @@ class SellToggle extends Component {
         const { Title, Paragraph, Text } = Typography;
         return (
             <>
-                <div className="sellcrypto-container auto-scroll">
-                    <Card className="crypto-card select mb-16 c-pointer" bordered={false} onClick={() => this.props.changeStep('step10')} >
+                {this.props.sellData.MemberCoins&&<div className="sellcrypto-container auto-scroll">
+                    {this.props.sellData.MemberCoins.map((coin,idx) => <Card className="crypto-card select mb-16 c-pointer" bordered={false} onClick={() => {this.props.changeStep('step10');this.props.dispatch(updateCoinDetails(coin))}} >
                         <span className="d-flex align-center">
                             <span className="coin lg btc-white" />
-                            <Text className="fs-24 text-purewhite crypto-name ml-8">Bitcoin</Text>
+                            <Text className="fs-24 text-white crypto-name ml-8">{coin.coin}</Text>
                         </span>
                         <div className="crypto-details">
-                            <Text className="crypto-percent text-purewhite fw-700">65<sup className="percent text-purewhite fw-700">%</sup></Text>
-                            <div className="fs-16 text-purewhite fw-200 crypto-amount">
-                                <div className="text-yellow">1.0147668 <Text className="text-secondary">ETH</Text></div>
-                                <div className="text-yellow"><Text className="text-secondary">$</Text> 41.07</div>
+                            <Text className="crypto-percent text-white fw-700">{coin.change}<sup className="percent text-white fw-700">%</sup></Text>
+                            <div className="fs-16 text-white-30 fw-200 crypto-amount">
+                                <div className="text-yellow">{coin.balance}<Text className="text-secondary"> {coin.coin}</Text></div>
+                                <div className="text-yellow"><Text className="text-secondary">$</Text> {coin.price}</div>
                             </div>
                         </div>
-                    </Card>
-                    <Card className="crypto-card normal-card mb-16 c-pointer" bordered={false}>
-                        <span className="d-flex align-center">
-                            <span className="coin lg eth-white" />
-                            <Text className="fs-24 text-purewhite crypto-name ml-8">Ethereum</Text>
-                        </span>
-                        <div className="crypto-details">
-                            <Text className="crypto-percent text-purewhite fw-700">25<sup className="percent text-purewhite fw-700">%</sup></Text>
-                            <div className="fs-16 text-purewhite fw-200 crypto-amount">
-                                <div className="text-yellow">1.0147668 <Text className="text-secondary">ETH</Text></div>
-                                <div className="text-yellow"><Text className="text-secondary">$</Text> 41.07</div>
-                            </div>
-                        </div>
-                    </Card>
-                </div>
+                    </Card>)}
+                </div>}
             </>
         )
     }
 }
-const connectStateToProps = ({ buySell, oidc }) => {
-    return { buySell }
+const connectStateToProps = ({ buySell, sellData }) => {
+    return { buySell,sellData }
 }
 const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
-        }
+        },
+        fetchMemberCoins:()=>{
+            dispatch(getMemberCoins())
+        },
+        dispatch
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(SellToggle);
