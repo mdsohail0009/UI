@@ -219,4 +219,5 @@ export default {
   deposit_and_withdraw: '存款和取款',
   the_dashboard: '仪表板',
   buy_crypto: '购买加密货币',
+  change_password:"更改密码"
 }

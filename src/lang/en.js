@@ -219,4 +219,5 @@ export default {
   deposit_and_withdraw: 'Deposit and Withdraw',
   the_dashboard: 'The Dashboard',
   buy_crypto: 'Buy Crypto',
+  change_password:"Change Password"
 }

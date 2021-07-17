@@ -1,6 +1,6 @@
-import { firebaseServer } from '.';
+import { apiClient, firebaseServer } from '.';
 import { ApiControllers } from './config'
-export const sendNotification = ({ message, from, type,tokens }) => {
+export const sendNotification = ({ message, from, type, tokens }) => {
     const obj = {
         data: { user_id: from, type },
         notification: {
@@ -13,4 +13,8 @@ export const sendNotification = ({ message, from, type,tokens }) => {
         firebaseServer.post("fcm/send", obj).then(response => {
         });
     }
+}
+export const changePassword = (obj) => {
+
+    return apiClient.post(ApiControllers.exchange + "changePassword", obj);
 }
