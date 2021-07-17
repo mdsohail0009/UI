@@ -126,7 +126,7 @@ class Header extends Component {
                         <span className="icon md rarrow-white" />
                     </div>
                 </li>
-                <li onClick={() => this.setState({ ...this.state, showChangePassword: true })}>
+                <li onClick={() => this.setState({ ...this.state, showChangePassword: true})}>
                     <div className="dropdown-flex">
                         <Translate content="change_password" component={Link} />
                         <span className="icon md rarrow-white" />
@@ -155,7 +155,7 @@ class Header extends Component {
             billingAddress: false,
             initLoading: true,
             buyFiatDrawer: false,
-            showChangePassword: false
+            showChangePassword: false,
         }
         this.next = this.next.bind(this);
         this.previous = this.previous.bind(this);
@@ -483,12 +483,17 @@ class Header extends Component {
                 <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
                 <Drawer
                     title={[<div className="side-drawer-header">
-                        {"Change password"}
+                        <span onClick={()=>this.setState({ ...this.state, showChangePassword: false })} className="icon md close-white c-pointer" />
+                        <div className="text-center fs-14">
+                            <Translate className="mb-0 text-white-30 fw-600 text-upper" content="change_password" component={Paragraph} />
+                        </div>
+
                     </div>]}
                     placement="right"
                     closable={true}
                     visible={this.state.showChangePassword}
                     closeIcon={null}
+                    onClose={()=>this.setState({ ...this.state, showChangePassword: false })}
                     className="side-drawer"
                 >
                     <Changepassword onSubmit={() => { this.setState({ ...this.state, showChangePassword: false }) }} />
