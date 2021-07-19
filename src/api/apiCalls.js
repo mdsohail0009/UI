@@ -7,6 +7,6 @@ const getCryptos=()=>{
     return apiClient.get(Portfolio +'Coins');
 }
 const sumsubacesstoken=()=>{
-    return sumSubClient.get('/AccessToken?applicantId=Test2');
+    return sumSubClient.get('/AccessToken?applicantId=naresh');
 }
 export default {getportfolio,getCryptos,sumsubacesstoken}
