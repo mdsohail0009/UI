@@ -5,10 +5,30 @@ import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
+import { Dropdown } from '../../Shared/Dropdown';
 
 class SelectSellCrypto extends Component {
     state={
-        amnt:null,minamntValue:null
+        amnt: null, minamntValue: null, sellSaveData: {
+            "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "membershipId": "2E8E3877-BC8E-466D-B62D-F3F8CCBBD019",
+            "walletId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+            "walletName":null,
+            "walletCode": "",
+            "walletAddress": "",
+            "description": "",
+            "filledvalue": 0,
+            "excuatedPrice": 0,
+            "totalAmount": 0,
+            "type": "",
+            "orderNo": "",
+            "date": new Date(),
+            "comission": 0,
+            "amountInUsd": 0,
+            "isFiat": false,
+            "walletNameFrom": "",
+            "txId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        }
     }
     setAmount(e){
         this.setState({amnt:e.target.value,minamntValue:e.target.value})
@@ -43,6 +63,9 @@ class SelectSellCrypto extends Component {
         "isFiat":false,
         "walletNameFrom":"",
         "txId":"3fa85f64-5717-4562-b3fc-2c963f66afa6"}
+    }
+    handleChange(e) {
+        console.log(e)
     }
     render() {
         const { Text } = Typography;
@@ -81,7 +104,8 @@ class SelectSellCrypto extends Component {
                     <Translate value="half" content="half" component={Radio.Button}  onClick={()=>this.clickMinamnt('half')}/>
                     <Translate value="all" content="all" component={Radio.Button}  onClick={()=>this.clickMinamnt('all')}/>
                 </Radio.Group>
-                <WalletList />
+                {/* <WalletList /> */}
+                <Dropdown label="Wallets" name="bankName" type="Wallets" dropdownData={this.props.sellData.MemberFiat} value={this.state.sellSaveData.walletName} onValueChange={()=>this.handleChange()} field='WalletName'></Dropdown>
                 <Translate content="preview" component={Button} size="large" block className="pop-btn" onClick={() => {this.props.changeStep('step11');this.previewSellData()}} />
             </>
 

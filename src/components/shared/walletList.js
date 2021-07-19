@@ -4,7 +4,6 @@ import config from '../../config/config';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import {getMemberCoins,updateCoinDetails} from '../buysell.component/crypto.reducer'
 const { Option } = Select;
 class WalletList extends Component {
     state = {
@@ -52,10 +51,6 @@ const connectDispatchToProps = dispatch => {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         }
-        ,
-        fetchMemberCoins:()=>{
-            dispatch(getMemberCoins())
-        },
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(WalletList);
