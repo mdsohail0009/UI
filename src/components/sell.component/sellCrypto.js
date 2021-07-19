@@ -20,7 +20,7 @@ class SellToggle extends Component {
         const { Title, Paragraph, Text } = Typography;
         return (
             <>
-                {this.props.sellData.MemberCoins&&<div className="sellcrypto-container auto-scroll">
+                {this.props.sellData.MemberCoins.length!=0&&<div className="sellcrypto-container auto-scroll">
                     {this.props.sellData.MemberCoins.map((coin,idx) => <Card className="crypto-card select mb-16 c-pointer" bordered={false} onClick={() => {this.props.changeStep('step10');this.props.dispatch(updateCoinDetails(coin))}} >
                         <span className="d-flex align-center">
                             <span className="coin lg btc-white" />

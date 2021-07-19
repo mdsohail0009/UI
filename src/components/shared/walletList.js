@@ -12,7 +12,7 @@ class WalletList extends Component {
     }
     render() {
         return (<>
-            {/* {this.props.sellData.MemberFiat&& 
+            {this.props.sellData.MemberFiat&& 
              <form className="form">
              <Select defaultValue="Select Wallet" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={false} suffixIcon={<span className="icon md uparrow" />}>
                {this.props.sellData.MemberFiat.map((item,idx) =>
@@ -20,8 +20,8 @@ class WalletList extends Component {
                )}
             </Select>
             </form>
-            } */}
-             {this.props.sellData.MemberFiat&&<List
+            }
+             {/* {this.props.sellData.MemberFiat&&<List
                 itemLayout="horizontal"
                 className="wallet-list mb-36"
                 dataSource={this.props.sellData.MemberFiat}
@@ -39,7 +39,7 @@ class WalletList extends Component {
                     </List.Item>
 
                 )}
-            />}
+            />} */}
             </>
         );
     }
