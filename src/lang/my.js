@@ -219,4 +219,5 @@ export default {
   deposit_and_withdraw: 'Deposit dan Pengeluaran',
   the_dashboard: 'Papan Pemuka',
   buy_crypto: 'Beli Crypto',
+  change_password:"Tukar kata laluan"
 }
