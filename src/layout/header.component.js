@@ -40,7 +40,8 @@ const securityMenu = (
             <li><Link className="dropdown-flex">2FA<span className="icon md rarrow-white" /></Link></li>
             <li className="">
                 <div className="dropdown-flex">
-                    <Translate content="change_password" component={Link} />
+                    {/* <Translate content="change_password" component={Link} to="/changepassword" /> */}
+                    <Link to="/changepassword">Change Password</Link>
                     <span className="icon md rarrow-white" />
                 </div>
             </li>

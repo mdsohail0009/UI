@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Typography, List, Button } from 'antd';
 import config from '../../config/config';
 import Translate from 'react-translate-component';
-import MassPayment from '../../components/buyfiat.component'
+//import MassPayment from '../../components/buyfiat.component'
+import SuissebaseFiat from '../../components/buyfiat.component/suissebaseFiat';
 
 const { Title, Paragraph } = Typography;
 const suisseWalletList = [
@@ -65,7 +66,7 @@ class SuissebaseWallet extends Component {
                             </div>
                         </List.Item>}
                 />
-                <MassPayment showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
+                <SuissebaseFiat showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
 
             </>
         );
