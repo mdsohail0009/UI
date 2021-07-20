@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Typography, Dropdown, Tabs, Row, Col, Divider, Avatar, Carousel, Switch } from 'antd';
+import { Layout, Menu, Modal, Typography, Dropdown, Tabs, Row, Col, Divider, Avatar, Carousel, Switch, Drawer } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
@@ -10,12 +10,11 @@ import en from '../lang/en';
 import ch from '../lang/ch';
 import my from '../lang/my';
 import BuySell from '../components/buysell.component';
-import BusinessMenu from '../components/shared/megaMenu/businessMegamenu';
-import menuCarousel from '../components/shared/megaMenu/menuCarousel';
 import SendReceive from '../components/send.component'
 import SwapCrypto from '../components/swap.component'
 import MassPayment from '../components/buyfiat.component'
 import { userManager } from '../authentication';
+import Changepassword from '../components/changepassword';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -62,78 +61,85 @@ const securityMenu = (
         </ul>
     </Menu>
 );
-const settingMenu = (
-    <Menu>
-        <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="settings" component={Title} />
-        <ul className="pl-0 drpdwn-list">
-            <li>
-                <div className="dropdown-flex">
-                    <Translate content="general" component={Link} />
-                    <span className="icon md rarrow-white" />
-                </div>
-            </li>
-            <li>
-                <div className="dropdown-flex">
-                    <Translate content="privacy_policy" component={Link} />
-                    <span className="icon md rarrow-white" />
-                </div>
-            </li>
-            <li>
-                <div className="dropdown-flex">
-                    <Translate content="terms_service" component={Link} />
-                    <span className="icon md rarrow-white" />
-                </div>
-            </li>
-            <li>
-                <div className="dropdown-flex">
-                    <Translate content="about" component={Link} />
-                    <span className="icon md rarrow-white" />
-                </div>
-            </li>
-            <li>
-                <div className="dropdown-flex">
-                    <Translate content="wallet_version" component={Link} />
-                    <span className="icon md rarrow-white" />
-                </div>
-            </li>
-            <li>
-                <div className="dropdown-flex">
-                    <Translate content="preferences" component={Link} />
-                    <span className="icon md rarrow-white" />
-                </div>
-            </li>
-            <li>
-                <div className="dropdown-flex">
-                    <Translate content="language" component={Link} />
-                    <span className="icon md rarrow-white" />
-                </div>
-            </li>
-            <li>
-                <div className="dropdown-flex">
-                    <Translate content="local_currency" component={Link} />
-                    <span className="icon md rarrow-white" />
-                </div>
-            </li>
-            <li>
-                <div className="dropdown-flex">
-                    <Translate content="notifications" component={Link} />
-                    <span className="icon md rarrow-white" />
-                </div>
-            </li>
-            <li>
-                <div className="dropdown-flex">
-                    <Translate content="themes" component={Link} />
-                    <span className="icon md rarrow-white" />
-                </div>
-            </li>
-            <li className="d-flex justify-content align-center" onClick={() => userManager.signoutRedirect()}>
-                <Translate content="logout" component={Link} />
-                <span className="icon md rarrow-white" />
-            </li>
-        </ul>
-    </Menu>
-);
+
 class Header extends Component {
+    settingMenu = (
+        <Menu>
+            <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="settings" component={Title} />
+            <ul className="pl-0 drpdwn-list">
+                <li>
+                    <div className="dropdown-flex">
+                        <Translate content="general" component={Link} />
+                        <span className="icon md rarrow-white" />
+                    </div>
+                </li>
+                <li>
+                    <div className="dropdown-flex">
+                        <Translate content="privacy_policy" component={Link} />
+                        <span className="icon md rarrow-white" />
+                    </div>
+                </li>
+                <li>
+                    <div className="dropdown-flex">
+                        <Translate content="terms_service" component={Link} />
+                        <span className="icon md rarrow-white" />
+                    </div>
+                </li>
+                <li>
+                    <div className="dropdown-flex">
+                        <Translate content="about" component={Link} />
+                        <span className="icon md rarrow-white" />
+                    </div>
+                </li>
+                <li>
+                    <div className="dropdown-flex">
+                        <Translate content="wallet_version" component={Link} />
+                        <span className="icon md rarrow-white" />
+                    </div>
+                </li>
+                <li>
+                    <div className="dropdown-flex">
+                        <Translate content="preferences" component={Link} />
+                        <span className="icon md rarrow-white" />
+                    </div>
+                </li>
+                <li>
+                    <div className="dropdown-flex">
+                        <Translate content="language" component={Link} />
+                        <span className="icon md rarrow-white" />
+                    </div>
+                </li>
+                <li>
+                    <div className="dropdown-flex">
+                        <Translate content="local_currency" component={Link} />
+                        <span className="icon md rarrow-white" />
+                    </div>
+                </li>
+                <li>
+                    <div className="dropdown-flex">
+                        <Translate content="notifications" component={Link} />
+                        <span className="icon md rarrow-white" />
+                    </div>
+                </li>
+                <li>
+                    <div className="dropdown-flex">
+                        <Translate content="themes" component={Link} />
+                        <span className="icon md rarrow-white" />
+                    </div>
+                </li>
+                <li onClick={() => this.setState({ ...this.state, showChangePassword: true})}>
+                    <div className="dropdown-flex">
+                        <Translate content="change_password" component={Link} />
+                        <span className="icon md rarrow-white" />
+                    </div>
+                </li>
+                <li className="d-flex justify-content align-center" onClick={() => userManager.signoutRedirect()}>
+                    <Translate content="logout" component={Link} />
+                    <span className="icon md rarrow-white" />
+                </li>
+            </ul>
+        </Menu>
+    );
     constructor(props) {
         super(props);
         this.state = {
@@ -150,6 +156,7 @@ class Header extends Component {
             billingAddress: false,
             initLoading: true,
             buyFiatDrawer: false,
+            showChangePassword: false,
         }
         this.next = this.next.bind(this);
         this.previous = this.previous.bind(this);
@@ -238,7 +245,7 @@ class Header extends Component {
                                     <Menu.Item key="5">Security</Menu.Item>
                                 </Dropdown>
                                 <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
-                                <Dropdown overlay={settingMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                                <Dropdown overlay={this.settingMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                     <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
                                 </Dropdown>
                             </Menu>
@@ -255,7 +262,7 @@ class Header extends Component {
                                 <Translate key="5" content="security" component={Menu.Item} />
                             </Dropdown>
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
-                            <Dropdown overlay={settingMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                            <Dropdown overlay={this.settingMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Menu.Item key="7"><span className="icon md gear ml-4" /></Menu.Item>
                             </Dropdown>
                         </Menu>
@@ -475,6 +482,23 @@ class Header extends Component {
                 <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
                 <SwapCrypto showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
                 <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
+                <Drawer
+                    title={[<div className="side-drawer-header">
+                        <span onClick={()=>this.setState({ ...this.state, showChangePassword: false })} className="icon md close-white c-pointer" />
+                        <div className="text-center fs-14">
+                            <Translate className="mb-0 text-white-30 fw-600 text-upper" content="change_password" component={Paragraph} />
+                        </div>
+
+                    </div>]}
+                    placement="right"
+                    closable={true}
+                    visible={this.state.showChangePassword}
+                    closeIcon={null}
+                    onClose={()=>this.setState({ ...this.state, showChangePassword: false })}
+                    className="side-drawer"
+                >
+                    <Changepassword onSubmit={() => { this.setState({ ...this.state, showChangePassword: false }) }} />
+                </Drawer>
             </>
         );
     }

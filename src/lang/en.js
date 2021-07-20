@@ -261,4 +261,5 @@ export default {
   Require_all_devices_to_signin:'Require all devices to sign in ',
   with_new_password:'with new password',
   Yes:'Yes', 
+  change_password:"Change Password"
 }

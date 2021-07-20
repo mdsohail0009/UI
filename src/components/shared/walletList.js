@@ -4,7 +4,6 @@ import config from '../../config/config';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import {getMemberCoins,updateCoinDetails} from '../buysell.component/crypto.reducer'
 const { Option } = Select;
 class WalletList extends Component {
     state = {
@@ -12,7 +11,7 @@ class WalletList extends Component {
     }
     render() {
         return (<>
-            {/* {this.props.sellData.MemberFiat&& 
+            {this.props.sellData.MemberFiat&& 
              <form className="form">
              <Select defaultValue="Select Wallet" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={false} suffixIcon={<span className="icon md uparrow" />}>
                {this.props.sellData.MemberFiat.map((item,idx) =>
@@ -20,8 +19,8 @@ class WalletList extends Component {
                )}
             </Select>
             </form>
-            } */}
-             {this.props.sellData.MemberFiat&&<List
+            }
+             {/* {this.props.sellData.MemberFiat&&<List
                 itemLayout="horizontal"
                 className="wallet-list mb-36"
                 dataSource={this.props.sellData.MemberFiat}
@@ -39,7 +38,7 @@ class WalletList extends Component {
                     </List.Item>
 
                 )}
-            />}
+            />} */}
             </>
         );
     }
@@ -52,10 +51,6 @@ const connectDispatchToProps = dispatch => {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         }
-        ,
-        fetchMemberCoins:()=>{
-            dispatch(getMemberCoins())
-        },
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(WalletList);

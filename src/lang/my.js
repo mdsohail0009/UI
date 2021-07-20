@@ -254,4 +254,5 @@ export default {
   Amount_to_pay:'Amaun yang perlu dibayar',
   place_an_order:'membuat pesanan',
   Routing_number:'Nombor Laluan (ABA)',
+  change_password:"Tukar kata laluan"
 }

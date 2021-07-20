@@ -254,4 +254,5 @@ export default {
   Amount_to_pay:'支付数量',
   place_an_order:'下订单',
   Routing_number:'路由号码 (ABA)',
+  change_password:"更改密码"
 }
