@@ -6,6 +6,7 @@ import Formvalidations from '../components/test.pages/form.validations'
 const Dashboard = React.lazy(() => import('../components/dashboard.component'));
 const CallbackPage = React.lazy(() => import('../authentication/callback.component'));
 const Login = React.lazy(() => import('../authentication/login.component'));
+const ChangePassword = React.lazy(() => import('../components/shared/changePassword'));
 
 class RoutingComponent extends Component {
   render() {
@@ -14,6 +15,7 @@ class RoutingComponent extends Component {
         <Route path="/dashboard" component={Dashboard} />
         <ReactRoute path="/callback" component={CallbackPage} />
         <ReactRoute path="/login" component={Login} />
+        <ReactRoute path="/changepassword" component={ChangePassword} />
         <Route path="" component={Dashboard} />
       </React.Suspense>
     </Switch>

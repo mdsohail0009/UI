@@ -5,6 +5,11 @@ import FiatList from '../shared/fiatList';
 import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
+import FaitWithdrawal from '../shared/faitWithdrawal';
+import FaitDeposit from '../shared/faitDeposit';
+import FaitwithdrawalSummary from '../shared/faitwithdrawalSummary';
+
+
 const LinkValue = (props) => {
     return (
         <Translate className="text-yellow text-underline c-pointer"
@@ -30,13 +35,13 @@ class BuyFiat extends Component {
         const { buyFiat } = this.state;
         return (
             <>
-                <Radio.Group
+                {/* <Radio.Group
                     defaultValue={1}
                     onChange={this.handleBuyFiatToggle}
                     className="buysell-toggle crypto-toggle">
                     <Translate content="add_fund" component={Radio.Button} value={1} />
                     <Translate content="withdraw" component={Radio.Button} value={2} />
-                </Radio.Group>
+                </Radio.Group> */}
                 {buyFiat ? <>
                     <Translate className="mb-0 text-white-30 fw-200 fs-36" content="sell_your_fiat_for_cash" component={Paragraph} />
                     <Translate className="text-secondary fw-300 fs-16 mb-36 mr-16" with={{ link }} content="need_to_replenish" component={Paragraph} />
@@ -83,10 +88,13 @@ class BuyFiat extends Component {
                     </div>
                 </>
                     : <>
-                        <Translate className="mb-0 text-white-30 fw-200 fs-36 mb-16" content="purchase_fiat" component={Title} />
-                        <Translate className="text-secondary fw-300 fs-16" content="purchase_fiat" with={{ link }} component={Title} />
-                        <div className="markets-panel mt-36">
-                            <FiatList />
+                        {/* <Translate className="mb-0 text-white-30 fw-200 fs-36 mb-16" content="purchase_fiat" component={Title} />  */}
+                        {/* <Translate className="text-secondary fw-300 fs-16" content="Beneficiary_BankDetails" with={{ link }} component={Title} />  */}
+                        <div className="markets-panel mr-0">
+                            {/* <FiatList /> */}
+                            {/* <FaitWithdrawal /> */}
+                            <FaitDeposit />
+                            {/* <FaitwithdrawalSummary /> */}
                         </div>
                     </>}
             </>
