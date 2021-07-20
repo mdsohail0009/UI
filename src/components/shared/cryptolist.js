@@ -19,6 +19,7 @@ class CryptoList extends Component {
     }
     loadCryptos = async () => {
         let res = await apiCalls.getCryptos()
+        if (res.ok)
         this.setState({ coinsList: res.data })
     }
     renderContent = () => {

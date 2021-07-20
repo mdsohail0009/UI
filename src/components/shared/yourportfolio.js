@@ -20,6 +20,7 @@ class YourPortfolio extends Component {
     }
     loadCryptos=async()=>{
         let res=await apiCalls.getportfolio()
+        if (res.ok)
         this.setState({portfolioData:res.data})
     }
     showBuyDrawer = () => {
