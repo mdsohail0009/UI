@@ -6,6 +6,7 @@ const FETCH_MEMBERCOINS = "fetchMemberCoins";
 const FETCH_MEMBERCOINS_REJECTED = "fetchMemberCoinsRejected";
 const FETCH_MEMBERCOINS_SUCCESS = "fetchMemberCoinsSuccess";
 const UPDATE_COINDETAILS = "updateCoinDetails";
+const UPDATE_SELLSAVEOBJECT='updatesellsaveObject'
 const fetchMemberCoins = () => {
     return { type: FETCH_MEMBERCOINS };
 }
@@ -24,12 +25,15 @@ const fetchMemberCoinsRejected = (paylaod) => {
 const updateCoinDetails = (payload) => {
     return { type: UPDATE_COINDETAILS, payload }
 }
+const updatesellsaveObject=(payload)=>{
+    return { type: UPDATE_SELLSAVEOBJECT, payload }
+}
 const initialState = {
     isLoading: true,
     error: null,
     MemberCoins:[] ,
     MemberFiat: [],
-    coinDetailData: {}
+    coinDetailData: {},sellsaveObject:{}
 }
 
 const getMemberCoins = () => {
@@ -71,17 +75,19 @@ const sellReducer = (state = initialState, action) => {
             state = { ...state, isLoading: true }
             return state;
         case FETCH_MEMBERCOINS_SUCCESS:
-            state = { ...state, [action.payload.key]: action.payload.data, isLoading: false};
+            state = { ...state, [action.payload.key]: action.payload.data, isLoading: false };
             return state;
         case FETCH_MEMBERCOINS_REJECTED:
-            state = { ...state, isLoading: false, error: { [action.payload.key]: action.payload.data} }
+            state = { ...state, isLoading: false, error: { [action.payload.key]: action.payload.data } }
             return state;
         case UPDATE_COINDETAILS:
-            return { ...state, coinDetailData: action.payload};
+            return { ...state, coinDetailData: action.payload };
+        case UPDATE_SELLSAVEOBJECT:
+            return { ...state, sellsaveObject: action.payload }
         default:
             return state;
     }
 }
 
 export default sellReducer;
-export { getMemberCoins, updateCoinDetails }
+export { getMemberCoins, updateCoinDetails,updatesellsaveObject }

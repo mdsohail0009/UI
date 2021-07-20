@@ -8,9 +8,9 @@ const getCryptos=()=>{
     return apiClient.get(ApiControllers.exchange +'Coins');
 }
 const getMemberfiat=()=>{
-    return apiClient.get(Portfolio +'MemberFiat?memberId=2E8E3877-BC8E-466D-B62D-F3F8CCBBD019');
+    return apiClient.get(Portfolio +'MemberFiat?memberId=E3BF0F02-70E5-4575-8552-F8C49533B7C6');
 }
-const getSellamnt=(coin,Value,isSwap)=>{
-    return apiClient.get(ApiControllers.exchange +'fiatToCryptoConvert?fromcoin='+(isSwap?coin:'USD')+'&fromfiat='+(isSwap?'USD':coin)+'&fiatValue='+Value);
+const getSellamnt=(Value,isSwap)=>{
+    return apiClient.get(ApiControllers.exchange +'CryptoFiatConverter?from=BTC&to=USD&value='+Value+'&isCrypto='+!isSwap);
 }
 export {getportfolio,getCryptos,getMemberfiat,getSellamnt}

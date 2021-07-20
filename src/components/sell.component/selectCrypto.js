@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import { Dropdown } from '../../Shared/Dropdown';
 import {getSellamnt} from '../../components/buysell.component/api'
+import { updatesellsaveObject } from '../buysell.component/crypto.reducer';
 
 class SelectSellCrypto extends Component {
     state={
@@ -31,22 +32,26 @@ class SelectSellCrypto extends Component {
             "txId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
         },isSwap:false
     }
-    async setAmount(e){
-        let res =await getSellamnt(this.props.sellData.coinDetailData.coin, e.target.value, this.state.isSwap);
+    async setAmount(e,fn){
+        this.state[fn]=e.target.value
+        let res =await getSellamnt(e.target.value, this.state.isSwap);
         if (res.ok) {
-            this.setState({ amnt: e.target.value, minamntValue: res.data })
+            this.setState({...this.state,minamntValue: res.data })
         }
     }
     clickMinamnt(type) {
-        let amnt;
+        let usdamnt;let cryptoamnt;
+        let obj=Object.assign({},this.props.sellData.coinDetailData)
         if (type == 'half') {
-            amnt=(this.state.amnt/2)
+            usdamnt=(obj.coinValueinNativeCurrency/2).toString();
+            cryptoamnt=(obj.coinBalance/2)
         }else if(type == 'all'){
-            amnt=this.state.amnt
+            usdamnt=obj.coinValueinNativeCurrency;
+            cryptoamnt=obj.coinBalance
         }else{
-            amnt=this.state.amnt
+            usdamnt=this.state.amnt
         }
-        this.setState({minamntValue:amnt})
+        this.setState({amnt:usdamnt,minamntValue:cryptoamnt})
     }
     previewSellData(){
         let obj={"id":"3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -67,14 +72,17 @@ class SelectSellCrypto extends Component {
         "isFiat":false,
         "walletNameFrom":"",
         "txId":"3fa85f64-5717-4562-b3fc-2c963f66afa6"}
+        this.props.changeStep('step11');
+        this.props.dispatch(updatesellsaveObject(obj))
     }
     handleChange(e) {
-        console.log(e)
+        // let obj=Object.assign({},this.state);
+        // this.setState({...this.state})
     }
     async swapChange(value){
         let obj=Object.assign({},this.state);
         this.setState({isSwap:value,amnt:parseInt(obj.minamntValue),minamntValue:obj.amnt})
-        let res =await getSellamnt(this.props.sellData.coinDetailData.coin, obj.minamntValue, value);
+        let res =await getSellamnt(obj.minamntValue,value);
         if (res.ok) {
             this.setState({ amnt: obj.minamntValue, minamntValue: res.data })
         }
@@ -104,7 +112,7 @@ class SelectSellCrypto extends Component {
                             bordered={false}
                             prefix={this.state.isSwap?coinDetailData.coin:"USD"}
                             style={{ maxWidth: 206 }}
-                            onChange={(e)=>this.setAmount(e)}/>
+                            onChange={value=>this.setAmount(value,'amnt')} value={this.state.amnt}/>
                         <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{this.state.minamntValue} {this.state.isSwap?"USD":coinDetailData.coin}</Text>
                     </div>
                     <span className="mt-8 val-updown">
@@ -118,8 +126,8 @@ class SelectSellCrypto extends Component {
                     <Translate value="all" content="all" component={Radio.Button}  onClick={()=>this.clickMinamnt('all')}/>
                 </Radio.Group>
                 {/* <WalletList /> */}
-                <Dropdown label="Wallets" name="bankName" type="Wallets" dropdownData={this.props.sellData.MemberFiat} value={this.state.sellSaveData.walletName} onValueChange={()=>this.handleChange()} field='WalletName'></Dropdown>
-                <Translate content="preview" component={Button} size="large" block className="pop-btn" onClick={() => {this.props.changeStep('step11');this.previewSellData()}} />
+                <Dropdown label="Wallets" name="currencyCode" type="Wallets" dropdownData={this.props.sellData.MemberFiat} value={this.state.sellSaveData.walletName} onValueChange={()=>this.handleChange()} field='WalletName'></Dropdown>
+                <Translate content="preview" component={Button} size="large" block className="pop-btn" onClick={() => {this.previewSellData()}} />
             </>
 
         )
@@ -132,7 +140,8 @@ const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
-        }
+        },
+        dispatch
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(SelectSellCrypto);
