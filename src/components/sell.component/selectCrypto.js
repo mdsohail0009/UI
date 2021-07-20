@@ -6,6 +6,7 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import { Dropdown } from '../../Shared/Dropdown';
+import {getSellamnt} from '../../components/buysell.component/api'
 
 class SelectSellCrypto extends Component {
     state={
@@ -28,10 +29,13 @@ class SelectSellCrypto extends Component {
             "isFiat": false,
             "walletNameFrom": "",
             "txId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-        }
+        },isSwap:false
     }
-    setAmount(e){
-        this.setState({amnt:e.target.value,minamntValue:e.target.value})
+    async setAmount(e){
+        let res =await getSellamnt(this.props.sellData.coinDetailData.coin, e.target.value, this.state.isSwap);
+        if (res.ok) {
+            this.setState({ amnt: e.target.value, minamntValue: res.data })
+        }
     }
     clickMinamnt(type) {
         let amnt;
@@ -67,6 +71,14 @@ class SelectSellCrypto extends Component {
     handleChange(e) {
         console.log(e)
     }
+    async swapChange(value){
+        let obj=Object.assign({},this.state);
+        this.setState({isSwap:value,amnt:parseInt(obj.minamntValue),minamntValue:obj.amnt})
+        let res =await getSellamnt(this.props.sellData.coinDetailData.coin, obj.minamntValue, value);
+        if (res.ok) {
+            this.setState({ amnt: obj.minamntValue, minamntValue: res.data })
+        }
+    }
     render() {
         const { Text } = Typography;
         const {coinDetailData}=this.props.sellData;
@@ -75,13 +87,13 @@ class SelectSellCrypto extends Component {
                 {coinDetailData&&<Card className="crypto-card mb-36" bordered={false}>
                     <span className="d-flex align-center">
                         <span className="coin lg btc-white" />
-                        <Text className="fs-24 text-white crypto-name ml-8">{coinDetailData.coin}</Text>
+                        <Text className="fs-24 text-white crypto-name ml-8">{coinDetailData.coinFullName}</Text>
                     </span>
                     <div className="crypto-details">
-                        <Text className="crypto-percent text-white fw-700">{coinDetailData.change}<sup className="percent text-white fw-700">%</sup></Text>
+                        <Text className="crypto-percent text-white fw-700">{coinDetailData.percentage}<sup className="percent text-white fw-700">%</sup></Text>
                         <div className="fs-16 text-white-30 fw-200 crypto-amount">
-                            <div className="text-yellow">{coinDetailData.balance}<Text className="text-secondary"> {coinDetailData.coin}</Text></div>
-                            <div className="text-yellow"><Text className="text-secondary">$</Text> {coinDetailData.price}</div>
+                            <div className="text-yellow">{coinDetailData.coinBalance}<Text className="text-secondary"> {coinDetailData.coin}</Text></div>
+                            <div className="text-yellow"><Text className="text-secondary">$</Text> {coinDetailData.coinValueinNativeCurrency}</div>
                         </div>
                     </div>
                 </Card>}
@@ -90,13 +102,14 @@ class SelectSellCrypto extends Component {
                         <Input className="fs-36 fw-100 text-white-30 text-center enter-val p-0"
                             placeholder="0.0"
                             bordered={false}
-                            prefix="USD"
+                            prefix={this.state.isSwap?coinDetailData.coin:"USD"}
                             style={{ maxWidth: 206 }}
-                            onChange={(e)=>this.setAmount(e)} value={this.state.amnt}/>
-                        <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{this.state.minamntValue} BTC</Text>
+                            onChange={(e)=>this.setAmount(e)}/>
+                        <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{this.state.minamntValue} {this.state.isSwap?"USD":coinDetailData.coin}</Text>
                     </div>
                     <span className="mt-8 val-updown">
-                        <span className="icon sm uparw-o-white d-block c-pointer mb-4" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
+                        <span className="icon sm uparw-o-white d-block c-pointer mb-4" onClick={()=>this.state.isSwap?this.swapChange(false):''}/>
+                        <span className="icon sm dwnarw-o-white d-block c-pointer" onClick={()=>!this.state.isSwap?this.swapChange(true):''}/>
                     </span>
                 </div>
                 <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
