@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Dropdown } from 'antd';
+import { Drawer, Typography, Dropdown,Radio } from 'antd';
 import { buyFiatSteps as config } from './config';
 import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
 import connectStateProps from '../../utils/state.connect';
+import FaitDeposit from './faitDeposit';
+import FaitdepositSummary from './faitdepositSummary';
 
 class SuissebaseFiat extends Component {
     state = {}
@@ -27,7 +29,9 @@ class SuissebaseFiat extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            buyfiat: "",
+            buyfiat: <FaitDeposit />,
+            faitsummary:< FaitdepositSummary />,
+
         }
         return stepcodes[config[this.props.buyFiat.stepcode]]
     }
@@ -67,6 +71,13 @@ class SuissebaseFiat extends Component {
                 className="side-drawer"
             >
                 {this.renderContent()}
+                {/* <Radio.Group
+                    defaultValue={1}
+                    onChange={this.handleBuyFiatToggle}
+                    className="buysell-toggle crypto-toggle">
+                    <Translate content="add_fund" component={Radio.Button} value={1} />
+                    <Translate content="withdraw" component={Radio.Button} value={2} />
+                </Radio.Group> */}
             </Drawer >
         );
     }

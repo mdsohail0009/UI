@@ -254,5 +254,12 @@ export default {
   Amount_to_pay:'Amaun yang perlu dibayar',
   place_an_order:'membuat pesanan',
   Routing_number:'Nombor Laluan (ABA)',
-  change_password:"Tukar kata laluan"
+  Change_password:'Tukar kata laluan',
+  Choose_a_unique_password_to_protect_your_account:'Pilih kata laluan yang unik untuk melindungi akaun anda.',
+  Save_btn_text:'Jimat',
+  forgot_your_password:'Lupa kata laluan anda?',
+  Require_all_devices_to_signin:'Memerlukan semua peranti untuk log masuk ',
+  with_new_password:'dengan kata laluan baru',
+  Yes:'Ya', 
+  change_password:"Tukar kata laluan",
 }

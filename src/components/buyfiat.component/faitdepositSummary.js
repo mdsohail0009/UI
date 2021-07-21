@@ -15,7 +15,7 @@ const LinkValue = (props) => {
     )
 }
 
-class FaitwithdrawalSummary extends Component {
+class FaitdepositSummary extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -59,7 +59,7 @@ class FaitwithdrawalSummary extends Component {
                     <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
 
                 </div>
-                <Translate content="place_an_order" component={Button} size="large" block className="pop-btn" onClick={() => this.props.changeStep('step4')} />
+                <Translate content="place_an_order" component={Button} size="large" block className="pop-btn" onClick={() => this.props.changeStep('step2')} />
                 {/* <Translate content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block /> */}
             </>
         )
@@ -75,4 +75,4 @@ const connectDispatchToProps = dispatch => {
         }
     }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(FaitwithdrawalSummary);
+export default connect(connectStateToProps, connectDispatchToProps)(FaitdepositSummary);
