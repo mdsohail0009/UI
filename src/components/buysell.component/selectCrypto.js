@@ -1,24 +1,32 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Button, Card, Input,Select  } from 'antd';
+import { Drawer, Typography, Button, Card, Input, Select } from 'antd';
 import config from '../../config/config';
 import WalletList from '../shared/walletList';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-const { Option } = Select;
+import { convertCurrency } from './buySellService';
 class SelectCrypto extends Component {
     constructor(props) {
         super(props);
         this.state = {
             buyDrawer: false,
             crypto: config.tlvCoinsList,
-             wallets: config.walletList,
+            wallets: config.walletList,
+            swapValues: {
+                nativeValue: 0,
+                selectedCoinValue: 0,
+                isSwaped: false,
+            }
         }
     }
     showPayDrawer = () => {
         console.log(this.state);
     }
-
+    fetchConvertionValue = async () => {
+        const value = await convertCurrency({ from: (!this.state.swapValues.isSwaped ? this.props.sellData?.selectedCoin?.data?.coin : "USD"), to: (!this.state.swapValues.isSwaped ? this.props.sellData?.selectedCoin?.data?.coin : "USD"), value: this.state.swapValues.nativeValue, isCrypto: !this.state.swapValues.isSwaped })
+        this.setState({ ...this.state, swapValues: { ...this.state.swapValues, selectedCoinValue: value } })
+    }
     render() {
         const { Title, Paragraph, Text } = Typography;
         const { Option } = Select;
@@ -27,13 +35,13 @@ class SelectCrypto extends Component {
                 <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
                         <span className="coin lg eth-white" />
-                        <Text className="fs-24 text-purewhite crypto-name ml-8">Ethereum</Text>
+                        <Text className="fs-24 text-purewhite crypto-name ml-8">{this.props.sellData.selectedCoin?.data?.coin}</Text>
                     </span>
                     <div className="crypto-details">
-                        <Text className="crypto-percent text-purewhite fw-700">25<sup className="percent text-purewhite fw-700">%</sup></Text>
+                        <Text className="crypto-percent text-purewhite fw-700">{this.props.sellData.selectedCoin?.data?.percentage}<sup className="percent text-purewhite fw-700">%</sup></Text>
                         <div className="fs-16 text-purewhite fw-200 crypto-amount">
-                            <div>1.0147668 ETH</div>
-                            <div>$ 41.07</div>
+                            <div>{this.props.sellData.selectedCoin?.data?.coinBalance} {this.props.sellData.selectedCoin?.data?.coin}</div>
+                            <div>${this.props.sellData.selectedCoin?.data?.coinValueinNativeCurrency}</div>
                         </div>
                     </div>
                 </Card>
@@ -42,16 +50,21 @@ class SelectCrypto extends Component {
                         <Input className="fs-36 fw-100 text-white-30 text-center enter-val p-0"
                             placeholder="0.00"
                             bordered={false}
-                            prefix="USD"
+                            prefix={!this.state.swapValues.isSwaped ? "USD" : this.props.sellData?.selectedCoin?.data?.coin}
                             style={{ maxWidth: 160 }}
+                            value={this.state.swapValues.isSwaped ? this.state.swapValues.selectedCoinValue : this.state.swapValues.nativeValue}
+                            onChange={(e) => {
+                                this.setState({ ...this.state, swapValues: { ...this.state.swapValues, [this.state.swapValues.isSwaped ? "selectedCoinValue" : "nativeValue"]: e.currentTarget.value } }, () => this.fetchConvertionValue());
+
+                            }}
                         />
-                        <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">0.00701 ETH</Text>
+                        <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{this.state.swapValues.isSwaped ? this.state.swapValues.nativeValue : this.state.swapValues.selectedCoinValue} {this.state.swapValues.isSwaped ? "USD" : this.props.sellData?.selectedCoin?.data?.coin}</Text>
                     </div>
                     <span className="mt-24 val-updown">
-                        <span className="icon sm uparw-o-white d-block c-pointer mb-4" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
+                        <span onClick={()=>!this.state.swapValues.isSwaped?this.setState({...this.state,swapValues:{...this.state.swapValues,isSwaped:true}}):""} className="icon sm uparw-o-white d-block c-pointer mb-4" /><span onClick={()=>this.state.swapValues.isSwaped?this.setState({...this.state,swapValues:{...this.state.swapValues,isSwaped:false}}):""}  className="icon sm dwnarw-o-white d-block c-pointer" />
                     </span>
                 </div>
-               
+
                 <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua pt-16" />
                 <WalletList isArrow={true} className="mb-4" />
                 <Translate content="refresh_newprice" component={Paragraph} className="mb-36 fs-14 text-white-30 fw-200 text-center mb-16" />
@@ -60,8 +73,8 @@ class SelectCrypto extends Component {
         )
     }
 }
-const connectStateToProps = ({ buySell, oidc }) => {
-    return { buySell }
+const connectStateToProps = ({ buySell, oidc, sellData }) => {
+    return { buySell, sellData }
 }
 const connectDispatchToProps = dispatch => {
     return {

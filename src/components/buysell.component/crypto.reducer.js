@@ -1,12 +1,12 @@
 
-import { getMemberfiat, getportfolio } from './api'
-import { apiClient } from '../../api';
-
+import { getCoins, getMemberfiat, getportfolio, getSelectedCoinDetails } from './api'
 const FETCH_MEMBERCOINS = "fetchMemberCoins";
 const FETCH_MEMBERCOINS_REJECTED = "fetchMemberCoinsRejected";
 const FETCH_MEMBERCOINS_SUCCESS = "fetchMemberCoinsSuccess";
 const UPDATE_COINDETAILS = "updateCoinDetails";
-const UPDATE_SELLSAVEOBJECT='updatesellsaveObject'
+const UPDATE_SELLSAVEOBJECT = 'updatesellsaveObject';
+const HANDLE_FETCH = "handleFetch";
+const HANDLE_COINS_FETCH = "handleCoinsFetch";
 const fetchMemberCoins = () => {
     return { type: FETCH_MEMBERCOINS };
 }
@@ -25,15 +25,53 @@ const fetchMemberCoinsRejected = (paylaod) => {
 const updateCoinDetails = (payload) => {
     return { type: UPDATE_COINDETAILS, payload }
 }
-const updatesellsaveObject=(payload)=>{
+const updatesellsaveObject = (payload) => {
     return { type: UPDATE_SELLSAVEOBJECT, payload }
+}
+const handleCoinsFetch = (payload) => {
+    return {
+        type: HANDLE_COINS_FETCH,
+        payload
+    }
+}
+const handleFetch = (payload) => {
+    return {
+        type: HANDLE_FETCH,
+        payload
+    }
+}
+
+const fetchCoins = (type) => {
+    return async (dispatch) => {
+        dispatch(handleCoinsFetch({ key: type, loading: true, data: [] }));
+        const response = await getCoins(type);
+        if (response.ok) {
+            dispatch(handleCoinsFetch({ key: type, loading: false, data: response.data }));
+        } else {
+            dispatch(handleCoinsFetch({ key: type, loading: false, data: [], error: response.originalError.message }));
+        }
+
+    }
+}
+const fetchSelectedCoinDetails = (coin) => {
+    return async (dispatch) => {
+        dispatch(handleFetch({ key: "selectedCoin", loading: true, data: null }));
+        const response = await getSelectedCoinDetails(coin);
+        if (response.ok) {
+            dispatch(handleFetch({ key: "selectedCoin", loading: false, data: response.data }));
+        } else {
+            dispatch(handleFetch({ key: "selectedCoin", loading: false, data: null, error: response.originalError.message }));
+        }
+    }
 }
 const initialState = {
     isLoading: true,
     error: null,
-    MemberCoins:[] ,
+    MemberCoins: [],
     MemberFiat: [],
-    coinDetailData: {},sellsaveObject:{}
+    coinDetailData: {}, sellsaveObject: {},
+    coins: { all: { loading: false, data: [] }, gainers: { loading: false, data: [], losers: { loading: false, data: [] } } },
+    selectedCoin: { loading: false, data: null }
 }
 
 const getMemberCoins = () => {
@@ -43,7 +81,7 @@ const getMemberCoins = () => {
             getportfolio().then(
                 (response) => {
                     if (response.ok) {
-                        dispatch(fetchMemberCoinsSuccess( response.data, 'MemberCoins' ));
+                        dispatch(fetchMemberCoinsSuccess(response.data, 'MemberCoins'));
                     } else {
                         dispatch(fetchMemberCoinsRejected(response.data, 'MemberCoins'));
                     }
@@ -84,10 +122,16 @@ const sellReducer = (state = initialState, action) => {
             return { ...state, coinDetailData: action.payload };
         case UPDATE_SELLSAVEOBJECT:
             return { ...state, sellsaveObject: action.payload }
+        case HANDLE_FETCH:
+            state = { ...state, [action.payload.key]: action.payload };
+            return state;
+        case HANDLE_COINS_FETCH:
+            state = { ...state, coins: { ...state.coins, [action.payload.key]: { loading: action.payload.loading, data: action.payload.data } } };
+            return state;
         default:
             return state;
     }
 }
 
 export default sellReducer;
-export { getMemberCoins, updateCoinDetails,updatesellsaveObject }
+export { getMemberCoins, updateCoinDetails, updatesellsaveObject, fetchCoins, fetchSelectedCoinDetails }

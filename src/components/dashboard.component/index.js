@@ -1,21 +1,13 @@
 import React, { Component } from 'react';
-import { Row, Col, Typography, List, Button, Skeleton, Input, Carousel, Drawer, Dropdown } from 'antd';
-import { CaretDownOutlined, ArrowLeftOutlined } from '@ant-design/icons';
-import chart from '../../assets/images/chart.png'
-import graph from '../../assets/images/graph.png'
-import { Link } from 'react-router-dom';
-import { AudioOutlined } from '@ant-design/icons';
-import config from '../../config/config';
+import { Row, Col, Typography, Button, Input, Carousel} from 'antd';
 import SuissebaseWallet from '../shared/suissebasewallet';
 import Translate from 'react-translate-component';
 import CryptoList from '../shared/cryptolist';
 import Portfolio from '../shared/portfolio';
 import Coins from '../shared/coins';
 import YourPortfolio from '../shared/yourportfolio';
-import AlertConfirmation from '../shared/alertconfirmation';
-
 const { Search } = Input;
-const { Title, Paragraph, Text } = Typography;
+const { Title, Paragraph } = Typography;
 
 class Home extends Component {
     state = {

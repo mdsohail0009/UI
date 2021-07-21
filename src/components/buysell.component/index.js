@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
-import BuyCrypto from './buyCrypto';
+import CryptoComponent from './crypto';
 import connectStateProps from '../../utils/state.connect';
 import Summary from './cryptoSummary';
 import BillType from './payOption';
@@ -17,18 +17,11 @@ import AddressScanner from './addressScanner';
 import SellSummary from '../sell.component/sellSummary';
 import SelectSellCrypto from '../sell.component/selectCrypto'
 import SuccessMsg from '../shared/success';
-import { connect } from 'react-redux';
-
-const { Title, Paragraph } = Typography
+const { Paragraph } = Typography
 class BuySell extends Component {
     state = {
 
     }
-
-    // componentDidMount(){
-    //     getportfolio();
-    //     getMemberfiat()
-    // }
     closeBuyDrawer = () => {
         this.props.dispatch(setStep("step1"))
         if (this.props.onClose) {
@@ -37,7 +30,7 @@ class BuySell extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            buycrypto: <BuyCrypto />,
+            buycrypto: <CryptoComponent />,
             selectcrypto: <SelectCrypto />,
             billtype: <BillType />,
             addcard: <AddCard />,
@@ -55,7 +48,7 @@ class BuySell extends Component {
         return stepcodes[config[this.props.buySell.stepcode]]
     };
     renderTitle = () => {
-        const stepcodes = {
+        const titles = {
             buycrypto: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             selectcrypto: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             billtype: <span onClick={() => this.props.dispatch(setStep("step3"))} className="icon md close-white c-pointer" />,
@@ -71,7 +64,7 @@ class BuySell extends Component {
             successmsg: null,
             wiretransfor: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />
         }
-        return stepcodes[config[this.props.buySell.stepcode]]
+        return titles[config[this.props.buySell.stepcode]]
     }
     renderIcon = () => {
         const stepcodes = {
