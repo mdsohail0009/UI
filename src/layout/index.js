@@ -6,6 +6,7 @@ import Header from '../layout/header.component';
 import Footer from './footer.component';
 import connectStateProps from '../utils/state.connect';
 import { userManager } from '../authentication';
+import OnBoarding from './onboard.component';
 class Layout extends Component {
     state = {
     }
@@ -19,11 +20,12 @@ class Layout extends Component {
         //     return <div className="loader">Loading....</div>
         // }
         return <>
-            <AntLayout>
+            {/*<AntLayout>
                 <Header />
                 <Content />
                 <Footer />
-            </AntLayout>
+            </AntLayout>*/}
+            <OnBoarding />
         </>
     }
 }

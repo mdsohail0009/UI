@@ -123,7 +123,7 @@ export default {
   fund_with_card: 'Fund with card',
   fund_with_card_text: 'How much would you like to add?',
   preview_swap: 'Preview Swap',
-  pay: 'Pay 0,00701 ETH',
+  pay: 'Pay 0,00701 ',
   deposit_link: 'Your wallet is empty, you don’t have any assets to make transactions. Follow this link and %(link)s some cash.',
   link: 'link',
   agree_to_suissebase: 'I agree to Suissebase’s %(link)s and its return, refund and cancellation policy.',
