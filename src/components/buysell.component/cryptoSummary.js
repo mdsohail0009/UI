@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { Typography, Button, Tooltip, Checkbox } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
@@ -25,10 +25,17 @@ class Summary extends Component {
     showPayCardDrawer = () => {
         console.log(this.state);
     }
-
+    // React.useEffect(() => {
+    //     if (seconds > 0) {
+    //       setTimeout(() => setSeconds(seconds - 1), 1000);
+    //     } else {
+    //       setSeconds('BOOOOM!');
+    //     }
+    //   });
     render() {
         const { Title, Paragraph, Text } = Typography;
         const link = <LinkValue content="terms_service" />;
+        // const [seconds, setSeconds] = React.useState(10);
         return (
             <>
                 <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>0.0070 ETH</div>
@@ -49,8 +56,11 @@ class Summary extends Component {
                     <Translate className="fw-400 text-white" content="estimated_total" component={Text} />
                     <Text className="fw-300 text-white-30">0.0070125 ETH (USD 20.00)</Text>
                 </div>
-                <Translate className="fs-12 text-white-30 text-center my-16" content="summary_hint_text" component={Paragraph} />
-                <div className="text-center text-underline text-white"><Link className="text-white"> Refresh</Link></div>
+                {/* <Translate className="fs-12 text-white-30 text-center my-16" content="summary_hint_text" component={Paragraph} /> */}
+                <div className="fs-12 text-white-30 text-center my-16">Your final amount might be changed with in 
+                {/* {seconds}  */}
+                10 seconds.</div>
+                <div className="text-center text-underline text-white"><Link className="text-white">Click to see the new rate.</Link></div>
                 <div className="d-flex p-16 mb-36 agree-check">
                     <label>
                         <input type="checkbox" id="agree-check" />

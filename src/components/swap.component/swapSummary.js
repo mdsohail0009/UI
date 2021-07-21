@@ -5,9 +5,20 @@ import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
 
+const LinkValue = (props) => {
+    return (
+        <Translate className="text-yellow text-underline c-pointer"
+            content={props.content}
+            component={Link}
+            to="./#"
+        />
+    )
+}
+
 class SwapSummary extends Component {
     render() {
         const { Paragraph, Text } = Typography;
+        const link = <LinkValue content="terms_service" />;
         return (
             <>
                 <div className="enter-val-container">
@@ -42,7 +53,13 @@ class SwapSummary extends Component {
                     <Text className="fw-300 text-white-30">0.00279935 BTC (USD 104.08)</Text>
                 </div>
                 <Translate className="fs-14 text-white-30 text-center mb-36 fw-200" content="summary_hint_text" component={Paragraph} />
-                <div className="text-center text-underline"><Link className="text-white"> Refresh</Link></div>
+                <div className="text-center text-underline"><Link className="text-white"> Click to see the new rate.</Link></div>
+                <div className="d-flex p-16 mb-36 agree-check">
+                    <label>
+                        <input type="checkbox" id="agree-check" />
+                        <span for="agree-check" />
+                    </label><Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
+                </div>
                 <Translate size="large" block className="pop-btn" onClick={() => this.props.changeStep('confirm')} style={{ marginTop: '100px' }} content="confirm_swap" component={Button} />
             </>
         )

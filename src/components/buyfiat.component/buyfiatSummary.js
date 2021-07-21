@@ -42,6 +42,7 @@ class FiatSummary extends Component {
                     <Paragraph className="fw-100 text-white mb-0 fs-36">USD 200,00</Paragraph>
                 </div>
                 <Translate className="fs-14 text-center text-white-30 mt-24" content="summary_hint_text" component={Paragraph} />
+                {/* <div className="fs-14 text-center text-white-30 mt-24">Your final amount might be changed with in 10 seconds.</div> */}
                 <div className="text-center text-underline my-24"><Link className="text-white"> Refresh</Link></div>
                 <div className="d-flex p-16 mt-16 mb-36 agree-check">
                     <label>

@@ -39,7 +39,7 @@ class SellSummary extends Component {
                     <Text className="fw-300 text-white-30">0.00279935 BTC (USD 104.08)</Text>
                 </div>
                 <Translate className="fs-12 text-white-30 text-center my-16" content="summary_hint_text" component={Paragraph} />
-                <div className="text-center text-underline text-white"><Link className="text-white"> Refresh</Link></div>
+                <div className="text-center text-underline text-white"><Link className="text-white"> Click to see the new rate.</Link></div>
                 <div className="d-flex p-16 mb-36 agree-check">
                     <label>
                         <input type="checkbox" id="agree-check" />

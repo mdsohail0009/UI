@@ -19,6 +19,7 @@ class CryptoList extends Component {
     }
     loadCryptos = async () => {
         let res = await apiCalls.getCryptos()
+        if (res.ok)
         this.setState({ coinsList: res.data })
     }
     renderContent = () => {
@@ -66,7 +67,7 @@ class CryptoList extends Component {
                             />
                             <div className="text-right coin-typo">
                                 <div className="text-white-30 fw-600">${item.transactionFee}</div>
-                                <div className={item.up ? 'text-red' : 'text-green'}>-{item.percent_change_1h} % </div>
+                                <div className={item.up ? 'text-red' : 'text-green'}>{item.percent_change_1h} % </div>
                             </div>
                             {!item.up ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}
                         </Link>
