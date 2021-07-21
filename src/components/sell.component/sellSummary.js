@@ -65,7 +65,7 @@ class SellSummary extends Component {
                     <Text className="fw-300 text-white-30">{sellpreviewData.amount} {sellpreviewData.coin} (USD {sellpreviewData.amountNativeCurrency})</Text>
                 </div>
                 <Translate className="fs-12 text-white-30 text-center my-16" content="summary_hint_text" component={Paragraph} />
-                <div className="text-center text-underline text-white"><Link className="text-white" onClick={()=>this.refreshPage()}> Refresh</Link></div>
+                <div className="text-center text-underline text-white"><Link className="text-white" onClick={()=>this.refreshPage()}> Click to see the new rate.</Link></div>
                 <div className="d-flex p-16 mb-36 agree-check">
                     <label>
                         <input type="checkbox" id="agree-check" />

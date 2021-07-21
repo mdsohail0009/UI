@@ -6,7 +6,7 @@ const firebaseServer = create({
     // }
 });
 const apiClient = create({
-    baseURL:"https://cefiapi.azurewebsites.net/api/v1"
+    baseURL:process.env.REACT_APP_API_END_POINT
       
 })
 export { firebaseServer,apiClient }
