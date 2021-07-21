@@ -17,14 +17,12 @@ class OnBoarding extends Component {
     this.getMemberDetails()
   }
   getMemberDetails=async()=>{
-    
     apiCalls.getMember().then((res)=>{
-        this.setState({isGetOnboardingStatus:true,isOnboarding:res.data.isKYC})
+        this.setState({isGetOnboardingStatus:true,isOnboarding:((res?.data?.isKYC)?true:false)})
         this.props.userInformation(res.data);
     })
   }
-renderdata= async()=>{
-    
+renderdata= async()=>{   
     if(this.state.isGetOnboardingStatus){
         return <div className="loader">Loading....</div>
     }else if(this.state.isOnboarding){
@@ -35,20 +33,21 @@ renderdata= async()=>{
 }
   render() {
     return <>
-    {!this.state.isGetOnboardingStatus && <div className="loader">Loading....</div>}
-    {!this.state.isOnboarding && <SumSub />}
-    {this.state.isOnboarding && <>
+    {!(this.props.userConfig) && <div className="loader">Loading....</div>}
+    {this.props.userConfig&&<>
+    {!(this.props.userConfig.isKYC) && <SumSub />}
+    {this.props?.userConfig?.isKYC && <>
         <AntLayout>
         <Header />
         <Content />
         <Footer />
         </AntLayout>
-        </>}
+        </>}</>}
     </>
   }
 }
 const connectStateToProps = ({ userConfig }) => {
-    return { userConfig }
+    return { userConfig:userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
