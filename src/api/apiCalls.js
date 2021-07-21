@@ -6,4 +6,10 @@ const getportfolio = () => {
 const getCryptos=()=>{
     return apiClient.get(Portfolio +'Coins');
 }
-export default {getportfolio,getCryptos}
+const getMember=()=>{
+    return apiClient.get(Portfolio +'/Member?userId=B1889EEF-651D-4667-9D87-C27A3F9AA07D');
+}
+const sumsubacesstoken=()=>{
+    return apiClient.get('Sumsub/AccessToken?applicantId=naresh1');
+}
+export default {getportfolio,getCryptos,getMember,sumsubacesstoken}
