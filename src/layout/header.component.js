@@ -127,7 +127,7 @@ class Header extends Component {
                         <span className="icon md rarrow-white" />
                     </div>
                 </li>
-                <li onClick={() => this.setState({ ...this.state, showChangePassword: true})}>
+                <li onClick={() => this.setState({ ...this.state, showChangePassword: true })}>
                     <div className="dropdown-flex">
                         <Translate content="change_password" component={Link} />
                         <span className="icon md rarrow-white" />
@@ -235,7 +235,7 @@ class Header extends Component {
                 <Layout className="layout">
                     <menuHeader className="tlv-header" id="area">
                         <div className="login-user">
-                            <ul className="header-logo">
+                            <ul className="header-logo pl-0">
                                 <li className="pr-30 p-relative"><Link><img src={logoColor} alt="logo" className="tlv-logo" /></Link></li>
                                 <li className="px-36"><span className="icon md hamburger c-pointer" onClick={this.showMegaMenu} /></li>
                                 <li className="mb-d-none"><Translate content="header_title" component="p" className="text-white-30 mb-0 fs-24" /></li>
@@ -484,7 +484,7 @@ class Header extends Component {
                 <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
                 <Drawer
                     title={[<div className="side-drawer-header">
-                        <span onClick={()=>this.setState({ ...this.state, showChangePassword: false })} className="icon md close-white c-pointer" />
+                        <span onClick={() => this.setState({ ...this.state, showChangePassword: false })} className="icon md close-white c-pointer" />
                         <div className="text-center fs-14">
                             <Translate className="mb-0 text-white-30 fw-600 text-upper" content="change_password" component={Paragraph} />
                         </div>
@@ -494,7 +494,7 @@ class Header extends Component {
                     closable={true}
                     visible={this.state.showChangePassword}
                     closeIcon={null}
-                    onClose={()=>this.setState({ ...this.state, showChangePassword: false })}
+                    onClose={() => this.setState({ ...this.state, showChangePassword: false })}
                     className="side-drawer"
                 >
                     <Changepassword onSubmit={() => { this.setState({ ...this.state, showChangePassword: false }) }} />
