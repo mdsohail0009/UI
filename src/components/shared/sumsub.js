@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import snsWebSdk from '@sumsub/websdk';
 import apicalls from './../../api/apiCalls';
-
+import { connect } from 'react-redux';
 
 class SumSub extends Component {
     componentDidMount() {
@@ -10,12 +10,11 @@ class SumSub extends Component {
 
     }
     launchWebSdk = async(apiUrl, flowName, accessToken, applicantEmail, applicantPhone, customI18nMessages) => {
-        debugger
         applicantEmail = "test@example.org"
         applicantPhone = "+491758764512"
-        let snsWebSdkInstance = snsWebSdk.Builder("https://test-api.sumsub.com", "SuisseBase KYC")
+        let snsWebSdkInstance = snsWebSdk.Builder("https://test-api.sumsub.com", (this.props.userConfig.isBusiness?"SuisseBase KYB":"SuisseBase KYC"))
             .withAccessToken(accessToken, (newAccessTokenCallback) => {
-                apicalls.sumsubacesstoken().then((res)=>{
+                apicalls.sumsubacesstoken(this.props.userConfig.id).then((res)=>{
                     newAccessTokenCallback(res.data.token)
                 })
                
@@ -42,16 +41,21 @@ class SumSub extends Component {
 render() {
     return (
         <>
-            <span onClick={() => this.launchWebSdk('https://test-api.sumsub.com', 'basic-kyc', 'tst:N2Kvt7SOOVp1jMf7wyQy9BSO.KlnFBjZadRJWK1A0rHckzIlaHQqbRDTO')}>
-                Activate Lasers
-            </span>
-
             <div id="sumsub-websdk-container"></div>
         </>
     );
 }
 }
 
+const connectStateToProps = ({ userConfig }) => {
+    return { userConfig:userConfig.userProfileInfo }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        // userInformation: (stepcode) => {
+        //     dispatch(userInfo(stepcode))
+        // }
+    }
+}
 
-
-export default SumSub;
+export default connect(connectStateToProps, connectDispatchToProps)(SumSub);

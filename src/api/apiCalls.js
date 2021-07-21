@@ -7,9 +7,9 @@ const getCryptos=()=>{
     return apiClient.get(Portfolio +'Coins');
 }
 const getMember=()=>{
-    return apiClient.get(Portfolio +'/Member?userId=B1889EEF-651D-4667-9D87-C27A3F9AA07D');
+    return apiClient.get(Portfolio +'/Member?email=naresh8@yopmail.com');
 }
-const sumsubacesstoken=()=>{
-    return apiClient.get('Sumsub/AccessToken?applicantId=naresh1');
+const sumsubacesstoken=(userid)=>{
+    return apiClient.get('Sumsub/AccessToken?applicantId='+userid);
 }
 export default {getportfolio,getCryptos,getMember,sumsubacesstoken}
