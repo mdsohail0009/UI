@@ -1,26 +1,18 @@
 import React, { Component } from 'react';
-import config from '../../config/config';
 import { Link } from 'react-router-dom';
-import { List, Skeleton, Drawer, Typography } from 'antd';
+import { List, Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
-import { connect } from 'react-redux';
-import apiCalls from '../../api/apiCalls'
 import SelectCrypto from '../sell.component/selectCrypto';
 import connectStateProps from '../../utils/state.connect';
-
+import { fetchCoins } from '../buysell.component/crypto.reducer';
 class CryptoList extends Component {
     state = {
         loading: false,
         initLoading: true, coinsList: []
     }
     componentDidMount() {
-        this.loadCryptos();
-    }
-    loadCryptos = async () => {
-        let res = await apiCalls.getCryptos()
-        if (res.ok)
-        this.setState({ coinsList: res.data })
+        this.props.dispatch(fetchCoins(this.props.coinType||"all"));
     }
     renderContent = () => {
         return <SelectCrypto />
@@ -36,10 +28,9 @@ class CryptoList extends Component {
         })
     }
     render() {
-        const { Title, Paragraph } = Typography
-        const { initLoading, loading } = this.state;
+        const { Paragraph } = Typography
         const loadMore =
-            !loading ? (
+            !this.props.sellData?.coins[this.props.coinType]?.loading ? (
                 <div
                     style={{
                         textAlign: 'center',
@@ -55,18 +46,19 @@ class CryptoList extends Component {
         return (<>
             <List
                 itemLayout="horizontal"
-                dataSource={this.state.coinsList}
-                loadMore={loadMore}
+                dataSource={this.props.sellData?.coins[this.props.coinType]?.data}
+                //loadMore={loadMore}
                 className="crypto-list"
+                loading={this.props.sellData?.coins[this.props.coinType]?.loading}
                 renderItem={item => (
                     <List.Item>
-                        <Link onClick={() => {this.props.isShowDrawer?this.showBuyDrawer():this.props.dispatch(setStep("step2"))}}>
+                        <Link onClick={() => { this.props.isShowDrawer ? this.showBuyDrawer() : (this.props.onCoinSelected?this.props.onCoinSelected(item):this.props.dispatch(setStep("step2"))) }}>
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.walletCode} mr-4`} />}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.walletCode}</div>}
                             />
                             <div className="text-right coin-typo">
-                                <div className="text-white-30 fw-600">${item.transactionFee}</div>
+                                <div className="text-white-30 fw-600">${item.amountInUSD}</div>
                                 <div className={item.up ? 'text-red' : 'text-green'}>-{item.percent_change_1h} % </div>
                             </div>
                             {!item.up ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}
@@ -89,7 +81,7 @@ class CryptoList extends Component {
             >
                 {this.renderContent()}
             </Drawer>
-            </>
+        </>
         );
     }
 }
