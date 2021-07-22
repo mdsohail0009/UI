@@ -13,7 +13,7 @@ class SumSub extends Component {
     launchWebSdk = async (apiUrl, flowName, accessToken, applicantEmail, applicantPhone, customI18nMessages) => {
         applicantEmail = "test@example.org"
         applicantPhone = "+491758764512"
-        let snsWebSdkInstance = snsWebSdk.Builder("https://test-api.sumsub.com", "SuisseBase KYB")
+        let snsWebSdkInstance = snsWebSdk.Builder("https://test-api.sumsub.com", this.props.userConfig.isbusines? "SuisseBase KYB":"SuisseBase KYC")
             .withAccessToken(accessToken, (newAccessTokenCallback) => {
                 apicalls.sumsubacesstoken(this.props.userConfig.userId).then((res) => {
                     newAccessTokenCallback(res.data.token)

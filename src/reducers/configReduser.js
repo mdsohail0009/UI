@@ -12,7 +12,9 @@ const userInfo = (payload) => {
 const getmemeberInfo = (useremail) => {
     return async (dispatch) => {
         apiCalls.getMember(useremail).then((res) => {
+            if(res.ok){
             dispatch(userInfo(res.data))
+            }
         });
     }
 }
