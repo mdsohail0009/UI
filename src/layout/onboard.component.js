@@ -24,8 +24,8 @@ class OnBoarding extends Component {
     return <>
       {!(this.props.userConfig && this.props.user) && <div className="loader">Loading....</div>}
       {(this.props.userConfig && this.props.user) && <>
-    {/*{!(this.props.userConfig.isKYC) && <SumSub />}*/}
-        {!(this.props?.userConfig?.isKYC) && <>
+    {!(this.props.userConfig.isKYC) && <SumSub />}
+        {(this.props?.userConfig?.isKYC) && <>
           <AntLayout>
             <Header />
             <Content />

@@ -6,16 +6,16 @@ import { userInfo, getmemeberInfo } from './../../reducers/configReduser';
 
 class SumSub extends Component {
     componentDidMount() {
-        
+
         this.launchWebSdk('https://test-api.sumsub.com', 'basic-kyc', 'tst:N2Kvt7SOOVp1jMf7wyQy9BSO.KlnFBjZadRJWK1A0rHckzIlaHQqbRDTO');
 
     }
     launchWebSdk = async (apiUrl, flowName, accessToken, applicantEmail, applicantPhone, customI18nMessages) => {
         applicantEmail = "test@example.org"
         applicantPhone = "+491758764512"
-        let snsWebSdkInstance = snsWebSdk.Builder("https://test-api.sumsub.com", (this.props.userConfig.isBusiness ? "SuisseBase KYB" : "SuisseBase KYC"))
+        let snsWebSdkInstance = snsWebSdk.Builder("https://test-api.sumsub.com", "SuisseBase KYB")
             .withAccessToken(accessToken, (newAccessTokenCallback) => {
-                apicalls.sumsubacesstoken(this.props.userConfig.id).then((res) => {
+                apicalls.sumsubacesstoken(this.props.userConfig.userId).then((res) => {
                     newAccessTokenCallback(res.data.token)
                 })
 
@@ -32,7 +32,7 @@ class SumSub extends Component {
                 onMessage: (type, payload) => {
                     console.log('WebSDK onMessage', type, payload)
                     if (type === 'idCheck.applicantStatus' && payload.reviewStatus == "completed")
-                        apicalls.updateKyc(this.props.userConfig.id).then((res) => {
+                        apicalls.updateKyc(this.props.userConfig.userId).then((res) => {
                             this.props.getmemeberInfoa(this.props.userConfig.email)
                         })
                 },
