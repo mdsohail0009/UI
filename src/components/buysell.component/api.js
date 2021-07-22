@@ -14,6 +14,12 @@ const getMemberfiat = () => {
 const getSellamnt = (Value, isSwap) => {
     return apiClient.get(ApiControllers.exchange + 'CryptoFiatConverter?from=BTC&to=USD&value=' + Value + '&isCrypto=' + !isSwap);
 }
+const getSellPreviewData=(sellObject)=>{
+    return apiClient.get(ApiControllers.exchange +'Preview?coin='+sellObject.fromWalletCode+'&currency=USD&amount='+sellObject.fromValue);
+}
+const savesellData=(obj)=>{
+    return apiClient.post(ApiControllers.exchange +'SellCrypto',obj);
+}
 const getCoins = (type) => {
     return apiClient.get(ApiControllers.exchange + "Coins?type=" + type);
 }
@@ -23,4 +29,5 @@ const getSelectedCoinDetails = (coin_code, member_id = memId) => {
 const fetchCurrencyConvertionValue = ({ from, to, value, isCrypto }) => {
     return apiClient.get(ApiControllers.exchange+`CryptoFiatConverter?from=${from}&to=${to}&value=${value}&isCrypto=${isCrypto}`);
 }
-export { getportfolio, getCryptos, getMemberfiat, getSellamnt, getCoins, getSelectedCoinDetails,fetchCurrencyConvertionValue }
+export { getportfolio, getCryptos, getMemberfiat, getSellamnt, getCoins, getSelectedCoinDetails,fetchCurrencyConvertionValue,getSellPreviewData,savesellData }
+
