@@ -6,10 +6,14 @@ const getportfolio = () => {
 const getCryptos=()=>{
     return apiClient.get(Portfolio +'Coins');
 }
-const getMember=()=>{
-    return apiClient.get(Portfolio +'/Member?email=naresh8@yopmail.com');
+const getMember=(useremail)=>{
+    return apiClient.get(Portfolio +'/Member?email='+useremail);
 }
 const sumsubacesstoken=(userid)=>{
     return apiClient.get('Sumsub/AccessToken?applicantId='+userid);
 }
-export default {getportfolio,getCryptos,getMember,sumsubacesstoken}
+const updateKyc=(userid)=>{
+    return apiClient.get(Portfolio+'UpdateKYC?isKyc=true&userId='+userid);
+}
+
+export default {getportfolio,getCryptos,getMember,sumsubacesstoken, updateKyc}
