@@ -1,10 +1,12 @@
 import React, { Component, useEffect, useState } from 'react';
-import { Typography, Button, Tooltip, Checkbox } from 'antd';
+import { Typography, Button, Tooltip, Checkbox, notification } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import Loader from '../../Shared/loader';
+import { fetchPreview } from './crypto.reducer';
+import { buyCrypto } from './api';
 
 const LinkValue = (props) => {
     return (
@@ -20,34 +22,62 @@ class Summary extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+           isLoading:false
         }
     }
     showPayCardDrawer = () => {
         console.log(this.state);
     }
-    // React.useEffect(() => {
-    //     if (seconds > 0) {
-    //       setTimeout(() => setSeconds(seconds - 1), 1000);
-    //     } else {
-    //       setSeconds('BOOOOM!');
-    //     }
-    //   });
-    render() {
-        if(this.props.sellData?.previewDetails?.loading){
-            return <Loader/>
+    pay = async () => {
+        const isTermsAgreed = document.getElementById("agree-check").checked;
+        if (isTermsAgreed) {
+            const { id: toWalletId, walletName: toWalletName, walletCode: toWalletCode } = this.props.sellData?.coinWallet;
+            const { id: fromWalletId, bankName: fromWalletName, currencyCode: fromWalletCode } = this.props.sellData?.selectedWallet;
+            const obj = {
+                "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                "membershipId": "E3BF0F02-70E5-4575-8552-F8C49533B7C6", 
+                fromWalletId,
+                fromWalletCode,
+                fromWalletName,
+                "fromValue": this.props.sellData.previewDetails?.data?.amountNativeCurrency,
+                toWalletId,
+                toWalletCode,
+                toWalletName,
+                "toValue": this.props.sellData.previewDetails?.data?.amount,
+                "description": "Buy Crypto",
+                "comission": 0,
+                "exicutedPrice": 0,
+                "totalAmount": this.props.sellData.previewDetails?.data?.amountNativeCurrency
+
+            }
+            this.setState({isLoading:true});
+            debugger
+            const response = await buyCrypto(obj);
+            if (response.ok) {
+                this.props.changeStep('success')
+            } else {
+                notification.error({ message: "Buy Crypto", description: response.data||response.originalError.message })
+            }
+            this.setState({isLoading:false})
+        } else {
+            notification.warn({ message: "Terms&Conditions", description: "Please agree to terms&conditions" })
         }
-        const { Title, Paragraph, Text } = Typography;
-        const {coin,oneCoinValue,amount,amountNativeCurrency} = this.props.sellData?.previewDetails?.data;
+    }
+    render() {
+        if (this.props.sellData?.previewDetails?.loading) {
+            return <Loader />
+        }
+        const { Paragraph, Text } = Typography;
+        const { coin, oneCoinValue, amount, amountNativeCurrency } = this.props.sellData?.previewDetails?.data;
         const link = <LinkValue content="terms_service" />;
         // const [seconds, setSeconds] = React.useState(10);
         return (
             <>
                 <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>{amount} {coin}</div>
-                <div className="text-white-50 fw-300 text-center fs-14 mb-16">USD {amountNativeCurrency}</div>
+                <div className="text-white-50 fw-300 text-center fs-14 mb-16">{this.props.sellData?.selectedWallet?.currencyCode} {amountNativeCurrency}</div>
                 <div className="pay-list fs-14">
                     <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
-                    <Text className="fw-300 text-white-30">1 {coin} = USD {oneCoinValue}</Text>
+                    <Text className="fw-300 text-white-30">1 {coin} = {this.props.sellData?.selectedWallet?.currencyCode} {oneCoinValue}</Text>
                 </div>
                 <div className="pay-list fs-14">
                     <Translate className="fw-400 text-white" content="amount" component={Text} />
@@ -59,13 +89,13 @@ class Summary extends Component {
                 </div> */}
                 <div className="pay-list fs-14">
                     <Translate className="fw-400 text-white" content="estimated_total" component={Text} />
-                    <Text className="fw-300 text-white-30">{amount} {coin} (USD {amountNativeCurrency})</Text>
+                    <Text className="fw-300 text-white-30">{amount} {coin} ({this.props.sellData?.selectedWallet?.currencyCode} {amountNativeCurrency})</Text>
                 </div>
                 {/* <Translate className="fs-12 text-white-30 text-center my-16" content="summary_hint_text" component={Paragraph} /> */}
-                <div className="fs-12 text-white-30 text-center my-16">Your final amount might be changed with in 
-                {/* {seconds}  */}
-                10 seconds.</div>
-                <div className="text-center text-underline text-white"><Link className="text-white">Click to see the new rate.</Link></div>
+                <div className="fs-12 text-white-30 text-center my-16">Your final amount might be changed with in
+                    {/* {seconds}  */}
+                    10 seconds.</div>
+                <div className="text-center text-underline text-white"><Link onClick={() => this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, amount)} className="text-white">Click to see the new rate.</Link></div>
                 <div className="d-flex p-16 mb-36 agree-check">
                     <label>
                         <input type="checkbox" id="agree-check" />
@@ -74,19 +104,22 @@ class Summary extends Component {
                     <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
 
                 </div>
-                <Button title={"Pay "+amountNativeCurrency} size="large" block className="pop-btn" onClick={() => this.props.changeStep('step4')} />
-                <Button title="Cancel" onClick={() => this.props.changeStep('step1')} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
+                <Translate content={"pay"} component={Button} size="large" block className="pop-btn" onClick={() => this.pay()} loading={this.state.isLoading} />
+                <Translate content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
             </>
         )
     }
 }
-const connectStateToProps = ({ buySell, oidc,sellData }) => {
-    return { buySell,sellData }
+const connectStateToProps = ({ buySell, oidc, sellData }) => {
+    return { buySell, sellData }
 }
 const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
+        },
+        refreshDetails: (wallet, coin, amount) => {
+            dispatch(fetchPreview({ coin, wallet, amount }))
         }
     }
 }

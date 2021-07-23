@@ -7,8 +7,22 @@ const UPDATE_COINDETAILS = "updateCoinDetails";
 const UPDATE_SELLSAVEOBJECT = 'updatesellsaveObject';
 const HANDLE_FETCH = "handleFetch";
 const HANDLE_COINS_FETCH = "handleCoinsFetch";
+const SET_WALLET = "setWallet";
+const SET_COIN_WALLET = "setCoinWallet";
 const fetchMemberCoins = () => {
     return { type: FETCH_MEMBERCOINS };
+}
+const setWallet = (payload) => {
+    return {
+        type: SET_WALLET,
+        payload
+    }
+}
+const setCoinWallet = (payload) => {
+    return {
+        type: SET_COIN_WALLET,
+        payload
+    }
 }
 const fetchMemberCoinsSuccess = (payload, key) => {
     return {
@@ -96,7 +110,9 @@ const initialState = {
     coins: { all: { loading: false, data: [] }, gainers: { loading: false, data: [], losers: { loading: false, data: [] } } },
     selectedCoin: { loading: false, data: null },
     memberFiat: { loading: false, data: [] },
-    previewDetails: { loading: false, data: null }
+    previewDetails: { loading: false, data: null },
+    selectedWallet: null,
+    coinWallet: null
 }
 
 const getMemberCoins = () => {
@@ -154,10 +170,16 @@ const sellReducer = (state = initialState, action) => {
         case HANDLE_COINS_FETCH:
             state = { ...state, coins: { ...state.coins, [action.payload.key]: { loading: action.payload.loading, data: action.payload.data } } };
             return state;
+        case SET_WALLET:
+            state = { ...state, selectedWallet: action.payload };
+            return state;
+        case SET_COIN_WALLET:
+            state = { ...state, coinWallet: action.payload };
+            return state;
         default:
             return state;
     }
 }
 
 export default sellReducer;
-export { getMemberCoins, updateCoinDetails, updatesellsaveObject, fetchCoins, fetchSelectedCoinDetails, fetchMemberFiat, fetchPreview }
+export { getMemberCoins, updateCoinDetails, updatesellsaveObject, fetchCoins, fetchSelectedCoinDetails, fetchMemberFiat, fetchPreview, setWallet, setCoinWallet }
