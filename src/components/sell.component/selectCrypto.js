@@ -102,7 +102,7 @@ class SelectSellCrypto extends Component {
                 <div className="enter-val-container">
                     <div className="text-center">
                         <Input className="fs-36 fw-100 text-white-30 text-center enter-val p-0"
-                            placeholder="0.0"
+                            placeholder="0"
                             bordered={false}
                             prefix={this.state.isSwap?coinDetailData.coin:"USD"}
                             style={{ maxWidth: 206 }}
@@ -117,7 +117,7 @@ class SelectSellCrypto extends Component {
                 <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
                     <Translate value="min" content="min" component={Radio.Button} onClick={()=>this.clickMinamnt('min')}/>
                     <Translate value="half" content="half" component={Radio.Button}  onClick={()=>this.clickMinamnt('half')}/>
-                    <Translate value="all" content="all" component={Radio.Button}  onClick={()=>this.clickMinamnt('all')}/>
+                    <Translate value="max" content="all" component={Radio.Button}  onClick={()=>this.clickMinamnt('all')}/>
                 </Radio.Group>
                 {/* <WalletList /> */}
                 <Dropdown label="Wallets" name="currencyCode" type="Wallets" dropdownData={this.props.sellData.MemberFiat} value={this.state.sellSaveData.walletName} onValueChange={(Value)=>this.handleChange(Value)} field='WalletName'></Dropdown>
