@@ -130,9 +130,20 @@ const getMemberCoins = () => {
                     dispatch(fetchMemberCoinsRejected(error, 'MemberCoins'));
                 },
             ),
-
+            getMemberfiat().then(
+                (response) => {
+                    if (response.ok) {
+                        dispatch(fetchMemberCoinsSuccess(response.data, 'MemberFiat'));
+                    } else {
+                        dispatch(fetchMemberCoinsRejected(response.data, 'MemberFiat'));
+                    }
+                },
+                (error) => {
+                    dispatch(fetchMemberCoinsRejected(error, 'MemberFiat'));
+                },
+            )
         ]);
-        dispatch(fetchMemberFiat());
+        // dispatch(fetchMemberFiat());
         try {
         } catch (error) { }
     }
