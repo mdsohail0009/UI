@@ -11,7 +11,6 @@ class ToReceive extends Component {
     }
     onSearch = value => console.log(value);
     selectToggle = id => {
-        debugger;
         this.setState({ addLinks: id });
       };
     render() {

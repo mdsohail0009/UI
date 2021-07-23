@@ -67,10 +67,10 @@ const fetchCoins = (type) => {
 
     }
 }
-const fetchSelectedCoinDetails = (coin) => {
+const fetchSelectedCoinDetails = (coin,member_id) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "selectedCoin", loading: true, data: null }));
-        const response = await getSelectedCoinDetails(coin);
+        const response = await getSelectedCoinDetails(coin,member_id);
         if (response.ok) {
             dispatch(handleFetch({ key: "selectedCoin", loading: false, data: response.data }));
         } else {
@@ -78,11 +78,10 @@ const fetchSelectedCoinDetails = (coin) => {
         }
     }
 }
-const fetchMemberFiat = () => {
-
+const fetchMemberFiat = (member_id) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "memberFiat", loading: true, data: [] }));
-        const response = await getMemberfiat();
+        const response = await getMemberfiat(member_id);
         if (response.ok) {
             dispatch(handleFetch({ key: "memberFiat", loading: false, data: response.data }));
         } else {

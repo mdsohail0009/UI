@@ -31,7 +31,7 @@ class CryptoComponent extends Component {
         });
     }
     handleCoinSelection = (selectedCoin) => {
-        this.props.getCoinDetails(selectedCoin.walletCode);
+        this.props.getCoinDetails(selectedCoin.walletCode,this.props.member?.id);
         this.props.setSelectedCoin(selectedCoin);
         this.props.changeStep("step2");
     }
@@ -75,16 +75,16 @@ class CryptoComponent extends Component {
         )
     }
 }
-const connectStateToProps = ({ buySell, oidc }) => {
-    return { buySell }
+const connectStateToProps = ({ buySell, oidc,userConfig }) => {
+    return { buySell,member:userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
-        getCoinDetails: (coin) => {
-            dispatch(fetchSelectedCoinDetails(coin));
+        getCoinDetails: (coin,memid) => {
+            dispatch(fetchSelectedCoinDetails(coin,memid));
         },
         setSelectedCoin: (coinWallet) => {
             dispatch(setCoinWallet(coinWallet));

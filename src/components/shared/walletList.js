@@ -9,7 +9,7 @@ class WalletList extends Component {
         isArrow: true,
     }
     componentDidMount() {
-        this.props.getFiat();
+        this.props.getFiat(this.props.member?.id);
     }
     render() {
         return (<>
@@ -27,15 +27,15 @@ class WalletList extends Component {
         );
     }
 }
-const connectStateToProps = ({ buySell, sellData }) => {
-    return { buySell, sellData }
+const connectStateToProps = ({ buySell, sellData,userConfig }) => {
+    return { buySell, sellData,member:userConfig?.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
-        getFiat: () => dispatch(fetchMemberFiat())
+        getFiat: (id) => dispatch(fetchMemberFiat(id))
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(WalletList);

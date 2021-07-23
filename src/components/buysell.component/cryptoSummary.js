@@ -22,7 +22,7 @@ class Summary extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           isLoading:false
+            isLoading: false
         }
     }
     showPayCardDrawer = () => {
@@ -35,7 +35,7 @@ class Summary extends Component {
             const { id: fromWalletId, bankName: fromWalletName, currencyCode: fromWalletCode } = this.props.sellData?.selectedWallet;
             const obj = {
                 "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                "membershipId": "E3BF0F02-70E5-4575-8552-F8C49533B7C6", 
+                "membershipId": this.props?.member?.id,
                 fromWalletId,
                 fromWalletCode,
                 fromWalletName,
@@ -50,15 +50,14 @@ class Summary extends Component {
                 "totalAmount": this.props.sellData.previewDetails?.data?.amountNativeCurrency
 
             }
-            this.setState({isLoading:true});
-            debugger
+            this.setState({ isLoading: true });
             const response = await buyCrypto(obj);
             if (response.ok) {
                 this.props.changeStep('success')
             } else {
-                notification.error({ message: "Buy Crypto", description: response.data||response.originalError.message })
+                notification.error({ message: "Buy Crypto", description: response.data || response.originalError.message })
             }
-            this.setState({isLoading:false})
+            this.setState({ isLoading: false })
         } else {
             notification.warn({ message: "Terms&Conditions", description: "Please agree to terms&conditions" })
         }
@@ -110,8 +109,8 @@ class Summary extends Component {
         )
     }
 }
-const connectStateToProps = ({ buySell, oidc, sellData }) => {
-    return { buySell, sellData }
+const connectStateToProps = ({ buySell, oidc, sellData, userConfig }) => {
+    return { buySell, sellData, member: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
