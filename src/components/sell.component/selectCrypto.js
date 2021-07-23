@@ -10,8 +10,9 @@ import {getSellamnt} from '../../components/buysell.component/api'
 import { updatesellsaveObject } from '../buysell.component/crypto.reducer';
 
 class SelectSellCrypto extends Component {
-    state={
-        amnt: null, minamntValue: null, sellSaveData: {"id":"00000000-0000-0000-0000-000000000000","membershipId":"3fa85f64-5717-4562-b3fc-2c963f66afa6","fromWalletId":null,"fromWalletCode":null,"fromWalletName":null,"fromValue":0,"toWalletId":null,"toWalletCode":null,"toWalletName":null,"toValue":0,"description":null,"comission":0,"exicutedPrice":0,"totalAmount":0},isSwap:false
+    state = {
+        amnt: null, minamntValue: null, sellSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }, isSwap: false
+        , errorMessage: null
     }
     async setAmount(e,fn){
         this.state[fn]=e.target.value
@@ -30,21 +31,36 @@ class SelectSellCrypto extends Component {
             usdamnt=obj.coinValueinNativeCurrency;
             cryptoamnt=obj.coinBalance
         }else{
-            usdamnt=this.state.amnt
+            usdamnt=(obj.coinValueinNativeCurrency/2).toString();
+            cryptoamnt=(obj.coinBalance/2)
         }
         this.setState({amnt:usdamnt,minamntValue:cryptoamnt})
     }
     previewSellData(){
-         let obj = Object.assign({}, this.state.sellSaveData);
-         obj.membershipId="E3BF0F02-70E5-4575-8552-F8C49533B7C6";
-         obj.fromWalletId=this.props.sellData.coinDetailData.id
-         obj.fromWalletCode=this.props.sellData.coinDetailData.coin
-         obj.fromWalletName=this.props.sellData.coinDetailData.coinFullName
-         obj.fromValue=this.state.minamntValue
-         obj.toValue=this.state.amnt
-         obj.exicutedPrice=this.props.sellData.coinDetailData.oneCoinValue
-        this.props.changeStep('step11');
-        this.props.dispatch(updatesellsaveObject(obj))
+        this.setState({ ...this.state, errorMessage: '' })
+        let obj = Object.assign({}, this.state.sellSaveData);
+        if (!this.state.amnt) {
+            this.setState({ ...this.state, errorMessage: 'Enter amount' })
+        }
+        else if (!obj.toWalletId) {
+            this.setState({ ...this.state, errorMessage: 'Select wallet' })
+        } else if (!this.state.isSwap && this.state.amnt > this.props.sellData.coinDetailData.coinValueinNativeCurrency) {
+            this.setState({ ...this.state, errorMessage: 'Entered amount should be less than available amount' })
+        }
+        else if (this.state.isSwap && this.state.minamntValue > this.props.sellData.coinDetailData.coinBalance) {
+            this.setState({ ...this.state, errorMessage: 'Entered amount should be less than balance' })
+        } else {
+            this.setState({ ...this.state, errorMessage: '' })
+            obj.membershipId = "E3BF0F02-70E5-4575-8552-F8C49533B7C6";
+            obj.fromWalletId = this.props.sellData.coinDetailData.id
+            obj.fromWalletCode = this.props.sellData.coinDetailData.coin
+            obj.fromWalletName = this.props.sellData.coinDetailData.coinFullName
+            obj.fromValue = this.state.minamntValue
+            obj.toValue = this.state.amnt
+            obj.exicutedPrice = this.props.sellData.coinDetailData.oneCoinValue
+            this.props.changeStep('step11');
+            this.props.dispatch(updatesellsaveObject(obj))
+        }
     }
     handleChange(e) {
         let obj = Object.assign({}, this.state.sellSaveData);
@@ -69,6 +85,7 @@ class SelectSellCrypto extends Component {
         const {coinDetailData}=this.props.sellData;
         return (
             <>
+            {this.state.errorMessage!=null&& <Text className="fs-15 text-red crypto-name ml-8 mb-8">{this.state.errorMessage}</Text>}
                 {coinDetailData&&<Card className="crypto-card mb-36" bordered={false}>
                     <span className="d-flex align-center">
                         <span className="coin lg btc-white" />

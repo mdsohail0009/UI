@@ -16,20 +16,21 @@ const LinkValue = (props) => {
     )
 }
 class SellSummary extends Component {
-    state={sellpreviewData:{}}
+    state={sellpreviewData:{},loader:true}
     componentDidMount(){
         this.fetchPreviewData()
     }
     async fetchPreviewData(){
         let res =await getSellPreviewData(this.props.sellData.sellsaveObject);
         if (res.ok) {
-            this.setState({ sellpreviewData: res.data })
+            this.setState({ sellpreviewData: res.data,loader:false })
         }
     }
     refreshPage(){
         this.fetchPreviewData()
     }
     async saveSellData(){
+        this.setState({ ...this.state,loader:true })
         let obj = Object.assign({}, this.props.sellData.sellsaveObject)
         obj.fromValue = this.state.sellpreviewData.amount
         obj.toValue =this.state.sellpreviewData.amountNativeCurrency
@@ -38,6 +39,9 @@ class SellSummary extends Component {
         let res =await savesellData(obj);
         if (res.ok) {
             this.props.changeStep('success')
+            this.setState({ ...this.state,loader:false })
+        }else{
+            this.setState({ ...this.state,loader:false })
         }
     }
     render() {
@@ -74,6 +78,7 @@ class SellSummary extends Component {
                 </div>
                 <Translate size="large" block className="pop-btn" onClick={() => this.saveSellData()} content="confirm_now" component={Button} />
                 <Translate type="text" size="large" onClick={() => this.props.changeStep('step1')} className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block content="cancel" component={Button} />
+                {(this.state.loader)&&<div>Loading...</div>}
             </>
         )
     }
