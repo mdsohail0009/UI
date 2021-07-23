@@ -37,7 +37,6 @@ function Footer() {
       }
 
       const handleTheme = () => {
-          debugger;
         setIsDarkMode(previous => {
           switcher({ theme: previous ? themes.LHT : themes.DRT });
           return !previous;

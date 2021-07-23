@@ -19,7 +19,6 @@ class CallbackPage extends React.Component {
                 userManager={userManager}
                 successCallback={(user) => this.handleSuccess(user)}
                 errorCallback={error => {
-                    debugger
                     console.error(error);
                 }}
             >

@@ -9,7 +9,7 @@ import SendReceive from '../reducers/sendreceiveReducer'
 import SwapReducer from '../reducers/swapReducer';
 import BuyFiat from '../reducers/buyFiatReducer';
 import UserConfig from '../reducers/configReduser';
-import CryptoReducer from '../components/buysell.component/crypto.reducer';
+import sellReducer from '../components/buysell.component/crypto.reducer';
 
 const persistConfig = {
     key: "root",
@@ -22,7 +22,7 @@ const rootReducer = combineReducers({
     sendReceive: SendReceive,
     swapStore: SwapReducer,
     buyFiat: BuyFiat,
-    sellData:CryptoReducer,
+    sellData:sellReducer,
     userConfig:UserConfig
 })
 const reducer = persistReducer(persistConfig, rootReducer)
