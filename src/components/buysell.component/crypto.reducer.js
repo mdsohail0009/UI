@@ -1,5 +1,5 @@
 
-import { getCoins, getMemberfiat, getportfolio, getSelectedCoinDetails } from './api'
+import { getCoins, getMemberfiat, getportfolio, getPreview, getSelectedCoinDetails } from './api'
 const FETCH_MEMBERCOINS = "fetchMemberCoins";
 const FETCH_MEMBERCOINS_REJECTED = "fetchMemberCoinsRejected";
 const FETCH_MEMBERCOINS_SUCCESS = "fetchMemberCoinsSuccess";
@@ -64,6 +64,29 @@ const fetchSelectedCoinDetails = (coin) => {
         }
     }
 }
+const fetchMemberFiat = () => {
+
+    return async (dispatch) => {
+        dispatch(handleFetch({ key: "memberFiat", loading: true, data: [] }));
+        const response = await getMemberfiat();
+        if (response.ok) {
+            dispatch(handleFetch({ key: "memberFiat", loading: false, data: response.data }));
+        } else {
+            dispatch(handleFetch({ key: "memberFiat", loading: false, data: [], error: response.originalError.message }));
+        }
+    }
+}
+const fetchPreview = ({ coin, wallet, amount }) => {
+    return async (dispatch) => {
+        dispatch(handleFetch({ key: "previewDetails", loading: true, data: null }));
+        const response = await getPreview({ coin, currency: wallet.currencyCode, amount });
+        if (response.ok) {
+            dispatch(handleFetch({ key: "previewDetails", loading: false, data: response.data }));
+        } else {
+            dispatch(handleFetch({ key: "previewDetails", loading: false, data: null, error: response.originalError.message }));
+        }
+    }
+}
 const initialState = {
     isLoading: true,
     error: null,
@@ -71,7 +94,9 @@ const initialState = {
     MemberFiat: [],
     coinDetailData: {}, sellsaveObject: {},
     coins: { all: { loading: false, data: [] }, gainers: { loading: false, data: [], losers: { loading: false, data: [] } } },
-    selectedCoin: { loading: false, data: null }
+    selectedCoin: { loading: false, data: null },
+    memberFiat: { loading: false, data: [] },
+    previewDetails: { loading: false, data: null }
 }
 
 const getMemberCoins = () => {
@@ -90,19 +115,9 @@ const getMemberCoins = () => {
                     dispatch(fetchMemberCoinsRejected(error, 'MemberCoins'));
                 },
             ),
-            getMemberfiat().then(
-                (response) => {
-                    if (response.ok) {
-                        dispatch(fetchMemberCoinsSuccess(response.data, 'MemberFiat'));
-                    } else {
-                        dispatch(fetchMemberCoinsRejected(response.data, 'MemberFiat'));
-                    }
-                },
-                (error) => {
-                    dispatch(fetchMemberCoinsRejected(error, 'MemberFiat'));
-                },
-            ),
+
         ]);
+        dispatch(fetchMemberFiat());
         try {
         } catch (error) { }
     }
@@ -134,4 +149,4 @@ const sellReducer = (state = initialState, action) => {
 }
 
 export default sellReducer;
-export { getMemberCoins, updateCoinDetails, updatesellsaveObject, fetchCoins, fetchSelectedCoinDetails }
+export { getMemberCoins, updateCoinDetails, updatesellsaveObject, fetchCoins, fetchSelectedCoinDetails, fetchMemberFiat, fetchPreview }
