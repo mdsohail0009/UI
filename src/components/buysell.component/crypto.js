@@ -7,7 +7,7 @@ import SellToggle from '../sell.component/sellCrypto'
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import { fetchSelectedCoinDetails } from './crypto.reducer';
+import { fetchSelectedCoinDetails, setCoinWallet } from './crypto.reducer';
 
 const LinkValue = (props) => {
     return (
@@ -32,12 +32,13 @@ class CryptoComponent extends Component {
     }
     handleCoinSelection = (selectedCoin) => {
         this.props.getCoinDetails(selectedCoin.walletCode);
+        this.props.setSelectedCoin(selectedCoin);
         this.props.changeStep("step2");
     }
     render() {
         const { TabPane } = Tabs;
         const link = <LinkValue content="deposit" />;
-        const { Title, Paragraph, Text } = Typography;
+        const { Title, Paragraph } = Typography;
         const { isBuy } = this.state;
         return (
             <>
@@ -84,6 +85,9 @@ const connectDispatchToProps = dispatch => {
         },
         getCoinDetails: (coin) => {
             dispatch(fetchSelectedCoinDetails(coin));
+        },
+        setSelectedCoin: (coinWallet) => {
+            dispatch(setCoinWallet(coinWallet));
         }
     }
 }

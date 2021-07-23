@@ -32,5 +32,8 @@ const fetchCurrencyConvertionValue = ({ from, to, value, isCrypto }) => {
 const getPreview = ({ coin, currency = "USD", amount }) => {
     return apiClient.get(ApiControllers.exchange + `Preview?coin=${coin}&currency=${currency}&amount=${amount}`)
 }
-export { getportfolio, getCryptos, getMemberfiat, getSellamnt, getCoins, getSelectedCoinDetails, fetchCurrencyConvertionValue, getSellPreviewData, savesellData, getPreview }
+const buyCrypto = (obj) => {
+    return apiClient.post(ApiControllers.exchange + `BuyCrypto`, obj);
+}
+export { getportfolio, getCryptos, getMemberfiat, getSellamnt, getCoins, getSelectedCoinDetails, fetchCurrencyConvertionValue, getSellPreviewData, savesellData, getPreview,buyCrypto }
 
