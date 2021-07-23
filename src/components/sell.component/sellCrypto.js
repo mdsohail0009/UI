@@ -35,6 +35,7 @@ class SellToggle extends Component {
                         </div>
                     </Card>)}
                 </div>}
+                {(this.props.sellData.MemberCoins.length==0||this.props.sellData.MemberCoins==null)&&<div>Loading...</div>}
             </>
         )
     }
