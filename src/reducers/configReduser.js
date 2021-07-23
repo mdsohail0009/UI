@@ -1,3 +1,5 @@
+import apiCalls from "../api/apiCalls";
+
 const USEER_INFO = "userInfo";
 
 const userInfo = (payload) => {
@@ -7,6 +9,15 @@ const userInfo = (payload) => {
     }
 };
 
+const getmemeberInfo = (useremail) => {
+    return async (dispatch) => {
+        apiCalls.getMember(useremail).then((res) => {
+            if(res.ok){
+            dispatch(userInfo(res.data))
+            }
+        });
+    }
+}
 
 let initialState = {
     userProfileInfo:null
@@ -22,4 +33,4 @@ const UserConfig = (state = initialState, action) => {
 }
 
 export default UserConfig;
-export { userInfo };
+export { userInfo, getmemeberInfo };

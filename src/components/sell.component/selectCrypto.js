@@ -11,26 +11,7 @@ import { updatesellsaveObject } from '../buysell.component/crypto.reducer';
 
 class SelectSellCrypto extends Component {
     state={
-        amnt: null, minamntValue: null, sellSaveData: {
-            "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-            "membershipId": "2E8E3877-BC8E-466D-B62D-F3F8CCBBD019",
-            "walletId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-            "walletName":null,
-            "walletCode": "",
-            "walletAddress": "",
-            "description": "",
-            "filledvalue": 0,
-            "excuatedPrice": 0,
-            "totalAmount": 0,
-            "type": "",
-            "orderNo": "",
-            "date": new Date(),
-            "comission": 0,
-            "amountInUsd": 0,
-            "isFiat": false,
-            "walletNameFrom": "",
-            "txId": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-        },isSwap:false
+        amnt: null, minamntValue: null, sellSaveData: {"id":"00000000-0000-0000-0000-000000000000","membershipId":"3fa85f64-5717-4562-b3fc-2c963f66afa6","fromWalletId":null,"fromWalletCode":null,"fromWalletName":null,"fromValue":0,"toWalletId":null,"toWalletCode":null,"toWalletName":null,"toValue":0,"description":null,"comission":0,"exicutedPrice":0,"totalAmount":0},isSwap:false
     }
     async setAmount(e,fn){
         this.state[fn]=e.target.value
@@ -54,30 +35,26 @@ class SelectSellCrypto extends Component {
         this.setState({amnt:usdamnt,minamntValue:cryptoamnt})
     }
     previewSellData(){
-        let obj={"id":"3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "membershipId":"2E8E3877-BC8E-466D-B62D-F3F8CCBBD019",
-        "walletId":"3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        "walletName":"",
-        "walletCode":"",
-        "walletAddress":"",
-        "description":"",
-        "filledvalue":0,
-        "excuatedPrice":0,
-        "totalAmount":0,
-        "type":"",
-        "orderNo":"",
-        "date":new Date(),
-        "comission":0,
-        "amountInUsd":0,
-        "isFiat":false,
-        "walletNameFrom":"",
-        "txId":"3fa85f64-5717-4562-b3fc-2c963f66afa6"}
+         let obj = Object.assign({}, this.state.sellSaveData);
+         obj.membershipId="E3BF0F02-70E5-4575-8552-F8C49533B7C6";
+         obj.fromWalletId=this.props.sellData.coinDetailData.id
+         obj.fromWalletCode=this.props.sellData.coinDetailData.coin
+         obj.fromWalletName=this.props.sellData.coinDetailData.coinFullName
+         obj.fromValue=this.state.minamntValue
+         obj.toValue=this.state.amnt
+         obj.exicutedPrice=this.props.sellData.coinDetailData.oneCoinValue
         this.props.changeStep('step11');
         this.props.dispatch(updatesellsaveObject(obj))
     }
     handleChange(e) {
-        // let obj=Object.assign({},this.state);
-        // this.setState({...this.state})
+        let obj = Object.assign({}, this.state.sellSaveData);
+        for (var k in this.props.sellData.MemberFiat) {
+            if (this.props.sellData.MemberFiat[k].currencyCode == e) {
+                obj.toWalletId=this.props.sellData.MemberFiat[k].id;
+                obj.toWalletCode=this.props.sellData.MemberFiat[k].currencyCode;
+            }
+        }
+        this.setState({ ...this.state,sellSaveData:obj })
     }
     async swapChange(value){
         let obj=Object.assign({},this.state);
@@ -126,7 +103,7 @@ class SelectSellCrypto extends Component {
                     <Translate value="all" content="all" component={Radio.Button}  onClick={()=>this.clickMinamnt('all')}/>
                 </Radio.Group>
                 {/* <WalletList /> */}
-                <Dropdown label="Wallets" name="currencyCode" type="Wallets" dropdownData={this.props.sellData.MemberFiat} value={this.state.sellSaveData.walletName} onValueChange={()=>this.handleChange()} field='WalletName'></Dropdown>
+                <Dropdown label="Wallets" name="currencyCode" type="Wallets" dropdownData={this.props.sellData.MemberFiat} value={this.state.sellSaveData.walletName} onValueChange={(Value)=>this.handleChange(Value)} field='WalletName'></Dropdown>
                 <Translate content="preview" component={Button} size="large" block className="pop-btn" onClick={() => {this.previewSellData()}} />
             </>
 

@@ -49,4 +49,4 @@ const authReducer = (state = initialState, action) => {
 }
 
 export default authReducer;
-export { userLogout, profileSuccess,setToken };
+export { userLogout, profileSuccess, setToken };
