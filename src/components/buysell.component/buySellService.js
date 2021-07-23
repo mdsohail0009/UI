@@ -1,7 +1,6 @@
-import { fetchCurrencyConvertionValue } from "./api"
+import { fetchCurrencyConvertionValue,getMemberfiat } from "./api"
 
 export const convertCurrency = async ({ from, to, value, isCrypto }) => {
-    debugger
     const response = await fetchCurrencyConvertionValue({ from, to, value, isCrypto });
     if (response.ok) {
         return response.data;
