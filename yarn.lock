@@ -2184,6 +2184,10 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
+"@sumsub/websdk@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@sumsub/websdk/-/websdk-1.1.0.tgz#8f0a3f070ccd1fda4039d1c62fb9167d31b00c13"
+  integrity sha512-H/jWtqwJpOStDJDzuud8+qO6DY4PNrgat2jWzOMgX7m2CQ8lB3cDGZ6j6YD+QbKZoTnHX7oSeCCHOUpkIhGLXg==
 
 "@surma/rollup-plugin-off-main-thread@^1.1.1":
   version "1.4.2"
