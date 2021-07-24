@@ -82,7 +82,7 @@ class FaitWithdrawal extends Component {
             <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
           </div>
           <Input className="cust-input" placeholder="Bank name" />
-          <div className="d-flex">
+          <div className="d-flex"> 
             <Translate
               className="input-label"
               content="Bank_address1"

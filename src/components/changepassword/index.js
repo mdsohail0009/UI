@@ -1,5 +1,6 @@
 
 import { Typography, Input, Button, Select, Switch, Form, notification, Alert } from 'antd';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
@@ -64,34 +65,51 @@ const ChangePassword = ({ profile, onSubmit, info }) => {
         <Translate
           content="Choose_a_unique_password_to_protect_your_account"
           component={Paragraph}
-          className="mt-36 mb-4 fs-14 text-white-30 fw-400"
+          className="mt-36 mb-16 fs-14 text-white-30 fw-400"
         />
+        
         <Form.Item
-          className="custom-forminput mb-8"
+          className="custom-forminput mb-16"
           required
           name="oldPassword"
           rules={[
             { required: true, message: "Please enter old password" },
           ]}
         >
-          <Input
+          <div className="d-flex"> 
+            <Translate
+              className="text-white input-label mb-0"
+              content="current_password"
+              component={Text}
+            />
+            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+          </div>
+          <Input.Password 
             type="password"
             placeholder="Current Password"
-            className="cust-input mb-8"
+            className="cust-input mb-8" iconRender={visible => (visible ? <EyeTwoTone  className="text-white" /> : <EyeInvisibleOutlined className="text-white" />)}
           />
         </Form.Item>
         <Form.Item
           name="newPassword"
-          className="custom-forminput mb-8"
+          className="custom-forminput mb-16"
           required
           rules={[
             { required: true, message: "Please enter new password" },
           ]}
         >
-          <Input
+          <div className="d-flex"> 
+            <Translate
+              className="text-white input-label mb-0"
+              content="new_password"
+              component={Text}
+            />
+            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+          </div>
+          <Input.Password 
             type="password"
             placeholder="New Password"
-            className="cust-input mb-8"
+            className="cust-input mb-8" iconRender={visible => (visible ? <EyeTwoTone  className="text-white" /> : <EyeInvisibleOutlined className="text-white" />)}
           />
         </Form.Item>
         <Form.Item
@@ -116,13 +134,21 @@ const ChangePassword = ({ profile, onSubmit, info }) => {
             }),
           ]}
         >
-          <Input
+          <div className="d-flex"> 
+            <Translate
+              className="text-white input-label mb-0"
+              content="confirm_password"
+              component={Text}
+            />
+            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+          </div>
+          <Input.Password 
             type="password"
             placeholder="Confirm Password"
-            className="cust-input mb-8"
+            className="cust-input mb-8" iconRender={visible => (visible ? <EyeTwoTone  className="text-white" /> : <EyeInvisibleOutlined className="text-white" />)}
           />
         </Form.Item>
-        <div className="pay-list custom-switch p-0">
+        {/* <div className="pay-list custom-switch p-0">
           <div>
             <Translate
               className="fw-400 fs-16 text-white-30"
@@ -148,7 +174,7 @@ const ChangePassword = ({ profile, onSubmit, info }) => {
               className="custom-toggle ml-12"
             />
           </div>
-        </div>
+        </div> */}
         <Form.Item className="mb-0 mt-16">
           <Button
             loading={changePasswordResponse.isLoading}
@@ -162,8 +188,8 @@ const ChangePassword = ({ profile, onSubmit, info }) => {
         </Form.Item>
       </Form>
     </div>
-     <a href={process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/EnableAuthenticator"}>2FA Enable</a>
-     <a href={process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/Disable2faWarning"}>2FA Disable</a> 
+     {/* <a href={process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/EnableAuthenticator"}>2FA Enable</a>
+     <a href={process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/Disable2faWarning"}>2FA Disable</a>  */}
   </>
   );
 }
