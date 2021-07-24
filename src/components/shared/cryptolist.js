@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { List, Drawer, Typography } from 'antd';
+import { List, Drawer, Typography, Input } from 'antd';
 import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
 import SelectCrypto from '../sell.component/selectCrypto';
@@ -12,7 +12,7 @@ class CryptoList extends Component {
         initLoading: true, coinsList: []
     }
     componentDidMount() {
-        this.props.dispatch(fetchCoins(this.props.coinType||"all"));
+        this.props.dispatch(fetchCoins(this.props.coinType || "all"));
     }
     renderContent = () => {
         return <SelectCrypto />
@@ -28,7 +28,8 @@ class CryptoList extends Component {
         })
     }
     render() {
-        const { Paragraph } = Typography
+        const { Paragraph } = Typography;
+        const { Search } = Input;
         const loadMore =
             !this.props.sellData?.coins[this.props.coinType]?.loading ? (
                 <div
@@ -44,6 +45,7 @@ class CryptoList extends Component {
                 </div>
             ) : null;
         return (<>
+            <Search placeholder="Search Currency" size="middle" bordered={false} enterButton className="mb-16" />
             <List
                 itemLayout="horizontal"
                 dataSource={this.props.sellData?.coins[this.props.coinType]?.data}
@@ -52,7 +54,7 @@ class CryptoList extends Component {
                 loading={this.props.sellData?.coins[this.props.coinType]?.loading}
                 renderItem={item => (
                     <List.Item>
-                        <Link onClick={() => { this.props.isShowDrawer ? this.showBuyDrawer() : (this.props.onCoinSelected?this.props.onCoinSelected(item):this.props.dispatch(setStep("step2"))) }}>
+                        <Link onClick={() => { this.props.isShowDrawer ? this.showBuyDrawer() : (this.props.onCoinSelected ? this.props.onCoinSelected(item) : this.props.dispatch(setStep("step2"))) }}>
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.walletCode} mr-4`} />}
                                 title={<div className="wallet-title">{item.walletCode}</div>}
