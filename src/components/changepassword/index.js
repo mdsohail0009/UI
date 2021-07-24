@@ -84,10 +84,10 @@ const ChangePassword = ({ profile, onSubmit, info }) => {
             />
             <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
           </div>
-          <Input
+          <Input.Password
             type="password"
             placeholder="Current Password"
-            className="text-left cust-input mb-8"
+            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
         <Form.Item
@@ -106,10 +106,10 @@ const ChangePassword = ({ profile, onSubmit, info }) => {
             />
             <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
           </div>
-          <Input
+          <Input.Password
             type="password"
             placeholder="New Password"
-            className="text-left cust-input mb-8"
+            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
         <Form.Item
@@ -142,10 +142,10 @@ const ChangePassword = ({ profile, onSubmit, info }) => {
             />
             <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
           </div>
-          <Input
+          <Input.Password
             type="password"
             placeholder="Confirm Password"
-            className="text-left cust-input mb-8" 
+            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
         {/* <div className="pay-list custom-switch p-0">
