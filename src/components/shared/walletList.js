@@ -18,7 +18,7 @@ class WalletList extends Component {
                     <Select loading={this.props?.sellData?.memberFiat?.loading} defaultValue="Select Wallet" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={false} suffixIcon={<span className="icon md uparrow" />}
                         onChange={(e) => this.props.onWalletSelect ? this.props.onWalletSelect(e) : ""}>
                         {this.props.sellData.memberFiat?.data?.map((item, idx) =>
-                            <Option key={idx} value={item.id}>{item.currencyCode+" Wallet"}</Option>
+                            <Option key={idx} value={item.id}>{item.currencyCode+` Wallet Available:(${item.currencyCode} ${item.avilable})` }</Option>
                         )}
                     </Select>
                 </form>

@@ -5,7 +5,7 @@ import WalletList from '../shared/walletList';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-import { convertCurrency } from './buySellService';
+import { convertCurrency, validatePreview } from './buySellService';
 import { fetchPreview, setWallet } from './crypto.reducer';
 import Loader from '../../Shared/loader';
 class SelectCrypto extends Component {
@@ -37,19 +37,19 @@ class SelectCrypto extends Component {
         this.props.setWallet(selectedWallet);
     }
     handlePreview = () => {
-        if (!this.state.swapValues.localValue||!this.state.swapValues.cryptoValue) {
-            notification.error({ message: "Amount Required", description: "Please enter amount" });
-            return;
-        } else if (!this.state.selectedWallet) {
-            notification.error({ message: "Select Wallet", description: "Please slect wallet" });
+        const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
+        const { buyMin, buyMax, coin } = this.props.sellData?.selectedCoin?.data;
+        const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin })
+        if(!_vaidator.valid){
+            notification.error({message:"Buy crypto",description:_vaidator.message});
             return;
         }
-        this.props.preview(this.state.selectedWallet, this.props.sellData?.selectedCoin?.data?.coin, this.state.swapValues?.isSwaped?this.state.swapValues.cryptoValue:this.state.swapValues.localValue);
+        this.props.preview(this.state.selectedWallet, coin, isSwaped ? cryptoValue : localValue);
         this.props.changeStep('step3');
     }
     render() {
-        if(this.props.sellData?.selectedCoin.loading){
-            return <Loader/>
+        if (this.props.sellData?.selectedCoin.loading) {
+            return <Loader />
         }
         const { Paragraph, Text } = Typography;
         const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
@@ -58,7 +58,7 @@ class SelectCrypto extends Component {
             <>
                 <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
-                        <span className="coin lg eth-white" />
+                        <span className={`coin lg ${coin?.toLowerCase()}-white`} />
                         <Text className="fs-24 text-purewhite crypto-name ml-8">{coin}</Text>
                     </span>
                     <div className="crypto-details">
