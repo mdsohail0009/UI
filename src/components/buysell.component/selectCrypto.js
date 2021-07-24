@@ -14,8 +14,8 @@ class SelectCrypto extends Component {
         this.state = {
             buyDrawer: false,
             swapValues: {
-                localValue: 0,
-                cryptoValue: 0,
+                localValue: '0.00',
+                cryptoValue: '0.00',
                 isSwaped: false,
             },
             selectedWallet: null
@@ -40,8 +40,8 @@ class SelectCrypto extends Component {
         const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
         const { buyMin, buyMax, coin } = this.props.sellData?.selectedCoin?.data;
         const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin })
-        if(!_vaidator.valid){
-            notification.error({message:"Buy crypto",description:_vaidator.message});
+        if (!_vaidator.valid) {
+            notification.error({ message: "Buy crypto", description: _vaidator.message });
             return;
         }
         this.props.preview(this.state.selectedWallet, coin, isSwaped ? cryptoValue : localValue);
@@ -69,22 +69,29 @@ class SelectCrypto extends Component {
                         </div>
                     </div>
                 </Card>
-                <div className="enter-val-container">
-                    <div className="text-center">
-                        <Input className="fs-36 fw-100 text-white-30 text-center enter-val p-0"
+                <div className="p-relative">
+                    <div className="enter-val-container">
+                        <Text className="fs-36 fw-100 text-white-30">{!isSwaped ? "USD" : coin}</Text>
+                        <Input className="fw-100 text-white-30 enter-val p-0"
                             placeholder="0.00"
                             bordered={false}
-                            prefix={!isSwaped ? "USD" : coin}
-                            style={{ maxWidth: 160 }}
+                            style={{ width: 90, lineHeight: '55px', fontSize: 36, paddingRight: 30 }}
+                            //prefix={!isSwaped ? "USD" : coin}
+                            onBlur={(e) => e.currentTarget.value.length == 0 ? e.currentTarget.style.width = "100px" : ''}
+                            onKeyPress={(e) => {
+                                e.currentTarget.style.width = ((e.currentTarget.value.length + 6) * 15) + 'px'
+                                e.currentTarget.value.length >= 8 ? e.currentTarget.style.fontSize = "30px" : e.currentTarget.style.fontSize = "36px"
+                            }}
                             value={isSwaped ? cryptoValue : localValue}
                             onChange={(e) => {
                                 this.setState({ ...this.state, swapValues: { ...this.state.swapValues, [isSwaped ? "cryptoValue" : "localValue"]: e.currentTarget.value } }, () => this.fetchConvertionValue());
 
                             }}
                         />
-                        <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{isSwaped ? localValue : cryptoValue} {isSwaped ? "USD" : coin}</Text>
+
                     </div>
-                    <span className="mt-24 val-updown">
+                    <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{isSwaped ? localValue : cryptoValue} {isSwaped ? "USD" : coin}</Text>
+                    <span className="mt-16 val-updown">
                         <span onClick={() => !isSwaped ? this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: true } }) : ""} className="icon sm uparw-o-white d-block c-pointer mb-4" /><span onClick={() => isSwaped ? this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: false } }) : ""} className="icon sm dwnarw-o-white d-block c-pointer" />
                     </span>
                 </div>

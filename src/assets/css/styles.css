@@ -152,7 +152,7 @@ line-height: 16px;min-width:90px}
 .crypto-card.fiatcard{background-image: url(../images/fiatcard-bg.png);background-size: cover;border-radius: 1.8rem;}
 .crypto-card-top{display: flex; align-items: center;justify-content: space-between;}
 .crypto-card-top{align-items: flex-start;}
-.enter-val-container{display: flex; align-items: flex-start;justify-content: center; position: relative;}
+.enter-val-container{display: flex; align-items: flex-start;justify-content: center;}
 .crypto-details{display: flex;justify-content: space-between;align-items: center;}
 .crypto-details .crypto-amount{text-align: right;font-size: 16px;font-weight: 200;color: #FFDB1A;}
 .enter-val{width: auto;}
@@ -229,6 +229,10 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .crypto-search .anticon-search{font-size: 18px; color: var(--textWhite);margin-right: 12px !important;}
 .confirm-icon{width: 124px; height: 124px; margin-bottom:50px;}
 .loader{position: fixed;top: 0; right: 0; bottom: 0; left: 0;display: flex; align-items: center;font-size: 36px;color: var(--textWhite);background-color: var(--bgDarkGrey);justify-content: center;}
+.select-drpdwn{background-color: var(--bgGloom);margin-right: 30px;padding: 24px 0;border-radius: 10px;}
+.select-drpdwn .ant-select-item{padding: 10px 24px;color: var(--textWhite);}
+.select-drpdwn .ant-select-item:hover, .select-drpdwn .ant-select-item.ant-select-item-option-active, .select-drpdwn .ant-select-item.ant-select-item-option-selected{background-color: var(--bgDarkGrey);}
+.cust-input.ant-select{padding: 0 !important;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}
@@ -301,7 +305,6 @@ height: 58px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .item-wrapper{flex-grow:0; flex-shrink:0;flex-basis:calc(100% - 10px); }
     .copyright{display: none !important;}
     .swap-subtitlte{width:250px}
-    .enter-val-container{margin-right: 35px; margin-bottom: 36px;}
     .buysell-toggle{ margin: 0 50px 50px !important;}
     .buysell-toggle .ant-radio-button-wrapper{min-width:174px !important; }
     .tlv-header{border-radius: 0 0 30px 30px;}
