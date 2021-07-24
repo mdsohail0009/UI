@@ -1,7 +1,12 @@
+import { getportfolio } from '../components/swap.component/api'
 const SET_STEP = "setStep";
 const CLEAR_STEP = "clearStep"
 const UPDATE_COINDETAILS = "updateCoinDetails";
 const UPDATE_RECEIVECOINDETAILS = "updateReceiveCoinDetails";
+const UPDATE_FROMCOININPUTVALUE = "updateFromCoinInputValue";
+const FETCH_MEMBERCOINS_REJECTED = "fetchMemberCoinsRejected";
+const FETCH_MEMBERCOINS_SUCCESS = "fetchMemberCoinsSuccess";
+const FETCH_MEMBERCOINS = "fetchMemberCoins";
 
 const setStep = (payload) => {
     return {
@@ -23,6 +28,36 @@ const updateReceiveCoinDetails = (payload) => {
     return { type: UPDATE_RECEIVECOINDETAILS, payload }
 }
 
+const updateFromCoinInputValue = (payload) => {
+    return { type: UPDATE_FROMCOININPUTVALUE, payload }
+}
+const fetchMemberCoins = () => {
+    return { type: FETCH_MEMBERCOINS };
+}
+const fetchMemberCoinsSuccess = (payload, key) => {
+    return {
+        type: FETCH_MEMBERCOINS_SUCCESS,
+        payload: { data: payload, key }
+    }
+}
+const fetchMemberCoinsRejected = (paylaod) => {
+    return {
+        type: FETCH_MEMBERCOINS_REJECTED,
+        payload: paylaod
+    }
+}
+
+const getMemberCoins = () => {
+    return async (dispatch) => {
+        dispatch(fetchMemberCoins({ key: "MemberCoins", loading: true, data: [] }));
+        const response = await getportfolio();
+        if (response.ok) {
+            dispatch(fetchMemberCoinsSuccess(response.data, 'MemberCoins'));
+        } else {
+            dispatch(fetchMemberCoinsRejected(response.data, 'MemberCoins'));
+        }
+    }
+}
 
 let initialState = {
     stepcode: 'step1',
@@ -39,8 +74,10 @@ let initialState = {
         toreceive: 'swap_desc'
     },
     coinDetailData: {},
-    coinReceiveDetailData: {}
-
+    coinReceiveDetailData: {},
+    fromCoinInputValue:null,
+    isLoading: true,
+    MemberCoins: [],
 }
 
 const SwapReducer = (state = initialState, action) => {
@@ -55,10 +92,21 @@ const SwapReducer = (state = initialState, action) => {
             return { ...state, coinDetailData: action.payload };
         case UPDATE_RECEIVECOINDETAILS:
             return { ...state, coinReceiveDetailData: action.payload };
+        case UPDATE_FROMCOININPUTVALUE:
+            return { ...state, fromCoinInputValue: action.payload };
+        case FETCH_MEMBERCOINS:
+            state = { ...state, isLoading: true }
+            return state;
+        case FETCH_MEMBERCOINS_SUCCESS:
+            state = { ...state, [action.payload.key]: action.payload.data, isLoading: false };
+            return state;
+        case FETCH_MEMBERCOINS_REJECTED:
+            state = { ...state, isLoading: false, error: { [action.payload.key]: action.payload.data } }
+            return state;
         default:
             return state;
     }
 }
 
 export default SwapReducer;
-export { setStep, clearStep , updateCoinDetails , updateReceiveCoinDetails }
+export { setStep, clearStep , updateCoinDetails , updateReceiveCoinDetails , updateFromCoinInputValue , getMemberCoins }

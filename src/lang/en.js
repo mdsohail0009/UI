@@ -266,5 +266,6 @@ export default {
   summar_info: 'Summary Information',
   current_password: 'Current Password',
   new_password: 'New Password',
-  confirm_password: 'Confirm Password'
+  confirm_password: 'Confirm Password',
+  convert : 'Convert'
 }

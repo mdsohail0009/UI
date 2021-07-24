@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import { Typography, Button, Input, List } from 'antd';
-import config from '../../config/config';
 import Translate from 'react-translate-component';
-import { setStep , updateReceiveCoinDetails } from '../../reducers/swapReducer';
+import { setStep , updateReceiveCoinDetails , getMemberCoins } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
-import { getMemberCoins } from '../buysell.component/crypto.reducer'
 
 class ToReceive extends Component {
     state = {
         addLinks: null,
     }
     componentDidMount(){
-        this.state.MemberCoins = this.props.sellData.MemberCoins;
+        this.state.MemberCoins = this.props.swapStore.MemberCoins;
         this.props.fetchMemberCoins()
     }
-    onSearch(searchValue) {
-        let matches = this.props.sellData.MemberCoins.filter(v => v.coin.toLowerCase().includes(searchValue.toLowerCase()));
+    onSearch(e) {
+        var searchValue = e.target.value;
+        let matches = this.props.swapStore.MemberCoins.filter(v => v.coin.toLowerCase().includes(searchValue.toLowerCase()));
         this.setState({ ...this.state, MemberCoins: matches});
     }
     selectToggle = id => {
@@ -27,8 +26,8 @@ class ToReceive extends Component {
         const {addLinks }= this.state;
 
         return (<>
-            <Search placeholder="Search for a Currency" onSearch={value=>this.onSearch(value)} className="crypto-search fs-14" />
-            <Paragraph className="text-upper fs-14 text-center text-white-30  mt-36 fw-500 mb-0"><span className="icon sm leftarrow mr-12 mb-4" />To Receive</Paragraph>
+            <Search placeholder="Search for a Currency" onChange={value=>this.onSearch(value)} className="crypto-search fs-14" />
+            <Paragraph className="text-upper fs-14 text-center text-white-30 mt-36 fw-500 mb-0"><span className="icon sm leftarrow mr-12 mb-4" />To Receive</Paragraph>
             <div className="sellcrypto-container auto-scroll">
             <List
                     itemLayout="horizontal"
@@ -40,7 +39,7 @@ class ToReceive extends Component {
                          onClick={() => {this.selectToggle(item.id);this.props.dispatch(updateReceiveCoinDetails(item))}} >
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin} mr-4`} />}
-                                title={<div className="wallet-title">{item.coin}</div>}
+                                title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}
                             />
                         </List.Item>
                     )}
@@ -51,8 +50,8 @@ class ToReceive extends Component {
         </>)
     }
 }
-const connectStateToProps = ({ swapStore, sellData }) => {
-    return { swapStore,sellData }
+const connectStateToProps = ({ swapStore }) => {
+    return { swapStore }
 }
 const connectDispatchToProps = dispatch => {
     return {

@@ -264,4 +264,6 @@ export default {
   Yes: 'Ya',
   change_password: "Tukar kata laluan",
   summar_info: 'Maklumat Ringkasan',
+  confirm_password: 'Sahkan Kata Laluan',
+  convert : 'Tukarkan'
 }

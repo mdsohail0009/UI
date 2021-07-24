@@ -264,4 +264,6 @@ export default {
   Yes: '是的',
   change_password: "更改密码",
   summar_info: '概要信息',
+  confirm_password: '确认密码',
+  convert : '兌換'
 }

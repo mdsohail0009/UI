@@ -14,10 +14,10 @@ class SuccessMessage extends Component {
                 <div className="success-pop text-center">
                     <img src={success} className="confirm-icon" />
                     <Translate className="text-white-30 fs-36 fw-200 mb-4" content="transaction_submitted" component={Title} />
-                    <Translate component={Paragraph} className="fs-16 text-white-30 fw-200 mb-36" content="swapped_btc" />
-                    <Space direction="vertical" size="large">
+                    {/* <Translate component={Paragraph} className="fs-16 text-white-30 fw-200 mb-36" content="swapped_btc" /> */}
+                    {/* <Space direction="vertical" size="large">
                         <Link onClick={() => this.props.dispatch(setStep("step1"))} className="f-16 text-white-30 mt-16 text-underline">View on BscScan<span className="icon md diag-arrow ml-4" /></Link>
-                    </Space>
+                    </Space> */}
                 </div>
             </>
         );
