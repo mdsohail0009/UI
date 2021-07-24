@@ -77,7 +77,7 @@ class SelectCrypto extends Component {
                 </Card>
                 <div className="p-relative">
                     <div className="enter-val-container">
-                        <Text className="fs-36 fw-100 text-white-30">{!isSwaped ? "USD" : coin}</Text>
+                        <Text className="fs-36 fw-100 text-white-30 mr-4">{!isSwaped ? "USD" : coin}</Text>
                         <Input className="fw-100 text-white-30 enter-val p-0"
                             placeholder="0.00"
                             bordered={false}

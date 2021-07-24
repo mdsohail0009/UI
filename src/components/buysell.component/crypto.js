@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Radio, Tabs } from 'antd';
+import { Typography, Radio, Tabs, Input } from 'antd';
 import config from '../../config/config';
 import Translate from 'react-translate-component';
 import CryptoList from '../shared/cryptolist';
@@ -41,11 +41,13 @@ class CryptoComponent extends Component {
     }
     render() {
         const { TabPane } = Tabs;
+        const { Search } = Input;
         const link = <LinkValue content="deposit" />;
         const { Title, Paragraph } = Typography;
         const { isBuy } = this.state;
         return (
             <>
+                {this.props.showSearch && <Search placeholder="Search for a Currency" onSearch={value => this.onSearch(value)} className="crypto-search fs-14 mb-24" />}
                 <Radio.Group
                     defaultValue={1}
                     onChange={this.handleBuySellToggle}
