@@ -22,6 +22,7 @@ class FaitWithdrawal extends Component {
     const link = <LinkValue content="terms_service" />;
     return (
       <>
+        <div className="suisfiat-height auto-scroll">
         <form className="form">
           <Translate
             content="Beneficiary_BankDetails"
@@ -167,6 +168,7 @@ class FaitWithdrawal extends Component {
             />
           </div>
         </form>
+        </div>
         <Translate
           content="confirm_btn_text"
           component={Button}

@@ -83,7 +83,7 @@ class SwapCoins extends Component {
                         Price 1{coinDetailData.coin} = {this.state.price} {coinReceiveDetailData.coin}
                     </Paragraph>
                 </div>
-                <Translate size="large" block className="pop-btn" style={{ marginTop: '100px' }} content="preview_swap" component={Button} onClick={() => this.props.changeStep('step2')} />
+                <Translate size="large" block className="pop-btn" style={{ marginTop: '130px' }} content="preview_swap" component={Button} onClick={() => this.props.changeStep('step2')} />
             </div>
         )
     }
