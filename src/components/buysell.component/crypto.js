@@ -41,13 +41,12 @@ class CryptoComponent extends Component {
     }
     render() {
         const { TabPane } = Tabs;
-        const { Search } = Input;
         const link = <LinkValue content="deposit" />;
         const { Title, Paragraph } = Typography;
         const { isBuy } = this.state;
+        const { Search } = Input;
         return (
             <>
-                {this.props.showSearch && <Search placeholder="Search for a Currency" onSearch={value => this.onSearch(value)} className="crypto-search fs-14 mb-24" />}
                 <Radio.Group
                     defaultValue={1}
                     onChange={this.handleBuySellToggle}
@@ -58,16 +57,16 @@ class CryptoComponent extends Component {
                 {isBuy ?
                     <>
                         {/* <Paragraph className="mb-0 text-white-30 fw-200 fs-36">Sell your Crypto for Cash</Paragraph> */}
-                        <Translate content="sell_your_crypto_for_cash" component={Paragraph} className="mb-0 text-white-30 fw-200 fs-36" />
+                        <Translate content="sell_your_crypto_for_cash" component={Title} className="drawer-title" />
                         <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-secondary fw-300 fs-16" />
                         <SellToggle /></>
                     :
                     <>
-                        <Translate content="purchase_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-16" />
+                        <Translate content="purchase_a_crypto" component={Title} className="drawer-title" />
                         <Translate content="deposit_link" with={{ link }} component={Paragraph} className="fs-16 text-secondary" />
                         <Tabs className="crypto-list-tabs">
                             <TabPane tab="All" key="1">
-                                <CryptoList coinType="All" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
+                                <CryptoList showSearch={this.props.showSearch} coinType="All" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                             </TabPane>
                             <TabPane tab="Gainers" key="2">
                                 <CryptoList coinType="Gainers" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />

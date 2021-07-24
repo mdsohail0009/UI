@@ -22,9 +22,9 @@ class BuySell extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            search: false,
+            //search: false,
         }
-        this.openSearch = this.openSearch.bind(this);
+        //this.openSearch = this.openSearch.bind(this);
     }
     closeBuyDrawer = () => {
         this.props.dispatch(setStep("step1"))
@@ -32,14 +32,14 @@ class BuySell extends Component {
             this.props.onClose();
         }
     }
-    openSearch = () => {
-        debugger
-        this.setState({ search: !this.state.search })
-    }
+    // openSearch = () => {
+    //     debugger
+    //     this.setState({ search: !this.state.search })
+    // }
 
     renderContent = () => {
         const stepcodes = {
-            buycrypto: <CryptoComponent showSearch={this.state.search} />,
+            buycrypto: <CryptoComponent />,
             selectcrypto: <SelectCrypto />,
             billtype: <BillType />,
             addcard: <AddCard />,
@@ -77,7 +77,7 @@ class BuySell extends Component {
     }
     renderIcon = () => {
         const stepcodes = {
-            buycrypto: <span className="icon md search-white c-pointer" onClick={(e) => { this.openSearch(e) }} />,
+            buycrypto: <span />,
             selectcrypto: <span />,
             billtype: <span />,
             addcard: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
