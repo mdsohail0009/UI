@@ -13,7 +13,7 @@ class RoutingComponent extends Component {
         <ReactRoute path="/callback" component={CallbackPage} />
         <ReactRoute path="/login" component={Login} />
         <ReactRoute path="/changepassword" component={ChangePassword} />
-        <Route path="" exact component={Dashboard}/>
+        <Redirect to="/dashboard" path="/" exact/>
       </React.Suspense>
     </Switch>
   }
