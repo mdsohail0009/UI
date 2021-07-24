@@ -90,7 +90,7 @@ class DepositeCrypto extends Component {
                     <>
                         <Translate content="deposite_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-8" />
                         <Translate content="deposite_a_cryto_txt" component={Paragraph} className="fs-16 text-secondary fw-200" />
-                        <div className="sellcrypto-container auto-scroll">
+                        <div className="dep-withdraw auto-scroll">
                             <List
                                 itemLayout="horizontal"
                                 dataSource={config.tlvCoinsList}
@@ -101,7 +101,7 @@ class DepositeCrypto extends Component {
                                         <Link onClick={() => this.props.changeStep('step7')}>
                                             <List.Item.Meta
                                                 avatar={<span className={`coin ${item.coin} mr-4`} />}
-                                                title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}
+                                                title={<div className="wallet-title">{item.coin}</div>}
                                             />
                                             {/* <div className="fs-16 text-right">
                                                 <div className="text-white-30 fw-600">${item.price}</div>

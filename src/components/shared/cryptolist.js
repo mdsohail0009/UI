@@ -55,7 +55,7 @@ class CryptoList extends Component {
                         <Link onClick={() => { this.props.isShowDrawer ? this.showBuyDrawer() : (this.props.onCoinSelected?this.props.onCoinSelected(item):this.props.dispatch(setStep("step2"))) }}>
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.walletCode} mr-4`} />}
-                                title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.walletCode}</div>}
+                                title={<div className="wallet-title">{item.walletCode}</div>}
                             />
                             <div className="text-right coin-typo">
                                 <div className="text-white-30 fw-600">${item.amountInUSD}</div>

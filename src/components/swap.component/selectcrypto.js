@@ -32,7 +32,7 @@ class SelectCrypto extends Component {
         return (<>
         
             <Search placeholder="Search for a Currency" onSearch={value=>this.onSearch(value)} className="crypto-search fs-14" />
-            <Paragraph className="text-upper fs-14 text-center text-white-30 c-pointer mt-36 mb-0 fw-500">Swap From<span className="icon sm rightarrow ml-12 mb-4" /></Paragraph>
+            <Paragraph className="text-upper fs-14 text-center text-white-30  mt-36 mb-0 fw-500">Swap From<span className="icon sm rightarrow ml-12 mb-4" /></Paragraph>
             <div className="sellcrypto-container auto-scroll">
                 <List
                     itemLayout="horizontal"
@@ -44,7 +44,7 @@ class SelectCrypto extends Component {
                          onClick={() => {this.selectToggle(item.id);this.props.dispatch(updateCoinDetails(item))}} >
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin} mr-4`} />}
-                                title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}
+                                title={<div className="wallet-title">{item.coin}</div>}
                             />
                         </List.Item>
                     )}
