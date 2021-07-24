@@ -1,5 +1,7 @@
 const SET_STEP = "setStep";
 const CLEAR_STEP = "clearStep"
+const UPDATE_COINDETAILS = "updateCoinDetails";
+const UPDATE_RECEIVECOINDETAILS = "updateReceiveCoinDetails";
 
 const setStep = (payload) => {
     return {
@@ -14,6 +16,13 @@ const clearStep = (payload) => {
         payload
     }
 }
+const updateCoinDetails = (payload) => {
+    return { type: UPDATE_COINDETAILS, payload }
+}
+const updateReceiveCoinDetails = (payload) => {
+    return { type: UPDATE_RECEIVECOINDETAILS, payload }
+}
+
 
 let initialState = {
     stepcode: 'step1',
@@ -23,13 +32,15 @@ let initialState = {
         swapsummary: 'swap_title',
         toreceive: 'swap_title'
     },
-
     stepSubTitles: {
         swapcoins: "swap_desc",
         selectcrypto: 'swap_desc',
         swapsummary: 'swap_desc',
         toreceive: 'swap_desc'
-    }
+    },
+    coinDetailData: {},
+    coinReceiveDetailData: {}
+
 }
 
 const SwapReducer = (state = initialState, action) => {
@@ -40,10 +51,14 @@ const SwapReducer = (state = initialState, action) => {
         case CLEAR_STEP:
             state = { ...state, stepcode: action.payload };
             return state;
+        case UPDATE_COINDETAILS:
+            return { ...state, coinDetailData: action.payload };
+        case UPDATE_RECEIVECOINDETAILS:
+            return { ...state, coinReceiveDetailData: action.payload };
         default:
             return state;
     }
 }
 
 export default SwapReducer;
-export { setStep, clearStep }
+export { setStep, clearStep , updateCoinDetails , updateReceiveCoinDetails }
