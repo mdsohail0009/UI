@@ -22,8 +22,18 @@ class Summary extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: false
+            isLoading: false,
+            disablePay: false,
         }
+    }
+    componentDidMount() {
+        setTimeout(this.disablePay, 12000);
+    }
+    startCounter = () => {
+        setTimeout(this.disablePay, 12000);
+    }
+    disablePay=()=> {
+        this.setState({ ...this.state, disablePay: true });
     }
     showPayCardDrawer = () => {
         console.log(this.state);
@@ -94,16 +104,15 @@ class Summary extends Component {
                 <div className="fs-12 text-white-30 text-center my-16">Your final amount might be changed with in
                     {/* {seconds}  */}
                     10 seconds.</div>
-                <div className="text-center text-underline text-white"><Link onClick={() => this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, amount)} className="text-white">Click to see the new rate.</Link></div>
+                <div className="text-center text-underline text-white"><Link onClick={() => { this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, amount); this.startCounter(); this.setState({ ...this.state, disablePay: false }) }} className="text-white">Click to see the new rate.</Link></div>
                 <div className="d-flex p-16 mb-36 agree-check">
                     <label>
                         <input type="checkbox" id="agree-check" />
                         <span for="agree-check" />
                     </label>
                     <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
-
                 </div>
-                <Translate content={"pay"} component={Button} size="large" block className="pop-btn" onClick={() => this.pay()} loading={this.state.isLoading} />
+                <Translate content={"pay"} component={Button} disabled={this.state.disablePay} size="large" block className="pop-btn" onClick={() => this.pay()} loading={this.state.isLoading} />
                 <Translate content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
             </>
         )
