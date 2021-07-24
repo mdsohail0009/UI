@@ -18,18 +18,24 @@ class SelectCrypto extends Component {
                 cryptoValue: 0,
                 isSwaped: false,
             },
-            selectedWallet: null
+            selectedWallet: null,
+            disableConfirm: false
         }
     }
     showPayDrawer = () => {
 
         console.log(this.state);
     }
+    startTimer = () => {
+        setTimeout(() => this.setState({ ...this.state, disableConfirm: true }), 12000)
+    }
     fetchConvertionValue = async () => {
         const { coin } = this.props.sellData?.selectedCoin?.data;
         const { isSwaped, cryptoValue, localValue } = this.state.swapValues;
         const value = await convertCurrency({ from: coin, to: "USD", value: isSwaped ? cryptoValue : localValue, isCrypto: !isSwaped })
-        this.setState({ ...this.state, swapValues: { ...this.state.swapValues, [isSwaped ? "localValue" : "cryptoValue"]: value } })
+        this.setState({ ...this.state, disableConfirm: false, swapValues: { ...this.state.swapValues, [isSwaped ? "localValue" : "cryptoValue"]: value } }, () => {
+            this.startTimer();
+        })
     }
     handleWalletSelection = (walletId) => {
         const selectedWallet = this.props.sellData?.memberFiat?.data?.filter(item => item.id == walletId)[0];
@@ -40,8 +46,8 @@ class SelectCrypto extends Component {
         const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
         const { buyMin, buyMax, coin } = this.props.sellData?.selectedCoin?.data;
         const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin })
-        if(!_vaidator.valid){
-            notification.error({message:"Buy crypto",description:_vaidator.message});
+        if (!_vaidator.valid) {
+            notification.error({ message: "Buy crypto", description: _vaidator.message });
             return;
         }
         this.props.preview(this.state.selectedWallet, coin, isSwaped ? cryptoValue : localValue);
@@ -91,8 +97,8 @@ class SelectCrypto extends Component {
 
                 <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua pt-16" />
                 <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
-                <Translate content="refresh_newprice" component={Paragraph} className="mb-36 fs-14 text-white-30 fw-200 text-center mb-16" />
-                <Translate content="confirm_btn_text" component={Button} size="large" block className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
+                <Translate content="refresh_newprice" component={Paragraph} onClick={() => this.fetchConvertionValue()} className="mb-36 fs-14 text-white-30 fw-200 text-center mb-16" />
+                <Translate content="confirm_btn_text" disabled={this.state.disableConfirm} component={Button} size="large" block className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
             </>
         )
     }
