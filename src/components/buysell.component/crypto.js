@@ -7,7 +7,8 @@ import SellToggle from '../sell.component/sellCrypto'
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import { fetchSelectedCoinDetails, setCoinWallet } from './crypto.reducer';
+import { fetchSelectedCoinDetails, setCoinWallet, setExchangeValue } from './crypto.reducer';
+import { convertCurrency } from './buySellService';
 
 const LinkValue = (props) => {
     return (
@@ -31,8 +32,11 @@ class CryptoComponent extends Component {
         });
     }
     handleCoinSelection = (selectedCoin) => {
-        this.props.getCoinDetails(selectedCoin.walletCode,this.props.member?.id);
+        this.props.getCoinDetails(selectedCoin.walletCode, this.props.member?.id);
         this.props.setSelectedCoin(selectedCoin);
+        convertCurrency({ from: selectedCoin.walletCode, to: "USD", value: 1, isCrypto: false }).then(val => {
+            this.props.setExchangeValue({ key: selectedCoin.walletCode, value: val });
+        })
         this.props.changeStep("step2");
     }
     render() {
@@ -75,19 +79,22 @@ class CryptoComponent extends Component {
         )
     }
 }
-const connectStateToProps = ({ buySell, oidc,userConfig }) => {
-    return { buySell,member:userConfig.userProfileInfo }
+const connectStateToProps = ({ buySell, oidc, userConfig }) => {
+    return { buySell, member: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
-        getCoinDetails: (coin,memid) => {
-            dispatch(fetchSelectedCoinDetails(coin,memid));
+        getCoinDetails: (coin, memid) => {
+            dispatch(fetchSelectedCoinDetails(coin, memid));
         },
         setSelectedCoin: (coinWallet) => {
             dispatch(setCoinWallet(coinWallet));
+        },
+        setExchangeValue: ({ key, value }) => {
+            dispatch(setExchangeValue({ key, value }))
         }
     }
 }

@@ -9,6 +9,7 @@ const HANDLE_FETCH = "handleFetch";
 const HANDLE_COINS_FETCH = "handleCoinsFetch";
 const SET_WALLET = "setWallet";
 const SET_COIN_WALLET = "setCoinWallet";
+const SET_EXCHANGE_VALUE = "setExchangeValue";
 const fetchMemberCoins = () => {
     return { type: FETCH_MEMBERCOINS };
 }
@@ -21,6 +22,12 @@ const setWallet = (payload) => {
 const setCoinWallet = (payload) => {
     return {
         type: SET_COIN_WALLET,
+        payload
+    }
+}
+const setExchangeValue = (payload) => {
+    return {
+        type: SET_EXCHANGE_VALUE,
         payload
     }
 }
@@ -67,10 +74,10 @@ const fetchCoins = (type) => {
 
     }
 }
-const fetchSelectedCoinDetails = (coin,member_id) => {
+const fetchSelectedCoinDetails = (coin, member_id) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "selectedCoin", loading: true, data: null }));
-        const response = await getSelectedCoinDetails(coin,member_id);
+        const response = await getSelectedCoinDetails(coin, member_id);
         if (response.ok) {
             dispatch(handleFetch({ key: "selectedCoin", loading: false, data: response.data }));
         } else {
@@ -111,7 +118,8 @@ const initialState = {
     memberFiat: { loading: false, data: [] },
     previewDetails: { loading: false, data: null },
     selectedWallet: null,
-    coinWallet: null
+    coinWallet: null,
+    exchangeValues: {}
 }
 
 const getMemberCoins = () => {
@@ -175,10 +183,13 @@ const sellReducer = (state = initialState, action) => {
         case SET_COIN_WALLET:
             state = { ...state, coinWallet: action.payload };
             return state;
+        case SET_EXCHANGE_VALUE:
+            state = { ...state, exchangeValues: { ...state.exchangeValues, [action.payload.key]: action.payload.value } };
+            return state;
         default:
             return state;
     }
 }
 
 export default sellReducer;
-export { getMemberCoins, updateCoinDetails, updatesellsaveObject, fetchCoins, fetchSelectedCoinDetails, fetchMemberFiat, fetchPreview, setWallet, setCoinWallet }
+export {setExchangeValue, getMemberCoins, updateCoinDetails, updatesellsaveObject, fetchCoins, fetchSelectedCoinDetails, fetchMemberFiat, fetchPreview, setWallet, setCoinWallet }
