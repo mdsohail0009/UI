@@ -83,6 +83,9 @@ class SwapCoins extends Component {
                         <span className="icon swapfrom-arrow"></span>
                     </div>
                 </div>}
+                <span className="mt-16 swap-updown">
+                        <span className="icon sm uparw-o-white d-block c-pointer" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
+                    </span>
                 {coinReceiveDetailData&&<div className="swap swapreceive-card p-relative">
                     <div>
                         <Translate className="text-purewhite fs-14 fw-100" content="swap_to" component={Text} />
