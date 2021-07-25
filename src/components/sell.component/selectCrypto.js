@@ -18,10 +18,10 @@ class SelectSellCrypto extends Component {
        this.fetchdefaultMinAmntValues()
     }
     async fetchdefaultMinAmntValues(){
-        this.setState({...this.state,USDAmnt:this.props.sellData.coinDetailData?.sellMinValue})
-        let res =await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue,false);
+        this.setState({...this.state,CryptoAmnt:this.props.sellData.coinDetailData?.sellMinValue})
+        let res =await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue,true);
         if (res.ok) {
-            this.setState({ USDAmnt: this.props.sellData.coinDetailData?.sellMinValue, CryptoAmnt: res.data })
+            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data,isSwap:true })
         }
     }
     async setAmount(e,fn){
@@ -95,10 +95,10 @@ class SelectSellCrypto extends Component {
     }
     async swapChange(value){
         let obj=Object.assign({},this.state);
-        this.setState({isSwap:value,USDAmnt:parseInt(obj.CryptoAmnt),CryptoAmnt:obj.USDAmnt})
+        this.setState({isSwap:value,USDAmnt:obj.CryptoAmnt,CryptoAmnt:obj.USDAmnt})
         let res =await getSellamnt(obj.CryptoAmnt,value);
         if (res.ok) {
-            this.setState({ USDAmnt: obj.CryptoAmnt, CryptoAmnt: res.data })
+            this.setState({ USDAmnt: obj.CryptoAmnt, CryptoAmnt: parseFloat(res.data).toFixed(8) })
         }
     }
     render() {
