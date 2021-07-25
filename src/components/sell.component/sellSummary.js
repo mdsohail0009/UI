@@ -17,14 +17,15 @@ const LinkValue = (props) => {
     )
 }
 class SellSummary extends Component {
-    state={sellpreviewData:{},loader:true}
+    state={sellpreviewData:{},loader:true,disableConfirm: false}
     componentDidMount(){
         this.fetchPreviewData()
+        setTimeout(() => this.setState({ ...this.state, disableConfirm: true }), 12000)
     }
     async fetchPreviewData(){
         let res =await getSellPreviewData(this.props.sellData.sellsaveObject);
         if (res.ok) {
-            this.setState({ sellpreviewData: res.data,loader:false })
+            this.setState({ sellpreviewData: res.data,loader:false,disableConfirm: false })
         }
     }
     refreshPage(){
@@ -40,9 +41,9 @@ class SellSummary extends Component {
         let res =await savesellData(obj);
         if (res.ok) {
             this.props.changeStep('success')
-            this.setState({ ...this.state,loader:false })
+            this.setState({ ...this.state,loader:false ,disableConfirm: false})
         }else{
-            this.setState({ ...this.state,loader:false })
+            this.setState({ ...this.state,loader:false ,disableConfirm: false})
         }
     }
     render() {
@@ -52,7 +53,7 @@ class SellSummary extends Component {
         return (
             <>
            {(!this.state.loader)&&<>
-                <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>USD ${sellpreviewData.amountNativeCurrency}</div>
+                <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>USD {sellpreviewData.amountNativeCurrency}</div>
                 <div className="text-white-50 fw-300 text-center fs-14 mb-16">{sellpreviewData.amount} {sellpreviewData.coin}</div>
                 <div className="pay-list fs-14">
                     <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
@@ -78,7 +79,7 @@ class SellSummary extends Component {
                         <span for="agree-check" />
                     </label><Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
                 </div>
-                <Translate size="large" block className="pop-btn" onClick={() => this.saveSellData()} content="confirm_now" component={Button} />
+                <Translate size="large" block className="pop-btn" disabled={this.state.disableConfirm} onClick={() => this.saveSellData()} content="confirm_now" component={Button} />
                 <Translate type="text" size="large" onClick={() => this.props.changeStep('step1')} className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block content="cancel" component={Button} />
                </>}
                 {(this.state.loader)&&<Loader />}
