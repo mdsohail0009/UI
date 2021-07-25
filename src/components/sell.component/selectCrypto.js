@@ -14,6 +14,16 @@ class SelectSellCrypto extends Component {
         USDAmnt: null, CryptoAmnt: null, sellSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": null, "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }, isSwap: false
         
     }
+    componentDidMount(){
+       this.fetchdefaultMinAmntValues()
+    }
+    async fetchdefaultMinAmntValues(){
+        this.setState({...this.state,USDAmnt:this.props.sellData.coinDetailData?.sellMinValue})
+        let res =await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue,false);
+        if (res.ok) {
+            this.setState({ USDAmnt: this.props.sellData.coinDetailData?.sellMinValue, CryptoAmnt: res.data })
+        }
+    }
     async setAmount(e,fn){
         this.state[fn]=e.target.value
         let res =await getSellamnt(e.target.value, this.state.isSwap);
@@ -27,32 +37,41 @@ class SelectSellCrypto extends Component {
         if (type == 'half') {
             usdamnt=(obj.coinValueinNativeCurrency/2).toString();
             cryptoamnt=(obj.coinBalance/2)
+            this.setState({USDAmnt:usdamnt,CryptoAmnt:cryptoamnt})
         }else if(type == 'all'){
             usdamnt=obj.coinValueinNativeCurrency;
             cryptoamnt=obj.coinBalance
+            this.setState({USDAmnt:usdamnt,CryptoAmnt:cryptoamnt})
         }else{
-            usdamnt=(obj.coinValueinNativeCurrency/2).toString();
-            cryptoamnt=(obj.coinBalance/2)
+            this.fetchdefaultMinAmntValues()
         }
-        this.setState({USDAmnt:usdamnt,CryptoAmnt:cryptoamnt})
     }
     previewSellData(){
         let obj = Object.assign({}, this.state.sellSaveData);
+        let {sellMinValue}=this.props.sellData.coinDetailData;
         if (!this.state.USDAmnt) {
-            notification.error({ message: "", description:'Enter amount' });
+            notification.error({ message: "", description: 'Enter amount' });
             return;
         }
         else if (!obj.toWalletId) {
-            notification.error({ message: '', description:'Select wallet' });
+            notification.error({ message: '', description: 'Select wallet' });
             return;
         } else if (!this.state.isSwap && this.state.USDAmnt > this.props.sellData.coinDetailData.coinValueinNativeCurrency) {
-            notification.error({ message: '', description:'Entered amount should be less than available amount' });
+            notification.error({ message: '', description: 'Entered amount should be less than available amount' });
             return;
         }
         else if (this.state.isSwap && this.state.CryptoAmnt > this.props.sellData.coinDetailData.coinBalance) {
-            notification.error({ message: '', description:'Entered amount should be less than balance' });
+            notification.error({ message: '', description: 'Entered amount should be less than balance' });
             return;
-        } else {
+        } else if (this.state.isSwap && parseFloat(this.state.CryptoAmnt) <sellMinValue ) {
+            notification.error({ message: '', description: 'Please enter min value' });
+            return;
+        }
+        else if (!this.state.isSwap &&parseFloat(this.state.USDAmnt) < sellMinValue) {
+            notification.error({ message: '', description: 'Please enter min value' });
+            return;
+        }
+         else {
             obj.membershipId = this.props.member?.id;
             obj.fromWalletId = this.props.sellData.coinDetailData.id
             obj.fromWalletCode = this.props.sellData.coinDetailData.coin
@@ -103,7 +122,7 @@ class SelectSellCrypto extends Component {
                 <div className="enter-val-container">
                     <div className="text-center">
                         <Input className="fs-36 fw-100 text-white-30 text-center enter-val p-0"
-                            placeholder="0"
+                            placeholder=""
                             bordered={false}
                             prefix={this.state.isSwap?coinDetailData.coin:"USD"}
                             style={{ maxWidth: 206 }}

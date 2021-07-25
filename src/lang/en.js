@@ -21,7 +21,7 @@ export default {
   deposite_a_cryto_txt: 'Get crypto by simply sharing your QR Address',
   purchase_a_crypto: 'Purchase a Crypto',
   purchase_a_cryto_txt: 'Your wallet is empty, you don’t have any assets to make transactions. Follow this link and Deposit some cash.',
-  all: 'All',
+  all: 'Max',
   gainers: 'Gainers',
   losers: 'Losers',
   db_slider_title: 'Get $10 in free crypto',
