@@ -5,6 +5,7 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import {getSellPreviewData,savesellData} from '../../components/buysell.component/api'
+import Loader from '../../Shared/loader'
 
 const LinkValue = (props) => {
     return (
@@ -50,6 +51,7 @@ class SellSummary extends Component {
         const {sellpreviewData}=this.state;
         return (
             <>
+           {(!this.state.loader)&&<>
                 <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>USD ${sellpreviewData.amountNativeCurrency}</div>
                 <div className="text-white-50 fw-300 text-center fs-14 mb-16">{sellpreviewData.amount} {sellpreviewData.coin}</div>
                 <div className="pay-list fs-14">
@@ -78,7 +80,8 @@ class SellSummary extends Component {
                 </div>
                 <Translate size="large" block className="pop-btn" onClick={() => this.saveSellData()} content="confirm_now" component={Button} />
                 <Translate type="text" size="large" onClick={() => this.props.changeStep('step1')} className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block content="cancel" component={Button} />
-                {(this.state.loader)&&<div>Loading...</div>}
+               </>}
+                {(this.state.loader)&&<Loader />}
             </>
         )
     }

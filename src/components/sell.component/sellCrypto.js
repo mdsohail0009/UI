@@ -5,7 +5,7 @@ import WalletList from '../shared/walletList';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import {getMemberCoins,updateCoinDetails} from '../buysell.component/crypto.reducer'
-
+import Loader from '../../Shared/loader'
 
 class SellToggle extends Component {
     componentDidMount(){
@@ -35,7 +35,7 @@ class SellToggle extends Component {
                         </div>
                     </Card>)}
                 </div>}
-                {(this.props.sellData.MemberCoins.length==0||this.props.sellData.MemberCoins==null)&&<div>Loading...</div>}
+                {(this.props.sellData.MemberCoins.length==0||this.props.sellData.MemberCoins==null)&&<Loader />}
             </>
         )
     }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Button, Card, Input, Radio } from 'antd';
+import { Drawer, Typography, Button, Card, Input, Radio,notification } from 'antd';
 import WalletList from '../shared/walletList';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
@@ -12,7 +12,7 @@ import { updatesellsaveObject } from '../buysell.component/crypto.reducer';
 class SelectSellCrypto extends Component {
     state = {
         USDAmnt: null, CryptoAmnt: null, sellSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": null, "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }, isSwap: false
-        , errorMessage: null
+        
     }
     async setAmount(e,fn){
         this.state[fn]=e.target.value
@@ -37,20 +37,22 @@ class SelectSellCrypto extends Component {
         this.setState({USDAmnt:usdamnt,CryptoAmnt:cryptoamnt})
     }
     previewSellData(){
-        this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
         if (!this.state.USDAmnt) {
-            this.setState({ ...this.state, errorMessage: 'Enter amount' })
+            notification.error({ message: "", description:'Enter amount' });
+            return;
         }
         else if (!obj.toWalletId) {
-            this.setState({ ...this.state, errorMessage: 'Select wallet' })
+            notification.error({ message: '', description:'Select wallet' });
+            return;
         } else if (!this.state.isSwap && this.state.USDAmnt > this.props.sellData.coinDetailData.coinValueinNativeCurrency) {
-            this.setState({ ...this.state, errorMessage: 'Entered amount should be less than available amount' })
+            notification.error({ message: '', description:'Entered amount should be less than available amount' });
+            return;
         }
         else if (this.state.isSwap && this.state.CryptoAmnt > this.props.sellData.coinDetailData.coinBalance) {
-            this.setState({ ...this.state, errorMessage: 'Entered amount should be less than balance' })
+            notification.error({ message: '', description:'Entered amount should be less than balance' });
+            return;
         } else {
-            this.setState({ ...this.state, errorMessage: '' })
             obj.membershipId = this.props.member?.id;
             obj.fromWalletId = this.props.sellData.coinDetailData.id
             obj.fromWalletCode = this.props.sellData.coinDetailData.coin
@@ -85,7 +87,6 @@ class SelectSellCrypto extends Component {
         const {coinDetailData}=this.props.sellData;
         return (
             <>
-            {this.state.errorMessage!=null&& <Text className="fs-15 text-red crypto-name ml-8 mb-8">{this.state.errorMessage}</Text>}
                 {coinDetailData&&<Card className="crypto-card mb-36" bordered={false}>
                     <span className="d-flex align-center">
                         <span className="coin lg btc-white" />
