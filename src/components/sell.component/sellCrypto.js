@@ -9,7 +9,7 @@ import {getMemberCoins,updateCoinDetails} from '../buysell.component/crypto.redu
 
 class SellToggle extends Component {
     componentDidMount(){
-        this.props.fetchMemberCoins()
+        this.props.fetchMemberCoins(this.props.member?.id)
     }
     handleBuySellToggle = e => {
         this.setState({
@@ -40,16 +40,16 @@ class SellToggle extends Component {
         )
     }
 }
-const connectStateToProps = ({ buySell, sellData }) => {
-    return { buySell,sellData }
+const connectStateToProps = ({ buySell, sellData,userConfig }) => {
+    return { buySell,sellData , member: userConfig.userProfileInfo}
 }
 const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
-        fetchMemberCoins:()=>{
-            dispatch(getMemberCoins())
+        fetchMemberCoins:(memberId)=>{
+            dispatch(getMemberCoins(memberId))
         },
         dispatch
     }

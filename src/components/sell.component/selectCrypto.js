@@ -11,14 +11,14 @@ import { updatesellsaveObject } from '../buysell.component/crypto.reducer';
 
 class SelectSellCrypto extends Component {
     state = {
-        amnt: null, minamntValue: null, sellSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }, isSwap: false
+        USDAmnt: null, CryptoAmnt: null, sellSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": null, "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }, isSwap: false
         , errorMessage: null
     }
     async setAmount(e,fn){
         this.state[fn]=e.target.value
         let res =await getSellamnt(e.target.value, this.state.isSwap);
         if (res.ok) {
-            this.setState({...this.state,minamntValue: res.data })
+            this.setState({...this.state,CryptoAmnt: res.data })
         }
     }
     clickMinamnt(type) {
@@ -34,29 +34,29 @@ class SelectSellCrypto extends Component {
             usdamnt=(obj.coinValueinNativeCurrency/2).toString();
             cryptoamnt=(obj.coinBalance/2)
         }
-        this.setState({amnt:usdamnt,minamntValue:cryptoamnt})
+        this.setState({USDAmnt:usdamnt,CryptoAmnt:cryptoamnt})
     }
     previewSellData(){
         this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
-        if (!this.state.amnt) {
+        if (!this.state.USDAmnt) {
             this.setState({ ...this.state, errorMessage: 'Enter amount' })
         }
         else if (!obj.toWalletId) {
             this.setState({ ...this.state, errorMessage: 'Select wallet' })
-        } else if (!this.state.isSwap && this.state.amnt > this.props.sellData.coinDetailData.coinValueinNativeCurrency) {
+        } else if (!this.state.isSwap && this.state.USDAmnt > this.props.sellData.coinDetailData.coinValueinNativeCurrency) {
             this.setState({ ...this.state, errorMessage: 'Entered amount should be less than available amount' })
         }
-        else if (this.state.isSwap && this.state.minamntValue > this.props.sellData.coinDetailData.coinBalance) {
+        else if (this.state.isSwap && this.state.CryptoAmnt > this.props.sellData.coinDetailData.coinBalance) {
             this.setState({ ...this.state, errorMessage: 'Entered amount should be less than balance' })
         } else {
             this.setState({ ...this.state, errorMessage: '' })
-            obj.membershipId = "E3BF0F02-70E5-4575-8552-F8C49533B7C6";
+            obj.membershipId = this.props.member?.id;
             obj.fromWalletId = this.props.sellData.coinDetailData.id
             obj.fromWalletCode = this.props.sellData.coinDetailData.coin
             obj.fromWalletName = this.props.sellData.coinDetailData.coinFullName
-            obj.fromValue = this.state.minamntValue
-            obj.toValue = this.state.amnt
+            obj.fromValue = this.state.CryptoAmnt
+            obj.toValue = this.state.USDAmnt
             obj.exicutedPrice = this.props.sellData.coinDetailData.oneCoinValue
             this.props.changeStep('step11');
             this.props.dispatch(updatesellsaveObject(obj))
@@ -74,10 +74,10 @@ class SelectSellCrypto extends Component {
     }
     async swapChange(value){
         let obj=Object.assign({},this.state);
-        this.setState({isSwap:value,amnt:parseInt(obj.minamntValue),minamntValue:obj.amnt})
-        let res =await getSellamnt(obj.minamntValue,value);
+        this.setState({isSwap:value,USDAmnt:parseInt(obj.CryptoAmnt),CryptoAmnt:obj.USDAmnt})
+        let res =await getSellamnt(obj.CryptoAmnt,value);
         if (res.ok) {
-            this.setState({ amnt: obj.minamntValue, minamntValue: res.data })
+            this.setState({ USDAmnt: obj.CryptoAmnt, CryptoAmnt: res.data })
         }
     }
     render() {
@@ -106,8 +106,8 @@ class SelectSellCrypto extends Component {
                             bordered={false}
                             prefix={this.state.isSwap?coinDetailData.coin:"USD"}
                             style={{ maxWidth: 206 }}
-                            onChange={value=>this.setAmount(value,'amnt')} value={this.state.amnt}/>
-                        <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{this.state.minamntValue} {this.state.isSwap?"USD":coinDetailData.coin}</Text>
+                            onChange={value=>this.setAmount(value,'USDAmnt')} value={this.state.USDAmnt}/>
+                        <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{this.state.CryptoAmnt} {this.state.isSwap?"USD":coinDetailData.coin}</Text>
                     </div>
                     <span className="mt-8 val-updown">
                         <span className="icon sm uparw-o-white d-block c-pointer mb-4" onClick={()=>this.state.isSwap?this.swapChange(false):''}/>
@@ -127,8 +127,8 @@ class SelectSellCrypto extends Component {
         )
     }
 }
-const connectStateToProps = ({ buySell, sellData }) => {
-    return { buySell, sellData }
+const connectStateToProps = ({ buySell, sellData,userConfig }) => {
+    return { buySell, sellData  , member: userConfig.userProfileInfo}
 }
 const connectDispatchToProps = dispatch => {
     return {

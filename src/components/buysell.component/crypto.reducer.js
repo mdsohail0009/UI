@@ -122,7 +122,7 @@ const initialState = {
     exchangeValues: {}
 }
 
-const getMemberCoins = () => {
+const getMemberCoins = (memberId) => {
     return async (dispatch) => {
         dispatch(fetchMemberCoins({ key: "MemberCoins", loading: true, data: [] }));
         Promise.all([
@@ -138,7 +138,7 @@ const getMemberCoins = () => {
                     dispatch(fetchMemberCoinsRejected(error, 'MemberCoins'));
                 },
             ),
-            getMemberfiat().then(
+            getMemberfiat(memberId).then(
                 (response) => {
                     if (response.ok) {
                         dispatch(fetchMemberCoinsSuccess(response.data, 'MemberFiat'));
