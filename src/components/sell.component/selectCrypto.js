@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Button, Card, Input, Radio, notification } from 'antd';
-import WalletList from '../shared/walletList';
-import { Link } from 'react-router-dom';
+import { Typography, Button, Card, Input, Radio, notification } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -17,16 +15,16 @@ class SelectSellCrypto extends Component {
     componentDidMount() {
         this.fetchdefaultMinAmntValues()
     }
-    async fetchdefaultMinAmntValues() {
+     fetchdefaultMinAmntValues=async()=> {
         this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue })
-        let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true);
+        let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true, this.props.sellData?.coinDetailData?.coin);
         if (res.ok) {
-            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: true })
+            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: false })
         }
     }
-    async setAmount(e, fn) {
-        this.state[fn] = e.target.value
-        let res = await getSellamnt(e.target.value, this.state.isSwap);
+    setAmount = async ({currentTarget}, fn) => {
+        this.setState({...this.state,[fn]:currentTarget.value})
+        let res = await getSellamnt(currentTarget.value, this.state.isSwap, !this.state.isSwap ? this.props.sellData.coinDetailData?.coin : "USD");
         if (res.ok) {
             this.setState({ ...this.state, CryptoAmnt: res.data })
         }
@@ -123,16 +121,16 @@ class SelectSellCrypto extends Component {
                     <div className="enter-val-container">
                         <Text className="fs-36 fw-100 text-white-30 mr-4">{this.state.isSwap ? coinDetailData.coin : "USD"}</Text>
                         <Input className="fs-36 fw-100 text-white-30 text-center enter-val p-0"
-                            placeholder=""
+                            
                             bordered={false}
+                            onChange={(e) =>{debugger; this.setAmount(e, 'USDAmnt')}} value={this.state.USDAmnt}
                             style={{ width: 100, lineHeight: '55px', fontSize: 36, paddingRight: 30 }}
-                            //prefix={this.state.isSwap ? coinDetailData.coin : "USD"}
                             onBlur={(e) => e.currentTarget.value.length == 0 ? e.currentTarget.style.width = "100px" : ''}
                             onKeyPress={(e) => {
                                 e.currentTarget.style.width = ((e.currentTarget.value.length + 8) * 20) + 'px'
                                 e.currentTarget.value.length >= 8 ? e.currentTarget.style.fontSize = "30px" : e.currentTarget.style.fontSize = "36px"
                             }}
-                            onChange={value => this.setAmount(value, 'USDAmnt')} value={this.state.USDAmnt} />
+                        />
                     </div>
                     <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{this.state.CryptoAmnt} {this.state.isSwap ? "USD" : coinDetailData.coin}</Text>
                     <span className="mt-8 val-updown">

@@ -126,7 +126,7 @@ const getMemberCoins = (memberId) => {
     return async (dispatch) => {
         dispatch(fetchMemberCoins({ key: "MemberCoins", loading: true, data: [] }));
         Promise.all([
-            getportfolio().then(
+            getportfolio(memberId).then(
                 (response) => {
                     if (response.ok) {
                         dispatch(fetchMemberCoinsSuccess(response.data, 'MemberCoins'));

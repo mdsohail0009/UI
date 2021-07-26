@@ -8,20 +8,21 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import apiCalls from '../../api/apiCalls'
 import BuySell from '../../components/buysell.component';
+import connectStateProps from '../../utils/state.connect';
 
 class YourPortfolio extends Component {
     state = {
         loading: false,
         initLoading: true,
-        portfolioData:[],buyDrawer:false
+        portfolioData: [], buyDrawer: false
     }
     componentDidMount() {
         this.loadCryptos();
     }
-    loadCryptos=async()=>{
-        let res=await apiCalls.getportfolio()
+    loadCryptos = async () => {
+        let res = await apiCalls.getportfolio(this.props.userProfile.id)
         if (res.ok)
-        this.setState({portfolioData:res.data})
+            this.setState({ portfolioData: res.data })
     }
     showBuyDrawer = () => {
         this.setState({
@@ -38,14 +39,14 @@ class YourPortfolio extends Component {
         return (
             <div className="box portfolio-list">
                 <Translate content="your_portfolio" component={Title} className="fs-24 text-white mb-36 mt-0 fw-600" />
-                <List  className="mobile-list"
+                <List className="mobile-list"
                     itemLayout="horizontal"
                     dataSource={this.state.portfolioData}
                     renderItem={item => (
                         <List.Item className="" extra={
                             <div className="crypto_btns">
                                 <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer()} className="custom-btn prime" />
-                                <Translate content="sell" component={Button} className="custom-btn sec outline ml-16"  onClick={() => this.showBuyDrawer()}/>
+                                <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer()} />
                             </div>
                         }>
                             <List.Item.Meta
@@ -58,10 +59,10 @@ class YourPortfolio extends Component {
                         </List.Item>
                     )}
                 />
- <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
+                <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
             </div>
         );
     }
 }
 
-export default YourPortfolio;
+export default connectStateProps(YourPortfolio);
