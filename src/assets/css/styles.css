@@ -421,7 +421,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .copyright{display: none !important;}
     .swap-subtitlte{width:250px}
     .enter-val-container{margin-right: 35px;}
-    .buysell-toggle{ margin: 0 15px 20px !important;}
+    .buysell-toggle{ margin: 0 10px 20px !important;}
     .buysell-toggle .ant-radio-button-wrapper{min-width:163px !important; }
     .tlv-header{border-radius: 0 0 30px 30px;}
     .pay-list{display: flex;justify-content: space-between;align-items: center;}
