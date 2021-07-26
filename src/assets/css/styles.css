@@ -472,6 +472,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .to-receive{margin-top: 36px;}
     .pop-btn{height: 57px;}
     .crypto-list .ant-list-item, .wallet-list .ant-list-item{padding:10px 0 8px 8px !important}
+    .crypto-search.ant-input-search .ant-input-group .ant-input-group-addon{border-radius: 0 30px 30px 0;}
 }
 .recomoned-bg{background: var(--texthover);font-size: 12px;padding: 0 2px;line-height: 1.2;color: var(--textWhite);float: right;}
 .text-width{width: 250px;}
