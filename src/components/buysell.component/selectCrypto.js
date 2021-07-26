@@ -93,6 +93,7 @@ class SelectCrypto extends Component {
                                 this.setState({ ...this.state, swapValues: { ...this.state.swapValues, [isSwaped ? "cryptoValue" : "localValue"]: e.currentTarget.value } }, () => this.fetchConvertionValue());
 
                             }}
+                            autoFocus
                         />
 
                     </div>

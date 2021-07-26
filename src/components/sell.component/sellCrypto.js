@@ -4,11 +4,11 @@ import config from '../../config/config';
 import WalletList from '../shared/walletList';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import {getMemberCoins,updateCoinDetails} from '../buysell.component/crypto.reducer'
+import { getMemberCoins, updateCoinDetails } from '../buysell.component/crypto.reducer'
 import Loader from '../../Shared/loader'
 
 class SellToggle extends Component {
-    componentDidMount(){
+    componentDidMount() {
         this.props.fetchMemberCoins(this.props.member?.id)
     }
     handleBuySellToggle = e => {
@@ -20,11 +20,11 @@ class SellToggle extends Component {
         const { Title, Paragraph, Text } = Typography;
         return (
             <>
-                {this.props.sellData.MemberCoins!=null&&this.props.sellData.MemberCoins.length!=0&&<div className="sellcrypto-container auto-scroll">
-                    {this.props.sellData.MemberCoins.map((coin,idx) => <Card className="crypto-card select mb-16 c-pointer" bordered={false} onClick={() => {this.props.changeStep('step10');this.props.dispatch(updateCoinDetails(coin))}} >
+                {this.props.sellData.MemberCoins != null && this.props.sellData.MemberCoins.length != 0 && <div className="sellcrypto-container auto-scroll">
+                    {this.props.sellData.MemberCoins.map((coin, idx) => <Card className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { this.props.changeStep('step10'); this.props.dispatch(updateCoinDetails(coin)) }} >
                         <span className="d-flex align-center">
-                            <span className="coin lg btc-white" />
-                            <Text className="fs-24 text-white crypto-name ml-8">{coin.coinFullName}</Text>
+                            <span className={`coin lg ${coin.coin}`} />
+                            <Text className="fs-24 text-white crypto-name ml-12">{coin.coinFullName}</Text>
                         </span>
                         <div className="crypto-details">
                             <Text className="crypto-percent text-white fw-700">{coin.percentage}<sup className="percent text-white fw-700">%</sup></Text>
@@ -35,20 +35,20 @@ class SellToggle extends Component {
                         </div>
                     </Card>)}
                 </div>}
-                {(this.props.sellData.MemberCoins.length==0||this.props.sellData.MemberCoins==null)&&<Loader />}
+                {(this.props.sellData.MemberCoins.length == 0 || this.props.sellData.MemberCoins == null) && <Loader />}
             </>
         )
     }
 }
-const connectStateToProps = ({ buySell, sellData,userConfig }) => {
-    return { buySell,sellData , member: userConfig.userProfileInfo}
+const connectStateToProps = ({ buySell, sellData, userConfig }) => {
+    return { buySell, sellData, member: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
-        fetchMemberCoins:(memberId)=>{
+        fetchMemberCoins: (memberId) => {
             dispatch(getMemberCoins(memberId))
         },
         dispatch
