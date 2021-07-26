@@ -64,7 +64,7 @@ class SelectCrypto extends Component {
             <>
                 <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
-                        <span className={`coin lg ${coin?.toLowerCase()}-white`} />
+                        <span className={`coin lg ${coin}`} />
                         <Text className="fs-24 text-purewhite crypto-name ml-8">{coin}</Text>
                     </span>
                     <div className="crypto-details">
