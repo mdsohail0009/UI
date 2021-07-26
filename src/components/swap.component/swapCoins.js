@@ -106,14 +106,15 @@ class SwapCoins extends Component {
                     </div>
                     <div className="d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step3')} >
                         <div className="text-center crypto-coin">
-                            <span className="coin md btc-white"></span>
+                            {/* <span className="coin md btc-white"></span> */}
+                            <span className={`coin md ${coinDetailData.coin}`}></span>
                             <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinDetailData.coinFullName}</Paragraph>
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>
                     </div>
                     <span className="icon swapfrom-arrow c-pointer" onClick={()=>this.swapingCurr()}></span>
                     <div className="mt-16 swap-updown" onClick={this.swapingCurr}>
-                            <span className="icon sm uparw-o-white d-block c-pointer" />
+                            <span className="icon sm uparw-o-white d-block c-pointer mb-4" />
                             <span className="icon sm dwnarw-o-white d-block c-pointer" />
                     </div>
                 </div>
@@ -127,7 +128,8 @@ class SwapCoins extends Component {
                     </div>
                     <div className="d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step4')} >
                         <div className="text-center crypto-coin">
-                            <span className="coin md eth-white"></span>
+                            {/* <span className="coin md eth-white"></span> */}
+                            <span className={`coin md ${coinReceiveDetailData.coin}`}></span>
                             <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinReceiveDetailData.coinFullName}</Paragraph>
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>

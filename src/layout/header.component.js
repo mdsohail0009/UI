@@ -15,6 +15,8 @@ import SwapCrypto from '../components/swap.component'
 import MassPayment from '../components/buyfiat.component'
 import { userManager } from '../authentication';
 import Changepassword from '../components/changepassword';
+import { updateCoinDetails , updateReceiveCoinDetails } from '../reducers/swapReducer';
+import { connect } from 'react-redux';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -200,6 +202,9 @@ class Header extends Component {
         })
     }
     closeDrawer = () => {
+        let obj = {};
+        this.props.fromObjSwap(obj);
+        this.props.receiveObjSwap(obj);
         this.setState({
             buyDrawer: false,
             payDrawer: false,
@@ -502,4 +507,20 @@ class Header extends Component {
     }
 }
 
-export default Header;
+const connectStateToProps = ({ swapStore, oidc }) => {
+    return { swapStore }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        fromObjSwap:(obj)=>{
+            dispatch(updateCoinDetails(obj))
+        },
+        receiveObjSwap:(obj)=>{
+            dispatch(updateReceiveCoinDetails(obj))
+        },
+        dispatch
+    }
+}
+
+// export default Header;
+export default connect(connectStateToProps, connectDispatchToProps)(Header);
