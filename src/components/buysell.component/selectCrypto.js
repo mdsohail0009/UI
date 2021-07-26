@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Button, Card, Input, Select, notification } from 'antd';
+import { Drawer, Typography, Button, Card, Input, Select, notification, Alert, message } from 'antd';
 import config from '../../config/config';
 import WalletList from '../shared/walletList';
 import { setStep } from '../../reducers/buysellReducer';
@@ -20,7 +20,11 @@ class SelectCrypto extends Component {
                 isSwaped: false,
             },
             selectedWallet: null,
-            disableConfirm: false
+            disableConfirm: false,
+            error:{
+                valid:true,
+                description:message
+            }
         }
     }
     showPayDrawer = () => {
@@ -48,7 +52,8 @@ class SelectCrypto extends Component {
         const { buyMin, buyMax, coin } = this.props.sellData?.selectedCoin?.data;
         const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin })
         if (!_vaidator.valid) {
-            notification.error({ message: "Buy crypto", description: _vaidator.message });
+           // notification.error({ message: "Buy crypto", description: _vaidator.message });
+           this.setState({...this.state,error:{..._vaidator}})
             return;
         }
         this.props.preview(this.state.selectedWallet, coin, isSwaped ? cryptoValue : localValue);
@@ -63,6 +68,7 @@ class SelectCrypto extends Component {
         const { coin, coinValueinNativeCurrency, coinBalance, percentage } = this.props.sellData?.selectedCoin?.data;
         return (
             <>
+                {!this.state?.error?.valid && <Alert showIcon type="error" message="Buy crypto" description={this.state.error?.message} />}
                 <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
                         <span className={`coin lg ${coin}`} />
