@@ -39,8 +39,7 @@ class ToReceive extends Component {
                          onClick={() => {this.selectToggle(item.id);this.props.dispatch(updateReceiveCoinDetails(item))}} >
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin} mr-4`} />}
-                                title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0 mt-12">{item.coin}</div>}
-                            />
+                                title={<div className="wallet-title">{item.coin}</div>}                            />
                         </List.Item>
                     )}
                 />
