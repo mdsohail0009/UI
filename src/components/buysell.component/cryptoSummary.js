@@ -32,7 +32,7 @@ class Summary extends Component {
     startCounter = () => {
         setTimeout(this.disablePay, 12000);
     }
-    disablePay=()=> {
+    disablePay = () => {
         this.setState({ ...this.state, disablePay: true });
     }
     showPayCardDrawer = () => {
@@ -49,7 +49,7 @@ class Summary extends Component {
                 fromWalletId,
                 fromWalletCode,
                 fromWalletName,
-                "fromValue":this.props.sellData.previewDetails?.data?.amount ,
+                "fromValue": this.props.sellData.previewDetails?.data?.amount,
                 toWalletId,
                 toWalletCode,
                 toWalletName,
@@ -73,7 +73,7 @@ class Summary extends Component {
         }
     }
     render() {
-        if (this.props.sellData?.previewDetails?.loading) {
+        if (this.props.sellData?.previewDetails?.loading || !this.props.sellData?.previewDetails?.data) {
             return <Loader />
         }
         const { Paragraph, Text } = Typography;

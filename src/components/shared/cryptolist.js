@@ -29,7 +29,6 @@ class CryptoList extends Component {
         })
     }
     handleSearch = (value) => {
-        debugger
         let coinsList;
         if (!value) {
             coinsList = this.props.sellData?.coins[this.props.coinType]?.data;

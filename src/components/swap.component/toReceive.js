@@ -30,7 +30,7 @@ class ToReceive extends Component {
             {this.props.swapStore.MemberCoins&&<div className="sellcrypto-container auto-scroll">
             <List
                     itemLayout="horizontal"
-                    dataSource={this.props.swapStore.MemberCoins}
+                    dataSource={this.state.MemberCoins|| this.props.swapStore.MemberCoins}
                     className="wallet-list c-pointer"
                    
                     renderItem={item => (
@@ -58,7 +58,6 @@ const connectDispatchToProps = dispatch => {
             dispatch(setStep(stepcode))
         },
         fetchMemberCoins:(id)=>{
-            debugger
             dispatch(getMemberCoins(id))
         },
         dispatch
