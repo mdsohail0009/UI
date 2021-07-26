@@ -119,7 +119,7 @@ class SelectSellCrypto extends Component {
                         </div>
                     </div>
                 </Card>}
-                <div className="enter-val-container">
+                <div className="enter-val-container  p-relative">
                     <div className="text-center">
                         <Input className="fs-36 fw-100 text-white-30 text-center enter-val p-0"
                             placeholder=""

@@ -19,7 +19,7 @@ class WithdrawSummary extends Component {
         const link = <LinkValue content="terms_service" />;
         return (
             <>
-                <div className="enter-val-container mr-0">
+                <div className="enter-val-container mr-0  p-relative">
                     <div className="text-center">
                         <Input className="enter-val p-0 fs-36 text-white-30 fw-200" style={{ lineHeight: '28px' }}
                             bordered={false}
