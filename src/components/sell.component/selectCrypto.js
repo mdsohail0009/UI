@@ -23,11 +23,11 @@ class SelectSellCrypto extends Component {
             this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: false })
         }
     }
-    setAmount = async ({currentTarget}, fn) => {
+    setAmount = async ({currentTarget}, fn,fnRes) => {
         this.setState({...this.state,[fn]:currentTarget.value})
-        let res = await getSellamnt(currentTarget.value, this.state.isSwap, !this.state.isSwap ? this.props.sellData.coinDetailData?.coin : "USD");
+        let res = await getSellamnt(currentTarget.value, !this.state.isSwap, this.props.sellData.coinDetailData?.coin );
         if (res.ok) {
-            this.setState({ ...this.state, CryptoAmnt: res.data })
+            this.setState({ ...this.state, [fnRes]: res.data })
         }
     }
     clickMinamnt(type) {
@@ -95,7 +95,7 @@ class SelectSellCrypto extends Component {
     async swapChange(value) {
         let obj = Object.assign({}, this.state);
         this.setState({ isSwap: value })
-        let res = await getSellamnt(!this.state.isSwap ?obj.CryptoAmnt:obj.USDAmnt, value, !this.state.isSwap ? this.props.sellData.coinDetailData?.coin : "USD");
+        let res = await getSellamnt(!this.state.isSwap ?obj.CryptoAmnt:obj.USDAmnt, value, this.props.sellData.coinDetailData?.coin );
         if (res.ok) {
             this.setState({ USDAmnt:this.state.isSwap ?parseFloat(res.data).toFixed(8):obj.USDAmnt , CryptoAmnt: !this.state.isSwap ?res.data:obj.CryptoAmnt,isSwap:value })
         }
@@ -134,7 +134,7 @@ class SelectSellCrypto extends Component {
                         <Input className="fs-36 fw-100 text-white-30 text-center enter-val p-0"
                             
                             bordered={false}
-                            onChange={(e) =>{this.setAmount(e, !this.state.isSwap ?'CryptoAmnt':'USDAmnt')}} value={!this.state.isSwap ? this.state.CryptoAmnt:this.state.USDAmnt}
+                            onChange={(e) =>{this.setAmount(e, !this.state.isSwap ?'CryptoAmnt':'USDAmnt',this.state.isSwap ?'CryptoAmnt':'USDAmnt')}} value={!this.state.isSwap ? this.state.CryptoAmnt:this.state.USDAmnt}
                             style={{ width: 100, lineHeight: '55px', fontSize: 36, paddingRight: 30 }}
                             onBlur={(e) => e.currentTarget.value.length == 0 ? e.currentTarget.style.width = "100px" : ''}
                             onKeyPress={(e) => {
