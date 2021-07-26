@@ -59,9 +59,9 @@ class CryptoList extends Component {
             <Search placeholder="Search Currency" onChange={({ currentTarget }) => { this.handleSearch(currentTarget.value) }} size="middle" bordered={false} enterButton className="my-16" />
             <List
                 itemLayout="horizontal"
-                dataSource={this.state.coinsList|| this.props.sellData?.coins[this.props.coinType]?.data}
+                dataSource={this.state.coinsList || this.props.sellData?.coins[this.props.coinType]?.data}
                 //loadMore={loadMore}
-                className="crypto-list"
+                className="crypto-list auto-scroll"
                 loading={this.props.sellData?.coins[this.props.coinType]?.loading}
                 renderItem={item => (
                     <List.Item>

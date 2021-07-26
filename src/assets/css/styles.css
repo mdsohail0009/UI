@@ -466,7 +466,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .buysell-toggle{ margin: 0 45px 50px !important;}
     .buysell-toggle .ant-radio-button-wrapper{min-width:174px !important; }
     .crypto-list-tabs .crypto-list{max-height: calc(100vh - 492px); overflow-y: auto; padding-right: 10px;}
-    .sellcrypto-container{max-height: calc(100vh - 328px);}
+    .sellcrypto-container{max-height: calc(100vh - 336px);}
     .suisfiat-container{max-height: calc(100vh - 314px);}
     .suisfiat-height{max-height: calc(100vh - 278px);}
     .round-pills .ant-radio-button-wrapper,.default-radio .ant-radio-button-wrapper{min-width: 120px;}
