@@ -50,7 +50,6 @@ const fetchMemberCoinsRejected = (paylaod) => {
 const getMemberCoins = (member_id) => {
     return async (dispatch) => {
         dispatch(fetchMemberCoins({ key: "MemberCoins", loading: true, data: [] }));
-        debugger
         const response = await getportfolio(member_id);
         if (response.ok) {
             dispatch(fetchMemberCoinsSuccess(response.data, 'MemberCoins'));

@@ -55,7 +55,7 @@ class SelectCrypto extends Component {
         this.props.changeStep('step3');
     }
     render() {
-        if (this.props.sellData?.selectedCoin.loading) {
+        if (this.props.sellData?.selectedCoin.loading || !this.props.sellData?.selectedCoin?.data) {
             return <Loader />
         }
         const { Paragraph, Text } = Typography;
@@ -106,7 +106,7 @@ class SelectCrypto extends Component {
 
                 <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua pt-16" />
                 <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
-                <Translate content="refresh_newprice" style={{cursor:"pointer"}}  component={Paragraph} onClick={() => this.fetchConvertionValue()} className="mb-36 fs-14 text-white-30 fw-200 text-center mb-16" />
+                <Translate content="refresh_newprice" style={{ cursor: "pointer" }} component={Paragraph} onClick={() => this.fetchConvertionValue()} className="mb-36 fs-14 text-white-30 fw-200 text-center mb-16" />
                 <Translate content="confirm_btn_text" disabled={this.state.disableConfirm} component={Button} size="large" block className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
             </>
         )

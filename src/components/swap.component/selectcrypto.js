@@ -10,7 +10,6 @@ class SelectCrypto extends Component {
         MemberCoins: []
     }
     componentDidMount() {
-        debugger
         this.props.fetchMemberCoins(this.props.userProfile?.id);
     }
 

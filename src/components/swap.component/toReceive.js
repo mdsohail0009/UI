@@ -58,7 +58,6 @@ const connectDispatchToProps = dispatch => {
             dispatch(setStep(stepcode))
         },
         fetchMemberCoins:(id)=>{
-            debugger
             dispatch(getMemberCoins(id))
         },
         dispatch
