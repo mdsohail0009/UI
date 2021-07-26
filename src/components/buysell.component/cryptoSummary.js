@@ -96,7 +96,7 @@ class Summary extends Component {
                     </div>
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="amount" component={Text} />
-                        <Text className="fw-300 text-white-30">{coin}{amount}</Text>
+                        <Text className="fw-300 text-white-30">{coin} {amount}</Text>
                     </div>
                     {/* <div className="pay-list fs-14">
                     <Translate className="fw-400 text-white" content={`suissebase_fee`} component={Text} ><Tooltip title="Suissebase Fee"><span className="icon md info c-pointer ml-4" /></Tooltip></Translate>
