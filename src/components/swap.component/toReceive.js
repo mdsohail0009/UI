@@ -27,7 +27,7 @@ class ToReceive extends Component {
 
         return (<>
             <Search placeholder="Search for a Currency" onChange={value=>this.onSearch(value)} className="crypto-search fs-14" />
-            <Paragraph className="text-upper fs-14 text-center text-white-30 mt-36 fw-500 mb-0"><span className="icon sm leftarrow mr-12 mb-4" />To Receive</Paragraph>
+            <Paragraph className="to-receive"><span className="icon sm leftarrow mr-12 mb-4" />To Receive</Paragraph>
             <div className="sellcrypto-container auto-scroll">
             <List
                     itemLayout="horizontal"

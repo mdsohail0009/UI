@@ -137,7 +137,7 @@ line-height: 16px;min-width:90px}
 .crypto-list-tabs .ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textDark); background: var(--bgYellow); border-radius: 30px;}
 .crypto-list-tabs .ant-tabs-ink-bar{display: none;}
 .pop-btn{font-size: 14px;}
-.pop-btn{background-color: var(--bgYellow); border-color: var(--bgYellow); border-radius: 40px;height: 57px; text-transform: uppercase;font-weight: 700; transition: 0.3s ease;}
+.pop-btn{background-color: var(--bgYellow); border-color: var(--bgYellow); border-radius: 40px;height: 48px; text-transform: uppercase;font-weight: 700; transition: 0.3s ease;}
 .pop-btn:hover, .pop-btn:focus, .pop-btn:active{background-color: var(--bgDarkYellow);color: var(--textDark);border-color: var(--bgYellow);}
 .pop-cancel{background-color: transparent;color: var(--textWhite30); border-color: transparent; border-radius: 40px;height: 57px;}
 .cancel-btn{height: 48px; text-transform: uppercase;font-weight: 700;text-align: center;}
@@ -465,6 +465,11 @@ height: 48px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .crypto-percent{font-size: 60px;line-height: normal;}
     .coin{transform: scale(1);}
     .round-pills{ margin-bottom: 40px;}
+    .crypto-search.ant-input-search .ant-input-group input{height: 58px !important;}
+    .cancel-btn{height: 57px !important;}
+    .custon-btngroup{height: 57px !important;}
+    .to-receive{margin-top: 36px;}
+    .pop-btn{height: 57px;}
 }
 .recomoned-bg{background: var(--texthover);font-size: 12px;padding: 0 2px;line-height: 1.2;color: var(--textWhite);float: right;}
 .text-width{width: 250px;}
@@ -582,3 +587,4 @@ height: 48px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .crypto-list .ant-list-item, .wallet-list .ant-list-item{padding:10px 0 8px !important}
 .drawer-title{font-size: 34px !important;}
 .swap-updown{position: absolute; right: 202px; top: 156px; z-index: 9; background: #054d73;padding: 4px 8px; border-radius: 10px;}
+.to-receive{text-transform: uppercase;font-size: 14px;text-align: center;color: var(--textWhite30);font-weight: 500;margin-bottom: 0 !important;margin-top: 26px;}
