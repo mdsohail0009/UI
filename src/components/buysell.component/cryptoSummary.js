@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import { Typography, Button, Tooltip, Checkbox, notification } from 'antd';
+import { Typography, Button, Tooltip, Checkbox, notification, Alert } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -24,6 +24,7 @@ class Summary extends Component {
         this.state = {
             isLoading: false,
             disablePay: false,
+            error: { valid: true, error: null }
         }
     }
     componentDidMount() {
@@ -39,6 +40,7 @@ class Summary extends Component {
         console.log(this.state);
     }
     pay = async () => {
+        this.setState({...this.state,error:{valid:true,message:null}});
         const isTermsAgreed = document.getElementById("agree-check").checked;
         if (isTermsAgreed) {
             const { id: toWalletId, walletName: toWalletName, walletCode: toWalletCode } = this.props.sellData?.coinWallet;
@@ -65,11 +67,13 @@ class Summary extends Component {
             if (response.ok) {
                 this.props.changeStep('success')
             } else {
-                notification.error({ message: "Buy Crypto", description: response.data || response.originalError.message })
+                this.setState({...this.state,error:{valid:false,message:response.data || response.originalError.message}})
+               // notification.error({ message: "Buy Crypto", description: response.data || response.originalError.message })
             }
             this.setState({ isLoading: false })
         } else {
-            notification.warn({ message: "Terms&Conditions", description: "Please agree to terms&conditions" })
+            this.setState({...this.state,error:{valid:false,message:"Please agree to terms&conditions"}})
+            //notification.warn({ message: "Terms&Conditions", description: "Please agree to terms&conditions" })
         }
     }
     render() {
@@ -82,6 +86,7 @@ class Summary extends Component {
         // const [seconds, setSeconds] = React.useState(10);
         return (
             <>
+                {!this.state?.error?.valid && <Alert showIcon type="error" message="Buy crypto" description={this.state.error?.message} />}
                 <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>{amount} {coin}</div>
                 <div className="text-white-50 fw-300 text-center fs-14 mb-16">{this.props.sellData?.selectedWallet?.currencyCode} {amountNativeCurrency}</div>
                 <div className="pay-list fs-14">
