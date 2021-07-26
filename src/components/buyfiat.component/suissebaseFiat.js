@@ -6,6 +6,7 @@ import { setStep } from '../../reducers/buysellReducer';
 import connectStateProps from '../../utils/state.connect';
 import FaitDeposit from './faitDeposit';
 import FaitdepositSummary from './faitdepositSummary';
+import SelectCurrency from './selectCurrency';
 
 class SuissebaseFiat extends Component {
     state = {}
@@ -26,6 +27,7 @@ class SuissebaseFiat extends Component {
         const stepcodes = {
             fiatdeposit: <FaitDeposit />,
             faitsummary: < FaitdepositSummary />,
+            selectcurrency: < SelectCurrency/>,
 
         }
         return stepcodes[config[this.props.buyFiat.stepcode]]

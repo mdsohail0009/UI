@@ -265,5 +265,12 @@ export default {
   change_password: "更改密码",
   summar_info: '概要信息',
   confirm_password: '确认密码',
-  convert : '兌換'
+  convert : '兌換',
+  EUR_text :'请选择您要存入的货币，然后将显示所选货币的银行帐户详细信息。下一步是您将资金电汇到所提供的银行详细信息，并记住包括参考号。',
+  BICcode : 'BIC',
+  EPUALT : 'EPUALT22XXX',
+  account_holder_name: '账户持有人姓名',
+  innovative_concepts:'创新理念',
+  wire_16_ZBPHXFHI :'wire_16_ZBPHXFHI',
+  note: '请注意，我们接受只能在 SEPA 中寻址的传输。',
 }

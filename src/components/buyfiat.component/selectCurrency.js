@@ -6,7 +6,6 @@ import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import SellToggle from './faitWithdrawal';
 import config from '../../config/config';
-import SelectCurrency from './selectCurrency';
 
 const LinkValue = (props) => {
   return (
@@ -18,47 +17,26 @@ const LinkValue = (props) => {
   )
 }
 const { Option } = Select;
-class FaitDeposit extends Component {
-  state = {
-    buyDrawer: false,
-    crypto: config.tlvCoinsList,
-    buyToggle: 'Buy',
-    fiatDepEur: false
-  }
-  handleBuySellToggle = e => {
-    this.setState({
-      faitdeposit: e.target.value === 2
-    });
-  }
-  handlFiatDep = e => {
-    this.setState({
-      fiatDepEur: e.target.value === "eur"
-    });
-//    return <SelectCurrency />
-  }
-
+class SelectCurrency extends Component {
   state = {}
-  
   render() {
     const { TabPane } = Tabs;
     const { Paragraph, Title, Text } = Typography;
     const link = <LinkValue content="terms_service" />;
-    const { faitdeposit, fiatDepEur } = this.state;
-    const { options, value } = this.state;
+    const { faitdeposit } = this.state;
     return (
       <>
-        <Radio.Group
+        {/* <Radio.Group
           defaultValue={1}
           onChange={this.handleBuySellToggle}
           className="buysell-toggle">
           <Translate content="deposit" component={Radio.Button} value={1} />
           <Translate content="withdraw" component={Radio.Button} value={2} />
-        </Radio.Group>
-        {faitdeposit ?
-          <SellToggle />
-          : <><div className="suisfiat-container auto-scroll"><Translate
+        </Radio.Group> */}
+       
+          <div className="suisfiat-container auto-scroll"><Translate
             className="mb-0 text-white-30 fs-14 fw-200"
-            content="desposite_text"
+            content="EUR_text"
             component={Paragraph}
           />
             <form className="form">
@@ -68,9 +46,8 @@ class FaitDeposit extends Component {
                   content="currency"
                   component={Text}
                 />
-                <Select 
-                  onChange={(e)=>this.handlFiatDep} value={value}
-                  defaultValue="usd"
+                <Select
+                  defaultValue="EUR"
                   className="cust-input mb-0"
                   dropdownClassName="select-drpdwn"
                   style={{ width: "100%" }}
@@ -78,67 +55,51 @@ class FaitDeposit extends Component {
                   showArrow={false}
                   suffixIcon={<span className="icon md uparrow" />}
                 >
-                  <Option value="usd">USD</Option>
-                  <Option value="eur">EUR</Option>
-                  <Option value="gbp">GBP</Option>
+                  <Option value="USD">USD</Option>
+                  <Option value="EUR">EUR</Option>
+                  <Option value="GBP">GBP</Option>
                 </Select>
-                {!fiatDepEur?<>
-                <div className="d-flex">
+              </div>
+              <div className="d-flex mb-24">
                 {/* <span className="coin deposit-white mt-4" /> */}
                 <div style={{ flex: 1 }}>
-                  <Paragraph className="mb-0 fs-16 text-white fw-500 mt-36">Innovative Concepts</Paragraph>
+                  <Paragraph className="mb-0 fs-16 text-white fw-500">UAB epayblock</Paragraph>
                   <Paragraph className="mb-0 fs-12 text-white-30 fw-300">
-                    Innovative Concepts
-                    PL DU BOURG DE FOUR6,1204 GENEVE,SWITZERLAND</Paragraph>
-                  <Paragraph className="mb-0 fs-14 text-yellow fw-500"><Text className="text-white-30 fs-14">A/C </Text>*** *** 6717</Paragraph>
+                   Upes str.23,LT-08128,vilnius
+                   </Paragraph>                  
+                  <Paragraph className="mb-0 fs-14 text-yellow fw-500"><Text className="text-white-30 fs-14">A/C </Text>LT41*** *** 1796</Paragraph>
                 </div>
               </div>
-              <Translate
-                className="mt-36 fs-14 text-aqua fw-500 text-upper"
-                content="for_Domestic_wires"
-                component={Paragraph}
-              />
-              <Translate
-                className="fw-200 text-white-30 fs-16"
-                content="Routing_number"
-                component={Text}
-              />
-              <Text className="fs-20 text-white-30 d-block">026013576</Text>
-              <Translate
+              
+              
+             
+              {/* <Translate
                 className="mt-24 fs-14 text-aqua fw-500 text-upper"
                 content="for_international_wires"
                 component={Paragraph}
-              />
+              /> */}
               <Translate
-                className="fw-200 text-white-30 fs-16"
-                content="Swift_BICcode"
+                className=" fw-200 text-white-30 fs-16 "
+                content="BICcode"
                 component={Text}
               />
               <Translate
                 className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                content="SIGNU"
+                content="EPUALT"
                 component={Text}
               />
               <Translate
                 className="fw-200 text-white-30 fs-16"
-                content="beneficiaryBank"
+                content="account_holder_name"
                 component={Text}
               />
               <Translate
                 className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                content="signature_bank"
+                content="innovative_concepts"
                 component={Text}
               />
-              <Translate
-                className="fw-200 text-white-30 fs-16"
-                content="beneficiary_Bank_address"
-                component={Text}
-              />
-              <Translate
-                className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                content="Fifth_Avenue"
-                component={Text}
-              />
+             
+              
               <div className="crypto-address mb-36 mx-0">
                 <Translate
                   className="mb-0 fw-400 fs-14 text-secondary"
@@ -146,35 +107,24 @@ class FaitDeposit extends Component {
                   component={Text}
                 />
                 <div className="mb-0 fs-16 fw-500 text-textDark">
-                  wire_16_PKFPGATX
+                  wire_16_ZBPHXFHI
                 </div>
               </div>
               <Translate
                 className="fs-14 text-white-30 fw-200 l-height-normal"
                 content="reference_hint_text"
                 component={Paragraph}
-              /></>:<selectCurrency />}
-              </div>
+              />
+                <Translate className="text-white-30 f-12 " content="note" component={Paragraph} />
             </form>
-          </div>
-            <Translate
-              content="confirm_btn_text"
-              component={Button}
-              size="large"
-              block
-              className="pop-btn mt-36"
-              onClick={() => this.props.changeStep("step2")}
-            />
-          </> 
-        }
-       
+          </div>       
       </>
     );
   }
 }
 
-const connectStateToProps = ({ faitdeposit, oidc }) => {
-  return { faitdeposit }
+const connectStateToProps = ({ SelectCurrency, oidc }) => {
+  return { SelectCurrency }
 }
 const connectDispatchToProps = dispatch => {
   return {
@@ -183,4 +133,4 @@ const connectDispatchToProps = dispatch => {
     }
   }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(FaitDeposit);
+export default connect(connectStateToProps, connectDispatchToProps)(SelectCurrency);

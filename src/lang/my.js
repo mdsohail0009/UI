@@ -265,5 +265,12 @@ export default {
   change_password: "Tukar kata laluan",
   summar_info: 'Maklumat Ringkasan',
   confirm_password: 'Sahkan Kata Laluan',
-  convert : 'Tukarkan'
+  convert : 'Tukarkan',
+  EUR_text :'Pilih mata wang yang ingin anda masukkan, dan butiran akaun bank untuk mata wang yang dipilih akan dipaparkan. Langkah seterusnya adalah untuk memasukkan wang anda ke butiran bank yang disediakan dan ingat untuk MEMASUKI nombor rujukan.',
+  BICcode : 'BIC',
+  EPUALT : 'EPUALT22XXX',
+  account_holder_name: 'Nama Pemegang Akaun',
+  innovative_concepts:'Konsep Inovatif',
+  wire_16_ZBPHXFHI :'wayar_16_ZBPHXFHI',
+  note: 'Harap maklum bahawa kami menerima pemindahan yang dapat dialamatkan hanya di SEPA.',
 }
