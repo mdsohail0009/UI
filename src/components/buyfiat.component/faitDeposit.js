@@ -46,8 +46,8 @@ class FaitDeposit extends Component {
           <Translate content="withdraw" component={Radio.Button} value={2} />
         </Radio.Group>
         {faitdeposit ?
-            <SellToggle />
-           : <><div className="suisfiat-container auto-scroll"><Translate
+          <SellToggle />
+          : <><div className="suisfiat-container auto-scroll"><Translate
             className="mb-0 text-white-30 fs-14 fw-200"
             content="desposite_text"
             component={Paragraph}
@@ -62,6 +62,7 @@ class FaitDeposit extends Component {
                 <Select
                   defaultValue="USD"
                   className="cust-input mb-0"
+                  dropdownClassName="select-drpdwn"
                   style={{ width: "100%" }}
                   bordered={false}
                   showArrow={false}
@@ -73,8 +74,8 @@ class FaitDeposit extends Component {
                 </Select>
               </div>
               <div className="d-flex">
-                <span className="coin deposit-white mt-4" />
-                <div className="ml-16" style={{ flex: 1 }}>
+                {/* <span className="coin deposit-white mt-4" /> */}
+                <div style={{ flex: 1 }}>
                   <Paragraph className="mb-0 fs-16 text-white fw-500">Innovative Concepts</Paragraph>
                   <Paragraph className="mb-0 fs-12 text-white-30 fw-300">
                     Innovative Concepts
@@ -144,15 +145,15 @@ class FaitDeposit extends Component {
                 component={Paragraph}
               />
             </form>
-           </div>
+          </div>
             <Translate
-            content="confirm_btn_text"
-            component={Button}
-            size="large"
-            block
-            className="pop-btn mt-36"
-            onClick={() => this.props.changeStep("step2")}
-          />
+              content="confirm_btn_text"
+              component={Button}
+              size="large"
+              block
+              className="pop-btn mt-36"
+              onClick={() => this.props.changeStep("step2")}
+            />
           </>
         }
       </>
