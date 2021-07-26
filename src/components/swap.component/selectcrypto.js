@@ -10,7 +10,6 @@ class SelectCrypto extends Component {
         MemberCoins: []
     }
     componentDidMount(){
-        this.state.MemberCoins = this.props.swapStore.MemberCoins;
         this.props.fetchMemberCoins();
     }
     
@@ -32,10 +31,10 @@ class SelectCrypto extends Component {
         
             <Search placeholder="Search for a Currency" onChange={value=>this.onSearch(value)} className="crypto-search fs-14" />
             <Paragraph className="to-receive">Swap From<span className="icon sm rightarrow ml-12 mb-4" /></Paragraph>
-            <div className="sellcrypto-container auto-scroll">
+            {this.props.swapStore.MemberCoins&&<div className="sellcrypto-container auto-scroll">
                 <List
                     itemLayout="horizontal"
-                    dataSource={this.state.MemberCoins}
+                    dataSource={this.props.swapStore.MemberCoins}
                     className="wallet-list c-pointer"
                    
                     renderItem={item => (
@@ -48,7 +47,7 @@ class SelectCrypto extends Component {
                         </List.Item>
                     )}
                 />
-            </div>
+            </div>}
             <Translate size="large" className="custon-btngroup cancel-btngroup" content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} />
             <Translate size="large" className="custon-btngroup pick-btn" content="pick" component={Button} onClick={() => this.props.changeStep('step1')} />
         </>)

@@ -9,7 +9,6 @@ class ToReceive extends Component {
         addLinks: null,
     }
     componentDidMount(){
-        this.state.MemberCoins = this.props.swapStore.MemberCoins;
         this.props.fetchMemberCoins()
     }
     onSearch(e) {
@@ -23,15 +22,15 @@ class ToReceive extends Component {
     render() {
         const { Search } = Input;
         const { Paragraph, Text } = Typography;
-        const {addLinks }= this.state;
+        const { addLinks } = this.state;
 
         return (<>
             <Search placeholder="Search for a Currency" onChange={value=>this.onSearch(value)} className="crypto-search fs-14" />
             <Paragraph className="to-receive"><span className="icon sm leftarrow mr-12 mb-4" />To Receive</Paragraph>
-            <div className="sellcrypto-container auto-scroll">
+            {this.props.swapStore.MemberCoins&&<div className="sellcrypto-container auto-scroll">
             <List
                     itemLayout="horizontal"
-                    dataSource={this.state.MemberCoins}
+                    dataSource={this.props.swapStore.MemberCoins}
                     className="wallet-list c-pointer"
                    
                     renderItem={item => (
@@ -39,11 +38,12 @@ class ToReceive extends Component {
                          onClick={() => {this.selectToggle(item.id);this.props.dispatch(updateReceiveCoinDetails(item))}} >
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin} mr-4`} />}
-                                title={<div className="wallet-title">{item.coin}</div>}                            />
+                                title={<div className="wallet-title">{item.coin}</div>}
+                            />
                         </List.Item>
                     )}
                 />
-            </div>
+            </div>}
             <Translate size="large" className="custon-btngroup cancel-btngroup" content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} />
             <Translate size="large" className="custon-btngroup pick-btn" content="pick" component={Button} onClick={() => this.props.changeStep('step1')} />
         </>)
