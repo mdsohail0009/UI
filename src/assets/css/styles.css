@@ -129,6 +129,7 @@ line-height: 16px;min-width:90px}
 .verify-container{max-height: calc(100vh - 140px);}
 .dep-withdraw{max-height: calc(100vh - 267px);}
 .selectcrypto-container{max-height: calc(100vh - 272px);}
+.cryptosummary-container{max-height: calc(100vh - 322px);}
 .auto-scroll{overflow-y: auto; padding-right: 10px;}
 .auto-scroll::-webkit-scrollbar-thumb{background-color: var(--bgDarkGrey);}
 .crypto-list-tabs .ant-list-item, .wallet-list .ant-list-item{border-color: var(--borderLight);}
