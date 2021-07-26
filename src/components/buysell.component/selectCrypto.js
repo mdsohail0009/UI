@@ -21,9 +21,9 @@ class SelectCrypto extends Component {
             },
             selectedWallet: null,
             disableConfirm: false,
-            error:{
-                valid:true,
-                description:message
+            error: {
+                valid: true,
+                description: message
             }
         }
     }
@@ -52,8 +52,8 @@ class SelectCrypto extends Component {
         const { buyMin, buyMax, coin } = this.props.sellData?.selectedCoin?.data;
         const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin })
         if (!_vaidator.valid) {
-           // notification.error({ message: "Buy crypto", description: _vaidator.message });
-           this.setState({...this.state,error:{..._vaidator}})
+            // notification.error({ message: "Buy crypto", description: _vaidator.message });
+            this.setState({ ...this.state, error: { ..._vaidator } })
             return;
         }
         this.props.preview(this.state.selectedWallet, coin, isSwaped ? cryptoValue : localValue);
@@ -69,51 +69,52 @@ class SelectCrypto extends Component {
         return (
             <>
                 {!this.state?.error?.valid && <Alert showIcon type="error" message="Buy crypto" description={this.state.error?.message} />}
-                <Card className="crypto-card select mb-36" bordered={false}>
-                    <span className="d-flex align-center">
-                        <span className={`coin lg ${coin}`} />
-                        <Text className="fs-24 text-purewhite crypto-name ml-8">{coin}</Text>
-                    </span>
-                    <div className="crypto-details">
-                        <Text className="crypto-percent text-purewhite fw-700">{percentage}<sup className="percent text-purewhite fw-700">%</sup></Text>
-                        <div className="fs-16 text-purewhite fw-200 crypto-amount">
-                            <div>{coinBalance} {coin}</div>
-                            <div>${coinValueinNativeCurrency}</div>
+                <div className="selectcrypto-container auto-scroll">
+                    <Card className="crypto-card select mb-36" bordered={false}>
+                        <span className="d-flex align-center">
+                            <span className={`coin lg ${coin}`} />
+                            <Text className="fs-24 text-purewhite crypto-name ml-8">{coin}</Text>
+                        </span>
+                        <div className="crypto-details">
+                            <Text className="crypto-percent text-purewhite fw-700">{percentage}<sup className="percent text-purewhite fw-700">%</sup></Text>
+                            <div className="fs-16 text-purewhite fw-200 crypto-amount">
+                                <div>{coinBalance} {coin}</div>
+                                <div>${coinValueinNativeCurrency}</div>
+                            </div>
                         </div>
-                    </div>
-                </Card>
-                <div className="p-relative">
-                    <div className="enter-val-container  p-relative">
-                        <Text className="fs-36 fw-100 text-white-30 mr-4">{!isSwaped ? "USD" : coin}</Text>
-                        <Input className="fw-100 text-white-30 enter-val p-0"
-                            placeholder="0.00"
-                            bordered={false}
-                            style={{ width: 90, lineHeight: '55px', fontSize: 36, paddingRight: 30 }}
-                            //prefix={!isSwaped ? "USD" : coin}
-                            onBlur={(e) => e.currentTarget.value.length == 0 ? e.currentTarget.style.width = "100px" : ''}
-                            onKeyPress={(e) => {
-                                e.currentTarget.style.width = ((e.currentTarget.value.length + 6) * 15) + 'px'
-                                e.currentTarget.value.length >= 8 ? e.currentTarget.style.fontSize = "30px" : e.currentTarget.style.fontSize = "36px"
-                            }}
-                            value={isSwaped ? cryptoValue : localValue}
-                            onChange={(e) => {
-                                this.setState({ ...this.state, swapValues: { ...this.state.swapValues, [isSwaped ? "cryptoValue" : "localValue"]: e.currentTarget.value } }, () => this.fetchConvertionValue());
+                    </Card>
+                    <div className="p-relative">
+                        <div className="enter-val-container  p-relative">
+                            <Text className="fs-36 fw-100 text-white-30 mr-4">{!isSwaped ? "USD" : coin}</Text>
+                            <Input className="fw-100 text-white-30 enter-val p-0"
+                                placeholder="0.00"
+                                bordered={false}
+                                style={{ width: 90, lineHeight: '55px', fontSize: 36, paddingRight: 30 }}
+                                //prefix={!isSwaped ? "USD" : coin}
+                                onBlur={(e) => e.currentTarget.value.length == 0 ? e.currentTarget.style.width = "100px" : ''}
+                                onKeyPress={(e) => {
+                                    e.currentTarget.style.width = ((e.currentTarget.value.length + 6) * 15) + 'px'
+                                    e.currentTarget.value.length >= 8 ? e.currentTarget.style.fontSize = "30px" : e.currentTarget.style.fontSize = "36px"
+                                }}
+                                value={isSwaped ? cryptoValue : localValue}
+                                onChange={(e) => {
+                                    this.setState({ ...this.state, swapValues: { ...this.state.swapValues, [isSwaped ? "cryptoValue" : "localValue"]: e.currentTarget.value } }, () => this.fetchConvertionValue());
 
-                            }}
-                            autoFocus
-                        />
+                                }}
+                                autoFocus
+                            />
 
+                        </div>
+                        <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{isSwaped ? localValue : cryptoValue} {isSwaped ? "USD" : coin}</Text>
+                        <span className="mt-16 val-updown">
+                            <span onClick={() => !isSwaped ? this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: true } }) : ""} className="icon sm uparw-o-white d-block c-pointer mb-4" /><span onClick={() => isSwaped ? this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: false } }) : ""} className="icon sm dwnarw-o-white d-block c-pointer" />
+                        </span>
                     </div>
-                    <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{isSwaped ? localValue : cryptoValue} {isSwaped ? "USD" : coin}</Text>
-                    <span className="mt-16 val-updown">
-                        <span onClick={() => !isSwaped ? this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: true } }) : ""} className="icon sm uparw-o-white d-block c-pointer mb-4" /><span onClick={() => isSwaped ? this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: false } }) : ""} className="icon sm dwnarw-o-white d-block c-pointer" />
-                    </span>
+                    <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua pt-16" />
+                    <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
+                    <Translate content="refresh_newprice" style={{ cursor: "pointer" }} component={Paragraph} onClick={() => this.fetchConvertionValue()} className="mb-36 fs-14 text-white-30 fw-200 text-center mb-16" />
                 </div>
-
-                <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua pt-16" />
-                <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
-                <Translate content="refresh_newprice" style={{ cursor: "pointer" }} component={Paragraph} onClick={() => this.fetchConvertionValue()} className="mb-36 fs-14 text-white-30 fw-200 text-center mb-16" />
-                <Translate content="confirm_btn_text" disabled={this.state.disableConfirm} component={Button} size="large" block className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
+                <Translate content="confirm_btn_text" disabled={this.state.disableConfirm} component={Button} size="large" block className="pop-btn mt-24" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
             </>
         )
     }
