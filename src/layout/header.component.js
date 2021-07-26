@@ -125,12 +125,12 @@ class Header extends Component {
                         <span className="icon md rarrow-white" />
                     </div>
                 </li>
-                <li onClick={() => this.setState({ ...this.state, showChangePassword: true })}>
+                {/* <li onClick={() => this.setState({ ...this.state, showChangePassword: true })}>
                     <div className="dropdown-flex">
                         <Translate content="change_password" component={Link} />
                         <span className="icon md rarrow-white" />
                     </div>
-                </li>
+                </li> */}
                 <li className="d-flex justify-content align-center" onClick={() => userManager.signoutRedirect()}>
                     <Translate content="logout" component={Link} />
                     <span className="icon md rarrow-white" />
