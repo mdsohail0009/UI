@@ -45,7 +45,7 @@ class CryptoList extends Component {
                 </div>
             ) : null;
         return (<>
-            <Search placeholder="Search Currency" size="middle" bordered={false} enterButton className="mb-16" />
+            <Search placeholder="Search Currency" size="middle" bordered={false} enterButton className="my-16" />
             <List
                 itemLayout="horizontal"
                 dataSource={this.props.sellData?.coins[this.props.coinType]?.data}
