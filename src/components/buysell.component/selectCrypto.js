@@ -56,7 +56,7 @@ class SelectCrypto extends Component {
             this.setState({ ...this.state, error: { ..._vaidator } })
             return;
         }
-        this.props.preview(this.state.selectedWallet, coin, isSwaped ? cryptoValue : localValue);
+        this.props.preview(this.state.selectedWallet, coin, cryptoValue);
         this.props.changeStep('step3');
     }
     render() {
