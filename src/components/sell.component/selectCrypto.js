@@ -122,9 +122,8 @@ class SelectSellCrypto extends Component {
                 <div className="p-relative">
                     <div className="enter-val-container">
                         <Text className="fs-36 fw-100 text-white-30 mr-4">{this.state.isSwap ? coinDetailData.coin : "USD"}</Text>
-                        <Input className="fw-100 text-white-30 enter-val p-0"
-                            placeholder="0.00"
-                            autoFocus
+                        <Input className="fs-36 fw-100 text-white-30 text-center enter-val p-0"
+                            placeholder=""
                             bordered={false}
                             style={{ width: 100, lineHeight: '55px', fontSize: 36, paddingRight: 30 }}
                             //prefix={this.state.isSwap ? coinDetailData.coin : "USD"}

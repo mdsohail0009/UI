@@ -9,7 +9,8 @@ import { fetchCoins } from '../buysell.component/crypto.reducer';
 class CryptoList extends Component {
     state = {
         loading: false,
-        initLoading: true, coinsList: []
+        initLoading: true, coinsList: null,
+
     }
     componentDidMount() {
         this.props.dispatch(fetchCoins(this.props.coinType || "all"));
@@ -26,6 +27,16 @@ class CryptoList extends Component {
         this.setState({
             showDrawer: false,
         })
+    }
+    handleSearch = (value) => {
+        debugger
+        let coinsList;
+        if (!value) {
+            coinsList = this.props.sellData?.coins[this.props.coinType]?.data;
+        } else {
+            coinsList = this.props.sellData?.coins[this.props.coinType]?.data.filter(item => item.walletCode.toLowerCase().includes(value.toLowerCase()));
+        }
+        this.setState({ ...this.state, coinsList })
     }
     render() {
         const { Paragraph } = Typography;
@@ -45,10 +56,10 @@ class CryptoList extends Component {
                 </div>
             ) : null;
         return (<>
-            <Search placeholder="Search Currency" size="middle" bordered={false} enterButton className="my-16" />
+            <Search placeholder="Search Currency" onChange={({ currentTarget }) => { this.handleSearch(currentTarget.value) }} size="middle" bordered={false} enterButton className="my-16" />
             <List
                 itemLayout="horizontal"
-                dataSource={this.props.sellData?.coins[this.props.coinType]?.data}
+                dataSource={this.state.coinsList|| this.props.sellData?.coins[this.props.coinType]?.data}
                 //loadMore={loadMore}
                 className="crypto-list"
                 loading={this.props.sellData?.coins[this.props.coinType]?.loading}

@@ -31,7 +31,7 @@ class SelectCrypto extends Component {
         return (<>
         
             <Search placeholder="Search for a Currency" onChange={value=>this.onSearch(value)} className="crypto-search fs-14" />
-            <Paragraph className="text-upper fs-14 text-center text-white-30 mt-36 mb-0 fw-500">Swap From<span className="icon sm rightarrow ml-12 mb-4" /></Paragraph>
+            <Paragraph className="to-receive">Swap From<span className="icon sm rightarrow ml-12 mb-4" /></Paragraph>
             <div className="sellcrypto-container auto-scroll">
                 <List
                     itemLayout="horizontal"
