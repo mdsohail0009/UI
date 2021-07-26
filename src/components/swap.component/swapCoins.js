@@ -112,10 +112,13 @@ class SwapCoins extends Component {
                         <span className="icon sm rightarrow swap-arrow"></span>
                     </div>
                     <span className="icon swapfrom-arrow c-pointer" onClick={()=>this.swapingCurr()}></span>
-                </div>}
-                {/* <span className="mt-16 swap-updown" onClick={this.swapingCurr}>
-                        <span className="icon sm uparw-o-white d-block c-pointer" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
-                    </span> */}
+                    <div className="mt-16 swap-updown" onClick={this.swapingCurr}>
+                            <span className="icon sm uparw-o-white d-block c-pointer" />
+                            <span className="icon sm dwnarw-o-white d-block c-pointer" />
+                    </div>
+                </div>
+                }
+                
                 {coinReceiveDetailData&&<div className="swap swapreceive-card p-relative">
                     <div>
                         <Translate className="text-purewhite fs-14 fw-100" content="swap_to" component={Text} />
