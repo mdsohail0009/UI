@@ -47,10 +47,11 @@ const fetchMemberCoinsRejected = (paylaod) => {
     }
 }
 
-const getMemberCoins = () => {
+const getMemberCoins = (member_id) => {
     return async (dispatch) => {
         dispatch(fetchMemberCoins({ key: "MemberCoins", loading: true, data: [] }));
-        const response = await getportfolio();
+        debugger
+        const response = await getportfolio(member_id);
         if (response.ok) {
             dispatch(fetchMemberCoinsSuccess(response.data, 'MemberCoins'));
         } else {

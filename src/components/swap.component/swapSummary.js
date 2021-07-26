@@ -66,11 +66,11 @@ class SwapSummary extends Component {
             this.setState({...this.state,errorMessage: 'Check Agree Policy Checkbox'})
         }
         else if(!this.props.swapStore.coinDetailData.coinBalance){
-            this.setState({...this.state,errorMessage: 'You do not have balance to swap'})
+            this.setState({...this.state,errorMessage: 'Insufficiant funds to swap'})
         }
         else{
             let obj = Object.assign({}, this.state.swapSaveData);
-            obj.membershipId = "E3BF0F02-70E5-4575-8552-F8C49533B7C6";
+            obj.membershipId = this.props.userProfile.id;
             obj.fromWalletId = this.props.swapStore.coinDetailData.id
             obj.fromWalletCode = this.props.swapStore.coinDetailData.coin
             obj.fromWalletName = this.props.swapStore.coinDetailData.coinFullName
@@ -125,8 +125,8 @@ class SwapSummary extends Component {
         )
     }
 }
-const connectStateToProps = ({ swapStore, oidc }) => {
-    return { swapStore }
+const connectStateToProps = ({ swapStore, oidc,userConfig }) => {
+    return { swapStore,userProfile:userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
