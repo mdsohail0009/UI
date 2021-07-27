@@ -128,8 +128,8 @@ line-height: 16px;min-width:90px}
 .suisfiat-height{max-height: calc(100vh - 210px);}
 .verify-container{max-height: calc(100vh - 140px);}
 .dep-withdraw{max-height: calc(100vh - 267px);}
-.selectcrypto-container{max-height: calc(100vh - 272px);}
-.cryptosummary-container{max-height: calc(100vh - 322px);}
+.selectcrypto-container{max-height: calc(100vh - 110px);}
+.cryptosummary-container{max-height: calc(100vh - 106px);}
 .auto-scroll{overflow-y: auto; padding-right: 10px;}
 .auto-scroll::-webkit-scrollbar-thumb{background-color: var(--bgDarkGrey);}
 .crypto-list-tabs .ant-list-item, .wallet-list .ant-list-item{border-color: var(--borderLight);}
@@ -221,7 +221,7 @@ line-height: 16px;min-width:90px}
 .coin.md.mastercard-white{background-position: -83px -1055px;width: 54px !important;height: 35px !important;}
 .coin.credit-white{background-position: -488px -2px;box-shadow: none;}
 .coin.deposit-white{background-position: -542px 0;box-shadow: none;}
-.pay-list{padding: 20px 0; border-bottom: 1px solid var(--borderLight);}
+.pay-list{padding: 16px 0; border-bottom: 1px solid var(--borderLight);}
 .expiry-input{width: 200px;}
 .expiry-input input{width: 50px; padding: 0 4px;height: 50px;}
 .cust-input, .expiry-input,.cust-input .ant-input{background: transparent;border-radius: 30px;height: 50px;border: 1px solid var(--borderLight);color: var(--textWhite30); text-align: center;margin-bottom: 20px;font-size: 16px;padding: 0 16px !important; }
@@ -489,6 +489,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .pop-btn{height: 57px;}
     .crypto-list .ant-list-item, .wallet-list .ant-list-item{padding:10px 0 8px 8px !important}
     .crypto-search.ant-input-search .ant-input-group .ant-input-group-addon{border-radius: 0 30px 30px 0;}
+    .pay-list{padding: 16px 0;}
 }
 .recomoned-bg{background: var(--texthover);font-size: 12px;padding: 0 2px;line-height: 1.2;color: var(--textWhite);float: right;}
 .text-width{width: 250px;}
