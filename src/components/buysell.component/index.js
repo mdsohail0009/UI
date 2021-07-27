@@ -99,8 +99,8 @@ class BuySell extends Component {
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
                 <div className="text-center fs-14">
-                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode }} className="mb-0 text-white-30 fw-600 text-upper" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
-                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode, value: this.props.sellData?.exchangeValues[this.props.sellData?.coinWallet?.walletCode] }} className="text-white-50 mb-0 fw-300" content={this.props.buySell.stepSubTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
+                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode||this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600 text-upper" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
+                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode||this.props.sellData?.coinWallet?.coin, value: this.props.sellData?.exchangeValues[this.props.sellData?.coinWallet?.walletCode||this.props.sellData?.coinWallet?.coin] }} className="text-white-50 mb-0 fw-300" content={this.props.buySell.stepSubTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
                 </div>
                 {this.renderIcon()}</div>]}
             placement="right"
