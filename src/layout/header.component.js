@@ -15,7 +15,7 @@ import SwapCrypto from '../components/swap.component'
 import MassPayment from '../components/buyfiat.component'
 import { userManager } from '../authentication';
 import Changepassword from '../components/changepassword';
-import { updateCoinDetails , updateReceiveCoinDetails } from '../reducers/swapReducer';
+import { updateCoinDetails, updateReceiveCoinDetails } from '../reducers/swapReducer';
 import { connect } from 'react-redux';
 
 counterpart.registerTranslations('en', en);
@@ -39,11 +39,11 @@ const securityMenu = (
     <Menu>
         <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="security" component={Title} />
         <ul className="pl-0 drpdwn-list">
-            <li><Link className="dropdown-flex" to="/2fa">2FA<span className="icon md rarrow-white" /></Link></li>
+            <li className="no-hover dropdown-flex text-white fs-14 pb-16">2FA<Switch size="small" /> </li>
             <li className="">
-                    {/* <Translate content="change_password" component={Link} to="/changepassword" /> */}
-                    <Link className="dropdown-flex" to="/changepassword">Change Password <span className="icon md rarrow-white" /></Link>
-                    
+                {/* <Translate content="change_password" component={Link} to="/changepassword" /> */}
+                <Link className="dropdown-flex" to="/changepassword">Change Password <span className="icon md rarrow-white" /></Link>
+
             </li>
             <li className="no-hover">
                 <div className="">
@@ -512,10 +512,10 @@ const connectStateToProps = ({ swapStore, oidc }) => {
 }
 const connectDispatchToProps = dispatch => {
     return {
-        fromObjSwap:(obj)=>{
+        fromObjSwap: (obj) => {
             dispatch(updateCoinDetails(obj))
         },
-        receiveObjSwap:(obj)=>{
+        receiveObjSwap: (obj) => {
             dispatch(updateReceiveCoinDetails(obj))
         },
         dispatch

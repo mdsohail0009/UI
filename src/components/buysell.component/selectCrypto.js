@@ -69,7 +69,7 @@ class SelectCrypto extends Component {
         const { coin, coinValueinNativeCurrency, coinBalance, percentage } = this.props.sellData?.selectedCoin?.data;
         return (
             <>
-                {!this.state?.error?.valid && <Alert showIcon type="error" message="Buy crypto" description={this.state.error?.message} />}
+                {!this.state?.error?.valid && <Alert showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable />}
                 <div className="selectcrypto-container auto-scroll">
                     <Card className="crypto-card select mb-36" bordered={false}>
                         <span className="d-flex align-center">
@@ -113,13 +113,11 @@ class SelectCrypto extends Component {
                     </div>
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua pt-16" />
                     <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
-                    <div className="fs-12 text-white-30 text-center my-16">Your amount might be changed with in
-                     
-                        10 seconds.</div>
+                    <div className="fs-12 text-white-30 text-center mt-24">Your amount might be changed with in10 seconds.</div>
                     {/* <div className="text-center">
                         <Translate content="refresh_newprice" component={Link} onClick={() => this.fetchConvertionValue()} className="mb-36 fs-14 text-yellow fw-200 mb-16 text-underline" />
                     </div> */}
-                    <SuisseBtn title="confirm_btn_text" onRefresh={()=>this.fetchConvertionValue()}  className="pop-btn mt-24" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
+                    <SuisseBtn title="confirm_btn_text" onRefresh={() => this.fetchConvertionValue()} className="pop-btn mt-16" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
                 </div>
 
             </>
