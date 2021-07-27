@@ -5,6 +5,7 @@ const Dashboard = React.lazy(() => import('../components/dashboard.component'));
 const CallbackPage = React.lazy(() => import('../authentication/callback.component'));
 const Login = React.lazy(() => import('../authentication/login.component'));
 const ChangePassword = React.lazy(() => import('../components/changepassword'));
+const Twofa = React.lazy(() => import('../components/twofa'));
 class RoutingComponent extends Component {
   render() {
     return <Switch>
@@ -13,6 +14,7 @@ class RoutingComponent extends Component {
         <ReactRoute path="/callback" component={CallbackPage} />
         <ReactRoute path="/login" component={Login} />
         <ReactRoute path="/changepassword" component={ChangePassword} />
+        <ReactRoute path="/2fa" component={Twofa} />
         <Redirect to="/dashboard" path="/" exact/>
       </React.Suspense>
     </Switch>
