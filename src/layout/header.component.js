@@ -39,7 +39,7 @@ const securityMenu = (
     <Menu>
         <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="security" component={Title} />
         <ul className="pl-0 drpdwn-list">
-            <li><Link className="dropdown-flex">2FA<span className="icon md rarrow-white" /></Link></li>
+            <li><Link className="dropdown-flex" to="/2fa">2FA<span className="icon md rarrow-white" /></Link></li>
             <li className="">
                     {/* <Translate content="change_password" component={Link} to="/changepassword" /> */}
                     <Link className="dropdown-flex" to="/changepassword">Change Password <span className="icon md rarrow-white" /></Link>

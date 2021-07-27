@@ -31,7 +31,7 @@ class SelectCrypto extends Component {
 
             <Search placeholder="Search for a Currency" onChange={(value) => this.onSearch(value)} className="crypto-search fs-14" />
             <Paragraph className="to-receive">Swap From<span className="icon sm rightarrow ml-12 mb-4" /></Paragraph>
-            {this.props.swapStore.MemberCoins && <div className="sellcrypto-container auto-scroll">
+            {this.props.swapStore.MemberCoins && <div className="crypto-container auto-scroll">
                 <List
                     itemLayout="horizontal"
                     dataSource={this.state.MemberCoins||this.props.swapStore.MemberCoins}

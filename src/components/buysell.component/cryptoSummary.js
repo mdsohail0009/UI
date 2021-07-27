@@ -110,7 +110,7 @@ class Summary extends Component {
                     <div className="fs-12 text-white-30 text-center my-16">Your final amount might be changed with in
                         {/* {seconds}  */}
                         10 seconds.</div>
-                    <div className="text-center text-underline text-white"><Link onClick={() => { this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, amount); this.startCounter(); this.setState({ ...this.state, disablePay: false }) }} className="text-white">Click to see the new rate.</Link></div>
+                    <div className="text-center text-underline text-white"><Link onClick={() => { this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, amount); this.startCounter(); this.setState({ ...this.state, disablePay: false }) }} className="text-yellow">Click to see the new rate.</Link></div>
                     <div className="d-flex p-16 mb-36 agree-check">
                         <label>
                             <input type="checkbox" id="agree-check" />
