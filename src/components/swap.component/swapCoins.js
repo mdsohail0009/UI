@@ -122,9 +122,9 @@ class SwapCoins extends Component {
                         <span className="icon sm rightarrow swap-arrow"></span>
                     </div>
                     {/* <span className="icon swapfrom-arrow c-pointer" onClick={()=>this.swapingCurr()}></span> */}
-                    <div className="mt-16 swap-updown" onClick={this.swapingCurr}>
-                            <span className="icon sm uparw-o-white d-block c-pointer mb-4" />
-                            <span className="icon sm dwnarw-o-white d-block c-pointer" />
+                    <div className="mt-16 swap-updown"  onClick={()=>this.swapingCurr()}>
+                            <span className="icon lg swap-arrow d-block c-pointer mb-4" />
+                            {/* <span className="icon sm dwnarw-o-white d-block c-pointer" /> */}
                     </div>
                 </div>
                 }

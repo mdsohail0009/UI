@@ -457,7 +457,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .crypto_btns{margin-left: 16px !important;}
     .crypto_btns .custom-btn.prime{margin-left: 36px  !important;}
     .coin-typo{font-size: 16px !important;}
-    .swap-arrow{margin-left:8px;}
+    /* .swap-arrow{margin-left:8px;} */
 }
 @media (min-width: 1200px){
     .main-container{max-width: 1232px; padding: 55px 16px 24px;}
@@ -608,6 +608,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .coin.TFUEL{background-position:-652px -120px;}
 .coin.OXY{background-position:-487px -240px;}
 .icon.lg.usd-default{background-position:2px -63px;width:32px !important}
+.icon.lg.swap-arrow{background-position:-8px -186px; transform: scale(1.2);} 
 /* .drawer-title{font-size: 34px !important;} */
 .to-receive{text-transform: uppercase;font-size: 14px;text-align: center;color: var(--textWhite30);font-weight: 500;margin-bottom: 0 !important;margin-top: 26px;}
 .swap-updown{position: absolute;right: 4%;bottom: -17px;z-index: 9;background: #1e526e;padding: 4px 10px;border-radius: 8px;box-shadow: var(--bgDark) 2px 2px 7px;}
