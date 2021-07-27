@@ -37,9 +37,9 @@ class Home extends Component {
                     <Col xs={24} md={12} xl={14}>
                         <Portfolio
                             crypto="Bitcoin"
-                            crypto_value='60,000.00'
-                            crypto_usd="1.0147658 BTC"
-                            crypto_stock="7.41%" />
+                            crypto_value='0.00'
+                            crypto_usd="0.00 BTC"
+                            crypto_stock="0.0%" />
 
                         <Carousel autoplay className="mb-24">
                             <div className="p-28 carousel-card">

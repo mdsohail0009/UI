@@ -10,17 +10,17 @@ const suisseWalletList = [
     {
         title: 'usd',
         coin: 'usd-d',
-        price: '$ 5,000',
+        price: '$ 0.00',
     },
     {
         title: 'eur',
         coin: 'EUR',
-        price: '€ 2,500',
+        price: '€ 0.00',
     },
     {
         title: 'gbp',
         coin: 'gbp',
-        price: '£ 2,500',
+        price: '£ 0.00',
     },
 ]
 
