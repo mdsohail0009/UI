@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button } from 'antd';
+import { Typography, Button, notification } from 'antd';
 import Translate from 'react-translate-component';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/swapReducer';
@@ -11,7 +11,7 @@ const LinkValue = (props) => {
         <Translate className="text-yellow text-underline c-pointer"
             content={props.content}
             component={Link}
-            to="./#"
+            // to="./#"
         />
     )
 }
@@ -63,10 +63,12 @@ class SwapSummary extends Component {
     }
     async confirmSwap(){
         if(!this.state.agreeValue){
-            this.setState({...this.state,errorMessage: 'Check Agree Policy Checkbox'})
+            notification.error({ message: "", description: 'Please agree to terms&conditions' });
+            // this.setState({...this.state,errorMessage: 'Check Agree Policy Checkbox'})
         }
         else if(!this.props.swapStore.coinDetailData.coinBalance){
-            this.setState({...this.state,errorMessage: 'Insufficiant funds to swap'})
+            notification.error({ message: "", description: 'Insufficiant funds to swap' });
+            // this.setState({...this.state,errorMessage: 'Insufficiant funds to swap'})
         }
         else{
             let obj = Object.assign({}, this.state.swapSaveData);

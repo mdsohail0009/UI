@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Input } from 'antd';
+import { Typography, Button, Input, notification } from 'antd';
 import { setStep , updateFromCoinInputValue , updateCoinDetails , updateReceiveCoinDetails } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -27,10 +27,12 @@ class SwapCoins extends Component {
         }
    }
    async setSwapOneCoinValue(fromCoin,toCoin){
-        let res = await fetchCurrConvertionValue(fromCoin,toCoin,1);
-        if (res.ok) {
-            this.setState({...this.state,price: res.data })
-        }    
+       if(fromCoin && toCoin){
+            let res = await fetchCurrConvertionValue(fromCoin,toCoin,1);
+            if (res.ok) {
+                this.setState({...this.state,price: res.data })
+            }  
+       }
     }
     async setReceiveAmount(e){
         this.state.fromValue = e.target.value;
@@ -47,13 +49,16 @@ class SwapCoins extends Component {
     }
     previewClick(){
         if(!this.props.swapStore.coinDetailData.coin){
-            this.setState({ ...this.state, errorMessage: 'Select From Swap Coin' })
+            notification.error({ message: "", description: 'Select From Swap Coin' });
+            // this.setState({ ...this.state, errorMessage: 'Select From Swap Coin' })
         }
         else if(!this.props.swapStore.coinReceiveDetailData.coin){
-            this.setState({ ...this.state, errorMessage: 'Select Receive Swap Coin' })
+            notification.error({ message: "", description: 'Select Receive Swap Coin' });
+            // this.setState({ ...this.state, errorMessage: 'Select Receive Swap Coin' })
         }
         else if(!this.state.fromValue){
-            this.setState({ ...this.state, errorMessage: 'Enter Swap From Value' })
+            notification.error({ message: "", description: 'Enter Swap From Value' });
+            // this.setState({ ...this.state, errorMessage: 'Enter Swap From Value' })
         }
         else{
             this.setState({ ...this.state, errorMessage: null })
@@ -97,7 +102,7 @@ class SwapCoins extends Component {
 
         return (
             <div>
-                {this.state.errorMessage!=null&& <Text className="fs-15 text-red crypto-name ml-8 mb-8">{this.state.errorMessage}</Text>}
+                {/* {this.state.errorMessage!=null&& <Text className="fs-15 text-red crypto-name ml-8 mb-8">{this.state.errorMessage}</Text>} */}
                 {coinDetailData&&<div className="swap swapfrom-card p-relative">
                     <div>
                         <Translate className="text-purewhite fs-14 fw-100" content="swap_from" component={Text} />
@@ -107,16 +112,16 @@ class SwapCoins extends Component {
                     <div className="d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step3')} >
                         <div className="text-center crypto-coin">
                             {/* <span className="coin md btc-white"></span> */}
-                            <span className={`coin md ${coinDetailData.coin}`}></span>
+                            {coinDetailData.coin&&<span className={`coin md ${coinDetailData.coin}`}></span>}
                             <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinDetailData.coinFullName}</Paragraph>
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>
                     </div>
                     <span className="icon swapfrom-arrow c-pointer" onClick={()=>this.swapingCurr()}></span>
-                    <div className="mt-16 swap-updown" onClick={this.swapingCurr}>
+                    {/* <div className="mt-16 swap-updown" onClick={this.swapingCurr}>
                             <span className="icon sm uparw-o-white d-block c-pointer mb-4" />
                             <span className="icon sm dwnarw-o-white d-block c-pointer" />
-                    </div>
+                    </div> */}
                 </div>
                 }
                 
@@ -129,7 +134,7 @@ class SwapCoins extends Component {
                     <div className="d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step4')} >
                         <div className="text-center crypto-coin">
                             {/* <span className="coin md eth-white"></span> */}
-                            <span className={`coin md ${coinReceiveDetailData.coin}`}></span>
+                            {coinReceiveDetailData.coin&&<span className={`coin md ${coinReceiveDetailData.coin}`}></span>}
                             <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinReceiveDetailData.coinFullName}</Paragraph>
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>
