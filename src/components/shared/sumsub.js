@@ -7,14 +7,14 @@ import { userInfo, getmemeberInfo } from './../../reducers/configReduser';
 class SumSub extends Component {
     componentDidMount() {
 
-        this.launchWebSdk('https://test-api.sumsub.com', 'basic-kyc', 'tst:N2Kvt7SOOVp1jMf7wyQy9BSO.KlnFBjZadRJWK1A0rHckzIlaHQqbRDTO');
+        this.launchWebSdk('https://api.sumsub.com', 'basic-kyc', 'prd:osQlWfTRIpgzY3mkz4kX8AdD.tKWT0GeplFeE69kLD8SpWpJoMWd6LiBA');
 
     }
     launchWebSdk = async (apiUrl, flowName, accessToken, applicantEmail, applicantPhone, customI18nMessages) => {
         applicantEmail = "test@example.org"
         applicantPhone = "+491758764512"
         apicalls.sumsubacesstoken(this.props.userConfig.userId).then((res) => {
-        let snsWebSdkInstance = snsWebSdk.Builder("https://test-api.sumsub.com", this.props.userConfig.isbusines? "SuisseBase KYB":"SuisseBase KYC")
+        let snsWebSdkInstance = snsWebSdk.Builder("https://api.sumsub.com", this.props.userConfig.isbusines? "SuisseBase KYB":"SuisseBase KYC")
             .withAccessToken(res.data.token, (newAccessTokenCallback) => {
                     newAccessTokenCallback(res.data.token)
 
