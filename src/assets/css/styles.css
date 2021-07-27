@@ -130,7 +130,7 @@ line-height: 16px;min-width:90px}
 .suisfiat-height{max-height: calc(100vh - 210px);}
 .verify-container{max-height: calc(100vh - 140px);}
 .dep-withdraw{max-height: calc(100vh - 267px);}
-.selectcrypto-container{max-height: calc(100vh - 110px);}
+.selectcrypto-container{max-height: calc(100vh - 101px);}
 .cryptosummary-container{max-height: calc(100vh - 106px);}
 .auto-scroll{overflow-y: auto; padding-right: 10px;}
 .auto-scroll::-webkit-scrollbar-thumb{background-color: var(--bgDarkGrey);}
@@ -610,7 +610,6 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .coin.md.usd-default{background-position:-93px -405px;transform: scale(0.5);}
 /* .drawer-title{font-size: 34px !important;} */
 .to-receive{text-transform: uppercase;font-size: 14px;text-align: center;color: var(--textWhite30);font-weight: 500;margin-bottom: 0 !important;margin-top: 26px;}
-.ant-drawer-close{display: none;}
 .swap-updown{position: absolute;right: 4%;bottom: -17px;z-index: 9;background: #1e526e;padding: 4px 10px;border-radius: 8px;box-shadow: var(--bgDark) 2px 2px 7px;}
 .default-circle{border-radius: 50%;width: 40px;height: 40px;}
 .swap-from{ background-color: var(--bgBlu);}
