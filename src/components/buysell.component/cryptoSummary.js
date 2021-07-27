@@ -73,7 +73,7 @@ class Summary extends Component {
             }
             this.setState({ isLoading: false })
         } else {
-            this.setState({ ...this.state, error: { valid: false, message: "Please agree to terms&conditions" } })
+            this.setState({ ...this.state, error: { valid: false, message: "Please agree to terms & conditions" } })
             //notification.warn({ message: "Terms&Conditions", description: "Please agree to terms&conditions" })
         }
     }
@@ -87,7 +87,7 @@ class Summary extends Component {
         // const [seconds, setSeconds] = React.useState(10);
         return (
             <>
-                {!this.state?.error?.valid && <Alert showIcon type="error" message="Buy crypto" description={this.state.error?.message} />}
+                {!this.state?.error?.valid && <Alert showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable />}
                 <div className="cryptosummary-container auto-scroll">
                     <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>{amount} {coin}</div>
                     <div className="text-white-50 fw-300 text-center fs-14 mb-16">{this.props.sellData?.selectedWallet?.currencyCode} {amountNativeCurrency}</div>
@@ -119,7 +119,7 @@ class Summary extends Component {
                         </label>
                         <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16 mb-0" style={{ flex: 1 }} />
                     </div>
-                    <SuisseBtn className={"pop-btn"} onRefresh={()=> this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, amount)}  title={"pay"} loading={this.state.isLoading} autoDisable={true} onClick={() => this.pay()} />
+                    <SuisseBtn className={"pop-btn"} onRefresh={() => this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, amount)} title={"pay"} loading={this.state.isLoading} autoDisable={true} onClick={() => this.pay()} />
                     <Translate content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
                 </div>
 
