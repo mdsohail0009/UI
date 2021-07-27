@@ -38,8 +38,8 @@ class SelectSellCrypto extends Component {
             cryptoamnt = (obj.coinBalance / 2)
             this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt })
         } else if (type == 'all') {
-            usdamnt = obj.coinValueinNativeCurrency;
-            cryptoamnt = obj.coinBalance
+            usdamnt = obj.coinValueinNativeCurrency?obj.coinValueinNativeCurrency:0;
+            cryptoamnt = obj.coinBalance?obj.coinBalance:0;
             this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt })
         } else {
             this.fetchdefaultMinAmntValues()
