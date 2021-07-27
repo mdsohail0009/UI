@@ -273,4 +273,5 @@ export default {
   innovative_concepts:'Konsep Inovatif',
   wire_16_ZBPHXFHI :'wayar_16_ZBPHXFHI',
   note: 'Harap maklum bahawa kami menerima pemindahan yang dapat dialamatkan hanya di SEPA.',
+  suisse_btn_refresh:"Klik untuk mendapatkan harga baru"
 }
