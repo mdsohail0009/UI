@@ -62,7 +62,7 @@ class CryptoList extends Component {
                 //loadMore={loadMore}
                 className="crypto-list auto-scroll"
                 loading={this.props.sellData?.coins[this.props.coinType]?.loading}
-                
+
                 renderItem={item => (
                     <List.Item>
                         <Link onClick={() => { this.props.isShowDrawer ? this.showBuyDrawer() : (this.props.onCoinSelected ? this.props.onCoinSelected(item) : this.props.dispatch(setStep("step2"))) }}>
@@ -72,7 +72,7 @@ class CryptoList extends Component {
                             />
                             <div className="text-right coin-typo">
                                 <div className="text-white-30 fw-600">${item.amountInUSD}</div>
-                                <div className={item.up ? 'text-red' : 'text-green'}>-{item.percent_change_1h} % </div>
+                                <div className={item.percent_change_1h < 0 ? 'text-red' : 'text-green'}>{item.percent_change_1h} % </div>
                             </div>
                             {!item.up ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}
                         </Link>
