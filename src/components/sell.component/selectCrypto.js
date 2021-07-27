@@ -54,7 +54,7 @@ class SelectSellCrypto extends Component {
             return;
         }
         else if (!obj.toWalletId) {
-            this.setState({ ...this.state, errorMessage: 'Select wallet' })
+            this.setState({ ...this.state, errorMessage: 'Please select wallet' })
             return;
         } else if (!this.state.isSwap && this.state.USDAmnt > this.props.sellData.coinDetailData.coinValueinNativeCurrency) {
             this.setState({ ...this.state, errorMessage: 'Entered amount should be less than available amount' })
@@ -117,7 +117,7 @@ class SelectSellCrypto extends Component {
         const { coinDetailData } = this.props.sellData;
         return (
             <>
-             {this.state?.errorMessage!=null && <Alert showIcon type="error" message="Sell crypto" description={this.state?.errorMessage} />}
+             {this.state?.errorMessage!=null &&this.state?.errorMessage!='' && <Alert showIcon type="error" message="Sell crypto" description={this.state?.errorMessage} />}
                 {coinDetailData && <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
                         <span className={`coin lg ${coinDetailData.coin}`} />
