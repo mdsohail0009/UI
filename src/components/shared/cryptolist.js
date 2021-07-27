@@ -29,7 +29,6 @@ class CryptoList extends Component {
         })
     }
     handleSearch = (value) => {
-        debugger
         let coinsList;
         if (!value) {
             coinsList = this.props.sellData?.coins[this.props.coinType]?.data;
@@ -63,6 +62,7 @@ class CryptoList extends Component {
                 //loadMore={loadMore}
                 className="crypto-list auto-scroll"
                 loading={this.props.sellData?.coins[this.props.coinType]?.loading}
+                
                 renderItem={item => (
                     <List.Item>
                         <Link onClick={() => { this.props.isShowDrawer ? this.showBuyDrawer() : (this.props.onCoinSelected ? this.props.onCoinSelected(item) : this.props.dispatch(setStep("step2"))) }}>

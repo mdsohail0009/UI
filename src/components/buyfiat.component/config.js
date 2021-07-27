@@ -1,7 +1,7 @@
 export const buyFiatSteps = {
     step1: "fiatdeposit",
     step2: "faitsummary",
-    // step3: "addcard",
+    step3: "selectcurrency",
     // step4: "selectwallet",
     // step5: 'selectfiat',
     // step6: 'billingaddress',

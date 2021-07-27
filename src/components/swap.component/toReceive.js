@@ -9,7 +9,7 @@ class ToReceive extends Component {
         addLinks: null,
     }
     componentDidMount(){
-        this.props.fetchMemberCoins()
+        this.props.fetchMemberCoins(this.props?.userProfile?.id)
     }
     onSearch(e) {
         var searchValue = e.target.value;
@@ -30,7 +30,7 @@ class ToReceive extends Component {
             {this.props.swapStore.MemberCoins&&<div className="sellcrypto-container auto-scroll">
             <List
                     itemLayout="horizontal"
-                    dataSource={this.props.swapStore.MemberCoins}
+                    dataSource={this.state.MemberCoins|| this.props.swapStore.MemberCoins}
                     className="wallet-list c-pointer"
                    
                     renderItem={item => (
@@ -49,16 +49,16 @@ class ToReceive extends Component {
         </>)
     }
 }
-const connectStateToProps = ({ swapStore }) => {
-    return { swapStore }
+const connectStateToProps = ({ swapStore,userConfig }) => {
+    return { swapStore,userProfile:userConfig?.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
-        fetchMemberCoins:()=>{
-            dispatch(getMemberCoins())
+        fetchMemberCoins:(id)=>{
+            dispatch(getMemberCoins(id))
         },
         dispatch
     }
