@@ -111,7 +111,7 @@ class Summary extends Component {
                     <div className="fs-12 text-white-30 text-center my-16">Your final amount might be changed with in
                         {/* {seconds}  */}
                         10 seconds.</div>
-                    <div className="text-center text-underline text-white"><Link onClick={() => { this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, amount); this.startCounter(); this.setState({ ...this.state, disablePay: false }) }} className="text-yellow">Click to see the new rate.</Link></div>
+                    {/* <div className="text-center text-underline text-white"><Link onClick={() => { this.startCounter(); this.setState({ ...this.state, disablePay: false }) }} className="text-yellow">Click to see the new rate.</Link></div> */}
                     <div className="d-flex p-16 mb-36 agree-check">
                         <label>
                             <input type="checkbox" id="agree-check" />
@@ -119,7 +119,7 @@ class Summary extends Component {
                         </label>
                         <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16 mb-0" style={{ flex: 1 }} />
                     </div>
-                    <SuisseBtn  title={"pay"} loading={this.state.isLoading} autoDisable={true} onClick={() => this.pay()} />
+                    <SuisseBtn className={"pop-btn"} onRefresh={()=> this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, amount)}  title={"pay"} loading={this.state.isLoading} autoDisable={true} onClick={() => this.pay()} />
                     <Translate content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
                 </div>
 

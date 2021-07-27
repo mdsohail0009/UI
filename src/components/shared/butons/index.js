@@ -4,7 +4,7 @@ import Translate from 'react-translate-component';
 
 const SuisseBtn = ({ title, onClick, autoDisable = false, duration = 10000, className = "", loading = false, disabled, onRefresh }) => {
     const [refresh, setRefresh] = useState(false);
-    const [seconds, setSeconds] = useState(0);
+    const [seconds, setSeconds] = useState(1);
     let timeInterval;
     let maxCount = duration / 1000;
     let count = 1;
@@ -12,13 +12,16 @@ const SuisseBtn = ({ title, onClick, autoDisable = false, duration = 10000, clas
         timeInterval = setInterval(() => {
             let sec = count + 1;
             setSeconds(sec);
-            count=count+1;
-            if (sec >= maxCount) {count=0;setSeconds(0); clearInterval(timeInterval); setRefresh(true); }
+            count = count + 1;
+            if (sec > maxCount) { count = 1; setSeconds(1); clearInterval(timeInterval); setRefresh(true); }
         }, 1000);
     }
     const refreshTimer = () => {
-        onRefresh();
+        if (onRefresh) {
+            onRefresh();
+        }
         startTimer();
+        setRefresh(false);
     }
     useEffect(() => {
         startTimer();
@@ -27,7 +30,7 @@ const SuisseBtn = ({ title, onClick, autoDisable = false, duration = 10000, clas
 
 
 
-    return refresh ? <Translate content={"suisse_btn_refresh"} component={Button} size="large" block className="pop-btn" onClick={() => refreshTimer()} /> : <Translate with={{ counter: seconds }} content={title} component={Button} disabled={disabled} size="large" block className="pop-btn" onClick={() => onClick()} loading={loading} />
+    return refresh ? <Translate content={"suisse_btn_refresh"} component={Button} size="large" block className={className} onClick={() => refreshTimer()} /> : <Translate with={{ counter: `(${seconds})` }} content={title} component={Button} disabled={disabled} size="large" block className={className} onClick={() => onClick()} loading={loading} />
 }
 
 export default SuisseBtn;
