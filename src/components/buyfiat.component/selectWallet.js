@@ -40,7 +40,7 @@ class SelectWallet extends Component {
                         />
                         <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">0.00 BTC</Text>
                     </div>
-                    <span className="mt-16 val-updown">
+                    <span className="mt-16 val-updown c-pointer">
                         <span className="icon sm uparw-o-white d-block c-pointer mb-4" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
                     </span>
                 </div>

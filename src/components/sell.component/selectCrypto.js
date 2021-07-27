@@ -144,7 +144,7 @@ class SelectSellCrypto extends Component {
                         />
                     </div>
                     <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{!this.state.isSwap ? this.state.USDAmnt:this.state.CryptoAmnt} {!this.state.isSwap ? "USD" : coinDetailData.coin}</Text>
-                    <span className="mt-8 val-updown">
+                    <span className="mt-8 val-updown  c-pointe">
                         <span className="icon sm uparw-o-white d-block c-pointer mb-4" onClick={() => this.state.isSwap ? this.swapChange(false) : ''} />
                         <span className="icon sm dwnarw-o-white d-block c-pointer" onClick={() => !this.state.isSwap ? this.swapChange(true) : ''} />
                     </span>
