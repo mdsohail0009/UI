@@ -36,10 +36,11 @@ const { menuHeader } = Layout;
 const { Title, Paragraph, Text } = Typography;
 const { TabPane } = Tabs;
 const securityMenu = (
+
     <Menu>
         <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="security" component={Title} />
         <ul className="pl-0 drpdwn-list">
-            <li className="no-hover dropdown-flex text-white fs-14 pb-16">2FA<Switch size="small" /> </li>
+            <li className="no-hover dropdown-flex text-white fs-14 pb-16">2FA<Switch size="small" checked={false} /> </li>
             <li className="">
                 {/* <Translate content="change_password" component={Link} to="/changepassword" /> */}
                 <Link className="dropdown-flex" to="/changepassword">Change Password <span className="icon md rarrow-white" /></Link>
@@ -217,6 +218,16 @@ class Header extends Component {
             swapDrawer: false,
             buyFiatDrawer: false,
         })
+    }
+    enableDisable2fa = (status) => {
+        var url = '';
+        if (status) {
+            url = process.env.REACT_APP_AUTHORITY + "/account/login?returnUrl=/manage/EnableAuthenticator";
+        } else {
+            url = process.env.REACT_APP_AUTHORITY + "/account/login?returnUrl=/manage/Disable2faWarning"
+        }
+        var win = window.open(url);
+        
     }
     render() {
         const { initLoading, loading } = this.state;
@@ -507,8 +518,8 @@ class Header extends Component {
     }
 }
 
-const connectStateToProps = ({ swapStore, oidc }) => {
-    return { swapStore }
+const connectStateToProps = ({ swapStore, userConfig,oidc }) => {
+    return { swapStore,userConfig: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
