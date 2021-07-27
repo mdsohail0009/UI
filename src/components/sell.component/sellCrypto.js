@@ -29,8 +29,8 @@ class SellToggle extends Component {
                         <div className="crypto-details">
                             <Text className="crypto-percent text-white fw-700">{coin.percentage}<sup className="percent text-white fw-700">%</sup></Text>
                             <div className="fs-16 text-white-30 fw-200 crypto-amount">
-                                <div className="text-yellow">{coin.coinBalance}<Text className="text-secondary"> {coin.coin}</Text></div>
-                                <div className="text-yellow"><Text className="text-secondary"></Text> {coin.coinValueinNativeCurrency}</div>
+                                <div>{coin.coinBalance} {coin.coin}</div>
+                                <div>{coin.coinValueinNativeCurrency}</div>
                             </div>
                         </div>
                     </Card>)}

@@ -16,16 +16,16 @@ class SelectSellCrypto extends Component {
     componentDidMount() {
         this.fetchdefaultMinAmntValues()
     }
-     fetchdefaultMinAmntValues=async()=> {
+    fetchdefaultMinAmntValues = async () => {
         this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue })
         let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true, this.props.sellData?.coinDetailData?.coin);
         if (res.ok) {
             this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: false })
         }
     }
-    setAmount = async ({currentTarget}, fn,fnRes) => {
-        this.setState({...this.state,[fn]:currentTarget.value})
-        let res = await getSellamnt(currentTarget.value, !this.state.isSwap, this.props.sellData.coinDetailData?.coin );
+    setAmount = async ({ currentTarget }, fn, fnRes) => {
+        this.setState({ ...this.state, [fn]: currentTarget.value })
+        let res = await getSellamnt(currentTarget.value, !this.state.isSwap, this.props.sellData.coinDetailData?.coin);
         if (res.ok) {
             this.setState({ ...this.state, [fnRes]: res.data })
         }
@@ -48,7 +48,7 @@ class SelectSellCrypto extends Component {
     previewSellData() {
         let obj = Object.assign({}, this.state.sellSaveData);
         let { sellMinValue } = this.props.sellData.coinDetailData;
-        if (!this.state.USDAmnt&&!this.state.CryptoAmnt) {
+        if (!this.state.USDAmnt && !this.state.CryptoAmnt) {
             notification.error({ message: "", description: 'Enter amount' });
             return;
         }
@@ -95,9 +95,9 @@ class SelectSellCrypto extends Component {
     async swapChange(value) {
         let obj = Object.assign({}, this.state);
         this.setState({ isSwap: value })
-        let res = await getSellamnt(!this.state.isSwap ?obj.CryptoAmnt:obj.USDAmnt, value, this.props.sellData.coinDetailData?.coin );
+        let res = await getSellamnt(!this.state.isSwap ? obj.CryptoAmnt : obj.USDAmnt, value, this.props.sellData.coinDetailData?.coin);
         if (res.ok) {
-            this.setState({ USDAmnt:this.state.isSwap ?parseFloat(res.data).toFixed(8):obj.USDAmnt , CryptoAmnt: !this.state.isSwap ?res.data:obj.CryptoAmnt,isSwap:value })
+            this.setState({ USDAmnt: this.state.isSwap ? parseFloat(res.data).toFixed(8) : obj.USDAmnt, CryptoAmnt: !this.state.isSwap ? res.data : obj.CryptoAmnt, isSwap: value })
         }
     }
     handleWalletSelection = (walletId) => {
@@ -123,18 +123,18 @@ class SelectSellCrypto extends Component {
                     <div className="crypto-details">
                         <Text className="crypto-percent text-white fw-700">{coinDetailData.percentage}<sup className="percent text-white fw-700">%</sup></Text>
                         <div className="fs-16 text-white-30 fw-200 crypto-amount">
-                            <div className="text-yellow">{coinDetailData.coinBalance}<Text className="text-secondary"> {coinDetailData.coin}</Text></div>
-                            <div className="text-yellow"><Text className="text-secondary"></Text> {coinDetailData.coinValueinNativeCurrency}</div>
+                            <div>{coinDetailData.coinBalance} {coinDetailData.coin}</div>
+                            <div>{coinDetailData.coinValueinNativeCurrency}</div>
                         </div>
                     </div>
                 </Card>}
                 <div className="p-relative">
                     <div className="enter-val-container">
-                        <Text className="fs-36 fw-100 text-white-30 mr-4">{this.state.isSwap ? "USD": coinDetailData.coin }</Text>
+                        <Text className="fs-36 fw-100 text-white-30 mr-4">{this.state.isSwap ? "USD" : coinDetailData.coin}</Text>
                         <Input className="fs-36 fw-100 text-white-30 text-center enter-val p-0"
-                            
+
                             bordered={false}
-                            onChange={(e) =>{this.setAmount(e, !this.state.isSwap ?'CryptoAmnt':'USDAmnt',this.state.isSwap ?'CryptoAmnt':'USDAmnt')}} value={!this.state.isSwap ? this.state.CryptoAmnt:this.state.USDAmnt}
+                            onChange={(e) => { this.setAmount(e, !this.state.isSwap ? 'CryptoAmnt' : 'USDAmnt', this.state.isSwap ? 'CryptoAmnt' : 'USDAmnt') }} value={!this.state.isSwap ? this.state.CryptoAmnt : this.state.USDAmnt}
                             style={{ width: 100, lineHeight: '55px', fontSize: 36, paddingRight: 30 }}
                             onBlur={(e) => e.currentTarget.value.length == 0 ? e.currentTarget.style.width = "100px" : ''}
                             onKeyPress={(e) => {
@@ -143,8 +143,8 @@ class SelectSellCrypto extends Component {
                             }}
                         />
                     </div>
-                    <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{!this.state.isSwap ? this.state.USDAmnt:this.state.CryptoAmnt} {!this.state.isSwap ? "USD" : coinDetailData.coin}</Text>
-                    <span className="mt-8 val-updown">
+                    <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{!this.state.isSwap ? this.state.USDAmnt : this.state.CryptoAmnt} {!this.state.isSwap ? "USD" : coinDetailData.coin}</Text>
+                    <span className="mt-8 val-updown  c-pointe">
                         <span className="icon sm uparw-o-white d-block c-pointer mb-4" onClick={() => this.state.isSwap ? this.swapChange(false) : ''} />
                         <span className="icon sm dwnarw-o-white d-block c-pointer" onClick={() => !this.state.isSwap ? this.swapChange(true) : ''} />
                     </span>
@@ -154,7 +154,7 @@ class SelectSellCrypto extends Component {
                     <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt('half')} />
                     <Translate value="max" content="all" component={Radio.Button} onClick={() => this.clickMinamnt('all')} />
                 </Radio.Group>
-                <WalletList  isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)}/>
+                <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                 {/* <Dropdown label="Wallets" name="currencyCode" type="Wallets" dropdownData={this.props.sellData.MemberFiat} value={this.state.sellSaveData.walletName} onValueChange={(Value) => this.handleChange(Value)} field='WalletName'></Dropdown> */}
                 <Translate content="preview" component={Button} size="large" block className="pop-btn mt-36" onClick={() => { this.previewSellData() }} />
             </>

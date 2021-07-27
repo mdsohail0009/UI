@@ -17,8 +17,9 @@ class OnBoarding extends Component {
     this.getMemberDetails()
   }
   getMemberDetails = async () => {
-
-    this.props.getmemeberInfoa(this.props.user.profile.email)
+    if (this.props.user && this.props.user.profile) {
+      this.props.getmemeberInfoa(this.props.user.profile.email)
+    }
   }
   render() {
     return <>

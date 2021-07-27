@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import success from '../../assets/images/success.png';
-import { Drawer, Typography, Button, Card, Input, Tooltip, Space } from 'antd';
-import { Link } from 'react-router-dom';
+import { Typography } from 'antd';
 import Translate from 'react-translate-component';
-import { setStep } from '../../reducers/swapReducer';
 import connectStateProps from '../../utils/state.connect';
 
 class SuccessMessage extends Component {

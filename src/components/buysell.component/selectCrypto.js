@@ -9,6 +9,7 @@ import { convertCurrency, validatePreview } from './buySellService';
 import { fetchPreview, setWallet } from './crypto.reducer';
 import Loader from '../../Shared/loader';
 import { Link } from 'react-router-dom';
+import SuisseBtn from '../shared/butons';
 class SelectCrypto extends Component {
     constructor(props) {
         super(props);
@@ -106,15 +107,21 @@ class SelectCrypto extends Component {
 
                         </div>
                         <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{isSwaped ? localValue : cryptoValue} {isSwaped ? "USD" : coin}</Text>
-                        <span className="mt-16 val-updown">
+                        <span className="mt-16 val-updown c-pointer">
                             <span onClick={() => !isSwaped ? this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: true } }) : ""} className="icon sm uparw-o-white d-block c-pointer mb-4" /><span onClick={() => isSwaped ? this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: false } }) : ""} className="icon sm dwnarw-o-white d-block c-pointer" />
                         </span>
                     </div>
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua pt-16" />
                     <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
-                    <Translate content="refresh_newprice" style={{ cursor: "pointer" }} component={Paragraph} onClick={() => this.fetchConvertionValue()} className="mb-36 fs-14 text-white-30 fw-200 text-center mb-16" />
+                    <div className="fs-12 text-white-30 text-center my-16">Your amount might be changed with in
+                     
+                        10 seconds.</div>
+                    {/* <div className="text-center">
+                        <Translate content="refresh_newprice" component={Link} onClick={() => this.fetchConvertionValue()} className="mb-36 fs-14 text-yellow fw-200 mb-16 text-underline" />
+                    </div> */}
+                    <SuisseBtn title="confirm_btn_text" onRefresh={()=>this.fetchConvertionValue()}  className="pop-btn mt-24" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
                 </div>
-                <Translate content="confirm_btn_text" disabled={this.state.disableConfirm} component={Button} size="large" block className="pop-btn mt-24" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
+
             </>
         )
     }
