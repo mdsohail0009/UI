@@ -6,6 +6,8 @@ import { setStep } from '../../reducers/buysellReducer';
 import SelectCrypto from '../sell.component/selectCrypto';
 import connectStateProps from '../../utils/state.connect';
 import { fetchCoins } from '../buysell.component/crypto.reducer';
+import NumberFormat from 'react-number-format';
+
 class CryptoList extends Component {
     state = {
         loading: false,
@@ -71,10 +73,10 @@ class CryptoList extends Component {
                                 title={<div className="wallet-title">{item.walletCode}</div>}
                             />
                             <div className="text-right coin-typo">
-                                <div className="text-white-30 fw-600">${item.amountInUSD}</div>
+                                <NumberFormat value={item.amountInUSD} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} className="text-white-30 fw-600">{value}</div>} />
                                 <div className={item.percent_change_1h < 0 ? 'text-red' : 'text-green'}>{item.percent_change_1h} % </div>
                             </div>
-                            {item.percent_change_1h < 0 ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}
+                            {item.percent_change_1h > 0 ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}
                         </Link>
                     </List.Item>
                 )}

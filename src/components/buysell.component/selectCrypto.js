@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Button, Card, Input, Select, notification, Alert, message } from 'antd';
-import config from '../../config/config';
+import { Typography, Card, Input, Alert, message } from 'antd';
 import WalletList from '../shared/walletList';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -8,8 +7,9 @@ import Translate from 'react-translate-component';
 import { convertCurrency, validatePreview } from './buySellService';
 import { fetchPreview, setWallet } from './crypto.reducer';
 import Loader from '../../Shared/loader';
-import { Link } from 'react-router-dom';
 import SuisseBtn from '../shared/butons';
+import NumberFormat from 'react-number-format';
+
 class SelectCrypto extends Component {
     constructor(props) {
         super(props);
@@ -80,7 +80,7 @@ class SelectCrypto extends Component {
                             <Text className="crypto-percent text-purewhite fw-700">{percentage}<sup className="percent text-purewhite fw-700">%</sup></Text>
                             <div className="fs-16 text-purewhite fw-200 crypto-amount">
                                 <div>{coinBalance} {coin}</div>
-                                <div>${coinValueinNativeCurrency}</div>
+                                <NumberFormat value={coinValueinNativeCurrency} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) =>  <div {...props}>{value}</div>} />
                             </div>
                         </div>
                     </Card>
