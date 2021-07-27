@@ -5,6 +5,7 @@
 body, h1, h2, h3, h4, h5, h6, a, p div{font-family: 'SF Pro Text' !important;}
 .ant-layout, body{background-color: var(--bgDarkGrey);}
 .ant-btn{font-weight: var(--fw500);}
+.ant-drawer-close{display: none;}
 .d-inlineblock{display: inline-block !important;}
 .loader-antd{padding: 30px 50px;text-align: center;color: var(--bgWhite);}
 .ant-empty-description{color: var(--textWhite30);}
