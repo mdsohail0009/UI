@@ -74,7 +74,7 @@ class CryptoList extends Component {
                                 <div className="text-white-30 fw-600">${item.amountInUSD}</div>
                                 <div className={item.percent_change_1h < 0 ? 'text-red' : 'text-green'}>{item.percent_change_1h} % </div>
                             </div>
-                            {!item.up ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}
+                            {item.percent_change_1h < 0 ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}
                         </Link>
                     </List.Item>
                 )}
