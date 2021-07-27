@@ -109,19 +109,23 @@ class SwapCoins extends Component {
                         <Input className="card-input" defaultValue="0" value={this.state.fromValue} onChange={value=>this.setReceiveAmount(value)} bordered={false} placeholder="0.0" />
                         {coinDetailData.coinBalance&&<Text className="text-purewhite mt-4 fs-12 fw-100">Balance - {coinDetailData.coinBalance} {coinDetailData.coin}</Text>}
                     </div>
-                    <div className="d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step3')} >
-                        <div className="text-center crypto-coin">
+                    <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step3')} >
+                        <div className="crypto-coin">
                             {/* <span className="coin md btc-white"></span> */}
-                            {coinDetailData.coin&&<span className={`coin md ${coinDetailData.coin}`}></span>}
-                            <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinDetailData.coinFullName}</Paragraph>
+                            
+                            {coinDetailData.coin ? <><span className={`coin md BTC ${coinDetailData.coin}`}></span>
+                            <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinDetailData.coinFullName}</Paragraph></>
+                            :
+                            <div className="text-left"><div className="default-circle swap-from"><span className="coin md usd-default"></span></div>
+                            <Paragraph className="mb-0 text-purewhite fs-14 fw-100">Select</Paragraph></div>}
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>
                     </div>
-                    <span className="icon swapfrom-arrow c-pointer" onClick={()=>this.swapingCurr()}></span>
-                    {/* <div className="mt-16 swap-updown" onClick={this.swapingCurr}>
+                    {/* <span className="icon swapfrom-arrow c-pointer" onClick={()=>this.swapingCurr()}></span> */}
+                    <div className="mt-16 swap-updown" onClick={this.swapingCurr}>
                             <span className="icon sm uparw-o-white d-block c-pointer mb-4" />
                             <span className="icon sm dwnarw-o-white d-block c-pointer" />
-                    </div> */}
+                    </div>
                 </div>
                 }
                 
@@ -131,15 +135,18 @@ class SwapCoins extends Component {
                         <Input className="card-input" defaultValue="0" value={this.state.receiveValue} onChange={value=>this.setFromAmount(value)} bordered={false} placeholder="0.0" />
                         {coinReceiveDetailData.coinBalance&&<Text className="text-purewhite mt-4 fs-12 fw-100">Balance - {coinReceiveDetailData.coinBalance} {coinReceiveDetailData.coin}</Text>}
                     </div>
-                    <div className="d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step4')} >
-                        <div className="text-center crypto-coin">
-                            {/* <span className="coin md eth-white"></span> */}
-                            {coinReceiveDetailData.coin&&<span className={`coin md ${coinReceiveDetailData.coin}`}></span>}
-                            <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinReceiveDetailData.coinFullName}</Paragraph>
+                    <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step4')} >
+                        <div className="crypto-coin">
+                            {coinReceiveDetailData.coin ?<> <span className={`coin md ${coinReceiveDetailData.coin}`}></span>
+                            <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinReceiveDetailData.coinFullName}</Paragraph></>
+                            :
+                            <div className="text-left"><div className="default-circle swap-to"><span className="coin md usd-default"></span></div>
+                            <Paragraph className="mb-0 text-purewhite fs-14 fw-100">Select</Paragraph></div>}
+                            
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>
                     </div>
-                    <span className="icon swapto-arrow c-pointer" onClick={()=>this.swapingCurr()}></span>
+                    {/* <span className="icon swapto-arrow c-pointer" onClick={()=>this.swapingCurr()}></span> */}
                 </div>}
                 <div className="p-16 mt-24 text-center fw-200">
                     {coinDetailData.coinBalance&&<Paragraph className="fs-16 text-white-30 mb-0 l-height-normal">
