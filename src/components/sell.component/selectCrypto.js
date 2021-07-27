@@ -99,7 +99,7 @@ class SelectSellCrypto extends Component {
         this.setState({ isSwap: value })
         let res = await getSellamnt(!this.state.isSwap ? obj.CryptoAmnt : obj.USDAmnt, value, this.props.sellData.coinDetailData?.coin);
         if (res.ok) {
-            this.setState({ USDAmnt: this.state.isSwap ? parseFloat(res.data).toFixed(8) : obj.USDAmnt, CryptoAmnt: !this.state.isSwap ? res.data : obj.CryptoAmnt, isSwap: value })
+            this.setState({ USDAmnt: this.state.isSwap ? res.data?parseFloat(res.data).toFixed(8):0 : obj.USDAmnt, CryptoAmnt: !this.state.isSwap ? res.data?res.data:0 : obj.CryptoAmnt, isSwap: value })
         }
     }
     handleWalletSelection = (walletId) => {
@@ -126,8 +126,8 @@ class SelectSellCrypto extends Component {
                     <div className="crypto-details">
                         <Text className="crypto-percent text-white fw-700">{coinDetailData.percentage}<sup className="percent text-white fw-700">%</sup></Text>
                         <div className="fs-16 text-white-30 fw-200 crypto-amount">
-                            <div>{coinDetailData.coinBalance} {coinDetailData.coin}</div>
-                            <div>{coinDetailData.coinValueinNativeCurrency}</div>
+                            <div>{coinDetailData.coinBalance?.toFixed(8)} {coinDetailData.coin}</div>
+                            <div>{coinDetailData.coinValueinNativeCurrency?.toFixed(2)}</div>
                         </div>
                     </div>
                 </Card>}
