@@ -52,15 +52,15 @@ class Summary extends Component {
                 fromWalletId,
                 fromWalletCode,
                 fromWalletName,
-                "fromValue": this.props.sellData.previewDetails?.data?.amount,
+                "fromValue":this.props.sellData.previewDetails?.data?.amountNativeCurrency,
                 toWalletId,
                 toWalletCode,
                 toWalletName,
-                "toValue": this.props.sellData.previewDetails?.data?.amountNativeCurrency,
+                "toValue": this.props.sellData.previewDetails?.data?.amount ,
                 "description": "Buy Crypto",
                 "comission": 0,
                 "exicutedPrice": 0,
-                "totalAmount": this.props.sellData.previewDetails?.data?.amountNativeCurrency
+                "totalAmount": this.props.sellData.previewDetails?.data?.amount
 
             }
             this.setState({ isLoading: true });
