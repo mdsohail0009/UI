@@ -61,16 +61,16 @@ class SellSummary extends Component {
             <>
                 {(!this.state.loader) && <>
                     {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert showIcon type="error" message="Sell crypto" description={this.state?.errorMessage} />}
-                    <NumberFormat value={sellpreviewData.amountNativeCurrency} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}> <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>USD {value}</div> </div>} />
+                    <NumberFormat value={sellpreviewData.amountNativeCurrency} displayType={'text'} thousandSeparator={true}  renderText={(value, props) => <div {...props}> <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>USD {value}</div> </div>} />
                     <NumberFormat value={sellpreviewData.amount} displayType={'text'} thousandSeparator={true} renderText={(value, props) => <div {...props}><div className="text-white-50 fw-300 text-center fs-14 mb-16">{value} {sellpreviewData.coin}</div></div>} />
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
-                        <NumberFormat value={sellpreviewData.oneCoinValue} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}><div className="fw-300 text-white-30">1 {sellpreviewData.coin} = {value} USD</div></div>} />
+                        <NumberFormat value={sellpreviewData.oneCoinValue} displayType={'text'} thousandSeparator={true}  renderText={(value, props) => <div {...props}><div className="fw-300 text-white-30">1 {sellpreviewData.coin} = {value} USD</div></div>} />
 
                     </div>
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="amount" component={Text} />
-                        <NumberFormat value={sellpreviewData.amountNativeCurrency} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}> <div className="fw-300 text-white-30">USD {value}</div></div>} />
+                        <NumberFormat value={sellpreviewData.amountNativeCurrency} displayType={'text'} thousandSeparator={true}  renderText={(value, props) => <div {...props}> <div className="fw-300 text-white-30">USD {value}</div></div>} />
 
                     </div>
                     {/* <div className="pay-list fs-14">

@@ -90,7 +90,7 @@ class Summary extends Component {
                 {!this.state?.error?.valid && <Alert showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable />}
                 <div className="cryptosummary-container auto-scroll">
                     <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>{amount} {coin}</div>
-                    <div className="text-white-50 fw-300 text-center fs-14 mb-16"><NumberFormat value={amountNativeCurrency} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} >{this.props.sellData?.selectedWallet?.currencyCode} {value}</div>} /></div>
+                    <div className="text-white-50 fw-300 text-center fs-14 mb-16"><NumberFormat value={amountNativeCurrency} displayType={'text'} thousandSeparator={true}  renderText={(value, props) => <div {...props} >{this.props.sellData?.selectedWallet?.currencyCode} {value}</div>} /></div>
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
                         <NumberFormat value={oneCoinValue} displayType={'text'} thousandSeparator={true}
