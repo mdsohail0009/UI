@@ -133,23 +133,21 @@ class SelectSellCrypto extends Component {
                 </Card>}
                 <div className="p-relative">
                     <div className="enter-val-container">
-                        <Text className="fs-36 fw-100 text-white-30 mr-4">{this.state.isSwap ? "USD" : coinDetailData.coin}</Text>
-                        <Input className="fs-36 fw-100 text-white-30 text-center enter-val p-0"
-
+                        <Text className="fs-30 fw-100 text-defaultylw mr-4">{this.state.isSwap ? "USD" : coinDetailData.coin}</Text>
+                        <Input className="fw-100 text-white-30 text-center enter-val p-0"
                             bordered={false}
                             onChange={(e) => { this.setAmount(e, !this.state.isSwap ? 'CryptoAmnt' : 'USDAmnt', this.state.isSwap ? 'CryptoAmnt' : 'USDAmnt') }} value={!this.state.isSwap ? this.state.CryptoAmnt : this.state.USDAmnt}
-                            style={{ width: 100, lineHeight: '55px', fontSize: 36, paddingRight: 30 }}
-                            onBlur={(e) => e.currentTarget.value.length == 0 ? e.currentTarget.style.width = "100px" : ''}
+                            style={{ lineHeight: '48px', fontSize: 30, paddingRight: '40px !important' }}
+                            //onBlur={(e) => e.currentTarget.value.length == 0 ? e.currentTarget.style.width = "100px" : ''}
                             onKeyPress={(e) => {
-                                e.currentTarget.style.width = ((e.currentTarget.value.length + 8) * 20) + 'px'
-                                e.currentTarget.value.length >= 8 ? e.currentTarget.style.fontSize = "30px" : e.currentTarget.style.fontSize = "36px"
+                                // e.currentTarget.style.width = ((e.currentTarget.value.length + 8) * 20) + 'px'
+                                e.currentTarget.value.length >= 8 ? e.currentTarget.style.fontSize = "30px" : e.currentTarget.style.fontSize = "30px"
                             }}
                         />
                     </div>
-                    <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{!this.state.isSwap ? this.state.USDAmnt : this.state.CryptoAmnt} {!this.state.isSwap ? "USD" : coinDetailData.coin}</Text>
-                    <span className="mt-8 val-updown  c-pointe">
-                        <span className="icon sm uparw-o-white d-block c-pointer mb-4" onClick={() => this.state.isSwap ? this.swapChange(false) : ''} />
-                        <span className="icon sm dwnarw-o-white d-block c-pointer" onClick={() => !this.state.isSwap ? this.swapChange(true) : ''} />
+                    <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36 ml-24">{!this.state.isSwap ? this.state.USDAmnt : this.state.CryptoAmnt} {!this.state.isSwap ? "USD" : coinDetailData.coin}</Text>
+                    <span className="val-updown c-pointer" onClick={() => this.state.isSwap ? this.swapChange(false) : this.swapChange(true)}>
+                        <span className="icon md swaparrow" />
                     </span>
                 </div>
                 <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
