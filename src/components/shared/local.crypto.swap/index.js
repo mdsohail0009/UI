@@ -6,16 +6,18 @@ import { convertCurrency } from '../../buysell.component/buySellService';
 import NumberFormat from 'react-number-format';
 const LocalCryptoSwapper = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, sellData, selectedCoin = null }) => {
     const [isSwaped, setSwapped] = useState(false);
-    const [values, setValues] = useState({ localValue: localAmt, cryptoValue: cryptoAmt });
-
-    const { localValue, cryptoValue } = values;
+    const [localValue, setLocalValue] = useState(localAmt);
+    const [cryptoValue, setCryptoValue] = useState(cryptoAmt);
     useEffect(() => {
-        setValues({ localValue: localAmt, cryptoValue: cryptoAmt })
+        if (localAmt != localValue) { setLocalValue(localAmt); }
+        if (cryptoAmt != cryptoValue) { setCryptoValue(cryptoAmt); }
     }, [localAmt]);
     const fetchConvertionValue = async ({ cryptoValue, localValue }) => {
         const coin = selectedCoin || sellData?.selectedCoin?.data?.coin;
         const value = await convertCurrency({ from: coin, to: "USD", value: isSwaped ? cryptoValue : localValue, isCrypto: !isSwaped })
-        setValues({ cryptoValue, localValue, [isSwaped ? "localValue" : "cryptoValue"]: value });
+        if (!isSwaped) {
+            setCryptoValue(value);
+        } else { setLocalValue(value) }
         onChange({ cryptoValue, localValue, [isSwaped ? "localValue" : "cryptoValue"]: value, isSwaped });
     }
     return <div className="p-relative">
@@ -30,10 +32,13 @@ const LocalCryptoSwapper = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "USD"
                     //e.currentTarget.style.width = ((e.currentTarget.value.length + 6) * 15) + 'px'
                     e.currentTarget.value.length >= 8 ? e.currentTarget.style.fontSize = "30px" : e.currentTarget.style.fontSize = "30px"
                 }}
-                value={isSwaped ? cryptoValue : localValue}
+                //value={isSwaped ? cryptoValue : localValue}
+                defaultValue={isSwaped ? cryptoValue : localValue}
                 onValueChange={({ value }) => {
-                    setValues({ ...values, [isSwaped ? 'cryptoValue' : 'localValue']: value });
-                    fetchConvertionValue({ cryptoValue: isSwaped ? value : values.cryptoValue, localValue: !isSwaped ? value : values.localValue });
+                    if (isSwaped) {
+                        setCryptoValue(value);
+                    } else { setLocalValue(value) }
+                    fetchConvertionValue({ cryptoValue: isSwaped ? value : cryptoValue, localValue: !isSwaped ? value : localValue });
                 }}
                 autoFocus
             />

@@ -52,15 +52,15 @@ class Summary extends Component {
                 fromWalletId,
                 fromWalletCode,
                 fromWalletName,
-                "fromValue": this.props.sellData.previewDetails?.data?.amount,
+                "fromValue": this.props.sellData.previewDetails?.data?.amountNativeCurrency,
                 toWalletId,
                 toWalletCode,
                 toWalletName,
-                "toValue": this.props.sellData.previewDetails?.data?.amountNativeCurrency,
+                "toValue": this.props.sellData.previewDetails?.data?.amount,
                 "description": "Buy Crypto",
                 "comission": 0,
                 "exicutedPrice": 0,
-                "totalAmount": this.props.sellData.previewDetails?.data?.amountNativeCurrency
+                "totalAmount": this.props.sellData.previewDetails?.data?.amount
 
             }
             this.setState({ isLoading: true });
@@ -90,14 +90,18 @@ class Summary extends Component {
                 {!this.state?.error?.valid && <Alert showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable />}
                 <div className="cryptosummary-container auto-scroll">
                     <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>{amount} {coin}</div>
-                    <div className="text-white-50 fw-300 text-center fs-14 mb-16"><NumberFormat value={amountNativeCurrency} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} >{this.props.sellData?.selectedWallet?.currencyCode} {value}</div>} /></div>
+                    <div className="text-white-50 fw-300 text-center fs-14 mb-16"><NumberFormat value={amountNativeCurrency} displayType={'text'} thousandSeparator={true}  renderText={(value, props) => <div {...props} >{this.props.sellData?.selectedWallet?.currencyCode} {value}</div>} /></div>
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
-                        <Text className="fw-300 text-white-30">1 {coin} = {this.props.sellData?.selectedWallet?.currencyCode} {oneCoinValue}</Text>
+                        <NumberFormat value={oneCoinValue} displayType={'text'} thousandSeparator={true}
+                            renderText={(value, props) => <div {...props} className="fw-300 text-white-30">1 {coin} = {this.props.sellData?.selectedWallet?.currencyCode} {value}</div>} />
+
                     </div>
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="amount" component={Text} />
-                        <Text className="fw-300 text-white-30">{coin} {amount}</Text>
+                        <NumberFormat value={amount} displayType={'text'} thousandSeparator={true}
+                            renderText={(value, props) => <div {...props} className="fw-300 text-white-30">{coin} {value}</div>} />
+
                     </div>
                     {/* <div className="pay-list fs-14">
                     <Translate className="fw-400 text-white" content={`suissebase_fee`} component={Text} ><Tooltip title="Suissebase Fee"><span className="icon md info c-pointer ml-4" /></Tooltip></Translate>
@@ -105,7 +109,9 @@ class Summary extends Component {
                 </div> */}
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="estimated_total" component={Text} />
-                        <Text className="fw-300 text-white-30">{amount} {coin} ({this.props.sellData?.selectedWallet?.currencyCode} {amountNativeCurrency})</Text>
+                        
+                        <NumberFormat value={amountNativeCurrency} displayType={'text'} thousandSeparator={true}
+                            renderText={(value, props) => <div {...props} className="fw-300 text-white-30">{amount} {coin} ({this.props.sellData?.selectedWallet?.currencyCode} {value})</div>} />
                     </div>
                     {/* <Translate className="fs-12 text-white-30 text-center my-16" content="summary_hint_text" component={Paragraph} /> */}
                     <div className="fs-12 text-white-30 text-center my-16">Your final amount might be changed with in
