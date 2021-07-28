@@ -119,7 +119,7 @@ class SelectSellCrypto extends Component {
         const { coinDetailData } = this.props.sellData;
         return (
             <>
-                {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert showIcon type="info" message="Sell crypto" description={this.state?.errorMessage} closable />}
+                {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert onClose={()=>this.setState({...this.state,errorMessage:null})} showIcon type="info" message="Sell crypto" description={this.state?.errorMessage} closable />}
                 {coinDetailData && <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
                         <span className={`coin lg ${coinDetailData.coin}`} />
