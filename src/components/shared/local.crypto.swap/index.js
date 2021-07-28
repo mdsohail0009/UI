@@ -9,7 +9,6 @@ const LocalCryptoSwapper = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "USD"
     const [localValue, setLocalValue] = useState(localAmt);
     const [cryptoValue, setCryptoValue] = useState(cryptoAmt);
     useEffect(() => {
-        debugger;
         if (localAmt != localValue) { setLocalValue(localAmt); }
         if (cryptoAmt != cryptoValue) { setCryptoValue(cryptoAmt); }
     }, [localAmt]);
@@ -31,8 +30,8 @@ const LocalCryptoSwapper = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "USD"
                 onKeyPress={(e) => {
                     e.currentTarget.value.length >= 8 ? e.currentTarget.style.fontSize = "30px" : e.currentTarget.style.fontSize = "30px"
                 }}
-                //value={isSwaped ? cryptoValue : localValue}
-                defaultValue={isSwaped ? cryptoValue : localValue}
+                value={isSwaped ? cryptoValue : localValue}
+                //defaultValue={isSwaped ? cryptoValue : localValue}
                 onValueChange={({ value }) => {
                     if (isSwaped) {
                         setCryptoValue(value);
