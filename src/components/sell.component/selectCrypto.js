@@ -115,7 +115,7 @@ class SelectSellCrypto extends Component {
         this.setState({ ...this.state, sellSaveData: obj })
     }
     render() {
-        const { Text } = Typography;
+        const { Text, Paragraph } = Typography;
         const { coinDetailData } = this.props.sellData;
         return (
             <>
@@ -145,6 +145,7 @@ class SelectSellCrypto extends Component {
                     <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt('half')} />
                     <Translate value="max" content="all" component={Radio.Button} onClick={() => this.clickMinamnt('all')} />
                 </Radio.Group>
+                <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua" />
                 <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                 {/* <Dropdown label="Wallets" name="currencyCode" type="Wallets" dropdownData={this.props.sellData.MemberFiat} value={this.state.sellSaveData.walletName} onValueChange={(Value) => this.handleChange(Value)} field='WalletName'></Dropdown> */}
                 <SuisseBtn autoDisable={true} title="preview" className="pop-btn mt-36" onClick={() => { this.previewSellData() }} />
