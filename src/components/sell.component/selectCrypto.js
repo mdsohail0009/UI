@@ -38,15 +38,15 @@ class SelectSellCrypto extends Component {
             cryptoamnt = (obj.coinBalance / 2)
             this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt })
         } else if (type == 'all') {
-            usdamnt = obj.coinValueinNativeCurrency?obj.coinValueinNativeCurrency:0;
-            cryptoamnt = obj.coinBalance?obj.coinBalance:0;
+            usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
+            cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
             this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt })
         } else {
             this.fetchdefaultMinAmntValues()
         }
     }
-    previewSellData() {  
-         this.setState({ ...this.state, errorMessage: '' })
+    previewSellData() {
+        this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
         let { sellMinValue } = this.props.sellData.coinDetailData;
         if (!this.state.USDAmnt && !this.state.CryptoAmnt) {
@@ -99,7 +99,7 @@ class SelectSellCrypto extends Component {
         this.setState({ isSwap: value })
         let res = await getSellamnt(!this.state.isSwap ? obj.CryptoAmnt : obj.USDAmnt, value, this.props.sellData.coinDetailData?.coin);
         if (res.ok) {
-            this.setState({ USDAmnt: this.state.isSwap ? res.data?parseFloat(res.data).toFixed(8):0 : obj.USDAmnt, CryptoAmnt: !this.state.isSwap ? res.data?res.data:0 : obj.CryptoAmnt, isSwap: value })
+            this.setState({ USDAmnt: this.state.isSwap ? res.data ? parseFloat(res.data).toFixed(8) : 0 : obj.USDAmnt, CryptoAmnt: !this.state.isSwap ? res.data ? res.data : 0 : obj.CryptoAmnt, isSwap: value })
         }
     }
     handleWalletSelection = (walletId) => {
@@ -117,7 +117,7 @@ class SelectSellCrypto extends Component {
         const { coinDetailData } = this.props.sellData;
         return (
             <>
-             {this.state?.errorMessage!=null &&this.state?.errorMessage!='' && <Alert showIcon type="error" message="Sell crypto" description={this.state?.errorMessage} />}
+                {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert showIcon type="info" message="Sell crypto" description={this.state?.errorMessage} closable />}
                 {coinDetailData && <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
                         <span className={`coin lg ${coinDetailData.coin}`} />
