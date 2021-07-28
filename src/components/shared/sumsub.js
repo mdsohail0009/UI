@@ -5,16 +5,17 @@ import { connect } from 'react-redux';
 import { userInfo, getmemeberInfo } from './../../reducers/configReduser';
 
 class SumSub extends Component {
+    state = {}
     componentDidMount() {
 
-        this.launchWebSdk('https://test-api.sumsub.com', 'basic-kyc', 'tst:N2Kvt7SOOVp1jMf7wyQy9BSO.KlnFBjZadRJWK1A0rHckzIlaHQqbRDTO');
+        this.launchWebSdk(process.env.REACT_APP_SUMSUB_URI, 'basic-kyc', 'tst:N2Kvt7SOOVp1jMf7wyQy9BSO.KlnFBjZadRJWK1A0rHckzIlaHQqbRDTO');
 
     }
     launchWebSdk = async (apiUrl, flowName, accessToken, applicantEmail, applicantPhone, customI18nMessages) => {
         applicantEmail = "test@example.org"
         applicantPhone = "+491758764512"
         apicalls.sumsubacesstoken(this.props.userConfig.userId).then((res) => {
-        let snsWebSdkInstance = snsWebSdk.Builder("https://test-api.sumsub.com", this.props.userConfig.isbusines? "SuisseBase KYB":"SuisseBase KYC")
+        let snsWebSdkInstance = snsWebSdk.Builder(process.env.REACT_APP_SUMSUB_URI, this.props.userConfig.isbusines? "SuisseBase KYB":"SuisseBase KYC")
             .withAccessToken(res.data.token, (newAccessTokenCallback) => {
                     newAccessTokenCallback(res.data.token)
 
