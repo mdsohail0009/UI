@@ -113,7 +113,7 @@ class SwapCoins extends Component {
                         <div className="crypto-coin">
                             {/* <span className="coin md btc-white"></span> */}
                             
-                            {coinDetailData.coin ? <><span className={`coin md BTC ${coinDetailData.coin}`}></span>
+                            {coinDetailData.coin ? <><span className={`coin md  ${coinDetailData.coin}`}></span>
                             <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinDetailData.coinFullName}</Paragraph></>
                             :
                             <div className="text-left"><div className="default-circle swap-from"><span className="icon lg usd-default"></span></div>
