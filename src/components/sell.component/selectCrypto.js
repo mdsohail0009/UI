@@ -51,7 +51,7 @@ class SelectSellCrypto extends Component {
         this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
         let { sellMinValue } = this.props.sellData.coinDetailData;
-        if (!this.state.USDAmnt && !this.state.CryptoAmnt) {
+        if ((!this.state.USDAmnt && !this.state.CryptoAmnt)||(this.state.USDAmnt=="0"||this.state.CryptoAmnt=="0")) {
             this.setState({ ...this.state, errorMessage: 'Enter amount' })
             return;
         }
