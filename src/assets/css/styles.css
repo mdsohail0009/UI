@@ -111,7 +111,6 @@ line-height: 16px;min-width:90px}
 .box{background-color: var(--bgGrey); border-radius: 30px;overflow: hidden; margin-bottom: 28px; padding: 30px 24px;}
 .main-container{padding: 24px 16px; margin: auto;}
 .trade-btn{border-radius: 5px; background-color: var(--bgDarkGreen) !important;border-color: var(--bgDarkGreen) !important; line-height: normal; height: 20px;padding: 0 4px;}
-
 /* Buy/sell */
 .side-drawer .ant-drawer-body, .side-drawer .ant-drawer-header{background-color: var(--bgGrey);}
 .side-drawer .ant-drawer-mask{background-color: var(--bgDarkGrey-95);}
@@ -212,7 +211,6 @@ line-height: 16px;min-width:90px}
 .coin.lg.XRP{background-position: -423px -768px;}
 .coin.lg.BUSD{background-position: -563px -768px;}
 .coin.lg.DOGE{background-position: -490px -768px;}
-
 .coin.md.BTC{background-position: 5px -404px;}
 .coin.md.USDC{background-position: -97px -404px;}
 .coin.md.DOT{background-position: -135px -404px;}
@@ -244,7 +242,7 @@ line-height: 16px;min-width:90px}
 .cust-input .ant-select-selector, .cust-input .ant-input{background-color: transparent;}
 .cust-input .ant-select-selection-item, .cust-input .ant-select-selector, .cust-input .ant-input, .ant-select-single .ant-select-selector .ant-select-selection-item, .ant-select-single .ant-select-selector .ant-select-selection-placeholder{line-height: 45px !important; height: 47px !important;}
 /* swap */
-.swap{border-radius:25px; display: flex; justify-content: space-between; align-items: center; padding: 16px 24px;}
+.swap{border-radius:25px; display: flex; justify-content: space-between; align-items: center; padding: 16px 24px;min-height: 105px;}
 .swapfrom-card{background-color: var(--bgPitch);  border-bottom-right-radius: 0 !important; }
 .swapreceive-card{background-color: var(--bgOrient);  border-top-right-radius: 0 !important;box-shadow: var(--bgDark) 0px 7px 0; }
 .card-input{padding:0 !important; font-size: 24px; line-height: 24px; color:var(--textPureWhite);}
@@ -252,7 +250,7 @@ line-height: 16px;min-width:90px}
 .icon.swapto-arrow{position: absolute; top: 0; right:0;width:43px;height: 26px;margin-right: 12px; background-position: -3px -287px;}
 .crypto-search.ant-input-search .ant-input-group input{background-color: var(--bgDark) !important;text-align: center;
 height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-radius: 30px 0px 0 30px;}
-.crypto-coin{width: 63px;}
+.crypto-coin{width: 63px; margin-right: 20px;}
 .crypto-search.ant-input-search .ant-input-group .ant-input-group-addon{background-color: var(--bgDark) !important;border-radius: 0 20px 20px 0;}
 .crypto-search .anticon-search{font-size: 18px; color: var(--textWhite);margin-right: 12px !important;}
 .confirm-icon{width: 124px; height: 124px; margin-bottom:50px;}
@@ -375,6 +373,40 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .coin.TFUEL{background-position:-652px -120px;}
 .coin.OXY{background-position:-487px -240px;}
 .ant-spin-dot-item{background-color: var(--bgWhite);}
+.recomoned-bg{background: var(--texthover);font-size: 12px;padding: 0 2px;line-height: 1.2;color: var(--textWhite);float: right;}
+.text-width{width: 250px;}
+.pop-drpdwn-toogle{background: var(--bgDark);width: 50px; height: 50px; border-radius: 20px;text-align: center;line-height: 50px;}
+.alert-popup li{padding: 0;}
+.alert-popup{background: #E7F2E1;border-radius: 4px;border-radius: 6px;}
+.alert-popup .ant-card-body{padding: 12px;}
+.alert-popup .alert-close svg{color: #000}
+.alert-success{width: 20px;height: 20px;}
+.close-icon{background-position: -143px -35px;}
+.find-wallet .ant-select-selector{height: 50px !important;border: 1px solid var(--borderLight);border-radius: 30px !important;background: transparent !important;color: #fff;}
+.find-wallet .ant-select-selection-item{line-height: 3.5 !important;}
+.find-wallet .ant-select-arrow{color: var(--bgWhite); margin-right: 5px;}
+.find-wallet .ant-select-selector{padding: 0 20px !important;}
+.ant-checkbox-checked .ant-checkbox-inner{border: 1px solid var(--bgDarkYellow);border-color: var(--bgDarkYellow);background-color: var(--bgDarkYellow);}
+.ant-checkbox-wrapper:hover .ant-checkbox-inner, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner, .ant-checkbox-checked::after{border: 1px solid var(--textSecondary);border-color: var(--textSecondary);}
+.agree-check input[type=checkbox]{display: none;}
+.agree-check input[type=checkbox]+span{display: inline-block;width: 34px;height: 34px;vertical-align: text-top;cursor: pointer;background: var(--lightThemeIcons);background-position: -33px -140px;border: 1px solid var(--borderLight)}
+.agree-check input[type=checkbox]:checked+span{background-position: -33px -109px;}
+.cust-input.ant-select{position: relative;}
+.cust-input.ant-select::after{content: '';position: absolute;top: 12px; right: 16px; width: 20px; height: 20px; background: var(--lightThemeIcons);background-position: -350px 0;}
+.custom-switch{border-bottom: none;}
+.custom-formcard{width: 500px;margin: 0px auto;background: #515A64;border-radius: 50px;padding-left: 40px;padding-right: 40px;padding-top: 50px;padding-bottom: 50px;}
+.ant-form-item-has-error .cust-input{background-color: transparent !important;}
+.ant-form-item-explain-error{text-align: right;}
+.ant-input-suffix, .anticon-eye-invisible.ant-input-password-icon{color: var(--bgWhite);}
+.cust-input .ant-input{text-align: left !important;padding: 0 !important;background-color: transparent !important;}
+.icon.lg.usd-default{background-position:-1px -70px;width:32px !important}
+.icon.lg.swap-arrow{background-position:-8px -186px;}
+.to-receive{text-transform: uppercase;font-size: 14px;text-align: center;color: var(--textWhite30);font-weight: 500;margin-bottom: 0 !important;margin-top: 26px;}
+.swap-updown{position: absolute;right: 4%;bottom: -17px;z-index: 9;background: #1e526e;padding:8px 6px;border-radius: 6px;box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 1px 2px rgb(0 0 0 / 23%);}
+.swap-updown:hover{background: var(--bgDark);}
+.default-circle{border-radius: 50%;padding:12px 4px;}
+.swap-from{ background-color: var(--bgBlu);}
+.swap-to{ background-color: var(--bgPitch);}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}
@@ -425,8 +457,6 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .sidebar-push {margin: 100px 0 0;}
     .mobile-header-right {display: block;float: right;}    
     .crypto_btns{display: flex; width: 100%; padding-top: 16px; margin-left: 0 !important; margin-right: 16px !important;}
-    .swap-arrow{margin-left:6px;}
-   
 }
 @media (min-width: 768px){
     .crypto-card .ant-card-body{padding: 33px;height: 200px;}
@@ -469,7 +499,6 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .crypto_btns{margin-left: 16px !important;}
     .crypto_btns .custom-btn.prime{margin-left: 36px  !important;}
     .coin-typo{font-size: 16px !important;}
-    /* .swap-arrow{margin-left:8px;} */
 }
 @media (min-width: 1200px){
     .main-container{max-width: 1232px; padding: 55px 16px 24px;}
@@ -506,36 +535,3 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .pay-list{padding: 16px 0;}
     .crypto-container {max-height: calc(100vh - 325px);}
 }
-.recomoned-bg{background: var(--texthover);font-size: 12px;padding: 0 2px;line-height: 1.2;color: var(--textWhite);float: right;}
-.text-width{width: 250px;}
-.pop-drpdwn-toogle{background: var(--bgDark);width: 50px; height: 50px; border-radius: 20px;text-align: center;line-height: 50px;}
-.alert-popup li{padding: 0;}
-.alert-popup{background: #E7F2E1;border-radius: 4px;border-radius: 6px;}
-.alert-popup .ant-card-body{padding: 12px;}
-.alert-popup .alert-close svg{color: #000}
-.alert-success{width: 20px;height: 20px;}
-.close-icon{background-position: -143px -35px;}
-.find-wallet .ant-select-selector{height: 50px !important;border: 1px solid var(--borderLight);border-radius: 30px !important;background: transparent !important;color: #fff;}
-.find-wallet .ant-select-selection-item{line-height: 3.5 !important;}
-.find-wallet .ant-select-arrow{color: var(--bgWhite); margin-right: 5px;}
-.find-wallet .ant-select-selector{padding: 0 20px !important;}
-.ant-checkbox-checked .ant-checkbox-inner{border: 1px solid var(--bgDarkYellow);border-color: var(--bgDarkYellow);background-color: var(--bgDarkYellow);}
-.ant-checkbox-wrapper:hover .ant-checkbox-inner, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner, .ant-checkbox-checked::after{border: 1px solid var(--textSecondary);border-color: var(--textSecondary);}
-.agree-check input[type=checkbox]{display: none;}
-.agree-check input[type=checkbox]+span{display: inline-block;width: 34px;height: 34px;vertical-align: text-top;cursor: pointer;background: var(--lightThemeIcons);background-position: -33px -140px;border: 1px solid var(--borderLight)}
-.agree-check input[type=checkbox]:checked+span{background-position: -33px -109px;}
-.cust-input.ant-select{position: relative;}
-.cust-input.ant-select::after{content: '';position: absolute;top: 12px; right: 16px; width: 20px; height: 20px; background: var(--lightThemeIcons);background-position: -350px 0;}
-.custom-switch{border-bottom: none;}
-.custom-formcard{width: 500px;margin: 0px auto;background: #515A64;border-radius: 50px;padding-left: 40px;padding-right: 40px;padding-top: 50px;padding-bottom: 50px;}
-.ant-form-item-has-error .cust-input{background-color: transparent !important;}
-.ant-form-item-explain-error{text-align: right;}
-.ant-input-suffix, .anticon-eye-invisible.ant-input-password-icon{color: var(--bgWhite);}
-.cust-input .ant-input{text-align: left !important;padding: 0 !important;background-color: transparent !important;}
-.icon.lg.usd-default{background-position:2px -63px;width:32px !important}
-.icon.lg.swap-arrow{background-position:-8px -186px; transform: scale(1.2);} 
-.to-receive{text-transform: uppercase;font-size: 14px;text-align: center;color: var(--textWhite30);font-weight: 500;margin-bottom: 0 !important;margin-top: 26px;}
-.swap-updown{position: absolute;right: 4%;bottom: -17px;z-index: 9;background: #1e526e;padding: 4px 10px;border-radius: 8px;box-shadow: var(--bgDark) 2px 2px 7px;}
-.default-circle{border-radius: 50%;width: 40px;height: 40px;}
-.swap-from{ background-color: var(--bgBlu);}
-.swap-to{ background-color: var(--bgPitch);}

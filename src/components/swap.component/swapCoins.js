@@ -116,8 +116,8 @@ class SwapCoins extends Component {
                             {coinDetailData.coin ? <><span className={`coin md  ${coinDetailData.coin}`}></span>
                             <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinDetailData.coinFullName}</Paragraph></>
                             :
-                            <div className="text-left"><div className="default-circle swap-from"><span className="icon lg usd-default"></span></div>
-                            <Paragraph className="mb-0 text-purewhite fs-14 fw-100">Select</Paragraph></div>}
+                            <div className="text-center mt-4"><span className="default-circle swap-from"><span className="icon lg usd-default"></span></span>
+                            <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-8">Select</Paragraph></div>}
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>
                     </div>
@@ -140,8 +140,8 @@ class SwapCoins extends Component {
                             {coinReceiveDetailData.coin ?<> <span className={`coin md ${coinReceiveDetailData.coin}`}></span>
                             <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinReceiveDetailData.coinFullName}</Paragraph></>
                             :
-                            <div className="text-left"><div className="default-circle swap-to"><span className="icon lg usd-default"></span></div>
-                            <Paragraph className="mb-0 text-purewhite fs-14 fw-100">Select</Paragraph></div>}
+                            <div className="text-center mt-4"><span className="default-circle swap-to"><span className="icon lg usd-default"></span></span>
+                            <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-8">Select</Paragraph></div>}
                             
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>
