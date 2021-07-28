@@ -58,9 +58,9 @@ class BuySell extends Component {
     };
     renderTitle = () => {
         const titles = {
-            buycrypto: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
+            buycrypto: <span />,
             selectcrypto: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
-            billtype: <span onClick={() => this.props.dispatch(setStep("step3"))} className="icon md close-white c-pointer" />,
+            billtype: <span />,
             addcard: <span onClick={() => this.props.dispatch(setStep("step4"))} className="icon md lftarw-white c-pointer" />,
             depositcrypto: <span onClick={() => this.props.dispatch(setStep("step4"))} className="icon md lftarw-white c-pointer" />,
             selectcrypto: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
@@ -77,9 +77,9 @@ class BuySell extends Component {
     }
     renderIcon = () => {
         const stepcodes = {
-            buycrypto: <span />,
+            buycrypto: <span  onClick={this.closeBuyDrawer} className="icon md close-white c-pointer"/>,
             selectcrypto: <span />,
-            billtype: <span />,
+            billtype: <span onClick={() => this.props.dispatch(setStep("step3"))} className="icon md close-white c-pointer" />,
             addcard: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             depositcrypto: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             selectcrypto: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,

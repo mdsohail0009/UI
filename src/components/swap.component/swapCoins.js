@@ -113,18 +113,18 @@ class SwapCoins extends Component {
                         <div className="crypto-coin">
                             {/* <span className="coin md btc-white"></span> */}
                             
-                            {coinDetailData.coin ? <><span className={`coin md BTC ${coinDetailData.coin}`}></span>
+                            {coinDetailData.coin ? <><span className={`coin md  ${coinDetailData.coin}`}></span>
                             <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinDetailData.coinFullName}</Paragraph></>
                             :
-                            <div className="text-left"><div className="default-circle swap-from"><span className="coin md usd-default"></span></div>
-                            <Paragraph className="mb-0 text-purewhite fs-14 fw-100">Select</Paragraph></div>}
+                            <div className="text-center mt-4"><span className="default-circle swap-from"><span className="icon lg usd-default"></span></span>
+                            <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-8">Select</Paragraph></div>}
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>
                     </div>
                     {/* <span className="icon swapfrom-arrow c-pointer" onClick={()=>this.swapingCurr()}></span> */}
-                    <div className="mt-16 swap-updown" onClick={this.swapingCurr}>
-                            <span className="icon sm uparw-o-white d-block c-pointer mb-4" />
-                            <span className="icon sm dwnarw-o-white d-block c-pointer" />
+                    <div className="mt-16 swap-updown"  onClick={()=>this.swapingCurr()}>
+                            <span className="icon lg swap-arrow d-block c-pointer mb-4" />
+                            {/* <span className="icon sm dwnarw-o-white d-block c-pointer" /> */}
                     </div>
                 </div>
                 }
@@ -140,8 +140,8 @@ class SwapCoins extends Component {
                             {coinReceiveDetailData.coin ?<> <span className={`coin md ${coinReceiveDetailData.coin}`}></span>
                             <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinReceiveDetailData.coinFullName}</Paragraph></>
                             :
-                            <div className="text-left"><div className="default-circle swap-to"><span className="coin md usd-default"></span></div>
-                            <Paragraph className="mb-0 text-purewhite fs-14 fw-100">Select</Paragraph></div>}
+                            <div className="text-center mt-4"><span className="default-circle swap-to"><span className="icon lg usd-default"></span></span>
+                            <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-8">Select</Paragraph></div>}
                             
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>

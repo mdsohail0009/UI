@@ -29,7 +29,7 @@ let initialState = {
         wiretransfor:"wire_transfer"
     },
     stepSubTitles: {
-        buycrypto: "past_hours",
+        buycrypto: null,
         selectcrypto: "crypto_compare_val",
         summary: "crypto_compare_val",
         billtype: "select_from_below",

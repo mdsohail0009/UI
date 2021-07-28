@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Tooltip, Checkbox } from 'antd';
+import { Typography, Button, Tooltip, Checkbox ,Alert} from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -17,7 +17,7 @@ const LinkValue = (props) => {
     )
 }
 class SellSummary extends Component {
-    state={sellpreviewData:{},loader:true,disableConfirm: false}
+    state={sellpreviewData:{},loader:true,disableConfirm: false,isTermsAgree:false,errorMessage:null}
     componentDidMount(){
         this.fetchPreviewData()
         setTimeout(() => this.setState({ ...this.state, disableConfirm: true }), 12000)
@@ -32,18 +32,24 @@ class SellSummary extends Component {
         this.fetchPreviewData()
     }
     async saveSellData(){
-        this.setState({ ...this.state,loader:true })
-        let obj = Object.assign({}, this.props.sellData.sellsaveObject)
-        obj.fromValue = this.state.sellpreviewData.amount
-        obj.toValue =this.state.sellpreviewData.amountNativeCurrency
-        obj.exicutedPrice = this.state.sellpreviewData.oneCoinValue
-        obj.totalAmount = this.state.sellpreviewData.amountNativeCurrency+this.props.sellData.sellsaveObject.comission;
-        let res =await savesellData(obj);
-        if (res.ok) {
-            this.props.changeStep('success')
-            this.setState({ ...this.state,loader:false ,disableConfirm: false})
+        this.setState({ ...this.state, errorMessage: '' })
+        if(!this.state.isTermsAgree){
+            this.setState({ ...this.state, errorMessage: 'Please accept terms of service' })
+            return;
         }else{
-            this.setState({ ...this.state,loader:false ,disableConfirm: false})
+            this.setState({ ...this.state,loader:true, errorMessage: ''  })
+            let obj = Object.assign({}, this.props.sellData.sellsaveObject)
+            obj.fromValue = this.state.sellpreviewData.amount
+            obj.toValue =this.state.sellpreviewData.amountNativeCurrency
+            obj.exicutedPrice = this.state.sellpreviewData.oneCoinValue
+            obj.totalAmount = this.state.sellpreviewData.amountNativeCurrency+this.props.sellData.sellsaveObject.comission;
+            let res =await savesellData(obj);
+            if (res.ok) {
+                this.props.changeStep('success')
+                this.setState({ ...this.state,loader:false ,disableConfirm: false})
+            }else{
+                this.setState({ ...this.state,loader:false ,disableConfirm: false})
+            }
         }
     }
     render() {
@@ -53,6 +59,7 @@ class SellSummary extends Component {
         return (
             <>
            {(!this.state.loader)&&<>
+            {this.state?.errorMessage!=null &&this.state?.errorMessage!='' && <Alert showIcon type="error" message="Sell crypto" description={this.state?.errorMessage} />}
                 <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>USD {sellpreviewData.amountNativeCurrency}</div>
                 <div className="text-white-50 fw-300 text-center fs-14 mb-16">{sellpreviewData.amount} {sellpreviewData.coin}</div>
                 <div className="pay-list fs-14">
@@ -75,7 +82,7 @@ class SellSummary extends Component {
                 <div className="text-center text-underline text-white"><Link className="text-yellow" onClick={()=>this.refreshPage()}> Click to see the new rate.</Link></div>
                 <div className="d-flex p-16 mb-36 agree-check">
                     <label>
-                        <input type="checkbox" id="agree-check" />
+                        <input type="checkbox" id="agree-check" value={this.state.isTermsAgree} onChange={()=>this.setState({isTermsAgree:true})}/>
                         <span for="agree-check" />
                     </label><Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
                 </div>

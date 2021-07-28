@@ -35,35 +35,42 @@ const LinkValue = (props) => {
 const { menuHeader } = Layout;
 const { Title, Paragraph, Text } = Typography;
 const { TabPane } = Tabs;
-const securityMenu = (
 
-    <Menu>
-        <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="security" component={Title} />
-        <ul className="pl-0 drpdwn-list">
-            <li className="no-hover dropdown-flex text-white fs-14 pb-16">2FA<Switch size="small" checked={false} /> </li>
-            <li className="">
-                {/* <Translate content="change_password" component={Link} to="/changepassword" /> */}
-                <Link className="dropdown-flex" to="/changepassword">Change Password <span className="icon md rarrow-white" /></Link>
-
-            </li>
-            <li className="no-hover">
-                <div className="">
-                    <Translate className="text-white fs-14 pt-16 mb-0" content="current_security_level" component={Paragraph} />
-                    <Translate className="text-green fw-900" content="medium" component={Paragraph} />
-                </div>
-                <Translate className="text-white fs-14" style={{ paddingRight: '78px' }} content="current_security_text" component={Paragraph} />
-            </li>
-            <li>
-                <div className="dropdown-flex-top">
-                    <Translate content="protect_your_account" component={Link} />
-                    <span className="icon md rarrow-white" />
-                </div>
-            </li>
-        </ul>
-    </Menu>
-);
 
 class Header extends Component {
+    securityMenu = (
+
+        <Menu>
+            <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="security" component={Title} />
+            <ul className="pl-0 drpdwn-list">
+                <li className="no-hover dropdown-flex text-white fs-14 pb-16">2FA<Switch size="small" checked={this.props.userConfig.twofactorVerified} onChange={(status)=>{
+                    if(status==true){
+                        window.open(process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/EnableAuthenticator","_self");
+                    }else{
+                        window.open(process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/Disable2faWarning","_self");
+                    }
+                }} /> </li>
+                <li className="">
+                    {/* <Translate content="change_password" component={Link} to="/changepassword" /> */}
+                    <Link className="dropdown-flex" to="/changepassword">Change Password <span className="icon md rarrow-white" /></Link>
+    
+                </li>
+                <li className="no-hover">
+                    <div className="">
+                        <Translate className="text-white fs-14 pt-16 mb-0" content="current_security_level" component={Paragraph} />
+                        <Translate className="text-green fw-900" content="medium" component={Paragraph} />
+                    </div>
+                    <Translate className="text-white fs-14" style={{ paddingRight: '78px' }} content="current_security_text" component={Paragraph} />
+                </li>
+                <li>
+                    <div className="dropdown-flex-top">
+                        <Translate content="protect_your_account" component={Link} />
+                        <span className="icon md rarrow-white" />
+                    </div>
+                </li>
+            </ul>
+        </Menu>
+    );
     settingMenu = (
         <Menu>
             <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="settings" component={Title} />
@@ -255,7 +262,7 @@ class Header extends Component {
                                 <li className="mb-d-none"><Translate content="header_title" component="p" className="text-white-30 mb-0 fs-24" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
-                                <Dropdown overlay={securityMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                                <Dropdown overlay={this.securityMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                     <Menu.Item key="5">Security</Menu.Item>
                                 </Dropdown>
                                 <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
@@ -272,7 +279,7 @@ class Header extends Component {
                                 <Translate content="menu_send_receive" component={Menu.Item} key="3" className="mr-16" />
                             </Dropdown>
                             {/* <Translate content="menu_mass_pay" component={Menu.Item} key="4" onClick={this.showBuyFiatDrawer} className="list-item" /> */}
-                            <Dropdown overlay={securityMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                            <Dropdown overlay={this.securityMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Translate key="5" content="security" component={Menu.Item} />
                             </Dropdown>
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>

@@ -63,7 +63,7 @@ class CryptoComponent extends Component {
                     :
                     <>
                         <Translate content="purchase_a_crypto" component={Title} className="drawer-title" />
-                        <Translate content="deposit_link" with={{ link }} component={Paragraph} className="fs-16 text-secondary" />
+                        <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-secondary fw-300 fs-16" />
                         <Tabs className="crypto-list-tabs">
                             <TabPane tab="All" key="1">
                                 <CryptoList showSearch={this.props.showSearch} coinType="All" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />

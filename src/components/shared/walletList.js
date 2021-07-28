@@ -3,6 +3,8 @@ import { Select } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import { fetchMemberFiat } from '../buysell.component/crypto.reducer';
+import NumberFormat from 'react-number-format';
+
 const { Option } = Select;
 class WalletList extends Component {
     state = {
@@ -18,7 +20,9 @@ class WalletList extends Component {
                     <Select dropdownClassName="select-drpdwn" loading={this.props?.sellData?.memberFiat?.loading} placeholder="Select Wallet" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={false} suffixIcon={<span className="icon md uparrow" />}
                         onChange={(e) => this.props.onWalletSelect ? this.props.onWalletSelect(e) : ""}>
                         {this.props.sellData.memberFiat?.data?.map((item, idx) =>
-                            <Option key={idx} value={item.id}>{item.currencyCode + ` Wallet Available:(${item.currencyCode} ${item.avilable})`}</Option>
+                            <Option key={idx} value={item.id}>{item.currencyCode}
+                            <NumberFormat value={item.avilable} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <span {...props}> Balance: {value}</span>} />
+                            </Option>
                         )}
                     </Select>
                 </form>
