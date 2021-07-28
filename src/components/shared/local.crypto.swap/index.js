@@ -19,16 +19,16 @@ const LocalCryptoSwapper = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "USD"
         onChange({ cryptoValue, localValue, [isSwaped ? "localValue" : "cryptoValue"]: value, isSwaped });
     }
     return <div className="p-relative">
-        <div className="enter-val-container  p-relative">
-            <Text className="fs-36 fw-100 text-white-30 mr-4">{!isSwaped ? localCurrency : cryptoCurrency}</Text>
-            <NumberFormat className="fw-100 text-white-30 enter-val p-0" customInput={Input} thousandSeparator={true} prefix={isSwaped ? "" : "$"}
+        <div className="enter-val-container">
+            <Text className="fs-30 fw-100 text-white-30 text-defaultylw mr-4">{!isSwaped ? localCurrency : cryptoCurrency}</Text>
+            <NumberFormat className="fw-100 text-white-30 text-center enter-val p-0" customInput={Input} thousandSeparator={true} prefix={isSwaped ? "" : "$"}
                 placeholder="0.00"
                 bordered={false}
-                style={{ width: 90, lineHeight: '55px', fontSize: 36, paddingRight: 30 }}
-                onBlur={(e) => e.currentTarget.value.length == 0 ? e.currentTarget.style.width = "100px" : ''}
+                style={{ lineHeight: '48px', fontSize: 30, paddingRight: '40px !important' }}
+                //onBlur={(e) => e.currentTarget.value.length == 0 ? e.currentTarget.style.width = "100px" : ''}
                 onKeyPress={(e) => {
-                    e.currentTarget.style.width = ((e.currentTarget.value.length + 6) * 15) + 'px'
-                    e.currentTarget.value.length >= 8 ? e.currentTarget.style.fontSize = "30px" : e.currentTarget.style.fontSize = "36px"
+                    //e.currentTarget.style.width = ((e.currentTarget.value.length + 6) * 15) + 'px'
+                    e.currentTarget.value.length >= 8 ? e.currentTarget.style.fontSize = "30px" : e.currentTarget.style.fontSize = "30px"
                 }}
                 value={isSwaped ? cryptoValue : localValue}
                 onValueChange={({ value }) => {
@@ -37,12 +37,11 @@ const LocalCryptoSwapper = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "USD"
                 }}
                 autoFocus
             />
-
         </div>
         <NumberFormat value={isSwaped ? localValue : cryptoValue} displayType={'text'} thousandSeparator={true} prefix={isSwaped ? '$' : ""} renderText={(value, props) => <div {...props} className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{value} {isSwaped ? localCurrency : cryptoCurrency}</div>
         } />
-        <span className="mt-16 val-updown c-pointer">
-            <span onClick={() => !isSwaped ? setSwapped(true) : ""} className="icon sm uparw-o-white d-block c-pointer mb-4" /><span onClick={() => isSwaped ? setSwapped(false) : ""} className="icon sm dwnarw-o-white d-block c-pointer" />
+        <span className="val-updown c-pointer" onClick={() => !isSwaped ? setSwapped(true) : setSwapped(false)}>
+            <span className="icon md swaparrow" />
         </span>
     </div>
 
