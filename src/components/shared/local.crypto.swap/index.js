@@ -1,6 +1,6 @@
 import { Input } from 'antd';
 import Text from 'antd/lib/typography/Text';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import connectStateProps from '../../../utils/state.connect';
 import { convertCurrency } from '../../buysell.component/buySellService';
 import NumberFormat from 'react-number-format';
@@ -9,7 +9,9 @@ const LocalCryptoSwapper = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "USD"
     const [values, setValues] = useState({ localValue: localAmt, cryptoValue: cryptoAmt });
 
     const { localValue, cryptoValue } = values;
-
+    useEffect(() => {
+        setValues({ localValue: localAmt, cryptoValue: cryptoAmt })
+    }, [localAmt]);
     const fetchConvertionValue = async ({ cryptoValue, localValue }) => {
         const coin = selectedCoin || sellData?.selectedCoin?.data?.coin;
         const value = await convertCurrency({ from: coin, to: "USD", value: isSwaped ? cryptoValue : localValue, isCrypto: !isSwaped })
@@ -35,9 +37,8 @@ const LocalCryptoSwapper = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "USD"
                 }}
                 autoFocus
             />
-
         </div>
-        <NumberFormat value={isSwaped ? localValue : cryptoValue} displayType={'text'} thousandSeparator={true} prefix={isSwaped ? '$' : ""} renderText={(value, props) => <div {...props} className="fs-14 text-white-30 fw-200 text-center d-block mb-36 ml-24">{value} {isSwaped ? localCurrency : cryptoCurrency}</div>
+        <NumberFormat value={isSwaped ? localValue : cryptoValue} displayType={'text'} thousandSeparator={true} prefix={isSwaped ? '$' : ""} renderText={(value, props) => <div {...props} className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{value} {isSwaped ? localCurrency : cryptoCurrency}</div>
         } />
         <span className="val-updown c-pointer" onClick={() => !isSwaped ? setSwapped(true) : setSwapped(false)}>
             <span className="icon md swaparrow" />

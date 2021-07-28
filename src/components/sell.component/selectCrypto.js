@@ -7,6 +7,8 @@ import { Dropdown } from '../../Shared/Dropdown';
 import { getSellamnt } from '../../components/buysell.component/api'
 import { updatesellsaveObject } from '../buysell.component/crypto.reducer';
 import WalletList from '../shared/walletList';
+import LocalCryptoSwap from '../shared/local.crypto.swap';
+import SuisseBtn from '../shared/butons';
 
 class SelectSellCrypto extends Component {
     state = {
@@ -131,25 +133,13 @@ class SelectSellCrypto extends Component {
                         </div>
                     </div>
                 </Card>}
-                <div className="p-relative">
-                    <div className="enter-val-container">
-                        <Text className="fs-30 fw-100 text-defaultylw mr-4">{this.state.isSwap ? "USD" : coinDetailData.coin}</Text>
-                        <Input className="fw-100 text-white-30 text-center enter-val p-0"
-                            bordered={false}
-                            onChange={(e) => { this.setAmount(e, !this.state.isSwap ? 'CryptoAmnt' : 'USDAmnt', this.state.isSwap ? 'CryptoAmnt' : 'USDAmnt') }} value={!this.state.isSwap ? this.state.CryptoAmnt : this.state.USDAmnt}
-                            style={{ lineHeight: '48px', fontSize: 30, paddingRight: '40px !important' }}
-                            //onBlur={(e) => e.currentTarget.value.length == 0 ? e.currentTarget.style.width = "100px" : ''}
-                            onKeyPress={(e) => {
-                                // e.currentTarget.style.width = ((e.currentTarget.value.length + 8) * 20) + 'px'
-                                e.currentTarget.value.length >= 8 ? e.currentTarget.style.fontSize = "30px" : e.currentTarget.style.fontSize = "30px"
-                            }}
-                        />
-                    </div>
-                    <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36 ml-24">{!this.state.isSwap ? this.state.USDAmnt : this.state.CryptoAmnt} {!this.state.isSwap ? "USD" : coinDetailData.coin}</Text>
-                    <span className="val-updown c-pointer" onClick={() => this.state.isSwap ? this.swapChange(false) : this.swapChange(true)}>
-                        <span className="icon md swaparrow" />
-                    </span>
-                </div>
+                <LocalCryptoSwap
+                    cryptoAmt={this.state.CryptoAmnt}
+                    localAmt={this.state.USDAmnt}
+                    cryptoCurrency={coinDetailData?.coin}
+                    localCurrency={"USD"}
+                    selectedCoin={coinDetailData?.coin}
+                    onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }} />
                 <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
                     <Translate value="min" content="min" component={Radio.Button} onClick={() => this.clickMinamnt('min')} />
                     <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt('half')} />
@@ -157,7 +147,7 @@ class SelectSellCrypto extends Component {
                 </Radio.Group>
                 <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                 {/* <Dropdown label="Wallets" name="currencyCode" type="Wallets" dropdownData={this.props.sellData.MemberFiat} value={this.state.sellSaveData.walletName} onValueChange={(Value) => this.handleChange(Value)} field='WalletName'></Dropdown> */}
-                <Translate content="preview" component={Button} size="large" block className="pop-btn mt-36" onClick={() => { this.previewSellData() }} />
+                <SuisseBtn autoDisable={true} title="preview" className="pop-btn mt-36" onClick={() => { this.previewSellData() }} />
             </>
 
         )

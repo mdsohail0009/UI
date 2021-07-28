@@ -29,7 +29,7 @@ export default {
   db_slider_btn: 'Siapkan pembelian berulang',
   selected_crypto: 'Beli eth',
   crypto_compare_val: '1 ETH - $2,495.31 ',
-  find_with_wallet: 'Cari Dengan dompet anda',
+  find_with_wallet: 'Pilih dompet anda',
   refresh_newprice: 'Segarkan untuk mendapatkan harga baru',
   confirm_btn_text: 'Sahkan',
   exchange_rate: 'Kadar pertukaran',
