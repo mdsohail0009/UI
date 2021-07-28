@@ -71,7 +71,7 @@ export default {
   select_wallet: "sell from you wallet",
   confirm_sell: "Confirm selling your Crypto",
   sell_compare_val: '1 %(coin)s - $%(value)s',
-  preview: 'Preview',
+  preview: 'Preview %(counter)s',
   success_msg: "Thank You",
   success_decr: "Your order has been placed successfully",
   confirm_msg: 'Waiting for Confirmation',
