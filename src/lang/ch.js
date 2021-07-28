@@ -29,7 +29,7 @@ export default {
   db_slider_btn: '设置定期购买',
   selected_crypto: '買 eth',
   crypto_compare_val: '1 ETH - $2,495.31 ',
-  find_with_wallet: '用你的钱包找',
+  find_with_wallet: '選擇你的錢包',
   refresh_newprice: '请刷新以获取新价格',
   confirm_btn_text: '确认',
   exchange_rate: '汇率',

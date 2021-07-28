@@ -29,7 +29,7 @@ export default {
   db_slider_btn: 'Set up recurring buy',
   selected_crypto: 'Buy %(coin)s',
   crypto_compare_val: '1 %(coin)s - $%(value)s ',
-  find_with_wallet: 'Find With your wallet',
+  find_with_wallet: 'Select your wallet',
   refresh_newprice: 'Please refresh to get new price',
   confirm_btn_text: 'Confirm %(counter)s',
   exchange_rate: 'Exchange Rate',
