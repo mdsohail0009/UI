@@ -26,7 +26,7 @@ const SuisseBtn = ({ title, onClick, autoDisable = false, duration = 10000, clas
     useEffect(() => {
         startTimer();
     }, [autoDisable]);
-    return refresh ? <Translate content={"suisse_btn_refresh"} component={Button} size="large" block className="pop-btn confirm-btn mt-36" onClick={() => refreshTimer()} /> :
+    return refresh ? <Translate content={"suisse_btn_refresh"} component={Button} size="large" block className="pop-btn confirm-btn" onClick={() => refreshTimer()} /> :
         <Translate with={{ counter: `(${seconds})` }} content={title} component={Button} disabled={disabled} size="large" block className={className} onClick={() => onClick()} loading={loading} />
 }
 

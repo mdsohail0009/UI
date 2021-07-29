@@ -51,7 +51,7 @@ class SelectSellCrypto extends Component {
         this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
         let { sellMinValue } = this.props.sellData.coinDetailData;
-        if ((!this.state.USDAmnt && !this.state.CryptoAmnt)||(this.state.USDAmnt=="0"||this.state.CryptoAmnt=="0")) {
+        if ((!this.state.USDAmnt && !this.state.CryptoAmnt) || (this.state.USDAmnt == "0" || this.state.CryptoAmnt == "0")) {
             this.setState({ ...this.state, errorMessage: 'Enter amount' })
             return;
         }
@@ -119,7 +119,7 @@ class SelectSellCrypto extends Component {
         const { coinDetailData } = this.props.sellData;
         return (
             <>
-                {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert onClose={()=>this.setState({...this.state,errorMessage:null})} showIcon type="info" message="Sell crypto" description={this.state?.errorMessage} closable />}
+                {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="Sell crypto" description={this.state?.errorMessage} closable />}
                 {coinDetailData && <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
                         <span className={`coin lg ${coinDetailData.coin}`} />
@@ -148,7 +148,9 @@ class SelectSellCrypto extends Component {
                 <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua" />
                 <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                 {/* <Dropdown label="Wallets" name="currencyCode" type="Wallets" dropdownData={this.props.sellData.MemberFiat} value={this.state.sellSaveData.walletName} onValueChange={(Value) => this.handleChange(Value)} field='WalletName'></Dropdown> */}
-                <SuisseBtn autoDisable={true} title="preview" className="pop-btn mt-36" onClick={() => { this.previewSellData() }} />
+                <div className="mt-24">
+                    <SuisseBtn autoDisable={true} title="preview" className="pop-btn" onClick={() => { this.previewSellData() }} />
+                </div>
             </>
 
         )
