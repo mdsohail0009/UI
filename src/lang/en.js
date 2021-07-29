@@ -94,7 +94,7 @@ export default {
   purchase_fiat_text: 'Your wallet is empty, you don’t have any assets to make transactions. Follow this link and %(link)s  some cash.',
   link_newcard: 'Link new card',
   pick: 'pick',
-  confirm_swap: 'Confirm Swap',
+  confirm_swap: 'Confirm Swap %(counter)s',
   total: 'Total',
   confirm_transaction: 'Confirm Transaction',
   confirm_transaction_decs: 'Wallet in USD',

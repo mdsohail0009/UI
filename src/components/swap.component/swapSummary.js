@@ -31,11 +31,11 @@ class SwapSummary extends Component {
     componentDidMount(){
          this.setOneCoinValue();
          this.setReceiveAmount();
-        this.updateTimer = setInterval(() => {
-            this.setOneCoinValue();
-            this.setReceiveAmount();
-            this.setState({ ...this.state, disableConfirm: true});
-        },10000);
+        // this.updateTimer = setInterval(() => {
+        //     this.setOneCoinValue();
+        //     this.setReceiveAmount();
+        //     this.setState({ ...this.state, disableConfirm: true});
+        // },10000);
     }
     componentWillUnmount(){
         clearInterval(this.updateTimer);
@@ -134,7 +134,7 @@ class SwapSummary extends Component {
                         <span for="agree-check" />
                     </label><Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
                 </div>
-                <SuisseBtn className={"pop-btn"} onRefresh={()=>{}} duration={1000} title={"confirm_swap"} loading={this.state.isLoading} autoDisable={true} onClick={() => this.confirmSwap()} />
+                <SuisseBtn className={"pop-btn"} onRefresh={()=>{this.setOneCoinValue();this.setReceiveAmount();}} duration={1000} title={"confirm_swap"} loading={this.state.isLoading} autoDisable={true} onClick={() => this.confirmSwap()} />
                {/* <Translate size="large" block className="pop-btn" disabled={this.state.disableConfirm} duration onClick={()=>this.confirmSwap()} style={{ marginTop: '100px' }} content="confirm_swap" component={Button} />*/}
             </>
         )
