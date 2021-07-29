@@ -253,7 +253,7 @@ line-height: 16px;min-width:90px}
 .card-input{padding:0 !important; font-size: 24px; line-height: 24px; color:var(--textPureWhite);}
 .icon.swapfrom-arrow{position: absolute; bottom: 0; right:0;width:43px;height: 26px; background-position: -54px -288px;}
 .icon.swapto-arrow{position: absolute; top: 0; right:0;width:43px;height: 26px;margin-right: 12px; background-position: -3px -287px;}
-.crypto-search.ant-input-search .ant-input-group input{background-color: var(--bgDark) !important;text-align: center;
+.crypto-search.ant-input-search .ant-input-group input{background-color: var(--bgDark) !important;
 height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-radius: 30px 0px 0 30px;}
 .crypto-coin{width: 63px; margin-right: 20px;}
 .crypto-search.ant-input-search .ant-input-group .ant-input-group-addon{background-color: var(--bgDark) !important;border-radius: 0 20px 20px 0;}

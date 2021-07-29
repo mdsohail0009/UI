@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Typography, Button, notification } from 'antd';
 import Translate from 'react-translate-component';
 import { Link } from 'react-router-dom';
-import { setStep } from '../../reducers/swapReducer';
+import { setStep, updateSwapdata } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
 import { fetchCurrConvertionValue, saveSwapData } from '../../components/swap.component/api'
 import SuisseBtn from '../shared/butons';
@@ -74,6 +74,7 @@ class SwapSummary extends Component {
         }
     }
     async confirmSwap() {
+        
         if (!this.state.agreeValue) {
             notification.error({ message: "", description: 'Please agree to terms&conditions' });
             // this.setState({...this.state,errorMessage: 'Check Agree Policy Checkbox'})
@@ -83,6 +84,7 @@ class SwapSummary extends Component {
             // this.setState({...this.state,errorMessage: 'Insufficiant funds to swap'})
         }
         else {
+
             let obj = Object.assign({}, this.state.swapSaveData);
             obj.membershipId = this.props.userProfile.id;
             obj.fromWalletId = this.props.swapStore.coinDetailData.id
@@ -96,13 +98,13 @@ class SwapSummary extends Component {
             obj.toWalletName = this.props.swapStore.coinReceiveDetailData.coinFullName
             obj.toValue = this.state.receiveValue
             obj.totalAmount = this.state.receiveValue
-
+            this.setState({ ...this.state, isLoading:true})
             let res = await saveSwapData(obj);
             if (res.ok) {
                 this.props.changeStep('confirm');
-                this.setState({ ...this.state, loader: false })
+                this.setState({ ...this.state, loader: false, isLoading:false })
             } else {
-                this.setState({ ...this.state, loader: false })
+                this.setState({ ...this.state, loader: false,isLoading:false })
             }
         }
     }
@@ -132,8 +134,9 @@ class SwapSummary extends Component {
                         <span for="agree-check" />
                     </label><Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
                 </div>
-                <SuisseBtn className={"pop-btn"} onRefresh={() => { this.setOneCoinValue(); this.setReceiveAmount(); }} duration={1000} title={"confirm_swap"} loading={this.state.isLoading} autoDisable={true} onClick={() => this.confirmSwap()} />
+                <SuisseBtn className={"pop-btn"} onRefresh={() => { this.setOneCoinValue(); this.setReceiveAmount(); }} duration={1000} title={"confirm_swap"} disabled={this.state.isLoading} loading={this.state.isLoading} autoDisable={true} onClick={() => this.confirmSwap()} />
                 {/* <Translate size="large" block className="pop-btn" disabled={this.state.disableConfirm} duration onClick={()=>this.confirmSwap()} style={{ marginTop: '100px' }} content="confirm_swap" component={Button} />*/}
+                <Translate size="large" block className="pop-btn" content="cancel" component={Button} style={{ marginTop: '10px' }} onClick={() => {this.props.changeStep('step1')}} />
             </>
         )
     }
@@ -145,7 +148,10 @@ const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
-        }
+        },
+        updateSwapdataobj: (obj) => {
+            dispatch(updateSwapdata(obj))
+        },
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(SwapSummary);

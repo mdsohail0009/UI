@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Input, List } from 'antd';
+import { Typography, Button, Input, List, Empty } from 'antd';
 import Translate from 'react-translate-component';
 import { setStep, updateCoinDetails, getMemberCoins } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 class SelectCrypto extends Component {
     state = {
         addLinks: null,
-        MemberCoins: null
+        MemberCoins: null,
+        coinDetails:null
     }
     componentDidMount() {
         this.props.fetchMemberCoins(this.props.userProfile?.id);
@@ -19,8 +20,8 @@ class SelectCrypto extends Component {
         this.setState({ ...this.state, MemberCoins: matches });
     }
 
-    selectToggle = id => {
-        this.setState({ addLinks: id });
+    selectToggle = item => {
+        this.setState({ addLinks: item.id,coinDetails:item });
     };
     render() {
         const { Search } = Input;
@@ -36,10 +37,10 @@ class SelectCrypto extends Component {
                     itemLayout="horizontal"
                     dataSource={this.state.MemberCoins||this.props.swapStore.MemberCoins}
                     className="wallet-list c-pointer"
-
+                    locale={{ emptyText:<Empty image={Empty.PRESENTED_IMAGE_DEFAULT} description={<span>No records found</span>} />}}
                     renderItem={item => (
                         <List.Item className={(item.id === addLinks ? " select" : "")} key={item.id}
-                            onClick={() => { this.selectToggle(item.id); this.props.dispatch(updateCoinDetails(item)) }} >
+                            onClick={() => { this.selectToggle(item);  }} >
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin} mr-4`} />}
                                 title={<div className="wallet-title">{item.coin}</div>}
@@ -49,7 +50,7 @@ class SelectCrypto extends Component {
                 />
             </div>}
             <Translate size="large" className="custon-btngroup cancel-btngroup" content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} />
-            <Translate size="large" className="custon-btngroup pick-btn" content="pick" component={Button} onClick={() => this.props.changeStep('step1')} />
+            <Translate size="large" className="custon-btngroup pick-btn" content="pick" component={Button} onClick={() => {this.props.dispatch(updateCoinDetails(this.state.coinDetails));this.props.changeStep('step1')}} />
         </>)
     }
 }

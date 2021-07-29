@@ -61,33 +61,36 @@ class SwapCoins extends Component {
         if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
             let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, e);
             if (res.ok) {
-                this.setState({ ...this.state, receiveValue: res.data })
+                this.setState({ ...this.state, receiveValue: res.data,errorMessage: null})
                 this.props.updateSwapdataobj({ ...this.state, receiveValue: res.data })
             } else {
                 this.setState({ ...this.state, receiveValue: 0 })
             }
         } else {
-            notification.error({ message: "", description: 'Select from and recevie swap coin' });
+            //notification.error({ message: "", description: 'Select from and recevie swap coin' });
+            this.setState({ ...this.state, errorMessage: 'Enter Swap From Value' })
         }
         this.props.insertFromCoinInputValue(e);
     }
     previewClick() {
         if (!this.props.swapStore.coinDetailData.coin) {
-            notification.error({ message: "", description: 'Select From Swap Coin' });
-            // this.setState({ ...this.state, errorMessage: 'Select From Swap Coin' })
+            //notification.error({ message: "", description: 'Select From Swap Coin' });
+             this.setState({ ...this.state, errorMessage: 'Select From Swap Coin' })
         }
         else if (!this.props.swapStore.coinReceiveDetailData.coin) {
-            notification.error({ message: "", description: 'Select Receive Swap Coin' });
-            // this.setState({ ...this.state, errorMessage: 'Select Receive Swap Coin' })
+            //notification.error({ message: "", description: 'Select Receive Swap Coin' });
+             this.setState({ ...this.state, errorMessage: 'Select Receive Swap Coin' })
         }
         else if (!this.state.fromValue) {
-            notification.error({ message: "", description: 'Enter Swap From Value' });
-            // this.setState({ ...this.state, errorMessage: 'Enter Swap From Value' })
+            //notification.error({ message: "", description: 'Enter Swap From Value' });
+             this.setState({ ...this.state, errorMessage: 'Enter Swap From Value' })
         }
         else if (this.props.swapStore.coinReceiveDetailData.coin == this.props.swapStore.coinDetailData.coin) {
-            notification.error({ message: "", description: 'selcted coins are both same' })
+            //notification.error({ message: "", description: 'selected coins are both same' })
+            this.setState({ ...this.state, errorMessage: 'Selected coins are both same' })
         } else if (this.state.fromValue > this.props.swapStore.coinDetailData.coinBalance) {
-            notification.error({ message: "", description: 'Entered Swap From balance is not aviable' })
+            //notification.error({ message: "", description: 'Entered Swap From balance is not available' })
+            this.setState({ ...this.state, errorMessage: 'Entered Swap From balance is not available' })
         } else {
 
             this.props.updateSwapdataobj({ ...this.state })
@@ -127,10 +130,15 @@ class SwapCoins extends Component {
     }
     async setFromAmount(e) {
         this.state.receiveValue = e;
-        let res = await fetchCurrConvertionValue(this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.coinDetailData.coin, e);
-        if (res.ok) {
-            this.setState({ ...this.state, fromValue: res.data })
-            this.props.updateSwapdataobj({ ...this.state, receiveValue: res.data })
+        if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
+            let res = await fetchCurrConvertionValue(this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.coinDetailData.coin, e);
+            if (res.ok) {
+                this.setState({ ...this.state, fromValue: res.data,errorMessage:null })
+                this.props.updateSwapdataobj({ ...this.state, receiveValue: res.data })
+            }
+        } else {
+            //notification.error({ message: "", description: 'Select from and recevie swap coin' });
+            this.setState({ ...this.state, errorMessage: 'Select from and recevie swap coin' })
         }
     }
     render() {
@@ -140,13 +148,13 @@ class SwapCoins extends Component {
 
         return (
             <div>
-                <Alert
-                    message="Warning"
-                    description="This is a warning notice about copywriting."
+                {this.state.errorMessage!=null&&<Alert
+                    //message="this.state.errorMessage"
+                     description={this.state.errorMessage}
                     type="error"
                     showIcon
                     closable
-                />
+                />}
                 {/* {this.state.errorMessage!=null&& <Text className="fs-15 text-red crypto-name ml-8 mb-8">{this.state.errorMessage}</Text>} */}
                 {coinDetailData && <div className="swap swapfrom-card p-relative">
                     <div>
