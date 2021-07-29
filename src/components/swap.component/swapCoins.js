@@ -145,14 +145,14 @@ class SwapCoins extends Component {
                     <div>
                         <Translate className="text-purewhite fs-14 fw-100" content="swap_from" component={Text} />
                         {/*<Input className="card-input" defaultValue="0" value={this.state.fromValue} onChange={value => this.setReceiveAmount(value.target.value)} bordered={false} placeholder="0.0" />*/}
-                        <NumberFormat className="fw-100 text-white-30 enter-val p-0" customInput={Input} thousandSeparator={true} prefix={""}
+                        <NumberFormat className="card-input d-block " customInput={Input} thousandSeparator={true} prefix={""}
                             placeholder="0.00"
                             bordered={false}
-                            style={{ lineHeight: '48px', fontSize: 30,width:'170px'  }}
+                            // style={{ lineHeight: '48px', fontSize: 30,width:'200px'  }}
                             //onBlur={(e) => e.currentTarget.value.length == 0 ? e.currentTarget.style.width = "100px" : ''}
                             onKeyPress={(e) => {
                                 //e.currentTarget.style.width = ((e.currentTarget.value.length + 6) * 15) + 'px'
-                                e.currentTarget.value.length >= 8 ? e.currentTarget.style.fontSize = "26ppx" : e.currentTarget.style.fontSize = "26px";
+                                e.currentTarget.value.length >= 6 ? e.currentTarget.style.fontSize = "20px" : e.currentTarget.style.fontSize = "24px";
                                
                             }}
                             onKeyUp={(e)=>{
@@ -191,14 +191,14 @@ class SwapCoins extends Component {
                     <div>
                         <Translate className="text-purewhite fs-14 fw-100" content="swap_to" component={Text} />
                         {/*<Input className="card-input" defaultValue="0" value={this.state.receiveValue} onChange={value => this.setFromAmount(value.target.value)} bordered={false} placeholder="0.0" />*/}
-                        <NumberFormat className="fw-100 text-white-30 enter-val p-0" customInput={Input} thousandSeparator={true} prefix={""}
+                        <NumberFormat className="card-input d-block" customInput={Input} thousandSeparator={true} prefix={""}
                             placeholder="0.00"
                             bordered={false}
-                            style={{ lineHeight: '48px', fontSize: 30,width:'170px'  }}
+                            // style={{ lineHeight: '48px', fontSize: 30,width:'200px'  }}
                             //onBlur={(e) => e.currentTarget.value.length == 0 ? e.currentTarget.style.width = "100px" : ''}
                             onKeyPress={(e) => {
                                 //e.currentTarget.style.width = ((e.currentTarget.value.length + 6) * 15) + 'px'
-                                e.currentTarget.value.length >= 8 ? e.currentTarget.style.fontSize = "26ppx" : e.currentTarget.style.fontSize = "26px";
+                                e.currentTarget.value.length >= 6 ? e.currentTarget.style.fontSize = "20px" : e.currentTarget.style.fontSize = "24px";
                             }}
                             onKeyUp={(e)=>{
                                 this.setFromAmount(e.target.value)
