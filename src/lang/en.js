@@ -267,13 +267,13 @@ export default {
   current_password: 'Current Password',
   new_password: 'New Password',
   confirm_password: 'Confirm Password',
-  convert : 'Convert',
-  EUR_text : 'Please choose the currency you would like to deposit in,and the bank account details for the currency chosen will be displayed.The next step is for you to wire your funds to the bank details provided and remember to INCLUDE the reference number.',
-  BICcode : 'BIC',
-  EPUALT : 'EPUALT22XXX',
+  convert: 'Convert',
+  EUR_text: 'Please choose the currency you would like to deposit in,and the bank account details for the currency chosen will be displayed.The next step is for you to wire your funds to the bank details provided and remember to INCLUDE the reference number.',
+  BICcode: 'BIC',
+  EPUALT: 'EPUALT22XXX',
   account_holder_name: 'Account Holder Name',
-  innovative_concepts:'Innovative Concepts',
-  wire_16_ZBPHXFHI :'wire_16_ZBPHXFHI',
+  innovative_concepts: 'Innovative Concepts',
+  wire_16_ZBPHXFHI: 'wire_16_ZBPHXFHI',
   note: 'Do note that we accept transfer addressable only in SEPA.',
-  suisse_btn_refresh:"Click to get new rates"
+  suisse_btn_refresh: "Click to get new rates"
 }
