@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, notification } from 'antd';
+import { Typography, Button, notification, Alert } from 'antd';
 import Translate from 'react-translate-component';
 import { Link } from 'react-router-dom';
 import { setStep, updateSwapdata } from '../../reducers/swapReducer';
@@ -45,7 +45,7 @@ class SwapSummary extends Component {
     }
     callBackFunction() {
         if (this.state.agreeValue) {
-            this.setState({ ...this.state, errorMessage: '' })
+            this.setState({ ...this.state, errorMessage: null })
         }
     }
 
@@ -65,23 +65,23 @@ class SwapSummary extends Component {
     }
     confirmswapvalidation() {
         if (!this.state.agreeValue) {
-            notification.error({ message: "", description: 'Please agree to terms&conditions' });
-            // this.setState({...this.state,errorMessage: 'Check Agree Policy Checkbox'})
+            //notification.error({ message: "", description: 'Please agree to terms&conditions' });
+            this.setState({...this.state,errorMessage: 'Please accept terms of service before swap'})
         }
         else if (!this.props.swapStore.coinDetailData.coinBalance) {
-            notification.error({ message: "", description: 'Insufficiant funds to swap' });
-            // this.setState({...this.state,errorMessage: 'Insufficiant funds to swap'})
+            //notification.error({ message: "", description: 'Insufficiant funds to swap' });
+            this.setState({...this.state,errorMessage: 'Insufficiant funds to swap'})
         }
     }
     async confirmSwap() {
         
         if (!this.state.agreeValue) {
-            notification.error({ message: "", description: 'Please agree to terms&conditions' });
-            // this.setState({...this.state,errorMessage: 'Check Agree Policy Checkbox'})
+            //notification.error({ message: "", description: 'Please agree to terms&conditions' });
+            this.setState({...this.state,errorMessage: 'Please accept terms of service before swap'})
         }
         else if (!this.props.swapStore.coinDetailData.coinBalance) {
-            notification.error({ message: "", description: 'Insufficiant funds to swap' });
-            // this.setState({...this.state,errorMessage: 'Insufficiant funds to swap'})
+            //notification.error({ message: "", description: 'Insufficiant funds to swap' });
+            this.setState({...this.state,errorMessage: 'Insufficiant funds to swap'})
         }
         else {
 
@@ -104,7 +104,7 @@ class SwapSummary extends Component {
                 this.props.changeStep('confirm');
                 this.setState({ ...this.state, loader: false, isLoading:false })
             } else {
-                this.setState({ ...this.state, loader: false,isLoading:false })
+                this.setState({ ...this.state, loader: false,isLoading:false, errorMessage:res.error })
             }
         }
     }
@@ -114,7 +114,14 @@ class SwapSummary extends Component {
         const link = <LinkValue content="terms_service" />;
         return (
             <>
-                {this.state.errorMessage != null && <Text className="fs-15 text-red crypto-name ml-8 mb-8">{this.state.errorMessage}</Text>}
+
+                {this.state.errorMessage != null && <Alert
+                    //message="this.state.errorMessage"
+                     description={this.state.errorMessage}
+                    type="error"
+                    showIcon
+                    closable={false}
+                />}
                 <div className="text-center">
                     <Text className="fs-36 fw-200 text-white-30">{this.state.receiveValue} {this.props.swapStore.coinReceiveDetailData?.coin}</Text>
                 </div>
