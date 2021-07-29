@@ -87,7 +87,7 @@ class Summary extends Component {
         // const [seconds, setSeconds] = React.useState(10);
         return (
             <>
-                {!this.state?.error?.valid && <Alert showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable />}
+                {!this.state?.error?.valid && <Alert showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable onClose={()=>this.setState({...this.state,error:{valid:true,message:null}})} />}
                 <div className="cryptosummary-container auto-scroll">
                     <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>{amount} {coin}</div>
                     <div className="text-white-50 fw-300 text-center fs-14 mb-16"><NumberFormat value={amountNativeCurrency} displayType={'text'} thousandSeparator={true}  renderText={(value, props) => <div {...props} >{this.props.sellData?.selectedWallet?.currencyCode} {value}</div>} /></div>

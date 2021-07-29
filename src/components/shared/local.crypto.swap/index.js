@@ -1,17 +1,19 @@
 import { Input } from 'antd';
 import Text from 'antd/lib/typography/Text';
-import React, { useEffect, useState } from 'react';
-import connectStateProps from '../../../utils/state.connect';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { convertCurrency } from '../../buysell.component/buySellService';
 import NumberFormat from 'react-number-format';
-const LocalCryptoSwapper = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, sellData, selectedCoin = null }) => {
+const LocalCryptoSwapper = (props, ref) => {
+    const { localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, sellData, selectedCoin = null } = props;
     const [isSwaped, setSwapped] = useState(false);
     const [localValue, setLocalValue] = useState(localAmt);
     const [cryptoValue, setCryptoValue] = useState(cryptoAmt);
-    useEffect(() => {
-        if (localAmt != localValue) { setLocalValue(localAmt); }
-        if (cryptoAmt != cryptoValue) { setCryptoValue(cryptoAmt); }
-    }, [localAmt]);
+    useImperativeHandle(ref, () => ({
+        changeInfo(info) {
+            setLocalValue(info.localValue);
+            setCryptoValue(info.cryptoValue);
+        }
+    }), []);
     const fetchConvertionValue = async ({ cryptoValue, localValue }) => {
         const coin = selectedCoin || sellData?.selectedCoin?.data?.coin;
         const value = await convertCurrency({ from: coin, to: "USD", value: isSwaped ? cryptoValue : localValue, isCrypto: !isSwaped })
@@ -20,6 +22,7 @@ const LocalCryptoSwapper = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "USD"
         } else { setLocalValue(value) }
         onChange({ cryptoValue, localValue, [isSwaped ? "localValue" : "cryptoValue"]: value, isSwaped });
     }
+
     return <div className="p-relative">
         <div className="enter-val-container">
             <Text className="fs-30 fw-100 text-white-30 text-defaultylw mr-4">{!isSwaped ? localCurrency : cryptoCurrency}</Text>
@@ -36,7 +39,8 @@ const LocalCryptoSwapper = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "USD"
                     if (isSwaped) {
                         setCryptoValue(value);
                     } else { setLocalValue(value) }
-                    fetchConvertionValue({ cryptoValue: isSwaped ? value : cryptoValue, localValue: !isSwaped ? value : localValue });
+                    fetchConvertionValue({ cryptoValue, localValue, [isSwaped ? "cryptoValue" : "localValue"]: value });
+
                 }}
                 autoFocus
             />
@@ -49,5 +53,4 @@ const LocalCryptoSwapper = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "USD"
     </div>
 
 }
-
-export default connectStateProps(LocalCryptoSwapper);
+export default forwardRef(LocalCryptoSwapper);

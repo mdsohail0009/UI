@@ -94,13 +94,16 @@ class BuySell extends Component {
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }
+     numberWithCommas=(x)=> {
+        return x? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):0;
+    }
     render() {
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
                 <div className="text-center fs-14">
                     <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode||this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600 text-upper" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
-                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode||this.props.sellData?.coinWallet?.coin, value: this.props.sellData?.exchangeValues[this.props.sellData?.coinWallet?.walletCode||this.props.sellData?.coinWallet?.coin] }} className="text-white-50 mb-0 fw-300" content={this.props.buySell.stepSubTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
+                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode||this.props.sellData?.coinWallet?.coin, value: this.numberWithCommas(this.props.sellData?.exchangeValues[this.props.sellData?.coinWallet?.walletCode||this.props.sellData?.coinWallet?.coin]) }} className="text-white-50 mb-0 fw-300" content={this.props.buySell.stepSubTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
                 </div>
                 {this.renderIcon()}</div>]}
             placement="right"

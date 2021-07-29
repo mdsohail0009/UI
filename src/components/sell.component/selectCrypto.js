@@ -3,7 +3,6 @@ import { Typography, Button, Card, Input, Radio, Alert } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-import { Dropdown } from '../../Shared/Dropdown';
 import { getSellamnt } from '../../components/buysell.component/api'
 import { updatesellsaveObject } from '../buysell.component/crypto.reducer';
 import WalletList from '../shared/walletList';
@@ -11,6 +10,10 @@ import LocalCryptoSwap from '../shared/local.crypto.swap';
 import SuisseBtn from '../shared/butons';
 
 class SelectSellCrypto extends Component {
+    constructor(props) {
+        super(props);
+        this.swapRef = React.createRef();
+    }
     state = {
         USDAmnt: "0.00", CryptoAmnt: "0.00", sellSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": null, "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }, isSwap: false
         , errorMessage: null
@@ -22,7 +25,9 @@ class SelectSellCrypto extends Component {
         this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue })
         let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true, this.props.sellData?.coinDetailData?.coin);
         if (res.ok) {
-            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: false })
+            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: false },()=>{
+                this.swapRef.current.changeInfo({localValue:this.state.USDAmnt,cryptoValue:this.state.CryptoAmnt});
+            })
         }
     }
     setAmount = async ({ currentTarget }, fn, fnRes) => {
@@ -38,11 +43,13 @@ class SelectSellCrypto extends Component {
         if (type == 'half') {
             usdamnt = (obj.coinValueinNativeCurrency / 2).toString();
             cryptoamnt = (obj.coinBalance / 2)
-            this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt })
+            this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt });
+            this.swapRef.current.changeInfo({localValue:usdamnt,cryptoValue:cryptoamnt});
         } else if (type == 'all') {
             usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
             cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
-            this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt })
+            this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt });
+            this.swapRef.current.changeInfo({localValue:usdamnt,cryptoValue:cryptoamnt});
         } else {
             this.fetchdefaultMinAmntValues()
         }
@@ -51,7 +58,7 @@ class SelectSellCrypto extends Component {
         this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
         let { sellMinValue } = this.props.sellData.coinDetailData;
-        if ((!this.state.USDAmnt && !this.state.CryptoAmnt)||(this.state.USDAmnt=="0"||this.state.CryptoAmnt=="0")) {
+        if ((!this.state.USDAmnt && !this.state.CryptoAmnt) || (parseFloat(this.state.USDAmnt) == 0 || parseFloat(this.state.CryptoAmnt) == 0)) {
             this.setState({ ...this.state, errorMessage: 'Enter amount' })
             return;
         }
@@ -119,7 +126,7 @@ class SelectSellCrypto extends Component {
         const { coinDetailData } = this.props.sellData;
         return (
             <>
-                {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert onClose={()=>this.setState({...this.state,errorMessage:null})} showIcon type="info" message="Sell crypto" description={this.state?.errorMessage} closable />}
+                {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="Sell crypto" description={this.state?.errorMessage} closable />}
                 {coinDetailData && <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
                         <span className={`coin lg ${coinDetailData.coin}`} />
@@ -133,7 +140,7 @@ class SelectSellCrypto extends Component {
                         </div>
                     </div>
                 </Card>}
-                <LocalCryptoSwap
+                <LocalCryptoSwap ref={this.swapRef}
                     cryptoAmt={this.state.CryptoAmnt}
                     localAmt={this.state.USDAmnt}
                     cryptoCurrency={coinDetailData?.coin}

@@ -78,7 +78,7 @@ class SelectCrypto extends Component {
                             </div>
                         </div>
                     </Card>
-                    <LocalCryptoSwapper localAmt={localValue} cryptoAmt={cryptoValue} localCurrency={"USD"} cryptoCurrency={coin} onChange={(obj) => this.onValueChange(obj)} />
+                    <LocalCryptoSwapper selectedCoin={coin} localAmt={localValue} cryptoAmt={cryptoValue} localCurrency={"USD"} cryptoCurrency={coin} onChange={(obj) => this.onValueChange(obj)} />
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua pt-16" />
                     <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     <div className="fs-12 text-white-30 text-center mt-24">Your amount might be changed with in <span className="text-yellow" >10</span> seconds.</div>
