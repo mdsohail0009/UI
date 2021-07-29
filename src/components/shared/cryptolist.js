@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { List, Drawer, Typography, Input } from 'antd';
+import { List, Drawer, Typography, Input, Empty } from 'antd';
 import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
 import SelectCrypto from '../sell.component/selectCrypto';
@@ -64,7 +64,7 @@ class CryptoList extends Component {
                 //loadMore={loadMore}
                 className="crypto-list auto-scroll"
                 loading={this.props.sellData?.coins[this.props.coinType]?.loading}
-
+                locale={{ emptyText:<Empty image={Empty.PRESENTED_IMAGE_DEFAULT} description={<span>No records found</span>} />}}
                 renderItem={item => (
                     <List.Item>
                         <Link onClick={() => { this.props.isShowDrawer ? this.showBuyDrawer() : (this.props.onCoinSelected ? this.props.onCoinSelected(item) : this.props.dispatch(setStep("step2"))) }}>

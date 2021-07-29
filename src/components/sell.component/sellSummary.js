@@ -85,7 +85,7 @@ class SellSummary extends Component {
                     {/* <div className="text-center text-underline text-white"><Link className="text-yellow" onClick={() => this.refreshPage()}> Click to see the new rate.</Link></div> */}
                     <div className="d-flex p-16 mb-36 agree-check">
                         <label>
-                            <input type="checkbox" id="agree-check" value={this.state.isTermsAgree} onChange={() => this.setState({ isTermsAgree: true })} />
+                            <input type="checkbox" id="agree-check" value={this.state.isTermsAgree} onChange={({currentTarget:{checked}}) => this.setState({ isTermsAgree: checked })} />
                             <span for="agree-check" />
                         </label><Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
                     </div>

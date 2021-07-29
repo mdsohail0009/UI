@@ -25,8 +25,8 @@ class SelectSellCrypto extends Component {
         this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue })
         let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true, this.props.sellData?.coinDetailData?.coin);
         if (res.ok) {
-            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: false },()=>{
-                this.swapRef.current.changeInfo({localValue:this.state.USDAmnt,cryptoValue:this.state.CryptoAmnt});
+            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: false }, () => {
+                this.swapRef.current.changeInfo({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt });
             })
         }
     }
@@ -44,12 +44,12 @@ class SelectSellCrypto extends Component {
             usdamnt = (obj.coinValueinNativeCurrency / 2).toString();
             cryptoamnt = (obj.coinBalance / 2)
             this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt });
-            this.swapRef.current.changeInfo({localValue:usdamnt,cryptoValue:cryptoamnt});
+            this.swapRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
         } else if (type == 'all') {
             usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
             cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
             this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt });
-            this.swapRef.current.changeInfo({localValue:usdamnt,cryptoValue:cryptoamnt});
+            this.swapRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
         } else {
             this.fetchdefaultMinAmntValues()
         }
@@ -73,11 +73,11 @@ class SelectSellCrypto extends Component {
             this.setState({ ...this.state, errorMessage: 'Entered amount should be less than balance' })
             return;
         } else if (!this.state.isSwap && parseFloat(this.state.CryptoAmnt) < sellMinValue) {
-            this.setState({ ...this.state, errorMessage: 'Please enter min value' })
+            this.setState({ ...this.state, errorMessage: 'Please enter min value of ' + sellMinValue })
             return;
         }
-        else if (this.state.isSwap && parseFloat(this.state.USDAmnt) < sellMinValue) {
-            this.setState({ ...this.state, errorMessage: 'Please enter min value' })
+        else if (this.state.isSwap && parseFloat(this.state.CryptoAmnt) < sellMinValue) {
+            this.setState({ ...this.state, errorMessage: 'Please enter min value of ' + sellMinValue })
             return;
         }
         else {
