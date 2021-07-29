@@ -48,7 +48,7 @@ class SelectCrypto extends Component {
         const { buyMin, buyMax, coin } = this.props.sellData?.selectedCoin?.data;
         const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin })
         if (!_vaidator.valid) {
-            this.setState({ ...this.state, error: { ..._vaidator } })
+            this.setState({ ...this.state, error: { ..._vaidator } });
             return;
         }
         this.props.preview(this.state.selectedWallet, coin, cryptoValue);
@@ -62,9 +62,9 @@ class SelectCrypto extends Component {
         const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
         const { coin, coinValueinNativeCurrency, coinBalance, percentage } = this.props.sellData?.selectedCoin?.data;
         return (
-            <>
+            <div id="divScroll">
                 {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable />}
-                <div className="selectcrypto-container auto-scroll">
+                <div className="selectcrypto-container">
                     <Card className="crypto-card select mb-36" bordered={false}>
                         <span className="d-flex align-center">
                             <span className={`coin lg ${coin}`} />
@@ -90,7 +90,7 @@ class SelectCrypto extends Component {
                     </div>
                 </div>
 
-            </>
+            </div>
         )
     }
 }
