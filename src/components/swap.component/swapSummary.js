@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
 import { fetchCurrConvertionValue , saveSwapData } from '../../components/swap.component/api'
+import SuisseBtn from '../shared/butons';
 
 const LinkValue = (props) => {
     return (
@@ -18,6 +19,7 @@ const LinkValue = (props) => {
 
 class SwapSummary extends Component {
     state = {
+        isLoading:false,
         loader: true,
         price:null,
         receiveValue:null,
@@ -59,6 +61,16 @@ class SwapSummary extends Component {
         let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin,this.props.swapStore.fromCoinInputValue);
         if (res.ok) {
             this.setState({...this.state,receiveValue: res.data })
+        }
+    }
+    confirmswapvalidation(){
+        if(!this.state.agreeValue){
+            notification.error({ message: "", description: 'Please agree to terms&conditions' });
+            // this.setState({...this.state,errorMessage: 'Check Agree Policy Checkbox'})
+        }
+        else if(!this.props.swapStore.coinDetailData.coinBalance){
+            notification.error({ message: "", description: 'Insufficiant funds to swap' });
+            // this.setState({...this.state,errorMessage: 'Insufficiant funds to swap'})
         }
     }
     async confirmSwap(){
@@ -115,14 +127,15 @@ class SwapSummary extends Component {
                     <Text className="fw-300 text-white-30">{this.props.swapStore.fromCoinInputValue} {this.props.swapStore?.coinDetailData?.coin} </Text>
                 </div>
                 <Translate className="fs-14 text-white-30 text-center mb-36 fw-200" content="summary_hint_text" component={Paragraph} />
-                <div className="text-center text-underline"><Link className="text-yellow" onClick={() => {this.setOneCoinValue();this.setReceiveAmount();this.setState({ ...this.state, disableConfirm: false});}}> Click to see the new rate.</Link></div>
+                {/*<div className="text-center text-underline"><Link className="text-yellow" onClick={() => {this.setOneCoinValue();this.setReceiveAmount();this.setState({ ...this.state, disableConfirm: false});}}> Click to see the new rate.</Link></div>*/}
                 <div className="d-flex p-16 mb-36 agree-check">
                     <label>
                         <input type="checkbox" id="agree-check" onChange={(e) => this.agreePolicyChecked(e)} />
                         <span for="agree-check" />
                     </label><Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
                 </div>
-                <Translate size="large" block className="pop-btn" disabled={this.state.disableConfirm} onClick={()=>this.confirmSwap()} style={{ marginTop: '100px' }} content="confirm_swap" component={Button} />
+                <SuisseBtn className={"pop-btn"} onRefresh={()=>{}} duration={1000} title={"confirm_swap"} loading={this.state.isLoading} autoDisable={true} onClick={() => this.confirmSwap()} />
+               {/* <Translate size="large" block className="pop-btn" disabled={this.state.disableConfirm} duration onClick={()=>this.confirmSwap()} style={{ marginTop: '100px' }} content="confirm_swap" component={Button} />*/}
             </>
         )
     }

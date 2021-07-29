@@ -7,6 +7,7 @@ const UPDATE_FROMCOININPUTVALUE = "updateFromCoinInputValue";
 const FETCH_MEMBERCOINS_REJECTED = "fetchMemberCoinsRejected";
 const FETCH_MEMBERCOINS_SUCCESS = "fetchMemberCoinsSuccess";
 const FETCH_MEMBERCOINS = "fetchMemberCoins";
+const UPDATE_SWAPDATA = "updateSwapdata";
 
 const setStep = (payload) => {
     return {
@@ -30,6 +31,10 @@ const updateReceiveCoinDetails = (payload) => {
 
 const updateFromCoinInputValue = (payload) => {
     return { type: UPDATE_FROMCOININPUTVALUE, payload }
+}
+const updateSwapdata = (payload) => {
+
+    return { type: UPDATE_SWAPDATA, payload }
 }
 const fetchMemberCoins = () => {
     return { type: FETCH_MEMBERCOINS };
@@ -73,6 +78,14 @@ let initialState = {
         swapsummary: 'swap_desc',
         toreceive: 'swap_desc'
     },
+    swapdata:{
+        fromCoin: null,
+        receiveCoin: null,
+        price: null,
+        fromValue: null,
+        receiveValue: null,
+        errorMessage: null
+    },
     coinDetailData: {},
     coinReceiveDetailData: {},
     fromCoinInputValue:null,
@@ -94,6 +107,8 @@ const SwapReducer = (state = initialState, action) => {
             return { ...state, coinReceiveDetailData: action.payload };
         case UPDATE_FROMCOININPUTVALUE:
             return { ...state, fromCoinInputValue: action.payload };
+        case UPDATE_SWAPDATA:
+            return { ...state, swapdata: action.payload };
         case FETCH_MEMBERCOINS:
             state = { ...state, isLoading: true }
             return state;
@@ -109,4 +124,4 @@ const SwapReducer = (state = initialState, action) => {
 }
 
 export default SwapReducer;
-export { setStep, clearStep , updateCoinDetails , updateReceiveCoinDetails , updateFromCoinInputValue , getMemberCoins }
+export { setStep, clearStep , updateCoinDetails , updateReceiveCoinDetails , updateFromCoinInputValue , getMemberCoins, updateSwapdata }

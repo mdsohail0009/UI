@@ -150,6 +150,7 @@ line-height: 16px;min-width:90px}
 .pop-btn{background-color: var(--bgYellow); border-color: var(--bgYellow); border-radius: 40px;height: 48px; text-transform: uppercase;font-weight: 700; transition: 0.3s ease;}
 .pop-btn:hover, .pop-btn:focus, .pop-btn:active{background-color: var(--bgDarkYellow);color: var(--textDark);border-color: var(--bgYellow);}
 .pop-cancel{background-color: transparent;color: var(--textWhite30); border-color: transparent; border-radius: 40px;height: 57px;}
+.pop-cancel:hover span{color: var(--textYellow) !important;text-decoration: underline;}
 .cancel-btn{height: 48px; text-transform: uppercase;font-weight: 700;text-align: center;}
 .custon-btngroup{height: 48px; text-transform: uppercase; border:0;font-weight: 700;text-align: center; margin-top: 10px; width:50%}
 .pick-btn{ border-radius:0 30px 30px 0; background-color: var(--bgYellow);}
@@ -283,10 +284,11 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .ant-checkbox-wrapper:hover .ant-checkbox-inner, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner, .ant-checkbox-checked::after{border: 1px solid var(--textSecondary);border-color: var(--textSecondary);}
 .agree-check input[type=checkbox]{display: none;}
 .agree-check input[type=checkbox]+span{display: inline-block;width: 34px;height: 34px;vertical-align: text-top;cursor: pointer;background: var(--lightThemeIcons);background-position: -33px -140px;border: 1px solid var(--borderLight)}
-.agree-check input[type=checkbox]:checked+span{background-position: -33px -109px;}
+.agree-check input[type=checkbox]:checked+span{background-position: -33px -109px;border-color: transparent !important;}
 .agree-check label{height: 34px;}
-.cust-input.ant-select{position: relative;}
-.cust-input.ant-select::after{content: '';position: absolute;top: 12px; right: 16px; width: 20px; height: 20px; background: var(--lightThemeIcons);background-position: -350px 0;}
+.ant-select-arrow{color: var(--textWhite);right:16px; top: 24px;}
+/* .cust-input.ant-select{position: relative;} 
+.cust-input.ant-select::after{content: '';position: absolute;top: 12px; right: 16px; width: 20px; height: 20px; background: var(--lightThemeIcons);background-position: -350px 0;}*/
 .custom-switch{border-bottom: none;}
 .custom-formcard{width: 500px;margin: 0px auto;background: #515A64;border-radius: 50px;padding-left: 40px;padding-right: 40px;padding-top: 50px;padding-bottom: 50px;}
 .ant-form-item-has-error .cust-input{background-color: transparent !important;}
@@ -395,8 +397,6 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .agree-check input[type=checkbox]{display: none;}
 .agree-check input[type=checkbox]+span{display: inline-block;width: 34px;height: 34px;vertical-align: text-top;cursor: pointer;background: var(--lightThemeIcons);background-position: -33px -140px;border: 1px solid var(--borderLight)}
 .agree-check input[type=checkbox]:checked+span{background-position: -33px -109px; border:0}
-.cust-input.ant-select{position: relative;}
-.cust-input.ant-select::after{content: '';position: absolute;top: 12px; right: 16px; width: 20px; height: 20px; background: var(--lightThemeIcons);background-position: -350px 0;}
 .custom-switch{border-bottom: none;}
 .custom-formcard{width: 500px;margin: 0px auto;background: #515A64;border-radius: 50px;padding-left: 40px;padding-right: 40px;padding-top: 50px;padding-bottom: 50px;}
 .ant-form-item-has-error .cust-input{background-color: transparent !important;}

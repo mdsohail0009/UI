@@ -63,7 +63,7 @@ class SelectCrypto extends Component {
         const { coin, coinValueinNativeCurrency, coinBalance, percentage } = this.props.sellData?.selectedCoin?.data;
         return (
             <>
-                {!this.state?.error?.valid && <Alert onClose={()=>this.setState({...this.state,error:{valid:true,description:null}})} showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable />}
+                {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable />}
                 <div className="selectcrypto-container auto-scroll">
                     <Card className="crypto-card select mb-36" bordered={false}>
                         <span className="d-flex align-center">
@@ -85,7 +85,9 @@ class SelectCrypto extends Component {
                     {/* <div className="text-center">
                         <Translate content="refresh_newprice" component={Link} onClick={() => this.fetchConvertionValue()} className="mb-36 fs-14 text-yellow fw-200 mb-16 text-underline" />
                     </div> */}
-                    <SuisseBtn title="confirm_btn_text" onRefresh={() => this.fetchConvertionValue()} className="pop-btn mt-16" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
+                    <div className="mt-24">
+                        <SuisseBtn title="confirm_btn_text" onRefresh={() => this.fetchConvertionValue()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
+                    </div>
                 </div>
 
             </>
