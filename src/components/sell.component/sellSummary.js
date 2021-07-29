@@ -60,7 +60,7 @@ class SellSummary extends Component {
         return (
             <>
                 {(!this.state.loader) && <>
-                    {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert closable={true} onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message="Sell crypto" description={this.state?.errorMessage} />}
+                    {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert closable={true} onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="Sell crypto" description={this.state?.errorMessage} />}
                     <NumberFormat value={sellpreviewData.amountNativeCurrency} displayType={'text'} thousandSeparator={true} renderText={(value, props) => <div {...props}> <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>USD {value}</div> </div>} />
                     <NumberFormat value={sellpreviewData.amount} displayType={'text'} thousandSeparator={true} renderText={(value, props) => <div {...props}><div className="text-white-50 fw-300 text-center fs-14 mb-16">{value} {sellpreviewData.coin}</div></div>} />
                     <div className="pay-list fs-14">
