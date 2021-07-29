@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Typography, Button, Input, notification } from 'antd';
-import { setStep, updateFromCoinInputValue, updateCoinDetails, updateReceiveCoinDetails,updateSwapdata } from '../../reducers/swapReducer';
+import { Typography, Button, Input, notification, Alert } from 'antd';
+import { setStep, updateFromCoinInputValue, updateCoinDetails, updateReceiveCoinDetails, updateSwapdata } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import { fetchCurrConvertionValue } from '../../components/swap.component/api'
@@ -30,20 +30,20 @@ class SwapCoins extends Component {
             errorMessage: null
         })
     }
-    loadamount(){
-        if(this.state.fromValue || this.props.swapStore.swapdata.fromValue){
+    loadamount() {
+        if (this.state.fromValue || this.props.swapStore.swapdata.fromValue) {
             this.setReceiveAmount(this.state.fromValue || this.props.swapStore.swapdata.fromValue);
         }
     }
     async setOneCoinValue() {
-        this.setState({...this.props.swapStore.swapdata})
+        this.setState({ ...this.props.swapStore.swapdata })
         if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
             let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, 1);
             if (res.ok) {
                 this.setState({ ...this.state, price: res.data })
             }
         }
-        
+
     }
     async setSwapOneCoinValue(fromCoin, toCoin) {
         if (fromCoin && toCoin) {
@@ -63,7 +63,7 @@ class SwapCoins extends Component {
             if (res.ok) {
                 this.setState({ ...this.state, receiveValue: res.data })
                 this.props.updateSwapdataobj({ ...this.state, receiveValue: res.data })
-            }else{
+            } else {
                 this.setState({ ...this.state, receiveValue: 0 })
             }
         } else {
@@ -86,11 +86,11 @@ class SwapCoins extends Component {
         }
         else if (this.props.swapStore.coinReceiveDetailData.coin == this.props.swapStore.coinDetailData.coin) {
             notification.error({ message: "", description: 'selcted coins are both same' })
-        }else if (this.state.fromValue > this.props.swapStore.coinDetailData.coinBalance) {
+        } else if (this.state.fromValue > this.props.swapStore.coinDetailData.coinBalance) {
             notification.error({ message: "", description: 'Entered Swap From balance is not aviable' })
         } else {
-            
-            this.props.updateSwapdataobj({...this.state})
+
+            this.props.updateSwapdataobj({ ...this.state })
             this.setState({
                 fromCoin: null,
                 receiveCoin: null,
@@ -130,7 +130,7 @@ class SwapCoins extends Component {
         let res = await fetchCurrConvertionValue(this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.coinDetailData.coin, e);
         if (res.ok) {
             this.setState({ ...this.state, fromValue: res.data })
-            this.props.updateSwapdataobj({...this.state, receiveValue: res.data})
+            this.props.updateSwapdataobj({ ...this.state, receiveValue: res.data })
         }
     }
     render() {
@@ -140,6 +140,13 @@ class SwapCoins extends Component {
 
         return (
             <div>
+                <Alert
+                    message="Warning"
+                    description="This is a warning notice about copywriting."
+                    type="error"
+                    showIcon
+                    closable
+                />
                 {/* {this.state.errorMessage!=null&& <Text className="fs-15 text-red crypto-name ml-8 mb-8">{this.state.errorMessage}</Text>} */}
                 {coinDetailData && <div className="swap swapfrom-card p-relative">
                     <div>
@@ -148,14 +155,14 @@ class SwapCoins extends Component {
                         <NumberFormat className="fw-100 text-white-30 enter-val p-0" customInput={Input} thousandSeparator={true} prefix={""}
                             placeholder="0.00"
                             bordered={false}
-                            style={{ lineHeight: '48px', fontSize: 30,width:'170px'  }}
+                            style={{ lineHeight: '48px', fontSize: 30, width: '170px' }}
                             //onBlur={(e) => e.currentTarget.value.length == 0 ? e.currentTarget.style.width = "100px" : ''}
                             onKeyPress={(e) => {
                                 //e.currentTarget.style.width = ((e.currentTarget.value.length + 6) * 15) + 'px'
                                 e.currentTarget.value.length >= 8 ? e.currentTarget.style.fontSize = "26ppx" : e.currentTarget.style.fontSize = "26px";
-                               
+
                             }}
-                            onKeyUp={(e)=>{
+                            onKeyUp={(e) => {
                                 this.setReceiveAmount(e.target.value)
                             }}
                             //value={isSwaped ? cryptoValue : localValue}
@@ -194,13 +201,13 @@ class SwapCoins extends Component {
                         <NumberFormat className="fw-100 text-white-30 enter-val p-0" customInput={Input} thousandSeparator={true} prefix={""}
                             placeholder="0.00"
                             bordered={false}
-                            style={{ lineHeight: '48px', fontSize: 30,width:'170px'  }}
+                            style={{ lineHeight: '48px', fontSize: 30, width: '170px' }}
                             //onBlur={(e) => e.currentTarget.value.length == 0 ? e.currentTarget.style.width = "100px" : ''}
                             onKeyPress={(e) => {
                                 //e.currentTarget.style.width = ((e.currentTarget.value.length + 6) * 15) + 'px'
                                 e.currentTarget.value.length >= 8 ? e.currentTarget.style.fontSize = "26ppx" : e.currentTarget.style.fontSize = "26px";
                             }}
-                            onKeyUp={(e)=>{
+                            onKeyUp={(e) => {
                                 this.setFromAmount(e.target.value)
                             }}
                             //value={isSwaped ? cryptoValue : localValue}
