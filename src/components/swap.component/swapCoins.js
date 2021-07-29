@@ -160,7 +160,7 @@ class SwapCoins extends Component {
                             onKeyPress={(e) => {
                                 //e.currentTarget.style.width = ((e.currentTarget.value.length + 6) * 15) + 'px'
                                 e.currentTarget.value.length >= 6 ? e.currentTarget.style.fontSize = "20px" : e.currentTarget.style.fontSize = "24px";
-                               
+
                             }}
                             onKeyUp={(e) => {
                                 this.setReceiveAmount(e.target.value)
@@ -240,7 +240,7 @@ class SwapCoins extends Component {
                         Exchange Rate 1{coinDetailData.coin} = {this.state.price} {coinReceiveDetailData.coin}
                     </Paragraph>}
                 </div>
-                <Translate size="large" block className="pop-btn" style={{ marginTop: '100px' }} content="preview_swap" component={Button} onClick={() => { this.previewClick() }} />
+                <Translate size="large" block className="pop-btn mt-36" content="preview_swap" component={Button} onClick={() => { this.previewClick() }} />
             </div>
         )
     }
