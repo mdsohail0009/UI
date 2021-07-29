@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
 import connectStateProps from '../../utils/state.connect';
 import { setStep } from '../../reducers/swapReducer';
-
+import {updateSwapdata } from '../../reducers/swapReducer';
+import { connect } from 'react-redux';
 
 class SuccessMessage extends Component {
     render() {
@@ -16,8 +17,16 @@ class SuccessMessage extends Component {
                     <img src={success} className="confirm-icon" />
                     <Translate className="text-white-30 fs-36 fw-200 mb-4" content="transaction_submitted" component={Title} />
                     {/* <Translate component={Paragraph} className="fs-16 text-white-30 fw-200 mb-36" content="swapped_btc" />  */}
-                   <Space direction="vertical" size="large">
-                        <Link onClick={() => this.props.dispatch(setStep("step1"))} className="f-16 text-white-30 mt-16 text-underline">Back to Swap<span className="icon md diag-arrow ml-4" /></Link>
+                    <Space direction="vertical" size="large">
+                        <Link onClick={() => {this.props.dispatch(updateSwapdata({
+                                fromCoin: null,
+                                receiveCoin: null,
+                                price: null,
+                                fromValue: null,
+                                receiveValue: null,
+                                errorMessage: null
+                            })); this.props.dispatch(setStep("step1"))
+                        }} className="f-16 text-white-30 mt-16 text-underline">Back to Swap<span className="icon md diag-arrow ml-4" /></Link>
                     </Space>
                 </div>
             </>
