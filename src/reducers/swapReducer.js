@@ -8,6 +8,7 @@ const FETCH_MEMBERCOINS_REJECTED = "fetchMemberCoinsRejected";
 const FETCH_MEMBERCOINS_SUCCESS = "fetchMemberCoinsSuccess";
 const FETCH_MEMBERCOINS = "fetchMemberCoins";
 const UPDATE_SWAPDATA = "updateSwapdata";
+const CLEAR_SWAPDATA = "clearSwapData";
 
 const setStep = (payload) => {
     return {
@@ -49,6 +50,12 @@ const fetchMemberCoinsRejected = (paylaod) => {
     return {
         type: FETCH_MEMBERCOINS_REJECTED,
         payload: paylaod
+    }
+}
+const clearSwapData = (paylaod) => {
+    return {
+        type: CLEAR_SWAPDATA,
+        payload: initialState
     }
 }
 
@@ -118,10 +125,13 @@ const SwapReducer = (state = initialState, action) => {
         case FETCH_MEMBERCOINS_REJECTED:
             state = { ...state, isLoading: false, error: { [action.payload.key]: action.payload.data } }
             return state;
+        case CLEAR_SWAPDATA:
+            state = { ...initialState }
+            return state;
         default:
             return state;
     }
 }
 
 export default SwapReducer;
-export { setStep, clearStep , updateCoinDetails , updateReceiveCoinDetails , updateFromCoinInputValue , getMemberCoins, updateSwapdata }
+export { setStep, clearStep , updateCoinDetails , updateReceiveCoinDetails , updateFromCoinInputValue , getMemberCoins, updateSwapdata, clearSwapData }

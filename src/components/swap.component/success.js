@@ -4,8 +4,7 @@ import { Typography,Space } from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
 import connectStateProps from '../../utils/state.connect';
-import { setStep } from '../../reducers/swapReducer';
-import {updateSwapdata } from '../../reducers/swapReducer';
+import { setStep, getMemberCoins,updateSwapdata, clearSwapData } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
 
 class SuccessMessage extends Component {
@@ -25,7 +24,7 @@ class SuccessMessage extends Component {
                                 fromValue: null,
                                 receiveValue: null,
                                 errorMessage: null
-                            })); this.props.dispatch(setStep("step1"))
+                            })); this.props.dispatch(setStep("step1"));this.props.clearSwapfullData()
                         }} className="f-16 text-white-30 mt-16 text-underline">Back to Swap<span className="icon md diag-arrow ml-4" /></Link>
                     </Space>
                 </div>
@@ -33,5 +32,18 @@ class SuccessMessage extends Component {
         );
     }
 }
-
-export default connectStateProps(SuccessMessage);
+const connectStateToProps = ({ swapStore, userConfig }) => {
+    return { swapStore, userProfile: userConfig.userProfileInfo }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        fetchMemberCoins: (member_id) => {
+            dispatch(getMemberCoins(member_id))
+        },
+        clearSwapfullData: (member_id) => {
+            dispatch(clearSwapData(member_id))
+        },
+        dispatch
+    }
+}
+export default connect(connectStateToProps,connectDispatchToProps)(SuccessMessage);

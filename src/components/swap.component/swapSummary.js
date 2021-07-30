@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Typography, Button, notification } from 'antd';
+import { Typography, Button, notification, Alert } from 'antd';
 import Translate from 'react-translate-component';
 import { Link } from 'react-router-dom';
-import { setStep } from '../../reducers/swapReducer';
+import { setStep, updateSwapdata } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
-import { fetchCurrConvertionValue , saveSwapData } from '../../components/swap.component/api'
+import { fetchCurrConvertionValue, saveSwapData } from '../../components/swap.component/api'
 import SuisseBtn from '../shared/butons';
 
 const LinkValue = (props) => {
@@ -12,111 +12,118 @@ const LinkValue = (props) => {
         <Translate className="text-yellow text-underline c-pointer"
             content={props.content}
             component={Link}
-            // to="./#"
+        // to="./#"
         />
     )
 }
 
 class SwapSummary extends Component {
     state = {
-        isLoading:false,
+        isLoading: false,
         loader: true,
-        price:null,
-        receiveValue:null,
-        disableConfirm:false,
-        errorMessage:null,
-        agreeValue:false,
+        price: null,
+        receiveValue: null,
+        disableConfirm: false,
+        errorMessage: null,
+        agreeValue: false,
         swapSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }
     }
-    componentDidMount(){
-         this.setOneCoinValue();
-         this.setReceiveAmount();
+    componentDidMount() {
+        this.setOneCoinValue();
+        this.setReceiveAmount();
         // this.updateTimer = setInterval(() => {
         //     this.setOneCoinValue();
         //     this.setReceiveAmount();
         //     this.setState({ ...this.state, disableConfirm: true});
         // },10000);
     }
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearInterval(this.updateTimer);
     }
-    agreePolicyChecked(e){
+    agreePolicyChecked(e) {
         this.setState({ agreeValue: e.target.checked }, () => this.callBackFunction());
     }
-    callBackFunction(){
-        if(this.state.agreeValue){
-            this.setState({...this.state,errorMessage: ''})
+    callBackFunction() {
+        if (this.state.agreeValue) {
+            this.setState({ ...this.state, errorMessage: null })
         }
     }
 
-    async setOneCoinValue(){
-        if(this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin){
-            let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin,1);
+    async setOneCoinValue() {
+        if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
+            let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, 1);
             if (res.ok) {
-                this.setState({...this.state,price: res.data })
+                this.setState({ ...this.state, price: res.data })
             }
         }
     }
-    async setReceiveAmount(e){
-        let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin,this.props.swapStore.fromCoinInputValue);
+    async setReceiveAmount(e) {
+        let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.fromCoinInputValue);
         if (res.ok) {
-            this.setState({...this.state,receiveValue: res.data })
+            this.setState({ ...this.state, receiveValue: res.data })
         }
     }
-    confirmswapvalidation(){
-        if(!this.state.agreeValue){
-            notification.error({ message: "", description: 'Please agree to terms&conditions' });
-            // this.setState({...this.state,errorMessage: 'Check Agree Policy Checkbox'})
+    confirmswapvalidation() {
+        if (!this.state.agreeValue) {
+            //notification.error({ message: "", description: 'Please agree to terms&conditions' });
+            this.setState({...this.state,errorMessage: 'Please accept terms of service before swap'})
         }
-        else if(!this.props.swapStore.coinDetailData.coinBalance){
-            notification.error({ message: "", description: 'Insufficiant funds to swap' });
-            // this.setState({...this.state,errorMessage: 'Insufficiant funds to swap'})
+        else if (!this.props.swapStore.coinDetailData.coinBalance) {
+            //notification.error({ message: "", description: 'Insufficiant funds to swap' });
+            this.setState({...this.state,errorMessage: 'Insufficiant funds to swap'})
         }
     }
-    async confirmSwap(){
-        if(!this.state.agreeValue){
-            notification.error({ message: "", description: 'Please agree to terms&conditions' });
-            // this.setState({...this.state,errorMessage: 'Check Agree Policy Checkbox'})
+    async confirmSwap() {
+        
+        if (!this.state.agreeValue) {
+            //notification.error({ message: "", description: 'Please agree to terms&conditions' });
+            this.setState({...this.state,errorMessage: 'Please accept terms of service before swap'})
         }
-        else if(!this.props.swapStore.coinDetailData.coinBalance){
-            notification.error({ message: "", description: 'Insufficiant funds to swap' });
-            // this.setState({...this.state,errorMessage: 'Insufficiant funds to swap'})
+        else if (!this.props.swapStore.coinDetailData.coinBalance) {
+            //notification.error({ message: "", description: 'Insufficiant funds to swap' });
+            this.setState({...this.state,errorMessage: 'Insufficiant funds to swap'})
         }
-        else{
+        else {
+
             let obj = Object.assign({}, this.state.swapSaveData);
             obj.membershipId = this.props.userProfile.id;
             obj.fromWalletId = this.props.swapStore.coinDetailData.id
             obj.fromWalletCode = this.props.swapStore.coinDetailData.coin
             obj.fromWalletName = this.props.swapStore.coinDetailData.coinFullName
-            obj.fromValue = this.props.swapStore.fromCoinInputValue 
-            obj.exicutedPrice = this.state.price 
+            obj.fromValue = this.props.swapStore.fromCoinInputValue
+            obj.exicutedPrice = this.state.price
 
             obj.toWalletId = this.props.swapStore.coinReceiveDetailData.id
             obj.toWalletCode = this.props.swapStore.coinReceiveDetailData.coin
             obj.toWalletName = this.props.swapStore.coinReceiveDetailData.coinFullName
             obj.toValue = this.state.receiveValue
             obj.totalAmount = this.state.receiveValue
-
+            this.setState({ ...this.state, isLoading:true})
             let res = await saveSwapData(obj);
             if (res.ok) {
                 this.props.changeStep('confirm');
-                this.setState({ ...this.state,loader:false })
-            }else{
-                this.setState({ ...this.state,loader:false })
+                this.setState({ ...this.state, loader: false, isLoading:false })
+            } else {
+                this.setState({ ...this.state, loader: false,isLoading:false, errorMessage:res.error })
+            }
         }
-      }
     }
-    
+
     render() {
         const { Paragraph, Text } = Typography;
         const link = <LinkValue content="terms_service" />;
         return (
             <>
-               {this.state.errorMessage!=null&& <Text className="fs-15 text-red crypto-name ml-8 mb-8">{this.state.errorMessage}</Text>}
-                <div className="enter-val-container">
-                    <div className="text-center">
-                        <Text className="fs-36 fw-200 text-white-30">{this.state.receiveValue} {this.props.swapStore.coinReceiveDetailData?.coin}</Text>
-                    </div>
+
+                {this.state.errorMessage != null && <Alert
+                    //message="this.state.errorMessage"
+                     description={this.state.errorMessage}
+                    type="error"
+                    showIcon
+                    closable={false}
+                />}
+                <div className="text-center">
+                    <Text className="fs-36 fw-200 text-white-30">{this.state.receiveValue} {this.props.swapStore.coinReceiveDetailData?.coin}</Text>
                 </div>
                 <div className="pay-list fs-16">
                     <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
@@ -134,20 +141,24 @@ class SwapSummary extends Component {
                         <span for="agree-check" />
                     </label><Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
                 </div>
-                <SuisseBtn className={"pop-btn"} onRefresh={()=>{this.setOneCoinValue();this.setReceiveAmount();}} duration={1000} title={"confirm_swap"} loading={this.state.isLoading} autoDisable={true} onClick={() => this.confirmSwap()} />
-               {/* <Translate size="large" block className="pop-btn" disabled={this.state.disableConfirm} duration onClick={()=>this.confirmSwap()} style={{ marginTop: '100px' }} content="confirm_swap" component={Button} />*/}
+                <SuisseBtn className={"pop-btn"} onRefresh={() => { this.setOneCoinValue(); this.setReceiveAmount(); }} duration={1000} title={"confirm_swap"} disabled={this.state.isLoading} loading={this.state.isLoading} autoDisable={true} onClick={() => this.confirmSwap()} />
+                {/* <Translate size="large" block className="pop-btn" disabled={this.state.disableConfirm} duration onClick={()=>this.confirmSwap()} style={{ marginTop: '100px' }} content="confirm_swap" component={Button} />*/}
+                <Translate size="large" block className="pop-btn" content="cancel" component={Button} style={{ marginTop: '10px' }} onClick={() => {this.props.changeStep('step1')}} />
             </>
         )
     }
 }
-const connectStateToProps = ({ swapStore, oidc,userConfig }) => {
-    return { swapStore,userProfile:userConfig.userProfileInfo }
+const connectStateToProps = ({ swapStore, oidc, userConfig }) => {
+    return { swapStore, userProfile: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
-        }
+        },
+        updateSwapdataobj: (obj) => {
+            dispatch(updateSwapdata(obj))
+        },
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(SwapSummary);

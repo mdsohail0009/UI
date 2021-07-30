@@ -15,7 +15,7 @@ import SwapCrypto from '../components/swap.component'
 import MassPayment from '../components/buyfiat.component'
 import { userManager } from '../authentication';
 import Changepassword from '../components/changepassword';
-import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata } from '../reducers/swapReducer';
+import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata,clearSwapData } from '../reducers/swapReducer';
 import { connect } from 'react-redux';
 
 counterpart.registerTranslations('en', en);
@@ -221,6 +221,7 @@ class Header extends Component {
             receiveValue: null,
             errorMessage: null
         })
+        this.props.clearSwapfullData()
         this.setState({
             buyDrawer: false,
             payDrawer: false,
@@ -546,6 +547,9 @@ const connectDispatchToProps = dispatch => {
         },
         updateSwapdataobj: (obj) => {
             dispatch(updateSwapdata(obj))
+        },
+        clearSwapfullData: (member_id) => {
+            dispatch(clearSwapData(member_id))
         },
         dispatch
     }
