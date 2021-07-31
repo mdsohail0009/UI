@@ -35,6 +35,7 @@ const ChangePassword = ({ userConfig }) => {
     else {
       const result = await changePassword(initialValues);
       if (result.ok) {
+        setChangePasswordResponse({ error: false, messsage: 'Successfully passsword changed', isLoading: false });
         form.resetFields();
       }
       else {
