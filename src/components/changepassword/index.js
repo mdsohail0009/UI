@@ -92,14 +92,13 @@ const ChangePassword = ({ userConfig }) => {
         <Form.Item
           className="custom-forminput mb-16"
           name="CurrentPassword"
+          required
           rules={[
             { required: true, message: "Please enter current password" },
           ]}
         >
 
-          <div>
             <Input.Password placeholder="Current Password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
-          </div>
         </Form.Item>
         <div className="d-flex"> 
             <Translate
