@@ -16,6 +16,12 @@ class SwapCrypto extends Component {
     state = {
 
     }
+    componentDidMount() {
+        this.props.swapRef(this)
+    }
+    clearValues(){
+        this.child.clearSwapCoinValues();
+    }
     closeBuyDrawer = () => {
         this.props.dispatch(setStep("step1"))
         if (this.props.onClose) {
@@ -24,7 +30,7 @@ class SwapCrypto extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            swapcoins: <SwapCoins />,
+            swapcoins: <SwapCoins swapCoinsRef={(cd) => this.child = cd}/>,
             swapsummary: <SwapSummary />,
             selectcrypto: <SelectCrypto swapfrom="true" />,
             toreceive: <ToReceive />,

@@ -210,6 +210,7 @@ class Header extends Component {
         })
     }
     closeDrawer = () => {
+        this.child.clearValues();
         let obj = {};
         this.props.fromObjSwap(obj);
         this.props.receiveObjSwap(obj);
@@ -510,7 +511,7 @@ class Header extends Component {
                 </Modal>
                 <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
                 <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
-                <SwapCrypto showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
+                <SwapCrypto swapRef={(cd) => this.child = cd}  showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
                 <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
                 <Drawer
                     title={[<div className="side-drawer-header">

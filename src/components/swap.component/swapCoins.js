@@ -17,19 +17,25 @@ class SwapCoins extends Component {
         errorMessage: null
     }
     async componentDidMount() {
+        this.props.swapCoinsRef(this)
         await this.setOneCoinValue();
         this.loadamount()
     }
-    componentWillUnmount() {
-        this.setState({
-            fromCoin: null,
-            receiveCoin: null,
-            price: null,
-            fromValue: null,
-            receiveValue: null,
-            errorMessage: null
-        })
+    clearSwapCoinValues = () =>{
+        this.setState({  }, () => this.componentWillUnmount());
     }
+    componentWillUnmount() {
+        // this.setState({
+        //     fromCoin: null,
+        //     receiveCoin: null,
+        //     price: null,
+        //     fromValue: null,
+        //     receiveValue: null,
+        //     errorMessage: null
+        // })
+         this.setState({ ...this.state, fromCoin: null,eceiveCoin: null,price: null, fromValue: 0, receiveValue: 0,errorMessage: null})
+        //  this.setReceiveAmount(0);
+     }
     loadamount() {
         if (this.state.fromValue || this.props.swapStore.swapdata.fromValue) {
             this.setReceiveAmount(this.state.fromValue || this.props.swapStore.swapdata.fromValue);
@@ -164,7 +170,7 @@ class SwapCoins extends Component {
                 {coinDetailData && <div className="swap swapfrom-card p-relative">
                     <div>
                         <Translate className="text-purewhite fs-14 fw-100" content="swap_from" component={Text} />
-                        {/*<Input className="card-input" defaultValue="0" value={this.state.fromValue} onChange={value => this.setReceiveAmount(value.target.value)} bordered={false} placeholder="0.0" />*/}
+                        {/* <Input className="card-input" defaultValue="0" value={this.state.fromValue} onChange={value => this.setReceiveAmount(value.target.value)} bordered={false} placeholder="0.0" /> */}
                         <NumberFormat className="card-input d-block " customInput={Input} thousandSeparator={true} prefix={""}
                             placeholder="0.00"
                             bordered={false}
