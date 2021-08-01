@@ -52,7 +52,7 @@ class Header extends Component {
                 }} /> </li>
                 <li className="">
                     {/* <Translate content="change_password" component={Link} to="/changepassword" /> */}
-                    <Link className="dropdown-flex" to="/changepassword">Change Password <span className="icon md rarrow-white" /></Link>
+                    <Link className="dropdown-flex" to="/changepassword" >Change Password <span className="icon md rarrow-white" /></Link>
     
                 </li>
                 <li className="no-hover">
@@ -272,7 +272,7 @@ class Header extends Component {
                                 <li className="mb-d-none"><Translate content="header_title" component="p" className="text-white-30 mb-0 fs-24" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
-                                <Dropdown overlay={this.securityMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                                <Dropdown overlay={this.securityMenu}  placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                     <Menu.Item key="5">Security</Menu.Item>
                                 </Dropdown>
                                 <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
@@ -289,7 +289,7 @@ class Header extends Component {
                                 <Translate content="menu_send_receive" component={Menu.Item} key="3" className="mr-16" />
                             </Dropdown>
                             {/* <Translate content="menu_mass_pay" component={Menu.Item} key="4" onClick={this.showBuyFiatDrawer} className="list-item" /> */}
-                            <Dropdown overlay={this.securityMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                            <Dropdown overlay={this.securityMenu} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Translate key="5" content="security" component={Menu.Item} />
                             </Dropdown>
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>

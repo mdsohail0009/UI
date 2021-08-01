@@ -1,58 +1,72 @@
-
-import { Typography, Input, Button, Select, Switch, Form, notification, Alert } from 'antd';
+import React, { Component, useEffect, useState } from 'react';
+import { Button, Input, Form, Divider, Row, Col, notification, Typography, Alert } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
-import React, { useEffect, useState } from 'react';
+//import connectStateProps from '../../shared/stateConnect';
+//import notify from '../../shared/components/notification';
 import { changePassword } from '../../api/apiServer';
 notification.config({
   placement: "topRight",
   rtl: true
 });
-const ChangePassword = ({ profile, onSubmit, info }) => {
+const ChangePassword = ({ userConfig }) => {
+  const [initialValues, setInitialValues] = useState({
+    "Email": userConfig?.email,
+    "CurrentPassword": "",
+    "Password": "",
+    "ConfirmPassword": ""
+  })
+  const { Paragraph, Title, Text } = Typography;
   const [form] = Form.useForm();
   const [requiredMark, setRequiredMarkType] = useState('required');
   const [changePasswordResponse, setChangePasswordResponse] = useState({ error: false, messsage: "", isLoading: false });
-  useEffect(() => {
-    setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
-    form.resetFields();
-  }, [info])
-  const onFinish = async (values) => {
-    setChangePasswordResponse({ ...changePasswordResponse, isLoading: true, messsage: "" });
-    const obj = { "email": profile?.profile?.email, "currentPassword": values.oldPassword, "password": values.newPassword, "confirmPassword": values.confirmPassword, }
-    const response = await changePassword(obj);
-    if (response.ok) {
-      setChangePasswordResponse({ error: false, messsage: "Password updated successfully", isLoading: false });
-      onSubmit();
-    } else {
-      setChangePasswordResponse({ error: true, messsage: response.originalError.message, isLoading: false });
-    }
-
+  const onFinishFailed = (error) => {
 
   }
+  const saveUserPass = async (values) => {
+    debugger
+    if (values.Password !== values.ConfirmPassword) {
+      //notify({ message: "Error", type: "error", description: "New password and re entered password must same" });
+      setChangePasswordResponse({ error: true, messsage: "New password and re entered password must same", isLoading: false });
 
-  const { Paragraph, Title, Text } = Typography;
+    }
+    else {
+      const result = await changePassword(initialValues);
+      if (result.ok) {
+        setChangePasswordResponse({ error: false, messsage: 'Successfully passsword changed', isLoading: false });
+        form.resetFields();
+      }
+      else {
+        setChangePasswordResponse({ error: true, messsage: result.data, isLoading: false });
+      }
+    }
+  }
+  const clearValues = () => {
+    form.resetFields();
+
+  }
+  const handleChange = (prop, val) => {
+    let object = { ...initialValues };
+    object[prop] = val.currentTarget.value;
+    setInitialValues(object);
+  }
   return (<>
     <div className="custom-formcard mt-36">
-      <Form
-        form={form}
-        layout="vertical"
+      <Form form={form}
         initialValues={{
-          requiredMarkValue: requiredMark,
-          oldPassword: "",
-          newPassword: "",
-          confirmPassword: "",
-        }}
-        requiredMark={requiredMark}
-        onFinish={(values) => onFinish(values)}
-      >
+          "Email": userConfig?.email,
+          "CurrentPassword": "",
+          "Password": "",
+          "ConfirmPassword": ""
+        }} onFinishFailed={onFinishFailed} onFinish={(values) => saveUserPass(values)} enableReinitialize>
         {changePasswordResponse.messsage !== "" && (
           <Typography>
             <Alert
               type={changePasswordResponse?.error ? "error" : "success"}
               showIcon
-              message="Change Password"
+              //message="Change Password"
               description={changePasswordResponse.messsage}
             />
           </Typography>
@@ -67,38 +81,26 @@ const ChangePassword = ({ profile, onSubmit, info }) => {
           component={Paragraph}
           className="mt-36 mb-16 fs-14 text-white-30 fw-400"
         />
-        
-        <Form.Item
-          className="custom-forminput mb-16"
-          required
-          name="oldPassword"
-          rules={[
-            { required: true, message: "Please enter old password" },
-          ]}
-        >
-          <div className="d-flex"> 
-            <Translate
-              className="text-white input-label mb-0"
-              content="current_password"
-              component={Text}
-            />
-            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-          </div>
-          <Input.Password
-            type="password"
-            placeholder="Current Password"
-            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+        <div className="d-flex">
+          <Translate
+            className="text-white input-label mb-0"
+            content="current_password"
+            component={Text}
           />
-        </Form.Item>
+          <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+        </div>
         <Form.Item
-          name="newPassword"
           className="custom-forminput mb-16"
+          name="CurrentPassword"
           required
           rules={[
-            { required: true, message: "Please enter new password" },
+            { required: true, message: "Please enter current password" },
           ]}
         >
-          <div className="d-flex"> 
+
+            <Input.Password placeholder="Current Password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
+        </Form.Item>
+        <div className="d-flex"> 
             <Translate
               className="text-white input-label mb-0"
               content="new_password"
@@ -106,15 +108,33 @@ const ChangePassword = ({ profile, onSubmit, info }) => {
             />
             <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
           </div>
+        <Form.Item
+          name="Password"
+          className="custom-forminput mb-16"
+          required
+          rules={[
+            { required: true, message: "Please enter new password" },
+          ]}
+        >
+
           <Input.Password
-            type="password"
             placeholder="New Password"
+            value={initialValues.Password}
+            onChange={(e) => handleChange("Password", e)}
             className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
+        <div className="d-flex">
+            <Translate
+              className="text-white input-label mb-0"
+              content="confirm_password"
+              component={Text}
+            />
+            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+          </div>
         <Form.Item
           required
-          name="confirmPassword"
+          name="ConfirmPassword"
           dependencies={["password"]}
           //hasFeedback
           rules={[
@@ -124,7 +144,7 @@ const ChangePassword = ({ profile, onSubmit, info }) => {
             },
             ({ getFieldValue }) => ({
               validator(rule, value) {
-                if (!value || getFieldValue("newPassword") === value) {
+                if (!value || getFieldValue("Password") === value) {
                   return Promise.resolve();
                 }
                 return Promise.reject(
@@ -134,47 +154,15 @@ const ChangePassword = ({ profile, onSubmit, info }) => {
             }),
           ]}
         >
-          <div className="d-flex"> 
-            <Translate
-              className="text-white input-label mb-0"
-              content="confirm_password"
-              component={Text}
-            />
-            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-          </div>
+          
           <Input.Password
-            type="password"
             placeholder="Confirm Password"
+            value={initialValues.ConfirmPassword}
+            onChange={(e) => handleChange("ConfirmPassword", e)}
             className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
-        {/* <div className="pay-list custom-switch p-0">
-          <div>
-            <Translate
-              className="fw-400 fs-16 text-white-30"
-              content="Require_all_devices_to_signin"
-              component={Text}
-            />
-            <Translate
-              content="with_new_password"
-              component={Paragraph}
-              className="fs-14 text-white-30 fw-500 "
-            />
-          </div>
-          <div>
-            <Translate
-              className="fw-400 fs-16 text-white-30 mr-4"
-              content="Yes"
-              component={Text}
-              style={{ verticalAlign: "middle" }}
-            />
-            <Switch
-              size="large"
-              defaultChecked
-              className="custom-toggle ml-12"
-            />
-          </div>
-        </div> */}
+
         <Form.Item className="mb-0 mt-16">
           <Button
             loading={changePasswordResponse.isLoading}
@@ -188,14 +176,11 @@ const ChangePassword = ({ profile, onSubmit, info }) => {
         </Form.Item>
       </Form>
     </div>
-     {/* <a href={process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/EnableAuthenticator"}>2FA Enable</a>
-     <a href={process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/Disable2faWarning"}>2FA Disable</a>  */}
-  </>
-  );
+  </>)
 }
 
-const connectStateToProps = ({ buySell, oidc }) => {
-  return { buySell }
+const connectStateToProps = ({ buySell, oidc, userConfig }) => {
+  return { buySell, userConfig: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
   return {
