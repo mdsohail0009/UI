@@ -27,15 +27,15 @@ const ChangePassword = ({ userConfig }) => {
   }
   const saveUserPass = async (values) => {
     debugger
-    if (values.Password !== values.ConfirmPassword) {
+    if (values.CurrentPassword === values.Password) {
       //notify({ message: "Error", type: "error", description: "New password and re entered password must same" });
-      setChangePasswordResponse({ error: true, messsage: "New password and re entered password must same", isLoading: false });
+      setChangePasswordResponse({ error: true, messsage: "Current & New passwords should not be same!", isLoading: false });
 
     }
     else {
       const result = await changePassword(initialValues);
       if (result.ok) {
-        setChangePasswordResponse({ error: false, messsage: 'Successfully passsword changed', isLoading: false });
+        setChangePasswordResponse({ error: false, messsage: 'Password changed successfully', isLoading: false });
         form.resetFields();
       }
       else {
@@ -98,7 +98,7 @@ const ChangePassword = ({ userConfig }) => {
           ]}
         >
 
-            <Input.Password placeholder="Current Password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)} />
+            <Input.Password placeholder="Current Password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeTwoTone />)} />
         </Form.Item>
         <div className="d-flex"> 
             <Translate
@@ -121,7 +121,7 @@ const ChangePassword = ({ userConfig }) => {
             placeholder="New Password"
             value={initialValues.Password}
             onChange={(e) => handleChange("Password", e)}
-            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeTwoTone />)}
           />
         </Form.Item>
         <div className="d-flex">
@@ -140,7 +140,7 @@ const ChangePassword = ({ userConfig }) => {
           rules={[
             {
               required: true,
-              message: "Please confirm your password!",
+              message: "Please enter confirm password!",
             },
             ({ getFieldValue }) => ({
               validator(rule, value) {
@@ -148,7 +148,7 @@ const ChangePassword = ({ userConfig }) => {
                   return Promise.resolve();
                 }
                 return Promise.reject(
-                  "The two passwords that you entered do not match!"
+                  "Password does not match!"
                 );
               },
             }),
@@ -159,7 +159,7 @@ const ChangePassword = ({ userConfig }) => {
             placeholder="Confirm Password"
             value={initialValues.ConfirmPassword}
             onChange={(e) => handleChange("ConfirmPassword", e)}
-            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeTwoTone />)}
           />
         </Form.Item>
 
