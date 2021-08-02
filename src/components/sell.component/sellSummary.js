@@ -8,6 +8,7 @@ import { getSellPreviewData, savesellData } from '../../components/buysell.compo
 import Loader from '../../Shared/loader'
 import SuisseBtn from '../shared/butons';
 import NumberFormat from 'react-number-format';
+import Currency from '../shared/number.formate';
 const LinkValue = (props) => {
     return (
         <Translate className="text-yellow text-underline c-pointer"
@@ -61,16 +62,16 @@ class SellSummary extends Component {
             <>
                 {(!this.state.loader) && <>
                     {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert closable={true} onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="Sell crypto" description={this.state?.errorMessage} />}
-                    <NumberFormat value={sellpreviewData.amountNativeCurrency} displayType={'text'} thousandSeparator={true} renderText={(value, props) => <div {...props}> <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>USD {value}</div> </div>} />
-                    <NumberFormat value={sellpreviewData.amount} displayType={'text'} thousandSeparator={true} renderText={(value, props) => <div {...props}><div className="text-white-50 fw-300 text-center fs-14 mb-16">{value} {sellpreviewData.coin}</div></div>} />
+                    <Currency defaultValue={sellpreviewData.amountNativeCurrency} className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }} prefixText={"USD"} />
+                    <Currency defaultValue={sellpreviewData.amount} className="text-white-50 fw-300 text-center fs-14 mb-16" suffixText={sellpreviewData.coin} prefix={""} />
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
-                        <NumberFormat value={sellpreviewData.oneCoinValue} displayType={'text'} thousandSeparator={true} renderText={(value, props) => <div {...props}><div className="fw-300 text-white-30">1 {sellpreviewData.coin} = {value} USD</div></div>} />
+                        <Currency defaultValue={sellpreviewData.oneCoinValue} className="fw-300 text-white-30" prefixText={`1 ${sellpreviewData.coin} =`} suffixText={"USD"} />
 
                     </div>
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="amount" component={Text} />
-                        <NumberFormat value={sellpreviewData.amountNativeCurrency} displayType={'text'} thousandSeparator={true} renderText={(value, props) => <div {...props}> <div className="fw-300 text-white-30">USD {value}</div></div>} />
+                        <Currency defaultValue={sellpreviewData.amountNativeCurrency} className="fw-300 text-white-30" prefixText={"USD"} />
 
                     </div>
                     {/* <div className="pay-list fs-14">
@@ -79,13 +80,13 @@ class SellSummary extends Component {
                 </div> */}
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="total" component={Text} />
-                        <Text className="fw-300 text-white-30">{sellpreviewData.amount} {sellpreviewData.coin} (USD {sellpreviewData.amountNativeCurrency})</Text>
+                        <Currency className="fw-300 text-white-30" defaultValue={sellpreviewData.amount} prefix={""} suffixText={`${sellpreviewData.coin} (USD $${sellpreviewData.amountNativeCurrency.toFixed(2)})`} />
                     </div>
                     <Translate className="fs-12 text-white-30 text-center my-16" content="summary_hint_text" component={Paragraph} />
                     {/* <div className="text-center text-underline text-white"><Link className="text-yellow" onClick={() => this.refreshPage()}> Click to see the new rate.</Link></div> */}
                     <div className="d-flex p-16 mb-36 agree-check">
                         <label>
-                            <input type="checkbox" id="agree-check" value={this.state.isTermsAgree} onChange={({currentTarget:{checked}}) => this.setState({ isTermsAgree: checked })} />
+                            <input type="checkbox" id="agree-check" value={this.state.isTermsAgree} onChange={({ currentTarget: { checked } }) => this.setState({ isTermsAgree: checked })} />
                             <span for="agree-check" />
                         </label><Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
                     </div>

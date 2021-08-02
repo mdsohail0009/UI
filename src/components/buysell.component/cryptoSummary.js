@@ -9,6 +9,7 @@ import { fetchPreview } from './crypto.reducer';
 import { buyCrypto } from './api';
 import SuisseBtn from '../shared/butons';
 import NumberFormat from 'react-number-format';
+import Currency from '../shared/number.formate';
 const LinkValue = (props) => {
     return (
         <Translate className="text-yellow text-underline c-pointer"
@@ -87,20 +88,20 @@ class Summary extends Component {
         // const [seconds, setSeconds] = React.useState(10);
         return (
             <>
-                {!this.state?.error?.valid && <Alert showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable onClose={()=>this.setState({...this.state,error:{valid:true,message:null}})} />}
+                {!this.state?.error?.valid && <Alert showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable onClose={() => this.setState({ ...this.state, error: { valid: true, message: null } })} />}
                 <div className="cryptosummary-container auto-scroll">
-                    <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}>{amount} {coin}</div>
-                    <div className="text-white-50 fw-300 text-center fs-14 mb-16"><NumberFormat value={amountNativeCurrency} displayType={'text'} thousandSeparator={true}  renderText={(value, props) => <div {...props} >{this.props.sellData?.selectedWallet?.currencyCode} {value}</div>} /></div>
+                    <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}><Currency prefix={""} defaultValue={amount} suffixText={coin}/> </div>
+                    <div className="text-white-50 fw-300 text-center fs-14 mb-16"><Currency defaultValue={amountNativeCurrency} type={'text'} prefixText={this.props.sellData?.selectedWallet?.currencyCode} /></div>
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
-                        <NumberFormat value={oneCoinValue} displayType={'text'} thousandSeparator={true}
-                            renderText={(value, props) => <div {...props} className="fw-300 text-white-30">1 {coin} = {this.props.sellData?.selectedWallet?.currencyCode} {value}</div>} />
+                        <Currency defaultValue={oneCoinValue} className="fw-300 text-white-30" prefixText={`1 ${coin} = ${this.props.sellData?.selectedWallet?.currencyCode}`}
+                            />
 
                     </div>
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="amount" component={Text} />
-                        <NumberFormat value={amount} displayType={'text'} thousandSeparator={true}
-                            renderText={(value, props) => <div {...props} className="fw-300 text-white-30">{coin} {value}</div>} />
+                        <Currency defaultValue={amount} type={'text'} className="fw-300 text-white-30"
+                            prefixText={coin} />
 
                     </div>
                     {/* <div className="pay-list fs-14">
@@ -109,9 +110,8 @@ class Summary extends Component {
                 </div> */}
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="estimated_total" component={Text} />
-                        
-                        <NumberFormat value={amountNativeCurrency} displayType={'text'} thousandSeparator={true}
-                            renderText={(value, props) => <div {...props} className="fw-300 text-white-30">{amount} {coin} ({this.props.sellData?.selectedWallet?.currencyCode} {value})</div>} />
+                        <Currency defaultValue={amountNativeCurrency} className="fw-300 text-white-30" prefixText={this.props.sellData?.selectedWallet?.currencyCode} />
+
                     </div>
                     {/* <Translate className="fs-12 text-white-30 text-center my-16" content="summary_hint_text" component={Paragraph} /> */}
                     <div className="fs-12 text-white-30 text-center my-16">Your final amount might be changed with in
