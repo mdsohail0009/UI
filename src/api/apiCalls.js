@@ -13,7 +13,7 @@ const sumsubacesstoken=(userid)=>{
     return apiClient.get('Sumsub/AccessToken?applicantId='+userid);
 }
 const sumsubacesstokennew=(userid)=>{
-    return apiClient.get('Sumsub/AccessTokennew?applicantId='+userid);
+    return apiClient.get('Sumsub/KYBAccessToken?applicantId='+userid);
 }
 const updateKyc=(userid)=>{
     return apiClient.get(Portfolio+'UpdateKYC?isKyc=true&userId='+userid);
