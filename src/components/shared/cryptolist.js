@@ -57,7 +57,7 @@ class CryptoList extends Component {
                 </div>
             ) : null;
         return (<>
-            <Search placeholder="Search Currency" onChange={({ currentTarget }) => { this.handleSearch(currentTarget.value) }} size="middle" bordered={false} enterButton className="my-16" />
+            <Search placeholder="Search Currency" onChange={({ currentTarget }) => { this.handleSearch(currentTarget.value) }} size="middle" bordered={false} enterButton className="crypto-search my-16" />
             <List
                 itemLayout="horizontal"
                 dataSource={this.state.coinsList || this.props.sellData?.coins[this.props.coinType]?.data}

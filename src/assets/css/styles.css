@@ -140,7 +140,7 @@ line-height: 16px;min-width:90px}
 .wallet-list h4{margin-bottom: 0;}
 .crypto-toggle .ant-radio-button-wrapper{padding: 22px;}
 .crypto-list-tabs .ant-tabs-tab{font-size: 16px; margin: 0; padding-bottom: 0;}
-.crypto-list-tabs .ant-tabs-tab-btn{padding: 3px 33px;color: var(--textYellow);}
+.crypto-list-tabs .ant-tabs-tab-btn{padding: 3px 33px;color: var(--textDefautlYlw);}
 .crypto-list-tabs .ant-tabs-tab-btn:focus{color: var(--textYellow);}
 .crypto-list-tabs .ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textDark); background: var(--bgYellow); border-radius: 30px;}
 .crypto-list-tabs .ant-tabs-ink-bar{display: none;}
