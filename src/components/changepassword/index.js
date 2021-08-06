@@ -87,7 +87,7 @@ const ChangePassword = ({ userConfig }) => {
             content="current_password"
             component={Text}
           />
-          <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+          <span className="ant-input-password-icon" style={{  paddingLeft: "2px" }}>*</span>
         </div>
         <Form.Item
           className="custom-forminput mb-16"
@@ -106,7 +106,7 @@ const ChangePassword = ({ userConfig }) => {
               content="new_password"
               component={Text}
             />
-            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+            <span className="ant-input-password-icon" style={{  paddingLeft: "2px" }}>*</span>
           </div>
         <Form.Item
           name="Password"
@@ -130,7 +130,7 @@ const ChangePassword = ({ userConfig }) => {
               content="confirm_password"
               component={Text}
             />
-            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+            <span className="ant-input-password-icon" style={{  paddingLeft: "2px" }}>*</span>
           </div>
         <Form.Item
           required
