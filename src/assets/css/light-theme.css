@@ -13,7 +13,8 @@
     --bgGloom: #FFFFFF;
     --bgBlue: #1E90FF;
     --bgPitch: #1B4156;
-    --bgBlu: #ecf1f4;
+    /* --bgBlu: #ecf1f4; */
+    --bgBlu:#296281;
     --textPureWhite: #FFFFFF;
     --textWhite: #000000;
     --textWhite30: #243540;
@@ -37,4 +38,5 @@
     --lightThemeIcons: url(../../assets/images/light-theme-icons.svg);
     --cryptoIcons: url(../../assets/images/light-crypto-icons.svg);
     --logo: url(../../assets/images/logo-color.png);
+    --bgDefautldark:#0E0E2C;
 }
