@@ -161,7 +161,7 @@ line-height: 16px;min-width:90px}
 .cancel-btngroup{ border-radius:30px 0 0 30px;background-color:var(--bgDarkYellow); color:var(--textWhite);}
 .crypto-card{border-radius: 25px;box-shadow: 0 8px 16px rgba(20,0,4,0.2);background-color:var(--bgCard);background-position: center center;}
 .crypto-card .ant-card-body{display: flex; flex-direction: column;justify-content: space-between;}
-.crypto-card.normal-card{background-color: var(--bgDark);box-shadow:none;}
+.crypto-card.normal-card{background-color: var(--bgCard);box-shadow:none;}
 .crypto-card.select, .crypto-card:hover{background-image: url(../images/select-card-bg.png);background-size: cover;border-radius: 1.8rem;}
 .crypto-card.fiatcard{background-image: url(../images/fiatcard-bg.png);background-size: cover;border-radius: 1.8rem;}
 .crypto-card-top{display: flex; align-items: center;justify-content: space-between;}

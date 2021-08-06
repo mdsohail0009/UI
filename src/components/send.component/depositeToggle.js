@@ -65,9 +65,9 @@ class DepositeCrypto extends Component {
                                 </span>
                                 <div className="crypto-details">
                                     <div className="crypto-percent">65<sup className="percent">%</sup></div>
-                                    <div className="crypto-amount">
-                                        <div>1.0147668 <Text className="text-secondary">ETH</Text></div>
-                                        <Text className="text-secondary">$</Text> 41.07
+                                    <div className="crypto-amount text-card-white30 ">
+                                        <div>1.0147668 <Text className="text-card-white30">ETH</Text></div>
+                                        <Text className="text-card-white30">$</Text> 41.07
                                     </div>
                                 </div>
                             </Card>
@@ -78,9 +78,9 @@ class DepositeCrypto extends Component {
                                 </span>
                                 <div className="crypto-details">
                                     <Text className="crypto-percent">25<sup className="percent">%</sup></Text>
-                                    <div className="crypto-amount">
-                                        <div>1.0147668 <Text className="text-secondary">ETH</Text></div>
-                                        <Text className="text-secondary">$</Text> 41.07
+                                    <div className="crypto-amount text-card-white30">
+                                        <div>1.0147668 <Text className="text-card-white30">ETH</Text></div>
+                                        <Text className="text-card-white30">$</Text> 41.07
                                     </div>
                                 </div>
                             </Card>
