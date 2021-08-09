@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { CallbackComponent } from "redux-oidc";
 import { profileSuccess } from "../reducers/authReducer";
 import { userManager } from "./index";
@@ -33,4 +34,4 @@ const mapStateToProps = ({ oidc }) => {
 const mapDispatchToProps = dispatch => {
     return { updateProfile: (info) => { dispatch(profileSuccess(info)) } }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(CallbackPage);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CallbackPage));
