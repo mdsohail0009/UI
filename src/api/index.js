@@ -1,4 +1,5 @@
 import { create } from 'apisauce';
+import { store } from '../store';
 const firebaseServer = create({
     baseURL: "https://fcm.googleapis.com/",
     // headers: {
@@ -6,7 +7,16 @@ const firebaseServer = create({
     // }
 });
 const apiClient = create({
-    baseURL:process.env.REACT_APP_API_END_POINT
-      
+    baseURL: process.env.REACT_APP_API_END_POINT
 })
-export { firebaseServer,apiClient }
+firebaseServer.axiosInstance.interceptors.request.use((config) => {
+    const { oidc: { user } } = store.getState()
+    config.headers.Authorization = `Bearer ${user.access_token}`
+    return config;
+})
+apiClient.axiosInstance.interceptors.request.use((config) => {
+    const { oidc: { user } } = store.getState()
+    config.headers.Authorization = `Bearer ${user.access_token}`
+    return config;
+})
+export { firebaseServer, apiClient }
