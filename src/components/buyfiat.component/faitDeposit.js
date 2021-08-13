@@ -71,7 +71,7 @@ class FaitDeposit extends Component {
                 <Select
                   onChange={(e) => this.handlFiatDep} value={value}
                   defaultValue="usd"
-                  className="cust-input mb-0"
+                  className="cust-input"
                   dropdownClassName="select-drpdwn"
                   style={{ width: "100%" }}
                   bordered={false}
@@ -80,6 +80,22 @@ class FaitDeposit extends Component {
                   <Option value="usd">USD</Option>
                   <Option value="eur">EUR</Option>
                   <Option value="gbp">GBP</Option>
+                </Select>
+                <Text
+                  className="input-label"
+                >Select Bank</Text>
+                <Select
+                  //onChange={(e) => this.handlFiatDep} value={value}
+                  defaultValue="Select Bank"
+                  className="cust-input mb-0"
+                  dropdownClassName="select-drpdwn"
+                  style={{ width: "100%" }}
+                  bordered={false}
+                  showArrow={true}
+                >
+                  <Option value="ICICI">ICICI Bank</Option>
+                  <Option value="Signature">Signature Bank</Option>
+                  <Option value="Siget">Siget Bank</Option>
                 </Select>
                 {!fiatDepEur ? <>
                   <div className="d-flex">
