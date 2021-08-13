@@ -17,13 +17,16 @@ import AddressScanner from './addressScanner';
 import SellSummary from '../sell.component/sellSummary';
 import SelectSellCrypto from '../sell.component/selectCrypto'
 import SuccessMsg from '../shared/success';
+import History from './history';
 const { Paragraph } = Typography
 class BuySell extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            showDrawer: false,
             //search: false,
         }
+        this.showHistoryDrawer = this.showHistoryDrawer.bind(this)
         //this.openSearch = this.openSearch.bind(this);
     }
     closeBuyDrawer = () => {
@@ -32,6 +35,9 @@ class BuySell extends Component {
             this.props.onClose();
         }
     }
+    showHistoryDrawer =() => {
+         this.setState({showDrawer: !this.state.showDrawer})
+     }
     // openSearch = () => {
     //     debugger
     //     this.setState({ search: !this.state.search })
@@ -58,7 +64,7 @@ class BuySell extends Component {
     };
     renderTitle = () => {
         const titles = {
-            buycrypto: <span />,
+            buycrypto: <span onClick={this.showHistoryDrawer} className="icon md history-white c-pointer" />,
             selectcrypto: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             billtype: <span />,
             addcard: <span onClick={() => this.props.dispatch(setStep("step4"))} className="icon md lftarw-white c-pointer" />,
@@ -98,7 +104,7 @@ class BuySell extends Component {
         return x? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):0;
     }
     render() {
-        return (<Drawer
+        return (<><Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
                 <div className="text-center fs-14">
@@ -113,7 +119,9 @@ class BuySell extends Component {
             className="side-drawer"
         >
             {this.renderContent()}
-        </Drawer>);
+        </Drawer>
+        <History showDrawer={this.state.showDrawer}  handleClick = {this.showHistoryDrawer}/>
+        </>);
     }
 }
 
