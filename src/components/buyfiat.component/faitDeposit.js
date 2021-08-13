@@ -98,14 +98,14 @@ class FaitDeposit extends Component {
                   <Option value="Siget">Siget Bank</Option>
                 </Select>
                 {!fiatDepEur ? <>
-                  <div className="d-flex">
+                  <div className="d-flex copy-icon">
                     {/* <span className="coin deposit-white mt-4" /> */}
                     <div style={{ flex: 1 }}>
                       <Paragraph className="mb-0 fs-16 text-white fw-500 mt-36">Innovative Concepts</Paragraph>
                       <Paragraph className="mb-0 fs-12 text-white-30 fw-300">
                         Innovative Concepts
                         PL DU BOURG DE FOUR6,1204 GENEVE,SWITZERLAND</Paragraph>
-                      <Paragraph className="mb-0 fs-14 text-yellow fw-500"><Text className="text-white-30 fs-14">A/C </Text>100432152366717</Paragraph>
+                      <Text className="text-white-30 fs-14">A/C </Text><Text copyable className="mb-0 fs-14 text-yellow fw-500">100432152366717 </Text> 
                     </div>
                   </div>
                   <Translate
@@ -118,7 +118,7 @@ class FaitDeposit extends Component {
                     content="Routing_number"
                     component={Text}
                   />
-                  <Text className="fs-20 text-white-30 d-block">026013576</Text>
+                  <Text copyable className="fs-20 text-white-30 d-block">026013576</Text>
                   <Translate
                     className="mt-24 fs-14 text-aqua fw-500 text-upper"
                     content="for_international_wires"
@@ -129,7 +129,7 @@ class FaitDeposit extends Component {
                     content="Swift_BICcode"
                     component={Text}
                   />
-                  <Translate
+                  <Translate copyable
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     content="SIGNU"
                     component={Text}
@@ -160,9 +160,9 @@ class FaitDeposit extends Component {
                       content="reference"
                       component={Text}
                     />
-                    <div className="mb-0 fs-16 fw-500 text-textDark">
+                    <Paragraph copyable className="mb-0 fs-16 fw-500 text-textDark">
                       wire_16_PKFPGATX
-                    </div>
+                    </Paragraph>
                   </div>
                   <Translate
                     className="fs-14 text-white-30 fw-200 l-height-normal"
