@@ -9,6 +9,7 @@ import BuyFiat from './buyFiat';
 import SelectFiat from './selectFiat';
 import AddCard from './addCard';
 import SelectWallet from './selectWallet';
+import FiatDeposit from './faitDeposit';
 import FiatSummary from './buyfiatSummary';
 import BillingAddress from './fiatBillingAddress';
 import ConfirmMsg from './confirm'
@@ -27,7 +28,8 @@ class MassPayment extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            buyfiat: <BuyFiat activeTab={this.props.valNum}/>,
+            fiatdeposit: <FiatDeposit />,
+            //buyfiat: <BuyFiat activeTab={this.props.valNum} />,
             selectfiat: <SelectFiat />,
             addcard: <AddCard />,
             selectwallet: <SelectWallet />,
@@ -39,7 +41,7 @@ class MassPayment extends Component {
     }
     renderTitle = () => {
         const stepcodes = {
-            buyfiat: <span />,
+            fiatdeposit: <span />,
             selectfiat: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             addcard: <span onClick={() => this.props.dispatch(setStep("step2"))} className="icon md lftarw-white c-pointer" />,
             selectwallet: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
@@ -59,7 +61,7 @@ class MassPayment extends Component {
             </Menu>
         );
         const stepcodes = {
-            buyfiat: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            fiatdeposit: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             selectfiat: <span />,
             addcard: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             selectwallet: <Dropdown overlay={menu} overlayClassName="secureDropdown" arrow>

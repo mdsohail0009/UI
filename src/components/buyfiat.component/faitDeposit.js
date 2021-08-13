@@ -34,11 +34,11 @@ class FaitDeposit extends Component {
     this.setState({
       fiatDepEur: e.target.value === "eur"
     });
-//    return <SelectCurrency />
+    //    return <SelectCurrency />
   }
 
   state = {}
-  
+
   render() {
     const { TabPane } = Tabs;
     const { Paragraph, Title, Text } = Typography;
@@ -68,92 +68,91 @@ class FaitDeposit extends Component {
                   content="currency"
                   component={Text}
                 />
-                <Select 
-                  onChange={(e)=>this.handlFiatDep} value={value}
+                <Select
+                  onChange={(e) => this.handlFiatDep} value={value}
                   defaultValue="usd"
                   className="cust-input mb-0"
                   dropdownClassName="select-drpdwn"
                   style={{ width: "100%" }}
                   bordered={false}
-                  showArrow={false}
-                  suffixIcon={<span className="icon md uparrow" />}
+                  showArrow={true}
                 >
                   <Option value="usd">USD</Option>
                   <Option value="eur">EUR</Option>
                   <Option value="gbp">GBP</Option>
                 </Select>
-                {!fiatDepEur?<>
-                <div className="d-flex">
-                {/* <span className="coin deposit-white mt-4" /> */}
-                <div style={{ flex: 1 }}>
-                  <Paragraph className="mb-0 fs-16 text-white fw-500 mt-36">Innovative Concepts</Paragraph>
-                  <Paragraph className="mb-0 fs-12 text-white-30 fw-300">
-                    Innovative Concepts
-                    PL DU BOURG DE FOUR6,1204 GENEVE,SWITZERLAND</Paragraph>
-                  <Paragraph className="mb-0 fs-14 text-yellow fw-500"><Text className="text-white-30 fs-14">A/C </Text>*** *** 6717</Paragraph>
-                </div>
-              </div>
-              <Translate
-                className="mt-36 fs-14 text-aqua fw-500 text-upper"
-                content="for_Domestic_wires"
-                component={Paragraph}
-              />
-              <Translate
-                className="fw-200 text-white-30 fs-16"
-                content="Routing_number"
-                component={Text}
-              />
-              <Text className="fs-20 text-white-30 d-block">026013576</Text>
-              <Translate
-                className="mt-24 fs-14 text-aqua fw-500 text-upper"
-                content="for_international_wires"
-                component={Paragraph}
-              />
-              <Translate
-                className="fw-200 text-white-30 fs-16"
-                content="Swift_BICcode"
-                component={Text}
-              />
-              <Translate
-                className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                content="SIGNU"
-                component={Text}
-              />
-              <Translate
-                className="fw-200 text-white-30 fs-16"
-                content="beneficiaryBank"
-                component={Text}
-              />
-              <Translate
-                className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                content="signature_bank"
-                component={Text}
-              />
-              <Translate
-                className="fw-200 text-white-30 fs-16"
-                content="beneficiary_Bank_address"
-                component={Text}
-              />
-              <Translate
-                className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                content="Fifth_Avenue"
-                component={Text}
-              />
-              <div className="crypto-address mb-36 mx-0">
-                <Translate
-                  className="mb-0 fw-400 fs-14 text-secondary"
-                  content="reference"
-                  component={Text}
-                />
-                <div className="mb-0 fs-16 fw-500 text-textDark">
-                  wire_16_PKFPGATX
-                </div>
-              </div>
-              <Translate
-                className="fs-14 text-white-30 fw-200 l-height-normal"
-                content="reference_hint_text"
-                component={Paragraph}
-              /></>:<selectCurrency />}
+                {!fiatDepEur ? <>
+                  <div className="d-flex">
+                    {/* <span className="coin deposit-white mt-4" /> */}
+                    <div style={{ flex: 1 }}>
+                      <Paragraph className="mb-0 fs-16 text-white fw-500 mt-36">Innovative Concepts</Paragraph>
+                      <Paragraph className="mb-0 fs-12 text-white-30 fw-300">
+                        Innovative Concepts
+                        PL DU BOURG DE FOUR6,1204 GENEVE,SWITZERLAND</Paragraph>
+                      <Paragraph className="mb-0 fs-14 text-yellow fw-500"><Text className="text-white-30 fs-14">A/C </Text>100432152366717</Paragraph>
+                    </div>
+                  </div>
+                  <Translate
+                    className="mt-36 fs-14 text-aqua fw-500 text-upper"
+                    content="for_Domestic_wires"
+                    component={Paragraph}
+                  />
+                  <Translate
+                    className="fw-200 text-white-30 fs-16"
+                    content="Routing_number"
+                    component={Text}
+                  />
+                  <Text className="fs-20 text-white-30 d-block">026013576</Text>
+                  <Translate
+                    className="mt-24 fs-14 text-aqua fw-500 text-upper"
+                    content="for_international_wires"
+                    component={Paragraph}
+                  />
+                  <Translate
+                    className="fw-200 text-white-30 fs-16"
+                    content="Swift_BICcode"
+                    component={Text}
+                  />
+                  <Translate
+                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                    content="SIGNU"
+                    component={Text}
+                  />
+                  <Translate
+                    className="fw-200 text-white-30 fs-16"
+                    content="beneficiaryBank"
+                    component={Text}
+                  />
+                  <Translate
+                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                    content="signature_bank"
+                    component={Text}
+                  />
+                  <Translate
+                    className="fw-200 text-white-30 fs-16"
+                    content="beneficiary_Bank_address"
+                    component={Text}
+                  />
+                  <Translate
+                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                    content="Fifth_Avenue"
+                    component={Text}
+                  />
+                  <div className="crypto-address mb-36 mx-0">
+                    <Translate
+                      className="mb-0 fw-400 fs-14 text-secondary"
+                      content="reference"
+                      component={Text}
+                    />
+                    <div className="mb-0 fs-16 fw-500 text-textDark">
+                      wire_16_PKFPGATX
+                    </div>
+                  </div>
+                  <Translate
+                    className="fs-14 text-white-30 fw-200 l-height-normal"
+                    content="reference_hint_text"
+                    component={Paragraph}
+                  /></> : <selectCurrency />}
               </div>
             </form>
           </div>
@@ -165,9 +164,9 @@ class FaitDeposit extends Component {
               className="pop-btn mt-36"
               onClick={() => this.props.changeStep("step2")}
             />
-          </> 
+          </>
         }
-       
+
       </>
     );
   }

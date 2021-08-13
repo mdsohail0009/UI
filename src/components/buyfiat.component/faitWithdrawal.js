@@ -41,8 +41,7 @@ class FaitWithdrawal extends Component {
               dropdownClassName="select-drpdwn"
               style={{ width: "100%" }}
               bordered={false}
-              showArrow={false}
-              suffixIcon={<span className="icon md uparrow" />}
+              showArrow={true}
             >
               <Option value="philippines">EUR</Option>
               <Option value="india">USD</Option>
