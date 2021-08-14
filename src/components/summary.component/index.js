@@ -20,7 +20,7 @@ class Summary extends Component {
             return <Loader />
         }
         const { Paragraph, Text } = Typography;
-        const { coin, oneCoinValue, amount, amountNativeCurrency, nativeCurrency, error, isButtonLoad, showFee, feeAmount, feeCurrency } = this.props;
+        const { coin, oneCoinValue, amount, amountNativeCurrency, nativeCurrency, error, isButtonLoad, showFee, feeAmount, feeCurrency,okBtnTitle } = this.props;
         const link = <LinkValue content="terms_service" />;
         return (
             <>
@@ -58,7 +58,7 @@ class Summary extends Component {
                         </label>
                         <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16 mb-0" style={{ flex: 1 }} />
                     </div>
-                    <SuisseBtn className={"pop-btn"} onRefresh={() => this.props.onRefresh()} title={"pay"} loading={isButtonLoad} autoDisable={true} onClick={() => this.props.onClick()} />
+                    <SuisseBtn className={"pop-btn"} onRefresh={() => this.props.onRefresh()} title={okBtnTitle|| "pay"} loading={isButtonLoad} autoDisable={true} onClick={() => this.props.onClick()} />
                     <Translate content="cancel" component={Button} onClick={() => this.props.onCancel()} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
                 </div>
 

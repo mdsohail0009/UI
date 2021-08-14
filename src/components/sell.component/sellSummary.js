@@ -1,24 +1,8 @@
 import React, { Component } from 'react';
-import { Typography, Button, Tooltip, Checkbox, Alert } from 'antd';
-import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import Translate from 'react-translate-component';
 import { getSellPreviewData, savesellData } from '../../components/buysell.component/api'
-import Loader from '../../Shared/loader'
-import SuisseBtn from '../shared/butons';
-import NumberFormat from 'react-number-format';
-import Currency from '../shared/number.formate';
 import Summary from '../summary.component';
-const LinkValue = (props) => {
-    return (
-        <Translate className="text-yellow text-underline c-pointer"
-            content={props.content}
-            component={Link}
-            to="./#"
-        />
-    )
-}
 class SellSummary extends Component {
     state = { sellpreviewData: {}, loader: true, disableConfirm: false, isTermsAgree: false, error: {valid:true,message:null} }
     componentDidMount() {
@@ -56,8 +40,6 @@ class SellSummary extends Component {
         }
     }
     render() {
-        const { Paragraph, Text } = Typography;
-        const link = <LinkValue content="terms_service" />;
         const { sellpreviewData } = this.state;
         const {amount,amountNativeCurrency,oneCoinValue,coin} = sellpreviewData;
 
@@ -72,6 +54,7 @@ class SellSummary extends Component {
             onRefresh={() => {}}
             onCancel={() => this.props.changeStep('step1')}
             onClick={() => this.saveSellData()}
+            okBtnTitle={"confirm_now"}
             onTermsChange={(checked) => { this.setState({ ...this.state, isTermsAgree: checked }) }}/>
             // return (
             //     <>
