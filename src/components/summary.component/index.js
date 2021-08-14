@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Alert } from 'antd';
+import { Typography, Button, Alert,Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
 import Loader from '../../Shared/loader';
@@ -15,14 +15,8 @@ const LinkValue = (props) => {
     )
 }
 class Summary extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            error: { valid: true, error: null }
-        }
-    }
     render() {
-        if (this.props?.loading || !this.props?.data) {
+        if (this.props?.loading) {
             return <Loader />
         }
         const { Paragraph, Text } = Typography;
@@ -59,7 +53,7 @@ class Summary extends Component {
                         10 seconds.</div>
                     <div className="d-flex p-16 mb-36 agree-check">
                         <label>
-                            <input type="checkbox" id="agree-check" />
+                            <input type="checkbox" id="agree-check" onChange={({currentTarget:{checked}})=>{this.props.onTermsChange(checked)}} />
                             <span for="agree-check" />
                         </label>
                         <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16 mb-0" style={{ flex: 1 }} />
