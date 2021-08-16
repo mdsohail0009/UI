@@ -5,7 +5,7 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import { convertCurrency, validatePreview } from './buySellService';
-import { fetchMemberFiat, fetchPreview, setWallet } from './crypto.reducer';
+import { fetchMemberFiat, fetchPreview, setWallet } from '../../reducers/buy.reducer';
 import Loader from '../../Shared/loader';
 import SuisseBtn from '../shared/butons';
 import NumberFormat from 'react-number-format';

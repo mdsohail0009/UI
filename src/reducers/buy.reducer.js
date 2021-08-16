@@ -1,5 +1,5 @@
 
-import { getCoins, getMemberfiat, getportfolio, getPreview, getSelectedCoinDetails } from './api'
+import { getCoins, getMemberfiat, getportfolio, getPreview, getSelectedCoinDetails } from '../components/buy.component/api'
 const FETCH_MEMBERCOINS = "fetchMemberCoins";
 const FETCH_MEMBERCOINS_REJECTED = "fetchMemberCoinsRejected";
 const FETCH_MEMBERCOINS_SUCCESS = "fetchMemberCoinsSuccess";
@@ -63,7 +63,9 @@ const handleFetch = (payload) => {
 }
 
 const fetchCoins = (type) => {
+    debugger
     return async (dispatch) => {
+        debugger
         dispatch(handleCoinsFetch({ key: type, loading: true, data: [] }));
         const response = await getCoins(type);
         if (response.ok) {
@@ -156,7 +158,7 @@ const getMemberCoins = (memberId) => {
         } catch (error) { }
     }
 }
-const sellReducer = (state = initialState, action) => {
+const buyReducer = (state = initialState, action) => {
     debugger
     switch (action.type) {
         case FETCH_MEMBERCOINS:
@@ -192,5 +194,5 @@ const sellReducer = (state = initialState, action) => {
     }
 }
 
-export default sellReducer;
+export default buyReducer;
 export {setExchangeValue, getMemberCoins, updateCoinDetails, updatesellsaveObject, fetchCoins, fetchSelectedCoinDetails, fetchMemberFiat, fetchPreview, setWallet, setCoinWallet }

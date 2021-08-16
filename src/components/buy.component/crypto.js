@@ -7,7 +7,7 @@ import SellToggle from '../sell.component/sellCrypto'
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import { fetchSelectedCoinDetails, setCoinWallet, setExchangeValue, fetchCoins } from './crypto.reducer';
+import { fetchSelectedCoinDetails, setCoinWallet, setExchangeValue, fetchCoins } from '../../reducers/buy.reducer';
 import { convertCurrency } from './buySellService';
 
 const LinkValue = (props) => {

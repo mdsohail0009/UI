@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import { fetchPreview } from './crypto.reducer';
+import { fetchPreview } from '../../reducers/buy.reducer';
 import { buyCrypto } from './api';
 import Summary from '../summary.component';
 import Loader from '../../Shared/loader';

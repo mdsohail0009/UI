@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Select } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import { fetchMemberFiat } from '../buy.component/crypto.reducer';
+import { fetchMemberFiat } from '../../reducers/buy.reducer';
 import NumberFormat from 'react-number-format';
 
 const { Option } = Select;
