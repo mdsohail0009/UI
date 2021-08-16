@@ -157,6 +157,7 @@ const getMemberCoins = (memberId) => {
     }
 }
 const sellReducer = (state = initialState, action) => {
+    debugger
     switch (action.type) {
         case FETCH_MEMBERCOINS:
             state = { ...state, isLoading: true }

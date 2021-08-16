@@ -19,6 +19,7 @@ class SwapCrypto extends Component {
         this.props.swapRef(this)
     }
     clearValues(){
+        if(this.child)
         this.child.clearSwapCoinValues();
     }
     closeBuyDrawer = () => {

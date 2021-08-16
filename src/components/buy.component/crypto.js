@@ -27,7 +27,6 @@ class CryptoComponent extends Component {
         isBuy: false
     }
     componentDidMount(){
-        debugger
         this.props.dispatch(fetchCoins("All"));
     }
     handleBuySellToggle = e => {
