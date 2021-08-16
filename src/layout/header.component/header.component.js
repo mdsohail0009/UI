@@ -16,6 +16,7 @@ import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata,clearSwapDa
 import { connect } from 'react-redux';
 import MegaMenu from './megaMenu.component'
 import SettingsMenu from './settingsMenu.component'
+import SecurityMenu from './securityMenu.component'
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -40,34 +41,7 @@ class Header extends Component {
     securityMenu = (
 
         <Menu>
-            <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="security" component={Title} />
-            <ul className="pl-0 drpdwn-list">
-                <li className="no-hover dropdown-flex text-white fs-14 pb-16">2FA<Switch size="small" checked={this.props.userConfig.twofactorVerified} onChange={(status)=>{
-                    if(status==true){
-                        window.open(process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/EnableAuthenticator","_self");
-                    }else{
-                        window.open(process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/Disable2faWarning","_self");
-                    }
-                }} /> </li>
-                <li className="">
-                    {/* <Translate content="change_password" component={Link} to="/changepassword" /> */}
-                    <Link className="dropdown-flex" to="/changepassword" >Change Password <span className="icon md rarrow-white" /></Link>
-    
-                </li>
-                <li className="no-hover">
-                    <div className="">
-                        <Translate className="text-white fs-14 pt-16 mb-0" content="current_security_level" component={Paragraph} />
-                        <Translate className="text-green fw-900" content="medium" component={Paragraph} />
-                    </div>
-                    <Translate className="text-white fs-14" style={{ paddingRight: '78px' }} content="current_security_text" component={Paragraph} />
-                </li>
-                <li>
-                    <div className="dropdown-flex-top">
-                        <Translate content="protect_your_account" component={Link} />
-                        <span className="icon md rarrow-white" />
-                    </div>
-                </li>
-            </ul>
+           <SecurityMenu/>
         </Menu>
     );
     settingMenu = (
