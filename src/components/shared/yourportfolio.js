@@ -7,7 +7,7 @@ import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import apiCalls from '../../api/apiCalls'
-import BuySell from '../../components/buysell.component';
+import BuySell from '../../components/buy.component';
 import connectStateProps from '../../utils/state.connect';
 
 class YourPortfolio extends Component {

@@ -9,7 +9,7 @@ import Translate from 'react-translate-component';
 import en from '../lang/en';
 import ch from '../lang/ch';
 import my from '../lang/my';
-import BuySell from '../components/buysell.component';
+import BuySell from '../components/buy.component';
 import SendReceive from '../components/send.component'
 import SwapCrypto from '../components/swap.component'
 import MassPayment from '../components/buyfiat.component'
