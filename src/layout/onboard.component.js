@@ -4,7 +4,7 @@ import RoutingComponent from '../config/router.config.component';
 import SumSub from '../components/shared/sumsub';
 import apiCalls from '../api/apiCalls';
 import Content from './content.component';
-import Header from '../layout/header.component';
+import Header from '../layout/header.component/header.component';
 import Footer from './footer.component';
 import { userInfo, getmemeberInfo } from '../reducers/configReduser';
 import { connect } from 'react-redux';
