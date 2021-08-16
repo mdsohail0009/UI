@@ -9,11 +9,6 @@ const firebaseServer = create({
 const apiClient = create({
     baseURL: process.env.REACT_APP_API_END_POINT
 })
-firebaseServer.axiosInstance.interceptors.request.use((config) => {
-    const { oidc: { user } } = store.getState()
-    config.headers.Authorization = `Bearer ${user.access_token}`
-    return config;
-})
 apiClient.axiosInstance.interceptors.request.use((config) => {
     const { oidc: { user } } = store.getState()
     config.headers.Authorization = `Bearer ${user.access_token}`

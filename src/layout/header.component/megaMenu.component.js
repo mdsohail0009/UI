@@ -4,7 +4,7 @@ import logoWhite from '../../assets/images/logo-white.png';
 import Translate from 'react-translate-component';
 import { UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
-import BuySell from '../../components/buysell.component';
+import BuySell from '../../components/buy.component';
 import SendReceive from '../../components/send.component'
 import SwapCrypto from '../../components/swap.component'
 import MassPayment from '../../components/buyfiat.component'

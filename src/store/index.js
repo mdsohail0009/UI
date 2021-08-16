@@ -2,14 +2,14 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import thunk from 'redux-thunk'
+import thunk from 'redux-thunk';
+import sellReducer from '../components/buy.component/crypto.reducer';
 import authReducer from '../reducers/authReducer';
 import buySellReducer from '../reducers/buysellReducer'
 import SendReceive from '../reducers/sendreceiveReducer'
 import SwapReducer from '../reducers/swapReducer';
 import BuyFiat from '../reducers/buyFiatReducer';
 import UserConfig from '../reducers/configReduser';
-import sellReducer from '../components/buy.component/crypto.reducer';
 
 const persistConfig = {
     key: "root",

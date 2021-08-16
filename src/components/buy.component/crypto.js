@@ -7,7 +7,7 @@ import SellToggle from '../sell.component/sellCrypto'
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import { fetchSelectedCoinDetails, setCoinWallet, setExchangeValue,fetchCoins } from './crypto.reducer';
+import { fetchSelectedCoinDetails, setCoinWallet, setExchangeValue, fetchCoins } from './crypto.reducer';
 import { convertCurrency } from './buySellService';
 
 const LinkValue = (props) => {
@@ -26,7 +26,7 @@ class CryptoComponent extends Component {
         buyToggle: 'Buy',
         isBuy: false
     }
-    componentDidMount(){
+    componentDidMount() {
         this.props.dispatch(fetchCoins("All"));
     }
     handleBuySellToggle = e => {
@@ -35,9 +35,9 @@ class CryptoComponent extends Component {
         });
     }
     handleCoinSelection = (selectedCoin) => {
-        
+
         this.props.getCoinDetails(selectedCoin.walletCode, this.props.member?.id);
-        this.props.setSelectedCoin(selectedCoin); 
+        this.props.setSelectedCoin(selectedCoin);
         convertCurrency({ from: selectedCoin.walletCode, to: "USD", value: 1, isCrypto: false }).then(val => {
             this.props.setExchangeValue({ key: selectedCoin.walletCode, value: val });
         })
@@ -49,7 +49,7 @@ class CryptoComponent extends Component {
         const { Title, Paragraph } = Typography;
         const { isBuy } = this.state;
         const { Search } = Input;
-        const  coinListdata = this.props.sellData?.coins || [];
+        const coinListdata = this.props.sellData?.coins || [];
         return (
             <>
                 <Radio.Group
@@ -71,7 +71,7 @@ class CryptoComponent extends Component {
                         <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-secondary fw-300 fs-16" />
                         <Tabs className="crypto-list-tabs">
                             <TabPane tab="All" key="1">
-                                
+
                                 <CryptoList showSearch={this.props.showSearch} coinList={coinListdata.Áll} coinType="All" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                             </TabPane>
                             <TabPane tab="Gainers" key="2">
@@ -86,8 +86,8 @@ class CryptoComponent extends Component {
         )
     }
 }
-const connectStateToProps = ({ buySell, userConfig,sellData }) => {
-    return { buySell, member: userConfig.userProfileInfo,sellData }
+const connectStateToProps = ({ buySell, userConfig, sellData }) => {
+    return { buySell, member: userConfig.userProfileInfo, sellData }
 }
 const connectDispatchToProps = dispatch => {
     return {
