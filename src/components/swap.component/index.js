@@ -9,7 +9,6 @@ import SwapSummary from './swapSummary'
 import SelectCrypto from './selectcrypto';
 import Success from './success';
 import SuccessMessage from './success';
-import ToReceive from './toReceive';
 
 const { Title, Paragraph } = Typography
 class SwapCrypto extends Component {
@@ -32,8 +31,8 @@ class SwapCrypto extends Component {
         const stepcodes = {
             swapcoins: <SwapCoins swapCoinsRef={(cd) => this.child = cd}/>,
             swapsummary: <SwapSummary />,
-            selectcrypto: <SelectCrypto swapfrom="true" />,
-            toreceive: <ToReceive />,
+            selectcrypto: <SelectCrypto swapfrom={true} />,
+            toreceive: <SelectCrypto swapfrom={false} />,
             confirmation: <SuccessMessage />
 
 

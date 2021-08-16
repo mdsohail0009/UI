@@ -22,7 +22,6 @@ class OnBoarding extends Component {
     }
   }
   render() {
-    debugger
     return <>
       {(!(this.props.userConfig) || !(this.props.user)) && <div className="loader">Loading....</div>}
       {(this.props.userConfig && this.props.user) && <>
