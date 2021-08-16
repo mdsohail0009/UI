@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import { getSellPreviewData, savesellData } from '../../components/buysell.component/api'
+import { getSellPreviewData, savesellData } from '../buy.component/api'
 import Summary from '../summary.component';
 class SellSummary extends Component {
     state = { sellpreviewData: {}, loader: true, disableConfirm: false, isTermsAgree: false, error: {valid:true,message:null} }

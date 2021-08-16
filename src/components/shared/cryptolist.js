@@ -5,7 +5,7 @@ import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
 import SelectCrypto from '../sell.component/selectCrypto';
 import connectStateProps from '../../utils/state.connect';
-import { fetchCoins } from '../buysell.component/crypto.reducer';
+import { fetchCoins } from '../buy.component/crypto.reducer';
 import NumberFormat from 'react-number-format';
 
 class CryptoList extends Component {
