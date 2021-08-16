@@ -3,8 +3,8 @@ import { Typography, Button, Card, Input, Radio, Alert } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-import { getSellamnt } from '../../components/buysell.component/api'
-import { updatesellsaveObject } from '../buysell.component/crypto.reducer';
+import { getSellamnt } from '../buy.component/api'
+import { updatesellsaveObject } from '../buy.component/crypto.reducer';
 import WalletList from '../shared/walletList';
 import LocalCryptoSwap from '../shared/local.crypto.swap';
 import SuisseBtn from '../shared/butons';
