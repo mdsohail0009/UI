@@ -9,7 +9,7 @@ import SendReceive from '../reducers/sendreceiveReducer'
 import SwapReducer from '../reducers/swapReducer';
 import BuyFiat from '../reducers/buyFiatReducer';
 import UserConfig from '../reducers/configReduser';
-import sellReducer from '../components/buysell.component/crypto.reducer';
+import sellReducer from '../components/buy.component/crypto.reducer';
 
 const persistConfig = {
     key: "root",

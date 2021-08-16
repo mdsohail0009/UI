@@ -1,7 +1,7 @@
 import { Input } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
-import { convertCurrency } from '../../buysell.component/buySellService';
+import { convertCurrency } from '../../buy.component/buySellService';
 import NumberFormat from 'react-number-format';
 const LocalCryptoSwapper = (props, ref) => {
     const { localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, sellData, selectedCoin = null } = props;

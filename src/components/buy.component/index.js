@@ -3,7 +3,7 @@ import { Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
 import CryptoComponent from './crypto';
 import connectStateProps from '../../utils/state.connect';
-import Summary from './cryptoSummary';
+import BuySummary from './buy.summary';
 import BillType from './payOption';
 import SelectCrypto from './selectCrypto';
 import { setStep } from '../../reducers/buysellReducer';
@@ -45,7 +45,7 @@ class BuySell extends Component {
             addcard: <AddCard />,
             depositcrypto: <DepositCrypto />,
             selectcrypto: <SelectCrypto />,
-            summary: <Summary />,
+            summary: <BuySummary />,
             billingaddress: <BillingAddress />,
             addressscanner: <AddressScanner />,
             depositfiat: <DepositFiat />,
