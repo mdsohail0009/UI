@@ -20,23 +20,23 @@ class Summary extends Component {
             return <Loader />
         }
         const { Paragraph, Text } = Typography;
-        const { coin, oneCoinValue, amount, amountNativeCurrency, nativeCurrency, error, isButtonLoad, showFee, feeAmount, feeCurrency, okBtnTitle, showEstimatedTotal = true, showConvert = false, convertValue, convertCoin, } = this.props;
+        const { coin, oneCoinValue, amount, amountNativeCurrency, nativeCurrency, error, isButtonLoad, showFee, feeAmount, feeCurrency, okBtnTitle, showEstimatedTotal = true, showConvert = false, convertValue, convertCoin,showEstimated = true,exchangeCoin, decimalPlaces, currencyPrefix } = this.props;
         const link = <LinkValue content="terms_service" />;
         return (
             <>
                 {!error?.valid && <Alert showIcon type="info" message="Buy crypto" description={error?.message} closable onClose={() => this.setState({ ...this.state, error: { valid: true, message: null } })} />}
                 <div className="cryptosummary-container auto-scroll">
                     <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}><Currency prefix={""} defaultValue={amount} suffixText={coin} /> </div>
-                    <div className="text-white-50 fw-300 text-center fs-14 mb-16"><Currency defaultValue={amountNativeCurrency} type={'text'} prefixText={nativeCurrency} /></div>
+                    {showEstimated && <div className="text-white-50 fw-300 text-center fs-14 mb-16"><Currency defaultValue={amountNativeCurrency} type={'text'} prefixText={nativeCurrency} /></div>}
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
-                        <Currency defaultValue={oneCoinValue} className="fw-300 text-white-30" prefixText={`1 ${coin} = ${nativeCurrency}`}
+                        <Currency defaultValue={oneCoinValue} prefix={currencyPrefix} className="fw-300 text-white-30" prefixText={`1 ${exchangeCoin||coin} = ${nativeCurrency}`}
                         />
 
                     </div>
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="amount" component={Text} />
-                        <Currency defaultValue={amount} type={'text'} className="fw-300 text-white-30"
+                        <Currency defaultValue={amount} prefix={currencyPrefix} type={'text'} className="fw-300 text-white-30"
                             prefixText={coin} />
 
                     </div>
@@ -46,7 +46,7 @@ class Summary extends Component {
                     </div>}
                     {showEstimatedTotal && <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="estimated_total" component={Text} />
-                        <Currency defaultValue={amountNativeCurrency} className="fw-300 text-white-30" prefixText={nativeCurrency} />
+                        <Currency defaultValue={amountNativeCurrency} decimalPlaces={"3"} className="fw-300 text-white-30" prefixText={nativeCurrency}/>
 
                     </div>}
                     {showConvert && <div className="pay-list fs-16 mb-16">
