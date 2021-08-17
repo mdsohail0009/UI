@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu,  Typography, Dropdown, Tabs, Switch, Drawer } from 'antd';
+import { Layout, Menu,  Typography, Dropdown, Tabs, notification, Drawer } from 'antd';
 import { Link } from 'react-router-dom';
 import logoColor from '../../assets/images/logo-color.png';
 import counterpart from 'counterpart';
@@ -65,24 +65,40 @@ class Header extends Component {
     }
    
     showBuyDrawer = () => {
-        this.setState({
-            buyDrawer: true
-        })
+        if (this.props.userConfig.isKYC) {
+            this.setState({
+                buyDrawer: true
+            })
+        } else {
+            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+        }
     }
     showSendDrawer = () => {
-        this.setState({
-            sendDrawer: true
-        })
+        if (this.props.userConfig.isKYC) {
+            this.setState({
+                sendDrawer: true
+            })
+        } else {
+            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+        }
     }
     showSwapDrawer = () => {
-        this.setState({
-            swapDrawer: true
-        })
+        if (this.props.userConfig.isKYC) {
+            this.setState({
+                swapDrawer: true
+            })
+        } else {
+            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+        }
     }
     showBuyFiatDrawer = () => {
-        this.setState({
-            buyFiatDrawer: true,
-        })
+        if (this.props.userConfig.isKYC) {
+            this.setState({
+                buyFiatDrawer: true
+            })
+        } else {
+            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+        }
     }
     closeDrawer = () => {
         this.child.clearValues();

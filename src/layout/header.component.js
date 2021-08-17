@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Typography, Dropdown, Tabs, Row, Col, Divider, Avatar, Carousel, Switch, Drawer } from 'antd';
+import { Layout, Menu, Modal, Typography, Dropdown, Tabs, Row, Col, Divider, Avatar, Carousel, Switch, Drawer, notification } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
@@ -190,24 +190,52 @@ class Header extends Component {
         })
     }
     showBuyDrawer = () => {
-        this.setState({
-            buyDrawer: true
-        })
+        // this.setState({
+        //     buyDrawer: true
+        // })
+        if (this.props.userConfig.isKYC) {
+            this.setState({
+                buyDrawer: true
+            })
+        } else {
+            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+        }
     }
     showSendDrawer = () => {
-        this.setState({
-            sendDrawer: true
-        })
+        // this.setState({
+        //     sendDrawer: true
+        // })
+        if (this.props.userConfig.isKYC) {
+            this.setState({
+                sendDrawer: true
+            })
+        } else {
+            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+        }
     }
     showSwapDrawer = () => {
-        this.setState({
-            swapDrawer: true
-        })
+        // this.setState({
+        //     swapDrawer: true
+        // })
+        if (this.props.userConfig.isKYC) {
+            this.setState({
+                swapDrawer: true
+            })
+        } else {
+            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+        }
     }
     showBuyFiatDrawer = () => {
-        this.setState({
-            buyFiatDrawer: true,
-        })
+        // this.setState({
+        //     buyFiatDrawer: true,
+        // })
+        if (this.props.userConfig.isKYC) {
+            this.setState({
+                buyFiatDrawer: true
+            })
+        } else {
+            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+        }
     }
     closeDrawer = () => {
         this.child.clearValues();
