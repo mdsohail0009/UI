@@ -40,7 +40,6 @@ class BuySell extends Component {
     renderContent = () => {
         const stepcodes = {
             buycrypto: <CryptoComponent />,
-            selectcrypto: <SelectCrypto />,
             billtype: <BillType />,
             addcard: <AddCard />,
             depositcrypto: <DepositCrypto />,
