@@ -128,7 +128,7 @@ class SwapSummary extends Component {
             showConvert={true}
             convertValue={parseFloat(this.props.swapStore.fromCoinInputValue)}
             convertCoin={this.props.swapStore?.coinDetailData?.coin}
-            error={this.state.errorMessage} iButtonLoad={this.state.isLoading}
+            error={{ valid: this.state.errorMessage?false:true,title:'Swap', message: this.state.errorMessage }} iButtonLoad={this.state.isLoading}
             onRefresh={() => {this.setOneCoinValue(); this.setReceiveAmount();}}
             onCancel={() => this.props.changeStep('step1')}
             onClick={() => this.confirmSwap()}

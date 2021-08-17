@@ -8,6 +8,7 @@ import Header from '../layout/header.component/header.component';
 import Footer from './footer.component';
 import { userInfo, getmemeberInfo } from '../reducers/configReduser';
 import { connect } from 'react-redux';
+import { Redirect, withRouter } from 'react-router-dom';
 class OnBoarding extends Component {
   state = {
     isOnboarding: false,
@@ -22,18 +23,15 @@ class OnBoarding extends Component {
     }
   }
   render() {
-    return <>
-      {(!(this.props.userConfig) || !(this.props.user)) && <div className="loader">Loading....</div>}
-      {(this.props.userConfig && this.props.user) && <>
-        {!(this.props.userConfig.isKYC) && <SumSub />}
-        {(this.props?.userConfig?.isKYC) && <>
-          <AntLayout>
-            <Header />
-            <Content />
-            <Footer />
-          </AntLayout>
-        </>}</>}
-    </>
+    debugger
+    if (this.props.user && this.props.user.profile && this.props.userConfig) {
+     if(this.props.userConfig.isKYC ){
+      if(!window.location.pathname.includes('dashboard'))this.props.history.push("/dashboard")
+     }else{
+      if(!window.location.pathname.includes('sumsub'))this.props.history.push('/sumsub')
+     }
+    }
+    return <></>
   }
 }
 const connectStateToProps = ({ userConfig, oidc }) => {
@@ -49,4 +47,4 @@ const connectDispatchToProps = dispatch => {
     }
   }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(OnBoarding);
+export default connect(connectStateToProps, connectDispatchToProps)(withRouter(OnBoarding));

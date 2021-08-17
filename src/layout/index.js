@@ -17,11 +17,19 @@ class Layout extends Component {
         }
     }
     render() {
-        if ((!this.props.user || this.props.user.expired) && window.location.pathname.includes('callback')) {
+        if ((!this.props.user || this.props.user.expired) && !window.location.pathname.includes('callback')) {
+            return <div className="loader">Loading .....</div>
+        }else if((!this.props.user || this.props.user.expired) && window.location.pathname.includes('callback')){
             return <CallbackPage />
+        }else if(this.props.user && !this.props.userProfile){
+            return <OnBoarding />
         }
         return <>
-            <OnBoarding />
+            <AntLayout>
+            <Header />
+            <Content />
+            <Footer />
+          </AntLayout>
         </>
         
         
