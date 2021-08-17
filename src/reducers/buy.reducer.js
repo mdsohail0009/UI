@@ -107,21 +107,6 @@ const fetchPreview = ({ coin, wallet, amount }) => {
         }
     }
 }
-const initialState = {
-    isLoading: true,
-    error: null,
-    MemberCoins: [],
-    MemberFiat: [],
-    coinDetailData: {}, sellsaveObject: {},
-    coins: { all: { loading: false, data: [] }, gainers: { loading: false, data: [], losers: { loading: false, data: [] } } },
-    selectedCoin: { loading: false, data: null },
-    memberFiat: { loading: false, data: [] },
-    previewDetails: { loading: false, data: null },
-    selectedWallet: null,
-    coinWallet: null,
-    exchangeValues: {}
-}
-
 const getMemberCoins = (memberId) => {
     return async (dispatch) => {
         dispatch(fetchMemberCoins({ key: "MemberCoins", loading: true, data: [] }));
@@ -152,10 +137,24 @@ const getMemberCoins = (memberId) => {
             )
         ]);
         // dispatch(fetchMemberFiat());
-        try {
-        } catch (error) { }
     }
 }
+const initialState = {
+    isLoading: true,
+    error: null,
+    MemberCoins: [],
+    MemberFiat: [],
+    coinDetailData: {}, sellsaveObject: {},
+    coins: { all: { loading: false, data: [] }, gainers: { loading: false, data: [], losers: { loading: false, data: [] } } },
+    selectedCoin: { loading: false, data: null },
+    memberFiat: { loading: false, data: [] },
+    previewDetails: { loading: false, data: null },
+    selectedWallet: null,
+    coinWallet: null,
+    exchangeValues: {}
+}
+
+
 const buyReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_MEMBERCOINS:
@@ -190,5 +189,5 @@ const buyReducer = (state = initialState, action) => {
             return state;
     }
 }
-export {setExchangeValue, getMemberCoins, updateCoinDetails, updatesellsaveObject, fetchCoins, fetchSelectedCoinDetails, fetchMemberFiat, fetchPreview, setWallet, setCoinWallet };
 export default buyReducer;
+export {setExchangeValue, getMemberCoins, updateCoinDetails, updatesellsaveObject, fetchCoins, fetchSelectedCoinDetails, fetchMemberFiat, fetchPreview, setWallet, setCoinWallet }

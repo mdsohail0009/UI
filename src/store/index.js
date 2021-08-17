@@ -3,7 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
-import buyReducer from '../reducers/buy.reducer';
+import buyReducer from '../reducers/buy.reducer.js';
 import authReducer from '../reducers/authReducer';
 import buySellReducer from '../reducers/buysellReducer'
 import SendReceive from '../reducers/sendreceiveReducer'
