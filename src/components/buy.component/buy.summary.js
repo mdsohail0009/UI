@@ -37,7 +37,7 @@ class BuySummary extends Component {
                 "toValue": this.props.sellData.previewDetails?.data?.amount,
                 "description": "Buy Crypto",
                 "comission": 0,
-                "exicutedPrice": 0,
+                "exicutedPrice": this.props.sellData?.previewDetails?.data?.oneCoinValue,
                 "totalAmount": this.props.sellData.previewDetails?.data?.amount
 
             }
