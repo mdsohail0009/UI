@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Card, Input, Alert, message } from 'antd';
+import { Typography, Card, Alert, message } from 'antd';
 import WalletList from '../shared/walletList';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -61,7 +61,7 @@ class SelectCrypto extends Component {
             return <Loader />
         }
         const { Paragraph, Text } = Typography;
-        const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
+        const { localValue, cryptoValue } = this.state.swapValues;
         const { coin, coinValueinNativeCurrency, coinBalance, percentage } = this.props.sellData?.selectedCoin?.data;
         return (
             <div id="divScroll">
@@ -96,7 +96,7 @@ class SelectCrypto extends Component {
         )
     }
 }
-const connectStateToProps = ({ buySell, oidc, sellData, userConfig }) => {
+const connectStateToProps = ({ buySell, sellData, userConfig }) => {
     return { buySell, sellData, userProfileInfo: userConfig?.userProfileInfo  }
 }
 const connectDispatchToProps = dispatch => {

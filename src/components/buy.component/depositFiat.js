@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Button, Radio, Tabs } from 'antd';
-import config from '../../config/config';
+import { Typography } from 'antd';
 import WalletList from '../shared/walletList';
-import CryptoList from '../shared/cryptolist';
-import { Link } from "react-router-dom";
 import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -37,7 +34,7 @@ class DepositFiat extends Component {
     }
 }
 
-const connectStateToProps = ({ buySell, oidc }) => {
+const connectStateToProps = ({ buySell }) => {
     return { buySell }
 }
 const connectDispatchToProps = dispatch => {

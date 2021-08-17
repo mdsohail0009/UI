@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Card, Input, Radio, Alert } from 'antd';
+import { Typography, Card, Radio, Alert } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -93,16 +93,6 @@ class SelectSellCrypto extends Component {
             this.props.dispatch(updatesellsaveObject(obj))
         }
     }
-    // handleChange(e) {
-    //     let obj = Object.assign({}, this.state.sellSaveData);
-    //     for (var k in this.props.sellData.MemberFiat) {
-    //         if (this.props.sellData.MemberFiat[k].currencyCode == e) {
-    //             obj.toWalletId = this.props.sellData.MemberFiat[k].id;
-    //             obj.toWalletCode = this.props.sellData.MemberFiat[k].currencyCode;
-    //         }
-    //     }
-    //     this.setState({ ...this.state, sellSaveData: obj })
-    // }
     async swapChange(value) {
         let obj = Object.assign({}, this.state);
         this.setState({ isSwap: value })
@@ -154,7 +144,6 @@ class SelectSellCrypto extends Component {
                 </Radio.Group>
                 <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua" />
                 <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
-                {/* <Dropdown label="Wallets" name="currencyCode" type="Wallets" dropdownData={this.props.sellData.MemberFiat} value={this.state.sellSaveData.walletName} onValueChange={(Value) => this.handleChange(Value)} field='WalletName'></Dropdown> */}
                 <div className="mt-24">
                     <SuisseBtn autoDisable={true} title="preview" className="pop-btn" onClick={() => { this.previewSellData() }} />
                 </div>

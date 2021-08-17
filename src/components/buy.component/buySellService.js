@@ -1,4 +1,4 @@
-import { fetchCurrencyConvertionValue, getMemberfiat } from "./api"
+import { fetchCurrencyConvertionValue } from "./api"
 
 export const convertCurrency = async ({ from, to, value, isCrypto }) => {
     const response = await fetchCurrencyConvertionValue({ from, to, value, isCrypto });

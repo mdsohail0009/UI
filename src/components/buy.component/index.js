@@ -22,9 +22,7 @@ class BuySell extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            //search: false,
         }
-        //this.openSearch = this.openSearch.bind(this);
     }
     closeBuyDrawer = () => {
         this.props.dispatch(setStep("step1"))
@@ -32,10 +30,6 @@ class BuySell extends Component {
             this.props.onClose();
         }
     }
-    // openSearch = () => {
-    //     debugger
-    //     this.setState({ search: !this.state.search })
-    // }
 
     renderContent = () => {
         const stepcodes = {

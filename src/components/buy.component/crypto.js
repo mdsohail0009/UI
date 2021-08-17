@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
-import { Typography, Radio, Tabs, Input } from 'antd';
+import { Typography, Radio, Tabs } from 'antd';
 import config from '../../config/config';
 import Translate from 'react-translate-component';
 import CryptoList from '../shared/cryptolist';
 import SellToggle from '../sell.component/sellCrypto'
-import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import { fetchSelectedCoinDetails, setCoinWallet, setExchangeValue, fetchCoins } from '../../reducers/buyReducer';
 import { convertCurrency } from './buySellService';
-
-const LinkValue = (props) => {
-    return (
-        <Translate className="text-yellow text-underline c-pointer"
-            content={props.content}
-            component={Link}
-            to="./#"
-        />
-    )
-}
 class CryptoComponent extends Component {
     state = {
         buyDrawer: false,
@@ -45,11 +34,9 @@ class CryptoComponent extends Component {
     }
     render() {
         const { TabPane } = Tabs;
-        const link = <LinkValue content="deposit" />;
         const { Title, Paragraph } = Typography;
         const { isBuy } = this.state;
-        const { Search } = Input;
-        const { coins: coinListdata } = this.props.sellData;
+        const { coins: coinListdata } = this.props?.sellData;
         return (
             <>
                 <Radio.Group

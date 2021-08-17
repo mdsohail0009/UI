@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Typography, Button, Tooltip } from 'antd';
-import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';

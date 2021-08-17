@@ -71,51 +71,6 @@ class BuySummary extends Component {
             onClick={() => this.pay()}
             onTermsChange={(checked)=>{this.setState({...this.state,isTermsAgreed:checked})}}
         />
-        // return (
-        //     <>
-        //         {!this.state?.error?.valid && <Alert showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable onClose={() => this.setState({ ...this.state, error: { valid: true, message: null } })} />}
-        //         <div className="cryptosummary-container auto-scroll">
-        //             <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}><Currency prefix={""} defaultValue={amount} suffixText={coin} /> </div>
-        //             <div className="text-white-50 fw-300 text-center fs-14 mb-16"><Currency defaultValue={amountNativeCurrency} type={'text'} prefixText={this.props.sellData?.selectedWallet?.currencyCode} /></div>
-        //             <div className="pay-list fs-14">
-        //                 <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
-        //                 <Currency defaultValue={oneCoinValue} className="fw-300 text-white-30" prefixText={`1 ${coin} = ${this.props.sellData?.selectedWallet?.currencyCode}`}
-        //                 />
-
-        //             </div>
-        //             <div className="pay-list fs-14">
-        //                 <Translate className="fw-400 text-white" content="amount" component={Text} />
-        //                 <Currency defaultValue={amount} type={'text'} className="fw-300 text-white-30"
-        //                     prefixText={coin} />
-
-        //             </div>
-        //             {/* <div className="pay-list fs-14">
-        //             <Translate className="fw-400 text-white" content={`suissebase_fee`} component={Text} ><Tooltip title="Suissebase Fee"><span className="icon md info c-pointer ml-4" /></Tooltip></Translate>
-        //             <Text className="text-darkgreen fw-400">USD 0,000</Text>
-        //         </div> */}
-        //             <div className="pay-list fs-14">
-        //                 <Translate className="fw-400 text-white" content="estimated_total" component={Text} />
-        //                 <Currency defaultValue={amountNativeCurrency} className="fw-300 text-white-30" prefixText={this.props.sellData?.selectedWallet?.currencyCode} />
-
-        //             </div>
-        //             {/* <Translate className="fs-12 text-white-30 text-center my-16" content="summary_hint_text" component={Paragraph} /> */}
-        //             <div className="fs-12 text-white-30 text-center my-16">Your final amount might be changed with in
-        //                 {/* {seconds}  */}
-        //                 10 seconds.</div>
-        //             {/* <div className="text-center text-underline text-white"><Link onClick={() => { this.startCounter(); this.setState({ ...this.state, disablePay: false }) }} className="text-yellow">Click to see the new rate.</Link></div> */}
-        //             <div className="d-flex p-16 mb-36 agree-check">
-        //                 <label>
-        //                     <input type="checkbox" id="agree-check" />
-        //                     <span for="agree-check" />
-        //                 </label>
-        //                 <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16 mb-0" style={{ flex: 1 }} />
-        //             </div>
-        //             <SuisseBtn className={"pop-btn"} onRefresh={() => this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, amount)} title={"pay"} loading={this.state.isLoading} autoDisable={true} onClick={() => this.pay()} />
-        //             <Translate content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
-        //         </div>
-
-        //     </>
-        // )
     }
 }
 const connectStateToProps = ({ buySell, oidc, sellData, userConfig }) => {

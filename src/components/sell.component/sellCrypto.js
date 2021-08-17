@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Button, Card, Input, Radio } from 'antd';
-import config from '../../config/config';
-import WalletList from '../shared/walletList';
+import { Typography, Card } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import { getMemberCoins, updateCoinDetails,setExchangeValue,setCoinWallet } from '../../reducers/buyReducer'
@@ -17,7 +15,7 @@ class SellToggle extends Component {
         });
     };
     render() {
-        const { Title, Paragraph, Text } = Typography;
+        const { Text } = Typography;
         return (
             <>
                 {this.props.sellData.MemberCoins != null && this.props.sellData.MemberCoins.length != 0 && <div className="sellcrypto-container auto-scroll">
