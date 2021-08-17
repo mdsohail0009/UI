@@ -63,9 +63,7 @@ const handleFetch = (payload) => {
 }
 
 const fetchCoins = (type) => {
-    debugger
     return async (dispatch) => {
-        debugger
         dispatch(handleCoinsFetch({ key: type, loading: true, data: [] }));
         const response = await getCoins(type);
         if (response.ok) {
@@ -159,7 +157,6 @@ const getMemberCoins = (memberId) => {
     }
 }
 const buyReducer = (state = initialState, action) => {
-    debugger
     switch (action.type) {
         case FETCH_MEMBERCOINS:
             state = { ...state, isLoading: true }
@@ -193,6 +190,5 @@ const buyReducer = (state = initialState, action) => {
             return state;
     }
 }
-
+export {setExchangeValue, getMemberCoins, updateCoinDetails, updatesellsaveObject, fetchCoins, fetchSelectedCoinDetails, fetchMemberFiat, fetchPreview, setWallet, setCoinWallet };
 export default buyReducer;
-export {setExchangeValue, getMemberCoins, updateCoinDetails, updatesellsaveObject, fetchCoins, fetchSelectedCoinDetails, fetchMemberFiat, fetchPreview, setWallet, setCoinWallet }
