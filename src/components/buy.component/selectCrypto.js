@@ -5,13 +5,11 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import { convertCurrency, validatePreview } from './buySellService';
-import { fetchMemberFiat, fetchPreview, setWallet } from '../../reducers/buy.reducer';
+import { fetchMemberFiat, fetchPreview, setWallet } from '../../reducers/buyReducer';
 import Loader from '../../Shared/loader';
 import SuisseBtn from '../shared/butons';
 import NumberFormat from 'react-number-format';
 import LocalCryptoSwapper from '../shared/local.crypto.swap';
-import CryptoList from '../shared/cryptolist';
-
 class SelectCrypto extends Component {
     constructor(props) {
         super(props);
@@ -65,7 +63,6 @@ class SelectCrypto extends Component {
         const { Paragraph, Text } = Typography;
         const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
         const { coin, coinValueinNativeCurrency, coinBalance, percentage } = this.props.sellData?.selectedCoin?.data;
-        const { loading: coinLoading, data: coinsList } = this.props.sellData?.memberFiat;
         return (
             <div id="divScroll">
                 {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable />}
@@ -85,12 +82,7 @@ class SelectCrypto extends Component {
                     </Card>
                     <LocalCryptoSwapper selectedCoin={coin} localAmt={localValue} cryptoAmt={cryptoValue} localCurrency={"USD"} cryptoCurrency={coin} onChange={(obj) => this.onValueChange(obj)} />
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua pt-16" />
-                    <CryptoList
-                        coinType=""
-                        showSearch={true}
-                        coinList={coinsList} isLoading={coinLoading}
-                        onCoinSelected={(selectedCoin) => this.handleWalletSelection(selectedCoin)}
-                    />
+                    <WalletList onWalletSelect={(e)=>this.handleWalletSelection(e)} />
                     <div className="fs-12 text-white-30 text-center mt-24">Your amount might be changed with in <span className="text-yellow" >10</span> seconds.</div>
                     {/* <div className="text-center">
                         <Translate content="refresh_newprice" component={Link} onClick={() => this.fetchConvertionValue()} className="mb-36 fs-14 text-yellow fw-200 mb-16 text-underline" />

@@ -7,7 +7,7 @@ import SellToggle from '../sell.component/sellCrypto'
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import { fetchSelectedCoinDetails, setCoinWallet, setExchangeValue, fetchCoins } from '../../reducers/buy.reducer';
+import { fetchSelectedCoinDetails, setCoinWallet, setExchangeValue, fetchCoins } from '../../reducers/buyReducer';
 import { convertCurrency } from './buySellService';
 
 const LinkValue = (props) => {
@@ -49,7 +49,7 @@ class CryptoComponent extends Component {
         const { Title, Paragraph } = Typography;
         const { isBuy } = this.state;
         const { Search } = Input;
-        const coinListdata = this.props.sellData?.coins || [];
+        const { coins: coinListdata } = this.props.sellData;
         return (
             <>
                 <Radio.Group
@@ -69,16 +69,20 @@ class CryptoComponent extends Component {
                     <>
                         <Translate content="purchase_a_crypto" component={Title} className="drawer-title" />
                         <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-secondary fw-300 fs-16" />
-                        <Tabs className="crypto-list-tabs">
+                        <Tabs className="crypto-list-tabs" onChange={(key)=>{
+                            const types={
+                                1:"All",2:"Gainers",3:"Losers"
+                            };
+                            this.props.dispatch(fetchCoins(types[key]));
+                        }}>
                             <TabPane tab="All" key="1">
-
-                                <CryptoList showSearch={this.props.showSearch} coinList={coinListdata.Áll} coinType="All" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
+                                <CryptoList isLoading={coinListdata["All"]?.loading} showSearch={true} coinList={coinListdata["All"]?.data} coinType="All" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                             </TabPane>
                             <TabPane tab="Gainers" key="2">
-                                <CryptoList coinType="Gainers" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
+                                <CryptoList coinType="Gainers" showSearch={true} isLoading={coinListdata["Gainers"]?.loading} coinList={coinListdata["Gainers"]?.data} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                             </TabPane>
                             <TabPane tab="Losers" key="3">
-                                <CryptoList coinType="Losers" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
+                                <CryptoList coinType="Losers" showSearch={true} isLoading={coinListdata["Losers"]?.loading} coinList={coinListdata["Losers"]?.data} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                             </TabPane>
                         </Tabs></>
                 }

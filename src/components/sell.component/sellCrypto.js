@@ -4,7 +4,7 @@ import config from '../../config/config';
 import WalletList from '../shared/walletList';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import { getMemberCoins, updateCoinDetails,setExchangeValue,setCoinWallet } from '../../reducers/buy.reducer'
+import { getMemberCoins, updateCoinDetails,setExchangeValue,setCoinWallet } from '../../reducers/buyReducer'
 import Loader from '../../Shared/loader'
 
 class SellToggle extends Component {
