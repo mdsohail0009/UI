@@ -1,14 +1,13 @@
 import { apiClient } from '../../api';
 import { ApiControllers } from '../../api/config';
-const Portfolio = "Exchange/";
 const getportfolio = (member_id) => {
-    return apiClient.get(Portfolio + `MemberCrypto?memberId=${member_id}`);
+    return apiClient.get(ApiControllers.exchange + `MemberCrypto?memberId=${member_id}`);
 }
 const getCryptos = () => {
     return apiClient.get(ApiControllers.exchange + 'Coins');
 }
 const getMemberfiat = (member_id) => {
-    return apiClient.get(Portfolio + 'MemberFiat?memberId=' + (member_id));
+    return apiClient.get(ApiControllers.exchange + 'MemberFiat?memberId=' + member_id);
 }
 const getSellamnt = (Value, isSwap,coin) => {
     return apiClient.get(ApiControllers.exchange + 'CryptoFiatConverter?from='+coin+'&to=USD&value=' + Value + '&isCrypto=' + !isSwap);
@@ -23,7 +22,7 @@ const getCoins = (type) => {
     return apiClient.get(ApiControllers.exchange + "Coins?type=" + type);
 }
 const getSelectedCoinDetails = (coin_code, member_id) => {
-    return apiClient.get(ApiControllers.exchange + `MemberCoinDetail?memberId=${member_id}&coin=${coin_code} `)
+    return apiClient.get(ApiControllers.exchange + `MemberCoinDetail?memberId=${member_id}&coin=${coin_code}`)
 }
 const fetchCurrencyConvertionValue = ({ from, to, value, isCrypto }) => {
     return apiClient.get(ApiControllers.exchange + `CryptoFiatConverter?from=${from}&to=${to}&value=${value}&isCrypto=${isCrypto}`);
