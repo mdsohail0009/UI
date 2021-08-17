@@ -38,15 +38,7 @@ const { TabPane } = Tabs;
 
 
 class Header extends Component {
-    securityMenu = (
-
-        <Menu>
-           <SecurityMenu/>
-        </Menu>
-    );
-    settingMenu = (
-        <Menu><SettingsMenu/></Menu>
-    );
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -151,17 +143,13 @@ class Header extends Component {
                         <div className="login-user">
                             <ul className="header-logo pl-0">
                                 <li className="pr-30 p-relative"><Link><img src={logoColor} alt="logo" className="tlv-logo" /></Link></li>
-                               <MegaMenu></MegaMenu>
+                                <MegaMenu></MegaMenu>
                                 <li className="mb-d-none"><Translate content="header_title" component="p" className="text-white-30 mb-0 fs-24" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
-                                <Dropdown overlay={this.securityMenu}  placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                    <Menu.Item key="5">Security</Menu.Item>
-                                </Dropdown>
+                                <SecurityMenu />
                                 <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
-                                <Dropdown overlay={this.settingMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                    <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
-                                </Dropdown>
+                                <SettingsMenu />
                             </Menu>
                         </div>
                         <Menu theme="light" mode="horizontal" className="header-right" defaultSelectedKeys={['1']}>
@@ -172,13 +160,9 @@ class Header extends Component {
                                 <Translate content="menu_send_receive" component={Menu.Item} key="3" className="mr-16" />
                             </Dropdown>
                             {/* <Translate content="menu_mass_pay" component={Menu.Item} key="4" onClick={this.showBuyFiatDrawer} className="list-item" /> */}
-                            <Dropdown overlay={this.securityMenu} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                <Translate key="5" content="security" component={Menu.Item} />
-                            </Dropdown>
+                            <SecurityMenu/>
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
-                            <Dropdown overlay={this.settingMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                <Menu.Item key="7"><span className="icon md gear ml-4" /></Menu.Item>
-                            </Dropdown>
+                            <SettingsMenu/>
                         </Menu>
                     </menuHeader>
                 </Layout >
