@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
-import { Layout as AntLayout } from 'antd';
-import RoutingComponent from '../config/router.config.component';
-import SumSub from '../components/shared/sumsub';
-import apiCalls from '../api/apiCalls';
-import Content from './content.component';
-import Header from '../layout/header.component/header.component';
-import Footer from './footer.component';
 import { userInfo, getmemeberInfo } from '../reducers/configReduser';
 import { connect } from 'react-redux';
-import { Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 class OnBoarding extends Component {
   state = {
     isOnboarding: false,
