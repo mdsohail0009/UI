@@ -59,8 +59,8 @@ class SellSummary extends Component {
     }
 }
 
-const connectStateToProps = ({ buySell, sellData }) => {
-    return { buySell, sellData }
+const connectStateToProps = ({ buySell, sellInfo }) => {
+    return { buySell, sellData:sellInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
