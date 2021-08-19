@@ -22,8 +22,9 @@ const rootReducer = combineReducers({
     sendReceive: SendReceive,
     swapStore: SwapReducer,
     buyFiat: BuyFiat,
-    sellData:buyReducer,
-    userConfig:UserConfig
+    //sellData:buyReducer,
+    userConfig:UserConfig,
+    buyInfo:buyReducer
 })
 const reducer = persistReducer(persistConfig, rootReducer)
 let store = createStore(

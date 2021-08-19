@@ -6,7 +6,7 @@ import CryptoList from '../shared/cryptolist';
 import SellToggle from '../sell.component/sellCrypto'
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import { fetchSelectedCoinDetails, setCoinWallet, setExchangeValue, fetchCoins } from '../../reducers/buyReducer';
+import { fetchCoins, fetchSelectedCoinDetails, setCoin,setExchangeValue } from '../../reducers/buyReducer';
 import { convertCurrency } from './buySellService';
 class CryptoComponent extends Component {
     state = {
@@ -36,7 +36,7 @@ class CryptoComponent extends Component {
         const { TabPane } = Tabs;
         const { Title, Paragraph } = Typography;
         const { isBuy } = this.state;
-        const { coins: coinListdata } = this.props?.sellData;
+        const { coins: coinListdata } = this.props?.buyInfo;
         return (
             <>
                 <Radio.Group
@@ -56,9 +56,9 @@ class CryptoComponent extends Component {
                     <>
                         <Translate content="purchase_a_crypto" component={Title} className="drawer-title" />
                         <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-secondary fw-300 fs-16" />
-                        <Tabs className="crypto-list-tabs" onChange={(key)=>{
-                            const types={
-                                1:"All",2:"Gainers",3:"Losers"
+                        <Tabs className="crypto-list-tabs" onChange={(key) => {
+                            const types = {
+                                1: "All", 2: "Gainers", 3: "Losers"
                             };
                             this.props.dispatch(fetchCoins(types[key]));
                         }}>
@@ -77,8 +77,8 @@ class CryptoComponent extends Component {
         )
     }
 }
-const connectStateToProps = ({ buySell, userConfig, sellData }) => {
-    return { buySell, member: userConfig.userProfileInfo, sellData }
+const connectStateToProps = ({ buySell, userConfig, buyInfo }) => {
+    return { buySell, member: userConfig.userProfileInfo, buyInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
@@ -89,10 +89,10 @@ const connectDispatchToProps = dispatch => {
             dispatch(fetchSelectedCoinDetails(coin, memid));
         },
         setSelectedCoin: (coinWallet) => {
-            dispatch(setCoinWallet(coinWallet));
+         dispatch(setCoin(coinWallet));
         },
         setExchangeValue: ({ key, value }) => {
-            dispatch(setExchangeValue({ key, value }))
+             dispatch(setExchangeValue({ key, value }))
         },
         dispatch
     }

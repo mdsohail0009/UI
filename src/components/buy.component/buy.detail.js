@@ -5,7 +5,7 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import { convertCurrency, validatePreview } from './buySellService';
-import { fetchMemberFiat, fetchPreview, setWallet } from '../../reducers/buyReducer';
+import { fetchPreview, setWallet,fetchMemberFiat } from '../../reducers/buyReducer';
 import Loader from '../../Shared/loader';
 import SuisseBtn from '../shared/butons';
 import NumberFormat from 'react-number-format';
@@ -32,7 +32,7 @@ class SelectCrypto extends Component {
         this.props.getCoinsList(this.props.userProfileInfo?.id)
     }
     fetchConvertionValue = async () => {
-        const { coin } = this.props.sellData?.selectedCoin?.data;
+        const { coin } = this.props.buyInfo?.selectedCoin?.data;
         const { isSwaped, cryptoValue, localValue } = this.state.swapValues;
         const value = await convertCurrency({ from: coin, to: "USD", value: isSwaped ? cryptoValue : localValue, isCrypto: !isSwaped })
         this.setState({ ...this.state, disableConfirm: false, swapValues: { ...this.state.swapValues, [isSwaped ? "localValue" : "cryptoValue"]: value } })
@@ -41,13 +41,13 @@ class SelectCrypto extends Component {
         this.setState({ ...this.state, swapValues: { localValue, cryptoValue, isSwaped } });
     }
     handleWalletSelection = (walletId) => {
-        const selectedWallet = this.props.sellData?.memberFiat?.data?.filter(item => item.id == walletId)[0];
+        const selectedWallet = this.props.buyInfo?.memberFiat?.data?.filter(item => item.id == walletId)[0];
         this.setState({ ...this.state, selectedWallet });
         this.props.setWallet(selectedWallet);
     }
     handlePreview = () => {
         const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
-        const { buyMin, buyMax, coin } = this.props.sellData?.selectedCoin?.data;
+        const { buyMin, buyMax, coin } = this.props.buyInfo?.selectedCoin?.data;
         const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin })
         if (!_vaidator.valid) {
             this.setState({ ...this.state, error: { ..._vaidator } });
@@ -57,12 +57,12 @@ class SelectCrypto extends Component {
         this.props.changeStep('step3');
     }
     render() {
-        if (this.props.sellData?.selectedCoin.loading || !this.props.sellData?.selectedCoin?.data) {
+        if (this.props.buyInfo?.selectedCoin?.loading || !this.props.buyInfo?.selectedCoin?.data) {
             return <Loader />
         }
         const { Paragraph, Text } = Typography;
         const { localValue, cryptoValue } = this.state.swapValues;
-        const { coin, coinValueinNativeCurrency, coinBalance, percentage } = this.props.sellData?.selectedCoin?.data;
+        const { coin, coinValueinNativeCurrency, coinBalance, percentage } = this.props.buyInfo?.selectedCoin?.data;
         return (
             <div id="divScroll">
                 {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable />}
@@ -96,8 +96,8 @@ class SelectCrypto extends Component {
         )
     }
 }
-const connectStateToProps = ({ buySell, sellData, userConfig }) => {
-    return { buySell, sellData, userProfileInfo: userConfig?.userProfileInfo  }
+const connectStateToProps = ({ buySell, buyInfo, userConfig }) => {
+    return { buySell, buyInfo, userProfileInfo: userConfig?.userProfileInfo  }
 }
 const connectDispatchToProps = dispatch => {
     return {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Typography, Card } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import { getMemberCoins, updateCoinDetails,setExchangeValue,setCoinWallet } from '../../reducers/buyReducer'
+import { getMemberCoins, updateCoinDetails,setExchangeValue,setCoinWallet } from '../../reducers/buy.reducer'
 import Loader from '../../Shared/loader'
 
 class SellToggle extends Component {
@@ -18,8 +18,8 @@ class SellToggle extends Component {
         const { Text } = Typography;
         return (
             <>
-                {this.props.sellData.MemberCoins != null && this.props.sellData.MemberCoins.length != 0 && <div className="sellcrypto-container auto-scroll">
-                    {this.props.sellData.MemberCoins.map((coin, idx) => <Card className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { this.props.changeStep('step10'); this.props.dispatch(updateCoinDetails(coin)); this.props.setSelectedCoin(coin);this.props.dispatch(setExchangeValue({ key: coin.coin, value: coin.oneCoinValue })) }} >
+                {this.props.sellData?.MemberCoins != null && this.props.sellData?.MemberCoins.length != 0 && <div className="sellcrypto-container auto-scroll">
+                    {this.props.sellData?.MemberCoins.map((coin, idx) => <Card key={idx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { this.props.changeStep('step10'); this.props.dispatch(updateCoinDetails(coin)); this.props.setSelectedCoin(coin);this.props.dispatch(setExchangeValue({ key: coin.coin, value: coin.oneCoinValue })) }} >
                         <span className="d-flex align-center">
                             <span className={`coin lg ${coin.coin}`} />
                             <Text className="fs-24 text-white crypto-name ml-12">{coin.coinFullName}</Text>
@@ -33,7 +33,7 @@ class SellToggle extends Component {
                         </div>
                     </Card>)}
                 </div>}
-                {(this.props.sellData.MemberCoins.length == 0 || this.props.sellData.MemberCoins == null) && <Loader />}
+                {(this.props.sellData?.MemberCoins.length == 0 || this.props.sellData?.MemberCoins == null) && <Loader />}
             </>
         )
     }
@@ -54,8 +54,7 @@ const connectDispatchToProps = dispatch => {
         },
         setExchangeValue: ({ key, value }) => {
             dispatch(setExchangeValue({ key, value }))
-        },
-        dispatch
+        }
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(SellToggle);

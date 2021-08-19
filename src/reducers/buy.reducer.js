@@ -108,38 +108,36 @@ const fetchPreview = ({ coin, wallet, amount }) => {
     }
 }
 const getMemberCoins = (memberId) => {
-    return async (dispatch) => {
-        // dispatch(fetchMemberCoins({ key: "MemberCoins", loading: true, data: [] }));
-        Promise.all([
-            getportfolio(memberId).then(
-                (response) => {
-                    if (response.ok) {
-                        dispatch(fetchMemberCoinsSuccess(response.data, 'MemberCoins'));
-                    } else {
-                        dispatch(fetchMemberCoinsRejected(response.data, 'MemberCoins'));
-                    }
-                },
-                (error) => {
-                    dispatch(fetchMemberCoinsRejected(error, 'MemberCoins'));
-                },
-            ),
-            getMemberfiat(memberId).then(
-                (response) => {
-                    if (response.ok) {
-                        dispatch(fetchMemberCoinsSuccess(response.data, 'MemberFiat'));
-                    } else {
-                        dispatch(fetchMemberCoinsRejected(response.data, 'MemberFiat'));
-                    }
-                },
-                (error) => {
-                    dispatch(fetchMemberCoinsRejected(error, 'MemberFiat'));
-                },
-            )
-        ]);
+    return dispatch => {
+        dispatch(fetchMemberCoins({ key: "MemberCoins", loading: true, data: [] }));
+        getportfolio(memberId).then(
+            (response) => {
+                if (response.ok) {
+                    dispatch(fetchMemberCoinsSuccess(response.data, 'MemberCoins'));
+                } else {
+                    dispatch(fetchMemberCoinsRejected(response.data, 'MemberCoins'));
+                }
+            },
+            (error) => {
+                dispatch(fetchMemberCoinsRejected(error, 'MemberCoins'));
+            },
+        );
+        getMemberfiat(memberId).then(
+            (response) => {
+                if (response.ok) {
+                    dispatch(fetchMemberCoinsSuccess(response.data, 'MemberFiat'));
+                } else {
+                    dispatch(fetchMemberCoinsRejected(response.data, 'MemberFiat'));
+                }
+            },
+            (error) => {
+                dispatch(fetchMemberCoinsRejected(error, 'MemberFiat'));
+            },
+        );
         // dispatch(fetchMemberFiat());
     }
 }
-const initialState = {
+let initialState = {
     isLoading: true,
     error: null,
     MemberCoins: [],
@@ -155,7 +153,7 @@ const initialState = {
 }
 
 
-const buyReducer = (state = initialState, action) => {
+let buyReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_MEMBERCOINS:
             state = { ...state, isLoading: true }
@@ -190,4 +188,4 @@ const buyReducer = (state = initialState, action) => {
     }
 }
 export default buyReducer;
-export {setExchangeValue, getMemberCoins, updateCoinDetails, updatesellsaveObject, fetchCoins, fetchSelectedCoinDetails, fetchMemberFiat, fetchPreview, setWallet, setCoinWallet }
+export { setExchangeValue, getMemberCoins, updateCoinDetails, updatesellsaveObject, fetchCoins, fetchSelectedCoinDetails, fetchMemberFiat, fetchPreview, setWallet, setCoinWallet }

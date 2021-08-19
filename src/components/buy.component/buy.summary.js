@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import { fetchPreview } from '../../reducers/buyReducer';
+import { fetchPreview } from '../../reducers/buy.reducer';
 import { buyCrypto } from './api';
 import Summary from '../summary.component';
 import Loader from '../../Shared/loader';
@@ -73,8 +73,8 @@ class BuySummary extends Component {
         />
     }
 }
-const connectStateToProps = ({ buySell, oidc, sellData, userConfig }) => {
-    return { buySell, sellData, member: userConfig.userProfileInfo }
+const connectStateToProps = ({ buySell, oidc, buyInfo, userConfig }) => {
+    return { buySell, sellData:buyInfo, member: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {

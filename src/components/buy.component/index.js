@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
-import CryptoComponent from './crypto';
+import CryptoComponent from './coin.selection';
 import connectStateProps from '../../utils/state.connect';
 import BuySummary from './buy.summary';
 import BillType from './payOption';
-import SelectCrypto from './selectCrypto';
+import SelectCrypto from './buy.detail';
 import { setStep } from '../../reducers/buysellReducer';
 import { processSteps as config } from './config';
 import DepositFiat from './depositFiat'

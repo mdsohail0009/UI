@@ -4,7 +4,7 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import { getSellamnt } from '../buy.component/api'
-import { updatesellsaveObject } from '../../reducers/buyReducer';
+import { updatesellsaveObject } from '../../reducers/buy.reducer';
 import WalletList from '../shared/walletList';
 import LocalCryptoSwap from '../shared/local.crypto.swap';
 import SuisseBtn from '../shared/butons';
