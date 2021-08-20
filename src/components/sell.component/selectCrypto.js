@@ -125,7 +125,7 @@ class SelectSellCrypto extends Component {
                         <Text className="crypto-percent text-white fw-700">{coinDetailData.percentage}<sup className="percent text-white fw-700">%</sup></Text>
                         <div className="fs-16 text-white-30 fw-200 crypto-amount">
                             <div>{coinDetailData.coinBalance?.toFixed(8)} {coinDetailData.coin}</div>
-                            <div>{coinDetailData.coinValueinNativeCurrency?.toFixed(2)}</div>
+                            <div>$ {coinDetailData.coinValueinNativeCurrency?.toFixed(2)}</div>
                         </div>
                     </div>
                 </Card>}

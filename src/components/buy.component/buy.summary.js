@@ -70,6 +70,8 @@ class BuySummary extends Component {
             onCancel={() => this.props.changeStep('step1')}
             onClick={() => this.pay()}
             onTermsChange={(checked)=>{this.setState({...this.state,isTermsAgreed:checked})}}
+            isButtonLoad={this.state.isLoading}
+            onErrorClose = {()=>this.setState({...this.state,error:{valid:true,message:null}})}
         />
     }
 }
