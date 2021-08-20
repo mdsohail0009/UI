@@ -55,7 +55,8 @@ class SellSummary extends Component {
             onCancel={() => this.props.changeStep('step1')}
             onClick={() => this.saveSellData()}
             okBtnTitle={"confirm_now"}
-            onTermsChange={(checked) => { this.setState({ ...this.state, isTermsAgree: checked }) }}/>
+            onTermsChange={(checked) => { this.setState({ ...this.state, isTermsAgree: checked }) }}
+            onErrorClose = {()=>this.setState({...this.state,error:{valid:true,message:null}})}/>
     }
 }
 

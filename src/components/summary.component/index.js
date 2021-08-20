@@ -20,11 +20,11 @@ class Summary extends Component {
             return <Loader />
         }
         const { Paragraph, Text } = Typography;
-        const { coin, oneCoinValue, amount, amountNativeCurrency, nativeCurrency, error, isButtonLoad, showFee, feeAmount, feeCurrency, okBtnTitle, showEstimatedTotal = true, showConvert = false, convertValue, convertCoin,showEstimated = true,exchangeCoin, decimalPlaces, currencyPrefix } = this.props;
+        const { coin, oneCoinValue, amount, amountNativeCurrency, nativeCurrency, error, isButtonLoad, showFee, feeAmount, feeCurrency, okBtnTitle, showEstimatedTotal = true, showConvert = false, convertValue, convertCoin,showEstimated = true,exchangeCoin, decimalPlaces, currencyPrefix,onErrorClose } = this.props;
         const link = <LinkValue content="terms_service" />;
         return (
             <>
-                {!error?.valid && <Alert showIcon type="info" message={error?.title||"Buy crypto"} description={error?.message} closable onClose={() => this.setState({ ...this.state, error: { valid: true, message: null } })} />}
+                {!error?.valid && <Alert showIcon type="info" message={error?.title||"Buy crypto"} description={error?.message} closable onClose={() => onErrorClose?onErrorClose():""} />}
                 <div className="cryptosummary-container auto-scroll">
                     <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}><Currency prefix={""} decimalPlaces={decimalPlaces||8} defaultValue={amount} suffixText={coin} /> </div>
                     {showEstimated && <div className="text-white-50 fw-300 text-center fs-14 mb-16"><Currency defaultValue={amountNativeCurrency} decimalPlaces={decimalPlaces} type={'text'} prefixText={nativeCurrency} /></div>}

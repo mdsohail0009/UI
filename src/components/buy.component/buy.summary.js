@@ -71,6 +71,7 @@ class BuySummary extends Component {
             onClick={() => this.pay()}
             onTermsChange={(checked)=>{this.setState({...this.state,isTermsAgreed:checked})}}
             isButtonLoad={this.state.isLoading}
+            onErrorClose = {()=>this.setState({...this.state,error:{valid:true,message:null}})}
         />
     }
 }
