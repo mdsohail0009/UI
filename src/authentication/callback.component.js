@@ -12,7 +12,7 @@ class CallbackPage extends React.Component {
         this.props.updateProfile(user)
         const url = localStorage.getItem("__url");
         localStorage.removeItem("__url");
-        this.props.history.push(url && url !== "/callback" ? url : "/")
+        this.props.history.push(url && url !== "/callback" ? url : "/onboading")
     }
     render() {
         return (

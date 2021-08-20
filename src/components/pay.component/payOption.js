@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Typography, Button, Tooltip } from 'antd';
-import { Link } from 'react-router-dom';
+import { Typography } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-
 class BillType extends Component {
     constructor(props) {
         super(props);
@@ -18,10 +16,8 @@ class BillType extends Component {
     showCardDrawer = () => {
         console.log(this.state);
     }
-
-
     render() {
-        const { Title, Paragraph, Text } = Typography;
+        const { Paragraph } = Typography;
         return (
             <>
                 <div className="d-flex align-center mb-24 mt-36 c-pointer" onClick={() => this.props.changeStep('step5')}>
@@ -42,7 +38,7 @@ class BillType extends Component {
         )
     }
 }
-const connectStateToProps = ({ buySell, oidc }) => {
+const connectStateToProps = ({ buySell }) => {
     return { buySell }
 }
 const connectDispatchToProps = dispatch => {

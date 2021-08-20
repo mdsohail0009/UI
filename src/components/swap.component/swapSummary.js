@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Typography, Button, notification, Alert } from 'antd';
+import { Typography, Button, notification, Alert, Spin } from 'antd';
 import Translate from 'react-translate-component';
 import { Link } from 'react-router-dom';
 import { setStep, updateSwapdata } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
 import { fetchCurrConvertionValue, saveSwapData } from '../../components/swap.component/api'
 import SuisseBtn from '../shared/butons';
+import Summary from '../summary.component';
 
 const LinkValue = (props) => {
     return (
@@ -91,7 +92,7 @@ class SwapSummary extends Component {
             obj.fromWalletCode = this.props.swapStore.coinDetailData.coin
             obj.fromWalletName = this.props.swapStore.coinDetailData.coinFullName
             obj.fromValue = this.props.swapStore.fromCoinInputValue
-            obj.exicutedPrice = this.state.price
+            obj.executedPrice = this.state.price
 
             obj.toWalletId = this.props.swapStore.coinReceiveDetailData.id
             obj.toWalletCode = this.props.swapStore.coinReceiveDetailData.coin
@@ -113,7 +114,29 @@ class SwapSummary extends Component {
         const { Paragraph, Text } = Typography;
         const link = <LinkValue content="terms_service" />;
         return (
-            <>
+            <>{(this.state.receiveValue &&this.state.price &&this.props.swapStore.fromCoinInputValue && this.props.swapStore?.coinDetailData?.coin)?<Summary
+            loading={false}
+            coin={this.props.swapStore?.coinReceiveDetailData?.coin}
+            nativeCurrency={this.props.swapStore?.coinReceiveDetailData?.coin}
+            oneCoinValue={this.state.price}
+            amount={this.state.receiveValue}
+            showEstimated={false}
+            showEstimatedTotal={false}
+            currencyPrefix=''
+            exchangeCoin={this.props.swapStore?.coinDetailData?.coin}
+            decimalPlaces={8}
+            showConvert={true}
+            convertValue={parseFloat(this.props.swapStore.fromCoinInputValue)}
+            convertCoin={this.props.swapStore?.coinDetailData?.coin}
+            error={{ valid: this.state.errorMessage?false:true,title:'Swap', message: this.state.errorMessage }} iButtonLoad={this.state.isLoading}
+            onRefresh={() => {this.setOneCoinValue(); this.setReceiveAmount();}}
+            onCancel={() => this.props.changeStep('step1')}
+            onClick={() => this.confirmSwap()}
+            onTermsChange={(checked)=>{this.setState({...this.state,agreeValue:checked})}}
+        />:<div className="spinLoader">
+        <Spin />
+      </div>}
+           {/* <>
 
                 {this.state.errorMessage != null && <Alert
                     //message="this.state.errorMessage"
@@ -134,7 +157,7 @@ class SwapSummary extends Component {
                     <Text className="fw-300 text-white-30">{this.props.swapStore.fromCoinInputValue} {this.props.swapStore?.coinDetailData?.coin} </Text>
                 </div>
                 <Translate className="fs-14 text-white-30 text-center mb-36 fw-200" content="summary_hint_text" component={Paragraph} />
-                {/*<div className="text-center text-underline"><Link className="text-yellow" onClick={() => {this.setOneCoinValue();this.setReceiveAmount();this.setState({ ...this.state, disableConfirm: false});}}> Click to see the new rate.</Link></div>*/}
+                
                 <div className="d-flex p-16 mb-36 agree-check">
                     <label>
                         <input type="checkbox" id="agree-check" onChange={(e) => this.agreePolicyChecked(e)} />
@@ -142,9 +165,9 @@ class SwapSummary extends Component {
                     </label><Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
                 </div>
                 <SuisseBtn className={"pop-btn"} onRefresh={() => { this.setOneCoinValue(); this.setReceiveAmount(); }} duration={1000} title={"confirm_swap"} disabled={this.state.isLoading} loading={this.state.isLoading} autoDisable={true} onClick={() => this.confirmSwap()} />
-                {/* <Translate size="large" block className="pop-btn" disabled={this.state.disableConfirm} duration onClick={()=>this.confirmSwap()} style={{ marginTop: '100px' }} content="confirm_swap" component={Button} />*/}
+                
                 <Translate size="large" block className="pop-btn" content="cancel" component={Button} style={{ marginTop: '10px' }} onClick={() => {this.props.changeStep('step1')}} />
-            </>
+                </>*/}</>
         )
     }
 }

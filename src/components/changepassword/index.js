@@ -26,7 +26,6 @@ const ChangePassword = ({ userConfig }) => {
 
   }
   const saveUserPass = async (values) => {
-    debugger
     if (values.CurrentPassword === values.Password) {
       //notify({ message: "Error", type: "error", description: "New password and re entered password must same" });
       setChangePasswordResponse({ error: true, messsage: "Current & New passwords should not be same!", isLoading: false });

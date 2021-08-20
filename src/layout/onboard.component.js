@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
-import { Layout as AntLayout } from 'antd';
-import RoutingComponent from '../config/router.config.component';
-import SumSub from '../components/shared/sumsub';
-import apiCalls from '../api/apiCalls';
-import Content from './content.component';
-import Header from '../layout/header.component';
-import Footer from './footer.component';
 import { userInfo, getmemeberInfo } from '../reducers/configReduser';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 class OnBoarding extends Component {
   state = {
     isOnboarding: false,
@@ -23,17 +17,15 @@ class OnBoarding extends Component {
   }
   render() {
     debugger
+    if (this.props.user && this.props.user.profile && this.props.userConfig) {
+     if(this.props.userConfig.isKYC ){
+      if(!window.location.pathname.includes('dashboard'))this.props.history.push("/dashboard")
+     }else{
+      if(!window.location.pathname.includes('sumsub'))this.props.history.push('/sumsub')
+     }
+    }
     return <>
-      {(!(this.props.userConfig) || !(this.props.user)) && <div className="loader">Loading....</div>}
-      {(this.props.userConfig && this.props.user) && <>
-        {!(this.props.userConfig.isKYC) && <SumSub />}
-        {(this.props?.userConfig?.isKYC) && <>
-          <AntLayout>
-            <Header />
-            <Content />
-            <Footer />
-          </AntLayout>
-        </>}</>}
+    <div className="loader">Loading .....</div>
     </>
   }
 }
@@ -50,4 +42,4 @@ const connectDispatchToProps = dispatch => {
     }
   }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(OnBoarding);
+export default connect(connectStateToProps, connectDispatchToProps)(withRouter(OnBoarding));

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Select } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import { fetchMemberFiat } from '../buysell.component/crypto.reducer';
+import { fetchMemberFiat } from '../../reducers/buyReducer';
 import NumberFormat from 'react-number-format';
 
 const { Option } = Select;
@@ -15,11 +15,11 @@ class WalletList extends Component {
     }
     render() {
         return (<>
-            {this.props.sellData.memberFiat &&
+            {this.props.buyInfo.memberFiat &&
                 <form className="form">
-                    <Select dropdownClassName="select-drpdwn" loading={this.props?.sellData?.memberFiat?.loading} placeholder="Select Wallet" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+                    <Select dropdownClassName="select-drpdwn" loading={this.props?.buyInfo?.memberFiat?.loading} placeholder="Select Wallet" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                         onChange={(e) => this.props.onWalletSelect ? this.props.onWalletSelect(e) : ""}>
-                        {this.props.sellData.memberFiat?.data?.map((item, idx) =>
+                        {this.props.buyInfo.memberFiat?.data?.map((item, idx) =>
                             <Option key={idx} value={item.id}>{item.currencyCode}
                                 <NumberFormat value={item.avilable} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <span {...props}> Balance: {value}</span>} />
                             </Option>
@@ -31,8 +31,8 @@ class WalletList extends Component {
         );
     }
 }
-const connectStateToProps = ({ buySell, sellData, userConfig }) => {
-    return { buySell, sellData, member: userConfig?.userProfileInfo }
+const connectStateToProps = ({ buySell, buyInfo, userConfig }) => {
+    return { buySell, buyInfo, member: userConfig?.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {

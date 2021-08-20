@@ -7,7 +7,7 @@ import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import apiCalls from '../../api/apiCalls'
-import BuySell from '../../components/buysell.component';
+import BuySell from '../../components/buy.component';
 import connectStateProps from '../../utils/state.connect';
 
 class YourPortfolio extends Component {
@@ -20,9 +20,10 @@ class YourPortfolio extends Component {
         this.loadCryptos();
     }
     loadCryptos = async () => {
-        let res = await apiCalls.getportfolio(this.props.userProfile.id)
-        if (res.ok)
-            this.setState({ portfolioData: res.data })
+        if (this.props.userProfile) {
+            let res = await apiCalls.getportfolio(this.props.userProfile.id)
+            if (res.ok) this.setState({ portfolioData: res.data })
+        }
     }
     showBuyDrawer = () => {
         this.setState({

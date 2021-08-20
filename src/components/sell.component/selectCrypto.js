@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import { Typography, Button, Card, Input, Radio, Alert } from 'antd';
+import { Typography, Card, Radio, Alert } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-import { getSellamnt } from '../../components/buysell.component/api'
-import { updatesellsaveObject } from '../buysell.component/crypto.reducer';
+import { getSellamnt } from '../buy.component/api'
 import WalletList from '../shared/walletList';
 import LocalCryptoSwap from '../shared/local.crypto.swap';
 import SuisseBtn from '../shared/butons';
-
+import {updatesellsaveObject} from '../../reducers/sellReducer'
 class SelectSellCrypto extends Component {
     constructor(props) {
         super(props);
@@ -90,19 +89,9 @@ class SelectSellCrypto extends Component {
             obj.toValue = this.state.USDAmnt
             obj.exicutedPrice = this.props.sellData.coinDetailData.oneCoinValue
             this.props.changeStep('step11');
-            this.props.dispatch(updatesellsaveObject(obj))
+             this.props.dispatch(updatesellsaveObject(obj))
         }
     }
-    // handleChange(e) {
-    //     let obj = Object.assign({}, this.state.sellSaveData);
-    //     for (var k in this.props.sellData.MemberFiat) {
-    //         if (this.props.sellData.MemberFiat[k].currencyCode == e) {
-    //             obj.toWalletId = this.props.sellData.MemberFiat[k].id;
-    //             obj.toWalletCode = this.props.sellData.MemberFiat[k].currencyCode;
-    //         }
-    //     }
-    //     this.setState({ ...this.state, sellSaveData: obj })
-    // }
     async swapChange(value) {
         let obj = Object.assign({}, this.state);
         this.setState({ isSwap: value })
@@ -136,7 +125,7 @@ class SelectSellCrypto extends Component {
                         <Text className="crypto-percent text-white fw-700">{coinDetailData.percentage}<sup className="percent text-white fw-700">%</sup></Text>
                         <div className="fs-16 text-white-30 fw-200 crypto-amount">
                             <div>{coinDetailData.coinBalance?.toFixed(8)} {coinDetailData.coin}</div>
-                            <div>{coinDetailData.coinValueinNativeCurrency?.toFixed(2)}</div>
+                            <div>$ {coinDetailData.coinValueinNativeCurrency?.toFixed(2)}</div>
                         </div>
                     </div>
                 </Card>}
@@ -154,7 +143,6 @@ class SelectSellCrypto extends Component {
                 </Radio.Group>
                 <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua" />
                 <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
-                {/* <Dropdown label="Wallets" name="currencyCode" type="Wallets" dropdownData={this.props.sellData.MemberFiat} value={this.state.sellSaveData.walletName} onValueChange={(Value) => this.handleChange(Value)} field='WalletName'></Dropdown> */}
                 <div className="mt-24">
                     <SuisseBtn autoDisable={true} title="preview" className="pop-btn" onClick={() => { this.previewSellData() }} />
                 </div>
@@ -163,8 +151,8 @@ class SelectSellCrypto extends Component {
         )
     }
 }
-const connectStateToProps = ({ buySell, sellData, userConfig }) => {
-    return { buySell, sellData, member: userConfig.userProfileInfo }
+const connectStateToProps = ({ buySell, sellInfo, userConfig }) => {
+    return { buySell, sellData:sellInfo, member: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {

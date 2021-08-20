@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Button, Radio, Tabs, List } from 'antd';
+import { Radio, List } from 'antd';
 import config from '../../config/config';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';

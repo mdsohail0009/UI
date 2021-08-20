@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Typography, Dropdown, Tabs, Row, Col, Divider, Avatar, Carousel, Switch, Drawer } from 'antd';
+import { Layout, Menu, Modal, Typography, Dropdown, Tabs, Row, Col, Divider, Avatar, Carousel, Switch, Drawer, notification } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
@@ -9,7 +9,7 @@ import Translate from 'react-translate-component';
 import en from '../lang/en';
 import ch from '../lang/ch';
 import my from '../lang/my';
-import BuySell from '../components/buysell.component';
+import BuySell from '../components/buy.component';
 import SendReceive from '../components/send.component'
 import SwapCrypto from '../components/swap.component'
 import MassPayment from '../components/buyfiat.component'
@@ -43,7 +43,7 @@ class Header extends Component {
         <Menu>
             <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="security" component={Title} />
             <ul className="pl-0 drpdwn-list">
-                <li className="no-hover dropdown-flex text-white fs-14 pb-16">2FA<Switch size="small" checked={this.props.userConfig.twofactorVerified} onChange={(status)=>{
+                <li className="no-hover dropdown-flex text-white fs-14 pb-16">2FA<Switch size="small" checked={this.props.userConfig?.twofactorVerified} onChange={(status)=>{
                     if(status==true){
                         window.open(process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/EnableAuthenticator","_self");
                     }else{
@@ -190,24 +190,52 @@ class Header extends Component {
         })
     }
     showBuyDrawer = () => {
-        this.setState({
-            buyDrawer: true
-        })
+        // this.setState({
+        //     buyDrawer: true
+        // })
+        if (this.props.userConfig.isKYC) {
+            this.setState({
+                buyDrawer: true
+            })
+        } else {
+            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+        }
     }
     showSendDrawer = () => {
-        this.setState({
-            sendDrawer: true
-        })
+        // this.setState({
+        //     sendDrawer: true
+        // })
+        if (this.props.userConfig.isKYC) {
+            this.setState({
+                sendDrawer: true
+            })
+        } else {
+            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+        }
     }
     showSwapDrawer = () => {
-        this.setState({
-            swapDrawer: true
-        })
+        // this.setState({
+        //     swapDrawer: true
+        // })
+        if (this.props.userConfig.isKYC) {
+            this.setState({
+                swapDrawer: true
+            })
+        } else {
+            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+        }
     }
     showBuyFiatDrawer = () => {
-        this.setState({
-            buyFiatDrawer: true,
-        })
+        // this.setState({
+        //     buyFiatDrawer: true,
+        // })
+        if (this.props.userConfig.isKYC) {
+            this.setState({
+                buyFiatDrawer: true
+            })
+        } else {
+            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+        }
     }
     closeDrawer = () => {
         this.child.clearValues();

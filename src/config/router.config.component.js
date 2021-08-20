@@ -6,6 +6,8 @@ const CallbackPage = React.lazy(() => import('../authentication/callback.compone
 const Login = React.lazy(() => import('../authentication/login.component'));
 const ChangePassword = React.lazy(() => import('../components/changepassword'));
 const Twofa = React.lazy(() => import('../components/twofa'));
+const SumSub = React.lazy(() => import('../components/shared/sumsub'));
+const OnBoarding = React.lazy(() => import('../layout/onboard.component'));
 class RoutingComponent extends Component {
   render() {
     return <Switch>
@@ -15,7 +17,9 @@ class RoutingComponent extends Component {
         <ReactRoute path="/login" component={Login} />
         <ReactRoute path="/changepassword" component={ChangePassword} />
         <ReactRoute path="/2fa" component={Twofa} />
-        <Redirect to="/dashboard" path="/" exact/>
+        <ReactRoute path="/sumsub" component={SumSub} />
+        <ReactRoute path="/onboading" component={OnBoarding} />
+        <Redirect to="/onboading" path="/" exact/>
       </React.Suspense>
     </Switch>
   }

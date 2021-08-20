@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Typography, Button, Tooltip } from "antd";
+import { Typography } from "antd";
 import Translate from 'react-translate-component';
 
 class WireTransfer extends Component {
     state = {}
     render() {
-        const { Title, Paragraph, Text } = Typography;
+        const { Text } = Typography;
         return (<>
             <div className="mb-24">
                 <div className="wire-trans">
