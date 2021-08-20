@@ -517,3 +517,6 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .pay-list{padding: 16px 0;}
     .crypto-container {max-height: calc(100vh - 325px);}
 }
+.currencyContains {display: inline;color: var(--textWhite30);}
+.spinLoader {margin: 20px 0;margin-bottom: 20px;padding: 30px 50px;text-align: center;background: rgba(0, 0, 0, 0.05);border-radius: 4px;}
+.inputSpinner{display: block;text-align: left;height: 30px}

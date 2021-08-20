@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, notification, Alert } from 'antd';
+import { Typography, Button, notification, Alert, Spin } from 'antd';
 import Translate from 'react-translate-component';
 import { Link } from 'react-router-dom';
 import { setStep, updateSwapdata } from '../../reducers/swapReducer';
@@ -114,7 +114,7 @@ class SwapSummary extends Component {
         const { Paragraph, Text } = Typography;
         const link = <LinkValue content="terms_service" />;
         return (
-            <>{console.log(this.props.swapStore.fromCoinInputValue)}{this.state.receiveValue &&this.state.price &&this.props.swapStore.fromCoinInputValue && this.props.swapStore?.coinDetailData?.coin&&<Summary
+            <>{(this.state.receiveValue &&this.state.price &&this.props.swapStore.fromCoinInputValue && this.props.swapStore?.coinDetailData?.coin)?<Summary
             loading={false}
             coin={this.props.swapStore?.coinReceiveDetailData?.coin}
             nativeCurrency={this.props.swapStore?.coinReceiveDetailData?.coin}
@@ -133,7 +133,9 @@ class SwapSummary extends Component {
             onCancel={() => this.props.changeStep('step1')}
             onClick={() => this.confirmSwap()}
             onTermsChange={(checked)=>{this.setState({...this.state,agreeValue:checked})}}
-        />}
+        />:<div className="spinLoader">
+        <Spin />
+      </div>}
            {/* <>
 
                 {this.state.errorMessage != null && <Alert

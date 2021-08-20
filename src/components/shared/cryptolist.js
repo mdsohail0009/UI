@@ -4,7 +4,7 @@ import { List, Empty, Input } from 'antd';
 import NumberFormat from 'react-number-format';
 import { UserOutlined } from '@ant-design/icons';
 
-const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, showSearch }) => {
+const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, showSearch,selectedCoin }) => {
     const [loading, setLoading] = useState(true);
     const [coinListData, setCoinListData] = useState([]);
     const [selList, setselList] = useState({});
@@ -12,6 +12,12 @@ const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, s
     useEffect(() => {
         setCoinListData(coinList)
     }, [coinList])
+    useEffect(() => {
+        if(selectedCoin){
+        setselList(selectedCoin)
+        selectList(selectedCoin)
+        }
+    }, [selectedCoin])
     const handleSearch = (value) => {
         let filtercoinsList;
         if (!value) {
