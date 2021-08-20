@@ -4,16 +4,16 @@ import Translate from 'react-translate-component';
 import CryptoComponent from './coin.selection';
 import connectStateProps from '../../utils/state.connect';
 import BuySummary from './buy.summary';
-import BillType from './payOption';
+import BillType from '../pay.component/payOption';
 import SelectCrypto from './buy.detail';
 import { setStep } from '../../reducers/buysellReducer';
 import { processSteps as config } from './config';
-import DepositFiat from './depositFiat'
-import WireTransfer from './wireTransfer';
+import DepositFiat from '../deposit.component/depositFiat'
+import WireTransfer from '../wire.transfer.component/wireTransfer';
 import AddCard from './addCard';
-import DepositCrypto from './depositCrypto';
-import BillingAddress from './billAddress';
-import AddressScanner from './addressScanner';
+import DepositCrypto from '../deposit.component/depositCrypto';
+import BillingAddress from '../billing.address.component/billAddress';
+import AddressScanner from '../address.scanner/addressScanner';
 import SellSummary from '../sell.component/sellSummary';
 import SelectSellCrypto from '../sell.component/selectCrypto'
 import SuccessMsg from '../shared/success';
