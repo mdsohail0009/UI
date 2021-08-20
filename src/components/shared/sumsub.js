@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { userInfo, getmemeberInfo } from './../../reducers/configReduser';
 
 class SumSub extends Component {
-    state = {}
+    state = {loading:true}
     componentDidMount() {
 
         this.launchWebSdk(process.env.REACT_APP_SUMSUB_URI, 'basic-kyc', 'tst:N2Kvt7SOOVp1jMf7wyQy9BSO.KlnFBjZadRJWK1A0rHckzIlaHQqbRDTO');
@@ -45,12 +45,14 @@ class SumSub extends Component {
             }).build()
             
         snsWebSdkInstance.launch('#sumsub-websdk-container')
+        this.setState({loading:false})
         })
     }
     
     render() {
         return (
             <>
+            {this.state.loading && <div className="loader">Loading .....</div>}
                 <div id="sumsub-websdk-container"></div>
             </>
         );

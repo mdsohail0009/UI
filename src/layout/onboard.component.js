@@ -24,7 +24,9 @@ class OnBoarding extends Component {
       if(!window.location.pathname.includes('sumsub'))this.props.history.push('/sumsub')
      }
     }
-    return <></>
+    return <>
+    <div className="loader">Loading .....</div>
+    </>
   }
 }
 const connectStateToProps = ({ userConfig, oidc }) => {

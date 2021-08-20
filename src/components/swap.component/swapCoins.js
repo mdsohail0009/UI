@@ -75,7 +75,7 @@ class SwapCoins extends Component {
             }
         } else {
             //notification.error({ message: "", description: 'Select from and recevie swap coin' });
-            this.setState({ ...this.state, errorMessage: 'Please select from coin to swap' })
+            this.setState({ ...this.state, errorMessage: 'Please select from and receive coins to swap' })
         }
         
     }
@@ -149,7 +149,7 @@ class SwapCoins extends Component {
             }
         } else {
             //notification.error({ message: "", description: 'Select from and recevie swap coin' });
-            this.setState({ ...this.state, errorMessage: 'Select from and recevie swap coin' })
+            this.setState({ ...this.state, errorMessage: 'Please select from and receive coins to swap' })
         }
     }
     render() {
@@ -160,9 +160,8 @@ class SwapCoins extends Component {
         return (
             <div>
                 {this.state.errorMessage!=null&&<Alert
-                    //message="this.state.errorMessage"
                      description={this.state.errorMessage}
-                    type="error"
+                    type="info"
                     showIcon
                     closable={false}
                 />}
