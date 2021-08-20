@@ -75,7 +75,7 @@ class SelectCrypto extends Component {
                         <div className="crypto-details">
                             <Text className="crypto-percent text-purewhite fw-700">{percentage}<sup className="percent text-purewhite fw-700">%</sup></Text>
                             <div className="fs-16 text-purewhite fw-200 crypto-amount">
-                                <div>{coinBalance} {coin}</div>
+                                <div>{coinBalance.toFixed(8)} {coin}</div>
                                 <NumberFormat value={coinValueinNativeCurrency} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} />
                             </div>
                         </div>
