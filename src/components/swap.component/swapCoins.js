@@ -17,7 +17,7 @@ class SwapCoins extends Component {
         receiveValue: null,
         errorMessage: null,
         loadingToValue:false,
-        loadingFromValue:false
+        loadingFromValue:false    
     }
     async componentDidMount() {
         this.props.swapCoinsRef(this)
@@ -107,7 +107,7 @@ class SwapCoins extends Component {
         else if (this.props.swapStore.coinReceiveDetailData.coin == this.props.swapStore.coinDetailData.coin) {
             //notification.error({ message: "", description: 'selected coins are both same' })
             this.setState({ ...this.state, errorMessage: 'Selected coins are both same' })
-        } else if (parseFloat(this.state.fromValue.replace(/,/g, '')) > parseFloat(this.props.swapStore.coinDetailData.coinBalance)) {
+        } else if (parseFloat(typeof this.state.fromValue=='string'?this.state.fromValue.replace(/,/g, ''):this.state.fromValue) > parseFloat(this.props.swapStore.coinDetailData.coinBalance)) {
             //notification.error({ message: "", description: 'Entered Swap From balance is not available' })
             this.setState({ ...this.state, errorMessage: 'Insufficient balance' })
         } else {
@@ -134,8 +134,7 @@ class SwapCoins extends Component {
             let v1 = _.cloneDeep(this.state.fromValue);
             let v2 = _.cloneDeep(this.state.receiveValue);
 
-            this.setState({ ...this.state, fromValue: v2, receiveValue: v1 })
-
+            
             objReceive.coinBalance = this.props.swapStore.coinDetailData.coinBalance
             objReceive.coin = this.props.swapStore.coinDetailData.coin
             objReceive.coinFullName = this.props.swapStore.coinDetailData.coinFullName
@@ -149,6 +148,7 @@ class SwapCoins extends Component {
             this.props.fromObjSwap(objFrom);
             this.props.receiveObjSwap(objReceive);
             this.setSwapOneCoinValue(objFrom.coin, objReceive.coin);
+            this.setState({ ...this.state, fromValue: v2, receiveValue: v1 })
             this.props.insertFromCoinInputValue(v2);
         }
     }
@@ -176,7 +176,7 @@ class SwapCoins extends Component {
 
         return (
             <div>
-                {this.state.errorMessage!=null&&<Alert
+                {this.state.errorMessage&&<Alert
                      description={this.state.errorMessage}
                     type="info"
                     showIcon
@@ -200,14 +200,14 @@ class SwapCoins extends Component {
                                 e.currentTarget.value.length >= 6 ? e.currentTarget.style.fontSize = "20px" : e.currentTarget.style.fontSize = "24px";
 
                             }}
-                            // onKeyUp={(e) => {
-                            //     this.setReceiveAmount(e.target.value)
-                            // }}
+                            onKeyUp={(e) => {
+                                this.setReceiveAmount(e.target.value)
+                            }}
                             //value={isSwaped ? cryptoValue : localValue}
                             value={this.state.fromValue}
-                            onValueChange={({ value }) => {
-                                this.setReceiveAmount(value)
-                            }}
+                            // onValueChange={({ value }) => {
+                            //     this.setReceiveAmount(value)
+                            // }}
                             autoFocus
                         />}
                         {coinDetailData.coinBalance && <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - <Currency prefix={""} className={'currencyContains'} decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} /></Text>}
@@ -248,14 +248,14 @@ class SwapCoins extends Component {
                                 //e.currentTarget.style.width = ((e.currentTarget.value.length + 6) * 15) + 'px'
                                 e.currentTarget.value.length >= 6 ? e.currentTarget.style.fontSize = "20px" : e.currentTarget.style.fontSize = "24px";
                             }}
-                            // onKeyUp={(e) => {
-                            //     this.setFromAmount(e.target.value)
-                            // }}
+                            onKeyUp={(e) => {
+                                this.setFromAmount(e.target.value)
+                            }}
                             //value={isSwaped ? cryptoValue : localValue}
                             value={this.state.receiveValue}
-                            onValueChange={({ value }) => {
-                                this.setFromAmount(value)
-                            }}
+                            // onValueChange={({ value }) => {
+                            //     this.setFromAmount(value)
+                            // }}
                             
                         />}
                         {coinReceiveDetailData.coinBalance && <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - <Currency prefix={""} className={'currencyContains'} decimalPlaces={8} defaultValue={coinReceiveDetailData.coinBalance} suffixText={coinReceiveDetailData.coin} /></Text>}

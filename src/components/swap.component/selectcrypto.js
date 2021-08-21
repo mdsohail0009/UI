@@ -55,7 +55,7 @@ class SelectCrypto extends Component {
             {/*<Search placeholder="Search for a Currency" onChange={(value) => this.onSearch(value)} className="crypto-search fs-14" />*/}
             <Paragraph className="to-receive">Swap {this.props.swapfrom?'from':'to'}<span className="icon sm rightarrow ml-12 mb-4" /></Paragraph>
             
-            <CryptoList coinType="swap" showSearch={true} selectedCoin={this.props.swapfrom?this.props.swapStore.coinDetailData:this.props.swapStore.coinReceiveDetailData} coinList={this.props.swapStore.MemberCoins} isLoading={this.props.swapStore.isLoading} onCoinSelected={(selectedCoin) => this.selectToggle(selectedCoin)} />
+            <CryptoList coinType="swap" showSearch={true} titleField={'coin'} iconField={'coin'} selectedCoin={this.props.swapfrom?this.props.swapStore.coinDetailData:this.props.swapStore.coinReceiveDetailData} coinList={this.props.swapStore.MemberCoins} isLoading={this.props.swapStore.isLoading} onCoinSelected={(selectedCoin) => this.selectToggle(selectedCoin)} />
 
             {(this.state.MemberCoins ? this.state.MemberCoins.length > 0 : true) && <><Translate size="large" className="custon-btngroup cancel-btngroup" content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} />
                 <Translate size="large" className="custon-btngroup pick-btn" content="pick" component={Button} onClick={() => this.pickCoin()} /></>}

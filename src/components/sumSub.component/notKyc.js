@@ -1,14 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 class NotKyc extends Component {
- 
-  render() {
-   
-    return <>
-    <div className="loader">Your Kyc Is Not Done, Please complete your kyc</div>
-    </>
-  }
+    state = {loading:true}
+    
+    
+    render() {
+        return (
+            <>
+            <div className="notkyc">
+             <div>Dear cusomer Please complete your
+            <Link  to="/sumsub" >{this.props.userConfig.isbusines?' kyb ':' kyc '}</Link>
+            to continue </div></div>
+            </>
+        );
+    }
 }
 
-export default connect(withRouter(NotKyc));
+const connectStateToProps = ({ userConfig }) => {
+    return { userConfig: userConfig.userProfileInfo }
+}
+
+export default connect(connectStateToProps)(NotKyc);

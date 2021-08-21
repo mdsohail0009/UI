@@ -4,7 +4,7 @@ import { List, Empty, Input } from 'antd';
 import NumberFormat from 'react-number-format';
 import { UserOutlined } from '@ant-design/icons';
 
-const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, showSearch,selectedCoin }) => {
+const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, showSearch,selectedCoin,iconField,titleField }) => {
     const [loading, setLoading] = useState(true);
     const [coinListData, setCoinListData] = useState([]);
     const [selList, setselList] = useState({});
@@ -23,7 +23,7 @@ const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, s
         if (!value) {
             filtercoinsList = coinList;
         } else {
-            filtercoinsList = coinList.filter(item => (coinType == 'swap' ? item.coin : item.walletCode).toLowerCase().includes(value.toLowerCase()));
+            filtercoinsList = coinList.filter(item => (item[titleField||'walletCode']).toLowerCase().includes(value.toLowerCase()));
         }
         setCoinListData(filtercoinsList)
     }
@@ -41,11 +41,12 @@ const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, s
             loading={isLoading ? isLoading : false}
             locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_DEFAULT} description={<span>No records found</span>} /> }}
             renderItem={item => (
-                <List.Item className={(item.id == selList.id ? " select" : "")}>
+                
+                <List.Item className={(item[titleField||'walletCode'] == selList[titleField||'walletCode'] ? " select" : "")}>
                     <Link onClick={() => selectList(item)}>
                         <List.Item.Meta
-                            avatar={<span className={`coin ${coinType == 'swap' ? item.coin : item.walletCode} mr-4`} />}
-                            title={<div className="wallet-title">{coinType == 'swap' ? item.coin : item.walletCode}</div>}
+                            avatar={<span className={`coin ${item[iconField||'walletCode']} mr-4`} />}
+                            title={<div className="wallet-title">{item[titleField||'walletCode']}</div>}
                         />
                         {coinType != 'swap' && <><div className="text-right coin-typo">
                             <NumberFormat value={item.amountInUSD} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} className="text-white-30 fw-600">{value}</div>} />

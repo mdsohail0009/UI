@@ -198,7 +198,8 @@ class Header extends Component {
                 buyDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+            this.props.history.push("/notkyc");
+            //notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
         }
     }
     showSendDrawer = () => {
@@ -210,7 +211,8 @@ class Header extends Component {
                 sendDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+            this.props.history.push("/notkyc");
+            //notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
         }
     }
     showSwapDrawer = () => {
@@ -222,7 +224,7 @@ class Header extends Component {
                 swapDrawer: true
             })
         } else {
-            this.props.history.push("/notkyc")
+            this.props.history.push("/notkyc");
         }
     }
     showBuyFiatDrawer = () => {
@@ -234,7 +236,8 @@ class Header extends Component {
                 buyFiatDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+            this.props.history.push("/notkyc");
+           // notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
         }
     }
     closeDrawer = () => {
@@ -297,7 +300,7 @@ class Header extends Component {
                             <ul className="header-logo pl-0">
                                 <li className="pr-30 p-relative"><Link><img src={logoColor} alt="logo" className="tlv-logo" /></Link></li>
                                 <li className="px-36"><span className="icon md hamburger c-pointer" onClick={this.showMegaMenu} /></li>
-                                <li className="mb-d-none"><Translate content="header_title" component="p" className="text-white-30 mb-0 fs-24" /></li>
+                                <li className="mb-d-none c-pointer"><Translate content="header_title" component="p" className="text-white-30 mb-0 fs-24" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
                                 <Dropdown overlay={this.securityMenu}  placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
