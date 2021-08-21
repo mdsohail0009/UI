@@ -101,7 +101,7 @@ class Header extends Component {
         }
     }
     closeDrawer = () => {
-        this.child.clearValues();
+        if(this.child)this.child.clearValues();
         let obj = {};
         this.props.fromObjSwap(obj);
         this.props.receiveObjSwap(obj);

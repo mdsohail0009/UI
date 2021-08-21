@@ -36,7 +36,7 @@ class SwapCoins extends Component {
         //     receiveValue: null,
         //     errorMessage: null
         // })
-         this.setState({ ...this.state, fromCoin: null,eceiveCoin: null,price: null, fromValue: 0, receiveValue: 0,errorMessage: null})
+         this.setState({ ...this.state, fromCoin: null,receiveCoin: null,price: null, fromValue: '', receiveValue: '',errorMessage: null})
         //  this.setReceiveAmount(0);
      }
     loadamount() {
@@ -100,10 +100,14 @@ class SwapCoins extends Component {
             //notification.error({ message: "", description: 'Enter Swap From Value' });
              this.setState({ ...this.state, errorMessage: 'Please enter from coin Value' })
         }
+        else if (!this.props.swapStore.coinDetailData.coinBalance) {
+            //notification.error({ message: "", description: 'Enter Swap From Value' });
+             this.setState({ ...this.state, errorMessage: 'Insufficient balance' })
+        }
         else if (this.props.swapStore.coinReceiveDetailData.coin == this.props.swapStore.coinDetailData.coin) {
             //notification.error({ message: "", description: 'selected coins are both same' })
             this.setState({ ...this.state, errorMessage: 'Selected coins are both same' })
-        } else if (parseFloat(this.state.fromValue) > parseFloat(this.props.swapStore.coinDetailData.coinBalance)) {
+        } else if (parseFloat(this.state.fromValue.replace(/,/g, '')) > parseFloat(this.props.swapStore.coinDetailData.coinBalance)) {
             //notification.error({ message: "", description: 'Entered Swap From balance is not available' })
             this.setState({ ...this.state, errorMessage: 'Insufficient balance' })
         } else {
@@ -196,14 +200,14 @@ class SwapCoins extends Component {
                                 e.currentTarget.value.length >= 6 ? e.currentTarget.style.fontSize = "20px" : e.currentTarget.style.fontSize = "24px";
 
                             }}
-                            onKeyUp={(e) => {
-                                this.setReceiveAmount(e.target.value)
-                            }}
+                            // onKeyUp={(e) => {
+                            //     this.setReceiveAmount(e.target.value)
+                            // }}
                             //value={isSwaped ? cryptoValue : localValue}
                             value={this.state.fromValue}
-                            // onValueChange={({ value }) => {
-                            //     this.setReceiveAmount(value)
-                            // }}
+                            onValueChange={({ value }) => {
+                                this.setReceiveAmount(value)
+                            }}
                             autoFocus
                         />}
                         {coinDetailData.coinBalance && <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - <Currency prefix={""} className={'currencyContains'} decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} /></Text>}
@@ -244,14 +248,14 @@ class SwapCoins extends Component {
                                 //e.currentTarget.style.width = ((e.currentTarget.value.length + 6) * 15) + 'px'
                                 e.currentTarget.value.length >= 6 ? e.currentTarget.style.fontSize = "20px" : e.currentTarget.style.fontSize = "24px";
                             }}
-                            onKeyUp={(e) => {
-                                this.setFromAmount(e.target.value)
-                            }}
+                            // onKeyUp={(e) => {
+                            //     this.setFromAmount(e.target.value)
+                            // }}
                             //value={isSwaped ? cryptoValue : localValue}
                             value={this.state.receiveValue}
-                            // onValueChange={({ value }) => {
-                            //     this.setFromAmount(value)
-                            // }}
+                            onValueChange={({ value }) => {
+                                this.setFromAmount(value)
+                            }}
                             
                         />}
                         {coinReceiveDetailData.coinBalance && <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - <Currency prefix={""} className={'currencyContains'} decimalPlaces={8} defaultValue={coinReceiveDetailData.coinBalance} suffixText={coinReceiveDetailData.coin} /></Text>}

@@ -14,7 +14,7 @@ class Currency extends Component {
     }
     render() {
         const {Text} = Typography;
-        const { type, defaultValue, prefixText, suffixText, onChange, prefix = "$", decimalPlaces = 2, format, className, bordered = false, inputCustomStyle, textCustomStyle, autoFocus = false, } = this.props;
+        const { type, defaultValue, prefixText, suffixText, onChange, prefix = "$", decimalPlaces, format, className, bordered = false, inputCustomStyle, textCustomStyle, autoFocus = false, } = this.props;
         return <>{type === "input" ? <NumberFormat className={className} customInput={Input} thousandSeparator={true} prefix={prefix}
             placeholder="0.00"
             bordered={bordered}
@@ -25,7 +25,7 @@ class Currency extends Component {
             }}
             autoFocus={autoFocus}
         /> : <NumberFormat
-            value={defaultValue.toFixed(decimalPlaces)}
+            value={defaultValue}
             className={className}
             displayType={'text'}
             thousandSeparator={true}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Modal, Typography, Dropdown, Tabs, Row, Col, Divider, Avatar, Carousel, Switch, Drawer, notification } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
 import logoColor from '../assets/images/logo-color.png';
 import counterpart from 'counterpart';
@@ -141,7 +141,7 @@ class Header extends Component {
                         <span className="icon md rarrow-white" />
                     </div>
                 </li> */}
-                <li className="d-flex justify-content align-center" onClick={() => userManager.signoutRedirect()}>
+                <li className="d-flex justify-content align-center c-pointer" onClick={() => userManager.signoutRedirect()}>
                     <Translate content="logout" component={Link} />
                     <span className="icon md rarrow-white" />
                 </li>
@@ -222,7 +222,7 @@ class Header extends Component {
                 swapDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+            this.props.history.push("/notkyc")
         }
     }
     showBuyFiatDrawer = () => {
@@ -238,7 +238,7 @@ class Header extends Component {
         }
     }
     closeDrawer = () => {
-        this.child.clearValues();
+        if(this.child)this.child.clearValues();
         let obj = {};
         this.props.fromObjSwap(obj);
         this.props.receiveObjSwap(obj);
@@ -585,4 +585,4 @@ const connectDispatchToProps = dispatch => {
 }
 
 // export default Header;
-export default connect(connectStateToProps, connectDispatchToProps)(Header);
+export default connect(connectStateToProps, connectDispatchToProps)(withRouter(Header));

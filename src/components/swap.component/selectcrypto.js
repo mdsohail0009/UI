@@ -27,7 +27,7 @@ class SelectCrypto extends Component {
         this.setState({ addLinks: item.id, coinDetails: item });
     };
     pickCoin = ()=>{
-        if (this.state.coinDetails != null) {
+        if (this.state.coinDetails != null && this.state.coinDetails.id) {
             if (this.props.swapfrom) {
                 this.props.dispatch(updateCoinDetails(this.state.coinDetails));
             } else {
@@ -35,6 +35,7 @@ class SelectCrypto extends Component {
             }
             this.props.changeStep('step1') 
         } else { 
+            window.scrollTo(0, 0)
             this.setState({ ...this.state, errorMessage: 'Please select coin to swap' })
         }
     }

@@ -67,7 +67,7 @@ class SwapSummary extends Component {
     confirmswapvalidation() {
         if (!this.state.agreeValue) {
             //notification.error({ message: "", description: 'Please agree to terms&conditions' });
-            this.setState({...this.state,errorMessage: 'Please accept terms of service before swap'})
+            this.setState({...this.state,errorMessage: 'Please agree to all Term of Use'})
         }
         else if (!this.props.swapStore.coinDetailData.coinBalance) {
             //notification.error({ message: "", description: 'Insufficiant funds to swap' });
@@ -78,7 +78,7 @@ class SwapSummary extends Component {
         
         if (!this.state.agreeValue) {
             //notification.error({ message: "", description: 'Please agree to terms&conditions' });
-            this.setState({...this.state,errorMessage: 'Please accept terms of service before swap'})
+            this.setState({...this.state,errorMessage: 'Please agree to all Term of Use'})
         }
         else if (!this.props.swapStore.coinDetailData.coinBalance) {
             //notification.error({ message: "", description: 'Insufficiant funds to swap' });
@@ -124,7 +124,6 @@ class SwapSummary extends Component {
             showEstimatedTotal={false}
             currencyPrefix=''
             exchangeCoin={this.props.swapStore?.coinDetailData?.coin}
-            decimalPlaces={8}
             showConvert={true}
             convertValue={parseFloat(this.props.swapStore.fromCoinInputValue)}
             convertCoin={this.props.swapStore?.coinDetailData?.coin}
@@ -133,6 +132,8 @@ class SwapSummary extends Component {
             onCancel={() => this.props.changeStep('step1')}
             onClick={() => this.confirmSwap()}
             onTermsChange={(checked)=>{this.setState({...this.state,agreeValue:checked})}}
+            onErrorClose = {()=>this.setState({...this.state,errorMessage:null})}
+            isButtonLoad = {this.state.isLoading}
         />:<div className="spinLoader">
         <Spin />
       </div>}

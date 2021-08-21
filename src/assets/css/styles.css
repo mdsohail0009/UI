@@ -543,3 +543,4 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     font-size: 20px;
     margin-left: 12px;
 }
+main.ant-layout-content{min-height: calc(100vh - 220px);}

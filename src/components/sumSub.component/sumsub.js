@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import snsWebSdk from '@sumsub/websdk';
-import apicalls from './../../api/apiCalls';
+import apicalls from '../../api/apiCalls';
 import { connect } from 'react-redux';
-import { userInfo, getmemeberInfo } from './../../reducers/configReduser';
+import { userInfo, getmemeberInfo } from '../../reducers/configReduser';
 
 class SumSub extends Component {
     state = {loading:true}

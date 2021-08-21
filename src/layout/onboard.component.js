@@ -16,7 +16,6 @@ class OnBoarding extends Component {
     }
   }
   render() {
-    debugger
     if (this.props.user && this.props.user.profile && this.props.userConfig) {
      if(this.props.userConfig.isKYC ){
       if(!window.location.pathname.includes('dashboard'))this.props.history.push("/dashboard")
