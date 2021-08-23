@@ -9,9 +9,12 @@ const firebaseServer = create({
 const apiClient = create({
     baseURL: process.env.REACT_APP_API_END_POINT
 })
+const coinGekoClient = create({
+    baseURL: process.env.REACT_APP_COIN_GECO_API
+})
 apiClient.axiosInstance.interceptors.request.use((config) => {
     const { oidc: { user } } = store.getState()
     config.headers.Authorization = `Bearer ${user.access_token}`
     return config;
 })
-export { firebaseServer, apiClient }
+export { firebaseServer, apiClient, coinGekoClient }

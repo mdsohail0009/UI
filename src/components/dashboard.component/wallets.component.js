@@ -3,7 +3,7 @@ import { Typography, List, Button } from 'antd';
 import config from '../../config/config';
 import Translate from 'react-translate-component';
 //import MassPayment from '../../components/buyfiat.component'
-import SuissebaseFiat from '../../components/buyfiat.component/suissebaseFiat';
+import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 
 const { Title, Paragraph } = Typography;
 const suisseWalletList = [
@@ -24,7 +24,7 @@ const suisseWalletList = [
     },
 ]
 
-class SuissebaseWallet extends Component {
+class Wallets extends Component {
     state = {
         sendReceiveDrawer: false,
         valNum: 1
@@ -73,4 +73,4 @@ class SuissebaseWallet extends Component {
     }
 }
 
-export default SuissebaseWallet;
+export default Wallets;

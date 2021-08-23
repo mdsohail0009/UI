@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { Row, Col, Typography, Button, Input, Carousel } from 'antd';
-import SuissebaseWallet from '../shared/suissebasewallet';
+import Wallets from './wallets.component';
 import Translate from 'react-translate-component';
-import CryptoList from '../shared/cryptolist';
-import Portfolio from '../shared/portfolio';
-import Coins from '../shared/coins';
-import YourPortfolio from '../shared/yourportfolio';
-const { Search } = Input;
+import Portfolio from './portfolio.component';
+import Coins from './coins.component';
+import YourPortfolio from './yourportfolio.component';
+import MarketCap from './marketcap.component';
 const { Title, Paragraph } = Typography;
-
 class Home extends Component {
     state = {
         loading: false,
@@ -25,13 +23,13 @@ class Home extends Component {
                 <Row justify="center">
                     <Col xs={24} md={12} xl={10}>
                         <div className="markets-panel mb-36">
-                            <SuissebaseWallet />
+                            <Wallets />
                         </div>
                         <div className="box markets-panel">
                             <Translate content="markets_title" component={Title} className="fs-24 fw-600 mb-0 text-white-30" />
                             <Translate content="markets_subtitle" component={Paragraph} className="text-white-30 fs-16 fw-200" />
                             {/* <Translate content="search_currency" component={Search} size="middle" bordered={false} enterButton className="mt-24" /> */}
-                            <CryptoList isShowDrawer={true} />
+                            <MarketCap />
                         </div>
                     </Col>
                     <Col xs={24} md={12} xl={14}>

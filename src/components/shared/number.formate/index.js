@@ -13,7 +13,6 @@ class Currency extends Component {
 
     }
     render() {
-        const {Text} = Typography;
         const { type, defaultValue, prefixText, suffixText, onChange, prefix = "$", decimalPlaces, format, className, bordered = false, inputCustomStyle, textCustomStyle, autoFocus = false, } = this.props;
         return <>{type === "input" ? <NumberFormat className={className} customInput={Input} thousandSeparator={true} prefix={prefix}
             placeholder="0.00"
