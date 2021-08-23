@@ -1,35 +1,38 @@
 import { Table } from 'antd';
-import React, { Component } from 'react';
+import { FullscreenOutlined ,ReloadOutlined} from '@ant-design/icons'
+import React, { useEffect, useState, useCallback } from 'react';
 import Loader from '../../Shared/loader';
-import Currency from '../shared/number.formate';
 import { fetchMarketCaps } from './api';
-
-class MarketCap extends Component {
-    columns = [{ title: "Coin", dataIndex: "name" },
-    { title: "", dataIndex: "symbol" },
-    {
-        title: "Price", dataIndex: "current_price", render: (val) => <Currency defaultValue={val} type={"text"} />
-    },
-    {title:""}
-    ]
-    state = {
-        marketCaps: [],
-        isLoading: false
-    }
-    componentDidMount() {
-        this.fetchMarketCapsInfo();
-    }
-    async fetchMarketCapsInfo() {
-        this.setState({ ...this.state, isLoading: true });
+import { FullScreen, useFullScreenHandle } from 'react-full-screen'
+import { detailInfoColumns, infoColumns } from './marketcap.columns';
+const MarketCap = () => {
+    const marketsFullScreen = useFullScreenHandle();
+    const [isDetailView,setDetailView] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [marketCaps, setMarketCaps] = useState([]);
+    useEffect(() => { fetchMarketCapsInfo() }, [])
+    const fetchMarketCapsInfo = async () => {
+        setIsLoading(true)
         const response = await fetchMarketCaps({ pageNo: 1 });
         if (response.ok) {
-            this.setState({ ...this.state, marketCaps: response.data, isLoading: false });
+            setMarketCaps(response.data);
+            setIsLoading(false);
         }
     }
-    render() {
-        const { isLoading, marketCaps } = this.state;
-        if (isLoading) { return <Loader /> }
-        return <Table columns={this.columns} dataSource={marketCaps} loading={isLoading} />
-    }
+    const onFullScreenChange = useCallback((state, handle) => {
+        setDetailView(state);
+    });
+    if (isLoading) { return <Loader /> }
+    return <div>
+
+        <FullScreen handle={marketsFullScreen} onChange={onFullScreenChange}>
+            <div className="full-screenable-node" style={{overflow:"hidden",height:"100%",background:"daryGrey"}}>
+                <FullscreenOutlined onClick={() => marketsFullScreen.enter()} />
+                <ReloadOutlined onClick={fetchMarketCapsInfo}/>
+                <Table sortDirections={["ascend","descend"]} style={{background:"grey"}} scroll={{y:isDetailView?750:400}} pagination={false} columns={isDetailView?detailInfoColumns:infoColumns} dataSource={marketCaps} loading={isLoading} />
+            </div>
+        </FullScreen>
+    </div>
+
 }
 export default MarketCap;
