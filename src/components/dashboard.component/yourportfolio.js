@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
-import config from '../../config/config';
-import { Link } from 'react-router-dom';
-import { CaretDownOutlined, ArrowLeftOutlined } from '@ant-design/icons';
-import { List, Button, Input, Carousel, Drawer, Dropdown, Typography } from 'antd';
+import { List, Button, Typography } from 'antd';
 import Translate from 'react-translate-component';
-import { setStep } from '../../reducers/buysellReducer';
-import { connect } from 'react-redux';
 import apiCalls from '../../api/apiCalls'
-import BuySell from '../../components/buy.component';
+import BuySell from '../buy.component';
 import connectStateProps from '../../utils/state.connect';
 
 class YourPortfolio extends Component {
@@ -36,7 +31,7 @@ class YourPortfolio extends Component {
         })
     }
     render() {
-        const { Title, Paragraph, Text } = Typography;
+        const { Title } = Typography;
         return (
             <div className="box portfolio-list">
                 <Translate content="your_portfolio" component={Title} className="fs-24 text-white mb-36 mt-0 fw-600" />
