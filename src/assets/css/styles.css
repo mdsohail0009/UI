@@ -405,7 +405,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .custom-table .ant-table-body{background: var(--bgGrey);}
 .custom-table .ant-table-row.ant-table-row-level-0:hover td{background: transparent;}
 .coin-typo .gain, .coin-typo .lose{transform: scale(0.85);}
-.custom-table.ant-table-tbody > tr > td {border-bottom: 1px solid #313c46 !important;padding:20px 0 20px 10px !important;}
+.custom-table .ant-table-tbody > tr > td {border-bottom: 1px solid #313c46 !important;padding:20px 0 20px 10px !important;}
+.ant-table-tbody > tr > td {border-bottom: 1px solid #313c46;transition: background 0.3s;}
 .custom-table .ant-table-row:first-child td{padding:0 16px 16px !important ;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}

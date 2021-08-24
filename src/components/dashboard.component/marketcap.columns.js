@@ -1,11 +1,12 @@
 import Currency from "../shared/number.formate";
 
 const infoColumns = [
-    { title: "", dataIndex: "image", render: val => <img style={{ height: 20, width: 20 }} src={val} />, width: 70 },
+    { title: "", dataIndex: "image", render: val => <img style={{ height: 20, width: 20 }} src={val} />, width: 40 },
+    { title: "", dataIndex: "symbol", render: text => <span className="fs-18 fw-500 text-upper text-white mb-0 mt-12">{text.toUpperCase()}</span>, sorter: (a, b) => b.name - a.name, },
     {
-        title: "Price", dataIndex: "current_price", render: (val) => <Currency defaultValue={val} type={"text"} className="fs-18 fw-400 text-upper text-white" />, sorter: (a, b) => b.current_price - a.current_price
+        title: "Price", dataIndex: "current_price", render: (val) => <Currency defaultValue={val} type={"text"} className="fs-16 fw-400 text-upper text-white" />, sorter: (a, b) => b.current_price - a.current_price
     },
-    { title: "24h(%)", dataIndex: "price_change_percentage_24h", sorter: (a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h, render: val => <><div className="coin-typo text-right"> <div className={val < 0 ? 'text-red' : 'text-green'}>{val}<span>{val < 0 ? <span className="icon md lose ml-16" /> : <span className="icon md gain ml-12" />}</span></div></div></> },
+    { title: "24h(%)", dataIndex: "price_change_percentage_24h", sorter: (a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h, render: val => <><div className="coin-typo text-right"> <div className={val < 0 ? 'text-red' : 'text-green'}>{val}<span>{val < 0 ? <span className="icon md lose ml-8" /> : <span className="icon md gain ml-8" />}</span></div></div></> },
 
 ];
 
