@@ -27,7 +27,7 @@ const MarketCap = () => {
 
         <FullScreen handle={marketsFullScreen} onChange={onFullScreenChange}>
             <div className="full-screenable-node" style={{overflow:"hidden",height:"100%",background:"daryGrey"}}>
-                <div style={{marginBottom:'12px'}}>
+                <div style={{marginBottom:'8px', textAlign:'right'}}>
                 <FullscreenOutlined onClick={() => marketsFullScreen.enter()} className="fs-18 text-white ml-8 fw-500" />
                 <ReloadOutlined  onClick={fetchMarketCapsInfo} className="fs-18 text-white ml-8 fw-500"/>
                 </div>

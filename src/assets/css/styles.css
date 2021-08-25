@@ -401,13 +401,19 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .side-drawer-full .ant-pagination-item-active{border-color: #ffffff !important;background: transparent;}
 .side-drawer-full .ant-pagination-item-active a, .ant-table-column-sorter-up.active, .ant-table-column-sorter-down.active{color: #ffdb1a !important;}
 .side-drawer-full .ant-table-column-title{text-transform: uppercase;}
-.custom-table .ant-table-header{display: none;}
-.custom-table .ant-table-body{background: var(--bgGrey);}
-.custom-table .ant-table-row.ant-table-row-level-0:hover td{background: transparent;}
+/* .custom-table .ant-table-header{display: none;} */
+.custom-table .ant-table-column-title{color: var(--textWhite);}
+.custom-table .ant-table-body,.custom-table .ant-table-thead > tr > th{background: var(--bgGrey);}
+.custom-table .ant-table-row.ant-table-row-level-0:hover td, td.ant-table-column-sort{background: transparent;}
 .coin-typo .gain, .coin-typo .lose{transform: scale(0.85);}
-.custom-table .ant-table-tbody > tr > td {border-bottom: 1px solid #313c46 !important;padding:20px 0 20px 10px !important;}
-.ant-table-tbody > tr > td {border-bottom: 1px solid #313c46;transition: background 0.3s;}
+.custom-table .ant-table-tbody > tr:first-child td{padding:0 !important; }
+.custom-table .ant-table-thead th.ant-table-column-has-sorters:hover{background: var(--bgGrey)}
+.custom-table .ant-table-tbody > tr > td {border-bottom: 1px solid #313c46 !important;padding:20px 0 20px 4px !important;}
+.ant-table-tbody > tr > td ,.custom-table .ant-table-thead > tr > th{border-bottom: 1px solid #313c46;transition: background 0.3s;}
 .custom-table .ant-table-row:first-child td{padding:0 16px 16px !important ;}
+.ant-table-container table > thead > tr:first-child th:first-child{border-top-left-radius:0}
+.ant-table-container table > thead > tr:first-child th:last-child{border-top-right-radius:0}
+.custom-table .ant-table-cell-scrollbar{box-shadow: 0;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}

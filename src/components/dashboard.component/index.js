@@ -27,7 +27,7 @@ class Home extends Component {
                         </div>
                         <div className="box markets-panel">
                             <Translate content="markets_title" component={Title} className="fs-24 fw-600 mb-0 text-white-30" />
-                            <Translate content="markets_subtitle" component={Paragraph} className="text-white-30 fs-16 fw-200" />
+                            <Translate content="markets_subtitle" component={Paragraph} className="text-white-30 fs-16 fw-200 mb-0" />
                             {/* <Translate content="search_currency" component={Search} size="middle" bordered={false} enterButton className="mt-24" /> */}
                             <MarketCap />
                         </div>

@@ -1,8 +1,8 @@
 import Currency from "../shared/number.formate";
 
 const infoColumns = [
-    { title: "", dataIndex: "image", render: val => <img style={{ height: 20, width: 20 }} src={val} />, width: 40 },
-    { title: "", dataIndex: "symbol", render: text => <span className="fs-18 fw-500 text-upper text-white mb-0 mt-12">{text.toUpperCase()}</span>, sorter: (a, b) => b.name - a.name, },
+    { dataIndex: "image", render: val => <img style={{ height: 20, width: 20 }} src={val} />, width: 40 },
+    { title: "Coin", dataIndex: "symbol", render: text => <span className="fs-18 fw-500 text-upper text-white mb-0 mt-12">{text.toUpperCase()}</span>, sorter: (a, b) => b.name - a.name, },
     {
         title: "Price", dataIndex: "current_price", render: (val) => <Currency defaultValue={val} type={"text"} className="fs-16 fw-400 text-upper text-white" />, sorter: (a, b) => b.current_price - a.current_price
     },
@@ -11,9 +11,9 @@ const infoColumns = [
 ];
 
 const detailInfoColumns = [
-    { title: "", dataIndex: "image", render: val => <img style={{ height: 20, width: 20 }} src={val} />, width: 100 },
-    { title: "Coin", dataIndex: "name", width: 250, render: text => <span className="fs-18 fw-500 text-upper text-white mb-0 mt-12">{text}</span> },
-    { title: "", dataIndex: "symbol", render: text => <span className="fs-18 fw-500 text-upper text-white mb-0 mt-12">{text.toUpperCase()}</span>, sorter: (a, b) => b.name - a.name, },
+    { title: "", dataIndex: "image", render: val => <img style={{ height: 20, width: 20 }} src={val} />, width: 80 },
+    { title: "", dataIndex: "name", width: 250, render: text => <span className="fs-18 fw-500 text-upper text-white mb-0 mt-12">{text}</span> },
+    { title: "Coin", dataIndex: "symbol", render: text => <span className="fs-18 fw-500 text-upper text-white mb-0 mt-12">{text.toUpperCase()}</span>, sorter: (a, b) => b.name - a.name, },
     {
         title: "Price", dataIndex: "current_price", render: (val) => <Currency className="fs-14 fw-400 text-upper text-white mb-0 mt-12" defaultValue={val} type={"text"} />, sorter: (a, b) => b.current_price - a.current_price,
     },
