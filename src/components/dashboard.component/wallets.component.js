@@ -1,28 +1,9 @@
 import React, { Component } from 'react';
 import { Typography, List, Button } from 'antd';
-import config from '../../config/config';
 import Translate from 'react-translate-component';
-//import MassPayment from '../../components/buyfiat.component'
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 
 const { Title, Paragraph } = Typography;
-const suisseWalletList = [
-    {
-        title: 'usd',
-        coin: 'usd-d',
-        price: '$ 0.00',
-    },
-    {
-        title: 'eur',
-        coin: 'EUR',
-        price: '€ 0.00',
-    },
-    {
-        title: 'gbp',
-        coin: 'gbp',
-        price: '£ 0.00',
-    },
-]
 
 class Wallets extends Component {
     state = {
@@ -50,7 +31,7 @@ class Wallets extends Component {
                 <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16 fw-200" />
                 <List
                     itemLayout="horizontal"
-                    dataSource={suisseWalletList}
+                    dataSource={[]}
                     bordered={false}
                     className="mx-24 mobile-list"
                     renderItem={item =>
