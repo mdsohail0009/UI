@@ -114,7 +114,7 @@ line-height: 16px;min-width:90px}
 .mid-menu{display: flex; align-items: center;}
 .box{background-color: var(--bgGrey); border-radius: 30px;overflow: hidden; margin-bottom: 28px; padding: 30px 24px;}
 .main-container{padding: 24px 16px; margin: auto;}
-.trade-btn{border-radius: 5px; background-color: var(--bgDarkGreen) !important;border-color: var(--bgDarkGreen) !important; line-height: normal; height: 20px;padding: 0 4px;}
+.trade-btn{border-radius: 5px;  line-height: normal; height: 20px;padding: 0 4px;}
 /* Buy/sell */
 .side-drawer .ant-drawer-body, .side-drawer .ant-drawer-header, .side-drawer-full .ant-drawer-header, .side-drawer-full .ant-drawer-body, .side-drawer-full .ant-table-cell, .side-drawer-full .ant-table-tbody > tr.ant-table-row:hover > td, .side-drawer-full .ant-table-thead th.ant-table-column-sort, .side-drawer-full .ant-table-thead th.ant-table-column-has-sorters:hover{background-color: var(--bgGrey);}
 .side-drawer .ant-drawer-mask, .side-drawer-full .ant-drawer-mask{background-color: var(--bgDarkGrey-95);}

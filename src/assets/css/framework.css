@@ -55,6 +55,9 @@
 .text-aqua{color: var(--textAqua) !important;}
 .text-purple{color: var(--textpurple) !important;}
 .bggrey{background-color: var(--bgGrey) !important;}
+.bgred{ background-color: var(--bgDarkRed) !important;border-color: var(--bgDarkRed) !important;}
+.bggreen{ background-color: var(--bgDarkGreen) !important;border-color: var(--bgDarkGreen) !important;}
+
 
 /*----Padding Utilities----*/
 .p-0{padding: 0 !important;}
