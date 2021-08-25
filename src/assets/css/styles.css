@@ -413,7 +413,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .custom-table .ant-table-row:first-child td{padding:0 16px 16px !important ;}
 .ant-table-container table > thead > tr:first-child th:first-child{border-top-left-radius:0}
 .ant-table-container table > thead > tr:first-child th:last-child{border-top-right-radius:0}
-.custom-table .ant-table-cell-scrollbar{box-shadow: 0;}
+.custom-table .ant-table-cell-scrollbar{box-shadow: none !important;}
+.custom-table tr>.ant-table-row-level-0:first-child td{border-bottom: 0 !important;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}
