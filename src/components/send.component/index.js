@@ -10,7 +10,7 @@ import ScanQR from './scan';
 import WithdrawAddress from './withdrawAddress'
 import SellSummary from '../sell.component/sellSummary';
 import VerifyIDentity from './verifyIdentity';
-import WithdrawScan from './withdrawScan';
+import WithdrawScan from './qr.scan';
 import WithdrawSummary from './withdrawSummary';
 import AddressScanner from './addressScanner'
 const { Title, Paragraph } = Typography

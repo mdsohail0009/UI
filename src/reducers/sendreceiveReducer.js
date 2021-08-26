@@ -1,5 +1,6 @@
 const SET_STEP = "setStep";
 const CLEAR_STEP = "clearStep";
+const SET_WALLET_ADDRESS = "setWalletAddress";
 const setStep = (payload) => {
     return {
         type: SET_STEP,
@@ -11,6 +12,9 @@ const clearStep = (payload) => {
         type: CLEAR_STEP,
         payload
     }
+}
+const setWalletAddress = (payload) => {
+    return { type: SET_WALLET_ADDRESS, payload }
 }
 let initialState = {
     stepcode: "step1",
@@ -33,7 +37,8 @@ let initialState = {
         withdrawscan: 'withdraw_summary_sub',
 
 
-    }
+    },
+    depositWallet: ""
 }
 const sendReceiveReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -43,10 +48,13 @@ const sendReceiveReducer = (state = initialState, action) => {
         case CLEAR_STEP:
             state = { ...state, stepcode: action.payload };
             return state;
+        case SET_WALLET_ADDRESS:
+            state = { ...state, depositWallet: action.payload };
+            return state;
         default:
             return state;
     }
 
 }
 export default sendReceiveReducer;
-export { setStep, clearStep }
+export { setStep, clearStep,setWalletAddress }

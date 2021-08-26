@@ -4,7 +4,7 @@ import { List, Empty, Input } from 'antd';
 import NumberFormat from 'react-number-format';
 import { UserOutlined } from '@ant-design/icons';
 
-const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, showSearch,selectedCoin,iconField,titleField }) => {
+const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, showSearch,selectedCoin,iconField,titleField,showValues=true }) => {
     const [loading, setLoading] = useState(true);
     const [coinListData, setCoinListData] = useState([]);
     const [selList, setselList] = useState({});

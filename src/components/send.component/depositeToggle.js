@@ -5,6 +5,7 @@ import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import CryptoDeposit from '../deposit.component/crypto.deposit';
 
 
 class DepositeCrypto extends Component {
@@ -88,31 +89,7 @@ class DepositeCrypto extends Component {
                     </>
                     :
                     <>
-                        <Translate content="deposite_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-8" />
-                        <Translate content="deposite_a_cryto_txt" component={Paragraph} className="fs-16 text-secondary fw-200" />
-                        <div className="dep-withdraw auto-scroll">
-                            <List
-                                itemLayout="horizontal"
-                                dataSource={config.tlvCoinsList}
-                                loadMore={loadMore}
-                                className="wallet-list"
-                                renderItem={item => (
-                                    <List.Item className="px-8">
-                                        <Link onClick={() => this.props.changeStep('step7')}>
-                                            <List.Item.Meta
-                                                avatar={<span className={`coin ${item.coin} mr-4`} />}
-                                                title={<div className="wallet-title">{item.coin}</div>}
-                                            />
-                                            {/* <div className="fs-16 text-right">
-                                                <div className="text-white-30 fw-600">${item.price}</div>
-                                                <div className={item.up ? 'text-green' : 'text-red'}>-{item.loss} % </div>
-                                            </div>
-                                            {item.up ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />} */}
-                                        </Link>
-                                    </List.Item>
-                                )}
-                            />
-                        </div>
+                        <CryptoDeposit />
                     </>
                 }
 

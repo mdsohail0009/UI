@@ -1,7 +1,7 @@
 
 import QRCode  from 'qrcode.react';
 
-const QRCodeComponent = ({ value, bgColor, fgColor, size = 128 }) => {
+const QRCodeComponent = ({ value="abc", bgColor, fgColor, size = 250 }) => {
 
 
     return <QRCode value={value} size={size} bgColor={bgColor} fgColor = {fgColor} />
