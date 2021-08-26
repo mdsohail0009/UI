@@ -100,7 +100,8 @@ line-height: 16px;min-width:90px}
 .icon.sm.uparrow{background-position: -87px -4px;}
 .icon.sm.rightarrow{background-position: -78px -40px;}
 .icon.sm.leftarrow{background-position: -92px -40px;}
-.icon.sm.downarrow-white{background-position: -128px -6px;}
+.icon.sm.downarrow-white{background-position: -148px -5px;transform: scale(1.1);}
+.icon.sm.uparrow-white{background-position: -128px -6px;}
 .icon.sm.r-arrow-o-white{background-position:-222px -5px;}
 .icon.sm.uparw-o-white{background-position:-332px -6px;}
 .icon.sm.dwnarw-o-white{background-position:-355px -5px;}
@@ -415,7 +416,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .ant-table-container table > thead > tr:first-child th:last-child{border-top-right-radius:0}
 .custom-table .ant-table-cell-scrollbar{box-shadow: none !important;}
 .custom-table tr>.ant-table-row-level-0:first-child td{border-bottom: 0 !important;}
-.custom-table .ant-table-body{min-height: 100vh; height: 100vh;}
+.custom-table .ant-table-body{max-height: 100vh !important; height: 100vh !important;}
 .custom-table .ant-table-column-title{z-index: 0;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
