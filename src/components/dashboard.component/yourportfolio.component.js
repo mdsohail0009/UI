@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { List, Button, Typography } from 'antd';
 import Translate from 'react-translate-component';
-import apiCalls from '../../api/apiCalls'
 import BuySell from '../buy.component';
 import connectStateProps from '../../utils/state.connect';
+import { fetchYourPortfolio } from './api';
+import Currency from '../shared/number.formate';
 
 class YourPortfolio extends Component {
     state = {
-        loading: false,
+        loading: true,
         initLoading: true,
         portfolioData: [], buyDrawer: false
     }
@@ -16,8 +17,8 @@ class YourPortfolio extends Component {
     }
     loadCryptos = async () => {
         if (this.props.userProfile) {
-            let res = await apiCalls.getportfolio(this.props.userProfile.id)
-            if (res.ok) this.setState({ portfolioData: res.data })
+            let res = await fetchYourPortfolio(this.props.userProfile.id)
+            if (res.ok) this.setState({ portfolioData: res.data,loading:false })
         }
     }
     showBuyDrawer = () => {
@@ -38,6 +39,7 @@ class YourPortfolio extends Component {
                 <List className="mobile-list"
                     itemLayout="horizontal"
                     dataSource={this.state.portfolioData}
+                    loading={this.state.loading}
                     renderItem={item => (
                         <List.Item className="" extra={
                             <div className="crypto_btns">
@@ -50,7 +52,8 @@ class YourPortfolio extends Component {
                                 title={<div className="fs-18 fw-300 text-upper text-white mb-0 mt-12">{item.coin}</div>}
                             />
 
-                            <div className={`text-right fs-20 ${!item.up ? 'text-green' : 'text-red'}`}>{!item.up ? <span className="icon md gain mr-8" /> : <span className="icon md lose mr-8" />}{item.change}%</div>
+                            <div className={`text-right fs-20 ${item.coinBalance>0 ? 'text-green' : 'text-red'}`}><Currency defaultValue={item.coinBalance} type={"text"}/></div>
+                            {/* {item.coinBalance>0? <span className="icon md gain mr-8" /> : <span className="icon md lose mr-8" />} */}
                             {/* <div className="fs-16 text-white-30 fw-300 ml-24  text-upper ">{item.totalcoin} {item.shortcode}</div> */}
                         </List.Item>
                     )}
