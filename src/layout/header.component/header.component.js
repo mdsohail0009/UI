@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu,  Typography, Dropdown, Tabs, notification, Drawer } from 'antd';
+import { Layout, Menu,  Typography, Dropdown, notification, Drawer } from 'antd';
 import { Link } from 'react-router-dom';
 import logoColor from '../../assets/images/logo-color.png';
 import counterpart from 'counterpart';
@@ -8,15 +8,15 @@ import en from '../../lang/en';
 import ch from '../../lang/ch';
 import my from '../../lang/my';
 import BuySell from '../../components/buy.component';
-import SendReceive from '../../components/send.component'
-import SwapCrypto from '../../components/swap.component'
-import MassPayment from '../../components/buyfiat.component'
+import SendReceive from '../../components/send.component';
+import SwapCrypto from '../../components/swap.component';
+import MassPayment from '../../components/buyfiat.component';
 import Changepassword from '../../components/changepassword';
 import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata,clearSwapData } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
-import MegaMenu from './megaMenu.component'
-import SettingsMenu from './settingsMenu.component'
-import SecurityMenu from './securityMenu.component'
+import MegaMenu from './megaMenu.component';
+import SettingsMenu from './settingsMenu.component';
+import SecurityMenu from './securityMenu.component';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -28,17 +28,11 @@ const LinkValue = (props) => {
         <Translate className="text-yellow fw-700 fs-16 d-inlineblock"
             content={props.content}
             component={Link}
-        // to="./#"
         />
     )
 }
-const { menuHeader } = Layout;
-const { Title, Paragraph, Text } = Typography;
-const { TabPane } = Tabs;
-
-
+const {Paragraph } = Typography;
 class Header extends Component {
-    
     constructor(props) {
         super(props);
         this.state = {
@@ -59,11 +53,6 @@ class Header extends Component {
         }
       
     }
-   
-    onChange(checked) {
-        console.log(`switch to ${checked}`);
-    }
-   
     showBuyDrawer = () => {
         if (this.props.userConfig.isKYC) {
             this.setState({
@@ -138,8 +127,6 @@ class Header extends Component {
         
     }
     render() {
-        const { initLoading, loading } = this.state;
-        const link = <LinkValue content="medium" />;
         const depostWithdrawMenu = (
             <Menu>
                 <ul className="pl-0 drpdwn-list">

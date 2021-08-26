@@ -4,6 +4,8 @@ import { setStep } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import QRCodeComponent from '../qr.code.component';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+const { Text } = Typography
 class QRScan extends Component {
     state = {}
     success = () => {
@@ -18,9 +20,10 @@ class QRScan extends Component {
                 </div>
                 <div className="crypto-address mt-36">
                     <Translate className="mb-0 fw-400 text-secondary" content="address" component={Text} />
-                    <div className="mb-0 fs-14 fw-500 text-textDark">{this.props?.sendReceive?.depositWallet?.walletAddress}</div>
+                    <div className="mb-0 fs-14 fw-500 text-textDark">{this.props?.sendReceive?.depositWallet?.walletAddress}  <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress}>
+                        <Text copyable className="fs-20 text-white-30 d-block"></Text></CopyToClipboard> </div>
                 </div>
-                {this.props?.sendReceive?.depositWallet?.tag!=null&&<div className="crypto-address mt-36">
+                {this.props?.sendReceive?.depositWallet?.tag != null && <div className="crypto-address mt-36">
                     <Text className="mb-0 fw-400 text-secondary">Tag</Text>
                     <div className="mb-0 fs-14 fw-500 text-textDark">{this.props?.sendReceive?.depositWallet?.tag}</div>
                 </div>}

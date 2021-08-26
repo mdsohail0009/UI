@@ -26,22 +26,6 @@ class DepositeCrypto extends Component {
     }
 
     render() {
-        console.log('propssssssssssss depositeToggle', this.props)
-        const { initLoading, loading } = this.state;
-        const loadMore =
-            !loading ? (
-                <div
-                    style={{
-                        textAlign: 'center',
-                        marginTop: 16,
-                        height: 40,
-                        lineHeight: '40px',
-                        borderColor: 'var(--borderGrey)'
-                    }}
-                >
-                    <Translate content="load_more" component={Link} className="fs-16 text-white-30" />
-                </div>
-            ) : null;
         const { Title, Paragraph, Text } = Typography;
         const { sendreceive } = this.state
         return (
