@@ -15,6 +15,8 @@ class SuissebaseFiat extends Component {
         if (this.props.onClose) {
             this.props.onClose();
         }
+        if(this.child)
+        this.child.clearfiatValues();
     }
     renderTitle = () => {
         const stepcodes = {
@@ -25,7 +27,7 @@ class SuissebaseFiat extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            fiatdeposit: <FaitDeposit />,
+            fiatdeposit: <FaitDeposit  fiatRef={(cd) => this.child = cd}/>,
             faitsummary: < FaitdepositSummary />,
             selectcurrency: < SelectCurrency/>,
 

@@ -29,9 +29,16 @@ class FaitDeposit extends Component {
     BankDetails: [],BankInfo:null,Amount:null,depObj:{currency:null,BankName:null}
   }
   componentDidMount(){
+    this.props.fiatRef(this)
     this.props.fetchCurrencyWithBankDetails()
   }
-
+  clearfiatValues = () => {
+    this.setState({buyDrawer: false,
+      crypto: config.tlvCoinsList,
+      buyToggle: 'Buy',
+      fiatDepEur: false,
+      BankDetails: [],BankInfo:null,Amount:null,depObj:{currency:null,BankName:null}});
+  }
   handleBuySellToggle = e => {
     this.setState({
       faitdeposit: e.target.value === 2

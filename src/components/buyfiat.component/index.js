@@ -22,13 +22,15 @@ class MassPayment extends Component {
         if (this.props.onClose) {
             this.props.onClose();
         }
+        if(this.child)
+        this.child.clearfiatValues();
     }
     onHhandleClick = () => {
         this.props.changeStep("step3");
     }
     renderContent = () => {
         const stepcodes = {
-            fiatdeposit: <FiatDeposit />,
+            fiatdeposit: <FiatDeposit  fiatRef={(cd) => this.child = cd}/>,
             //buyfiat: <BuyFiat activeTab={this.props.valNum} />,
             selectfiat: <SelectFiat />,
             addcard: <AddCard />,
