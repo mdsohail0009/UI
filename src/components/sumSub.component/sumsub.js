@@ -3,13 +3,16 @@ import snsWebSdk from '@sumsub/websdk';
 import apicalls from '../../api/apiCalls';
 import { connect } from 'react-redux';
 import { userInfo, getmemeberInfo } from '../../reducers/configReduser';
+import { withRouter } from 'react-router-dom';
 
 class SumSub extends Component {
     state = {loading:true}
     componentDidMount() {
-
+        if (this.props.userConfig.isKYC) {
+            this.props.history.push("/dashboard")
+        }
         this.launchWebSdk(process.env.REACT_APP_SUMSUB_URI, 'basic-kyc', 'tst:N2Kvt7SOOVp1jMf7wyQy9BSO.KlnFBjZadRJWK1A0rHckzIlaHQqbRDTO');
-
+        
     }
     launchWebSdk = async (apiUrl, flowName, accessToken, applicantEmail, applicantPhone, customI18nMessages) => {
         applicantEmail = "test@example.org"
@@ -34,6 +37,7 @@ class SumSub extends Component {
                     if (type === 'idCheck.applicantStatus' && payload.reviewStatus == "completed")
                         apicalls.updateKyc(this.props.userConfig.userId).then((res) => {
                             this.props.getmemeberInfoa(this.props.userConfig.email)
+                            this.props.history.push("/dashboard")
                         })
                 },
                 onError: (error) => {
@@ -73,4 +77,4 @@ const connectDispatchToProps = dispatch => {
     }
 }
 
-export default connect(connectStateToProps, connectDispatchToProps)(SumSub);
+export default connect(connectStateToProps, connectDispatchToProps)(withRouter(SumSub));

@@ -10,8 +10,8 @@ class NotKyc extends Component {
         return (
             <>
             <div className="notkyc">
-             <div>Dear cusomer Please complete your
-            <Link  to="/sumsub" >{this.props.userConfig.isbusines?' kyb ':' kyc '}</Link>
+             <div>Dear customer please complete your
+            <Link  to="/sumsub" >{this.props.userConfig.isbusines?' KYB ':' KYC '}</Link>
             to continue </div></div>
             </>
         );
