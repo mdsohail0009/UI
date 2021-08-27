@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
-import SellToggle from '../buyfiat.component/faitWithdrawal';
+import SellToggle from '../withDraw.component/faitWithdrawal';
 import config from '../../config/config';
 import SelectCurrency from '../buyfiat.component/selectCurrency';
 import NumberFormat from 'react-number-format';

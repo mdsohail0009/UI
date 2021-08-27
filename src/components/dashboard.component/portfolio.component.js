@@ -32,8 +32,8 @@ class Portfolio extends Component {
                 <Translate content="Portfolio_title" component={Title} level={3} className="fs-24 fw-600 mb-0 text-white-30" />
                 <div className="portfolio-count py-36 pb-0">
                     <div className="summary-count mr-16">
-                        <Currency defaultValue={totalCryptoValue} className={`fs-40 m-0 fw-600 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }}/>
-                        <Currency defaultValue={totalFiatValue} prefix={""} suffixText={"BTC"} className={`text-white-30 fs-16 m-0 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }}/>
+                        <Currency defaultValue={totalFiatValue} className={`fs-40 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }}/>
+                        <Currency defaultValue={totalCryptoValue} prefix={""} suffixText={"BTC"} className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }}/>
                     </div>
                    {/* <Button type="primary" className={`mt-16 trade-btn ${totalCryptoValue < 0 ? 'bgred' : 'bggreen'}`}  size="small">{crypto_stock} {totalCryptoValue < 0 ? <span className="icon sm downarrow-white ml-4" />:<span className="icon sm uparrow-white ml-4" />}</Button> */}
                 </div>
