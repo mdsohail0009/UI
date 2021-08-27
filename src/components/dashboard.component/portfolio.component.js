@@ -35,7 +35,7 @@ class Portfolio extends Component {
                         <Currency defaultValue={totalCryptoValue} className={`fs-40 m-0 fw-600 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }}/>
                         <Currency defaultValue={totalFiatValue} prefix={""} suffixText={"BTC"} className={`text-white-30 fs-16 m-0 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }}/>
                     </div>
-                   <Button type="primary" className={`mt-16 trade-btn ${totalCryptoValue < 0 ? 'bgred' : 'bggreen'}`}  size="small">{crypto_stock} {totalCryptoValue < 0 ? <span className="icon sm downarrow-white ml-4" />:<span className="icon sm uparrow-white ml-4" />}</Button>
+                   {/* <Button type="primary" className={`mt-16 trade-btn ${totalCryptoValue < 0 ? 'bgred' : 'bggreen'}`}  size="small">{crypto_stock} {totalCryptoValue < 0 ? <span className="icon sm downarrow-white ml-4" />:<span className="icon sm uparrow-white ml-4" />}</Button> */}
                 </div>
                 <img src={chart} width="100%" />
             </div>
