@@ -4,7 +4,7 @@ import { buyFiatSteps as config } from './config';
 import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
 import connectStateProps from '../../utils/state.connect';
-import FaitDeposit from './faitDeposit';
+import FaitDeposit from '../../components/deposit.component/faitDeposit';
 import FaitdepositSummary from './faitdepositSummary';
 import SelectCurrency from './selectCurrency';
 

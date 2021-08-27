@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
-import SellToggle from './faitWithdrawal';
+import SellToggle from '../buyfiat.component/faitWithdrawal';
 import config from '../../config/config';
-import SelectCurrency from './selectCurrency';
+import SelectCurrency from '../buyfiat.component/selectCurrency';
 import NumberFormat from 'react-number-format';
 import {getCurrencieswithBankDetails} from '../../reducers/depositReducer'
 
@@ -31,6 +31,7 @@ class FaitDeposit extends Component {
   componentDidMount(){
     this.props.fetchCurrencyWithBankDetails()
   }
+
   handleBuySellToggle = e => {
     this.setState({
       faitdeposit: e.target.value === 2

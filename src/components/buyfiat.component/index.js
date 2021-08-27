@@ -9,7 +9,7 @@ import BuyFiat from './buyFiat';
 import SelectFiat from './selectFiat';
 import AddCard from './addCard';
 import SelectWallet from './selectWallet';
-import FiatDeposit from './faitDeposit';
+import FiatDeposit from '../../components/deposit.component/faitDeposit';
 import FiatSummary from './buyfiatSummary';
 import BillingAddress from './fiatBillingAddress';
 import ConfirmMsg from './confirm'
