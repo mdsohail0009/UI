@@ -242,11 +242,11 @@ export default {
   for_Domestic_wires: 'For Domestic Wires',
   for_international_wires: 'For International Wires',
   Swift_BICcode: 'Swift/BIC Code',
-  SIGNU: 'SIGNU533XXX',
+  SIGNU: '%(value)s',
   beneficiaryBank: 'Beneficiary Bank',
-  signature_bank: 'Signature Bank',
+  signature_bank: '%(value)s',
   beneficiary_Bank_address: 'Beneficiary Bank Address',
-  Fifth_Avenue: '565 Fifth Avenue,NEW YORK NY 10017',
+  Fifth_Avenue: '%(value)s',
   reference: 'Reference',
   reference_hint_text: 'Important: this code identifies your deposit include this code when submitting the wire transfer in the transaction description or purpose',
   desposite_text: 'Please choose the currency you would like to deposite in, and bank account details for the currency chosen will be displayed.The next step is for you to wire your funds to the bank details provided and remember to INCLUDE the reference number.',
@@ -275,5 +275,6 @@ export default {
   innovative_concepts: 'Innovative Concepts',
   wire_16_ZBPHXFHI: 'wire_16_ZBPHXFHI',
   note: 'Do note that we accept transfer addressable only in SEPA.',
-  suisse_btn_refresh: "Click to get new rates"
+  suisse_btn_refresh: "Click to get new rates",
+  BankName:'Bank Name'
 }
