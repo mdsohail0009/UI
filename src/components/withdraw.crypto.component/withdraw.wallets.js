@@ -12,7 +12,7 @@ const assetsList = [
         network: "BTC Binance Address",
     }
 ]
-class SelectWithdraw extends Component {
+class CryptoWithDrawWallets extends Component {
     render() {
         const { Text } = Typography;
         return (
@@ -88,4 +88,4 @@ const connectDispatchToProps = dispatch => {
         }
     }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(SelectWithdraw);
+export default connect(connectStateToProps, connectDispatchToProps)(CryptoWithDrawWallets);

@@ -11,6 +11,7 @@ import SwapReducer from '../reducers/swapReducer';
 import BuyFiat from '../reducers/buyFiatReducer';
 import UserConfig from '../reducers/configReduser';
 import sellReducer from '../reducers/sellReducer';
+import depositReducer from '../reducers/depositReducer';
 
 const persistConfig = {
     key: "root",
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
     //sellData:buyReducer,
     userConfig:UserConfig,
     buyInfo:buyReducer,
-    sellInfo:sellReducer
+    sellInfo:sellReducer,
+    depositInfo:depositReducer
 })
 const reducer = persistReducer(persistConfig, rootReducer)
 let store = createStore(

@@ -5,15 +5,13 @@ import connectStateProps from '../../utils/state.connect';
 import { setStep } from '../../reducers/sendreceiveReducer';
 import { sendreceiveSteps as config } from './config';
 import DepositeCrypto from '../send.component/depositeToggle';
-import SelectWithdraw from './selectWithdraw';
+import CryptoWithDrawWallets from '../withdraw.crypto.component/withdraw.wallets';
 import ScanQR from './scan';
 import WithdrawAddress from './withdrawAddress'
-import SellSummary from '../sell.component/sellSummary';
 import VerifyIDentity from './verifyIdentity';
 import WithdrawScan from './qr.scan';
 import WithdrawSummary from './withdrawSummary';
-import AddressScanner from './addressScanner'
-const { Title, Paragraph } = Typography
+const {Paragraph } = Typography
 class SendReceive extends Component {
     state = {
 
@@ -27,7 +25,7 @@ class SendReceive extends Component {
     renderContent = () => {
         const stepcodes = {
             depositecrypto: <DepositeCrypto activeTab={this.props.valNum} />,
-            withdraw: <SelectWithdraw />,
+            withdraw: <CryptoWithDrawWallets />,
             scanner: <ScanQR />,
             withdrawaddress: <WithdrawAddress />,
             verifyidentity: <VerifyIDentity />,

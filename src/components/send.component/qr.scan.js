@@ -28,7 +28,7 @@ class QRScan extends Component {
                     <div className="mb-0 fs-14 fw-500 text-textDark">{this.props?.sendReceive?.depositWallet?.tag}</div>
                 </div>}
                 <Translate className="text-left f-12 text-white fw-200" content="address_hint_text" component={Paragraph} />
-                <Translate size="large" block className="pop-btn" style={{ marginTop: '100px' }} content="copy" component={Button} onClick={this.success} />
+                {/* <Translate size="large" block className="pop-btn" style={{ marginTop: '100px' }} content="copy" component={Button} onClick={this.success} /> */}
                 <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" onClick={() => this.props.changeStep('step1')} block content="share" component={Button} />
             </div>
         )
