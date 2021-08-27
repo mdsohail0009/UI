@@ -8,6 +8,7 @@ import SellToggle from './faitWithdrawal';
 import config from '../../config/config';
 import SelectCurrency from './selectCurrency';
 import NumberFormat from 'react-number-format';
+import {getCurrencieswithBankDetails} from '../../reducers/depositReducer'
 
 const LinkValue = (props) => {
   return (
@@ -25,51 +26,51 @@ class FaitDeposit extends Component {
     crypto: config.tlvCoinsList,
     buyToggle: 'Buy',
     fiatDepEur: false,
-    currencyLu: [{"Id":1,"WalletCode":"USD","BankDetails":[{"BankName":"signet","AccountNumber":"*** *** 6717","RoutingNumber":"026013576","SwiftCode":"SIGNU533XXX","BeneficiaryBank":"Signature Bank","BankAddress":"565 Fifth Avenue,NEW YORK NY 10017","Reference":"wire_16_PKFPGATX"},{"BankName":"icici","AccountNumber":"*** *** 6718","RoutingNumber":"026013577","SwiftCode":"SIGNU534XXX","BeneficiaryBank":"Signature Bank","BankAddress":"565 Fifth Avenue,NEW YORK NY 10018","Reference":"wire_16_PKFPGATX"}]},{"Id":2,"WalletCode":"EUR","BankDetails":[{"BankName":"signet","AccountNumber":"*** *** 6719","RoutingNumber":"026013578","SwiftCode":"SIGNU533XXX","BeneficiaryBank":"Signature Bank","BankAddress":"565 Fifth Avenue,NEW YORK NY 10019","Reference":"wire_16_PKFPGATX"}]}],
-    BankDetails: [],BankInfo:null,Amount:null
+    BankDetails: [],BankInfo:null,Amount:null,depObj:{currency:null,BankName:null}
+  }
+  componentDidMount(){
+    this.props.fetchCurrencyWithBankDetails()
   }
   handleBuySellToggle = e => {
     this.setState({
       faitdeposit: e.target.value === 2
     });
   }
-  // handlFiatDep = e => {
-  //   this.setState({
-  //     fiatDepEur: e.target.value === "eur"
-  //   });
-  //   //    return <SelectCurrency />
-  // }
-  handlFiatDep = (e) => {
-    for (var k in this.state.currencyLu) {
-      if (this.state.currencyLu[k].WalletCode == e) {
-        if(this.state.currencyLu[k].BankDetails?.length==1){
+  handlFiatDep = (e,currencyLu) => {
+    let {depObj}=this.state;
+    depObj.currency=e;
+    depObj.BankName=null;
+    for (var k in currencyLu) {
+      if (currencyLu[k].walletCode == e) {
+        if(currencyLu[k].bankDetailModel?.length==1){
           this.setState({
-            fiatDepEur: e === "EUR",BankInfo:this.state.currencyLu[k].BankDetails[0],BankDetails:[]
+            fiatDepEur: e === "EUR",BankInfo:currencyLu[k].bankDetailModel[0],BankDetails:[],depObj:depObj
           });
         }else{
           this.setState({
-            fiatDepEur: e === "EUR",BankDetails:this.state.currencyLu[k].BankDetails,BankInfo:null
+            fiatDepEur: e === "EUR",BankDetails:currencyLu[k].bankDetailModel,BankInfo:null,depObj:depObj
           });
         }
       }
     }
   }
     handlebankName=(e)=>{
+      let { depObj } = this.state;
+      depObj.BankName = e;
       for (var k in this.state.BankDetails) {
-        if (this.state.BankDetails[k].BankName == e) {
+        if (this.state.BankDetails[k].bankName == e) {
           this.setState({
-            fiatDepEur: e === "EUR",BankInfo:this.state.BankDetails[k]
+            fiatDepEur: e === "EUR",BankInfo:this.state.BankDetails[k],depObj:depObj
           });
         }
       }
     }
 
   render() {
-    const { TabPane } = Tabs;
-    const { Paragraph, Title, Text } = Typography;
+    const { Paragraph,  Text } = Typography;
     const link = <LinkValue content="terms_service" />;
-    const { faitdeposit, fiatDepEur,currencyLu } = this.state;
-    const { options, value } = this.state;
+    const { faitdeposit,BankInfo } = this.state;
+    const {currenciesWithBankInfo}=this.props.depositInfo;
     return (
       <>
         <Radio.Group
@@ -94,9 +95,9 @@ class FaitDeposit extends Component {
                   component={Text}
                 />
                 <Select dropdownClassName="select-drpdwn" placeholder="Select Currency" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-                  onChange={(e) => this.handlFiatDep(e)}>
-                  {currencyLu?.map((item, idx) =>
-                    <Option key={idx} value={item.WalletCode}>{item.WalletCode}
+                  onChange={(e) => this.handlFiatDep(e,currenciesWithBankInfo)} value={this.state.depObj.currency}>
+                  {currenciesWithBankInfo?.map((item, idx) =>
+                    <Option key={idx} value={item.walletCode}>{item.walletCode}
                     </Option>
                   )}
                 </Select>
@@ -106,9 +107,9 @@ class FaitDeposit extends Component {
                   component={Text}
                 />
                   <Select dropdownClassName="select-drpdwn" placeholder="Select Bank Name" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-                    onChange={(e) => this.handlebankName(e)}>
+                    onChange={(e) => this.handlebankName(e)}  value={this.state.depObj.BankName}>
                     {this.state.BankDetails.map((item, idx) =>
-                      <Option key={idx} value={item.BankName}>{item.BankName}
+                      <Option key={idx} value={item.bankName}>{item.bankName}
                       </Option>
                     )}
                   </Select></>}
@@ -119,9 +120,9 @@ class FaitDeposit extends Component {
                 {/* <span className="coin deposit-white mt-4" /> */}
                 <div style={{ flex: 1 }}>
                   <Paragraph className="mb-0 fs-16 text-white fw-500 mt-36">Innovative Concepts</Paragraph>
-                  <Paragraph className="mb-0 fs-12 text-white-30 fw-300">
-                  Innovative Concepts</Paragraph>
-                  <Text className="text-white-30 fs-14">A/C </Text><Text copyable className="mb-0 fs-14 text-yellow fw-500">{this.state.BankInfo.AccountNumber} </Text> 
+                  {/* <Paragraph className="mb-0 fs-12 text-white-30 fw-300">
+                  Innovative Concepts</Paragraph> */}
+                  <Text className="text-white-30 fs-14">A/C </Text><Text copyable className="mb-0 fs-14 text-yellow fw-500">{BankInfo.accountNumber} </Text> 
                 </div>
               </div>
               <Translate
@@ -134,7 +135,7 @@ class FaitDeposit extends Component {
                 content="Routing_number"
                 component={Text}
               />
-              <Text copyable className="fs-20 text-white-30 d-block">{this.state.BankInfo.RoutingNumber}</Text>
+              <Text copyable className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text>
               <Translate
                 className="mt-24 fs-14 text-aqua fw-500 text-upper"
                 content="for_international_wires"
@@ -149,7 +150,7 @@ class FaitDeposit extends Component {
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     content="SIGNU"
                     component={Text}
-                    with={{ value: this.state.BankInfo.SwiftCode }} />
+                    with={{ value: BankInfo.swiftCode }} />
               <Translate
                 className="fw-200 text-white-30 fs-16"
                 content="beneficiaryBank"
@@ -159,7 +160,7 @@ class FaitDeposit extends Component {
                 className="fs-20 text-white-30 l-height-normal d-block mb-24"
                 content="signature_bank"
                 component={Text}
-                with={{ value: this.state.BankInfo.BeneficiaryBank }}  />
+                with={{ value: BankInfo.beneficiaryBank }}  />
               <Translate
                 className="fw-200 text-white-30 fs-16"
                 content="beneficiary_Bank_address"
@@ -169,17 +170,17 @@ class FaitDeposit extends Component {
                 className="fs-20 text-white-30 l-height-normal d-block mb-24"
                 content="Fifth_Avenue"
                 component={Text}
-                with={{ value: this.state.BankInfo.BankAddress }} />
-              <div className="crypto-address mb-36 mx-0">
+                with={{ value: BankInfo.bankAddress }} />
+              {BankInfo.reference!=''&&<div className="crypto-address mb-36 mx-0">
                 <Translate
                   className="mb-0 fw-400 fs-14 text-secondary"
                   content="reference"
                   component={Text}
                 />
                 <Paragraph copyable className="mb-0 fs-16 fw-500 text-textDark">
-                {this.state.BankInfo.Reference}
+                {BankInfo.reference}
                 </Paragraph>
-              </div>
+              </div>}
               <Translate
                 className="fs-14 text-white-30 fw-200 l-height-normal"
                 content="reference_hint_text"
@@ -206,13 +207,16 @@ class FaitDeposit extends Component {
   }
 }
 
-const connectStateToProps = ({ faitdeposit, oidc }) => {
-  return { faitdeposit }
+const connectStateToProps = ({ faitdeposit,depositInfo }) => {
+  return { faitdeposit,depositInfo }
 }
 const connectDispatchToProps = dispatch => {
   return {
     changeStep: (stepcode) => {
       dispatch(setStep(stepcode))
+    },
+    fetchCurrencyWithBankDetails:()=>{
+      dispatch(getCurrencieswithBankDetails())
     }
   }
 }
