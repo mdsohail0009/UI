@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col } from 'antd';
+import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -52,7 +52,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
     if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) >= parseFloat(selectedWallet.avilable)) {
       return setErrorMsg('Insufficiant Balance');
     }
-    //return
+    setErrorMsg(null)
     values['membershipId'] = userConfig.id
     values['walletCode'] = selectedWallet.currencyCode
     setSaveObj(values);
@@ -155,6 +155,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
   return (
     <>
       <div className="suisfiat-height auto-scroll">
+      {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
         <Form form={form} onFinish={savewithdrawal}>
           <Translate
             content="Beneficiary_BankDetails"
