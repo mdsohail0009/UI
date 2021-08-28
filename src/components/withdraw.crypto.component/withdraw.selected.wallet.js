@@ -152,14 +152,14 @@ class CryptoWithDrawWallet extends Component {
 
     }
     render() {
-        const { Text } = Typography;
+        const { Text, Paragraph } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
         return (
             <div ref={this.myRef}>
                 {this.state.error != null && <Alert closable type="error" message={"Error"} description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
                 <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
-                        <span className={`coin lg ${selectedWallet.coin.toLowerCase()}-white`} />
+                        <span className={`coin lg ${selectedWallet.coin}`} />
                         <Text className="fs-24 text-purewhite ml-8">{selectedWallet.coinFullName}</Text>
                     </span>
                     <div className="crypto-details">
@@ -183,11 +183,16 @@ class CryptoWithDrawWallet extends Component {
                     <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt("half")} />
                     <Translate value="all" content="all" component={Radio.Button} onClick={() => this.clickMinamnt("all")} />
                 </Radio.Group>
-                <Radio.Group defaultValue="half" buttonStyle="outline" className="default-radio">
-                    {/* <Translate value="min" content="assets" className="fs-16 fw-400" component={Radio.Button} /> */}
+                {/* <Radio.Group defaultValue="half" buttonStyle="outline" className="default-radio">
+                    <Translate value="min" content="assets" className="fs-16 fw-400" component={Radio.Button} />
                     <Translate value="half" content="address" className="fs-16 fw-400" component={Radio.Button} onClick={() => this.props.changeStep('step4')} />
-                </Radio.Group>
-                <List
+                </Radio.Group> */}
+                <Translate
+                    className="fs-14 text-aqua fw-500 text-upper"
+                    content="address"
+                    component={Paragraph}
+                />
+                {/* <List
                     itemLayout="horizontal"
                     className="wallet-list my-36"
                     dataSource={[{}]}
@@ -196,16 +201,17 @@ class CryptoWithDrawWallet extends Component {
                         <List.Item className="px-8">
                             <Link>
                                 <List.Item.Meta
-                                    title={<><div className="fs-16 fw-200 text-white"><Input placeholder="Enter address" value={this.state.walletAddress}
-                                        onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })}
-                                    /></div>
-                                        {/* <div className="fs-16 fw-200 text-white">Network : {selectedWallet.netWork}</div> */}
+                                    title={<><div className="fs-16 fw-200 text-white"></div>
+                                        <div className="fs-16 fw-200 text-white">Network : {selectedWallet.netWork}</div>
                                     </>}
                                 />
                             </Link>
                         </List.Item>
 
                     )}
+                /> */}
+                <Input className="cust-input" placeholder="Enter address" value={this.state.walletAddress}
+                    onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })}
                 />
                 <Translate content="with_draw" component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
                 <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[

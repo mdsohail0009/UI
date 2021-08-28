@@ -172,7 +172,7 @@ line-height: 16px;min-width:90px}
 .crypto-card-top{align-items: flex-start;}
 .enter-val-container{display: flex; align-items: flex-start;}
 .crypto-details{display: flex;justify-content: space-between;align-items: center;}
-.crypto-details .crypto-amount{text-align: right;font-size: 16px;font-weight: 200;color: #FFDB1A;}
+.crypto-details .crypto-amount{text-align: right;font-size: 16px;font-weight: 200;color: #FFFFFF;}
 .enter-val{width: auto;}
 .val-updown{position: absolute;right: 0;top: 0;width: 40px;height: 40px;border-radius: 15px;background-color: var(--bgDark);text-align: center;line-height: 38px;}
 .val-updown:hover .swaparrow, .swap-updown:hover .swaparrow{transform: rotate(180deg);transition: 0.5s;background-position: -237px -35px;}
@@ -222,6 +222,9 @@ line-height: 16px;min-width:90px}
 .coin.lg.XRP{background-position: -423px -768px;}
 .coin.lg.BUSD{background-position: -563px -768px;}
 .coin.lg.DOGE{background-position: -490px -768px;}
+.coin.lg.GBP{background-position: -698px -769px;}
+.coin.lg.USD{background-position: -98px -769px;}
+.coin.lg.EUR{background-position: -630px -771px;}
 .coin.md.BTC{background-position: 5px -404px;}
 .coin.md.USDC{background-position: -97px -404px;}
 .coin.md.DOT{background-position: -135px -404px;}
