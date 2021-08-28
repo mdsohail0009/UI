@@ -277,5 +277,7 @@ export default {
   note: 'Do note that we accept transfer addressable only in SEPA.',
   suisse_btn_refresh: "Click to get new rates",
   BankName:'Bank Name',
+  proceed:'Proceed',
+  description:'Description',
   with_draw:"Withdraw"
 }
