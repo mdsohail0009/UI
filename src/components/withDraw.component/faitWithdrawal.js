@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { Drawer, Form, Typography, Input, Button, label, Select } from 'antd';
+import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import WalletList from '../shared/walletList';
 import NumberFormat from 'react-number-format';
 import {withdrawRecepientNamecheck,withdrawSave} from '../../api/apiServer';
+import Currency from '../shared/number.formate';
 
 const LinkValue = (props) => {
   return (
@@ -21,6 +22,11 @@ const LinkValue = (props) => {
 const FaitWithdrawal = ({ buyInfo, userConfig }) => {
   const [form] = Form.useForm();
   const [selectedWallet, setSelectedWallet] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [confirmationStep, setConfirmationStep] = useState('step1');
+  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [saveObj, setSaveObj] = useState(null);
 
   const handleWalletSelection = (walletId) => {
     form.setFieldsValue({ memberWalletId: walletId })
@@ -41,15 +47,93 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
   }
 
   const savewithdrawal = async(values) => {
-    console.log(values)
+    //console.log(values)
+    if(parseFloat(typeof values.totalValue=='string'?values.totalValue.replace(/,/g, ''):values.totalValue)>=parseFloat(selectedWallet.avilable)){
+      return setErrorMsg('Insufficiant Balance');
+    }
+    //return
     values['membershipId'] = userConfig.id
     values['walletCode'] = selectedWallet.currencyCode
-    let withdrawal = await withdrawSave(values)
-    if (withdrawal.ok) {
-      console.log(withdrawal)
-    } else {
+    setSaveObj(values);
+    setConfirmationStep('step1')
+    setShowModal(true);
+  //   let withdrawal = await withdrawSave(values)
+  //   if (withdrawal.ok) {
+  //     console.log(withdrawal)
+  //   } else {
+
+  //  }
+  }
+  const renderModalContent = () => {
+    const _types = {
+      step1: <>{saveObj && <div>
+        <p> <Currency defaultValue={saveObj?.totalValue} prefixText={<b>Amount: </b>} prefix={""} suffixText={saveObj.walletCode} /></p>
+        <p><b>Bank Account Number: </b> {saveObj.accountNumber}</p>
+        <p><b>Bank Name: </b> {saveObj.bankName}</p>
+        <p><b>Recipient Namae : </b> {saveObj.beneficiaryAccountName}</p>
+        <ul>
+          <li>Ensure that the account details is correct</li>
+        </ul>
+      </div>}</>,
+      step2: <>{saveObj &&<div>
+        <p> <Currency defaultValue={saveObj?.totalValue} prefixText={<b>Amount: </b>} prefix={""} suffixText={saveObj.walletCode} /></p>
+        <p><b>Bank Account Number: </b> {saveObj.accountNumber}</p>
+        <p><b>Bank Name: </b> {saveObj.bankName}</p>
+        <p><b>Recipient Namae : </b> {saveObj.beneficiaryAccountName}</p>
+        <Form name="verification" initialValues={{ Phone: "" }}>
+          <Form.Item label="Phone" extra="Please enter 6 digit code sent to you're Phone.">
+            <Row gutter={8}>
+              <Col span={12}>
+                <Form.Item
+                  name="Phone"
+                  noStyle
+                  rules={[{ required: true, message: 'Please input the phone' }]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Button>Get Code</Button>
+              </Col>
+            </Row>
+          </Form.Item>
+          <Form.Item label="Email" extra="Please enter 6 digit code sent to you're Email.">
+            <Row gutter={8}>
+              <Col span={12}>
+                <Form.Item
+                  name="Email"
+                  noStyle
+                  rules={[{ required: true, message: 'Please input the email' }]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Button>Get Code</Button>
+              </Col>
+            </Row>
+          </Form.Item>
+        </Form>
+      </div>}</>
+    }
+    return _types[confirmationStep]
+  }
+  const handleCancel= ()=>{
+    setShowModal(false);
+  }
+  const handleOk = async() =>{
+    let currentStep = parseInt(confirmationStep.split("step")[1]);
+    if (currentStep == 2) {
+      let withdrawal = await withdrawSave(saveObj)
+      if (withdrawal.ok) {
+        setShowModal(false);
+        form.resetFields()
+      } else {
 
    }
+    }else{
+      setConfirmationStep("step" + (currentStep + 1))
+    }
   }
 
   const { Paragraph, Title, Text } = Typography;
@@ -311,9 +395,9 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
           <Form.Item
             className="custom-forminput mb-16"
             name="description"
-            // rules={[
-            //   { message: "Please enter reference" },
-            // ]}
+            rules={[
+              { required: true, message: "Please enter reference" },
+            ]}
           >
             <div>
             <div className="d-flex">
@@ -323,46 +407,6 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                 component={Text}
               /></div>
               <Input className="cust-input" placeholder="Reference" />
-            </div>
-          </Form.Item>
-          <Form.Item
-            className="custom-forminput mb-16"
-            name="description"
-            required
-            // rules={[
-            //   { required: true, message: "Please enter description" },
-            // ]}
-          >
-            <div>
-            <div className="d-flex">
-              <Translate
-                className="input-label"
-                content="description"
-                component={Text}
-              /></div>
-              <Input className="cust-input" placeholder="Description" />
-            </div>
-          </Form.Item>
-          <Form.Item
-            className="custom-forminput mb-16"
-            name="isAccept"
-            required
-            rules={[
-              { required: true, message: "Please enter isaccept" },
-            ]}
-          >
-            <div className="d-flex p-16 mb-36 agree-check">
-              <label>
-                <input type="checkbox" id="agree-check" />
-                <span for="agree-check" />
-              </label>
-              <Translate
-                content="agree_to_suissebase"
-                with={{ link }}
-                component={Paragraph}
-                className="fs-14 text-white-30 ml-16"
-                style={{ flex: 1 }}
-              />
             </div>
           </Form.Item>
 
@@ -375,11 +419,19 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             >
              Proceed
             </Button>
-            <Translate size="large" block className="pop-btn mt-36" content="preview_swap" component={Button} onClick={() => { this.previewClick() }} />
           </Form.Item>
         </Form>
       </div>
-
+      <Modal title="Withdrawal" footer={[
+                    <Button key="back" onClick={handleCancel} disabled={loading}>
+                        Return
+                    </Button>,
+                    <Button key="submit" type="primary" onClick={handleOk} loading={loading}>
+                        Confirm
+                    </Button>
+                ]} visible={showModal}>
+                    {renderModalContent()}
+                </Modal>
     </>
   );
 }
