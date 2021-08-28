@@ -278,5 +278,6 @@ export default {
   suisse_btn_refresh: "Click to get new rates",
   BankName:'Bank Name',
   proceed:'Proceed',
-  description:'Description'
+  description:'Description',
+  with_draw:"Withdraw"
 }

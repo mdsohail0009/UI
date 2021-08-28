@@ -1,3 +1,4 @@
 export const ApiControllers = {
-    exchange: "Exchange/"
+    exchange: "Exchange/",
+    withdraw:"Withdrawal/"
 }

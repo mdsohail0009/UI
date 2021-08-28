@@ -1,6 +1,9 @@
+import { getCryptoWithDrawWallets } from "../components/send.component/api";
+
 const SET_STEP = "setStep";
 const CLEAR_STEP = "clearStep";
 const SET_WALLET_ADDRESS = "setWalletAddress";
+const HANDLE_SEND_FETCH = "handleSendFetch";
 const setStep = (payload) => {
     return {
         type: SET_STEP,
@@ -13,8 +16,31 @@ const clearStep = (payload) => {
         payload
     }
 }
+const handleSendFetch = (payload) => {
+    return {
+        type: HANDLE_SEND_FETCH,
+        payload
+    }
+}
 const setWalletAddress = (payload) => {
     return { type: SET_WALLET_ADDRESS, payload }
+}
+
+const fetchWithDrawWallets = ({ memberId }) => {
+    return async dispatch => {
+        dispatch(handleSendFetch({ key: "cryptoWithdraw", wallets: { loading: true, data: [], error: null } }));
+        const response = await getCryptoWithDrawWallets({ memberId });
+        if (response.ok) {
+            dispatch(handleSendFetch({ key: "cryptoWithdraw", wallets: { loading: false, data: response.data } }));
+        } else {
+            dispatch(handleSendFetch({ key: "cryptoWithdraw", wallets: { loading: false, error: response.data, data: [] } }));
+        }
+    }
+}
+const setSelectedWithDrawWallet = (wallet) => {
+    return dispatch => {
+        dispatch(handleSendFetch({ key: "cryptoWithdraw", selectedWallet: wallet }));
+    }
 }
 let initialState = {
     stepcode: "step1",
@@ -38,7 +64,8 @@ let initialState = {
 
 
     },
-    depositWallet: ""
+    depositWallet: "",
+    cryptoWithdraw: {},
 }
 const sendReceiveReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -51,10 +78,13 @@ const sendReceiveReducer = (state = initialState, action) => {
         case SET_WALLET_ADDRESS:
             state = { ...state, depositWallet: action.payload };
             return state;
+        case HANDLE_SEND_FETCH:
+            state = { ...state, [action.payload.key]: { ...state[action.payload.key], ...action.payload } };
+            return state
         default:
             return state;
     }
 
 }
 export default sendReceiveReducer;
-export { setStep, clearStep,setWalletAddress }
+export { setStep, clearStep, setWalletAddress, fetchWithDrawWallets,setSelectedWithDrawWallet }
