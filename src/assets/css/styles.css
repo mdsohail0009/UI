@@ -132,7 +132,7 @@ line-height: 16px;min-width:90px}
 .crypto-list-tabs .ant-input-group-addon .icon, .ant-input-search .ant-input-group-addon .icon{margin-right: 16px !important;}
 .sellcrypto-container{max-height: calc(100vh - 262px);}
 .crypto-container{max-height: calc(100vh - 270px);}
-.suisfiat-container{max-height: calc(100vh - 246px);}
+.suisfiat-container{max-height: calc(100vh - 165px);}
 .suisfiat-height{max-height: calc(100vh - 210px);}
 .verify-container{max-height: calc(100vh - 140px);}
 .dep-withdraw{max-height: calc(100vh - 267px);}
@@ -532,7 +532,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .buysell-toggle .ant-radio-button-wrapper{min-width:180px !important; }
     .crypto-list-tabs .crypto-list{max-height: calc(100vh - 428px); overflow-y: auto; padding-right: 10px;}
     .sellcrypto-container{max-height: calc(100vh - 300px);}
-    .suisfiat-container{max-height: calc(100vh - 316px);}
+    .suisfiat-container{max-height: calc(100vh - 210px);}
     .suisfiat-height{max-height: calc(100vh - 280px);}
     .round-pills .ant-radio-button-wrapper,.default-radio .ant-radio-button-wrapper{min-width: 120px;}
     .dep-withdraw{max-height: calc(100vh - 353px);}
