@@ -16,6 +16,9 @@ const LocalCryptoSwapper = (props, ref) => {
         },
         handleConvertion({ cryptoValue, localValue }) {
             fetchConvertionValue({ cryptoValue, localValue });
+           if(isSwaped){
+               setCryptoValue(cryptoValue);
+           }
         }
     }), []);
     const fetchConvertionValue = async ({ cryptoValue, localValue }) => {

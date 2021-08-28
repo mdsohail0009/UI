@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Card, Input, Radio, List } from 'antd';
+import { Typography, Button, Card, Input, Radio, List, Alert } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -14,19 +14,54 @@ const assetsList = [
 ]
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
+    myRef=React.createRef();
     state = {
         CryptoAmnt: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue,
         USDAmnt: "",
-        isSwap: true
+        isSwap: true,
+        error: null
     }
     componentDidMount() {
         this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
+    }
+    clickMinamnt(type) {
+        let usdamnt; let cryptoamnt;
+        let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
+        if (type == 'half') {
+            usdamnt = (obj.coinValueinNativeCurrency / 2).toString();
+            cryptoamnt = (obj.coinBalance / 2)
+            this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt });
+            this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
+        } else if (type == 'all') {
+            usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
+            cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
+            this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt });
+            this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
+        } else {
+            this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 });
+        }
+    }
+    handlePreview = () => {
+        const amt = parseFloat(this.state.CryptoAmnt);
+        const {withdrawMaxValue,withdrawMinValue} =this.props.sendReceive?.cryptoWithdraw?.selectedWallet
+        this.setState({ ...this.state, error: null });
+        if (amt < withdrawMinValue) {
+            this.setState({ ...this.state, error: `Please enter minimum purchase value of ${withdrawMinValue}` });
+            this.myRef.current.scrollIntoView();
+        } else if (amt >withdrawMaxValue) {
+            this.setState({ ...this.state, error: `You can purchase maximum value of ${withdrawMaxValue}` });
+            this.myRef.current.scrollIntoView();
+        }
+        else {
+            this.props.changeStep('step5')
+        }
     }
     render() {
         const { Text } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
         return (
-            <>
+            <div ref={this.myRef}>
+                {this.state.error!=null&&<Alert closable type="error" message={"Error"} description={this.state.error} onClose={()=> this.setState({ ...this.state, error: null })} showIcon /> }
                 <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
                         <span className={`coin lg ${selectedWallet.coin.toLowerCase()}-white`} />
@@ -49,9 +84,9 @@ class CryptoWithDrawWallet extends Component {
                     selectedCoin={selectedWallet?.coin}
                     onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }} />
                 <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
-                    <Translate value="min" content="min" component={Radio.Button} />
-                    <Translate value="half" content="half" component={Radio.Button} />
-                    <Translate value="all" content="all" component={Radio.Button} />
+                    <Translate value="min" content="min" component={Radio.Button} onClick={() => this.clickMinamnt("min")} />
+                    <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt("half")} />
+                    <Translate value="all" content="all" component={Radio.Button} onClick={() => this.clickMinamnt("all")} />
                 </Radio.Group>
                 <Radio.Group defaultValue="min" buttonStyle="outline" className="default-radio">
                     <Translate value="min" content="assets" className="fs-16 fw-400" component={Radio.Button} />
@@ -75,8 +110,8 @@ class CryptoWithDrawWallet extends Component {
 
                     )}
                 />
-                <Translate content="preview" component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.props.changeStep('step5')} />
-            </>
+                <Translate content="preview" component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
+            </div>
 
 
         )
