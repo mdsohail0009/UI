@@ -18,3 +18,11 @@ export const changePassword = (obj) => {
 
     return apiClient.post(ApiControllers.exchange + "changePassword", obj);
 }
+export const withdrawRecepientNamecheck = (memberid,name) => {
+
+    return apiClient.get(ApiControllers.exchange + "FavouriteNameCheck?memberId="+memberid+"&name="+name);
+}
+export const withdrawSave = (obj) => {
+
+    return apiClient.post(ApiControllers.exchange + "WithdrawFiat", obj);
+}

@@ -276,5 +276,7 @@ export default {
   wire_16_ZBPHXFHI: 'wire_16_ZBPHXFHI',
   note: 'Do note that we accept transfer addressable only in SEPA.',
   suisse_btn_refresh: "Click to get new rates",
-  BankName:'Bank Name'
+  BankName:'Bank Name',
+  proceed:'Proceed',
+  description:'Description'
 }
