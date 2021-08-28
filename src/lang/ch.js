@@ -275,5 +275,6 @@ export default {
   note: '请注意，我们接受只能在 SEPA 中寻址的传输。',
   suisse_btn_refresh:"點擊獲取新費率",
   proceed:'行进',
-  description:'Description'
+  description:'Description',
+  withdrawal_success:'Withdrawal success'
 }

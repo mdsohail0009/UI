@@ -275,5 +275,6 @@ export default {
   note: 'Harap maklum bahawa kami menerima pemindahan yang dapat dialamatkan hanya di SEPA.',
   suisse_btn_refresh:"Klik untuk mendapatkan harga baru",
   proceed:'magpatuloy',
-  description:'Description'
+  description:'Description',
+  withdrawal_success:'Withdrawal success'
 }

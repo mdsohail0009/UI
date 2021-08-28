@@ -280,5 +280,6 @@ export default {
   proceed:'Proceed',
   description:'Description',
   with_draw:"Withdraw",
-  crypto_with_draw_success:"Back"
+  crypto_with_draw_success:"Back",
+  withdrawal_success:'Withdrawal success'
 }
