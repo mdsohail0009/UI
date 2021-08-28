@@ -207,6 +207,8 @@ line-height: 16px;min-width:90px}
 .coin.act{background-position: -270px -1px;}
 .coin.DOT{background-position: -324px -1px;}
 .coin.EUR{background-position: -378px -1px;}
+.coin.usd{background-position: -216px -1px;}
+.coin.eur{background-position: -378px -1px;}
 .coin.gbp{background-position: -432px -1px;}
 .coin.md{width: 40px; height: 40px; box-shadow: none;}
 .coin.lg{width: 52px; height: 52px;box-shadow: none;}
