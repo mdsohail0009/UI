@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Menu,  Typography, Dropdown, notification, Drawer } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import logoColor from '../../assets/images/logo-color.png';
 import counterpart from 'counterpart';
 import Translate from 'react-translate-component';
@@ -145,9 +145,9 @@ class Header extends Component {
                     <menuHeader className="tlv-header" id="area">
                         <div className="login-user">
                             <ul className="header-logo pl-0">
-                                <li className="pr-30 p-relative"><Link><img src={logoColor} alt="logo" className="tlv-logo" /></Link></li>
+                                <li className="pr-30 p-relative"><Link to="/dashboard"><img src={logoColor} alt="logo" className="tlv-logo" /></Link></li>
                                 <MegaMenu></MegaMenu>
-                                <li className="mb-d-none"><Translate content="header_title" component="p" className="text-white-30 mb-0 fs-24" /></li>
+                                <li className="mb-d-none" onClick={()=>this.props.history.push("/dashboard")}><Translate content="header_title" component="p" className="text-white-30 mb-0 fs-24" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
                                 <SecurityMenu />
@@ -155,7 +155,7 @@ class Header extends Component {
                                 <SettingsMenu />
                             </Menu>
                         </div>
-                        <Menu theme="light" mode="horizontal" className="header-right" defaultSelectedKeys={['1']}>
+                        <Menu theme="light" mode="horizontal" className="header-right">
                             {/* <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item> */}
                             <Translate content="menu_buy_sell" component={Menu.Item} key="1" onClick={this.showBuyDrawer} className="list-item" />
                             <Translate content="menu_swap" component={Menu.Item} key="2" onClick={this.showSwapDrawer} className="list-item" />
@@ -218,4 +218,4 @@ const connectDispatchToProps = dispatch => {
 }
 
 // export default Header;
-export default connect(connectStateToProps, connectDispatchToProps)(Header);
+export default withRouter(connect(connectStateToProps, connectDispatchToProps)(Header));

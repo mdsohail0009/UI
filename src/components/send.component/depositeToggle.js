@@ -25,14 +25,16 @@ class DepositeCrypto extends Component {
             sendreceive: e.target.value === 2
         });
     }
+componentWillUnmount(){
 
+}
     render() {
         const { Title, Paragraph, Text } = Typography;
         const { sendreceive } = this.state
         return (
             <>
                 <Radio.Group
-                    defaultValue={this.props.activeTab || 1}
+                    defaultValue={1}
                     onChange={this.handleBuySellToggle}
                     className="buysell-toggle crypto-toggle text-upper">
                     <Translate value={1} content="deposit" component={Radio.Button} />

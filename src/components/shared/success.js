@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import success from '../../assets/images/success.png';
-import { Drawer, Typography, Button, Card, Input, Tooltip, Space } from 'antd';
+import { Typography, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
@@ -17,7 +17,7 @@ const LinkValue = (props) => {
 }
 class SuccessMsg extends Component {
     render() {
-        const { Title, Paragraph, Text } = Typography;
+        const { Title, Paragraph } = Typography;
         const link = <LinkValue content="return_to_buy_sell" />;
         return (
             <>

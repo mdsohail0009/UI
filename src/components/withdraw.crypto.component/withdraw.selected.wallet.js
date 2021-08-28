@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Typography, Button, Card, Input, Radio, List, Alert, Row, Col, Form, Modal } from 'antd';
-import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import Currency from '../shared/number.formate';
 import LocalCryptoSwap from '../shared/local.crypto.swap';
 import { withDrawCrypto } from '../send.component/api';
+import SuccessMsg from './success';
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
     myRef = React.createRef();
@@ -18,12 +18,14 @@ class CryptoWithDrawWallet extends Component {
         walletAddress: null,
         loading: false,
         showModal: false,
-        confirmationStep: "step1"
+        confirmationStep: "step1",
+        isWithdrawSuccess: false
     }
     componentDidMount() {
         this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
     }
     componentWillUnmount() {
+        this.setState({ ...this.state, isWithdrawSuccess: false })
         this.props.changeStep("step1");
     }
     clickMinamnt(type) {
@@ -43,9 +45,9 @@ class CryptoWithDrawWallet extends Component {
             this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 });
         }
     }
-    handlePreview = async () => {
+    handlePreview = () => {
         const amt = parseFloat(this.state.CryptoAmnt);
-        const { withdrawMaxValue, withdrawMinValue, id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
+        const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
         if (amt < withdrawMinValue) {
             this.setState({ ...this.state, error: `Please enter minimum purchase value of ${withdrawMinValue}` });
@@ -62,7 +64,29 @@ class CryptoWithDrawWallet extends Component {
             this.myRef.current.scrollIntoView();
         }
         else {
-            this.setState({ ...this.state, showModal: true })
+            // this.setState({ ...this.state, showModal: true })
+            this.withDraw();
+        }
+    }
+    withDraw = async () => {
+        const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
+        this.setState({ ...this.state, error: null, loading: true, isWithdrawSuccess: false })
+        let obj = {
+            "membershipId": this.props.userProfile.id,
+            "memberWalletId": id,
+            "walletCode": coin,
+            "toWalletAddress": this.state.walletAddress,
+            "reference": "",
+            "description": "",
+            "totalValue": this.state.CryptoAmnt,
+            "tag": ""
+        }
+        const response = await withDrawCrypto(obj);
+        this.setState({ ...this.state, loading: false, showModal: false })
+        if (response.ok) {
+            this.setState({ ...this.state, isWithdrawSuccess: true });
+        } else {
+            this.setState({ ...this.state, error: response.data, confirmationStep: "step1", showModal: false, isWithdrawSuccess: false })
         }
     }
     renderModalContent = () => {
@@ -124,28 +148,10 @@ class CryptoWithDrawWallet extends Component {
     handleCancel = () => {
         this.setState({ ...this.state, showModal: false, confirmationStep: "step1" })
     }
-    handleOk = async () => {
-        const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
+    handleOk = () => {
         let currentStep = parseInt(this.state.confirmationStep.split("step")[1]);
         if (currentStep == 3) {
-            this.setState({ ...this.state, error: null, loading: true })
-            let obj = {
-                "membershipId": this.props.userProfile.id,
-                "memberWalletId": id,
-                "walletCode": coin,
-                "toWalletAddress": this.state.walletAddress,
-                "reference": "",
-                "description": "",
-                "totalValue": this.state.CryptoAmnt,
-                "tag": ""
-            }
-            const response = await withDrawCrypto(obj);
-            this.setState({ ...this.state, loading: false, showModal: false })
-            if (response.ok) {
-                this.props.changeStep("step1")
-            } else {
-                this.setState({ ...this.state, error: response.data, confirmationStep: "step1", showModal: false })
-            }
+            this.withDraw();
         } else {
             this.setState({ ...this.state, confirmationStep: "step" + (currentStep + 1) })
         }
@@ -154,6 +160,9 @@ class CryptoWithDrawWallet extends Component {
     render() {
         const { Text, Paragraph } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
+        if (this.state.isWithdrawSuccess) {
+            return <SuccessMsg onBackCLick ={() => this.props.changeStep("step1")} />
+        }
         return (
             <div ref={this.myRef}>
                 {this.state.error != null && <Alert closable type="error" message={"Error"} description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
@@ -183,37 +192,15 @@ class CryptoWithDrawWallet extends Component {
                     <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt("half")} />
                     <Translate value="all" content="all" component={Radio.Button} onClick={() => this.clickMinamnt("all")} />
                 </Radio.Group>
-                {/* <Radio.Group defaultValue="half" buttonStyle="outline" className="default-radio">
-                    <Translate value="min" content="assets" className="fs-16 fw-400" component={Radio.Button} />
-                    <Translate value="half" content="address" className="fs-16 fw-400" component={Radio.Button} onClick={() => this.props.changeStep('step4')} />
-                </Radio.Group> */}
                 <Translate
                     className="fs-14 text-aqua fw-500 text-upper"
                     content="address"
                     component={Paragraph}
                 />
-                {/* <List
-                    itemLayout="horizontal"
-                    className="wallet-list my-36"
-                    dataSource={[{}]}
-                    style={{ borderBottom: '1px solid var(--borderLight)' }}
-                    renderItem={item => (
-                        <List.Item className="px-8">
-                            <Link>
-                                <List.Item.Meta
-                                    title={<><div className="fs-16 fw-200 text-white"></div>
-                                        <div className="fs-16 fw-200 text-white">Network : {selectedWallet.netWork}</div>
-                                    </>}
-                                />
-                            </Link>
-                        </List.Item>
-
-                    )}
-                /> */}
                 <Input className="cust-input" placeholder="Enter address" value={this.state.walletAddress}
                     onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })}
                 />
-                <Translate content="with_draw" component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
+                <Translate content="with_draw" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
                 <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[
                     <Button key="back" onClick={this.handleCancel} disabled={this.state.loading}>
                         Return

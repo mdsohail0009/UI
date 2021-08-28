@@ -279,5 +279,6 @@ export default {
   BankName:'Bank Name',
   proceed:'Proceed',
   description:'Description',
-  with_draw:"Withdraw"
+  with_draw:"Withdraw",
+  crypto_with_draw_success:"Back"
 }

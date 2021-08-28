@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { List, Skeleton, Row, Col, Typography } from 'antd';
-import Translate from 'react-translate-component';
+import { Row, Col, Typography } from 'antd';
 import graphbtc from '../../assets/images/graph-btc.png';
 import grapheth from '../../assets/images/graph-eth.png';
 import graphgbp from '../../assets/images/graph-gbp.png';
@@ -9,7 +8,7 @@ class Coins extends Component {
     state = {
     }
     render() {
-        const { Title, Paragraph, Text } = Typography;
+        const { Paragraph } = Typography;
         return (
             <>
                 <Row gutter={16}>
