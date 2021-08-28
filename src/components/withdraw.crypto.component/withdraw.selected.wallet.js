@@ -122,12 +122,10 @@ class CryptoWithDrawWallet extends Component {
         return _types[confirmationStep]
     }
     handleCancel = () => {
-
+        this.setState({ ...this.state, showModal: false, confirmationStep: "step1" })
     }
     handleOk = async () => {
-        debugger
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
-
         let currentStep = parseInt(this.state.confirmationStep.split("step")[1]);
         if (currentStep == 3) {
             this.setState({ ...this.state, error: null, loading: true })
@@ -146,7 +144,7 @@ class CryptoWithDrawWallet extends Component {
             if (response.ok) {
                 this.props.changeStep("step1")
             } else {
-                this.setState({ ...this.state, error: response.data, confirmationStep: "step1" })
+                this.setState({ ...this.state, error: response.data, confirmationStep: "step1", showModal: false })
             }
         } else {
             this.setState({ ...this.state, confirmationStep: "step" + (currentStep + 1) })
@@ -201,7 +199,8 @@ class CryptoWithDrawWallet extends Component {
                                     title={<><div className="fs-16 fw-200 text-white"><Input placeholder="Enter address" value={this.state.walletAddress}
                                         onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })}
                                     /></div>
-                                        <div className="fs-16 fw-200 text-white">Network : {selectedWallet.netWork}</div></>}
+                                        {/* <div className="fs-16 fw-200 text-white">Network : {selectedWallet.netWork}</div> */}
+                                    </>}
                                 />
                             </Link>
                         </List.Item>
@@ -209,7 +208,7 @@ class CryptoWithDrawWallet extends Component {
                     )}
                 />
                 <Translate content="with_draw" component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
-                <Modal title="Withdrawal" footer={[
+                <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[
                     <Button key="back" onClick={this.handleCancel} disabled={this.state.loading}>
                         Return
                     </Button>,
