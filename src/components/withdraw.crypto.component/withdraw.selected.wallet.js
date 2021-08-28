@@ -49,7 +49,11 @@ class CryptoWithDrawWallet extends Component {
         const amt = parseFloat(this.state.CryptoAmnt);
         const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
-        if (amt < withdrawMinValue) {
+        if(!amt){
+            this.setState({ ...this.state, error: `Please enter amount` });
+            this.myRef.current.scrollIntoView();
+        }
+        else if (amt < withdrawMinValue) {
             this.setState({ ...this.state, error: `Please enter minimum purchase value of ${withdrawMinValue}` });
             this.myRef.current.scrollIntoView();
         } else if (amt > withdrawMaxValue) {
