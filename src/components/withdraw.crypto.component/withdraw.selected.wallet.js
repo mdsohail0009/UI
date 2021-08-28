@@ -1,49 +1,53 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Button, Card, Input, Radio, List } from 'antd';
-import WalletList from '../shared/walletList';
+import { Typography, Button, Card, Input, Radio, List } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-
+import Currency from '../shared/number.formate';
+import LocalCryptoSwap from '../shared/local.crypto.swap';
 const assetsList = [
     {
         address: "1CTEjSuGFv1DwpkGWxfC5qck1iHACw…",
         network: "BTC Binance Address",
     }
 ]
-class CryptoWithDrawWallets extends Component {
+class CryptoWithDrawWallet extends Component {
+    eleRef = React.createRef();
+    state = {
+        CryptoAmnt: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue,
+        USDAmnt: "",
+        isSwap: true
+    }
+    componentDidMount() {
+        this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
+    }
     render() {
         const { Text } = Typography;
+        const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
         return (
             <>
                 <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
-                        <span className="coin lg btc-white" />
-                        <Text className="fs-24 text-purewhite ml-8">Bitcoin</Text>
+                        <span className={`coin lg ${selectedWallet.coin.toLowerCase()}-white`} />
+                        <Text className="fs-24 text-purewhite ml-8">{selectedWallet.coinFullName}</Text>
                     </span>
                     <div className="crypto-details">
-                        <Text className="crypto-percent fw-700">65<sup className="percent fw-700">%</sup></Text>
+                        <Text className="crypto-percent fw-700">{selectedWallet.percentage}<sup className="percent fw-700">%</sup></Text>
                         <div className="crypto-amount">
-                            <div>1.0147668 <Text className="text-secondary">ETH</Text></div>
-                            <Text className="text-secondary">$</Text> 41.07
+                            <Currency defaultValue={selectedWallet.coinBalance} prefix={""} type={"text"} suffixText={selectedWallet.coin} />
+                            <Currency defaultValue={selectedWallet.coinValueinNativeCurrency} prefix={"$"} type={"text"} />
                         </div>
                     </div>
                 </Card>
-                <div className="enter-val-container mr-0">
-                    <div className="text-center">
-                        <Input className="fs-36 fw-100 text-white-30 text-center enter-val p-0"
-                            placeholder="106.79"
-                            bordered={false}
-                            prefix="$"
-                            style={{ maxWidth: 186 }}
-                        />
-                        <Text className="fs-14 text-white-30 fw-200 text-center d-block mb-36">0.00287116 BTC</Text>
-                    </div>
-                    <span className="mt-8 val-updown  c-pointe">
-                        <span className="icon sm uparw-o-white d-block c-pointer mb-4" /><span className="icon sm dwnarw-o-white d-block c-pointer" />
-                    </span>
-                </div>
+                <LocalCryptoSwap ref={this.eleRef}
+                    isSwap={this.state.isSwap}
+                    cryptoAmt={this.state.CryptoAmnt}
+                    localAmt={this.state.USDAmnt}
+                    cryptoCurrency={selectedWallet?.coin}
+                    localCurrency={"USD"}
+                    selectedCoin={selectedWallet?.coin}
+                    onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }} />
                 <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
                     <Translate value="min" content="min" component={Radio.Button} />
                     <Translate value="half" content="half" component={Radio.Button} />
@@ -78,8 +82,8 @@ class CryptoWithDrawWallets extends Component {
         )
     }
 }
-const connectStateToProps = ({ sendReceive, oidc }) => {
-    return { sendReceive }
+const connectStateToProps = ({ sendReceive, userConfig }) => {
+    return { sendReceive, userProfile: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
@@ -88,4 +92,4 @@ const connectDispatchToProps = dispatch => {
         }
     }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(CryptoWithDrawWallets);
+export default connect(connectStateToProps, connectDispatchToProps)(CryptoWithDrawWallet);
