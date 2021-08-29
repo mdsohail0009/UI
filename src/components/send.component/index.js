@@ -52,7 +52,7 @@ class SendReceive extends Component {
             depositecrypto: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdraw: <span />,
             scanner: <span />,
-            withdrawscan: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md close-white c-pointer" />,
+            withdrawscan: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdrawaddress: <span />,
             verifyidentity: <span />,
             withdrawsummary: <span />,
