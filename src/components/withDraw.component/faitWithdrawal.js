@@ -155,7 +155,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
   return (
     <>
       <div className="suisfiat-height auto-scroll">
-      {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+        {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
         <Form form={form} onFinish={savewithdrawal}>
           <Translate
             content="Beneficiary_BankDetails"
@@ -163,7 +163,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             className="mb-16 fs-14 text-aqua fw-500 text-upper"
           />
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="memberWalletId"
             required
             rules={[
@@ -179,7 +179,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
               <WalletList onWalletSelect={(e) => handleWalletSelection(e)} /></div>
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="totalValue"
             required
             rules={[
@@ -207,24 +207,26 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             </div>
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="accountNumber"
             required
             rules={[
               { required: true, message: "Please enter bank account!" },
-              {validator: (rule, value, callback) => {
-                var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                if (value) {
+              {
+                validator: (rule, value, callback) => {
+                  var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                  if (value) {
                     if (!regx.test(value)) {
-                        callback("Invalid!")
+                      callback("Invalid!")
                     } else if (regx.test(value)) {
-                        callback();
+                      callback();
                     }
-                }else{
-                  callback();
+                  } else {
+                    callback();
+                  }
+                  return;
                 }
-                return;
-            }}
+              }
             ]}
           >
             <div>
@@ -239,24 +241,26 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             </div>
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="swiftCode"
             required
             rules={[
               { required: true, message: "Please enter BIC/SWIFT/routing number!" },
-              {validator: (rule, value, callback) => {
-                var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                if (value) {
+              {
+                validator: (rule, value, callback) => {
+                  var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                  if (value) {
                     if (!regx.test(value)) {
-                        callback("Invalid!")
+                      callback("Invalid!")
                     } else if (regx.test(value)) {
-                        callback();
+                      callback();
                     }
-                }else{
-                  callback();
+                  } else {
+                    callback();
+                  }
+                  return;
                 }
-                return;
-            }}
+              }
             ]}
           >
             <div>
@@ -272,24 +276,26 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
 
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="bankName"
             required
             rules={[
               { required: true, message: "Please enter bank name!" },
-              {validator: (rule, value, callback) => {
-                var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
-                if (value) {
+              {
+                validator: (rule, value, callback) => {
+                  var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
+                  if (value) {
                     if (!regx.test(value)) {
-                        callback("Invalid!")
+                      callback("Invalid!")
                     } else if (regx.test(value)) {
-                        callback();
+                      callback();
                     }
-                }else{
-                  callback();
+                  } else {
+                    callback();
+                  }
+                  return;
                 }
-                return;
-            }}
+              }
             ]}
           >
             <div>
@@ -305,7 +311,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
 
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="bankAddress"
             required
             rules={[
@@ -326,7 +332,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
           </Form.Item>
 
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="bankAddress1"
           >
             <div>
@@ -340,7 +346,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             </div>
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="bankAddress2"
           >
             <div>
@@ -360,24 +366,26 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             className="mb-16 fs-14 text-aqua fw-500 text-upper"
           />
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="beneficiaryAccountName"
             required
             rules={[
               { required: true, message: "Please enter recipient full name!" },
-              {validator: (rule, value, callback) => {
-                var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
-                if (value) {
+              {
+                validator: (rule, value, callback) => {
+                  var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
+                  if (value) {
                     if (!regx.test(value)) {
-                        callback("Invalid!")
+                      callback("Invalid!")
                     } else if (regx.test(value)) {
-                        callback();
+                      callback();
                     }
-                }else{
-                  callback();
+                  } else {
+                    callback();
+                  }
+                  return;
                 }
-                return;
-            }}
+              }
             ]}
           >
             <div>
@@ -393,7 +401,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
 
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="beneficiaryAccountAddress"
             rules={[
               { required: true, message: "Please enter recipient address!" }
@@ -414,7 +422,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
 
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="beneficiaryAccountAddress1"
           >
             <div>
@@ -428,7 +436,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             </div>
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="beneficiaryAccountAddress2"
           >
             <div>
@@ -442,23 +450,25 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             </div>
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="description"
             rules={[
               { required: true, message: "Please enter reference!" },
-              {validator: (rule, value, callback) => {
-                var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                if (value) {
+              {
+                validator: (rule, value, callback) => {
+                  var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                  if (value) {
                     if (!regx.test(value)) {
-                        callback("Invalid!")
+                      callback("Invalid!")
                     } else if (regx.test(value)) {
-                        callback();
+                      callback();
                     }
-                }else{
-                  callback();
+                  } else {
+                    callback();
+                  }
+                  return;
                 }
-                return;
-            }}
+              }
             ]}
           >
             <div>
@@ -468,13 +478,13 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   content="Reference"
                   component={Text}
                 /><span style={{ color: "#fafcfe", paddingLeft: "2px" }}>
-                {" * "}
-              </span></div>
+                  {" * "}
+                </span></div>
               <Input className="cust-input" placeholder="Reference" />
             </div>
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="isAccept"
             required
             rules={[
