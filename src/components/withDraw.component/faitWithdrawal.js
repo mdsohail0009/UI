@@ -9,6 +9,7 @@ import NumberFormat from 'react-number-format';
 import { withdrawRecepientNamecheck, withdrawSave } from '../../api/apiServer';
 import Currency from '../shared/number.formate';
 import success from '../../assets/images/success.png';
+import Checkbox from 'antd/lib/checkbox/Checkbox';
 
 const LinkValue = (props) => {
   return (
@@ -488,13 +489,17 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
           <Form.Item
             className="custom-forminput mb-36 agree"
             name="isAccept"
+            valuePropName="checked"
             required
             rules={[
-              { required: true, message: "Please agree terms of service!" },
+              {
+                validator: (_, value) =>
+                  value ? Promise.resolve() : Promise.reject(new Error('Please agree terms of service!')),
+              },
             ]}
           >
             <div className="d-flex pt-16 agree-check">
-              <label>
+            <label>
                 <input type="checkbox" id="agree-check" />
                 <span for="agree-check" />
               </label>
