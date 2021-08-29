@@ -40,6 +40,7 @@ class Header extends Component {
             initLoading: true,
             buyFiatDrawer: false,
             showChangePassword: false,
+            headerTitle:"Hello World"
         }
 
     }
@@ -132,13 +133,13 @@ class Header extends Component {
         return (
             <React.Fragment>
                 <Layout className="layout">
-                    <menuHeader className="tlv-header" id="area">
+                    <div className="tlv-header" id="area">
                         <div className="login-user">
                             <ul className="header-logo pl-0">
                                 <li className="pr-30 p-relative"><Link to="/dashboard"><img src={logoColor} alt="logo" className="tlv-logo" /></Link></li>
                                 <MegaMenu />
                                 <li className="mb-d-none" onClick={() => this.props.history.push("/dashboard")}>
-                                    <Translate with={{ lable: this.props.userConfig?.isBusiness ? "| Business" : "| Personal" }} content="header_title" component="p" className="text-white-30 mb-0 fs-24" />
+                                    <Translate  content="header_title_business" component="p" className="text-white-30 mb-0 fs-24" />
                                 </li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
@@ -157,7 +158,7 @@ class Header extends Component {
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
                             <SettingsMenu />
                         </Menu>
-                    </menuHeader>
+                    </div>
                 </Layout >
                 <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
                 <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />

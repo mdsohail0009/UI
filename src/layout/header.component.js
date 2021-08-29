@@ -298,9 +298,9 @@ class Header extends Component {
                     <menuHeader className="tlv-header" id="area">
                         <div className="login-user">
                             <ul className="header-logo pl-0">
-                                <li className="pr-30 p-relative"><Link><img src={logoColor} alt="logo" className="tlv-logo" /></Link></li>
+                                <li className="pr-30 p-relative"><Link to="/dashboard"><img src={logoColor} alt="logo" className="tlv-logo" /></Link></li>
                                 <li className="px-36"><span className="icon md hamburger c-pointer" onClick={this.showMegaMenu} /></li>
-                                <li className="mb-d-none c-pointer"><Translate content="header_title" component="p" className="text-white-30 mb-0 fs-24" /></li>
+                                <li className="mb-d-none"><Translate content="header_title" with={{lable:this.props.userConfig?.isBusiness?" Business":" Personal"}} component="p" className="text-white-30 mb-0 fs-24" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
                                 <Dropdown overlay={this.securityMenu}  placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
@@ -312,7 +312,7 @@ class Header extends Component {
                                 </Dropdown>
                             </Menu>
                         </div>
-                        <Menu theme="light" mode="horizontal" className="header-right" defaultSelectedKeys={['1']}>
+                        <Menu theme="light" mode="horizontal" className="header-right" >
                             {/* <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item> */}
                             <Translate content="menu_buy_sell" component={Menu.Item} key="1" onClick={this.showBuyDrawer} className="list-item" />
                             <Translate content="menu_swap" component={Menu.Item} key="2" onClick={this.showSwapDrawer} className="list-item" />

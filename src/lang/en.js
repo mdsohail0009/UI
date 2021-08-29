@@ -1,5 +1,5 @@
 export default {
-  header_title: 'Dashboard %(lable)s',
+  header_title: 'Dashboard |%(lable)s',
   Portfolio_title: 'Portfolio',
   your_portfolio: 'Your Portfolio',
   suissebase_title: 'Suissebase',
@@ -115,7 +115,7 @@ export default {
   min: 'Min',
   half: 'Half',
   assets: 'Assets',
-  address: 'New address',
+  address: 'address',
   confirm_now: 'Confirm Now %(counter)s',
   buy_sell_address: 'UNIT 527 TOWER 4, SMDC Grace Residences, Cayetano Blvd. Brgy. Ususan, Taguig City 1630 PH',
   withdraw_to: 'Withdraw to',
