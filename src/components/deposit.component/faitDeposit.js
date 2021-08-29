@@ -33,6 +33,7 @@ class FaitDeposit extends Component {
     this.props.fetchCurrencyWithBankDetails()
   }
   clearfiatValues = () => {
+    this.props.fetchCurrencyWithBankDetails()
     this.setState({
       buyDrawer: false,
       crypto: config.tlvCoinsList,
