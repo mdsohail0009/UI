@@ -249,7 +249,7 @@ export default {
   Fifth_Avenue: '%(value)s',
   reference: 'Reference',
   reference_hint_text: 'Important: this code identifies your deposit include this code when submitting the wire transfer in the transaction description or purpose',
-  desposite_text: 'Please choose the currency you would like to deposite in, and bank account details for the currency chosen will be displayed.The next step is for you to wire your funds to the bank details provided and remember to INCLUDE the reference number.',
+  desposite_text: 'Please choose the currency you would like to deposit in, and bank account details for the currency chosen will be displayed.The next step is for you to wire your funds to the bank details provided and remember to INCLUDE the reference number.',
   EUR_amount: 'EUR Amount',
   Fee: 'Fee',
   Amount_to_pay: 'Amount to pay',

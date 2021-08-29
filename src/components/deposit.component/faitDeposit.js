@@ -127,10 +127,10 @@ class FaitDeposit extends Component {
                 <div className="d-flex">
                 {/* <span className="coin deposit-white mt-4" /> */}
                 <div style={{ flex: 1 }}>
-                  <Paragraph className="mb-0 fs-16 text-white fw-500 mt-36">Innovative Concepts</Paragraph>
+                  <Paragraph className="mb-0 fs-16 text-aqua fw-500 mt-36 text-upper">{BankInfo.bankName}</Paragraph>
                   {/* <Paragraph className="mb-0 fs-12 text-white-30 fw-300">
                   Innovative Concepts</Paragraph> */}
-                  <Text className="text-white-30 fs-14">A/C </Text><Text copyable className="mb-0 fs-14 text-yellow fw-500">{BankInfo.accountNumber} </Text> 
+                  <Text className="text-white-30 fs-14">A/C </Text><Text copyable className="mb-0 fs-14 text-yellow fw-500">{BankInfo.accountNumber}</Text> 
                 </div>
               </div>
               <Translate
