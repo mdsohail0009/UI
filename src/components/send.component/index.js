@@ -11,7 +11,7 @@ import WithdrawAddress from './withdrawAddress'
 import VerifyIDentity from './verifyIdentity';
 import WithdrawScan from './qr.scan';
 import WithdrawSummary from './withdrawSummary';
-const {Paragraph } = Typography
+const { Paragraph } = Typography
 class SendReceive extends Component {
     state = {
 
@@ -37,7 +37,7 @@ class SendReceive extends Component {
     }
     renderTitle = () => {
         const stepcodes = {
-            depositecrypto: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            depositecrypto: <span />,
             withdraw: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             scanner: <span onClick={() => this.props.dispatch(setStep("step4"))} className="icon md lftarw-white c-pointer" />,
             withdrawscan: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
@@ -49,10 +49,10 @@ class SendReceive extends Component {
     }
     renderIcon = () => {
         const stepcodes = {
-            depositecrypto: <span  />,
+            depositecrypto: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdraw: <span />,
             scanner: <span />,
-            withdrawscan: <span />,
+            withdrawscan: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md close-white c-pointer" />,
             withdrawaddress: <span />,
             verifyidentity: <span />,
             withdrawsummary: <span />,

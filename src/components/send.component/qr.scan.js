@@ -12,13 +12,13 @@ class QRScan extends Component {
     success = () => {
         message.success('Address was copied!');
     };
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.props.dispatch(setWalletAddress(null))
     }
     render() {
         const { Paragraph, Text } = Typography;
-        if(!this.props?.sendReceive?.depositWallet?.walletAddress){
-            return <Loader/>
+        if (!this.props?.sendReceive?.depositWallet?.walletAddress) {
+            return <Loader />
         }
         return (
             <div>
@@ -27,7 +27,7 @@ class QRScan extends Component {
                 </div>
                 <div className="crypto-address mt-36 custom-crypto-address mx-0">
                     <Translate className="mb-0 fw-400 text-secondary" content="address" component={Text} />
-                    <div className="mb-0 fs-14 fw-500 text-textDark">{this.props?.sendReceive?.depositWallet?.walletAddress}  <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress}>
+                    <div className="mb-0 fs-14 fw-700 text-textDark l-height-normal">{this.props?.sendReceive?.depositWallet?.walletAddress}  <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress}>
                         <Text copyable className="fs-20 text-white-30 custom-display"></Text></CopyToClipboard> </div>
                 </div>
                 {this.props?.sendReceive?.depositWallet?.tag != null && <div className="crypto-address mt-36">
@@ -49,7 +49,7 @@ const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
-        },dispatch
+        }, dispatch
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(QRScan);
