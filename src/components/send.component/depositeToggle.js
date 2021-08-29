@@ -16,31 +16,32 @@ class DepositeCrypto extends Component {
         buyDrawer: false,
         crypto: config.tlvCoinsList,
         buyToggle: 'Buy',
-        sendreceive: false
+        activeKey: 1
     }
 
     handleBuySellToggle = e => {
-        // console.log(this.state);
         this.setState({
-            sendreceive: e.target.value === 2
+            ...this.state,
+            activeKey: e.target.value
         });
     }
+    componentDidMount() {
+        this.setState({ ...this.state, activeKey: this.props.sendReceive?.cryptoWithdraw?.activeTab || 1, sendReceive: true })
+    }
     componentWillUnmount() {
-
+        this.setState({ ...this.state, activeKey: 1 })
     }
     render() {
-        const { Title, Paragraph, Text } = Typography;
-        const { sendreceive } = this.state
+        const { activeKey } = this.state
         return (
             <>
-                <Radio.Group
-                    defaultValue={1}
+                <Radio.Group value={this.state.activeKey}
                     onChange={this.handleBuySellToggle}
                     className="buysell-toggle crypto-toggle text-upper">
                     <Translate value={1} content="deposit" component={Radio.Button} />
                     <Translate value={2} content="withdraw" component={Radio.Button} />
                 </Radio.Group>
-                {sendreceive ? <WithdrawCrypto /> : <CryptoDeposit />}
+                {activeKey==2 ? <WithdrawCrypto /> : <CryptoDeposit />}
             </>
         )
     }

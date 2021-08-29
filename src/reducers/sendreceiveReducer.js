@@ -87,4 +87,4 @@ const sendReceiveReducer = (state = initialState, action) => {
 
 }
 export default sendReceiveReducer;
-export { setStep, clearStep, setWalletAddress, fetchWithDrawWallets,setSelectedWithDrawWallet }
+export { setStep, clearStep, setWalletAddress, fetchWithDrawWallets,setSelectedWithDrawWallet,handleSendFetch }
