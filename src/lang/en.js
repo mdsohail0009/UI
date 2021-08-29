@@ -232,7 +232,7 @@ export default {
   Recipient_address2: 'Recipient address2',
   Recipient_address3: 'Recipient address3',
   Reference: 'Reference',
-  Fiat_deposit: 'Fiat Deposit',
+  Fiat_deposit: 'Fiat Deposit / Withdraw ',
   Fiat_withdrawl: 'Fiat Withdrawal',
   Beneficiary_Accountname: 'Beneficiary Account Name',
   Innovative_Concepts: 'INNOVATIVE CONCEPTS AG',

@@ -15,7 +15,6 @@ const LinkValue = (props) => {
     <Translate className="text-yellow text-underline c-pointer"
       content={props.content}
       component={Link}
-      to="./#"
     />
   )
 }
@@ -49,8 +48,11 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
 
   const savewithdrawal = async (values) => {
     //console.log(values)
-    if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) >= parseFloat(selectedWallet.avilable)) {
-      return setErrorMsg('Insufficiant Balance');
+    if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) >  parseFloat(selectedWallet.avilable)) {
+      return setErrorMsg('Insufficient Balance');
+    }
+    if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) <=0) {
+      return setErrorMsg('Please enter Amount');
     }
     setErrorMsg(null)
     values['membershipId'] = userConfig.id
@@ -70,9 +72,9 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
       step1: <>{saveObj && <div>
         <p> <Currency defaultValue={saveObj?.totalValue} prefixText={<b>Amount: </b>} prefix={""} suffixText={saveObj.walletCode} /></p>
         <p><b>Bank Account Number: </b> {saveObj.accountNumber}</p>
-        <p><b>Bank Name: </b> {saveObj.bankName}</p>
         <p><b>Bank BIC/SWIFT/Routing number: </b> {saveObj.swiftCode}</p>
-        <p><b>Recipient Namae : </b> {saveObj.beneficiaryAccountName}</p>
+        <p><b>Bank Name: </b> {saveObj.bankName}</p>
+        <p><b>Recipient full Name : </b> {saveObj.beneficiaryAccountName}</p>
         <ul>
           <li>Ensure that the account details is correct</li>
           <li>Transaction can't be cancelled</li>
@@ -90,9 +92,9 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
       step3: <>{saveObj && <div>
         <p> <Currency defaultValue={saveObj?.totalValue} prefixText={<b>Amount: </b>} prefix={""} suffixText={saveObj.walletCode} /></p>
         <p><b>Bank Account Number: </b> {saveObj.accountNumber}</p>
-        <p><b>Bank Name: </b> {saveObj.bankName}</p>
         <p><b>Bank BIC/SWIFT/Routing number: </b> {saveObj.swiftCode}</p>
-        <p><b>Recipient Namae : </b> {saveObj.beneficiaryAccountName}</p>
+        <p><b>Bank Name: </b> {saveObj.bankName}</p>
+        <p><b>Recipient full Name : </b> {saveObj.beneficiaryAccountName}</p>
         {/* <Form name="verification" initialValues={{ Phone: "" }}>
           <Form.Item label="Phone" extra="Please enter 6 digit code sent to you're Phone.">
             <Row gutter={8}>
@@ -137,10 +139,12 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
   const handleOk = async () => {
     let currentStep = parseInt(confirmationStep.split("step")[1]);
     if (currentStep == 1) {
+      setLoading(true)
       let withdrawal = await withdrawSave(saveObj)
       if (withdrawal.ok) {
         setConfirmationStep("step" + (currentStep + 1))
         form.resetFields()
+        setLoading(false)
       } else {
 
       }
@@ -216,7 +220,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   var regx = new RegExp(/^[A-Za-z0-9]+$/);
                   if (value) {
                     if (!regx.test(value)) {
-                      callback("Invalid!")
+                        callback("Invalid account number!")
                     } else if (regx.test(value)) {
                       callback();
                     }
@@ -236,7 +240,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   component={Text}
                 />
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" placeholder="Bank account" />
+              <Input className="cust-input" placeholder="Bank account number/IBAN" />
             </div>
           </Form.Item>
           <Form.Item
@@ -244,13 +248,12 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             name="swiftCode"
             required
             rules={[
-              { required: true, message: "Please enter BIC/SWIFT/routing number!" },
-              {
-                validator: (rule, value, callback) => {
-                  var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                  if (value) {
+              { required: true, message: "Please enter BIC/SWIFT/Routing number!" },
+              {validator: (rule, value, callback) => {
+                var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                if (value) {
                     if (!regx.test(value)) {
-                      callback("Invalid!")
+                        callback("Invalid BIC/SWIFT/Routing number!")
                     } else if (regx.test(value)) {
                       callback();
                     }
@@ -270,7 +273,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   component={Text}
                 />
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" placeholder="BIC/SWIFT/routing number" />
+              <Input className="cust-input" placeholder="BIC/SWIFT/Routing number" />
             </div>
 
           </Form.Item>
@@ -285,7 +288,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
                   if (value) {
                     if (!regx.test(value)) {
-                      callback("Invalid!")
+                        callback("Invalid bank name!")
                     } else if (regx.test(value)) {
                       callback();
                     }
@@ -341,7 +344,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   content="Bank_address2"
                   component={Text}
                 /></div>
-              <Input className="cust-input" placeholder="Bank address2!" />
+              <Input className="cust-input" placeholder="Bank address2" />
             </div>
           </Form.Item>
           <Form.Item
@@ -355,7 +358,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   content="Bank_address3"
                   component={Text}
                 /></div>
-              <Input className="cust-input" placeholder="Bank address3!" />
+              <Input className="cust-input" placeholder="Bank address3" />
             </div>
           </Form.Item>
 
@@ -375,7 +378,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
                   if (value) {
                     if (!regx.test(value)) {
-                      callback("Invalid!")
+                        callback("Invalid recipient full name!")
                     } else if (regx.test(value)) {
                       callback();
                     }
@@ -416,7 +419,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>
                   {" * "}
                 </span></div>
-              <Input className="cust-input" placeholder="Recipient address" />
+              <Input className="cust-input" placeholder="Recipient address1" />
             </div>
 
           </Form.Item>
@@ -431,7 +434,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   content="Recipient_address2"
                   component={Text}
                 /></div>
-              <Input className="cust-input" placeholder="Recipient address2!" />
+              <Input className="cust-input" placeholder="Recipient address2" />
             </div>
           </Form.Item>
           <Form.Item
@@ -445,7 +448,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   content="Recipient_address3"
                   component={Text}
                 /></div>
-              <Input className="cust-input" placeholder="Recipient address3!" />
+              <Input className="cust-input" placeholder="Recipient address3" />
             </div>
           </Form.Item>
           <Form.Item
@@ -458,7 +461,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   var regx = new RegExp(/^[A-Za-z0-9]+$/);
                   if (value) {
                     if (!regx.test(value)) {
-                      callback("Invalid!")
+                        callback("Invalid reference!")
                     } else if (regx.test(value)) {
                       callback();
                     }
@@ -516,10 +519,10 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
           </Form.Item>
         </Form>
       </div>
-      <Modal title="Withdrawal" footer={[
+      <Modal onCancel={handleCancel} title="Withdraw" footer={[
         <>{confirmationStep != 'step2' && <><Button key="back" onClick={handleCancel} disabled={loading}>
           Return
-        </Button>,
+        </Button>
           <Button key="submit" type="primary" onClick={handleOk} loading={loading}>
             Confirm
           </Button></>}</>
