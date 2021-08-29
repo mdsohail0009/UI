@@ -243,7 +243,7 @@ export default {
   for_international_wires: 'For International Wires',
   Swift_BICcode: 'Swift/BIC Code',
   SIGNU: '%(value)s',
-  beneficiaryBank: 'Beneficiary Bank',
+  beneficiaryBank: 'Beneficiary Bank Name',
   signature_bank: '%(value)s',
   beneficiary_Bank_address: 'Beneficiary Bank Address',
   Fifth_Avenue: '%(value)s',
