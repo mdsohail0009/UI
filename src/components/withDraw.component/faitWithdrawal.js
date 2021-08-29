@@ -172,7 +172,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             name="memberWalletId"
             required
             rules={[
-              { required: true, message: "Please enter currency" },
+              { required: true, message: "Is required" },
             ]}
           >
             <div> <div className="d-flex"><Translate
@@ -187,7 +187,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             className="custom-forminput mb-24"
             name="totalValue"
             rules={[
-              { required: true, message: "Please enter amount!" },
+              { required: true, message: "Is required" },
             ]}
           >
             <div ><div className="d-flex">
@@ -215,7 +215,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             name="accountNumber"
             required
             rules={[
-              { required: true, message: "Please enter bank account!" },
+              { required: true, message: "Is required" },
               {
                 validator: (rule, value, callback) => {
                   var regx = new RegExp(/^[A-Za-z0-9]+$/);
@@ -249,7 +249,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             name="swiftCode"
             required
             rules={[
-              { required: true, message: "Please enter BIC/SWIFT/Routing number!" },
+              { required: true, message: "Is required" },
               {validator: (rule, value, callback) => {
                 var regx = new RegExp(/^[A-Za-z0-9]+$/);
                 if (value) {
@@ -283,7 +283,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             name="bankName"
             required
             rules={[
-              { required: true, message: "Please enter bank name!" },
+              { required: true, message: "Is required" },
               {
                 validator: (rule, value, callback) => {
                   var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
@@ -318,7 +318,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             name="bankAddress"
             required
             rules={[
-              { required: true, message: "Please enter bank address1!" }
+              { required: true, message: "Is required" }
             ]}
           >
             <div>
@@ -373,7 +373,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             name="beneficiaryAccountName"
             required
             rules={[
-              { required: true, message: "Please enter recipient full name!" },
+              { required: true, message: "Is required" },
               {
                 validator: (rule, value, callback) => {
                   var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
@@ -407,7 +407,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             className="custom-forminput mb-24"
             name="beneficiaryAccountAddress"
             rules={[
-              { required: true, message: "Please enter recipient address!" }
+              { required: true, message: "Is required" }
             ]}
           >
             <div>
@@ -456,7 +456,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             className="custom-forminput mb-24"
             name="description"
             rules={[
-              { required: true, message: "Please enter reference!" },
+              { required: true, message: "Is required" },
               {
                 validator: (rule, value, callback) => {
                   var regx = new RegExp(/^[A-Za-z0-9]+$/);
@@ -494,7 +494,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             rules={[
               {
                 validator: (_, value) =>
-                  value ? Promise.resolve() : Promise.reject(new Error('Please agree terms of service!')),
+                  value ? Promise.resolve() : Promise.reject(new Error('Please agree terms of service')),
               },
             ]}
           >
