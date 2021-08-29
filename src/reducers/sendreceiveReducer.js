@@ -56,7 +56,7 @@ let initialState = {
     },
     stepSubTitles: {
         depositecrypto: null,
-        withdraw: 'select_a_currency',
+        withdraw: null,
         scanner: 'center_qr',
         withdrawaddress: 'send_wallet_fiat',
         withdrawsummary: 'withdraw_summary_sub',
