@@ -115,7 +115,7 @@ export default {
   min: 'Min',
   half: 'Half',
   assets: 'Assets',
-  address: 'address',
+  address: 'Address',
   confirm_now: 'Confirm Now %(counter)s',
   buy_sell_address: 'UNIT 527 TOWER 4, SMDC Grace Residences, Cayetano Blvd. Brgy. Ususan, Taguig City 1630 PH',
   withdraw_to: 'Withdraw to',

@@ -550,6 +550,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .crypto-search.ant-input-search .ant-input-group .ant-input-group-addon{border-radius: 0 30px 30px 0;}
     .pay-list{padding: 16px 0;}
     .crypto-container {max-height: calc(100vh - 325px);}
+    .custom-crypto-address .fs-12{font-size: 14px !important;}
 }
 .currencyContains {display: inline;color: var(--textWhite30);}
 .spinLoader {margin: 20px 0;margin-bottom: 20px;padding: 30px 50px;text-align: center;background: rgba(0, 0, 0, 0.05);border-radius: 4px;}
@@ -567,6 +568,5 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 main.ant-layout-content{min-height: calc(100vh - 220px);}
 .notkyc{top: 0; right: 0; bottom: 0; left: 0;display: flex; align-items: center;font-size: 36px;color: var(--textWhite);background-color: var(--bgDarkGrey);justify-content: center;margin-top: 150px;text-align: center;}
 .crypto-address.custom-crypto-address{padding: 8px 10px;}
-.crypto-address .ant-typography-copy{float: right;}
 .crypto-address .ant-typography-copy svg{color: var(--textGreen);}
 .crypto-address.custom-crypto-address .ant-typography-expand, .crypto-address .ant-typography-edit, .crypto-address .ant-typography-copy{font-size:18px;margin-left:0px;}
