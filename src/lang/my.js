@@ -241,7 +241,7 @@ export default {
   Beneficiary_account: 'Akaun Penerima',
   for_Domestic_wires: 'Untuk Wayar Domestik',
   for_international_wires: 'Untuk Wayar Antarabangsa',
-  Swift_BICcode: 'Kod Swift / BIC',
+  Swift_BICcode: 'Kod Swift',
   SIGNU: 'SIGNU533XXX',
   beneficiaryBank: 'Bank Penerima',
   signature_bank: 'Bank Tandatangan',

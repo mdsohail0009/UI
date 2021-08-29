@@ -241,7 +241,7 @@ export default {
   Beneficiary_account: 'Beneficiary Account',
   for_Domestic_wires: 'For Domestic Wires',
   for_international_wires: 'For International Wires',
-  Swift_BICcode: 'Swift/BIC Code',
+  Swift_BICcode: 'Swift Code',
   SIGNU: '%(value)s',
   beneficiaryBank: 'Beneficiary Bank Name',
   signature_bank: '%(value)s',
