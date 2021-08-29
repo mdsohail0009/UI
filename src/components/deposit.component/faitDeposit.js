@@ -192,11 +192,10 @@ class FaitDeposit extends Component {
                         {BankInfo.reference}
                       </Paragraph>
                     </div>}
-                    <Translate
-                      className="fs-14 text-yellow fw-200 l-height-normal"
-                      content="reference_hint_text"
-                      component={Paragraph}
-                    /></>
+                    <Paragraph
+                      className="fs-14 text-white-30 fw-200 l-height-normal"
+                    ><span className="text-yellow">IMPORTANT:</span> This code identifies your deposit include this code when submitting the wire transfer in the transaction description or purpose</Paragraph>
+                  </>
                   // :<selectCurrency />
                 }
               </div>

@@ -181,7 +181,6 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
           <Form.Item
             className="custom-forminput mb-24"
             name="totalValue"
-            required
             rules={[
               { required: true, message: "Please enter amount!" },
             ]}
@@ -484,14 +483,14 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             </div>
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-24"
+            className="custom-forminput mb-36 agree"
             name="isAccept"
             required
             rules={[
               { required: true, message: "Please agree terms of service!" },
             ]}
           >
-            <div className="d-flex p-16 mb-36 agree-check">
+            <div className="d-flex pt-16 agree-check">
               <label>
                 <input type="checkbox" id="agree-check" />
                 <span for="agree-check" />
@@ -500,7 +499,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                 content="agree_to_suissebase"
                 with={{ link }}
                 component={Paragraph}
-                className="fs-14 text-white-30 ml-16"
+                className="fs-14 text-white-30 ml-16 mb-4"
                 style={{ flex: 1 }}
               />
             </div>

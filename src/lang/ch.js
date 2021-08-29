@@ -241,7 +241,7 @@ export default {
   Beneficiary_account: '受益人帐户',
   for_Domestic_wires: '国内电线用',
   for_international_wires: '对于国际电线',
-  Swift_BICcode: 'Swift/BIC 代码',
+  Swift_BICcode: 'Swift 代码',
   SIGNU: 'SIGNU533XXX',
   beneficiaryBank: '收款银行',
   signature_bank: '签名银行',
