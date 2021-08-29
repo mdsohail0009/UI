@@ -45,7 +45,7 @@ const setSelectedWithDrawWallet = (wallet) => {
 let initialState = {
     stepcode: "step1",
     stepTitles: {
-        depositecrypto: "deposit",
+        depositecrypto: "dep_with_assets",
         withdraw: 'withdraw',
         scanner: 'scan_your_crypto',
         withdrawaddress: 'withdraw',
@@ -55,7 +55,7 @@ let initialState = {
 
     },
     stepSubTitles: {
-        depositecrypto: "select_a_currency",
+        depositecrypto: null,
         withdraw: 'select_a_currency',
         scanner: 'center_qr',
         withdrawaddress: 'send_wallet_fiat',
@@ -87,4 +87,4 @@ const sendReceiveReducer = (state = initialState, action) => {
 
 }
 export default sendReceiveReducer;
-export { setStep, clearStep, setWalletAddress, fetchWithDrawWallets,setSelectedWithDrawWallet,handleSendFetch }
+export { setStep, clearStep, setWalletAddress, fetchWithDrawWallets, setSelectedWithDrawWallet, handleSendFetch }
