@@ -83,7 +83,7 @@ export default {
   suissebase_personal: 'Suissebase Personal',
   avail_wallet_weprovide: 'Available wallet we provide',
   withdraw_Btc: 'Withdraw BTC',
-  withdraw_summary_sub: ' Send from your wallet and into fiat.',
+  withdraw_summary_sub: ' Send from your address.',
   verify_identity: 'Verify your Identity',
   swap_title: 'New Swap',
   swap_desc: 'Instantly exchange your crypto into any currency we offer in your wallet.',
@@ -276,10 +276,10 @@ export default {
   wire_16_ZBPHXFHI: 'wire_16_ZBPHXFHI',
   note: 'Do note that we accept transfer addressable only in SEPA.',
   suisse_btn_refresh: "Click to get new rates",
-  BankName:'Bank Name',
-  proceed:'Proceed',
-  description:'Description',
-  with_draw:"Withdraw",
-  crypto_with_draw_success:"Cancel",
-  withdrawal_success:'Withdrawal success'
+  BankName: 'Bank Name',
+  proceed: 'Proceed',
+  description: 'Description',
+  with_draw: "Withdraw",
+  crypto_with_draw_success: "Cancel",
+  withdrawal_success: 'Withdrawal success'
 }
