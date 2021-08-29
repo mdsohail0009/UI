@@ -1,5 +1,5 @@
 export default {
-  header_title: 'Dashboard | Personal',
+  header_title: 'Dashboard %(lable)s',
   Portfolio_title: 'Portfolio',
   your_portfolio: 'Your Portfolio',
   suissebase_title: 'Suissebase',

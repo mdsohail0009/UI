@@ -25,9 +25,9 @@ class DepositeCrypto extends Component {
             sendreceive: e.target.value === 2
         });
     }
-componentWillUnmount(){
+    componentWillUnmount() {
 
-}
+    }
     render() {
         const { Title, Paragraph, Text } = Typography;
         const { sendreceive } = this.state
@@ -40,7 +40,7 @@ componentWillUnmount(){
                     <Translate value={1} content="deposit" component={Radio.Button} />
                     <Translate value={2} content="withdraw" component={Radio.Button} />
                 </Radio.Group>
-                {sendreceive ? <WithdrawCrypto /> :<CryptoDeposit />}
+                {sendreceive ? <WithdrawCrypto /> : <CryptoDeposit />}
             </>
         )
     }

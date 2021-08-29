@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu,  Typography, Dropdown, notification, Drawer } from 'antd';
+import { Layout, Menu, Typography, Dropdown, notification, Drawer } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import logoColor from '../../assets/images/logo-color.png';
 import counterpart from 'counterpart';
@@ -12,26 +12,16 @@ import SendReceive from '../../components/send.component';
 import SwapCrypto from '../../components/swap.component';
 import MassPayment from '../../components/buyfiat.component';
 import Changepassword from '../../components/changepassword';
-import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata,clearSwapData } from '../../reducers/swapReducer';
+import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata, clearSwapData } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
 import MegaMenu from './megaMenu.component';
 import SettingsMenu from './settingsMenu.component';
 import SecurityMenu from './securityMenu.component';
-
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
 counterpart.setLocale('en');
-
-const LinkValue = (props) => {
-    return (
-        <Translate className="text-yellow fw-700 fs-16 d-inlineblock"
-            content={props.content}
-            component={Link}
-        />
-    )
-}
-const {Paragraph } = Typography;
+const { Paragraph } = Typography;
 class Header extends Component {
     constructor(props) {
         super(props);
@@ -51,7 +41,7 @@ class Header extends Component {
             buyFiatDrawer: false,
             showChangePassword: false,
         }
-      
+
     }
     showBuyDrawer = () => {
         if (this.props.userConfig.isKYC) {
@@ -59,7 +49,7 @@ class Header extends Component {
                 buyDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+            notification.error({ message: "", description: 'Please complete Your ' + (this.props.userConfig.isbusines ? 'KYB.' : 'KYC.') });
         }
     }
     showSendDrawer = () => {
@@ -68,7 +58,7 @@ class Header extends Component {
                 sendDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+            notification.error({ message: "", description: 'Please complete Your ' + (this.props.userConfig.isbusines ? 'KYB.' : 'KYC.') });
         }
     }
     showSwapDrawer = () => {
@@ -77,7 +67,7 @@ class Header extends Component {
                 swapDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+            notification.error({ message: "", description: 'Please complete Your ' + (this.props.userConfig.isbusines ? 'KYB.' : 'KYC.') });
         }
     }
     showBuyFiatDrawer = () => {
@@ -86,11 +76,11 @@ class Header extends Component {
                 buyFiatDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+            notification.error({ message: "", description: 'Please complete Your ' + (this.props.userConfig.isbusines ? 'KYB.' : 'KYC.') });
         }
     }
     closeDrawer = () => {
-        if(this.child)this.child.clearValues();
+        if (this.child) this.child.clearValues();
         let obj = {};
         this.props.fromObjSwap(obj);
         this.props.receiveObjSwap(obj);
@@ -124,30 +114,32 @@ class Header extends Component {
             url = process.env.REACT_APP_AUTHORITY + "/account/login?returnUrl=/manage/Disable2faWarning"
         }
         var win = window.open(url);
-        
+
     }
+    depostWithdrawMenu = (
+        <Menu>
+            <ul className="pl-0 drpdwn-list">
+                <li onClick={this.showSendDrawer}>
+                    <Link>Crypto <span className="icon md rarrow-white" /></Link>
+                </li>
+                <li onClick={this.showBuyFiatDrawer}>
+                    <Link>Fiat <span className="icon md rarrow-white" /></Link>
+                </li>
+            </ul>
+        </Menu>
+    )
     render() {
-        const depostWithdrawMenu = (
-            <Menu>
-                <ul className="pl-0 drpdwn-list">
-                    <li onClick={this.showSendDrawer}>
-                        <Link>Crypto <span className="icon md rarrow-white" /></Link>
-                    </li>
-                    <li onClick={this.showBuyFiatDrawer}>
-                        <Link>Fiat <span className="icon md rarrow-white" /></Link>
-                    </li>
-                </ul>
-            </Menu>
-        )
         return (
-            <>
+            <React.Fragment>
                 <Layout className="layout">
                     <menuHeader className="tlv-header" id="area">
                         <div className="login-user">
                             <ul className="header-logo pl-0">
                                 <li className="pr-30 p-relative"><Link to="/dashboard"><img src={logoColor} alt="logo" className="tlv-logo" /></Link></li>
-                                <MegaMenu></MegaMenu>
-                                <li className="mb-d-none" onClick={()=>this.props.history.push("/dashboard")}><Translate content="header_title" component="p" className="text-white-30 mb-0 fs-24" /></li>
+                                <MegaMenu />
+                                <li className="mb-d-none" onClick={() => this.props.history.push("/dashboard")}>
+                                    <Translate with={{ lable: this.props.userConfig?.isBusiness ? "| Business" : "| Personal" }} content="header_title" component="p" className="text-white-30 mb-0 fs-24" />
+                                </li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
                                 <SecurityMenu />
@@ -156,23 +148,20 @@ class Header extends Component {
                             </Menu>
                         </div>
                         <Menu theme="light" mode="horizontal" className="header-right">
-                            {/* <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item> */}
                             <Translate content="menu_buy_sell" component={Menu.Item} key="1" onClick={this.showBuyDrawer} className="list-item" />
                             <Translate content="menu_swap" component={Menu.Item} key="2" onClick={this.showSwapDrawer} className="list-item" />
-                            <Dropdown overlay={depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" getPopupContainer={() => document.getElementById('area')}>
+                            <Dropdown overlay={this.depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Translate content="menu_send_receive" component={Menu.Item} key="3" className="mr-16" />
                             </Dropdown>
-                            {/* <Translate content="menu_mass_pay" component={Menu.Item} key="4" onClick={this.showBuyFiatDrawer} className="list-item" /> */}
-                            <SecurityMenu/>
+                            <SecurityMenu />
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
-                            <SettingsMenu/>
+                            <SettingsMenu />
                         </Menu>
                     </menuHeader>
                 </Layout >
-                
                 <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
                 <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
-                <SwapCrypto swapRef={(cd) => this.child = cd}  showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
+                <SwapCrypto swapRef={(cd) => this.child = cd} showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
                 <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
                 <Drawer
                     title={[<div className="side-drawer-header">
@@ -191,13 +180,13 @@ class Header extends Component {
                 >
                     <Changepassword onSubmit={() => { this.setState({ ...this.state, showChangePassword: false }) }} />
                 </Drawer>
-            </>
+            </React.Fragment>
         );
     }
 }
 
-const connectStateToProps = ({ swapStore, userConfig,oidc }) => {
-    return { swapStore,userConfig: userConfig.userProfileInfo }
+const connectStateToProps = ({ swapStore, userConfig, oidc }) => {
+    return { swapStore, userConfig: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
