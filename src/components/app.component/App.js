@@ -6,6 +6,7 @@ import { loadUser, OidcProvider } from 'redux-oidc';
 import { useEffect, useState } from "react";
 import { userManager } from "../../authentication";
 import { onMessageListener } from "../../utils/firebase";
+import ErrorBoundary from "antd/lib/alert/ErrorBoundary";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -22,7 +23,9 @@ function App() {
     <Provider store={store}>
       <OidcProvider userManager={userManager} store={store}>
         <Router basename={process.env.PUBLIC_URL}>
-          {loading ? <div className="loader">Loading....</div> : <Layout />}
+          <ErrorBoundary>
+            {loading ? <div className="loader">Loading....</div> : <Layout />}
+          </ErrorBoundary>
         </Router>
       </OidcProvider>
     </Provider>

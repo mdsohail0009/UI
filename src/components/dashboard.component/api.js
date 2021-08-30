@@ -12,4 +12,7 @@ const fetchPortfolio=(member_id)=>{
 const fetchYourPortfolio=(member_id)=>{
     return apiClient.get(ApiControllers.exchange+`MemberCryptofolio?memberId=${member_id}`)
 }
-export { fetchMarketCaps,fetchMemberWallets,fetchPortfolio,fetchYourPortfolio }
+const getNotices = (member_id)=>{
+    return apiClient.get(ApiControllers.exchange+`MemberNoticesDashboard?memberId=${member_id}`)
+}
+export { fetchMarketCaps,fetchMemberWallets,fetchPortfolio,fetchYourPortfolio,getNotices }

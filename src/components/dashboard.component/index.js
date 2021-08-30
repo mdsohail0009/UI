@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Row, Col, Typography, Button, Input, Carousel } from 'antd';
+import { Row, Col, Typography} from 'antd';
 import Wallets from './wallets.component';
 import Translate from 'react-translate-component';
 import Portfolio from './portfolio.component';
 import Coins from './coins.component';
 import YourPortfolio from './yourportfolio.component';
 import MarketCap from './marketcap.component';
+import Notices from './notices';
 const { Title, Paragraph } = Typography;
 class Home extends Component {
     state = {
@@ -39,23 +40,7 @@ class Home extends Component {
                             crypto_usd="0.00 BTC"
                             crypto_stock="0.0%" />
 
-                        <Carousel autoplay className="mb-24">
-                            <div className="p-28 carousel-card">
-                                <Translate content="db_slider_title" component={Title} className="fs-24 text-black mb-4" />
-                                <Translate content="db_slider_desc" component={Paragraph} className="fs-16 text-black mb-24" />
-                                <Translate content="db_slider_btn" component={Button} type="primary" className="custom-btn fs-14 prime mb-24" />
-                            </div>
-                            <div className="p-28 carousel-card">
-                                <Translate content="db_slider_title" component={Title} className="fs-24 text-black mb-4" />
-                                <Translate content="db_slider_desc" component={Paragraph} className="fs-16 text-black mb-24" />
-                                <Translate content="db_slider_btn" component={Button} type="primary" className="custom-btn fs-14 prime mb-24" />
-                            </div>
-                            <div className="p-28 carousel-card">
-                                <Translate content="db_slider_title" component={Title} className="fs-24 text-black mb-4" />
-                                <Translate content="db_slider_desc" component={Paragraph} className="fs-16 text-black mb-24" />
-                                <Translate content="db_slider_btn" component={Button} type="primary" className="custom-btn fs-14 prime mb-24" />
-                            </div>
-                        </Carousel>
+                       <Notices/>
                         <YourPortfolio />
                         <Coins />
                     </Col>
