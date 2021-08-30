@@ -9,13 +9,13 @@ import NumberFormat from 'react-number-format';
 import { withdrawRecepientNamecheck, withdrawSave } from '../../api/apiServer';
 import Currency from '../shared/number.formate';
 import success from '../../assets/images/success.png';
+import Checkbox from 'antd/lib/checkbox/Checkbox';
 
 const LinkValue = (props) => {
   return (
     <Translate className="text-yellow text-underline c-pointer"
       content={props.content}
       component={Link}
-      to="./#"
     />
   )
 }
@@ -49,8 +49,11 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
 
   const savewithdrawal = async (values) => {
     //console.log(values)
-    if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) >= parseFloat(selectedWallet.avilable)) {
-      return setErrorMsg('Insufficiant Balance');
+    if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) >  parseFloat(selectedWallet.avilable)) {
+      return setErrorMsg('Insufficient Balance');
+    }
+    if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) <=0) {
+      return setErrorMsg('Please enter Amount');
     }
     setErrorMsg(null)
     values['membershipId'] = userConfig.id
@@ -70,9 +73,9 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
       step1: <>{saveObj && <div>
         <p> <Currency defaultValue={saveObj?.totalValue} prefixText={<b>Amount: </b>} prefix={""} suffixText={saveObj.walletCode} /></p>
         <p><b>Bank Account Number: </b> {saveObj.accountNumber}</p>
-        <p><b>Bank Name: </b> {saveObj.bankName}</p>
         <p><b>Bank BIC/SWIFT/Routing number: </b> {saveObj.swiftCode}</p>
-        <p><b>Recipient Namae : </b> {saveObj.beneficiaryAccountName}</p>
+        <p><b>Bank Name: </b> {saveObj.bankName}</p>
+        <p><b>Recipient full Name : </b> {saveObj.beneficiaryAccountName}</p>
         <ul>
           <li>Ensure that the account details is correct</li>
           <li>Transaction can't be cancelled</li>
@@ -90,9 +93,9 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
       step3: <>{saveObj && <div>
         <p> <Currency defaultValue={saveObj?.totalValue} prefixText={<b>Amount: </b>} prefix={""} suffixText={saveObj.walletCode} /></p>
         <p><b>Bank Account Number: </b> {saveObj.accountNumber}</p>
-        <p><b>Bank Name: </b> {saveObj.bankName}</p>
         <p><b>Bank BIC/SWIFT/Routing number: </b> {saveObj.swiftCode}</p>
-        <p><b>Recipient Namae : </b> {saveObj.beneficiaryAccountName}</p>
+        <p><b>Bank Name: </b> {saveObj.bankName}</p>
+        <p><b>Recipient full Name : </b> {saveObj.beneficiaryAccountName}</p>
         {/* <Form name="verification" initialValues={{ Phone: "" }}>
           <Form.Item label="Phone" extra="Please enter 6 digit code sent to you're Phone.">
             <Row gutter={8}>
@@ -137,10 +140,12 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
   const handleOk = async () => {
     let currentStep = parseInt(confirmationStep.split("step")[1]);
     if (currentStep == 1) {
+      setLoading(true)
       let withdrawal = await withdrawSave(saveObj)
       if (withdrawal.ok) {
         setConfirmationStep("step" + (currentStep + 1))
         form.resetFields()
+        setLoading(false)
       } else {
 
       }
@@ -155,7 +160,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
   return (
     <>
       <div className="suisfiat-height auto-scroll">
-      {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+        {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
         <Form form={form} onFinish={savewithdrawal}>
           <Translate
             content="Beneficiary_BankDetails"
@@ -163,11 +168,11 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             className="mb-16 fs-14 text-aqua fw-500 text-upper"
           />
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="memberWalletId"
             required
             rules={[
-              { required: true, message: "Please enter currency" },
+              { required: true, message: "Is required" },
             ]}
           >
             <div> <div className="d-flex"><Translate
@@ -179,11 +184,10 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
               <WalletList onWalletSelect={(e) => handleWalletSelection(e)} /></div>
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="totalValue"
-            required
             rules={[
-              { required: true, message: "Please enter amount!" },
+              { required: true, message: "Is required" },
             ]}
           >
             <div ><div className="d-flex">
@@ -207,24 +211,26 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             </div>
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="accountNumber"
             required
             rules={[
-              { required: true, message: "Please enter bank account!" },
-              {validator: (rule, value, callback) => {
-                var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                if (value) {
+              { required: true, message: "Is required" },
+              {
+                validator: (rule, value, callback) => {
+                  var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                  if (value) {
                     if (!regx.test(value)) {
-                        callback("Invalid!")
+                        callback("Invalid account number!")
                     } else if (regx.test(value)) {
-                        callback();
+                      callback();
                     }
-                }else{
-                  callback();
+                  } else {
+                    callback();
+                  }
+                  return;
                 }
-                return;
-            }}
+              }
             ]}
           >
             <div>
@@ -235,28 +241,29 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   component={Text}
                 />
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" placeholder="Bank account" />
+              <Input className="cust-input" placeholder="Bank account number/IBAN" />
             </div>
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="swiftCode"
             required
             rules={[
-              { required: true, message: "Please enter BIC/SWIFT/routing number!" },
+              { required: true, message: "Is required" },
               {validator: (rule, value, callback) => {
                 var regx = new RegExp(/^[A-Za-z0-9]+$/);
                 if (value) {
                     if (!regx.test(value)) {
-                        callback("Invalid!")
+                        callback("Invalid BIC/SWIFT/Routing number!")
                     } else if (regx.test(value)) {
-                        callback();
+                      callback();
                     }
-                }else{
-                  callback();
+                  } else {
+                    callback();
+                  }
+                  return;
                 }
-                return;
-            }}
+              }
             ]}
           >
             <div>
@@ -267,29 +274,31 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   component={Text}
                 />
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" placeholder="BIC/SWIFT/routing number" />
+              <Input className="cust-input" placeholder="BIC/SWIFT/Routing number" />
             </div>
 
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="bankName"
             required
             rules={[
-              { required: true, message: "Please enter bank name!" },
-              {validator: (rule, value, callback) => {
-                var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
-                if (value) {
+              { required: true, message: "Is required" },
+              {
+                validator: (rule, value, callback) => {
+                  var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
+                  if (value) {
                     if (!regx.test(value)) {
-                        callback("Invalid!")
+                        callback("Invalid bank name!")
                     } else if (regx.test(value)) {
-                        callback();
+                      callback();
                     }
-                }else{
-                  callback();
+                  } else {
+                    callback();
+                  }
+                  return;
                 }
-                return;
-            }}
+              }
             ]}
           >
             <div>
@@ -305,11 +314,11 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
 
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="bankAddress"
             required
             rules={[
-              { required: true, message: "Please enter bank address1!" }
+              { required: true, message: "Is required" }
             ]}
           >
             <div>
@@ -326,7 +335,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
           </Form.Item>
 
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="bankAddress1"
           >
             <div>
@@ -336,11 +345,11 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   content="Bank_address2"
                   component={Text}
                 /></div>
-              <Input className="cust-input" placeholder="Bank address2!" />
+              <Input className="cust-input" placeholder="Bank address2" />
             </div>
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="bankAddress2"
           >
             <div>
@@ -350,7 +359,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   content="Bank_address3"
                   component={Text}
                 /></div>
-              <Input className="cust-input" placeholder="Bank address3!" />
+              <Input className="cust-input" placeholder="Bank address3" />
             </div>
           </Form.Item>
 
@@ -360,24 +369,26 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             className="mb-16 fs-14 text-aqua fw-500 text-upper"
           />
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="beneficiaryAccountName"
             required
             rules={[
-              { required: true, message: "Please enter recipient full name!" },
-              {validator: (rule, value, callback) => {
-                var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
-                if (value) {
+              { required: true, message: "Is required" },
+              {
+                validator: (rule, value, callback) => {
+                  var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
+                  if (value) {
                     if (!regx.test(value)) {
-                        callback("Invalid!")
+                        callback("Invalid recipient full name!")
                     } else if (regx.test(value)) {
-                        callback();
+                      callback();
                     }
-                }else{
-                  callback();
+                  } else {
+                    callback();
+                  }
+                  return;
                 }
-                return;
-            }}
+              }
             ]}
           >
             <div>
@@ -393,10 +404,10 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
 
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="beneficiaryAccountAddress"
             rules={[
-              { required: true, message: "Please enter recipient address!" }
+              { required: true, message: "Is required" }
             ]}
           >
             <div>
@@ -409,12 +420,12 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>
                   {" * "}
                 </span></div>
-              <Input className="cust-input" placeholder="Recipient address" />
+              <Input className="cust-input" placeholder="Recipient address1" />
             </div>
 
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="beneficiaryAccountAddress1"
           >
             <div>
@@ -424,11 +435,11 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   content="Recipient_address2"
                   component={Text}
                 /></div>
-              <Input className="cust-input" placeholder="Recipient address2!" />
+              <Input className="cust-input" placeholder="Recipient address2" />
             </div>
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="beneficiaryAccountAddress2"
           >
             <div>
@@ -438,27 +449,29 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   content="Recipient_address3"
                   component={Text}
                 /></div>
-              <Input className="cust-input" placeholder="Recipient address3!" />
+              <Input className="cust-input" placeholder="Recipient address3" />
             </div>
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-24"
             name="description"
             rules={[
-              { required: true, message: "Please enter reference!" },
-              {validator: (rule, value, callback) => {
-                var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                if (value) {
+              { required: true, message: "Is required" },
+              {
+                validator: (rule, value, callback) => {
+                  var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                  if (value) {
                     if (!regx.test(value)) {
-                        callback("Invalid!")
+                        callback("Invalid reference!")
                     } else if (regx.test(value)) {
-                        callback();
+                      callback();
                     }
-                }else{
-                  callback();
+                  } else {
+                    callback();
+                  }
+                  return;
                 }
-                return;
-            }}
+              }
             ]}
           >
             <div>
@@ -468,21 +481,25 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   content="Reference"
                   component={Text}
                 /><span style={{ color: "#fafcfe", paddingLeft: "2px" }}>
-                {" * "}
-              </span></div>
+                  {" * "}
+                </span></div>
               <Input className="cust-input" placeholder="Reference" />
             </div>
           </Form.Item>
           <Form.Item
-            className="custom-forminput mb-16"
+            className="custom-forminput mb-36 agree"
             name="isAccept"
+            valuePropName="checked"
             required
             rules={[
-              { required: true, message: "Please agree terms of service!" },
+              {
+                validator: (_, value) =>
+                  value ? Promise.resolve() : Promise.reject(new Error('Please agree terms of service')),
+              },
             ]}
           >
-            <div className="d-flex p-16 mb-36 agree-check">
-              <label>
+            <div className="d-flex pt-16 agree-check">
+            <label>
                 <input type="checkbox" id="agree-check" />
                 <span for="agree-check" />
               </label>
@@ -490,7 +507,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                 content="agree_to_suissebase"
                 with={{ link }}
                 component={Paragraph}
-                className="fs-14 text-white-30 ml-16"
+                className="fs-14 text-white-30 ml-16 mb-4"
                 style={{ flex: 1 }}
               />
             </div>
@@ -507,10 +524,10 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
           </Form.Item>
         </Form>
       </div>
-      <Modal title="Withdrawal" footer={[
+      <Modal onCancel={handleCancel} title="Withdraw" footer={[
         <>{confirmationStep != 'step2' && <><Button key="back" onClick={handleCancel} disabled={loading}>
           Return
-        </Button>,
+        </Button>
           <Button key="submit" type="primary" onClick={handleOk} loading={loading}>
             Confirm
           </Button></>}</>

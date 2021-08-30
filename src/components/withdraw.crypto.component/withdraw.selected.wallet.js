@@ -49,22 +49,22 @@ class CryptoWithDrawWallet extends Component {
         const amt = parseFloat(this.state.CryptoAmnt);
         const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
-        if(!amt){
-            this.setState({ ...this.state, error: `Please enter amount` });
+        if (!amt) {
+            this.setState({ ...this.state, error: `Enter amount` });
             this.myRef.current.scrollIntoView();
         }
         else if (amt < withdrawMinValue) {
-            this.setState({ ...this.state, error: `Please enter minimum purchase value of ${withdrawMinValue}` });
+            this.setState({ ...this.state, error: `Please enter min value of ${withdrawMinValue}` });
             this.myRef.current.scrollIntoView();
         } else if (amt > withdrawMaxValue) {
-            this.setState({ ...this.state, error: `You can purchase maximum value of ${withdrawMaxValue}` });
+            this.setState({ ...this.state, error: `Entered amount should be less than available balance ${withdrawMaxValue}` });
             this.myRef.current.scrollIntoView();
         } else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
-            this.setState({ ...this.state, error: `Insufficient funds to withdraw` });
+            this.setState({ ...this.state, error: `Entered amount should be less than available balance` });
             this.myRef.current.scrollIntoView();
         }
         else if (!this.state.walletAddress) {
-            this.setState({ ...this.state, error: `Please enter wallet address` });
+            this.setState({ ...this.state, error: `Entered amount should be less than available balance` });
             this.myRef.current.scrollIntoView();
         }
         else {
@@ -165,11 +165,11 @@ class CryptoWithDrawWallet extends Component {
         const { Text, Paragraph } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
         if (this.state.isWithdrawSuccess) {
-            return <SuccessMsg onBackCLick ={() => this.props.changeStep("step1")} />
+            return <SuccessMsg onBackCLick={() => this.props.changeStep("step1")} />
         }
         return (
             <div ref={this.myRef}>
-                {this.state.error != null && <Alert closable type="error" message={"Error"} description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
+                {this.state.error != null && <Alert closable type="error" message={"Withdraw Crypto"} description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
                 <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
                         <span className={`coin lg ${selectedWallet.coin}`} />

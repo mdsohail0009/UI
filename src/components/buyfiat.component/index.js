@@ -29,6 +29,8 @@ class MassPayment extends Component {
         this.props.changeStep("step3");
     }
     renderContent = () => {
+        if(this.child)
+        this.child.clearfiatValues();
         const stepcodes = {
             fiatdeposit: <FiatDeposit  fiatRef={(cd) => this.child = cd}/>,
             //buyfiat: <BuyFiat activeTab={this.props.valNum} />,

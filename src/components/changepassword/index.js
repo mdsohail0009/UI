@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 //import connectStateProps from '../../shared/stateConnect';
 //import notify from '../../shared/components/notification';
 import { changePassword } from '../../api/apiServer';
+import { Link } from 'react-router-dom';
 notification.config({
   placement: "topRight",
   rtl: true
@@ -172,6 +173,7 @@ const ChangePassword = ({ userConfig }) => {
           >
             Submit
           </Button>
+          <div className="text-center fs-20 mt-16"><Link to="/dashboard" className="f-16 mt-16 text-underline">Back to Dashboard</Link></div>
         </Form.Item>
       </Form>
     </div>

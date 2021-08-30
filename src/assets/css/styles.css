@@ -132,8 +132,8 @@ line-height: 16px;min-width:90px}
 .crypto-list-tabs .ant-input-group-addon .icon, .ant-input-search .ant-input-group-addon .icon{margin-right: 16px !important;}
 .sellcrypto-container{max-height: calc(100vh - 262px);}
 .crypto-container{max-height: calc(100vh - 270px);}
-.suisfiat-container{max-height: calc(100vh - 165px);}
-.suisfiat-height{max-height: calc(100vh - 210px);}
+.suisfiat-container{max-height: calc(100vh - 155px);}
+.suisfiat-height{max-height: calc(100vh - 155px);}
 .verify-container{max-height: calc(100vh - 140px);}
 .dep-withdraw{max-height: calc(100vh - 267px);}
 .selectcrypto-container{max-height: calc(100vh - 101px);}
@@ -257,6 +257,7 @@ line-height: 16px;min-width:90px}
 .error-text{position: absolute; right: 0; top: 4px;color: var(--textError);}
 .cust-input .ant-select-selector, .cust-input .ant-input{background-color: transparent;}
 .cust-input .ant-select-selection-item, .cust-input .ant-select-selector, .cust-input .ant-input, .ant-select-single .ant-select-selector .ant-select-selection-item, .ant-select-single .ant-select-selector .ant-select-selection-placeholder{line-height: 45px !important; height: 47px !important;}
+.suisfiat-height .cust-input{margin-bottom: 0;}
 /* swap */
 .swap{border-radius:25px; display: flex; justify-content: space-between; align-items: center; padding: 16px 24px;min-height: 105px;}
 .swapfrom-card{background-color: var(--bgPitch);  border-bottom-right-radius: 0 !important; }
@@ -298,6 +299,9 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .agree-check label{height: 34px;}
 .ant-select-arrow{color: var(--textWhite);right:16px; top: 24px;}
 .custom-switch{border-bottom: none;}
+.agree .ant-form-item-explain-error{text-align: left;}
+#memberWalletId .ant-select-selector{border-radius: 25px !important;height: 49px !important;}
+#memberWalletId .ant-form-item-has-error{border: 1px solid #ff4d4f !important;}
 /* .cust-input.ant-select{position: relative;} 
 .cust-input.ant-select::after{content: '';position: absolute;top: 12px; right: 16px; width: 20px; height: 20px; background: var(--lightThemeIcons);background-position: -350px 0;}*/
 .custom-formcard{width: 500px;margin: 0px auto;background: #515A64;border-radius: 50px;padding-left: 40px;padding-right: 40px;padding-top: 50px;padding-bottom: 50px;}
@@ -521,6 +525,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .mega-menu{max-width: 1140px;  padding: 29px 0px 24px 60px;}
     .side-drawer .ant-drawer-content-wrapper{width: 420px !important;}
     .side-drawer .ant-drawer-body{padding: 0 20px 20px 20px;}
+    .portfolio-list .mobile-list{max-height: 310px; overflow: auto;}
 }
 @media (min-width: 1400px){
     .main-container{max-width: 1320px; }
@@ -533,7 +538,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .crypto-list-tabs .crypto-list{max-height: calc(100vh - 428px); overflow-y: auto; padding-right: 10px;}
     .sellcrypto-container{max-height: calc(100vh - 300px);}
     .suisfiat-container{max-height: calc(100vh - 210px);}
-    .suisfiat-height{max-height: calc(100vh - 280px);}
+    .suisfiat-height{max-height: calc(100vh - 215px);}
     .round-pills .ant-radio-button-wrapper,.default-radio .ant-radio-button-wrapper{min-width: 120px;}
     .dep-withdraw{max-height: calc(100vh - 315px);}
     .crypto-card .ant-card-body{padding: 33px;height: 231px;}
@@ -550,6 +555,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .crypto-search.ant-input-search .ant-input-group .ant-input-group-addon{border-radius: 0 30px 30px 0;}
     .pay-list{padding: 16px 0;}
     .crypto-container {max-height: calc(100vh - 325px);}
+    .custom-crypto-address .fs-12{font-size: 14px !important;}
+    .portfolio-list .mobile-list{max-height: 285px; overflow: auto;}
 }
 .currencyContains {display: inline;color: var(--textWhite30);}
 .spinLoader {margin: 20px 0;margin-bottom: 20px;padding: 30px 50px;text-align: center;background: rgba(0, 0, 0, 0.05);border-radius: 4px;}
@@ -567,6 +574,5 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 main.ant-layout-content{min-height: calc(100vh - 220px);}
 .notkyc{top: 0; right: 0; bottom: 0; left: 0;display: flex; align-items: center;font-size: 36px;color: var(--textWhite);background-color: var(--bgDarkGrey);justify-content: center;margin-top: 150px;text-align: center;}
 .crypto-address.custom-crypto-address{padding: 8px 10px;}
-.crypto-address .ant-typography-copy{float: right;}
 .crypto-address .ant-typography-copy svg{color: var(--textGreen);}
 .crypto-address.custom-crypto-address .ant-typography-expand, .crypto-address .ant-typography-edit, .crypto-address .ant-typography-copy{font-size:18px;margin-left:0px;}
