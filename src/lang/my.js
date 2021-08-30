@@ -277,5 +277,5 @@ export default {
   proceed: 'magpatuloy',
   description: 'Description',
   withdrawal_success: 'Withdraw success',
-  dep_with_assets: "Deposit / Pengeluaran Aset"
+  dep_with_assets: "Deposit / Pengeluaran Kripto"
 }

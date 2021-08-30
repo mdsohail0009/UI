@@ -72,6 +72,7 @@ line-height: 16px;min-width:90px}
 .icon{background: var(--lightThemeIcons) no-repeat; display: inline-block; vertical-align: middle;}
 .icon.xl{width: 32px; height: 32px;}
 .icon.xl.closewhite{background-position: -2px -243px;}
+.icon.md.close{background-position: -42px -70px;}
 .icon.lg{width: 26px; height: 26px;}
 .icon.lg.drawer-close{background-position: -1px -112px;}
 .icon.lg.check-ylw{background-position: -36px -111px;}
@@ -427,6 +428,14 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .custom-table tr>.ant-table-row-level-0:first-child td{border-bottom: 0 !important;}
 .custom-table .ant-table-body{max-height: 780px !important; height: 100% !important;}
 .custom-table .ant-table-column-title{z-index: 0;}
+.widthdraw-pop .ant-modal-close-x{    position: absolute;
+    right: 0;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    top: 16px;
+    right: 16px;
+}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}

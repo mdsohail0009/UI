@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert } from 'antd';
+import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -256,9 +256,10 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             required
             rules={[
               { required: true, message: "Is required" },
-              {validator: (rule, value, callback) => {
-                var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                if (value) {
+              {
+                validator: (rule, value, callback) => {
+                  var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                  if (value) {
                     if (!regx.test(value)) {
                         callback("Invalid BIC/SWIFT/Routing number")
                     } else if (regx.test(value)) {
@@ -505,7 +506,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
             ]}
           >
             <div className="d-flex pt-16 agree-check">
-            <label>
+              <label>
                 <input type="checkbox" id="agree-check" />
                 <span for="agree-check" />
               </label>
@@ -530,7 +531,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
           </Form.Item>
         </Form>
       </div>
-      <Modal maskClosable={false} onCancel={handleCancel} title="Withdraw" footer={[
+      <Modal maskClosable={false} onCancel={handleCancel} title="Withdraw" closeIcon={<Tooltip title="Close"><span onClick={handleCancel} className="icon md close" /></Tooltip>} footer={[
         <>{confirmationStep != 'step2' && <><Button key="back" onClick={handleCancel} disabled={loading}>
           Return
         </Button>

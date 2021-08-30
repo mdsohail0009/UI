@@ -282,5 +282,5 @@ export default {
   with_draw: "Withdraw",
   crypto_with_draw_success: "Cancel",
   withdrawal_success: 'Withdraw success',
-  dep_with_assets: "Deposit / Withdraw Assets"
+  dep_with_assets: "Crypto Deposit / Withdraw"
 }
