@@ -81,7 +81,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
         <p><b>Bank Account Number: </b> {saveObj.accountNumber}</p>
         <p><b>Bank BIC/SWIFT/Routing Number: </b> {saveObj.swiftCode}</p>
         <p><b>Bank Name: </b> {saveObj.bankName}</p>
-        <p><b>Recipient full Name : </b> {saveObj.beneficiaryAccountName}</p>
+        <p><b>Recipient Full Name : </b> {saveObj.beneficiaryAccountName}</p>
         <ul>
           <li>Ensure that the account details is correct</li>
           <li>Transaction can't be cancelled</li>
