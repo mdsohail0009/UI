@@ -26,25 +26,34 @@ class FaitDeposit extends Component {
     crypto: config.tlvCoinsList,
     buyToggle: 'Buy',
     fiatDepEur: false,
-    BankDetails: [], BankInfo: null, Amount: null, depObj: { currency: null, BankName: null }
+    faitdeposit:false,
+    BankDetails: [], BankInfo: null, Amount: null, depObj: { currency: null, BankName: null },
+    tabValue:1
   }
   componentDidMount() {
     this.props.fiatRef(this)
     this.props.fetchCurrencyWithBankDetails()
   }
   clearfiatValues = () => {
+    console.log('trigger')
     this.props.fetchCurrencyWithBankDetails()
     this.setState({
       buyDrawer: false,
       crypto: config.tlvCoinsList,
       buyToggle: 'Buy',
       fiatDepEur: false,
-      BankDetails: [], BankInfo: null, Amount: null, depObj: { currency: null, BankName: null }
+      BankDetails: [], BankInfo: null, Amount: null, depObj: { currency: null, BankName: null },
+      faitdeposit:false,
+      tabValue:1
     });
   }
   handleBuySellToggle = e => {
-    this.setState({
-      faitdeposit: e.target.value === 2
+    this.setState({...this.state,
+      faitdeposit: e.target.value === 2,
+      tabValue:e.target.value,
+      BankDetails:[],
+      BankInfo: null,
+      depObj: { currency: null, BankName: null }
     });
   }
   handlFiatDep = (e, currencyLu) => {
@@ -55,11 +64,11 @@ class FaitDeposit extends Component {
       if (currencyLu[k].walletCode == e) {
         if (currencyLu[k].bankDetailModel?.length == 1) {
           this.setState({
-            fiatDepEur: e === "EUR", BankInfo: currencyLu[k].bankDetailModel[0], BankDetails: [], depObj: depObj
+            ...this.state,fiatDepEur: e === "EUR", BankInfo: currencyLu[k].bankDetailModel[0], BankDetails: [], depObj: depObj
           });
         } else {
           this.setState({
-            fiatDepEur: e === "EUR", BankDetails: currencyLu[k].bankDetailModel, BankInfo: null, depObj: depObj
+            ...this.state,fiatDepEur: e === "EUR", BankDetails: currencyLu[k].bankDetailModel, BankInfo: null, depObj: depObj
           });
         }
       }
@@ -71,7 +80,7 @@ class FaitDeposit extends Component {
     for (var k in this.state.BankDetails) {
       if (this.state.BankDetails[k].bankName == e) {
         this.setState({
-          fiatDepEur: e === "EUR", BankInfo: this.state.BankDetails[k], depObj: depObj
+          ...this.state,fiatDepEur: e === "EUR", BankInfo: this.state.BankDetails[k], depObj: depObj
         });
       }
     }
@@ -85,8 +94,8 @@ class FaitDeposit extends Component {
     return (
       <>
         <Radio.Group
-          defaultValue={1}
           onChange={this.handleBuySellToggle}
+          value={this.state.tabValue}
           className="buysell-toggle">
           <Translate content="deposit" component={Radio.Button} value={1} />
           <Translate content="withdraw" component={Radio.Button} value={2} />
