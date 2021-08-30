@@ -52,13 +52,13 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
 
   const savewithdrawal = async (values) => {
     //console.log(values)
-    if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) >  parseFloat(selectedWallet.avilable)) {
+    if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
       return setErrorMsg('Insufficient balance');
     }
-    if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) <=0) {
+    if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) <= 0) {
       return setErrorMsg('Amount must be greater than zero.');
     }
-    if (values.totalValue =='.') {
+    if (values.totalValue == '.') {
       return setErrorMsg('Amount must be greater than zero.');
     }
     setErrorMsg(null)
@@ -227,7 +227,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   var regx = new RegExp(/^[A-Za-z0-9]+$/);
                   if (value) {
                     if (!regx.test(value)) {
-                        callback("Invalid account number")
+                      callback("Invalid account number")
                     } else if (regx.test(value)) {
                       callback();
                     }
@@ -261,7 +261,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   var regx = new RegExp(/^[A-Za-z0-9]+$/);
                   if (value) {
                     if (!regx.test(value)) {
-                        callback("Invalid BIC/SWIFT/Routing number")
+                      callback("Invalid BIC/SWIFT/Routing number")
                     } else if (regx.test(value)) {
                       callback();
                     }
@@ -296,7 +296,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
                   if (value) {
                     if (!regx.test(value)) {
-                        callback("Invalid bank name")
+                      callback("Invalid bank name")
                     } else if (regx.test(value)) {
                       callback();
                     }
@@ -386,7 +386,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
                   if (value) {
                     if (!regx.test(value)) {
-                        callback("Invalid recipient full name")
+                      callback("Invalid recipient full name")
                     } else if (regx.test(value)) {
                       callback();
                     }
@@ -469,7 +469,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
                   var regx = new RegExp(/^[A-Za-z0-9]+$/);
                   if (value) {
                     if (!regx.test(value)) {
-                        callback("Invalid reference")
+                      callback("Invalid reference")
                     } else if (regx.test(value)) {
                       callback();
                     }
@@ -531,7 +531,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
           </Form.Item>
         </Form>
       </div>
-      <Modal maskClosable={false} onCancel={handleCancel} title="Withdraw" closeIcon={<Tooltip title="Close"><span onClick={handleCancel} className="icon md close" /></Tooltip>} footer={[
+      <Modal className="widthdraw-pop" maskClosable={false} onCancel={handleCancel} title="Withdraw" closeIcon={<Tooltip title="Close"><span onClick={handleCancel} className="icon md close" /></Tooltip>} footer={[
         <>{confirmationStep != 'step2' && <><Button key="back" onClick={handleCancel} disabled={loading}>
           Return
         </Button>
