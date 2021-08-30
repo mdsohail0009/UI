@@ -10,7 +10,6 @@ const LinkValue = (props) => {
         <Translate className="text-yellow text-underline c-pointer"
             content={props.content}
             component={Link}
-            to="./#"
         />
     )
 }

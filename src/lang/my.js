@@ -276,6 +276,6 @@ export default {
   suisse_btn_refresh: "Klik untuk mendapatkan harga baru",
   proceed: 'magpatuloy',
   description: 'Description',
-  withdrawal_success: 'Withdrawal success',
-  dep_with_assets: "Deposit / Pengeluaran Aset"
+  withdrawal_success: 'Withdraw success',
+  dep_with_assets: "Deposit / Pengeluaran Kripto"
 }

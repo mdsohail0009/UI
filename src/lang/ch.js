@@ -276,6 +276,6 @@ export default {
   suisse_btn_refresh: "點擊獲取新費率",
   proceed: '行进',
   description: 'Description',
-  withdrawal_success: 'Withdrawal success',
-  dep_with_assets: "扣押/提取资产"
+  withdrawal_success: 'Withdraw success',
+  dep_with_assets: "加密存款/取款"
 }
