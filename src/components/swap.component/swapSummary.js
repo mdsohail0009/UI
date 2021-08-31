@@ -29,6 +29,7 @@ class SwapSummary extends Component {
         agreeValue: false,
         swapSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }
     }
+    useDivRef = React.createRef();
     componentDidMount() {
         this.setOneCoinValue();
         this.setReceiveAmount();
@@ -79,6 +80,7 @@ class SwapSummary extends Component {
         if (!this.state.agreeValue) {
             //notification.error({ message: "", description: 'Please agree to terms&conditions' });
             this.setState({...this.state,errorMessage: 'Please agree to all Term of Use'})
+            this.useDivRef.current.scrollIntoView()
         }
         else if (!this.props.swapStore.coinDetailData.coinBalance) {
             //notification.error({ message: "", description: 'Insufficiant funds to swap' });
@@ -114,7 +116,7 @@ class SwapSummary extends Component {
         const { Paragraph, Text } = Typography;
         const link = <LinkValue content="terms_service" />;
         return (
-            <>{(this.state.receiveValue &&this.state.price &&this.props.swapStore.fromCoinInputValue && this.props.swapStore?.coinDetailData?.coin)?<Summary
+            <><div ref={this.useDivRef}></div>{(this.state.receiveValue &&this.state.price &&this.props.swapStore.fromCoinInputValue && this.props.swapStore?.coinDetailData?.coin)?<Summary
             loading={false}
             coin={this.props.swapStore?.coinReceiveDetailData?.coin}
             nativeCurrency={this.props.swapStore?.coinReceiveDetailData?.coin}

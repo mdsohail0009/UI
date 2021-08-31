@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useState,useRef } from 'react';
 import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
@@ -28,7 +28,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [saveObj, setSaveObj] = useState(null);
-
+  const useDivRef =React.useRef(null);
   const handleWalletSelection = (walletId) => {
     form.setFieldsValue({ memberWalletId: walletId })
     if (buyInfo.memberFiat?.data) {
@@ -53,12 +53,15 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
   const savewithdrawal = async (values) => {
     //console.log(values)
     if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
+      useDivRef.current.scrollIntoView()
       return setErrorMsg('Insufficient balance');
     }
     if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) <= 0) {
+      useDivRef.current.scrollIntoView()
       return setErrorMsg('Amount must be greater than zero.');
     }
     if (values.totalValue == '.') {
+      useDivRef.current.scrollIntoView()
       return setErrorMsg('Amount must be greater than zero.');
     }
     setErrorMsg(null)
@@ -142,6 +145,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
   }
   const handleCancel = () => {
     setShowModal(false);
+    useDivRef.current.scrollIntoView()
   }
   const handleOk = async () => {
     let currentStep = parseInt(confirmationStep.split("step")[1]);
@@ -152,6 +156,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
         setConfirmationStep("step" + (currentStep + 1))
         form.resetFields()
         setLoading(false)
+        useDivRef.current.scrollIntoView()
       } else {
 
       }
@@ -165,7 +170,8 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
 
   return (
     <>
-      <div className="suisfiat-height auto-scroll">
+      <div  className="suisfiat-height auto-scroll">
+        <div ref={useDivRef}></div>
         {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
         <Form form={form} onFinish={savewithdrawal}>
           <Translate
