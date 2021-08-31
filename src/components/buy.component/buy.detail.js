@@ -11,6 +11,7 @@ import SuisseBtn from '../shared/butons';
 import NumberFormat from 'react-number-format';
 import LocalCryptoSwapper from '../shared/local.crypto.swap';
 class SelectCrypto extends Component {
+    myRef = React.createRef();
     constructor(props) {
         super(props);
         this.state = {
@@ -51,6 +52,7 @@ class SelectCrypto extends Component {
         const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin })
         if (!_vaidator.valid) {
             this.setState({ ...this.state, error: { ..._vaidator } });
+            this.myRef.current.scrollIntoView();
             return;
         }
         this.props.preview(this.state.selectedWallet, coin, cryptoValue);
@@ -64,7 +66,7 @@ class SelectCrypto extends Component {
         const { localValue, cryptoValue } = this.state.swapValues;
         const { coin, coinValueinNativeCurrency, coinBalance, percentage } = this.props.buyInfo?.selectedCoin?.data;
         return (
-            <div id="divScroll">
+            <div id="divScroll"  ref={this.myRef}>
                 {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable />}
                 <div className="selectcrypto-container">
                     <Card className="crypto-card select mb-36" bordered={false}>

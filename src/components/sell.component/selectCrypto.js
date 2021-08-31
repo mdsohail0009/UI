@@ -9,6 +9,7 @@ import LocalCryptoSwap from '../shared/local.crypto.swap';
 import SuisseBtn from '../shared/butons';
 import {updatesellsaveObject} from '../../reducers/sellReducer'
 class SelectSellCrypto extends Component {
+    myRef = React.createRef();
     constructor(props) {
         super(props);
         this.swapRef = React.createRef();
@@ -59,24 +60,30 @@ class SelectSellCrypto extends Component {
         let { sellMinValue } = this.props.sellData.coinDetailData;
         if ((!this.state.USDAmnt && !this.state.CryptoAmnt) || (parseFloat(this.state.USDAmnt) == 0 || parseFloat(this.state.CryptoAmnt) == 0)) {
             this.setState({ ...this.state, errorMessage: 'Enter amount' })
+            this.myRef.current.scrollIntoView();
             return;
         }
         else if (!obj.toWalletId) {
             this.setState({ ...this.state, errorMessage: 'Please select wallet' })
+            this.myRef.current.scrollIntoView();
             return;
         } else if (!this.state.isSwap && this.state.USDAmnt > this.props.sellData.coinDetailData.coinValueinNativeCurrency) {
             this.setState({ ...this.state, errorMessage: 'Entered amount should be less than available amount' })
+            this.myRef.current.scrollIntoView();
             return;
         }
         else if (this.state.isSwap && this.state.CryptoAmnt > this.props.sellData.coinDetailData.coinBalance) {
             this.setState({ ...this.state, errorMessage: 'Entered amount should be less than balance' })
+            this.myRef.current.scrollIntoView();
             return;
         } else if (!this.state.isSwap && parseFloat(this.state.CryptoAmnt) < sellMinValue) {
+            this.myRef.current.scrollIntoView();
             this.setState({ ...this.state, errorMessage: 'Please enter min value of ' + sellMinValue })
             return;
         }
         else if (this.state.isSwap && parseFloat(this.state.CryptoAmnt) < sellMinValue) {
             this.setState({ ...this.state, errorMessage: 'Please enter min value of ' + sellMinValue })
+            this.myRef.current.scrollIntoView();
             return;
         }
         else {
@@ -115,7 +122,7 @@ class SelectSellCrypto extends Component {
         const { coinDetailData } = this.props.sellData;
         return (
             <>
-                {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="Sell crypto" description={this.state?.errorMessage} closable />}
+              <div ref={this.myRef}>  {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="Sell crypto" description={this.state?.errorMessage} closable />}
                 {coinDetailData && <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
                         <span className={`coin lg ${coinDetailData.coin}`} />
@@ -145,7 +152,7 @@ class SelectSellCrypto extends Component {
                 <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                 <div className="mt-24">
                     <SuisseBtn autoDisable={true} title="preview" className="pop-btn" onClick={() => { this.previewSellData() }} />
-                </div>
+                </div></div>
             </>
 
         )
