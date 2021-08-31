@@ -3,7 +3,7 @@ import { Row, Col, Typography} from 'antd';
 import Wallets from './wallets.component';
 import Translate from 'react-translate-component';
 import Portfolio from './portfolio.component';
-import Coins from './coins.component';
+// import Coins from './coins.component';
 import YourPortfolio from './yourportfolio.component';
 import MarketCap from './marketcap.component';
 import Notices from './notices';
@@ -42,7 +42,7 @@ class Home extends Component {
 
                        <Notices/>
                         <YourPortfolio />
-                        <Coins />
+                        {/* <Coins /> */}
                     </Col>
                 </Row>
             </div>

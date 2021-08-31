@@ -426,7 +426,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .ant-table-container table > thead > tr:first-child th:last-child{border-top-right-radius:0}
 .custom-table .ant-table-cell-scrollbar{box-shadow: none !important;}
 .custom-table tr>.ant-table-row-level-0:first-child td{border-bottom: 0 !important;}
-.custom-table .ant-table-body{max-height: 780px !important; height: 100% !important;}
+.custom-table .ant-table-body{max-height: 567px !important; height: 100% !important;}
 .custom-table .ant-table-column-title{z-index: 0;}
 .widthdraw-pop .ant-modal-close-x{
     position: absolute;
