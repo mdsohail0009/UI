@@ -3,6 +3,7 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import { getSellPreviewData, savesellData } from '../buy.component/api'
 import Summary from '../summary.component';
+import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 class SellSummary extends Component {
     state = { sellpreviewData: {}, loader: true, disableConfirm: false, isTermsAgree: false, error: {valid:true,message:null} }
     componentDidMount() {
@@ -34,6 +35,8 @@ class SellSummary extends Component {
             if (res.ok) {
                 this.props.changeStep('success')
                 this.setState({ ...this.state, loader: false, disableConfirm: false })
+                this.props.fetchDashboardData(this.props.member.id)
+
             } else {
                 this.setState({ ...this.state, loader: false, disableConfirm: false })
             }
@@ -60,13 +63,16 @@ class SellSummary extends Component {
     }
 }
 
-const connectStateToProps = ({ buySell, sellInfo }) => {
-    return { buySell, sellData:sellInfo }
+const connectStateToProps = ({ buySell, sellInfo,userConfig }) => {
+    return { buySell, sellData:sellInfo, member: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
+        },
+        fetchDashboardData: (member_id) => {
+            dispatch(fetchDashboardcalls(member_id))
         }
     }
 }

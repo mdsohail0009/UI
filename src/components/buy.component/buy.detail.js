@@ -56,7 +56,7 @@ class SelectCrypto extends Component {
             this.myRef.current.scrollIntoView();
             return;
         }
-        this.props.preview(this.state.selectedWallet, coin, cryptoValue);
+        this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue),!isSwaped);
         this.props.changeStep('step3');
     }
     render() {
@@ -108,8 +108,8 @@ const connectDispatchToProps = dispatch => {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
-        preview: (wallet, coin, amount) => {
-            dispatch(fetchPreview({ coin, wallet, amount }))
+        preview: (wallet, coin, amount,isCrypto) => {
+            dispatch(fetchPreview({ coin, wallet, amount,isCrypto }))
         },
         setWallet: (wallet) => {
             dispatch(setWallet(wallet))

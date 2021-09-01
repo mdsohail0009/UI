@@ -24,7 +24,7 @@ class SelectSellCrypto extends Component {
     }
     fetchdefaultMinAmntValues = async () => {
         this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue })
-        let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true, this.props.sellData?.coinDetailData?.coin);
+        let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true, this.props.sellData?.coinDetailData?.coin,false);
         if (res.ok) {
             this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: false }, () => {
                 this.swapRef.current.changeInfo({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt });
@@ -95,6 +95,7 @@ class SelectSellCrypto extends Component {
             obj.fromWalletName = this.props.sellData.coinDetailData.coinFullName
             obj.fromValue = this.state.CryptoAmnt
             obj.toValue = this.state.USDAmnt
+            obj.isSwap = this.state.isSwap
             obj.exicutedPrice = this.props.sellData.coinDetailData.oneCoinValue
             this.props.changeStep('step11');
              this.props.dispatch(updatesellsaveObject(obj))

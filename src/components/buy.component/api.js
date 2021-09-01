@@ -9,11 +9,11 @@ const getCryptos = () => {
 const getMemberfiat = (member_id) => {
     return apiClient.get(ApiControllers.exchange + 'MemberFiat?memberId=' + member_id);
 }
-const getSellamnt = (Value, isSwap,coin) => {
-    return apiClient.get(ApiControllers.exchange + 'CryptoFiatConverter?from='+coin+'&to=USD&value=' + Value + '&isCrypto=' + !isSwap);
+const getSellamnt = (Value, isSwap,coin,isCrypto) => {
+    return apiClient.get(ApiControllers.exchange + 'CryptoFiatConverter?coin='+coin+'&currency=USD&amount=' + Value + '&isCrypto=' + isCrypto);
 }
 const getSellPreviewData = (sellObject) => {
-    return apiClient.get(ApiControllers.exchange + 'Preview?coin=' + sellObject.fromWalletCode + '&currency=USD&amount=' + sellObject.fromValue);
+    return apiClient.get(ApiControllers.exchange + 'Preview?coin=' + sellObject.fromWalletCode + '&currency=USD&amount=' + (sellObject.isSwap?sellObject.fromValue:sellObject.toValue)+'&isCrypto='+(sellObject.isSwap==true?false:true));
 }
 const savesellData = (obj) => {
     return apiClient.post(ApiControllers.exchange + 'SellCrypto', obj);
@@ -25,10 +25,10 @@ const getSelectedCoinDetails = (coin_code, member_id) => {
     return apiClient.get(ApiControllers.exchange + `MemberCoinDetail?memberId=${member_id}&coin=${coin_code}`)
 }
 const fetchCurrencyConvertionValue = ({ from, to, value, isCrypto }) => {
-    return apiClient.get(ApiControllers.exchange + `CryptoFiatConverter?from=${from}&to=${to}&value=${value}&isCrypto=${isCrypto}`);
+    return apiClient.get(ApiControllers.exchange + `CryptoFiatConverter?coin=${from}&currency=${to}&amount=${value}&isCrypto=${isCrypto}`);
 }
-const getPreview = ({ coin, currency = "USD", amount }) => {
-    return apiClient.get(ApiControllers.exchange + `Preview?coin=${coin}&currency=${currency}&amount=${amount}`)
+const getPreview = ({ coin, currency = "USD", amount,isCrypto }) => {
+    return apiClient.get(ApiControllers.exchange + `Preview?coin=${coin}&currency=${currency}&amount=${amount}&isCrypto=${isCrypto}`)
 }
 const buyCrypto = (obj) => {
     return apiClient.post(ApiControllers.exchange + `BuyCrypto`, obj);

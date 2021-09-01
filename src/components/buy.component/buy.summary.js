@@ -5,6 +5,7 @@ import { fetchPreview } from '../../reducers/buyReducer';
 import { buyCrypto } from './api';
 import Summary from '../summary.component';
 import Loader from '../../Shared/loader';
+import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 class BuySummary extends Component {
     constructor(props) {
         super(props);
@@ -45,6 +46,7 @@ class BuySummary extends Component {
             const response = await buyCrypto(obj);
             if (response.ok) {
                 this.props.changeStep('success')
+                this.props.fetchDashboardData(this.props.member.id)
             } else {
                 this.setState({ ...this.state, error: { valid: false, message: response.data || response.originalError.message } })
             }
@@ -57,7 +59,7 @@ class BuySummary extends Component {
         if (this.props.sellData?.previewDetails?.loading || !this.props.sellData?.previewDetails?.data) {
             return <Loader />
         }
-        const { coin, oneCoinValue, amount, amountNativeCurrency } = this.props.sellData?.previewDetails?.data;
+        const { coin, oneCoinValue, amount, amountNativeCurrency,isCrypto,currency } = this.props.sellData?.previewDetails?.data;
         return <Summary
             loading={this.props.sellData?.previewDetails?.loading || !this.props.sellData?.previewDetails?.data}
             coin={coin}
@@ -66,7 +68,7 @@ class BuySummary extends Component {
             amountNativeCurrency={amountNativeCurrency}
             nativeCurrency={this.props.sellData?.selectedWallet?.currencyCode}
             error={this.state.error} iButtonLoad={this.state.isLoading}
-            onRefresh={() => this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, amount)}
+            onRefresh={() => this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, isCrypto?amount:amountNativeCurrency,isCrypto)}
             onCancel={() => this.props.changeStep('step1')}
             onClick={() => this.pay()}
             onTermsChange={(checked)=>{this.setState({...this.state,isTermsAgreed:checked})}}
@@ -83,8 +85,11 @@ const connectDispatchToProps = dispatch => {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
-        refreshDetails: (wallet, coin, amount) => {
-            dispatch(fetchPreview({ coin, wallet, amount }))
+        refreshDetails: (wallet, coin, amount,isCrypto) => {
+            dispatch(fetchPreview({ coin, wallet, amount,isCrypto }))
+        },
+        fetchDashboardData: (member_id) => {
+            dispatch(fetchDashboardcalls(member_id))
         }
     }
 }

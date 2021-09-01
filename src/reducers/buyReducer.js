@@ -43,10 +43,10 @@ const setExchangeValue = (payload) => {
         payload
     }
 }
-const fetchPreview = ({ coin, wallet, amount }) => {
+const fetchPreview = ({ coin, wallet, amount,isCrypto=false }) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "previewDetails", loading: true, data: null }));
-        const response = await getPreview({ coin, currency: wallet.currencyCode, amount });
+        const response = await getPreview({ coin, currency: wallet.currencyCode, amount,isCrypto });
         if (response.ok) {
             dispatch(handleFetch({ key: "previewDetails", loading: false, data: response.data }));
         } else {
