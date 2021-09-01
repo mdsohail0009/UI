@@ -37,7 +37,7 @@ class YourPortfolio extends Component {
         const {cryptoPortFolios} = this.props.dashboard
         return (
             <div className="box portfolio-list">
-                <Translate content="your_portfolio" component={Title} className="fs-24 text-white mb-36 mt-0 fw-600" />
+                <Translate content="your_portfolio" component={Title} className="fs-24 text-white mb-0 fw-600" />
                 <List className="mobile-list"
                     itemLayout="horizontal"
                     dataSource={cryptoPortFolios.data}
@@ -55,7 +55,7 @@ class YourPortfolio extends Component {
                             />
 
                             {/* <div className={`text-right fs-20 ${item.coinBalance>0 ? 'text-green' : 'text-red'}`}><Currency defaultValue={item.coinBalance} prefix={""} type={"text"}/></div> */}
-                            <div className='text-right fs-20 text-white'><Currency defaultValue={item.coinBalance} prefix={""} type={"text"}/></div>
+                            <div className='text-right fs-20 text-white'><Currency defaultValue={item.coinBalance} prefix={""} type={"text"} /></div>
                             {/* {item.coinBalance>0? <span className="icon md gain mr-8" /> : <span className="icon md lose mr-8" />} */}
                             {/* <div className="fs-16 text-white-30 fw-300 ml-24  text-upper ">{item.totalcoin} {item.shortcode}</div> */}
                         </List.Item>
