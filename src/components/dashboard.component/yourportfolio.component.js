@@ -3,7 +3,7 @@ import { List, Button, Typography } from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import connectStateProps from '../../utils/state.connect';
-import { fetchYourPortfolio } from './api';
+import { fetchYourPortfoliodata } from '../../reducers/dashboardReducer';
 import Currency from '../shared/number.formate';
 
 class YourPortfolio extends Component {
@@ -17,8 +17,9 @@ class YourPortfolio extends Component {
     }
     loadCryptos = async () => {
         if (this.props.userProfile) {
-            let res = await fetchYourPortfolio(this.props.userProfile.id)
-            if (res.ok) this.setState({ portfolioData: res.data,loading:false })
+            this.props.dispatch(fetchYourPortfoliodata(this.props.userProfile.id))
+            // let res = await fetchYourPortfolio(this.props.userProfile.id)
+            // if (res.ok) this.setState({ portfolioData: res.data,loading:false })
         }
     }
     showBuyDrawer = () => {
@@ -33,13 +34,14 @@ class YourPortfolio extends Component {
     }
     render() {
         const { Title } = Typography;
+        const {cryptoPortFolios} = this.props.dashboard
         return (
             <div className="box portfolio-list">
                 <Translate content="your_portfolio" component={Title} className="fs-24 text-white mb-36 mt-0 fw-600" />
                 <List className="mobile-list"
                     itemLayout="horizontal"
-                    dataSource={this.state.portfolioData}
-                    loading={this.state.loading}
+                    dataSource={cryptoPortFolios.data}
+                    loading={cryptoPortFolios.loading}
                     renderItem={item => (
                         <List.Item className="" extra={
                             <div className="crypto_btns">

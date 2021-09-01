@@ -7,6 +7,7 @@ import Currency from '../shared/number.formate';
 import LocalCryptoSwap from '../shared/local.crypto.swap';
 import { withDrawCrypto } from '../send.component/api';
 import SuccessMsg from './success';
+import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
     myRef = React.createRef();
@@ -89,6 +90,7 @@ class CryptoWithDrawWallet extends Component {
         this.setState({ ...this.state, loading: false, showModal: false })
         if (response.ok) {
             this.setState({ ...this.state, isWithdrawSuccess: true });
+            this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
         } else {
             this.setState({ ...this.state, error: response.data, confirmationStep: "step1", showModal: false, isWithdrawSuccess: false })
         }
@@ -228,7 +230,8 @@ const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
-        }
+        },
+        dispatch
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(CryptoWithDrawWallet);

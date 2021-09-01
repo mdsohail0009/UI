@@ -9,7 +9,7 @@ import NumberFormat from 'react-number-format';
 import { withdrawRecepientNamecheck, withdrawSave } from '../../api/apiServer';
 import Currency from '../shared/number.formate';
 import success from '../../assets/images/success.png';
-import Checkbox from 'antd/lib/checkbox/Checkbox';
+import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 
 const LinkValue = (props) => {
   return (
@@ -20,7 +20,7 @@ const LinkValue = (props) => {
   )
 }
 
-const FaitWithdrawal = ({ buyInfo, userConfig }) => {
+const FaitWithdrawal = ({ buyInfo, userConfig,dispatch }) => {
   const [form] = Form.useForm();
   const [selectedWallet, setSelectedWallet] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -157,6 +157,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig }) => {
         form.resetFields()
         setLoading(false)
         useDivRef.current.scrollIntoView()
+        dispatch(fetchDashboardcalls(userConfig.id))
       } else {
 
       }
@@ -558,7 +559,9 @@ const connectDispatchToProps = dispatch => {
   return {
     changeStep: (stepcode) => {
       dispatch(setStep(stepcode))
-    }
+    },
+    dispatch
   }
+  
 }
 export default connect(connectStateToProps, connectDispatchToProps)(FaitWithdrawal);

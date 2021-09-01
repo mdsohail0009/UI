@@ -13,6 +13,7 @@ class SelectCrypto extends Component {
         coinDetails: null,
         errorMessage: null
     }
+    useDivRef = React.createRef();
     componentDidMount() {
         this.props.fetchMemberCoins(this.props.userProfile?.id);
     }
@@ -35,7 +36,7 @@ class SelectCrypto extends Component {
             }
             this.props.changeStep('step1') 
         } else { 
-            window.scrollTo(0, 0)
+            this.useDivRef.current.scrollIntoView()
             this.setState({ ...this.state, errorMessage: 'Please select coin to swap' })
         }
     }
@@ -44,7 +45,7 @@ class SelectCrypto extends Component {
         const { addLinks } = this.state;
         const { Paragraph, Text } = Typography;
 
-        return (<>
+        return (<><div ref={this.useDivRef}></div>
             {this.state.errorMessage != null && <Alert
                 //message="this.state.errorMessage"
                 description={this.state.errorMessage}

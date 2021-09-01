@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Typography, Button } from 'antd';
 import Translate from 'react-translate-component';
 import chart from '../../assets/images/chart.png';
-import { fetchPortfolio } from './api';
 import connectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
+import { fetchPortfolioData } from '../../reducers/dashboardReducer';
 
 class Portfolio extends Component {
     state = {
@@ -12,19 +12,20 @@ class Portfolio extends Component {
         info: {}
     }
     async fetchInfo() {
-     const response = await fetchPortfolio(this.props.userProfile?.id);
-     if(response.ok){
-         this.setState({...this.state,loading:false,info:response.data});
-     }else{
-        this.setState({...this.state,loading:false,info:{},error:response.data});
-     }
+        this.props.dispatch(fetchPortfolioData(this.props.userProfile?.id))
+    //  const response = await fetchPortfolio(this.props.userProfile?.id);
+    //  if(response.ok){
+    //      this.setState({...this.state,loading:false,info:response.data});
+    //  }else{
+    //     this.setState({...this.state,loading:false,info:{},error:response.data});
+    //  }
     }
     componentDidMount(){
         this.fetchInfo();
     }
     render() {
         const { Title, Paragraph } = Typography;
-        const { totalCryptoValue,totalFiatValue } = this.state.info;
+        const { totalCryptoValue,totalFiatValue } = this.props.dashboard.portFolio.data;
         const {crypto_stock} =this.props;
 
         return (

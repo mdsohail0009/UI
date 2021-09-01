@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { fetchCurrConvertionValue, saveSwapData } from '../../components/swap.component/api'
 import SuisseBtn from '../shared/butons';
 import Summary from '../summary.component';
+import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 
 const LinkValue = (props) => {
     return (
@@ -106,6 +107,7 @@ class SwapSummary extends Component {
             if (res.ok) {
                 this.props.changeStep('confirm');
                 this.setState({ ...this.state, loader: false, isLoading:false })
+                this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
             } else {
                 this.setState({ ...this.state, loader: false,isLoading:false, errorMessage:res.error })
             }
@@ -185,6 +187,7 @@ const connectDispatchToProps = dispatch => {
         updateSwapdataobj: (obj) => {
             dispatch(updateSwapdata(obj))
         },
+        dispatch
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(SwapSummary);
