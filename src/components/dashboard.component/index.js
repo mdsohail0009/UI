@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Typography} from 'antd';
+import { Row, Col, Typography } from 'antd';
 import Wallets from './wallets.component';
 import Translate from 'react-translate-component';
 import Portfolio from './portfolio.component';
@@ -27,8 +27,10 @@ class Home extends Component {
                             <Wallets />
                         </div>
                         <div className="box markets-panel">
-                            <Translate content="markets_title" component={Title} className="fs-24 fw-600 mb-0 text-white-30" />
-                            <Translate content="markets_subtitle" component={Paragraph} className="text-white-30 fs-16 fw-200 mb-0" />
+                            <div style={{ padding: '30px 24px 0' }}>
+                                <Translate content="markets_title" component={Title} className="fs-24 fw-600 mb-0 text-white-30" />
+                                <Translate content="markets_subtitle" component={Paragraph} className="text-white-30 fs-16 fw-200 mb-0" />
+                            </div>
                             {/* <Translate content="search_currency" component={Search} size="middle" bordered={false} enterButton className="mt-24" /> */}
                             <MarketCap />
                         </div>
@@ -40,7 +42,7 @@ class Home extends Component {
                             crypto_usd="0.00 BTC"
                             crypto_stock="0.0%" />
 
-                       <Notices/>
+                        <Notices />
                         <YourPortfolio />
                         {/* <Coins /> */}
                     </Col>
