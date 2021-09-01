@@ -6,6 +6,7 @@ import {  setCoinWallet,updateCoinDetails } from '../../reducers/buy.reducer';  
 import Loader from '../../Shared/loader'
 import { getMemberCoins,updateCoinDetail } from '../../reducers/sellReducer';
 import { setCoin, setExchangeValue } from '../../reducers/buyReducer';
+import Currency from '../shared/number.formate';
 
 class SellToggle extends Component {
     componentDidMount() {
@@ -30,8 +31,10 @@ class SellToggle extends Component {
                         <div className="crypto-details">
                             <Text className="crypto-percent text-white fw-700">{coin.percentage}<sup className="percent text-white fw-700">%</sup></Text>
                             <div className="fs-16 text-white-30 fw-200 crypto-amount">
-                                <div>{coin.coinBalance?.toFixed(8)} {coin.coin}</div>
-                                <div>$ {coin.coinValueinNativeCurrency?.toFixed(2)}</div>
+                                {/* <div>{coin.coinBalance?.toFixed(8)} {coin.coin}</div>
+                                <div>$ {coin.coinValueinNativeCurrency?.toFixed(2)}</div> */}
+                                <Currency prefix={""} defaultValue={coin.coinBalance} suffixText={coin.coin} />
+                                <Currency prefix={"$ "} defaultValue={coin.coinValueinNativeCurrency} suffixText="" />
                             </div>
                         </div>
                     </Card>)}

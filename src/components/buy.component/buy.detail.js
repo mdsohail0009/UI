@@ -10,6 +10,7 @@ import Loader from '../../Shared/loader';
 import SuisseBtn from '../shared/butons';
 import NumberFormat from 'react-number-format';
 import LocalCryptoSwapper from '../shared/local.crypto.swap';
+import Currency from '../shared/number.formate';
 class SelectCrypto extends Component {
     myRef = React.createRef();
     constructor(props) {
@@ -77,7 +78,8 @@ class SelectCrypto extends Component {
                         <div className="crypto-details">
                             <Text className="crypto-percent text-purewhite fw-700">{percentage}<sup className="percent text-purewhite fw-700">%</sup></Text>
                             <div className="fs-16 text-purewhite fw-200 crypto-amount">
-                                <div>{coinBalance.toFixed(8)} {coin}</div>
+                                {/* <div>{coinBalance.toFixed(8)} {coin}</div> */}
+                                <Currency prefix={""} defaultValue={coinBalance} suffixText={coin} />
                                 <NumberFormat value={coinValueinNativeCurrency} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} />
                             </div>
                         </div>

@@ -8,6 +8,7 @@ import WalletList from '../shared/walletList';
 import LocalCryptoSwap from '../shared/local.crypto.swap';
 import SuisseBtn from '../shared/butons';
 import {updatesellsaveObject} from '../../reducers/sellReducer'
+import Currency from '../shared/number.formate';
 class SelectSellCrypto extends Component {
     myRef = React.createRef();
     constructor(props) {
@@ -131,8 +132,10 @@ class SelectSellCrypto extends Component {
                     <div className="crypto-details">
                         <Text className="crypto-percent text-white fw-700">{coinDetailData.percentage}<sup className="percent text-white fw-700">%</sup></Text>
                         <div className="fs-16 text-white-30 fw-200 crypto-amount">
-                            <div>{coinDetailData.coinBalance?.toFixed(8)} {coinDetailData.coin}</div>
-                            <div>$ {coinDetailData.coinValueinNativeCurrency?.toFixed(2)}</div>
+                            {/* <div>{coinDetailData.coinBalance?.toFixed(8)} {coinDetailData.coin}</div>
+                            <div>$ {coinDetailData.coinValueinNativeCurrency?.toFixed(2)}</div> */}
+                                <Currency prefix={""} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} />
+                                <Currency prefix={"$ "} defaultValue={coinDetailData.coinValueinNativeCurrency} suffixText="" />
                         </div>
                     </div>
                 </Card>}
