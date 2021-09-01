@@ -1,9 +1,9 @@
 export default {
   header_title: 'Papan Pemuka | Peribadi',
-  Portfolio_title: 'Portfolio',
+  Portfolio_title: 'Portfolio Crypto',
   your_portfolio: 'Portfolio anda',
   suissebase_title: 'Pangkalan Suissebase',
-  suissebase_subtitle: 'U dengan Dompet Tersedia.',
+  suissebase_subtitle: 'Dompet Fiat',
   markets_title: 'Pasaran',
   markets_subtitle: 'Mana-mana mata wang dengan Berdagang Serie Anda',
   deposit: 'simpanan',

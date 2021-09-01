@@ -31,7 +31,7 @@ const MarketCap = () => {
                     {!isDetailView && <><FullscreenOutlined onClick={() => marketsFullScreen.enter()} className="fs-18 text-white ml-8 fw-500" />
                         <ReloadOutlined onClick={fetchMarketCapsInfo} className="fs-18 text-white ml-8 fw-500" /></>}
                 </div>
-                <Table sortDirections={["ascend", "descend"]} style={{ background: "grey" }} scroll={{ y: isDetailView ? 750 : 400 }} pagination={false} columns={isDetailView ? detailInfoColumns : infoColumns} dataSource={marketCaps} loading={isLoading} className="custom-table" />
+                <Table sortDirections={["ascend", "descend"]} style={{ background: "grey" }} scroll={{ y: isDetailView ? 1080 : '' }} pagination={false} columns={isDetailView ? detailInfoColumns : infoColumns} dataSource={marketCaps} loading={isLoading} className="custom-table" />
             </div>
         </FullScreen>
     </div>

@@ -1,9 +1,9 @@
 export default {
   header_title: '仪表板 |个人的',
-  Portfolio_title: '文件夾',
+  Portfolio_title: '加密投资组合',
   your_portfolio: '您的投資組合',
   suissebase_title: '瑞士基地',
-  suissebase_subtitle: '您可以使用的钱包。',
+  suissebase_subtitle: '菲亚特钱包',
   markets_title: '市场',
   markets_subtitle: '将您的加密货币交易成任何货币',
   deposit: '订金',

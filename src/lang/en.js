@@ -1,9 +1,9 @@
 export default {
   header_title: 'Dashboard |%(lable)s',
-  Portfolio_title: 'Portfolio',
+  Portfolio_title: 'Crypto Portfolio',
   your_portfolio: 'Your Portfolio',
   suissebase_title: 'Suissebase',
-  suissebase_subtitle: 'Wallets available to you.',
+  suissebase_subtitle: 'Fiat Wallets',
   markets_title: 'Markets',
   markets_subtitle: 'Trade your crypto into any currency',
   deposit: 'Deposit',

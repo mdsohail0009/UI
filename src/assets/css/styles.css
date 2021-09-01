@@ -295,8 +295,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .ant-checkbox-checked .ant-checkbox-inner{border: 1px solid var(--bgDarkYellow);border-color: var(--bgDarkYellow);background-color: var(--bgDarkYellow);}
 .ant-checkbox-wrapper:hover .ant-checkbox-inner, .ant-checkbox:hover .ant-checkbox-inner, .ant-checkbox-input:focus + .ant-checkbox-inner, .ant-checkbox-checked::after{border: 1px solid var(--textSecondary);border-color: var(--textSecondary);}
 .agree-check input[type=checkbox]{display: none;}
-.agree-check input[type=checkbox]+span{display: inline-block;width: 34px;height: 34px;vertical-align: text-top;cursor: pointer;background: var(--lightThemeIcons);background-position: -33px -140px;border: 1px solid var(--borderLight)}
-.agree-check input[type=checkbox]:checked+span{background-position: -33px -109px;border-color: transparent !important;}
+.agree-check input[type=checkbox]+span{display: inline-block;width: 34px;height: 34px;vertical-align: text-top;cursor: pointer;border: 1px solid var(--borderLight)}
+.agree-check input[type=checkbox]:checked+span{background: var(--lightThemeIcons);background-position: -33px -109px;border-color: transparent !important;}
 .agree-check label{height: 34px;}
 .ant-select-arrow{color: var(--textWhite);right:16px; top: 24px;}
 .custom-switch{border-bottom: none;}
@@ -426,7 +426,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .ant-table-container table > thead > tr:first-child th:last-child{border-top-right-radius:0}
 .custom-table .ant-table-cell-scrollbar{box-shadow: none !important;}
 .custom-table tr>.ant-table-row-level-0:first-child td{border-bottom: 0 !important;}
-.custom-table .ant-table-body{max-height: 567px !important; height: 100% !important;}
+.custom-table .ant-table-body{max-height: 970px !important; height: 100% !important;}
 .custom-table .ant-table-column-title{z-index: 0;}
 .widthdraw-pop .ant-modal-close-x{
     position: absolute;
@@ -535,7 +535,6 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .mega-menu{max-width: 1140px;  padding: 29px 0px 24px 60px;}
     .side-drawer .ant-drawer-content-wrapper{width: 420px !important;}
     .side-drawer .ant-drawer-body{padding: 0 20px 20px 20px;}
-    .portfolio-list .mobile-list{max-height: 310px; overflow: auto;}
 }
 @media (min-width: 1400px){
     .main-container{max-width: 1320px; }
@@ -566,7 +565,6 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .pay-list{padding: 16px 0;}
     .crypto-container {max-height: calc(100vh - 325px);}
     .custom-crypto-address .fs-12{font-size: 14px !important;}
-    .portfolio-list .mobile-list{max-height: 285px; overflow: auto;}
 }
 .currencyContains {display: inline;color: var(--textWhite30);}
 .spinLoader {margin: 20px 0;margin-bottom: 20px;padding: 30px 50px;text-align: center;background: rgba(0, 0, 0, 0.05);border-radius: 4px;}
