@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Typography, Card, Alert, message } from 'antd';
 import WalletList from '../shared/walletList';
-import { setStep } from '../../reducers/buysellReducer';
+import { changeStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import { convertCurrency, validatePreview } from './buySellService';
@@ -57,7 +57,7 @@ class SelectCrypto extends Component {
             return;
         }
         this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue),!isSwaped);
-        this.props.changeStep('step3');
+        this.props.setStep('step3');
     }
     render() {
         if (this.props.buyInfo?.selectedCoin?.loading || !this.props.buyInfo?.selectedCoin?.data) {
@@ -105,8 +105,8 @@ const connectStateToProps = ({ buySell, buyInfo, userConfig }) => {
 }
 const connectDispatchToProps = dispatch => {
     return {
-        changeStep: (stepcode) => {
-            dispatch(setStep(stepcode))
+        setStep: (stepcode) => {
+            dispatch(changeStep(stepcode))
         },
         preview: (wallet, coin, amount,isCrypto) => {
             dispatch(fetchPreview({ coin, wallet, amount,isCrypto }))

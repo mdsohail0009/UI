@@ -96,6 +96,7 @@ class CryptoWithDrawWallet extends Component {
         }
     }
     renderModalContent = () => {
+        if(!this.props?.sendReceive?.cryptoWithdraw?.selectedWallet){return null}
         const { walletAddress, CryptoAmnt, confirmationStep } = this.state;
         const { coin, netWork } = this.props?.sendReceive?.cryptoWithdraw?.selectedWallet
         const _types = {

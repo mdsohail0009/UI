@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { setStep } from '../../reducers/buysellReducer';
+import { changeStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import { fetchPreview } from '../../reducers/buyReducer';
 import { buyCrypto } from './api';
@@ -45,7 +45,7 @@ class BuySummary extends Component {
             this.setState({ isLoading: true });
             const response = await buyCrypto(obj);
             if (response.ok) {
-                this.props.changeStep('success')
+                this.props.setStep('success')
                 this.props.fetchDashboardData(this.props.member.id)
             } else {
                 this.setState({ ...this.state, error: { valid: false, message: response.data || response.originalError.message } })
@@ -69,7 +69,7 @@ class BuySummary extends Component {
             nativeCurrency={this.props.sellData?.selectedWallet?.currencyCode}
             error={this.state.error} iButtonLoad={this.state.isLoading}
             onRefresh={() => this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, isCrypto?amountNativeCurrency:amount,isCrypto)}
-            onCancel={() => this.props.changeStep('step1')}
+            onCancel={() => this.props.setStep('step1')}
             onClick={() => this.pay()}
             onTermsChange={(checked)=>{this.setState({...this.state,isTermsAgreed:checked})}}
             isButtonLoad={this.state.isLoading}
@@ -82,8 +82,8 @@ const connectStateToProps = ({ buySell, oidc, buyInfo, userConfig }) => {
 }
 const connectDispatchToProps = dispatch => {
     return {
-        changeStep: (stepcode) => {
-            dispatch(setStep(stepcode))
+        setStep: (stepcode) => {
+            dispatch(changeStep(stepcode))
         },
         refreshDetails: (wallet, coin, amount,isCrypto) => {
             dispatch(fetchPreview({ coin, wallet, amount,isCrypto }))

@@ -12,7 +12,4 @@ export const processSteps = {
     step11:'sellsummary',
     step12:'wiretransfor',
     success:'successmsg',
-    
-
-
 }

@@ -22,6 +22,9 @@ class SendReceive extends Component {
             this.props.onClose();
         }
     }
+    componentWillUnmount(){
+        this.props.dispatch(setStep("step1"))
+    }
     renderContent = () => {
         const stepcodes = {
             depositecrypto: <DepositeCrypto activeTab={this.props.valNum} />,
