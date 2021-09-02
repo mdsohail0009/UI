@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Typography, Card, Alert, message } from 'antd';
 import WalletList from '../shared/walletList';
-import { changeStep } from '../../reducers/buysellReducer';
+import { changeStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import { convertCurrency, validatePreview } from './buySellService';
-import { fetchPreview, setWallet,fetchMemberFiat } from '../../reducers/buyReducer';
+import { fetchPreview, setWallet, fetchMemberFiat } from '../../reducers/buyReducer';
 import Loader from '../../Shared/loader';
 import SuisseBtn from '../shared/butons';
 import NumberFormat from 'react-number-format';
@@ -31,7 +31,8 @@ class SelectCrypto extends Component {
         }
     }
     componentDidMount() {
-        this.props.getCoinsList(this.props.userProfileInfo?.id)
+        this.props.getCoinsList(this.props.userProfileInfo?.id);
+        this.props.setTabKey();
     }
     fetchConvertionValue = async () => {
         const { coin } = this.props.buyInfo?.selectedCoin?.data;
@@ -56,7 +57,7 @@ class SelectCrypto extends Component {
             this.myRef.current.scrollIntoView();
             return;
         }
-        this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue),!isSwaped);
+        this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue), !isSwaped);
         this.props.setStep('step3');
     }
     render() {
@@ -67,7 +68,7 @@ class SelectCrypto extends Component {
         const { localValue, cryptoValue } = this.state.swapValues;
         const { coin, coinValueinNativeCurrency, coinBalance, percentage } = this.props.buyInfo?.selectedCoin?.data;
         return (
-            <div id="divScroll"  ref={this.myRef}>
+            <div id="divScroll" ref={this.myRef}>
                 {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable />}
                 <div className="selectcrypto-container">
                     <Card className="crypto-card select mb-36" bordered={false}>
@@ -86,7 +87,7 @@ class SelectCrypto extends Component {
                     </Card>
                     <LocalCryptoSwapper selectedCoin={coin} localAmt={localValue} cryptoAmt={cryptoValue} localCurrency={"USD"} cryptoCurrency={coin} onChange={(obj) => this.onValueChange(obj)} />
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua pt-16" />
-                    <WalletList onWalletSelect={(e)=>this.handleWalletSelection(e)} />
+                    <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     <div className="fs-12 text-white-30 text-center mt-24">Your amount might be changed with in <span className="text-yellow" >10</span> seconds.</div>
                     {/* <div className="text-center">
                         <Translate content="refresh_newprice" component={Link} onClick={() => this.fetchConvertionValue()} className="mb-36 fs-14 text-yellow fw-200 mb-16 text-underline" />
@@ -101,22 +102,23 @@ class SelectCrypto extends Component {
     }
 }
 const connectStateToProps = ({ buySell, buyInfo, userConfig }) => {
-    return { buySell, buyInfo, userProfileInfo: userConfig?.userProfileInfo  }
+    return { buySell, buyInfo, userProfileInfo: userConfig?.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
         setStep: (stepcode) => {
             dispatch(changeStep(stepcode))
         },
-        preview: (wallet, coin, amount,isCrypto) => {
-            dispatch(fetchPreview({ coin, wallet, amount,isCrypto }))
+        preview: (wallet, coin, amount, isCrypto) => {
+            dispatch(fetchPreview({ coin, wallet, amount, isCrypto }))
         },
         setWallet: (wallet) => {
             dispatch(setWallet(wallet))
         },
         getCoinsList: (id) => {
             dispatch(fetchMemberFiat(id));
-        }
+        },
+        setTabKey: () => dispatch(setTab(1))
 
     }
 }

@@ -1,9 +1,16 @@
 const SET_STEP = "setStep";
 const CLEAR_STEP = "clearStep";
 const CHANGE_STEP = "changeStep"
+const SET_TAB = "setTab";
 const setStep = (payload) => {
     return {
         type: SET_STEP,
+        payload
+    }
+}
+const setTab = (payload) => {
+    return {
+        type: SET_TAB,
         payload
     }
 }
@@ -48,7 +55,8 @@ let initialState = {
         selectedcrypto: "sell_compare_val",
         sellsummary: "confirm_sell",
         wiretransfor: "select_a_method"
-    }
+    },
+    tabKey: 1
 }
 const buySellReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -61,10 +69,13 @@ const buySellReducer = (state = initialState, action) => {
         case CLEAR_STEP:
             state = { ...state, stepcode: action.payload };
             return state;
+        case SET_TAB:
+            state = { ...state, tabKey: action.payload };
+            return state;
         default:
             return state;
     }
 
 }
 export default buySellReducer;
-export { setStep, clearStep,changeStep }
+export { setStep, clearStep, changeStep,setTab }

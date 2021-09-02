@@ -6,7 +6,7 @@ import connectStateProps from '../../utils/state.connect';
 import BuySummary from './buy.summary';
 import BillType from '../pay.component/payOption';
 import SelectCrypto from './buy.detail';
-import { setStep } from '../../reducers/buysellReducer';
+import { setStep, setTab } from '../../reducers/buysellReducer';
 import { processSteps as config } from './config';
 import DepositFiat from '../deposit.component/depositFiat'
 import WireTransfer from '../wire.transfer.component/wireTransfer';
@@ -25,12 +25,12 @@ class BuySell extends Component {
         }
     }
     closeBuyDrawer = () => {
+        this.props.dispatch(setTab(1));
         this.props.dispatch(setStep("step1"))
         if (this.props.onClose) {
             this.props.onClose();
         }
     }
-
     renderContent = () => {
         const stepcodes = {
             buycrypto: <CryptoComponent />,
@@ -70,7 +70,7 @@ class BuySell extends Component {
     }
     renderIcon = () => {
         const stepcodes = {
-            buycrypto: <span  onClick={this.closeBuyDrawer} className="icon md close-white c-pointer"/>,
+            buycrypto: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             selectcrypto: <span />,
             billtype: <span onClick={() => this.props.dispatch(setStep("step3"))} className="icon md close-white c-pointer" />,
             addcard: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
@@ -80,23 +80,23 @@ class BuySell extends Component {
             billingaddress: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             addressscanner: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             depositfiat: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
-            selectedcrypto: <span  onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
+            selectedcrypto: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             sellsummary: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             successmsg: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             wiretransfor: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }
-     numberWithCommas=(x)=> {
-        return x? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","):0;
+    numberWithCommas = (x) => {
+        return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0;
     }
     render() {
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
                 <div className="text-center fs-14">
-                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode||this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600 text-upper" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
-                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode||this.props.sellData?.coinWallet?.coin, value: this.numberWithCommas(this.props.sellData?.exchangeValues[this.props.sellData?.coinWallet?.walletCode||this.props.sellData?.coinWallet?.coin]) }} className="text-white-50 mb-0 fw-300" content={this.props.buySell.stepSubTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
+                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin }} className="mb-0 text-white-30 fw-600 text-upper" content={this.props.buySell.stepTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
+                    <Translate with={{ coin: this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin, value: this.numberWithCommas(this.props.sellData?.exchangeValues[this.props.sellData?.coinWallet?.walletCode || this.props.sellData?.coinWallet?.coin]) }} className="text-white-50 mb-0 fw-300" content={this.props.buySell.stepSubTitles[config[this.props.buySell.stepcode]]} component={Paragraph} />
                 </div>
                 {this.renderIcon()}</div>]}
             placement="right"
@@ -104,6 +104,7 @@ class BuySell extends Component {
             visible={this.props.showDrawer}
             closeIcon={null}
             className="side-drawer"
+
         >
             {this.renderContent()}
         </Drawer>);

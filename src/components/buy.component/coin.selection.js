@@ -4,7 +4,7 @@ import config from '../../config/config';
 import Translate from 'react-translate-component';
 import CryptoList from '../shared/cryptolist';
 import SellToggle from '../sell.component/sellCrypto'
-import { setStep } from '../../reducers/buysellReducer';
+import { setStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import { fetchCoins, fetchSelectedCoinDetails, setCoin, setExchangeValue } from '../../reducers/buyReducer';
 import { convertCurrency } from './buySellService';
@@ -13,15 +13,14 @@ class CryptoComponent extends Component {
         buyDrawer: false,
         crypto: config.tlvCoinsList,
         buyToggle: 'Buy',
-        isBuy: false
+        isBuy: false,
+        tabKey: 1
     }
     componentDidMount() {
         this.props.dispatch(fetchCoins("All"));
     }
     handleBuySellToggle = e => {
-        this.setState({
-            isBuy: e.target.value === 2
-        });
+       this.props.dispatch(setTab(e.target.value))
     }
     handleCoinSelection = (selectedCoin) => {
         this.props.getCoinDetails(selectedCoin.walletCode, this.props.member?.id);
@@ -34,18 +33,17 @@ class CryptoComponent extends Component {
     render() {
         const { TabPane } = Tabs;
         const { Title, Paragraph } = Typography;
-        const { isBuy } = this.state;
         const { coins: coinListdata } = this.props?.buyInfo;
         return (
             <>
                 <Radio.Group
-                    defaultValue={1}
+                    value={this.props.buySell.tabKey}
                     onChange={this.handleBuySellToggle}
                     className="buysell-toggle">
                     <Translate content="buy" component={Radio.Button} value={1} />
                     <Translate content="sell" component={Radio.Button} value={2} />
                 </Radio.Group>
-                {isBuy ?
+                {this.props.buySell.tabKey==2 ?
                     <>
                         {/* <Paragraph className="mb-0 text-white-30 fw-200 fs-36">Sell your Crypto for Cash</Paragraph> */}
                         <Translate content="sell_your_crypto_for_cash" component={Title} className="drawer-title" />

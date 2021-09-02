@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Card, Radio, Alert } from 'antd';
-import { setStep } from '../../reducers/buysellReducer';
+import { setStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import { getSellamnt } from '../buy.component/api'
@@ -20,7 +20,8 @@ class SelectSellCrypto extends Component {
         , errorMessage: null
     }
     componentDidMount() {
-        this.fetchdefaultMinAmntValues()
+        this.fetchdefaultMinAmntValues();
+        this.props.dispatch(setTab(2));
     }
     fetchdefaultMinAmntValues = async () => {
         this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue })
