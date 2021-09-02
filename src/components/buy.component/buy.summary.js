@@ -68,7 +68,7 @@ class BuySummary extends Component {
             amountNativeCurrency={amountNativeCurrency}
             nativeCurrency={this.props.sellData?.selectedWallet?.currencyCode}
             error={this.state.error} iButtonLoad={this.state.isLoading}
-            onRefresh={() => this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, isCrypto?amount:amountNativeCurrency,isCrypto)}
+            onRefresh={() => this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, isCrypto?amountNativeCurrency:amount,isCrypto)}
             onCancel={() => this.props.changeStep('step1')}
             onClick={() => this.pay()}
             onTermsChange={(checked)=>{this.setState({...this.state,isTermsAgreed:checked})}}
