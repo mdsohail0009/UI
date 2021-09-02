@@ -33,6 +33,13 @@ class FaitDeposit extends Component {
   componentDidMount() {
     this.props.fiatRef(this)
     this.props.fetchCurrencyWithBankDetails()
+    if(this.props?.tab?.tabVal){
+    this.setState({...this.state,tabValue:this.props?.tab?.tabVal,faitdeposit:this.props?.tab?.tabVal==2,depObj: { currency: (this.props?.tab?.tabVal==2)?null:(this.props?.tab.walletCode), BankName: null }})
+    }
+  }
+  setTabVal = (tab) =>{
+    console.log(tab)
+    this.setState({...this.state,tabValue:this.props.tab,faitdeposit:this.props.tab==2})
   }
   clearfiatValues = () => {
     console.log('trigger')
@@ -53,7 +60,7 @@ class FaitDeposit extends Component {
       tabValue:e.target.value,
       BankDetails:[],
       BankInfo: null,
-      depObj: { currency: null, BankName: null }
+      depObj: { currency: null, BankName: null },
     });
   }
   handlFiatDep = (e, currencyLu) => {
@@ -101,7 +108,7 @@ class FaitDeposit extends Component {
           <Translate content="withdraw" component={Radio.Button} value={2} />
         </Radio.Group>
         {faitdeposit ?
-          <SellToggle />
+          <SellToggle selectedWallet={this.props?.tab?.walletCode}/>
           : <><div className="suisfiat-container auto-scroll"><Translate
             className="mb-0 text-white-30 fs-14 fw-200"
             content="desposite_text"
