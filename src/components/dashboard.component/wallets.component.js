@@ -5,6 +5,7 @@ import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import { fetchMemberWalletsData } from '../../reducers/dashboardReducer';
 import connectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
+import MassPayment from '../buyfiat.component'
 
 const { Title, Paragraph } = Typography;
 
@@ -12,7 +13,9 @@ class Wallets extends Component {
     state = {
         sendReceiveDrawer: false,
         valNum: 1,
-        wallets: [], loading: true
+        wallets: [], loading: true,
+        buyFiatDrawer:false,
+        selctedVal:''
     }
     componentDidMount() {
 this.fetchWallets();
@@ -26,18 +29,20 @@ this.fetchWallets();
         //     this.setState({ ...this.state, wallets: [], loading: false, error: response.data });
         // }
     }
-    showSendReceiveDrawer = (e) => {
+    showSendReceiveDrawer = (e,value) => {
         this.setState({
             valNum: e
         }, () => {
-            this.setState({
-                sendReceiveDrawer: true
+            this.setState({...this.state,
+                buyFiatDrawer: true,
+                selctedVal:value
             })
+            
         })
     }
     closeDrawer = () => {
         this.setState({
-            sendReceiveDrawer: false
+            buyFiatDrawer: false
         })
     }
     render() {
@@ -60,13 +65,13 @@ this.fetchWallets();
                                 description={<Currency className="fs-16 text-white-30 fw-200 m-0" defaultValue={item.amount} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }}/>}
                             />
                             <div className="crypto-btns">
-                                <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1)} component={Button} type="primary" className="custom-btn prime" />
-                                <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2)} component={Button} className="custom-btn sec ml-16" />
+                                <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1,item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
+                                <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2,item.walletId)} component={Button} className="custom-btn sec ml-16" />
                             </div>
                         </List.Item>}
                 />
                 <SuissebaseFiat showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
-
+                {this.state.buyFiatDrawer && <MassPayment showDrawer={this.state.buyFiatDrawer} tabData={{tabVal:this.state.valNum,walletCode:this.state.selctedVal}} onClose={() => this.closeDrawer()} />}
             </>
         );
     }

@@ -1,4 +1,4 @@
-import React, { Component, useState,useRef } from 'react';
+import React, { Component, useState,useRef, useEffect } from 'react';
 import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
@@ -20,7 +20,7 @@ const LinkValue = (props) => {
   )
 }
 
-const FaitWithdrawal = ({ buyInfo, userConfig,dispatch }) => {
+const FaitWithdrawal = ({ selectedWalletCode,buyInfo, userConfig,dispatch }) => {
   const [form] = Form.useForm();
   const [selectedWallet, setSelectedWallet] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -29,6 +29,12 @@ const FaitWithdrawal = ({ buyInfo, userConfig,dispatch }) => {
   const [loading, setLoading] = useState(false);
   const [saveObj, setSaveObj] = useState(null);
   const useDivRef =React.useRef(null);
+  useEffect(() => {
+    if(buyInfo.memberFiat?.data && selectedWalletCode){
+      console.log(selectedWalletCode,buyInfo.memberFiat?.data)
+      handleWalletSelection(selectedWalletCode)
+    }
+  }, [buyInfo.memberFiat?.data])
   const handleWalletSelection = (walletId) => {
     form.setFieldsValue({ memberWalletId: walletId })
     if (buyInfo.memberFiat?.data) {
