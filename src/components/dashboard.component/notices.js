@@ -31,7 +31,7 @@ const Notices = ({ userProfile }) => {
             <div  className="fs-16 text-black mb-24"  dangerouslySetInnerHTML={{__html:notice.htmlContent}}>
                 
             </div>
-            <Translate content="db_slider_btn" component={Button} type="primary" className="custom-btn fs-14 prime mb-24" />
+            {/* <Translate content="db_slider_btn" component={Button} type="primary" className="custom-btn fs-14 prime mb-24" /> */}
         </div>)}
 
     </Carousel>

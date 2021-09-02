@@ -6,7 +6,7 @@ import CryptoList from '../shared/cryptolist';
 import SellToggle from '../sell.component/sellCrypto'
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import { fetchCoins, fetchSelectedCoinDetails, setCoin,setExchangeValue } from '../../reducers/buyReducer';
+import { fetchCoins, fetchSelectedCoinDetails, setCoin, setExchangeValue } from '../../reducers/buyReducer';
 import { convertCurrency } from './buySellService';
 class CryptoComponent extends Component {
     state = {
@@ -24,7 +24,6 @@ class CryptoComponent extends Component {
         });
     }
     handleCoinSelection = (selectedCoin) => {
-
         this.props.getCoinDetails(selectedCoin.walletCode, this.props.member?.id);
         this.props.setSelectedCoin(selectedCoin);
         convertCurrency({ from: selectedCoin.walletCode, to: "USD", value: 1, isCrypto: false }).then(val => {
@@ -89,10 +88,10 @@ const connectDispatchToProps = dispatch => {
             dispatch(fetchSelectedCoinDetails(coin, memid));
         },
         setSelectedCoin: (coinWallet) => {
-         dispatch(setCoin(coinWallet));
+            dispatch(setCoin(coinWallet));
         },
         setExchangeValue: ({ key, value }) => {
-             dispatch(setExchangeValue({ key, value }))
+            dispatch(setExchangeValue({ key, value }))
         },
         dispatch
     }
