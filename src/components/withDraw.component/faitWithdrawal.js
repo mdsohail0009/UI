@@ -1,4 +1,4 @@
-import React, { Component, useState,useRef } from 'react';
+import React, { Component, useState, useRef } from 'react';
 import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert, Tooltip } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
@@ -20,7 +20,7 @@ const LinkValue = (props) => {
   )
 }
 
-const FaitWithdrawal = ({ buyInfo, userConfig,dispatch }) => {
+const FaitWithdrawal = ({ buyInfo, userConfig, dispatch }) => {
   const [form] = Form.useForm();
   const [selectedWallet, setSelectedWallet] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -28,7 +28,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig,dispatch }) => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [saveObj, setSaveObj] = useState(null);
-  const useDivRef =React.useRef(null);
+  const useDivRef = React.useRef(null);
   const handleWalletSelection = (walletId) => {
     form.setFieldsValue({ memberWalletId: walletId })
     if (buyInfo.memberFiat?.data) {
@@ -80,23 +80,26 @@ const FaitWithdrawal = ({ buyInfo, userConfig,dispatch }) => {
   const renderModalContent = () => {
     const _types = {
       step1: <>{saveObj && <div>
-        <p> <Currency defaultValue={saveObj?.totalValue} prefixText={<b>Amount: </b>} prefix={""} suffixText={saveObj.walletCode} /></p>
-        <p><b>Bank Account Number: </b> {saveObj.accountNumber}</p>
-        <p><b>Bank BIC/SWIFT/Routing Number: </b> {saveObj.swiftCode}</p>
-        <p><b>Bank Name: </b> {saveObj.bankName}</p>
-        <p><b>Recipient Full Name : </b> {saveObj.beneficiaryAccountName}</p>
-        <ul>
+        <Text className="fs-14 text-white-50 fw-200">Amount</Text>
+        <Currency className="fs-20 text-white-30 mb-36" prefix={""} defaultValue={saveObj?.totalValue} suffixText={saveObj.walletCode} />
+        <Text className="fs-14 text-white-50 fw-200">Bank Account Number</Text>
+        <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.accountNumber}</Text>
+        <Text className="fs-14 text-white-50 fw-200">Bank BIC/SWIFT/Routing Number</Text>
+        <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.swiftCode}</Text>
+        <Text className="fs-14 text-white-50 fw-200">Bank Name</Text>
+        <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.bankName}</Text>
+        <Text className="fs-14 text-white-50 fw-200">Recipient Full Name</Text>
+        <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.beneficiaryAccountName}</Text>
+        <ul className="pl-0 ml-16 text-white-50 mb-0">
           <li>Ensure that the account details is correct</li>
           <li>Transaction can't be cancelled</li>
         </ul>
       </div>}</>,
       step2: <>
-        <div className="success-pop text-center">
+        <div className="success-pop text-center p-24">
           <img src={success} className="confirm-icon" />
-
-          <Translate className="fs-30 mb-4" content="withdrawal_success" component={Title} />
-          <Link onClick={() => setShowModal(false)} className="f-16 mt-16 text-underline">Back to Withdraw<span className="icon md diag-arrow ml-4" /></Link>
-
+          <Translate className="fs-30 mb-4 text-white-30" content="withdrawal_success" component={Title} />
+          <Link onClick={() => setShowModal(false)} className="f-16 mt-16 text-underline text-green">Back to Withdraw<span className="icon md diag-arrow ml-4" /></Link>
         </div>
       </>,
       step3: <>{saveObj && <div>
@@ -171,7 +174,7 @@ const FaitWithdrawal = ({ buyInfo, userConfig,dispatch }) => {
 
   return (
     <>
-      <div  className="suisfiat-height auto-scroll">
+      <div className="suisfiat-height auto-scroll">
         <div ref={useDivRef}></div>
         {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
         <Form form={form} onFinish={savewithdrawal}>
@@ -538,15 +541,14 @@ const FaitWithdrawal = ({ buyInfo, userConfig,dispatch }) => {
           </Form.Item>
         </Form>
       </div>
-      <Modal className="widthdraw-pop" maskClosable={false} onCancel={handleCancel} title="Withdraw" closeIcon={<Tooltip title="Close"><span onClick={handleCancel} className="icon md close" /></Tooltip>} footer={[
-        <>{confirmationStep != 'step2' && <><Button key="back" onClick={handleCancel} disabled={loading}>
-          Return
-        </Button>
-          <Button key="submit" type="primary" onClick={handleOk} loading={loading}>
-            Confirm
-          </Button></>}</>
-      ]} visible={showModal}>
+      <Modal className="widthdraw-pop" maskClosable={false} onCancel={handleCancel} title="Withdraw" closeIcon={<Tooltip title="Close"><span onClick={handleCancel} className="icon md close-white" /></Tooltip>} footer={false} visible={showModal}>
         {renderModalContent()}
+        {confirmationStep != 'step2' && <div className="mt-36 text-right withdraw-footer"><Button key="back" type="text" className="text-white-30 pop-cancel fw-400 text-captz text-center" onClick={handleCancel} disabled={loading}>
+          Cancel
+        </Button>
+          <Button key="submit" className="pop-btn px-36 ml-36" onClick={handleOk} loading={loading}>
+            Confirm
+          </Button></div>}
       </Modal>
     </>
   );
@@ -562,6 +564,6 @@ const connectDispatchToProps = dispatch => {
     },
     dispatch
   }
-  
+
 }
 export default connect(connectStateToProps, connectDispatchToProps)(FaitWithdrawal);
