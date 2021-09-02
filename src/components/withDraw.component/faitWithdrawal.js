@@ -216,9 +216,8 @@ const FaitWithdrawal = ({ selectedWalletCode,buyInfo, userConfig,dispatch }) => 
                 component={Text}
 
               /><span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <NumberFormat className="cust-input" customInput={Input} thousandSeparator={true} prefix={""}
+              <NumberFormat decimalScale={2} className="cust-input" customInput={Input} thousandSeparator={true} prefix={""}
                 placeholder="0.00"
-                decimalScale={8}
                 allowNegative={false}
                 maxlength={24}
               //value={}
