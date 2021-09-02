@@ -298,7 +298,7 @@ class Header extends Component {
                     <menuHeader className="tlv-header" id="area">
                         <div className="login-user">
                             <ul className="header-logo pl-0">
-                                <li className="pr-30 p-relative"><Link to="/dashboard"><img src={logoColor} alt="logo" className="tlv-logo" /></Link></li>
+                                <li className="pr-30 p-relative">{this.props.userConfig.isKYC?<Link to="/dashboard"><img src={logoColor} alt="logo" className="tlv-logo" /></Link>:<Link ><img src={logoColor} alt="logo" className="tlv-logo" /></Link>}</li>
                                 <li className="px-36"><span className="icon md hamburger c-pointer" onClick={this.showMegaMenu} /></li>
                                 <li className="mb-d-none"><Translate content="header_title" with={{lable:this.props.userConfig?.isBusiness?" Business":" Personal"}} component="p" className="text-white-30 mb-0 fs-24" /></li>
                             </ul>

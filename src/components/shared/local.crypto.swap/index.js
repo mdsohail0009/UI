@@ -44,7 +44,7 @@ const LocalCryptoSwapper = (props, ref) => {
         <div className="enter-val-container">
             <Text className="fs-30 fw-100 text-white-30 text-defaultylw mr-4">{!isSwaped ? localCurrency : cryptoCurrency}</Text>
             <NumberFormat className="fw-100 text-white-30 text-center enter-val p-0" maxLength={25} customInput={Input} thousandSeparator={true} prefix={isSwaped ? "" : "$"}
-               decimalScale={2}
+               decimalScale={isSwaped?8:2}
                placeholder="0.00"
                 bordered={false}
                 style={{ lineHeight: '48px', fontSize: 30, paddingRight: '40px !important' }}

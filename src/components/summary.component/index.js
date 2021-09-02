@@ -26,10 +26,10 @@ class Summary extends Component {
                 {!error?.valid && <Alert showIcon type="info" message={error?.title||"Buy crypto"} description={error?.message} closable onClose={() => onErrorClose?onErrorClose():""} />}
                 <div className="cryptosummary-container auto-scroll">
                     <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}><Currency prefix={""} decimalPlaces={decimalPlaces} defaultValue={amount} suffixText={coin} /> </div>
-                    {showEstimated && <div className="text-white-50 fw-300 text-center fs-14 mb-16"><Currency defaultValue={amountNativeCurrency} decimalPlaces={decimalPlaces} type={'text'} prefixText={nativeCurrency} /></div>}
+                    {showEstimated && <div className="text-white-50 fw-300 text-center fs-14 mb-16"><Currency defaultValue={amountNativeCurrency} prefix={""} decimalPlaces={decimalPlaces} type={'text'} prefixText={nativeCurrency} /></div>}
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
-                        <Currency defaultValue={oneCoinValue} decimalPlaces={decimalPlaces} prefix={currencyPrefix} className="fw-300 text-white-30" prefixText={`1 ${exchangeCoin||coin} = ${nativeCurrency}`}
+                        <Currency defaultValue={oneCoinValue} decimalPlaces={decimalPlaces} prefix={""} className="fw-300 text-white-30" prefixText={`1 ${exchangeCoin||coin} = ${nativeCurrency}`}
                         />
 
                     </div>
@@ -41,17 +41,17 @@ class Summary extends Component {
                     </div>
                     {showFee && <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content={`suissebase_fee`} component={Text} ><Tooltip title="Suissebase Fee"><span className="icon md info c-pointer ml-4" /></Tooltip></Translate>
-                        <Currency defaultValue={feeAmount} className="text-darkgreen fw-400" prefixText={feeCurrency} />
+                        <Currency defaultValue={feeAmount} prefix={""} className="text-darkgreen fw-400" prefixText={feeCurrency} />
                     </div>}
                     {showEstimatedTotal && <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="estimated_total" component={Text} />
-                        <Currency defaultValue={amountNativeCurrency}  className="fw-300 text-white-30" prefixText={nativeCurrency} />
+                        <Currency defaultValue={amountNativeCurrency} prefix={""} className="fw-300 text-white-30" prefixText={nativeCurrency} />
 
                     </div>}
                     {showConvert && <div className="pay-list fs-16 mb-16">
                         <Translate className="fw-400 text-white" content="convert" component={Text} />
                         {/* <Text className="fw-300 text-white-30">{this.props.swapStore.fromCoinInputValue} {this.props.swapStore?.coinDetailData?.coin} </Text> */}
-                        <Currency defaultValue={convertValue} decimalPlaces={decimalPlaces} className="fw-300 text-white-30" suffixText={convertCoin} />
+                        <Currency defaultValue={convertValue} prefix={""} decimalPlaces={decimalPlaces} className="fw-300 text-white-30" suffixText={convertCoin} />
                     </div>}
                     <div className="fs-12 text-white-30 text-center my-16">Your final amount might be changed with in
                         10 seconds.</div>
