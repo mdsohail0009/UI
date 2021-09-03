@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
-import { Typography, Button, message } from 'antd';
+import { Typography, message, Dropdown, Menu } from 'antd';
+import { ShareAltOutlined } from '@ant-design/icons'
 import { setStep, setWalletAddress } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import QRCodeComponent from '../qr.code.component';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Loader from '../../Shared/loader';
-const { Text } = Typography
+import {
+    EmailShareButton, EmailIcon,
+    FacebookShareButton, FacebookIcon,
+    LinkedinShareButton, LinkedinIcon,
+    TelegramShareButton, TelegramIcon,
+    TwitterShareButton, TwitterIcon,
+    WhatsappShareButton, WhatsappIcon
+} from "react-share";
 class QRScan extends Component {
     state = {}
     success = () => {
@@ -14,6 +22,44 @@ class QRScan extends Component {
     };
     componentWillUnmount() {
         this.props.dispatch(setWalletAddress(null))
+    }
+    get walletAddress() {
+        debugger
+        return this.props?.sendReceive?.depositWallet?.walletAddress
+    }
+    get shareMenu() {
+        return <Menu>
+            <Menu.Item>
+                <WhatsappShareButton te url={"https://v2.suissebase.ch"} title={this.walletAddress} >
+                    <WhatsappIcon size={32} round={true} />
+                </WhatsappShareButton>
+            </Menu.Item>
+            <Menu.Item>
+                <LinkedinShareButton url={"https://v2.suissebase.ch"} source={this.walletAddress} summary={this.walletAddress} title={this.walletAddress}>
+                    <LinkedinIcon size={32} round={true} />
+                </LinkedinShareButton>
+            </Menu.Item>
+            <Menu.Item>
+                <EmailShareButton url={"https://v2.suissebase.ch"} subject={"Wallet Address"} body={this.walletAddress} separator={";"} >
+                    <EmailIcon size={32} round={true} />
+                </EmailShareButton>
+            </Menu.Item>
+            <Menu.Item>
+                <TwitterShareButton url={"https://v2.suissebase.ch"} title={this.walletAddress} >
+                    <TwitterIcon size={32} round={true} />
+                </TwitterShareButton>
+            </Menu.Item>
+            <Menu.Item>
+                <FacebookShareButton url={"https://v2.suissebase.ch"} quote={this.walletAddress} >
+                    <FacebookIcon size={32} round={true} />
+                </FacebookShareButton>
+            </Menu.Item>
+            <Menu.Item>
+                <TelegramShareButton url={"https://v2.suissebase.ch"} title={this.walletAddress} >
+                    <TelegramIcon size={32} round={true} />
+                </TelegramShareButton>
+            </Menu.Item>
+        </Menu>
     }
     render() {
         const { Paragraph, Text } = Typography;
@@ -27,8 +73,14 @@ class QRScan extends Component {
                 </div>
                 <div className="crypto-address mt-36 custom-crypto-address mx-0">
                     <Translate className="mb-0 fw-400 text-secondary" content="address" component={Text} />
-                    <div className="mb-0 fs-12 fw-700 text-textDark l-height-normal">{this.props?.sendReceive?.depositWallet?.walletAddress}  <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress}>
-                        <Text copyable className="fs-20 text-white-30 custom-display"></Text></CopyToClipboard> </div>
+                    <div className="mb-0 fs-12 fw-700 text-textDark l-height-normal">{this.props?.sendReceive?.depositWallet?.walletAddress}
+                        <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress}>
+                            <Text copyable className="fs-20 text-white-30 custom-display"></Text>
+                        </CopyToClipboard>
+                        <Dropdown overlay={this.shareMenu}>
+                            <ShareAltOutlined size={32} />
+                        </Dropdown>
+                    </div>
                 </div>
                 {this.props?.sendReceive?.depositWallet?.tag != null && <div className="crypto-address mt-36">
                     <Text className="mb-0 fw-400 text-secondary">Tag</Text>
