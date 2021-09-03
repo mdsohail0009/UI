@@ -1,4 +1,4 @@
-import { Table, Tooltip } from 'antd';
+import { Table, Tooltip, Input, Empty } from 'antd';
 import { FullscreenOutlined, ReloadOutlined } from '@ant-design/icons'
 import React, { useEffect, useState, useCallback } from 'react';
 import Loader from '../../Shared/loader';
@@ -10,18 +10,24 @@ const MarketCap = () => {
     const [isDetailView, setDetailView] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [marketCaps, setMarketCaps] = useState([]);
+    const [originalMarketCaps, setOriginalMarketCaps] = useState([])
     useEffect(() => { fetchMarketCapsInfo() }, [])
     const fetchMarketCapsInfo = async () => {
         setIsLoading(true)
         const response = await fetchMarketCaps({ pageNo: 1 });
         if (response.ok) {
             setMarketCaps(response.data);
+            setOriginalMarketCaps(response.data);
             setIsLoading(false);
         }
     }
     const onFullScreenChange = useCallback((state, handle) => {
         setDetailView(state);
     });
+    const onSearch = ({currentTarget:{value}}) => {
+        let matches = originalMarketCaps.filter(item => item.symbol.toLowerCase().includes(value.toLowerCase()));
+        setMarketCaps(matches)
+    }
     if (isLoading) { return <Loader /> }
     return <div>
 
@@ -31,7 +37,8 @@ const MarketCap = () => {
                     {!isDetailView && <><Tooltip title="Fullscreen"><FullscreenOutlined onClick={() => marketsFullScreen.enter()} className="fs-18 text-white ml-8 fw-500" /></Tooltip>
                         <Tooltip title="Reload"><ReloadOutlined onClick={fetchMarketCapsInfo} className="fs-18 text-white ml-16 fw-500" /></Tooltip></>}
                 </div>
-                <Table sortDirections={["ascend", "descend"]} style={{ background: "grey" }} scroll={{ y: isDetailView ? '100vh' : '' }} pagination={false} columns={isDetailView ? detailInfoColumns : infoColumns} dataSource={marketCaps} loading={isLoading} className="custom-table" />
+                <Input.Search style={{padding:10}} placeholder="Search for a coin" onChange={(value) => onSearch(value)} className="crypto-search fs-14" />
+                <Table  locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_DEFAULT} description={<span>No records found</span>} /> }} sortDirections={["ascend", "descend"]} style={{ background: "grey" }} scroll={{ y: isDetailView ? '100vh' : '' }} pagination={false} columns={isDetailView ? detailInfoColumns : infoColumns} dataSource={marketCaps} loading={isLoading} className="custom-table" />
             </div>
         </FullScreen>
     </div>
