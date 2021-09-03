@@ -7,6 +7,7 @@ import { FullScreen, useFullScreenHandle } from 'react-full-screen'
 import { detailInfoColumns, infoColumns } from './marketcap.columns';
 const MarketCap = () => {
     const marketsFullScreen = useFullScreenHandle();
+    const { Search } = Input;
     const [isDetailView, setDetailView] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [marketCaps, setMarketCaps] = useState([]);
@@ -24,7 +25,7 @@ const MarketCap = () => {
     const onFullScreenChange = useCallback((state, handle) => {
         setDetailView(state);
     });
-    const onSearch = ({currentTarget:{value}}) => {
+    const onSearch = ({ currentTarget: { value } }) => {
         let matches = originalMarketCaps.filter(item => item.symbol.toLowerCase().includes(value.toLowerCase()));
         setMarketCaps(matches)
     }
@@ -37,8 +38,8 @@ const MarketCap = () => {
                     {!isDetailView && <><Tooltip title="Fullscreen"><FullscreenOutlined onClick={() => marketsFullScreen.enter()} className="fs-18 text-white ml-8 fw-500" /></Tooltip>
                         <Tooltip title="Reload"><ReloadOutlined onClick={fetchMarketCapsInfo} className="fs-18 text-white ml-16 fw-500" /></Tooltip></>}
                 </div>
-                <Input.Search style={{padding:10}} placeholder="Search for a coin" onChange={(value) => onSearch(value)} className="crypto-search fs-14" />
-                <Table  locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_DEFAULT} description={<span>No records found</span>} /> }} sortDirections={["ascend", "descend"]} style={{ background: "grey" }} scroll={{ y: isDetailView ? '100vh' : '' }} pagination={false} columns={isDetailView ? detailInfoColumns : infoColumns} dataSource={marketCaps} loading={isLoading} className="custom-table" />
+                <Search placeholder="Search for a coin" addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="px-16 mt-8 mb-8" />
+                <Table locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_DEFAULT} description={<span>No records found</span>} /> }} sortDirections={["ascend", "descend"]} style={{ background: "grey" }} scroll={{ y: isDetailView ? '100vh' : '' }} pagination={false} columns={isDetailView ? detailInfoColumns : infoColumns} dataSource={marketCaps} loading={isLoading} className="custom-table" />
             </div>
         </FullScreen>
     </div>

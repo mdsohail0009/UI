@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, message, Dropdown, Menu } from 'antd';
+import { Typography, message, Dropdown, Menu, Button } from 'antd';
 import { ShareAltOutlined } from '@ant-design/icons'
 import { setStep, setWalletAddress } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
@@ -28,7 +28,7 @@ class QRScan extends Component {
         return this.props?.sendReceive?.depositWallet?.walletAddress
     }
     get shareMenu() {
-        return <Menu>
+        return <Menu className="share-adrs">
             <Menu.Item>
                 <WhatsappShareButton te url={"https://v2.suissebase.ch"} title={this.walletAddress} >
                     <WhatsappIcon size={32} round={true} />
@@ -73,21 +73,21 @@ class QRScan extends Component {
                 </div>
                 <div className="crypto-address">
                     <Translate className="mb-0 fw-400 text-secondary" content="address" component={Text} />
-                    <div className="mb-0 fs-12 fw-700 text-textDark l-height-normal">{this.props?.sendReceive?.depositWallet?.walletAddress}
+                    <div className="mb-0 fw-700 text-white-30 walletadrs">{this.props?.sendReceive?.depositWallet?.walletAddress}
                         <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress}>
                             <Text copyable className="fs-20 text-white-30 custom-display"></Text>
                         </CopyToClipboard>
-                        <Dropdown overlay={this.shareMenu}>
-                            <ShareAltOutlined size={32} />
-                        </Dropdown>
                     </div>
-                  
                 </div>
+
                 {this.props?.sendReceive?.depositWallet?.tag != null && <div className="crypto-address mt-36">
                     <Text className="mb-0 fw-400 text-secondary">Tag</Text>
                     <div className="mb-0 fs-14 fw-500 text-textDark">{this.props?.sendReceive?.depositWallet?.tag}</div>
                 </div>}
                 <Translate className="text-center f-12 text-white fw-200 mt-16" content="address_hint_text" component={Paragraph} />
+                <Dropdown overlay={this.shareMenu}>
+                    <Button className="pop-btn mt-36" block>Share</Button>
+                </Dropdown>
                 {/* <Translate size="large" block className="pop-btn" style={{ marginTop: '100px' }} content="copy" component={Button} onClick={this.success} /> */}
                 {/* <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" onClick={() => this.props.changeStep('step1')} block content="share" component={Button} /> */}
             </div>
