@@ -22,7 +22,7 @@ class SendReceive extends Component {
             this.props.onClose();
         }
     }
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.props.dispatch(setStep("step1"))
     }
     renderContent = () => {
@@ -66,7 +66,7 @@ class SendReceive extends Component {
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
-                <div className="text-center fs-14">
+                <div className="text-center fs-20">
                     <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]]} component={Paragraph} />
                     <Translate className="text-white-50 mb-0 fw-300" content={this.props.sendReceive.stepSubTitles[config[this.props.sendReceive.stepcode]]} component={Paragraph} /></div>
                 {this.renderIcon()}

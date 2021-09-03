@@ -22,15 +22,15 @@ class MassPayment extends Component {
         if (this.props.onClose) {
             this.props.onClose();
         }
-        if(this.child)
-        this.child.clearfiatValues();
+        if (this.child)
+            this.child.clearfiatValues();
     }
     onHhandleClick = () => {
         this.props.changeStep("step3");
     }
     renderContent = () => {
         const stepcodes = {
-            fiatdeposit: <FiatDeposit tab={this.props.tabData} fiatRef={(cd) => this.child = cd}/>,
+            fiatdeposit: <FiatDeposit tab={this.props.tabData} fiatRef={(cd) => this.child = cd} />,
             //buyfiat: <BuyFiat activeTab={this.props.valNum} />,
             selectfiat: <SelectFiat />,
             addcard: <AddCard />,
@@ -83,7 +83,7 @@ class MassPayment extends Component {
                 title={[
                     <div className="side-drawer-header">
                         {this.renderTitle()}
-                        <div className="text-center fs-14">
+                        <div className="text-center fs-20">
                             <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                             <Translate className="text-white-50 mb-0 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                         </div>
