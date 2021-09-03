@@ -83,9 +83,9 @@ class MassPayment extends Component {
                 title={[
                     <div className="side-drawer-header">
                         {this.renderTitle()}
-                        <div className="text-center fs-20">
+                        <div className="text-center fs-16">
                             <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
-                            <Translate className="text-white-50 mb-0 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                            <Translate className="text-white-50 mb-0 fs-14 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                         </div>
                         {this.renderIcon()}
                         {/* <Dropdown overlay={menu} overlayClassName="secureDropdown" arrow>

@@ -69,9 +69,9 @@ class QRScan extends Component {
         return (
             <div>
                 <div className="scanner-img">
-                    <QRCodeComponent value={this.props?.sendReceive?.depositWallet?.walletAddress} />
+                    <QRCodeComponent value={this.props?.sendReceive?.depositWallet?.walletAddress} size={150} />
                 </div>
-                <div className="crypto-address mt-36 custom-crypto-address mx-0">
+                <div className="crypto-address">
                     <Translate className="mb-0 fw-400 text-secondary" content="address" component={Text} />
                     <div className="mb-0 fs-12 fw-700 text-textDark l-height-normal">{this.props?.sendReceive?.depositWallet?.walletAddress}
                         <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress}>
@@ -81,12 +81,13 @@ class QRScan extends Component {
                             <ShareAltOutlined size={32} />
                         </Dropdown>
                     </div>
+                  
                 </div>
                 {this.props?.sendReceive?.depositWallet?.tag != null && <div className="crypto-address mt-36">
                     <Text className="mb-0 fw-400 text-secondary">Tag</Text>
                     <div className="mb-0 fs-14 fw-500 text-textDark">{this.props?.sendReceive?.depositWallet?.tag}</div>
                 </div>}
-                <Translate className="text-center f-12 text-white fw-200" content="address_hint_text" component={Paragraph} />
+                <Translate className="text-center f-12 text-white fw-200 mt-16" content="address_hint_text" component={Paragraph} />
                 {/* <Translate size="large" block className="pop-btn" style={{ marginTop: '100px' }} content="copy" component={Button} onClick={this.success} /> */}
                 {/* <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" onClick={() => this.props.changeStep('step1')} block content="share" component={Button} /> */}
             </div>
