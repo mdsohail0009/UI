@@ -18,9 +18,9 @@ class SwapCrypto extends Component {
     componentDidMount() {
         this.props.swapRef(this)
     }
-    clearValues(){
-        if(this.child)
-        this.child.clearSwapCoinValues();
+    clearValues() {
+        if (this.child)
+            this.child.clearSwapCoinValues();
     }
     closeBuyDrawer = () => {
         this.props.dispatch(setStep("step1"))
@@ -30,7 +30,7 @@ class SwapCrypto extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            swapcoins: <SwapCoins swapCoinsRef={(cd) => this.child = cd}/>,
+            swapcoins: <SwapCoins swapCoinsRef={(cd) => this.child = cd} />,
             swapsummary: <SwapSummary />,
             selectcrypto: <SelectCrypto swapfrom={true} />,
             toreceive: <SelectCrypto swapfrom={false} />,
@@ -65,9 +65,9 @@ class SwapCrypto extends Component {
         return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
-                <div className="text-center fs-14 px-16">
-                    <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props.swapStore.stepTitles[config[this.props.swapStore.stepcode]]} component={Paragraph} />
-                    <Translate className="text-white-50 mb-0 fw-300 swap-subtitlte" content={this.props.swapStore.stepSubTitles[config[this.props.swapStore.stepcode]]} component={Paragraph} /></div>
+                <div className="text-center fs-20 px-16">
+                    <Translate className="text-white-30 fw-600 text-upper mb-4" content={this.props.swapStore.stepTitles[config[this.props.swapStore.stepcode]]} component={Paragraph} />
+                    <Translate className="text-white-50 mb-0 fw-300 fs-14 swap-subtitlte" content={this.props.swapStore.stepSubTitles[config[this.props.swapStore.stepcode]]} component={Paragraph} /></div>
                 {this.renderIcon()}</div>]}
             placement="right"
             closable={true}

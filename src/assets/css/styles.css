@@ -38,8 +38,8 @@ line-height: 16px;min-width:90px}
 .custom-btn.prime{background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2));}
 .custom-btn.sec{background-image: none; background: transparent;border: 1px solid var(--btnBorder); color: var(--textWhite);}
 .custom-btn.sec:hover{background-color: var(--bgWhite);color: var(--textDark);}
-.carousel-card{background-color: var(--bgDarkYellow);border-radius: 30px;overflow: hidden;}
-.ant-carousel .slick-dots-bottom{bottom: 28px  !important;}
+.carousel-card{background-color: var(--bgDarkYellow);border-radius: 30px;overflow: hidden;min-height: 192px;}
+.ant-carousel .slick-dots-bottom{bottom: 8px  !important;}
 .ant-carousel .slick-dots li button{background: var(--bgGrey) !important; opacity: 0.5;height: 4px;border-radius: 2px;}
 .ant-carousel .slick-dots li.slick-active button{background: var(--bgGrey) !important; opacity: 1;}
 .ant-carousel .slick-dots li{width: 8px; }
