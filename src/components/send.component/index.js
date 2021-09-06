@@ -55,7 +55,7 @@ class SendReceive extends Component {
     renderIcon = () => {
         const stepcodes = {
             depositecrypto: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
-            withdraw: <span />,
+            withdraw: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             scanner: <span />,
             withdrawscan: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdrawaddress: <span />,
