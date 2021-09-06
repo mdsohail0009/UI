@@ -54,7 +54,7 @@ class SellSummary extends Component {
             amountNativeCurrency={amountNativeCurrency}
             nativeCurrency={"USD"}
             error={this.state.error} iButtonLoad={this.state.isLoading}
-            onRefresh={() => {}}
+            onRefresh={() => {this.refreshPage()}}
             onCancel={() => this.props.changeStep('step1')}
             onClick={() => this.saveSellData()}
             okBtnTitle={"confirm_now"}
