@@ -83,7 +83,7 @@ export default {
   suissebase_personal: '瑞士基地 个人的',
   avail_wallet_weprovide: '我们提供的可用钱包',
   withdraw_Btc: '提現比特幣',
-  withdraw_summary_sub: '从您的地址发送',
+  withdraw_summary_sub: '发送您的货币地址。',
   verify_identity: '验证您的身份',
   swap_title: '新掉期',
   swap_desc: '立即將您的加密貨幣兌換成我們在您錢包中提供的任何貨幣',

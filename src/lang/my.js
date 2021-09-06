@@ -83,7 +83,7 @@ export default {
   suissebase_personal: 'Suissebase Peribadi',
   avail_wallet_weprovide: 'Dompet yang ada kami sediakan',
   withdraw_Btc: 'Tarik balik BTC',
-  withdraw_summary_sub: 'Hantar dari alamat anda.',
+  withdraw_summary_sub: 'Hantarkan alamat mata wang anda.',
   verify_identity: 'Sahkan Identiti anda',
   swap_title: 'Pertukaran Baru',
   swap_desc: 'tukar kripto anda dengan segera ke dalam mata wang yang kami tawarkan di dompet anda',
