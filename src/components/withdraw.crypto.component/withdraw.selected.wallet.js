@@ -8,6 +8,7 @@ import LocalCryptoSwap from '../shared/local.crypto.swap';
 import { withDrawCrypto } from '../send.component/api';
 import SuccessMsg from './success';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
+import WalletAddressValidator from 'wallet-address-validator';
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
     myRef = React.createRef();
@@ -76,7 +77,12 @@ class CryptoWithDrawWallet extends Component {
     }
     withDraw = async () => {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
-        this.setState({ ...this.state, error: null, loading: true, isWithdrawSuccess: false })
+        this.setState({ ...this.state, error: null, loading: true, isWithdrawSuccess: false });
+        // const valid = WalletAddressValidator.validate(this.state.walletAddress,coin);
+        // if (!valid) {
+        //     this.setState({ ...this.state, error: "Please enter valid address", confirmationStep: "step1", showModal: false, isWithdrawSuccess: false })
+        //     return;
+        // }
         let obj = {
             "membershipId": this.props.userProfile.id,
             "memberWalletId": id,
