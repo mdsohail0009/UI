@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Button, Card, Input, Radio, List, Alert, Row, Col, Form, Modal } from 'antd';
-import { setStep } from '../../reducers/sendreceiveReducer';
+import { handleSendFetch, setStep } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import Currency from '../shared/number.formate';
@@ -24,6 +24,7 @@ class CryptoWithDrawWallet extends Component {
     }
     componentDidMount() {
         this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
+        this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 2 }))
     }
     componentWillUnmount() {
         this.setState({ ...this.state, isWithdrawSuccess: false })
@@ -96,7 +97,7 @@ class CryptoWithDrawWallet extends Component {
         }
     }
     renderModalContent = () => {
-        if(!this.props?.sendReceive?.cryptoWithdraw?.selectedWallet){return null}
+        if (!this.props?.sendReceive?.cryptoWithdraw?.selectedWallet) { return null }
         const { walletAddress, CryptoAmnt, confirmationStep } = this.state;
         const { coin, netWork } = this.props?.sendReceive?.cryptoWithdraw?.selectedWallet
         const _types = {

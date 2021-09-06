@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Typography, Radio, Card, List, Skeleton } from 'antd';
+import { Radio } from 'antd';
 import config from '../../config/config';
 import Translate from 'react-translate-component';
-import { setStep } from '../../reducers/sendreceiveReducer';
+import { handleSendFetch, setStep } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import CryptoDeposit from '../deposit.component/crypto.deposit';
 import WithdrawCrypto from '../withdraw.crypto.component';
 
@@ -26,10 +25,11 @@ class DepositeCrypto extends Component {
         });
     }
     componentDidMount() {
-        this.setState({ ...this.state, activeKey: this.props.sendReceive?.cryptoWithdraw?.activeTab || 1, sendReceive: true })
+        this.setState({ ...this.state, activeKey: this.props.sendReceive?.cryptoWithdraw?.activeKey || 1, sendReceive: true });
+        this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
     }
     componentWillUnmount() {
-        this.setState({ ...this.state, activeKey: 1 })
+        this.setState({ ...this.state, activeKey: 1 });
     }
     render() {
         const { activeKey } = this.state
@@ -41,7 +41,7 @@ class DepositeCrypto extends Component {
                     <Translate value={1} content="deposit" component={Radio.Button} />
                     <Translate value={2} content="withdraw" component={Radio.Button} />
                 </Radio.Group>
-                {activeKey==2 ? <WithdrawCrypto /> : <CryptoDeposit />}
+                {activeKey == 2 ? <WithdrawCrypto /> : <CryptoDeposit />}
             </>
         )
     }
@@ -54,7 +54,7 @@ const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
-        }
+        }, dispatch
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(DepositeCrypto);

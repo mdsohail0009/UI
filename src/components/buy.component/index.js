@@ -91,7 +91,7 @@ class BuySell extends Component {
         return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0;
     }
     render() {
-        return (<Drawer
+        return (<Drawer destroyOnClose={true}
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
                 <div className="text-center fs-16">

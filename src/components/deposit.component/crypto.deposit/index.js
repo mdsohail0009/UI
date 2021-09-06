@@ -22,7 +22,7 @@ const CryptoDeposit = ({ dispatch, userProfile, sellData: buyInfo }) => {
     return <> <Translate content="deposite_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-8" />
         <Translate content="deposite_a_cryto_txt" component={Paragraph} className="fs-16 text-secondary fw-200" />
         <div className="dep-withdraw auto-scroll">
-            <CryptoList showSearch={true} coinList={buyInfo?.coins["All"]?.data} isLoading={buyInfo?.coins["All"]?.loading} onCoinSelected={(coin) => onCryptoCoinSelect(coin)} coinType={"swap"} />
+            <CryptoList showSearch={true} showValues={true} coinList={buyInfo?.coins["All"]?.data} isLoading={buyInfo?.coins["All"]?.loading} onCoinSelected={(coin) => onCryptoCoinSelect(coin)} coinType={"swap"} />
         </div></>
 }
 
