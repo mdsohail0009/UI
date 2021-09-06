@@ -50,9 +50,10 @@ const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, s
                         />
                         <><div className="text-right coin-typo">
                             <NumberFormat value={coinType == "swap" ? item.coinValueinNativeCurrency : item.amountInUSD} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} className="text-white-30 fw-600">{value}</div>} />
+                            {coinType == "swap" && <NumberFormat value={item.coinBalance} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={''} renderText={(value, props) => <div {...props} className={`fs-16 ${item.coinBalance > 0 ? "text-green" : "text-red"}`}>{value}</div>} />}
                             {coinType !== "swap" && <div className={item.percent_change_1h < 0 ? 'text-red' : 'text-green'}>{item.percent_change_1h} % </div>}
                         </div>
-                           {coinType !== "swap" &&<> {item.percent_change_1h > 0 ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}</>}</>
+                            {coinType !== "swap" && <> {item.percent_change_1h > 0 ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}</>}</>
                     </Link>
                 </List.Item>
             )}

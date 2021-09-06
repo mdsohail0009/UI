@@ -5,9 +5,9 @@ import BuySell from '../buy.component';
 import connectStateProps from '../../utils/state.connect';
 import { fetchYourPortfoliodata } from '../../reducers/dashboardReducer';
 import Currency from '../shared/number.formate';
-import { fetchSelectedCoinDetails, setExchangeValue,setCoin } from '../../reducers/buyReducer';
+import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reducers/buyReducer';
 import { setStep } from '../../reducers/buysellReducer';
-import {updateCoinDetail} from '../../reducers/sellReducer'
+import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 
 class YourPortfolio extends Component {
@@ -32,7 +32,7 @@ class YourPortfolio extends Component {
                 this.props.dispatch(setExchangeValue({ key: item.coin, value: val }));
             });
             this.props.dispatch(setStep("step2"));
-        } else if(key=="sell") {
+        } else if (key == "sell") {
             this.props.dispatch(setCoin(item));
             this.props.dispatch(setExchangeValue({ key: item.coin, value: item.oneCoinValue }));
             this.props.dispatch(updateCoinDetail(item))
@@ -70,7 +70,10 @@ class YourPortfolio extends Component {
                             />
 
                             {/* <div className={`text-right fs-20 ${item.coinBalance>0 ? 'text-green' : 'text-red'}`}><Currency defaultValue={item.coinBalance} prefix={""} type={"text"}/></div> */}
-                            <div className='text-right fs-20 text-white'><Currency  defaultValue={item.coinValueinNativeCurrency} type={"text"} /></div>
+                            <div className='text-right fs-20 text-white'>
+                                <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} />
+                                <Currency defaultValue={item.coinBalance} prefix={""} type={"text"} className={`fs-16 ${item.coinBalance > 0 ? "text-green" : "text-red"}`} />
+                            </div>
                             {/* {item.coinBalance>0? <span className="icon md gain mr-8" /> : <span className="icon md lose mr-8" />} */}
                             {/* <div className="fs-16 text-white-30 fw-300 ml-24  text-upper ">{item.totalcoin} {item.shortcode}</div> */}
                         </List.Item>

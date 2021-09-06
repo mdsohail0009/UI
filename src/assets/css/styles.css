@@ -560,7 +560,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .custon-btngroup{height: 57px !important;}
     .to-receive{margin-top: 36px;}
     .pop-btn, .confirm-btn{height: 57px;}
-    .crypto-list .ant-list-item, .wallet-list .ant-list-item{padding:10px 0 8px 8px !important}
+    .crypto-list .ant-list-item, .wallet-list .ant-list-item{padding:10px 8px 8px !important}
     .crypto-search.ant-input-search .ant-input-group .ant-input-group-addon{border-radius: 0 30px 30px 0;}
     .pay-list{padding: 16px 0;}
     .crypto-container {max-height: calc(100vh - 325px);}
