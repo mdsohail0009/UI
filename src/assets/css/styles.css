@@ -590,3 +590,4 @@ main.ant-layout-content{min-height: calc(100vh - 220px);}
 .share-adrs{display: flex;justify-content: center;padding: 0;border-radius: 10px;background-color: var(--bgDarkGrey);}
 .share-adrs li{padding: 16px 20px 10px;}
 .share-adrs li:hover{background-color: var(--bgGrey);}
+.notice-nodata{display: flex; align-items: center;justify-content: center; height: 192px;}

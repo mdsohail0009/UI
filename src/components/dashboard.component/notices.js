@@ -1,10 +1,10 @@
-import { Alert, Carousel,Typography,Button } from "antd";
+import { Alert, Carousel, Typography, Button } from "antd";
 import { useEffect, useState } from "react"
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
 import connectStateProps from "../../utils/state.connect";
 import { getNotices } from "./api";
-const {Title,Paragraph} = Typography;
+const { Title, Paragraph, Text } = Typography;
 const Notices = ({ userProfile }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState({ hasError: false, message: null });
@@ -27,13 +27,13 @@ const Notices = ({ userProfile }) => {
     }
     return <Carousel autoplay className="mb-24">
         {notices.map((notice, indx) => <div key={indx} className="p-28 carousel-card">
-            <Title  className="fs-24 text-black mb-4" >{notice.title}</Title>
-            <div  className="fs-16 text-black mb-24"  dangerouslySetInnerHTML={{__html:notice.htmlContent}}>
-                
+            <Title className="fs-24 text-black mb-4" >{notice.title}</Title>
+            <div className="fs-16 text-black mb-24" dangerouslySetInnerHTML={{ __html: notice.htmlContent }}>
+
             </div>
             {/* <Translate content="db_slider_btn" component={Button} type="primary" className="custom-btn fs-14 prime mb-24" /> */}
         </div>)}
-
+        {notices.length === 0 && <div className="carousel-card"><Text className="notice-nodata fs-20 fw-500 text-primary">Notices not available</Text></div>}
     </Carousel>
 }
 
