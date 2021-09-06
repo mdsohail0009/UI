@@ -67,7 +67,7 @@ function Footer() {
                 <Translate content="ftr_tc_p" component={Link}>Legan & Policy</Translate> */}
                 <a href="https://suissebase.ch/" target="_blank">Home</a>
                 <a href="https://suissebase.ch/" target="_blank">Careers</a>
-                <a href="https://www.iubenda.com/privacy-policy/42856099" target="_blank">Legan & Policy</a>
+                <a href="https://www.iubenda.com/privacy-policy/42856099" target="_blank">Legal & Policy</a>
                 <Typography className="mobile-none text-white-30">Suissebase<sup className="fs-10">TM</sup> {new Date().getFullYear()}</Typography>
             </div>
             <div className="copyright-block">

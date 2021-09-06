@@ -33,7 +33,7 @@ const Notices = ({ userProfile }) => {
             </div>
             {/* <Translate content="db_slider_btn" component={Button} type="primary" className="custom-btn fs-14 prime mb-24" /> */}
         </div>)}
-        {notices.length === 0 && <div className="carousel-card"><Text className="notice-nodata fs-20 fw-500 text-primary">Notices not available</Text></div>}
+        {notices.length === 0 && <div className="carousel-card"><Text className="notice-nodata fs-20 fw-500 text-primary">Notices are not available</Text></div>}
     </Carousel>
 }
 
