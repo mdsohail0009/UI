@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Layout, Typography, Menu, Button, Dropdown } from 'antd';
+import { Link } from 'react-router-dom';
 import labels from '../utils/lables.json';
 import counterpart from 'counterpart';
 import en from '../lang/en';
@@ -27,6 +28,14 @@ const languageMenu = (
         </Menu.Item>
     </Menu>
 );
+const homeLink = (props) => {
+    return (
+        <Translate
+            content={props.content}
+            component={Link}
+            to="/neo/AllCrypto"
+        />)
+}
 function Footer() {
     const { switcher, themes, currentTheme, status } = useThemeSwitcher();
     const [isDarkMode, setIsDarkMode] = React.useState(true);
@@ -34,29 +43,31 @@ function Footer() {
 
     if (status === 'loading') {
         return <div>Loading styles...</div>;
-      }
+    }
 
-      const handleTheme = () => {
+    const handleTheme = () => {
         setIsDarkMode(previous => {
-          switcher({ theme: previous ? themes.LHT : themes.DRT });
-          return !previous;
+            switcher({ theme: previous ? themes.LHT : themes.DRT });
+            return !previous;
         });
-      };
+    };
     const onLangChange = (e) => {
         setLang({ lang: e.target.value });
         counterpart.setLocale(e.target.value);
     }
-  
 
-
+    const home = <homeLink content="ftr_home" />
 
     // return <AntFooter style={{ textAlign: 'center' }}>{labels.company} @copy; {new Date().getFullYear()} Created by {labels.company}</AntFooter>
-    return <AntFooter style={{ backgroundColor: 'transparent', padding: 0 }}>
+    return (<AntFooter style={{ backgroundColor: 'transparent', padding: 0 }}>
         <div className="main-container footer-links">
             <div className="d-flex justify-content align-center">
-                <Translate content="ftr_home" component={Typography.Link}>Home</Translate>
-                <Translate content="ftr_careers" component={Typography.Link}>Careers</Translate>
-                <Translate content="ftr_tc_p" component={Typography.Link}>Legan & Policy</Translate>
+                {/* <Translate content="links" with={home} />
+                <Translate content="ftr_careers" component={Link}>Careers</Translate>
+                <Translate content="ftr_tc_p" component={Link}>Legan & Policy</Translate> */}
+                <a href="https://suissebase.ch/" target="_blank">Home</a>
+                <a href="https://suissebase.ch/" target="_blank">Careers</a>
+                <a href="https://www.iubenda.com/privacy-policy/42856099" target="_blank">Legan & Policy</a>
                 <Typography className="mobile-none text-white-30">Suissebase<sup className="fs-10">TM</sup> {new Date().getFullYear()}</Typography>
             </div>
             <div className="copyright-block">
@@ -74,7 +85,7 @@ function Footer() {
                 </span>
             </div>
         </div>
-    </AntFooter>
+    </AntFooter>)
 
 
 }
