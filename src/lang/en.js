@@ -283,5 +283,7 @@ export default {
   crypto_with_draw_success: "Cancel",
   withdrawal_success: 'Withdraw success',
   dep_with_assets: "Crypto Deposit / Withdraw",
-  links: "%(link)s"
+  links: "%(link)s",
+  userName:'John Huh',
+  manage_account:'Manage your Account'
 }

@@ -277,5 +277,8 @@ export default {
   proceed: 'magpatuloy',
   description: 'Description',
   withdrawal_success: 'Withdraw success',
-  dep_with_assets: "Deposit / Pengeluaran Kripto"
+  dep_with_assets: "Deposit / Pengeluaran Kripto",
+  userName:'John Huh',
+  manage_account:'Manage your Account'
+
 }
