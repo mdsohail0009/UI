@@ -1,7 +1,7 @@
 import { Card, Typography } from "antd";
 import { useEffect } from "react";
 import Translate from "react-translate-component";
-import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setStep } from "../../reducers/sendreceiveReducer";
+import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setStep, setSubTitle } from "../../reducers/sendreceiveReducer";
 import connectStateProps from "../../utils/state.connect";
 import Currency from '../shared/number.formate';
 import Loader from '../../Shared/loader';
@@ -9,7 +9,8 @@ const { Paragraph, Text, Title } = Typography;
 const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
     useEffect(() => {
         dispatch(fetchWithDrawWallets({ memberId: userProfile?.id }));
-        dispatch(handleSendFetch({key:"cryptoWithdraw",activeTab:null}))
+        dispatch(handleSendFetch({key:"cryptoWithdraw",activeTab:null}));
+        dispatch(setSubTitle("Select a currency in your wallet"));
     }, [])
 
     const { cryptoWithdraw: { wallets } } = sendReceive;

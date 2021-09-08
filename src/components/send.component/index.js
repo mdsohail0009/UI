@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
 import connectStateProps from '../../utils/state.connect';
-import { handleSendFetch, setStep } from '../../reducers/sendreceiveReducer';
+import { handleSendFetch, setSendSelectedCoin, setStep, setSubTitle } from '../../reducers/sendreceiveReducer';
 import { sendreceiveSteps as config } from './config';
 import DepositeCrypto from '../send.component/depositeToggle';
 import CryptoWithDrawWallet from '../withdraw.crypto.component/withdraw.selected.wallet';
@@ -17,7 +17,8 @@ class SendReceive extends Component {
 
     }
     closeDrawer = () => {
-        this.props.dispatch(setStep("step1"))
+        this.props.dispatch(setStep("step1"));
+        this.props.dispatch(setSubTitle(""))
         if (this.props.onClose) {
             this.props.onClose();
         }
@@ -25,6 +26,7 @@ class SendReceive extends Component {
     }
     componentWillUnmount() {
         this.props.dispatch(setStep("step1"));
+       
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
     }
     renderContent = () => {
@@ -70,7 +72,7 @@ class SendReceive extends Component {
                 {this.renderTitle()}
                 <div className="text-center fs-16">
                     <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props.sendReceive.stepTitles[config[this.props.sendReceive.stepcode]]} component={Paragraph} />
-                    <Translate className="text-white-50 mb-0 fs-14 fw-300" content={this.props.sendReceive.stepSubTitles[config[this.props.sendReceive.stepcode]]} component={Paragraph} /></div>
+                    <Paragraph className="text-white-50 mb-0 fs-14 fw-300" >{this.props.sendReceive?.subTitle} {this.props.sendReceive?.selectedCoin?.coin} </Paragraph></div>
                 {this.renderIcon()}
             </div>]}
             placement="right"

@@ -1,7 +1,7 @@
 import { Typography } from "antd";
 import { useEffect } from "react";
 import Translate from "react-translate-component";
-import { setStep, setWalletAddress } from "../../../reducers/sendreceiveReducer";
+import { setSendSelectedCoin, setStep, setSubTitle, setWalletAddress } from "../../../reducers/sendreceiveReducer";
 import { getMemberCoins } from "../../../reducers/swapReducer";
 import connectStateProps from "../../../utils/state.connect";
 import CryptoList from "../../shared/cryptolist"
@@ -13,7 +13,8 @@ const CryptoDeposit = ({ dispatch, userProfile, sellData: buyInfo,swapStore }) =
         dispatch(getMemberCoins(userProfile.id));
     }
     const onCryptoCoinSelect = async (coin) => {
-        dispatch(setStep("step7"))
+        dispatch(setStep("step7"));
+        dispatch(setSubTitle(`${coin.coinBalance} ${coin.coin} available`));
         const response = await createCryptoDeposit({ memberId: userProfile?.id, walletCode: coin?.coin });
         if (response.ok) {
             dispatch(setWalletAddress(response.data));

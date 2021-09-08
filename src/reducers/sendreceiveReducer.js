@@ -4,9 +4,16 @@ const SET_STEP = "setStep";
 const CLEAR_STEP = "clearStep";
 const SET_WALLET_ADDRESS = "setWalletAddress";
 const HANDLE_SEND_FETCH = "handleSendFetch";
+const SET_SUB_TITLE = "setSubTitle";
 const setStep = (payload) => {
     return {
         type: SET_STEP,
+        payload
+    }
+}
+const setSubTitle = (payload) => {
+    return {
+        type: SET_SUB_TITLE,
         payload
     }
 }
@@ -66,6 +73,7 @@ let initialState = {
     },
     depositWallet: "",
     cryptoWithdraw: {},
+    subTitle: null
 }
 const sendReceiveReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -80,11 +88,14 @@ const sendReceiveReducer = (state = initialState, action) => {
             return state;
         case HANDLE_SEND_FETCH:
             state = { ...state, [action.payload.key]: { ...state[action.payload.key], ...action.payload } };
-            return state
+            return state;
+        case SET_SUB_TITLE:
+            state = { ...state, subTitle: action.payload };
+            return state;
         default:
             return state;
     }
 
 }
 export default sendReceiveReducer;
-export { setStep, clearStep, setWalletAddress, fetchWithDrawWallets, setSelectedWithDrawWallet, handleSendFetch }
+export { setStep, clearStep, setWalletAddress, fetchWithDrawWallets, setSelectedWithDrawWallet, handleSendFetch, setSubTitle }

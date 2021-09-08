@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Radio } from 'antd';
 import config from '../../config/config';
 import Translate from 'react-translate-component';
-import { handleSendFetch, setStep } from '../../reducers/sendreceiveReducer';
+import { handleSendFetch, setSendSelectedCoin, setStep, setSubTitle } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import CryptoDeposit from '../deposit.component/crypto.deposit';
 import WithdrawCrypto from '../withdraw.crypto.component';
@@ -23,10 +23,12 @@ class DepositeCrypto extends Component {
             ...this.state,
             activeKey: e.target.value
         });
+      e.target.value==1?  this.props.dispatch(setSubTitle(`USD ${this.props.dashboard?.totalFiatValue} Total balance`)):  this.props.dispatch(setSubTitle(`Select a currency in your wallet`));;
     }
     componentDidMount() {
         this.setState({ ...this.state, activeKey: this.props.sendReceive?.cryptoWithdraw?.activeKey || 1, sendReceive: true });
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
+        this.props.dispatch(setSubTitle(`USD ${this.props.dashboard?.totalFiatValue} Total balance`));
     }
     componentWillUnmount() {
         this.setState({ ...this.state, activeKey: 1 });
@@ -47,8 +49,8 @@ class DepositeCrypto extends Component {
     }
 }
 
-const connectStateToProps = ({ sendReceive, oidc }) => {
-    return { sendReceive }
+const connectStateToProps = ({ sendReceive, dashboard }) => {
+    return { sendReceive,dashboard:dashboard?.portFolio?.data }
 }
 const connectDispatchToProps = dispatch => {
     return {
