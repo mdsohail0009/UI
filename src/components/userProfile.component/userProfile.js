@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'antd'
 import ProfileInfo from './profileInfo';
+import Security from './security'
+import Translate from 'react-translate-component';
+
 
 class userProfile extends Component {
     state={
        isProfile:false,
+       isSecurity:false,
     }
     handleProfile=() =>{
          this.setState({isProfile:true})
     }
     handleSecurity=() =>{
-
+        this.setState({isSecurity:true})
     }
     handleSetting=() =>{
         
@@ -65,7 +69,8 @@ class userProfile extends Component {
                     </Col>
                     <Col span={18} className="gutter-row">
                         <div className="right-panel">
-                            {this.state.isProfile  &&<ProfileInfo/>} 
+                            {this.state.isProfile  &&<ProfileInfo/>}
+                            {this.state.isSecurity && <Security/>} 
                         </div>
                     </Col>
                 </Row>
