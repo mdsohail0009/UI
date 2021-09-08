@@ -6,4 +6,10 @@ const createCryptoDeposit = ({ memberId, walletCode }) => {
 const getCurrencywithBank=()=>{
     return apiClient.get(ApiControllers.exchange + `CurrencyWithBank`)
 }
-export { createCryptoDeposit,getCurrencywithBank }
+const savedepositFiat=(obj)=>{
+    return apiClient.post(ApiControllers.exchange + `UserDepositFiat`,obj)
+}
+const requestDepositFiat=(bankId,memId)=>{
+    return apiClient.get(ApiControllers.exchange + `RequestDepositFiat?memberId=`+memId+'&bankId='+bankId)
+}
+export { createCryptoDeposit,getCurrencywithBank ,savedepositFiat,requestDepositFiat}
