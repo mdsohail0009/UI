@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Typography, Input, Button, label, Select, Radio, Tabs } from 'antd';
+import React, { Component,createRef } from 'react';
+import { Typography, Input, Button, label, Select, Radio, Tabs,Form } from 'antd';
 import { Link } from 'react-router-dom';
-import { setStep } from '../../reducers/buysellReducer';
+import { changeStep,setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import SellToggle from '../withDraw.component/faitWithdrawal';
@@ -9,6 +9,7 @@ import config from '../../config/config';
 import SelectCurrency from '../buyfiat.component/selectCurrency';
 import NumberFormat from 'react-number-format';
 import { getCurrencieswithBankDetails } from '../../reducers/depositReducer'
+import { savedepositFiat } from './api';
 
 const LinkValue = (props) => {
   return (
@@ -21,35 +22,28 @@ const LinkValue = (props) => {
 }
 const { Option } = Select;
 class FaitDeposit extends Component {
+  formRef = createRef();
   state = {
     buyDrawer: false,
     crypto: config.tlvCoinsList,
     buyToggle: 'Buy',
     fiatDepEur: false,
     faitdeposit:false,
-    BankDetails: [], BankInfo: null, Amount: null, depObj: { currency: null, BankName: null },
+    BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null },
     tabValue:1
   }
   componentDidMount() {
     this.props.fiatRef(this)
     this.props.fetchCurrencyWithBankDetails()
-    if(this.props?.tab?.tabVal){
-    this.setState({...this.state,tabValue:this.props?.tab?.tabVal,faitdeposit:this.props?.tab?.tabVal==2,depObj: { currency: (this.props?.tab?.tabVal==2)?null:(this.props?.tab.walletCode), BankName: null }})
-    }
-  }
-  setTabVal = (tab) =>{
-    console.log(tab)
-    this.setState({...this.state,tabValue:this.props.tab,faitdeposit:this.props.tab==2})
   }
   clearfiatValues = () => {
-    console.log('trigger')
     this.props.fetchCurrencyWithBankDetails()
     this.setState({
       buyDrawer: false,
       crypto: config.tlvCoinsList,
       buyToggle: 'Buy',
       fiatDepEur: false,
-      BankDetails: [], BankInfo: null, Amount: null, depObj: { currency: null, BankName: null },
+      BankDetails: [], BankInfo: null,  depObj: { currency: null, BankName: null , Amount: null},
       faitdeposit:false,
       tabValue:1
     });
@@ -60,13 +54,14 @@ class FaitDeposit extends Component {
       tabValue:e.target.value,
       BankDetails:[],
       BankInfo: null,
-      depObj: { currency: null, BankName: null },
+      depObj: { currency: null, BankName: null , Amount: null}
     });
   }
   handlFiatDep = (e, currencyLu) => {
     let { depObj } = this.state;
     depObj.currency = e;
     depObj.BankName = null;
+    depObj.Amount=null;
     for (var k in currencyLu) {
       if (currencyLu[k].walletCode == e) {
         if (currencyLu[k].bankDetailModel?.length == 1) {
@@ -80,10 +75,12 @@ class FaitDeposit extends Component {
         }
       }
     }
+    this.formRef.current.setFieldsValue({ ...depObj })
   }
   handlebankName = (e) => {
     let { depObj } = this.state;
     depObj.BankName = e;
+    depObj.Amount=null;
     for (var k in this.state.BankDetails) {
       if (this.state.BankDetails[k].bankName == e) {
         this.setState({
@@ -91,12 +88,28 @@ class FaitDeposit extends Component {
         });
       }
     }
+    this.formRef.current.setFieldsValue({ ...depObj })
   }
-
+  ConfirmDeposit=async()=>{
+    let {BankInfo,depObj}=this.state;
+    this.formRef.current.validateFields().then(async() => {
+      let createObj={"id":"00000000-0000-0000-0000-000000000000","bankId":BankInfo.bankId,"currency":depObj.currency,"bankName":BankInfo.bankName,"bankAddress":BankInfo.bankAddress,"amount":parseFloat(depObj.Amount),"accountNumber":BankInfo.accountNumber,"routingNumber":BankInfo.routingNumber,"swiftorBICCode":BankInfo.swiftCode,"benficiaryBankName":BankInfo.beneficiaryBank,"reference":BankInfo.reference,"benficiaryAccountAddrress":BankInfo.benficiaryAccountAddrress}
+      let Obj = await savedepositFiat(createObj);
+      if (Obj.ok == true) {
+        this.formRef.current.resetFields()
+        this.setState({
+          buyDrawer: false,
+          BankDetails: [], BankInfo: null,  depObj: { currency: null, BankName: null , Amount: null},
+          faitdeposit:false,
+          tabValue:1
+        });
+      } 
+  });
+  }
   render() {
     const { Paragraph, Text } = Typography;
     const link = <LinkValue content="terms_service" />;
-    const { faitdeposit, BankInfo } = this.state;
+    const { faitdeposit, BankInfo ,depObj} = this.state;
     const { currenciesWithBankInfo } = this.props.depositInfo;
     return (
       <>
@@ -108,38 +121,70 @@ class FaitDeposit extends Component {
           <Translate content="withdraw" component={Radio.Button} value={2} />
         </Radio.Group>
         {faitdeposit ?
-          <SellToggle selectedWallet={this.props?.tab?.walletCode}/>
-          : <><div className="suisfiat-container auto-scroll"><Translate
+          <SellToggle />
+          : <> <Form layout="vertical" initialValues={{ ...depObj }} on scrollToFirstError={true} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll"><Translate
             className="mb-0 text-white-30 fs-14 fw-200"
             content="desposite_text"
             component={Paragraph}
           />
-            <form className="form">
-              <div className="my-36">
-                <Translate
-                  className="input-label"
-                  content="currency"
-                  component={Text}
-                />
-                <Select dropdownClassName="select-drpdwn" placeholder="Select Currency" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-                  onChange={(e) => this.handlFiatDep(e, currenciesWithBankInfo)} value={this.state.depObj.currency}>
-                  {currenciesWithBankInfo?.map((item, idx) =>
-                    <Option key={idx} value={item.walletCode}>{item.walletCode}
-                    </Option>
-                  )}
-                </Select>
-                {this.state.BankDetails?.length > 1 && <><Translate
+                <div className="my-36">
+                
+              <Form.Item
+                className="custom-forminput mb-16"
+                name="currency"
+                required
+                rules={[
+                  { required: true, message: "Is required" },
+                ]}
+              ><div> <div className="d-flex"><Translate
+                className="input-label"
+                content="currency"
+                component={Text}
+              /><span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                  <Select dropdownClassName="select-drpdwn" placeholder="Select Currency" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+                    onChange={(e) => { this.handlFiatDep(e, currenciesWithBankInfo) }}>
+                    {currenciesWithBankInfo?.map((item, idx) =>
+                      <Option key={idx} value={item.walletCode}>{item.walletCode}
+                      </Option>
+                    )}
+                  </Select></div></Form.Item>
+                {this.state.BankDetails?.length > 1 &&<><Translate
                   className="input-label"
                   content="BankName"
                   component={Text}
                 />
                   <Select dropdownClassName="select-drpdwn" placeholder="Select Bank Name" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-                    onChange={(e) => this.handlebankName(e)} value={this.state.depObj.BankName}>
+                    onChange={(e) => {this.handlebankName(e)}}>
                     {this.state.BankDetails.map((item, idx) =>
                       <Option key={idx} value={item.bankName}>{item.bankName}
                       </Option>
                     )}
                   </Select></>}
+              <Form.Item
+                className="custom-forminput mb-16"
+                name="Amount"
+                required
+                rules={[
+                  { required: true, message: "Is required" },
+                ]}
+              > <div ><div className="d-flex">
+                <Translate
+                  className="input-label"
+                  content="amount"
+                  component={Text}
+
+                /><span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                  <NumberFormat className="cust-input" customInput={Input} thousandSeparator={true} prefix={""}
+                    placeholder="0.00"
+                    decimalScale={8}
+                    allowNegative={false}
+                    maxlength={24}
+                    onValueChange={({ value }) => {
+                      let { depObj } = this.state;depObj.Amount=value; this.formRef.current.setFieldsValue({ ...depObj })
+                    }}
+                  />
+
+                </div></Form.Item>
                 {this.state.BankInfo &&
                   // !fiatDepEur?
                   <>
@@ -147,8 +192,8 @@ class FaitDeposit extends Component {
                       {/* <span className="coin deposit-white mt-4" /> */}
                       <div style={{ flex: 1 }}>
                         <Paragraph className="mb-0 fs-16 text-white-30 fw-500 mt-16 text-upper">{BankInfo.bankName}</Paragraph>
-                        {/* <Paragraph className="mb-0 fs-12 text-white-30 fw-300">
-                  Innovative Concepts</Paragraph> */}
+                        <Paragraph className="mb-0 fs-12 text-white-30 fw-300">
+                        {BankInfo.benficiaryAccountAddrress}</Paragraph>
                         <Text className="text-white-30 fs-14">A/C </Text><Text copyable className="mb-0 fs-14 text-yellow fw-500">{BankInfo.accountNumber}</Text>
                       </div>
                     </div>
@@ -211,20 +256,22 @@ class FaitDeposit extends Component {
                     <Paragraph
                       className="fs-14 text-white-30 fw-200 l-height-normal"
                     ><span className="text-yellow">IMPORTANT:</span> This code identifies your deposit include this code when submitting the wire transfer in the transaction description or purpose</Paragraph>
+                 
+               
                   </>
                   // :<selectCurrency />
                 }
               </div>
-            </form>
+                <Button
+                  htmlType="submit"
+                  size="large"
+                  block
+                  className="pop-btn"
+                  >
+                  Confirm
+                </Button>
           </div>
-            {/* <Translate
-              content="confirm_btn_text"
-              component={Button}
-              size="large"
-              block
-              className="pop-btn mt-36"
-              onClick={() => this.props.changeStep("step2")}
-            /> */}
+         </Form>
           </>
         }
 
