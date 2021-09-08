@@ -277,5 +277,7 @@ export default {
   proceed: '行进',
   description: 'Description',
   withdrawal_success: 'Withdraw success',
-  dep_with_assets: "加密存款/取款"
+  dep_with_assets: "加密存款/取款",
+  userName:'行进',
+  manage_account:'加密存款/取款'
 }

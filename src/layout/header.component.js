@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Typography, Dropdown, Tabs, Row, Col, Divider, Avatar, Carousel, Switch, Drawer, notification } from 'antd';
+import { Layout, Menu, Modal, Typography, Dropdown, Tabs, Row, Col, Divider, Avatar, Carousel, Switch, Drawer, notification, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Link, withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
 import logoColor from '../assets/images/logo-color.png';
 import counterpart from 'counterpart';
@@ -17,6 +18,7 @@ import { userManager } from '../authentication';
 import Changepassword from '../components/changepassword';
 import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata,clearSwapData } from '../reducers/swapReducer';
 import { connect } from 'react-redux';
+import userProfile from '../assets/images/profile.png';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -71,11 +73,25 @@ class Header extends Component {
             </ul>
         </Menu>
     );
+    // userProfileMenu = (
+    //     <Menu>
+    //         <div className="profile-dropdown">
+    //         <img src={userProfile} className="user-profile"/>
+    //         <Translate className="fs-16 text-white my-16 fw-500 mx-30" content="userName" component={Title} />
+    //         <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={this.userProfile } />
+    //         <ul className="pl-0 drpdwn-list">
+    //         <li className="c-pointer px-0" onClick={() => userManager.signoutRedirect()}>
+    //                 <Translate content="logout" component={Link} />
+    //             </li>
+    //         </ul>
+    //         </div>
+    //     </Menu>  
+    // );
     settingMenu = (
         <Menu>
             <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="settings" component={Title} />
             <ul className="pl-0 drpdwn-list">
-                <li>
+                <li className>
                     <div className="dropdown-flex">
                         <Translate content="general" component={Link} />
                         <span className="icon md rarrow-white" />
@@ -169,6 +185,11 @@ class Header extends Component {
         this.next = this.next.bind(this);
         this.previous = this.previous.bind(this);
         this.carousel = React.createRef();
+        this.userProfile = this.userProfile.bind(this);
+    }
+    userProfile(){
+        debugger;
+        // this.props.history.push("/userprofile");
     }
     next() {
         this.carousel.next();
@@ -277,6 +298,20 @@ class Header extends Component {
         var win = window.open(url);
         
     }
+    userProfileMenu = (
+        <Menu>
+            <div className="profile-dropdown">
+            <img src={userProfile} className="user-profile"/>
+            <Translate className="fs-16 text-white my-16 fw-500 mx-30" content="userName" component={Title} />
+            <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={this.userProfile } />
+            <ul className="pl-0 drpdwn-list">
+            <li className="c-pointer px-0" onClick={() => userManager.signoutRedirect()}>
+                    <Translate content="logout" component={Link} />
+                </li>
+            </ul>
+            </div>
+        </Menu>  
+    );
     render() {
         const { initLoading, loading } = this.state;
         const link = <LinkValue content="medium" />;
@@ -320,12 +355,12 @@ class Header extends Component {
                                 <Translate content="menu_send_receive" component={Menu.Item} key="3" className="mr-16" />
                             </Dropdown>
                             {/* <Translate content="menu_mass_pay" component={Menu.Item} key="4" onClick={this.showBuyFiatDrawer} className="list-item" /> */}
-                            <Dropdown overlay={this.securityMenu} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                            {/* <Dropdown overlay={this.securityMenu} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Translate key="5" content="security" component={Menu.Item} />
-                            </Dropdown>
-                            <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
-                            <Dropdown overlay={this.settingMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                <Menu.Item key="7"><span className="icon md gear ml-4" /></Menu.Item>
+                            </Dropdown> */}
+                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
+                            <Dropdown overlay={this.userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                                <Menu.Item key="7"><img src={userProfile} className="user-profile"/></Menu.Item>
                             </Dropdown>
                         </Menu>
                     </menuHeader>
