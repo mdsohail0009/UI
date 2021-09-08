@@ -461,8 +461,9 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .profileinfo:first-child{border-top:0}
 .profileinfo.active, .profileinfo:hover{background: var(--bgOrient); margin-left: -32px; margin-right: -32px;}
 .profileinfo.active .profile-block, .profileinfo:hover .profile-block{padding: 0 32px}
-
-
+.cust-select {min-width: 250px;}
+.cust-select .ant-select-selection-placeholder{color:#ED4B9E !important;}
+.border-bottom{border-bottom: 1px solid var(--borderGrey);}
 
 
 @media (min-width: 320px){
