@@ -338,13 +338,11 @@ class Header extends Component {
                                 <li className="mb-d-none"><Translate content="header_title" with={{lable:this.props.userConfig?.isBusiness?" Business":" Personal"}} component="p" className="text-white-30 mb-0 fs-24" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
-                                <Dropdown overlay={this.securityMenu}  placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                    <Menu.Item key="5">Security</Menu.Item>
-                                </Dropdown>
+                               
                                 <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
-                                <Dropdown overlay={this.settingMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                    <Menu.Item key="7"><span className="icon md gear" /></Menu.Item>
-                                </Dropdown>
+                                <Dropdown overlay={this.userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                                <Menu.Item key="7"><img src={userProfile} className="user-profile"/></Menu.Item>
+                            </Dropdown>
                             </Menu>
                         </div>
                         <Menu theme="light" mode="horizontal" className="header-right" >

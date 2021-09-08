@@ -31,7 +31,7 @@ class userProfile extends Component {
         return (<>
             <div className="main-container">
                 <Row gutter={24}>
-                    <Col span={6} className="gutter-row">
+                    <Col xs={24} sm={24} md={6} lg={6} xl={6} className="gutter-row">
                         <div className="left-panel">
                         <ul className="user-list">
                             <li className="user-labels active mb-24" onClick={this.handleProfile}>
@@ -69,11 +69,11 @@ class userProfile extends Component {
                         </ul>
                         </div>
                     </Col>
-                    <Col span={18} className="gutter-row">
+                    <Col xs={24} sm={24} md={18} lg={18} xl={18} className="gutter-row">
                         <div className="right-panel">
-                            {this.state.isProfile  &&<ProfileInfo/>}
-                            {this.state.isSecurity && <Security/>} 
-                            {this.state.isSetting && <Settings/>}
+                            {this.state.isProfile  ?<ProfileInfo/>:""}
+                            {this.state.isSecurity? <Security/>:""} 
+                            {this.state.isSetting ? <Settings/>:""}
                         </div>
                     </Col>
                 </Row>
