@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col, Typography, Switch, Drawer } from 'antd'
 import Translate from 'react-translate-component';
 import Changepassword from '../../components/changepassword';
+import { connect } from 'react-redux';
 
 class Security extends Component {
     state = {
@@ -39,7 +40,7 @@ class Security extends Component {
                             <label className="mb-0 profile-label">Password</label>
                             <div style={{ flexGrow: 12 }}>
                                 <p className="mb-0 ml-8 profile-value"> ************</p>
-                                <p className="mb-0 ml-8 fs-14 text-white"> Johndoe@suissebase.com</p>
+                                <p className="mb-0 ml-8 fs-14 text-white"> {this.props.userConfig?.email}</p>
                             </div>
                             <div>
                                 <span className="icon md rarrow-white" />
@@ -72,4 +73,7 @@ class Security extends Component {
         </>)
     }
 }
-export default Security;
+const connectStateToProps = ({  userConfig }) => {
+    return {userConfig: userConfig.userProfileInfo }
+  }
+export default connect(connectStateToProps)(Security);
