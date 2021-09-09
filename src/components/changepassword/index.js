@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Button, Input, Form, Divider, Row, Col, notification, Typography, Alert } from 'antd';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeOutlined  } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
@@ -53,7 +53,7 @@ const ChangePassword = ({ userConfig }) => {
     setInitialValues(object);
   }
   return (<>
-    <div className="custom-formcard">
+    <div className="mt-16">
       <Form form={form}
         initialValues={{
           "Email": userConfig?.email,
@@ -98,7 +98,7 @@ const ChangePassword = ({ userConfig }) => {
           ]}
         >
 
-            <Input.Password placeholder="Current Password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeTwoTone />)} />
+            <Input.Password placeholder="Current Password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ?  <EyeOutlined style={{ color:'#fff'}}/> : <EyeInvisibleOutlined /> )} />
         </Form.Item>
         <div className="d-flex"> 
             <Translate
@@ -121,7 +121,7 @@ const ChangePassword = ({ userConfig }) => {
             placeholder="New Password"
             value={initialValues.Password}
             onChange={(e) => handleChange("Password", e)}
-            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeTwoTone />)}
+            className="text-left cust-input mb-8" iconRender={visible => (visible ?  <EyeOutlined style={{ color:'#fff'}}/> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
         <div className="d-flex">
@@ -134,6 +134,7 @@ const ChangePassword = ({ userConfig }) => {
           </div>
         <Form.Item
           required
+          className="custom-forminput mb-16"
           name="ConfirmPassword"
           dependencies={["password"]}
           //hasFeedback
@@ -159,11 +160,11 @@ const ChangePassword = ({ userConfig }) => {
             placeholder="Confirm Password"
             value={initialValues.ConfirmPassword}
             onChange={(e) => handleChange("ConfirmPassword", e)}
-            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeTwoTone />)}
+            className="text-left cust-input mb-8" iconRender={visible => (visible ?  <EyeOutlined style={{ color:'#fff'}}/> : <EyeInvisibleOutlined /> )}
           />
         </Form.Item>
 
-        <Form.Item className="mb-0 mt-16">
+        <div style={{marginTop:'50px'}}>
           <Button
             loading={changePasswordResponse.isLoading}
             htmlType="submit"
@@ -173,8 +174,8 @@ const ChangePassword = ({ userConfig }) => {
           >
             Submit
           </Button>
-          <div className="text-center fs-20 mt-16"><Link to="/dashboard" className="f-16 mt-16 text-underline">Back to Dashboard</Link></div>
-        </Form.Item>
+          <div className="text-center fs-20 mt-16"><Link to="/dashboard" className="fs-16 mt-16 text-white text-underline">Back to Dashboard</Link></div>
+        </div>
       </Form>
     </div>
   </>)

@@ -73,20 +73,21 @@ class Header extends Component {
             </ul>
         </Menu>
     );
-    // userProfileMenu = (
-    //     <Menu>
-    //         <div className="profile-dropdown">
-    //         <img src={userProfile} className="user-profile"/>
-    //         <Translate className="fs-16 text-white my-16 fw-500 mx-30" content="userName" component={Title} />
-    //         <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={this.userProfile } />
-    //         <ul className="pl-0 drpdwn-list">
-    //         <li className="c-pointer px-0" onClick={() => userManager.signoutRedirect()}>
-    //                 <Translate content="logout" component={Link} />
-    //             </li>
-    //         </ul>
-    //         </div>
-    //     </Menu>  
-    // );
+    userProfileMenu = (
+        <Menu>
+            <div className="profile-dropdown">
+            <img src={userProfile} className="user-profile"/>
+            <Translate className="fs-16 text-white my-16 fw-500 mx-30" content="userName" component={Title} />
+            {/* <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={this.userProfile } /> */}
+            <Link className="profile-btn" to="/userprofile" >Manage Your Account</Link>
+            <ul className="pl-0 drpdwn-list">
+            <li className="c-pointer px-0" onClick={() => userManager.signoutRedirect()}>
+                    <Translate content="logout" component={Link} />
+                </li>
+            </ul>
+            </div>
+        </Menu>  
+    );
     settingMenu = (
         <Menu>
             <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="settings" component={Title} />
@@ -298,20 +299,7 @@ class Header extends Component {
         var win = window.open(url);
         
     }
-    userProfileMenu = (
-        <Menu>
-            <div className="profile-dropdown">
-            <img src={userProfile} className="user-profile"/>
-            <Translate className="fs-16 text-white my-16 fw-500 mx-30" content="userName" component={Title} />
-            <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={this.userProfile } />
-            <ul className="pl-0 drpdwn-list">
-            <li className="c-pointer px-0" onClick={() => userManager.signoutRedirect()}>
-                    <Translate content="logout" component={Link} />
-                </li>
-            </ul>
-            </div>
-        </Menu>  
-    );
+   
     render() {
         const { initLoading, loading } = this.state;
         const link = <LinkValue content="medium" />;

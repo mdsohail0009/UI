@@ -471,6 +471,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .theme-active .switch-circle{background: var(--borderGrey);}
 .theme-txt{font-size: 14px; font-weight: 500; color: var(--textDark);}
 .theme-active .theme-txt{color: var(--textWhite);font-weight: 400;}
+.custom-forminput .cust-input .ant-input{text-align: center !important;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}

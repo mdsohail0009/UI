@@ -24,7 +24,7 @@ class RoutingComponent extends Component {
         <ReactRoute path="/onboading" component={OnBoarding} />
         <ReactRoute path='/userprofile' component={userProfile}/>
         {/* <Redirect to="/onboading" path="/" exact/> */}
-        {/* <Route path="/" component={Dashboard} /> */}
+        <Route path="/" component={Dashboard}  exact />
       </React.Suspense>
     </Switch>
   }
