@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Col, Typography } from 'antd'
 import userProfile from '../../assets/images/profile.png';
+import { connect } from 'react-redux';
+import Moment from 'react-moment'
 
 class ProfileInfo extends Component {
     render() {
@@ -16,7 +18,7 @@ class ProfileInfo extends Component {
                     <li className="profileinfo">
                         <div className="d-flex profile-block">
                           <label className="mb-0 profile-label" >Username</label>
-                            <p className="mb-0 ml-8 profile-value" style={{flexGrow:12}}>John_123</p>
+                            <p className="mb-0 ml-8 profile-value" style={{flexGrow:12}}>{this.props.userConfig.userName}</p>
                             <div >
                             <span className="icon md rarrow-white"  /></div>
                         </div>
@@ -24,7 +26,7 @@ class ProfileInfo extends Component {
                     <li className="profileinfo active">
                         <div className="d-flex profile-block ">
                           <label className="mb-0 profile-label" >Name</label>
-                            <p className="mb-0 ml-8 profile-value" style={{flexGrow:12}}>John Doe Mile</p>
+                            <p className="mb-0 ml-8 profile-value" style={{flexGrow:12}}>{this.props.userConfig.firstName} {this.props.userConfig.lastName}</p>
                             <div >
                             <span className="icon md rarrow-white" /></div>
                         </div>
@@ -32,7 +34,8 @@ class ProfileInfo extends Component {
                     <li className="profileinfo">
                         <div className="d-flex profile-block">
                           <label className="mb-0 profile-label" >Birthday</label>
-                            <p className="mb-0 ml-8 profile-value" style={{flexGrow:12}}>12/04/2000</p>
+                            <p className="mb-0 ml-8 profile-value" style={{flexGrow:12}}>
+                            <Moment format="DD/MM/YYYY">{this.props.userConfig.dob}</Moment></p>
                             <div >
                             <span className="icon md rarrow-white"  /></div>
                         </div>
@@ -40,7 +43,7 @@ class ProfileInfo extends Component {
                     <li className="profileinfo">
                         <div className="d-flex profile-block">
                           <label className="mb-0 profile-label">Country</label>
-                            <p className="mb-0 ml-8 profile-value" style={{flexGrow:12}}>India</p>
+                            <p className="mb-0 ml-8 profile-value" style={{flexGrow:12}}>{this.props.userConfig.country}</p>
                             <div >
                             <span className="icon md rarrow-white"  /></div>
                         </div>
@@ -54,7 +57,7 @@ class ProfileInfo extends Component {
                     <li className="profileinfo">
                         <div className="d-flex profile-block">
                           <label className="mb-0 profile-label">Email Address</label>
-                            <p className="mb-0 ml-8 profile-value" style={{flexGrow:12}}>Johndoe@suissebase.com</p>
+                            <p className="mb-0 ml-8 profile-value" style={{flexGrow:12}}>{this.props.userConfig.email}</p>
                             <div>
                             <span className="icon md rarrow-white"  /></div>
                         </div>
@@ -62,7 +65,7 @@ class ProfileInfo extends Component {
                     <li className="profileinfo active">
                         <div className="d-flex profile-block ">
                           <label className="mb-0 profile-label">Phone Number</label>
-                            <p className="mb-0 ml-8 profile-value" style={{flexGrow:12}}>4234354546</p>
+                            <p className="mb-0 ml-8 profile-value" style={{flexGrow:12}}>{this.props.userConfig.phoneNo}</p>
                             <div >
                             <span className="icon md rarrow-white"  /></div>
                         </div>
@@ -73,4 +76,7 @@ class ProfileInfo extends Component {
         </>)
     }
 }
-export default ProfileInfo;
+const connectStateToProps = ({  userConfig }) => {
+    return {userConfig: userConfig.userProfileInfo }
+  }
+export default  connect(connectStateToProps)(ProfileInfo);
