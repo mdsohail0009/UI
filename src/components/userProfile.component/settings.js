@@ -9,6 +9,10 @@ class Settings extends Component {
     }
     onChange = () => {
 
+        
+    }
+    themeSwitch=() =>{
+        
     }
     render() {
         const { Option } = Select;
@@ -41,7 +45,18 @@ class Settings extends Component {
                 </div>
                 <div className="pt-16">
                     <Text className="input-label">Theme</Text>
-                    
+                    <div className="d-flex">
+                    <div className="theme-switch theme-active" onClick={this.themeSwitch}>
+                        <div className="d-flex align-center">
+                            <p className="switch-circle mb-0"><span className="icon md check-arrow c-pointer"></span></p>
+                            <p className="mb-0 ml-16 theme-txt">Dark Theme</p></div>
+                    </div>
+                    <div className="theme-switch ml-24">
+                        <div className="d-flex align-center">
+                            <p className="switch-circle mb-0"><span></span></p>
+                            <p className="mb-0 ml-16 theme-txt">Light Theme</p></div>
+                    </div>
+                    </div>
                 </div>
             </div>
         </>)
