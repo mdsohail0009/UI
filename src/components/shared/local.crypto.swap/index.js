@@ -30,12 +30,16 @@ const LocalCryptoSwapper = (props, ref) => {
             setConvertionLoad(true);
             const value = await convertCurrency({ from: coin, to: "USD", value: inputvalue, isCrypto: !isSwaped })
             if (!isSwaped) {
-                setCryptoValue(value);
-            } else { setLocalValue(value) }
+                setCryptoValue(value||0);
+            } else { setLocalValue(value||0) }
             setConvertionLoad(false);
-            console.log({ cryptoValue: isSwaped ? inputvalue : value, localValue: isSwaped ? value : inputvalue, isSwaped })
             onChange({ cryptoValue: isSwaped ? inputvalue : value, localValue: isSwaped ? value : inputvalue, isSwaped });
         } else { 
+            if(isSwaped){
+                setLocalValue(0)
+            }else{
+                setCryptoValue(0)
+            }
             onChange({ cryptoValue: isSwaped ? inputvalue : null, localValue: isSwaped ? null : inputvalue, isSwaped });
         }
     }

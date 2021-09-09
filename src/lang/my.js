@@ -275,9 +275,10 @@ export default {
   note: 'Harap maklum bahawa kami menerima pemindahan yang dapat dialamatkan hanya di SEPA.',
   suisse_btn_refresh: "Klik untuk mendapatkan harga baru",
   proceed: 'magpatuloy',
-  description: 'Description',
-  withdrawal_success: 'Withdraw success',
-  dep_with_assets: "Deposit / Pengeluaran Kripto",
+description: 'Paglalarawan',
+withdrawal_success: 'Umatras ng tagumpay',
+dep_with_assets: "Deposit / Pengeluaran Kripto",
+remarks:'sinabi',
   userName:'John Huh',
   manage_account:'Manage your Account'
 

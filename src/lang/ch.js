@@ -275,9 +275,10 @@ export default {
   note: '请注意，我们接受只能在 SEPA 中寻址的传输。',
   suisse_btn_refresh: "點擊獲取新費率",
   proceed: '行进',
-  description: 'Description',
-  withdrawal_success: 'Withdraw success',
+  description: '描述',
+  withdrawal_success: '提現成功',
   dep_with_assets: "加密存款/取款",
-  userName:'行进',
-  manage_account:'加密存款/取款'
+  remarks: "評論",
+  userName: '行进',
+  manage_account: '加密存款/取款'
 }
