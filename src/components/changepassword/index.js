@@ -27,12 +27,20 @@ const ChangePassword = ({ userConfig }) => {
 
   }
   const saveUserPass = async (values) => {
+    let pwdregEx=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/;
+    let minLength=/^.{8,}$/
     if (values.CurrentPassword === values.Password) {
       //notify({ message: "Error", type: "error", description: "New password and re entered password must same" });
       setChangePasswordResponse({ error: true, messsage: "Current & New passwords should not be same!", isLoading: false });
 
+    }else if(!minLength.test(values.Password)){
+      setChangePasswordResponse({ error: true, messsage: "Password should be atleast 8 characters", isLoading: false });
+    }
+    else if(!pwdregEx.test(values.Password)){
+      setChangePasswordResponse({ error: true, messsage: "Passwords must have at least one non alphanumeric character. Passwords must have at least one lowercase ('a'-'z'). Passwords must have at least one uppercase ('A'-'Z').", isLoading: false });
     }
     else {
+      setChangePasswordResponse({ error: false, messsage: "", isLoading: true });
       const result = await changePassword(initialValues);
       if (result.ok) {
         setChangePasswordResponse({ error: false, messsage: 'Password changed successfully', isLoading: false });
