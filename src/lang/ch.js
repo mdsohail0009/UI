@@ -107,6 +107,7 @@ export default {
   sell_your_crypto_for_cash_text: '直接从您的钱包轻松买卖加密货币。',
   sell_your_fiat_for_cash: '出售您的法定货币以换取现金',
   menu_buy_sell: '买卖',
+  menu_transactions_history: '交易',
   menu_swap: '交换',
   menu_send_receive: '存款/取款',
   menu_mass_pay: '批量付款',

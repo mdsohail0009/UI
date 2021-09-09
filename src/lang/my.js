@@ -107,6 +107,7 @@ export default {
   sell_your_crypto_for_cash_text: 'Beli dan jual Crypto dengan mudah terus dari Wallet anda.',
   sell_your_fiat_for_cash: 'Jual Fiat anda dengan Wang Tunai',
   menu_buy_sell: 'Jual beli',
+  menu_transactions_history: 'Urus Niaga',
   menu_swap: 'Tukar',
   menu_send_receive: 'Deposit / Pengeluaran',
   menu_mass_pay: 'Pembayaran Massa',
