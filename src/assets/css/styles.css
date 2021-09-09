@@ -646,3 +646,14 @@ main.ant-layout-content{min-height: calc(100vh - 220px);}
 .share-adrs li{padding: 16px 20px 10px;}
 .share-adrs li:hover{background-color: var(--bgGrey);}
 .notice-nodata{display: flex; align-items: center;justify-content: center; height: 192px;}
+
+.transaction-tabs .ant-tabs-nav::before{border-bottom: none;}
+.transaction-tabs .ant-tabs-nav{margin-bottom: 15px;}
+.transaction-tabs .ant-drawer-body{padding: 10px 24px;}
+.transaction-tabs .ant-collapse-header{background: var(--bgDarkGrey) !important;color: #fff !important;}
+.transaction-tabs .ant-collapse{background: transparent;border: 1px solid #313c46;}
+.transaction-tabs .ant-collapse-content{background: transparent;border: none;}
+.transaction-tabs .ant-collapse > .ant-collapse-item{border-bottom: 1px solid #313c46;}
+.transaction-tabs .ant-collapse-item .ant-collapse-arrow svg{transform: scale(1.3);}
+.transaction-tabs .ant-collapse-item-active .ant-collapse-arrow svg{transform: rotate(90deg) scale(1.3) !important;}
+.alltab-space .ant-table{margin: -16px -16px 0;}

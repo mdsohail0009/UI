@@ -107,6 +107,7 @@ export default {
   sell_your_crypto_for_cash_text: 'Easily buy and sell Crypto straight from your Wallet.',
   sell_your_fiat_for_cash: 'Sell your Fiat for Cash',
   menu_buy_sell: 'Buy / Sell',
+  menu_transactions_history: 'Transactions',
   menu_swap: 'Swap',
   menu_send_receive: 'Deposit / Withdraw',
   menu_mass_pay: 'Mass Payments',

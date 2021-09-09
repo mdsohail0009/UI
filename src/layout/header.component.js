@@ -16,6 +16,7 @@ import SwapCrypto from '../components/swap.component'
 import MassPayment from '../components/buyfiat.component'
 import { userManager } from '../authentication';
 import Changepassword from '../components/changepassword';
+import TransactionsHistory from '../components/transactions.history.component';
 import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata,clearSwapData } from '../reducers/swapReducer';
 import { connect } from 'react-redux';
 import userProfile from '../assets/images/profile.png';
@@ -182,6 +183,7 @@ class Header extends Component {
             initLoading: true,
             buyFiatDrawer: false,
             showChangePassword: false,
+            transactionDrawer:false,
         }
         this.next = this.next.bind(this);
         this.previous = this.previous.bind(this);
@@ -237,6 +239,11 @@ class Header extends Component {
             //notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
         }
     }
+    showTransactionHistoryDrawer = () => {
+        this.setState({
+            transactionDrawer: true
+        })
+    }
     showSwapDrawer = () => {
         // this.setState({
         //     swapDrawer: true
@@ -287,6 +294,7 @@ class Header extends Component {
             sendDrawer: false,
             swapDrawer: false,
             buyFiatDrawer: false,
+            transactionDrawer: false
         })
     }
     enableDisable2fa = (status) => {
@@ -344,6 +352,7 @@ class Header extends Component {
                             {/* <Dropdown overlay={this.securityMenu} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Translate key="5" content="security" component={Menu.Item} />
                             </Dropdown> */}
+                             <Translate content="menu_transactions_history" component={Menu.Item} key="4" onClick={this.showTransactionHistoryDrawer} className="list-item" />
                              <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
                             <Dropdown overlay={this.userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Menu.Item key="7"><img src={userProfile} className="user-profile"/></Menu.Item>
@@ -565,6 +574,7 @@ class Header extends Component {
                 <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
                 <SwapCrypto swapRef={(cd) => this.child = cd}  showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
                 <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
+                <TransactionsHistory showDrawer={this.state.transactionDrawer} onClose={() => this.closeDrawer()}/>
                 <Drawer
                     title={[<div className="side-drawer-header">
                         <span onClick={() => this.setState({ ...this.state, showChangePassword: false })} className="icon md close-white c-pointer" />
