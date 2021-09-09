@@ -278,5 +278,7 @@ export default {
   description: '描述',
   withdrawal_success: '提現成功',
   dep_with_assets: "加密存款/取款",
-  remarks: "評論"
+  remarks: "評論",
+  userName: '行进',
+  manage_account: '加密存款/取款'
 }

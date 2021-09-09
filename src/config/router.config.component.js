@@ -9,6 +9,7 @@ const Twofa = React.lazy(() => import('../components/twofa'));
 const SumSub = React.lazy(() => import('../components/sumSub.component/sumsub'));
 const NotKyc = React.lazy(() => import('../components/sumSub.component/notKyc'));
 const OnBoarding = React.lazy(() => import('../layout/onboard.component'));
+const userProfile = React.lazy(() => import('../components/userProfile.component/userProfile'));
 class RoutingComponent extends Component {
   render() {
     return <Switch>
@@ -21,7 +22,9 @@ class RoutingComponent extends Component {
         <ReactRoute path="/sumsub" component={SumSub} />
         <ReactRoute path="/notkyc" component={NotKyc} />
         <ReactRoute path="/onboading" component={OnBoarding} />
-        <Redirect to="/onboading" path="/" exact/>
+        <ReactRoute path='/userprofile' component={userProfile}/>
+        {/* <Redirect to="/onboading" path="/" exact/> */}
+        <Route path="/" component={Dashboard}  exact />
       </React.Suspense>
     </Switch>
   }

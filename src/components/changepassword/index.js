@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import { Button, Input, Form, Divider, Row, Col, notification, Typography, Alert } from 'antd';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeOutlined  } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
@@ -27,12 +27,20 @@ const ChangePassword = ({ userConfig }) => {
 
   }
   const saveUserPass = async (values) => {
+    let pwdregEx=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/;
+    let minLength=/^.{8,}$/
     if (values.CurrentPassword === values.Password) {
       //notify({ message: "Error", type: "error", description: "New password and re entered password must same" });
       setChangePasswordResponse({ error: true, messsage: "Current & New passwords should not be same!", isLoading: false });
 
+    }else if(!minLength.test(values.Password)){
+      setChangePasswordResponse({ error: true, messsage: "Password should be atleast 8 characters", isLoading: false });
+    }
+    else if(!pwdregEx.test(values.Password)){
+      setChangePasswordResponse({ error: true, messsage: "Passwords must have at least one non alphanumeric character. Passwords must have at least one lowercase ('a'-'z'). Passwords must have at least one uppercase ('A'-'Z').", isLoading: false });
     }
     else {
+      setChangePasswordResponse({ error: false, messsage: "", isLoading: true });
       const result = await changePassword(initialValues);
       if (result.ok) {
         setChangePasswordResponse({ error: false, messsage: 'Password changed successfully', isLoading: false });
@@ -53,7 +61,7 @@ const ChangePassword = ({ userConfig }) => {
     setInitialValues(object);
   }
   return (<>
-    <div className="custom-formcard mt-36">
+    <div className="mt-16">
       <Form form={form}
         initialValues={{
           "Email": userConfig?.email,
@@ -71,7 +79,7 @@ const ChangePassword = ({ userConfig }) => {
             />
           </Typography>
         )}
-        <Translate
+        {/* <Translate
           content="Change_password"
           component={Title}
           className="mb-0 fs-24 text-white-30 fw-400"
@@ -80,7 +88,7 @@ const ChangePassword = ({ userConfig }) => {
           content="Choose_a_unique_password_to_protect_your_account"
           component={Paragraph}
           className="mt-36 mb-16 fs-14 text-white-30 fw-400"
-        />
+        /> */}
         <div className="d-flex">
           <Translate
             className="text-white input-label mb-0"
@@ -98,7 +106,7 @@ const ChangePassword = ({ userConfig }) => {
           ]}
         >
 
-            <Input.Password placeholder="Current Password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeTwoTone />)} />
+            <Input.Password placeholder="Current Password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ?  <EyeOutlined style={{ color:'#fff'}}/> : <EyeInvisibleOutlined /> )} />
         </Form.Item>
         <div className="d-flex"> 
             <Translate
@@ -121,7 +129,7 @@ const ChangePassword = ({ userConfig }) => {
             placeholder="New Password"
             value={initialValues.Password}
             onChange={(e) => handleChange("Password", e)}
-            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeTwoTone />)}
+            className="text-left cust-input mb-8" iconRender={visible => (visible ?  <EyeOutlined style={{ color:'#fff'}}/> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
         <div className="d-flex">
@@ -134,6 +142,7 @@ const ChangePassword = ({ userConfig }) => {
           </div>
         <Form.Item
           required
+          className="custom-forminput mb-16"
           name="ConfirmPassword"
           dependencies={["password"]}
           //hasFeedback
@@ -159,11 +168,11 @@ const ChangePassword = ({ userConfig }) => {
             placeholder="Confirm Password"
             value={initialValues.ConfirmPassword}
             onChange={(e) => handleChange("ConfirmPassword", e)}
-            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeTwoTone />)}
+            className="text-left cust-input mb-8" iconRender={visible => (visible ?  <EyeOutlined style={{ color:'#fff'}}/> : <EyeInvisibleOutlined /> )}
           />
         </Form.Item>
 
-        <Form.Item className="mb-0 mt-16">
+        <div style={{marginTop:'50px'}}>
           <Button
             loading={changePasswordResponse.isLoading}
             htmlType="submit"
@@ -173,8 +182,8 @@ const ChangePassword = ({ userConfig }) => {
           >
             Submit
           </Button>
-          <div className="text-center fs-20 mt-16"><Link to="/dashboard" className="f-16 mt-16 text-underline">Back to Dashboard</Link></div>
-        </Form.Item>
+          <div className="text-center fs-20 mt-16"><Link to="/dashboard" className="fs-16 mt-16 text-white text-underline">Back to Dashboard</Link></div>
+        </div>
       </Form>
     </div>
   </>)

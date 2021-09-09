@@ -284,8 +284,10 @@ export default {
   withdrawal_success: 'Withdraw success',
   dep_with_assets: "Crypto Deposit / Withdraw",
   links: "%(link)s",
-  remarks: "Remarks",
-  Country:"Country",
-  state:'State',
-  zipcode:'Zip code'
+remarks: "Remarks",
+Country:"Country",
+state:'State',
+zipcode:'Zip code',
+  userName:'John Huh',
+  manage_account:'Manage your Account'
 }

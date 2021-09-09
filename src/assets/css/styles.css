@@ -98,6 +98,16 @@ line-height: 16px;min-width:90px}
 .icon.md.swaparrow{background-position: -236px -35px}
 .icon.md.sentarrow{background-position: -307px -35px}
 .icon.md.recivearrow{background-position: -338px -35px}
+.icon.md.check-arrow{background-position: -366px -36px}
+.icon.lg.profile-icon{background-position: -4px -329px}
+.icon.lg.security-icon{background-position:-107px -330px}
+.icon.lg.settings-icon{background-position: -38px -330px}
+.icon.lg.info-icon{background-position:-73px -330px}
+.user-labels.active .icon.lg.profile-icon,.user-labels:hover .icon.lg.profile-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.profile-icon, .ant-tabs-tab:hover .icon.lg.profile-icon{background-position: -3px -363px} 
+.user-labels.active .icon.lg.security-icon, .user-labels:hover .icon.lg.security-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.security-icon,.ant-tabs-tab:hover .icon.lg.security-icon{background-position:-107px -363px}
+.user-labels.active .icon.lg.settings-icon, .user-labels:hover .icon.lg.settings-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.settings-icon,.ant-tabs-tab:hover .icon.lg.settings-icon{background-position:-38px -363px}
+.user-labels.active .icon.lg.info-icon, .user-labels:hover .icon.lg.info-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.info-icon,.ant-tabs-tab:hover .icon.lg.info-icon{background-position:-72px -363px}
+
 .icon.sm{width: 12px; height: 12px;}
 .icon.sm.downarrow{background-position: -107px -4px;}
 .icon.sm.uparrow{background-position: -87px -4px;}
@@ -433,6 +443,45 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .widthdraw-pop .ant-modal-close-x{position: absolute;right: 0;width: 22px;height: 22px;line-height: 22px;top: 16px;right: 16px;}
 .markets-panel .ant-table-tbody > tr.ant-table-placeholder:hover > td{background-color: transparent;}
 .markets-panel .ant-table-tbody > tr.ant-table-placeholder > td{border-bottom: none !important;}
+.user-profile{ border-radius: 50%; background: var(--bgDarkGrey); margin-left: 12px;}
+.profile-dropdown .user-profile{width:112px;height: 112px; border-radius: 50%;display: block;margin: 0 auto;}
+.profile-dropdown {text-align: center;padding:12px 34px;}
+.profile-dropdown .drpdwn-list{padding-top: 52px; padding-left: 0; padding-right: 0;}
+.profile-btn, .profile-btn:hover, .profile-btn:active, .profile-btn:focus{background: var(--bgDarkGrey);border: 1px solid #ED4B9E;height: 32px;border-radius: 17px;color: #ffff; text-transform: uppercase; font-size: 12px;font-weight: normal;margin-top: 10px;padding: 10px 14px ;}
+.user-labels{padding:12px; font-size: 16px; font-weight: 600; color: var(--textWhite); margin-bottom: 0; margin-left:8px}
+.user-list{list-style: none;}
+.user-labels.active, .user-labels:hover{background: var(--bgDarkYellow);font-weight: 700; border-radius: 30px; padding:12px; color: var(--textDark);}
+.profile-info .user-profile{width:160px;height: 160px; border-radius: 50%; background: var(--bgDarkGrey); border: 3px solid var(--bgDark);padding: 4px;}
+.basic-info,.contact-info{padding: 24px;}
+.basicinfo{ font-weight: 600 !important; color: var(--textWhite30) !important; line-height: 28px !important;}
+.basic-decs{font-size: 16px; font-weight: 400; color: var(--textWhite30);}
+/* .right-panel{padding: 0 60px;} */
+.profile-label{font-size: 14px; color: var(--textWhite30); font-weight: 400; width:150px}
+.profile-value{font-size: 16px; color: var(--textWhite30); font-weight: 700;}
+.profileinfo{padding: 32px 0; border-top:1px solid var(--borderGrey); cursor: pointer;}
+.profileinfo:first-child{border-top:0}
+.profileinfo.active, .profileinfo:hover{background: var(--bgOrient); margin-left: -32px; margin-right: -32px;}
+.profileinfo.active .profile-block, .profileinfo:hover .profile-block{padding: 0 32px}
+.cust-select {min-width: 250px;}
+.cust-select .ant-select-selection-placeholder{color:#ED4B9E !important;}
+.border-bottom{border-bottom: 1px solid var(--borderGrey);}
+.theme-switch {width: 212px;background: var(--bgWhite30); border-radius: 30px;height: 52px; padding: 7px 10px}
+.theme-switch.theme-active{background: var(--bgDark);}
+.switch-circle { width: 39px; height: 39px; border-radius: 50%;padding: 8px; background: #d5d7d8;}
+.theme-active .switch-circle{background: var(--borderGrey);}
+.theme-txt{font-size: 14px; font-weight: 500; color: var(--textDark);}
+.theme-active .theme-txt{color: var(--textWhite);font-weight: 400;}
+.custom-forminput .cust-input .ant-input{text-align: center !important;}
+.user-list .ant-tabs-nav{width: 265px;}
+.user-list .ant-tabs-tab{padding:12px; font-size: 16px; font-weight: 600; color: var(--textWhite); margin-bottom: 0;padding: 12px !important;}
+.user-list.ant-tabs-left > .ant-tabs-content-holder{border-left: 0 !important;}
+.user-list .ant-tabs-content.ant-tabs-content-left{padding-left: 65px;}
+.user-list .ant-tabs-tab.ant-tabs-tab-active,.user-list .ant-tabs-tab:hover {background: var(--bgDarkYellow);font-weight: 600; border-radius: 30px; padding:12px; color: var(--textDark);}
+.user-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textWhite);}
+.user-list .ant-tabs-ink-bar {background: transparent !important;}
+
+
+
 
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
@@ -475,6 +524,9 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .portfolio-list .mobile-list .ant-list-item{display: flex;}
 }
 @media (max-width: 991px){
+    .user-profile{width:42px;height: 42px;}
+    .basicinfo{font-size: 20px !important;}
+    .user-list{padding-left: 0;}
     .mobile-list .ant-list-item{display: block; border-bottom: 1px solid  var(--borderLight) !important;}
     .mobile-list .custom-btn, .crypto_btns .custom-btn{min-width:50%;}
     .mobile-list .custom-btn:first-child{margin-left: 0 !important;}
@@ -516,6 +568,9 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .side-drawer .ant-drawer-header{padding:20px !important}
 }
 @media (min-width: 992px){
+    .user-profile{width:52px;height: 52px;}
+    .basicinfo{font-size: 24px !important;}
+    .right-panel{padding: 0 60px;}
     .tlv-header{padding: 24px 32px !important;}
     .summary-count{display: inline-block;vertical-align: top;}
     .markets-panel{margin-right: 40px;}
