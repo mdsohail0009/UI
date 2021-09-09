@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col, Typography, Switch, Drawer } from 'antd'
 import Translate from 'react-translate-component';
-import ChangePassword from './changePassword';
+import Changepassword from '../../components/changepassword';
 
 class Security extends Component {
     state = {
@@ -65,7 +65,7 @@ class Security extends Component {
                 className="side-drawer"
             >
                 <Paragraph className="mb-0 ml-8 fs-14 text-white mt-16 fw-200">Choose a unique password to protect your account</Paragraph>
-                <ChangePassword onSubmit={() => { this.setState({ ...this.state, isChangepassword: false }) }} />
+                <Changepassword onSubmit={() => { this.setState({ ...this.state, showChangePassword: false }) }} />
             </Drawer>
 
 

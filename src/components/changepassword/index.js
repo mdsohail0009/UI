@@ -53,7 +53,7 @@ const ChangePassword = ({ userConfig }) => {
     setInitialValues(object);
   }
   return (<>
-    <div className="custom-formcard mt-36">
+    <div className="custom-formcard">
       <Form form={form}
         initialValues={{
           "Email": userConfig?.email,
@@ -71,7 +71,7 @@ const ChangePassword = ({ userConfig }) => {
             />
           </Typography>
         )}
-        <Translate
+        {/* <Translate
           content="Change_password"
           component={Title}
           className="mb-0 fs-24 text-white-30 fw-400"
@@ -80,7 +80,7 @@ const ChangePassword = ({ userConfig }) => {
           content="Choose_a_unique_password_to_protect_your_account"
           component={Paragraph}
           className="mt-36 mb-16 fs-14 text-white-30 fw-400"
-        />
+        /> */}
         <div className="d-flex">
           <Translate
             className="text-white input-label mb-0"
