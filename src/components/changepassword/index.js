@@ -12,7 +12,7 @@ notification.config({
   placement: "topRight",
   rtl: true
 });
-const ChangePassword = ({ userConfig }) => {
+const ChangePassword = ({ userConfig,onSubmit }) => {
   const [initialValues, setInitialValues] = useState({
     "Email": userConfig?.email,
     "CurrentPassword": "",
@@ -45,6 +45,7 @@ const ChangePassword = ({ userConfig }) => {
       if (result.ok) {
         setChangePasswordResponse({ error: false, messsage: 'Password changed successfully', isLoading: false });
         form.resetFields();
+        onSubmit()
       }
       else {
         setChangePasswordResponse({ error: true, messsage: result.data, isLoading: false });

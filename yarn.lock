@@ -2318,6 +2318,11 @@
     "@progress/kendo-react-common" "4.8.0"
     prop-types "^15.6.0"
 
+"@progress/kendo-theme-default@^4.41.1":
+  version "4.41.1"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-theme-default/-/kendo-theme-default-4.41.1.tgz#3c8e6a0d90e1af20602fa55f520d97dd7be82b3b"
+  integrity sha512-IAusp+H85Ero4RJzuuTV/ymXHVq4IaFIRS3W+3SwHBMXSC+Bi6dk38K046SjDO8ROXxrG4C15roUeX3wSIgMUg==
+
 "@progress/pako-esm@^1.0.1":
   version "1.0.1"
   resolved "https://registry.npmjs.org/@progress/pako-esm/-/pako-esm-1.0.1.tgz"
