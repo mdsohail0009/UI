@@ -107,7 +107,6 @@ line-height: 16px;min-width:90px}
 .user-labels.active .icon.lg.security-icon, .user-labels:hover .icon.lg.security-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.security-icon,.ant-tabs-tab:hover .icon.lg.security-icon{background-position:-107px -363px}
 .user-labels.active .icon.lg.settings-icon, .user-labels:hover .icon.lg.settings-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.settings-icon,.ant-tabs-tab:hover .icon.lg.settings-icon{background-position:-38px -363px}
 .user-labels.active .icon.lg.info-icon, .user-labels:hover .icon.lg.info-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.info-icon,.ant-tabs-tab:hover .icon.lg.info-icon{background-position:-72px -363px}
-
 .icon.sm{width: 12px; height: 12px;}
 .icon.sm.downarrow{background-position: -107px -4px;}
 .icon.sm.uparrow{background-position: -87px -4px;}
@@ -250,8 +249,6 @@ line-height: 16px;min-width:90px}
 .coin.md.XRP{background-position: -376px -404px;}
 .coin.md.BUSD{background-position: -563px -404px;}
 .coin.md.DOGE{background-position:-436px -404px;}
-
-
 .coin.md.usd{background-position: -79px -1112px}
 .coin.md.btc-white{background-position: 1px -405px}
 .coin.md.eth-white{background-position: -48px -405px}
@@ -266,6 +263,7 @@ line-height: 16px;min-width:90px}
 .expiry-input{width: 200px;}
 .expiry-input input{width: 50px; padding: 0 4px;height: 50px;}
 .cust-input, .expiry-input,.cust-input .ant-input{background: transparent;border-radius: 30px;height: 50px;border: 1px solid var(--borderLight);color: var(--textWhite30); text-align: center;margin-bottom: 20px;font-size: 16px;padding: 0 16px !important; }
+.cust-input[disabled]{background-color: transparent;color: var(--textSecondary);border-color: inherit !important;}
 .input-label{color: var(--textWhite30); font-size: 14px;font-weight: 200;margin-left: 12px;margin-bottom: 8px !important; display: block;}
 .error-text{position: absolute; right: 0; top: 4px;color: var(--textError);}
 .cust-input .ant-select-selector, .cust-input .ant-input{background-color: transparent;}
@@ -479,10 +477,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .user-list .ant-tabs-tab.ant-tabs-tab-active,.user-list .ant-tabs-tab:hover {background: var(--bgDarkYellow);font-weight: 600; border-radius: 30px; padding:12px; color: var(--textDark);}
 .user-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textWhite);}
 .user-list .ant-tabs-ink-bar {background: transparent !important;}
-
-
-
-
+.anticon-copy svg, .anticon-check svg{color: var(--textYellow);}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}
