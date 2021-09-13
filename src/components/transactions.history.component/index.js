@@ -12,20 +12,30 @@ function collapseGrids(key) {
 
 const columns = [
   { field: "txDate", title: "Tx Date", width: 150, filterType: "date", filter: true, },
-  { field: "memberid", title: "Member Id", width: 150,filter: true, },
+  { field: "memberId", title: "Member Id", width: 150,filter: true, },
   { field: "credit", title: "Credit", filter: true, width: 160 },
   { field: "debit", title: "Debit", filter: true, width: 180 },
   { field: "status", title: "Status", filter: true, width: 200 },
   { field: "description", title: "Description", filter: true, width: 200 },
-  { field: "transactionid", title: "Transaction Id", filter: true, width: 250 }
+  { field: "transactionId", title: "Transaction Id", filter: true, width: 250 }
 ];
 
 
 class TransactionsHistory extends Component { 
-  state = {
-    gridUrl: "https://tstget.suissebase.ch/api/v1/Transaction/TransactionHistoryk",key:1
+  componentDidMount(){
+    this.props.thref(this)
   }
-  
+  state = {
+    gridUrl: "https://tstget.suissebase.ch/api/v1/Transaction/TransactionHistoryk", activeTab: "1"
+  }
+  setKy=()=>{
+    this.setState({activeTab:'1'})
+  }
+  changeTab = activeKey => {
+    this.setState({
+      activeTab: activeKey
+    });
+  };
   render() {
     const {gridUrl}=this.state
     return (
@@ -44,12 +54,12 @@ class TransactionsHistory extends Component {
           className="side-drawer-full"
         >
           <div className="transaction-tabs">
-            <Tabs className="crypto-list-tabs">
-              <TabPane tab="All" key={this.state.key} className="alltab-space">
+            <Tabs className="crypto-list-tabs" activeKey={this.state.activeTab} onChange={this.changeTab}>
+              <TabPane tab="All" key='1' className="alltab-space" onClick={()=>  this.changeTab("1")}>
               <Collapse defaultActiveKey={['1']} onChange={collapseGrids} className="mb-16">
                 <Panel header="Buy/Sell" key="1">
                   {/* <Table columns={columns}   /> */}
-                  <HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{screenName: 'Buy' }}></HistoryGridComponent>
+                  <HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{screenName: 'BuyandSell' }}></HistoryGridComponent>
                 </Panel>
                 </Collapse>
 
@@ -61,19 +71,19 @@ class TransactionsHistory extends Component {
 
                 <Collapse onChange={collapseGrids}>
                 <Panel header="Deposit/Withdraw" key="3">
-                <HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{screenName: 'Deposit' }}></HistoryGridComponent>
+                <HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{screenName: 'DepositandWithdraw' }}></HistoryGridComponent>
                 </Panel>
               </Collapse>
               </TabPane>
 
-              <TabPane tab="Buy/Sell" key="2">
-              <HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{screenName: 'Buy' }}></HistoryGridComponent>
+              <TabPane tab="Buy/Sell" key='2' onClick={()=>  this.changeTab("2")}>
+              <HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{screenName: 'BuyandSell' }}></HistoryGridComponent>
               </TabPane>
-              <TabPane tab="Swap" key="3">
+              <TabPane tab="Swap" key='3' onClick={()=>  this.changeTab("3")}>
               <HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{screenName: 'Swap' }}></HistoryGridComponent>
               </TabPane>
-              <TabPane tab="Deposit/Withdraw" key="4">
-              <HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{screenName: 'Deposit' }}></HistoryGridComponent>
+              <TabPane tab="Deposit/Withdraw" key='4' onClick={()=> this.changeTab("4")}>
+              <HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{screenName: 'DepositandWithdraw' }}></HistoryGridComponent>
               </TabPane>
             </Tabs>
             </div>

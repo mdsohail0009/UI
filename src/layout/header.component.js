@@ -586,7 +586,7 @@ class Header extends Component {
                 <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
                 <SwapCrypto swapRef={(cd) => this.child = cd}  showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
                 <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
-                <TransactionsHistory showDrawer={this.state.transactionDrawer} onClose={() => this.closeDrawer()}/>
+                <TransactionsHistory showDrawer={this.state.transactionDrawer} onClose={() => {this.closeDrawer();if(this.child1){this.child1.setKy()}}} thref={(cd)=>this.child1=cd}/>
                 <Drawer
                     title={[<div className="side-drawer-header">
                         <span onClick={() => this.setState({ ...this.state, showChangePassword: false })} className="icon md close-white c-pointer" />
