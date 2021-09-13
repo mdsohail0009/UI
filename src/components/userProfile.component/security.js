@@ -3,12 +3,15 @@ import { Row, Col, Typography, Switch, Drawer } from 'antd'
 import Translate from 'react-translate-component';
 import Changepassword from '../../components/changepassword';
 import { connect } from 'react-redux';
+import { updatechange } from '../../reducers/UserprofileReducer';
+import {store} from '../../store'
 
 const Security =({userConfig,onChange})=> {
     const [isChangepassword,setisChangepassword]=useState(false)
     
     const showDrawer = () => {
-        setisChangepassword(true)
+        setisChangepassword(true);
+        store.dispatch(updatechange())
     }
     const onClose = () => {
         setisChangepassword(false)

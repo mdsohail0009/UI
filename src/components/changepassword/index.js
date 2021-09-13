@@ -12,7 +12,7 @@ notification.config({
   placement: "topRight",
   rtl: true
 });
-const ChangePassword = ({ userConfig,onSubmit }) => {
+const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
   const [initialValues, setInitialValues] = useState({
     "Email": userConfig?.email,
     "CurrentPassword": "",
@@ -23,6 +23,12 @@ const ChangePassword = ({ userConfig,onSubmit }) => {
   const [form] = Form.useForm();
   const [requiredMark, setRequiredMarkType] = useState('required');
   const [changePasswordResponse, setChangePasswordResponse] = useState({ error: false, messsage: "", isLoading: false });
+  useEffect(() => {
+    if (userProfile?.isNew) {
+      setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
+      form.resetFields();
+    }
+  }, [userProfile])
   const onFinishFailed = (error) => {
 
   }
@@ -190,8 +196,8 @@ const ChangePassword = ({ userConfig,onSubmit }) => {
   </>)
 }
 
-const connectStateToProps = ({ buySell, oidc, userConfig }) => {
-  return { buySell, userConfig: userConfig.userProfileInfo }
+const connectStateToProps = ({ buySell, oidc, userConfig,userProfile }) => {
+  return { buySell, userConfig: userConfig.userProfileInfo,userProfile }
 }
 const connectDispatchToProps = dispatch => {
   return {
