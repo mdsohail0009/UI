@@ -657,3 +657,20 @@ main.ant-layout-content{min-height: calc(100vh - 220px);}
 .transaction-tabs .ant-collapse-item .ant-collapse-arrow svg{transform: scale(1.3);}
 .transaction-tabs .ant-collapse-item-active .ant-collapse-arrow svg{transform: rotate(90deg) scale(1.3) !important;}
 .alltab-space .ant-table{margin: -16px -16px 0;}
+
+.k-grid-header, .k-grouping-header, .k-grid-add-row, .k-grid-footer {
+    color: #fff !important;
+    background-color: transparent !important;
+}
+.k-grid-content, .k-grid {
+    background-color: transparent !important;
+    color: #fff !important;
+}
+
+.k-grid tbody tr:hover, .k-grid tbody tr.k-state-hover {
+    background-color: #313c46 !important;
+}
+.k-pager-wrap {
+    color: #fff;
+    background-color: transparent;
+}

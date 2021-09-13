@@ -17,6 +17,7 @@ import MassPayment from '../components/buyfiat.component'
 import { userManager } from '../authentication';
 import Changepassword from '../components/changepassword';
 import TransactionsHistory from '../components/transactions.history.component';
+import AuditLogs from '../components/auditlogs.component';
 import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata,clearSwapData } from '../reducers/swapReducer';
 import { connect } from 'react-redux';
 import userProfile from '../assets/images/profile.png';
@@ -82,9 +83,12 @@ class Header extends Component {
             {/* <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={this.userProfile } /> */}
             <Link className="profile-btn" to="/userprofile" >Manage Your Account</Link>
             <ul className="pl-0 drpdwn-list">
+            <li className="c-pointer px-0">
+               <Link onClick={this.showAuditLogsDrawer}>Audit Logs</Link>
+            </li>
             <li className="c-pointer px-0" onClick={() => userManager.signoutRedirect()}>
                     <Translate content="logout" component={Link} />
-                </li>
+            </li>
             </ul>
             </div>
         </Menu>  
@@ -184,6 +188,7 @@ class Header extends Component {
             buyFiatDrawer: false,
             showChangePassword: false,
             transactionDrawer:false,
+            auditlogsDrawer:false
         }
         this.next = this.next.bind(this);
         this.previous = this.previous.bind(this);
@@ -244,6 +249,12 @@ class Header extends Component {
             transactionDrawer: true
         })
     }
+    showAuditLogsDrawer = () => {
+        this.setState({
+            auditlogsDrawer:true
+        })
+    }
+
     showSwapDrawer = () => {
         // this.setState({
         //     swapDrawer: true
@@ -294,7 +305,8 @@ class Header extends Component {
             sendDrawer: false,
             swapDrawer: false,
             buyFiatDrawer: false,
-            transactionDrawer: false
+            transactionDrawer: false,
+            auditlogsDrawer:false
         })
     }
     enableDisable2fa = (status) => {
@@ -592,7 +604,9 @@ class Header extends Component {
                 >
                     <Changepassword onSubmit={() => { this.setState({ ...this.state, showChangePassword: false }) }} />
                 </Drawer>
+                <AuditLogs showDrawer={this.state.auditlogsDrawer} onClose={() => this.closeDrawer()}/>
             </>
+            
         );
     }
 }

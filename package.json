@@ -16,6 +16,7 @@
     "@progress/kendo-react-inputs": "^4.8.0",
     "@progress/kendo-react-intl": "^4.8.0",
     "@progress/kendo-react-treeview": "^4.8.0",
+    "@progress/kendo-theme-default": "^4.41.1",
     "@reduxjs/toolkit": "^1.5.1",
     "@sumsub/websdk": "^1.1.0",
     "@testing-library/jest-dom": "^5.11.4",

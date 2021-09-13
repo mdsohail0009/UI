@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import '@progress/kendo-theme-default/dist/all.css';
 import App from './components/app.component/App';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.css'
