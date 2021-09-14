@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Input, Button, label, Select, Radio, Tabs, Form } from 'antd';
+import { Typography, Input, Button, label, Select, Radio, Tabs, Form,Alert,Modal ,Tooltip} from 'antd';
 import { Link } from 'react-router-dom';
 import { changeStep, setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -11,6 +11,7 @@ import NumberFormat from 'react-number-format';
 import { getCurrencieswithBankDetails } from '../../reducers/depositReducer'
 import { savedepositFiat, requestDepositFiat } from './api';
 import Loader from '../../Shared/loader';
+import success from '../../assets/images/success.png';
 
 const LinkValue = (props) => {
   return (
@@ -31,7 +32,7 @@ class FaitDeposit extends Component {
     fiatDepEur: false,
     faitdeposit: false,
     BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null },
-    tabValue: 1, Loader: false
+    tabValue: 1, Loader: false,isTermsAgreed:false,errorMessage:null,showSuccessMsg:false
   }
   componentDidMount() {
     this.props.fiatRef(this)
@@ -71,12 +72,12 @@ class FaitDeposit extends Component {
           let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
           if (reqdepositObj.ok == true) {
             this.setState({
-              ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], depObj: depObj, Loader: false
+              ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], depObj: depObj, Loader: false,isTermsAgreed:false
             });
           }
         } else {
           this.setState({
-            ...this.state, fiatDepEur: e === "EUR", BankDetails: currencyLu[k].bankDetailModel, BankInfo: null, depObj: depObj
+            ...this.state, fiatDepEur: e === "EUR", BankDetails: currencyLu[k].bankDetailModel, BankInfo: null, depObj: depObj,isTermsAgreed:false
           });
         }
       }
@@ -93,7 +94,7 @@ class FaitDeposit extends Component {
         let reqdepositObj = await requestDepositFiat(this.state.BankDetails[k].bankId, this.props.member?.id);
         if (reqdepositObj.ok == true) {
           this.setState({
-            ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, depObj: depObj, Loader: false
+            ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, depObj: depObj, Loader: false,isTermsAgreed:false
           });
         }
       }
@@ -102,26 +103,48 @@ class FaitDeposit extends Component {
   }
   ConfirmDeposit = async () => {
     let { BankInfo, depObj } = this.state;
-    this.formRef.current.validateFields().then(async () => {
-      this.setState({ ...this.state, Loader: true })
-      let createObj = { "id": "00000000-0000-0000-0000-000000000000", "bankId": BankInfo.id, "currency": depObj.currency, "bankName": BankInfo.bankName, "bankAddress": BankInfo.bankAddress, "amount": parseFloat(depObj.Amount), "accountNumber": BankInfo.accountNumber, "routingNumber": BankInfo.routingNumber, "swiftorBICCode": BankInfo.networkCode, "benficiaryBankName": BankInfo.accountName, "reference": BankInfo.depReferenceNo, "benficiaryAccountAddrress": BankInfo.accountAddress }
-      let Obj = await savedepositFiat(createObj);
-      if (Obj.ok == true) {
-        this.setState({
-          buyDrawer: false,
-          BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null },
-          faitdeposit: false,
-          tabValue: 1, Loader: false
-        });
-      }
-    });
+     if (parseFloat(typeof depObj.Amount == 'string' ? depObj.Amount.replace(/,/g, '') : depObj.Amount) <= 0) {
+      this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero.' })
+    }
+    else if (depObj.Amount == '.') {
+      this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero.' })
+    }
+    else{
+      this.formRef.current.validateFields().then(async () => {
+        this.setState({ ...this.state, Loader: true,errorMessage:null })
+        let createObj = { "id": "00000000-0000-0000-0000-000000000000", "bankId": BankInfo.id, "currency": depObj.currency, "bankName": BankInfo.bankName, "bankAddress": BankInfo.bankAddress, "amount": parseFloat(depObj.Amount), "accountNumber": BankInfo.accountNumber, "routingNumber": BankInfo.routingNumber, "swiftorBICCode": BankInfo.networkCode, "benficiaryBankName": BankInfo.accountName, "reference": BankInfo.depReferenceNo, "benficiaryAccountAddrress": BankInfo.accountAddress }
+        let Obj = await savedepositFiat(createObj);
+        if (Obj.ok == true) {
+          this.setState({
+            buyDrawer: false,
+            BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null },
+            faitdeposit: false,
+            tabValue: 1, Loader: false,isTermsAgreed:false,showSuccessMsg:true
+          });
+        }
+      });
+    }
+  }
+  onTermsChange=(chkd)=>{
+    this.setState({...this.state,isTermsAgreed:chkd})
+  }
+   renderModalContent = () => { 
+   return <>
+        <div className="success-pop text-center">
+          <img src={success} className="confirm-icon" />
+
+          <Translate className="fs-30 mb-4" content="Deposit_success" component='Deposit' />
+          <div><Link onClick={() => this.setState({...this.state,showSuccessMsg:false})} className="f-16 mt-16 text-underline">Back to Deposit<span className="icon md diag-arrow ml-4" /></Link>
+          </div>
+        </div>
+      </>
+      
   }
   render() {
     const { Paragraph, Text } = Typography;
     const link = <LinkValue content="terms_service" />;
     const { faitdeposit, BankInfo, depObj } = this.state;
     const { currenciesWithBankInfo } = this.props.depositInfo;
-    console.log(BankInfo)
     return (
       <>
         <Radio.Group
@@ -134,6 +157,7 @@ class FaitDeposit extends Component {
         {faitdeposit ?
           <SellToggle />
           : <> {this.state.Loader && <Loader />}
+           {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="" description={this.state?.errorMessage} closable />}
             {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} on scrollToFirstError={true} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll"><Translate
               className="mb-0 text-white-30 fs-14 fw-200"
               content="desposite_text"
@@ -142,9 +166,10 @@ class FaitDeposit extends Component {
               <div className="my-36">
 
                 <Form.Item
-                  className="custom-forminput mb-0"
+                  className="custom-forminput mb-24"
                   name="currency"
                   required
+                  id="currency"
                   rules={[
                     { required: true, message: "Is required" },
                   ]}
@@ -153,26 +178,29 @@ class FaitDeposit extends Component {
                   content="currency"
                   component={Text}
                 /><span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-                    <Select dropdownClassName="select-drpdwn" placeholder="Select Currency" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+                    <Select dropdownClassName="select-drpdwn" placeholder="Select Currency" className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true} getPopupContainer={() => document.getElementById('currency')}
                       onChange={(e) => { this.handlFiatDep(e, currenciesWithBankInfo) }} value={depObj.currency}>
                       {currenciesWithBankInfo?.map((item, idx) =>
                         <Option key={idx} value={item.walletCode}>{item.walletCode}
                         </Option>
                       )}
                     </Select></div></Form.Item>
+                    {this.state.BankInfo==null&&depObj.currency!=null&&this.state.BankDetails?.length==0 &&<Text className="fs-20 text-white-30 d-block" style={{textAlign:'center'}}>Bank details not available</Text>}
                 {this.state.BankDetails?.length > 1 && <><Translate
                   className="input-label"
                   content="BankName"
                   component={Text}
                 />
-                  <Select dropdownClassName="select-drpdwn" placeholder="Select Bank Name" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+                  <Select dropdownClassName="select-drpdwn" placeholder="Select Bank Name" className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true}
                     onChange={(e) => { this.handlebankName(e) }} value={depObj.BankName}>
                     {this.state.BankDetails.map((item, idx) =>
                       <Option key={idx} value={item.bankName}>{item.bankName}
                       </Option>
                     )}
                   </Select></>}
-                <Form.Item
+                  {this.state.BankInfo &&
+                  // !fiatDepEur?
+                  <> <Form.Item
                   className="custom-forminput mb-0"
                   name="Amount"
                   required
@@ -186,9 +214,9 @@ class FaitDeposit extends Component {
                     component={Text}
 
                   /><span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-                    <NumberFormat className="cust-input" customInput={Input} thousandSeparator={true} prefix={""}
+                    <NumberFormat className="cust-input mb-0" customInput={Input} thousandSeparator={true} prefix={""}
                       placeholder="0.00"
-                      decimalScale={8}
+                      decimalScale={2}
                       allowNegative={false}
                       maxlength={24}
                       onValueChange={({ value }) => {
@@ -197,9 +225,7 @@ class FaitDeposit extends Component {
                       value={depObj.Amount} />
 
                   </div></Form.Item>
-                {this.state.BankInfo &&
-                  // !fiatDepEur?
-                  <>
+                
                     <div className="d-flex">
                       {/* <span className="coin deposit-white mt-4" /> */}
                       <div style={{ flex: 1 }}>
@@ -268,22 +294,56 @@ class FaitDeposit extends Component {
                     <Paragraph
                       className="fs-14 text-white-30 fw-200 l-height-normal"
                     ><span className="text-yellow">IMPORTANT:</span> This code identifies your deposit include this code when submitting the wire transfer in the transaction description or purpose</Paragraph>
-
-
+                  <Form.Item
+                    className="custom-forminput mb-36 agree"
+                    name="isAccept"
+                    valuePropName="checked"
+                    required
+                    rules={[
+                      {
+                        validator: (_, value) =>
+                          value ? Promise.resolve() : Promise.reject(new Error('Please agree terms of service')),
+                      },
+                    ]}
+                  >
+                    <div className="d-flex pt-16 agree-check">
+                      <label>
+                        <input type="checkbox" id="agree-check" />
+                        <span for="agree-check" />
+                      </label>
+                      <Translate
+                        content="agree_to_suissebase"
+                        with={{ link }}
+                        component={Paragraph}
+                        className="fs-14 text-white-30 ml-16 mb-4"
+                        style={{ flex: 1 }}
+                      />
+                    </div>
+                  </Form.Item>
+                  
                   </>
                   // :<selectCurrency />
+                  
                 }
               </div>
-              <Button
+             
+              {this.state.BankInfo &&
+                  // !fiatDepEur?
+                  <><Button
                 htmlType="submit"
                 size="large"
                 block
-                className="pop-btn"
+                className="pop-btn mt-36"
               >
                 Confirm
-              </Button>
+              </Button></>}
             </div>
             </Form>}
+            <Modal className="widthdraw-pop" maskClosable={false} onCancel={() => this.setState({...this.state,showSuccessMsg:false})} title="Deposit" closeIcon={<Tooltip title="Close"><span onClick={() => this.setState({...this.state,showSuccessMsg:false})} className="icon md close" /></Tooltip>} footer={[
+             
+            ]} visible={this.state.showSuccessMsg}>
+              {this.renderModalContent()}
+            </Modal>
           </>
         }
 

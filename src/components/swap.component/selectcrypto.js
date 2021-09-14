@@ -5,6 +5,7 @@ import { setStep, updateCoinDetails, getMemberCoins,updateReceiveCoinDetails } f
 import { connect } from 'react-redux';
 import cryptolist from '../shared/cryptolist';
 import CryptoList from '../shared/cryptolist';
+import { appInsights } from "../../Shared/appinsights";
 
 class SelectCrypto extends Component {
     state = {
@@ -16,8 +17,13 @@ class SelectCrypto extends Component {
     useDivRef = React.createRef();
     componentDidMount() {
         this.props.fetchMemberCoins(this.props.userProfile?.id);
+        //this.trackEvent()
     }
-
+    trackEvent = () =>{
+        appInsights.trackEvent({
+            name: 'Swap', properties: {"Type": 'User',"Action": 'Page view',"Username": this.props.userProfile.email,"MemeberId": this.props.userProfile.userId,"Feature": 'Swap',"Remarks": 'Selct Swap coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Selct Swap coins'}
+        });
+    }
     onSearch = (e) => {
         var searchValue = e.target.value;
         let matches = this.props.swapStore.MemberCoins.filter(v => v.coin.toLowerCase().includes(searchValue.toLowerCase()));

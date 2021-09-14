@@ -290,5 +290,6 @@ export default {
   state: 'State',
   zipcode: 'Zip code',
   userName: 'John Huh',
-  manage_account: 'Manage your Account'
+  manage_account: 'Manage your Account',
+  Deposit_success:'Deposit Success'
 }

@@ -1,4 +1,4 @@
-import React, { Component, useState,useRef, useEffect } from 'react';
+import React, { Component, useState, useRef, useEffect } from 'react';
 import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert, Tooltip, Select } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
@@ -10,6 +10,7 @@ import { withdrawRecepientNamecheck, withdrawSave, getCountryStateLu } from '../
 import Currency from '../shared/number.formate';
 import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
+import { appInsights } from "../../Shared/appinsights";
 
 const LinkValue = (props) => {
   return (
@@ -20,7 +21,7 @@ const LinkValue = (props) => {
   )
 }
 const { Option } = Select;
-const FaitWithdrawal = ({ selectedWalletCode,buyInfo, userConfig,dispatch }) => {
+const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) => {
   const [form] = Form.useForm();
   const [selectedWallet, setSelectedWallet] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -31,16 +32,16 @@ const FaitWithdrawal = ({ selectedWalletCode,buyInfo, userConfig,dispatch }) => 
   const [countryLu, setCountryLu] = useState([]);
   const [stateLu, setStateLu] = useState([]);
   const [country, setCountry] = useState(null);
-  const useDivRef =React.useRef(null);
+  const useDivRef = React.useRef(null);
   useEffect(() => {
-    if(buyInfo.memberFiat?.data && selectedWalletCode){
-      console.log(selectedWalletCode,buyInfo.memberFiat?.data)
+    if (buyInfo.memberFiat?.data && selectedWalletCode) {
+      console.log(selectedWalletCode, buyInfo.memberFiat?.data)
       handleWalletSelection(selectedWalletCode)
     }
   }, [buyInfo.memberFiat?.data])
-  useEffect(()=>{
+  useEffect(() => {
     getCountryLu();
-  },[])
+  }, [])
   const handleWalletSelection = (walletId) => {
     form.setFieldsValue({ memberWalletId: walletId })
     if (buyInfo.memberFiat?.data) {
@@ -58,14 +59,17 @@ const FaitWithdrawal = ({ selectedWalletCode,buyInfo, userConfig,dispatch }) => 
 
     }
   }
-  const getCountryLu = async() =>{
+  const getCountryLu = async () => {
     let recName = await getCountryStateLu()
     if (recName.ok) {
       setCountryLu(recName.data);
     }
+    appInsights.trackEvent({
+      name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'Page view', "Username": userConfig.email, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": 'WithDraw Fiat', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
+    });
   }
-  const getStateLu = (countryname) =>{
-    let statelu = countryLu.filter((item)=>{if(item.name==countryname)return item})
+  const getStateLu = (countryname) => {
+    let statelu = countryLu.filter((item) => { if (item.name == countryname) return item })
     setStateLu(statelu[0].states)
     form.setFieldsValue({ state: null })
 
@@ -182,6 +186,9 @@ const FaitWithdrawal = ({ selectedWalletCode,buyInfo, userConfig,dispatch }) => 
         setLoading(false)
         useDivRef.current.scrollIntoView()
         dispatch(fetchDashboardcalls(userConfig.id))
+        appInsights.trackEvent({
+          name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.email, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
+        });
       } else {
 
       }
@@ -195,7 +202,7 @@ const FaitWithdrawal = ({ selectedWalletCode,buyInfo, userConfig,dispatch }) => 
 
   return (
     <>
-      <div  className="suisfiat-height auto-scroll">
+      <div className="suisfiat-height auto-scroll">
         <div ref={useDivRef}></div>
         {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
         <Form form={form} onFinish={savewithdrawal}>
@@ -386,14 +393,15 @@ const FaitWithdrawal = ({ selectedWalletCode,buyInfo, userConfig,dispatch }) => 
             </div>
           </Form.Item>
           <div className="d-flex">
-                <Translate
-                  className="input-label"
-                  content="Country"
-                  component={Text}
-                /></div>
+            <Translate
+              className="input-label"
+              content="Country"
+              component={Text}
+            /></div>
           <Form.Item
             className="custom-forminput mb-24"
             name="country"
+            id="country"
           >
             {/* <div>
               <div className="d-flex">
@@ -402,34 +410,34 @@ const FaitWithdrawal = ({ selectedWalletCode,buyInfo, userConfig,dispatch }) => 
                   content="Bank_address2"
                   component={Text}
                 /></div> */}
-              <Select dropdownClassName="select-drpdwn" placeholder="Select Country" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-                  onChange={(e) => getStateLu(e)} >
-                  {countryLu?.map((item, idx) =>
-                    <Option key={idx} value={item.name}>{item.name}
-                    </Option>
-                  )}
-                </Select>
-                {/* </div> */}
+            <Select dropdownClassName="select-drpdwn" placeholder="Select Country" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true} getPopupContainer={() => document.getElementById('country')}
+              onChange={(e) => getStateLu(e)} >
+              {countryLu?.map((item, idx) =>
+                <Option key={idx} value={item.name}>{item.name}
+                </Option>
+              )}
+            </Select>
+            {/* </div> */}
           </Form.Item>
           <div className="d-flex">
-                <Translate
-                  className="input-label"
-                  content="state"
-                  component={Text}
-                /></div>
+            <Translate
+              className="input-label"
+              content="state"
+              component={Text}
+            /></div>
           <Form.Item
             className="custom-forminput mb-24"
             name="state"
 
           >
-            
-              <Select dropdownClassName="select-drpdwn" placeholder="Select State" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-                  onChange={(e) => ''} >
-                  {stateLu?.map((item, idx) =>
-                    <Option key={idx} value={item.name}>{item.name}
-                    </Option>
-                  )}
-                </Select>
+
+            <Select dropdownClassName="select-drpdwn" placeholder="Select State" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+              onChange={(e) => ''} >
+              {stateLu?.map((item, idx) =>
+                <Option key={idx} value={item.name}>{item.name}
+                </Option>
+              )}
+            </Select>
           </Form.Item>
           <Form.Item
             className="custom-forminput mb-24"
@@ -471,24 +479,24 @@ const FaitWithdrawal = ({ selectedWalletCode,buyInfo, userConfig,dispatch }) => 
             className="custom-forminput mb-24"
             name="beneficiaryAccountName"
             required
-            // rules={[
-            //   { required: true, message: "Is required" },
-            //   {
-            //     validator: (rule, value, callback) => {
-            //       var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
-            //       if (value) {
-            //         if (!regx.test(value)) {
-            //           callback("Invalid recipient full name")
-            //         } else if (regx.test(value)) {
-            //           callback();
-            //         }
-            //       } else {
-            //         callback();
-            //       }
-            //       return;
-            //     }
-            //   }
-            // ]}
+          // rules={[
+          //   { required: true, message: "Is required" },
+          //   {
+          //     validator: (rule, value, callback) => {
+          //       var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
+          //       if (value) {
+          //         if (!regx.test(value)) {
+          //           callback("Invalid recipient full name")
+          //         } else if (regx.test(value)) {
+          //           callback();
+          //         }
+          //       } else {
+          //         callback();
+          //       }
+          //       return;
+          //     }
+          //   }
+          // ]}
           >
             <div>
               <div className="d-flex">
@@ -498,7 +506,7 @@ const FaitWithdrawal = ({ selectedWalletCode,buyInfo, userConfig,dispatch }) => 
                   component={Text}
                 />{" "}
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" value={userConfig.firstName+" "+userConfig.lastName} placeholder="Recipient full name" disabled={true} />
+              <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
             </div>
 
           </Form.Item>
@@ -630,6 +638,6 @@ const connectDispatchToProps = dispatch => {
     },
     dispatch
   }
-  
+
 }
 export default connect(connectStateToProps, connectDispatchToProps)(FaitWithdrawal);
