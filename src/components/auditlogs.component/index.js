@@ -274,7 +274,7 @@ class AuditLogs extends Component {
               <Col sm={24} md={3} className="px-8 text-right">
                 <Button
                   type="primary"
-                  className="primary-btn px-24 search-btn custom-btn prime"
+                  className="primary-btn px-24 search-btn custom-btn prime mt-16"
                   htmlType="submit"
                   onClick={this.handleSearch}
                 >Search
@@ -308,7 +308,7 @@ class AuditLogs extends Component {
                   <Form.Item
                     name="fromdate"
                     className="input-label ml-0"
-                    label="From Date"
+                    label="Start Date"
                     rules={[
                       { required: true, message: "Is required" }, {
                           type: "date", validator: async (rule, value, callback) => {
@@ -328,7 +328,7 @@ class AuditLogs extends Component {
                   <Form.Item
                     name="todate"
                     className="input-label ml-0"
-                    label="To Date"
+                    label="End Date"
                     rules={[
                       { required: true, message: "Is required" }, {
                           type: "date", validator: async (rule, value, callback) => {
