@@ -81,8 +81,8 @@ class Header extends Component {
             <img src={userProfile} className="user-profile"/>
             <p className="mb-15 ml-8 profile-value" style={{flexGrow:12}}>{this.props.userConfig.firstName} {this.props.userConfig.lastName}</p>
             {/* <Translate className="fs-16 text-white my-16 fw-500 mx-30" content="userName" component={this.props.userConfig.userName} /> */}
-            {/* <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={this.userProfile } /> */}
-            <Link className="profile-btn" to="/userprofile" >Manage Your Account</Link>
+            <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={() => this.userProfile()}  />
+            {/* <Link className="profile-btn" to="/userprofile" >Manage Your Account</Link> */}
             <ul className="pl-0 drpdwn-list">
                 <Menu.Item className="px-0" onClick={() => this.showAuditLogsDrawer()}>
                 <li className="c-pointer px-0">
@@ -200,7 +200,7 @@ class Header extends Component {
     }
     userProfile(){
         debugger;
-        // this.props.history.push("/userprofile");
+         this.props.history.push("/userprofile");
     }
     next() {
         this.carousel.next();
@@ -258,6 +258,8 @@ class Header extends Component {
             auditlogsDrawer:true
         })
     }
+  
+
 
     showSwapDrawer = () => {
         // this.setState({
@@ -371,7 +373,7 @@ class Header extends Component {
                              <Translate content="menu_transactions_history" component={Menu.Item} key="4" onClick={this.showTransactionHistoryDrawer} className="list-item" />
                              <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
                             <Dropdown overlay={this.userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                <Menu.Item key="7"><img src={userProfile} className="user-profile"/></Menu.Item>
+                                <Menu.Item key="7"  className="ml-16" ><img src={userProfile} className="user-profile"/></Menu.Item>
                             </Dropdown>
                         </Menu>
                     </menuHeader>
