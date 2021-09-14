@@ -189,7 +189,14 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
           >
             Save
           </Button>
-          <div className="text-center fs-20 mt-16"><Link to="/dashboard" className="fs-16 mt-16 text-white text-underline">Back to Dashboard</Link></div>
+          <Button
+            htmlType="cancel"
+            size="large"
+            block
+            className="pop-cancel"
+          onClick={()=>onSubmit()}>
+            Cancel
+          </Button>
         </div>
       </Form>
     </div>
