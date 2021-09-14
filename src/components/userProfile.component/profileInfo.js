@@ -48,7 +48,14 @@ class ProfileInfo extends Component {
                             <span className="icon md rarrow-white"  /></div>
                         </div>
                     </li>
-                    
+                    <li className="profileinfo">
+                        <div className="d-flex profile-block">
+                          <label className="mb-0 profile-label">Reference Code</label>
+                            <p className="mb-0 ml-8 profile-value" style={{flexGrow:12}}>{this.props.userConfig.depositReference}</p>
+                            <div >
+                            <span className="icon md rarrow-white"  /></div>
+                        </div>
+                    </li>
                 </ul>
             </div>
             <div className="box contact-info">
