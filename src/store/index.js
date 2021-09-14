@@ -13,6 +13,7 @@ import UserConfig from '../reducers/configReduser';
 import sellReducer from '../reducers/sellReducer';
 import depositReducer from '../reducers/depositReducer';
 import dashboardReducer from '../reducers/dashboardReducer';
+import UserprofileReducer from '../reducers/UserprofileReducer';
 
 const persistConfig = {
     key: "root",
@@ -30,7 +31,8 @@ const rootReducer = combineReducers({
     buyInfo:buyReducer,
     sellInfo:sellReducer,
     depositInfo:depositReducer,
-    dashboard:dashboardReducer
+    dashboard:dashboardReducer,
+    userProfile:UserprofileReducer
 })
 const reducer = persistReducer(persistConfig, rootReducer)
 let store = createStore(
