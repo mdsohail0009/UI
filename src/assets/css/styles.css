@@ -104,6 +104,7 @@ line-height: 16px;min-width:90px}
 .icon.lg.security-icon{background-position:-107px -330px}
 .icon.lg.settings-icon{background-position: -38px -330px}
 .icon.lg.info-icon{background-position:-73px -330px}
+.icon.lg.logout-icon{background-position:-73px -330px}
 .user-labels.active .icon.lg.profile-icon,.user-labels:hover .icon.lg.profile-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.profile-icon, .ant-tabs-tab:hover .icon.lg.profile-icon{background-position: -3px -363px} 
 .user-labels.active .icon.lg.security-icon, .user-labels:hover .icon.lg.security-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.security-icon,.ant-tabs-tab:hover .icon.lg.security-icon{background-position:-107px -363px}
 .user-labels.active .icon.lg.settings-icon, .user-labels:hover .icon.lg.settings-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.settings-icon,.ant-tabs-tab:hover .icon.lg.settings-icon{background-position:-38px -363px}
@@ -705,3 +706,55 @@ main.ant-layout-content{min-height: calc(100vh - 220px);}
     background-color: transparent;
 }
 .ant-drawer{z-index: 99 !important;}
+.change-space .ant-input-password-icon{padding: 10px 16px 10px 0 !important;cursor: pointer;}
+
+.hover-passlwngth {display: none}
+.pass-onhover:hover + .hover-passlwngth {
+    display: block;
+    position: absolute;
+    right: 0;
+    background-color: #000;
+    z-index: 999;
+    padding: 10px;
+}
+.pass-onhover:hover + .hover-passlwngth span {
+        display: block;
+        color: #fff;
+        padding: 3px 2px 2px 8px;
+        font-size: 12px;
+        position: relative;}
+.pass-onhover:hover + .hover-passlwngth span:first-child {
+            padding: 0;
+            margin-top: -5px;
+            margin-left: -3px;}
+.hover-passlwngth:after {border-top-color: #000 !important;}
+.hover-passlwngth:after {
+    content: "";
+    position: absolute;
+    border-top: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+    width: 8px;
+    height: 8px;
+    left: 2px;
+    transform: rotate( 175deg );
+    top: -7px;
+    z-index: 99;
+}
+.hover-passlwngth span:after {border-top-color: #fff !important;}
+.hover-passlwngth span:after {
+    content: "";
+    position: absolute;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-right: 6px solid transparent;
+    width: 4px;
+    height: 4px;
+    left: -7px;
+    transform: rotate( 135deg );
+    top: 4px;
+    z-index: 99;
+}
+.hover-passlwngth span:first-child:after {display: none}
+
+
