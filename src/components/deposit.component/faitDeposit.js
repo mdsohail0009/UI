@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Input, Button, label, Select, Radio, Tabs, Form,Alert } from 'antd';
+import { Typography, Input, Button, label, Select, Radio, Tabs, Form,Alert,Modal ,Tooltip} from 'antd';
 import { Link } from 'react-router-dom';
 import { changeStep, setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -11,6 +11,7 @@ import NumberFormat from 'react-number-format';
 import { getCurrencieswithBankDetails } from '../../reducers/depositReducer'
 import { savedepositFiat, requestDepositFiat } from './api';
 import Loader from '../../Shared/loader';
+import success from '../../assets/images/success.png';
 
 const LinkValue = (props) => {
   return (
@@ -31,7 +32,7 @@ class FaitDeposit extends Component {
     fiatDepEur: false,
     faitdeposit: false,
     BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null },
-    tabValue: 1, Loader: false,isTermsAgreed:false,errorMessage:null
+    tabValue: 1, Loader: false,isTermsAgreed:false,errorMessage:null,showSuccessMsg:false
   }
   componentDidMount() {
     this.props.fiatRef(this)
@@ -118,7 +119,7 @@ class FaitDeposit extends Component {
             buyDrawer: false,
             BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null },
             faitdeposit: false,
-            tabValue: 1, Loader: false,isTermsAgreed:false
+            tabValue: 1, Loader: false,isTermsAgreed:false,showSuccessMsg:true
           });
         }
       });
@@ -126,6 +127,18 @@ class FaitDeposit extends Component {
   }
   onTermsChange=(chkd)=>{
     this.setState({...this.state,isTermsAgreed:chkd})
+  }
+   renderModalContent = () => { 
+   return <>
+        <div className="success-pop text-center">
+          <img src={success} className="confirm-icon" />
+
+          <Translate className="fs-30 mb-4" content="Deposit_success" component='Deposit' />
+          <div><Link onClick={() => this.setState({...this.state,showSuccessMsg:false})} className="f-16 mt-16 text-underline">Back to Deposit<span className="icon md diag-arrow ml-4" /></Link>
+          </div>
+        </div>
+      </>
+      
   }
   render() {
     const { Paragraph, Text } = Typography;
@@ -325,7 +338,11 @@ class FaitDeposit extends Component {
               </Button></>}
             </div>
             </Form>}
-            
+            <Modal className="widthdraw-pop" maskClosable={false} onCancel={() => this.setState({...this.state,showSuccessMsg:false})} title="Deposit" closeIcon={<Tooltip title="Close"><span onClick={() => this.setState({...this.state,showSuccessMsg:false})} className="icon md close" /></Tooltip>} footer={[
+             
+            ]} visible={this.state.showSuccessMsg}>
+              {this.renderModalContent()}
+            </Modal>
           </>
         }
 
