@@ -83,9 +83,11 @@ class Header extends Component {
             {/* <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={this.userProfile } /> */}
             <Link className="profile-btn" to="/userprofile" >Manage Your Account</Link>
             <ul className="pl-0 drpdwn-list">
-            <li className="c-pointer px-0">
-               <Link onClick={this.showAuditLogsDrawer}>Audit Logs</Link>
+                <Menu.Item className="px-0" onClick={() => this.showAuditLogsDrawer()}>
+                <li className="c-pointer px-0">
+               <Link>Audit Logs</Link>
             </li>
+                </Menu.Item>
             <li className="c-pointer px-0" onClick={() => userManager.signoutRedirect()}>
                     <Translate content="logout" component={Link} />
             </li>
@@ -250,6 +252,7 @@ class Header extends Component {
         })
     }
     showAuditLogsDrawer = () => {
+        debugger
         this.setState({
             auditlogsDrawer:true
         })
@@ -587,6 +590,7 @@ class Header extends Component {
                 <SwapCrypto swapRef={(cd) => this.child = cd}  showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
                 <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
                 <TransactionsHistory showDrawer={this.state.transactionDrawer} onClose={() => this.closeDrawer()}/>
+                <AuditLogs showDrawer={this.state.auditlogsDrawer} onClose={() => this.closeDrawer()}/>
                 <Drawer
                     title={[<div className="side-drawer-header">
                         <span onClick={() => this.setState({ ...this.state, showChangePassword: false })} className="icon md close-white c-pointer" />
@@ -604,7 +608,6 @@ class Header extends Component {
                 >
                     <Changepassword onSubmit={() => { this.setState({ ...this.state, showChangePassword: false }) }} />
                 </Drawer>
-                <AuditLogs showDrawer={this.state.auditlogsDrawer} onClose={() => this.closeDrawer()}/>
             </>
             
         );
