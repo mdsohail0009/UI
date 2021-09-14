@@ -185,6 +185,7 @@ class FaitDeposit extends Component {
                         </Option>
                       )}
                     </Select></div></Form.Item>
+                    {this.state.BankInfo==null&&depObj.currency!=null&&this.state.BankDetails?.length==0 &&<Text className="fs-20 text-white-30 d-block" style={{textAlign:'center'}}>Bank details not available</Text>}
                 {this.state.BankDetails?.length > 1 && <><Translate
                   className="input-label"
                   content="BankName"
