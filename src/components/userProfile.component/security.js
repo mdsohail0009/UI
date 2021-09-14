@@ -76,7 +76,7 @@ const Security =({userConfig,onChange})=> {
                 onClose={() => setisChangepassword(false)}
                 className="side-drawer"
             >
-                <Paragraph className="mb-0 ml-8 fs-14 text-white mt-16 fw-200">Choose a unique password to protect your account</Paragraph>
+                <Paragraph className="mb-16 ml-8 fs-14 text-white mt-8 fw-200 py-16">Choose a unique password to protect your account</Paragraph>
                 <Changepassword onSubmit={() => setisChangepassword(false)} />
             </Drawer>
 

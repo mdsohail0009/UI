@@ -94,18 +94,18 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
         <Translate
           content="Choose_a_unique_password_to_protect_your_account"
           component={Paragraph}
-          className="mt-36 mb-16 fs-14 text-white-30 fw-400"
+          className="mt-36 mb-24 fs-14 text-white-30 fw-400"
         /> */}
         <div className="d-flex">
           <Translate
-            className="text-white input-label mb-0"
+            className="text-white input-label"
             content="current_password"
             component={Text}
           />
           <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
         </div>
         <Form.Item
-          className="custom-forminput mb-16"
+          className="custom-forminput mb-24"
           name="CurrentPassword"
           required
           rules={[
@@ -113,11 +113,11 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
           ]}
         >
 
-            <Input.Password placeholder="Current Password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ?  <EyeOutlined style={{ color:'#fff'}}/> : <EyeInvisibleOutlined /> )} />
+            <Input.Password placeholder="Current Password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ?  <EyeInvisibleOutlined />:<EyeOutlined style={{ color:'#fff'}}/> )} />
         </Form.Item>
         <div className="d-flex"> 
             <Translate
-              className="text-white input-label mb-0"
+              className="text-white input-label"
               content="new_password"
               component={Text}
             />
@@ -125,7 +125,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
           </div>
         <Form.Item
           name="Password"
-          className="custom-forminput mb-16"
+          className="custom-forminput mb-24"
           required
           rules={[
             { required: true, message: "Please enter new password" },
@@ -136,12 +136,12 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
             placeholder="New Password"
             value={initialValues.Password}
             onChange={(e) => handleChange("Password", e)}
-            className="text-left cust-input mb-8" iconRender={visible => (visible ?  <EyeOutlined style={{ color:'#fff'}}/> : <EyeInvisibleOutlined />)}
+            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeInvisibleOutlined />:<EyeOutlined style={{ color:'#fff'}}/> )}
           />
         </Form.Item>
         <div className="d-flex">
             <Translate
-              className="text-white input-label mb-0"
+              className="text-white input-label"
               content="confirm_password"
               component={Text}
             />
@@ -149,7 +149,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
           </div>
         <Form.Item
           required
-          className="custom-forminput mb-16"
+          className="custom-forminput mb-24"
           name="ConfirmPassword"
           dependencies={["password"]}
           //hasFeedback
@@ -175,7 +175,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
             placeholder="Confirm Password"
             value={initialValues.ConfirmPassword}
             onChange={(e) => handleChange("ConfirmPassword", e)}
-            className="text-left cust-input mb-8" iconRender={visible => (visible ?  <EyeOutlined style={{ color:'#fff'}}/> : <EyeInvisibleOutlined /> )}
+            className="text-left cust-input mb-8" iconRender={visible => (visible ?  <EyeInvisibleOutlined />:<EyeOutlined style={{ color:'#fff'}}/>  )}
           />
         </Form.Item>
 
@@ -187,7 +187,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
             block
             className="pop-btn"
           >
-            Submit
+            Save
           </Button>
           <div className="text-center fs-20 mt-16"><Link to="/dashboard" className="fs-16 mt-16 text-white text-underline">Back to Dashboard</Link></div>
         </div>
