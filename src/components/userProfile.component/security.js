@@ -14,6 +14,16 @@ class Security extends Component {
     onClose = () => {
         this.setState({ isChangepassword: false })
     }
+    enableDisable2fa = (status) => {
+        var url = '';
+        if (status) {
+            url = process.env.REACT_APP_AUTHORITY + "/account/login?returnUrl=/manage/EnableAuthenticator";
+        } else {
+            url = process.env.REACT_APP_AUTHORITY + "/account/login?returnUrl=/manage/Disable2faWarning"
+        }
+        var win = window.open(url,"_self");
+        
+    }
     render() {
         const { Title, Text, Paragraph } = Typography;
         return (<>
@@ -24,9 +34,9 @@ class Security extends Component {
                     <li className="profileinfo">
                         <div className="d-flex profile-block">
                             <label className="mb-0 profile-label" >2FA</label>
-                            <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>Active</p>
+                            <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig?.twofactorVerified?'Active':'Inactive'}</p>
                             <div>
-                                <Switch onChange={this.onChange} size="medium" className="custom-toggle ml-12" /></div>
+                                <Switch onChange={(status)=>this.enableDisable2fa(status)} checked={this.props.userConfig?.twofactorVerified} size="medium" className="custom-toggle ml-12" /></div>
                         </div>
                     </li>
                 </ul>
