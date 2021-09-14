@@ -3,7 +3,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="512px" height="512px" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">
-<rect x="0" display="none" width="512" height="512"/>
+<rect display="none" width="512" height="512"/>
 <g>
 	<path fill="none" stroke="#FAFCFE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M15.88,7.01
 		c0-1.43-0.57-2.81-1.58-3.82s-2.39-1.58-3.82-1.58S7.67,2.18,6.66,3.19C5.65,4.21,5.08,5.58,5.08,7.01c0,6.3-2.7,8.1-2.7,8.1h16.2
@@ -264,4 +264,10 @@
 <path fill="#FFDB1A" d="M373.6,51.511c0.352,0.352,0.949,0.352,1.301,0l10.336-10.336c0.352-0.352,0.352-0.949,0-1.301l-1.266-1.266
 	c-0.352-0.352-0.914-0.352-1.266,0l-8.438,8.438l-3.973-3.937c-0.352-0.352-0.914-0.352-1.266,0l-1.266,1.266
 	c-0.352,0.352-0.352,0.949,0,1.301L373.6,51.511z"/>
+<path fill="none" stroke="#0E0E2C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M401,40
+	c0-1.105,0.895-2,2-2h0.93c0.669,0,1.293-0.334,1.664-0.891l0.813-1.219c0.371-0.556,0.995-0.891,1.664-0.891h3.859
+	c0.669,0,1.293,0.334,1.664,0.891l0.813,1.219c0.371,0.556,0.995,0.891,1.664,0.891H417c1.105,0,2,0.895,2,2v9c0,1.105-0.895,2-2,2
+	h-14c-1.105,0-2-0.895-2-2V40z"/>
+<path fill="none" stroke="#0E0E2C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M413,44
+	c0,1.657-1.343,3-3,3s-3-1.343-3-3s1.343-3,3-3S413,42.343,413,44z"/>
 </svg>
