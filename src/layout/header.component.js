@@ -79,7 +79,8 @@ class Header extends Component {
         <Menu>
             <div className="profile-dropdown">
             <img src={userProfile} className="user-profile"/>
-            <Translate className="fs-16 text-white my-16 fw-500 mx-30" content="userName" component={Title} />
+            <p className="mb-15 ml-8 profile-value" style={{flexGrow:12}}>{this.props.userConfig.firstName} {this.props.userConfig.lastName}</p>
+            {/* <Translate className="fs-16 text-white my-16 fw-500 mx-30" content="userName" component={this.props.userConfig.userName} /> */}
             <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={() => this.userProfile()}  />
             {/* <Link className="profile-btn" to="/userprofile" >Manage Your Account</Link> */}
             <ul className="pl-0 drpdwn-list">
