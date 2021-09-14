@@ -10,6 +10,7 @@ import { withdrawRecepientNamecheck, withdrawSave, getCountryStateLu } from '../
 import Currency from '../shared/number.formate';
 import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
+import { appInsights } from "../../Shared/appinsights";
 
 const LinkValue = (props) => {
   return (
@@ -63,6 +64,9 @@ const FaitWithdrawal = ({ selectedWalletCode,buyInfo, userConfig,dispatch }) => 
     if (recName.ok) {
       setCountryLu(recName.data);
     }
+    appInsights.trackEvent({
+      name: 'WithDraw Fiat', properties: {"Type": 'User',"Action": 'Page view',"Username": userConfig.email,"MemeberId": userConfig.id,"Feature": 'WithDraw Fiat',"Remarks": 'WithDraw Fiat',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'WithDraw Fiat'}
+  });
   }
   const getStateLu = (countryname) =>{
     let statelu = countryLu.filter((item)=>{if(item.name==countryname)return item})
@@ -182,6 +186,9 @@ const FaitWithdrawal = ({ selectedWalletCode,buyInfo, userConfig,dispatch }) => 
         setLoading(false)
         useDivRef.current.scrollIntoView()
         dispatch(fetchDashboardcalls(userConfig.id))
+        appInsights.trackEvent({
+          name: 'WithDraw Fiat', properties: {"Type": 'User',"Action": 'save',"Username": userConfig.email,"MemeberId": userConfig.id,"Feature": 'WithDraw Fiat',"Remarks": (saveObj?.totalValue +' '+saveObj.walletCode+' withdraw.'),"Duration": 1,"Url": window.location.href,"FullFeatureName": 'WithDraw Fiat'}
+      });
       } else {
 
       }

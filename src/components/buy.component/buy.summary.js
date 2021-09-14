@@ -6,6 +6,7 @@ import { buyCrypto } from './api';
 import Summary from '../summary.component';
 import Loader from '../../Shared/loader';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
+import { appInsights } from "../../Shared/appinsights";
 class BuySummary extends Component {
     constructor(props) {
         super(props);
@@ -47,6 +48,9 @@ class BuySummary extends Component {
             if (response.ok) {
                 this.props.setStep('success')
                 this.props.fetchDashboardData(this.props.member.id)
+                appInsights.trackEvent({
+                    name: 'Buy', properties: {"Type": 'User',"Action": 'Save ',"Username": this.props?.member.email,"MemeberId": this.props?.member.id,"Feature": 'Buy',"Remarks": obj.toValue +' '+ obj.toWalletName+' bue success' ,"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Buy'}
+                });
             } else {
                 this.setState({ ...this.state, error: { valid: false, message: response.data || response.originalError.message } })
             }

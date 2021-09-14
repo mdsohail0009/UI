@@ -11,6 +11,7 @@ import SuisseBtn from '../shared/butons';
 import NumberFormat from 'react-number-format';
 import LocalCryptoSwapper from '../shared/local.crypto.swap';
 import Currency from '../shared/number.formate';
+import { appInsights } from "../../Shared/appinsights";
 class SelectCrypto extends Component {
     myRef = React.createRef();
     constructor(props) {
@@ -33,6 +34,12 @@ class SelectCrypto extends Component {
     componentDidMount() {
         this.props.getCoinsList(this.props.userProfileInfo?.id);
         this.props.setTabKey();
+        this.trackEvent()
+    }
+    trackEvent = () =>{
+        appInsights.trackEvent({
+            name: 'Buy', properties: {"Type": 'User',"Action": 'Page view',"Username": this.props.userProfileInfo.email,"MemeberId": this.props.userProfileInfo.id,"Feature": 'Buy',"Remarks": 'Buy coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Buy'}
+        });
     }
     fetchConvertionValue = async () => {
         const { coin } = this.props.buyInfo?.selectedCoin?.data;
