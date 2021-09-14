@@ -107,6 +107,7 @@ export default {
   sell_your_crypto_for_cash_text: 'Beli dan jual Crypto dengan mudah terus dari Wallet anda.',
   sell_your_fiat_for_cash: 'Jual Fiat anda dengan Wang Tunai',
   menu_buy_sell: 'Jual beli',
+  menu_transactions_history: 'Urus Niaga',
   menu_swap: 'Tukar',
   menu_send_receive: 'Deposit / Pengeluaran',
   menu_mass_pay: 'Pembayaran Massa',
@@ -241,7 +242,7 @@ export default {
   Beneficiary_account: 'Akaun Penerima',
   for_Domestic_wires: 'Untuk Wayar Domestik',
   for_international_wires: 'Untuk Wayar Antarabangsa',
-  Swift_BICcode: 'Kod Swift',
+  Swift_BICcode: 'Kod Swift / BIC',
   SIGNU: 'SIGNU533XXX',
   beneficiaryBank: 'Bank Penerima',
   signature_bank: 'Bank Tandatangan',
@@ -254,7 +255,7 @@ export default {
   Fee: 'Bayaran',
   Amount_to_pay: 'Amaun yang perlu dibayar',
   place_an_order: 'membuat pesanan',
-  Routing_number: 'Nombor Laluan (ABA)',
+  Routing_number: 'Nombor Laluan',
   Change_password: 'Tukar kata laluan',
   Choose_a_unique_password_to_protect_your_account: 'Pilih kata laluan yang unik untuk melindungi akaun anda.',
   Save_btn_text: 'Jimat',
@@ -275,11 +276,11 @@ export default {
   note: 'Harap maklum bahawa kami menerima pemindahan yang dapat dialamatkan hanya di SEPA.',
   suisse_btn_refresh: "Klik untuk mendapatkan harga baru",
   proceed: 'magpatuloy',
-description: 'Paglalarawan',
-withdrawal_success: 'Umatras ng tagumpay',
-dep_with_assets: "Deposit / Pengeluaran Kripto",
-remarks:'sinabi',
-  userName:'John Huh',
-  manage_account:'Manage your Account'
+  description: 'Paglalarawan',
+  withdrawal_success: 'Umatras ng tagumpay',
+  dep_with_assets: "Deposit / Pengeluaran Kripto",
+  remarks: 'sinabi',
+  userName: 'John Huh',
+  manage_account: 'Manage your Account'
 
 }
