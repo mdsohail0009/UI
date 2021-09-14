@@ -142,9 +142,10 @@ class FaitDeposit extends Component {
               <div className="my-36">
 
                 <Form.Item
-                  className="custom-forminput mb-0"
+                  className="custom-forminput mb-24"
                   name="currency"
                   required
+                  id="currency"
                   rules={[
                     { required: true, message: "Is required" },
                   ]}
@@ -153,7 +154,7 @@ class FaitDeposit extends Component {
                   content="currency"
                   component={Text}
                 /><span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-                    <Select dropdownClassName="select-drpdwn" placeholder="Select Currency" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+                    <Select dropdownClassName="select-drpdwn" placeholder="Select Currency" className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true} getPopupContainer={() => document.getElementById('currency')}
                       onChange={(e) => { this.handlFiatDep(e, currenciesWithBankInfo) }} value={depObj.currency}>
                       {currenciesWithBankInfo?.map((item, idx) =>
                         <Option key={idx} value={item.walletCode}>{item.walletCode}
@@ -165,7 +166,7 @@ class FaitDeposit extends Component {
                   content="BankName"
                   component={Text}
                 />
-                  <Select dropdownClassName="select-drpdwn" placeholder="Select Bank Name" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+                  <Select dropdownClassName="select-drpdwn" placeholder="Select Bank Name" className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true}
                     onChange={(e) => { this.handlebankName(e) }} value={depObj.BankName}>
                     {this.state.BankDetails.map((item, idx) =>
                       <Option key={idx} value={item.bankName}>{item.bankName}
@@ -186,7 +187,7 @@ class FaitDeposit extends Component {
                     component={Text}
 
                   /><span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-                    <NumberFormat className="cust-input" customInput={Input} thousandSeparator={true} prefix={""}
+                    <NumberFormat className="cust-input mb-0" customInput={Input} thousandSeparator={true} prefix={""}
                       placeholder="0.00"
                       decimalScale={8}
                       allowNegative={false}
@@ -278,7 +279,7 @@ class FaitDeposit extends Component {
                 htmlType="submit"
                 size="large"
                 block
-                className="pop-btn"
+                className="pop-btn mt-36"
               >
                 Confirm
               </Button>
