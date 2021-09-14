@@ -31,7 +31,7 @@ const ChangePassword = ({ onDrawerCancel }) => {
       <div className=" mt-16">
         <Form form={form} onFinish={onFinish}>
           <Form.Item
-            className="custom-forminput mb-0"
+            className="custom-forminput mb-0 pr-0"
             name="currentpassword"
           >
             <div>
@@ -53,6 +53,7 @@ const ChangePassword = ({ onDrawerCancel }) => {
                 {/* <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span> */}
               </div>
               <Input.Password className="cust-input" placeholder="Type your new password" /></div>
+              
           </Form.Item>
           <Form.Item
             name="confirmpassword"

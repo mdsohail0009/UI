@@ -113,7 +113,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
           ]}
         >
 
-            <Input.Password placeholder="Type your current password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ?  <EyeInvisibleOutlined />:<EyeOutlined style={{ color:'#fff'}}/> )} />
+            <Input.Password placeholder="Type your current password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8 pr-0 change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ?  <EyeInvisibleOutlined />:<EyeOutlined style={{ color:'#fff'}}/> )} />
         </Form.Item>
         <div className="d-flex"> 
             <Translate
@@ -136,8 +136,16 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
             placeholder="Type your new password"
             value={initialValues.Password}
             onChange={(e) => handleChange("Password", e)}
-            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeInvisibleOutlined />:<EyeOutlined style={{ color:'#fff'}}/> )}
+            className="text-left cust-input mb-8 pr-0 change-space pass-onhover" iconRender={visible => (visible ? <EyeInvisibleOutlined />:<EyeOutlined style={{ color:'#fff'}}/> )}
           />
+          <div class="hover-passlwngth">
+                                <span>At least:</span>
+                                <span>8 characters</span>
+                                <span>1 uppercase</span>
+                                <span>1 lowercase</span>
+                                <span>1 number</span>
+                                <span>1 special character</span>
+                            </div>
         </Form.Item>
         <div className="d-flex">
             <Translate
@@ -175,7 +183,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
             placeholder="Re-type your new password"
             value={initialValues.ConfirmPassword}
             onChange={(e) => handleChange("ConfirmPassword", e)}
-            className="text-left cust-input mb-8" iconRender={visible => (visible ?  <EyeInvisibleOutlined />:<EyeOutlined style={{ color:'#fff'}}/>  )}
+            className="text-left cust-input mb-8 pr-0 change-space" iconRender={visible => (visible ?  <EyeInvisibleOutlined />:<EyeOutlined style={{ color:'#fff'}}/>  )}
           />
         </Form.Item>
 
