@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { userManager } from "../../authentication";
 import { onMessageListener } from "../../utils/firebase";
 import ErrorBoundary from "antd/lib/alert/ErrorBoundary";
+import { AppInsightsContext } from "@microsoft/applicationinsights-react-js";
+import { reactPlugin } from "../../Shared/appinsights";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -23,9 +25,11 @@ function App() {
     <Provider store={store}>
       <OidcProvider userManager={userManager} store={store}>
         <Router basename={process.env.PUBLIC_URL}>
+        <AppInsightsContext.Provider value={reactPlugin}>
           <ErrorBoundary>
-            {loading ? <div className="loader">Loading....</div> : <Layout />}
+            {loading ? <div className="loader">Loading....</div> : <><Layout /></>}
           </ErrorBoundary>
+          </AppInsightsContext.Provider>
         </Router>
       </OidcProvider>
     </Provider>

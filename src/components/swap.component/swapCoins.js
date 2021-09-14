@@ -7,6 +7,7 @@ import { fetchCurrConvertionValue } from '../../components/swap.component/api'
 import * as _ from 'lodash';
 import NumberFormat from 'react-number-format';
 import Currency from '../shared/number.formate';
+import { appInsights } from "../../Shared/appinsights";
 
 class SwapCoins extends Component {
     state = {
@@ -23,6 +24,12 @@ class SwapCoins extends Component {
         this.props.swapCoinsRef(this)
         await this.setOneCoinValue();
         this.loadamount()
+        this.trackEvent()
+    }
+    trackEvent = () =>{
+        appInsights.trackEvent({
+            name: 'Swap', properties: {"Type": 'User',"Action": 'Page view',"Username": this.props.userProfile.email,"MemeberId": this.props.userProfile.id,"Feature": 'Swap',"Remarks": 'Swap coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Swap'}
+        });
     }
     clearSwapCoinValues = () =>{
         this.setState({  }, () => this.componentWillUnmount());
@@ -287,8 +294,8 @@ class SwapCoins extends Component {
     }
 }
 
-const connectStateToProps = ({ swapStore, oidc }) => {
-    return { swapStore }
+const connectStateToProps = ({ swapStore, userConfig }) => {
+    return { swapStore,userProfile: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
