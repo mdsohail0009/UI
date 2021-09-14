@@ -49,7 +49,7 @@ class BuySummary extends Component {
                 this.props.setStep('success')
                 this.props.fetchDashboardData(this.props.member.id)
                 appInsights.trackEvent({
-                    name: 'Buy', properties: {"Type": 'User',"Action": 'Page view',"Username": this.props?.member.email,"MemeberId": this.props?.member.id,"Feature": 'Buy',"Remarks": 'Buy coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Buy'}
+                    name: 'Buy', properties: {"Type": 'User',"Action": 'Save ',"Username": this.props?.member.email,"MemeberId": this.props?.member.id,"Feature": 'Buy',"Remarks": obj.toValue +' '+ obj.toWalletName+' bue success' ,"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Buy'}
                 });
             } else {
                 this.setState({ ...this.state, error: { valid: false, message: response.data || response.originalError.message } })
