@@ -101,10 +101,14 @@ class FaitDeposit extends Component {
     this.formRef.current.setFieldsValue({ ...depObj })
   }
   ConfirmDeposit = async () => {
-    if(!this.state.isTermsAgreed){
-      this.setState({ ...this.state, errorMessage: 'Please accept terms of service' })
-    }else{
-      let { BankInfo, depObj } = this.state;
+    let { BankInfo, depObj } = this.state;
+     if (parseFloat(typeof depObj.Amount == 'string' ? depObj.Amount.replace(/,/g, '') : depObj.Amount) <= 0) {
+      this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero.' })
+    }
+    else if (depObj.Amount == '.') {
+      this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero.' })
+    }
+    else{
       this.formRef.current.validateFields().then(async () => {
         this.setState({ ...this.state, Loader: true,errorMessage:null })
         let createObj = { "id": "00000000-0000-0000-0000-000000000000", "bankId": BankInfo.id, "currency": depObj.currency, "bankName": BankInfo.bankName, "bankAddress": BankInfo.bankAddress, "amount": parseFloat(depObj.Amount), "accountNumber": BankInfo.accountNumber, "routingNumber": BankInfo.routingNumber, "swiftorBICCode": BankInfo.networkCode, "benficiaryBankName": BankInfo.accountName, "reference": BankInfo.depReferenceNo, "benficiaryAccountAddrress": BankInfo.accountAddress }
@@ -128,7 +132,6 @@ class FaitDeposit extends Component {
     const link = <LinkValue content="terms_service" />;
     const { faitdeposit, BankInfo, depObj } = this.state;
     const { currenciesWithBankInfo } = this.props.depositInfo;
-    console.log(BankInfo)
     return (
       <>
         <Radio.Group
@@ -180,7 +183,9 @@ class FaitDeposit extends Component {
                       </Option>
                     )}
                   </Select></>}
-                <Form.Item
+                  {this.state.BankInfo &&
+                  // !fiatDepEur?
+                  <> <Form.Item
                   className="custom-forminput mb-0"
                   name="Amount"
                   required
@@ -205,9 +210,7 @@ class FaitDeposit extends Component {
                       value={depObj.Amount} />
 
                   </div></Form.Item>
-                {this.state.BankInfo &&
-                  // !fiatDepEur?
-                  <>
+                
                     <div className="d-flex">
                       {/* <span className="coin deposit-white mt-4" /> */}
                       <div style={{ flex: 1 }}>
@@ -276,30 +279,52 @@ class FaitDeposit extends Component {
                     <Paragraph
                       className="fs-14 text-white-30 fw-200 l-height-normal"
                     ><span className="text-yellow">IMPORTANT:</span> This code identifies your deposit include this code when submitting the wire transfer in the transaction description or purpose</Paragraph>
-                  <div className="d-flex p-16 mb-36 agree-check">
-                    <label>
-                      <input type="checkbox" id="agree-check" onChange={({ currentTarget: { checked } }) => { this.onTermsChange(checked) }} />
-                      <span for="agree-check" />
-                    </label>
-                    <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16 mb-0" style={{ flex: 1 }} />
-                  </div>
-
+                  <Form.Item
+                    className="custom-forminput mb-36 agree"
+                    name="isAccept"
+                    valuePropName="checked"
+                    required
+                    rules={[
+                      {
+                        validator: (_, value) =>
+                          value ? Promise.resolve() : Promise.reject(new Error('Please agree terms of service')),
+                      },
+                    ]}
+                  >
+                    <div className="d-flex pt-16 agree-check">
+                      <label>
+                        <input type="checkbox" id="agree-check" />
+                        <span for="agree-check" />
+                      </label>
+                      <Translate
+                        content="agree_to_suissebase"
+                        with={{ link }}
+                        component={Paragraph}
+                        className="fs-14 text-white-30 ml-16 mb-4"
+                        style={{ flex: 1 }}
+                      />
+                    </div>
+                  </Form.Item>
+                  
                   </>
                   // :<selectCurrency />
                   
                 }
               </div>
              
-              <Button
+              {this.state.BankInfo &&
+                  // !fiatDepEur?
+                  <><Button
                 htmlType="submit"
                 size="large"
                 block
                 className="pop-btn"
               >
                 Confirm
-              </Button>
+              </Button></>}
             </div>
             </Form>}
+            
           </>
         }
 
