@@ -15,6 +15,7 @@ const { Option } = Select;
 
 class AuditLogs extends Component {
   formRef = React.createRef();
+  formDateRef = React.createRef();
   constructor(props) {
     super(props);
     this.state = {
@@ -80,15 +81,7 @@ class AuditLogs extends Component {
     }
   };
 
-//   SearchGrid = async () => {
-//     let response = await getSearchGrid();
-//     if (response.ok) {
-//       console.log(response.data);
-//     }
-//   };
-
   handleUserChange = (event) => {
-    debugger
     if (event.target.value != null && event.target.value.length > 2) {
       let userVal = event.target.value
       this.TransactionUserSearch(userVal);
@@ -97,7 +90,6 @@ class AuditLogs extends Component {
   }
 
   handleTimeSpan = (val, id) => {
-    debugger
     let { searchObj } = this.state;
     searchObj[id] = val;
     if (val == "Custom") {
@@ -128,6 +120,7 @@ class AuditLogs extends Component {
     selectedTimespan = timeSpanfromdate + " " + "-" + " " + timeSpantodate;
     this.formRef.current.setFieldsValue({ ...this.state, selectedTimespan })
     this.setState({ ...this.state, selectedTimespan, timeSpanfromdate, timeSpantodate, modal: false, });
+    this.formDateRef.current.setFieldsValue({ ...this.state, timeSpanfromdate, timeSpantodate })
   };
 
   handleCancel = e => {
@@ -143,7 +136,7 @@ class AuditLogs extends Component {
   };
 
   render() {
-    const { gridUrl, searchObj, featureData, userData, timeListSpan, spanDate, todate, fromdate } = this.state;
+    const { gridUrl, searchObj, featureData, userData, timeListSpan, timeSpanfromdate, timeSpantodate } = this.state;
 
     const options1 = featureData.map((d) => (
       <Option key={d} value={d}>{d}</Option>
@@ -213,7 +206,7 @@ class AuditLogs extends Component {
                   className="input-label selectcustom-input mb-0"
                   label="Date"
                 >
-                  <Input disabled className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={() => { this.setState({ ...this.state, modal: true }) }} />} />
+                  <Input disabled className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={() => { this.setState({ ...this.state, modal: true, }) }} />} />
                 </Form.Item>
               </Col> : ""}
 
@@ -308,6 +301,7 @@ class AuditLogs extends Component {
               className="ant-advanced-search-form"
               autoComplete="off"
               onFinish={(e) => this.handleOk(e, "timeSpan")}
+              ref={this.formDateRef}
             >
               <Row gutter={24} className="mb-24 pb-24 border-bottom">
                 <Col xs={24} sm={24} md={12} >
@@ -360,8 +354,8 @@ class AuditLogs extends Component {
               </Row>
               <Form.Item className="mb-0">
                 <div className="text-right">
-                  <Button type="button" className="text-center ant-btn ant-btn-lg text-white-30 pop-cancel fw-400 text-captz text-center mr-12" onClick={this.handleCancel} ><span>Cancel</span></Button>
-                  <Button type="button" key="submit" className="pop-btn ant-btn px-24" htmlType="submit"><span>Save</span></Button>
+                  <Button type="button" className="c-pointer text-center ant-btn-lg text-white-30 pop-cancel fw-400 text-captz text-center mr-12" onClick={this.handleCancel} ><span>Cancel</span></Button>
+                  <Button type="button" key="submit" className="c-pointer pop-btn ant-btn px-24" htmlType="submit"><span>Save</span></Button>
                 </div>
               </Form.Item>
             </Form>
