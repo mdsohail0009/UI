@@ -25,7 +25,7 @@ class ProfileInfo extends Component {
             .post("UploadFile", formData)
             .then((res) => {
                 if (res.ok) {
-                    let Obj = { ImageURL: res.data[0], UserId: this.props.userConfig?.id }
+                    let Obj = { ImageURL: res.data[0], UserId: this.props.userConfig?.userId }
                     this.saveImage(Obj,res)
                 }
               else {
