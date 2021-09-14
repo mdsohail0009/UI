@@ -113,7 +113,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
           ]}
         >
 
-            <Input.Password placeholder="Current Password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ?  <EyeOutlined style={{ color:'#fff'}}/> : <EyeInvisibleOutlined /> )} />
+            <Input.Password placeholder="Type your current password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ?  <EyeOutlined style={{ color:'#fff'}}/> : <EyeInvisibleOutlined /> )} />
         </Form.Item>
         <div className="d-flex"> 
             <Translate
@@ -133,7 +133,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
         >
 
           <Input.Password
-            placeholder="New Password"
+            placeholder="Type your new password"
             value={initialValues.Password}
             onChange={(e) => handleChange("Password", e)}
             className="text-left cust-input mb-8" iconRender={visible => (visible ?  <EyeOutlined style={{ color:'#fff'}}/> : <EyeInvisibleOutlined />)}
@@ -172,7 +172,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
         >
           
           <Input.Password
-            placeholder="Confirm Password"
+            placeholder="Re-type your new password"
             value={initialValues.ConfirmPassword}
             onChange={(e) => handleChange("ConfirmPassword", e)}
             className="text-left cust-input mb-8" iconRender={visible => (visible ?  <EyeOutlined style={{ color:'#fff'}}/> : <EyeInvisibleOutlined /> )}
