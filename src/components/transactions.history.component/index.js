@@ -26,7 +26,7 @@ class TransactionsHistory extends Component {
     this.props.thref(this)
   }
   state = {
-    gridUrl: "https://tstget.suissebase.ch/api/v1/Transaction/TransactionHistoryk", activeTab: "1"
+    gridUrl: process.env.REACT_APP_GRID_API+"Transaction/TransactionHistoryk", activeTab: "1"
   }
   setKy=()=>{
     this.setState({activeTab:'1'})
