@@ -37,7 +37,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
     let minLength=/^.{8,}$/
     if (values.CurrentPassword === values.Password) {
       //notify({ message: "Error", type: "error", description: "New password and re entered password must same" });
-      setChangePasswordResponse({ error: true, messsage: "Current & New passwords should not be same", isLoading: false });
+      setChangePasswordResponse({ error: true, messsage: "Your current password is wrong", isLoading: false });
     }
     //  else if (!minLength.test(values.Password)) {
     //   setChangePasswordResponse({ error: true, messsage: "Password should be atleast 8 characters", isLoading: false });
@@ -130,7 +130,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
           rules={[{ required: true, message: "New password  required" },
           //  { min: 8, message: "password  atleast 8 characters" },
            { pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/,
-            message: 'Password must be at least 8 Characters along one uppercase with one lowercase, one numeric & special character' },
+            message: 'Password must be at least 8 Characters long one uppercase with one lowercase, one numeric & special character' },
            ]}
         >
          
