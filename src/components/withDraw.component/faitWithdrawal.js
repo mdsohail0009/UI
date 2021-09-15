@@ -63,14 +63,19 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
     let recName = await getCountryStateLu()
     if (recName.ok) {
       setCountryLu(recName.data);
+      //setCountryLu([]);
     }
-    appInsights.trackEvent({
-      name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'Page view', "Username": userConfig.email, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": 'WithDraw Fiat', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
-    });
+    // appInsights.trackEvent({
+    //   name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'Page view', "Username": userConfig.email, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": 'WithDraw Fiat', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
+    // });
   }
   const getStateLu = (countryname) => {
     let statelu = countryLu.filter((item) => { if (item.name == countryname) return item })
-    setStateLu(statelu[0].states)
+    if(statelu[0].states.length>0){
+      setStateLu(statelu[0].states)
+    }else{
+      setStateLu([{name:countryname,code:countryname}])
+    }
     form.setFieldsValue({ state: null })
 
   }
@@ -95,6 +100,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
     setErrorMsg(null)
     values['membershipId'] = userConfig.id
     values['walletCode'] = selectedWallet.currencyCode
+    values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName
     setSaveObj(values);
     setConfirmationStep('step1')
     setShowModal(true);
@@ -109,7 +115,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
     const _types = {
       step1: <>{saveObj && <div>
         <p> <Currency defaultValue={saveObj?.totalValue} prefixText={<b>Amount: </b>} prefix={""} suffixText={saveObj.walletCode} /></p>
-        <p><b>Bank Account Number: </b> {saveObj.accountNumber}</p>
+        <p><b>Bank Account Number/IBAN: </b> {saveObj.accountNumber}</p>
         <p><b>Bank BIC/SWIFT/Routing Number: </b> {saveObj.swiftCode}</p>
         <p><b>Bank Name: </b> {saveObj.bankName}</p>
         <p><b>Recipient Full Name : </b> {saveObj.beneficiaryAccountName}</p>
@@ -129,7 +135,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
       </>,
       step3: <>{saveObj && <div>
         <p> <Currency defaultValue={saveObj?.totalValue} prefixText={<b>Amount: </b>} prefix={""} suffixText={saveObj.walletCode} /></p>
-        <p><b>Bank Account Number: </b> {saveObj.accountNumber}</p>
+        <p><b>Bank Account Number/IBAN: </b> {saveObj.accountNumber}</p>
         <p><b>Bank BIC/SWIFT/Routing number: </b> {saveObj.swiftCode}</p>
         <p><b>Bank Name: </b> {saveObj.bankName}</p>
         <p><b>Recipient full Name : </b> {saveObj.beneficiaryAccountName}</p>
@@ -403,21 +409,13 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
             name="country"
             id="country"
           >
-            {/* <div>
-              <div className="d-flex">
-                <Translate
-                  className="input-label"
-                  content="Bank_address2"
-                  component={Text}
-                /></div> */}
-            <Select dropdownClassName="select-drpdwn" placeholder="Select Country" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true} getPopupContainer={() => document.getElementById('country')}
-              onChange={(e) => getStateLu(e)} >
-              {countryLu?.map((item, idx) =>
-                <Option key={idx} value={item.name}>{item.name}
-                </Option>
-              )}
-            </Select>
-            {/* </div> */}
+          <Select dropdownClassName="select-drpdwn" placeholder="Select Country" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+          onChange={(e) => getStateLu(e)} >
+          {countryLu?.map((item, idx) =>
+            <Option key={idx} value={item.name}>{item.name}
+            </Option>
+          )}
+        </Select>
           </Form.Item>
           <div className="d-flex">
             <Translate
@@ -548,23 +546,23 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
           <Form.Item
             className="custom-forminput mb-24"
             name="description"
-            rules={[
-              {
-                validator: (rule, value, callback) => {
-                  var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                  if (value) {
-                    if (!regx.test(value)) {
-                      callback("Invalid reference")
-                    } else if (regx.test(value)) {
-                      callback();
-                    }
-                  } else {
-                    callback();
-                  }
-                  return;
-                }
-              }
-            ]}
+            // rules={[
+            //   {
+            //     validator: (rule, value, callback) => {
+            //       var regx = new RegExp(/^[A-Za-z0-9]+$/);
+            //       if (value) {
+            //         if (!regx.test(value)) {
+            //           callback("Invalid reference")
+            //         } else if (regx.test(value)) {
+            //           callback();
+            //         }
+            //       } else {
+            //         callback();
+            //       }
+            //       return;
+            //     }
+            //   }
+            // ]}
           >
             <div>
               <div className="d-flex">

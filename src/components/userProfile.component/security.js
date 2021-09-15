@@ -35,7 +35,7 @@ const Security =({userConfig,onChange})=> {
                     <li className="profileinfo">
                         <div className="d-flex profile-block">
                             <label className="mb-0 profile-label" >2FA</label>
-                            <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{userConfig?.twofactorVerified?'Active':'Inactive'}</p>
+                            <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{userConfig?.twofactorVerified?'Enabled':'Disabled'}</p>
                             <div>
                                 <Switch onChange={(status)=>enableDisable2fa(status)} checked={userConfig?.twofactorVerified} size="medium" className="custom-toggle ml-12" /></div>
                         </div>
