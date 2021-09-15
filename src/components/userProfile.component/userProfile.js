@@ -96,8 +96,8 @@ class userProfile extends Component {
           <TabPane tab={ <span><span className="icon lg info-icon mr-16" />About</span>}  key="4">
           <Settings/>
           </TabPane>
-          <TabPane onClick={() => userManager.signoutRedirect()} tab={ <span  onClick={() => userManager.signoutRedirect()}><span className="icon lg info-icon mr-16" />Logout</span>}>
-          </TabPane>
+          {/* <TabPane tab={ <span onClick={() => userManager.signoutRedirect()}><span className="icon lg logout-icon mr-16" />Logout</span>}>
+          </TabPane> */}
         </Tabs>
             </div>
         </>);

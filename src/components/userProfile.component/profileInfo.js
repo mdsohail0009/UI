@@ -1,17 +1,57 @@
 import React, { Component } from 'react';
-import { Row, Col, Typography, Button, Upload } from 'antd'
+import { Row, Col, Typography, Button, Upload,notification } from 'antd'
 import userProfile from '../../assets/images/profile.png';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
 import { SearchOutlined } from '@ant-design/icons';
+import {uploadClient} from '../../api'
+import {ProfileImageSave} from '../../api/apiServer'
+import { getmemeberInfo } from '../../reducers/configReduser';
 
 class ProfileInfo extends Component {
+    state={Image:null}
+    uploadProps = {
+        name: "file",
+        multiple: false,
+        fileList: [],
+        customRequest: ({ file }) => {
+          let formData = new FormData();
+          formData.append(
+            "file",
+            file,
+            file.name 
+          );
+          uploadClient
+            .post("UploadFile", formData)
+            .then((res) => {
+                if (res.ok) {
+                    let Obj = { ImageURL: res.data[0], UserId: this.props.userConfig?.userId }
+                    this.saveImage(Obj,res)
+                }
+              else {
+                notification.open({
+                    message: "Error",
+                    description:'Something went wrong',
+                    placement: "bottom",
+                    type:"success"
+                });
+              }
+            });
+        }
+      };
+      saveImage=async(Obj,res)=>{
+        let res1 = await ProfileImageSave(Obj);
+        if (res1.ok) {
+            this.props.getmemeberInfoa(this.props.userConfig.email)
+        }
+      }
     render() {
         const { Title, Text, Paragraph } = Typography;
         return (<>
             <div className="profile-info text-center">
-                <img src={userProfile} className="user-profile" />
-                <Upload>
+            {this.props.userConfig.imageURL!=null&&<img src={this.props.userConfig.imageURL} className="user-profile" />}
+            {this.props.userConfig.imageURL==null&&<img src={userProfile} className="user-profile" />}
+                <Upload {...this.uploadProps}>
                     <Button shape="circle" type="primary" className="img-upld" size="large" icon={<span className="icon md camera" />} />
                 </Upload>
             </div>
@@ -90,4 +130,11 @@ class ProfileInfo extends Component {
 const connectStateToProps = ({ userConfig }) => {
     return { userConfig: userConfig.userProfileInfo }
 }
-export default connect(connectStateToProps)(ProfileInfo);
+const connectDispatchToProps = dispatch => {
+    return {
+      getmemeberInfoa: (useremail) => {
+        dispatch(getmemeberInfo(useremail));
+      }
+    }
+  }
+export default connect(connectStateToProps,connectDispatchToProps)(ProfileInfo);
