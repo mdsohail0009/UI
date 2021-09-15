@@ -71,8 +71,8 @@ class YourPortfolio extends Component {
 
                             {/* <div className={`text-right fs-20 ${item.coinBalance>0 ? 'text-green' : 'text-red'}`}><Currency defaultValue={item.coinBalance} prefix={""} type={"text"}/></div> */}
                             <div className='text-right fs-20 text-white'>
-                                <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} />
-                                <Currency defaultValue={item.coinBalance} prefix={""} type={"text"} className={`fs-16 ${item.coinBalance > 0 ? "text-green" : "text-red"}`} />
+                                <Currency defaultValue={item.coinBalance} type={"text"} prefix={""} />
+                                <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
                             </div>
                             {/* {item.coinBalance>0? <span className="icon md gain mr-8" /> : <span className="icon md lose mr-8" />} */}
                             {/* <div className="fs-16 text-white-30 fw-300 ml-24  text-upper ">{item.totalcoin} {item.shortcode}</div> */}
