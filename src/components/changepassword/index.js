@@ -38,13 +38,13 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
     if (values.CurrentPassword === values.Password) {
       //notify({ message: "Error", type: "error", description: "New password and re entered password must same" });
       setChangePasswordResponse({ error: true, messsage: "Current & New passwords should not be same", isLoading: false });
-
-    }else if(!minLength.test(values.Password)){
-      setChangePasswordResponse({ error: true, messsage: "Password should be atleast 8 characters", isLoading: false });
     }
-    else if(!pwdregEx.test(values.Password)){
-      setChangePasswordResponse({ error: true, messsage: "Passwords must have at least one non alphanumeric character. Passwords must have at least one lowercase ('a'-'z'). Passwords must have at least one uppercase ('A'-'Z').", isLoading: false });
-    }
+    //  else if (!minLength.test(values.Password)) {
+    //   setChangePasswordResponse({ error: true, messsage: "Password should be atleast 8 characters", isLoading: false });
+    // }
+    //  else if (!pwdregEx.test(values.Password)) {
+    //   setChangePasswordResponse({ error: true, messsage: "Passwords must have at least one non alphanumeric character. Passwords must have at least one lowercase ('a'-'z'). Passwords must have at least one uppercase ('A'-'Z').", isLoading: false });
+    // }
     else {
       setChangePasswordResponse({ error: false, messsage: "", isLoading: true });
       const result = await changePassword(initialValues);
@@ -113,31 +113,33 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
           ]}
         >
 
-            <Input.Password placeholder="Type your current password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8 pr-0 change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ?  <EyeInvisibleOutlined />:<EyeOutlined style={{ color:'#fff'}}/> )} />
+          <Input.Password placeholder="Type your current password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8 pr-0 change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeOutlined style={{ color: '#fff' }} />)} />
         </Form.Item>
-        <div className="d-flex"> 
-            <Translate
-              className="text-white input-label"
-              content="new_password"
-              component={Text}
-            />
-            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-          </div>
+        <div className="d-flex">
+          <Translate
+            className="text-white input-label"
+            content="new_password"
+            component={Text}
+          />
+          <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+        </div>
         <Form.Item
           name="Password"
           className="custom-forminput mb-24"
           required
-          rules={[
-            { required: true, message: "Please enter new password" },
-          ]}
+          rules={[{ required: true, message: "New password  required" },
+          //  { min: 8, message: "password  atleast 8 characters" },
+           { pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/,
+            message: 'Password must be at least 8 Characters along one uppercase with one lowercase, one numeric & special character' },
+           ]}
         >
-
-          <Input.Password
-            placeholder="Type your new password"
-            value={initialValues.Password}
-            onChange={(e) => handleChange("Password", e)}
-            className="text-left cust-input mb-8 pr-0 change-space pass-onhover" iconRender={visible => (visible ? <EyeInvisibleOutlined />:<EyeOutlined style={{ color:'#fff'}}/> )}
-          />
+         
+            <Input.Password
+              placeholder="Type your new password"
+              value={initialValues.Password}
+              onChange={(e) => handleChange("Password", e)}
+              className="text-left cust-input mb-8 pr-0 change-space pass-onhover" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeOutlined style={{ color: '#fff' }} />)}
+            />
           {/* <div class="hover-passlwngth">
                                 <span>At least:</span>
                                 <span>8 characters</span>
@@ -148,13 +150,13 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
                             </div> */}
         </Form.Item>
         <div className="d-flex">
-            <Translate
-              className="text-white input-label"
-              content="confirm_password"
-              component={Text}
-            />
-            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-          </div>
+          <Translate
+            className="text-white input-label"
+            content="confirm_password"
+            component={Text}
+          />
+          <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+        </div>
         <Form.Item
           required
           className="custom-forminput mb-24"
@@ -178,16 +180,16 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
             }),
           ]}
         >
-          
+
           <Input.Password
             placeholder="Re-type your new password"
             value={initialValues.ConfirmPassword}
             onChange={(e) => handleChange("ConfirmPassword", e)}
-            className="text-left cust-input mb-8 pr-0 change-space" iconRender={visible => (visible ?  <EyeInvisibleOutlined />:<EyeOutlined style={{ color:'#fff'}}/>  )}
+            className="text-left cust-input mb-8 pr-0 change-space" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeOutlined style={{ color: '#fff' }} />)}
           />
         </Form.Item>
 
-        <div style={{marginTop:'50px'}} className="">
+        <div style={{ marginTop: '50px' }} className="">
           <Button
             loading={changePasswordResponse.isLoading}
             htmlType="submit"
@@ -200,9 +202,9 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
           <Button
             htmlType="cancel"
             size="large"
-            block 
+            block
             className="pwd-popup pop-cancel"
-          onClick={()=>onSubmit()}>
+            onClick={() => onSubmit()}>
             Cancel
           </Button>
         </div>
@@ -211,8 +213,8 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
   </>)
 }
 
-const connectStateToProps = ({ buySell, oidc, userConfig,userProfile }) => {
-  return { buySell, userConfig: userConfig.userProfileInfo,userProfile }
+const connectStateToProps = ({ buySell, oidc, userConfig, userProfile }) => {
+  return { buySell, userConfig: userConfig.userProfileInfo, userProfile }
 }
 const connectDispatchToProps = dispatch => {
   return {
