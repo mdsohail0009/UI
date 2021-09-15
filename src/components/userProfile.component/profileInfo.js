@@ -7,6 +7,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import {uploadClient} from '../../api'
 import {ProfileImageSave} from '../../api/apiServer'
 import { getmemeberInfo } from '../../reducers/configReduser';
+import flag from '../../assets/images/flag.png';
 
 class ProfileInfo extends Component {
     state={Image:null}
@@ -122,7 +123,11 @@ class ProfileInfo extends Component {
                     <li className="profileinfo">
                         <div className="d-flex profile-block ">
                             <label className="mb-0 profile-label">Phone Number</label>
-                            <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.phoneNo}</p>
+                            <div style={{ flexGrow: 12 }}>
+                            <p className="mb-0 ml-8 profile-value" >
+                                <span className="mr-12"><img src={flag} style={{width:'30px', height:'30px'}}/></span>
+                                {this.props.userConfig.phoneNo}</p>
+                                </div>
                             <div >
                                 {/* <span className="icon md rarrow-white" /> */}
                                 </div>
