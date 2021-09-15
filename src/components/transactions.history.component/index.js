@@ -60,31 +60,31 @@ class TransactionsHistory extends Component {
               <Collapse onChange={collapseGrids} className="mb-16">
                 <Panel header="Buy/Sell" key="1">
                   {/* <Table columns={columns}   /> */}
-                  <HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{memberId:this.props.member?.id,screenName: 'BuyandSell' }}></HistoryGridComponent>
+                  {this.state.activeTab==1&&<HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{memberId:this.props.member?.id,screenName: 'BuyandSell' }}></HistoryGridComponent>}
                 </Panel>
                 </Collapse>
 
                 <Collapse onChange={collapseGrids} className="mb-16">
                 <Panel header="Swap" key="2">
-                <HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{memberId:this.props.member?.id,screenName: 'Swap' }}></HistoryGridComponent>
+                {this.state.activeTab==1&&<HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{memberId:this.props.member?.id,screenName: 'Swap' }}></HistoryGridComponent>}
                 </Panel>
                 </Collapse>
 
                 <Collapse onChange={collapseGrids}>
                 <Panel header="Deposit/Withdraw" key="3">
-                <HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{memberId:this.props.member?.id,screenName: 'DepositandWithdraw' }}></HistoryGridComponent>
+                {this.state.activeTab==1&&<HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{memberId:this.props.member?.id,screenName: 'DepositandWithdraw' }}></HistoryGridComponent>}
                 </Panel>
               </Collapse>
               </TabPane>
 
               <TabPane tab="Buy/Sell" key='2' onClick={()=>  this.changeTab("2")}>
-              <HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{memberId:this.props.member?.id,screenName: 'BuyandSell' }}></HistoryGridComponent>
+              {this.state.activeTab==2&&<HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{memberId:this.props.member?.id,screenName: 'BuyandSell' }}></HistoryGridComponent>}
               </TabPane>
               <TabPane tab="Swap" key='3' onClick={()=>  this.changeTab("3")}>
-              <HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{memberId:this.props.member?.id,screenName: 'Swap' }}></HistoryGridComponent>
+              {this.state.activeTab==3&&<HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{memberId:this.props.member?.id,screenName: 'Swap' }}></HistoryGridComponent>}
               </TabPane>
               <TabPane tab="Deposit/Withdraw" key='4' onClick={()=> this.changeTab("4")}>
-              <HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{memberId:this.props.member?.id,screenName: 'DepositandWithdraw' }}></HistoryGridComponent>
+              {this.state.activeTab==4&&<HistoryGridComponent  columns={columns} gridUrl={gridUrl} params={{memberId:this.props.member?.id,screenName: 'DepositandWithdraw' }}></HistoryGridComponent>}
               </TabPane>
             </Tabs>
             </div>
