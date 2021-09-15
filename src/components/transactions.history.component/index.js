@@ -17,7 +17,7 @@ const columns = [
   { field: "docType", title: "Doc Type", width: 150,filter: true, },
   { field: "credit", title: "Credit", filter: true, width: 160 },
   { field: "debit", title: "Debit", filter: true, width: 180 },
-  { field: "description", title: "Description", filter: true, width: 220 },
+  { field: "description", title: "Description", filter: true},
   { field: "status", title: "Status", filter: true, width: 220 }
 ];
 
