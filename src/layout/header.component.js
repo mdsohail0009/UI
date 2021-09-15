@@ -18,7 +18,7 @@ import { userManager } from '../authentication';
 import Changepassword from '../components/changepassword';
 import TransactionsHistory from '../components/transactions.history.component';
 import AuditLogs from '../components/auditlogs.component';
-import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata,clearSwapData } from '../reducers/swapReducer';
+import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata, clearSwapData } from '../reducers/swapReducer';
 import { connect } from 'react-redux';
 import userProfile from '../assets/images/profile.png';
 
@@ -47,17 +47,17 @@ class Header extends Component {
         <Menu>
             <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="security" component={Title} />
             <ul className="pl-0 drpdwn-list">
-                <li className="no-hover dropdown-flex text-white fs-14 pb-16">2FA<Switch size="small" checked={this.props.userConfig?.twofactorVerified} onChange={(status)=>{
-                    if(status==true){
-                        window.open(process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/EnableAuthenticator","_self");
-                    }else{
-                        window.open(process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/Disable2faWarning","_self");
+                <li className="no-hover dropdown-flex text-white fs-14 pb-16">2FA<Switch size="small" checked={this.props.userConfig?.twofactorVerified} onChange={(status) => {
+                    if (status == true) {
+                        window.open(process.env.REACT_APP_AUTHORITY + "/account/login?returnUrl=/manage/EnableAuthenticator", "_self");
+                    } else {
+                        window.open(process.env.REACT_APP_AUTHORITY + "/account/login?returnUrl=/manage/Disable2faWarning", "_self");
                     }
                 }} /> </li>
                 <li className="">
                     {/* <Translate content="change_password" component={Link} to="/changepassword" /> */}
                     <Link className="dropdown-flex" to="/changepassword" >Change Password <span className="icon md rarrow-white" /></Link>
-    
+
                 </li>
                 <li className="no-hover">
                     <div className="">
@@ -74,28 +74,6 @@ class Header extends Component {
                 </li>
             </ul>
         </Menu>
-    );
-    userProfileMenu = (
-        <Menu>
-            <div className="profile-dropdown">
-            {this.props.userConfig?.imageURL!=null&&<img src={this.props.userConfig?.imageURL} className="user-profile"/>}
-            {this.props.userConfig?.imageURL==null&&<img src={userProfile} className="user-profile"/>}
-            <p className="mb-15 ml-8 profile-value" style={{flexGrow:12}}>{this.props.userConfig.firstName} {this.props.userConfig.lastName}</p>
-            {/* <Translate className="fs-16 text-white my-16 fw-500 mx-30" content="userName" component={this.props.userConfig.userName} /> */}
-            <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={() => this.userProfile()}  />
-            {/* <Link className="profile-btn" to="/userprofile" >Manage Your Account</Link> */}
-            <ul className="pl-0 drpdwn-list">
-                <Menu.Item className="px-0" onClick={() => this.showAuditLogsDrawer()}>
-                <li className="c-pointer px-0">
-               <Link>Audit Logs</Link>
-            </li>
-                </Menu.Item>
-            <li className="c-pointer px-0" onClick={() => userManager.signoutRedirect()}>
-                    <Translate content="logout" component={Link} />
-            </li>
-            </ul>
-            </div>
-        </Menu>  
     );
     settingMenu = (
         <Menu>
@@ -191,17 +169,17 @@ class Header extends Component {
             initLoading: true,
             buyFiatDrawer: false,
             showChangePassword: false,
-            transactionDrawer:false,
-            auditlogsDrawer:false
+            transactionDrawer: false,
+            auditlogsDrawer: false
         }
         this.next = this.next.bind(this);
         this.previous = this.previous.bind(this);
         this.carousel = React.createRef();
         this.userProfile = this.userProfile.bind(this);
     }
-    userProfile(){
+    userProfile() {
         debugger;
-         this.props.history.push("/userprofile");
+        this.props.history.push("/userprofile");
     }
     next() {
         this.carousel.next();
@@ -256,10 +234,10 @@ class Header extends Component {
     showAuditLogsDrawer = () => {
         debugger
         this.setState({
-            auditlogsDrawer:true
+            auditlogsDrawer: true
         })
     }
-  
+
 
 
     showSwapDrawer = () => {
@@ -284,11 +262,11 @@ class Header extends Component {
             })
         } else {
             this.props.history.push("/notkyc");
-           // notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+            // notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
         }
     }
     closeDrawer = () => {
-        if(this.child)this.child.clearValues();
+        if (this.child) this.child.clearValues();
         let obj = {};
         this.props.fromObjSwap(obj);
         this.props.receiveObjSwap(obj);
@@ -313,7 +291,7 @@ class Header extends Component {
             swapDrawer: false,
             buyFiatDrawer: false,
             transactionDrawer: false,
-            auditlogsDrawer:false
+            auditlogsDrawer: false
         })
     }
     enableDisable2fa = (status) => {
@@ -324,9 +302,9 @@ class Header extends Component {
             url = process.env.REACT_APP_AUTHORITY + "/account/login?returnUrl=/manage/Disable2faWarning"
         }
         var win = window.open(url);
-        
+
     }
-   
+
     render() {
         const { initLoading, loading } = this.state;
         const link = <LinkValue content="medium" />;
@@ -342,23 +320,46 @@ class Header extends Component {
                 </ul>
             </Menu>
         )
+        const userProfileMenu = (
+            <Menu>
+                <div className="profile-dropdown">
+                    {this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL} className="user-profile" />}
+                    {this.props.userConfig?.imageURL == null && <img src={userProfile} className="user-profile" />}
+                    <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.firstName} {this.props.userConfig.lastName}</p>
+                    {/* <Translate className="fs-16 text-white my-16 fw-500 mx-30" content="userName" component={this.props.userConfig.userName} /> */}
+                    <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={() => this.userProfile()} />
+                    {/* <Link className="profile-btn" to="/userprofile" >Manage Your Account</Link> */}
+                    <ul className="pl-0 drpdwn-list">
+                        <Menu.Item className="px-0" onClick={() => this.showAuditLogsDrawer()}>
+                            <li className="c-pointer px-0">
+                                <Link>Audit Logs</Link>
+                            </li>
+                        </Menu.Item>
+                        <li className="c-pointer px-0" onClick={() => userManager.signoutRedirect()}>
+                            <Translate content="logout" component={Link} />
+                        </li>
+                    </ul>
+                </div>
+            </Menu>
+        );
         return (
             <>
                 <Layout className="layout">
                     <menuHeader className="tlv-header" id="area">
                         <div className="login-user">
                             <ul className="header-logo pl-0">
-                                <li className="pr-30 p-relative">{this.props.userConfig.isKYC?<Link to="/dashboard"><img src={logoColor} alt="logo" className="tlv-logo" /></Link>:<Link ><img src={logoColor} alt="logo" className="tlv-logo" /></Link>}</li>
-                                <li className="px-36"><span className="icon md hamburger c-pointer" onClick={this.showMegaMenu} /></li>
-                                <li className="mb-d-none"><Translate content="header_title" with={{lable:this.props.userConfig?.isBusiness?" Business":" Personal"}} component="p" className="text-white-30 mb-0 fs-24" /></li>
+                                <li className="pr-30 p-relative">{this.props.userConfig.isKYC ? <Link to="/dashboard"><img src={logoColor} alt="logo" className="tlv-logo" /></Link> : <Link ><img src={logoColor} alt="logo" className="tlv-logo" /></Link>}</li>
+                                <li className="px-36"><span className="icon md hamburger c-pointer" /></li>
+                                {/* Mega menu ==> onClick={this.showMegaMenu} */}
+                                <li className="mb-d-none"><Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? " Business" : " Personal" }} component="p" className="text-white-30 mb-0 fs-24" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
-                               
+
                                 <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
-                                <Dropdown overlay={this.userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                <Menu.Item key="7">{this.props.userConfig?.imageURL!=null&&<img src={this.props.userConfig?.imageURL} className="user-profile"/>}
-                                {this.props.userConfig?.imageURL==null&&<img src={userProfile} className="user-profile"/>}</Menu.Item>
-                            </Dropdown>
+                                <Dropdown overlay={userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                                    <Menu.Item key="7">{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL} className="user-profile" />}
+                                        {this.props.userConfig?.imageURL == null && <img src={userProfile} className="user-profile" />}</Menu.Item>
+                                </Dropdown>
                             </Menu>
                         </div>
                         <Menu theme="light" mode="horizontal" className="header-right" >
@@ -372,11 +373,11 @@ class Header extends Component {
                             {/* <Dropdown overlay={this.securityMenu} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Translate key="5" content="security" component={Menu.Item} />
                             </Dropdown> */}
-                             <Translate content="menu_transactions_history" component={Menu.Item} key="4" onClick={this.showTransactionHistoryDrawer} className="list-item" />
-                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
-                            <Dropdown overlay={this.userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                <Menu.Item key="7"  className="ml-16" >{this.props.userConfig?.imageURL!=null&&<img src={this.props.userConfig?.imageURL} className="user-profile"/>}
-                                {this.props.userConfig?.imageURL==null&&<img src={userProfile} className="user-profile"/>}</Menu.Item>
+                            <Translate content="menu_transactions_history" component={Menu.Item} key="4" onClick={this.showTransactionHistoryDrawer} className="list-item" />
+                            <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
+                            <Dropdown overlay={userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                                <Menu.Item key="7" className="ml-16" >{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL} className="user-profile" />}
+                                    {this.props.userConfig?.imageURL == null && <img src={userProfile} className="user-profile" />}</Menu.Item>
                             </Dropdown>
                         </Menu>
                     </menuHeader>
@@ -593,10 +594,10 @@ class Header extends Component {
                 </Modal>
                 <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
                 <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
-                <SwapCrypto swapRef={(cd) => this.child = cd}  showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
+                <SwapCrypto swapRef={(cd) => this.child = cd} showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
                 <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
-                <TransactionsHistory showDrawer={this.state.transactionDrawer} onClose={() => {this.closeDrawer();if(this.child1){this.child1.setKy()}}} thref={(cd)=>this.child1=cd}/>
-                <AuditLogs showDrawer={this.state.auditlogsDrawer} onClose={() => this.closeDrawer()}/>
+                <TransactionsHistory showDrawer={this.state.transactionDrawer} onClose={() => { this.closeDrawer(); if (this.child1) { this.child1.setKy() } }} thref={(cd) => this.child1 = cd} />
+                <AuditLogs showDrawer={this.state.auditlogsDrawer} onClose={() => this.closeDrawer()} />
                 <Drawer
                     title={[<div className="side-drawer-header">
                         <span onClick={() => this.setState({ ...this.state, showChangePassword: false })} className="icon md close-white c-pointer" />
@@ -615,13 +616,13 @@ class Header extends Component {
                     <Changepassword onSubmit={() => { this.setState({ ...this.state, showChangePassword: false }) }} />
                 </Drawer>
             </>
-            
+
         );
     }
 }
 
-const connectStateToProps = ({ swapStore, userConfig,oidc }) => {
-    return { swapStore,userConfig: userConfig.userProfileInfo }
+const connectStateToProps = ({ swapStore, userConfig, oidc }) => {
+    return { swapStore, userConfig: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
