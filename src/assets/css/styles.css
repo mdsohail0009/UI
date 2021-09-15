@@ -759,5 +759,11 @@ main.ant-layout-content{min-height: calc(100vh - 220px);}
     z-index: 99;
 }
 .hover-passlwngth span:first-child:after {display: none}
+.pwd-popup.pop-cancel{vertical-align: middle;
+    margin: 10px auto !important;
+    display: flex;
+    height: 36px !important;
+text-align: center !important;}
+.pwd-popup.pop-cancel.ant-btn-block{width: auto !important;}
 
 
