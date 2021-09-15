@@ -46,7 +46,7 @@ const Security =({userConfig,onChange})=> {
                 <Title className="basicinfo">Change Password</Title>
                 <Paragraph className="basic-decs">Choose a unique password to protect your account</Paragraph>
                 <ul className="user-list pl-0">
-                    <li className="profileinfo" onClick={()=>showDrawer()}>
+                    <li className="profileinfo c-pointer" onClick={()=>showDrawer()}>
                         <div className="d-flex profile-block">
                             <label className="mb-0 profile-label">Password</label>
                             <div style={{ flexGrow: 12 }}>
