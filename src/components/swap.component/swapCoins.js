@@ -35,16 +35,7 @@ class SwapCoins extends Component {
         this.setState({  }, () => this.componentWillUnmount());
     }
     componentWillUnmount() {
-        // this.setState({
-        //     fromCoin: null,
-        //     receiveCoin: null,
-        //     price: null,
-        //     fromValue: null,
-        //     receiveValue: null,
-        //     errorMessage: null
-        // })
          this.setState({ ...this.state, fromCoin: null,receiveCoin: null,price: null, fromValue: '', receiveValue: '',errorMessage: null})
-        //  this.setReceiveAmount(0);
      }
     loadamount() {
         if (this.state.fromValue || this.props.swapStore.swapdata.fromValue) {
@@ -173,14 +164,16 @@ class SwapCoins extends Component {
             }
         } else {
             //notification.error({ message: "", description: 'Select from and recevie swap coin' });
-            this.setState({ ...this.state, errorMessage: 'Please select from and receive coins to swap' })
+           this.setState({ ...this.state, errorMessage: 'Please select from and receive coins to swap' })
         }
     }
     render() {
         const { Paragraph, Text } = Typography;
         const { coinDetailData } = this.props.swapStore;
         const { coinReceiveDetailData } = this.props.swapStore;
-
+        if((!coinReceiveDetailData.coin) && this.state.receiveValue){
+            this.setState({ ...this.state, receiveValue: 0 })
+        }
         return (
             <div>
                 {this.state.errorMessage&&<Alert
@@ -233,9 +226,9 @@ class SwapCoins extends Component {
                     </div>
                     {/* <span className="icon swapfrom-arrow c-pointer" onClick={()=>this.swapingCurr()}></span> */}
 
-                    <span className="mt-16 swap-updown c-pointer" onClick={() => this.swapingCurr()}>
+                    {/* <span className="mt-16 swap-updown c-pointer" onClick={() => this.swapingCurr()}>
                         <span className="icon md swaparrow" />
-                    </span>
+                    </span> */}
                 </div>
                 }
 
@@ -265,9 +258,9 @@ class SwapCoins extends Component {
                             // }}
                             
                         />}
-                        {coinReceiveDetailData.coinBalance && <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - <Currency prefix={""} className={'currencyContains'} decimalPlaces={8} defaultValue={coinReceiveDetailData.coinBalance} suffixText={coinReceiveDetailData.coin} /></Text>}
+                        {(coinReceiveDetailData.coinBalance||coinReceiveDetailData.coinBalance==0) && <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - <Currency prefix={""} className={'currencyContains'} decimalPlaces={8} defaultValue={coinReceiveDetailData.coinBalance} suffixText={coinReceiveDetailData.coin} /></Text>}
                     </div>
-                    <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step4')} >
+                    <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => {if(coinDetailData.coinFullName){this.props.changeStep('step4');this.setState({ ...this.state, errorMessage:'' })}else{this.setState({ ...this.state, errorMessage: 'Please select from coin' })}}} >
                         <div className="crypto-coin">
                             {coinReceiveDetailData.coin ? <> <span className={`coin md ${coinReceiveDetailData.coin}`}></span>
                                 <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinReceiveDetailData.coinFullName}</Paragraph></>
@@ -284,7 +277,7 @@ class SwapCoins extends Component {
                     {coinDetailData.coinBalance && <Paragraph className="fs-16 text-white-30 mb-0 l-height-normal">
                         Available <Currency className={'currencyContains'} prefix={""} decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} />
                     </Paragraph>}
-                    {this.state.price && <Paragraph className="fs-16 text-white-30 l-height-normal">
+                    {(this.state.price && coinReceiveDetailData.coin)&& <Paragraph className="fs-16 text-white-30 l-height-normal">
                         Exchange Rate <Currency className={'currencyContains'} defaultValue={this.state.price} decimalPlaces={"8"} prefix={""} suffixText={coinReceiveDetailData.coin} className="fw-300 text-white-30" prefixText={`1 ${coinDetailData.coin} =  `}/>
                     </Paragraph>}
                 </div>

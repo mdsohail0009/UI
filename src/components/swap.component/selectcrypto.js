@@ -6,22 +6,48 @@ import { connect } from 'react-redux';
 import cryptolist from '../shared/cryptolist';
 import CryptoList from '../shared/cryptolist';
 import { appInsights } from "../../Shared/appinsights";
+import { getfromCoinList, gettoCoinList } from './api'
 
 class SelectCrypto extends Component {
     state = {
         addLinks: null,
         MemberCoins: null,
         coinDetails: null,
-        errorMessage: null
+        errorMessage: null,
+        fromCoinsList:[],
+        toCoinsList:[],
+        isLoading:true,
     }
     useDivRef = React.createRef();
     componentDidMount() {
-        this.props.fetchMemberCoins(this.props.userProfile?.id);
+        //this.props.fetchMemberCoins(this.props.userProfile?.id);
         //this.trackEvent()
+        if(this.props.swapfrom){
+            this.fromCoinList()
+        }else{
+            this.toCoinList()
+        }
     }
+    fromCoinList = async() =>{
+       let  fromlist =  await getfromCoinList(this.props.userProfile?.id)
+        if(fromlist.ok){
+            this.setState({...this.state,fromCoinsList:fromlist.data,isLoading:false})
+        }else{
+            this.setState({...this.state,fromCoinsList:[],isLoading:false})
+        }
+    }
+    toCoinList = async() =>{
+        let tolist = await gettoCoinList(this.props.userProfile?.id, this.props.swapStore.coinDetailData.coin)
+        if(tolist.ok){
+            this.setState({...this.state,toCoinsList:tolist.data,isLoading:false})
+        }else{
+            this.setState({...this.state,toCoinsList:[],isLoading:false})
+        }
+    }
+    
     trackEvent = () =>{
         appInsights.trackEvent({
-            name: 'Swap', properties: {"Type": 'User',"Action": 'Page view',"Username": this.props.userProfile.email,"MemeberId": this.props.userProfile.userId,"Feature": 'Swap',"Remarks": 'Selct Swap coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Selct Swap coins'}
+            name: 'Swap', properties: {"Type": 'User',"Action": 'Page view',"Username": this.props.userProfile.email,"MemeberId": this.props.userProfile.userId,"Feature": 'Swap',"Remarks": 'Swap coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Swap crypto'}
         });
     }
     onSearch = (e) => {
@@ -37,6 +63,7 @@ class SelectCrypto extends Component {
         if (this.state.coinDetails != null && this.state.coinDetails.id) {
             if (this.props.swapfrom) {
                 this.props.dispatch(updateCoinDetails(this.state.coinDetails));
+                this.props.dispatch(updateReceiveCoinDetails({}));
             } else {
                 this.props.dispatch(updateReceiveCoinDetails(this.state.coinDetails));
             }
@@ -62,7 +89,7 @@ class SelectCrypto extends Component {
             {/*<Search placeholder="Search for a Currency" onChange={(value) => this.onSearch(value)} className="crypto-search fs-14" />*/}
             <Paragraph className="to-receive">Swap {this.props.swapfrom?'from':'to'}<span className="icon sm rightarrow ml-12 mb-4" /></Paragraph>
             
-            <CryptoList coinType="swap" showSearch={true} showValues={true} titleField={'coin'} iconField={'coin'} selectedCoin={this.props.swapfrom?this.props.swapStore.coinDetailData:this.props.swapStore.coinReceiveDetailData} coinList={this.props.swapStore.MemberCoins} isLoading={this.props.swapStore.isLoading} onCoinSelected={(selectedCoin) => this.selectToggle(selectedCoin)} />
+            <CryptoList coinType="swap" showSearch={true} showValues={true} titleField={'coin'} iconField={'coin'} selectedCoin={this.props.swapfrom?this.props.swapStore.coinDetailData:this.props.swapStore.coinReceiveDetailData} coinList={this.props.swapfrom?this.state.fromCoinsList:this.state.toCoinsList} isLoading={this.state.isLoading} onCoinSelected={(selectedCoin) => this.selectToggle(selectedCoin)} />
 
             {(this.state.MemberCoins ? this.state.MemberCoins.length > 0 : true) && <><Translate size="large" className="custon-btngroup cancel-btngroup" content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} />
                 <Translate size="large" className="custon-btngroup pick-btn" content="pick" component={Button} onClick={() => this.pickCoin()} /></>}

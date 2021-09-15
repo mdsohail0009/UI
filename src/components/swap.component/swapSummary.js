@@ -4,10 +4,11 @@ import Translate from 'react-translate-component';
 import { Link } from 'react-router-dom';
 import { setStep, updateSwapdata } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
-import { fetchCurrConvertionValue, saveSwapData } from '../../components/swap.component/api'
+import { fetchCurrConvertionValue, saveSwapData } from '../../components/swap.component/api';
 import SuisseBtn from '../shared/butons';
 import Summary from '../summary.component';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
+import { appInsights } from "../../Shared/appinsights";
 
 const LinkValue = (props) => {
     return (
@@ -108,6 +109,9 @@ class SwapSummary extends Component {
                 this.props.changeStep('confirm');
                 this.setState({ ...this.state, loader: false, isLoading:false })
                 this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
+                appInsights.trackEvent({
+                    name: 'Swap', properties: {"Type": 'User',"Action": 'Save swap',"Username": this.props.userProfile.email,"MemeberId": this.props.userProfile.id,"Feature": 'Swap',"Remarks": (obj.fromValue +" "+obj.fromWalletName+" to "+obj.toValue +" "+obj.toWalletName),"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Swap Crypto'}
+                });
             } else {
                 this.setState({ ...this.state, loader: false,isLoading:false, errorMessage:res.error })
             }

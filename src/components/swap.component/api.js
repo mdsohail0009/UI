@@ -11,7 +11,13 @@ const fetchCurrConvertionValue = (from, to, value) => {
 const swapPreviewData = (coin, currency, amount) => {
     return apiClient.get(ApiControllers.exchange+`Preview?coin=${coin}&currency=${currency}&amount=${amount}`);
 }
+const getfromCoinList = (member_id) => {
+    return apiClient.get(ApiControllers.exchange+`MemberCoins?memberId=${member_id}`);
+}
+const gettoCoinList = (member_id,fromcoin) => {
+    return apiClient.get(ApiControllers.exchange+`GetSwapCoins?coin=${fromcoin}&memberId=${member_id}`);
+}
 const saveSwapData = (obj) => {
     return apiClient.post(ApiControllers.exchange + 'Swap', obj);
 }
-export { getportfolio , fetchCurrConvertionValue , swapPreviewData , saveSwapData}
+export { getportfolio , fetchCurrConvertionValue , swapPreviewData , saveSwapData, getfromCoinList, gettoCoinList}
