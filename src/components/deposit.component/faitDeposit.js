@@ -158,14 +158,15 @@ class FaitDeposit extends Component {
         {faitdeposit ?
           <SellToggle />
           : <> {this.state.Loader && <Loader />}
-            {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="" description={this.state?.errorMessage} closable />}
-            {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} on scrollToFirstError={true} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll"><Translate
-              className="mb-0 text-white-30 fs-14 fw-200"
-              content="desposite_text"
-              component={Paragraph}
-            />
-              <div className="my-36">
 
+            {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} on scrollToFirstError={true} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll">
+              {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="" description={this.state?.errorMessage} closable />}
+              <Translate
+                className="mb-0 text-white-30 fs-14 fw-200"
+                content="desposite_text"
+                component={Paragraph}
+              />
+              <div className="my-36">
                 <Form.Item
                   className="custom-forminput mb-24"
                   name="currency"
