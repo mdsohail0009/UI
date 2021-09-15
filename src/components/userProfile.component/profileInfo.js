@@ -39,7 +39,7 @@ class ProfileInfo extends Component {
                         notification.open({
                             message: "Error",
                             description: 'Something went wrong',
-                            placement: "bottom",
+                            placement: "bottomRight",
                             type: "success"
                         });
                     }
@@ -50,7 +50,11 @@ class ProfileInfo extends Component {
         this.setState({ ...this.state, Loader: true })
         let res1 = await ProfileImageSave(Obj);
         if (res1.ok) {
-            message.success('Profile uploaded successfully');
+            // message.success('Profile uploaded successfully');
+            notification.open({
+                description: 'Profile uploaded successfully',
+                placement: "bottomRight"
+            });
             this.setState({ ...this.state, Loader: false })
             this.props.getmemeberInfoa(this.props.userConfig.email)
         } else {
