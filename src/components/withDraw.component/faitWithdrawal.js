@@ -420,15 +420,15 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
                   content="Bank_address2"
                   component={Text}
                 /></div> */}
-            <div id="_country">
-              <Select getPopupContainer={() => document.getElementById('_country')} dropdownClassName="select-drpdwn" placeholder="Select Country" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+            {/* <div id="_country"> */}
+              <Select dropdownClassName="select-drpdwn" placeholder="Select Country" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                 onChange={(e) => getStateLu(e)} >
                 {countryLu?.map((item, idx) =>
                   <Option key={idx} value={item.name}>{item.name}
                   </Option>
                 )}
               </Select>
-            </div>
+            {/* </div> */}
             {/* </div> */}
           </Form.Item>
           <div className="d-flex">
@@ -441,19 +441,19 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
             className="custom-forminput mb-24"
             name="state"
           >
-            <div id="_state">
-              <Select getPopupContainer={() => document.getElementById('_state')} dropdownClassName="select-drpdwn" placeholder="Select State" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+            {/* <div id="_state"> */}
+              <Select  dropdownClassName="select-drpdwn" placeholder="Select State" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                 onChange={(e) => ''} >
                 {stateLu?.map((item, idx) =>
                   <Option key={idx} value={item.name}>{item.name}
                   </Option>
                 )}
               </Select>
-            </div>
+            {/* </div> */}
           </Form.Item>
           <Form.Item
             className="custom-forminput mb-24"
-            name="zip code"
+            name="zipcode"
             rules={[
               {
                 validator: (rule, value, callback) => {
