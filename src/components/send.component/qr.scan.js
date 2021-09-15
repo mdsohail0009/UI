@@ -86,7 +86,7 @@ class QRScan extends Component {
                     </div>
                 </div>
 
-                {this.props?.sendReceive?.depositWallet?.tag != null && <div className="crypto-address mt-36">
+                {this.props?.sendReceive?.depositWallet?.tag && <div className="crypto-address mt-36">
                     <Text className="mb-0 fw-400 text-secondary">Tag</Text>
                     <div className="mb-0 fs-14 fw-500 text-white-30">{this.props?.sendReceive?.depositWallet?.tag}
                         <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.tag}>
