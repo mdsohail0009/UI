@@ -131,12 +131,10 @@ class FaitDeposit extends Component {
   }
   renderModalContent = () => {
     return <>
-      <div className="success-pop text-center">
+      <div className="success-pop text-center mb-24">
         <img src={success} className="confirm-icon" />
-
-        <Translate className="fs-30 mb-4" content="Deposit_success" component='Deposit' />
-        <div><Link onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} className="f-16 mt-16 text-underline">Back to Deposit<span className="icon md diag-arrow ml-4" /></Link>
-        </div>
+        <Translate className="fs-30 mb-4 d-block text-white-30" content="Deposit_success" component='Deposit' />
+        <Link onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} className="f-16 mt-16 text-underline text-green">Back to Deposit<span className="icon md diag-arrow ml-4" /></Link>
       </div>
     </>
 
@@ -188,20 +186,20 @@ class FaitDeposit extends Component {
                       )}
                     </Select></div></Form.Item>
                 {this.state.BankInfo == null && depObj.currency != null && this.state.BankDetails?.length == 0 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}>Bank details not available</Text>}
-                {this.state.BankDetails?.length > 1 && <><Translate
+                {this.state.BankDetails?.length > 1 && <Form.Item><Translate
                   className="input-label"
                   content="BankName"
                   component={Text}
                 />
-                  <div id="_bankName">
-                    <Select dropdownClassName="select-drpdwn" placeholder="Select Bank Name" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true} getPopupContainer={() => document.getElementById('_bankName')}
+                  <div id="_bankname">
+                    <Select dropdownClassName="select-drpdwn" placeholder="Select Bank Name" className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true} getPopupContainer={() => document.getElementById('_bankname')}
                       onChange={(e) => { this.handlebankName(e) }} value={depObj.BankName}>
                       {this.state.BankDetails.map((item, idx) =>
                         <Option key={idx} value={item.bankName}>{item.bankName}
                         </Option>
                       )}
                     </Select>
-                  </div></>}
+                  </div></Form.Item>}
                 {this.state.BankInfo &&
                   // !fiatDepEur?
                   <div className="fiatdep-info"> <Form.Item
@@ -346,9 +344,7 @@ class FaitDeposit extends Component {
                 </Button></>}
             </div>
             </Form>}
-            <Modal className="widthdraw-pop" maskClosable={false} onCancel={() => this.setState({ ...this.state, showSuccessMsg: false })} title="Deposit" closeIcon={<Tooltip title="Close"><span onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} className="icon md close" /></Tooltip>} footer={[
-
-            ]} visible={this.state.showSuccessMsg}>
+            <Modal className="widthdraw-pop" maskClosable={false} onCancel={() => this.setState({ ...this.state, showSuccessMsg: false })} title="Deposit" closeIcon={<Tooltip title="Close"><span onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} className="icon md close" /></Tooltip>} footer={null} visible={this.state.showSuccessMsg}>
               {this.renderModalContent()}
             </Modal>
           </>

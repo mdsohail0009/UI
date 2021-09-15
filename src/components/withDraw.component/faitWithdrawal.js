@@ -71,10 +71,10 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
   }
   const getStateLu = (countryname) => {
     let statelu = countryLu.filter((item) => { if (item.name == countryname) return item })
-    if(statelu[0].states.length>0){
+    if (statelu[0].states.length > 0) {
       setStateLu(statelu[0].states)
-    }else{
-      setStateLu([{name:countryname,code:countryname}])
+    } else {
+      setStateLu([{ name: countryname, code: countryname }])
     }
     form.setFieldsValue({ state: null })
 
@@ -114,22 +114,27 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
   const renderModalContent = () => {
     const _types = {
       step1: <>{saveObj && <div>
-        <p> <Currency defaultValue={saveObj?.totalValue} prefixText={<b>Amount: </b>} prefix={""} suffixText={saveObj.walletCode} /></p>
-        <p><b>Bank Account Number/IBAN: </b> {saveObj.accountNumber}</p>
-        <p><b>Bank BIC/SWIFT/Routing Number: </b> {saveObj.swiftCode}</p>
-        <p><b>Bank Name: </b> {saveObj.bankName}</p>
-        <p><b>Recipient Full Name : </b> {saveObj.beneficiaryAccountName}</p>
-        <ul>
+        <Text className="fs-14 text-white-50 fw-200">Amount</Text>
+        <Currency className="fs-20 text-white-30 mb-36" prefix={""} defaultValue={saveObj?.totalValue} suffixText={saveObj.walletCode} />
+        <Text className="fs-14 text-white-50 fw-200">Bank Account Number</Text>
+        <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.accountNumber}</Text>
+        <Text className="fs-14 text-white-50 fw-200">Bank BIC/SWIFT/Routing Number</Text>
+        <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.swiftCode}</Text>
+        <Text className="fs-14 text-white-50 fw-200">Bank Name</Text>
+        <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.bankName}</Text>
+        <Text className="fs-14 text-white-50 fw-200">Recipient Full Name</Text>
+        <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.beneficiaryAccountName}</Text>
+        <ul className="pl-0 ml-16 text-white-50 mb-0">
           <li>Ensure that the account details is correct</li>
           <li>Transaction can't be cancelled</li>
         </ul>
       </div>}</>,
       step2: <>
-        <div className="success-pop text-center">
+        <div className="success-pop text-center mb-24">
           <img src={success} className="confirm-icon" />
 
-          <Translate className="fs-30 mb-4" content="withdrawal_success" component={Title} />
-          <Link onClick={() => setShowModal(false)} className="f-16 mt-16 text-underline">Back to Withdraw<span className="icon md diag-arrow ml-4" /></Link>
+          <Translate className="fs-30 mb-4 d-block text-white-30" content="withdrawal_success" component={Title} />
+          <Link onClick={() => setShowModal(false)} className="f-16 mt-16 text-underline text-green">Back to Withdraw<span className="icon md diag-arrow ml-4" /></Link>
 
         </div>
       </>,
@@ -555,23 +560,23 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
           <Form.Item
             className="custom-forminput mb-24"
             name="description"
-            // rules={[
-            //   {
-            //     validator: (rule, value, callback) => {
-            //       var regx = new RegExp(/^[A-Za-z0-9]+$/);
-            //       if (value) {
-            //         if (!regx.test(value)) {
-            //           callback("Invalid reference")
-            //         } else if (regx.test(value)) {
-            //           callback();
-            //         }
-            //       } else {
-            //         callback();
-            //       }
-            //       return;
-            //     }
-            //   }
-            // ]}
+          // rules={[
+          //   {
+          //     validator: (rule, value, callback) => {
+          //       var regx = new RegExp(/^[A-Za-z0-9]+$/);
+          //       if (value) {
+          //         if (!regx.test(value)) {
+          //           callback("Invalid reference")
+          //         } else if (regx.test(value)) {
+          //           callback();
+          //         }
+          //       } else {
+          //         callback();
+          //       }
+          //       return;
+          //     }
+          //   }
+          // ]}
           >
             <div>
               <div className="d-flex">
@@ -622,12 +627,12 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
         </Form>
       </div>
       <Modal className="widthdraw-pop" maskClosable={false} onCancel={handleCancel} title="Withdraw" closeIcon={<Tooltip title="Close"><span onClick={handleCancel} className="icon md close" /></Tooltip>} footer={[
-        <>{confirmationStep != 'step2' && <><Button key="back" onClick={handleCancel} disabled={loading}>
-          Return
+        <>{confirmationStep != 'step2' && <div className="text-right withdraw-footer"><Button key="back" type="text" className="text-white-30 pop-cancel fw-400 text-captz text-center" onClick={handleCancel} disabled={loading}>
+          Cancel
         </Button>
-          <Button key="submit" type="primary" onClick={handleOk} loading={loading}>
+          <Button key="submit" className="pop-btn px-36 ml-36" onClick={handleOk} loading={loading}>
             Confirm
-          </Button></>}</>
+          </Button></div>}</>
       ]} visible={showModal}>
         {renderModalContent()}
       </Modal>
