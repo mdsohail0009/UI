@@ -35,6 +35,7 @@ class SwapCoins extends Component {
         this.setState({  }, () => this.componentWillUnmount());
     }
     componentWillUnmount() {
+        debugger
          this.setState({ ...this.state, fromCoin: null,receiveCoin: null,price: null, fromValue: '', receiveValue: '',errorMessage: null})
      }
     loadamount() {
@@ -198,16 +199,18 @@ class SwapCoins extends Component {
                             onKeyPress={(e) => {
                                 //e.currentTarget.style.width = ((e.currentTarget.value.length + 6) * 15) + 'px'
                                 e.currentTarget.value.length >= 6 ? e.currentTarget.style.fontSize = "20px" : e.currentTarget.style.fontSize = "24px";
-
+                                if(!(coinDetailData.coin &&coinReceiveDetailData.coin)){
+                                    e.preventDefault()
+                                }
                             }}
-                            onKeyUp={(e) => {
-                                this.setReceiveAmount(e.target.value)
-                            }}
+                            // onKeyUp={(e) => {
+                            //     this.setReceiveAmount(e.target.value)
+                            // }}
                             //value={isSwaped ? cryptoValue : localValue}
                             value={this.state.fromValue}
-                            // onValueChange={({ value }) => {
-                            //     this.setReceiveAmount(value)
-                            // }}
+                            onValueChange={({ value }) => {
+                                this.setReceiveAmount(value)
+                            }}
                             autoFocus
                         />}
                         {coinDetailData.coinBalance && <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - <Currency prefix={""} className={'currencyContains'} decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} /></Text>}
@@ -236,17 +239,21 @@ class SwapCoins extends Component {
                     <div>
                         <Translate className="text-purewhite fs-14 fw-100" content="swap_to" component={Text} />
                         {/*<Input className="card-input" defaultValue="0" value={this.state.receiveValue} onChange={value => this.setFromAmount(value.target.value)} bordered={false} placeholder="0.0" />*/}
-                        {this.state.loadingToValue?<Spin className={'inputSpinner'} />:<NumberFormat className="card-input d-block" customInput={Input} thousandSeparator={true} prefix={""}
+                        {this.state.loadingToValue?<Spin className={'inputSpinner'} />:<NumberFormat className="card-input d-block colr-comn" customInput={Input} thousandSeparator={true} prefix={""}
                             placeholder="0.00"
                             decimalScale={8}
                             allowNegative={false}
                             maxlength={24}
+                            disabled={true}
                             bordered={false}
                             // style={{ lineHeight: '48px', fontSize: 30,width:'200px'  }}
                             //onBlur={(e) => e.currentTarget.value.length == 0 ? e.currentTarget.style.width = "100px" : ''}
                             onKeyPress={(e) => {
                                 //e.currentTarget.style.width = ((e.currentTarget.value.length + 6) * 15) + 'px'
                                 e.currentTarget.value.length >= 6 ? e.currentTarget.style.fontSize = "20px" : e.currentTarget.style.fontSize = "24px";
+                                if(!(coinDetailData.coin &&coinReceiveDetailData.coin)){
+                                    e.preventDefault()
+                                }
                             }}
                             onKeyUp={(e) => {
                                 this.setFromAmount(e.target.value)
