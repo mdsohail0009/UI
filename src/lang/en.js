@@ -291,5 +291,6 @@ export default {
   zipcode: 'Zip code',
   userName: 'John Huh',
   manage_account: 'Manage your Account',
-  Deposit_success:'Deposit Success'
+  Deposit_success:'Deposit Success',
+  return_to_depositfiat:'Return to Deposit Fiat'
 }

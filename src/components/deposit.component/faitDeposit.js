@@ -148,13 +148,13 @@ class FaitDeposit extends Component {
     const { currenciesWithBankInfo } = this.props.depositInfo;
     return (
       <>
-        <Radio.Group
+        {!this.state.showSuccessMsg&&<Radio.Group
           onChange={this.handleBuySellToggle}
           value={this.state.tabValue}
           className="buysell-toggle">
           <Translate content="deposit" component={Radio.Button} value={1} />
           <Translate content="withdraw" component={Radio.Button} value={2} />
-        </Radio.Group>
+        </Radio.Group>}
         {faitdeposit ?
           <SellToggle />
           : <> {this.state.Loader && <Loader />}
@@ -356,7 +356,7 @@ class FaitDeposit extends Component {
               <div><Translate content="success_msg" component='Success' className="text-white-30 fs-36 fw-200 mb-4" /></div>
               <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" />
               <Space direction="vertical" size="large">
-                <Translate content="return_to_fiat" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} />
+                <Translate content="return_to_depositfiat" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} />
               </Space>
             </div>}
           </>
