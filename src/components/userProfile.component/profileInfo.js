@@ -135,7 +135,7 @@ class ProfileInfo extends Component {
                             <label className="mb-0 profile-label">Phone Number</label>
                             <div style={{ flexGrow: 12 }}>
                             <p className="mb-0 ml-8 profile-value" >
-                                <span className="mr-12"><img src={flag} style={{width:'30px', height:'30px'}}/></span>
+                                {/* <span className="mr-12"><img src={flag} style={{width:'30px', height:'30px'}}/></span> */}
                                 {this.props.userConfig.phoneNo}</p>
                                 </div>
                             <div >
