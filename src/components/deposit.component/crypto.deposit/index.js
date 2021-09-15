@@ -15,7 +15,7 @@ const CryptoDeposit = ({ dispatch, userProfile, sellData: buyInfo,swapStore }) =
     }
     const onCryptoCoinSelect = async (coin) => {
         dispatch(setStep("step7"));
-        dispatch(setSubTitle(`${coin.coinBalance} ${coin.coin} available`));
+        dispatch(setSubTitle(`${coin.coinBalance?coin.coinBalance:'0'} ${coin.coin} available`));
         const response = await createCryptoDeposit({ memberId: userProfile?.id, walletCode: coin?.coin });
         if (response.ok) {
             dispatch(setWalletAddress(response.data));
