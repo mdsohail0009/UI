@@ -75,28 +75,7 @@ class Header extends Component {
             </ul>
         </Menu>
     );
-    userProfileMenu = (
-        <Menu>
-            <div className="profile-dropdown">
-            {this.props.userConfig?.imageURL!=null&&<img src={this.props.userConfig?.imageURL} className="user-profile"/>}
-            {this.props.userConfig?.imageURL==null&&<img src={userProfile} className="user-profile"/>}
-            <p className="mb-15 ml-8 profile-value" style={{flexGrow:12}}>{this.props.userConfig.firstName} {this.props.userConfig.lastName}</p>
-            {/* <Translate className="fs-16 text-white my-16 fw-500 mx-30" content="userName" component={this.props.userConfig.userName} /> */}
-            <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={() => this.userProfile()}  />
-            {/* <Link className="profile-btn" to="/userprofile" >Manage Your Account</Link> */}
-            <ul className="pl-0 drpdwn-list">
-                <Menu.Item className="px-0" onClick={() => this.showAuditLogsDrawer()}>
-                <li className="c-pointer px-0">
-               <Link>Audit Logs</Link>
-            </li>
-                </Menu.Item>
-            <li className="c-pointer px-0" onClick={() => userManager.signoutRedirect()}>
-                    <Translate content="logout" component={Link} />
-            </li>
-            </ul>
-            </div>
-        </Menu>  
-    );
+   
     settingMenu = (
         <Menu>
             <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="settings" component={Title} />
@@ -342,6 +321,28 @@ class Header extends Component {
                 </ul>
             </Menu>
         )
+        const userProfileMenu = (
+            <Menu>
+                <div className="profile-dropdown">
+                {this.props.userConfig?.imageURL!=null&&<img src={this.props.userConfig?.imageURL} className="user-profile"/>}
+                {this.props.userConfig?.imageURL==null&&<img src={userProfile} className="user-profile"/>}
+                <p className="mb-15 ml-8 profile-value" style={{flexGrow:12}}>{this.props.userConfig.firstName} {this.props.userConfig.lastName}</p>
+                {/* <Translate className="fs-16 text-white my-16 fw-500 mx-30" content="userName" component={this.props.userConfig.userName} /> */}
+                <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={() => this.userProfile()}  />
+                {/* <Link className="profile-btn" to="/userprofile" >Manage Your Account</Link> */}
+                <ul className="pl-0 drpdwn-list">
+                    <Menu.Item className="px-0" onClick={() => this.showAuditLogsDrawer()}>
+                    <li className="c-pointer px-0">
+                   <Link>Audit Logs</Link>
+                </li>
+                    </Menu.Item>
+                <li className="c-pointer px-0" onClick={() => userManager.signoutRedirect()}>
+                        <Translate content="logout" component={Link} />
+                </li>
+                </ul>
+                </div>
+            </Menu>  
+        );
         return (
             <>
                 <Layout className="layout">
@@ -355,7 +356,7 @@ class Header extends Component {
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
                                
                                 <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
-                                <Dropdown overlay={this.userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                                <Dropdown overlay={userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Menu.Item key="7">{this.props.userConfig?.imageURL!=null&&<img src={this.props.userConfig?.imageURL} className="user-profile"/>}
                                 {this.props.userConfig?.imageURL==null&&<img src={userProfile} className="user-profile"/>}</Menu.Item>
                             </Dropdown>
@@ -374,7 +375,7 @@ class Header extends Component {
                             </Dropdown> */}
                              <Translate content="menu_transactions_history" component={Menu.Item} key="4" onClick={this.showTransactionHistoryDrawer} className="list-item" />
                              <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
-                            <Dropdown overlay={this.userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                            <Dropdown overlay={userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Menu.Item key="7"  className="ml-16" >{this.props.userConfig?.imageURL!=null&&<img src={this.props.userConfig?.imageURL} className="user-profile"/>}
                                 {this.props.userConfig?.imageURL==null&&<img src={userProfile} className="user-profile"/>}</Menu.Item>
                             </Dropdown>
