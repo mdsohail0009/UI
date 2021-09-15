@@ -118,7 +118,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
         <Currency className="fs-20 text-white-30 mb-36" prefix={""} defaultValue={saveObj?.totalValue} suffixText={saveObj.walletCode} />
         <Text className="fs-14 text-white-50 fw-200">Bank Account Number/IBAN</Text>
         <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.accountNumber}</Text>
-        <Text className="fs-14 text-white-50 fw-200">BIC/SWIFT/Routing number</Text>
+        <Text className="fs-14 text-white-50 fw-200">BIC/SWIFT/Routing Number</Text>
         <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.swiftCode}</Text>
         <Text className="fs-14 text-white-50 fw-200">Bank Name</Text>
         <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.bankName}</Text>
