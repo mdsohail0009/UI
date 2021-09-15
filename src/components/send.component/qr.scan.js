@@ -6,6 +6,7 @@ import Translate from 'react-translate-component';
 import QRCodeComponent from '../qr.code.component';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Loader from '../../Shared/loader';
+import { appInsights } from "../../Shared/appinsights";
 import {
     EmailShareButton, EmailIcon,
     FacebookShareButton, FacebookIcon,
@@ -19,8 +20,15 @@ class QRScan extends Component {
     success = () => {
         message.success('Address was copied!');
     };
+    
     componentWillUnmount() {
         this.props.dispatch(setWalletAddress(null))
+        this.trackevent();
+    }
+    trackevent =() =>{
+        appInsights.trackEvent({
+            name: 'WithDraw Crypto', properties: {"Type": 'User',"Action": 'Page view',"Username": this.props.userProfile.email,"MemeberId": this.props.userProfile.id,"Feature": 'WithDraw Crypto',"Remarks": "WithDraw crypto scan page view","Duration": 1,"Url": window.location.href,"FullFeatureName": 'WithDraw Crypto'}
+        });
     }
     get walletAddress() {
         return this.props?.sendReceive?.depositWallet?.walletAddress
@@ -93,8 +101,8 @@ class QRScan extends Component {
     }
 }
 
-const connectStateToProps = ({ sendReceive, oidc }) => {
-    return { sendReceive }
+const connectStateToProps = ({ sendReceive, userConfig }) => {
+    return { sendReceive, userProfile: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {

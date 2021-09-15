@@ -7,10 +7,17 @@ import Loader from '../../Shared/loader'
 import { getMemberCoins,updateCoinDetail } from '../../reducers/sellReducer';
 import { setCoin, setExchangeValue } from '../../reducers/buyReducer';
 import Currency from '../shared/number.formate';
+import { appInsights } from "../../Shared/appinsights";
 
 class SellToggle extends Component {
     componentDidMount() {
         this.props.fetchMemberCoins(this.props.member?.id)
+        this.trackevent()
+    }
+    trackevent =() =>{
+        appInsights.trackEvent({
+            name: 'Sell', properties: {"Type": 'User',"Action": 'Page view',"Username":this.props.member.email,"MemeberId": this.props.member.id,"Feature": 'Sell',"Remarks": "Sell page view","Duration": 1,"Url": window.location.href,"FullFeatureName": 'Sell Crypto'}
+        });
     }
     handleBuySellToggle = e => {
         this.setState({

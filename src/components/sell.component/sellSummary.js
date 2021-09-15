@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getSellPreviewData, savesellData } from '../buy.component/api'
 import Summary from '../summary.component';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
+import { appInsights } from "../../Shared/appinsights";
 class SellSummary extends Component {
     state = { sellpreviewData: {}, loader: true, disableConfirm: false, isTermsAgree: false, error: {valid:true,message:null} }
     componentDidMount() {
@@ -36,7 +37,9 @@ class SellSummary extends Component {
                 this.props.changeStep('success')
                 this.setState({ ...this.state, loader: false, disableConfirm: false })
                 this.props.fetchDashboardData(this.props.member.id)
-
+                appInsights.trackEvent({
+                    name: 'Sell', properties: {"Type": 'User',"Action": 'Save',"Username":this.props.member.email,"MemeberId": this.props.member.id,"Feature": 'Sell',"Remarks": "Sell Crypto","Duration": 1,"Url": window.location.href,"FullFeatureName": 'Deposit Crypto'}
+                });
             } else {
                 this.setState({ ...this.state, loader: false, disableConfirm: false })
             }

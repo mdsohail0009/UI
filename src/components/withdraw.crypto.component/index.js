@@ -5,18 +5,26 @@ import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSt
 import connectStateProps from "../../utils/state.connect";
 import Currency from '../shared/number.formate';
 import Loader from '../../Shared/loader';
+import { appInsights } from "../../Shared/appinsights";
+
 const { Paragraph, Text, Title } = Typography;
 const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
     useEffect(() => {
         dispatch(fetchWithDrawWallets({ memberId: userProfile?.id }));
         dispatch(handleSendFetch({key:"cryptoWithdraw",activeTab:null}));
         dispatch(setSubTitle("Select a currency in your wallet"));
+        trackevent()
     }, [])
 
     const { cryptoWithdraw: { wallets } } = sendReceive;
 
     if (wallets?.loading) {
         return <Loader />
+    }
+    const trackevent =() =>{
+        appInsights.trackEvent({
+            name: 'WithDraw Crypto', properties: {"Type": 'User',"Action": 'Page view',"Username":userProfile.email,"MemeberId": userProfile.id,"Feature": 'WithDraw Crypto',"Remarks": "WithDraw crypto page view","Duration": 1,"Url": window.location.href,"FullFeatureName": 'WithDraw Crypto'}
+        });
     }
     return <>
 
