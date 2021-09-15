@@ -116,9 +116,9 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
       step1: <>{saveObj && <div>
         <Text className="fs-14 text-white-50 fw-200">Amount</Text>
         <Currency className="fs-20 text-white-30 mb-36" prefix={""} defaultValue={saveObj?.totalValue} suffixText={saveObj.walletCode} />
-        <Text className="fs-14 text-white-50 fw-200">Bank Account Number</Text>
+        <Text className="fs-14 text-white-50 fw-200">Bank Account Number/IBAN</Text>
         <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.accountNumber}</Text>
-        <Text className="fs-14 text-white-50 fw-200">Bank BIC/SWIFT/Routing Number</Text>
+        <Text className="fs-14 text-white-50 fw-200">BIC/SWIFT/Routing number</Text>
         <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.swiftCode}</Text>
         <Text className="fs-14 text-white-50 fw-200">Bank Name</Text>
         <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.bankName}</Text>
@@ -421,13 +421,13 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
                   component={Text}
                 /></div> */}
             {/* <div id="_country"> */}
-              <Select dropdownClassName="select-drpdwn" placeholder="Select Country" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-                onChange={(e) => getStateLu(e)} >
-                {countryLu?.map((item, idx) =>
-                  <Option key={idx} value={item.name}>{item.name}
-                  </Option>
-                )}
-              </Select>
+            <Select dropdownClassName="select-drpdwn" placeholder="Select Country" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+              onChange={(e) => getStateLu(e)} >
+              {countryLu?.map((item, idx) =>
+                <Option key={idx} value={item.name}>{item.name}
+                </Option>
+              )}
+            </Select>
             {/* </div> */}
             {/* </div> */}
           </Form.Item>
@@ -442,13 +442,13 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
             name="state"
           >
             {/* <div id="_state"> */}
-              <Select  dropdownClassName="select-drpdwn" placeholder="Select State" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-                onChange={(e) => ''} >
-                {stateLu?.map((item, idx) =>
-                  <Option key={idx} value={item.name}>{item.name}
-                  </Option>
-                )}
-              </Select>
+            <Select dropdownClassName="select-drpdwn" placeholder="Select State" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+              onChange={(e) => ''} >
+              {stateLu?.map((item, idx) =>
+                <Option key={idx} value={item.name}>{item.name}
+                </Option>
+              )}
+            </Select>
             {/* </div> */}
           </Form.Item>
           <Form.Item

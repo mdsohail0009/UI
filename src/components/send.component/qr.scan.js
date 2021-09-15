@@ -20,14 +20,14 @@ class QRScan extends Component {
     success = () => {
         message.success('Address was copied!');
     };
-    
+
     componentWillUnmount() {
         this.props.dispatch(setWalletAddress(null))
         this.trackevent();
     }
-    trackevent =() =>{
+    trackevent = () => {
         appInsights.trackEvent({
-            name: 'WithDraw Crypto', properties: {"Type": 'User',"Action": 'Page view',"Username": this.props.userProfile.email,"MemeberId": this.props.userProfile.id,"Feature": 'WithDraw Crypto',"Remarks": "WithDraw crypto scan page view","Duration": 1,"Url": window.location.href,"FullFeatureName": 'WithDraw Crypto'}
+            name: 'WithDraw Crypto', properties: { "Type": 'User', "Action": 'Page view', "Username": this.props.userProfile.email, "MemeberId": this.props.userProfile.id, "Feature": 'WithDraw Crypto', "Remarks": "WithDraw crypto scan page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Crypto' }
         });
     }
     get walletAddress() {
@@ -88,7 +88,10 @@ class QRScan extends Component {
 
                 {this.props?.sendReceive?.depositWallet?.tag != null && <div className="crypto-address mt-36">
                     <Text className="mb-0 fw-400 text-secondary">Tag</Text>
-                    <div className="mb-0 fs-14 fw-500 text-textDark">{this.props?.sendReceive?.depositWallet?.tag}</div>
+                    <div className="mb-0 fs-14 fw-500 text-white-30">{this.props?.sendReceive?.depositWallet?.tag}
+                        <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.tag}>
+                            <Text copyable className="fs-20 text-white-30 custom-display"></Text>
+                        </CopyToClipboard></div>
                 </div>}
                 <Translate className="text-center f-12 text-white fw-200 mt-16" content="address_hint_text" component={Paragraph} />
                 <Dropdown overlay={this.shareMenu}>
