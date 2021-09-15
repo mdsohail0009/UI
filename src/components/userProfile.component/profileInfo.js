@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Typography, Button, Upload,notification } from 'antd'
+import { Row, Col, Typography, Button, Upload,notification,message } from 'antd'
 import userProfile from '../../assets/images/profile.png';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
@@ -8,15 +8,17 @@ import {uploadClient} from '../../api'
 import {ProfileImageSave} from '../../api/apiServer'
 import { getmemeberInfo } from '../../reducers/configReduser';
 import flag from '../../assets/images/flag.png';
+import Loader from '../../Shared/loader'
 
 class ProfileInfo extends Component {
-    state={Image:null}
+    state={Image:null,Loader:false}
     uploadProps = {
         name: "file",
         multiple: false,
         fileList: [],
         customRequest: ({ file }) => {
           let formData = new FormData();
+          this.setState({...this.state,Loader:true})
           formData.append(
             "file",
             file,
@@ -26,10 +28,12 @@ class ProfileInfo extends Component {
             .post("UploadFile", formData)
             .then((res) => {
                 if (res.ok) {
+                    this.setState({...this.state,Loader:false})
                     let Obj = { ImageURL: res.data[0], UserId: this.props.userConfig?.userId }
                     this.saveImage(Obj,res)
                 }
               else {
+                this.setState({...this.state,Loader:false})
                 notification.open({
                     message: "Error",
                     description:'Something went wrong',
@@ -41,20 +45,26 @@ class ProfileInfo extends Component {
         }
       };
       saveImage=async(Obj,res)=>{
+          this.setState({...this.state,Loader:true})
         let res1 = await ProfileImageSave(Obj);
         if (res1.ok) {
+            message.success('Profile uploaded successfully');
+            this.setState({...this.state,Loader:false})
             this.props.getmemeberInfoa(this.props.userConfig.email)
+        }else{
+            this.setState({...this.state,Loader:false})
         }
       }
     render() {
         const { Title, Text, Paragraph } = Typography;
         return (<>
             <div className="profile-info text-center">
-            {this.props.userConfig.imageURL!=null&&<img src={this.props.userConfig.imageURL} className="user-profile" />}
+            {this.state.Loader&&<Loader />}
+            {!this.state.Loader&&<>{this.props.userConfig.imageURL!=null&&<img src={this.props.userConfig.imageURL} className="user-profile" />}
             {this.props.userConfig.imageURL==null&&<img src={userProfile} className="user-profile" />}
-                <Upload {...this.uploadProps}>
+                <Upload {...this.uploadProps} accept=".png,.jpeg,.jpg">
                     <Button shape="circle" type="primary" className="img-upld" size="large" icon={<span className="icon md camera" />} />
-                </Upload>
+                </Upload></>}
             </div>
             <div className="box basic-info">
                 <Title className="basicinfo">Basic Info</Title>
