@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Input, Button, label, Select, Radio, Tabs, Form, Alert, Modal, Tooltip } from 'antd';
+import { Typography, Input, Button, label, Select, Radio, Tabs, Form, Alert, Modal, Tooltip,Space } from 'antd';
 import { Link } from 'react-router-dom';
 import { changeStep, setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -58,7 +58,7 @@ class FaitDeposit extends Component {
       tabValue: e.target.value,
       BankDetails: [],
       BankInfo: null,
-      depObj: { currency: null, BankName: null, Amount: null }
+      depObj: { currency: null, BankName: null, Amount: null }, Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false
     });
   }
   handlFiatDep = async (e, currencyLu) => {
@@ -161,13 +161,13 @@ class FaitDeposit extends Component {
 
             {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} on scrollToFirstError={true} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll">
               {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="" description={this.state?.errorMessage} closable />}
-              <Translate
+              {!this.state.showSuccessMsg&&<Translate
                 className="mb-0 text-white-30 fs-14 fw-200"
                 content="desposite_text"
                 component={Paragraph}
-              />
+              />}
               <div className="my-36">
-                <Form.Item
+              {!this.state.showSuccessMsg&&<Form.Item
                   className="custom-forminput mb-24"
                   name="currency"
                   required
@@ -186,7 +186,7 @@ class FaitDeposit extends Component {
                         <Option key={idx} value={item.walletCode}>{item.walletCode}
                         </Option>
                       )}
-                    </Select></div></Form.Item>
+                    </Select></div></Form.Item>}
                 {this.state.BankInfo == null && depObj.currency != null && this.state.BankDetails?.length == 0 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}>Bank details not available</Text>}
                 {this.state.BankDetails?.length > 1 && <><Translate
                   className="input-label"
@@ -346,11 +346,19 @@ class FaitDeposit extends Component {
                 </Button></>}
             </div>
             </Form>}
-            <Modal className="widthdraw-pop" maskClosable={false} onCancel={() => this.setState({ ...this.state, showSuccessMsg: false })} title="Deposit" closeIcon={<Tooltip title="Close"><span onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} className="icon md close" /></Tooltip>} footer={[
+            {/* <Modal className="widthdraw-pop" maskClosable={false} onCancel={() => this.setState({ ...this.state, showSuccessMsg: false })} title="Deposit" closeIcon={<Tooltip title="Close"><span onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} className="icon md close" /></Tooltip>} footer={[
 
             ]} visible={this.state.showSuccessMsg}>
               {this.renderModalContent()}
-            </Modal>
+            </Modal> */}
+            {this.state.showSuccessMsg&&<div className="success-pop text-center">
+              <img src={success} className="confirm-icon" />
+              <div><Translate content="success_msg" component='Success' className="text-white-30 fs-36 fw-200 mb-4" /></div>
+              <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" />
+              <Space direction="vertical" size="large">
+                <Translate content="return_to_fiat" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} />
+              </Space>
+            </div>}
           </>
         }
 
