@@ -64,15 +64,17 @@ class ProfileInfo extends Component {
                             <label className="mb-0 profile-label" >Username</label>
                             <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.userName}</p>
                             <div >
-                                <span className="icon md rarrow-white" /></div>
+                                {/* <span className="icon md rarrow-white" /> */}
+                                </div>
                         </div>
                     </li>
-                    <li className="profileinfo active">
+                    <li className="profileinfo">
                         <div className="d-flex profile-block ">
                             <label className="mb-0 profile-label" >Name</label>
                             <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.firstName} {this.props.userConfig.lastName}</p>
                             <div >
-                                <span className="icon md rarrow-white" /></div>
+                                {/* <span className="icon md rarrow-white" /> */}
+                                </div>
                         </div>
                     </li>
                     <li className="profileinfo">
@@ -81,7 +83,8 @@ class ProfileInfo extends Component {
                             <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>
                                 <Moment format="DD/MM/YYYY">{this.props.userConfig.dob}</Moment></p>
                             <div >
-                                <span className="icon md rarrow-white" /></div>
+                                {/* <span className="icon md rarrow-white" /> */}
+                                </div>
                         </div>
                     </li>
                     <li className="profileinfo">
@@ -89,7 +92,8 @@ class ProfileInfo extends Component {
                             <label className="mb-0 profile-label">Country</label>
                             <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.country}</p>
                             <div >
-                                <span className="icon md rarrow-white" /></div>
+                                {/* <span className="icon md rarrow-white" /> */}
+                                </div>
                         </div>
                     </li>
                     <li className="profileinfo">
@@ -97,7 +101,8 @@ class ProfileInfo extends Component {
                             <label className="mb-0 profile-label">Reference Code</label>
                             <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.depositReference}</p>
                             <div >
-                                <span className="icon md rarrow-white" /></div>
+                                {/* <span className="icon md rarrow-white" /> */}
+                                </div>
                         </div>
                     </li>
                 </ul>
@@ -110,15 +115,17 @@ class ProfileInfo extends Component {
                             <label className="mb-0 profile-label">Email Address</label>
                             <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.email}</p>
                             <div>
-                                <span className="icon md rarrow-white" /></div>
+                                {/* <span className="icon md rarrow-white" /> */}
+                                </div>
                         </div>
                     </li>
-                    <li className="profileinfo active">
+                    <li className="profileinfo">
                         <div className="d-flex profile-block ">
                             <label className="mb-0 profile-label">Phone Number</label>
                             <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.phoneNo}</p>
                             <div >
-                                <span className="icon md rarrow-white" /></div>
+                                {/* <span className="icon md rarrow-white" /> */}
+                                </div>
                         </div>
                     </li>
                 </ul>
