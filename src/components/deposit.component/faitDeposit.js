@@ -48,7 +48,7 @@ class FaitDeposit extends Component {
       fiatDepEur: false,
       BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null },
       faitdeposit: false,
-      tabValue: 1
+      tabValue: 1, Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false
     });
   }
   handleBuySellToggle = e => {
