@@ -37,7 +37,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
     let minLength=/^.{8,}$/
     if (values.CurrentPassword === values.Password) {
       //notify({ message: "Error", type: "error", description: "New password and re entered password must same" });
-      setChangePasswordResponse({ error: true, messsage: "Current & New passwords should not be same!", isLoading: false });
+      setChangePasswordResponse({ error: true, messsage: "Current & New passwords should not be same", isLoading: false });
 
     }else if(!minLength.test(values.Password)){
       setChangePasswordResponse({ error: true, messsage: "Password should be atleast 8 characters", isLoading: false });
@@ -138,14 +138,14 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
             onChange={(e) => handleChange("Password", e)}
             className="text-left cust-input mb-8 pr-0 change-space pass-onhover" iconRender={visible => (visible ? <EyeInvisibleOutlined />:<EyeOutlined style={{ color:'#fff'}}/> )}
           />
-          <div class="hover-passlwngth">
+          {/* <div class="hover-passlwngth">
                                 <span>At least:</span>
                                 <span>8 characters</span>
                                 <span>1 uppercase</span>
                                 <span>1 lowercase</span>
                                 <span>1 number</span>
                                 <span>1 special character</span>
-                            </div>
+                            </div> */}
         </Form.Item>
         <div className="d-flex">
             <Translate
@@ -164,7 +164,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
           rules={[
             {
               required: true,
-              message: "Please enter confirm password!",
+              message: "Please enter confirm password",
             },
             ({ getFieldValue }) => ({
               validator(rule, value) {
@@ -172,7 +172,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
                   return Promise.resolve();
                 }
                 return Promise.reject(
-                  "Password does not match!"
+                  "Password does not match"
                 );
               },
             }),
@@ -187,7 +187,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
           />
         </Form.Item>
 
-        <div style={{marginTop:'50px'}}>
+        <div style={{marginTop:'50px'}} className="">
           <Button
             loading={changePasswordResponse.isLoading}
             htmlType="submit"
@@ -200,8 +200,8 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
           <Button
             htmlType="cancel"
             size="large"
-            block
-            className="pop-cancel"
+            block 
+            className="pwd-popup pop-cancel"
           onClick={()=>onSubmit()}>
             Cancel
           </Button>

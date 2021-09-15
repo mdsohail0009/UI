@@ -461,7 +461,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 /* .right-panel{padding: 0 60px;} */
 .profile-label{font-size: 14px; color: var(--textWhite30); font-weight: 400; width:150px}
 .profile-value{font-size: 16px; color: var(--textWhite30); font-weight: 700;}
-.profileinfo{padding: 32px 0; border-top:1px solid var(--borderGrey); cursor: pointer;}
+.profileinfo{padding: 32px 0; border-top:1px solid var(--borderGrey);}
 .profileinfo:first-child{border-top:0}
 .profileinfo.active, .profileinfo:hover{background: var(--bgOrient); margin-left: -32px; margin-right: -32px;}
 .profileinfo.active .profile-block, .profileinfo:hover .profile-block{padding: 0 32px}
@@ -759,5 +759,11 @@ main.ant-layout-content{min-height: calc(100vh - 220px);}
     z-index: 99;
 }
 .hover-passlwngth span:first-child:after {display: none}
+.pwd-popup.pop-cancel{vertical-align: middle;
+    margin: 10px auto !important;
+    display: flex;
+    height: 36px !important;
+text-align: center !important;}
+.pwd-popup.pop-cancel.ant-btn-block{width: auto !important;}
 
 
