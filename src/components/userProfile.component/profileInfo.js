@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { Row, Col, Typography, Button, Upload, notification, message } from 'antd'
-import userProfile from '../../assets/images/profile.png';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
-import { SearchOutlined } from '@ant-design/icons';
 import { uploadClient } from '../../api'
 import { ProfileImageSave } from '../../api/apiServer'
 import { getmemeberInfo } from '../../reducers/configReduser';
-import flag from '../../assets/images/flag.png';
 import DefaultUser from '../../assets/images/defaultuser.jpg';
 
 import Loader from '../../Shared/loader'
@@ -67,7 +64,7 @@ class ProfileInfo extends Component {
             <div className="profile-info text-center">
                 {this.state.Loader && <Loader />}
                 {!this.state.Loader && <>{this.props.userConfig.imageURL != null && <img src={this.props.userConfig.imageURL ? this.props.userConfig.imageURL : DefaultUser} className="user-profile" />}
-                    {this.props.userConfig.imageURL == null && <img src={userProfile} className="user-profile" />}
+                    {this.props.userConfig.imageURL == null && <img src={this.props.userConfig.imageURL ? this.props.userConfig.imageURL : DefaultUser} className="user-profile" />}
                     <Upload {...this.uploadProps} accept=".png,.jpeg,.jpg">
                         <Button shape="circle" type="primary" className="img-upld" size="large" icon={<span className="icon md camera" />} />
                     </Upload></>}

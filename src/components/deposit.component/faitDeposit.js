@@ -1,5 +1,5 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Input, Button, label, Select, Radio, Tabs, Form, Alert, Modal, Tooltip,Space } from 'antd';
+import { Typography, Input, Button, label, Select, Radio, Tabs, Form, Alert, Modal, Tooltip, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import { changeStep, setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -131,12 +131,10 @@ class FaitDeposit extends Component {
   }
   renderModalContent = () => {
     return <>
-      <div className="success-pop text-center">
+      <div className="success-pop text-center mb-24">
         <img src={success} className="confirm-icon" />
-
-        <Translate className="fs-30 mb-4" content="Deposit_success" component='Deposit' />
-        <div><Link onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} className="f-16 mt-16 text-underline">Back to Deposit<span className="icon md diag-arrow ml-4" /></Link>
-        </div>
+        <Translate className="fs-30 mb-4 d-block text-white-30" content="Deposit_success" component='Deposit' />
+        <Link onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} className="f-16 mt-16 text-underline text-green">Back to Deposit<span className="icon md diag-arrow ml-4" /></Link>
       </div>
     </>
 
@@ -161,13 +159,13 @@ class FaitDeposit extends Component {
 
             {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} on scrollToFirstError={true} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll">
               {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="" description={this.state?.errorMessage} closable />}
-              {!this.state.showSuccessMsg&&<Translate
+              {!this.state.showSuccessMsg && <Translate
                 className="mb-0 text-white-30 fs-14 fw-200"
                 content="desposite_text"
                 component={Paragraph}
               />}
               <div className="my-36">
-              {!this.state.showSuccessMsg&&<Form.Item
+                {!this.state.showSuccessMsg && <Form.Item
                   className="custom-forminput mb-24"
                   name="currency"
                   required
@@ -188,20 +186,20 @@ class FaitDeposit extends Component {
                       )}
                     </Select></div></Form.Item>}
                 {this.state.BankInfo == null && depObj.currency != null && this.state.BankDetails?.length == 0 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}>Bank details not available</Text>}
-                {this.state.BankDetails?.length > 1 && <><Translate
+                {this.state.BankDetails?.length > 1 && <Form.Item><Translate
                   className="input-label"
                   content="BankName"
                   component={Text}
                 />
-                  <div id="_bankName">
-                    <Select dropdownClassName="select-drpdwn" placeholder="Select Bank Name" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true} getPopupContainer={() => document.getElementById('_bankName')}
+                  <div id="_bankname">
+                    <Select dropdownClassName="select-drpdwn" placeholder="Select Bank Name" className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true} getPopupContainer={() => document.getElementById('_bankname')}
                       onChange={(e) => { this.handlebankName(e) }} value={depObj.BankName}>
                       {this.state.BankDetails.map((item, idx) =>
                         <Option key={idx} value={item.bankName}>{item.bankName}
                         </Option>
                       )}
                     </Select>
-                  </div></>}
+                  </div></Form.Item>}
                 {this.state.BankInfo &&
                   // !fiatDepEur?
                   <div className="fiatdep-info"> <Form.Item
@@ -351,7 +349,7 @@ class FaitDeposit extends Component {
             ]} visible={this.state.showSuccessMsg}>
               {this.renderModalContent()}
             </Modal> */}
-            {this.state.showSuccessMsg&&<div className="success-pop text-center">
+            {this.state.showSuccessMsg && <div className="success-pop text-center">
               <img src={success} className="confirm-icon" />
               <div><Translate content="success_msg" component='Success' className="text-white-30 fs-36 fw-200 mb-4" /></div>
               <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" />
