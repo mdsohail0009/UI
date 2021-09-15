@@ -39,7 +39,7 @@ const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, s
             loadMore={loadMore ? loadMore : ''}
             className="crypto-list auto-scroll wallet-list c-pointer"
             loading={isLoading ? isLoading : false}
-            locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_DEFAULT} description={<span>No records found</span>} /> }}
+            locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> }}
             renderItem={item => (
 
                 <List.Item className={(item[titleField || 'walletCode'] == selList[titleField || 'walletCode'] ? " select" : "")}>
