@@ -12,14 +12,14 @@ function collapseGrids(key) {
 }
 
 const columns = [
-  { field: "firstName", title: "User Name", width: 150,filter: true, },
+  { field: "firstName", title: "User Name", width: 220,filter: true, },
   { field: "walletCode", title: "Wallet Code", width: 150,filter: true, },
-  { field: "txDate", title: "Tax Date", width: 150, filterType: "date", filter: true, },
+  { field: "txDate", title: "Tax Date", width: 180, filterType: "date", filter: true, },
   { field: "type", title: "Type", width: 150,filter: true, },
   { field: "docType", title: "Doc Type", width: 150,filter: true, },
   { field: "credit", title: "Credit", filter: true, width: 160 },
   { field: "debit", title: "Debit", filter: true, width: 180 },
-  { field: "description", title: "Description", filter: true, width: 200 }
+  { field: "description", title: "Description", filter: true, width: 220 }
 ];
 
 
