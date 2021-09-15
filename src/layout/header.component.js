@@ -20,7 +20,7 @@ import TransactionsHistory from '../components/transactions.history.component';
 import AuditLogs from '../components/auditlogs.component';
 import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata, clearSwapData } from '../reducers/swapReducer';
 import { connect } from 'react-redux';
-import userProfile from '../assets/images/profile.png';
+import DefaultUser from '../assets/images/defaultuser.jpg';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -323,8 +323,8 @@ class Header extends Component {
         const userProfileMenu = (
             <Menu>
                 <div className="profile-dropdown">
-                    {this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL} className="user-profile" />}
-                    {this.props.userConfig?.imageURL == null && <img src={userProfile} className="user-profile" />}
+                    {this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" />}
+                    {this.props.userConfig?.imageURL == null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" />}
                     <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.firstName} {this.props.userConfig.lastName}</p>
                     {/* <Translate className="fs-16 text-white my-16 fw-500 mx-30" content="userName" component={this.props.userConfig.userName} /> */}
                     <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={() => this.userProfile()} />
@@ -357,8 +357,8 @@ class Header extends Component {
 
                                 <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
                                 <Dropdown overlay={userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                    <Menu.Item key="7">{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL} className="user-profile" />}
-                                        {this.props.userConfig?.imageURL == null && <img src={userProfile} className="user-profile" />}</Menu.Item>
+                                    <Menu.Item key="7">{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" />}
+                                        {this.props.userConfig?.imageURL == null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" />}</Menu.Item>
                                 </Dropdown>
                             </Menu>
                         </div>
@@ -376,8 +376,8 @@ class Header extends Component {
                             <Translate content="menu_transactions_history" component={Menu.Item} key="4" onClick={this.showTransactionHistoryDrawer} className="list-item" />
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
                             <Dropdown overlay={userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                <Menu.Item key="7" className="ml-16" >{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL} className="user-profile" />}
-                                    {this.props.userConfig?.imageURL == null && <img src={userProfile} className="user-profile" />}</Menu.Item>
+                                <Menu.Item key="7" className="ml-16" >{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" />}
+                                    {this.props.userConfig?.imageURL == null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" />}</Menu.Item>
                             </Dropdown>
                         </Menu>
                     </menuHeader>
@@ -596,7 +596,7 @@ class Header extends Component {
                 <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
                 <SwapCrypto swapRef={(cd) => this.child = cd} showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
                 <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
-                <TransactionsHistory showDrawer={this.state.transactionDrawer} onClose={() => { this.closeDrawer(); if (this.child1) { this.child1.setKy() } }} thref={(cd) => this.child1 = cd} />
+                {this.state.transactionDrawer&&<TransactionsHistory showDrawer={this.state.transactionDrawer} onClose={() => { this.closeDrawer(); if (this.child1) { this.child1.setKy() } }} thref={(cd) => this.child1 = cd} />}
                 <AuditLogs showDrawer={this.state.auditlogsDrawer} onClose={() => this.closeDrawer()} />
                 <Drawer
                     title={[<div className="side-drawer-header">
