@@ -203,15 +203,15 @@ class SwapCoins extends Component {
                                     e.preventDefault()
                                 }
                             }}
-                            // onKeyUp={(e) => {
-                            //     this.setReceiveAmount(e.target.value)
-                            // }}
+                            onKeyUp={(e) => {
+                                this.setReceiveAmount(e.target.value)
+                            }}
                             //value={isSwaped ? cryptoValue : localValue}
                             value={this.state.fromValue}
-                            onValueChange={({ value }) => {
-                                this.setReceiveAmount(value)
-                            }}
-                            autoFocus
+                            // onValueChange={({ value }) => {
+                            //     this.setReceiveAmount(value)
+                            // }}
+                            autoFocus={(coinDetailData.coin &&coinReceiveDetailData.coin)?true:false}
                         />}
                         {coinDetailData.coinBalance && <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - <Currency prefix={""} className={'currencyContains'} decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} /></Text>}
                     </div>
