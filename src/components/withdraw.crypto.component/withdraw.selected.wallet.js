@@ -9,6 +9,8 @@ import { withDrawCrypto } from '../send.component/api';
 import SuccessMsg from './success';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import WalletAddressValidator from 'wallet-address-validator';
+import { appInsights } from "../../Shared/appinsights";
+
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
     myRef = React.createRef();
@@ -27,6 +29,12 @@ class CryptoWithDrawWallet extends Component {
         this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 2 }))
         this.props. dispatch(setSubTitle("Select wallet address"));
+        this.trackevent()
+    }
+    trackevent =() =>{
+        appInsights.trackEvent({
+            name: 'WithDraw Crypto', properties: {"Type": 'User',"Action": 'Page view',"Username":this.props.userProfile.email,"MemeberId": this.props.userProfile.id,"Feature": 'WithDraw Crypto',"Remarks": "WithDraw crypto page view","Duration": 1,"Url": window.location.href,"FullFeatureName": 'WithDraw Crypto'}
+        });
     }
     componentWillUnmount() {
         this.setState({ ...this.state, isWithdrawSuccess: false })

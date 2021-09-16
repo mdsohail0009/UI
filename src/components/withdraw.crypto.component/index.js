@@ -10,12 +10,13 @@ import { appInsights } from "../../Shared/appinsights";
 const { Paragraph, Text, Title } = Typography;
 const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
     useEffect(() => {
+        loadData()
+    }, [])
+    const loadData = () =>{
         dispatch(fetchWithDrawWallets({ memberId: userProfile?.id }));
         dispatch(handleSendFetch({key:"cryptoWithdraw",activeTab:null}));
         dispatch(setSubTitle("Select a currency in your wallet"));
-        trackevent()
-    }, [])
-
+    }
     const { cryptoWithdraw: { wallets } } = sendReceive;
 
     if (wallets?.loading) {
