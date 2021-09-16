@@ -11,6 +11,7 @@ import Currency from '../shared/number.formate';
 import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
+import LiveNessSumsub from "../sumSub.component/liveness";
 
 const LinkValue = (props) => {
   return (
@@ -130,6 +131,12 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
         </ul>
       </div>}</>,
       step2: <>
+      <div className="success-pop text-center mb-24">
+        Welcome
+        <LiveNessSumsub />
+      </div>
+    </>,
+      step3: <>
         <div className="success-pop text-center mb-24">
           <img src={success} className="confirm-icon" />
 
@@ -138,7 +145,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
 
         </div>
       </>,
-      step3: <>{saveObj && <div>
+      step4: <>{saveObj && <div>
         <p> <Currency defaultValue={saveObj?.totalValue} prefixText={<b>Amount: </b>} prefix={""} suffixText={saveObj.walletCode} /></p>
         <p><b>Bank Account Number/IBAN: </b> {saveObj.accountNumber}</p>
         <p><b>Bank BIC/SWIFT/Routing number: </b> {saveObj.swiftCode}</p>
@@ -188,7 +195,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
   }
   const handleOk = async () => {
     let currentStep = parseInt(confirmationStep.split("step")[1]);
-    if (currentStep == 1) {
+    if (currentStep == 2) {
       setLoading(true)
       let withdrawal = await withdrawSave(saveObj)
       if (withdrawal.ok) {
@@ -198,7 +205,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
         useDivRef.current.scrollIntoView()
         dispatch(fetchDashboardcalls(userConfig.id))
         appInsights.trackEvent({
-          name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.email, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
+          name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
         });
       } else {
 

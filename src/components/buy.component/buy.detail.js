@@ -38,7 +38,7 @@ class SelectCrypto extends Component {
     }
     trackEvent = () =>{
         appInsights.trackEvent({
-            name: 'Buy', properties: {"Type": 'User',"Action": 'Page view',"Username": this.props.userProfileInfo.email,"MemeberId": this.props.userProfileInfo.id,"Feature": 'Buy',"Remarks": 'Buy coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Buy'}
+            name: 'Buy', properties: {"Type": 'User',"Action": 'Page view',"Username": this.props.userProfileInfo.userName,"MemeberId": this.props.userProfileInfo.id,"Feature": 'Buy',"Remarks": 'Buy coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Buy'}
         });
     }
     fetchConvertionValue = async () => {

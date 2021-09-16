@@ -16,7 +16,7 @@ class SellToggle extends Component {
     }
     trackevent =() =>{
         appInsights.trackEvent({
-            name: 'Sell', properties: {"Type": 'User',"Action": 'Page view',"Username":this.props.member.email,"MemeberId": this.props.member.id,"Feature": 'Sell',"Remarks": "Sell page view","Duration": 1,"Url": window.location.href,"FullFeatureName": 'Sell Crypto'}
+            name: 'Sell', properties: {"Type": 'User',"Action": 'Page view',"Username":this.props.member.userName,"MemeberId": this.props.member.id,"Feature": 'Sell',"Remarks": "Sell page view","Duration": 1,"Url": window.location.href,"FullFeatureName": 'Sell Crypto'}
         });
     }
     handleBuySellToggle = e => {
