@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Drawer, Typography, Row, Col, Select, Button, Form, DatePicker, Modal, Tooltip, Input, Icon } from "antd";
+import { Drawer, Typography, Row, Col, Select, Button, Form, DatePicker, Modal, Tooltip, Input, message } from "antd";
 import List from "../grid.component";
 import Loader from '../../Shared/loader'
 import { userNameLuSearch, getFeatureLuSearch } from './api';
-//import { setBreadcrumb } from '../../reducers/breadcrumbReducer';
 import * as _ from 'lodash';
 import moment from 'moment';
 
@@ -21,16 +20,14 @@ class AuditLogs extends Component {
       isLoading: false,
       userData: [],
       featureData: [],
-      selectedDateObj: {},
       value: "",
       modal: false,
-      showElement: false,
       selectedTimespan: "",
       timeSpanfromdate: "",
       timeSpantodate: "",
+      customFromdata: "",
+      customTodate: "",
       isCustomDate: false,
-      noticeObject: {},
-      dateSpan:{},
       searchObj: {
         timeSpan: "Last 1 Day",
         fromdate: '',
@@ -38,7 +35,6 @@ class AuditLogs extends Component {
         userName: this.props.userProfile?.userName,
         feature: "All Features",
       },
-      tranObj: {},
       timeListSpan: ["Last 1 Day", "Last One Week", "Custom"],
       gridUrl: process.env.REACT_APP_GRID_API+"AuditLog/GetAdminLogsK",
     };
@@ -54,14 +50,9 @@ class AuditLogs extends Component {
     { field: "action", title: "Action", width: 200, filter: true },
     { field: "remarks", title: "Remarks",filter: true },
   ]
-  onFocus = () => {
-    console.log('focus');
-  }
 
   componentDidMount = () => {
-    debugger
    this.TransactionFeatureSearch(this.props.userProfile?.userName);
-  // this.TransactionFeatureSearch();
   };
 
   TransactionUserSearch = async (userVal) => {
@@ -83,23 +74,14 @@ class AuditLogs extends Component {
   };
 
   handleTimeSpan = (val, id) => {
-    let { searchObj, timeSpanfromdate, timeSpantodate } = this.state;
+    let { searchObj } = this.state;
     searchObj[id] = val;
     if (val == "Custom") {
-      searchObj.fromdate=timeSpanfromdate
-      searchObj.todate=timeSpantodate
-      this.setState({ ...this.state, modal: true, isCustomDate: true, searchObj: searchObj})
+      this.setState({ ...this.state, modal: true, isCustomDate: true, searchObj: searchObj })
     } else {
       this.setState({ ...this.state, searchObj: searchObj, isCustomDate: false });
     }
   }
-
-  dateClickTimeSpan(){
-    let { searchObj, timeSpanfromdate, timeSpantodate } = this.state;
-     searchObj.fromdate=timeSpanfromdate
-      searchObj.todate=timeSpantodate
-      this.setState({ ...this.state, modal: true, isCustomDate: true, searchObj: searchObj})
-    }
 
   handleChange = (val, id) => {
     let { searchObj } = this.state;
@@ -107,21 +89,38 @@ class AuditLogs extends Component {
     this.setState({ ...this.state, searchObj: searchObj });
   };
 
-    handleDateChange = (prop, val) => {
-    let { searchObj } = this.state;
+  handleDateChange = (prop, val) => {
+    let { searchObj, customFromdata, customTodate } = this.state;
     searchObj[val] = new Date(prop);
-    this.setState({ ...this.state, searchObj });
+    this.setState({ ...this.state, searchObj, fromdate: customFromdata, todate: customTodate });
   };
 
-  handleOk = (values, id) => {
-    let { selectedTimespan, timeSpanfromdate, timeSpantodate } = this.state;
+  datePopup = (prop, val) => {
+    let { searchObj,timeSpanfromdate,timeSpantodate,customFromdata, customTodate } = this.state;
+    searchObj.fromdate = new Date(timeSpanfromdate)
+    searchObj.fromdate = new Date(timeSpantodate)
+    this.formDateRef.current.setFieldsValue({ fromdate: customFromdata, todate: customTodate })
+    this.setState({ ...this.state, modal: true, searchObj });
+  }
+
+  handleOk = (values) => {
+    let { selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate } = this.state;
+    if(moment(values.fromdate).format('DD/MM/YYYY') > moment(values.todate).format('DD/MM/YYYY') ) {
+     return message.error({
+       content: 'Start date must be less than or equal to the end date.',
+       className: 'custom-msg',
+       duration: 1
+   });
+   }
+    customFromdata = values.fromdate;
+    customTodate = values.todate;
     values.fromdate = moment(values.fromdate).format('DD/MM/YYYY');
     values.todate = moment(values.todate).format('DD/MM/YYYY');
     timeSpanfromdate = values.fromdate;
     timeSpantodate = values.todate;
     selectedTimespan = timeSpanfromdate + " " + "-" + " " + timeSpantodate;
     this.formRef.current.setFieldsValue({ ...this.state, selectedTimespan })
-    this.setState({ ...this.state, selectedTimespan, timeSpanfromdate, timeSpantodate, modal: false, });
+    this.setState({ ...this.state, selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate, modal: false, });
   };
 
   handleCancel = e => {
@@ -129,8 +128,6 @@ class AuditLogs extends Component {
   }
 
   handleSearch = (values) => {
-    debugger
-    console.log(this.props.userProfile)
     let { searchObj, timeSpanfromdate, timeSpantodate } = this.state;
     searchObj.fromdate = timeSpanfromdate
     searchObj.todate = timeSpantodate
@@ -138,7 +135,7 @@ class AuditLogs extends Component {
   };
 
   render() {
-    const { gridUrl, searchObj, featureData, userData, timeListSpan, timeSpanfromdate, timeSpantodate } = this.state;
+    const { gridUrl, searchObj, featureData, userData, timeListSpan} = this.state;
 
     const options1 = featureData.map((d) => (
       <Option key={d} value={d}>{d}</Option>
@@ -208,7 +205,7 @@ class AuditLogs extends Component {
                   className="input-label selectcustom-input mb-0"
                   label="Date"
                 >
-                  <Input disabled className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer"  onClick={() => { this.dateClickTimeSpan() }} />} />
+                  <Input disabled className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
                 </Form.Item>
               </Col> : ""}
               <Col sm={24} md={7} className="px-8">
