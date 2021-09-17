@@ -16,10 +16,12 @@ let initialState = {
     stepcode: "step1",
     stepTitles: {
         newaddress: "suissebase_personal",
+        fiataddress:"",
        
     },
     stepSubTitles: {
         newaddress: "avail_wallet_weprovide",
+        fiataddress:"",
        
     }
 

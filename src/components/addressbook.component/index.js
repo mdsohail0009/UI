@@ -1,153 +1,118 @@
 import React, { Component } from 'react';
-import { Typography, Drawer, Button, Tabs, Form, Input, Row, Col } from 'antd'
+import { Typography, Drawer, Button, Tabs, Radio } from 'antd'
 import { setStep } from '../../reducers/addressBookReducer';
 import connectStateProps from '../../utils/state.connect';
 import Translate from 'react-translate-component';
 import { processSteps as config } from './config';
 import NewAddressBook from './newAddressBook';
+import List from '../grid.component';
+import FaitWithdrawal from '../withDraw.component/faitWithdrawal'
 
 
 const { Title, Paragraph } = Typography;
 const { TabPane } = Tabs;
+const columnsCrypto = [
+    { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="check" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
+    { field: "walletCode", title: "Address Label", filter: true, },
+    { field: "docType", title: "Coin", width: 150, filter: true, },
+    { field: "debit", title: "Address", filter: true, width: 180 },
+    { field: "status", title: "Status", filter: true, width: 220 }
+];
+const columnsFiat = [
+    { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="check" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
+    { field: "walletCode", title: "Address Label", filter: true, },
+    { field: "docType", title: "Currency", width: 150, filter: true, },
+    { field: "debit", title: "Address", filter: true, width: 180 },
+    { field: "debit", title: "Account Number", filter: true, width: 180 },
+    { field: "debit", title: "Bank Name", filter: true, width: 180 },
+    { field: "status", title: "Bank Address", filter: true, width: 220 },
+    { field: "debit", title: "Routing Number", filter: true, width: 180 },
+    { field: "status", title: "Bank Address", filter: true, }
+];
 class AddressBook extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            visible: false
+            visible: false,
+            cryptoFiat: false,
+            fiatDrawer:false,
+            gridUrl: process.env.REACT_APP_GRID_API + "Transaction/TransactionHistoryk",
         }
     }
-    showDrawer = () => {
+
+    handleFiatAddress = () => {
+        this.setState({ fiatDrawer: true })
+    }
+    handleCryptoAddress = () => {
         this.setState({ visible: true })
     }
 
     closeBuyDrawer = () => {
         this.setState({ visible: false })
     }
-    onFinish = () => {
-
-    }
-    tabChange = () => {
-
+    handleWithdrawToggle = e => {
+        this.setState({
+            cryptoFiat: e.target.value === 2
+        })
     }
     renderContent = () => {
         const stepcodes = {
-            newaddressbook: <NewAddressBook />,
+            cryptoaddressbook: <NewAddressBook />,
         }
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
     }
     renderTitle = () => {
         const titles = {
-            newaddressbook: <span onClick={this.closeBuyDrawer} className="icon md lftarw-white c-pointer" />,
+            cryptoaddressbook: <span onClick={this.closeBuyDrawer} className="icon md lftarw-white c-pointer" />,
         }
         return titles[config[this.props.addressBookReducer.stepcode]]
     }
     renderIcon = () => {
         const stepcodes = {
-            newaddressbook: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
+            cryptoaddressbook: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
         }
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
     }
     render() {
+        const { cryptoFiat, gridUrl } = this.state;
         return (
             <>
                 <div className="box basic-info">
-                    <Title className="basicinfo">Withdraw Crypto</Title>
+                    <Title className="basicinfo">Address Book</Title>
                     <Paragraph className="basic-decs mb-16">User customized addressbook</Paragraph>
-                    <Form
-                        className="mt-24"
-                        onFinish={this.onFinish()} >
-                        <Row>
+                    <Radio.Group
+                        defaultValue={1}
+                        onChange={this.handleWithdrawToggle}
+                        className="buysell-toggle">
+                        <Translate content="withdrawCrypto" component={Radio.Button} value={1} />
+                        <Translate content="withdrawFiat" component={Radio.Button} value={2} />
+                    </Radio.Group>
 
-                            <Col sm={24} md={24} className="px-8 mb-16">
-                                <div className="d-flex">
-                                    <label className="input-label profile-label">Select Coins</label>
-                                    <Form.Item
-                                        name="coins"
-                                        style={{ flexGrow: 5 }}
-                                        className="input-label selectcustom-input mb-0"
-                                        label="Coins">
-                                        <Input className="cust-input cust-adon mb-0" addonAfter={<i className="icon md downarrow-icon c-pointer" onClick={() => { this.setState({ ...this.state, visible: true, }) }} />} />
-                                    </Form.Item>
-                                </div>
-                            </Col>
-                            <Col sm={24} md={24} className="px-8 ">
-                                <div className="d-flex">
-                                    <label className="input-label profile-label">Withdraw To</label>
-                                    <Tabs defaultActiveKey="1" onChange={this.tabChange()} className="crypto-list-tabs addressbook_tabs" style={{ flexGrow: 5 }}>
-                                        <TabPane tab="New Address" key="1">
-                                            <Form.Item
-                                                name="coins"
-                                                className="input-label selectcustom-input mb-0"
-                                                label="Address">
-                                                <Input className="cust-input cust-adon mb-0" />
-                                            </Form.Item>
-                                            {/* <Form.Item
-                                                name="coins"
-                                                className="input-label selectcustom-input mb-0"
-                                                label="Network">
-                                                <Input className="cust-input cust-adon mb-0" addonAfter={<i className="icon md downarrow-icon c-pointer" onClick={() => { this.setState({ ...this.state, visible: true, }) }} />} />
-                                            </Form.Item> */}
-                                            {/* <div className="wdr-summary d-flex mt-24">
-                                                <div>
-                                                <label className="mb-0 text-white-30 fw-200">BTC spot balance</label>
-                                                <Paragraph className="basic-decs mb-0">0 BTC</Paragraph>
-                                                </div>
-                                                <div>
-                                                <label className="mb-0 text-white-30 fw-200">BTC spot balance</label>
-                                                <Paragraph className="basic-decs mb-0">0 BTC</Paragraph>
-                                                </div>
-                                            </div> */}
-                                            <Row className='mt-24 ml-16'>
-                                                <Col sm={12} className="pb-16">
-                                                <label className="mb-0 text-white-30 fw-200">BTC spot balance</label>
-                                                <Paragraph className="basic-decs mb-0">0 BTC</Paragraph>
-                                                </Col>
-                                                <Col sm={12}  className="pb-16">
-                                                <label className="mb-0 text-white-30 fw-200">Minimum withdrawal</label>
-                                                <Paragraph className="basic-decs mb-0">0.0000088 BTC</Paragraph>
-                                                </Col>
-                                                <Col sm={12}  className="pb-16">
-                                                <label className="mb-0 text-white-30 fw-200">Network fee</label>
-                                                <Paragraph className="basic-decs mb-0">0.0000044 ~ 0.0006 BTC</Paragraph>
-                                                </Col>
-                                                <Col sm={12}  className="pb-16">
-                                                <label className="mb-0 text-white-30 fw-200">24h remaining limit</label>
-                                                <Paragraph className="basic-decs mb-0">0.06 BTC/0.06 BTC</Paragraph>
-                                                </Col>
-                                            </Row>
-                                        </TabPane>
-                                        <TabPane tab="Add Address" key="2">
+                    {cryptoFiat ? <div className="mt-24">
+                        <div className="d-flex justify-content">
+                            <div><Title className="fs-26 text-white-30 fw-500">Withdraw Fiat</Title>
+                                <Paragraph className="basic-decs fw-200">Basic Info, like your name and photo, that you use on Suissebase</Paragraph>
+                            </div>
+                            <div className="text-right ">
+                                <Button className="c-pointer pop-btn ant-btn px-24" onClick={this.handleCryptoAddress}> Add Address</Button>
+                            </div>
+                        </div>
+                        <List url={gridUrl} ref={this.gridRef} columns={columnsFiat} />
 
-                                            <Form.Item
-                                                name="coins"
-                                                className="input-label selectcustom-input mb-0"
-                                                label="Address Book">
-                                                <Input className="cust-input cust-adon mb-0" addonAfter={<i className="icon md downarrow-icon c-pointer" onClick={() => { this.setState({ ...this.state, visible: true, }) }} />} />
-                                            </Form.Item>
-                                            <Row className='mt-24 ml-16'>
-                                                <Col sm={12} className="pb-16">
-                                                <label className="mb-0 text-white-30 fw-200">BTC spot balance</label>
-                                                <Paragraph className="basic-decs mb-0">0 BTC</Paragraph>
-                                                </Col>
-                                                <Col sm={12}  className="pb-16">
-                                                <label className="mb-0 text-white-30 fw-200">Minimum withdrawal</label>
-                                                <Paragraph className="basic-decs mb-0">0.0000088 BTC</Paragraph>
-                                                </Col>
-                                                <Col sm={12}  className="pb-16">
-                                                <label className="mb-0 text-white-30 fw-200">Network fee</label>
-                                                <Paragraph className="basic-decs mb-0">0.0000044 ~ 0.0006 BTC</Paragraph>
-                                                </Col>
-                                                <Col sm={12}  className="pb-16">
-                                                <label className="mb-0 text-yellow fw-200 ">24h remaining limit</label>
-                                                <Paragraph className="basic-decs  mb-0">0.06 BTC/0.06 BTC</Paragraph>
-                                                </Col>
-                                            </Row>
-                                        </TabPane>
-                                    </Tabs>
+                    </div> :
+                        <div className="mt-24">
+                            <div className="d-flex justify-content">
+                                <div> <Title className="fs-26 text-white-30 fw-500">Withdraw Crypto</Title>
+                                    <Paragraph className="basic-decs fw-200">Basic Info, like your name and photo, that you use on Suissebase</Paragraph>
                                 </div>
-                            </Col>
-                        </Row>
-                    </Form>
+                                <div className="text-right ">
+                                    <Button className="c-pointer pop-btn ant-btn px-24" onClick={this.handleFiatAddress}> Add Address</Button>
+                                </div>
+                            </div>
+                            <List url={gridUrl} ref={this.gridRef} columns={columnsCrypto} />
+                        </div>}
+
+
                 </div>
 
                 <Drawer destroyOnClose={true}
@@ -155,8 +120,6 @@ class AddressBook extends Component {
                         {this.renderTitle()}
                         <div className="text-center fs-16">
                             <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Add New Address</Paragraph>
-                            {/* <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props.addressBookReducer.stepTitles[config[this.props.addressBookReducer.stepcode]]} component={Paragraph} />
-                            <Translate className="text-white-50 mb-0 fs-14 fw-300" content={this.props.addressBookReducer.stepSubTitles[config[this.props.addressBookReducer.stepcode]]} component={Paragraph} /> */}
                         </div>
                         {this.renderIcon()}
                     </div>]}
@@ -169,6 +132,21 @@ class AddressBook extends Component {
 
                 >
                     {this.renderContent()}
+                </Drawer>
+                <Drawer destroyOnClose={true}
+                    title={[<div className="side-drawer-header">
+                        <div className="text-center fs-16">
+                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Add New Address</Paragraph>
+                        </div>
+                    </div>]}
+                    placement="right"
+                    closable={true}
+                    visible={this.state.fiatDrawer}
+                    closeIcon={null}
+                    className="side-drawer"
+
+                >
+                  {/* <FaitWithdrawal/>  */}
                 </Drawer>
             </>
         )
