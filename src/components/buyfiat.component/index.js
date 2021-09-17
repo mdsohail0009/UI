@@ -91,9 +91,6 @@ class MassPayment extends Component {
                             <Translate className="text-white-50 mb-0 fs-14 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                         </div>
                         {this.renderIcon()}
-                        {/* <Dropdown overlay={menu} overlayClassName="secureDropdown" arrow>
-                            <a className="pop-drpdwn-toogle" onClick={e => e.preventDefault()}><span className="icon md h-more" /></a>
-                        </Dropdown> */}
                     </div>
                 ]}
                 placement="right"
