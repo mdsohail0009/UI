@@ -89,6 +89,12 @@ class AuditLogs extends Component {
     this.setState({ ...this.state, searchObj: searchObj });
   };
 
+  handleChange = (val, id) => {
+    let { searchObj } = this.state;
+    searchObj[id] = val;
+    this.setState({ ...this.state, searchObj: searchObj });
+  };
+
   handleDateChange = (prop, val) => {
     let { searchObj, customFromdata, customTodate } = this.state;
     searchObj[val] = new Date(prop);
@@ -105,7 +111,7 @@ class AuditLogs extends Component {
 
   handleOk = (values) => {
     let { selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate } = this.state;
-    if(moment(values.fromdate).format('DD/MM/YYYY') > moment(values.todate).format('DD/MM/YYYY') ) {
+    if(moment(values.fromdate).format('MM/DD/YYYY') > moment(values.todate).format('MM/DD/YYYY') ) {
      return message.error({
        content: 'Start date must be less than or equal to the end date.',
        className: 'custom-msg',
@@ -114,8 +120,8 @@ class AuditLogs extends Component {
    }
     customFromdata = values.fromdate;
     customTodate = values.todate;
-    values.fromdate = moment(values.fromdate).format('DD/MM/YYYY');
-    values.todate = moment(values.todate).format('DD/MM/YYYY');
+    values.fromdate = moment(values.fromdate).format('MM/DD/YYYY');
+    values.todate = moment(values.todate).format('MM/DD/YYYY');
     timeSpanfromdate = values.fromdate;
     timeSpantodate = values.todate;
     selectedTimespan = timeSpanfromdate + " " + "-" + " " + timeSpantodate;
@@ -287,7 +293,7 @@ class AuditLogs extends Component {
                   ]}
                   >
                     <DatePicker 
-                    format={"DD/MM/YYYY"} 
+                    format={"MM/DD/YYYY"} 
                     onChange={(e) => this.handleDateChange(e, 'fromdate')}
                     className="cust-input" style={{width:'100%'}}/>
                   </Form.Item>
@@ -302,7 +308,7 @@ class AuditLogs extends Component {
                           type: "date", validator: async (rule, value, callback) => {
                               if (value) {
                                   if (new Date(value) < searchObj.fromdate) {
-                                      throw new Error("to date should be greater than from date")
+                                      throw new Error("Start date must be less than or equal to the end date.")
                                   } else {
                                       callback();
                                   }
