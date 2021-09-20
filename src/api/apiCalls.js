@@ -18,5 +18,4 @@ const sumsubacesstokennew=(userid)=>{
 const updateKyc=(userid)=>{
     return apiClient.get(Portfolio+'UpdateKYC?isKyc=true&userId='+userid);
 }
-
 export default {getportfolio,getCryptos,getMember,sumsubacesstoken, updateKyc,sumsubacesstokennew}
