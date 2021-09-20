@@ -13,11 +13,25 @@ class List extends React.Component {
     refreshGrid() {
         this.eleRef.current.refreshGrid();
     }
+    // renderDate = (props) => {
+    //     return <td><Moment format="DD/MM/YYYY">{props.dataItem[props.field]}</Moment></td>
+    // }
     renderDate = (props) => {
-        return <td><Moment format="DD/MM/YYYY">{props.dataItem[props.field]}</Moment></td>
+        if(props.dataItem[props.field]){
+            return <td><Moment format="DD/MM/YYYY">{props.dataItem[props.field]}</Moment></td>
+        }else{
+            return <td>{props.dataItem[props.field]}</td>
+        }
+    }
+    renderDateTime = (props) => {
+        if(props.dataItem[props.field]){
+            return <td><Moment format="DD/MM/YYYY hh:mm:ss a" globalLocal={true}>{props.dataItem[props.field] + '.000Z'}</Moment></td>
+        }else{
+            return <td>{props.dataItem[props.field]}</td>
+        }
     }
     renderNumber = (props) => {
-        return <td>  <NumberFormat value={props?.dataItem[props.field]} decimalSeparator="."  displayType={'text'} thousandSeparator={true} /></td>
+        return <td>  <NumberFormat value={props?.dataItem[props.field]} decimalSeparator="." displayType={'text'} thousandSeparator={true} /></td>
     }
     render() {
         const { columns, url, additionalParams } = this.props
@@ -28,7 +42,8 @@ class List extends React.Component {
                         columnMenu={column.filter ? ColumnMenu : null}
                         field={column.field}
                         title={column.title} width={column.width}
-                        cell={column.customCell || (column.filterType == "date" ? this.renderDate : (column.dataType == 'number' ? this.renderNumber : null))}
+                        //cell={column.customCell || (column.filterType == "date" ? this.renderDate : (column.dataType == 'number' ? this.renderNumber : null))}
+                        cell={column.customCell || (column.filterType == "date" ? this.renderDate : (column.dataType == 'number' ? this.renderNumber : (column.filterType == "datetime" ? this.renderDateTime : null )))}
                         filter={column.filterType || 'text'}
                         format="{0:,0.##}"
                     />

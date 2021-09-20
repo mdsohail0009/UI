@@ -178,7 +178,6 @@ class Header extends Component {
         this.userProfile = this.userProfile.bind(this);
     }
     userProfile() {
-        debugger;
         this.props.history.push("/userprofile");
     }
     next() {
@@ -232,7 +231,6 @@ class Header extends Component {
         })
     }
     showAuditLogsDrawer = () => {
-        debugger
         this.setState({
             auditlogsDrawer: true
         })
@@ -330,11 +328,11 @@ class Header extends Component {
                     <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={() => this.userProfile()} />
                     {/* <Link className="profile-btn" to="/userprofile" >Manage Your Account</Link> */}
                     <ul className="pl-0 drpdwn-list">
-                        {/* <Menu.Item className="px-0" onClick={() => this.showAuditLogsDrawer()}>
+                        <Menu.Item className="px-0" onClick={() => this.showAuditLogsDrawer()}>
                             <li className="c-pointer px-0">
                                 <Link>Audit Logs</Link>
                             </li>
-                        </Menu.Item> */}
+                        </Menu.Item>
                         <li className="c-pointer px-0" onClick={() => userManager.signoutRedirect()}>
                             <Translate content="logout" component={Link} />
                         </li>
