@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Input, Typography, Button } from 'antd'
+import { setStep } from '../../reducers/addressBookReducer';
+import { connect } from 'react-redux';
 
 const { Text } = Typography;
 class NewAddressBook extends Component {
@@ -37,7 +39,7 @@ class NewAddressBook extends Component {
                                     <Text className="input-label">Coins</Text>
                                     <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
                                 </div>
-                                <Input className="cust-input" placeholder="Select from Coins" />
+                                <Input onClick={() => this.props.changeStep('step3')} className="cust-input" placeholder="Select from Coins" />
                             </div>
                         </Form.Item>
                         <Form.Item
@@ -77,4 +79,14 @@ class NewAddressBook extends Component {
     }
 }
 
-export default NewAddressBook;
+const connectStateToProps = ({ addressBookReducer }) => {
+    return { addressBookReducer }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        }
+    }
+}
+export default connect(connectStateToProps, connectDispatchToProps)(NewAddressBook);
