@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Card, Input, Radio, List, Alert, Row, Col, Form, Modal } from 'antd';
+import { Typography, Button, Card, Input, Radio, List, Alert, Row, Col, Form, Modal,Select } from 'antd';
 import { handleSendFetch, setStep, setSubTitle } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -11,6 +11,7 @@ import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import WalletAddressValidator from 'wallet-address-validator';
 import { appInsights } from "../../Shared/appinsights";
 
+const {Option} =Select;
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
     myRef = React.createRef();
@@ -220,9 +221,37 @@ class CryptoWithDrawWallet extends Component {
                     content="address"
                     component={Paragraph}
                 />
-                <Input className="cust-input" placeholder="Enter address" value={this.state.walletAddress}
+                  <Form>
+                <Form.Item
+            name="bankId"
+            className="custom-forminput mb-16"
+            rules={[
+              {
+                required: true,
+                message: 'Is required',
+              },
+            ]}
+          >
+            <div className="d-flex"><Text
+              className="input-label" >Address</Text>
+           
+              <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+            </div>
+
+            <Select dropdownClassName="select-drpdwn"
+              className="cust-input"
+            //   onChange={(e) => handleChange(e)}
+              placeholder="Select Address"
+            >
+              <Option value="meena">meena</Option>
+            </Select>
+
+          </Form.Item>
+          </Form>
+        
+                {/* <Input className="cust-input" placeholder="Enter address" value={this.state.walletAddress}
                     onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })}
-                />
+                /> */}
                 <Translate content="with_draw" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
                 <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[
                     <Button key="back" onClick={this.handleCancel} disabled={this.state.loading}>

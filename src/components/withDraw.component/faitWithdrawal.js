@@ -248,7 +248,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
             <Select dropdownClassName="select-drpdwn"
               className="cust-input"
               onChange={(e) => handleChange(e)}
-              placeholder="Select Currency"
+              placeholder="Select Address"
             >
               <Option value="meena">meena</Option>
             </Select>
