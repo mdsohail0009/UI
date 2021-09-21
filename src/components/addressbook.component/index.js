@@ -6,8 +6,10 @@ import Translate from 'react-translate-component';
 import { processSteps as config } from './config';
 import NewAddressBook from './newAddressBook';
 import List from '../grid.component';
+import FaitWithdrawal from '../withDraw.component/faitWithdrawal'
+import CryptoList from '../shared/cryptolist';
 import NewFiatAddress from './addFiatAddressbook';
-import CryptoList from '../shared/cryptolist'
+
 
 const { Title, Paragraph } = Typography;
 const { TabPane } = Tabs;
@@ -62,23 +64,21 @@ class AddressBook extends Component {
     renderContent = () => {
         const stepcodes = {
             cryptoaddressbook: <NewAddressBook />,
-            selectCoin:<CryptoList showSearch={true} titleField={'coin'} iconField={'coin'} showValues={true}  />
-
+            selectcrypto:  <CryptoList coinType="swap" showSearch={true} showValues={true} titleField={'coin'} iconField={'coin'} coinList={this.props.swapStore.MemberCoins} />
         }
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
     }
     renderTitle = () => {
         const titles = {
-            cryptoaddressbook: <span/>,
-            selectCoin:<span onClick={this.closeBuyDrawer} className="icon md lftarw-white c-pointer" />
+            cryptoaddressbook: <span onClick={this.closeBuyDrawer} className="icon md lftarw-white c-pointer" />,
+            selectcrypto: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
         }
         return titles[config[this.props.addressBookReducer.stepcode]]
     }
     renderIcon = () => {
         const stepcodes = {
             cryptoaddressbook: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
-            selectCoin:<span/>
-
+            selectcrypto: <span />
         }
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
     }
