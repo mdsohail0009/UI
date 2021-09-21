@@ -43,10 +43,10 @@ class AuditLogs extends Component {
 
   }
   gridColumns = [
-    { field: "date", title: "Date", filter: true, filterType: "date", width: 180 },
-    { field: "feature", title: "Feature", filter: true, width: 160 },
-    { field: "featurePath", title: "Feature Path", filter: true, width: 200 },
-    { field: "userName", title: "Name", filter: true, width: 250, },
+    { field: "date", title: "Date", filter: true, filterType: "datetime", width: 250 },
+    { field: "feature", title: "Feature", filter: true, width: 190 },
+    { field: "featurePath", title: "Feature Path", filter: true, width: 230 },
+    //{ field: "userName", title: "Name", filter: true, width: 250, },
     { field: "action", title: "Action", width: 200, filter: true },
     { field: "remarks", title: "Remarks",filter: true },
   ]
@@ -278,7 +278,7 @@ class AuditLogs extends Component {
               ref={this.formDateRef}
             >
               <Row gutter={24} className="mb-24 pb-24 border-bottom">
-                <Col xs={24} sm={24} md={12} >
+                <Col xs={24} sm={24} md={12} className="mb-24">
                   <Form.Item
                     name="fromdate"
                     className="input-label ml-0"
@@ -295,10 +295,10 @@ class AuditLogs extends Component {
                     <DatePicker 
                     format={"MM/DD/YYYY"} 
                     onChange={(e) => this.handleDateChange(e, 'fromdate')}
-                    className="cust-input" style={{width:'100%'}}/>
+                    className="cust-input mb-0" style={{width:'100%'}}/>
                   </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={12}>
+                <Col xs={24} sm={24} md={12} className="mb-24">
                   <Form.Item
                     name="todate"
                     className="input-label ml-0"
@@ -318,9 +318,9 @@ class AuditLogs extends Component {
                   ]}
                   > 
                     <DatePicker 
-                    className="cust-input" 
+                    className="cust-input mb-0" 
                     onChange={(e) => this.handleDateChange(e, 'todate')}
-                    format={"DD/MM/YYYY"} 
+                    format={"MM/DD/YYYY"} 
                     style={{width:'100%'}}
                     />
                   </Form.Item>
