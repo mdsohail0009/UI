@@ -10,6 +10,7 @@ import { withdrawRecepientNamecheck, withdrawSave, getCountryStateLu } from '../
 import Currency from '../shared/number.formate';
 import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
+import { handleFavouritAddress } from '../../reducers/addressBookReducer';
 import { appInsights } from "../../Shared/appinsights";
 
 const LinkValue = (props) => {
@@ -21,7 +22,7 @@ const LinkValue = (props) => {
   )
 }
 const { Option } = Select;
-const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) => {
+const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, props,changeStep }) => {
   const [form] = Form.useForm();
   const [selectedWallet, setSelectedWallet] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -34,6 +35,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
   const [country, setCountry] = useState(null);
   const useDivRef = React.useRef(null);
   useEffect(() => {
+    // props.fetchFavouirtAddresss();
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       console.log(selectedWalletCode, buyInfo.memberFiat?.data)
       handleWalletSelection(selectedWalletCode)
@@ -41,6 +43,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
   }, [buyInfo.memberFiat?.data])
   useEffect(() => {
     getCountryLu();
+
   }, [])
   const handleWalletSelection = (walletId) => {
     form.setFieldsValue({ memberWalletId: walletId })
@@ -182,6 +185,9 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
     }
     return _types[confirmationStep]
   }
+  const handleChange = () => {
+
+  }
   const handleCancel = () => {
     setShowModal(false);
     useDivRef.current.scrollIntoView()
@@ -210,7 +216,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
 
   const { Paragraph, Title, Text } = Typography;
   const link = <LinkValue content="terms_service" />;
-
+  // const options = props.addressBookReducer?.favouriteAddress?.map((item, idx) => <option key={idx} title="" value={item.id}>{item.currencyCode}</option>)
   return (
     <>
       <div className="suisfiat-height auto-scroll">
@@ -222,6 +228,32 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
             component={Paragraph}
             className="mb-16 fs-14 text-aqua fw-500 text-upper"
           />
+          <p className="mb-16 fs-14 text-aqua fw-500 text-right c-pointer" onClick={() => changeStep('step4')} > Add New Address</p>
+          <Form.Item
+            name="bankId"
+            className="custom-forminput mb-24"
+            rules={[
+              {
+                required: true,
+                message: 'Is required',
+              },
+            ]}
+          >
+            <div className="d-flex"><Text
+              className="input-label" >Address</Text>
+           
+              <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+            </div>
+
+            <Select dropdownClassName="select-drpdwn"
+              className="cust-input"
+              onChange={(e) => handleChange(e)}
+              placeholder="Select Currency"
+            >
+              <Option value="meena">meena</Option>
+            </Select>
+
+          </Form.Item>
           <Form.Item
             className="custom-forminput mb-24"
             name="memberWalletId"
@@ -640,15 +672,18 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
   );
 }
 
-const connectStateToProps = ({ buyInfo, userConfig }) => {
-  return { buyInfo, userConfig: userConfig.userProfileInfo }
+const connectStateToProps = ({ buyInfo, userConfig, addressBookReducer }) => {
+  return { addressBookReducer, buyInfo, userConfig: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
   return {
     changeStep: (stepcode) => {
       dispatch(setStep(stepcode))
     },
-    dispatch
+    fetchFavouirtAddresss: () => {
+      dispatch(handleFavouritAddress())
+    },
+    
   }
 
 }
