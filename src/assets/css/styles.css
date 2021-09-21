@@ -150,6 +150,7 @@ line-height: 16px;min-width:90px}
 .crypto-container{max-height: calc(100vh - 270px);}
 .suisfiat-container{max-height: calc(100vh - 155px);}
 .suisfiat-height{max-height: calc(100vh - 155px);}
+.addbook-height{max-height: calc(100vh - 84px);}
 .verify-container{max-height: calc(100vh - 140px);}
 .dep-withdraw{max-height: calc(100vh - 267px);}
 .selectcrypto-container{max-height: calc(100vh - 101px);}
