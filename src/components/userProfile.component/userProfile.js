@@ -5,7 +5,7 @@ import Security from './security'
 import Translate from 'react-translate-component';
 import { userManager } from '../../authentication';
 import Settings from './settings';
-import Documents from './documents';
+import Documents from './documents/documents';
 
 const { TabPane } = Tabs;
 class userProfile extends Component {
