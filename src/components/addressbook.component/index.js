@@ -9,6 +9,7 @@ import List from '../grid.component';
 import FaitWithdrawal from '../withDraw.component/faitWithdrawal'
 import CryptoList from '../shared/cryptolist';
 import NewFiatAddress from './addFiatAddressbook';
+import { getCoinList} from './api'
 
 
 const { Title, Paragraph } = Typography;
@@ -46,6 +47,20 @@ class AddressBook extends Component {
         }
     }
 
+    componentDidMount() {
+        this.coinList()
+    }
+
+    coinList = async() =>{
+        let  fromlist =  await getCoinList(this.props.userProfile?.id)
+         if(fromlist.ok){
+             this.setState({...this.state,fromCoinsList:fromlist.data,isLoading:false})
+         }else{
+             this.setState({...this.state,fromCoinsList:[],isLoading:false})
+         }
+     }
+
+
     handleFiatAddress = () => {
         this.setState({ fiatDrawer: true })
     }
@@ -64,7 +79,7 @@ class AddressBook extends Component {
     renderContent = () => {
         const stepcodes = {
             cryptoaddressbook: <NewAddressBook />,
-            selectcrypto:  <CryptoList coinType="swap" showSearch={true} showValues={true} titleField={'coin'} iconField={'coin'} coinList={this.props.swapStore.MemberCoins} />
+            selectcrypto:  <CryptoList coinType="swap" showSearch={true} showValues={true} titleField={'coin'} iconField={'coin'} selectedCoin={this.props.swapfrom?this.props.swapStore.coinDetailData:this.props.swapStore.coinReceiveDetailData} coinList={this.state.fromCoinsList} />
         }
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
     }
