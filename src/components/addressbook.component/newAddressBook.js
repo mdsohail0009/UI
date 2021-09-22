@@ -2,17 +2,31 @@ import React, { Component } from 'react';
 import { Form, Input, Typography, Button } from 'antd'
 import { setStep } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
+import {saveAddress} from './api';
 
 const { Text } = Typography;
 class NewAddressBook extends Component {
     formRef = React.createRef();
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+           cryptoSave:{
+            memberShipId:'',
+            favouriteName:'',
+            type:'crypto',
+            toWalletAddress:''
+           }
+
+        }
     }
-    saveAddressBook = (values) => {
-        console.log(values)
+    saveAddressBook =async (values) => {
+        debugger;
+       // values.memberShipId = this.props.userConfig.id;
+        let response = await saveAddress(values);
+        if (response.ok) {
+            
     }
+}
     render() {
         return (
             <>
@@ -22,7 +36,7 @@ class NewAddressBook extends Component {
                         onFinish={this.saveAddressBook()} >
                         <Form.Item
                             className="custom-forminput mb-0 pr-0"
-                            name="label" >
+                            name="favouriteName" >
                             <div>
                                 <div className="d-flex">
                                     <Text className="input-label">Address Label</Text>
@@ -33,18 +47,18 @@ class NewAddressBook extends Component {
                         </Form.Item>
                         <Form.Item
                             className="custom-forminput mb-0 pr-0"
-                            name="coins" >
+                            name="coin" >
                             <div>
                                 <div className="d-flex">
-                                    <Text className="input-label">Coins</Text>
+                                    <Text className="input-label">Coin</Text>
                                     <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
                                 </div>
-                                <Input onClick={() => this.props.changeStep('step3')} className="cust-input" placeholder="Select from Coins" />
+                                <Input onClick={() => this.props.changeStep('step3')} value={this.props.addressBookReducer.coinWallet.coinFullName } className="cust-input" placeholder="Select from Coins" />
                             </div>
                         </Form.Item>
                         <Form.Item
                             className="custom-forminput mb-0 pr-0"
-                            name="currentpassword" >
+                            name="toWalletAddress" >
                             <div>
                                 <div className="d-flex">
                                     <Text className="input-label">Address</Text>
@@ -79,8 +93,8 @@ class NewAddressBook extends Component {
     }
 }
 
-const connectStateToProps = ({ addressBookReducer }) => {
-    return { addressBookReducer }
+const connectStateToProps = ({ addressBookReducer,userConfig }) => {
+    return { addressBookReducer,userConfig: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {

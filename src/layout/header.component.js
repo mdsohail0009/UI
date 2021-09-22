@@ -178,7 +178,6 @@ class Header extends Component {
         this.userProfile = this.userProfile.bind(this);
     }
     userProfile() {
-        debugger;
         this.props.history.push("/userprofile");
     }
     next() {
@@ -232,7 +231,6 @@ class Header extends Component {
         })
     }
     showAuditLogsDrawer = () => {
-        debugger
         this.setState({
             auditlogsDrawer: true
         })
