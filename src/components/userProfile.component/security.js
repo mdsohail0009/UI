@@ -5,6 +5,7 @@ import Changepassword from '../../components/changepassword';
 import { connect } from 'react-redux';
 import { updatechange } from '../../reducers/UserprofileReducer';
 import {store} from '../../store'
+import Moment from 'react-moment';
 
 const Security =({userConfig,onChange})=> {
     const [isChangepassword,setisChangepassword]=useState(false)
@@ -51,7 +52,7 @@ const Security =({userConfig,onChange})=> {
                             <label className="mb-0 profile-label">Password</label>
                             <div style={{ flexGrow: 12 }}>
                                 <p className="mb-0 ml-8 profile-value"> ************</p>
-                                <p className="mb-0 ml-8 fs-14 text-white"> {userConfig?.email}</p>
+                                <p className="mb-0 ml-8 fs-14 text-white">Modified on <Moment format="DD-MM-YYYY">{userConfig?.pwdModifiedDate}</Moment></p>
                             </div>
                             <div>
                                 <span className="icon md rarrow-white" />
