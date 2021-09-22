@@ -4,6 +4,7 @@ import snsWebSdk from '@sumsub/websdk';
 import apicalls from './../../api/apiCalls';
 import { connect } from 'react-redux';
 import { userInfo, getmemeberInfo } from './../../reducers/configReduser';
+import { userManager } from '../../authentication';
 
 class SumSub extends Component {
     state = {}
@@ -52,7 +53,7 @@ class SumSub extends Component {
     render() {
         return (
             <>
-                <div className="tlv-header text-right d-block" style={{ position: 'relative' }}><Button className="pop-btn px-36">Logout</Button></div>
+                <div className="tlv-header text-right d-block" style={{ position: 'relative' }}><Button className="pop-btn px-36" onClick={() => userManager.signoutRedirect()}>Logout</Button></div>
                 <div id="sumsub-websdk-container"></div>
             </>
         );
