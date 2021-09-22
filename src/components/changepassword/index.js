@@ -8,11 +8,12 @@ import { connect } from 'react-redux';
 //import notify from '../../shared/components/notification';
 import { changePassword } from '../../api/apiServer';
 import { Link } from 'react-router-dom';
+import { getmemeberInfo } from '../../reducers/configReduser';
 notification.config({
   placement: "topRight",
   rtl: true
 });
-const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
+const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
   const [initialValues, setInitialValues] = useState({
     "Email": userConfig?.email,
     "CurrentPassword": "",
@@ -52,6 +53,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
         setChangePasswordResponse({ error: false, messsage: 'Password changed successfully', isLoading: false });
         form.resetFields();
         onSubmit()
+        getmemeberInfoa(userConfig.email)
       }
       else {
         setChangePasswordResponse({ error: true, messsage: result.data, isLoading: false });
@@ -220,7 +222,10 @@ const connectDispatchToProps = dispatch => {
   return {
     changeStep: (stepcode) => {
       dispatch(setStep(stepcode))
-    }
+    },
+    getmemeberInfoa: (useremail) => {
+      dispatch(getmemeberInfo(useremail));
+  }
   }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(ChangePassword);
