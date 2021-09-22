@@ -92,6 +92,7 @@ line-height: 16px;min-width:90px}
 .icon.md.load{background-position: -242px 0;float: right; margin-top: 2px;}
 .icon.md.info{background-position:-404px -1px;}
 .icon.md.lftarw-white{background-position: -377px 0;}
+.icon.md.downarrow-icon{background-position: -350px 0;}
 .icon.md.history-white{background-position:-272px -33px;}
 .icon.md.card{background-position: -480px -1px;}
 .icon.md.phone{background-position: 0px -35px;}
@@ -101,6 +102,8 @@ line-height: 16px;min-width:90px}
 .icon.md.recivearrow{background-position: -338px -35px}
 .icon.md.check-arrow{background-position: -366px -36px}
 .icon.md.camera{background-position: -400px -34px;}
+.icon.md.address-book{background-position:-434px -34px}
+
 .icon.lg.profile-icon{background-position: -4px -329px}
 .icon.lg.security-icon{background-position:-107px -330px}
 .icon.lg.settings-icon{background-position: -38px -330px}
@@ -149,6 +152,7 @@ line-height: 16px;min-width:90px}
 .crypto-container{max-height: calc(100vh - 270px);}
 .suisfiat-container{max-height: calc(100vh - 155px);}
 .suisfiat-height{max-height: calc(100vh - 155px);}
+.addbook-height{max-height: calc(100vh - 84px);}
 .verify-container{max-height: calc(100vh - 140px);}
 .dep-withdraw{max-height: calc(100vh - 267px);}
 .selectcrypto-container{max-height: calc(100vh - 101px);}
@@ -163,7 +167,7 @@ line-height: 16px;min-width:90px}
 .crypto-list-tabs .ant-tabs-tab{font-size: 16px; margin: 0; padding-bottom: 0;}
 .crypto-list-tabs .ant-tabs-tab-btn{padding: 3px 33px;color: var(--textYellow);}
 .crypto-list-tabs .ant-tabs-tab-btn:focus{color: var(--textYellow);}
-.crypto-list-tabs .ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textDark); background: var(--bgYellow); border-radius: 30px;}
+.crypto-list-tabs .ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textDark) !important; background: var(--bgYellow); border-radius: 30px;}
 .crypto-list-tabs .ant-tabs-ink-bar{display: none;}
 .pop-btn,.confirm-btn{font-size: 14px;}
 .confirm-btn{height: 48px;}
@@ -483,6 +487,9 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .user-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textWhite);}
 .user-list .ant-tabs-ink-bar {background: transparent !important;}
 
+.addressbook_tabs .ant-tabs-nav{width:auto !important}
+.addressbook_tabs .ant-tabs-tab.ant-tabs-tab-active,.addressbook_tabs .ant-tabs-tab:hover {background: transparent !important;font-weight: 600;  padding: 12px !important; color: var(--textDark);}
+.wdr-summary{display: flex; justify-content: space-around; align-items: center;}
 .selectcustom-input .ant-select:not(.ant-select-customize-input) .ant-select-selector{background-color: transparent;border: transparent;}
 
 .ant-modal-content{border-radius: 24px;}
@@ -498,7 +505,6 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .ant-picker-input > input, .ant-form-item-label > label{color: var(--textWhite30)}
 
 .search-bg{border: 1px solid rgba(0,0,0,.08);color: #313c46 !important;background-color: #313c4669 !important;padding: 15px 10px;}
-
 .anticon-copy svg, .anticon-check svg{color: var(--textYellow);}
 
 .k-pager-numbers .k-link.k-state-selected,.k-list .k-item.k-state-selected, .k-list-optionlabel.k-state-selected ,.k-list .k-item.k-state-selected:hover,.k-list-optionlabel.k-state-selected:hover{color: var(--textDark);background-color: var(--bgYellow);}
@@ -517,6 +523,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .k-pager-sizes .k-dropdown .k-dropdown-wrap, .k-dropdowntree .k-dropdown-wrap, .k-pager-sizes .k-dropdown .k-dropdown-wrap:hover{background: var(--bgDarkGrey-95);color: var(--textWhite);}
 .k-pager-nav.k-link:hover{background-color: #38444d6b;border-radius: 50%;}
 .fiatdep-info .anticon-copy, .fiatdep-info .anticon-check{font-size: 16px;}
+.ant-select:not(.ant-select-customize-input) .ant-select-selector{background: transparent !important; border: 0;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}
