@@ -1,4 +1,4 @@
-import { favouriteAddress } from "../components/addressbook.component/api";
+import { favouriteFiatAddress } from "../components/addressbook.component/api";
 const SET_STEP = "setStep";
 const CLEAR_STEP = "clearStep";
 const FETCH_ADDRESS = 'fetchAddress';
@@ -23,7 +23,7 @@ const fetchAddress = (payload) => {
 const handleFavouritAddress = () => {
     return async (dispatch) => {
         dispatch(fetchAddress({ key: "favouriteAddress", loading: true, data: [] }));
-        const response = await favouriteAddress();
+        const response = await favouriteFiatAddress();
         if (response.ok) {
             dispatch(fetchAddress({ key: "favouriteAddress", loading: false, data: response.data, error: null }))
         } else {

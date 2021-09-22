@@ -12,6 +12,7 @@ import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { handleFavouritAddress } from '../../reducers/addressBookReducer';
 import { appInsights } from "../../Shared/appinsights";
+import {favouriteFiatAddress } from '../addressbook.component/api'
 
 const LinkValue = (props) => {
   return (
@@ -33,6 +34,8 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
   const [countryLu, setCountryLu] = useState([]);
   const [stateLu, setStateLu] = useState([]);
   const [country, setCountry] = useState(null);
+  const[addressLu, setAddressLu] = useState([])
+
   const useDivRef = React.useRef(null);
   useEffect(() => {
     // props.fetchFavouirtAddresss();
@@ -43,6 +46,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
   }, [buyInfo.memberFiat?.data])
   useEffect(() => {
     getCountryLu();
+    getAddressLu();
 
   }, [])
   const handleWalletSelection = (walletId) => {
@@ -59,7 +63,12 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
     if (recName.ok) {
       console.log(recName)
     } else {
-
+    }
+  }
+  const getAddressLu = async () => {
+    let recAddress = await favouriteFiatAddress()
+    if (recAddress.ok) {
+        setAddressLu(recAddress.data);
     }
   }
   const getCountryLu = async () => {
@@ -223,12 +232,18 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
         <div ref={useDivRef}></div>
         {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
         <Form form={form} onFinish={savewithdrawal}>
-          <Translate
+          <div className="p-relative d-flex align-center"> <Translate
             content="Beneficiary_BankDetails"
             component={Paragraph}
             className="mb-16 fs-14 text-aqua fw-500 text-upper"
           />
-          <p className="mb-16 fs-14 text-aqua fw-500 text-right c-pointer" onClick={() => changeStep('step4')} > Add New Address</p>
+            <Tooltip placement="bottom" title={<span>New Address</span>} >
+              <span className="val-updown c-pointer" onClick={() => changeStep('step4')}>
+                <span className="icon md address-book d-block c-pointer" style={{ marginTop: '10px', marginLeft: '10px' }}></span>
+              </span>
+            </Tooltip>
+          </div>
+          {/* <p className="mb-16 fs-14 text-aqua fw-500 text-right c-pointer" onClick={() => changeStep('step4')} > Add New Address</p> */}
           <Form.Item
             name="bankId"
             className="custom-forminput mb-24"
@@ -244,13 +259,16 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
            
               <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
             </div>
-
             <Select dropdownClassName="select-drpdwn"
               className="cust-input"
               onChange={(e) => handleChange(e)}
               placeholder="Select Address"
             >
-              <Option value="meena">meena</Option>
+              {/* <Option value="meena">meena</Option> */}
+              {addressLu?.map((item, idx) =>
+                <Option key={idx} value={item.name}>{item.name}
+                </Option>
+              )}
             </Select>
 
           </Form.Item>

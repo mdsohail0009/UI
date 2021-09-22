@@ -566,7 +566,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
                             <Input className="cust-input" placeholder="Remarks" />
                         </div>
                     </Form.Item>
-                    <Form.Item
+                    {/* <Form.Item
                         className="custom-forminput mb-36 agree"
                         name="isAccept"
                         valuePropName="checked"
@@ -591,7 +591,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
                                 style={{ flex: 1 }}
                             />
                         </div>
-                    </Form.Item>
+                    </Form.Item> */}
                     <Form.Item className="mb-0 mt-16">
                         <Button
                             htmlType="submit"
@@ -599,7 +599,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch }) =
                             block
                             className="pop-btn"
                         >
-                            Proceed
+                            Save
                         </Button>
                     </Form.Item>
                 </Form>

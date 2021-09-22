@@ -10,6 +10,7 @@ import SuccessMsg from './success';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import WalletAddressValidator from 'wallet-address-validator';
 import { appInsights } from "../../Shared/appinsights";
+import {favouriteFiatAddress } from '../addressbook.component/api'
 
 const {Option} =Select;
 class CryptoWithDrawWallet extends Component {
@@ -24,13 +25,15 @@ class CryptoWithDrawWallet extends Component {
         loading: false,
         showModal: false,
         confirmationStep: "step1",
-        isWithdrawSuccess: false
+        isWithdrawSuccess: false,
+        addressLu:[]
     }
     componentDidMount() {
         this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 2 }))
         this.props. dispatch(setSubTitle("Select wallet address"));
-        this.trackevent()
+        this.trackevent();
+        this.getAddressLu();
     }
     trackevent =() =>{
         appInsights.trackEvent({
@@ -41,6 +44,12 @@ class CryptoWithDrawWallet extends Component {
         this.setState({ ...this.state, isWithdrawSuccess: false })
         this.props.changeStep("step1");
     }
+   getAddressLu = async () => {
+        let recAddress = await favouriteFiatAddress()
+        if (recAddress.ok) {
+            this.setState({addressLu:recAddress.data});
+        }
+      }
     clickMinamnt(type) {
         let usdamnt; let cryptoamnt;
         let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
@@ -184,6 +193,7 @@ class CryptoWithDrawWallet extends Component {
     render() {
         const { Text, Paragraph } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
+        const{addressLu} = this.state;
         if (this.state.isWithdrawSuccess) {
             return <SuccessMsg onBackCLick={() => this.props.changeStep("step1")} />
         }
@@ -243,7 +253,10 @@ class CryptoWithDrawWallet extends Component {
             //   onChange={(e) => handleChange(e)}
               placeholder="Select Address"
             >
-              <Option value="meena">meena</Option>
+              {addressLu?.map((item, idx) =>
+                <Option key={idx} value={item.name}>{item.name}
+                </Option>
+              )}
             </Select>
 
           </Form.Item>
