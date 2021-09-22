@@ -12,11 +12,13 @@ const getMember=(useremail)=>{
 const sumsubacesstoken=(userid)=>{
     return apiClient.get('Sumsub/AccessToken?applicantId='+userid);
 }
+const sumsublivenessacesstoken=(userid,flow)=>{
+    return apiClient.get('Sumsub/ExternalAccessToken?userId='+userid);
+}
 const sumsubacesstokennew=(userid)=>{
     return apiClient.get('Sumsub/KYBAccessToken?applicantId='+userid);
 }
 const updateKyc=(userid)=>{
     return apiClient.get(Portfolio+'UpdateKYC?isKyc=true&userId='+userid);
 }
-
-export default {getportfolio,getCryptos,getMember,sumsubacesstoken, updateKyc,sumsubacesstokennew}
+export default {getportfolio,getCryptos,getMember,sumsubacesstoken, updateKyc,sumsubacesstokennew,sumsublivenessacesstoken}
