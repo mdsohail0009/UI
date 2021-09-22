@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Typography, Button, Input, List } from 'antd';
 import snsWebSdk from '@sumsub/websdk';
 import apicalls from './../../api/apiCalls';
 import { connect } from 'react-redux';
@@ -51,6 +52,7 @@ class SumSub extends Component {
     render() {
         return (
             <>
+            <Button >Logout</Button>
                 <div id="sumsub-websdk-container"></div>
             </>
         );
