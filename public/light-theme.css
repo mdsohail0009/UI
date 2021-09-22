@@ -1,5 +1,6 @@
 :root {
     --bgDark: #ECF1F4;
+    --bgDark1: #515A64;
     --bgDarkGrey:#ECF1F4;
     --bgDarkGrey-95:rgba(49,60,70,0.75);
     --bgGrey: #FFFFFF;
@@ -34,7 +35,7 @@
     --borderGrey: #E9F3FF;
     --borderLight: #CECECE;
     --bgCircle: #19B06C;
-    --lightThemeIcons: url(../../light-theme-icons.svg);
-    --cryptoIcons: url(../../light-crypto-icons.svg);
+    --lightThemeIcons: url(light-theme-icons.svg);
+    --cryptoIcons: url(light-crypto-icons.svg);
     --logo: url(../../assets/images/logo-color.png);
 }
