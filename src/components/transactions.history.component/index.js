@@ -15,7 +15,7 @@ const withdrawcolumns = [
   // { field: "username", title: "User Name", filter: true, width: 150},
   // { field: "memberName", title: "Full Name", filter: true, width: 150},
   // { field: "email", title: "Email", filter: true, width: 200 },
-  { field: "accountType", title: "Account Type", filter: TABLE_ROW_INDEX_ATTRIBUTE },
+  { field: "accountType", title: "Account Type", filter: true },
   { field: "walletCode", title: "Wallet", filter: true, width: 130 },
   { field: "amount", title: "Amount", filter: true, width: 150, dataType: "number", filterType: "numeric", },
   { field: "bankName", title: "Bank Name", filter: true, width: 150 },
