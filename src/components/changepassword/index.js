@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import { Button, Input, Form, Divider, Row, Col, notification, Typography, Alert } from 'antd';
+import { Button, Input, Form, Divider, Row, Col, notification, Typography, Alert,message } from 'antd';
 import { EyeInvisibleOutlined, EyeOutlined  } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -50,6 +50,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
       setChangePasswordResponse({ error: false, messsage: "", isLoading: true });
       const result = await changePassword(initialValues);
       if (result.ok) {
+        message.success({content:'Password changed successfully',className: 'custom-msg'});
         setChangePasswordResponse({ error: false, messsage: 'Password changed successfully', isLoading: false });
         form.resetFields();
         onSubmit()
