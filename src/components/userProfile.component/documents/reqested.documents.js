@@ -63,7 +63,7 @@ class RequestedDocs extends Component {
                             </div>
                         </Col>
                         <Col xs={24} sm={24} md={12} lg={8} xxl={6}>
-                            <span className="icon md date" />
+                            <span className="icon md calendar" />
                             <div>
                                 <label className="kpi-label">Date</label>
                                 <div className="kpi-val">21-09-2021</div>
