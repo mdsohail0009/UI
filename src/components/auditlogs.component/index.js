@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Drawer, Typography, Row, Col, Select, Button, Form, DatePicker, Modal, Tooltip, Input, Icon } from "antd";
+import { Drawer, Typography, Row, Col, Select, Button, Form, DatePicker, Modal, Tooltip, Input, message } from "antd";
 import List from "../grid.component";
-//import { fetchUsersUpdate } from "../../reducers/auditlogReducer";
 import Loader from '../../Shared/loader'
 import { userNameLuSearch, getFeatureLuSearch } from './api';
-//import { setBreadcrumb } from '../../reducers/breadcrumbReducer';
 import * as _ from 'lodash';
 import moment from 'moment';
 
@@ -22,45 +20,39 @@ class AuditLogs extends Component {
       isLoading: false,
       userData: [],
       featureData: [],
-      selectedDateObj: {},
       value: "",
       modal: false,
-      showElement: false,
       selectedTimespan: "",
       timeSpanfromdate: "",
       timeSpantodate: "",
+      customFromdata: "",
+      customTodate: "",
       isCustomDate: false,
-      noticeObject: {},
-      dateSpan:{},
       searchObj: {
         timeSpan: "Last 1 Day",
         fromdate: '',
         todate: '',
-        userName: "All Users",
+        userName: this.props.userProfile?.userName,
         feature: "All Features",
       },
-      tranObj: {},
       timeListSpan: ["Last 1 Day", "Last One Week", "Custom"],
-      gridUrl: "https://tstget.suissebase.ch/api/v1/AuditLog/GetAdminLogsK",
+      gridUrl: process.env.REACT_APP_GRID_API+"AuditLog/GetAdminLogsK",
     };
 
     this.gridRef = React.createRef();
 
   }
   gridColumns = [
-    { field: "date", title: "Date", filter: true, filterType: "date", width: 180 },
-    { field: "feature", title: "Feature", filter: true, width: 160 },
-    { field: "featurePath", title: "Feature Path", filter: true, width: 200 },
-    { field: "userName", title: "Name", filter: true },
+    { field: "date", title: "Date", filter: true, filterType: "datetime", width: 250 },
+    { field: "feature", title: "Feature", filter: true, width: 190 },
+    { field: "featurePath", title: "Feature Path", filter: true, width: 230 },
+    //{ field: "userName", title: "Name", filter: true, width: 250, },
     { field: "action", title: "Action", width: 200, filter: true },
-    { field: "remarks", title: "Remarks", width: 250, filter: true },
+    { field: "remarks", title: "Remarks",filter: true },
   ]
-  onFocus = () => {
-    console.log('focus');
-  }
 
   componentDidMount = () => {
-    this.TransactionFeatureSearch();
+   this.TransactionFeatureSearch(this.props.userProfile?.userName);
   };
 
   TransactionUserSearch = async (userVal) => {
@@ -72,22 +64,14 @@ class AuditLogs extends Component {
     }
   };
 
-  TransactionFeatureSearch = async () => {
-    let response = await getFeatureLuSearch();
+  TransactionFeatureSearch = async (userVal) => {
+    let response = await getFeatureLuSearch(userVal);
     if (response.ok) {
       this.setState({
         featureData: response.data
       });
     }
   };
-
-  handleUserChange = (event) => {
-    if (event.target.value != null && event.target.value.length > 2) {
-      let userVal = event.target.value
-      this.TransactionUserSearch(userVal);
-    }
-
-  }
 
   handleTimeSpan = (val, id) => {
     let { searchObj } = this.state;
@@ -105,26 +89,49 @@ class AuditLogs extends Component {
     this.setState({ ...this.state, searchObj: searchObj });
   };
 
-    handleDateChange = (prop, val) => {
+  handleChange = (val, id) => {
     let { searchObj } = this.state;
-    searchObj[val] = new Date(prop);
-    this.setState({ ...this.state, searchObj });
+    searchObj[id] = val;
+    this.setState({ ...this.state, searchObj: searchObj });
   };
 
-  handleOk = (values, id) => {
-    let { selectedTimespan, timeSpanfromdate, timeSpantodate } = this.state;
-    values.fromdate = moment(values.fromdate).format('DD/MM/YYYY');
-    values.todate = moment(values.todate).format('DD/MM/YYYY');
+  handleDateChange = (prop, val) => {
+    let { searchObj, customFromdata, customTodate } = this.state;
+    searchObj[val] = new Date(prop);
+    this.setState({ ...this.state, searchObj, fromdate: customFromdata, todate: customTodate });
+  };
+
+  datePopup = (prop, val) => {
+    let { searchObj,timeSpanfromdate,timeSpantodate,customFromdata, customTodate } = this.state;
+    searchObj.fromdate = new Date(timeSpanfromdate)
+    searchObj.fromdate = new Date(timeSpantodate)
+    this.formDateRef.current.setFieldsValue({ fromdate: customFromdata, todate: customTodate })
+    this.setState({ ...this.state, modal: true, searchObj });
+  }
+
+  handleOk = (values) => {
+    let { selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate } = this.state;
+    if(moment(values.fromdate).format('MM/DD/YYYY') > moment(values.todate).format('MM/DD/YYYY') ) {
+     return message.error({
+       content: 'Start date must be less than or equal to the end date.',
+       className: 'custom-msg',
+       duration: 1
+   });
+   }
+    customFromdata = values.fromdate;
+    customTodate = values.todate;
+    values.fromdate = moment(values.fromdate).format('MM/DD/YYYY');
+    values.todate = moment(values.todate).format('MM/DD/YYYY');
     timeSpanfromdate = values.fromdate;
     timeSpantodate = values.todate;
     selectedTimespan = timeSpanfromdate + " " + "-" + " " + timeSpantodate;
     this.formRef.current.setFieldsValue({ ...this.state, selectedTimespan })
-    this.setState({ ...this.state, selectedTimespan, timeSpanfromdate, timeSpantodate, modal: false, });
-    this.formDateRef.current.setFieldsValue({ ...this.state, timeSpanfromdate, timeSpantodate })
+    this.setState({ ...this.state, selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate, modal: false, });
   };
 
   handleCancel = e => {
-    this.setState({ modal: false, selection: [], check: false });
+    this.setState({ modal: false, selection: [], check: false, isCustomDate: false });
+   // this.setState({ ...this.state, searchObj: searchObj, isCustomDate: false });
   }
 
   handleSearch = (values) => {
@@ -132,11 +139,10 @@ class AuditLogs extends Component {
     searchObj.fromdate = timeSpanfromdate
     searchObj.todate = timeSpantodate
     this.setState({ ...this.state, searchObj }, () => { this.gridRef.current.refreshGrid(); });
-
   };
 
   render() {
-    const { gridUrl, searchObj, featureData, userData, timeListSpan, timeSpanfromdate, timeSpantodate } = this.state;
+    const { gridUrl, searchObj, featureData, userData, timeListSpan} = this.state;
 
     const options1 = featureData.map((d) => (
       <Option key={d} value={d}>{d}</Option>
@@ -177,7 +183,7 @@ class AuditLogs extends Component {
                   label="Time Span"
                 >
                   <Select
-                     className="cust-input mb-0"
+                     className="cust-input mb-0 custom-search"
                      dropdownClassName="select-drpdwn"
                     showSearch
                     defaultValue="Last 1 Day"
@@ -206,40 +212,9 @@ class AuditLogs extends Component {
                   className="input-label selectcustom-input mb-0"
                   label="Date"
                 >
-                  <Input disabled className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={() => { this.setState({ ...this.state, modal: true, }) }} />} />
+                  <Input disabled className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
                 </Form.Item>
               </Col> : ""}
-
-              <Col sm={24} md={7} className="px-8">
-                <Form.Item
-                  name="userName"
-                  className="input-label selectcustom-input mb-0"
-                  label="Name"
-                >
-                  <Select
-                   // defaultValue="All Users"
-                   className="cust-input mb-0"
-                   dropdownClassName="select-drpdwn"
-                    showSearch
-                    onKeyUp={(event) => this.handleUserChange(event, "userName")}
-                    onChange={(e) => this.handleChange(e, 'userName')}
-                    placeholder="Select Users"
-                    optionFilterProp="children"
-                    filterOption={(input, option) =>
-                      option.children
-                        .toLowerCase()
-                        .indexOf(input.toLowerCase()) >= 0
-                    }
-                    filterSort={(optionA, optionB) =>
-                      optionA.children
-                        .toLowerCase()
-                        .localeCompare(optionB.children.toLowerCase())
-                    }
-                  >
-                    {options2}
-                  </Select>
-                </Form.Item>
-              </Col>
               <Col sm={24} md={7} className="px-8">
                 <Form.Item
                   name="feature"
@@ -247,7 +222,7 @@ class AuditLogs extends Component {
                   label="Features"
                 >
                   <Select
-                   // defaultValue="All Features"
+                   defaultValue="All Features"
                    className="cust-input mb-0"
                    dropdownClassName="select-drpdwn"
                     showSearch
@@ -271,10 +246,10 @@ class AuditLogs extends Component {
                   </Select>
                 </Form.Item>
               </Col>
-              <Col sm={24} md={3} className="px-8 text-right">
+              <Col sm={24} md={3} className="px-8">
                 <Button
                   type="primary"
-                  className="primary-btn px-24 search-btn custom-btn prime mt-16"
+                  className="primary-btn px-24 search-btn custom-btn prime mt-16 mb-8"
                   htmlType="submit"
                   onClick={this.handleSearch}
                 >Search
@@ -304,7 +279,7 @@ class AuditLogs extends Component {
               ref={this.formDateRef}
             >
               <Row gutter={24} className="mb-24 pb-24 border-bottom">
-                <Col xs={24} sm={24} md={12} >
+                <Col xs={24} sm={24} md={12} className="mb-24">
                   <Form.Item
                     name="fromdate"
                     className="input-label ml-0"
@@ -319,12 +294,12 @@ class AuditLogs extends Component {
                   ]}
                   >
                     <DatePicker 
-                    format={"DD/MM/YYYY"} 
+                    format={"MM/DD/YYYY"} 
                     onChange={(e) => this.handleDateChange(e, 'fromdate')}
-                    className="cust-input" style={{width:'100%'}}/>
+                    className="cust-input mb-0" style={{width:'100%'}}/>
                   </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={12}>
+                <Col xs={24} sm={24} md={12} className="mb-24">
                   <Form.Item
                     name="todate"
                     className="input-label ml-0"
@@ -334,7 +309,7 @@ class AuditLogs extends Component {
                           type: "date", validator: async (rule, value, callback) => {
                               if (value) {
                                   if (new Date(value) < searchObj.fromdate) {
-                                      throw new Error("to date should be greater than from date")
+                                      throw new Error("Start date must be less than or equal to the end date.")
                                   } else {
                                       callback();
                                   }
@@ -344,9 +319,9 @@ class AuditLogs extends Component {
                   ]}
                   > 
                     <DatePicker 
-                    className="cust-input" 
+                    className="cust-input mb-0" 
                     onChange={(e) => this.handleDateChange(e, 'todate')}
-                    format={"DD/MM/YYYY"} 
+                    format={"MM/DD/YYYY"} 
                     style={{width:'100%'}}
                     />
                   </Form.Item>
@@ -366,4 +341,9 @@ class AuditLogs extends Component {
     );
   }
 }
-export default connect(null, (dispatch) => { return { dispatch } })(AuditLogs);
+
+const connectStateToProps = ({ userConfig }) => {
+  return { userProfile: userConfig.userProfileInfo }
+}
+
+export default connect(connectStateToProps, (dispatch) => { return { dispatch } })(AuditLogs);
