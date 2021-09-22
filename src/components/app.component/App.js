@@ -5,14 +5,14 @@ import { store } from "../../store";
 import { loadUser, OidcProvider } from 'redux-oidc';
 import { useEffect, useState } from "react";
 import { userManager } from "../../authentication";
-import { onMessageListener } from "../../utils/firebase";
+// import { onMessageListener } from "../../utils/firebase";
 
 function App() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    onMessageListener().then(payload => {
-      console.log(payload)
-    })
+    // onMessageListener().then(payload => {
+    //   console.log(payload)
+    // })
     localStorage.setItem("__url", window.location.pathname);
     loadUser(store, userManager).then(user => {
       setLoading(false)
