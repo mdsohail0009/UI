@@ -130,7 +130,8 @@ class AuditLogs extends Component {
   };
 
   handleCancel = e => {
-    this.setState({ modal: false, selection: [], check: false });
+    this.setState({ modal: false, selection: [], check: false, isCustomDate: false });
+   // this.setState({ ...this.state, searchObj: searchObj, isCustomDate: false });
   }
 
   handleSearch = (values) => {

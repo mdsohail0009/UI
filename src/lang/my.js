@@ -281,6 +281,9 @@ export default {
   dep_with_assets: "Deposit / Pengeluaran Kripto",
   remarks: 'sinabi',
   userName: 'John Huh',
-  manage_account: 'Manage your Account'
+  manage_account: 'Manage your Account',
+  withdrawCrypto:'Withdraw Crypto',
+  withdrawFiat:'Withdraw Fiat',
+  Address:'Add New Address'
 
 }

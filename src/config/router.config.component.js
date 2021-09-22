@@ -10,6 +10,7 @@ const SumSub = React.lazy(() => import('../components/sumSub.component/sumsub'))
 const NotKyc = React.lazy(() => import('../components/sumSub.component/notKyc'));
 const OnBoarding = React.lazy(() => import('../layout/onboard.component'));
 const userProfile = React.lazy(() => import('../components/userProfile.component/userProfile'));
+const AddressBookGrid = React.lazy(() => import('../components/addressbook.component/addressBookGrid'));
 class RoutingComponent extends Component {
   render() {
     return <Switch>
@@ -23,6 +24,7 @@ class RoutingComponent extends Component {
         <ReactRoute path="/notkyc" component={NotKyc} />
         <ReactRoute path="/onboading" component={OnBoarding} />
         <ReactRoute path='/userprofile' component={userProfile}/>
+        <ReactRoute path='/addressbook' component={AddressBookGrid}/>
         {/* <Redirect to="/onboading" path="/" exact/> */}
         <Route path="/" component={Dashboard}  exact />
       </React.Suspense>

@@ -292,5 +292,9 @@ export default {
   userName: 'John Huh',
   manage_account: 'Manage your Account',
   Deposit_success:'Deposit Success',
-  return_to_depositfiat:'Return to Deposit Fiat'
+  return_to_depositfiat:'Return to Deposit Fiat',
+  withdrawCrypto:'Withdraw Crypto',
+  withdrawFiat:'Withdraw Fiat',
+  Address:'Add New Address'
+
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Card, Input, Radio, List, Alert, Row, Col, Form, Modal } from 'antd';
+import { Typography, Button, Card, Input, Radio, List, Alert, Row, Col, Form, Modal,Select } from 'antd';
 import { handleSendFetch, setStep, setSubTitle } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -10,7 +10,9 @@ import SuccessMsg from './success';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import WalletAddressValidator from 'wallet-address-validator';
 import { appInsights } from "../../Shared/appinsights";
+import {favouriteFiatAddress } from '../addressbook.component/api'
 
+const {Option} =Select;
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
     myRef = React.createRef();
@@ -23,13 +25,15 @@ class CryptoWithDrawWallet extends Component {
         loading: false,
         showModal: false,
         confirmationStep: "step1",
-        isWithdrawSuccess: false
+        isWithdrawSuccess: false,
+        addressLu:[]
     }
     componentDidMount() {
         this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 2 }))
         this.props. dispatch(setSubTitle("Select wallet address"));
-        this.trackevent()
+        this.trackevent();
+        this.getAddressLu();
     }
     trackevent =() =>{
         appInsights.trackEvent({
@@ -40,6 +44,12 @@ class CryptoWithDrawWallet extends Component {
         this.setState({ ...this.state, isWithdrawSuccess: false })
         this.props.changeStep("step1");
     }
+   getAddressLu = async () => {
+        let recAddress = await favouriteFiatAddress()
+        if (recAddress.ok) {
+            this.setState({addressLu:recAddress.data});
+        }
+      }
     clickMinamnt(type) {
         let usdamnt; let cryptoamnt;
         let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
@@ -183,6 +193,7 @@ class CryptoWithDrawWallet extends Component {
     render() {
         const { Text, Paragraph } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
+        const{addressLu} = this.state;
         if (this.state.isWithdrawSuccess) {
             return <SuccessMsg onBackCLick={() => this.props.changeStep("step1")} />
         }
@@ -220,9 +231,40 @@ class CryptoWithDrawWallet extends Component {
                     content="address"
                     component={Paragraph}
                 />
-                <Input className="cust-input" placeholder="Enter address" value={this.state.walletAddress}
+                  <Form>
+                <Form.Item
+            name="bankId"
+            className="custom-forminput mb-16"
+            rules={[
+              {
+                required: true,
+                message: 'Is required',
+              },
+            ]}
+          >
+            <div className="d-flex"><Text
+              className="input-label" >Address</Text>
+           
+              <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+            </div>
+
+            <Select dropdownClassName="select-drpdwn"
+              className="cust-input"
+            //   onChange={(e) => handleChange(e)}
+              placeholder="Select Address"
+            >
+              {addressLu?.map((item, idx) =>
+                <Option key={idx} value={item.name}>{item.name}
+                </Option>
+              )}
+            </Select>
+
+          </Form.Item>
+          </Form>
+        
+                {/* <Input className="cust-input" placeholder="Enter address" value={this.state.walletAddress}
                     onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })}
-                />
+                /> */}
                 <Translate content="with_draw" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
                 <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[
                     <Button key="back" onClick={this.handleCancel} disabled={this.state.loading}>

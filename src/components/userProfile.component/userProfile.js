@@ -5,6 +5,7 @@ import Security from './security'
 import Translate from 'react-translate-component';
 import { userManager } from '../../authentication';
 import Settings from './settings';
+import AddressBook from '../addressbook.component'
 
 const { TabPane } = Tabs;
 class userProfile extends Component {
@@ -89,6 +90,9 @@ class userProfile extends Component {
           </TabPane>
           <TabPane tab={ <span><span className="icon lg security-icon mr-16" />Security</span>} key="2">
           <Security/>
+          </TabPane>
+          <TabPane tab={ <span><span className="icon lg settings-icon mr-16" />Address Book</span>}  key="4">
+          <AddressBook/>
           </TabPane>
           {/* <TabPane tab={ <span><span className="icon lg settings-icon mr-16" />Setting</span>}  key="3">
           <Settings/>
