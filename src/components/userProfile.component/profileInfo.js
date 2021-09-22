@@ -47,7 +47,8 @@ class ProfileInfo extends Component {
         this.setState({ ...this.state, Loader: true })
         let res1 = await ProfileImageSave(Obj);
         if (res1.ok) {
-             message.success('Profile uploaded successfully');
+            //  message.success('Profile uploaded successfully');
+             message.success({content:'Profile uploaded successfully' ,className: 'custom-msg'});
             // notification.open({
             //     description: 'Profile uploaded successfully',
             //     placement: "bottomRight"

@@ -767,5 +767,7 @@ main.ant-layout-content{min-height: calc(100vh - 220px);}
 text-align: center !important;}
 .pwd-popup.pop-cancel.ant-btn-block{width: auto !important;}
 .colr-comn{color: var(--textWhite)!important}
+.custom-msg .ant-message-notice-content{background:#333; color: var(--textWhite); padding: 20px 40px; min-width: 200px;}
+.ant-message{  bottom: 15px !important; top: auto;}
 
 
