@@ -12,7 +12,7 @@ import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { handleFavouritAddress } from '../../reducers/addressBookReducer';
 import { appInsights } from "../../Shared/appinsights";
-import {favouriteFiatAddress } from '../addressbook.component/api'
+import {favouriteFiatAddress,detailsAddress } from '../addressbook.component/api'
 
 const LinkValue = (props) => {
   return (
@@ -35,6 +35,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
   const [stateLu, setStateLu] = useState([]);
   const [country, setCountry] = useState(null);
   const[addressLu, setAddressLu] = useState([])
+  const[addressDetails, setAddressDetails] = useState({})
 
   const useDivRef = React.useRef(null);
   useEffect(() => {
@@ -47,6 +48,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
   useEffect(() => {
     getCountryLu();
     getAddressLu();
+    // getAddressDetails();
 
   }, [])
   const handleWalletSelection = (walletId) => {
@@ -66,9 +68,17 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
     }
   }
   const getAddressLu = async () => {
-    let recAddress = await favouriteFiatAddress()
+    let recAddress = await favouriteFiatAddress(userConfig.id,'fiat')
     if (recAddress.ok) {
         setAddressLu(recAddress.data);
+    }
+  }
+  const getAddressDetails = async (e) => {
+    debugger
+    let recAddressDetails = await detailsAddress(e)
+    if (recAddressDetails.ok) {
+      let detailsObj = recAddressDetails.data
+      form.setFieldsValue({detailsObj})
     }
   }
   const getCountryLu = async () => {
@@ -194,8 +204,10 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
     }
     return _types[confirmationStep]
   }
-  const handleChange = () => {
-
+  const handleChange = (e) => {
+    debugger;
+  // let id = e.target.value;
+  getAddressDetails(e);
   }
   const handleCancel = () => {
     setShowModal(false);
@@ -261,12 +273,13 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
             </div>
             <Select dropdownClassName="select-drpdwn"
               className="cust-input"
-              onChange={(e) => handleChange(e)}
+              // onKeyUp={(event) => this.handleUserChange(event)}
+               onChange={(e) => handleChange(e)}
               placeholder="Select Address"
             >
               {/* <Option value="meena">meena</Option> */}
               {addressLu?.map((item, idx) =>
-                <Option key={idx} value={item.name}>{item.name}
+                <Option key={idx} value={item.id}>{item.name}
                 </Option>
               )}
             </Select>
