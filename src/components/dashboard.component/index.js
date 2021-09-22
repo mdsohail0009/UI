@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Typography } from 'antd';
+import { Row, Col, Typography, Button } from 'antd';
 import Wallets from './wallets.component';
 import Translate from 'react-translate-component';
 import Portfolio from './portfolio.component';
@@ -7,6 +7,7 @@ import Portfolio from './portfolio.component';
 import YourPortfolio from './yourportfolio.component';
 import MarketCap from './marketcap.component';
 import Notices from './notices';
+import AlertConfirmation from '../shared/alertconfirmation';
 const { Title, Paragraph } = Typography;
 class Home extends Component {
     state = {
@@ -18,9 +19,14 @@ class Home extends Component {
     render() {
         return (
             <div className="main-container">
-                {/* <div className="mb-24">
-                    <AlertConfirmation />
-                </div> */}
+                <div className="mb-24">
+                    <AlertConfirmation type="success" title="Requesting for personal data" showIcon closable description="Dear user please check the details for requesting documents to approval your deposit/withdraw."
+                        action={
+                            <Button size="small" type="text">
+                                View Details
+                            </Button>
+                        } />
+                </div>
                 <Row justify="center">
                     <Col xs={24} md={12} xl={10}>
                         <div className="markets-panel mb-36">
