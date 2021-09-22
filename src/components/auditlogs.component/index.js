@@ -130,7 +130,7 @@ class AuditLogs extends Component {
   };
 
   handleCancel = e => {
-    this.setState({ modal: false, selection: [], check: false, isCustomDate: false });
+    this.setState({ modal: false, selection: [], check: false, });
    // this.setState({ ...this.state, searchObj: searchObj, isCustomDate: false });
   }
 
@@ -210,7 +210,7 @@ class AuditLogs extends Component {
                 <Form.Item
                   name="selectedTimespan"
                   className="input-label selectcustom-input mb-0"
-                  label="Date"
+                  label="Selected timespan"
                 >
                   <Input disabled className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
                 </Form.Item>
