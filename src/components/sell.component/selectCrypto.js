@@ -129,11 +129,11 @@ class SelectSellCrypto extends Component {
                 {coinDetailData && <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
                         <span className={`coin lg ${coinDetailData.coin}`} />
-                        <Text className="fs-24 text-white crypto-name ml-8">{coinDetailData.coinFullName}</Text>
+                        <Text className="fs-24 textc-white crypto-name ml-8">{coinDetailData.coinFullName}</Text>
                     </span>
                     <div className="crypto-details">
-                        <Text className="crypto-percent text-white fw-700">{coinDetailData.percentage}<sup className="percent text-white fw-700">%</sup></Text>
-                        <div className="fs-16 text-white-30 fw-200 crypto-amount">
+                        <Text className="crypto-percent textc-white fw-700">{coinDetailData.percentage}<sup className="percent textc-white fw-700">%</sup></Text>
+                        <div className="fs-16 textc-white fw-200 crypto-amount">
                             {/* <div>{coinDetailData.coinBalance?.toFixed(8)} {coinDetailData.coin}</div>
                             <div>$ {coinDetailData.coinValueinNativeCurrency?.toFixed(2)}</div> */}
                                 <Currency prefix={""} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} />
