@@ -9,7 +9,8 @@ import List from '../grid.component';
 import FaitWithdrawal from '../withDraw.component/faitWithdrawal'
 import CryptoList from '../shared/cryptolist';
 import NewFiatAddress from './addFiatAddressbook';
-import { getCoinList} from './api'
+import { getCoinList} from './api';
+import SelectCrypto from './selectCrypto';
 
 
 const { Title, Paragraph } = Typography;
@@ -79,7 +80,7 @@ class AddressBook extends Component {
     renderContent = () => {
         const stepcodes = {
             cryptoaddressbook: <NewAddressBook />,
-            selectcrypto:  <CryptoList coinType="swap" showSearch={true} showValues={true} titleField={'coin'} iconField={'coin'} selectedCoin={this.props.swapfrom?this.props.swapStore.coinDetailData:this.props.swapStore.coinReceiveDetailData} coinList={this.state.fromCoinsList} />
+            selectcrypto: <SelectCrypto />
         }
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
     }
