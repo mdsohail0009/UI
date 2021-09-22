@@ -1,5 +1,6 @@
 import React, { Component, useState, useRef, useEffect } from 'react';
 import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert, Tooltip, Select } from 'antd';
+import Currency from '../shared/number.formate';
 
 
 const WithdrawalSummary = ({ userConfig, dispatch }) => {
