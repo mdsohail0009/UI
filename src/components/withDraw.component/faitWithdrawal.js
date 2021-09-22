@@ -52,6 +52,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
 
   }, [])
   const handleWalletSelection = (walletId) => {
+    debugger;
     form.setFieldsValue({ memberWalletId: walletId })
     if (buyInfo.memberFiat?.data) {
       let wallet = buyInfo.memberFiat.data.filter((item) => {
@@ -77,10 +78,14 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
     debugger
     let recAddressDetails = await detailsAddress(e)
     if (recAddressDetails.ok) {
-      let detailsObj = recAddressDetails.data
-      form.setFieldsValue({detailsObj})
+      bindEditableData(recAddressDetails.data)
     }
   }
+  const bindEditableData = (obj) => {
+    debugger;
+    setAddressDetails({ ...obj });
+    form.setFieldsValue({ bankName:obj.bankName });
+};
   const getCountryLu = async () => {
     let recName = await getCountryStateLu()
     if (recName.ok) {
@@ -243,7 +248,8 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
       <div className="suisfiat-height auto-scroll">
         <div ref={useDivRef}></div>
         {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-        <Form form={form} onFinish={savewithdrawal}>
+        <Form 
+        form={form} onFinish={savewithdrawal} >
           <div className="p-relative d-flex align-center"> <Translate
             content="Beneficiary_BankDetails"
             component={Paragraph}
