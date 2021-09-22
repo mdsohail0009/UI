@@ -11,6 +11,7 @@ import WithdrawAddress from './withdrawAddress'
 import VerifyIDentity from './verifyIdentity';
 import WithdrawScan from './qr.scan';
 import WithdrawSummary from './withdrawSummary';
+import NewAddressBook from '../addressbook.component/newAddressBook';
 const { Paragraph } = Typography
 class SendReceive extends Component {
     state = {
@@ -37,7 +38,8 @@ class SendReceive extends Component {
             withdrawaddress: <WithdrawAddress />,
             verifyidentity: <VerifyIDentity />,
             withdrawsummary: <WithdrawSummary />,
-            withdrawscan: <WithdrawScan />
+            withdrawscan: <WithdrawScan />,
+            addnewAddress: <NewAddressBook/>
 
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
@@ -51,6 +53,7 @@ class SendReceive extends Component {
             withdrawaddress: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             verifyidentity: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdrawsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            addnewAddress:<span onClick={() => this.props.dispatch(setStep("step2"))} className="icon md lftarw-white c-pointer" />,
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }
@@ -63,6 +66,7 @@ class SendReceive extends Component {
             withdrawaddress: <span />,
             verifyidentity: <span />,
             withdrawsummary: <span />,
+            addnewAddress:<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }

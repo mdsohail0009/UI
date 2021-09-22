@@ -276,7 +276,7 @@
 	<path fill="none" stroke="#0E0E2C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M413,44
 		c0,1.657-1.343,3-3,3s-3-1.343-3-3s1.343-3,3-3S413,42.343,413,44z"/>
 </g>
-<path fill="none" stroke="#0E0E2C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M444.5,37.126v13
+<path fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M444.5,37.126v13
 	 M444.5,37.126c-1.168-0.776-2.754-1.253-4.5-1.253s-3.332,0.477-4.5,1.253v13c1.168-0.776,2.754-1.253,4.5-1.253
 	s3.332,0.477,4.5,1.253 M444.5,37.126c1.168-0.776,2.754-1.253,4.5-1.253s3.332,0.477,4.5,1.253v13
 	c-1.168-0.776-2.754-1.253-4.5-1.253s-3.332,0.477-4.5,1.253"/>
