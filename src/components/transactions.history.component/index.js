@@ -30,12 +30,13 @@ const DepositColmns = [
   { field: "bankName", title: "Bank Name", filter: true, width: 120 },
   { field: "amountDeposit", title: "Amount", filter: true, width: 150 },
   { field: "date", title: "Date", filter: true, width: 110, filterType: "date" },
-  { field: "status", title: "State", filter: true, width: 110, filter: true }
+  { field: "status", title: "State", filter: true, width: 110, filter: true },
+  { field: "statusRemarks", title: "Remarks", filter: true, width: 110, filter: true }
 ]
 const SwapColmns = [
   // { field: "memberFirtName", title: "Name",filter: true },
   { field: "date", title: "Date", width: 140, filter: true, filterType: "date", },
-  { field: "fromWalletCode", title: "From Wallet", width: 180, filter: true },
+  { field: "fromWalletCode", title: "From Wallet", filter: true },
   { field: "toWalletCode", title: "To Wallet", width: 170, filter: true },
   { field: "fromValue", title: "From Value", width: 180, filter: true, dataType: 'number' },
   { field: "toValue", title: "To Value", width: 140, filter: true, dataType: 'number' },
@@ -71,7 +72,8 @@ const withdrwCryptoColomns = [
   { field: "walletAddress", title: "Wallet Address", filter: true, width: 200 },
   { field: "type", title: "Type", width: 150, filter: true, },
   { field: "createdDate", title: "Request Date", filter: true, width: 150, filter: true,filterType: "date" },
-  { field: "status", title: "State", filter: true, width: 150, filter: true }
+  { field: "status", title: "State", filter: true, width: 150, filter: true },
+  { field: "statusRemarks", title: "Remarks", filter: true, width: 110, filter: true }
 ]
 class TransactionsHistory extends Component { 
   componentDidMount(){
