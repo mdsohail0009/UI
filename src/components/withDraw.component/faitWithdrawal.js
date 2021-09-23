@@ -95,6 +95,10 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
    setAddressDetails({ ...obj });
     form.setFieldsValue({obj });
 };
+const handleChange = () => {
+        setAddressDetails({ ...addressDetails });
+        form.setFieldsValue({...addressDetails });
+    }
   const getCountryLu = async () => {
     let recName = await getCountryStateLu()
     if (recName.ok) {
@@ -156,7 +160,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
       <div className="suisfiat-height auto-scroll">
         <div ref={useDivRef}></div>
         {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-        <Form form={form} onFinish={savewithdrawal}>
+        <Form form={form} onFinish={savewithdrawal} initialValues={addressDetails}>
           <div className="p-relative d-flex align-center"> <Translate
             content="Beneficiary_BankDetails"
             component={Paragraph}
@@ -200,7 +204,6 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
           <Form.Item
             className="custom-forminput mb-24"
             name="memberWalletId"
-            required
             rules={[
               { required: true, message: "Is required" },
             ]}
@@ -243,6 +246,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
             className="custom-forminput mb-24"
             name="accountNumber"
             required
+            onChange={handleChange}
             rules={[
               { required: true, message: "Is required" },
               {
@@ -270,12 +274,13 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                   component={Text}
                 />
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" placeholder="Bank account number/IBAN" />
+              <Input value={addressDetails.accountNumber} className="cust-input" placeholder="Bank account number/IBAN" />
             </div>
           </Form.Item>
           <Form.Item
             className="custom-forminput mb-24"
-            name="swiftCode"
+            name="routingNumber"
+            onChange={handleChange}
             required
             rules={[
               { required: true, message: "Is required" },
@@ -304,13 +309,14 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                   component={Text}
                 />
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" placeholder="BIC/SWIFT/Routing number" />
+              <Input value={addressDetails.routingNumber} className="cust-input" placeholder="BIC/SWIFT/Routing number" />
             </div>
 
           </Form.Item>
           <Form.Item
             className="custom-forminput mb-24"
             name="bankName"
+            onChange={handleChange}
             required
             rules={[
               { required: true, message: "Is required" },
@@ -339,13 +345,14 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                   component={Text}
                 />
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" placeholder="Bank name" />
+              <Input value={addressDetails.bankName} className="cust-input" placeholder="Bank name" />
             </div>
 
           </Form.Item>
           <Form.Item
             className="custom-forminput mb-24"
             name="bankAddress"
+            onChange={handleChange}
             required
             rules={[
               { required: true, message: "Is required" }
@@ -359,7 +366,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                   component={Text}
                 />
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" placeholder="Bank address line 1" />
+              <Input value={addressDetails.bankAddress} className="cust-input" placeholder="Bank address line 1" />
             </div>
 
           </Form.Item>
@@ -500,6 +507,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
           <Form.Item
             className="custom-forminput mb-24"
             name="beneficiaryAccountAddress"
+            onChange={handleChange}
             rules={[
               { required: true, message: "Is required" }
             ]}
@@ -514,7 +522,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>
                   {" * "}
                 </span></div>
-              <Input className="cust-input" placeholder="Recipient address line 1" />
+              <Input value={addressDetails.beneficiaryAccountAddress} className="cust-input" placeholder="Recipient address line 1" />
             </div>
 
           </Form.Item>
@@ -618,9 +626,6 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
       
     }
     return _types[confirmationStep]
-  }
-  const handleChange = () => {
-
   }
   const handleCancel = () => {
     setShowModal(false);

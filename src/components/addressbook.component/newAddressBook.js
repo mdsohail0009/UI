@@ -37,7 +37,10 @@ const NewAddressBook = ({changeStep,addressBookReducer,userConfig}) =>{
                         onFinish={saveAddressBook} >
                         <Form.Item
                             className="custom-forminput mb-0 pr-0"
-                            name="favouriteName" >
+                            name="favouriteName"
+                            rules={[
+                                { required: true, message: "Is required" },
+                              ]} >
                             <div>
                                 <div className="d-flex">
                                     <Text className="input-label">Address Label</Text>
@@ -48,7 +51,10 @@ const NewAddressBook = ({changeStep,addressBookReducer,userConfig}) =>{
                         </Form.Item>
                         <Form.Item
                             className="custom-forminput mb-0 pr-0"
-                            name="coin" >
+                            name="coin" 
+                            rules={[
+                                { required: true, message: "Is required" },
+                              ]}>
                             <div>
                                 <div className="d-flex">
                                     <Text className="input-label">Coin</Text>
@@ -60,7 +66,10 @@ const NewAddressBook = ({changeStep,addressBookReducer,userConfig}) =>{
                         </Form.Item>
                         <Form.Item
                             className="custom-forminput mb-0 pr-0"
-                            name="toWalletAddress" >
+                            name="toWalletAddress"
+                             rules={[
+                                { required: true, message: "Is required" },
+                              ]}>
                             <div>
                                 <div className="d-flex">
                                     <Text className="input-label">Address</Text>
