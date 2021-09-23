@@ -23,7 +23,7 @@ const LinkValue = (props) => {
     )
 }
 const { Option } = Select;
-const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,changeStep }) => {
+const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,changeStep ,props}) => {
     const [form] = Form.useForm();
     const [selectedWallet, setSelectedWallet] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -113,12 +113,12 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,chan
         }else{
         let response = await saveAddress(values);
         if (response.ok) {
-             console.log(response.data)
-            changeStep('step1')
+            debugger;
+            changeStep('step1');
+            props.closeBuyDrawer();
+
         }
     }
-
-       
     }
 
     const { Paragraph, Title, Text } = Typography;
@@ -137,7 +137,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,chan
                     />
                     <Form.Item
                         className="custom-forminput mb-24 pr-0"
-                        name="favouriteName"   required
+                        name="favouriteName"  required
                         rules={[
                             { required: true, message: "Is required" },
                         ]}>

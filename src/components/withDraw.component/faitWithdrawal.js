@@ -40,6 +40,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   const[addressLu, setAddressLu] = useState([]);
   const [livefacerecognization, setLivefacerecognization] = useState({});
   const [isWithdrawSuccess, setIsWithdrawSuccess] = useState(false);
+  const[addressDetails,setAddressDetails] = useState({})
 
   const useDivRef = React.useRef(null);
   useEffect(() => {
@@ -91,8 +92,8 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   }
   const bindEditableData = (obj) => {
     debugger;
-   // setAddressDetails({ ...obj });
-    form.setFieldsValue({obj, });
+   setAddressDetails({ ...obj });
+    form.setFieldsValue({obj });
 };
   const getCountryLu = async () => {
     let recName = await getCountryStateLu()
@@ -169,7 +170,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
           </div>
           {/* <p className="mb-16 fs-14 text-aqua fw-500 text-right c-pointer" onClick={() => changeStep('step4')} > Add New Address</p> */}
           <Form.Item
-            name="bankId"
+           
             className="custom-forminput mb-24"
             // rules={[
             //   {
@@ -184,13 +185,13 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
               <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
             </div>
             <Select dropdownClassName="select-drpdwn"
-              className="cust-input"
+              className="cust-input" value={addressDetails.favouriteName}
               onChange={(e) => handleAddressChange(e)}
               placeholder="Select Address"
             >
               {/* <Option value="meena">meena</Option> */}
               {addressLu?.map((item, idx) =>
-                <Option key={idx} value={item.name}>{item.name}
+                <Option key={idx} value={item.id}>{item.name}
                 </Option>
               )}
             </Select>
