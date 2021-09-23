@@ -31,7 +31,6 @@ class SelectSellCrypto extends Component {
                 this.swapRef.current.changeInfo({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt });
             })
         }
-        console.log(this.state.minmaxTab)
     }
     setAmount = async ({ currentTarget }, fn, fnRes) => {
         this.setState({ ...this.state, [fn]: currentTarget.value })
