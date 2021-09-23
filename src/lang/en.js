@@ -295,6 +295,8 @@ export default {
   return_to_depositfiat:'Return to Deposit Fiat',
   withdrawCrypto:'Withdraw Crypto',
   withdrawFiat:'Withdraw Fiat',
-  Address:'Add New Address'
-
+  Address:'Add New Address',
+  withdraw_fiat_summary:'Withdraw fiat summary',
+  withdraw_live:'Withdraw Face recognition',
+  confirm_withdraw:'Withdraw confirm'
 }

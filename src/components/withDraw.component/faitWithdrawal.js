@@ -12,7 +12,10 @@ import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { handleFavouritAddress } from '../../reducers/addressBookReducer';
 import { appInsights } from "../../Shared/appinsights";
-import {favouriteFiatAddress } from '../addressbook.component/api'
+import {favouriteFiatAddress,detailsAddress } from '../addressbook.component/api';
+import { setWithdrawfiat } from '../../reducers/sendreceiveReducer';
+import WithdrawalSummary from './withdrawalSummary';
+import WithdrawalLive from './withdrawLive';
 
 const LinkValue = (props) => {
   return (
@@ -23,7 +26,7 @@ const LinkValue = (props) => {
   )
 }
 const { Option } = Select;
-const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, props,changeStep }) => {
+const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sendReceive,changeStep }) => {
   const [form] = Form.useForm();
   const [selectedWallet, setSelectedWallet] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -34,7 +37,10 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
   const [countryLu, setCountryLu] = useState([]);
   const [stateLu, setStateLu] = useState([]);
   const [country, setCountry] = useState(null);
-  const[addressLu, setAddressLu] = useState([])
+  const[addressLu, setAddressLu] = useState([]);
+  const [livefacerecognization, setLivefacerecognization] = useState({});
+  const [isWithdrawSuccess, setIsWithdrawSuccess] = useState(false);
+  const[addressDetails,setAddressDetails] = useState({})
 
   const useDivRef = React.useRef(null);
   useEffect(() => {
@@ -47,8 +53,14 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
   useEffect(() => {
     getCountryLu();
     getAddressLu();
-
+    setPrevousValues()
   }, [])
+  const setPrevousValues = () =>{
+    if(sendReceive.withdrawFiatObj){
+      debugger
+    form.setFieldsValue({accountNumber:sendReceive.withdrawFiatObj.accountNumber})
+    }
+  }
   const handleWalletSelection = (walletId) => {
     form.setFieldsValue({ memberWalletId: walletId })
     if (buyInfo.memberFiat?.data) {
@@ -66,11 +78,27 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
     }
   }
   const getAddressLu = async () => {
-    let recAddress = await favouriteFiatAddress()
+    let recAddress = await favouriteFiatAddress(userConfig.id,'fiat')
     if (recAddress.ok) {
         setAddressLu(recAddress.data);
     }
   }
+  const handleAddressChange = async (e) => {
+    debugger
+    let recAddressDetails = await detailsAddress(e)
+    if (recAddressDetails.ok) {
+      bindEditableData(recAddressDetails.data)
+    }
+  }
+  const bindEditableData = (obj) => {
+    debugger;
+   setAddressDetails({ ...obj });
+    form.setFieldsValue({obj });
+};
+const handleChange = () => {
+        setAddressDetails({ ...addressDetails });
+        form.setFieldsValue({...addressDetails });
+    }
   const getCountryLu = async () => {
     let recName = await getCountryStateLu()
     if (recName.ok) {
@@ -114,8 +142,10 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
     values['walletCode'] = selectedWallet.currencyCode
     values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName
     setSaveObj(values);
-    setConfirmationStep('step1')
-    setShowModal(true);
+    dispatch(setWithdrawfiat(values))
+    //changeStep('step5')
+    setConfirmationStep('step2')
+    // setShowModal(true);
     //   let withdrawal = await withdrawSave(values)
     //   if (withdrawal.ok) {
     //     console.log(withdrawal)
@@ -123,115 +153,14 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
 
     //  }
   }
+
   const renderModalContent = () => {
     const _types = {
-      step1: <>{saveObj && <div>
-        <Text className="fs-14 text-white-50 fw-200">Amount</Text>
-        <Currency className="fs-20 text-white-30 mb-36" prefix={""} defaultValue={saveObj?.totalValue} suffixText={saveObj.walletCode} />
-        <Text className="fs-14 text-white-50 fw-200">Bank Account Number/IBAN</Text>
-        <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.accountNumber}</Text>
-        <Text className="fs-14 text-white-50 fw-200">BIC/SWIFT/Routing Number</Text>
-        <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.swiftCode}</Text>
-        <Text className="fs-14 text-white-50 fw-200">Bank Name</Text>
-        <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.bankName}</Text>
-        <Text className="fs-14 text-white-50 fw-200">Recipient Full Name</Text>
-        <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.beneficiaryAccountName}</Text>
-        <ul className="pl-0 ml-16 text-white-50 mb-0">
-          <li>Ensure that the account details is correct</li>
-          <li>Transaction can't be cancelled</li>
-        </ul>
-      </div>}</>,
-      step2: <>
-        <div className="success-pop text-center mb-24">
-          <img src={success} className="confirm-icon" />
-
-          <Translate className="fs-30 mb-4 d-block text-white-30" content="withdrawal_success" component={Title} />
-          <Link onClick={() => setShowModal(false)} className="f-16 mt-16 text-underline text-green">Back to Withdraw<span className="icon md diag-arrow ml-4" /></Link>
-
-        </div>
-      </>,
-      step3: <>{saveObj && <div>
-        <p> <Currency defaultValue={saveObj?.totalValue} prefixText={<b>Amount: </b>} prefix={""} suffixText={saveObj.walletCode} /></p>
-        <p><b>Bank Account Number/IBAN: </b> {saveObj.accountNumber}</p>
-        <p><b>Bank BIC/SWIFT/Routing number: </b> {saveObj.swiftCode}</p>
-        <p><b>Bank Name: </b> {saveObj.bankName}</p>
-        <p><b>Recipient full Name : </b> {saveObj.beneficiaryAccountName}</p>
-        {/* <Form name="verification" initialValues={{ Phone: "" }}>
-          <Form.Item label="Phone" extra="Please enter 6 digit code sent to you're Phone.">
-            <Row gutter={8}>
-              <Col span={12}>
-                <Form.Item
-                  name="Phone"
-                  noStyle
-                  rules={[{ required: true, message: 'Please input the phone' }]}
-                >
-                  <Input />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Button>Get Code</Button>
-              </Col>
-            </Row>
-          </Form.Item>
-          <Form.Item label="Email" extra="Please enter 6 digit code sent to you're Email.">
-            <Row gutter={8}>
-              <Col span={12}>
-                <Form.Item
-                  name="Email"
-                  noStyle
-                  rules={[{ required: true, message: 'Please input the email' }]}
-                >
-                  <Input />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Button>Get Code</Button>
-              </Col>
-            </Row>
-          </Form.Item>
-        </Form> */}
-      </div>}</>
-    }
-    return _types[confirmationStep]
-  }
-  const handleChange = () => {
-
-  }
-  const handleCancel = () => {
-    setShowModal(false);
-    useDivRef.current.scrollIntoView()
-  }
-  const handleOk = async () => {
-    let currentStep = parseInt(confirmationStep.split("step")[1]);
-    if (currentStep == 1) {
-      setLoading(true)
-      let withdrawal = await withdrawSave(saveObj)
-      if (withdrawal.ok) {
-        setConfirmationStep("step" + (currentStep + 1))
-        form.resetFields()
-        setLoading(false)
-        useDivRef.current.scrollIntoView()
-        dispatch(fetchDashboardcalls(userConfig.id))
-        appInsights.trackEvent({
-          name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.email, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
-        });
-      } else {
-
-      }
-    } else {
-      setConfirmationStep("step" + (currentStep + 1))
-    }
-  }
-
-  const { Paragraph, Title, Text } = Typography;
-  const link = <LinkValue content="terms_service" />;
-  // const options = props.addressBookReducer?.favouriteAddress?.map((item, idx) => <option key={idx} title="" value={item.id}>{item.currencyCode}</option>)
-  return (
-    <>
+      step1: <>
       <div className="suisfiat-height auto-scroll">
         <div ref={useDivRef}></div>
         {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-        <Form form={form} onFinish={savewithdrawal}>
+        <Form form={form} onFinish={savewithdrawal} initialValues={addressDetails}>
           <div className="p-relative d-flex align-center"> <Translate
             content="Beneficiary_BankDetails"
             component={Paragraph}
@@ -245,14 +174,14 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
           </div>
           {/* <p className="mb-16 fs-14 text-aqua fw-500 text-right c-pointer" onClick={() => changeStep('step4')} > Add New Address</p> */}
           <Form.Item
-            name="bankId"
+           
             className="custom-forminput mb-24"
-            rules={[
-              {
-                required: true,
-                message: 'Is required',
-              },
-            ]}
+            // rules={[
+            //   {
+            //     required: true,
+            //     message: 'Is required',
+            //   },
+            // ]}
           >
             <div className="d-flex"><Text
               className="input-label" >Address</Text>
@@ -260,13 +189,13 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
               <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
             </div>
             <Select dropdownClassName="select-drpdwn"
-              className="cust-input"
-              onChange={(e) => handleChange(e)}
+              className="cust-input" value={addressDetails.favouriteName}
+              onChange={(e) => handleAddressChange(e)}
               placeholder="Select Address"
             >
               {/* <Option value="meena">meena</Option> */}
               {addressLu?.map((item, idx) =>
-                <Option key={idx} value={item.name}>{item.name}
+                <Option key={idx} value={item.id}>{item.name}
                 </Option>
               )}
             </Select>
@@ -275,7 +204,6 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
           <Form.Item
             className="custom-forminput mb-24"
             name="memberWalletId"
-            required
             rules={[
               { required: true, message: "Is required" },
             ]}
@@ -318,6 +246,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
             className="custom-forminput mb-24"
             name="accountNumber"
             required
+            onChange={handleChange}
             rules={[
               { required: true, message: "Is required" },
               {
@@ -345,12 +274,13 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
                   component={Text}
                 />
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" placeholder="Bank account number/IBAN" />
+              <Input value={addressDetails.accountNumber} className="cust-input" placeholder="Bank account number/IBAN" />
             </div>
           </Form.Item>
           <Form.Item
             className="custom-forminput mb-24"
-            name="swiftCode"
+            name="routingNumber"
+            onChange={handleChange}
             required
             rules={[
               { required: true, message: "Is required" },
@@ -379,13 +309,14 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
                   component={Text}
                 />
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" placeholder="BIC/SWIFT/Routing number" />
+              <Input value={addressDetails.routingNumber} className="cust-input" placeholder="BIC/SWIFT/Routing number" />
             </div>
 
           </Form.Item>
           <Form.Item
             className="custom-forminput mb-24"
             name="bankName"
+            onChange={handleChange}
             required
             rules={[
               { required: true, message: "Is required" },
@@ -414,13 +345,14 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
                   component={Text}
                 />
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" placeholder="Bank name" />
+              <Input value={addressDetails.bankName} className="cust-input" placeholder="Bank name" />
             </div>
 
           </Form.Item>
           <Form.Item
             className="custom-forminput mb-24"
             name="bankAddress"
+            onChange={handleChange}
             required
             rules={[
               { required: true, message: "Is required" }
@@ -434,7 +366,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
                   component={Text}
                 />
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" placeholder="Bank address line 1" />
+              <Input value={addressDetails.bankAddress} className="cust-input" placeholder="Bank address line 1" />
             </div>
 
           </Form.Item>
@@ -575,6 +507,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
           <Form.Item
             className="custom-forminput mb-24"
             name="beneficiaryAccountAddress"
+            onChange={handleChange}
             rules={[
               { required: true, message: "Is required" }
             ]}
@@ -589,7 +522,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>
                   {" * "}
                 </span></div>
-              <Input className="cust-input" placeholder="Recipient address line 1" />
+              <Input value={addressDetails.beneficiaryAccountAddress} className="cust-input" placeholder="Recipient address line 1" />
             </div>
 
           </Form.Item>
@@ -676,6 +609,57 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
           </Form.Item>
         </Form>
       </div>
+     </>,
+      step2:<><WithdrawalSummary onConfirm={handleOk} onCancel={()=>{setConfirmationStep("step1");form.setFieldsValue({saveObj})}}/></>,
+      step3:<>
+      <WithdrawalLive onConfirm = {handleOk} onCancel={()=>{setConfirmationStep("step1");form.setFieldsValue({saveObj})}}/>
+      </>,
+      step4: <>
+        <div className="success-pop text-center mb-24">
+          <img src={success} className="confirm-icon" />
+
+          <Translate className="fs-30 mb-4 d-block text-white-30" content="withdrawal_success" component={Title} />
+          <Link onClick={() => {form.resetFields();setConfirmationStep("step1");}} className="f-16 mt-16 text-underline text-green">Back to Withdraw<span className="icon md diag-arrow ml-4" /></Link>
+
+        </div>
+      </>,
+      
+    }
+    return _types[confirmationStep]
+  }
+  const handleCancel = () => {
+    setShowModal(false);
+    useDivRef.current.scrollIntoView()
+  }
+  const handleOk = async () => {
+    let currentStep = parseInt(confirmationStep.split("step")[1]);
+    // if (currentStep == 1) {
+    //   setLoading(true)
+    //   let withdrawal = await withdrawSave(saveObj)
+    //   if (withdrawal.ok) {
+    //     setConfirmationStep("step" + (currentStep + 1))
+    //     form.resetFields()
+    //     setLoading(false)
+    //     useDivRef.current.scrollIntoView()
+    //     dispatch(fetchDashboardcalls(userConfig.id))
+    //     appInsights.trackEvent({
+    //       name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.email, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
+    //     });
+    //   } else {
+
+    //   }
+    // } else {
+      setConfirmationStep("step" + (currentStep + 1))
+    // }
+  }
+
+  const { Paragraph, Title, Text } = Typography;
+  const link = <LinkValue content="terms_service" />;
+  // const options = props.addressBookReducer?.favouriteAddress?.map((item, idx) => <option key={idx} title="" value={item.id}>{item.currencyCode}</option>)
+  return (
+    <>
+    {renderModalContent()}
+  
       <Modal className="widthdraw-pop" maskClosable={false} onCancel={handleCancel} title="Withdraw" closeIcon={<Tooltip title="Close"><span onClick={handleCancel} className="icon md close" /></Tooltip>} footer={[
         <>{confirmationStep != 'step2' && <div className="text-right withdraw-footer"><Button key="back" type="text" className="text-white-30 pop-cancel fw-400 text-captz text-center" onClick={handleCancel} disabled={loading}>
           Cancel
@@ -690,8 +674,8 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
   );
 }
 
-const connectStateToProps = ({ buyInfo, userConfig, addressBookReducer }) => {
-  return { addressBookReducer, buyInfo, userConfig: userConfig.userProfileInfo }
+const connectStateToProps = ({ buyInfo, userConfig, addressBookReducer,sendReceive}) => {
+  return { addressBookReducer, buyInfo, userConfig: userConfig.userProfileInfo,sendReceive }
 }
 const connectDispatchToProps = dispatch => {
   return {
@@ -701,7 +685,7 @@ const connectDispatchToProps = dispatch => {
     fetchFavouirtAddresss: () => {
       dispatch(handleFavouritAddress())
     },
-    
+    dispatch
   }
 
 }

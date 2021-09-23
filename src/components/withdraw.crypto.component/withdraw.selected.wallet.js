@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Card, Input, Radio, List, Alert, Row, Col, Form, Modal,Select } from 'antd';
+import { Typography, Button, Card, Input, Radio, List, Alert, Row, Col, Form, Modal, Select,Tooltip } from 'antd';
 import { handleSendFetch, setStep, setSubTitle } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -10,9 +10,9 @@ import SuccessMsg from './success';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import WalletAddressValidator from 'wallet-address-validator';
 import { appInsights } from "../../Shared/appinsights";
-import {favouriteFiatAddress } from '../addressbook.component/api'
+import { favouriteFiatAddress } from '../addressbook.component/api'
 
-const {Option} =Select;
+const { Option } = Select;
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
     myRef = React.createRef();
@@ -26,30 +26,33 @@ class CryptoWithDrawWallet extends Component {
         showModal: false,
         confirmationStep: "step1",
         isWithdrawSuccess: false,
-        addressLu:[]
+        addressLu: []
     }
     componentDidMount() {
         this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 2 }))
-        this.props. dispatch(setSubTitle("Select wallet address"));
+        this.props.dispatch(setSubTitle("Select wallet address"));
         this.trackevent();
+        debugger;
         this.getAddressLu();
     }
-    trackevent =() =>{
+    trackevent = () => {
         appInsights.trackEvent({
-            name: 'WithDraw Crypto', properties: {"Type": 'User',"Action": 'Page view',"Username":this.props.userProfile.userName,"MemeberId": this.props.userProfile.id,"Feature": 'WithDraw Crypto',"Remarks": "WithDraw crypto page view","Duration": 1,"Url": window.location.href,"FullFeatureName": 'WithDraw Crypto'}
+            name: 'WithDraw Crypto', properties: { "Type": 'User', "Action": 'Page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'WithDraw Crypto', "Remarks": "WithDraw crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Crypto' }
         });
     }
     componentWillUnmount() {
         this.setState({ ...this.state, isWithdrawSuccess: false })
         this.props.changeStep("step1");
     }
-   getAddressLu = async () => {
-        let recAddress = await favouriteFiatAddress()
+    getAddressLu = async () => {
+        debugger
+        let membershipId = this.props.userProfile.id;
+        let recAddress = await favouriteFiatAddress(membershipId,'crypto')
         if (recAddress.ok) {
-            this.setState({addressLu:recAddress.data});
+            this.setState({ addressLu: recAddress.data });
         }
-      }
+    }
     clickMinamnt(type) {
         let usdamnt; let cryptoamnt;
         let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
@@ -190,10 +193,13 @@ class CryptoWithDrawWallet extends Component {
         }
 
     }
+    handleChange=() =>{
+        debugger
+    }
     render() {
         const { Text, Paragraph } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
-        const{addressLu} = this.state;
+        const { addressLu } = this.state;
         if (this.state.isWithdrawSuccess) {
             return <SuccessMsg onBackCLick={() => this.props.changeStep("step1")} />
         }
@@ -226,42 +232,48 @@ class CryptoWithDrawWallet extends Component {
                     <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt("half")} />
                     <Translate value="all" content="all" component={Radio.Button} onClick={() => this.clickMinamnt("all")} />
                 </Radio.Group>
-                <Translate
-                    className="fs-14 text-aqua fw-500 text-upper"
-                    content="address"
-                    component={Paragraph}
-                />
-                  <Form>
-                <Form.Item
-            name="bankId"
-            className="custom-forminput mb-16"
-            rules={[
-              {
-                required: true,
-                message: 'Is required',
-              },
-            ]}
-          >
-            <div className="d-flex"><Text
-              className="input-label" >Address</Text>
-           
-              <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-            </div>
+                <div className="p-relative d-flex align-center">
+                    <Translate
+                        className="fs-14 text-aqua fw-500 text-upper"
+                        content="address"
+                        component={Paragraph}
+                    />
 
-            <Select dropdownClassName="select-drpdwn"
-              className="cust-input"
-            //   onChange={(e) => handleChange(e)}
-              placeholder="Select Address"
-            >
-              {addressLu?.map((item, idx) =>
-                <Option key={idx} value={item.name}>{item.name}
-                </Option>
-              )}
-            </Select>
+                    <Tooltip placement="bottom" title={<span>New Address</span>} >
+                        <span className="val-updown c-pointer" onClick={() =>this.props.changeStep('step8')}>
+                            <span className="icon md address-book d-block c-pointer" style={{ marginTop: '10px', marginLeft: '10px' }}></span>
+                        </span>
+                    </Tooltip></div>
+                <Form>
+                    <Form.Item
+                        name="bankId"
+                        className="custom-forminput mb-16"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Is required',
+                            },
+                        ]}
+                    >
+                        <div className="d-flex"><Text
+                            className="input-label" >Address</Text>
 
-          </Form.Item>
-          </Form>
-        
+                            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+                        </div>
+
+                        <Select dropdownClassName="select-drpdwn"
+                            className="cust-input"
+                            placeholder="Select Address"
+                            onChange={(e) => this.handleChange(e)}
+                        >
+                            {addressLu?.map((item, idx) =>
+                                <Option key={idx} value={item.id}>{item.name}
+                                </Option>
+                            )}
+                        </Select>
+                    </Form.Item>
+                </Form>
+
                 {/* <Input className="cust-input" placeholder="Enter address" value={this.state.walletAddress}
                     onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })}
                 /> */}
