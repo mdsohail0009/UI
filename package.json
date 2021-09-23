@@ -32,6 +32,7 @@
     "formik": "^2.2.8",
     "highcharts": "^9.1.1",
     "highcharts-react-official": "^3.0.0",
+    "lightweight-charts": "^3.6.1",
     "moment": "^2.29.1",
     "oidc-client": "^1.11.5",
     "qrcode.react": "^1.0.1",
