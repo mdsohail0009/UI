@@ -92,7 +92,7 @@ class RequestedDocs extends Component {
     }
     docReject = async (doc) => {
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
-        if (!item) {
+        if (!item||!item.reply) {
             message.destroy();
             message.warning({
                 content: "Please enter a message"
@@ -120,11 +120,18 @@ class RequestedDocs extends Component {
         this.setState({ ...this.state, docReplyObjs: objs });
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
-    deleteDocument = async (doc, idx) => {
+    deleteDocument = async (doc, idx, isAdd) => {
+        
         let item = { ...doc };
         item.path = item.path.splice(idx, 1);
         item.path = JSON.stringify(item.path);
         item.status = "Rejected";
+        if (isAdd) {
+            let objs = [...this.state.docReplyObjs];
+            objs = objs.filter(item => item.docunetDetailId != doc.id);
+            this.setState({ ...this.state, docReplyObjs: objs });
+            return;
+        }
         const response = await saveDocReply(item);
         message.destroy()
         if (response.ok) {
@@ -132,7 +139,10 @@ class RequestedDocs extends Component {
                 content: 'Documenst has been Deleted',
                 className: 'custom-msg',
             });
-            this.loadDocReplies(doc.id)
+            this.loadDocReplies(doc.id);
+            let objs = [...this.state.docReplyObjs];
+            objs = objs.filter(item => item.docunetDetailId != doc.id);
+            this.setState({ ...this.state, docReplyObjs: objs });
         } else {
             message.warning({
                 content: response.data,
@@ -208,8 +218,12 @@ class RequestedDocs extends Component {
     }
     getUploadedFiles = (id) => {
         let data = this.state.docReplyObjs.filter(item => item.docunetDetailId === id)[0];
-        debugger
-        return data ?(typeof(data.path)=="string"?JSON.parse(data.path):data.path)||[]: [];
+        if (data && data.path) {
+            data.path = (typeof (data.path) == "string" ? JSON.parse(data.path) : data.path) || [];
+            return data
+        } else {
+            return { path: [] }
+        }
     }
     render() {
         if (this.state.loading) {
@@ -218,13 +232,13 @@ class RequestedDocs extends Component {
         return <div className="main-container">
             <div className="mb-24 text-white-50"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile" />{this.state?.docDetails?.note}</div>
             <div className="bank-view">
-                {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key)=>{if(key){this.loadDocReplies(doc.id)}}} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
+                {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
                     <Panel header={doc.documentName} key={idx + 1} extra={<span className="icon md greyCheck" />}>
-                        {(!this.state.documentReplies[doc.id]?.data || this.state.documentReplies[doc.id]?.data?.length == 0 &&!this.state.documentReplies[doc.id]?.loading) && <><div className="mb-24">
+                        {(!this.state.documentReplies[doc.id]?.data || this.state.documentReplies[doc.id]?.data?.length == 0 && !this.state.documentReplies[doc.id]?.loading) && <><div className="mb-24">
                             <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
                             <Input onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
                                 className="mb-24 cust-input"
-                                placeholder="Enter write your message"
+                                placeholder="Write your message"
                             />
                             <Dragger accept=".pdf,.jpg,.jpeg,.png.gif" className="upload" action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} onChange={(props) => { this.handleUpload(props, doc) }}>
                                 <p className="ant-upload-drag-icon">
@@ -232,26 +246,26 @@ class RequestedDocs extends Component {
                                 </p>
                                 <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
                                 <p className="ant-upload-hint text-secondary fs-12">
-                                    PNG, JPG and GIF files are allwoed
+                                    PNG, JPG and PDF files are allwoed
                                 </p>
                             </Dragger>
                         </div>
                             <div className="docfile-container">
-                                {this.getUploadedFiles(doc.id)?.map((file, idx) => <div key={idx} className="docfile">
+                                {this.getUploadedFiles(doc.id)?.path?.map((file, idx) => <div key={idx} className="docfile">
                                     <span className="icon xl image mr-16" />
                                     <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                         <EllipsisMiddle suffixCount={12}>{file.filename}</EllipsisMiddle>
                                         <span className="fs-12 text-secondary">{file.size}</span>
                                     </div>
-                                    <span className="icon md close c-pointer" onClick={() => this.deleteDocument(doc, idx)} />
+                                    <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx,true)} />
                                 </div>)}
                             </div>
                             <div className="text-center my-36">
-                              
-                                <Button className="pop-btn px-36" onClick={()=>this.docReject(doc)}>Submit</Button>
+
+                                <Button className="pop-btn px-36" onClick={() => this.docReject(doc)}>Submit</Button>
                             </div>
                         </>}
-                        {this.state.documentReplies[doc.id]?.loading&&<Spin size="large"/>}
+                        {this.state.documentReplies[doc.id]?.loading && <Spin size="large" />}
                         {this.state.documentReplies[doc.id]?.data?.map((reply, idx) => <div key={idx} className="reply-container">
                             <img src={profile} className="mr-16" />
                             <div className="reply-body">
@@ -287,13 +301,13 @@ class RequestedDocs extends Component {
                                     </div>
                                 </div>
                                 <div className="docfile-container">
-                                    {this.getUploadedFiles(doc.id)?.map((file, idx) => <div key={idx} className="docfile">
+                                    {this.getUploadedFiles(doc.id)?.path?.map((file, idx) => <div key={idx} className="docfile">
                                         <span className="icon xl image mr-16" />
                                         <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                             <EllipsisMiddle suffixCount={12}>{file.filename}</EllipsisMiddle>
                                             <span className="fs-12 text-secondary">{file.size}</span>
                                         </div>
-                                        <span className="icon md close c-pointer" onClick={() => this.deleteDocument(doc, idx)} />
+                                        <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx,true)} />
                                     </div>)}
                                 </div>
                             </div>
@@ -310,10 +324,10 @@ class RequestedDocs extends Component {
                 closeIcon={<Tooltip title="Close"><span className="icon md close" onClick={this.docPreviewClose} /></Tooltip>}
                 footer={<>
                     <Button type="primary" onClick={this.docPreviewClose} className="text-center text-white-30 pop-cancel fw-400 text-captz mr-36">Close</Button>
-                    <Button className="pop-btn px-36" onClick={()=>window.open(this.state.previewPath,"_blank")}>Download</Button>
+                    <Button className="pop-btn px-36" onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
                 </>}
             >
-                <FilePreviewer hideControls={true} file={{url:this.state.previewPath?this.state.previewPath.includes(".pdf")?"https://cors-anywhere.herokuapp.com/"+this.state.previewPath:this.state.previewPath:null}}/>
+                <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.state.previewPath.includes(".pdf") ? "https://cors-anywhere.herokuapp.com/" + this.state.previewPath : this.state.previewPath : null }} />
                 {/* <img style={{ width: "100%" }} src={uploadImage} alt="User" /> */}
             </Modal>
         </div>;
