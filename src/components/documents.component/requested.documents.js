@@ -224,7 +224,7 @@ class RequestedDocs extends Component {
                             <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
                             <Input onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
                                 className="mb-24 cust-input"
-                                placeholder="Enter your reply text"
+                                placeholder="Enter write your message"
                             />
                             <Dragger accept=".pdf,.jpg,.jpeg,.png.gif" className="upload" action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} onChange={(props) => { this.handleUpload(props, doc) }}>
                                 <p className="ant-upload-drag-icon">
