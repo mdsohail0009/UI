@@ -13,6 +13,7 @@ import { savedepositFiat, requestDepositFiat } from './api';
 import Loader from '../../Shared/loader';
 import success from '../../assets/images/success.png';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { appInsights } from "../../Shared/appinsights";
 
 const LinkValue = (props) => {
   return (
@@ -39,6 +40,9 @@ class FaitDeposit extends Component {
   componentDidMount() {
     this.props.fiatRef(this)
     this.props.fetchCurrencyWithBankDetails()
+    appInsights.trackEvent({
+      name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": ('deposit page view'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
+    });
   }
   clearfiatValues = () => {
     this.props.fetchCurrencyWithBankDetails()
@@ -124,6 +128,9 @@ class FaitDeposit extends Component {
             BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null },
             faitdeposit: false,
             tabValue: 1, Loader: false, isTermsAgreed: false, showSuccessMsg: true
+          });
+          appInsights.trackEvent({
+            name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": (createObj.amount +' '+createObj.currency+ 'deposited.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
           });
         }
       });
