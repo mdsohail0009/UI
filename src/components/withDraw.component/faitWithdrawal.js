@@ -48,7 +48,6 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
   useEffect(() => {
     getCountryLu();
     getAddressLu();
-    // getAddressDetails();
 
   }, [])
   const handleWalletSelection = (walletId) => {
@@ -74,7 +73,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
         setAddressLu(recAddress.data);
     }
   }
-  const getAddressDetails = async (e) => {
+  const handleAddressChange = async (e) => {
     debugger
     let recAddressDetails = await detailsAddress(e)
     if (recAddressDetails.ok) {
@@ -83,8 +82,8 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
   }
   const bindEditableData = (obj) => {
     debugger;
-    setAddressDetails({ ...obj });
-    form.setFieldsValue({ bankName:obj.bankName });
+   // setAddressDetails({ ...obj });
+    form.setFieldsValue(obj);
 };
   const getCountryLu = async () => {
     let recName = await getCountryStateLu()
@@ -209,11 +208,11 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
     }
     return _types[confirmationStep]
   }
-  const handleChange = (e) => {
-    debugger;
-  // let id = e.target.value;
-  getAddressDetails(e);
-  }
+  // const handleChange = (e) => {
+  //   debugger;
+  // // let id = e.target.value;
+  // getAddressDetails(e);
+  // }
   const handleCancel = () => {
     setShowModal(false);
     useDivRef.current.scrollIntoView()
@@ -248,7 +247,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
       <div className="suisfiat-height auto-scroll">
         <div ref={useDivRef}></div>
         {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-        <Form 
+        <Form initialValues={addressDetails} name="control-hooks"
         form={form} onFinish={savewithdrawal} >
           <div className="p-relative d-flex align-center"> <Translate
             content="Beneficiary_BankDetails"
@@ -263,7 +262,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
           </div>
           {/* <p className="mb-16 fs-14 text-aqua fw-500 text-right c-pointer" onClick={() => changeStep('step4')} > Add New Address</p> */}
           <Form.Item
-            name="bankId"
+            name="favouriteName"
             className="custom-forminput mb-24"
             rules={[
               {
@@ -280,7 +279,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
             <Select dropdownClassName="select-drpdwn"
               className="cust-input"
               // onKeyUp={(event) => this.handleUserChange(event)}
-               onChange={(e) => handleChange(e)}
+               onChange={(e) => handleAddressChange(e)}
               placeholder="Select Address"
             >
               {/* <Option value="meena">meena</Option> */}
