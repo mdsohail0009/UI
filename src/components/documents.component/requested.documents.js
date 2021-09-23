@@ -226,7 +226,7 @@ class RequestedDocs extends Component {
                                 className="mb-24 cust-input"
                                 placeholder="Enter your reply text"
                             />
-                            <Dragger className="upload" action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} onChange={(props) => { this.handleUpload(props, doc) }}>
+                            <Dragger accept=".pdf,.jpg,.jpeg,.png.gif" className="upload" action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} onChange={(props) => { this.handleUpload(props, doc) }}>
                                 <p className="ant-upload-drag-icon">
                                     <span className="icon xxxl doc-upload" />
                                 </p>
@@ -275,7 +275,7 @@ class RequestedDocs extends Component {
                                     <Input className={doc.id.replace(/-/g, "")} onChange={({ currentTarget: { value } }) => this.handleReplymessage(value, doc)} autoFocus type="text" placeholder="Write your message..." size="large" bordered={false} multiple={true} />
                                     <div className="d-flex align-center">
                                         <Tooltip title="Attachments">
-                                            <Upload showUploadList={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} onChange={(props) => this.handleUpload(props, doc)}>
+                                            <Upload accept=".pdf,.jpg,.jpeg,.png.gif" showUploadList={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} onChange={(props) => this.handleUpload(props, doc)}>
                                                 <span className="icon md attach mr-16 c-pointer" />
                                             </Upload>
                                         </Tooltip>
