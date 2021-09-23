@@ -469,7 +469,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .profile-value{font-size: 16px; color: var(--textWhite30); font-weight: 700;}
 .profileinfo{padding: 32px 0; border-top:1px solid var(--borderGrey);}
 .profileinfo:first-child{border-top:0}
-.profileinfo.active, .profileinfo:hover{background: var(--bgOrient); margin-left: -32px; margin-right: -32px;}
+.profileinfo.active, .profileinfo:hover{background: var(--bgOrient1); margin-left: -32px; margin-right: -32px;}
 .profileinfo.active .profile-block, .profileinfo:hover .profile-block{padding: 0 32px}
 .cust-select {min-width: 250px;}
 .cust-select .ant-select-selection-placeholder{color:#ED4B9E !important;}
@@ -531,6 +531,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .selectcustom-input .anticon-search{display: none;}
 .custom-add-select{width:315px !important;border-bottom-right-radius: 0;border-top-right-radius: 0;}
 .new-add{border: 1px solid #899097; padding: 14px;border-bottom-right-radius: 30px; border-top-right-radius: 30px; border-left: 0;}
+.transaction-tabs .k-grid-content{overflow-y: auto;}
+
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}
@@ -725,7 +727,7 @@ main.ant-layout-content{min-height: calc(100vh - 220px);}
 }
 .ant-drawer{z-index: 99 !important;}
 .change-space .ant-input-password-icon{padding: 10px 16px 10px 0 !important;cursor: pointer;}
-
+.change-space .ant-input-password-icon svg{color: var(--textWhite)}
 .hover-passlwngth {display: none}
 .pass-onhover:hover + .hover-passlwngth {
     display: block;

@@ -105,13 +105,15 @@ class AuditLogs extends Component {
     let { searchObj,timeSpanfromdate,timeSpantodate,customFromdata, customTodate } = this.state;
     searchObj.fromdate = new Date(timeSpanfromdate)
     searchObj.fromdate = new Date(timeSpantodate)
+    searchObj.fromdate = moment(timeSpanfromdate).format('DD/MM/YYYY');
+    searchObj.todate = moment(timeSpantodate).format('DD/MM/YYYY');
     this.formDateRef.current.setFieldsValue({ fromdate: customFromdata, todate: customTodate })
     this.setState({ ...this.state, modal: true, searchObj });
   }
 
   handleOk = (values) => {
     let { selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate } = this.state;
-    if(moment(values.fromdate).format('MM/DD/YYYY') > moment(values.todate).format('MM/DD/YYYY') ) {
+    if(moment(values.fromdate).format('DD/MM/YYYY') > moment(values.todate).format('DD/MM/YYYY') ) {
      return message.error({
        content: 'Start date must be less than or equal to the end date.',
        className: 'custom-msg',
@@ -124,7 +126,7 @@ class AuditLogs extends Component {
     values.todate = moment(values.todate).format('MM/DD/YYYY');
     timeSpanfromdate = values.fromdate;
     timeSpantodate = values.todate;
-    selectedTimespan = timeSpanfromdate + " " + "-" + " " + timeSpantodate;
+    selectedTimespan = moment(timeSpanfromdate).format('DD/MM/YYYY') + " " + "-" + " " + moment(timeSpantodate).format('DD/MM/YYYY');
     this.formRef.current.setFieldsValue({ ...this.state, selectedTimespan })
     this.setState({ ...this.state, selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate, modal: false, });
   };
@@ -136,8 +138,10 @@ class AuditLogs extends Component {
 
   handleSearch = (values) => {
     let { searchObj, timeSpanfromdate, timeSpantodate } = this.state;
-    searchObj.fromdate = timeSpanfromdate
-    searchObj.todate = timeSpantodate
+    searchObj.fromdate = new Date(timeSpanfromdate)
+    searchObj.fromdate = new Date(timeSpantodate)
+    searchObj.fromdate = moment(timeSpanfromdate).format('MM/DD/YYYY');
+    searchObj.todate = moment(timeSpantodate).format('MM/DD/YYYY');
     this.setState({ ...this.state, searchObj }, () => { this.gridRef.current.refreshGrid(); });
   };
 
@@ -294,7 +298,7 @@ class AuditLogs extends Component {
                   ]}
                   >
                     <DatePicker 
-                    format={"MM/DD/YYYY"} 
+                    format={"DD/MM/YYYY"} 
                     onChange={(e) => this.handleDateChange(e, 'fromdate')}
                     className="cust-input mb-0" style={{width:'100%'}}/>
                   </Form.Item>
@@ -321,7 +325,7 @@ class AuditLogs extends Component {
                     <DatePicker 
                     className="cust-input mb-0" 
                     onChange={(e) => this.handleDateChange(e, 'todate')}
-                    format={"MM/DD/YYYY"} 
+                    format={"DD/MM/YYYY"} 
                     style={{width:'100%'}}
                     />
                   </Form.Item>
@@ -330,7 +334,7 @@ class AuditLogs extends Component {
               <Form.Item className="mb-0">
                 <div className="text-right">
                   <Button type="button" className="c-pointer text-center ant-btn-lg text-white-30 pop-cancel fw-400 text-captz text-center mr-12" onClick={this.handleCancel} ><span>Cancel</span></Button>
-                  <Button type="button" key="submit" className="c-pointer pop-btn ant-btn px-24" htmlType="submit"><span>Save</span></Button>
+                  <Button type="button" key="submit" className="c-pointer pop-btn ant-btn px-24" htmlType="submit"><span>Ok</span></Button>
                 </div>
               </Form.Item>
             </Form>
