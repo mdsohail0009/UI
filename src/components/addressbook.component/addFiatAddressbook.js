@@ -11,7 +11,7 @@ import Currency from '../shared/number.formate';
 import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
-import {saveAddress} from './api';
+import {saveAddress,favouriteNameCheck} from './api';
 
 
 const LinkValue = (props) => {
@@ -106,12 +106,17 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,chan
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
         debugger
+        let namecheck = values.favouriteName;
+        let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
+        if(responsecheck.data != null){
+            return setErrorMsg('Record already existed');
+        }else{
         let response = await saveAddress(values);
         if (response.ok) {
              console.log(response.data)
             changeStep('step1')
         }
-       
+    }
 
        
     }
