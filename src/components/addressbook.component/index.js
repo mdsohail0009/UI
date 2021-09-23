@@ -16,11 +16,11 @@ class AddressBook extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            cryptoDrawer: false,
+            visible: false,
             cryptoFiat: false,
             fiatDrawer: false,
-            //gridUrl: process.env.REACT_APP_GRID_API + "Transaction/TransactionHistoryk",
-            //gridUrlFiat: process.env.REACT_APP_GRID_API + "",
+            gridUrlCrypto: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressCryptoK",
+            gridUrlFiat: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressFiatK",
         }
         this.gridRef = React.createRef();
     }
@@ -40,14 +40,12 @@ class AddressBook extends Component {
     ];
     columnsCrypto = [
         //{ field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="check" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
-        { field: "walletCode", title: "Address Label", filter: true, width: 250 },
-        { field: "docType", title: "Coin", width: 150, filter: true, },
-        { field: "debit", title: "Address", filter: true, width: 350 },
-        { field: "status", title: "Status", filter: true, width: 100 }
+        { field: "addressLable", title: "Address Label", filter: true, width: 250 },
+        { field: "coin", title: "Coin", width: 150, filter: true, },
+        { field: "address", title: "Address", filter: true }
     ];
     componentDidMount() {
         this.coinList()
-        this.gridRef.current.refreshGrid();
     }
 
     coinList = async () => {
@@ -64,17 +62,16 @@ class AddressBook extends Component {
         this.setState({ fiatDrawer: true })
     }
     handleCryptoAddress = () => {
-        this.setState({ cryptoDrawer: true })
+        this.setState({ visible: true })
     }
 
     closeBuyDrawer = () => {
-        this.setState({ cryptoDrawer: false, fiatDrawer: false })
+        this.setState({ visible: false, fiatDrawer: false })
     }
     handleWithdrawToggle = e => {
         this.setState({
             cryptoFiat: e.target.value === 2
         })
-
     }
     renderContent = () => {
         const stepcodes = {
@@ -98,7 +95,7 @@ class AddressBook extends Component {
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
     }
     render() {
-        const { cryptoFiat, gridUrl, gridUrlFiat } = this.state;
+        const { cryptoFiat, gridUrlCrypto, gridUrlFiat } = this.state;
         const { Title, Paragraph } = Typography;
         return (
             <>
@@ -122,7 +119,7 @@ class AddressBook extends Component {
                                 <Button className="c-pointer pop-btn ant-btn px-24" onClick={this.handleFiatAddress}> Add Address</Button>
                             </div>
                         </div>
-                        <List columns={this.columnsFiat} ref={this.gridRef} url={process.env.REACT_APP_GRID_API + "/Transaction/TransactionHistoryk"} />
+                        <List columns={this.columnsFiat} ref={this.gridRef} key={gridUrlFiat} url={gridUrlFiat} />
                     </> :
                         <>
                             <div className="d-flex justify-content">
@@ -133,7 +130,7 @@ class AddressBook extends Component {
                                     <Button className="c-pointer pop-btn ant-btn px-24" onClick={this.handleCryptoAddress}> Add Address</Button>
                                 </div>
                             </div>
-                            <List columns={this.columnsCrypto} ref={this.gridRef} url={process.env.REACT_APP_GRID_API + "/Addressbook/FavouriteAddressK"} />
+                            <List columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridRef} url={gridUrlCrypto} />
                         </>}
                 </div>
                 <Drawer destroyOnClose={true}
@@ -146,7 +143,7 @@ class AddressBook extends Component {
                     </div>]}
                     placement="right"
                     closable={true}
-                    visible={this.state.cryptoDrawer}
+                    visible={this.state.visible}
                     closeIcon={null}
                     className="side-drawer"
                 >
