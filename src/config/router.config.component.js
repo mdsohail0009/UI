@@ -10,7 +10,7 @@ const SumSub = React.lazy(() => import('../components/sumSub.component/sumsub'))
 const NotKyc = React.lazy(() => import('../components/sumSub.component/notKyc'));
 const OnBoarding = React.lazy(() => import('../layout/onboard.component'));
 const userProfile = React.lazy(() => import('../components/userProfile.component/userProfile'));
-const RequestedDocs = React.lazy(() => import('../components/userProfile.component/documents/reqested.documents'));
+const RequestedDocs = React.lazy(() => import('../components/documents.component/requested.documents'));
 class RoutingComponent extends Component {
   render() {
     return <Switch>
@@ -24,7 +24,7 @@ class RoutingComponent extends Component {
         <ReactRoute path="/notkyc" component={NotKyc} />
         <ReactRoute path="/onboading" component={OnBoarding} />
         <ReactRoute path='/userprofile' component={userProfile} />
-        <ReactRoute path='/requesteddocs' component={RequestedDocs} />
+        <ReactRoute path='/documents/:id' component={RequestedDocs} />
         {/* <Redirect to="/onboading" path="/" exact/> */}
         <Route path="/" component={Dashboard} exact />
       </React.Suspense>
