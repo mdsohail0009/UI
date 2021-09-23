@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Typography, Button } from 'antd';
+import { Row, Col, Typography, Button, Carousel } from 'antd';
 import Wallets from './wallets.component';
 import Translate from 'react-translate-component';
 import Portfolio from './portfolio.component';
@@ -8,6 +8,8 @@ import YourPortfolio from './yourportfolio.component';
 import MarketCap from './marketcap.component';
 import Notices from './notices';
 import AlertConfirmation from '../shared/alertconfirmation';
+import { connect } from 'react-redux';
+import { getDashboardNotices } from '../documents.component/api';
 const { Title, Paragraph } = Typography;
 class Home extends Component {
     state = {
@@ -16,17 +18,28 @@ class Home extends Component {
         visible: false,
         childrenDrawer: false,
     };
+    componentDidMount() {
+        this.fetchNotices();
+    }
+    fetchNotices = async () => {
+        const response = await getDashboardNotices(this.props?.userProfileInfo.id);
+        if (response.ok) {
+            this.setState({ ...this.state, notices: response.data })
+        }
+    }
     render() {
         return (
             <div className="main-container">
-                <div className="mb-24">
-                    <AlertConfirmation type="success" title="Requesting for personal data" showIcon closable description="Dear user please check the details for requesting documents to approval your deposit/withdraw."
-                        action={
-                            <Button size="small" type="text">
-                                View Details
-                            </Button>
-                        } />
-                </div>
+                {this.state.notices != null && this.state.notices != undefined && <Carousel>
+                    {this.state.notices?.map((notice,idx)=><div className="mb-24"  key={idx}>
+                        <AlertConfirmation type="success" title={notice.title} showIcon closable description="Dear user please check the details for requesting documents to approval your deposit/withdraw."
+                            action={
+                                <Button size="small" type="text" onClick={()=>this.props.history.push(`/documents/${notice.typeId}`)}>
+                                    View Details
+                                </Button>
+                            } />
+                    </div>)}
+                </Carousel>}
                 <Row justify="center">
                     <Col xs={24} md={12} xl={10}>
                         <div className="markets-panel mb-36">
@@ -59,5 +72,7 @@ class Home extends Component {
 
     }
 }
-
-export default Home;
+const mapStateToProps = ({ userConfig }) => {
+    return { userProfileInfo: userConfig.userProfileInfo }
+}
+export default connect(mapStateToProps)(Home);

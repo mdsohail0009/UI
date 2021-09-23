@@ -23,9 +23,12 @@ const getDocumentReplies = (docDetailId) => {
     return clientApi.get(ApiControllers.exchange + `GetMessages?docdetailId=${docDetailId}`)
 }
 const saveDocReply = (obj) => {
-    return clientApi.post(ApiControllers.exchange+`SaveMessages`,obj)
+    return clientApi.post(ApiControllers.exchange + `SaveMessages`, obj)
 }
 const approveDoc = (obj) => {
-    return clientApi.post(ApiControllers.exchange+`DocumentStateChange`,obj)
+    return clientApi.post(ApiControllers.exchange + `DocumentStateChange`, obj)
 }
-export { sendRequest, getDocList, uploadFile, uuidv4, getDocDetails, getDocumentReplies,saveDocReply,approveDoc }
+const getDashboardNotices = (id) => {
+    return clientApi.get(ApiControllers.exchange+`GetDashboardNotices?memberId=${id}`)
+}
+export { sendRequest, getDocList, uploadFile, uuidv4, getDocDetails, getDocumentReplies, saveDocReply, approveDoc,getDashboardNotices }

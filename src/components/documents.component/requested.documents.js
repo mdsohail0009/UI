@@ -216,7 +216,7 @@ class RequestedDocs extends Component {
             return <Loader />
         }
         return <div className="main-container">
-            <div className="mb-24 text-white-50"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile" />/&nbsp;&nbsp;&nbsp;Payment Bill, Identity Document</div>
+            <div className="mb-24 text-white-50"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile" />{this.state?.docDetails?.note}</div>
             <div className="bank-view">
                 {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key)=>{if(key){this.loadDocReplies(doc.id)}}} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
                     <Panel header={doc.documentName} key={idx + 1} extra={<span className="icon md greyCheck" />}>
