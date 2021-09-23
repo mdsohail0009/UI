@@ -92,7 +92,7 @@ class RequestedDocs extends Component {
     }
     docReject = async (doc) => {
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
-        if (!item||!item.reply) {
+        if (!item || !item.reply) {
             message.destroy();
             message.warning({
                 content: "Please enter a message"
@@ -121,7 +121,7 @@ class RequestedDocs extends Component {
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
     deleteDocument = async (doc, idx, isAdd) => {
-        
+
         let item = { ...doc };
         item.path = item.path.splice(idx, 1);
         item.path = JSON.stringify(item.path);
@@ -257,7 +257,7 @@ class RequestedDocs extends Component {
                                         <EllipsisMiddle suffixCount={12}>{file.filename}</EllipsisMiddle>
                                         <span className="fs-12 text-secondary">{file.size}</span>
                                     </div>
-                                    <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx,true)} />
+                                    <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx, true)} />
                                 </div>)}
                             </div>
                             <div className="text-center my-36">
@@ -267,7 +267,8 @@ class RequestedDocs extends Component {
                         </>}
                         {this.state.documentReplies[doc.id]?.loading && <Spin size="large" />}
                         {this.state.documentReplies[doc.id]?.data?.map((reply, idx) => <div key={idx} className="reply-container">
-                            <img src={profile} className="mr-16" />
+                            {/* <img src={profile} className="mr-16" /> */}
+                            <div className="user-shortname">{this.props?.userProfileInfo?.firstName.charAt('0')}{this.props?.userProfileInfo?.lastName.charAt('0')}</div>
                             <div className="reply-body">
                                 <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment format={"DD, MMM YY"}>{reply.repliedDate}</Moment> </Text>
                                 <p className="reply-txt">{reply.reply}</p>
@@ -283,7 +284,8 @@ class RequestedDocs extends Component {
                             </div>
                         </div>)}
                         {this.state.documentReplies[doc.id]?.data && this.state.documentReplies[doc.id]?.data?.length != 0 && <div className="reply-container mb-0">
-                            <img src={profile} className="mr-16" />
+                            {/* <img src={profile} className="mr-16" /> */}
+                            <div className="user-shortname">{this.props?.userProfileInfo?.firstName.charAt('0')}{this.props?.userProfileInfo?.lastName.charAt('0')}</div>
                             <div className="reply-body">
                                 <div className="chat-send">
                                     <Input className={doc.id.replace(/-/g, "")} onChange={({ currentTarget: { value } }) => this.handleReplymessage(value, doc)} autoFocus type="text" placeholder="Write your message..." size="large" bordered={false} multiple={true} />
@@ -307,7 +309,7 @@ class RequestedDocs extends Component {
                                             <EllipsisMiddle suffixCount={12}>{file.filename}</EllipsisMiddle>
                                             <span className="fs-12 text-secondary">{file.size}</span>
                                         </div>
-                                        <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx,true)} />
+                                        <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx, true)} />
                                     </div>)}
                                 </div>
                             </div>
@@ -323,8 +325,8 @@ class RequestedDocs extends Component {
                 visible={this.state.previewModal}
                 closeIcon={<Tooltip title="Close"><span className="icon md close" onClick={this.docPreviewClose} /></Tooltip>}
                 footer={<>
-                    <Button type="primary" onClick={this.docPreviewClose} className="text-center text-white-30 pop-cancel fw-400 text-captz mr-36">Close</Button>
-                    <Button className="pop-btn px-36" onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
+                    <Button className="pop-btn px-36 mr-36" onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
+                    <Button type="primary" onClick={this.docPreviewClose} className="text-center text-white-30 pop-cancel fw-400 text-captz">Close</Button>
                 </>}
             >
                 <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.state.previewPath.includes(".pdf") ? "https://cors-anywhere.herokuapp.com/" + this.state.previewPath : this.state.previewPath : null }} />
