@@ -105,7 +105,7 @@ class RequestedDocs extends Component {
         message.destroy()
         if (response.ok) {
             message.warning({
-                content: 'Documenst has been rejected',
+                content: 'Documenst has been submitted',
                 className: 'custom-msg',
             });
             this.loadDocReplies(doc.id)
