@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Form, Input, Typography, Button } from 'antd'
+import { Form, Input, Typography, Button , Alert} from 'antd'
 import { setStep } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
-import {saveAddress} from './api';
+import {saveAddress, favouriteNameCheck} from './api';
 
 const { Text } = Typography;
 const NewAddressBook = ({changeStep,addressBookReducer,userConfig}) =>{
     const [form] = Form.useForm();
+    const [errorMsg, setErrorMsg] = useState(null);
   
    const saveAddressBook =async (values) => {
         debugger;
@@ -14,16 +15,23 @@ const NewAddressBook = ({changeStep,addressBookReducer,userConfig}) =>{
         values['membershipId'] = userConfig.id;
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
+        let namecheck = values.favouriteName;
+        let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
+        if(responsecheck.data != null){
+            return setErrorMsg('Record already existed');
+        }else{
         let response = await saveAddress(values);
         if (response.ok) {
             changeStep('step1');
             
     }
 }
+   }
    
         return (
             <>
                 <div className="mt-16">
+                {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
                     <Form
                         form={form} 
                         onFinish={saveAddressBook} >
@@ -46,7 +54,8 @@ const NewAddressBook = ({changeStep,addressBookReducer,userConfig}) =>{
                                     <Text className="input-label">Coin</Text>
                                     <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
                                 </div>
-                                <Input onClick={() => changeStep('step3')} value={addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} className="cust-input" placeholder="Select from Coins" />
+                                {addressBookReducer.coinWallet.coinFullName ? <Input onClick={() => changeStep('step3')} value={addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} className="cust-input" placeholder="Select from Coins" /> :
+                                <Input onClick={() => changeStep('step3')}  className="cust-input" placeholder="Select from Coins" />}
                             </div>
                         </Form.Item>
                         <Form.Item
