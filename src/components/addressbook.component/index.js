@@ -75,8 +75,8 @@ class AddressBook extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            cryptoaddressbook: <NewAddressBook />,
-            selectcrypto: <SelectCrypto />
+            cryptoaddressbook: <NewAddressBook onCancel= {() =>this.closeBuyDrawer()} />,
+            selectcrypto: <SelectCrypto /> 
         }
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
     }
@@ -163,7 +163,7 @@ class AddressBook extends Component {
                     closeIcon={null}
                     className="side-drawer"
                 >
-                    <NewFiatAddress />
+                    <NewFiatAddress onCancel= {() =>this.closeBuyDrawer()} />
                 </Drawer>
             </>
         )
