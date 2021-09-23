@@ -15,7 +15,8 @@ class NewAddressBook extends Component {
             favouriteName:'',
             type:'crypto',
             toWalletAddress:''
-           }
+           },
+           cryptoDrawer:false
 
         }
     }
@@ -24,6 +25,7 @@ class NewAddressBook extends Component {
        // values.memberShipId = this.props.userConfig.id;
         let response = await saveAddress(values);
         if (response.ok) {
+            this.setState({cryptoDrawer:false})
             
     }
 }
@@ -53,7 +55,7 @@ class NewAddressBook extends Component {
                                     <Text className="input-label">Coin</Text>
                                     <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
                                 </div>
-                                <Input onClick={() => this.props.changeStep('step3')} value={this.props.addressBookReducer.coinWallet.coinFullName } className="cust-input" placeholder="Select from Coins" />
+                                <Input onClick={() => this.props.changeStep('step3')} value={this.props.addressBookReducer.coinWallet.coinFullName + '-' + this.props.addressBookReducer.coinWallet.coin} className="cust-input" placeholder="Select from Coins" />
                             </div>
                         </Form.Item>
                         <Form.Item

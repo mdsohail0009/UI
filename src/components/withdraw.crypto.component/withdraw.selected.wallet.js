@@ -250,7 +250,7 @@ class CryptoWithDrawWallet extends Component {
 
             <Select dropdownClassName="select-drpdwn"
               className="cust-input"
-            //   onChange={(e) => handleChange(e)}
+         
               placeholder="Select Address"
             >
               {addressLu?.map((item, idx) =>
@@ -258,7 +258,6 @@ class CryptoWithDrawWallet extends Component {
                 </Option>
               )}
             </Select>
-
           </Form.Item>
           </Form>
         

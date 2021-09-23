@@ -12,7 +12,7 @@ import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { handleFavouritAddress } from '../../reducers/addressBookReducer';
 import { appInsights } from "../../Shared/appinsights";
-import {favouriteFiatAddress } from '../addressbook.component/api';
+import {favouriteFiatAddressz,detailsAddress } from '../addressbook.component/api';
 import { setWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import WithdrawalSummary from './withdrawalSummary';
 import WithdrawalLive from './withdrawLive';
@@ -38,6 +38,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   const [stateLu, setStateLu] = useState([]);
   const [country, setCountry] = useState(null);
   const[addressLu, setAddressLu] = useState([]);
+  const[addressDetails, setAddressDetails] = useState({})
   const [livefacerecognization, setLivefacerecognization] = useState({});
   const [isWithdrawSuccess, setIsWithdrawSuccess] = useState(false);
 
@@ -61,6 +62,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     }
   }
   const handleWalletSelection = (walletId) => {
+    debugger;
     form.setFieldsValue({ memberWalletId: walletId })
     if (buyInfo.memberFiat?.data) {
       let wallet = buyInfo.memberFiat.data.filter((item) => {
@@ -77,11 +79,23 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     }
   }
   const getAddressLu = async () => {
-    let recAddress = await favouriteFiatAddress()
+    let recAddress = await favouriteFiatAddress(userConfig.id,'fiat')
     if (recAddress.ok) {
         setAddressLu(recAddress.data);
     }
   }
+  const getAddressDetails = async (e) => {
+    debugger
+    let recAddressDetails = await detailsAddress(e)
+    if (recAddressDetails.ok) {
+      bindEditableData(recAddressDetails.data)
+    }
+  }
+  const bindEditableData = (obj) => {
+    debugger;
+    setAddressDetails({ ...obj });
+    form.setFieldsValue({ bankName:obj.bankName });
+};
   const getCountryLu = async () => {
     let recName = await getCountryStateLu()
     if (recName.ok) {
@@ -143,7 +157,8 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
       <div className="suisfiat-height auto-scroll">
         <div ref={useDivRef}></div>
         {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-        <Form form={form} onFinish={savewithdrawal}>
+        <Form 
+        form={form} onFinish={savewithdrawal} >
           <div className="p-relative d-flex align-center"> <Translate
             content="Beneficiary_BankDetails"
             component={Paragraph}
@@ -173,12 +188,13 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
             </div>
             <Select dropdownClassName="select-drpdwn"
               className="cust-input"
-              onChange={(e) => handleChange(e)}
+              // onKeyUp={(event) => this.handleUserChange(event)}
+               onChange={(e) => handleChange(e)}
               placeholder="Select Address"
             >
               {/* <Option value="meena">meena</Option> */}
               {addressLu?.map((item, idx) =>
-                <Option key={idx} value={item.name}>{item.name}
+                <Option key={idx} value={item.id}>{item.name}
                 </Option>
               )}
             </Select>

@@ -40,7 +40,7 @@ class AddressBook extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            visible: false,
+            cryptoDrawer: false,
             cryptoFiat: false,
             fiatDrawer:false,
             gridUrl: process.env.REACT_APP_GRID_API + "Transaction/TransactionHistoryk",
@@ -66,11 +66,11 @@ class AddressBook extends Component {
         this.setState({ fiatDrawer: true })
     }
     handleCryptoAddress = () => {
-        this.setState({ visible: true })
+        this.setState({ cryptoDrawer: true })
     }
 
     closeBuyDrawer = () => {
-        this.setState({ visible: false, fiatDrawer: false })
+        this.setState({ cryptoDrawer: false, fiatDrawer: false })
     }
     handleWithdrawToggle = e => {
         this.setState({
@@ -146,7 +146,7 @@ class AddressBook extends Component {
                     </div>]}
                     placement="right"
                     closable={true}
-                    visible={this.state.visible}
+                    visible={this.state.cryptoDrawer}
                     closeIcon={null}
                     className="side-drawer"
                 >
