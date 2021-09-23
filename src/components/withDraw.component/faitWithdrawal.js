@@ -12,7 +12,7 @@ import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { handleFavouritAddress } from '../../reducers/addressBookReducer';
 import { appInsights } from "../../Shared/appinsights";
-import {favouriteFiatAddressz,detailsAddress } from '../addressbook.component/api';
+import {favouriteFiatAddress,detailsAddress } from '../addressbook.component/api';
 import { setWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import WithdrawalSummary from './withdrawalSummary';
 import WithdrawalLive from './withdrawLive';
