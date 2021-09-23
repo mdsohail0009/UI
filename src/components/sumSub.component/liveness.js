@@ -6,38 +6,34 @@ import { userInfo, getmemeberInfo } from '../../reducers/configReduser';
 import { withRouter } from 'react-router-dom';
 
 class LiveNessSumsub extends Component {
-    state = {loading:true}
+    state = {loading:true,applicantId:null,applicantActionid:null}
     componentDidMount() {
-        if (this.props.userConfig.isKYC) {
-            this.props.history.push("/dashboard")
-        }
-        this.launchWebSdk(process.env.REACT_APP_SUMSUB_URI, 'basic-kyc', 'tst:N2Kvt7SOOVp1jMf7wyQy9BSO.KlnFBjZadRJWK1A0rHckzIlaHQqbRDTO');
-        
+        this.launchWebSdk(process.env.REACT_APP_SUMSUB_URI, 'basic-kyc', 'tst:N2Kvt7SOOVp1jMf7wyQy9BSO.KlnFBjZadRJWK1A0rHckzIlaHQqbRDTO');  
     }
     launchWebSdk = async (apiUrl, flowName, accessToken, applicantEmail, applicantPhone, customI18nMessages) => {
         applicantEmail = "test@example.org"
         applicantPhone = "+491758764512"
-        apicalls.sumsublivenessacesstoken(this.props.userConfig.userId,"Liveness Check - Withdrawals").then((res) => {
+        apicalls.sumsublivenessacesstoken(this.props.userConfig.userId,"Liveness Check - Withdrawals",this.state.applicantActionid).then((res) => {
         let snsWebSdkInstance = snsWebSdk.Builder(process.env.REACT_APP_SUMSUB_URI, "Liveness Check - Withdrawals")
             .withAccessToken(res.data.token, (newAccessTokenCallback) => {
                     newAccessTokenCallback(res.data.token)
-
             })
             .withConf({
                 lang: "en",
                 email: this.props.userConfig.email,
                 phone: this.props.userConfig.phoneNo, // if available
-                // firstName:'NARESH',
-                // fixedInfo: {
-                //     "firstName": "London",
-                //     "lastName": "GBR"
-                // },
                 onMessage: (type, payload) => {
-                    console.log('WebSDK onMessage', type, payload)
-                    if (type === 'idCheck.applicantStatus' && payload.reviewStatus == "completed")
-                        apicalls.updateKyc(this.props.userConfig.userId).then((res) => {
-                            
-                        })
+                    // console.log('WebSDK onMessage', type, payload)
+                    if(type == 'idCheck.actionCompleted'){
+                        this.setState({...this.state, applicantActionid:payload.applicantActionId})
+                        this.props.onConfirm(this.state)
+                    }
+                    if(type == 'idCheck.onActionSubmitted'){
+                        this.setState({...this.state, applicantActionid:payload.applicantActionId})
+                    }
+                    if(type == 'idCheck.onApplicantLoaded '){
+                        this.setState({...this.state, applicantId:payload.applicantId})
+                    }  
                 },
                 onError: (error) => {
                     console.log('WebSDK onError', error)
@@ -55,7 +51,7 @@ class LiveNessSumsub extends Component {
     render() {
         return (
             <>
-            {this.state.loading && <div className="loader">Loading .....</div>}
+            {/* {this.state.loading && <div className="loader">Loading .....</div>} */}
                 <div id="sumsub-websdk-container"></div>
             </>
         );
