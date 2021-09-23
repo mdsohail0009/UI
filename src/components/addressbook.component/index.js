@@ -9,57 +9,53 @@ import List from '../grid.component';
 import FaitWithdrawal from '../withDraw.component/faitWithdrawal'
 import CryptoList from '../shared/cryptolist';
 import NewFiatAddress from './addFiatAddressbook';
-import { getCoinList} from './api';
+import { getCoinList } from './api';
 import SelectCrypto from './selectCrypto';
 
-
-const { Title, Paragraph } = Typography;
-const { TabPane } = Tabs;
-const columnsCrypto = [
-    { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="check" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
-    { field: "walletCode", title: "Address Label", filter: true, },
-    { field: "docType", title: "Coin", width: 150, filter: true, },
-    { field: "debit", title: "Address", filter: true, width: 180 },
-    { field: "status", title: "Status", filter: true, width: 220 }
-];
-const columnsFiat = [
-    { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="check" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
-    { field: "favouriteName", title: "Address Label", filter: true, },
-    { field: "type", title: "Currency", width: 150, filter: true, },
-    { field: "toWalletAddress", title: "Address", filter: true, width: 180 },
-    { field: "accountNumber", title: "Account Number", filter: true, width: 180 },
-    { field: "beneficiaryAccountName", title: "Account Name", filter: true, width: 180 },
-    { field: "beneficiaryAccountAddress", title: "Account Address", filter: true, width: 220 },
-    { field: "routingNumber", title: "Routing Number", filter: true, width: 180 },
-    { field: "swiftCode", title: "Swift Code", filter: true, },
-    { field: "bankName", title: "Bank Name", filter: true, width: 180 },
-    { field: "bankAddress", title: "Bank Address", filter: true, width: 220 },
-    { field: "status", title: "Status", filter: true, width: 220 }
-];
 class AddressBook extends Component {
     constructor(props) {
         super(props);
         this.state = {
             visible: false,
             cryptoFiat: false,
-            fiatDrawer:false,
-            gridUrl: process.env.REACT_APP_GRID_API + "Transaction/TransactionHistoryk",
-            gridUrlFiat: process.env.REACT_APP_GRID_API + "Addressbook/FavouriteAddressK",
+            fiatDrawer: false,
+            gridUrlCrypto: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressCryptoK",
+            gridUrlFiat: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressFiatK",
         }
+        this.gridRef = React.createRef();
     }
-
+    columnsFiat = [
+        //{ field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="check" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
+        { field: "favouriteName", title: "Address Label", filter: true, width: 180 },
+        { field: "type", title: "Currency", width: 150, filter: true, with: 150 },
+        { field: "toWalletAddress", title: "Address", filter: true, width: 350 },
+        { field: "accountNumber", title: "Account Number", filter: true, width: 200 },
+        { field: "beneficiaryAccountName", title: "Account Name", filter: true, width: 200 },
+        { field: "beneficiaryAccountAddress", title: "Account Address", filter: true, width: 250 },
+        { field: "routingNumber", title: "Routing Number", filter: true, width: 180 },
+        { field: "swiftCode", title: "Swift Code", filter: true, },
+        { field: "bankName", title: "Bank Name", filter: true, width: 200 },
+        { field: "bankAddress", title: "Bank Address", filter: true, width: 250 },
+        { field: "status", title: "Status", filter: true, width: 100 }
+    ];
+    columnsCrypto = [
+        //{ field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="check" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
+        { field: "addressLable", title: "Address Label", filter: true, width: 250 },
+        { field: "coin", title: "Coin", width: 150, filter: true, },
+        { field: "address", title: "Address", filter: true }
+    ];
     componentDidMount() {
         this.coinList()
     }
 
-    coinList = async() =>{
-        let  fromlist =  await getCoinList(this.props.userProfile?.id)
-         if(fromlist.ok){
-             this.setState({...this.state,fromCoinsList:fromlist.data,isLoading:false})
-         }else{
-             this.setState({...this.state,fromCoinsList:[],isLoading:false})
-         }
-     }
+    coinList = async () => {
+        let fromlist = await getCoinList(this.props.userProfile?.id)
+        if (fromlist.ok) {
+            this.setState({ ...this.state, fromCoinsList: fromlist.data, isLoading: false })
+        } else {
+            this.setState({ ...this.state, fromCoinsList: [], isLoading: false })
+        }
+    }
 
 
     handleFiatAddress = () => {
@@ -99,7 +95,8 @@ class AddressBook extends Component {
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
     }
     render() {
-        const { cryptoFiat, gridUrl,gridUrlFiat } = this.state;
+        const { cryptoFiat, gridUrlCrypto, gridUrlFiat } = this.state;
+        const { Title, Paragraph } = Typography;
         return (
             <>
                 <div className="box basic-info">
@@ -108,12 +105,12 @@ class AddressBook extends Component {
                     <Radio.Group
                         defaultValue={1}
                         onChange={this.handleWithdrawToggle}
-                        className="buysell-toggle">
+                        className="buysell-toggle mx-0" style={{ display: "inline-block" }}>
                         <Translate content="withdrawCrypto" component={Radio.Button} value={1} />
                         <Translate content="withdrawFiat" component={Radio.Button} value={2} />
                     </Radio.Group>
 
-                    {cryptoFiat ? <div className="mt-24">
+                    {cryptoFiat ? <>
                         <div className="d-flex justify-content">
                             <div><Title className="fs-26 text-white-30 fw-500">Withdraw Fiat</Title>
                                 <Paragraph className="basic-decs fw-200">Basic Info, like your name and photo, that you use on Suissebase</Paragraph>
@@ -122,19 +119,19 @@ class AddressBook extends Component {
                                 <Button className="c-pointer pop-btn ant-btn px-24" onClick={this.handleFiatAddress}> Add Address</Button>
                             </div>
                         </div>
-                        <List url={gridUrlFiat}  columns={columnsFiat} />
-                    </div> :
-                        <div className="mt-24">
+                        <List columns={this.columnsFiat} ref={this.gridRef} key={gridUrlFiat} url={gridUrlFiat} />
+                    </> :
+                        <>
                             <div className="d-flex justify-content">
                                 <div> <Title className="fs-26 text-white-30 fw-500">Withdraw Crypto</Title>
                                     <Paragraph className="basic-decs fw-200">Basic Info, like your name and photo, that you use on Suissebase</Paragraph>
                                 </div>
                                 <div className="text-right ">
-                                    <Button className="c-pointer pop-btn ant-btn px-24" onClick={this. handleCryptoAddress}> Add Address</Button>
+                                    <Button className="c-pointer pop-btn ant-btn px-24" onClick={this.handleCryptoAddress}> Add Address</Button>
                                 </div>
                             </div>
-                            <List url={gridUrl}  columns={columnsCrypto} />
-                        </div>}
+                            <List columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridRef} url={gridUrlCrypto} />
+                        </>}
                 </div>
                 <Drawer destroyOnClose={true}
                     title={[<div className="side-drawer-header">
@@ -166,7 +163,7 @@ class AddressBook extends Component {
                     closeIcon={null}
                     className="side-drawer"
                 >
-                <NewFiatAddress/>
+                    <NewFiatAddress />
                 </Drawer>
             </>
         )

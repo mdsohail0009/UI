@@ -134,6 +134,7 @@ line-height: 16px;min-width:90px}
 .main-container{padding: 24px 16px; margin: auto;}
 .trade-btn{border-radius: 5px;  line-height: normal; height: 20px;padding: 0 4px;}
 /* Buy/sell */
+.k-loading-mask{z-index: 1;}
 .side-drawer .ant-drawer-body, .side-drawer .ant-drawer-header, .side-drawer-full .ant-drawer-header, .side-drawer-full .ant-drawer-body, .side-drawer-full .ant-table-cell, .side-drawer-full .ant-table-tbody > tr.ant-table-row:hover > td, .side-drawer-full .ant-table-thead th.ant-table-column-sort, .side-drawer-full .ant-table-thead th.ant-table-column-has-sorters:hover{background-color: var(--bgGrey);}
 .side-drawer .ant-drawer-mask, .side-drawer-full .ant-drawer-mask{background-color: var(--bgDarkGrey-95);}
 .side-drawer .ant-drawer-header,.side-drawer-full .ant-drawer-header, .crypto-list-tabs .ant-tabs-nav::before{border: none;}
@@ -142,7 +143,7 @@ line-height: 16px;min-width:90px}
 .buysell-toggle .ant-radio-button-wrapper{border-radius: 15px;border: none;background: transparent;color: var(--textYellow);text-transform: uppercase;font-weight: 600;padding: 20px 40px; min-width: 165px;line-height: 0;font-size: 14px;text-align: center;}
 .buysell-toggle .ant-radio-button{border-radius: 15px;font-size: 12px;}
 .buysell-toggle .ant-radio-button-checked{background: var(--bgYellow);border-left: none;}
-.buysell-toggle .ant-radio-button-wrapper-checked{color: var(--textDark) !important;}
+.buysell-toggle .ant-radio-button-wrapper-checked{color: var(--textDark) !important; z-index: 0;}
 .buysell-toggle .ant-radio-button-wrapper::before, .crypto-card .ant-card-body::before, .crypto-card .ant-card-body::after{content: none;}
 .crypto-list-tabs .crypto-list{max-height: calc(100vh - 391px); overflow-y: auto; padding-right: 10px;}
 .crypto-list-tabs .ant-input-search-button, .ant-input-search-middle .ant-input-search-button{display: none;}
