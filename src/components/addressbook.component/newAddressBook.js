@@ -15,6 +15,7 @@ const NewAddressBook = ({changeStep,addressBookReducer,userConfig, onCancel}) =>
         values['membershipId'] = userConfig.id;
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
+        values['toCoin'] = addressBookReducer.coinWallet.coin
         let namecheck = values.favouriteName;
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
         if(responsecheck.data != null){
@@ -52,7 +53,7 @@ const NewAddressBook = ({changeStep,addressBookReducer,userConfig, onCancel}) =>
                         </Form.Item>
                         <Form.Item
                             className="custom-forminput mb-0 pr-0"
-                            name="coin" 
+                            name="toCoin" 
                             // rules={[
                             //     { required: true, message: "Is required" },
                             //   ]}
@@ -62,8 +63,11 @@ const NewAddressBook = ({changeStep,addressBookReducer,userConfig, onCancel}) =>
                                     <Text className="input-label">Coin</Text>
                                     <span style={{ color: "#fafcfe", paddingLeft: "2px" }}></span>
                                 </div>
-                                {addressBookReducer.coinWallet.coinFullName ? <Input onClick={() => changeStep('step3')} value={addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} className="cust-input" placeholder="Select from Coins" /> :
-                                <Input onClick={() => changeStep('step3')}  className="cust-input" placeholder="Select from Coins" />}
+                                {addressBookReducer.coinWallet.coinFullName ? <Input onClick={() => changeStep('step3')} value={addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} className="cust-input cust-adon" placeholder="Select from Coins" 
+                                 addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />} /> :
+                                <Input   className="cust-input cust-adon" placeholder="Select from Coins"  
+                                addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />} 
+                                />}
                             </div>
                         </Form.Item>
                         <Form.Item

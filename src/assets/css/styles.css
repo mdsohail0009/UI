@@ -103,7 +103,7 @@ line-height: 16px;min-width:90px}
 .icon.md.recivearrow{background-position: -338px -35px}
 .icon.md.check-arrow{background-position: -366px -36px}
 .icon.md.camera{background-position: -400px -34px;}
-.icon.md.address-book{background-position:-430px -36px}
+.icon.md.address-book{background-position:-430px -35px}
 
 .icon.lg.profile-icon{background-position: -4px -329px}
 .icon.lg.security-icon{background-position:-107px -330px}
@@ -529,7 +529,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 
 .ant-select-focused .ant-select-selector{box-shadow:none !important}
 .selectcustom-input .anticon-search{display: none;}
-
+.custom-add-select{width:315px !important;border-bottom-right-radius: 0;border-top-right-radius: 0;}
+.new-add{border: 1px solid #899097; padding: 14px;border-bottom-right-radius: 30px; border-top-right-radius: 30px; border-left: 0;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}

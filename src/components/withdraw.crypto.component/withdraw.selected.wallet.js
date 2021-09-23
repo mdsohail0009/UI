@@ -240,7 +240,7 @@ class CryptoWithDrawWallet extends Component {
                     />
 
                     <Tooltip placement="bottom" title={<span>New Address</span>} >
-                        <span className="val-updown c-pointer" onClick={() =>this.props.changeStep('step8')}>
+                        <span className="val-updown c-pointer" onClick={() => this.props.changeStep('step8')}>
                             <span className="icon md address-book d-block c-pointer" style={{ marginTop: '10px', marginLeft: '10px' }}></span>
                         </span>
                     </Tooltip></div>

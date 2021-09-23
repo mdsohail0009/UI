@@ -164,7 +164,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,chan
                                 <Input className="cust-input" placeholder="Enter Address" />
                             </div>
                         </Form.Item>
-                    <Form.Item
+                    {/* <Form.Item
                         className="custom-forminput mb-24"
                         name="memberWalletId"
                         required
@@ -179,8 +179,8 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,chan
                         />
                             <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
                             <WalletList placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} /></div>
-                    </Form.Item>
-                    <Form.Item
+                    </Form.Item> */}
+                    {/* <Form.Item
                         className="custom-forminput mb-24"
                         name="totalValue"
                         rules={[
@@ -205,7 +205,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,chan
                             />
 
                         </div>
-                    </Form.Item>
+                    </Form.Item> */}
                     <Form.Item
                         className="custom-forminput mb-24"
                         name="accountNumber"
