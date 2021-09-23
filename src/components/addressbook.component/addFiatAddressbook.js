@@ -23,7 +23,7 @@ const LinkValue = (props) => {
     )
 }
 const { Option } = Select;
-const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,changeStep ,props}) => {
+const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,changeStep ,onCancel}) => {
     const [form] = Form.useForm();
     const [selectedWallet, setSelectedWallet] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -114,8 +114,8 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,chan
         let response = await saveAddress(values);
         if (response.ok) {
             debugger;
-            changeStep('step1');
-            props.closeBuyDrawer();
+           // changeStep('step1');
+            onCancel();
 
         }
     }

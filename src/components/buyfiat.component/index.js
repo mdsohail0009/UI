@@ -33,6 +33,10 @@ class MassPayment extends Component {
     onHhandleClick = () => {
         this.props.changeStep("step3");
     }
+    onAddressClick = () => {
+      //  console.log('trigger')
+        this.props.dispatch(setStep("step1"))
+    }
     renderContent = () => {
         const stepcodes = {
             fiatdeposit: <FiatDeposit tab={this.props.tabData} fiatRef={(cd) => this.child = cd} />,
@@ -44,7 +48,7 @@ class MassPayment extends Component {
 
             billingaddress: <BillingAddress />,
             confirmation: <ConfirmMsg />,
-            addAddress:<NewFiatAddress/>,
+            addAddress:<NewFiatAddress onCancel = { () =>this.onAddressClick() } />,
             withdrwalfiatsummary: < WithdrawalSummary/>,
             withdrwlive: < WithdrawalLive/>,
         }

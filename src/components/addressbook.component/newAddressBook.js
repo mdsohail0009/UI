@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import {saveAddress, favouriteNameCheck} from './api';
 
 const { Text } = Typography;
-const NewAddressBook = ({changeStep,addressBookReducer,userConfig}) =>{
+const NewAddressBook = ({changeStep,addressBookReducer,userConfig, onCancel}) =>{
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
   
@@ -23,6 +23,7 @@ const NewAddressBook = ({changeStep,addressBookReducer,userConfig}) =>{
         let response = await saveAddress(values);
         if (response.ok) {
             changeStep('step1');
+            onCancel();
             
     }
 }
@@ -87,14 +88,15 @@ const NewAddressBook = ({changeStep,addressBookReducer,userConfig}) =>{
                             >
                                 Save
                             </Button>
-                            <Button
+                            {/* <Button
                                 htmlType="cancel"
                                 size="large"
                                 block
+                                onClick={ () => onCancel()}
                                 className="pop-cancel"
                             >
                                 Cancel
-                            </Button>
+                            </Button> */}
                         </div>
 
                     </Form>
