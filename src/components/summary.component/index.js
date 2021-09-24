@@ -19,17 +19,17 @@ class Summary extends Component {
             return <Loader />
         }
         const { Paragraph, Text } = Typography;
-        const { coin, oneCoinValue, amount, amountNativeCurrency, nativeCurrency, error, isButtonLoad, showFee, feeAmount, feeCurrency, okBtnTitle, showEstimatedTotal = true, showConvert = false, convertValue, convertCoin,showEstimated = true,exchangeCoin, decimalPlaces, currencyPrefix,onErrorClose } = this.props;
+        const { coin, oneCoinValue, amount, amountNativeCurrency, nativeCurrency, error, isButtonLoad, showFee, feeAmount, feeCurrency, okBtnTitle, showEstimatedTotal = true, showConvert = false, convertValue, convertCoin, showEstimated = true, exchangeCoin, decimalPlaces, currencyPrefix, onErrorClose } = this.props;
         const link = <LinkValue content="terms_service" />;
         return (
             <>
-                {!error?.valid && <Alert showIcon type="info" message={error?.title||"Buy crypto"} description={error?.message} closable onClose={() => onErrorClose?onErrorClose():""} />}
+                {!error?.valid && <Alert showIcon type="info" message={error?.title || "Buy crypto"} description={error?.message} closable onClose={() => onErrorClose ? onErrorClose() : ""} />}
                 <div className="cryptosummary-container auto-scroll">
                     <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}><Currency prefix={""} decimalPlaces={decimalPlaces} defaultValue={amount} suffixText={coin} /> </div>
                     {showEstimated && <div className="text-white-50 fw-300 text-center fs-14 mb-16"><Currency defaultValue={amountNativeCurrency} prefix={""} decimalPlaces={decimalPlaces} type={'text'} prefixText={nativeCurrency} /></div>}
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
-                        <Currency defaultValue={oneCoinValue} decimalPlaces={decimalPlaces} prefix={""} className="fw-300 text-white-30" prefixText={`1 ${exchangeCoin||coin} = ${nativeCurrency}`}
+                        <Currency defaultValue={oneCoinValue} decimalPlaces={decimalPlaces} prefix={""} className="fw-300 text-white-30" prefixText={`1 ${exchangeCoin || coin} = ${nativeCurrency}`}
                         />
 
                     </div>
@@ -63,7 +63,9 @@ class Summary extends Component {
                         <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16 mb-0" style={{ flex: 1 }} />
                     </div>
                     <SuisseBtn className={"pop-btn"} onRefresh={() => this.props.onRefresh()} title={okBtnTitle || "pay"} loading={isButtonLoad} autoDisable={true} onClick={() => this.props.onClick()} />
-                    <Translate content="cancel" component={Button} onClick={() => this.props.onCancel()} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
+                    <div className="text-center">
+                        <Translate content="cancel" component={Button} onClick={() => this.props.onCancel()} type="text" size="large" className="text-white-30 pop-cancel fw-400" />
+                    </div>
                 </div>
 
             </>

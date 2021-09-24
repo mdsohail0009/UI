@@ -1,6 +1,5 @@
 :root {
     --bgDark: #ECF1F4;
-    --bgDark1: #515A64;
     --bgDarkGrey:#ECF1F4;
     --bgDarkGrey-95:rgba(49,60,70,0.75);
     --bgGrey: #FFFFFF;
@@ -10,14 +9,12 @@
     --bgYellow: #FFDB1A;
     --bgDarkYellow:#e0bb02;
     --bgWhite: #FFFFFF;
-    --bgWhiteSpin: #0E0E2C;
     --bgOrient: #1E526E;
-    --bgOrient1: #ECF1F4;
     --bgGloom: #FFFFFF;
     --bgBlue: #1E90FF;
     --bgPitch: #1B4156;
-    --bgPitch1: #94b7ca;
     --bgBlu: #ecf1f4;
+    --bgOrion: #13132B;
     --textPureWhite: #FFFFFF;
     --textWhite: #000000;
     --textWhite30: #243540;
@@ -38,7 +35,7 @@
     --borderGrey: #E9F3FF;
     --borderLight: #CECECE;
     --bgCircle: #19B06C;
-    --lightThemeIcons: url(https://scmcdn.blob.core.windows.net/scmcdn/suissebase/images/light-theme-icons.svg);
-    --cryptoIcons: url(https://scmcdn.blob.core.windows.net/scmcdn/suissebase/images/light-crypto-icons.svg);
+    --lightThemeIcons: url(../../assets/images/light-theme-icons.svg);
+    --cryptoIcons: url(../../assets/images/light-crypto-icons.svg);
     --logo: url(../../assets/images/logo-color.png);
 }
