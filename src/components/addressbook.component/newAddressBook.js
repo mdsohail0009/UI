@@ -65,7 +65,7 @@ const NewAddressBook = ({changeStep,addressBookReducer,userConfig, onCancel}) =>
                                 </div>
                                 {addressBookReducer.coinWallet.coinFullName ? <Input onClick={() => changeStep('step3')} value={addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} className="cust-input cust-adon" placeholder="Select from Coins" 
                                  addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />} /> :
-                                <Input   className="cust-input cust-adon" placeholder="Select from Coins"  
+                                <Input  disabled className="cust-input cust-adon" placeholder="Select from Coins"  
                                 addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />} 
                                 />}
                             </div>

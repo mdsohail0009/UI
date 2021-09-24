@@ -27,8 +27,8 @@ class AddressBook extends Component {
     columnsFiat = [
         //{ field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="check" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
         { field: "favouriteName", title: "Address Label", filter: true, width: 180 },
-        { field: "type", title: "Currency", width: 150, filter: true, with: 150 },
-        { field: "toWalletAddress", title: "Address", filter: true, width: 350 },
+        { field: "type", title: "Type", width: 150, filter: true, with: 150 },
+        { field: "toWalletAddress", title: "Address", filter: true, width: 380 },
         { field: "accountNumber", title: "Account Number", filter: true, width: 200 },
         { field: "beneficiaryAccountName", title: "Account Name", filter: true, width: 200 },
         { field: "beneficiaryAccountAddress", title: "Account Address", filter: true, width: 250 },
@@ -41,8 +41,8 @@ class AddressBook extends Component {
     columnsCrypto = [
         //{ field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="check" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
         { field: "addressLable", title: "Address Label", filter: true, width: 250 },
-        { field: "coin", title: "Coin", width: 150, filter: true, },
-        { field: "address", title: "Address", filter: true }
+        { field: "coin", title: "Coin",  filter: true, },
+        { field: "address", title: "Address", filter: true,  width: 380 }
     ];
     componentDidMount() {
         this.coinList()
@@ -111,9 +111,9 @@ class AddressBook extends Component {
                     </Radio.Group>
 
                     {cryptoFiat ? <>
-                        <div className="d-flex justify-content">
+                        <div className="d-flex justify-content align-center mb-16">
                             <div><Title className="fs-26 text-white-30 fw-500">Withdraw Fiat</Title>
-                                <Paragraph className="basic-decs fw-200">Basic Info, like your name and photo, that you use on Suissebase</Paragraph>
+                                {/* <Paragraph className="basic-decs fw-200">Basic Info, like your name and photo, that you use on Suissebase</Paragraph> */}
                             </div>
                             <div className="text-right ">
                                 <Button className="c-pointer pop-btn ant-btn px-24" onClick={this.handleFiatAddress}> Add Address</Button>
@@ -122,9 +122,9 @@ class AddressBook extends Component {
                         <List columns={this.columnsFiat} ref={this.gridRef} key={gridUrlFiat} url={gridUrlFiat} />
                     </> :
                         <>
-                            <div className="d-flex justify-content">
+                            <div className="d-flex justify-content align-center mb-16">
                                 <div> <Title className="fs-26 text-white-30 fw-500">Withdraw Crypto</Title>
-                                    <Paragraph className="basic-decs fw-200">Basic Info, like your name and photo, that you use on Suissebase</Paragraph>
+                                    {/* <Paragraph className="basic-decs fw-200">Basic Info, like your name and photo, that you use on Suissebase</Paragraph> */}
                                 </div>
                                 <div className="text-right ">
                                     <Button className="c-pointer pop-btn ant-btn px-24" onClick={this.handleCryptoAddress}> Add Address</Button>

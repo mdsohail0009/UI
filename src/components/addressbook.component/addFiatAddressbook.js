@@ -243,7 +243,6 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,chan
                         </div>
 
                     </Form.Item>
-
                     <Form.Item
                         className="custom-forminput mb-24"
                         name="bankAddress1"
