@@ -16,7 +16,7 @@ import {saveAddress,favouriteNameCheck} from './api';
 
 const LinkValue = (props) => {
     return (
-        <Translate className="text-yellow text-underline c-pointer"
+        <Translate className="textpure-yellow text-underline c-pointer"
             content={props.content}
             component={Link}
         />

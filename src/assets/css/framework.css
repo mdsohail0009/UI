@@ -51,6 +51,7 @@
 .text-red{color: var(--textRed) !important;}
 .text-secondary{color: var(--textSecondary) !important;}
 .text-yellow{color: var(--textYellow) !important;}
+.textpure-yellow{color: var(--bgDarkYellow) !important;}
 .text-defaultylw{color: var(--textDefautlYlw) !important;}
 .text-aqua{color: var(--textAqua) !important;}
 .text-purple{color: var(--textpurple) !important;}
