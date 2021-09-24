@@ -53,7 +53,7 @@ const WithdrawalLive = ({ userConfig, sendReceive, changeStep,dispatch,onConfirm
             >
               Confirm
             </Button>}
-        <Translate content="cancel" component={Button} onClick={() => onCancel()} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
+        <Translate content="back" component={Button} onClick={() => onCancel()} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
       </div>
     )}
 }

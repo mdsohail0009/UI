@@ -298,5 +298,6 @@ export default {
   Address:'Add New Address',
   withdraw_fiat_summary:'Withdraw fiat summary',
   withdraw_live:'Withdraw Face recognition',
-  confirm_withdraw:'Withdraw confirm'
+  confirm_withdraw:'Withdraw confirm',
+  back:'Back'
 }
