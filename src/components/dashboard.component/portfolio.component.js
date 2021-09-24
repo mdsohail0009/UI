@@ -18,21 +18,18 @@ class Portfolio extends Component {
 
     }
     componentDidMount() {
+
+        this.fetchInfo();
+        this.getGraph("week");
+    }
+    getGraph = async (type) => {
+        this.portFolioGraphRef.current.innerHTML = ""
         this.chart = createChart(this.portFolioGraphRef.current, {
             width: 750, height: 300,
             localization: {
                 dateFormat: "dd MMM yy",
             },
-            watermark: {
-                color: "#FFFFFF",
-                visible: false,
-                text: "Portfolio",
-                fontSize: 24,
-                horzAlign: "left",
-                vertAlign: "bottom",
-            },
-        });
-        this.chart.applyOptions({
+           
             priceScale: { position: "left", mode: PriceScaleMode.Normal },
             crosshair: {
                 vertLine: {
@@ -74,30 +71,34 @@ class Portfolio extends Component {
                 },
             },
             handleScroll: {
-                mouseWheel: false,
+                mouseWheel: true,
                 pressedMouseMove: true,
             },
             handleScale: {
                 axisPressedMouseMove: true,
-                mouseWheel: false,
+                mouseWheel: true,
                 pinch: true,
             },
-        })
-        this.fetchInfo();
-        this.getGraph("week");
-    }
-    getGraph = async (type) => {
-        const areaSeries = this.chart.addLineSeries();
-        const priceSeries = this.chart.addAreaSeries();
+        });
+      
+       
         const response = await getPortfolioGraph(this.props.userProfile?.id, type);
         if (response.ok) {
+            const areaSeries = this.chart.addLineSeries({
+                autoscaleInfoProvider: () => ({
+                    priceRange: {
+                        minValue: 0,
+                        maxValue: 30,
+                    },
+                }),
+            });
             const data = { BTC: response.data.map(item => { return { time: item.datetime, value: item.value } }) }
             areaSeries.setData(data.BTC);
-            priceSeries.setData(data.BTC);
             this.chart.timeScale().setVisibleLogicalRange({
                 from: 0,
-                to: data.BTC.length,
+                to: 30,
             });
+            this.chart.timeScale().fitContent();
         }
     }
     render() {
@@ -116,8 +117,8 @@ class Portfolio extends Component {
                 </div>
                 {/* <img src={chart} width="100%" /> */}
                 <div className="text-center mb-16 wmy-graph" >
-                    <Radio.Group defaultValue="week" buttonStyle="solid" onChange={({target:{value}}) => {
-                       this.getGraph(value)
+                    <Radio.Group defaultValue="week" buttonStyle="solid" onChange={({ target: { value } }) => {
+                        this.getGraph(value)
                     }}>
                         <Radio.Button value="week">1W</Radio.Button>
                         <Radio.Button value="month">1M</Radio.Button>

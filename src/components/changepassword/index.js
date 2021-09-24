@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import { changePassword } from '../../api/apiServer';
 import { Link } from 'react-router-dom';
 import { getmemeberInfo } from '../../reducers/configReduser';
+import apiClient from "../../api/apiCalls"
+
 notification.config({
   placement: "topRight",
   rtl: true
@@ -30,6 +32,13 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
       form.resetFields();
     }
   }, [userProfile])
+  useEffect(() => {
+    trakEvet()
+  }, [])
+
+  const trakEvet = () =>{
+    apiClient.trackEvent({"Action": 'Page View', "Feature": 'Change password', "Remarks": "Password page view","FullFeatureName": 'Change password',"userName":userConfig.userName,id:userConfig.id });
+  }
   const onFinishFailed = (error) => {
 
   }
@@ -55,6 +64,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
         form.resetFields();
         onSubmit()
         getmemeberInfoa(userConfig.email)
+        apiClient.trackEvent({"Action": 'Save', "Feature": 'Change password', "Remarks": "Password changed","FullFeatureName": 'Change password',"userName":userConfig.userName,id:userConfig.id });
       }
       else {
         setChangePasswordResponse({ error: true, messsage: result.data, isLoading: false });

@@ -18,6 +18,7 @@ const WithdrawalLive = ({ userConfig, sendReceive, changeStep,dispatch,onConfirm
   const [faceCapture, setFaceCapture] = useState(false);
   const [livefacerecognization, setLivefacerecognization] = useState({});
   const [isWithdrawSuccess, setIsWithdrawSuccess] = useState(false);
+  useEffect(() => { setFaceCapture(false) }, []);
   const saveWithdrwal = async() =>{
       let saveObj = sendReceive.withdrawFiatObj;
     saveObj.livefacerecognization = livefacerecognization?.applicantActionid;
