@@ -5,6 +5,7 @@ const CLEAR_STEP = "clearStep";
 const SET_WALLET_ADDRESS = "setWalletAddress";
 const HANDLE_SEND_FETCH = "handleSendFetch";
 const SET_WITHDRAWFIAT = "setWithdrawfiat";
+const REJECT_WITHDRAWFIAT = "rejectWithdrawfiat";
 const SET_SUB_TITLE = "setSubTitle";
 const setStep = (payload) => {
     return {
@@ -21,6 +22,12 @@ const setSubTitle = (payload) => {
 const setWithdrawfiat = (payload) => {
     return {
         type: SET_WITHDRAWFIAT,
+        payload
+    }
+}
+const rejectWithdrawfiat = (payload) => {
+    return {
+        type: REJECT_WITHDRAWFIAT,
         payload
     }
 }
@@ -66,6 +73,7 @@ let initialState = {
         withdrawsummary: 'withdraw_Btc',
         verifyidentity: 'verify_identity',
         withdrawscan: 'deposit',
+        addnewAddress: 'Address'
 
     },
     stepSubTitles: {
@@ -75,12 +83,13 @@ let initialState = {
         withdrawaddress: 'send_wallet_fiat',
         withdrawsummary: 'withdraw_summary_sub',
         withdrawscan: 'withdraw_summary_sub',
+        addnewAddress: null
 
 
     },
     depositWallet: "",
     cryptoWithdraw: {},
-    withdrawFiatObj:null,
+    withdrawFiatObj: null,
     subTitle: null
 }
 const sendReceiveReducer = (state = initialState, action) => {
@@ -97,6 +106,9 @@ const sendReceiveReducer = (state = initialState, action) => {
         case SET_WITHDRAWFIAT:
             state = { ...state, withdrawFiatObj: action.payload };
             return state;
+        case REJECT_WITHDRAWFIAT:
+            state = { ...state, withdrawFiatObj: null };
+            return state;
         case HANDLE_SEND_FETCH:
             state = { ...state, [action.payload.key]: { ...state[action.payload.key], ...action.payload } };
             return state;
@@ -109,4 +121,4 @@ const sendReceiveReducer = (state = initialState, action) => {
 
 }
 export default sendReceiveReducer;
-export { setStep, clearStep, setWalletAddress, fetchWithDrawWallets, setSelectedWithDrawWallet, handleSendFetch, setSubTitle, setWithdrawfiat }
+export { setStep, clearStep, setWalletAddress, fetchWithDrawWallets, setSelectedWithDrawWallet, handleSendFetch, setSubTitle, setWithdrawfiat, rejectWithdrawfiat }

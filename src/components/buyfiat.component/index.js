@@ -14,6 +14,8 @@ import FiatSummary from './buyfiatSummary';
 import BillingAddress from './fiatBillingAddress';
 import FaitDepositSummary from './faitdepositSummary';
 import NewFiatAddress from '../addressbook.component/addFiatAddressbook';
+import WithdrawalSummary from '../withDraw.component/withdrawalSummary';
+import WithdrawalLive from '../withDraw.component/withdrawLive';
 
 import ConfirmMsg from './confirm'
 class MassPayment extends Component {
@@ -31,6 +33,10 @@ class MassPayment extends Component {
     onHhandleClick = () => {
         this.props.changeStep("step3");
     }
+    onAddressClick = () => {
+      //  console.log('trigger')
+        this.props.dispatch(setStep("step1"))
+    }
     renderContent = () => {
         const stepcodes = {
             fiatdeposit: <FiatDeposit tab={this.props.tabData} fiatRef={(cd) => this.child = cd} />,
@@ -42,7 +48,9 @@ class MassPayment extends Component {
 
             billingaddress: <BillingAddress />,
             confirmation: <ConfirmMsg />,
-            addAddress:<NewFiatAddress/>
+            addAddress:<NewFiatAddress onCancel = { () =>this.onAddressClick() } />,
+            withdrwalfiatsummary: < WithdrawalSummary/>,
+            withdrwlive: < WithdrawalLive/>,
         }
         return stepcodes[config[this.props.buyFiat.stepcode]]
     }
@@ -56,6 +64,8 @@ class MassPayment extends Component {
             billingaddress: <span onClick={() => this.props.dispatch(setStep("step3"))} className="icon md lftarw-white c-pointer" />,
             confirmation: <span />,
             addAddress: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            withdrwalfiatsummary: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            withdrwlive: <span onClick={() => this.props.dispatch(setStep("step5"))} className="icon md lftarw-white c-pointer" />,
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }
@@ -79,7 +89,9 @@ class MassPayment extends Component {
 
             billingaddress: <sapn />,
             confirmation: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
-            addAddress: <span />
+            addAddress: <span />,
+            withdrwalfiatsummary: <span />,
+            withdrwlive: <span />
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }

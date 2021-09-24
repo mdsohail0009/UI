@@ -7,6 +7,7 @@ import connectStateProps from '../../utils/state.connect';
 import FaitDeposit from '../../components/deposit.component/faitDeposit';
 import FaitdepositSummary from './faitdepositSummary';
 import SelectCurrency from './selectCurrency';
+import WithdrawalSummary from '../withDraw.component/withdrawalSummary';
 
 class SuissebaseFiat extends Component {
     state = {}
@@ -22,6 +23,7 @@ class SuissebaseFiat extends Component {
         const stepcodes = {
             fiatdeposit: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             faitsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            withdrwalfiatsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }
@@ -30,6 +32,7 @@ class SuissebaseFiat extends Component {
             fiatdeposit: <FaitDeposit  fiatRef={(cd) => this.child = cd}/>,
             faitsummary: < FaitdepositSummary />,
             selectcurrency: < SelectCurrency/>,
+            withdrwalfiatsummary: < WithdrawalSummary/>,
 
         }
         return stepcodes[config[this.props.buyFiat.stepcode]]
@@ -38,6 +41,7 @@ class SuissebaseFiat extends Component {
         const stepcodes = {
             fiatdeposit: <span />,
             faitsummary: <span />,
+            withdrwalfiatsummary: <span />,
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }

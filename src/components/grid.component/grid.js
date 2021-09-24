@@ -30,6 +30,14 @@ const filterOperators = {
         { text: 'grid.filterBeforeOperator', operator: 'lt' },
         { text: 'grid.filterBeforeOrEqualOperator', operator: 'lte' }
     ],
+    'datetime': [
+        { text: 'grid.filterEqOperator', operator: 'eq' },
+        { text: 'grid.filterNotEqOperator', operator: 'neq' },
+        { text: 'grid.filterAfterOrEqualOperator', operator: 'gte' },
+        { text: 'grid.filterAfterOperator', operator: 'gt' },
+        { text: 'grid.filterBeforeOperator', operator: 'lt' },
+        { text: 'grid.filterBeforeOrEqualOperator', operator: 'lte' }
+    ],
     'boolean': [
         { text: 'grid.filterEqOperator', operator: 'eq' }
     ]

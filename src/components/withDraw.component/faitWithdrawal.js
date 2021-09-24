@@ -12,7 +12,10 @@ import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { handleFavouritAddress } from '../../reducers/addressBookReducer';
 import { appInsights } from "../../Shared/appinsights";
-import {favouriteFiatAddress } from '../addressbook.component/api'
+import { favouriteFiatAddress, detailsAddress } from '../addressbook.component/api';
+import { setWithdrawfiat } from '../../reducers/sendreceiveReducer';
+import WithdrawalSummary from './withdrawalSummary';
+import WithdrawalLive from './withdrawLive';
 
 const LinkValue = (props) => {
   return (
@@ -23,7 +26,7 @@ const LinkValue = (props) => {
   )
 }
 const { Option } = Select;
-const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, props,changeStep }) => {
+const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sendReceive, changeStep }) => {
   const [form] = Form.useForm();
   const [selectedWallet, setSelectedWallet] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -34,7 +37,8 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
   const [countryLu, setCountryLu] = useState([]);
   const [stateLu, setStateLu] = useState([]);
   const [country, setCountry] = useState(null);
-  const[addressLu, setAddressLu] = useState([])
+  const [addressLu, setAddressLu] = useState([]);
+  const [addressDetails, setAddressDetails] = useState({})
 
   const useDivRef = React.useRef(null);
   useEffect(() => {
@@ -44,11 +48,12 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
       handleWalletSelection(selectedWalletCode)
     }
   }, [buyInfo.memberFiat?.data])
+
   useEffect(() => {
     getCountryLu();
     getAddressLu();
-
   }, [])
+
   const handleWalletSelection = (walletId) => {
     form.setFieldsValue({ memberWalletId: walletId })
     if (buyInfo.memberFiat?.data) {
@@ -66,21 +71,33 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
     }
   }
   const getAddressLu = async () => {
-    let recAddress = await favouriteFiatAddress()
+    let recAddress = await favouriteFiatAddress(userConfig.id, 'fiat')
     if (recAddress.ok) {
-        setAddressLu(recAddress.data);
+      setAddressLu(recAddress.data);
     }
   }
+  const handleAddressChange = async (e) => {
+    debugger
+    let recAddressDetails = await detailsAddress(e)
+    if (recAddressDetails.ok) {
+      bindEditableData(recAddressDetails.data)
+    }
+  }
+  const bindEditableData = (obj) => {
+    setAddressDetails({ ...obj });
+    form.setFieldsValue(obj);
+  };
+
   const getCountryLu = async () => {
     let recName = await getCountryStateLu()
     if (recName.ok) {
       setCountryLu(recName.data);
-      //setCountryLu([]);
     }
     // appInsights.trackEvent({
     //   name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'Page view', "Username": userConfig.email, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": 'WithDraw Fiat', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
     // });
   }
+
   const getStateLu = (countryname) => {
     let statelu = countryLu.filter((item) => { if (item.name == countryname) return item })
     if (statelu[0].states.length > 0) {
@@ -91,12 +108,8 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
     form.setFieldsValue({ state: null })
 
   }
-  // const clearSwapData = () =>{
-  //   form.resetFields()
-  // }
 
   const savewithdrawal = async (values) => {
-    //console.log(values)
     if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
       useDivRef.current.scrollIntoView()
       return setErrorMsg('Insufficient balance');
@@ -114,194 +127,54 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
     values['walletCode'] = selectedWallet.currencyCode
     values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName
     setSaveObj(values);
-    setConfirmationStep('step1')
-    setShowModal(true);
-    //   let withdrawal = await withdrawSave(values)
-    //   if (withdrawal.ok) {
-    //     console.log(withdrawal)
-    //   } else {
-
-    //  }
+    dispatch(setWithdrawfiat(values))
+    //changeStep('step5')
+    setConfirmationStep('step2')
+    //form.resetFields();
   }
+
   const renderModalContent = () => {
     const _types = {
-      step1: <>{saveObj && <div>
-        <Text className="fs-14 text-white-50 fw-200">Amount</Text>
-        <Currency className="fs-20 text-white-30 mb-36" prefix={""} defaultValue={saveObj?.totalValue} suffixText={saveObj.walletCode} />
-        <Text className="fs-14 text-white-50 fw-200">Bank Account Number/IBAN</Text>
-        <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.accountNumber}</Text>
-        <Text className="fs-14 text-white-50 fw-200">BIC/SWIFT/Routing Number</Text>
-        <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.swiftCode}</Text>
-        <Text className="fs-14 text-white-50 fw-200">Bank Name</Text>
-        <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.bankName}</Text>
-        <Text className="fs-14 text-white-50 fw-200">Recipient Full Name</Text>
-        <Text className="fs-20 text-white-30 d-block mb-36">{saveObj.beneficiaryAccountName}</Text>
-        <ul className="pl-0 ml-16 text-white-50 mb-0">
-          <li>Ensure that the account details is correct</li>
-          <li>Transaction can't be cancelled</li>
-        </ul>
-      </div>}</>,
-      step2: <>
-        <div className="success-pop text-center mb-24">
-          <img src={success} className="confirm-icon" />
+      step1: <>
+        <div className="suisfiat-height auto-scroll">
+          <div ref={useDivRef}></div>
+          {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+          <Form form={form} onFinish={savewithdrawal} initialValues={addressDetails}>
+            <div className="p-relative d-flex align-center"> <Translate
+              content="Beneficiary_BankDetails"
+              component={Paragraph}
+              className="mb-16 fs-14 text-aqua fw-500 text-upper"
+            />
 
-          <Translate className="fs-30 mb-4 d-block text-white-30" content="withdrawal_success" component={Title} />
-          <Link onClick={() => setShowModal(false)} className="f-16 mt-16 text-underline text-green">Back to Withdraw<span className="icon md diag-arrow ml-4" /></Link>
-
-        </div>
-      </>,
-      step3: <>{saveObj && <div>
-        <p> <Currency defaultValue={saveObj?.totalValue} prefixText={<b>Amount: </b>} prefix={""} suffixText={saveObj.walletCode} /></p>
-        <p><b>Bank Account Number/IBAN: </b> {saveObj.accountNumber}</p>
-        <p><b>Bank BIC/SWIFT/Routing number: </b> {saveObj.swiftCode}</p>
-        <p><b>Bank Name: </b> {saveObj.bankName}</p>
-        <p><b>Recipient full Name : </b> {saveObj.beneficiaryAccountName}</p>
-        {/* <Form name="verification" initialValues={{ Phone: "" }}>
-          <Form.Item label="Phone" extra="Please enter 6 digit code sent to you're Phone.">
-            <Row gutter={8}>
-              <Col span={12}>
-                <Form.Item
-                  name="Phone"
-                  noStyle
-                  rules={[{ required: true, message: 'Please input the phone' }]}
-                >
-                  <Input />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Button>Get Code</Button>
-              </Col>
-            </Row>
-          </Form.Item>
-          <Form.Item label="Email" extra="Please enter 6 digit code sent to you're Email.">
-            <Row gutter={8}>
-              <Col span={12}>
-                <Form.Item
-                  name="Email"
-                  noStyle
-                  rules={[{ required: true, message: 'Please input the email' }]}
-                >
-                  <Input />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Button>Get Code</Button>
-              </Col>
-            </Row>
-          </Form.Item>
-        </Form> */}
-      </div>}</>
-    }
-    return _types[confirmationStep]
-  }
-  const handleChange = () => {
-
-  }
-  const handleCancel = () => {
-    setShowModal(false);
-    useDivRef.current.scrollIntoView()
-  }
-  const handleOk = async () => {
-    let currentStep = parseInt(confirmationStep.split("step")[1]);
-    if (currentStep == 1) {
-      setLoading(true)
-      let withdrawal = await withdrawSave(saveObj)
-      if (withdrawal.ok) {
-        setConfirmationStep("step" + (currentStep + 1))
-        form.resetFields()
-        setLoading(false)
-        useDivRef.current.scrollIntoView()
-        dispatch(fetchDashboardcalls(userConfig.id))
-        appInsights.trackEvent({
-          name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.email, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
-        });
-      } else {
-
-      }
-    } else {
-      setConfirmationStep("step" + (currentStep + 1))
-    }
-  }
-
-  const { Paragraph, Title, Text } = Typography;
-  const link = <LinkValue content="terms_service" />;
-  // const options = props.addressBookReducer?.favouriteAddress?.map((item, idx) => <option key={idx} title="" value={item.id}>{item.currencyCode}</option>)
-  return (
-    <>
-      <div className="suisfiat-height auto-scroll">
-        <div ref={useDivRef}></div>
-        {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-        <Form form={form} onFinish={savewithdrawal}>
-          <div className="p-relative d-flex align-center"> <Translate
-            content="Beneficiary_BankDetails"
-            component={Paragraph}
-            className="mb-16 fs-14 text-aqua fw-500 text-upper"
-          />
-            <Tooltip placement="bottom" title={<span>New Address</span>} >
-              <span className="val-updown c-pointer" onClick={() => changeStep('step4')}>
-                <span className="icon md address-book d-block c-pointer" style={{ marginTop: '10px', marginLeft: '10px' }}></span>
-              </span>
-            </Tooltip>
-          </div>
-          {/* <p className="mb-16 fs-14 text-aqua fw-500 text-right c-pointer" onClick={() => changeStep('step4')} > Add New Address</p> */}
-          <Form.Item
-            name="bankId"
-            className="custom-forminput mb-24"
-            rules={[
-              {
-                required: true,
-                message: 'Is required',
-              },
-            ]}
-          >
-            <div className="d-flex"><Text
-              className="input-label" >Address</Text>
-           
-              <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
             </div>
-            <Select dropdownClassName="select-drpdwn"
-              className="cust-input"
-              onChange={(e) => handleChange(e)}
-              placeholder="Select Address"
-            >
-              {/* <Option value="meena">meena</Option> */}
-              {addressLu?.map((item, idx) =>
-                <Option key={idx} value={item.name}>{item.name}
-                </Option>
-              )}
-            </Select>
 
-          </Form.Item>
-          <Form.Item
-            className="custom-forminput mb-24"
-            name="memberWalletId"
-            required
-            rules={[
-              { required: true, message: "Is required" },
-            ]}
-          >
-            <div> <div className="d-flex"><Translate
+            <Form.Item
+              className="custom-forminput custom-label mb-24"
+              name="memberWalletId"
+              label="Currency"
+              rules={[
+                { required: true, message: "Is required" },
+              ]}
+            >
+              <WalletList selectedvalue={saveObj?.memberWalletId} placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} />
+              {/* <WalletList placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} /> */}
+
+              {/* <div> <div className="d-flex"><Translate
               className="input-label"
               content="currency"
               component={Text}
             />
-              <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <WalletList placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} /></div>
-          </Form.Item>
-          <Form.Item
-            className="custom-forminput mb-24"
-            name="totalValue"
-            rules={[
-              { required: true, message: "Is required" },
-            ]}
-          >
-            <div ><div className="d-flex">
-              <Translate
-                className="input-label"
-                content="amount"
-                component={Text}
-
-              /><span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+            </div>
+              <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div> */}
+            </Form.Item>
+            <Form.Item
+              className="custom-forminput custom-label  mb-24"
+              name="totalValue"
+              label="Amount"
+              rules={[
+                { required: true, message: "Is required" },
+              ]}
+            >
               <NumberFormat decimalScale={2} className="cust-input" customInput={Input} thousandSeparator={true} prefix={""}
                 placeholder="0.00"
                 allowNegative={false}
@@ -311,33 +184,70 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
               //     this.setReceiveAmount(value)
               // }}
               />
+              {/* <div ><div className="d-flex">
+              <Translate
+                className="input-label"
+                content="amount"
+                component={Text}
 
-            </div>
-          </Form.Item>
-          <Form.Item
-            className="custom-forminput mb-24"
-            name="accountNumber"
-            required
-            rules={[
-              { required: true, message: "Is required" },
-              {
-                validator: (rule, value, callback) => {
-                  var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                  if (value) {
-                    if (!regx.test(value)) {
-                      callback("Invalid account number")
-                    } else if (regx.test(value)) {
+              /><span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+              
+
+            </div> */}
+            </Form.Item>
+            <Form.Item
+              className="custom-forminput mb-24"
+            >
+              <div className="d-flex"><Text
+                className="input-label" >Address Book</Text>
+
+                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+              </div>
+              <div className="p-relative d-flex align-center">
+                <Select dropdownClassName="select-drpdwn"
+                  className="cust-input custom-add-select" value={addressDetails.favouriteName}
+                  onChange={(e) => handleAddressChange(e)}
+                  placeholder="Select Address"
+                >
+                  {addressLu?.map((item, idx) =>
+                    <Option key={idx} value={item.id}>{item.name}
+                    </Option>
+                  )}
+                </Select>
+                <Tooltip placement="top" title={<span>New Address</span>} style={{ flexGrow: 1 }}>
+                  <div className="new-add c-pointer" onClick={() => changeStep('step4')}>
+                    <span className="icon md address-book d-block c-pointer"></span>
+                  </div>
+                </Tooltip>
+              </div>
+
+            </Form.Item>
+            <Form.Item
+              className="custom-forminput custom-label mb-24"
+              name="accountNumber"
+              label="Bank account number/IBAN"
+              required
+              rules={[
+                { required: true, message: "Is required" },
+                {
+                  validator: (rule, value, callback) => {
+                    var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                    if (value) {
+                      if (!regx.test(value)) {
+                        callback("Invalid account number")
+                      } else if (regx.test(value)) {
+                        callback();
+                      }
+                    } else {
                       callback();
                     }
-                  } else {
-                    callback();
+                    return;
                   }
-                  return;
                 }
-              }
-            ]}
-          >
-            <div>
+              ]}
+            >
+              <Input className="cust-input" placeholder="Bank account number/IBAN" />
+              {/* <div>
               <div className="d-flex">
                 <Translate
                   className="input-label"
@@ -346,32 +256,35 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
                 />
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
               <Input className="cust-input" placeholder="Bank account number/IBAN" />
-            </div>
-          </Form.Item>
-          <Form.Item
-            className="custom-forminput mb-24"
-            name="swiftCode"
-            required
-            rules={[
-              { required: true, message: "Is required" },
-              {
-                validator: (rule, value, callback) => {
-                  var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                  if (value) {
-                    if (!regx.test(value)) {
-                      callback("Invalid BIC/SWIFT/Routing number")
-                    } else if (regx.test(value)) {
+            </div> */}
+            </Form.Item>
+            <Form.Item
+              className="custom-forminput custom-label mb-24"
+              name="routingNumber"
+              label="BIC/SWIFT/Routing number"
+              required
+              rules={[
+                { required: true, message: "Is required" },
+                {
+                  validator: (rule, value, callback) => {
+                    var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                    if (value) {
+                      if (!regx.test(value)) {
+                        callback("Invalid BIC/SWIFT/Routing number")
+                      } else if (regx.test(value)) {
+                        callback();
+                      }
+                    } else {
                       callback();
                     }
-                  } else {
-                    callback();
+                    return;
                   }
-                  return;
                 }
-              }
-            ]}
-          >
-            <div>
+              ]}
+            >
+              <Input value={addressDetails.routingNumber} className="cust-input" placeholder="BIC/SWIFT/Routing number" />
+
+              {/* <div>
               <div className="d-flex">
                 <Translate
                   className="input-label"
@@ -379,34 +292,36 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
                   component={Text}
                 />
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" placeholder="BIC/SWIFT/Routing number" />
-            </div>
+            </div> */}
 
-          </Form.Item>
-          <Form.Item
-            className="custom-forminput mb-24"
-            name="bankName"
-            required
-            rules={[
-              { required: true, message: "Is required" },
-              {
-                validator: (rule, value, callback) => {
-                  var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
-                  if (value) {
-                    if (!regx.test(value)) {
-                      callback("Invalid bank name")
-                    } else if (regx.test(value)) {
+            </Form.Item>
+            <Form.Item
+              className="custom-forminput custom-label mb-24"
+              name="bankName"
+              label="Bank name"
+              required
+              rules={[
+                { required: true, message: "Is required" },
+                {
+                  validator: (rule, value, callback) => {
+                    var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
+                    if (value) {
+                      if (!regx.test(value)) {
+                        callback("Invalid bank name")
+                      } else if (regx.test(value)) {
+                        callback();
+                      }
+                    } else {
                       callback();
                     }
-                  } else {
-                    callback();
+                    return;
                   }
-                  return;
                 }
-              }
-            ]}
-          >
-            <div>
+              ]}
+            >
+              <Input value={addressDetails.bankName} className="cust-input" placeholder="Bank name" />
+
+              {/* <div>
               <div className="d-flex">
                 <Translate
                   className="input-label"
@@ -414,172 +329,175 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
                   component={Text}
                 />
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" placeholder="Bank name" />
-            </div>
+            </div> */}
 
-          </Form.Item>
-          <Form.Item
-            className="custom-forminput mb-24"
-            name="bankAddress"
-            required
-            rules={[
-              { required: true, message: "Is required" }
-            ]}
-          >
-            <div>
-              <div className="d-flex">
-                <Translate
-                  className="input-label"
-                  content="Bank_address1"
-                  component={Text}
-                />
-                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" placeholder="Bank address line 1" />
-            </div>
+            </Form.Item>
+            <Form.Item
+              className="custom-forminput custom-label mb-24"
+              name="bankAddress"
+              label="Bank address line 1"
+              required
+              rules={[
+                { required: true, message: "Is required" }
+              ]}
+            >
+              <Input value={addressDetails.bankAddress} className="cust-input" placeholder="Bank address line 1" />
+              {/* <div>
+                <div className="d-flex">
+                  <Translate
+                    className="input-label"
+                    content="Bank_address1"
+                    component={Text}
+                  />
+                  <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+              </div> */}
 
-          </Form.Item>
+            </Form.Item>
 
-          <Form.Item
-            className="custom-forminput mb-24"
-            name="bankAddress1"
-          >
-            <div>
-              <div className="d-flex">
-                <Translate
-                  className="input-label"
-                  content="Bank_address2"
-                  component={Text}
-                /></div>
-              <Input className="cust-input" placeholder="Bank address line 2" />
-            </div>
-          </Form.Item>
-          <div className="d-flex">
-            <Translate
-              className="input-label"
-              content="Country"
-              component={Text}
-            /></div>
-          <Form.Item
-            className="custom-forminput mb-24"
-            name="country"
-          >
-            {/* <div>
+            <Form.Item
+              className="custom-forminput mb-24"
+              name="bankAddress1"
+            >
+              <div>
+                <div className="d-flex">
+                  <Translate
+                    className="input-label"
+                    content="Bank_address2"
+                    component={Text}
+                  /></div>
+                <Input className="cust-input" placeholder="Bank address line 2" />
+              </div>
+            </Form.Item>
+            <div className="d-flex">
+              <Translate
+                className="input-label"
+                content="Country"
+                component={Text}
+              /></div>
+            <Form.Item
+              className="custom-forminput mb-24"
+              name="country"
+            >
+              {/* <div>
               <div className="d-flex">
                 <Translate
                   className="input-label"
                   content="Bank_address2"
                   component={Text}
                 /></div> */}
-            {/* <div id="_country"> */}
-            <Select dropdownClassName="select-drpdwn" placeholder="Select Country" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-              onChange={(e) => getStateLu(e)} >
-              {countryLu?.map((item, idx) =>
-                <Option key={idx} value={item.name}>{item.name}
-                </Option>
-              )}
-            </Select>
-            {/* </div> */}
-            {/* </div> */}
-          </Form.Item>
-          <div className="d-flex">
-            <Translate
-              className="input-label"
-              content="state"
-              component={Text}
-            /></div>
-          <Form.Item
-            className="custom-forminput mb-24"
-            name="state"
-          >
-            {/* <div id="_state"> */}
-            <Select dropdownClassName="select-drpdwn" placeholder="Select State" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-              onChange={(e) => ''} >
-              {stateLu?.map((item, idx) =>
-                <Option key={idx} value={item.name}>{item.name}
-                </Option>
-              )}
-            </Select>
-            {/* </div> */}
-          </Form.Item>
-          <Form.Item
-            className="custom-forminput mb-24"
-            name="zipcode"
-            rules={[
-              {
-                validator: (rule, value, callback) => {
-                  var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                  if (value) {
-                    if (!regx.test(value)) {
-                      callback("Invalid zip code")
-                    } else if (regx.test(value)) {
+              {/* <div id="_country"> */}
+              <Select dropdownClassName="select-drpdwn" placeholder="Select Country" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+                onChange={(e) => getStateLu(e)} >
+                {countryLu?.map((item, idx) =>
+                  <Option key={idx} value={item.name}>{item.name}
+                  </Option>
+                )}
+              </Select>
+              {/* </div> */}
+              {/* </div> */}
+            </Form.Item>
+            <div className="d-flex">
+              <Translate
+                className="input-label"
+                content="state"
+                component={Text}
+              /></div>
+            <Form.Item
+              className="custom-forminput mb-24"
+              name="state"
+            >
+              {/* <div id="_state"> */}
+              <Select dropdownClassName="select-drpdwn" placeholder="Select State" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+                onChange={(e) => ''} >
+                {stateLu?.map((item, idx) =>
+                  <Option key={idx} value={item.name}>{item.name}
+                  </Option>
+                )}
+              </Select>
+              {/* </div> */}
+            </Form.Item>
+            <Form.Item
+              className="custom-forminput mb-24"
+              name="zipcode"
+              rules={[
+                {
+                  validator: (rule, value, callback) => {
+                    var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                    if (value) {
+                      if (!regx.test(value)) {
+                        callback("Invalid zip code")
+                      } else if (regx.test(value)) {
+                        callback();
+                      }
+                    } else {
                       callback();
                     }
-                  } else {
-                    callback();
+                    return;
                   }
-                  return;
                 }
-              }
-            ]}
-          >
-            <div>
-              <div className="d-flex">
-                <Translate
-                  className="input-label"
-                  content="zipcode"
-                  component={Text}
-                /></div>
-              <Input className="cust-input" maxLength={8} placeholder="Zip code" />
-            </div>
-          </Form.Item>
-          <Translate
-            content="Beneficiary_Details"
-            component={Paragraph}
-            className="mb-16 fs-14 text-aqua fw-500 text-upper"
-          />
-          <Form.Item
-            className="custom-forminput mb-24"
-            name="beneficiaryAccountName"
-            required
-          // rules={[
-          //   { required: true, message: "Is required" },
-          //   {
-          //     validator: (rule, value, callback) => {
-          //       var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
-          //       if (value) {
-          //         if (!regx.test(value)) {
-          //           callback("Invalid recipient full name")
-          //         } else if (regx.test(value)) {
-          //           callback();
-          //         }
-          //       } else {
-          //         callback();
-          //       }
-          //       return;
-          //     }
-          //   }
-          // ]}
-          >
-            <div>
-              <div className="d-flex">
-                <Translate
-                  className="input-label"
-                  content="Recipient_full_name"
-                  component={Text}
-                />{" "}
-                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
-            </div>
+              ]}
+            >
+              <div>
+                <div className="d-flex">
+                  <Translate
+                    className="input-label"
+                    content="zipcode"
+                    component={Text}
+                  /></div>
+                <Input className="cust-input" maxLength={8} placeholder="Zip code" />
+              </div>
+            </Form.Item>
+            <Translate
+              content="Beneficiary_Details"
+              component={Paragraph}
+              className="mb-16 fs-14 text-aqua fw-500 text-upper"
+            />
+            <Form.Item
+              className="custom-forminput mb-24"
+              name="beneficiaryAccountName"
+              required
+            // rules={[
+            //   { required: true, message: "Is required" },
+            //   {
+            //     validator: (rule, value, callback) => {
+            //       var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
+            //       if (value) {
+            //         if (!regx.test(value)) {
+            //           callback("Invalid recipient full name")
+            //         } else if (regx.test(value)) {
+            //           callback();
+            //         }
+            //       } else {
+            //         callback();
+            //       }
+            //       return;
+            //     }
+            //   }
+            // ]}
+            >
+              <div>
+                <div className="d-flex">
+                  <Translate
+                    className="input-label"
+                    content="Recipient_full_name"
+                    component={Text}
+                  />{" "}
+                  <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
+              </div>
 
-          </Form.Item>
-          <Form.Item
-            className="custom-forminput mb-24"
-            name="beneficiaryAccountAddress"
-            rules={[
-              { required: true, message: "Is required" }
-            ]}
-          >
-            <div>
+            </Form.Item>
+            <Form.Item
+              className="custom-forminput custom-label mb-24"
+              name="beneficiaryAccountAddress"
+              label="Recipient address line 1"
+              rules={[
+                { required: true, message: "Is required" }
+              ]}
+            >
+              <Input value={addressDetails.beneficiaryAccountAddress} className="cust-input" placeholder="Recipient address line 1" />
+
+              {/* <div>
               <div className="d-flex">
                 <Translate
                   className="input-label"
@@ -589,93 +507,128 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>
                   {" * "}
                 </span></div>
-              <Input className="cust-input" placeholder="Recipient address line 1" />
-            </div>
+            </div> */}
 
-          </Form.Item>
-          <Form.Item
-            className="custom-forminput mb-24"
-            name="beneficiaryAccountAddress1"
-          >
-            <div>
-              <div className="d-flex">
-                <Translate
-                  className="input-label"
-                  content="Recipient_address2"
-                  component={Text}
-                /></div>
-              <Input className="cust-input" placeholder="Recipient address line 2" />
-            </div>
-          </Form.Item>
-          <Form.Item
-            className="custom-forminput mb-24"
-            name="description"
-          // rules={[
-          //   {
-          //     validator: (rule, value, callback) => {
-          //       var regx = new RegExp(/^[A-Za-z0-9]+$/);
-          //       if (value) {
-          //         if (!regx.test(value)) {
-          //           callback("Invalid reference")
-          //         } else if (regx.test(value)) {
-          //           callback();
-          //         }
-          //       } else {
-          //         callback();
-          //       }
-          //       return;
-          //     }
-          //   }
-          // ]}
-          >
-            <div>
-              <div className="d-flex">
-                <Translate
-                  className="input-label"
-                  content="remarks"
-                  component={Text}
-                /></div>
-              <Input className="cust-input" placeholder="Remarks" />
-            </div>
-          </Form.Item>
-          <Form.Item
-            className="custom-forminput mb-36 agree"
-            name="isAccept"
-            valuePropName="checked"
-            required
-            rules={[
-              {
-                validator: (_, value) =>
-                  value ? Promise.resolve() : Promise.reject(new Error('Please agree terms of service')),
-              },
-            ]}
-          >
-            <div className="d-flex pt-16 agree-check">
-              <label>
-                <input type="checkbox" id="agree-check" />
-                <span for="agree-check" />
-              </label>
-              <Translate
-                content="agree_to_suissebase"
-                with={{ link }}
-                component={Paragraph}
-                className="fs-14 text-white-30 ml-16 mb-4"
-                style={{ flex: 1 }}
-              />
-            </div>
-          </Form.Item>
-          <Form.Item className="mb-0 mt-16">
-            <Button
-              htmlType="submit"
-              size="large"
-              block
-              className="pop-btn"
+            </Form.Item>
+            <Form.Item
+              className="custom-forminput mb-24"
+              name="beneficiaryAccountAddress1"
             >
-              Proceed
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
+              <div>
+                <div className="d-flex">
+                  <Translate
+                    className="input-label"
+                    content="Recipient_address2"
+                    component={Text}
+                  /></div>
+                <Input className="cust-input" placeholder="Recipient address line 2" />
+              </div>
+            </Form.Item>
+            <Form.Item
+              className="custom-forminput mb-24"
+              name="description"
+            // rules={[
+            //   {
+            //     validator: (rule, value, callback) => {
+            //       var regx = new RegExp(/^[A-Za-z0-9]+$/);
+            //       if (value) {
+            //         if (!regx.test(value)) {
+            //           callback("Invalid reference")
+            //         } else if (regx.test(value)) {
+            //           callback();
+            //         }
+            //       } else {
+            //         callback();
+            //       }
+            //       return;
+            //     }
+            //   }
+            // ]}
+            >
+              <div>
+                <div className="d-flex">
+                  <Translate
+                    className="input-label"
+                    content="remarks"
+                    component={Text}
+                  /></div>
+                <Input className="cust-input" placeholder="Remarks" />
+              </div>
+            </Form.Item>
+            <Form.Item
+              className="custom-forminput mb-36 agree"
+              name="isAccept"
+              valuePropName="checked"
+              required
+              rules={[
+                {
+                  validator: (_, value) =>
+                    value ? Promise.resolve() : Promise.reject(new Error('Please agree terms of service')),
+                },
+              ]}
+            >
+              <div className="d-flex pt-16 agree-check">
+                <label>
+                  <input type="checkbox" id="agree-check" />
+                  <span for="agree-check" />
+                </label>
+                <Translate
+                  content="agree_to_suissebase"
+                  with={{ link }}
+                  component={Paragraph}
+                  className="fs-14 text-white-30 ml-16 mb-4"
+                  style={{ flex: 1 }}
+                />
+              </div>
+            </Form.Item>
+            <Form.Item className="mb-0 mt-16">
+              <Button
+                htmlType="submit"
+                size="large"
+                block
+                className="pop-btn"
+              >
+                Proceed
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      </>,
+      step2: <><WithdrawalSummary onConfirm={handleOk} onCancel={() => { setConfirmationStep("step1"); form.setFieldsValue(saveObj) }} /></>,
+      step3: <>
+        <WithdrawalLive onConfirm={handleOk} onCancel={() => {
+          setConfirmationStep("step1");
+          form.setFieldsValue(saveObj);
+        }} />
+      </>,
+      step4: <>
+        <div className="success-pop text-center mb-24">
+          <img src={success} className="confirm-icon" />
+
+          <Translate className="fs-30 mb-4 d-block text-white-30" content="withdrawal_success" component={Title} />
+          <Link onClick={() => { form.resetFields(); setConfirmationStep("step1"); }} className="f-16 mt-16 text-underline text-green">Back to Withdraw<span className="icon md diag-arrow ml-4" /></Link>
+
+        </div>
+      </>,
+
+    }
+    return _types[confirmationStep]
+  }
+  const handleCancel = () => {
+    setShowModal(false);
+    useDivRef.current.scrollIntoView()
+  }
+  const handleOk = async () => {
+    let currentStep = parseInt(confirmationStep.split("step")[1]);
+    setConfirmationStep("step" + (currentStep + 1))
+  }
+
+  const { Paragraph, Title, Text } = Typography;
+  const link = <LinkValue content="terms_service" />;
+  return (
+    <>
+      {renderModalContent()}
+
       <Modal className="widthdraw-pop" maskClosable={false} onCancel={handleCancel} title="Withdraw" closeIcon={<Tooltip title="Close"><span onClick={handleCancel} className="icon md close" /></Tooltip>} footer={[
         <>{confirmationStep != 'step2' && <div className="text-right withdraw-footer"><Button key="back" type="text" className="text-white-30 pop-cancel fw-400 text-captz text-center" onClick={handleCancel} disabled={loading}>
           Cancel
@@ -690,8 +643,8 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, pro
   );
 }
 
-const connectStateToProps = ({ buyInfo, userConfig, addressBookReducer }) => {
-  return { addressBookReducer, buyInfo, userConfig: userConfig.userProfileInfo }
+const connectStateToProps = ({ buyInfo, userConfig, addressBookReducer, sendReceive }) => {
+  return { addressBookReducer, buyInfo, userConfig: userConfig.userProfileInfo, sendReceive }
 }
 const connectDispatchToProps = dispatch => {
   return {
@@ -701,7 +654,7 @@ const connectDispatchToProps = dispatch => {
     fetchFavouirtAddresss: () => {
       dispatch(handleFavouritAddress())
     },
-    
+    dispatch
   }
 
 }

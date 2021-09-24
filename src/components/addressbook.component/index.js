@@ -82,7 +82,7 @@ class AddressBook extends Component {
     }
     renderTitle = () => {
         const titles = {
-            cryptoaddressbook: <span onClick={this.closeBuyDrawer} className="icon md lftarw-white c-pointer" />,
+            cryptoaddressbook: <span />,
             selectcrypto: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
         }
         return titles[config[this.props.addressBookReducer.stepcode]]
@@ -101,7 +101,7 @@ class AddressBook extends Component {
             <>
                 <div className="box basic-info">
                     <Title className="basicinfo">Address Book</Title>
-                    <Paragraph className="basic-decs mb-16">User customized addressbook</Paragraph>
+                    <Paragraph className="basic-decs mb-16">User customized address book</Paragraph>
                     <Radio.Group
                         defaultValue={1}
                         onChange={this.handleWithdrawToggle}
@@ -137,7 +137,7 @@ class AddressBook extends Component {
                     title={[<div className="side-drawer-header">
                         {this.renderTitle()}
                         <div className="text-center fs-16">
-                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Add New Address</Paragraph>
+                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Add Crypto Address</Paragraph>
                         </div>
                         {this.renderIcon()}
                     </div>]}
@@ -153,7 +153,7 @@ class AddressBook extends Component {
                     title={[<div className="side-drawer-header">
                         <span />
                         <div className="text-center fs-16">
-                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Add New Address</Paragraph>
+                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Add Fiat Address</Paragraph>
                         </div>
                         <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
                     </div>]}
