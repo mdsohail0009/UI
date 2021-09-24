@@ -51,16 +51,18 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
 
   useEffect(() => {
     getCountryLu();
-    getAddressLu();
+    // getAddressLu();
   }, [])
 
   const handleWalletSelection = (walletId) => {
+
     form.setFieldsValue({ memberWalletId: walletId })
     if (buyInfo.memberFiat?.data) {
       let wallet = buyInfo.memberFiat.data.filter((item) => {
-        return walletId === item.id
+        return walletId === item.currencyCode
       })
       setSelectedWallet(wallet[0])
+      getAddressLu();
     }
   }
   const checkRecipeantName = async (name) => {
@@ -71,7 +73,9 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     }
   }
   const getAddressLu = async () => {
-    let recAddress = await favouriteFiatAddress(userConfig.id, 'fiat')
+    debugger
+    let selectedFiat = selectedWallet?.currencyCode;
+    let recAddress = await favouriteFiatAddress(userConfig.id, 'fiat', selectedFiat)
     if (recAddress.ok) {
       setAddressLu(recAddress.data);
     }
@@ -156,7 +160,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                 { required: true, message: "Is required" },
               ]}
             >
-              <WalletList selectedvalue={saveObj?.memberWalletId} placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} />
+              <WalletList  valueFeild={'currencyCode'}  selectedvalue={saveObj?.memberWalletId} placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} />
               {/* <WalletList placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} /> */}
 
               {/* <div> <div className="d-flex"><Translate
@@ -355,37 +359,18 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
             </Form.Item>
 
             <Form.Item
-              className="custom-forminput mb-24"
-              name="bankAddress1"
+              className="custom-forminput custom-label mb-24"
+              name="bankAddress2"
+              label="Bank address line 2"
             >
-              <div>
-                <div className="d-flex">
-                  <Translate
-                    className="input-label"
-                    content="Bank_address2"
-                    component={Text}
-                  /></div>
-                <Input className="cust-input" placeholder="Bank address line 2" />
-              </div>
+              <Input className="cust-input" placeholder="Bank address line 2" />
             </Form.Item>
-            <div className="d-flex">
-              <Translate
-                className="input-label"
-                content="Country"
-                component={Text}
-              /></div>
+
             <Form.Item
-              className="custom-forminput mb-24"
+              className="custom-forminput custom-label  mb-24"
               name="country"
+              label="Country"
             >
-              {/* <div>
-              <div className="d-flex">
-                <Translate
-                  className="input-label"
-                  content="Bank_address2"
-                  component={Text}
-                /></div> */}
-              {/* <div id="_country"> */}
               <Select dropdownClassName="select-drpdwn" placeholder="Select Country" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                 onChange={(e) => getStateLu(e)} >
                 {countryLu?.map((item, idx) =>
@@ -393,20 +378,15 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                   </Option>
                 )}
               </Select>
-              {/* </div> */}
-              {/* </div> */}
+
             </Form.Item>
-            <div className="d-flex">
-              <Translate
-                className="input-label"
-                content="state"
-                component={Text}
-              /></div>
+
             <Form.Item
-              className="custom-forminput mb-24"
+              className="custom-forminput custom-label mb-24"
               name="state"
+              label="State"
             >
-              {/* <div id="_state"> */}
+
               <Select dropdownClassName="select-drpdwn" placeholder="Select State" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                 onChange={(e) => ''} >
                 {stateLu?.map((item, idx) =>
@@ -414,11 +394,12 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                   </Option>
                 )}
               </Select>
-              {/* </div> */}
+
             </Form.Item>
             <Form.Item
-              className="custom-forminput mb-24"
+              className="custom-forminput custom-label mb-24"
               name="zipcode"
+              label="Zipcode"
               rules={[
                 {
                   validator: (rule, value, callback) => {
@@ -437,15 +418,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                 }
               ]}
             >
-              <div>
-                <div className="d-flex">
-                  <Translate
-                    className="input-label"
-                    content="zipcode"
-                    component={Text}
-                  /></div>
-                <Input className="cust-input" maxLength={8} placeholder="Zip code" />
-              </div>
+              <Input className="cust-input" maxLength={8} placeholder="Zip code" />
             </Form.Item>
             <Translate
               content="Beneficiary_Details"
@@ -453,8 +426,9 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
               className="mb-16 fs-14 text-aqua fw-500 text-upper"
             />
             <Form.Item
-              className="custom-forminput mb-24"
+              className="custom-forminput custom-label mb-24"
               name="beneficiaryAccountName"
+              label="Recipient full name"
               required
             // rules={[
             //   { required: true, message: "Is required" },
@@ -475,17 +449,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
             //   }
             // ]}
             >
-              <div>
-                <div className="d-flex">
-                  <Translate
-                    className="input-label"
-                    content="Recipient_full_name"
-                    component={Text}
-                  />{" "}
-                  <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-                <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
-              </div>
-
+              <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
             </Form.Item>
             <Form.Item
               className="custom-forminput custom-label mb-24"
@@ -496,37 +460,18 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
               ]}
             >
               <Input value={addressDetails.beneficiaryAccountAddress} className="cust-input" placeholder="Recipient address line 1" />
-
-              {/* <div>
-              <div className="d-flex">
-                <Translate
-                  className="input-label"
-                  content="Recipient_address1"
-                  component={Text}
-                />{" "}
-                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>
-                  {" * "}
-                </span></div>
-            </div> */}
-
             </Form.Item>
             <Form.Item
-              className="custom-forminput mb-24"
+              className="custom-forminput custom-label  mb-24"
               name="beneficiaryAccountAddress1"
+              label="Recipient address line 2"
             >
-              <div>
-                <div className="d-flex">
-                  <Translate
-                    className="input-label"
-                    content="Recipient_address2"
-                    component={Text}
-                  /></div>
-                <Input className="cust-input" placeholder="Recipient address line 2" />
-              </div>
+              <Input className="cust-input" placeholder="Recipient address line 2" />
             </Form.Item>
             <Form.Item
-              className="custom-forminput mb-24"
+              className="custom-forminput custom-label mb-24"
               name="description"
+              label="Remarks"
             // rules={[
             //   {
             //     validator: (rule, value, callback) => {
@@ -545,42 +490,34 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
             //   }
             // ]}
             >
-              <div>
-                <div className="d-flex">
-                  <Translate
-                    className="input-label"
-                    content="remarks"
-                    component={Text}
-                  /></div>
-                <Input className="cust-input" placeholder="Remarks" />
-              </div>
+              <Input className="cust-input" placeholder="Remarks" />
             </Form.Item>
-            <Form.Item
-              className="custom-forminput mb-36 agree"
-              name="isAccept"
-              valuePropName="checked"
-              required
-              rules={[
-                {
-                  validator: (_, value) =>
-                    value ? Promise.resolve() : Promise.reject(new Error('Please agree terms of service')),
-                },
-              ]}
-            >
-              <div className="d-flex pt-16 agree-check">
-                <label>
+            <div className="d-flex pt-16 agree-check">
+              <label>
+                <Form.Item
+                  className="custom-forminput mb-36 agree"
+                  name="isAccept"
+                  valuePropName="checked"
+                  required
+                  rules={[
+                    {
+                      validator: (_, value) =>
+                        value ? Promise.resolve() : Promise.reject(new Error('Please agree terms of service')),
+                    },
+                  ]}
+                >
                   <input type="checkbox" id="agree-check" />
-                  <span for="agree-check" />
-                </label>
-                <Translate
-                  content="agree_to_suissebase"
-                  with={{ link }}
-                  component={Paragraph}
-                  className="fs-14 text-white-30 ml-16 mb-4"
-                  style={{ flex: 1 }}
-                />
-              </div>
-            </Form.Item>
+                </Form.Item>
+                <span for="agree-check" />
+              </label>
+              <Translate
+                content="agree_to_suissebase"
+                with={{ link }}
+                component={Paragraph}
+                className="fs-14 text-white-30 ml-16 mb-4"
+                style={{ flex: 1 }}
+              />
+            </div>
             <Form.Item className="mb-0 mt-16">
               <Button
                 htmlType="submit"

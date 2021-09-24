@@ -48,7 +48,8 @@ class CryptoWithDrawWallet extends Component {
     getAddressLu = async () => {
         debugger
         let membershipId = this.props.userProfile.id;
-        let recAddress = await favouriteFiatAddress(membershipId,'crypto')
+        let coin_code = this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coin;
+        let recAddress = await favouriteFiatAddress(membershipId,'crypto',coin_code)
         if (recAddress.ok) {
             this.setState({ addressLu: recAddress.data });
         }
