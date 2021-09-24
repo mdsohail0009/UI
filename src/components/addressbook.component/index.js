@@ -33,7 +33,7 @@ class AddressBook extends Component {
     columnsFiat = [
         { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
         { field: "favouriteName", title: "Address Label", filter: true, width: 180 },
-        { field: "type", title: "Type", width: 150, filter: true, with: 150 },
+        { field: "type", title: "Currency", width: 150, filter: true, with: 150 },
         { field: "toWalletAddress", title: "Address", filter: true, width: 380 },
         { field: "accountNumber", title: "Account Number", filter: true, width: 200 },
         { field: "beneficiaryAccountName", title: "Account Name", filter: true, width: 200 },
@@ -54,7 +54,7 @@ class AddressBook extends Component {
                 <span></span> </label></td>)
         },
         { field: "addressLable", title: "Address Label", filter: true, width: 250 },
-        { field: "coin", title: "Coin", filter: true, },
+        { field: "coin", title: "Coins", filter: true, },
         { field: "address", title: "Address", filter: true, width: 380 }
     ];
     componentDidMount() {

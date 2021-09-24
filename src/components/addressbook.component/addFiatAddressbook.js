@@ -78,7 +78,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
         let namecheck = values.favouriteName;
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
         if (responsecheck.data != null) {
-            return setErrorMsg('Record already existed');
+            return setErrorMsg('Address label already existed');
         } else {
             let response = await saveAddress(values);
             if (response.ok) {
@@ -116,7 +116,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 <Text className="input-label">Address Label</Text>
                                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
                             </div>
-                            <Input className="cust-input" placeholder="Enter Address label" />
+                            <Input className="cust-input" maxLength="20" placeholder="Enter Address label" />
                         </div>
                     </Form.Item>
                     <Form.Item
@@ -131,7 +131,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 <Text className="input-label">Address</Text>
                                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
                             </div>
-                            <Input className="cust-input" placeholder="Enter Address" />
+                            <Input className="cust-input"  maxLength="30" placeholder="Enter Address" />
                         </div>
                     </Form.Item>
                     <Form.Item

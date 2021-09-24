@@ -73,7 +73,8 @@ let initialState = {
         withdrawsummary: 'withdraw_Btc',
         verifyidentity: 'verify_identity',
         withdrawscan: 'deposit',
-        addnewAddress: 'cryptoAddress'
+        addnewAddress: 'cryptoAddress',
+        selectCrypto:null,
 
     },
     stepSubTitles: {
@@ -83,7 +84,8 @@ let initialState = {
         withdrawaddress: 'send_wallet_fiat',
         withdrawsummary: 'withdraw_summary_sub',
         withdrawscan: 'withdraw_summary_sub',
-        addnewAddress: null
+        addnewAddress: null,
+        selectCrypto:null
 
 
     },

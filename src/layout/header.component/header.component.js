@@ -50,7 +50,7 @@ class Header extends Component {
                 buyDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your ' + (this.props.userConfig.isbusines ? 'KYB.' : 'KYC.') });
+            notification.error({ message: "", description: 'Please complete Your ' + (this.props.userConfig.isBusiness ? 'KYB.' : 'KYC.') });
         }
     }
     showSendDrawer = () => {
@@ -59,7 +59,7 @@ class Header extends Component {
                 sendDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your ' + (this.props.userConfig.isbusines ? 'KYB.' : 'KYC.') });
+            notification.error({ message: "", description: 'Please complete Your ' + (this.props.userConfig.isBusiness ? 'KYB.' : 'KYC.') });
         }
     }
     showSwapDrawer = () => {
@@ -68,7 +68,7 @@ class Header extends Component {
                 swapDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your ' + (this.props.userConfig.isbusines ? 'KYB.' : 'KYC.') });
+            notification.error({ message: "", description: 'Please complete Your ' + (this.props.userConfig.isBusiness ? 'KYB.' : 'KYC.') });
         }
     }
     showBuyFiatDrawer = () => {
@@ -77,7 +77,7 @@ class Header extends Component {
                 buyFiatDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your ' + (this.props.userConfig.isbusines ? 'KYB.' : 'KYC.') });
+            notification.error({ message: "", description: 'Please complete Your ' + (this.props.userConfig.isBusiness ? 'KYB.' : 'KYC.') });
         }
     }
     closeDrawer = () => {
