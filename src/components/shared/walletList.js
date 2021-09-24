@@ -9,6 +9,7 @@ const { Option } = Select;
 class WalletList extends Component {
     state = {
         isArrow: true,
+        selectedvalue:null
     }
     componentDidMount() {
         this.props.getFiat(this.props.member?.id);
@@ -18,7 +19,9 @@ class WalletList extends Component {
             {this.props.buyInfo.memberFiat &&
                 <form className="form" id="withdrawCurrency">
                     <Select getPopupContainer={() => document.getElementById('withdrawCurrency')} dropdownClassName="select-drpdwn" loading={this.props?.buyInfo?.memberFiat?.loading} placeholder={this.props.placeholder || "Select Wallet"} className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-                        onChange={(e) => this.props.onWalletSelect ? this.props.onWalletSelect(e) : ""}>
+                        value={this.props.selectedvalue?this.props.selectedvalue:this.state.selectedvalue} onChange={(e) => {
+                            if(this.props.onWalletSelect){this.props.onWalletSelect(e)};
+                            this.setState({...this.state,selectedvalue:e});}}>
                         {this.props.buyInfo.memberFiat?.data?.map((item, idx) =>
                             <Option key={idx} value={item.id}>{item.currencyCode}
                                 <NumberFormat value={item.avilable} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <span {...props}> Balance: {value}</span>} />
