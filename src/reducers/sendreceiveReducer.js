@@ -73,7 +73,7 @@ let initialState = {
         withdrawsummary: 'withdraw_Btc',
         verifyidentity: 'verify_identity',
         withdrawscan: 'deposit',
-        addnewAddress: 'Address'
+        addnewAddress: 'cryptoAddress'
 
     },
     stepSubTitles: {

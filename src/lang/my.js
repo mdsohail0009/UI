@@ -284,6 +284,7 @@ export default {
   manage_account: 'Manage your Account',
   withdrawCrypto:'Withdraw Crypto',
   withdrawFiat:'Withdraw Fiat',
-  Address:'Add New Address'
+  fiatAddress:'Add Fiat Address',
+  cryptoAddress:'Add Crypto Address',
 
 }
