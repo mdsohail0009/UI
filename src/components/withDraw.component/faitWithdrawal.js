@@ -156,7 +156,8 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                 { required: true, message: "Is required" },
               ]}
             >
-              <WalletList placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} />
+              <WalletList selectedvalue={saveObj?.memberWalletId} placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} />
+              {/* <WalletList placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} /> */}
 
               {/* <div> <div className="d-flex"><Translate
               className="input-label"
