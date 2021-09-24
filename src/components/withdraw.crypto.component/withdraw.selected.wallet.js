@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Card, Input, Radio, List, Alert, Row, Col, Form, Modal, Select,Tooltip } from 'antd';
+import { Typography, Button, Card, Input, Radio, List, Alert, Row, Col, Form, Modal, Select, Tooltip } from 'antd';
 import { handleSendFetch, setStep, setSubTitle } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -232,18 +232,18 @@ class CryptoWithDrawWallet extends Component {
                     <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt("half")} />
                     <Translate value="all" content="all" component={Radio.Button} onClick={() => this.clickMinamnt("all")} />
                 </Radio.Group>
-                <div className="p-relative d-flex align-center">
-                    <Translate
-                        className="fs-14 text-aqua fw-500 text-upper"
-                        content="address"
-                        component={Paragraph}
-                    />
 
-                    <Tooltip placement="bottom" title={<span>New Address</span>} >
+                <Translate
+                    className="fs-14 text-aqua fw-500 text-upper"
+                    content="address"
+                    component={Paragraph}
+                />
+
+                {/* <Tooltip placement="bottom" title={<span>New Address</span>} >
                         <span className="val-updown c-pointer" onClick={() => this.props.changeStep('step8')}>
                             <span className="icon md address-book d-block c-pointer" style={{ marginTop: '10px', marginLeft: '10px' }}></span>
                         </span>
-                    </Tooltip></div>
+                    </Tooltip> */}
                 <Form>
                     <Form.Item
                         name="bankId"
@@ -256,21 +256,26 @@ class CryptoWithDrawWallet extends Component {
                         ]}
                     >
                         <div className="d-flex"><Text
-                            className="input-label" >Address</Text>
-
+                            className="input-label" >Address Book</Text>
                             <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
                         </div>
-
-                        <Select dropdownClassName="select-drpdwn"
-                            className="cust-input"
-                            placeholder="Select Address"
-                            onChange={(e) => this.handleChange(e)}
-                        >
-                            {addressLu?.map((item, idx) =>
-                                <Option key={idx} value={item.id}>{item.name}
-                                </Option>
-                            )}
-                        </Select>
+                        <div className="p-relative d-flex align-center">
+                            <Select dropdownClassName="select-drpdwn"
+                                className="cust-input custom-add-select mb-0"
+                                placeholder="Select Address"
+                                onChange={(e) => this.handleChange(e)}
+                            >
+                                {addressLu?.map((item, idx) =>
+                                    <Option key={idx} value={item.id}>{item.name}
+                                    </Option>
+                                )}
+                            </Select>
+                            <Tooltip placement="top" title={<span>New Address</span>} style={{ flexGrow: 1 }}>
+                                <div className="new-add c-pointer" onClick={() => this.props.changeStep('step8')}>
+                                    <span className="icon md address-book d-block c-pointer"></span>
+                                </div>
+                            </Tooltip>
+                        </div>
                     </Form.Item>
                 </Form>
 
