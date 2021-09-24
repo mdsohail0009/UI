@@ -53,8 +53,8 @@ class Portfolio extends Component {
             layout: {
                 background: {
                     type: ColorType.VerticalGradient,
-                    topColor: 'rgba(0, 0, 0, 0.85)',
-                    bottomColor: 'rgba(0, 0, 0, 0.85)',
+                    topColor: 'rgba(49,60,70,0.75)',
+                    bottomColor: 'rgba(49,60,70,0.75)',
                 },
                 textColor: '#696969',
                 fontSize: 12,

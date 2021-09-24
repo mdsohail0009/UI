@@ -27,7 +27,6 @@ class SendReceive extends Component {
     }
     componentWillUnmount() {
         this.props.dispatch(setStep("step1"));
-       
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
     }
     renderContent = () => {
@@ -55,7 +54,7 @@ class SendReceive extends Component {
             withdrawsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             addnewAddress:<span onClick={() => this.props.dispatch(setStep("step2"))} className="icon md lftarw-white c-pointer" />,
         }
-        return stepcodes[config[this.props.buySell.stepcode]]
+        return stepcodes[config[this.props.sendReceive.stepcode]]
     }
     renderIcon = () => {
         const stepcodes = {
@@ -68,7 +67,7 @@ class SendReceive extends Component {
             withdrawsummary: <span />,
             addnewAddress:<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
         }
-        return stepcodes[config[this.props.buySell.stepcode]]
+        return stepcodes[config[this.props.sendReceive.stepcode]]
     }
     render() {
         return (<Drawer destroyOnClose={true}

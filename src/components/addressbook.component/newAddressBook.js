@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { Form, Input, Typography, Button , Alert} from 'antd'
-import { setStep } from '../../reducers/addressBookReducer';
+import { Form, Input, Typography, Button, Alert } from 'antd'
+import { setAddressStep  } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
-import {saveAddress, favouriteNameCheck} from './api';
+import { saveAddress, favouriteNameCheck } from './api';
 
 const { Text } = Typography;
-const NewAddressBook = ({changeStep,addressBookReducer,userConfig, onCancel}) =>{
+const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel }) => {
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
-  
-   const saveAddressBook =async (values) => {
+
+    const saveAddressBook = async (values) => {
         debugger;
         const type = 'crypto';
         values['membershipId'] = userConfig.id;
@@ -18,84 +18,84 @@ const NewAddressBook = ({changeStep,addressBookReducer,userConfig, onCancel}) =>
         values['toCoin'] = addressBookReducer.coinWallet.coin
         let namecheck = values.favouriteName;
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
-        if(responsecheck.data != null){
+        if (responsecheck.data != null) {
             return setErrorMsg('Record already existed');
-        }else{
-        let response = await saveAddress(values);
-        if (response.ok) {
-            changeStep('step1');
-            onCancel();
-            setErrorMsg('Address saved sucessfully');
-            
+        } else {
+            let response = await saveAddress(values);
+            if (response.ok) {
+                changeStep('step1');
+                onCancel();
+                setErrorMsg('Address saved sucessfully');
+
+            }
+        }
     }
-}
-   }
-   
-        return (
-            <>
-                <div className="mt-16">
+
+    return (
+        <>
+            <div className="mt-16">
                 {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-                    <Form
-                        form={form} 
-                        onFinish={saveAddressBook} >
-                        <Form.Item
-                            className="custom-forminput mb-24 pr-0"
-                            name="toCoin"
-                           
-                            rules={[
-                                { required: true, message: "Is required" },
-                              ]}
-                              >
-                            <div>
-                                <div className="d-flex">
-                                    <Text className="input-label">Coin</Text>
-                                    <span style={{ color: "#fafcfe", paddingLeft: "2px" }}></span>
-                                </div>
-                                {addressBookReducer.coinWallet.coinFullName ? <Input  value={addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} className="cust-input cust-adon c-pointer" placeholder="Select from Coin" 
-                                 addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />} /> :
-                                <Input  disabled className="cust-input cust-adon" placeholder="Select from Coins"  
-                                addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />} 
+                <Form
+                    form={form}
+                    onFinish={saveAddressBook} >
+                    <Form.Item
+                        className="custom-forminput mb-24 pr-0"
+                        name="toCoin"
+
+                        rules={[
+                            { required: true, message: "Is required" },
+                        ]}
+                    >
+                        <div>
+                            <div className="d-flex">
+                                <Text className="input-label">Coin</Text>
+                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}></span>
+                            </div>
+                            {addressBookReducer.coinWallet.coinFullName ? <Input value={addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} className="cust-input cust-adon c-pointer" placeholder="Select from Coin"
+                                addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />} /> :
+                                <Input disabled className="cust-input cust-adon" placeholder="Select from Coins"
+                                    addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />}
                                 />}
+                        </div>
+                    </Form.Item>
+                    <Form.Item
+                        className="custom-forminput mb-24 pr-0"
+                        name="favouriteName"
+                        rules={[
+                            { required: true, message: "Is required" },
+                        ]} >
+                        <div>
+                            <div className="d-flex">
+                                <Text className="input-label">Address Label</Text>
+                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
                             </div>
-                        </Form.Item>
-                        <Form.Item
-                            className="custom-forminput mb-24 pr-0"
-                            name="favouriteName"
-                            rules={[
-                                { required: true, message: "Is required" },
-                              ]} >
-                            <div>
-                                <div className="d-flex">
-                                    <Text className="input-label">Address Label</Text>
-                                    <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-                                </div>
-                                <Input className="cust-input" placeholder="Enter Address label" />
+                            <Input className="cust-input" placeholder="Enter Address label" />
+                        </div>
+                    </Form.Item>
+                    <Form.Item
+                        className="custom-forminput mb-24 pr-0"
+                        name="toWalletAddress"
+                        rules={[
+                            { required: true, message: "Is required" },
+                        ]}>
+                        <div>
+                            <div className="d-flex">
+                                <Text className="input-label">Address</Text>
+                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
                             </div>
-                        </Form.Item>
-                        <Form.Item
-                            className="custom-forminput mb-24 pr-0"
-                            name="toWalletAddress"
-                             rules={[
-                                { required: true, message: "Is required" },
-                              ]}>
-                            <div>
-                                <div className="d-flex">
-                                    <Text className="input-label">Address</Text>
-                                    <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-                                </div>
-                                <Input className="cust-input" placeholder="Enter Address" />
-                            </div>
-                        </Form.Item>
-                        <div style={{ marginTop: '50px' }} className="">
-                            <Button
-                                htmlType="submit"
-                                size="large"
-                                block
-                                className="pop-btn"
-                            >
-                                Save
-                            </Button>
-                            {/* <Button
+                            <Input className="cust-input" placeholder="Enter Address" />
+                        </div>
+                    </Form.Item>
+                    <div style={{ marginTop: '50px' }} className="">
+                        <Button
+                            htmlType="submit"
+                            size="large"
+                            block
+                            className="pop-btn"
+                        >
+                            Save
+                        </Button>
+                        {/* <Button
                                 htmlType="cancel"
                                 size="large"
                                 block
@@ -104,22 +104,22 @@ const NewAddressBook = ({changeStep,addressBookReducer,userConfig, onCancel}) =>
                             >
                                 Cancel
                             </Button> */}
-                        </div>
+                    </div>
 
-                    </Form>
-                </div>
-            </>
-        )
-    }
+                </Form>
+            </div>
+        </>
+    )
+}
 
 
-const connectStateToProps = ({ addressBookReducer,userConfig }) => {
-    return { addressBookReducer,userConfig: userConfig.userProfileInfo }
+const connectStateToProps = ({ addressBookReducer, userConfig }) => {
+    return { addressBookReducer, userConfig: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
-            dispatch(setStep(stepcode))
+            dispatch(setAddressStep(stepcode))
         }
     }
 }

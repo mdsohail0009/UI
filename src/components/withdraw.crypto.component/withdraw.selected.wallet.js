@@ -33,7 +33,6 @@ class CryptoWithDrawWallet extends Component {
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 2 }))
         this.props.dispatch(setSubTitle("Select wallet address"));
         this.trackevent();
-        debugger;
         this.getAddressLu();
     }
     trackevent = () => {
@@ -42,11 +41,9 @@ class CryptoWithDrawWallet extends Component {
         });
     }
     componentWillUnmount() {
-        this.setState({ ...this.state, isWithdrawSuccess: false })
-        this.props.changeStep("step1");
+        this.setState({ ...this.state, isWithdrawSuccess: false });
     }
     getAddressLu = async () => {
-        debugger
         let membershipId = this.props.userProfile.id;
         let recAddress = await favouriteFiatAddress(membershipId,'crypto')
         if (recAddress.ok) {
@@ -100,11 +97,11 @@ class CryptoWithDrawWallet extends Component {
     withDraw = async () => {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null, loading: true, isWithdrawSuccess: false });
-        // const valid = WalletAddressValidator.validate(this.state.walletAddress,coin);
-        // if (!valid) {
-        //     this.setState({ ...this.state, error: "Please enter valid address", confirmationStep: "step1", showModal: false, isWithdrawSuccess: false })
-        //     return;
-        // }
+        const valid = WalletAddressValidator.validate(this.state.walletAddress,coin);
+        if (!valid) {
+            this.setState({ ...this.state, error: "Please enter valid address", confirmationStep: "step1", showModal: false, isWithdrawSuccess: false })
+            return;
+        }
         let obj = {
             "membershipId": this.props.userProfile.id,
             "memberWalletId": id,

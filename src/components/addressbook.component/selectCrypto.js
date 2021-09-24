@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Typography, Button, Input, List, Empty, Alert } from 'antd';
 import Translate from 'react-translate-component';
-import { setStep, setCoin, fetchSelectedCoinDetails, setExchangeValue} from '../../reducers/addressBookReducer';
+import { setAddressStep, setCoin, fetchSelectedCoinDetails, setExchangeValue} from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
 import CryptoList from '../shared/cryptolist';
 import { appInsights } from "../../Shared/appinsights";
@@ -79,7 +79,7 @@ const connectStateToProps = ({ addressBookReducer, userConfig }) => {
 const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
-            dispatch(setStep(stepcode))
+            dispatch(setAddressStep(stepcode))
         },
         getCoinDetails: (coin, memid) => {
             dispatch(fetchSelectedCoinDetails(coin, memid));
