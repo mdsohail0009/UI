@@ -166,41 +166,13 @@ const handleChange = () => {
             component={Paragraph}
             className="mb-16 fs-14 text-aqua fw-500 text-upper"
           />
-            <Tooltip placement="bottom" title={<span>New Address</span>} >
+            {/* <Tooltip placement="bottom" title={<span>New Address</span>} >
               <span className="val-updown c-pointer" onClick={() => changeStep('step4')}>
                 <span className="icon md address-book d-block c-pointer" style={{ marginTop: '10px', marginLeft: '10px' }}></span>
               </span>
-            </Tooltip>
+            </Tooltip> */}
           </div>
-          {/* <p className="mb-16 fs-14 text-aqua fw-500 text-right c-pointer" onClick={() => changeStep('step4')} > Add New Address</p> */}
-          <Form.Item
-           
-            className="custom-forminput mb-24"
-            // rules={[
-            //   {
-            //     required: true,
-            //     message: 'Is required',
-            //   },
-            // ]}
-          >
-            <div className="d-flex"><Text
-              className="input-label" >Address</Text>
-           
-              <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-            </div>
-            <Select dropdownClassName="select-drpdwn"
-              className="cust-input" value={addressDetails.favouriteName}
-              onChange={(e) => handleAddressChange(e)}
-              placeholder="Select Address"
-            >
-              {/* <Option value="meena">meena</Option> */}
-              {addressLu?.map((item, idx) =>
-                <Option key={idx} value={item.id}>{item.name}
-                </Option>
-              )}
-            </Select>
-
-          </Form.Item>
+         
           <Form.Item
             className="custom-forminput mb-24"
             name="memberWalletId"
@@ -241,6 +213,33 @@ const handleChange = () => {
               />
 
             </div>
+          </Form.Item>
+          <Form.Item
+            className="custom-forminput mb-24"
+          >
+            <div className="d-flex"><Text
+              className="input-label" >Address Book</Text>
+           
+              <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+            </div>
+            <div className="p-relative d-flex align-center"> 
+            <Select dropdownClassName="select-drpdwn"
+              className="cust-input custom-add-select" value={addressDetails.favouriteName}
+              onChange={(e) => handleAddressChange(e)}
+              placeholder="Select Address"
+            >
+              {addressLu?.map((item, idx) =>
+                <Option key={idx} value={item.id}>{item.name}
+                </Option>
+              )}
+            </Select>
+            <Tooltip placement="top" title={<span>New Address</span>}  style={{flexGrow:1}}>
+              <div className="new-add c-pointer" onClick={() => changeStep('step4')}>
+                <span className="icon md address-book d-block c-pointer"></span>
+              </div>
+            </Tooltip>
+            </div>
+
           </Form.Item>
           <Form.Item
             className="custom-forminput mb-24"

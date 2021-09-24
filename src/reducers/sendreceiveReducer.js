@@ -73,6 +73,7 @@ let initialState = {
         withdrawsummary: 'withdraw_Btc',
         verifyidentity: 'verify_identity',
         withdrawscan: 'deposit',
+        addnewAddress: 'Address'
 
     },
     stepSubTitles: {
@@ -82,12 +83,13 @@ let initialState = {
         withdrawaddress: 'send_wallet_fiat',
         withdrawsummary: 'withdraw_summary_sub',
         withdrawscan: 'withdraw_summary_sub',
+        addnewAddress: null
 
 
     },
     depositWallet: "",
     cryptoWithdraw: {},
-    withdrawFiatObj:null,
+    withdrawFiatObj: null,
     subTitle: null
 }
 const sendReceiveReducer = (state = initialState, action) => {
