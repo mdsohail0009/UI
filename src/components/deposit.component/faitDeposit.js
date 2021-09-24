@@ -13,6 +13,7 @@ import { savedepositFiat, requestDepositFiat } from './api';
 import Loader from '../../Shared/loader';
 import success from '../../assets/images/success.png';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { appInsights } from "../../Shared/appinsights";
 
 const LinkValue = (props) => {
   return (
@@ -26,6 +27,7 @@ const LinkValue = (props) => {
 const { Option } = Select;
 class FaitDeposit extends Component {
   formRef = createRef();
+  myRef=React.createRef();
   state = {
     buyDrawer: false,
     crypto: config.tlvCoinsList,
@@ -38,6 +40,9 @@ class FaitDeposit extends Component {
   componentDidMount() {
     this.props.fiatRef(this)
     this.props.fetchCurrencyWithBankDetails()
+    appInsights.trackEvent({
+      name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": ('deposit page view'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
+    });
   }
   clearfiatValues = () => {
     this.props.fetchCurrencyWithBankDetails()
@@ -106,9 +111,10 @@ class FaitDeposit extends Component {
     let { BankInfo, depObj } = this.state;
     if (parseFloat(typeof depObj.Amount == 'string' ? depObj.Amount.replace(/,/g, '') : depObj.Amount) <= 0) {
       this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero.' })
+      this.myRef.current.scrollIntoView()
     }
     else if (depObj.Amount == '.') {
-      this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero.' })
+      this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero.' });this.myRef.current.scrollIntoView()
     }
     else {
       this.formRef.current.validateFields().then(async () => {
@@ -122,6 +128,9 @@ class FaitDeposit extends Component {
             BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null },
             faitdeposit: false,
             tabValue: 1, Loader: false, isTermsAgreed: false, showSuccessMsg: true
+          });
+          appInsights.trackEvent({
+            name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": (createObj.amount +' '+createObj.currency+ 'deposited.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
           });
         }
       });
@@ -158,7 +167,7 @@ class FaitDeposit extends Component {
           <SellToggle />
           : <> {this.state.Loader && <Loader />}
 
-            {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} on scrollToFirstError={true} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll">
+            {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }}  ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll"><div ref={this.myRef}></div>
               {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="" description={this.state?.errorMessage} closable />}
               {!this.state.showSuccessMsg && <Translate
                 className="mb-0 text-white-30 fs-14 fw-200"
