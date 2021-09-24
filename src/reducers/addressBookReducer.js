@@ -1,5 +1,5 @@
 import { favouriteFiatAddress, getSelectedCoinDetails } from "../components/addressbook.component/api";
-const SET_STEP = "setStep";
+const SET_ADDRESS_STEP = "setAddressStep";
 const CLEAR_STEP = "clearStep";
 const FETCH_ADDRESS = 'fetchAddress';
 const HANDLE_FETCH = 'handleFetch';
@@ -16,9 +16,9 @@ const setCoin = (payload) => {
         payload
     }
 }
-const setStep = (payload) => {
+const setAddressStep = (payload) => {
     return {
-        type: SET_STEP,
+        type: SET_ADDRESS_STEP,
         payload
     }
 }
@@ -82,7 +82,7 @@ let initialState = {
 }
 const AddressBookReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_STEP:
+        case SET_ADDRESS_STEP:
             state = { ...state, stepcode: action.payload };
             return state;
         case CLEAR_STEP:
@@ -106,4 +106,4 @@ const AddressBookReducer = (state = initialState, action) => {
 
 }
 export default AddressBookReducer;
-export { setStep, clearStep, setCoin, handleFavouritAddress, fetchSelectedCoinDetails,setExchangeValue }
+export {setAddressStep, clearStep, setCoin, handleFavouritAddress, fetchSelectedCoinDetails,setExchangeValue }

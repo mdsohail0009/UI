@@ -23,7 +23,7 @@ class WalletList extends Component {
                             if(this.props.onWalletSelect){this.props.onWalletSelect(e)};
                             this.setState({...this.state,selectedvalue:e});}}>
                         {this.props.buyInfo.memberFiat?.data?.map((item, idx) =>
-                            <Option key={idx} value={item.id}>{item.currencyCode}
+                            <Option key={idx} value={item[this.props.valueFeild||'id']}>{item.currencyCode}
                                 <NumberFormat value={item.avilable} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <span {...props}> Balance: {value}</span>} />
                             </Option>
                         )}

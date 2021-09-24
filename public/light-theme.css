@@ -18,6 +18,7 @@
     --bgPitch: #1B4156;
     --bgPitch1: #94b7ca;
     --bgBlu: #ecf1f4;
+    --bgOrion: #13132B;
     --textPureWhite: #FFFFFF;
     --textWhite: #000000;
     --textWhite30: #243540;
@@ -38,7 +39,7 @@
     --borderGrey: #E9F3FF;
     --borderLight: #CECECE;
     --bgCircle: #19B06C;
-    --lightThemeIcons: url(https://scmcdn.blob.core.windows.net/scmcdn/suissebase/images/light-theme-icons.svg);
-    --cryptoIcons: url(https://scmcdn.blob.core.windows.net/scmcdn/suissebase/images/light-crypto-icons.svg);
+    --lightThemeIcons: url(light-theme-icons.svg);
+    --cryptoIcons: url(light-crypto-icons.svg);
     --logo: url(../../assets/images/logo-color.png);
 }

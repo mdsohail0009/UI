@@ -22,7 +22,7 @@ let initialState = {
         selectwallet: 'withdraw',
         billingaddress: 'change_billing_address',
         fiatdeposit: 'Fiat_deposit',
-        addAddress:'Address',
+        addAddress:'fiatAddress',
         withdrwalfiatsummary:'withdraw_fiat_summary',
         withdrwlive:'withdraw_live'
     },

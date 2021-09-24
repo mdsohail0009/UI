@@ -284,5 +284,7 @@ export default {
   manage_account: '加密存款/取款',
   withdrawCrypto:'Withdraw Crypto',
   withdrawFiat:'Withdraw Fiat',
-  Address:'Add New Address'
+  fiatAddress:'Add Fiat Address',  
+  cryptoAddress:'Add Crypto Address',
+
 }

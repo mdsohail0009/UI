@@ -4,6 +4,7 @@ import apicalls from '../../api/apiCalls';
 import { connect } from 'react-redux';
 import { userInfo, getmemeberInfo } from '../../reducers/configReduser';
 import { withRouter } from 'react-router-dom';
+import Loader from "../../Shared/loader";
 
 class LiveNessSumsub extends Component {
     state = {loading:true,applicantId:null,applicantActionid:null}
@@ -23,10 +24,12 @@ class LiveNessSumsub extends Component {
                 email: this.props.userConfig.email,
                 phone: this.props.userConfig.phoneNo, // if available
                 onMessage: (type, payload) => {
-                    // console.log('WebSDK onMessage', type, payload)
+                   // console.log('WebSDK onMessage', type, payload)
                     if(type == 'idCheck.actionCompleted'){
+                        if(payload.answer=="GREEN"){
                         this.setState({...this.state, applicantActionid:payload.applicantActionId})
                         this.props.onConfirm(this.state)
+                        }
                     }
                     if(type == 'idCheck.onActionSubmitted'){
                         this.setState({...this.state, applicantActionid:payload.applicantActionId})
@@ -51,7 +54,7 @@ class LiveNessSumsub extends Component {
     render() {
         return (
             <>
-            {/* {this.state.loading && <div className="loader">Loading .....</div>} */}
+            {this.state.loading && <Loader />}
                 <div id="sumsub-websdk-container"></div>
             </>
         );

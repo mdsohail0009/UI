@@ -11,7 +11,7 @@ import Currency from '../shared/number.formate';
 import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
-import {saveAddress,favouriteNameCheck} from './api';
+import { saveAddress, favouriteNameCheck } from './api';
 
 
 const LinkValue = (props) => {
@@ -23,7 +23,7 @@ const LinkValue = (props) => {
     )
 }
 const { Option } = Select;
-const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,changeStep ,onCancel}) => {
+const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, changeStep, onCancel }) => {
     const [form] = Form.useForm();
     const [selectedWallet, setSelectedWallet] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -54,7 +54,21 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,chan
         form.setFieldsValue({ state: null })
 
     }
+    const handleWalletSelection = (walletId) => {
+       debugger
+        form.setFieldsValue({ toCoin: walletId })
+        if (buyInfo.memberFiat?.data) {
+          let wallet = buyInfo.memberFiat.data.filter((item) => {
+            return walletId === item.currencyCode
+          })
+          setSelectedWallet(wallet[0])
+        }
+      }
     const savewithdrawal = async (values) => {
+        if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
+            useDivRef.current.scrollIntoView()
+            return setErrorMsg('Insufficient balance');
+          }
         setErrorMsg(null)
         const type = 'fiat';
         values['membershipId'] = userConfig.id;
@@ -63,17 +77,18 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,chan
         debugger
         let namecheck = values.favouriteName;
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
-        if(responsecheck.data != null){
-            return setErrorMsg('Record already existed');
-        }else{
-        let response = await saveAddress(values);
-        if (response.ok) {
-            debugger;
-           // changeStep('step1');
-            onCancel();
+        if (responsecheck.data != null) {
+            return setErrorMsg('Address label already existed');
+        } else {
+            let response = await saveAddress(values);
+            if (response.ok) {
+                debugger;
+                // changeStep('step1');
+                onCancel();
+                form.resetFields()
 
+            }
         }
-    }
     }
 
     const { Paragraph, Title, Text } = Typography;
@@ -92,7 +107,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,chan
                     />
                     <Form.Item
                         className="custom-forminput mb-24 pr-0"
-                        name="favouriteName"  required
+                        name="favouriteName" required
                         rules={[
                             { required: true, message: "Is required" },
                         ]}>
@@ -101,24 +116,34 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,chan
                                 <Text className="input-label">Address Label</Text>
                                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
                             </div>
-                            <Input className="cust-input" placeholder="Enter Address label" />
+                            <Input className="cust-input" maxLength="20" placeholder="Enter Address label" />
                         </div>
                     </Form.Item>
                     <Form.Item
-                            className="custom-forminput mb-24 pr-0"
-                            name="toWalletAddress"  required
-                            rules={[
-                                { required: true, message: "Is required" },
-                            ]}
-                            >
-                            <div>
-                                <div className="d-flex">
-                                    <Text className="input-label">Address</Text>
-                                    <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-                                </div>
-                                <Input className="cust-input" placeholder="Enter Address" />
+                        className="custom-forminput mb-24 pr-0"
+                        name="toWalletAddress" required
+                        rules={[
+                            { required: true, message: "Is required" },
+                        ]}
+                    >
+                        <div>
+                            <div className="d-flex">
+                                <Text className="input-label">Address</Text>
+                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
                             </div>
-                        </Form.Item>
+                            <Input className="cust-input"  maxLength="30" placeholder="Enter Address" />
+                        </div>
+                    </Form.Item>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-24"
+                        name="toCoin"
+                        label="Currency"
+                        rules={[
+                            { required: true, message: "Is required" },
+                        ]}
+                    >
+                        <WalletList valueFeild={'currencyCode'} placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} />
+                    </Form.Item>
                     <Form.Item
                         className="custom-forminput mb-24"
                         name="accountNumber"

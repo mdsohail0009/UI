@@ -121,6 +121,15 @@ class SelectSellCrypto extends Component {
         }
         this.setState({ ...this.state, sellSaveData: obj })
     }
+    refreshAmnts=async()=>{
+        this.setState({ ...this.state, CryptoAmnt: this.state.CryptoAmnt })
+        let res = await getSellamnt(this.state.CryptoAmnt, true, this.props.sellData?.coinDetailData?.coin,false);
+        if (res.ok) {
+            this.setState({ CryptoAmnt: this.state.CryptoAmnt, USDAmnt: res.data, isSwap: false }, () => {
+                this.swapRef.current.changeInfo({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt });
+            })
+        }
+    }
     render() {
         const { Text, Paragraph } = Typography;
         const { coinDetailData } = this.props.sellData;
@@ -157,7 +166,7 @@ class SelectSellCrypto extends Component {
                 <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua" />
                 <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                 <div className="mt-24">
-                    <SuisseBtn autoDisable={true} title="preview" className="pop-btn" onClick={() => { this.previewSellData() }} onRefresh={()=>{this.clickMinamnt(this.state.minmaxTab);}}/>
+                    <SuisseBtn autoDisable={true} title="preview" className="pop-btn" onClick={() => { this.previewSellData() }} onRefresh={()=>{this.refreshAmnts();}}/>
                 </div></div>
             </>
 
