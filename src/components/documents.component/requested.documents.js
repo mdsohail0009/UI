@@ -34,7 +34,6 @@ class RequestedDocs extends Component {
         previewPath: null
     }
     componentDidMount() {
-        window.scrollTo(0, 0);
         this.getDocument(this.props?.match?.params?.id);
     }
     getDocument = async (id) => {
@@ -288,7 +287,7 @@ class RequestedDocs extends Component {
                             <div className="user-shortname">{this.props?.userProfileInfo?.firstName.charAt('0')}{this.props?.userProfileInfo?.lastName.charAt('0')}</div>
                             <div className="reply-body">
                                 <div className="chat-send">
-                                    <Input className={doc.id.replace(/-/g, "")} onChange={({ currentTarget: { value } }) => this.handleReplymessage(value, doc)} autoFocus type="text" placeholder="Write your message..." size="large" bordered={false} multiple={true} />
+                                    <Input className={doc.id.replace(/-/g, "")} onChange={({ currentTarget: { value } }) => this.handleReplymessage(value, doc)} type="text" placeholder="Write your message..." size="large" bordered={false} multiple={true} />
                                     <div className="d-flex align-center">
                                         <Tooltip title="Attachments">
                                             <Upload accept=".pdf,.jpg,.jpeg,.png.gif" showUploadList={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} onChange={(props) => this.handleUpload(props, doc)}>
