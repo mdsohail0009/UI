@@ -24,7 +24,7 @@ const WithdrawalSummary = ({ userConfig, sendReceive,changeStep, onConfirm,onCan
         <Text className="fs-20 text-white-30 d-block mb-36">{sendReceive.withdrawFiatObj?.bankName}</Text>
         <Text className="fs-14 text-white-50 fw-200">Recipient Full Name</Text>
         <Text className="fs-20 text-white-30 d-block mb-36">{sendReceive.withdrawFiatObj?.beneficiaryAccountName}</Text>
-        <ul className="pl-0 ml-16 text-white-50 mb-0">
+        <ul className="pl-0 ml-16 text-white-50 mb-24">
           <li>Ensure that the account details is correct</li>
           <li>Transaction can't be cancelled</li>
         </ul>

@@ -503,7 +503,7 @@ debugger;
                 },
               ]}
             >
-              <Checkbox><Translate
+              <Checkbox className="ant-custumcheck"><span className="withdraw-check"></span><Translate
                 content="agree_to_suissebase"
                 with={{ link }}
                 component={Paragraph}
