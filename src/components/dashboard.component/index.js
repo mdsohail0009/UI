@@ -31,10 +31,10 @@ class Home extends Component {
         return (
             <div className="main-container">
                 {this.state.notices != null && this.state.notices != undefined && <Carousel>
-                    {this.state.notices?.map((notice,idx)=><div className="mb-24"  key={idx}>
-                        <AlertConfirmation type="success" title={notice.title} showIcon closable description="Dear user please check the details for requesting documents to approval your deposit/withdraw."
+                    {this.state.notices?.map((notice, idx) => <div className="mb-24" key={idx}>
+                        <AlertConfirmation type="warning" title={notice.title} showIcon closable description="Dear user please check the details for requesting documents to approval your deposit/withdraw."
                             action={
-                                <Button size="small" type="text" onClick={()=>this.props.history.push(`/documents/${notice.typeId}`)}>
+                                <Button size="small" type="text" onClick={() => this.props.history.push(`/documents/${notice.typeId}`)}>
                                     View Details
                                 </Button>
                             } />
