@@ -56,7 +56,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
 
   const handleWalletSelection = (walletId) => {
 debugger;
-    form.setFieldsValue({ memberWalletId: walletId })
+    form.setFieldsValue({ walletCode: walletId })
     if (buyInfo.memberFiat?.data) {
       let wallet = buyInfo.memberFiat.data.filter((item) => {
         return walletId === item.currencyCode
@@ -128,7 +128,7 @@ debugger;
     }
     setErrorMsg(null)
     values['membershipId'] = userConfig.id
-    values['walletCode'] = selectedWallet.currencyCode
+    values['memberWalletId'] = selectedWallet.id
     values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName
     setSaveObj(values);
     dispatch(setWithdrawfiat(values))
@@ -154,13 +154,13 @@ debugger;
 
             <Form.Item
               className="custom-forminput custom-label mb-24"
-              name="memberWalletId"
+              name="walletCode"
               label="Currency"
               rules={[
                 { required: true, message: "Is required" },
               ]}
             >
-              <WalletList  valueFeild={'currencyCode'}  selectedvalue={saveObj?.memberWalletId} placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} />
+              <WalletList  valueFeild={'currencyCode'}  selectedvalue={saveObj?.walletCode} placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} />
               {/* <WalletList placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} /> */}
 
               {/* <div> <div className="d-flex"><Translate
