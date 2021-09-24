@@ -1,5 +1,5 @@
 import React, { Component, useState, useRef, useEffect } from 'react';
-import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert, Tooltip, Select } from 'antd';
+import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert, Tooltip, Select,Checkbox } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -492,32 +492,26 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
             >
               <Input className="cust-input" placeholder="Remarks" />
             </Form.Item>
-            <div className="d-flex pt-16 agree-check">
-              <label>
-                <Form.Item
-                  className="custom-forminput mb-36 agree"
-                  name="isAccept"
-                  valuePropName="checked"
-                  required
-                  rules={[
-                    {
-                      validator: (_, value) =>
-                        value ? Promise.resolve() : Promise.reject(new Error('Please agree terms of service')),
-                    },
-                  ]}
-                >
-                  <input type="checkbox" id="agree-check" />
-                </Form.Item>
-                <span for="agree-check" />
-              </label>
-              <Translate
+            <Form.Item
+              className="custom-forminput mb-36 agree"
+              name="isAccept"
+              valuePropName="checked"
+              required
+              rules={[
+                {
+                  validator: (_, value) =>
+                    value ? Promise.resolve() : Promise.reject(new Error('Please agree terms of service')),
+                },
+              ]}
+            >
+              <Checkbox><Translate
                 content="agree_to_suissebase"
                 with={{ link }}
                 component={Paragraph}
                 className="fs-14 text-white-30 ml-16 mb-4"
                 style={{ flex: 1 }}
-              />
-            </div>
+              /></Checkbox>
+            </Form.Item>
             <Form.Item className="mb-0 mt-16">
               <Button
                 htmlType="submit"
@@ -534,7 +528,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
       step2: <><WithdrawalSummary onConfirm={handleOk} onCancel={() => { setConfirmationStep("step1"); form.setFieldsValue(saveObj) }} /></>,
       step3: <>
         <WithdrawalLive onConfirm={handleOk} onCancel={() => {
-          setConfirmationStep("step1");
+          setConfirmationStep("step2");
           form.setFieldsValue(saveObj);
         }} />
       </>,
@@ -568,7 +562,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
 
       <Modal className="widthdraw-pop" maskClosable={false} onCancel={handleCancel} title="Withdraw" closeIcon={<Tooltip title="Close"><span onClick={handleCancel} className="icon md close" /></Tooltip>} footer={[
         <>{confirmationStep != 'step2' && <div className="text-right withdraw-footer"><Button key="back" type="text" className="text-white-30 pop-cancel fw-400 text-captz text-center" onClick={handleCancel} disabled={loading}>
-          Cancel
+          Back
         </Button>
           <Button key="submit" className="pop-btn px-36 ml-36" onClick={handleOk} loading={loading}>
             Confirm
