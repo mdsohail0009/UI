@@ -25,6 +25,7 @@ const NewAddressBook = ({changeStep,addressBookReducer,userConfig, onCancel}) =>
         if (response.ok) {
             changeStep('step1');
             onCancel();
+            setErrorMsg('Address saved sucessfully');
             
     }
 }
@@ -38,7 +39,27 @@ const NewAddressBook = ({changeStep,addressBookReducer,userConfig, onCancel}) =>
                         form={form} 
                         onFinish={saveAddressBook} >
                         <Form.Item
-                            className="custom-forminput mb-0 pr-0"
+                            className="custom-forminput mb-24 pr-0"
+                            name="toCoin"
+                           
+                            rules={[
+                                { required: true, message: "Is required" },
+                              ]}
+                              >
+                            <div>
+                                <div className="d-flex">
+                                    <Text className="input-label">Coin</Text>
+                                    <span style={{ color: "#fafcfe", paddingLeft: "2px" }}></span>
+                                </div>
+                                {addressBookReducer.coinWallet.coinFullName ? <Input  value={addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} className="cust-input cust-adon c-pointer" placeholder="Select from Coin" 
+                                 addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />} /> :
+                                <Input  className="cust-input cust-adon c-pointer" placeholder="Select from Coins"  
+                                addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />} 
+                                />}
+                            </div>
+                        </Form.Item>
+                        <Form.Item
+                            className="custom-forminput mb-24 pr-0"
                             name="favouriteName"
                             rules={[
                                 { required: true, message: "Is required" },
@@ -52,26 +73,7 @@ const NewAddressBook = ({changeStep,addressBookReducer,userConfig, onCancel}) =>
                             </div>
                         </Form.Item>
                         <Form.Item
-                            className="custom-forminput mb-0 pr-0"
-                            name="toCoin" 
-                            // rules={[
-                            //     { required: true, message: "Is required" },
-                            //   ]}
-                              >
-                            <div>
-                                <div className="d-flex">
-                                    <Text className="input-label">Coin</Text>
-                                    <span style={{ color: "#fafcfe", paddingLeft: "2px" }}></span>
-                                </div>
-                                {addressBookReducer.coinWallet.coinFullName ? <Input onClick={() => changeStep('step3')} value={addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} className="cust-input cust-adon" placeholder="Select from Coins" 
-                                 addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />} /> :
-                                <Input   className="cust-input cust-adon" placeholder="Select from Coins"  
-                                addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />} 
-                                />}
-                            </div>
-                        </Form.Item>
-                        <Form.Item
-                            className="custom-forminput mb-0 pr-0"
+                            className="custom-forminput mb-24 pr-0"
                             name="toWalletAddress"
                              rules={[
                                 { required: true, message: "Is required" },
