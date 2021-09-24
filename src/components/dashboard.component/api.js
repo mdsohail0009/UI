@@ -15,4 +15,7 @@ const fetchYourPortfolio=(member_id)=>{
 const getNotices = (member_id)=>{
     return apiClient.get(ApiControllers.exchange+`MemberNoticesDashboard?memberId=${member_id}`)
 }
-export { fetchMarketCaps,fetchMemberWallets,fetchPortfolio,fetchYourPortfolio,getNotices }
+const getPortfolioGraph =(memId,type)=>{
+    return apiClient.get(ApiControllers.exchange+`DashBoardGraph?memberId=${memId}&type=${type}`)
+}
+export { fetchMarketCaps,fetchMemberWallets,fetchPortfolio,fetchYourPortfolio,getNotices,getPortfolioGraph }
