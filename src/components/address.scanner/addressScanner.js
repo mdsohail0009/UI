@@ -3,7 +3,7 @@ import { Typography, Button, message } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import sacnner from '../../assets/images/sacnner.png';
+// import sacnner from '../../assets/images/sacnner.png';
 import Translate from 'react-translate-component';
 
 class addressScanner extends Component {
@@ -16,7 +16,7 @@ class addressScanner extends Component {
         return (
             <div>
                 <div className="scanner-img">
-                    <img src={sacnner} />
+                    {/* <img src={sacnner} /> */}
                 </div>
                 <div className="crypto-address">
                     <Translate className="mb-0 fw-400 text-secondary" content="address" component={Text} />
