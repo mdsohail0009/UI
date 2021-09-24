@@ -1,8 +1,8 @@
 import { apiClient } from '../../api';
 import { ApiControllers } from '../../api/config';
 
-const favouriteFiatAddress = (member_id, type) => {
-    return apiClient.get(ApiControllers.exchange + `FavouriteLu?memberId=${member_id}&type=${type}`);
+const favouriteFiatAddress = (member_id, type, coin_code) => {
+    return apiClient.get(ApiControllers.exchange + `FavouriteLu?memberId=${member_id}&type=${type}&coin=${coin_code}`);
 }
 const detailsAddress = (id) => {
     return apiClient.get(ApiControllers.exchange + `RequestFavourite?id=${id}` );
