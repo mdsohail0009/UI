@@ -18,8 +18,10 @@ const WithdrawalLive = ({ userConfig, sendReceive, changeStep,dispatch,onConfirm
   const [faceCapture, setFaceCapture] = useState(false);
   const [livefacerecognization, setLivefacerecognization] = useState({});
   const [isWithdrawSuccess, setIsWithdrawSuccess] = useState(false);
+  const [isLoding, setIsLoding] = useState(false);
   useEffect(() => { setFaceCapture(false) }, []);
   const saveWithdrwal = async() =>{
+    setIsLoding(true)
       let saveObj = sendReceive.withdrawFiatObj;
     saveObj.livefacerecognization = livefacerecognization?.applicantActionid;
     let withdrawal = await withdrawSave(saveObj)
@@ -28,6 +30,7 @@ const WithdrawalLive = ({ userConfig, sendReceive, changeStep,dispatch,onConfirm
         setIsWithdrawSuccess(true)
         dispatch(rejectWithdrawfiat())
         onConfirm()
+        setIsLoding(true)
         appInsights.trackEvent({
           name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.email, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
         });
@@ -47,6 +50,7 @@ const WithdrawalLive = ({ userConfig, sendReceive, changeStep,dispatch,onConfirm
         <div>
         <LiveNessSumsub onConfirm = {confirmFaceLive}/>
         {faceCapture && <Button
+        disabled={isLoding}
               size="large"
               block
               className="pop-btn"

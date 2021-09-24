@@ -172,7 +172,7 @@ class RequestedDocs extends Component {
             let obj;
             if (item) {
                 obj = item;
-                obj.path = (obj.path && obj.path != "" && typeof (obj.path) == "string") ? JSON.parse(obj.path) : [];
+                obj.path = (obj.path && typeof (obj.path) == "string") ? JSON.parse(obj.path) :obj.path?obj.path: [];
                 obj.repliedDate = new Date();
                 obj.path.push({ filename: file.name, path: file.response[0], size: file.size });
                 obj.repliedBy = this.props.userProfileInfo?.firstName;
