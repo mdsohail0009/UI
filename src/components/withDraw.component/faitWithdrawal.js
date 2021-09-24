@@ -139,7 +139,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
         <div className="suisfiat-height auto-scroll">
           <div ref={useDivRef}></div>
           {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-          <Form form={form} ref={myform} onFinish={savewithdrawal} initialValues={addressDetails}>
+          <Form form={form} onFinish={savewithdrawal} initialValues={addressDetails}>
             <div className="p-relative d-flex align-center"> <Translate
               content="Beneficiary_BankDetails"
               component={Paragraph}
