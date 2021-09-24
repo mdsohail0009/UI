@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Drawer, Button, Tabs, Radio } from 'antd'
+import { Typography, Drawer, Button, Tabs, Radio ,Tooltip } from 'antd'
 import { setAddressStep } from '../../reducers/addressBookReducer';
 import connectStateProps from '../../utils/state.connect';
 import Translate from 'react-translate-component';
@@ -11,6 +11,9 @@ import CryptoList from '../shared/cryptolist';
 import NewFiatAddress from './addFiatAddressbook';
 import { getCoinList } from './api';
 import SelectCrypto from './selectCrypto';
+import { Link } from 'react-router-dom';
+
+
 
 class AddressBook extends Component {
     constructor(props) {
@@ -19,13 +22,16 @@ class AddressBook extends Component {
             visible: false,
             cryptoFiat: false,
             fiatDrawer: false,
+            isCheck: false,
+            selection: [],
+            selectedObj: {},
             gridUrlCrypto: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressCryptoK",
             gridUrlFiat: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressFiatK",
         }
         this.gridRef = React.createRef();
     }
     columnsFiat = [
-        //{ field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="check" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
+        { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
         { field: "favouriteName", title: "Address Label", filter: true, width: 180 },
         { field: "type", title: "Type", width: 150, filter: true, with: 150 },
         { field: "toWalletAddress", title: "Address", filter: true, width: 380 },
@@ -39,15 +45,38 @@ class AddressBook extends Component {
         { field: "status", title: "Status", filter: true, width: 100 }
     ];
     columnsCrypto = [
-        //{ field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="check" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
+        {
+            field: "", title: "", width: 50,
+            customCell: (props) => (<td > <label className="text-center custom-checkbox">
+                <input id={props.dataItem.id} name="isCheck" type="checkbox"
+                    checked={this.state.selection.indexOf(props.dataItem.id) > -1}
+                    onChange={(e) => this.handleInputChange(props, e)} />
+                <span></span> </label></td>)
+        },
         { field: "addressLable", title: "Address Label", filter: true, width: 250 },
-        { field: "coin", title: "Coin",  filter: true, },
-        { field: "address", title: "Address", filter: true,  width: 380 }
+        { field: "coin", title: "Coin", filter: true, },
+        { field: "address", title: "Address", filter: true, width: 380 }
     ];
     componentDidMount() {
         this.coinList()
     }
-
+    handleInputChange = (prop, e) => {
+        const rowObj = prop.dataItem;
+        const value = e.currentTarget.type === 'checkbox' ? e.currentTarget.checked : e.currentTarget.value;
+        const name = e.currentTarget.name;
+        let { selection } = this.state;
+        let idx = selection.indexOf(rowObj.id);
+        if (selection) {
+            selection = [];
+        }
+        if (idx > -1) {
+            selection.splice(idx, 1)
+        }
+        else {
+            selection.push(rowObj.id)
+        }
+        this.setState({ ...this.state, [name]: value, selectedObj: rowObj, selection });
+    }
     coinList = async () => {
         let fromlist = await getCoinList(this.props.userProfile?.id)
         if (fromlist.ok) {
@@ -75,8 +104,8 @@ class AddressBook extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            cryptoaddressbook: <NewAddressBook onCancel= {() =>this.closeBuyDrawer()} />,
-            selectcrypto: <SelectCrypto /> 
+            cryptoaddressbook: <NewAddressBook onCancel={() => this.closeBuyDrawer()} />,
+            selectcrypto: <SelectCrypto />
         }
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
     }
@@ -117,6 +146,19 @@ class AddressBook extends Component {
                             </div>
                             <div className="text-right ">
                                 <Button className="c-pointer pop-btn ant-btn px-24" onClick={this.handleFiatAddress}> Add Address</Button>
+                                <ul>
+                                    <li>
+                                        <Tooltip placement="top" title="Edit">
+                                            <Link className="icon md edit mr-0" onClick={() => this.editNotice()}></Link>
+                                        </Tooltip>
+                                    </li>
+                                    <li onClick={this.statusUpdate}>
+                                        <Tooltip placement="topRight" title="Active/Inactive">
+                                            <Link className="icon md status mr-0"
+                                            ></Link>
+                                        </Tooltip>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <List columns={this.columnsFiat} ref={this.gridRef} key={gridUrlFiat} url={gridUrlFiat} />
@@ -163,7 +205,7 @@ class AddressBook extends Component {
                     closeIcon={null}
                     className="side-drawer"
                 >
-                    <NewFiatAddress onCancel= {() =>this.closeBuyDrawer()} />
+                    <NewFiatAddress onCancel={() => this.closeBuyDrawer()} />
                 </Drawer>
             </>
         )

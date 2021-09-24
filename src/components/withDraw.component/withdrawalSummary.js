@@ -19,7 +19,7 @@ const WithdrawalSummary = ({ userConfig, sendReceive,changeStep, onConfirm,onCan
         <Text className="fs-14 text-white-50 fw-200">Bank Account Number/IBAN</Text>
         <Text className="fs-20 text-white-30 d-block mb-36">{sendReceive.withdrawFiatObj?.accountNumber}</Text>
         <Text className="fs-14 text-white-50 fw-200">BIC/SWIFT/Routing Number</Text>
-        <Text className="fs-20 text-white-30 d-block mb-36">{sendReceive.withdrawFiatObj?.swiftCode}</Text>
+        <Text className="fs-20 text-white-30 d-block mb-36">{sendReceive.withdrawFiatObj?.routingNumber}</Text>
         <Text className="fs-14 text-white-50 fw-200">Bank Name</Text>
         <Text className="fs-20 text-white-30 d-block mb-36">{sendReceive.withdrawFiatObj?.bankName}</Text>
         <Text className="fs-14 text-white-50 fw-200">Recipient Full Name</Text>
@@ -36,7 +36,7 @@ const WithdrawalSummary = ({ userConfig, sendReceive,changeStep, onConfirm,onCan
             >
               Confirm
             </Button>
-        <Translate content="cancel" component={Button} onClick={() => onCancel()} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
+        <Translate content="back" component={Button} onClick={() => onCancel()} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
       </div>
     )
 }
