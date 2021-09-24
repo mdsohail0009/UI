@@ -101,7 +101,7 @@ class AddressBook extends Component {
             <>
                 <div className="box basic-info">
                     <Title className="basicinfo">Address Book</Title>
-                    <Paragraph className="basic-decs mb-16">User customized addressbook</Paragraph>
+                    <Paragraph className="basic-decs mb-16">User customized address book</Paragraph>
                     <Radio.Group
                         defaultValue={1}
                         onChange={this.handleWithdrawToggle}

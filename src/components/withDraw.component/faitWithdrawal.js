@@ -108,7 +108,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     form.setFieldsValue({ state: null })
 
   }
-  
+
   const savewithdrawal = async (values) => {
     if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
       useDivRef.current.scrollIntoView()
@@ -145,12 +145,13 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
               component={Paragraph}
               className="mb-16 fs-14 text-aqua fw-500 text-upper"
             />
-             
+
             </div>
 
             <Form.Item
-              className="custom-forminput mb-24"
+              className="custom-forminput custom-label mb-24"
               name="memberWalletId"
+              label="Currency"
               rules={[
                 { required: true, message: "Is required" },
               ]}
@@ -166,8 +167,9 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
               <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div> */}
             </Form.Item>
             <Form.Item
-              className="custom-forminput mb-24"
+              className="custom-forminput custom-label  mb-24"
               name="totalValue"
+              label="Amount"
               rules={[
                 { required: true, message: "Is required" },
               ]}
@@ -220,8 +222,9 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
 
             </Form.Item>
             <Form.Item
-              className="custom-forminput mb-24"
+              className="custom-forminput custom-label mb-24"
               name="accountNumber"
+              label="Bank account number/IBAN"
               required
               rules={[
                 { required: true, message: "Is required" },
@@ -255,8 +258,9 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
             </div> */}
             </Form.Item>
             <Form.Item
-              className="custom-forminput mb-24"
+              className="custom-forminput custom-label mb-24"
               name="routingNumber"
+              label="BIC/SWIFT/Routing number"
               required
               rules={[
                 { required: true, message: "Is required" },
@@ -291,8 +295,9 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
 
             </Form.Item>
             <Form.Item
-              className="custom-forminput mb-24"
+              className="custom-forminput custom-label mb-24"
               name="bankName"
+              label="Bank name"
               required
               rules={[
                 { required: true, message: "Is required" },
@@ -327,14 +332,16 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
 
             </Form.Item>
             <Form.Item
-              className="custom-forminput mb-24"
+              className="custom-forminput custom-label mb-24"
               name="bankAddress"
+              label="Bank address line 1"
               required
               rules={[
                 { required: true, message: "Is required" }
               ]}
             >
-              <div>
+              <Input value={addressDetails.bankAddress} className="cust-input" placeholder="Bank address line 1" />
+              {/* <div>
                 <div className="d-flex">
                   <Translate
                     className="input-label"
@@ -342,8 +349,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                     component={Text}
                   />
                   <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-                <Input value={addressDetails.bankAddress} className="cust-input" placeholder="Bank address line 1" />
-              </div>
+              </div> */}
 
             </Form.Item>
 
@@ -481,8 +487,9 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
 
             </Form.Item>
             <Form.Item
-              className="custom-forminput mb-24"
+              className="custom-forminput custom-label mb-24"
               name="beneficiaryAccountAddress"
+              label="Recipient address line 1"
               rules={[
                 { required: true, message: "Is required" }
               ]}
@@ -559,20 +566,19 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                 },
               ]}
             >
-              <input type="checkbox" id="agree-check" />
-
-              {/* <div className="d-flex pt-16 agree-check">
-              <label>
-                <span for="agree-check" />
-              </label>
-              <Translate
-                content="agree_to_suissebase"
-                with={{ link }}
-                component={Paragraph}
-                className="fs-14 text-white-30 ml-16 mb-4"
-                style={{ flex: 1 }}
-              />
-            </div> */}
+              <div className="d-flex pt-16 agree-check">
+                <label>
+                  <input type="checkbox" id="agree-check" />
+                  <span for="agree-check" />
+                </label>
+                <Translate
+                  content="agree_to_suissebase"
+                  with={{ link }}
+                  component={Paragraph}
+                  className="fs-14 text-white-30 ml-16 mb-4"
+                  style={{ flex: 1 }}
+                />
+              </div>
             </Form.Item>
             <Form.Item className="mb-0 mt-16">
               <Button
