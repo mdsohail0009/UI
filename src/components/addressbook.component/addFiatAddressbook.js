@@ -32,6 +32,8 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
     const [countryLu, setCountryLu] = useState([]);
     const [stateLu, setStateLu] = useState([]);
     const [country, setCountry] = useState(null);
+    const[isLoading, setIsLoading] =useState(false)
+
     const [fiatDrawer, setFiatDrawer] = useState(false);
 
     const useDivRef = React.useRef(null);
@@ -65,6 +67,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
         }
       }
     const savewithdrawal = async (values) => {
+        setIsLoading(true)
         if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
             useDivRef.current.scrollIntoView()
             return setErrorMsg('Insufficient balance');
@@ -84,8 +87,11 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
             if (response.ok) {
                 debugger;
                 // changeStep('step1');
-                onCancel();
-                form.resetFields()
+               
+                form.resetFields();
+               
+                setIsLoading(false)
+               // onCancel();
 
             }
         }
@@ -494,7 +500,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         </div>
                     </Form.Item> */}
                     <Form.Item className="mb-0 mt-16">
-                        <Button
+                        <Button disabled= {isLoading}
                             htmlType="submit"
                             size="large"
                             block

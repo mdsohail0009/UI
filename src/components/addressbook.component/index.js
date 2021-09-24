@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Drawer, Button, Tabs, Radio ,Tooltip } from 'antd'
+import { Typography, Drawer, Button, Tabs, Radio, Tooltip, Modal, Alert } from 'antd'
 import { setAddressStep } from '../../reducers/addressBookReducer';
 import connectStateProps from '../../utils/state.connect';
 import Translate from 'react-translate-component';
@@ -9,10 +9,11 @@ import List from '../grid.component';
 import FaitWithdrawal from '../withDraw.component/faitWithdrawal'
 import CryptoList from '../shared/cryptolist';
 import NewFiatAddress from './addFiatAddressbook';
-import { getCoinList } from './api';
+import { getCoinList, activeInactive } from './api';
 import SelectCrypto from './selectCrypto';
 import { Link } from 'react-router-dom';
-
+import { connect } from 'react-redux';
+import { OKShareButton } from 'react-share';
 
 
 class AddressBook extends Component {
@@ -25,6 +26,14 @@ class AddressBook extends Component {
             isCheck: false,
             selection: [],
             selectedObj: {},
+            modal: false,
+            alert: false,
+            obj: {
+                "id": [],
+                "tableName": "Member.FavouriteAddress",
+                "modifiedBy": "",
+                "status": []
+            },
             gridUrlCrypto: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressCryptoK",
             gridUrlFiat: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressFiatK",
         }
@@ -77,6 +86,35 @@ class AddressBook extends Component {
         }
         this.setState({ ...this.state, [name]: value, selectedObj: rowObj, selection });
     }
+    statusUpdate = () => {
+        if (!this.state.isCheck) {
+            this.setState({ alert: true })
+            setTimeout(() => this.setState({ alert: false }), 2000)
+        }
+        else {
+            this.setState({ modal: true, })
+        }
+    }
+    handleCancel = e => {
+        this.setState({ ...this.state, modal: false, selection: [], isCheck: false });
+    }
+    handleSatatuSave = async () => {
+        debugger
+        this.setState({ ...this.state, isLoading: true })
+        let statusObj = this.state.obj;
+        statusObj.id.push(this.state.selectedObj.id);
+        statusObj.modifiedBy = this.props.userConfig.userName;
+        statusObj.status.push(this.state.selectedObj.status);
+        let response = await activeInactive(statusObj)
+        if (response.ok) {
+            // this.success();
+            this.setState({ ...this.state, modal: false, selection: [], isCheck: false, isLoading: false })
+            this.gridRef.current.refreshGrid();
+        }
+        else {
+            this.setState({ ...this.state, modal: false, selection: [], isCheck: false });
+        }
+    }
     coinList = async () => {
         let fromlist = await getCoinList(this.props.userProfile?.id)
         if (fromlist.ok) {
@@ -128,6 +166,7 @@ class AddressBook extends Component {
         const { Title, Paragraph } = Typography;
         return (
             <>
+
                 <div className="box basic-info">
                     <Title className="basicinfo">Address Book</Title>
                     <Paragraph className="basic-decs mb-16">User customized address book</Paragraph>
@@ -144,32 +183,43 @@ class AddressBook extends Component {
                             <div><Title className="fs-26 text-white-30 fw-500">Withdraw Fiat</Title>
                                 {/* <Paragraph className="basic-decs fw-200">Basic Info, like your name and photo, that you use on Suissebase</Paragraph> */}
                             </div>
-                            <div className="text-right ">
-                                <Button className="c-pointer pop-btn ant-btn px-24" onClick={this.handleFiatAddress}> Add Address</Button>
-                                {/* <ul >
-                                    <li>
-                                        <Tooltip placement="top" title="Edit">
-                                            <Link className="icon md edit mr-0" onClick={() => this.editNotice()}></Link>
-                                        </Tooltip>
-                                    </li>
+                            <div className="d-flex align-center">
+                                <Button className="c-pointer pop-btn ant-btn px-24 mr-16" onClick={this.handleFiatAddress}> Add Address</Button>
+                                <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0 }}>
                                     <li onClick={this.statusUpdate}>
                                         <Tooltip placement="topRight" title="Active/Inactive">
                                             <Link className="icon md status mr-0"
                                             ></Link>
                                         </Tooltip>
                                     </li>
-                                </ul> */}
+                                </ul>
                             </div>
                         </div>
+                        {this.state.alert &&
+                            <div className="custom-alert" ><Alert
+                                message="Please select the one record"
+                                type="warning"
+                                showIcon
+                                closable={false}
+                            />
+                            </div>}
                         <List columns={this.columnsFiat} ref={this.gridRef} key={gridUrlFiat} url={gridUrlFiat} />
                     </> :
                         <>
                             <div className="d-flex justify-content align-center mb-16">
                                 <div> <Title className="fs-26 text-white-30 fw-500">Withdraw Crypto</Title>
-                                    {/* <Paragraph className="basic-decs fw-200">Basic Info, like your name and photo, that you use on Suissebase</Paragraph> */}
                                 </div>
-                                <div className="text-right ">
-                                    <Button className="c-pointer pop-btn ant-btn px-24" onClick={this.handleCryptoAddress}> Add Address</Button>
+
+                                <div className="d-flex align-center">
+                                    <Button className="c-pointer pop-btn ant-btn px-24 mr-16" onClick={this.handleCryptoAddress}> Add Address</Button>
+                                    <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0 }}>
+                                        <li onClick={this.statusUpdate}>
+                                            <Tooltip placement="topRight" title="Active/Inactive">
+                                                <Link className="icon md status mr-0"
+                                                ></Link>
+                                            </Tooltip>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                             <List columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridRef} url={gridUrlCrypto} />
@@ -207,9 +257,30 @@ class AddressBook extends Component {
                 >
                     <NewFiatAddress onCancel={() => this.closeBuyDrawer()} />
                 </Drawer>
+                <Modal
+                    title={this.state.selectedObj.status == 'Active' ? 'Confirm Inactive?' : 'Confirm Active?'}
+                    visible={this.state.modal}
+                    closeIcon={<Tooltip title="Close"><span className="icon md close-white" onClick={this.handleCancel} /></Tooltip>}
+                    footer={<>
+                        <Button
+                            style={{ width: '100px', border: '1px solid #f2f2f2' }}
+                            className=" pop-cancel"
+                            onClick={this.handleCancel}
+                        >
+                            No
+                        </Button>
+                        <Button className="primary-btn pop-btn" onClick={this.handleSatatuSave} style={{ width: '100px' }}>
+                            yes
+                        </Button>
+                    </>}
+                >
+                    <p className="fs-16 mb-0">Do you really want to {this.state.selectedObj.status == 'Active' ? 'Inactive?' : 'Active?'}</p>
+                </Modal>
             </>
         )
     }
 }
-
-export default connectStateProps(AddressBook);
+const connectStateToProps = ({ addressBookReducer, userConfig }) => {
+    return { addressBookReducer, userConfig: userConfig.userProfileInfo }
+}
+export default connect(connectStateToProps)(AddressBook);

@@ -1,12 +1,12 @@
 import React, { useState ,useEffect} from 'react';
 import { Form, Input, Typography, Button, Alert } from 'antd'
-import { setAddressStep  } from '../../reducers/addressBookReducer';
+import { setAddressStep ,rejectCoin } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
 import { saveAddress, favouriteNameCheck } from './api';
 import Loader from '../../Shared/loader';
 
 const { Text } = Typography;
-const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, onStepchange }) => {
+const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,rejectCoinWallet  }) => {
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
     const[isLoading, setIsLoading] =useState(false)
@@ -17,7 +17,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
     }, [addressBookReducer?.coinWallet?.coin])
     const saveAddressBook = async (values) => {
         debugger;
-        setIsLoading(true)
+       setIsLoading(true)
         const type = 'crypto';
         values['membershipId'] = userConfig.id;
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
@@ -32,7 +32,8 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
             if (response.ok) {
               //  changeStep('step1');
                 setErrorMsg('Address saved sucessfully');
-                form.resetFields({})
+                form.resetFields();
+                rejectCoinWallet();
                 setIsLoading(false)
                 onCancel();
             }
@@ -41,7 +42,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
 
     return (
         <>
-        {isLoading && <Loader/>}
+        {isLoading ? <Loader/>: 
             <div className="mt-16">
                 {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
                 <Form
@@ -61,9 +62,9 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                                 <span style={{ color: "#fafcfe", paddingLeft: "2px" }}></span>
                             </div>
                             {addressBookReducer.coinWallet.coinFullName ? <Input value={addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} className="cust-input cust-adon c-pointer" placeholder="Select from Coin"
-                                addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => {changeStep('step3'); onStepchange();}} />} /> :
+                                addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />} /> :
                                 <Input disabled className="cust-input cust-adon" placeholder="Select from Coins"
-                                    addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() =>  {changeStep('step3'); onStepchange();}} />}
+                                    addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />}
                                 />}
                         </div>
                     </Form.Item>
@@ -96,7 +97,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                         </div>
                     </Form.Item>
                     <div style={{ marginTop: '50px' }} className="">
-                        <Button
+                        <Button disabled= {isLoading}
                             htmlType="submit"
                             size="large"
                             block
@@ -116,7 +117,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                     </div>
 
                 </Form>
-            </div>
+            </div>}
         </>
     )
 }
@@ -129,6 +130,9 @@ const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setAddressStep(stepcode))
+        },
+        rejectCoinWallet: () => {
+            dispatch(rejectCoin())
         }
     }
 }

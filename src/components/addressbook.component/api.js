@@ -19,4 +19,7 @@ const getCoinList = (member_id) => {
 const getSelectedCoinDetails = (coin_code, member_id) => {
     return apiClient.get(ApiControllers.exchange + `MemberCoinDetail?memberId=${member_id}&coin=${coin_code}`)
 }
-export {getCoinList,favouriteFiatAddress, saveAddress,getSelectedCoinDetails,detailsAddress,favouriteNameCheck}
+const activeInactive = (obj) => {
+    return apiClient.post(ApiControllers.exchange + "activeinactive", obj)
+}
+export {getCoinList,favouriteFiatAddress, saveAddress,getSelectedCoinDetails,detailsAddress,favouriteNameCheck,activeInactive}
