@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Typography, Drawer, Button, Tabs, Radio ,Tooltip} from 'antd'
-import { setStep } from '../../reducers/addressBookReducer';
+import { Typography, Drawer, Button, Tabs, Radio ,Tooltip } from 'antd'
+import { setAddressStep } from '../../reducers/addressBookReducer';
 import connectStateProps from '../../utils/state.connect';
 import Translate from 'react-translate-component';
 import { processSteps as config } from './config';
@@ -112,7 +112,7 @@ class AddressBook extends Component {
     renderTitle = () => {
         const titles = {
             cryptoaddressbook: <span />,
-            selectcrypto: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            selectcrypto: <span onClick={() => this.props.dispatch(setAddressStep("step1"))} className="icon md lftarw-white c-pointer" />,
         }
         return titles[config[this.props.addressBookReducer.stepcode]]
     }

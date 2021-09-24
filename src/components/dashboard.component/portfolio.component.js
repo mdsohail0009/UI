@@ -5,6 +5,7 @@ import connectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import { fetchGraphInfo, fetchPortfolioData } from '../../reducers/dashboardReducer';
 import { createChart, LineStyle, ColorType, PriceScaleMode } from "lightweight-charts";
+import { getPortfolioGraph } from './api';
 class Portfolio extends Component {
     chart;
     state = {
@@ -83,19 +84,21 @@ class Portfolio extends Component {
             },
         })
         this.fetchInfo();
-        this.props.dispatch(fetchGraphInfo(this.props.userProfile?.id, "week"));
+        this.getGraph("week");
+    }
+    getGraph = async (type) => {
         const areaSeries = this.chart.addLineSeries();
         const priceSeries = this.chart.addAreaSeries();
-        setTimeout(() => {
-            areaSeries.setData(this.props.dashboard?.portFolioGraph?.data.BTC);
-            priceSeries.setData(this.props.dashboard?.portFolioGraph?.data.BTC);
+        const response = await getPortfolioGraph(this.props.userProfile?.id, type);
+        if (response.ok) {
+            const data = { BTC: response.data.map(item => { return { time: item.datetime, value: item.value } }) }
+            areaSeries.setData(data.BTC);
+            priceSeries.setData(data.BTC);
             this.chart.timeScale().setVisibleLogicalRange({
                 from: 0,
-                to: this.props.dashboard?.portFolioGraph?.data.BTC.length,
+                to: data.BTC.length,
             });
-            // this.chart.timeScale().fitContent();
-        }, 3000)
-
+        }
     }
     render() {
         const { Title } = Typography;
@@ -112,11 +115,13 @@ class Portfolio extends Component {
                     {/* <Button type="primary" className={`mt-16 trade-btn ${totalCryptoValue < 0 ? 'bgred' : 'bggreen'}`}  size="small">{crypto_stock} {totalCryptoValue < 0 ? <span className="icon sm downarrow-white ml-4" />:<span className="icon sm uparrow-white ml-4" />}</Button> */}
                 </div>
                 {/* <img src={chart} width="100%" /> */}
-                <div className="text-center mb-16 wmy-graph">
-                    <Radio.Group defaultValue="a" buttonStyle="solid">
-                        <Radio.Button value="a">1W</Radio.Button>
-                        <Radio.Button value="b">1M</Radio.Button>
-                        <Radio.Button value="c">1Y</Radio.Button>
+                <div className="text-center mb-16 wmy-graph" >
+                    <Radio.Group defaultValue="week" buttonStyle="solid" onChange={({target:{value}}) => {
+                       this.getGraph(value)
+                    }}>
+                        <Radio.Button value="week">1W</Radio.Button>
+                        <Radio.Button value="month">1M</Radio.Button>
+                        <Radio.Button value="year">1Y</Radio.Button>
                     </Radio.Group>
                 </div>
                 <div ref={this.portFolioGraphRef} />
