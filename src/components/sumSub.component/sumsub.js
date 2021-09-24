@@ -18,7 +18,8 @@ class SumSub extends Component {
         applicantEmail = "test@example.org"
         applicantPhone = "+491758764512"
         apicalls.sumsubacesstoken(this.props.userConfig.userId).then((res) => {
-        let snsWebSdkInstance = snsWebSdk.Builder(process.env.REACT_APP_SUMSUB_URI, this.props.userConfig.isbusines? "SuisseBase KYB":"SuisseBase KYC")
+            debugger
+        let snsWebSdkInstance = snsWebSdk.Builder(process.env.REACT_APP_SUMSUB_URI, this.props.userConfig.isBusiness? "SuisseBase KYB":"SuisseBase KYC")
             .withAccessToken(res.data.token, (newAccessTokenCallback) => {
                     newAccessTokenCallback(res.data.token)
 
