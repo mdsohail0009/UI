@@ -4,12 +4,7 @@ import Translate from 'react-translate-component';
 import connectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import { fetchGraphInfo, fetchPortfolioData } from '../../reducers/dashboardReducer';
-import { createChart, LineStyle } from "lightweight-charts"; //npm install --save lightweight-charts
-const rndInt = () => {
-    return Math.floor(Math.random() * 150) + 75;
-};
-let assetColors = [];
-
+import { createChart, LineStyle, ColorType, PriceScaleMode } from "lightweight-charts";
 class Portfolio extends Component {
     chart;
     state = {
@@ -28,28 +23,83 @@ class Portfolio extends Component {
                 dateFormat: "dd MMM yy",
             },
             watermark: {
-                color: "rgba(11, 94, 29, 0.4)",
-                visible: true,
-                text:"Portfolio",
+                color: "white",
+                visible: false,
+                text: "Portfolio",
                 fontSize: 24,
                 horzAlign: "left",
                 vertAlign: "bottom",
             },
         });
-      
+        this.chart.applyOptions({
+            priceScale: { position: "left",mode:PriceScaleMode.Normal, },
+            crosshair: {
+                vertLine: {
+                    color: '#6A5ACD',
+                    width: 0.5,
+                    style: 1,
+                    visible: true,
+                    labelVisible: false,
+                },
+                horzLine: {
+                    color: '#6A5ACD',
+                    width: 0.5,
+                    style: 0,
+                    visible: true,
+                    labelVisible: true,
+                },
+                mode: 1,
+            },
+            layout: {
+                background: {
+                    type: ColorType.VerticalGradient,
+                    topColor: 'rgba(0, 0, 0, 0.85)',
+                    bottomColor: 'rgba(0, 0, 0, 0.85)',
+                },
+                textColor: '#696969',
+                fontSize: 12,
+                fontFamily: 'Calibri',
+            },
+            grid: {
+                vertLines: {
+                    color: 'rgba(70, 130, 180, 0.5)',
+                    style: 1,
+                    visible: false,
+                },
+                horzLines: {
+                    color: 'rgba(70, 130, 180, 0.5)',
+                    style: 1,
+                    visible: false,
+                },
+            },
+            handleScroll: {
+                mouseWheel: false,
+                pressedMouseMove: true,
+            },
+            handleScale: {
+                axisPressedMouseMove: true,
+                mouseWheel: false,
+                pinch: true,
+            },
+        })
         this.fetchInfo();
         this.props.dispatch(fetchGraphInfo(this.props.userProfile?.id, "week"));
         const areaSeries = this.chart.addLineSeries();
+        const priceSeries = this.chart.addAreaSeries();
         setTimeout(() => {
             areaSeries.setData(this.props.dashboard?.portFolioGraph?.data.BTC);
-        
+            priceSeries.setData(this.props.dashboard?.portFolioGraph?.data.BTC);
+            this.chart.timeScale().setVisibleLogicalRange({
+                from: 0,
+                to: this.props.dashboard?.portFolioGraph?.data.BTC.length,
+            });
+            // this.chart.timeScale().fitContent();
         }, 3000)
 
     }
     render() {
-        const { Title, Paragraph } = Typography;
+        const { Title } = Typography;
         const { totalCryptoValue, totalFiatValue } = this.props.dashboard.portFolio.data;
-        const { crypto_stock } = this.props;
 
         return (
             <div className="mb-24">
