@@ -18,6 +18,13 @@ class Portfolio extends Component {
 
     }
     componentDidMount() {
+       
+        this.fetchInfo();
+        this.getGraph("week");
+    }
+    getGraph = async (type) => {
+        debugger
+        this.portFolioGraphRef.current.innerHTML = ""
         this.chart = createChart(this.portFolioGraphRef.current, {
             width: 750, height: 300,
             localization: {
@@ -83,10 +90,6 @@ class Portfolio extends Component {
                 pinch: true,
             },
         })
-        this.fetchInfo();
-        this.getGraph("week");
-    }
-    getGraph = async (type) => {
         const areaSeries = this.chart.addLineSeries();
         const priceSeries = this.chart.addAreaSeries();
         const response = await getPortfolioGraph(this.props.userProfile?.id, type);
