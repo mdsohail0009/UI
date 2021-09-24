@@ -268,7 +268,7 @@ class RequestedDocs extends Component {
                             {/* <img src={profile} className="mr-16" /> */}
                             <div className="user-shortname">{this.props?.userProfileInfo?.firstName.charAt('0')}{this.props?.userProfileInfo?.lastName.charAt('0')}</div>
                             <div className="reply-body">
-                                <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment format={"DD, MMM YY"}>{reply.repliedDate}</Moment> </Text>
+                                <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment fromNow>{reply.repliedDate}</Moment> </Text>
                                 <p className="reply-txt">{reply.reply}</p>
                                 <div className="docfile-container">
                                     {reply.path.map((file, idx) => <div key={idx} className="docfile">
