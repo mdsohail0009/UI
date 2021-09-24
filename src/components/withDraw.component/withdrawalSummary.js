@@ -13,7 +13,7 @@ const WithdrawalSummary = ({ userConfig, sendReceive,changeStep, onConfirm,onCan
     changeStep('step6')
   }
     return (
-        <div>
+        <div className="mt-16">
         <Text className="fs-14 text-white-50 fw-200">Amount</Text>
         <Currency className="fs-20 text-white-30 mb-36" prefix={""} defaultValue={sendReceive.withdrawFiatObj?.totalValue} suffixText={sendReceive.withdrawFiatObj?.walletCode} />
         <Text className="fs-14 text-white-50 fw-200">Bank Account Number/IBAN</Text>
