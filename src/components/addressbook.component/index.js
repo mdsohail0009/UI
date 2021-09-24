@@ -32,7 +32,8 @@ class AddressBook extends Component {
                 "id": [],
                 "tableName": "Member.FavouriteAddress",
                 "modifiedBy": "",
-                "status": []
+                "status": [],
+                type:''
             },
             gridUrlCrypto: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressCryptoK",
             gridUrlFiat: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressFiatK",
@@ -64,7 +65,8 @@ class AddressBook extends Component {
         },
         { field: "addressLable", title: "Address Label", filter: true, width: 250 },
         { field: "coin", title: "Coins", filter: true, },
-        { field: "address", title: "Address", filter: true, width: 380 }
+        { field: "address", title: "Address", filter: true, width: 380 },
+        { field: "status", title: "Status", filter: true, width: 100 }
     ];
     componentDidMount() {
         this.coinList()
@@ -84,7 +86,7 @@ class AddressBook extends Component {
         else {
             selection.push(rowObj.id)
         }
-        this.setState({ ...this.state, [name]: value, selectedObj: rowObj, selection });
+        this.setState({ ...this.state, [name]: value, selectedObj: rowObj, selection});
     }
     statusUpdate = () => {
         if (!this.state.isCheck) {
@@ -103,16 +105,29 @@ class AddressBook extends Component {
         this.setState({ ...this.state, isLoading: true })
         let statusObj = this.state.obj;
         statusObj.id.push(this.state.selectedObj.id);
-        statusObj.modifiedBy = this.props.userConfig.userName;
+        statusObj.modifiedBy =  this.props.oidc.user.profile.unique_name;
         statusObj.status.push(this.state.selectedObj.status);
+        statusObj.type = this.state.cryptoFiat? "fiat":'crypto';
         let response = await activeInactive(statusObj)
         if (response.ok) {
             // this.success();
-            this.setState({ ...this.state, modal: false, selection: [], isCheck: false, isLoading: false })
+            this.setState({ ...this.state, modal: false, selection: [], isCheck: false, isLoading: false,
+                obj: {
+                    "id": [],
+                    "tableName": "Member.FavouriteAddress",
+                    "modifiedBy": "",
+                    "status": []
+                }, })
             this.gridRef.current.refreshGrid();
         }
         else {
-            this.setState({ ...this.state, modal: false, selection: [], isCheck: false });
+            this.setState({ ...this.state, modal: false, selection: [], isCheck: false,
+                obj: {
+                    "id": [],
+                    "tableName": "Member.FavouriteAddress",
+                    "modifiedBy": "",
+                    "status": []
+                }, });
         }
     }
     coinList = async () => {
@@ -126,18 +141,18 @@ class AddressBook extends Component {
 
 
     handleFiatAddress = () => {
-        this.setState({ fiatDrawer: true })
+        this.setState({ ...this.state,fiatDrawer: true })
     }
     handleCryptoAddress = () => {
-        this.setState({ visible: true })
+        this.setState({ ...this.state,visible: true })
     }
 
     closeBuyDrawer = () => {
-        this.setState({ visible: false, fiatDrawer: false })
+        this.setState({ ...this.state,visible: false, fiatDrawer: false })
     }
     handleWithdrawToggle = e => {
         this.setState({
-            cryptoFiat: e.target.value === 2
+            ...this.state,cryptoFiat: e.target.value === 2
         })
     }
     renderContent = () => {
@@ -280,7 +295,7 @@ class AddressBook extends Component {
         )
     }
 }
-const connectStateToProps = ({ addressBookReducer, userConfig }) => {
-    return { addressBookReducer, userConfig: userConfig.userProfileInfo }
+const connectStateToProps = ({ addressBookReducer, userConfig, oidc }) => {
+    return { addressBookReducer, userConfig: userConfig.userProfileInfo, oidc }
 }
 export default connect(connectStateToProps)(AddressBook);

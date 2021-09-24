@@ -91,7 +91,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                 form.resetFields();
                
                 setIsLoading(false)
-               // onCancel();
+                onCancel();
 
             }
         }
