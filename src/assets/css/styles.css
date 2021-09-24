@@ -852,3 +852,8 @@ main.ant-layout-content{min-height: calc(100vh - 220px);}
 text-align: center !important;}
 .pwd-popup.pop-cancel.ant-btn-block{width: auto !important;}
 .colr-comn{color: var(--textWhite)!important}
+.ant-custumcheck{display: flex;}
+.ant-checkbox-inner{width: 32px !important;height: 32px !important;background-color: transparent !important;border: 0 !important;}
+.ant-custumcheck {align-items: center;}
+.ant-custumcheck .ant-checkbox{display: inline-block;width: 60px;height: 34px;vertical-align: text-top;cursor: pointer;border: 1px solid var(--borderLight);background: transparent;}
+.ant-checkbox-checked .ant-checkbox-inner::after{height: 16px;}
