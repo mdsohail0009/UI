@@ -32,7 +32,7 @@ class Home extends Component {
             <div className="main-container">
                 {this.state.notices != null && this.state.notices != undefined && <Carousel autoplay={true}>
                     {this.state.notices?.map((notice, idx) => <div className="mb-24" key={idx}>
-                        <AlertConfirmation type="warning" title={notice.title} showIcon description="Dear user please check the details for requesting documents to approval your deposit/withdraw."
+                        <AlertConfirmation type="error" title={notice.title} showIcon description="Dear user please check the details for requesting documents to approval your deposit/withdraw."
                             action={
                                 <Button size="small" type="text" onClick={() => this.props.history.push(`/documents/${notice.typeId}`)}>
                                     View Details
