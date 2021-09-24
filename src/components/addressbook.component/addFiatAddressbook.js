@@ -36,40 +36,13 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,chan
 
     const useDivRef = React.useRef(null);
     useEffect(() => {
-        if (buyInfo.memberFiat?.data && selectedWalletCode) {
-            handleWalletSelection(selectedWalletCode)
-        }
-    }, [buyInfo.memberFiat?.data])
-    useEffect(() => {
         getCountryLu();
     }, [])
-
-    const handleWalletSelection = (walletId) => {
-        form.setFieldsValue({ memberWalletId: walletId })
-        if (buyInfo.memberFiat?.data) {
-            let wallet = buyInfo.memberFiat.data.filter((item) => {
-                return walletId === item.id
-            })
-            setSelectedWallet(wallet[0])
-        }
-    }
-    const checkRecipeantName = async (name) => {
-        let recName = await withdrawRecepientNamecheck(userConfig.id, name.target.value)
-        if (recName.ok) {
-            console.log(recName)
-        } else {
-
-        }
-    }
     const getCountryLu = async () => {
         let recName = await getCountryStateLu()
         if (recName.ok) {
             setCountryLu(recName.data);
-            //setCountryLu([]);
         }
-        // appInsights.trackEvent({
-        //   name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'Page view', "Username": userConfig.email, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": 'WithDraw Fiat', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
-        // });
     }
     const getStateLu = (countryname) => {
         let statelu = countryLu.filter((item) => { if (item.name == countryname) return item })
@@ -81,28 +54,10 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,chan
         form.setFieldsValue({ state: null })
 
     }
-    // const clearSwapData = () =>{
-    //   form.resetFields()
-    // }
-
     const savewithdrawal = async (values) => {
-        //console.log(values)
-        if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
-            useDivRef.current.scrollIntoView()
-            return setErrorMsg('Insufficient balance');
-        }
-        if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) <= 0) {
-            useDivRef.current.scrollIntoView()
-            return setErrorMsg('Amount must be greater than zero.');
-        }
-        if (values.totalValue == '.') {
-            useDivRef.current.scrollIntoView()
-            return setErrorMsg('Amount must be greater than zero.');
-        }
         setErrorMsg(null)
         const type = 'fiat';
         values['membershipId'] = userConfig.id;
-        values['walletCode'] = selectedWallet.currencyCode;
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
         debugger
@@ -164,48 +119,6 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch,chan
                                 <Input className="cust-input" placeholder="Enter Address" />
                             </div>
                         </Form.Item>
-                    {/* <Form.Item
-                        className="custom-forminput mb-24"
-                        name="memberWalletId"
-                        required
-                        rules={[
-                            { required: true, message: "Is required" },
-                        ]}
-                    >
-                        <div> <div className="d-flex"><Translate
-                            className="input-label"
-                            content="currency"
-                            component={Text}
-                        />
-                            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-                            <WalletList placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} /></div>
-                    </Form.Item> */}
-                    {/* <Form.Item
-                        className="custom-forminput mb-24"
-                        name="totalValue"
-                        rules={[
-                            { required: true, message: "Is required" },
-                        ]}
-                    >
-                        <div><div className="d-flex">
-                            <Translate
-                                className="input-label"
-                                content="amount"
-                                component={Text}
-
-                            /><span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
-                            <NumberFormat decimalScale={2} className="cust-input" customInput={Input} thousandSeparator={true} prefix={""}
-                                placeholder="0.00"
-                                allowNegative={false}
-                                maxlength={24}
-                            //value={}
-                            // onValueChange={({ value }) => {
-                            //     this.setReceiveAmount(value)
-                            // }}
-                            />
-
-                        </div>
-                    </Form.Item> */}
                     <Form.Item
                         className="custom-forminput mb-24"
                         name="accountNumber"

@@ -38,7 +38,7 @@ class SellSummary extends Component {
                 this.setState({ ...this.state, loader: false, disableConfirm: false })
                 this.props.fetchDashboardData(this.props.member.id)
                 appInsights.trackEvent({
-                    name: 'Sell', properties: {"Type": 'User',"Action": 'Save',"Username":this.props.member.userName,"MemeberId": this.props.member.id,"Feature": 'Sell',"Remarks": "Sell Crypto","Duration": 1,"Url": window.location.href,"FullFeatureName": 'Deposit Crypto'}
+                    name: 'Sell', properties: {"Type": 'User',"Action": 'Save',"Username":this.props.member.userName,"MemeberId": this.props.member.id,"Feature": 'Sell',"Remarks": obj.fromValue+" "+this.state.sellpreviewData.coin+" selled","Duration": 1,"Url": window.location.href,"FullFeatureName": 'sell Crypto'}
                 });
             } else {
                 this.setState({ ...this.state, loader: false, disableConfirm: false })
