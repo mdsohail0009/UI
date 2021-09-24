@@ -12,6 +12,7 @@ import VerifyIDentity from './verifyIdentity';
 import WithdrawScan from './qr.scan';
 import WithdrawSummary from './withdrawSummary';
 import NewAddressBook from '../addressbook.component/newAddressBook';
+import SelectCrypto from '../addressbook.component/selectCrypto';
 const { Paragraph } = Typography
 class SendReceive extends Component {
     state = {
@@ -29,6 +30,10 @@ class SendReceive extends Component {
         this.props.dispatch(setStep("step1"));
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
     }
+    selectCrypto = () =>{
+        debugger
+        this.props.dispatch(setStep("step9"));
+    }
     renderContent = () => {
         const stepcodes = {
             depositecrypto: <DepositeCrypto activeTab={this.props.valNum} />,
@@ -38,7 +43,8 @@ class SendReceive extends Component {
             verifyidentity: <VerifyIDentity />,
             withdrawsummary: <WithdrawSummary />,
             withdrawscan: <WithdrawScan />,
-            addnewAddress: <NewAddressBook/>
+            addnewAddress: <NewAddressBook onStepchange={() => this.selectCrypto()}/>,
+            selectCrypto: <SelectCrypto/>
 
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
@@ -53,6 +59,7 @@ class SendReceive extends Component {
             verifyidentity: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdrawsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             addnewAddress:<span onClick={() => this.props.dispatch(setStep("step2"))} className="icon md lftarw-white c-pointer" />,
+            selectCrypto: <span onClick={() => this.props.dispatch(setStep("step8"))} className="icon md lftarw-white c-pointer" />,
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
     }
@@ -66,6 +73,8 @@ class SendReceive extends Component {
             verifyidentity: <span />,
             withdrawsummary: <span />,
             addnewAddress:<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            selectCrypto: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
     }
