@@ -17,7 +17,7 @@ class SelectSellCrypto extends Component {
     }
     state = {
         USDAmnt: "0.00", CryptoAmnt: "0.00", sellSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": null, "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }, isSwap: false
-        , errorMessage: null
+        , errorMessage: null,minmaxTab:'min'
     }
     componentDidMount() {
         this.fetchdefaultMinAmntValues();
@@ -55,6 +55,7 @@ class SelectSellCrypto extends Component {
         } else {
             this.fetchdefaultMinAmntValues()
         }
+        this.setState({...this.state,minmaxTab:type})
     }
     previewSellData() {
         this.setState({ ...this.state, errorMessage: '' })
@@ -148,7 +149,7 @@ class SelectSellCrypto extends Component {
                     localCurrency={"USD"}
                     selectedCoin={coinDetailData?.coin}
                     onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }} />
-                <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
+                <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills">
                     <Translate value="min" content="min" component={Radio.Button} onClick={() => this.clickMinamnt('min')} />
                     <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt('half')} />
                     <Translate value="max" content="all" component={Radio.Button} onClick={() => this.clickMinamnt('all')} />
@@ -156,7 +157,7 @@ class SelectSellCrypto extends Component {
                 <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua" />
                 <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                 <div className="mt-24">
-                    <SuisseBtn autoDisable={true} title="preview" className="pop-btn" onClick={() => { this.previewSellData() }} onRefresh={()=>this.fetchdefaultMinAmntValues()}/>
+                    <SuisseBtn autoDisable={true} title="preview" className="pop-btn" onClick={() => { this.previewSellData() }} onRefresh={()=>{this.clickMinamnt(this.state.minmaxTab);}}/>
                 </div></div>
             </>
 
