@@ -92,6 +92,7 @@ debugger;
   };
 
   const getCountryLu = async () => {
+    form.setFieldsValue({ beneficiaryAccountName: (userConfig.firstName + " " + userConfig.lastName) })
     let recName = await getCountryStateLu()
     if (recName.ok) {
       setCountryLu(recName.data);
