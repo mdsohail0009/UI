@@ -23,7 +23,7 @@ const CryptoDeposit = ({ dispatch, userProfile, sellData: buyInfo,swapStore }) =
     }
     const trackevent =() =>{
         appInsights.trackEvent({
-            name: 'Deposit Crypto', properties: {"Type": 'User',"Action": 'Page view',"Username":userProfile.email,"MemeberId": userProfile.id,"Feature": 'Deposit Crypto',"Remarks": "Deposit crypto page view","Duration": 1,"Url": window.location.href,"FullFeatureName": 'Deposit Crypto'}
+            name: 'Deposit Crypto', properties: {"Type": 'User',"Action": 'Page view',"Username":userProfile.userName,"MemeberId": userProfile.id,"Feature": 'Deposit Crypto',"Remarks": "Deposit crypto page view","Duration": 1,"Url": window.location.href,"FullFeatureName": 'Deposit Crypto'}
         });
     }
     return <> <Translate content="deposite_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-8" />

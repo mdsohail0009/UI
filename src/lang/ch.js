@@ -281,5 +281,8 @@ export default {
   dep_with_assets: "加密存款/取款",
   remarks: "評論",
   userName: '行进',
-  manage_account: '加密存款/取款'
+  manage_account: '加密存款/取款',
+  withdrawCrypto:'Withdraw Crypto',
+  withdrawFiat:'Withdraw Fiat',
+  Address:'Add New Address'
 }

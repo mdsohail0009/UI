@@ -28,7 +28,7 @@ class SwapCoins extends Component {
     }
     trackEvent = () =>{
         appInsights.trackEvent({
-            name: 'Swap', properties: {"Type": 'User',"Action": 'Page view',"Username": this.props.userProfile.email,"MemeberId": this.props.userProfile.id,"Feature": 'Swap',"Remarks": 'Swap coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Swap'}
+            name: 'Swap', properties: {"Type": 'User',"Action": 'Page view',"Username": this.props.userProfile.userName,"MemeberId": this.props.userProfile.id,"Feature": 'Swap',"Remarks": 'Swap coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Swap'}
         });
     }
     clearSwapCoinValues = () =>{
@@ -213,7 +213,7 @@ class SwapCoins extends Component {
                             // }}
                             autoFocus = {(coinDetailData.coin && coinReceiveDetailData.coin) ? true : false}
                         />}
-                        {coinDetailData.coinBalance && <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - <Currency prefix={""} className={'currencyContains'} decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} /></Text>}
+                        {coinDetailData.coinBalance && <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} /></Text>}
                     </div>
                     <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step3')} >
                         <div className="crypto-coin">
@@ -265,7 +265,7 @@ class SwapCoins extends Component {
                             // }}
                             
                         />}
-                        {(coinReceiveDetailData.coinBalance||coinReceiveDetailData.coinBalance==0) && <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - <Currency prefix={""} className={'currencyContains'} decimalPlaces={8} defaultValue={coinReceiveDetailData.coinBalance} suffixText={coinReceiveDetailData.coin} /></Text>}
+                        {(coinReceiveDetailData.coinBalance||coinReceiveDetailData.coinBalance==0) && <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinReceiveDetailData.coinBalance} suffixText={coinReceiveDetailData.coin} /></Text>}
                     </div>
                     <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => {if(coinDetailData.coinFullName){this.props.changeStep('step4');this.setState({ ...this.state, errorMessage:'' })}else{this.setState({ ...this.state, errorMessage: 'Please select from coin' })}}} >
                         <div className="crypto-coin">

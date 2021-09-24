@@ -37,26 +37,26 @@ const homeLink = (props) => {
         />)
 }
 function Footer() {
-    //const { switcher, themes, currentTheme, status } = useThemeSwitcher();
-    //const [isDarkMode, setIsDarkMode] = React.useState(true);
+    const { switcher, themes, currentTheme, status } = useThemeSwitcher();
+    const [isDarkMode, setIsDarkMode] = React.useState(true);
     const [lang, setLang] = useState('en')
-    // const [theme, setTheme] = useState('LRT')
-    // if (status === 'loading') {
-    //     return <div>Loading styles...</div>;
-    // }
+    const [theme, setTheme] = useState('LRT')
+    if (status === 'loading') {
+        return <div>Loading styles...</div>;
+    }
 
-    // const handleTheme = () => {
-    //     setIsDarkMode(previous => {
-    //         if (previous) {
-    //             setTheme('DRT');
-    //         }
-    //         else {
-    //             setTheme('LRT');
-    //         }
-    //         switcher({ theme: previous ? themes.LHT : themes.DRT });
-    //         return !previous;
-    //     });
-    // };
+    const handleTheme = () => {
+        setIsDarkMode(previous => {
+            if(previous){
+                setTheme('DRT');
+            }
+            else{
+                setTheme('LRT');
+            }
+            switcher({ theme: previous ? themes.LHT : themes.DRT });
+            return !previous;
+        });
+    };
     const onLangChange = (e) => {
         setLang({ lang: e.target.value });
         counterpart.setLocale(e.target.value);
@@ -79,7 +79,7 @@ function Footer() {
             <div className="copyright-block">
                 <Typography className="copyright text-white-30">Suissebase<sup className="fs-10">TM</sup> {new Date().getFullYear()}</Typography>
                 <span>
-                    {/* <Button type="primary" shape="circle" size="large" className='darkTheme' onClick={handleTheme}> {theme}</Button> */}
+                    <Button type="primary" shape="circle" size="large" className='darkTheme' onClick={handleTheme}> {theme}</Button>
                     {/* <Dropdown placement="topRight" className="secureDrpdwn" overlayClassName="secureDropdown" overlay={languageMenu} trigger={['click']} arrow>
                             <Button shape="circle" className="selct-lang ml-8 text-center fs-14 fw-200" size="large" onClick={() => this.handleTheme}>EN</Button>
                         </Dropdown> */}

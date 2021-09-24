@@ -116,6 +116,7 @@ class FaitDeposit extends Component {
         let createObj = { "id": "00000000-0000-0000-0000-000000000000", "bankId": BankInfo.id, "currency": depObj.currency, "bankName": BankInfo.bankName, "bankAddress": BankInfo.bankAddress, "amount": parseFloat(depObj.Amount), "accountNumber": BankInfo.accountNumber, "routingNumber": BankInfo.routingNumber, "swiftorBICCode": BankInfo.networkCode, "benficiaryBankName": BankInfo.accountName, "reference": BankInfo.depReferenceNo, "benficiaryAccountAddrress": BankInfo.accountAddress }
         let Obj = await savedepositFiat(createObj);
         if (Obj.ok == true) {
+          this.props.changeStep('step2')
           this.setState({
             buyDrawer: false,
             BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null },

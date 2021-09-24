@@ -24,7 +24,7 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
     }
     const trackevent =() =>{
         appInsights.trackEvent({
-            name: 'WithDraw Crypto', properties: {"Type": 'User',"Action": 'Page view',"Username":userProfile.email,"MemeberId": userProfile.id,"Feature": 'WithDraw Crypto',"Remarks": "WithDraw crypto page view","Duration": 1,"Url": window.location.href,"FullFeatureName": 'WithDraw Crypto'}
+            name: 'WithDraw Crypto', properties: {"Type": 'User',"Action": 'Page view',"Username":userProfile.userName,"MemeberId": userProfile.id,"Feature": 'WithDraw Crypto',"Remarks": "WithDraw crypto page view","Duration": 1,"Url": window.location.href,"FullFeatureName": 'WithDraw Crypto'}
         });
     }
     return <>

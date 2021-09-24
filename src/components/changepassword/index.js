@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import { Button, Input, Form, Divider, Row, Col, notification, Typography, Alert } from 'antd';
+import { Button, Input, Form, Divider, Row, Col, notification, Typography, Alert,message } from 'antd';
 import { EyeInvisibleOutlined, EyeOutlined  } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -8,11 +8,12 @@ import { connect } from 'react-redux';
 //import notify from '../../shared/components/notification';
 import { changePassword } from '../../api/apiServer';
 import { Link } from 'react-router-dom';
+import { getmemeberInfo } from '../../reducers/configReduser';
 notification.config({
   placement: "topRight",
   rtl: true
 });
-const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
+const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
   const [initialValues, setInitialValues] = useState({
     "Email": userConfig?.email,
     "CurrentPassword": "",
@@ -49,9 +50,11 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile }) => {
       setChangePasswordResponse({ error: false, messsage: "", isLoading: true });
       const result = await changePassword(initialValues);
       if (result.ok) {
+        message.success({content:'Password changed successfully',className: 'custom-msg'});
         setChangePasswordResponse({ error: false, messsage: 'Password changed successfully', isLoading: false });
         form.resetFields();
         onSubmit()
+        getmemeberInfoa(userConfig.email)
       }
       else {
         setChangePasswordResponse({ error: true, messsage: result.data, isLoading: false });
@@ -220,7 +223,10 @@ const connectDispatchToProps = dispatch => {
   return {
     changeStep: (stepcode) => {
       dispatch(setStep(stepcode))
-    }
+    },
+    getmemeberInfoa: (useremail) => {
+      dispatch(getmemeberInfo(useremail));
+  }
   }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(ChangePassword);
