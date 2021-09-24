@@ -231,7 +231,7 @@ class RequestedDocs extends Component {
             <div className="mb-24 text-white-50"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile" />{this.state?.docDetails?.note}</div>
             <div className="bank-view">
                 {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
-                    <Panel header={doc.documentName} key={idx + 1} extra={<span className="icon md greyCheck" />}>
+                    <Panel header={doc.documentName} key={idx + 1} extra={<span className={`${doc.status === "Approved"||doc.status === "approved" ? "icon md greenCheck" : "icon md greyCheck"}`} />}>
                         {(!this.state.documentReplies[doc.id]?.data || this.state.documentReplies[doc.id]?.data?.length == 0 && !this.state.documentReplies[doc.id]?.loading) && <><div className="mb-24">
                             <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
                             <Input onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
@@ -281,7 +281,7 @@ class RequestedDocs extends Component {
                                 </div>
                             </div>
                         </div>)}
-                        {this.state.documentReplies[doc.id]?.data && this.state.documentReplies[doc.id]?.data?.length != 0 && <div className="reply-container mb-0">
+                        {this.state.documentReplies[doc.id]?.data && this.state.documentReplies[doc.id]?.data?.length != 0 && doc.status != "Approved"  && <div className="reply-container mb-0">
                             {/* <img src={profile} className="mr-16" /> */}
                             <div className="user-shortname">{this.props?.userProfileInfo?.firstName.charAt('0')}{this.props?.userProfileInfo?.lastName.charAt('0')}</div>
                             <div className="reply-body">
