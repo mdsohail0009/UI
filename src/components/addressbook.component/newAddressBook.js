@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { Form, Input, Typography, Button, Alert } from 'antd'
 import { setAddressStep  } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
@@ -8,7 +8,11 @@ const { Text } = Typography;
 const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel }) => {
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
-
+    useEffect(() => {
+       if(addressBookReducer?.coinWallet?.coin){
+           form.setFieldsValue({toCoin:addressBookReducer?.coinWallet?.coin })
+       }
+    }, [addressBookReducer?.coinWallet?.coin])
     const saveAddressBook = async (values) => {
         debugger;
         const type = 'crypto';
@@ -23,10 +27,10 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel }
         } else {
             let response = await saveAddress(values);
             if (response.ok) {
-                changeStep('step1');
-                onCancel();
+              //  changeStep('step1');
                 setErrorMsg('Address saved sucessfully');
-
+                form.resetFields({})
+                onCancel();
             }
         }
     }
