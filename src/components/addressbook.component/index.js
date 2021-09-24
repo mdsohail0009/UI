@@ -146,7 +146,7 @@ class AddressBook extends Component {
                             </div>
                             <div className="text-right ">
                                 <Button className="c-pointer pop-btn ant-btn px-24" onClick={this.handleFiatAddress}> Add Address</Button>
-                                <ul>
+                                {/* <ul >
                                     <li>
                                         <Tooltip placement="top" title="Edit">
                                             <Link className="icon md edit mr-0" onClick={() => this.editNotice()}></Link>
@@ -158,7 +158,7 @@ class AddressBook extends Component {
                                             ></Link>
                                         </Tooltip>
                                     </li>
-                                </ul>
+                                </ul> */}
                             </div>
                         </div>
                         <List columns={this.columnsFiat} ref={this.gridRef} key={gridUrlFiat} url={gridUrlFiat} />

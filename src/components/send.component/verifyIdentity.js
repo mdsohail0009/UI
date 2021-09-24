@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Typography, Input, Button, Select } from 'antd';
 import { Link } from 'react-router-dom';
-import sacnner from '../../assets/images/sacnner.png';
+// import sacnner from '../../assets/images/sacnner.png';
 import Translate from 'react-translate-component';
 import connectStateProps from '../../utils/state.connect';
 import { setStep } from '../../reducers/sendreceiveReducer';
@@ -33,7 +33,7 @@ class VerifyIDentity extends Component {
                     <Translate content="qption1" component={Paragraph} className="fs-16 fw-600 text-white-30 mb-0" />
                     <Translate content="qption1_answer" component={Paragraph} className="fs-16 fw-300 text-white-30" />
                     <div className="text-center">
-                        <img src={sacnner} alt="" className="confirm-icon" />
+                        {/* <img src={sacnner} alt="" className="confirm-icon" /> */}
                     </div>
                     <Paragraph className="fs-16 fw-600 text-white-30 mb-0">Option 2: Send link via SMS</Paragraph>
                     <Paragraph className="fs-16 fw-300 text-white-30">We’ll text a secure link to your mobile at no extra cost.</Paragraph>
@@ -41,7 +41,7 @@ class VerifyIDentity extends Component {
                         <Select defaultValue="philippines" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={false} suffixIcon={<span className="icon md uparrow" />}>
                             <Option value="philippines">Philippines(+63)</Option>
                             <Option value="india">India(+91)</Option>
-                        </Select> 
+                        </Select>
                         <Input className="cust-input" placeholder="Your phone number" />
                         <Button size="large" block className="pop-btn" onClick={() => this.props.dispatch(setStep("step1"))}>Next</Button>
                     </form>

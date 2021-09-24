@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Row, Col, Spin } from 'antd';
-import profile from '../../assets/images/user.jpg'
+import { Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Spin } from 'antd';
 import { approveDoc, getDocDetails, getDocumentReplies, saveDocReply, uuidv4 } from './api';
 import Loader from '../../Shared/loader'
 import Moment from 'react-moment';
