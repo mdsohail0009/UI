@@ -503,13 +503,17 @@ debugger;
                 },
               ]}
             >
-              <Checkbox><Translate
+            <label className="d-flex pt-16 agree-check">
+                          <input type="checkbox" id="agree-check" />
+                          <span for="agree-check" />
+                        
+                        <Translate
                 content="agree_to_suissebase"
                 with={{ link }}
                 component={Paragraph}
                 className="fs-14 text-white-30 ml-16 mb-4"
                 style={{ flex: 1 }}
-              /></Checkbox>
+              /></label>
             </Form.Item>
             <Form.Item className="mb-0 mt-16">
               <Button
