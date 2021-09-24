@@ -92,6 +92,7 @@ debugger;
   };
 
   const getCountryLu = async () => {
+    form.setFieldsValue({ beneficiaryAccountName: (userConfig.firstName + " " + userConfig.lastName) })
     let recName = await getCountryStateLu()
     if (recName.ok) {
       setCountryLu(recName.data);
@@ -503,17 +504,13 @@ debugger;
                 },
               ]}
             >
-            <label className="d-flex pt-16 agree-check">
-                          <input type="checkbox" id="agree-check" />
-                          <span for="agree-check" />
-                        
-                        <Translate
+              <Checkbox className="ant-custumcheck"><span className="withdraw-check"></span><Translate
                 content="agree_to_suissebase"
                 with={{ link }}
                 component={Paragraph}
                 className="fs-14 text-white-30 ml-16 mb-4"
                 style={{ flex: 1 }}
-              /></label>
+              /></Checkbox>
             </Form.Item>
             <Form.Item className="mb-0 mt-16">
               <Button
