@@ -55,14 +55,14 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   }, [])
 
   const handleWalletSelection = (walletId) => {
-
+debugger;
     form.setFieldsValue({ memberWalletId: walletId })
     if (buyInfo.memberFiat?.data) {
       let wallet = buyInfo.memberFiat.data.filter((item) => {
         return walletId === item.currencyCode
       })
       setSelectedWallet(wallet[0])
-      getAddressLu();
+      getAddressLu(wallet[0]);
     }
   }
   const checkRecipeantName = async (name) => {
@@ -72,16 +72,15 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     } else {
     }
   }
-  const getAddressLu = async () => {
+  const getAddressLu = async (obj) => {
     debugger
-    let selectedFiat = selectedWallet?.currencyCode;
+    let selectedFiat = obj.currencyCode;
     let recAddress = await favouriteFiatAddress(userConfig.id, 'fiat', selectedFiat)
     if (recAddress.ok) {
       setAddressLu(recAddress.data);
     }
   }
   const handleAddressChange = async (e) => {
-    debugger
     let recAddressDetails = await detailsAddress(e)
     if (recAddressDetails.ok) {
       bindEditableData(recAddressDetails.data)
@@ -134,7 +133,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     dispatch(setWithdrawfiat(values))
     //changeStep('step5')
     setConfirmationStep('step2')
-    //form.resetFields();
+    form.resetFields();
   }
 
   const renderModalContent = () => {
