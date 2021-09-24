@@ -46,7 +46,7 @@ class CryptoWithDrawWallet extends Component {
     getAddressLu = async () => {
         let membershipId = this.props.userProfile.id;
         let coin_code = this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coin;
-        let recAddress = await favouriteFiatAddress(membershipId,'crypto',coin_code)
+        let recAddress = await favouriteFiatAddress(membershipId, 'crypto', coin_code)
         if (recAddress.ok) {
             this.setState({ addressLu: recAddress.data });
         }
@@ -98,7 +98,7 @@ class CryptoWithDrawWallet extends Component {
     withDraw = async () => {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null, loading: true, isWithdrawSuccess: false });
-        const valid = WalletAddressValidator.validate(this.state.walletAddress,coin);
+        const valid = WalletAddressValidator.validate(this.state.walletAddress, coin);
         if (!valid) {
             this.setState({ ...this.state, error: "Please enter valid address", confirmationStep: "step1", showModal: false, isWithdrawSuccess: false })
             return;
@@ -191,7 +191,7 @@ class CryptoWithDrawWallet extends Component {
         }
 
     }
-    handleChange=() =>{
+    handleChange = () => {
         debugger
     }
     render() {
@@ -255,10 +255,10 @@ class CryptoWithDrawWallet extends Component {
                     >
                         <div className="d-flex"><Text
                             className="input-label" >Address Book</Text>
-                            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+                            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}></span>
                         </div>
                         <div className="p-relative d-flex align-center">
-                            <Select dropdownClassName="select-drpdwn"
+                            {/* <Select dropdownClassName="select-drpdwn"
                                 className="cust-input custom-add-select mb-0"
                                 placeholder="Select Address"
                                 onChange={(e) => this.handleChange(e)}
@@ -267,7 +267,10 @@ class CryptoWithDrawWallet extends Component {
                                     <Option key={idx} value={item.id}>{item.name}
                                     </Option>
                                 )}
-                            </Select>
+                            </Select> */}
+                            <Input className="cust-input  custom-add-select mb-0" placeholder="Enter address" value={this.state.walletAddress}
+                                onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })}
+                            />
                             <Tooltip placement="top" title={<span>New Address</span>} style={{ flexGrow: 1 }}>
                                 <div className="new-add c-pointer" onClick={() => this.props.changeStep('step8')}>
                                     <span className="icon md address-book d-block c-pointer"></span>
@@ -277,9 +280,7 @@ class CryptoWithDrawWallet extends Component {
                     </Form.Item>
                 </Form>
 
-                {/* <Input className="cust-input" placeholder="Enter address" value={this.state.walletAddress}
-                    onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })}
-                /> */}
+
                 <Translate content="with_draw" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
                 <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[
                     <Button key="back" onClick={this.handleCancel} disabled={this.state.loading}>

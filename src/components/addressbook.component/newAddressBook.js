@@ -42,7 +42,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
 
     return (
         <>
-        {isLoading ? <Loader/>: 
+     
             <div className="mt-16">
                 {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
                 <Form
@@ -117,7 +117,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                     </div>
 
                 </Form>
-            </div>}
+            </div>
         </>
     )
 }
