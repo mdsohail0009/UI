@@ -87,7 +87,7 @@ class SelectCrypto extends Component {
                 closable={false}
             />}
             {/*<Search placeholder="Search for a Currency" onChange={(value) => this.onSearch(value)} className="crypto-search fs-14" />*/}
-            <Paragraph className="to-receive">Swap {this.props.swapfrom?'from':'to'}<span className="icon sm rightarrow ml-12 mb-4" /></Paragraph>
+            <Paragraph className="to-receive">Swap {this.props.swapfrom?'from':'to'}<span className="icon sm rightthemearrow ml-12 mb-4" /></Paragraph>
             
             <CryptoList coinType="swap" showSearch={true} showValues={true} titleField={'coin'} iconField={'coin'} selectedCoin={this.props.swapfrom?this.props.swapStore.coinDetailData:this.props.swapStore.coinReceiveDetailData} coinList={this.props.swapfrom?this.state.fromCoinsList:this.state.toCoinsList} isLoading={this.state.isLoading} onCoinSelected={(selectedCoin) => this.selectToggle(selectedCoin)} />
 
