@@ -38,7 +38,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   const [stateLu, setStateLu] = useState([]);
   const [country, setCountry] = useState(null);
   const [addressLu, setAddressLu] = useState([]);
-  const [addressDetails, setAddressDetails] = useState({})
+  const [addressDetails, setAddressDetails] = useState({});
 
   const useDivRef = React.useRef(null);
   useEffect(() => {
@@ -205,7 +205,7 @@ debugger;
               <div className="d-flex"><Text
                 className="input-label" >Address Book</Text>
 
-                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}></span>
               </div>
               <div className="p-relative d-flex align-center">
                 <Select dropdownClassName="select-drpdwn"

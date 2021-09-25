@@ -9,7 +9,8 @@ const { Text } = Typography;
 const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,rejectCoinWallet  }) => {
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
-    const[isLoading, setIsLoading] =useState(false)
+    const[isLoading, setIsLoading] =useState(false);
+    const [successMsg, setSuccessMsg] = useState(null);
     useEffect(() => {
        if(addressBookReducer?.coinWallet?.coin){
            form.setFieldsValue({toCoin:addressBookReducer?.coinWallet?.coin })
@@ -31,11 +32,12 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
             let response = await saveAddress(values);
             if (response.ok) {
               //  changeStep('step1');
-                setErrorMsg('Address saved sucessfully');
-                form.resetFields();
+              setSuccessMsg('Address saved sucessfully');
+              form.resetFields();
                 rejectCoinWallet();
                 setIsLoading(false)
-                onCancel();
+                setTimeout(() => {onCancel();}, 2000)
+              //  onCancel();
             }
         }
     }
@@ -45,9 +47,24 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
      
             <div className="mt-16">
                 {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+                {successMsg != null && <Alert closable type="success" message={"Success"} description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
                 <Form
                     form={form}
                     onFinish={saveAddressBook} >
+                    <Form.Item
+                        className="custom-forminput mb-24 pr-0"
+                        name="favouriteName"
+                        rules={[
+                            { required: true, message: "Is required" },
+                        ]} >
+                        <div>
+                            <div className="d-flex">
+                                <Text className="input-label">Address Label</Text>
+                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+                            </div>
+                            <Input className="cust-input"  maxLength="20" placeholder="Enter Address label" />
+                        </div>
+                    </Form.Item>
                     <Form.Item
                         className="custom-forminput mb-24 pr-0"
                         name="toCoin"
@@ -66,20 +83,6 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                                 <Input disabled className="cust-input cust-adon" placeholder="Select from Coins"
                                     addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />}
                                 />}
-                        </div>
-                    </Form.Item>
-                    <Form.Item
-                        className="custom-forminput mb-24 pr-0"
-                        name="favouriteName"
-                        rules={[
-                            { required: true, message: "Is required" },
-                        ]} >
-                        <div>
-                            <div className="d-flex">
-                                <Text className="input-label">Address Label</Text>
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-                            </div>
-                            <Input className="cust-input"  maxLength="20" placeholder="Enter Address label" />
                         </div>
                     </Form.Item>
                     <Form.Item
