@@ -22,13 +22,11 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
        }
     }, [addressBookReducer?.coinWallet?.coin])
     const selectCrypto = () =>{
-        debugger
         let getvalues = form.getFieldsValue()
         setObj(getvalues)
         setIsSelect(true)
     }
     const saveAddressBook = async (values) => {
-        debugger;
        setIsLoading(true)
         const type = 'crypto';
         values['membershipId'] = userConfig.id;
@@ -42,18 +40,17 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
         } else {
             let response = await saveAddress(values);
             if (response.ok) {
-              //  changeStep('step1');
-              setSuccessMsg('Address saved sucessfully');
+              
+              setSuccessMsg('Address saved successfully');
               form.resetFields();
                 rejectCoinWallet();
                 setIsLoading(false)
                 setTimeout(() => {onCancel();}, 2000)
-              //  onCancel();
+            
             }
         }
     }
     const onCoinSelected =(selectedCoin) =>{
-        debugger
         let coinObj = obj;
         coinObj.toCoin = selectedCoin.coin
         setIsSelect(false)
@@ -91,11 +88,20 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                             { required: true, message: "Is required" },
                         ]}
                     >
-                            {addressBookReducer.coinWallet.coinFullName ? <Input value={addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} className="cust-input cust-adon c-pointer" placeholder="Select from Coin"
-                                addonAfter={<i className="icon sm rightarrow c-pointer" onClick={selectCrypto} />} /> :
+                            {/* {addressBookReducer.coinWallet.coinFullName ? <Input  value={addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} className="cust-input cust-adon c-pointer" placeholder="Select from Coin"
+                                addonAfter={<i className="icon md rarrow-white c-pointer" onClick={selectCrypto} />} /> :
                                 <Input disabled className="cust-input cust-adon" placeholder="Select from Coins"
-                                    addonAfter={<i className="icon sm rightarrow c-pointer" onClick={selectCrypto} />}
-                                />}
+                                    addonAfter={<i className="icon md rarrow-white c-pointer" onClick={selectCrypto} />}
+                                />} */}
+                              {addressBookReducer.coinWallet.coinFullName ? <div className="cust-input p-relative">
+                                    <p className=" text-center mb-0" style={{ lineHeight:'46px'}}>{addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} </p>
+                                    <span className="icon md rarrow-white c-pointer coin-select" onClick={selectCrypto} />
+                                </div>:
+                                 <div className="cust-input  p-relative">
+                                 <p className="text-center mb-0  " style={{color:'#bfbfbf', lineHeight:'46px'}}>Select from Coins</p>
+                                 <span className="icon md rarrow-white c-pointer coin-select" onClick={selectCrypto} />
+                                 
+                             </div>}
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24 pr-0"
@@ -107,7 +113,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                             <Input className="cust-input" maxLength="30" placeholder="Enter Address" />
                     </Form.Item>
                     <div style={{ marginTop: '50px' }} className="">
-                        <Button disabled= {isLoading}
+                        <Button disabled
                             htmlType="submit"
                             size="large"
                             block

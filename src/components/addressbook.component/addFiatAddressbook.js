@@ -63,7 +63,6 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
 
     }
     const handleWalletSelection = (walletId) => {
-       debugger
         form.setFieldsValue({ toCoin: walletId })
         if (buyInfo.memberFiat?.data) {
           let wallet = buyInfo.memberFiat.data.filter((item) => {
@@ -83,7 +82,6 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
         values['membershipId'] = userConfig.id;
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
-        debugger
         let namecheck = values.favouriteName;
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
         if (responsecheck.data != null) {
@@ -93,7 +91,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
             if (response.ok) {
                 debugger;
                 // changeStep('step1');
-                setSuccessMsg('Address saved sucessfully');
+                setSuccessMsg('Address saved successfully');
                 form.resetFields();
                 setIsLoading(false)
                 setTimeout(() => {onCancel();}, 2000)

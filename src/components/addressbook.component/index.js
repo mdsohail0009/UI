@@ -104,7 +104,6 @@ class AddressBook extends Component {
         this.setState({ ...this.state, modal: false, selection: [], isCheck: false });
     }
     handleSatatuSave = async () => {
-        debugger
         this.setState({ ...this.state, isLoading: true })
         let statusObj = this.state.obj;
         statusObj.id.push(this.state.selectedObj.id);
