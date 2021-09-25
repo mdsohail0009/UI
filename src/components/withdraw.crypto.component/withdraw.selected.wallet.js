@@ -98,11 +98,12 @@ class CryptoWithDrawWallet extends Component {
     withDraw = async () => {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null, loading: true, isWithdrawSuccess: false });
-        const valid = WalletAddressValidator.validate(this.state.walletAddress, coin);
-        if (!valid) {
-            this.setState({ ...this.state, error: "Please enter valid address", confirmationStep: "step1", showModal: false, isWithdrawSuccess: false })
-            return;
-        }
+        // const valid = WalletAddressValidator.validate(this.state.walletAddress, coin);
+        // if (!valid) {
+        //  this.myRef.current.scrollIntoView();
+        //     this.setState({ ...this.state, error: "Please enter valid address", confirmationStep: "step1", showModal: false, isWithdrawSuccess: false })
+        //     return;
+        // }
         let obj = {
             "membershipId": this.props.userProfile.id,
             "memberWalletId": id,
