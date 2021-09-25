@@ -80,14 +80,14 @@ class CryptoWithDrawWallet extends Component {
             this.setState({ ...this.state, error: `Please enter min value of ${withdrawMinValue}` });
             this.myRef.current.scrollIntoView();
         } else if (amt > withdrawMaxValue) {
-            this.setState({ ...this.state, error: `Entered amount should be less than available balance ${withdrawMaxValue}` });
+            this.setState({ ...this.state, error: `Entered amount should be less than max withdraw amount of ${withdrawMaxValue}` });
             this.myRef.current.scrollIntoView();
         } else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
             this.setState({ ...this.state, error: `Entered amount should be less than available balance` });
             this.myRef.current.scrollIntoView();
         }
         else if (!this.state.walletAddress) {
-            this.setState({ ...this.state, error: `Entered amount should be less than available balance` });
+            this.setState({ ...this.state, error: `Please enter valid wallet address` });
             this.myRef.current.scrollIntoView();
         }
         else {
