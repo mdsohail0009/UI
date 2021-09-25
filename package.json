@@ -36,6 +36,7 @@
     "moment": "^2.29.1",
     "oidc-client": "^1.11.5",
     "qrcode.react": "^1.0.1",
+    "query-string": "^7.0.1",
     "react": "^17.0.2",
     "react-copy-to-clipboard": "^5.0.4",
     "react-css-theme-switcher": "^0.3.0",

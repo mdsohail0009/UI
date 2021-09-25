@@ -61,7 +61,7 @@ class AuditLogs extends Component {
     if (response.ok) {
       this.setState({
         userData: response.data,
-        IsUser:true
+        //IsUser:true
       });
     }
   };
@@ -340,7 +340,7 @@ class AuditLogs extends Component {
                       { required: true, message: "Is required" }, {
                           type: "date", validator: async (rule, value, callback) => {
                               if (value) {
-                                  if (new Date(value) < searchObj.fromdate) {
+                                if (new Date(value) < moment(searchObj.fromdate).format('DD/MM/YYYY')) {
                                       throw new Error("Start date must be less than or equal to the end date.")
                                   } else {
                                       callback();

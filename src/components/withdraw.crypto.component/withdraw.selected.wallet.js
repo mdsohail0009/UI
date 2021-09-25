@@ -232,17 +232,11 @@ class CryptoWithDrawWallet extends Component {
                     <Translate value="all" content="all" component={Radio.Button} onClick={() => this.clickMinamnt("all")} />
                 </Radio.Group>
 
-                <Translate
+                {/* <Translate
                     className="fs-14 text-aqua fw-500 text-upper"
                     content="address"
                     component={Paragraph}
-                />
-
-                {/* <Tooltip placement="bottom" title={<span>New Address</span>} >
-                        <span className="val-updown c-pointer" onClick={() => this.props.changeStep('step8')}>
-                            <span className="icon md address-book d-block c-pointer" style={{ marginTop: '10px', marginLeft: '10px' }}></span>
-                        </span>
-                    </Tooltip> */}
+                /> */}
                 <Form>
                     <Form.Item
                         name="bankId"
@@ -258,7 +252,7 @@ class CryptoWithDrawWallet extends Component {
                             className="input-label" >Address Book</Text>
                             <span style={{ color: "#fafcfe", paddingLeft: "2px" }}></span>
                         </div>
-                        <div className="p-relative d-flex align-center">
+                        {/* <div className="p-relative d-flex align-center"> */}
                             {/* <Select dropdownClassName="select-drpdwn"
                                 className="cust-input custom-add-select mb-0"
                                 placeholder="Select Address"
@@ -269,15 +263,15 @@ class CryptoWithDrawWallet extends Component {
                                     </Option>
                                 )}
                             </Select> */}
-                            <Input className="cust-input  custom-add-select mb-0" placeholder="Enter address" value={this.state.walletAddress}
+                            <Input className="cust-input mb-0" placeholder="Enter address" value={this.state.walletAddress}
                                 onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })}
                             />
-                            <Tooltip placement="top" title={<span>New Address</span>} style={{ flexGrow: 1 }}>
+                            {/* <Tooltip placement="top" title={<span>New Address</span>} style={{ flexGrow: 1 }}>
                                 <div className="new-add c-pointer" onClick={() => this.props.changeStep('step8')}>
                                     <span className="icon md address-book d-block c-pointer"></span>
                                 </div>
-                            </Tooltip>
-                        </div>
+                            </Tooltip> */}
+                        {/* </div> */}
                     </Form.Item>
                 </Form>
 

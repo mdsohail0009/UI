@@ -59,7 +59,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                         <div>
                             <div className="d-flex">
                                 <Text className="input-label">Coin</Text>
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}></span>
+                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
                             </div>
                             {addressBookReducer.coinWallet.coinFullName ? <Input value={addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} className="cust-input cust-adon c-pointer" placeholder="Select from Coin"
                                 addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />} /> :
