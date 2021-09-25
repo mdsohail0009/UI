@@ -4,18 +4,29 @@ import { setAddressStep ,rejectCoin } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
 import { saveAddress, favouriteNameCheck } from './api';
 import Loader from '../../Shared/loader';
+import SelectCrypto from './selectCrypto';
+
+
 
 const { Text } = Typography;
-const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,rejectCoinWallet  }) => {
+const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,rejectCoinWallet, onCoinClick  }) => {
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
     const[isLoading, setIsLoading] =useState(false);
     const [successMsg, setSuccessMsg] = useState(null);
+    const[isSelect,setIsSelect] = useState(false);
+    const[obj,setObj] =useState({});
     useEffect(() => {
        if(addressBookReducer?.coinWallet?.coin){
            form.setFieldsValue({toCoin:addressBookReducer?.coinWallet?.coin })
        }
     }, [addressBookReducer?.coinWallet?.coin])
+    const selectCrypto = () =>{
+        debugger
+        let getvalues = form.getFieldsValue()
+        setObj(getvalues)
+        setIsSelect(true)
+    }
     const saveAddressBook = async (values) => {
         debugger;
        setIsLoading(true)
@@ -41,63 +52,57 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
             }
         }
     }
+    const onCoinSelected =(selectedCoin) =>{
+        debugger
+        setIsSelect(false)
+        setTimeout(() => {
+            form.setFieldsValue(obj);
+        }, 2000)
+        
+    }
 
     return (
         <>
      
-            <div className="mt-16">
+           {!isSelect  ? <div className="mt-16">
                 {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
                 {successMsg != null && <Alert closable type="success" message={"Success"} description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
                 <Form
                     form={form}
-                    onFinish={saveAddressBook} >
+                    onFinish={saveAddressBook} autoComplete="off" >
                     <Form.Item
-                        className="custom-forminput mb-24 pr-0"
+                        className="custom-forminput custom-label  mb-24 pr-0"
+                        label="Address Label"
                         name="favouriteName"
                         rules={[
                             { required: true, message: "Is required" },
-                        ]} >
-                        <div>
-                            <div className="d-flex">
-                                <Text className="input-label">Address Label</Text>
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-                            </div>
+                        ]} 
+                        
+                        >
                             <Input className="cust-input"  maxLength="20" placeholder="Enter Address label" />
-                        </div>
                     </Form.Item>
                     <Form.Item
-                        className="custom-forminput mb-24 pr-0"
+                        className="custom-forminput custom-label mb-24 pr-0"
                         name="toCoin"
-
+                        label="Coin"
                         rules={[
                             { required: true, message: "Is required" },
                         ]}
                     >
-                        <div>
-                            <div className="d-flex">
-                                <Text className="input-label">Coin</Text>
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-                            </div>
                             {addressBookReducer.coinWallet.coinFullName ? <Input value={addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} className="cust-input cust-adon c-pointer" placeholder="Select from Coin"
-                                addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />} /> :
+                                addonAfter={<i className="icon sm rightarrow c-pointer" onClick={selectCrypto} />} /> :
                                 <Input disabled className="cust-input cust-adon" placeholder="Select from Coins"
-                                    addonAfter={<i className="icon sm rightarrow c-pointer" onClick={() => changeStep('step3')} />}
+                                    addonAfter={<i className="icon sm rightarrow c-pointer" onClick={selectCrypto} />}
                                 />}
-                        </div>
                     </Form.Item>
                     <Form.Item
-                        className="custom-forminput mb-24 pr-0"
+                        className="custom-forminput custom-label mb-24 pr-0"
                         name="toWalletAddress"
+                        label="Address"
                         rules={[
                             { required: true, message: "Is required" },
                         ]}>
-                        <div>
-                            <div className="d-flex">
-                                <Text className="input-label">Address</Text>
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-                            </div>
                             <Input className="cust-input" maxLength="30" placeholder="Enter Address" />
-                        </div>
                     </Form.Item>
                     <div style={{ marginTop: '50px' }} className="">
                         <Button disabled= {isLoading}
@@ -120,7 +125,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                     </div>
 
                 </Form>
-            </div>
+            </div>:<SelectCrypto  onCoinClick ={(selectedCoin) => onCoinSelected(selectedCoin)} />}
         </>
     )
 }
