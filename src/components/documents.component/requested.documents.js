@@ -232,7 +232,7 @@ class RequestedDocs extends Component {
             return <Loader />
         }
         if (!this.state.docDetails?.details || this.state.docDetails?.details.length == 0) {
-            return <Empty description="No document requests found" />
+            return <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>
         }
         return <div className="main-container">
             <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile" />{this.state?.docDetails?.note}</div>
