@@ -241,7 +241,7 @@ class RequestedDocs extends Component {
                                 <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment fromNow>{reply.repliedDate}</Moment> </Text>
                                 <p className="reply-txt">{reply.reply}</p>
                                 <div className="docfile-container">
-                                    {reply.path.map((file, idx) => <div key={idx} className="docfile">
+                                    {reply?.path?.map((file, idx) => <div key={idx} className="docfile">
                                         <span className="icon xl image mr-16" />
                                         <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                             <EllipsisMiddle suffixCount={12}>{file.filename}</EllipsisMiddle>
