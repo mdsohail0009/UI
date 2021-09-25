@@ -24,7 +24,11 @@ export const withdrawRecepientNamecheck = (memberid,name) => {
 }
 export const getCountryStateLu = (memberid,name) => {
 
-    return identityClient.get("/js/countrystate.json");
+    return apiClient.get(ApiControllers.exchange +"ControlCodes?codeCategory=country");
+}
+export const getStateLookup = (country) => {
+
+    return apiClient.get(ApiControllers.exchange +"States?country="+country);
 }
 export const withdrawSave = (obj) => {
 
