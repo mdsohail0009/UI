@@ -20,7 +20,7 @@ class CryptoComponent extends Component {
         this.props.dispatch(fetchCoins("All"));
     }
     handleBuySellToggle = e => {
-       this.props.dispatch(setTab(e.target.value))
+        this.props.dispatch(setTab(e.target.value))
     }
     handleCoinSelection = (selectedCoin) => {
         this.props.getCoinDetails(selectedCoin.walletCode, this.props.member?.id);
@@ -36,22 +36,24 @@ class CryptoComponent extends Component {
         const { coins: coinListdata } = this.props?.buyInfo;
         return (
             <>
-                <Radio.Group
-                    value={this.props.buySell.tabKey}
-                    onChange={this.handleBuySellToggle}
-                    className="buysell-toggle">
-                    <Translate content="buy" component={Radio.Button} value={1} />
-                    <Translate content="sell" component={Radio.Button} value={2} />
-                </Radio.Group>
-                {this.props.buySell.tabKey==2 ?
+                <div className="text-center">
+                    <Radio.Group
+                        value={this.props.buySell.tabKey}
+                        onChange={this.handleBuySellToggle}
+                        className="buysell-toggle">
+                        <Translate content="buy" component={Radio.Button} value={1} />
+                        <Translate content="sell" component={Radio.Button} value={2} />
+                    </Radio.Group>
+                </div>
+                {this.props.buySell.tabKey == 2 ?
                     <>
                         {/* <Paragraph className="mb-0 text-white-30 fw-200 fs-36">Sell your Crypto for Cash</Paragraph> */}
-                        <Translate content="sell_your_crypto_for_cash" component={Title} className="drawer-title" />
+                        <Translate content="sell_your_crypto_for_cash" component={Title} className="drawer-title fs-36" />
                         <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-secondary fw-300 fs-16" />
                         <SellToggle /></>
                     :
                     <>
-                        <Translate content="purchase_a_crypto" component={Title} className="drawer-title" />
+                        <Translate content="purchase_a_crypto" component={Title} className="drawer-title fs-36" />
                         <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-secondary fw-300 fs-16" />
                         <Tabs className="crypto-list-tabs" onChange={(key) => {
                             const types = {

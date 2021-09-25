@@ -80,14 +80,14 @@ class CryptoWithDrawWallet extends Component {
             this.setState({ ...this.state, error: `Please enter min value of ${withdrawMinValue}` });
             this.myRef.current.scrollIntoView();
         } else if (amt > withdrawMaxValue) {
-            this.setState({ ...this.state, error: `Entered amount should be less than available balance ${withdrawMaxValue}` });
+            this.setState({ ...this.state, error: `Entered amount should be less than max withdraw amount of ${withdrawMaxValue}` });
             this.myRef.current.scrollIntoView();
         } else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
             this.setState({ ...this.state, error: `Entered amount should be less than available balance` });
             this.myRef.current.scrollIntoView();
         }
         else if (!this.state.walletAddress) {
-            this.setState({ ...this.state, error: `Entered amount should be less than available balance` });
+            this.setState({ ...this.state, error: `Please enter valid wallet address` });
             this.myRef.current.scrollIntoView();
         }
         else {
@@ -98,11 +98,12 @@ class CryptoWithDrawWallet extends Component {
     withDraw = async () => {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null, loading: true, isWithdrawSuccess: false });
-        const valid = WalletAddressValidator.validate(this.state.walletAddress, coin);
-        if (!valid) {
-            this.setState({ ...this.state, error: "Please enter valid address", confirmationStep: "step1", showModal: false, isWithdrawSuccess: false })
-            return;
-        }
+        // const valid = WalletAddressValidator.validate(this.state.walletAddress, coin);
+        // if (!valid) {
+        //  this.myRef.current.scrollIntoView();
+        //     this.setState({ ...this.state, error: "Please enter valid address", confirmationStep: "step1", showModal: false, isWithdrawSuccess: false })
+        //     return;
+        // }
         let obj = {
             "membershipId": this.props.userProfile.id,
             "memberWalletId": id,

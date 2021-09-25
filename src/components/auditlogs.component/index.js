@@ -34,6 +34,7 @@ class AuditLogs extends Component {
         todate: '',
         userName: this.props.userProfile?.userName,
         feature: "All Features",
+        IsAdmin:false
       },
       timeListSpan: ["Last 1 Day", "Last One Week", "Custom"],
       gridUrl: process.env.REACT_APP_GRID_API+"AuditLog/GetAdminLogsK",
@@ -60,7 +61,7 @@ class AuditLogs extends Component {
     if (response.ok) {
       this.setState({
         userData: response.data,
-        IsAdmin:false
+        IsUser:true
       });
     }
   };

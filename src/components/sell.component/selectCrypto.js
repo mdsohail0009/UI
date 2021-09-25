@@ -16,7 +16,7 @@ class SelectSellCrypto extends Component {
         this.swapRef = React.createRef();
     }
     state = {
-        USDAmnt: "0.00", CryptoAmnt: "0.00", sellSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": null, "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }, isSwap: false
+        USDAmnt: "", CryptoAmnt: "", sellSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": null, "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }, isSwap: false
         , errorMessage: null,minmaxTab:'min'
     }
     componentDidMount() {

@@ -21,13 +21,15 @@ class depositCrypto extends Component {
         const { depositeFiat } = this.state;
         return (
             <>
-                <Radio.Group
-                    defaultValue={1}
-                    onChange={this.handleBuySellToggle}
-                    className="buysell-toggle crypto-toggle">
-                    <Translate value="min" content="from_crypto" value={1} component={Radio.Button} />
-                    <Translate value="half" content="from_fiat" value={2} component={Radio.Button} />
-                </Radio.Group>
+                <div className="text-center">
+                    <Radio.Group
+                        defaultValue={1}
+                        onChange={this.handleBuySellToggle}
+                        className="buysell-toggle crypto-toggle">
+                        <Translate value="min" content="from_crypto" value={1} component={Radio.Button} />
+                        <Translate value="half" content="from_fiat" value={2} component={Radio.Button} />
+                    </Radio.Group>
+                </div>
                 {depositeFiat ?
                     <DepositFiat /> :
                     <div className="sellcrypto-container auto-scroll">
