@@ -6,7 +6,8 @@ import Translate from 'react-translate-component';
 import { userManager } from '../../authentication';
 import Settings from './settings';
 import Documents from '../documents.component/documents';
-import AddressBook from '../addressbook.component'
+import AddressBook from '../addressbook.component';
+import QueryString from 'query-string'
 const { TabPane } = Tabs;
 class userProfile extends Component {
     state = {
@@ -14,7 +15,14 @@ class userProfile extends Component {
         isSecurity: false,
         isSetting: false,
         tabPosition: 'left',
+        activeTab:"1"
 
+    }
+    componentDidMount(){
+        let activeKey = QueryString.parse(this.props.history.location.search)?.key;
+        if(activeKey){
+            this.setState({...this.state,activeTab:activeKey});
+        }
     }
     handleProfile = () => {
         this.setState({ isProfile: true })
@@ -84,7 +92,7 @@ class userProfile extends Component {
                 </Row> 
             </div> */}
             <div className="main-container">
-                <Tabs tabPosition={tabPosition} className="user-list">
+                <Tabs tabPosition={tabPosition} className="user-list"  activeKey={this.state.activeTab} onChange={(key)=>this.setState({...this.state,activeTab:key})}>
                     <TabPane tab={<span><span className="icon lg profile-icon mr-16" />Profile Info</span>} key="1" className=" ">
                         <ProfileInfo />
                     </TabPane>

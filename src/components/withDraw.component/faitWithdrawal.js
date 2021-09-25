@@ -393,7 +393,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
               <Select dropdownClassName="select-drpdwn" placeholder="Select State" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                 onChange={(e) => ''} >
                 {stateLu?.map((item, idx) =>
-                  <Option key={idx} value={item.name}>{item.name}
+                  <Option key={idx} value={item.code}>{item.code}
                   </Option>
                 )}
               </Select>
@@ -540,7 +540,11 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
           <img src={success} className="confirm-icon" />
 
           <Translate className="fs-30 mb-4 d-block text-white-30" content="withdrawal_success" component={Title} />
-          <Link onClick={() => { form.resetFields(); setConfirmationStep("step1"); }} className="f-16 mt-16 text-underline text-green">Back to Withdraw<span className="icon md diag-arrow ml-4" /></Link>
+          <Link onClick={() => { setSaveObj(null); setAddressDetails({});
+          setConfirmationStep("step1",()=>{
+           setTimeout(() => {
+            form.resetFields();
+           }, 1000); }); }} className="f-16 mt-16 text-underline text-green">Back to Withdraw<span className="icon md diag-arrow ml-4" /></Link>
 
         </div>
       </>,
@@ -560,6 +564,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
         dispatch(fetchDashboardcalls(userConfig.id))
         dispatch(rejectWithdrawfiat())
         //setIsLoding(true)
+        setConfirmationStep("step4")
         appInsights.trackEvent({
           name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.email, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
         });

@@ -227,37 +227,47 @@ class RequestedDocs extends Component {
             return { path: [] }
         }
     }
+    formatBytes(bytes, decimals = 2) {
+        if (bytes === 0) return '0 Bytes';
+
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
     render() {
         if (this.state.loading) {
             return <Loader />
         }
-        if(!this.state.docDetails?.details||this.state.docDetails?.details.length==0){
-            return <Empty description="No document requests found" />
-        }
         return <div className="main-container">
-            <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile" />{this.state?.docDetails?.note}</div>
+            {!this.state.docDetails?.details || this.state.docDetails?.details.length == 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
+            <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=3" />{this.state?.docDetails?.note}</div>
             <div className="bank-view">
                 {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
-                    <Panel header={doc.documentName} key={idx + 1} extra={<span className={`${doc.status === "Approved" || doc.status === "approved" ? "icon md greenCheck" : "icon md greyCheck"}`} />}>
-                        {this.state.documentReplies[doc.id]?.loading && <Spin size="large" />}
+                    <Panel header={doc.documentName} key={idx + 1} extra={(doc.status === "Approved" || doc.status === "approved") && <span className="approved-lbl">Approved</span>}>
+                        {/* <span className={`${doc.status === "Approved" || doc.status === "approved" ? "icon md greenCheck" : "icon md greyCheck"}`} /> */}
+                        {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
                         {this.state.documentReplies[doc.id]?.data?.map((reply, idx) => <div key={idx} className="reply-container">
                             {/* <img src={profile} className="mr-16" /> */}
                             <div className="user-shortname">{this.props?.userProfileInfo?.firstName.charAt('0')}{this.props?.userProfileInfo?.lastName.charAt('0')}</div>
                             <div className="reply-body">
-                                <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment fromNow>{reply.repliedDate}</Moment> </Text>
+                                <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment format="DD MMM YY hh:mm">{reply.repliedDate}</Moment> </Text>
                                 <p className="reply-txt">{reply.reply}</p>
                                 <div className="docfile-container">
                                     {reply?.path?.map((file, idx) => <div key={idx} className="docfile">
                                         <span className="icon xl image mr-16" />
                                         <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                             <EllipsisMiddle suffixCount={12}>{file.filename}</EllipsisMiddle>
-                                            <span className="fs-12 text-secondary">{file.size}</span>
+                                            <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
                                         </div>
                                     </div>)}
                                 </div>
                             </div>
                         </div>)}
-                        {!this.state.documentReplies[doc.id]?.loading && <><div className="mb-24">
+                        {!this.state.documentReplies[doc.id]?.loading && doc.status !== "Approved" && <><div className="mb-24">
                             <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
                             <Input onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
                                 className="mb-24 cust-input"

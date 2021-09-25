@@ -34,7 +34,7 @@ class Home extends Component {
                     {this.state.notices?.map((notice, idx) => <div className="mb-24" key={idx}>
                         <AlertConfirmation type="error" title={notice.title} showIcon description="Dear user please check the details for requesting documents to approval your deposit/withdraw."
                             action={
-                                <Button size="small" type="text" onClick={() => this.props.history.push(`/documents/${notice.typeId}`)}>
+                                <Button size="small" type="text" onClick={() => this.props.history.push(`/documents?id=${notice.typeId}`)}>
                                     View Details
                                 </Button>
                             } />

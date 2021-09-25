@@ -28,7 +28,7 @@ export const getCountryStateLu = (memberid,name) => {
 }
 export const getStateLookup = (country) => {
 
-    return apiClient.get(ApiControllers.exchange +"States?country="+country);
+    return apiClient.get(ApiControllers.exchange +"States?countryName="+country);
 }
 export const withdrawSave = (obj) => {
 

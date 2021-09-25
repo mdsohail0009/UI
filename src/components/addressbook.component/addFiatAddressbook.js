@@ -6,7 +6,7 @@ import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import WalletList from '../shared/walletList';
 import NumberFormat from 'react-number-format';
-import { withdrawRecepientNamecheck, withdrawSave, getCountryStateLu } from '../../api/apiServer';
+import { withdrawRecepientNamecheck, withdrawSave, getCountryStateLu,getStateLookup } from '../../api/apiServer';
 import Currency from '../shared/number.formate';
 import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
@@ -48,14 +48,18 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
             setCountryLu(recName.data);
         }
     }
-    const getStateLu = (countryname) => {
-        let statelu = countryLu.filter((item) => { if (item.name == countryname) return item })
-        if (statelu[0].states.length > 0) {
-            setStateLu(statelu[0].states)
-        } else {
-            setStateLu([{ name: countryname, code: countryname }])
-        }
-        form.setFieldsValue({ state: null })
+    const getStateLu = async(countryname) => {
+        let recName = await getStateLookup(countryname)
+    if (recName.ok) {
+      setStateLu(recName.data);
+    }
+    // let statelu = countryLu.filter((item) => { if (item.name == countryname) return item })
+    // if (statelu[0].states.length > 0) {
+    //   setStateLu(statelu[0].states)
+    // } else {
+    //   setStateLu([{ name: countryname, code: countryname }])
+    // }
+    form.setFieldsValue({ state: null })
 
     }
     const handleWalletSelection = (walletId) => {
@@ -333,7 +337,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         <Select dropdownClassName="select-drpdwn" placeholder="Select State" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                             onChange={(e) => ''} >
                             {stateLu?.map((item, idx) =>
-                                <Option key={idx} value={item.name}>{item.name}
+                                <Option key={idx} value={item.code}>{item.code}
                                 </Option>
                             )}
                         </Select>
