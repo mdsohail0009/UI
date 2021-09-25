@@ -54,9 +54,11 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
     }
     const onCoinSelected =(selectedCoin) =>{
         debugger
+        let coinObj = obj;
+        coinObj.toCoin = selectedCoin.coin
         setIsSelect(false)
         setTimeout(() => {
-            form.setFieldsValue(obj);
+            form.setFieldsValue(coinObj);
         }, 2000)
         
     }
