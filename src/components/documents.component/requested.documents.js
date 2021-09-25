@@ -227,15 +227,15 @@ class RequestedDocs extends Component {
             return { path: [] }
         }
     }
-     formatBytes(bytes, decimals = 2) {
+    formatBytes(bytes, decimals = 2) {
         if (bytes === 0) return '0 Bytes';
-    
+
         const k = 1024;
         const dm = decimals < 0 ? 0 : decimals;
         const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-    
+
         const i = Math.floor(Math.log(bytes) / Math.log(k));
-    
+
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
     render() {
@@ -243,7 +243,7 @@ class RequestedDocs extends Component {
             return <Loader />
         }
         return <div className="main-container">
-            {!this.state.docDetails?.details || this.state.docDetails?.details.length == 0 && <Empty description="No document requests found" />}
+            {!this.state.docDetails?.details || this.state.docDetails?.details.length == 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
             <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile" />{this.state?.docDetails?.note}</div>
             <div className="bank-view">
                 {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
@@ -267,7 +267,7 @@ class RequestedDocs extends Component {
                                 </div>
                             </div>
                         </div>)}
-                        {!this.state.documentReplies[doc.id]?.loading && doc.status !== "Approved"&& <><div className="mb-24">
+                        {!this.state.documentReplies[doc.id]?.loading && doc.status !== "Approved" && <><div className="mb-24">
                             <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
                             <Input onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
                                 className="mb-24 cust-input"
