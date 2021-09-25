@@ -47,14 +47,13 @@ class AddressBook extends Component {
         { field: "favouriteName", title: "Address Label", filter: true, width: 180 },
         { field: "toWalletAddress", title: "Address", filter: true, width: 380 },
         { field: "currency", title: "Currency", width: 150, filter: true, with: 150 },
-        { field: "accountNumber", title: "Account Number", filter: true, width: 200 },
-        { field: "routingNumber", title: "Routing Number", filter: true, width: 180 },
+        { field: "accountNumber", title: "Bank account number/IBAN" , filter: true, width: 220 },
+        { field: "routingNumber", title: "BIC/SWIFT/Routing Number", filter: true, width: 180 },
         { field: "bankName", title: "Bank Name", filter: true, width: 200 },
-        { field: "bankAddress", title: "Bank Address", filter: true, width: 250 },
-        { field: "beneficiaryAccountName", title: "Account Name", filter: true, width: 200 },
-        { field: "beneficiaryAccountAddress", title: "Account Address", filter: true, width: 250 },
+        { field: "bankAddress", title: "Bank address line 1", filter: true, width: 250 },
+        { field: "beneficiaryAccountName", title: "Recipient full name", filter: true, width: 200 },
+        { field: "beneficiaryAccountAddress", title: "Recipient address line 1", filter: true, width: 250 },
        // { field: "swiftCode", title: "Swift Code", filter: true, },
-      
         { field: "status", title: "Status", filter: true, width: 100 }
     ];
     columnsCrypto = [
@@ -220,7 +219,7 @@ class AddressBook extends Component {
                         {this.state.alert &&
                             <div className="custom-alert" ><Alert
                           //  message="Warning"
-                            description="Please select the one record"
+                            description="Please select one record"
                             type="warning"
                             showIcon
                             closable
@@ -251,14 +250,14 @@ class AddressBook extends Component {
                             {this.state.alert &&
                             <div className="custom-alert" ><Alert
                           //  message="Warning"
-                            description="Please select the one record"
+                            description="Please select one record"
                             type="warning"
                             showIcon
                             closable
                           />
                             </div>}
                             {this.state.successMsg  && <Alert closable type="success"
-                             description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'inactivated' : 'activated') + ' successfully'} onClose={() => this.setSuccessMsg(null)} showIcon />}
+                             description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'Inactivated' : 'Activated') + ' Successfully'} onClose={() => this.setSuccessMsg(null)} showIcon />}
                             <List columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridRef} url={gridUrlCrypto} />
                         </>}
                 </div>
