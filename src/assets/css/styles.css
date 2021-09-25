@@ -158,8 +158,8 @@ line-height: 16px;min-width:90px}
 .side-drawer .ant-drawer-mask, .side-drawer-full .ant-drawer-mask{background-color: var(--bgDarkGrey-95);}
 .side-drawer .ant-drawer-header,.side-drawer-full .ant-drawer-header, .crypto-list-tabs .ant-tabs-nav::before{border: none;}
 .side-drawer-header.custom-drawer-header{padding: 30px 46px 30px 0px !important;}
-.buysell-toggle{border-radius: 20px; background: var(--bgDarkGrey); padding: 10px;display: block;margin: 0 35px 50px 35px}
-.buysell-toggle .ant-radio-button-wrapper{border-radius: 15px;border: none;background: transparent;color: var(--textYellow);text-transform: uppercase;font-weight: 600;padding: 20px 40px; min-width: 165px;line-height: 0;font-size: 14px;text-align: center;}
+.buysell-toggle{border-radius: 20px; background: var(--bgDarkGrey); padding: 10px;display: inline-block;margin: 0 auto 50px}
+.buysell-toggle .ant-radio-button-wrapper{width: auto;border-radius: 15px;border: none;background: transparent;color: var(--textYellow);text-transform: uppercase;font-weight: 600;padding: 20px 40px; line-height: 0;font-size: 14px;text-align: center;}
 .buysell-toggle .ant-radio-button{border-radius: 15px;font-size: 12px;}
 .buysell-toggle .ant-radio-button-checked{background: var(--bgYellow);border-left: none;}
 .buysell-toggle .ant-radio-button-wrapper-checked{color: var(--textDark) !important; z-index: 0;}
@@ -614,8 +614,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .mobile-header-right{display: block;float: right;}
     .sidebar-push{margin: 62px 0 0;}
     .side-drawer .ant-drawer-content-wrapper{width: 95% !important;}
-    .buysell-toggle{ margin: 0 0 30px !important;}
-    .buysell-toggle .ant-radio-button-wrapper{min-width:142px !important; }
+    .buysell-toggle{ margin: 0 auto 30px !important;}
+    /* .buysell-toggle .ant-radio-button-wrapper{min-width:142px !important; } */
     .crypto-percent{font-size: 36px;color: #FFFFFF;font-weight: 700;}
     .crypto-percent .percent{font-size: 16px;vertical-align: middle;margin-left: 4px;}
     .drawer-title{font-size: 28px !important;font-weight: 200 !important;color: var(--textWhite30) !important; margin-bottom: 10px !important;}
@@ -683,8 +683,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .copyright{display: none !important;}
     .swap-subtitlte{width:250px}
     .enter-val-container{margin-right: 35px;}
-    .buysell-toggle{ margin: 0 10px 10px !important;}
-    .buysell-toggle .ant-radio-button-wrapper{min-width:163px !important; }
+    .buysell-toggle{ margin: 0 auto 10px !important;}
+    /* .buysell-toggle .ant-radio-button-wrapper{min-width:163px !important; } */
     .tlv-header{border-radius: 0 0 30px 30px;}
     .pay-list{display: flex;justify-content: space-between;align-items: center;}
     .verify-options{padding: 24px 70px;}
@@ -720,14 +720,14 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .side-drawer .ant-drawer-content-wrapper{width: 510px !important;}
     .side-drawer .ant-drawer-body{padding: 0 20px 20px 20px;}
     .side-drawer .side-drawer-header{padding: 15px 0px 15px 0px;}
-    .buysell-toggle{ margin: 0 45px 35px !important;}
-    .buysell-toggle .ant-radio-button-wrapper{min-width:180px !important; }
-    .crypto-list-tabs .crypto-list{max-height: calc(100vh - 428px); overflow-y: auto; padding-right: 10px;}
-    .sellcrypto-container{max-height: calc(100vh - 300px);}
+    .buysell-toggle{ margin: 0 auto 35px !important;}
+    /* .buysell-toggle .ant-radio-button-wrapper{min-width:175px !important; } */
+    .crypto-list-tabs .crypto-list{max-height: calc(100vh - 435px); overflow-y: auto; padding-right: 10px;}
+    .sellcrypto-container{max-height: calc(100vh - 305px);}
     .suisfiat-container{max-height: calc(100vh - 210px);}
     .suisfiat-height{max-height: calc(100vh - 215px);}
     .round-pills .ant-radio-button-wrapper,.default-radio .ant-radio-button-wrapper{min-width: 120px;}
-    .dep-withdraw{max-height: calc(100vh - 315px);}
+    .dep-withdraw{max-height: calc(100vh - 325px);}
     .crypto-card .ant-card-body{padding: 33px;height: 231px;}
     .crypto-percent{font-size: 60px;line-height: normal;}
     .coin{transform: scale(1);}

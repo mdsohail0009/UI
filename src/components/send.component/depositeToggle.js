@@ -23,7 +23,7 @@ class DepositeCrypto extends Component {
             ...this.state,
             activeKey: e.target.value
         });
-      e.target.value==1?  this.props.dispatch(setSubTitle(`USD ${this.props.dashboard?.totalFiatValue} Total balance`)):  this.props.dispatch(setSubTitle(`Select a currency in your wallet`));;
+        e.target.value == 1 ? this.props.dispatch(setSubTitle(`USD ${this.props.dashboard?.totalFiatValue} Total balance`)) : this.props.dispatch(setSubTitle(`Select a currency in your wallet`));;
     }
     componentDidMount() {
         this.setState({ ...this.state, activeKey: this.props.sendReceive?.cryptoWithdraw?.activeKey || 1, sendReceive: true });
@@ -37,12 +37,13 @@ class DepositeCrypto extends Component {
         const { activeKey } = this.state
         return (
             <>
-                <Radio.Group value={this.state.activeKey}
+                <div className="text-center"><Radio.Group value={this.state.activeKey}
                     onChange={this.handleBuySellToggle}
                     className="buysell-toggle crypto-toggle text-upper">
                     <Translate value={1} content="deposit" component={Radio.Button} />
                     <Translate value={2} content="withdraw" component={Radio.Button} />
                 </Radio.Group>
+                </div>
                 {activeKey == 2 ? <WithdrawCrypto /> : <CryptoDeposit />}
             </>
         )
@@ -50,7 +51,7 @@ class DepositeCrypto extends Component {
 }
 
 const connectStateToProps = ({ sendReceive, dashboard }) => {
-    return { sendReceive,dashboard:dashboard?.portFolio?.data }
+    return { sendReceive, dashboard: dashboard?.portFolio?.data }
 }
 const connectDispatchToProps = dispatch => {
     return {

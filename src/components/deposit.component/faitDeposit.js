@@ -27,7 +27,7 @@ const LinkValue = (props) => {
 const { Option } = Select;
 class FaitDeposit extends Component {
   formRef = createRef();
-  myRef=React.createRef();
+  myRef = React.createRef();
   state = {
     buyDrawer: false,
     crypto: config.tlvCoinsList,
@@ -114,7 +114,7 @@ class FaitDeposit extends Component {
       this.myRef.current.scrollIntoView()
     }
     else if (depObj.Amount == '.') {
-      this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero.' });this.myRef.current.scrollIntoView()
+      this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero.' }); this.myRef.current.scrollIntoView()
     }
     else {
       this.formRef.current.validateFields().then(async () => {
@@ -130,7 +130,7 @@ class FaitDeposit extends Component {
             tabValue: 1, Loader: false, isTermsAgreed: false, showSuccessMsg: true
           });
           appInsights.trackEvent({
-            name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": (createObj.amount +' '+createObj.currency+ 'deposited.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
+            name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": (createObj.amount + ' ' + createObj.currency + 'deposited.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
           });
         }
       });
@@ -156,18 +156,18 @@ class FaitDeposit extends Component {
     const { currenciesWithBankInfo } = this.props.depositInfo;
     return (
       <>
-        {!this.state.showSuccessMsg&&<Radio.Group
+        {!this.state.showSuccessMsg && <div className="text-center"><Radio.Group
           onChange={this.handleBuySellToggle}
           value={this.state.tabValue}
           className="buysell-toggle">
           <Translate content="deposit" component={Radio.Button} value={1} />
           <Translate content="withdraw" component={Radio.Button} value={2} />
-        </Radio.Group>}
+        </Radio.Group></div>}
         {faitdeposit ?
           <SellToggle />
           : <> {this.state.Loader && <Loader />}
 
-            {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }}  ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll"><div ref={this.myRef}></div>
+            {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll"><div ref={this.myRef}></div>
               {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="" description={this.state?.errorMessage} closable />}
               {!this.state.showSuccessMsg && <Translate
                 className="mb-0 text-white-30 fs-14 fw-200"
