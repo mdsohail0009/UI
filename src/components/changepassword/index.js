@@ -115,7 +115,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
             content="current_password"
             component={Text}
           />
-          <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+          <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
         </div>
         <Form.Item
           className="custom-forminput mb-24"
@@ -134,7 +134,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
             content="new_password"
             component={Text}
           />
-          <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+          <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
         </div>
         <Form.Item
           name="Password"
@@ -168,7 +168,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
             content="confirm_password"
             component={Text}
           />
-          <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+          <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
         </div>
         <Form.Item
           required

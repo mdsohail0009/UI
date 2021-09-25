@@ -37,7 +37,7 @@ const ChangePassword = ({ onDrawerCancel }) => {
             <div>
               <div className="d-flex">
                 <Text className="input-label">Current Password</Text>
-                {/* <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span> */}
+                {/* <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span> */}
               </div>
               <Input.Password className="cust-input" placeholder="Type your current password" />
             </div>
@@ -50,7 +50,7 @@ const ChangePassword = ({ onDrawerCancel }) => {
             <div>
               <div className="d-flex">
                 <Text className="input-label">New Password</Text>
-                {/* <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span> */}
+                {/* <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span> */}
               </div>
               <Input.Password className="cust-input" placeholder="Type your new password" /></div>
               
@@ -63,7 +63,7 @@ const ChangePassword = ({ onDrawerCancel }) => {
             <div>
               <div className="d-flex">
                 <Text className="input-label">Confirm Password</Text>
-                {/* <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span> */}
+                {/* <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span> */}
               </div>
               <Input.Password className="cust-input" placeholder="Re-Type your new password" /></div>
           </Form.Item>
