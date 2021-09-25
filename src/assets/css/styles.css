@@ -592,7 +592,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .react-pdf__Page__canvas{margin: auto;}
 .ant-select-focused .ant-select-selector{box-shadow:none !important}
 .selectcustom-input .anticon-search{display: none;}
-.custom-add-select{width:315px !important;border-bottom-right-radius: 0;border-top-right-radius: 0;}
+.custom-add-select{border-bottom-right-radius: 0;border-top-right-radius: 0;}
 .new-add{border: 1px solid #899097; padding: 14px;border-bottom-right-radius: 30px; border-top-right-radius: 30px; border-left: 0;}
 .transaction-tabs .k-grid-content{overflow-y: auto;}
 .ant-form-item-label>label.ant-form-item-required:not(.ant-form-item-required-mark-optional):after {display: inline-block;margin-right: 4px;color: var(--textPureWhite);font-size: 14px;font-family: SimSun,sans-serif;line-height: 1; content: "*";}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Drawer, Button, Tabs, Radio, Tooltip, Modal, Alert } from 'antd'
-import { setAddressStep } from '../../reducers/addressBookReducer';
+import { setAddressStep,rejectCoin } from '../../reducers/addressBookReducer';
 import connectStateProps from '../../utils/state.connect';
 import Translate from 'react-translate-component';
 import { processSteps as config } from './config';
@@ -43,7 +43,7 @@ class AddressBook extends Component {
     columnsFiat = [
         { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
         { field: "favouriteName", title: "Address Label", filter: true, width: 180 },
-        { field: "type", title: "Currency", width: 150, filter: true, with: 150 },
+        { field: "currency", title: "Currency", width: 150, filter: true, with: 150 },
         { field: "toWalletAddress", title: "Address", filter: true, width: 380 },
         { field: "accountNumber", title: "Account Number", filter: true, width: 200 },
         { field: "beneficiaryAccountName", title: "Account Name", filter: true, width: 200 },
@@ -64,7 +64,7 @@ class AddressBook extends Component {
                 <span></span> </label></td>)
         },
         { field: "addressLable", title: "Address Label", filter: true, width: 250 },
-        { field: "coin", title: "Coins", filter: true, },
+        { field: "coin", title: "Coins", filter: true, width: 120 },
         { field: "address", title: "Address", filter: true, width: 380 },
         { field: "status", title: "Status", filter: true, width: 100 }
     ];
@@ -149,6 +149,7 @@ class AddressBook extends Component {
 
     closeBuyDrawer = () => {
         this.setState({ ...this.state,visible: false, fiatDrawer: false })
+        this.props.rejectCoinWallet();
     }
     handleWithdrawToggle = e => {
         this.setState({
@@ -298,4 +299,11 @@ class AddressBook extends Component {
 const connectStateToProps = ({ addressBookReducer, userConfig, oidc }) => {
     return { addressBookReducer, userConfig: userConfig.userProfileInfo, oidc }
 }
-export default connect(connectStateToProps)(AddressBook);
+const connectDispatchToProps = dispatch => {
+    return {
+        rejectCoinWallet: () => {
+            dispatch(rejectCoin())
+        }
+    }
+}
+export default connect(connectStateToProps,connectDispatchToProps)(AddressBook);
