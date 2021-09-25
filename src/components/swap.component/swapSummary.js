@@ -9,6 +9,7 @@ import SuisseBtn from '../shared/butons';
 import Summary from '../summary.component';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
+import Loader from '../../Shared/loader';
 
 const LinkValue = (props) => {
     return (
@@ -142,9 +143,7 @@ class SwapSummary extends Component {
             onTermsChange={(checked)=>{this.setState({...this.state,agreeValue:checked})}}
             onErrorClose = {()=>this.setState({...this.state,errorMessage:null})}
             isButtonLoad = {this.state.isLoading}
-        />:<div className="spinLoader">
-        <Spin />
-      </div>}
+        />:<Loader />}
            {/* <>
 
                 {this.state.errorMessage != null && <Alert
