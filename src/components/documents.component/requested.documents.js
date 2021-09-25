@@ -231,15 +231,16 @@ class RequestedDocs extends Component {
         if (this.state.loading) {
             return <Loader />
         }
-        if(!this.state.docDetails?.details||this.state.docDetails?.details.length==0){
+        if (!this.state.docDetails?.details || this.state.docDetails?.details.length == 0) {
             return <Empty description="No document requests found" />
         }
         return <div className="main-container">
             <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile" />{this.state?.docDetails?.note}</div>
             <div className="bank-view">
                 {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
-                    <Panel header={doc.documentName} key={idx + 1} extra={<span className={`${doc.status === "Approved" || doc.status === "approved" ? "icon md greenCheck" : "icon md greyCheck"}`} />}>
-                        {this.state.documentReplies[doc.id]?.loading && <Spin size="large" />}
+                    <Panel header={doc.documentName} key={idx + 1} extra={doc.status === "Approved" || doc.status === "approved" && <span className="approved-lbl">Approved</span>}>
+                        {/* <span className={`${doc.status === "Approved" || doc.status === "approved" ? "icon md greenCheck" : "icon md greyCheck"}`} /> */}
+                        {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
                         {this.state.documentReplies[doc.id]?.data?.map((reply, idx) => <div key={idx} className="reply-container">
                             {/* <img src={profile} className="mr-16" /> */}
                             <div className="user-shortname">{this.props?.userProfileInfo?.firstName.charAt('0')}{this.props?.userProfileInfo?.lastName.charAt('0')}</div>
