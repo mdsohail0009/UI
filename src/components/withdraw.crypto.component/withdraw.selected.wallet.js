@@ -253,7 +253,7 @@ class CryptoWithDrawWallet extends Component {
                     >
                         <div className="d-flex"><Text
                             className="input-label" >Address Book</Text>
-                            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}></span>
+                            <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span>
                         </div>
                         {/* <div className="p-relative d-flex align-center"> */}
                             {/* <Select dropdownClassName="select-drpdwn"

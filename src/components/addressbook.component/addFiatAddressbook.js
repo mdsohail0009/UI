@@ -125,7 +125,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         <div>
                             <div className="d-flex">
                                 <Text className="input-label">Address Label</Text>
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
                             </div>
                             <Input className="cust-input" maxLength="20" placeholder="Enter Address label" />
                         </div>
@@ -140,7 +140,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         <div>
                             <div className="d-flex">
                                 <Text className="input-label">Address</Text>
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
                             </div>
                             <Input className="cust-input"  maxLength="30" placeholder="Enter Address" />
                         </div>
@@ -185,7 +185,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                     content="Bank_account"
                                     component={Text}
                                 />
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
                             <Input className="cust-input" placeholder="Bank account number/IBAN" />
                         </div>
                     </Form.Item>
@@ -219,7 +219,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                     content="BIC_SWIFT_routing_number"
                                     component={Text}
                                 />
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
                             <Input className="cust-input" placeholder="BIC/SWIFT/Routing number" />
                         </div>
 
@@ -254,7 +254,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                     content="Bank_name"
                                     component={Text}
                                 />
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
                             <Input className="cust-input" placeholder="Bank name" />
                         </div>
 
@@ -274,7 +274,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                     content="Bank_address1"
                                     component={Text}
                                 />
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
                             <Input className="cust-input" placeholder="Bank address line 1" />
                         </div>
 
@@ -399,7 +399,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                     content="Recipient_full_name"
                                     component={Text}
                                 />{" "}
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
                             <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
                         </div>
 
@@ -418,7 +418,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                     content="Recipient_address1"
                                     component={Text}
                                 />{" "}
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>
                                     {" * "}
                                 </span></div>
                             <Input className="cust-input" placeholder="Recipient address line 1" />

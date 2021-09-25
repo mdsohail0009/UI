@@ -870,6 +870,6 @@ text-align: center !important;}
 .ant-checkbox-inner{width: 32px !important;height: 32px !important;background-color: transparent !important;border: 0 !important;}
 .ant-custumcheck {align-items: center;}
 .ant-custumcheck .ant-checkbox{display: inline-block;width: 60px;height: 34px;vertical-align: text-top;cursor: pointer;border: 1px solid var(--borderLight);background: transparent;}
-.ant-checkbox-checked .ant-checkbox-inner::after{height: 16px;transform: rotate(50deg) scale(1.3) translate(-50%, -50%) !important;}
+.ant-checkbox-checked .ant-checkbox-inner::after{height: 16px;transform: rotate(50deg) scale(1.3) translate(-50%, -50%) !important;  border: 2px solid var(--bgDarkYellow);border-top: 0;border-left: 0;}
 
 .customaudit-select .ant-select-single .ant-select-selector .ant-select-selection-search{left: 17px!important}
