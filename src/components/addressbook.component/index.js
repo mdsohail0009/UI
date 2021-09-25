@@ -102,6 +102,13 @@ class AddressBook extends Component {
     }
     handleCancel = e => {
         this.setState({ ...this.state, modal: false, selection: [], isCheck: false });
+        if(this.state.cryptoFiat){
+            this.gridFiatRef.current.refreshGrid();
+        }
+        else{
+            this.gridCryptoRef.current.refreshGrid();
+ 
+        }
     }
     handleSatatuSave = async () => {
         this.setState({ ...this.state, isLoading: true })
@@ -121,7 +128,13 @@ class AddressBook extends Component {
                     "status": []
                 },successMsg:true })
                 setTimeout(() => this.setState({ successMsg:false}), 1500)
-            this.gridRef.current.refreshGrid();
+                if(this.state.cryptoFiat){
+                    this.gridFiatRef.current.refreshGrid();
+                }
+                else{
+                    this.gridCryptoRef.current.refreshGrid();
+         
+                }
         }
         else {
             this.setState({ ...this.state, modal: false, selection: [], isCheck: false,
