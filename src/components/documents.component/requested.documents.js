@@ -6,6 +6,7 @@ import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import FilePreviewer from 'react-file-previewer';
 import { Link } from 'react-router-dom';
+import Mome from 'moment'
 const { Panel } = Collapse;
 const { Text } = Typography;
 const { Dragger } = Upload
@@ -100,6 +101,7 @@ class RequestedDocs extends Component {
         }
         item.path = item.path ? JSON.stringify(item.path) : item.path;
         item.status = "Submitted";
+        item.repliedDate = Mome().format("YYYY-MM-DDThh:mm:ss");
         const response = await saveDocReply(item);
         message.destroy()
         if (response.ok) {
