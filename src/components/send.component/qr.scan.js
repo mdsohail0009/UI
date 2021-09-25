@@ -27,7 +27,7 @@ class QRScan extends Component {
     }
     trackevent = () => {
         appInsights.trackEvent({
-            name: 'WithDraw Crypto', properties: { "Type": 'User', "Action": 'Page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'WithDraw Crypto', "Remarks": "WithDraw crypto scan page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Crypto' }
+            name: 'Deposit Crypto', properties: { "Type": 'User', "Action": 'Page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'WithDraw Crypto', "Remarks": "Deposit crypto scan page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto' }
         });
     }
     get walletAddress() {

@@ -44,7 +44,7 @@ line-height: 16px;min-width:90px}
 .ant-carousel .slick-dots li.slick-active button{background: var(--bgGrey) !important; opacity: 1;}
 .ant-carousel .slick-dots li{width: 8px; }
 .ant-carousel .slick-dots li.slick-active{width: 30px;}
-.tlv-header{background-color: var(--bgGrey) !important;position: fixed; z-index: 3; width: 100%;}
+.tlv-header{background-color: var(--bgGrey) !important;position: fixed; z-index: 16; width: 100%;}
 .tlv-header ul{background-color: transparent; border-bottom: 0;}
 .tlv-header ul li{font-weight: 300;}
 .tlv-header .main-menu li{border-radius: 5px;}
@@ -612,6 +612,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .gridLink{color: var(--textYellow);cursor: pointer;display: inline-block;}
 .ant-message{  bottom: 15px !important; top: auto;}
 .custom-msg .ant-message-notice-content{background:#333; color: var(--textWhite); padding: 20px 40px; min-width: 200px;}
+.docreq-slider .slick-dots li button{width: 30px;height: 30px;color: var(--textWhite30);font-size: 16px;border-radius: 15px;}
+.docreq-slider .slick-dots li{width: 30px;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}

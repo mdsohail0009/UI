@@ -30,7 +30,7 @@ class Home extends Component {
     render() {
         return (
             <div className="main-container">
-                {this.state.notices != null && this.state.notices != undefined && <Carousel autoplay={true}>
+                {this.state.notices != null && this.state.notices != undefined && <Carousel className="docreq-slider" autoplay={true}>
                     {this.state.notices?.map((notice, idx) => <div className="mb-24" key={idx}>
                         <AlertConfirmation type="error" title={notice.title} showIcon description="Dear user please check the details for requesting documents to approval your deposit/withdraw."
                             action={
@@ -40,7 +40,7 @@ class Home extends Component {
                             } />
                     </div>)}
                 </Carousel>}
-                <Row justify="center">
+                <Row justify="center mt-36">
                     <Col xs={24} md={12} xl={10}>
                         <div className="markets-panel mb-36">
                             <Wallets />

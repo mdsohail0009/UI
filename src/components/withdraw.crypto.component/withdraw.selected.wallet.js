@@ -119,6 +119,9 @@ class CryptoWithDrawWallet extends Component {
         if (response.ok) {
             this.setState({ ...this.state, isWithdrawSuccess: true });
             this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
+            appInsights.trackEvent({
+                name: 'WithDraw Crypto', properties: { "Type": 'User', "Action": 'Save', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'WithDraw Crypto', "Remarks": "WithDraw crypto save", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Crypto' }
+            });
         } else {
             this.setState({ ...this.state, error: response.data, confirmationStep: "step1", showModal: false, isWithdrawSuccess: false })
         }
