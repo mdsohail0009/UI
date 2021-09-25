@@ -12,7 +12,7 @@ const WithdrawalSummary = ({ userConfig, sendReceive,changeStep, onConfirm,onCan
   const [isLoding, setIsLoding] = useState(false);
   const saveWithdrwal = async() =>{
     setIsLoding(true)
-    changeStep('step6')
+    onConfirm()
   }
     return (
         <div className="mt-16">
@@ -35,7 +35,7 @@ const WithdrawalSummary = ({ userConfig, sendReceive,changeStep, onConfirm,onCan
               size="large"
               block
               className="pop-btn"
-              onClick={onConfirm}
+              onClick={saveWithdrwal}
             >
               Confirm
             </Button>
