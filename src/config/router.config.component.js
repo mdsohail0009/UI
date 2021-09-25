@@ -25,10 +25,10 @@ class RoutingComponent extends Component {
         <ReactRoute path="/notkyc" component={NotKyc} />
         <ReactRoute path="/onboading" component={OnBoarding} />
         <ReactRoute path='/userprofile' component={userProfile} />
-        <ReactRoute path='/documents/:id' component={RequestedDocs} />
+        <ReactRoute path='/documents' component={RequestedDocs} />
         <ReactRoute path='/addressbook' component={AddressBookGrid}/>
         {/* <Redirect to="/onboading" path="/" exact/> */}
-        <Route path="/" component={Dashboard} exact />
+        <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>
     </Switch>
   }

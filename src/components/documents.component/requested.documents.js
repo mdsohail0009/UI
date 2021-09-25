@@ -6,6 +6,7 @@ import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import FilePreviewer from 'react-file-previewer';
 import { Link } from 'react-router-dom';
+import QueryString from 'query-string'
 import Mome from 'moment'
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -34,7 +35,8 @@ class RequestedDocs extends Component {
         previewPath: null
     }
     componentDidMount() {
-        this.getDocument(this.props?.match?.params?.id);
+        debugger
+        this.getDocument(QueryString.parse(this.props.location.search).id);
     }
     getDocument = async (id) => {
         this.setState({ ...this.state, loading: true, error: null });

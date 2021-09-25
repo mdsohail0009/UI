@@ -21,7 +21,7 @@ class Documents extends Component {
     };
     details = ({ dataItem }) => {
         this.props.history.push({
-            pathname: "/documents/" + dataItem.id,
+            pathname: "/documents?id=" + dataItem.id,
             state: {
                 pKey: "documents",
                 action: 'edit'
