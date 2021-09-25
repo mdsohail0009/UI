@@ -40,7 +40,8 @@ class AddressBook extends Component {
             gridUrlCrypto: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressCryptoK",
             gridUrlFiat: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressFiatK",
         }
-        this.gridRef = React.createRef();
+        this.gridFiatRef = React.createRef();
+        this.gridCryptoRef = React.createRef();
     }
     columnsFiat = [
         { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
@@ -155,6 +156,13 @@ class AddressBook extends Component {
     closeBuyDrawer = () => {
         this.setState({ ...this.state,visible: false, fiatDrawer: false })
         this.props.rejectCoinWallet();
+        if(this.state.cryptoFiat){
+            this.gridFiatRef.current.refreshGrid();
+        }
+        else{
+            this.gridCryptoRef.current.refreshGrid();
+ 
+        }
     }
     handleWithdrawToggle = e => {
         this.setState({
@@ -163,7 +171,7 @@ class AddressBook extends Component {
     }
     renderContent = () => {
         const stepcodes = {
-            cryptoaddressbook: <NewAddressBook onCancel={() => this.closeBuyDrawer()} />,
+            cryptoaddressbook: <NewAddressBook onCancel={() => this.closeBuyDrawer() } />,
             selectcrypto: <SelectCrypto />
         }
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
@@ -228,7 +236,7 @@ class AddressBook extends Component {
                             {this.state.successMsg  && <Alert closable type="success"
                              description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'inactivated' : 'activated') + ' successfully'} onClose={() => this.setSuccessMsg(null)} showIcon />}
 
-                        <List columns={this.columnsFiat} ref={this.gridRef} key={gridUrlFiat} url={gridUrlFiat} />
+                        <List columns={this.columnsFiat} ref={this.gridFiatRef} key={gridUrlFiat} url={gridUrlFiat} />
                     </> :
                         <>
                             <div className="d-flex justify-content align-center mb-16">
@@ -258,7 +266,7 @@ class AddressBook extends Component {
                             </div>}
                             {this.state.successMsg  && <Alert closable type="success"
                              description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'Inactivated' : 'Activated') + ' Successfully'} onClose={() => this.setSuccessMsg(null)} showIcon />}
-                            <List columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridRef} url={gridUrlCrypto} />
+                            <List columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridCryptoRef} url={gridUrlCrypto} />
                         </>}
                 </div>
                 <Drawer destroyOnClose={true}
