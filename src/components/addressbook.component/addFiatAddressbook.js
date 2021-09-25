@@ -108,7 +108,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                 {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
                 {successMsg != null && <Alert closable type="success" message={"Success"} description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
 
-                <Form form={form} onFinish={savewithdrawal}>
+                <Form form={form} onFinish={savewithdrawal} autoComplete="off">
                     <Translate
                         content="Beneficiary_BankDetails"
                         component={Paragraph}

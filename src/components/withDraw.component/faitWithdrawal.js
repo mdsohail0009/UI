@@ -143,7 +143,7 @@ debugger;
         <div className="suisfiat-height auto-scroll">
           <div ref={useDivRef}></div>
           {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-          <Form form={form} onFinish={savewithdrawal} initialValues={addressDetails}>
+          <Form form={form} onFinish={savewithdrawal} initialValues={addressDetails} autoComplete="off">
             <div className="p-relative d-flex align-center"> <Translate
               content="Beneficiary_BankDetails"
               component={Paragraph}
