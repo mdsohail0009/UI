@@ -349,7 +349,7 @@ class Header extends Component {
                                 <li className="pr-30 p-relative">{this.props.userConfig.isKYC ? <Link to="/dashboard"><img src={logoColor} alt="logo" className="tlv-logo" /></Link> : <Link ><img src={logoColor} alt="logo" className="tlv-logo" /></Link>}</li>
                                 <li className="px-36"><span className="icon md hamburger c-pointer" /></li>
                                 {/* Mega menu ==> onClick={this.showMegaMenu} */}
-                                <li className="mb-d-none"><Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? " Business" : " Personal" }} component="p" className="text-white-30 mb-0 fs-24" /></li>
+                                <li className="mb-d-none"><Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? " Business" : " Personal" }} onClick={() => this.props.history.push('/dashboard')} component="p" className="text-white-30 mb-0 fs-24 c-pointer" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
 
@@ -594,7 +594,7 @@ class Header extends Component {
                 <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
                 <SwapCrypto swapRef={(cd) => this.child = cd} showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
                 <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
-                {this.state.transactionDrawer&&<TransactionsHistory showDrawer={this.state.transactionDrawer} onClose={() => { this.closeDrawer(); if (this.child1) { this.child1.setKy() } }} thref={(cd) => this.child1 = cd} />}
+                {this.state.transactionDrawer && <TransactionsHistory showDrawer={this.state.transactionDrawer} onClose={() => { this.closeDrawer(); if (this.child1) { this.child1.setKy() } }} thref={(cd) => this.child1 = cd} />}
                 <AuditLogs showDrawer={this.state.auditlogsDrawer} onClose={() => this.closeDrawer()} />
                 <Drawer
                     title={[<div className="side-drawer-header">

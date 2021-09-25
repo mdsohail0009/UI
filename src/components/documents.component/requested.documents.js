@@ -35,7 +35,6 @@ class RequestedDocs extends Component {
         previewPath: null
     }
     componentDidMount() {
-        debugger
         this.getDocument(QueryString.parse(this.props.location.search).id);
     }
     getDocument = async (id) => {
