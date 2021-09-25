@@ -82,7 +82,8 @@ class AuditLogs extends Component {
     if (val == "Custom") {
       this.setState({ ...this.state, modal: true, isCustomDate: true, searchObj: searchObj })
     } else {
-      this.setState({ ...this.state, searchObj: searchObj, isCustomDate: false });
+      this.setState({ ...this.state, searchObj: {...searchObj,fromdate: '',todate: ''}, isCustomDate: false,customFromdata: "",customTodate: "" });
+      this.formDateRef.current.resetFields();
     }
   }
 
@@ -132,8 +133,14 @@ class AuditLogs extends Component {
   };
 
   handleCancel = e => {
-    this.setState({ modal: false, selection: [], check: false,message:'' });
-   // this.setState({ ...this.state, searchObj: searchObj, isCustomDate: false });
+    let { searchObj } = this.state;
+    if(searchObj.fromdate && searchObj.todate && !this.state.message){
+      this.setState({ modal: false, selection: [], check: false, message:'' });
+    }else{
+    this.setState({...this.state,searchObj:{...searchObj,timeSpan: "Last 1 Day",fromdate: '',todate: ''}, modal: false, selection: [], check: false, isCustomDate:false, message:'' });
+    this.formRef.current.setFieldsValue({...searchObj,timeSpan: "Last 1 Day",fromdate: '',todate: ''})
+    this.formDateRef.current.resetFields();
+    }
   }
 
   handleSearch = (values) => {
