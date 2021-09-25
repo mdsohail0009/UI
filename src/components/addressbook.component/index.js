@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Drawer, Button, Tabs, Radio, Tooltip, Modal, Alert } from 'antd'
+import { Typography, Drawer, Button, Tabs, Radio, Tooltip, Modal, Alert,message } from 'antd'
 import { setAddressStep,rejectCoin } from '../../reducers/addressBookReducer';
 import connectStateProps from '../../utils/state.connect';
 import Translate from 'react-translate-component';
@@ -28,6 +28,7 @@ class AddressBook extends Component {
             selectedObj: {},
             modal: false,
             alert: false,
+            successMsg:false,
             obj: {
                 "id": [],
                 "tableName": "Member.FavouriteAddress",
@@ -35,6 +36,7 @@ class AddressBook extends Component {
                 "status": [],
                 type:''
             },
+
             gridUrlCrypto: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressCryptoK",
             gridUrlFiat: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressFiatK",
         }
@@ -118,7 +120,8 @@ class AddressBook extends Component {
                     "tableName": "Member.FavouriteAddress",
                     "modifiedBy": "",
                     "status": []
-                }, })
+                },successMsg:true })
+                setTimeout(() => this.setState({ successMsg:false}), 1500)
             this.gridRef.current.refreshGrid();
         }
         else {
@@ -130,6 +133,9 @@ class AddressBook extends Component {
                     "status": []
                 }, });
         }
+    }
+    setSuccessMsg=()=>{
+        this.setState({ ...this.state,successMsg:false}) 
     }
     coinList = async () => {
         let fromlist = await getCoinList(this.props.userProfile?.id)
@@ -221,6 +227,9 @@ class AddressBook extends Component {
                             closable
                           />
                             </div>}
+                            {this.state.successMsg  && <Alert closable type="success"
+                             description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'inactivated' : 'activated') + ' successfully'} onClose={() => this.setSuccessMsg(null)} showIcon />}
+
                         <List columns={this.columnsFiat} ref={this.gridRef} key={gridUrlFiat} url={gridUrlFiat} />
                     </> :
                         <>
@@ -249,6 +258,8 @@ class AddressBook extends Component {
                             closable
                           />
                             </div>}
+                            {this.state.successMsg  && <Alert closable type="success"
+                             description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'inactivated' : 'activated') + ' successfully'} onClose={() => this.setSuccessMsg(null)} showIcon />}
                             <List columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridRef} url={gridUrlCrypto} />
                         </>}
                 </div>
@@ -294,10 +305,10 @@ class AddressBook extends Component {
                             className=" pop-cancel"
                             onClick={this.handleCancel}
                         >
-                            No
+                            Cancel
                         </Button>
                         <Button className="primary-btn pop-btn" onClick={this.handleSatatuSave} style={{ width: '100px' }}>
-                            yes
+                            Save
                         </Button>
                     </>}
                 >
