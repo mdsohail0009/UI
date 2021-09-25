@@ -94,7 +94,7 @@ class RequestedDocs extends Component {
             message.destroy();
             message.warning({
                 content: "Please enter a message",
-
+                className: "custom-msg"
             });
             return;
         }
@@ -282,7 +282,7 @@ class RequestedDocs extends Component {
                                 <Button className="pop-btn px-36" onClick={() => this.docReject(doc)}>Submit</Button>
                             </div>
                         </>}
-                        
+
                         {/* {this.state.documentReplies[doc.id]?.data && this.state.documentReplies[doc.id]?.data?.length != 0 && doc.status != "Approved" && <div className="reply-container mb-0">
                             <img src={profile} className="mr-16" />
                             <div className="user-shortname">{this.props?.userProfileInfo?.firstName.charAt('0')}{this.props?.userProfileInfo?.lastName.charAt('0')}</div>

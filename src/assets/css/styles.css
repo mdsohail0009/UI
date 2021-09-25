@@ -606,6 +606,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .custom-checkbox input[type=checkbox]+span {  width: 20px;height: 20px;cursor: pointer; background-position: -304px -71px;}
 .custom-checkbox input[type=checkbox]:checked+span {width: 20px; height: 20px;cursor: pointer; background-position:-271px -71px;}
 .gridLink{color: var(--textYellow);cursor: pointer;display: inline-block;}
+.ant-message{  bottom: 15px !important; top: auto;}
+.custom-msg .ant-message-notice-content{background:#333; color: var(--textWhite); padding: 20px 40px; min-width: 200px;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}
