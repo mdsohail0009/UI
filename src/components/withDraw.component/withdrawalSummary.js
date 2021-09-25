@@ -9,7 +9,9 @@ import Translate from 'react-translate-component';
 
 const WithdrawalSummary = ({ userConfig, sendReceive,changeStep, onConfirm,onCancel }) => {
   const { Paragraph, Title, Text } = Typography;
+  const [isLoding, setIsLoding] = useState(false);
   const saveWithdrwal = async() =>{
+    setIsLoding(true)
     changeStep('step6')
   }
     return (
@@ -29,6 +31,7 @@ const WithdrawalSummary = ({ userConfig, sendReceive,changeStep, onConfirm,onCan
           <li>Transaction can't be cancelled</li>
         </ul>
         <Button
+        disabled={isLoding}
               size="large"
               block
               className="pop-btn"
