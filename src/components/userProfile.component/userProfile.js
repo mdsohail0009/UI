@@ -91,11 +91,11 @@ class userProfile extends Component {
                     <TabPane tab={<span><span className="icon lg security-icon mr-16" />Security</span>} key="2">
                         <Security />
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg security-icon mr-16" />Documents</span>} key="3">
+                    <TabPane tab={<span><span className="icon lg documents-icon mr-16" />Documents</span>} key="3">
                         <Documents />
-                        
+
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg settings-icon mr-16" />Address Book</span>} key="4">
+                    <TabPane tab={<span><span className="icon lg addressbook-icon mr-16" />Address Book</span>} key="4">
                         <AddressBook />
                     </TabPane>
                     {/* <TabPane tab={ <span><span className="icon lg settings-icon mr-16" />Setting</span>}  key="3">
