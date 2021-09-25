@@ -19,8 +19,8 @@ class SelectCrypto extends Component {
         this.state = {
             buyDrawer: false,
             swapValues: {
-                localValue: '0.00',
-                cryptoValue: '0.00',
+                localValue: '',
+                cryptoValue: '',
                 isSwaped: false,
             },
             selectedWallet: null,
