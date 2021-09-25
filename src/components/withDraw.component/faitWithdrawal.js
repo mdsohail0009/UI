@@ -393,7 +393,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
               <Select dropdownClassName="select-drpdwn" placeholder="Select State" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                 onChange={(e) => ''} >
                 {stateLu?.map((item, idx) =>
-                  <Option key={idx} value={item.name}>{item.name}
+                  <Option key={idx} value={item.code}>{item.code}
                   </Option>
                 )}
               </Select>
