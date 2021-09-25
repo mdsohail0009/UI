@@ -20,13 +20,7 @@ class Documents extends Component {
         this.gridRef = React.createRef();
     };
     details = ({ dataItem }) => {
-        this.props.history.push({
-            pathname: "/documents?id=" + dataItem.id,
-            state: {
-                pKey: "documents",
-                action: 'edit'
-            }
-        })
+        this.props.history.push("/documents?id=" + dataItem.id)
     }
     gridColumns = [
         { field: "title", title: "Note", filter: true, customCell: (props) => <td><div className="gridLink" onClick={() => this.details(props)}>{props.dataItem?.title}</div></td> },
