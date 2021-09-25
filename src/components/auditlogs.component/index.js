@@ -179,7 +179,7 @@ class AuditLogs extends Component {
         >
         <div>
           <Form
-            className="ant-advanced-search-form form form-bg search-bg pt-8 pb-30"
+            className="ant-advanced-search-form form form-bg search-bg pt-8 pb-30 customaudit-select"
             autoComplete="off"
             ref={this.formRef}
           >
