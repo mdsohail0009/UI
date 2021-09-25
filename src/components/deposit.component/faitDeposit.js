@@ -65,6 +65,11 @@ class FaitDeposit extends Component {
       BankInfo: null,
       depObj: { currency: null, BankName: null, Amount: null }, Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false
     });
+    if(e.target.value === 1){
+      appInsights.trackEvent({
+        name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": ('deposit page view'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
+      });
+    }
   }
   handlFiatDep = async (e, currencyLu) => {
     let { depObj } = this.state;

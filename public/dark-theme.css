@@ -41,7 +41,7 @@
     --borderGrey: #313C46;
     --borderLight: #9797AA;
     --bgCircle: #19B06C;
-    --lightThemeIcons: url(dark-theme-icons.svg);
-    --cryptoIcons:url(dark-crypto-icons.svg);
+    --lightThemeIcons: url(https://scmcdn.blob.core.windows.net/scmcdn/suissebase/images/dark-theme-icons.svg);
+    --cryptoIcons:url(https://scmcdn.blob.core.windows.net/scmcdn/suissebase/images/dark-crypto-icons.svg);
     --logo: url(../../assets/images/logo-white.png);
 }

@@ -6,14 +6,14 @@ import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import WalletList from '../shared/walletList';
 import NumberFormat from 'react-number-format';
-import { withdrawRecepientNamecheck, withdrawSave, getCountryStateLu } from '../../api/apiServer';
+import { withdrawRecepientNamecheck, withdrawSave, getCountryStateLu, getStateLookup } from '../../api/apiServer';
 import Currency from '../shared/number.formate';
 import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { handleFavouritAddress } from '../../reducers/addressBookReducer';
 import { appInsights } from "../../Shared/appinsights";
 import { favouriteFiatAddress, detailsAddress } from '../addressbook.component/api';
-import { setWithdrawfiat } from '../../reducers/sendreceiveReducer';
+import { setWithdrawfiat, rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import WithdrawalSummary from './withdrawalSummary';
 import WithdrawalLive from './withdrawLive';
 
@@ -38,7 +38,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   const [stateLu, setStateLu] = useState([]);
   const [country, setCountry] = useState(null);
   const [addressLu, setAddressLu] = useState([]);
-  const [addressDetails, setAddressDetails] = useState({})
+  const [addressDetails, setAddressDetails] = useState({});
 
   const useDivRef = React.useRef(null);
   useEffect(() => {
@@ -55,7 +55,6 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   }, [])
 
   const handleWalletSelection = (walletId) => {
-debugger;
     form.setFieldsValue({ walletCode: walletId })
     if (buyInfo.memberFiat?.data) {
       let wallet = buyInfo.memberFiat.data.filter((item) => {
@@ -97,18 +96,22 @@ debugger;
     if (recName.ok) {
       setCountryLu(recName.data);
     }
-    // appInsights.trackEvent({
-    //   name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'Page view', "Username": userConfig.email, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": 'WithDraw Fiat', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
-    // });
+    appInsights.trackEvent({
+      name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'Page view', "Username": userConfig.Username, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": 'WithDraw Fiat', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
+    });
   }
 
-  const getStateLu = (countryname) => {
-    let statelu = countryLu.filter((item) => { if (item.name == countryname) return item })
-    if (statelu[0].states.length > 0) {
-      setStateLu(statelu[0].states)
-    } else {
-      setStateLu([{ name: countryname, code: countryname }])
+  const getStateLu = async(countryname) => {
+    let recName = await getStateLookup(countryname)
+    if (recName.ok) {
+      setStateLu(recName.data);
     }
+    // let statelu = countryLu.filter((item) => { if (item.name == countryname) return item })
+    // if (statelu[0].states.length > 0) {
+    //   setStateLu(statelu[0].states)
+    // } else {
+    //   setStateLu([{ name: countryname, code: countryname }])
+    // }
     form.setFieldsValue({ state: null })
 
   }
@@ -143,7 +146,7 @@ debugger;
         <div className="suisfiat-height auto-scroll">
           <div ref={useDivRef}></div>
           {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-          <Form form={form} onFinish={savewithdrawal} initialValues={addressDetails}>
+          <Form form={form} onFinish={savewithdrawal} initialValues={addressDetails} autoComplete="off">
             <div className="p-relative d-flex align-center"> <Translate
               content="Beneficiary_BankDetails"
               component={Paragraph}
@@ -205,7 +208,7 @@ debugger;
               <div className="d-flex"><Text
                 className="input-label" >Address Book</Text>
 
-                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}></span>
               </div>
               <div className="p-relative d-flex align-center">
                 <Select dropdownClassName="select-drpdwn"
@@ -551,7 +554,19 @@ debugger;
   }
   const handleOk = async () => {
     let currentStep = parseInt(confirmationStep.split("step")[1]);
-    setConfirmationStep("step" + (currentStep + 1))
+    if(userConfig.isBusiness && confirmationStep=='step2'){
+      let withdrawal = await withdrawSave(saveObj)
+      if (withdrawal.ok) {
+        dispatch(fetchDashboardcalls(userConfig.id))
+        dispatch(rejectWithdrawfiat())
+        //setIsLoding(true)
+        appInsights.trackEvent({
+          name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.email, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
+        });
+      }
+    }else{
+      setConfirmationStep("step" + (currentStep + 1))
+    }
   }
 
   const { Paragraph, Title, Text } = Typography;

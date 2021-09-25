@@ -43,18 +43,8 @@ class SelectCrypto extends Component {
                 this.props.setExchangeValue({ key: selectedCoin.walletCode, value: val });
             })
             this.props.changeStep('step1')
+            this.props.onCoinClick(selectedCoin)
     }
-    // pickCoin = ()=>{
-    //     debugger;
-    //     if (this.state.coinDetails != null && this.state.coinDetails.id) {
-    //         this.props.getCoinDetails(selectedCoin.walletCode, this.props.member?.id);
-               // this.props.setSelectedCoin(selectedCoin);
-    //         this.props.changeStep('step1') 
-    //     } else { 
-    //         this.useDivRef.current.scrollIntoView()
-    //         this.setState({ ...this.state, errorMessage: 'Please select coin to swap' })
-    //     }
-    // }
     render() {
         const { Search } = Input;
         const { addLinks } = this.state;
