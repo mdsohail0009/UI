@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Spin } from 'antd';
+import { Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Spin, Empty } from 'antd';
 import { approveDoc, getDocDetails, getDocumentReplies, saveDocReply, uuidv4 } from './api';
 import Loader from '../../Shared/loader';
 import Moment from 'react-moment';
@@ -230,6 +230,9 @@ class RequestedDocs extends Component {
     render() {
         if (this.state.loading) {
             return <Loader />
+        }
+        if(!this.state.docDetails?.details||this.state.docDetails?.details.length==0){
+            return <Empty description="No document requests found" />
         }
         return <div className="main-container">
             <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile" />{this.state?.docDetails?.note}</div>
