@@ -44,7 +44,7 @@ class AuditLogs extends Component {
 
   }
   gridColumns = [
-    { field: "date", title: "Date", filter: true, filterType: "datetime", width: 250 },
+    { field: "date", title: "Date", filter: true, filterType: "date", width: 250 },
     { field: "feature", title: "Feature", filter: true, width: 190 },
     { field: "featurePath", title: "Feature Path", filter: true, width: 230 },
     //{ field: "userName", title: "Name", filter: true, width: 250, },
