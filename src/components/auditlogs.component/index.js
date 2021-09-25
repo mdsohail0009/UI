@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Drawer, Typography, Row, Col, Select, Button, Form, DatePicker, Modal, Tooltip, Input, message} from "antd";
+import { Drawer, Typography, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input, message} from "antd";
 import List from "../grid.component";
 import Loader from '../../Shared/loader'
 import { userNameLuSearch, getFeatureLuSearch } from './api';
@@ -28,6 +28,7 @@ class AuditLogs extends Component {
       customFromdata: "",
       customTodate: "",
       isCustomDate: false,
+      message:"",
       searchObj: {
         timeSpan: "Last 1 Day",
         fromdate: '',
@@ -116,11 +117,8 @@ class AuditLogs extends Component {
   handleOk = (values) => {
     let { selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate } = this.state;
     if(moment(values.fromdate).format('DD/MM/YYYY') > moment(values.todate).format('DD/MM/YYYY') ) {
-     return message.error({
-       content: 'Start date must be less than or equal to the end date.',
-       className: 'custom-msg',
-       duration: 1
-   });
+      this.setState({...this.state, message:'Start date must be less than or equal to the end date.'})
+     return
    }
     customFromdata = values.fromdate;
     customTodate = values.todate;
@@ -130,7 +128,7 @@ class AuditLogs extends Component {
     timeSpantodate = values.todate;
     selectedTimespan = moment(timeSpanfromdate).format('DD/MM/YYYY') + " " + "-" + " " + moment(timeSpantodate).format('DD/MM/YYYY');
     this.formRef.current.setFieldsValue({ ...this.state, selectedTimespan })
-    this.setState({ ...this.state, selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate, modal: false, });
+    this.setState({ ...this.state, selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate, modal: false,message:'' });
   };
 
   handleCancel = e => {
@@ -310,6 +308,7 @@ class AuditLogs extends Component {
               onFinish={(e) => this.handleOk(e, "timeSpan")}
               ref={this.formDateRef}
             >
+               {this.state?.message && <Alert showIcon type="info" description={this.state?.message} closable={false} />}
               <Row gutter={24} className="mb-24 pb-24 border-bottom">
                 <Col xs={24} sm={24} md={12} className="mb-24">
                   <Form.Item
