@@ -43,15 +43,16 @@ class AddressBook extends Component {
     columnsFiat = [
         { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
         { field: "favouriteName", title: "Address Label", filter: true, width: 180 },
-        { field: "currency", title: "Currency", width: 150, filter: true, with: 150 },
         { field: "toWalletAddress", title: "Address", filter: true, width: 380 },
+        { field: "currency", title: "Currency", width: 150, filter: true, with: 150 },
         { field: "accountNumber", title: "Account Number", filter: true, width: 200 },
-        { field: "beneficiaryAccountName", title: "Account Name", filter: true, width: 200 },
-        { field: "beneficiaryAccountAddress", title: "Account Address", filter: true, width: 250 },
         { field: "routingNumber", title: "Routing Number", filter: true, width: 180 },
-        { field: "swiftCode", title: "Swift Code", filter: true, },
         { field: "bankName", title: "Bank Name", filter: true, width: 200 },
         { field: "bankAddress", title: "Bank Address", filter: true, width: 250 },
+        { field: "beneficiaryAccountName", title: "Account Name", filter: true, width: 200 },
+        { field: "beneficiaryAccountAddress", title: "Account Address", filter: true, width: 250 },
+       // { field: "swiftCode", title: "Swift Code", filter: true, },
+      
         { field: "status", title: "Status", filter: true, width: 100 }
     ];
     columnsCrypto = [
@@ -213,11 +214,12 @@ class AddressBook extends Component {
                         </div>
                         {this.state.alert &&
                             <div className="custom-alert" ><Alert
-                                message="Please select the one record"
-                                type="warning"
-                                showIcon
-                                closable={false}
-                            />
+                          //  message="Warning"
+                            description="Please select the one record"
+                            type="warning"
+                            showIcon
+                            closable
+                          />
                             </div>}
                         <List columns={this.columnsFiat} ref={this.gridRef} key={gridUrlFiat} url={gridUrlFiat} />
                     </> :
@@ -238,6 +240,15 @@ class AddressBook extends Component {
                                     </ul>
                                 </div>
                             </div>
+                            {this.state.alert &&
+                            <div className="custom-alert" ><Alert
+                          //  message="Warning"
+                            description="Please select the one record"
+                            type="warning"
+                            showIcon
+                            closable
+                          />
+                            </div>}
                             <List columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridRef} url={gridUrlCrypto} />
                         </>}
                 </div>

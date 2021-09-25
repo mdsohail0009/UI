@@ -32,7 +32,9 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
     const [countryLu, setCountryLu] = useState([]);
     const [stateLu, setStateLu] = useState([]);
     const [country, setCountry] = useState(null);
-    const[isLoading, setIsLoading] =useState(false)
+    const[isLoading, setIsLoading] =useState(false);
+    const [successMsg, setSuccessMsg] = useState(null);
+
 
     const [fiatDrawer, setFiatDrawer] = useState(false);
 
@@ -87,11 +89,10 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
             if (response.ok) {
                 debugger;
                 // changeStep('step1');
-               
+                setSuccessMsg('Address saved sucessfully');
                 form.resetFields();
-               
                 setIsLoading(false)
-                onCancel();
+                setTimeout(() => {onCancel();}, 2000)
 
             }
         }
@@ -105,6 +106,8 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
             <div className="addbook-height auto-scroll">
                 <div ref={useDivRef}></div>
                 {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+                {successMsg != null && <Alert closable type="success" message={"Success"} description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
+
                 <Form form={form} onFinish={savewithdrawal}>
                     <Translate
                         content="Beneficiary_BankDetails"
