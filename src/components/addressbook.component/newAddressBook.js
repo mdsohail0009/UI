@@ -113,7 +113,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                             <Input className="cust-input" maxLength="30" placeholder="Enter Address" />
                     </Form.Item>
                     <div style={{ marginTop: '50px' }} className="">
-                        <Button disabled
+                        <Button disabled={isLoading}
                             htmlType="submit"
                             size="large"
                             block

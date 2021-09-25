@@ -293,7 +293,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                             <Input className="cust-input" placeholder="Bank address line 2" />
                         </div>
                     </Form.Item>
-                    <div className="d-flex">
+                    {/* <div className="d-flex">
                         <Translate
                             className="input-label"
                             content="Country"
@@ -303,14 +303,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         className="custom-forminput mb-24"
                         name="country"
                     >
-                        {/* <div>
-              <div className="d-flex">
-                <Translate
-                  className="input-label"
-                  content="Bank_address2"
-                  component={Text}
-                /></div> */}
-                        {/* <div id="_country"> */}
+                    
                         <Select dropdownClassName="select-drpdwn" placeholder="Select Country" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                             onChange={(e) => getStateLu(e)} >
                             {countryLu?.map((item, idx) =>
@@ -318,8 +311,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 </Option>
                             )}
                         </Select>
-                        {/* </div> */}
-                        {/* </div> */}
+                       
                     </Form.Item>
                     <div className="d-flex">
                         <Translate
@@ -331,7 +323,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         className="custom-forminput mb-24"
                         name="state"
                     >
-                        {/* <div id="_state"> */}
+                       
                         <Select dropdownClassName="select-drpdwn" placeholder="Select State" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                             onChange={(e) => ''} >
                             {stateLu?.map((item, idx) =>
@@ -339,7 +331,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 </Option>
                             )}
                         </Select>
-                        {/* </div> */}
+                       
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput mb-24"
@@ -371,7 +363,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 /></div>
                             <Input className="cust-input" maxLength={8} placeholder="Zip code" />
                         </div>
-                    </Form.Item>
+                    </Form.Item> */}
                     <Translate
                         content="Beneficiary_Details"
                         component={Paragraph}
