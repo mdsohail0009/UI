@@ -279,7 +279,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         </div>
 
                     </Form.Item>
-                    <Form.Item
+                    {/* <Form.Item
                         className="custom-forminput mb-24"
                         name="bankAddress1"
                     >
@@ -292,7 +292,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 /></div>
                             <Input className="cust-input" placeholder="Bank address line 2" />
                         </div>
-                    </Form.Item>
+                    </Form.Item> */}
                     {/* <div className="d-flex">
                         <Translate
                             className="input-label"
@@ -425,7 +425,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         </div>
 
                     </Form.Item>
-                    <Form.Item
+                    {/* <Form.Item
                         className="custom-forminput mb-24"
                         name="beneficiaryAccountAddress1"
                     >
@@ -469,7 +469,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 /></div>
                             <Input className="cust-input" placeholder="Remarks" />
                         </div>
-                    </Form.Item>
+                    </Form.Item> */}
                     {/* <Form.Item
                         className="custom-forminput mb-36 agree"
                         name="isAccept"
