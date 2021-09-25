@@ -172,7 +172,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
               component={Text}
             />
             </div>
-              <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div> */}
+              <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div> */}
             </Form.Item>
             <Form.Item
               className="custom-forminput custom-label  mb-24"
@@ -197,7 +197,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                 content="amount"
                 component={Text}
 
-              /><span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+              /><span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
               
 
             </div> */}
@@ -208,7 +208,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
               <div className="d-flex"><Text
                 className="input-label" >Address Book</Text>
 
-                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}></span>
+                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span>
               </div>
               <div className="p-relative d-flex align-center">
                 <Select dropdownClassName="select-drpdwn"
@@ -261,7 +261,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                   content="Bank_account"
                   component={Text}
                 />
-                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
               <Input className="cust-input" placeholder="Bank account number/IBAN" />
             </div> */}
             </Form.Item>
@@ -298,7 +298,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                   content="BIC_SWIFT_routing_number"
                   component={Text}
                 />
-                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
             </div> */}
 
             </Form.Item>
@@ -335,7 +335,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                   content="Bank_name"
                   component={Text}
                 />
-                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
             </div> */}
 
             </Form.Item>
@@ -356,7 +356,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                     content="Bank_address1"
                     component={Text}
                   />
-                  <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                  <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
               </div> */}
 
             </Form.Item>

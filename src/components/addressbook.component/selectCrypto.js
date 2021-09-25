@@ -36,7 +36,6 @@ class SelectCrypto extends Component {
     }
 
     handleCoinSelection = (selectedCoin) => {
-        debugger;
             this.props.getCoinDetails(selectedCoin, this.props.userProfile?.userId);
             this.props.setSelectedCoin(selectedCoin);
             convertCurrency({ from: selectedCoin.walletCode, to: "USD", value: 1, isCrypto: false }).then(val => {
@@ -52,7 +51,6 @@ class SelectCrypto extends Component {
 
         return (<><div ref={this.useDivRef}></div>
             {this.state.errorMessage != null && <Alert
-                //message="this.state.errorMessage"
                 description={this.state.errorMessage}
                 type="error"
                 showIcon

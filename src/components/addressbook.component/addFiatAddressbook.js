@@ -63,7 +63,6 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
 
     }
     const handleWalletSelection = (walletId) => {
-       debugger
         form.setFieldsValue({ toCoin: walletId })
         if (buyInfo.memberFiat?.data) {
           let wallet = buyInfo.memberFiat.data.filter((item) => {
@@ -83,7 +82,6 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
         values['membershipId'] = userConfig.id;
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
-        debugger
         let namecheck = values.favouriteName;
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
         if (responsecheck.data != null) {
@@ -93,7 +91,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
             if (response.ok) {
                 debugger;
                 // changeStep('step1');
-                setSuccessMsg('Address saved sucessfully');
+                setSuccessMsg('Address saved successfully');
                 form.resetFields();
                 setIsLoading(false)
                 setTimeout(() => {onCancel();}, 2000)
@@ -127,7 +125,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         <div>
                             <div className="d-flex">
                                 <Text className="input-label">Address Label</Text>
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
                             </div>
                             <Input className="cust-input" maxLength="20" placeholder="Enter Address label" />
                         </div>
@@ -142,7 +140,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         <div>
                             <div className="d-flex">
                                 <Text className="input-label">Address</Text>
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
                             </div>
                             <Input className="cust-input"  maxLength="30" placeholder="Enter Address" />
                         </div>
@@ -187,7 +185,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                     content="Bank_account"
                                     component={Text}
                                 />
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
                             <Input className="cust-input" placeholder="Bank account number/IBAN" />
                         </div>
                     </Form.Item>
@@ -221,7 +219,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                     content="BIC_SWIFT_routing_number"
                                     component={Text}
                                 />
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
                             <Input className="cust-input" placeholder="BIC/SWIFT/Routing number" />
                         </div>
 
@@ -256,7 +254,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                     content="Bank_name"
                                     component={Text}
                                 />
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
                             <Input className="cust-input" placeholder="Bank name" />
                         </div>
 
@@ -276,12 +274,12 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                     content="Bank_address1"
                                     component={Text}
                                 />
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
                             <Input className="cust-input" placeholder="Bank address line 1" />
                         </div>
 
                     </Form.Item>
-                    <Form.Item
+                    {/* <Form.Item
                         className="custom-forminput mb-24"
                         name="bankAddress1"
                     >
@@ -294,8 +292,8 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 /></div>
                             <Input className="cust-input" placeholder="Bank address line 2" />
                         </div>
-                    </Form.Item>
-                    <div className="d-flex">
+                    </Form.Item> */}
+                    {/* <div className="d-flex">
                         <Translate
                             className="input-label"
                             content="Country"
@@ -305,14 +303,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         className="custom-forminput mb-24"
                         name="country"
                     >
-                        {/* <div>
-              <div className="d-flex">
-                <Translate
-                  className="input-label"
-                  content="Bank_address2"
-                  component={Text}
-                /></div> */}
-                        {/* <div id="_country"> */}
+                    
                         <Select dropdownClassName="select-drpdwn" placeholder="Select Country" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                             onChange={(e) => getStateLu(e)} >
                             {countryLu?.map((item, idx) =>
@@ -320,8 +311,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 </Option>
                             )}
                         </Select>
-                        {/* </div> */}
-                        {/* </div> */}
+                       
                     </Form.Item>
                     <div className="d-flex">
                         <Translate
@@ -333,7 +323,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         className="custom-forminput mb-24"
                         name="state"
                     >
-                        {/* <div id="_state"> */}
+                       
                         <Select dropdownClassName="select-drpdwn" placeholder="Select State" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                             onChange={(e) => ''} >
                             {stateLu?.map((item, idx) =>
@@ -341,7 +331,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 </Option>
                             )}
                         </Select>
-                        {/* </div> */}
+                       
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput mb-24"
@@ -373,7 +363,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 /></div>
                             <Input className="cust-input" maxLength={8} placeholder="Zip code" />
                         </div>
-                    </Form.Item>
+                    </Form.Item> */}
                     <Translate
                         content="Beneficiary_Details"
                         component={Paragraph}
@@ -409,7 +399,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                     content="Recipient_full_name"
                                     component={Text}
                                 />{" "}
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span></div>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
                             <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
                         </div>
 
@@ -428,14 +418,14 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                     content="Recipient_address1"
                                     component={Text}
                                 />{" "}
-                                <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>
                                     {" * "}
                                 </span></div>
                             <Input className="cust-input" placeholder="Recipient address line 1" />
                         </div>
 
                     </Form.Item>
-                    <Form.Item
+                    {/* <Form.Item
                         className="custom-forminput mb-24"
                         name="beneficiaryAccountAddress1"
                     >
@@ -479,7 +469,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 /></div>
                             <Input className="cust-input" placeholder="Remarks" />
                         </div>
-                    </Form.Item>
+                    </Form.Item> */}
                     {/* <Form.Item
                         className="custom-forminput mb-36 agree"
                         name="isAccept"
