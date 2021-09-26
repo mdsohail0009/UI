@@ -33,7 +33,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
         values['membershipId'] = userConfig.id;
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
-        values['toCoin'] = addressBookReducer.coinWallet.coin
+        values['toCoin'] = addressBookReducer.coinWallet.coin;
         let namecheck = values.favouriteName.trim();
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
         if (responsecheck.data != null) {
@@ -59,7 +59,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
         setIsSelect(false)
         setTimeout(() => {
             form.setFieldsValue(coinObj);
-        }, 1000)
+        }, 500)
         
     }
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color:'#fff', marginRight:'16px' }} spin />;
@@ -77,8 +77,21 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                         label="Address Label"
                         name="favouriteName"
                         rules={[
-                            { required: true, message: "Is required" },
+                            {
+                                type: "favouriteName", validator: async (rule, value, callback) => {
+                                    debugger;
+                                    if (value == null || value.trim() == "") {
+                                        throw new Error("Is required")
+                                    }
+                                    else {
+                                        callback();
+                                    }
+                                }
+                            }
                         ]} 
+                        // rules={[
+                        //     { required: true, message: "Is required" },
+                        // ]} 
                         
                         >
                             <Input className="cust-input"  maxLength="20" placeholder="Enter Address label" />
@@ -111,8 +124,18 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                         name="toWalletAddress"
                         label="Address"
                         rules={[
-                            { required: true, message: "Is required" },
-                        ]}>
+                            {
+                                type: "toWalletAddress", validator: async (rule, value, callback) => {
+                                    debugger;
+                                    if (value == null || value.trim() == "") {
+                                        throw new Error("Is required")
+                                    }
+                                    else {
+                                        callback();
+                                    }
+                                }
+                            }
+                        ]} >
                             <Input className="cust-input" maxLength="30" placeholder="Enter Address" />
                     </Form.Item>
                     <div style={{ marginTop: '50px' }} className="">
