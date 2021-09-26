@@ -87,11 +87,13 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
         if (responsecheck.data != null) {
             setIsLoading(false)
+            useDivRef.current.scrollIntoView()
             return setErrorMsg('Address label already existed');
         } else {
             let response = await saveAddress(values);
             if (response.ok) {
                 setErrorMsg('')
+               useDivRef.current.scrollIntoView()
                 setSuccessMsg('Address saved successfully');
                 form.resetFields();
                 setTimeout(() => {onCancel();}, 1500)
@@ -108,6 +110,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
 
     return (
         <>
+        {/* // <div ref={useDivRef}></div> */}
             <div className="addbook-height auto-scroll">
                 <div ref={useDivRef}></div>
                 {errorMsg  && <Alert closable type="error"  description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
@@ -149,7 +152,6 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         rules={[
                             {
                                 type: "toWalletAddress", validator: async (rule, value, callback) => {
-                                    debugger;
                                     if (value == null || value.trim() == "") {
                                         throw new Error("Is required")
                                     }
@@ -254,7 +256,6 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         rules={[
                             {
                                 type: "bankName", validator: async (rule, value, callback) => {
-                                    debugger;
                                     if (value == null || value.trim() == "") {
                                         throw new Error("Is required")
                                     }
@@ -303,7 +304,6 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         rules={[
                             {
                                 type: "bankAddress", validator: async (rule, value, callback) => {
-                                    debugger;
                                     if (value == null || value.trim() == "") {
                                         throw new Error("Is required")
                                     }
@@ -372,7 +372,6 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         rules={[
                             {
                                 type: "beneficiaryAccountAddress", validator: async (rule, value, callback) => {
-                                    debugger;
                                     if (value == null || value.trim() == "") {
                                         throw new Error("Is required")
                                     }
