@@ -62,7 +62,6 @@ class AuditLogs extends Component {
     if (response.ok) {
       this.setState({
         userData: response.data,
-        //IsUser:true
       });
     }
   };
@@ -93,11 +92,11 @@ class AuditLogs extends Component {
     this.setState({ ...this.state, searchObj: searchObj });
   };
 
-  handleChange = (val, id) => {
-    let { searchObj } = this.state;
-    searchObj[id] = val;
-    this.setState({ ...this.state, searchObj: searchObj });
-  };
+  // handleChange = (val, id) => {
+  //   let { searchObj } = this.state;
+  //   searchObj[id] = val;
+  //   this.setState({ ...this.state, searchObj: searchObj });
+  // };
 
   handleDateChange = (prop, val) => {
     let { searchObj, customFromdata, customTodate } = this.state;
@@ -133,8 +132,8 @@ class AuditLogs extends Component {
   };
 
   handleCancel = e => {
-    let { searchObj } = this.state;
-    if(searchObj.fromdate && searchObj.todate && !this.state.message){
+    let { searchObj, customFromdata, customTodate } = this.state;
+    if(customFromdata && customTodate){
       this.setState({ modal: false, selection: [], check: false, message:'' });
     }else{
     this.setState({...this.state,searchObj:{...searchObj,timeSpan: "Last 1 Day",fromdate: '',todate: ''}, modal: false, selection: [], check: false, isCustomDate:false, message:'' });
