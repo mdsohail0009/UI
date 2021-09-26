@@ -83,7 +83,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
         values['membershipId'] = userConfig.id;
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
-        let namecheck = values.favouriteName;
+        let namecheck = values.favouriteName.trim();
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
         if (responsecheck.data != null) {
             setIsLoading(false)
@@ -91,8 +91,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
         } else {
             let response = await saveAddress(values);
             if (response.ok) {
-                debugger;
-                // changeStep('step1');
+                setErrorMsg('')
                 setSuccessMsg('Address saved successfully');
                 form.resetFields();
                 setTimeout(() => {onCancel();}, 1500)
@@ -111,8 +110,8 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
         <>
             <div className="addbook-height auto-scroll">
                 <div ref={useDivRef}></div>
-                {errorMsg != null && <Alert closable type="error"  description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-                {successMsg != null && <Alert closable type="success"  description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
+                {errorMsg  && <Alert closable type="error"  description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+                {successMsg  && <Alert closable type="success"  description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
 
                 <Form form={form} onFinish={savewithdrawal} autoComplete="off">
                     <Translate
