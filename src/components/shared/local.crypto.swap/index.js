@@ -25,23 +25,27 @@ const LocalCryptoSwapper = (props, ref) => {
         }
     }), []);
     const fetchConvertionValue = async ({ cryptoValue, localValue, inputvalue }) => {
-        if (inputvalue) {
+        console.log(inputvalue)
+        // if (inputvalue) {
             const coin = selectedCoin || sellData?.selectedCoin?.data?.coin;
             setConvertionLoad(true);
-            const value = await convertCurrency({ from: coin, to: "USD", value: inputvalue, isCrypto: !isSwaped })
+            console.log(inputvalue||0)
+            const value = await convertCurrency({ from: coin, to: "USD", value: (inputvalue||0), isCrypto: !isSwaped })
+            console.log(value)
             if (!isSwaped) {
                 setCryptoValue(value||0);
             } else { setLocalValue(value||0) }
             setConvertionLoad(false);
             onChange({ cryptoValue: isSwaped ? inputvalue : value, localValue: isSwaped ? value : inputvalue, isSwaped });
-        } else { 
-            if(isSwaped){
-                setLocalValue(0)
-            }else{
-                setCryptoValue(0)
-            }
-            onChange({ cryptoValue: isSwaped ? inputvalue : null, localValue: isSwaped ? null : inputvalue, isSwaped });
-        }
+        // } else { 
+        //     console.log('trigger1')
+        //     if(isSwaped){
+        //         setLocalValue(0)
+        //     }else{
+        //         setCryptoValue(0)
+        //     }
+        //     onChange({ cryptoValue: isSwaped ? inputvalue : null, localValue: isSwaped ? null : inputvalue, isSwaped });
+        // }
     }
 
     return <div className="p-relative">
