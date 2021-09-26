@@ -243,19 +243,17 @@ class AddressBook extends Component {
                             description="Please select one record"
                             type="warning"
                             showIcon
-                            closable
+                           // closable
                           />
                             </div>}
-                            {this.state.successMsg  && <Alert closable type="success"
-                             description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'inactivated' : 'activated') + ' successfully'} onClose={() => this.setSuccessMsg(null)} showIcon />}
-
+                            {this.state.successMsg  && <Alert type="success"
+                             description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'Inactivated' : 'Activated') + ' Successfully'}  showIcon />}
                         <List columns={this.columnsFiat} ref={this.gridFiatRef} key={gridUrlFiat} url={gridUrlFiat} />
                     </> :
                         <>
                             <div className="d-flex justify-content align-center mb-16">
                                 <div> <Title className="fs-26 text-white-30 fw-500">Withdraw Crypto</Title>
                                 </div>
-
                                 <div className="d-flex align-center">
                                     <Button className="c-pointer pop-btn ant-btn px-24 mr-16" onClick={this.handleCryptoAddress}> Add Address</Button>
                                     <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0 }}>
@@ -274,11 +272,11 @@ class AddressBook extends Component {
                             description="Please select one record"
                             type="warning"
                             showIcon
-                            closable
+                           // closable
                           />
                             </div>}
-                            {this.state.successMsg  && <Alert closable type="success"
-                             description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'Inactivated' : 'Activated') + ' Successfully'} onClose={() => this.setSuccessMsg(null)} showIcon />}
+                            {this.state.successMsg  && <Alert type="success"
+                             description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'Inactivated' : 'Activated') + ' Successfully'}  showIcon />}
                             <List columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridCryptoRef} url={gridUrlCrypto} />
                         </>}
                 </div>
@@ -317,7 +315,7 @@ class AddressBook extends Component {
                 <Modal
                     title={this.state.selectedObj.status == 'Active' ? 'Confirm Inactive?' : 'Confirm Active?'}
                     visible={this.state.modal}
-                    closeIcon={<Tooltip title="Close"><span className="icon md close-white" onClick={this.handleCancel} /></Tooltip>}
+                    closeIcon={<Tooltip title="Close"><span className="icon md close-white c-pointer" onClick={this.handleCancel} /></Tooltip>}
                     footer={<>
                         <Button
                             style={{ width: '100px', border: '1px solid #f2f2f2' }}
