@@ -21,7 +21,9 @@ const withdrawcolumns = [
   { field: "bankName", title: "Bank Name", filter: true, width: 150 },
   { field: "accountNumber", title: "Bank account number/IBAN", width: 220, filter: true },
   { field: "swiftCode", title: " BIC/SWIFT/Routing number", filter: true, width: 250 },
-  { field: "createdDate", title: "Request Date", filter: true, width: 150, footerCell: true, filterType: "date" }
+  { field: "createdDate", title: "Request Date", filter: true, width: 150, footerCell: true, filterType: "date" },
+  { field: "status", title: "State", filter: true, width: 110, filter: true },
+  { field: "statusRemarks", title: "Remarks", filter: true, width: 110, filter: true }
 ];
 const DepositColmns = [
   // { field: "memberUserName", title: "Name", filter: true },
@@ -45,8 +47,8 @@ const SwapColmns = [
 ]
 const BuySellColmns = [
   // { field: "memberFirstName", title: "Name", filter: true, width: 200 },
-  // { field: "type", title: "Type", filter: true, },
   { field: "date", title: "Date", filter: true, filterType: "date", width: 150 },
+  { field: "type", title: "Type", filter: true,width: 150  },
   { field: "fromWalletCode", title: "From Wallet", filter: true, width: 200 },
   { field: "fromValue", title: "From Value", filter: true, width: 150, dataType: 'number' },
   { field: "toWalletCode", title: "To Wallet", filter: true, width: 150 },
@@ -54,7 +56,7 @@ const BuySellColmns = [
   { field: "beforeValue", title: "Before Value", width: 180, filter: true, dataType: 'number' },
   { field: "afterValue", title: "After Value", width: 180, filter: true, dataType: 'number' },
   { field: "totalAmount", title: "Total Amount", filter: true, width: 180, dataType: 'number' },
-  { field: "amountInUsd", title: "Amount In Usd", filter: true, width: 150, dataType: 'number' },
+  { field: "amountInUsd", title: "Amount In Usd", filter: true, width: 170, dataType: 'number' },
 ]
 const depositCryptoColomns = [
   // { field: "memberUserName", title: "Name", filter: true },
