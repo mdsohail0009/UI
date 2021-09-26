@@ -136,7 +136,8 @@ class Header extends Component {
                     <div className="tlv-header" id="area">
                         <div className="login-user">
                             <ul className="header-logo pl-0">
-                                <li className="pr-30 p-relative"><Link to="/dashboard"><img src={logoColor} alt="logo" className="tlv-logo" /></Link></li>
+                                {/* <li className="pr-30 p-relative"><Link to="/dashboard"><img src={logoColor} alt="logo" className="tlv-logo" /></Link></li> */}
+                                <li className="pr-30 p-relative"><img src={logoColor} alt="logo" className="tlv-logo" /></li>
                                 <MegaMenu />
                                 <li className="mb-d-none" onClick={() => this.props.history.push("/dashboard")}>
                                     <Translate  content="header_title_business" component="p" className="text-white-30 mb-0 fs-24" />
