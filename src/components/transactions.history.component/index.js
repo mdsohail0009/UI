@@ -15,25 +15,25 @@ const withdrawcolumns = [
   // { field: "username", title: "User Name", filter: true, width: 150},
   // { field: "memberName", title: "Full Name", filter: true, width: 150},
   // { field: "email", title: "Email", filter: true, width: 200 },
-  { field: "accountType", title: "Account Type", filter: true },
-  { field: "walletCode", title: "Wallet", filter: true, width: 130 },
-  { field: "amount", title: "Amount", filter: true, width: 150, dataType: "number", filterType: "numeric", },
-  { field: "bankName", title: "Bank Name", filter: true, width: 150 },
+  { field: "accountType", title: "Account Type", filter: true, width: 200 },
+  { field: "walletCode", title: "Wallet", filter: true, width: 200 },
+  { field: "amount", title: "Amount", filter: true, width: 220, dataType: "number", filterType: "numeric", },
+  { field: "bankName", title: "Bank Name", filter: true, width: 220 },
   { field: "accountNumber", title: "Bank account number/IBAN", width: 220, filter: true },
   { field: "swiftCode", title: " BIC/SWIFT/Routing number", filter: true, width: 250 },
-  { field: "createdDate", title: "Request Date", filter: true, width: 150, footerCell: true, filterType: "date" },
-  { field: "status", title: "State", filter: true, width: 110, filter: true },
-  { field: "statusRemarks", title: "Remarks", filter: true, width: 110, filter: true }
+  { field: "createdDate", title: "Request Date", filter: true, width: 210, footerCell: true, filterType: "date" },
+  { field: "status", title: "State", filter: true, width: 200, filter: true },
+  { field: "statusRemarks", title: "Remarks", filter: true, width: 280, filter: true }
 ];
 const DepositColmns = [
   // { field: "memberUserName", title: "Name", filter: true },
-  { field: "refrenceId", title: "Reference Id", filter: true },
-  { field: "currency", title: "Currency", filter: true, width: 110 },
-  { field: "bankName", title: "Bank Name", filter: true, width: 120 },
-  { field: "amountDeposit", title: "Amount", filter: true, width: 150 },
-  { field: "date", title: "Date", filter: true, width: 110, filterType: "date" },
-  { field: "status", title: "State", filter: true, width: 110, filter: true },
-  { field: "statusRemarks", title: "Remarks", filter: true, width: 110, filter: true }
+  { field: "refrenceId", title: "Reference Id", filter: true,width: 346 },
+  { field: "currency", title: "Currency", filter: true, width: 210 },
+  { field: "bankName", title: "Bank Name", filter: true, width: 260 },
+  { field: "amountDeposit", title: "Amount", filter: true, width: 250 },
+  { field: "date", title: "Date", filter: true, width: 210, filterType: "date" },
+  { field: "status", title: "State", filter: true, width: 260, filter: true },
+  { field: "statusRemarks", title: "Remarks", filter: true, width: 460, filter: true }
 ]
 const SwapColmns = [
   // { field: "memberFirtName", title: "Name",filter: true },
@@ -47,16 +47,16 @@ const SwapColmns = [
 ]
 const BuySellColmns = [
   // { field: "memberFirstName", title: "Name", filter: true, width: 200 },
-  { field: "date", title: "Date", filter: true, filterType: "date", width: 150 },
-  { field: "type", title: "Type", filter: true,width: 150  },
+  { field: "date", title: "Date", filter: true, filterType: "date", width: 184 },
+  { field: "type", title: "Type", filter: true,width: 190  },
   { field: "fromWalletCode", title: "From Wallet", filter: true, width: 200 },
-  { field: "fromValue", title: "From Value", filter: true, width: 150, dataType: 'number' },
-  { field: "toWalletCode", title: "To Wallet", filter: true, width: 150 },
-  { field: "tovalue", title: "To Value", filter: true, width: 150, dataType: 'number' },
-  { field: "beforeValue", title: "Before Value", width: 180, filter: true, dataType: 'number' },
-  { field: "afterValue", title: "After Value", width: 180, filter: true, dataType: 'number' },
-  { field: "totalAmount", title: "Total Amount", filter: true, width: 180, dataType: 'number' },
-  { field: "amountInUsd", title: "Amount In Usd", filter: true, width: 170, dataType: 'number' },
+  { field: "fromValue", title: "From Value", filter: true, width: 190, dataType: 'number' },
+  { field: "toWalletCode", title: "To Wallet", filter: true, width: 190 },
+  { field: "tovalue", title: "To Value", filter: true, width: 200, dataType: 'number' },
+  { field: "beforeValue", title: "Before Value", width: 200, filter: true, dataType: 'number' },
+  { field: "afterValue", title: "After Value", width: 200, filter: true, dataType: 'number' },
+  { field: "totalAmount", title: "Total Amount", filter: true, width: 210, dataType: 'number' },
+  { field: "amountInUsd", title: "Amount In Usd", filter: true, width: 200, dataType: 'number' },
 ]
 const depositCryptoColomns = [
   // { field: "memberUserName", title: "Name", filter: true },
@@ -70,12 +70,12 @@ const withdrwCryptoColomns = [
   // { field: "username", title: "User Name", filter: true},
   // { field: "email", title: "Email", filter: true },
   { field: "walletCode", title: "Wallet", filter: true },
-  { field: "amount", title: "Amount", filter: true, width: 150,filterType: "numeric",dataType:'number' },
+  { field: "amount", title: "Amount", filter: true, width: 200,filterType: "numeric",dataType:'number' },
   { field: "walletAddress", title: "Wallet Address", filter: true, width: 200 },
   // { field: "type", title: "Type", width: 150, filter: true, },
-  { field: "createdDate", title: "Request Date", filter: true, width: 150, filter: true,filterType: "date" },
-  { field: "status", title: "State", filter: true, width: 150, filter: true },
-  { field: "statusRemarks", title: "Remarks", filter: true, width: 110, filter: true }
+  { field: "createdDate", title: "Request Date", filter: true, width: 200, filter: true,filterType: "date" },
+  { field: "status", title: "State", filter: true, width: 200, filter: true },
+  { field: "statusRemarks", title: "Remarks", filter: true, width: 200, filter: true }
 ]
 class TransactionsHistory extends Component { 
   componentDidMount(){
