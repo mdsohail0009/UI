@@ -27,7 +27,7 @@ class YourPortfolio extends Component {
     showBuyDrawer = (item, key) => {
         if (key == "buy") {
             this.props.dispatch(fetchSelectedCoinDetails(item.coin, this.props.userProfile?.id));
-            this.props.dispatch(setCoin(item));
+            this.props.dispatch(setCoin({...item, toWalletCode:item.coin}));
             convertCurrency({ from: item.coin, to: "USD", value: 1, isCrypto: false }).then(val => {
                 this.props.dispatch(setExchangeValue({ key: item.coin, value: val }));
             });

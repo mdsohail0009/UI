@@ -34,7 +34,7 @@ class BuySummary extends Component {
                 fromWalletName,
                 "fromValue": this.props.sellData.previewDetails?.data?.amountNativeCurrency,
                 toWalletId,
-                toWalletCode,
+                "toWalletCode":this.props.sellData?.coinWallet.toWalletCode,
                 toWalletName,
                 "toValue": this.props.sellData.previewDetails?.data?.amount,
                 "description": "Buy Crypto",
