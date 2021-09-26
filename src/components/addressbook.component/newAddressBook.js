@@ -34,14 +34,14 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
         values['toCoin'] = addressBookReducer.coinWallet.coin
-        let namecheck = values.favouriteName;
+        let namecheck = values.favouriteName.trim();
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
         if (responsecheck.data != null) {
             debugger
             setIsLoading(false)
             return setErrorMsg('Address label already existed');
-          
         } else {
+            setErrorMsg('')
             let response = await saveAddress(values);
             if (response.ok) {
               setSuccessMsg('Address saved successfully');
@@ -59,7 +59,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
         setIsSelect(false)
         setTimeout(() => {
             form.setFieldsValue(coinObj);
-        }, 2000)
+        }, 1000)
         
     }
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color:'#fff', marginRight:'16px' }} spin />;
@@ -67,8 +67,8 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
         <>
      
            {!isSelect  ? <div className="mt-16">
-                {errorMsg != null && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-                {successMsg != null && <Alert closable type="success" description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
+                {errorMsg  && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+                {successMsg  && <Alert closable type="success" description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
                 <Form
                     form={form}
                     onFinish={saveAddressBook} autoComplete="off" >
