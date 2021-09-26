@@ -207,7 +207,9 @@ class CryptoWithDrawWallet extends Component {
         }
         return (
             <div ref={this.myRef}>
-                {this.state.error != null && <Alert closable type="error" message={"Withdraw Crypto"} description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
+                {this.state.error != null && <Alert closable type="error" 
+                //message={"Withdraw Crypto"}
+                 description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
                 <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
                         <span className={`coin lg ${selectedWallet?.coin}`} />
@@ -252,7 +254,7 @@ class CryptoWithDrawWallet extends Component {
                         ]}
                     >
                         <div className="d-flex"><Text
-                            className="input-label" >Address Book</Text>
+                            className="input-label" >Address</Text>
                             <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span>
                         </div>
                         {/* <div className="p-relative d-flex align-center"> */}

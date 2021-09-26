@@ -1,5 +1,6 @@
 import React, { useState ,useEffect} from 'react';
-import { Form, Input, Typography, Button, Alert } from 'antd'
+import { Form, Input, Typography, Button, Alert,Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import { setAddressStep ,rejectCoin } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
 import { saveAddress, favouriteNameCheck } from './api';
@@ -36,18 +37,20 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
         let namecheck = values.favouriteName;
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
         if (responsecheck.data != null) {
+            debugger
+            setIsLoading(false)
             return setErrorMsg('Address label already existed');
+          
         } else {
             let response = await saveAddress(values);
             if (response.ok) {
-              
               setSuccessMsg('Address saved successfully');
               form.resetFields();
                 rejectCoinWallet();
+                setTimeout(() => {onCancel();}, 1500)
                 setIsLoading(false)
-                setTimeout(() => {onCancel();}, 2000)
-            
             }
+            else{ setIsLoading(false)}
         }
     }
     const onCoinSelected =(selectedCoin) =>{
@@ -59,13 +62,13 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
         }, 2000)
         
     }
-
+    const antIcon = <LoadingOutlined style={{ fontSize: 18, color:'#fff', marginRight:'16px' }} spin />;
     return (
         <>
      
            {!isSelect  ? <div className="mt-16">
-                {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-                {successMsg != null && <Alert closable type="success" message={"Success"} description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
+                {errorMsg != null && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+                {successMsg != null && <Alert closable type="success" description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
                 <Form
                     form={form}
                     onFinish={saveAddressBook} autoComplete="off" >
@@ -119,7 +122,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                             block
                             className="pop-btn"
                         >
-                            Save
+                          { isLoading  && <Spin indicator={antIcon} />} Save
                         </Button>
                         {/* <Button
                                 htmlType="cancel"

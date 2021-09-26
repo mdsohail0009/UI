@@ -1,5 +1,6 @@
 import React, { Component, useState, useRef, useEffect } from 'react';
-import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert, Tooltip, Select } from 'antd';
+import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert, Tooltip, Select,Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -85,6 +86,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
         let namecheck = values.favouriteName;
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
         if (responsecheck.data != null) {
+            setIsLoading(false)
             return setErrorMsg('Address label already existed');
         } else {
             let response = await saveAddress(values);
@@ -93,22 +95,24 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                 // changeStep('step1');
                 setSuccessMsg('Address saved successfully');
                 form.resetFields();
+                setTimeout(() => {onCancel();}, 1500)
                 setIsLoading(false)
-                setTimeout(() => {onCancel();}, 2000)
 
             }
+            else{ setIsLoading(false)}
         }
     }
 
     const { Paragraph, Title, Text } = Typography;
     const link = <LinkValue content="terms_service" />;
+    const antIcon = <LoadingOutlined style={{ fontSize: 18, color:'#fff', marginRight:'16px' }} spin />;
 
     return (
         <>
             <div className="addbook-height auto-scroll">
                 <div ref={useDivRef}></div>
-                {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-                {successMsg != null && <Alert closable type="success" message={"Success"} description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
+                {errorMsg != null && <Alert closable type="error"  description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+                {successMsg != null && <Alert closable type="success"  description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
 
                 <Form form={form} onFinish={savewithdrawal} autoComplete="off">
                     <Translate
@@ -503,7 +507,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                             block
                             className="pop-btn"
                         >
-                            Save
+                             { isLoading  && <Spin indicator={antIcon} />}  Save
                         </Button>
                     </Form.Item>
                 </Form>
