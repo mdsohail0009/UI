@@ -24,7 +24,7 @@ class BuySummary extends Component {
     pay = async () => {
         this.setState({ ...this.state, error: { valid: true, message: null } });
         if (this.state.isTermsAgreed) {
-            const { id: toWalletId, walletName: toWalletName, walletCode: toWalletCode } = this.props.sellData?.coinWallet;
+            const { toWalletId, toWalletName,  toWalletCode } = this.props.sellData?.coinWallet;
             const { id: fromWalletId, bankName: fromWalletName, currencyCode: fromWalletCode } = this.props.sellData?.selectedWallet;
             const obj = {
                 "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -34,7 +34,7 @@ class BuySummary extends Component {
                 fromWalletName,
                 "fromValue": this.props.sellData.previewDetails?.data?.amountNativeCurrency,
                 toWalletId,
-                "toWalletCode":this.props.sellData?.coinWallet.toWalletCode,
+                toWalletCode,
                 toWalletName,
                 "toValue": this.props.sellData.previewDetails?.data?.amount,
                 "description": "Buy Crypto",
