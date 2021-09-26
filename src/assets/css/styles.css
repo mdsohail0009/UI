@@ -875,3 +875,5 @@ text-align: center !important;}
 
 .customaudit-select .ant-select-single .ant-select-selector .ant-select-selection-search{left: 17px!important}
 .ant-alert-with-description .ant-alert-message{margin-bottom: 0 !important;}
+
+.transaction-tabs .k-grid-header-wrap{margin-right: -13px;}
