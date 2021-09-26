@@ -33,15 +33,15 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
         values['membershipId'] = userConfig.id;
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
-        values['toCoin'] = addressBookReducer.coinWallet.coin
-        let namecheck = values.favouriteName;
+        values['toCoin'] = addressBookReducer.coinWallet.coin;
+        let namecheck = values.favouriteName.trim();
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
         if (responsecheck.data != null) {
             debugger
             setIsLoading(false)
             return setErrorMsg('Address label already existed');
-          
         } else {
+            setErrorMsg('')
             let response = await saveAddress(values);
             if (response.ok) {
               setSuccessMsg('Address saved successfully');
@@ -59,7 +59,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
         setIsSelect(false)
         setTimeout(() => {
             form.setFieldsValue(coinObj);
-        }, 2000)
+        }, 500)
         
     }
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color:'#fff', marginRight:'16px' }} spin />;
@@ -67,8 +67,8 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
         <>
      
            {!isSelect  ? <div className="mt-16">
-                {errorMsg != null && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-                {successMsg != null && <Alert closable type="success" description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
+                {errorMsg  && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+                {successMsg  && <Alert closable type="success" description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
                 <Form
                     form={form}
                     onFinish={saveAddressBook} autoComplete="off" >
@@ -77,8 +77,21 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                         label="Address Label"
                         name="favouriteName"
                         rules={[
-                            { required: true, message: "Is required" },
+                            {
+                                type: "favouriteName", validator: async (rule, value, callback) => {
+                                    debugger;
+                                    if (value == null || value.trim() == "") {
+                                        throw new Error("Is required")
+                                    }
+                                    else {
+                                        callback();
+                                    }
+                                }
+                            }
                         ]} 
+                        // rules={[
+                        //     { required: true, message: "Is required" },
+                        // ]} 
                         
                         >
                             <Input className="cust-input"  maxLength="20" placeholder="Enter Address label" />
@@ -111,8 +124,18 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                         name="toWalletAddress"
                         label="Address"
                         rules={[
-                            { required: true, message: "Is required" },
-                        ]}>
+                            {
+                                type: "toWalletAddress", validator: async (rule, value, callback) => {
+                                    debugger;
+                                    if (value == null || value.trim() == "") {
+                                        throw new Error("Is required")
+                                    }
+                                    else {
+                                        callback();
+                                    }
+                                }
+                            }
+                        ]} >
                             <Input className="cust-input" maxLength="30" placeholder="Enter Address" />
                     </Form.Item>
                     <div style={{ marginTop: '50px' }} className="">

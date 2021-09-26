@@ -83,16 +83,17 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
         values['membershipId'] = userConfig.id;
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
-        let namecheck = values.favouriteName;
+        let namecheck = values.favouriteName.trim();
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
         if (responsecheck.data != null) {
             setIsLoading(false)
+            useDivRef.current.scrollIntoView()
             return setErrorMsg('Address label already existed');
         } else {
             let response = await saveAddress(values);
             if (response.ok) {
-                debugger;
-                // changeStep('step1');
+                setErrorMsg('')
+               useDivRef.current.scrollIntoView()
                 setSuccessMsg('Address saved successfully');
                 form.resetFields();
                 setTimeout(() => {onCancel();}, 1500)
@@ -109,10 +110,11 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
 
     return (
         <>
+        {/* // <div ref={useDivRef}></div> */}
             <div className="addbook-height auto-scroll">
                 <div ref={useDivRef}></div>
-                {errorMsg != null && <Alert closable type="error"  description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-                {successMsg != null && <Alert closable type="success"  description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
+                {errorMsg  && <Alert closable type="error"  description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+                {successMsg  && <Alert closable type="success"  description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
 
                 <Form form={form} onFinish={savewithdrawal} autoComplete="off">
                     <Translate
@@ -124,8 +126,18 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         className="custom-forminput mb-24 pr-0"
                         name="favouriteName" required
                         rules={[
-                            { required: true, message: "Is required" },
-                        ]}>
+                            {
+                                type: "favouriteName", validator: async (rule, value, callback) => {
+                                    debugger;
+                                    if (value == null || value.trim() == "") {
+                                        throw new Error("Is required")
+                                    }
+                                    else {
+                                        callback();
+                                    }
+                                }
+                            }
+                        ]} >
                         <div>
                             <div className="d-flex">
                                 <Text className="input-label">Address Label</Text>
@@ -138,7 +150,16 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         className="custom-forminput mb-24 pr-0"
                         name="toWalletAddress" required
                         rules={[
-                            { required: true, message: "Is required" },
+                            {
+                                type: "toWalletAddress", validator: async (rule, value, callback) => {
+                                    if (value == null || value.trim() == "") {
+                                        throw new Error("Is required")
+                                    }
+                                    else {
+                                        callback();
+                                    }
+                                }
+                            }
                         ]}
                     >
                         <div>
@@ -233,23 +254,36 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         name="bankName"
                         required
                         rules={[
-                            { required: true, message: "Is required" },
                             {
-                                validator: (rule, value, callback) => {
-                                    var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
-                                    if (value) {
-                                        if (!regx.test(value)) {
-                                            callback("Invalid bank name")
-                                        } else if (regx.test(value)) {
-                                            callback();
-                                        }
-                                    } else {
+                                type: "bankName", validator: async (rule, value, callback) => {
+                                    if (value == null || value.trim() == "") {
+                                        throw new Error("Is required")
+                                    }
+                                    else {
                                         callback();
                                     }
-                                    return;
                                 }
                             }
                         ]}
+                        // rules={[
+                        //     { required: true, message: "Is required" },
+                        //     {
+                        //         validator: (rule, value, callback) => {
+                        //             var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
+                        //             if (value) {
+                        //                 if (!regx.test(value)) {
+                        //                     callback("Invalid bank name")
+                        //                 } else if (regx.test(value)) {
+                        //                     callback();
+                        //                 }
+                        //             } else {
+                        //                 callback();
+                        //             }
+                        //             return;
+                        //         }
+                        //     }
+                        // ]}
+
                     >
                         <div>
                             <div className="d-flex">
@@ -268,9 +302,17 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         name="bankAddress"
                         required
                         rules={[
-                            { required: true, message: "Is required" }
-                        ]}
-                    >
+                            {
+                                type: "bankAddress", validator: async (rule, value, callback) => {
+                                    if (value == null || value.trim() == "") {
+                                        throw new Error("Is required")
+                                    }
+                                    else {
+                                        callback();
+                                    }
+                                }
+                            }
+                        ]}>
                         <div>
                             <div className="d-flex">
                                 <Translate
@@ -283,91 +325,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         </div>
 
                     </Form.Item>
-                    {/* <Form.Item
-                        className="custom-forminput mb-24"
-                        name="bankAddress1"
-                    >
-                        <div>
-                            <div className="d-flex">
-                                <Translate
-                                    className="input-label"
-                                    content="Bank_address2"
-                                    component={Text}
-                                /></div>
-                            <Input className="cust-input" placeholder="Bank address line 2" />
-                        </div>
-                    </Form.Item> */}
-                    {/* <div className="d-flex">
-                        <Translate
-                            className="input-label"
-                            content="Country"
-                            component={Text}
-                        /></div>
-                    <Form.Item
-                        className="custom-forminput mb-24"
-                        name="country"
-                    >
-                    
-                        <Select dropdownClassName="select-drpdwn" placeholder="Select Country" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-                            onChange={(e) => getStateLu(e)} >
-                            {countryLu?.map((item, idx) =>
-                                <Option key={idx} value={item.name}>{item.name}
-                                </Option>
-                            )}
-                        </Select>
-                       
-                    </Form.Item>
-                    <div className="d-flex">
-                        <Translate
-                            className="input-label"
-                            content="state"
-                            component={Text}
-                        /></div>
-                    <Form.Item
-                        className="custom-forminput mb-24"
-                        name="state"
-                    >
-                       
-                        <Select dropdownClassName="select-drpdwn" placeholder="Select State" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-                            onChange={(e) => ''} >
-                            {stateLu?.map((item, idx) =>
-                                <Option key={idx} value={item.code}>{item.code}
-                                </Option>
-                            )}
-                        </Select>
-                       
-                    </Form.Item>
-                    <Form.Item
-                        className="custom-forminput mb-24"
-                        name="zipcode"
-                        rules={[
-                            {
-                                validator: (rule, value, callback) => {
-                                    var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                                    if (value) {
-                                        if (!regx.test(value)) {
-                                            callback("Invalid zip code")
-                                        } else if (regx.test(value)) {
-                                            callback();
-                                        }
-                                    } else {
-                                        callback();
-                                    }
-                                    return;
-                                }
-                            }
-                        ]}
-                    >
-                        <div>
-                            <div className="d-flex">
-                                <Translate
-                                    className="input-label"
-                                    content="zipcode"
-                                    component={Text}
-                                /></div>
-                            <Input className="cust-input" maxLength={8} placeholder="Zip code" />
-                        </div>
-                    </Form.Item> */}
+                   
                     <Translate
                         content="Beneficiary_Details"
                         component={Paragraph}
@@ -412,9 +370,18 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         className="custom-forminput mb-24"
                         name="beneficiaryAccountAddress"
                         rules={[
-                            { required: true, message: "Is required" }
-                        ]}
-                    >
+                            {
+                                type: "beneficiaryAccountAddress", validator: async (rule, value, callback) => {
+                                    if (value == null || value.trim() == "") {
+                                        throw new Error("Is required")
+                                    }
+                                    else {
+                                        callback();
+                                    }
+                                }
+                            }
+                        ]}>
+                    
                         <div>
                             <div className="d-flex">
                                 <Translate
