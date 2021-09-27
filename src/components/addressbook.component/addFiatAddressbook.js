@@ -1,5 +1,5 @@
 import React, { Component, useState, useRef, useEffect } from 'react';
-import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert, Tooltip, Select,Spin } from 'antd';
+import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert, Tooltip, Select, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
@@ -7,7 +7,7 @@ import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import WalletList from '../shared/walletList';
 import NumberFormat from 'react-number-format';
-import { withdrawRecepientNamecheck, withdrawSave, getCountryStateLu,getStateLookup } from '../../api/apiServer';
+import { withdrawRecepientNamecheck, withdrawSave, getCountryStateLu, getStateLookup } from '../../api/apiServer';
 import Currency from '../shared/number.formate';
 import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
@@ -24,7 +24,7 @@ const LinkValue = (props) => {
     )
 }
 const { Option } = Select;
-const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, changeStep, onCancel }) => {
+const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, changeStep, onCancel, hideBalance }) => {
     const [form] = Form.useForm();
     const [selectedWallet, setSelectedWallet] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -33,7 +33,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
     const [countryLu, setCountryLu] = useState([]);
     const [stateLu, setStateLu] = useState([]);
     const [country, setCountry] = useState(null);
-    const[isLoading, setIsLoading] =useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [successMsg, setSuccessMsg] = useState(null);
 
 
@@ -49,35 +49,35 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
             setCountryLu(recName.data);
         }
     }
-    const getStateLu = async(countryname) => {
+    const getStateLu = async (countryname) => {
         let recName = await getStateLookup(countryname)
-    if (recName.ok) {
-      setStateLu(recName.data);
-    }
-    // let statelu = countryLu.filter((item) => { if (item.name == countryname) return item })
-    // if (statelu[0].states.length > 0) {
-    //   setStateLu(statelu[0].states)
-    // } else {
-    //   setStateLu([{ name: countryname, code: countryname }])
-    // }
-    form.setFieldsValue({ state: null })
+        if (recName.ok) {
+            setStateLu(recName.data);
+        }
+        // let statelu = countryLu.filter((item) => { if (item.name == countryname) return item })
+        // if (statelu[0].states.length > 0) {
+        //   setStateLu(statelu[0].states)
+        // } else {
+        //   setStateLu([{ name: countryname, code: countryname }])
+        // }
+        form.setFieldsValue({ state: null })
 
     }
     const handleWalletSelection = (walletId) => {
         form.setFieldsValue({ toCoin: walletId })
         if (buyInfo.memberFiat?.data) {
-          let wallet = buyInfo.memberFiat.data.filter((item) => {
-            return walletId === item.currencyCode
-          })
-          setSelectedWallet(wallet[0])
+            let wallet = buyInfo.memberFiat.data.filter((item) => {
+                return walletId === item.currencyCode
+            })
+            setSelectedWallet(wallet[0])
         }
-      }
+    }
     const savewithdrawal = async (values) => {
         setIsLoading(true)
         if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
             useDivRef.current.scrollIntoView()
             return setErrorMsg('Insufficient balance');
-          }
+        }
         setErrorMsg(null)
         const type = 'fiat';
         values['membershipId'] = userConfig.id;
@@ -93,28 +93,28 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
             let response = await saveAddress(values);
             if (response.ok) {
                 setErrorMsg('')
-               useDivRef.current.scrollIntoView()
+                useDivRef.current.scrollIntoView()
                 setSuccessMsg('Address saved successfully');
                 form.resetFields();
-                setTimeout(() => {onCancel();}, 1500)
+                setTimeout(() => { onCancel(); }, 1500)
                 setIsLoading(false)
 
             }
-            else{ setIsLoading(false)}
+            else { setIsLoading(false) }
         }
     }
 
     const { Paragraph, Title, Text } = Typography;
     const link = <LinkValue content="terms_service" />;
-    const antIcon = <LoadingOutlined style={{ fontSize: 18, color:'#fff', marginRight:'16px' }} spin />;
+    const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
 
     return (
         <>
-        {/* // <div ref={useDivRef}></div> */}
+            {/* // <div ref={useDivRef}></div> */}
             <div className="addbook-height auto-scroll">
                 <div ref={useDivRef}></div>
-                {errorMsg  && <Alert closable type="error"  description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-                {successMsg  && <Alert closable type="success"  description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
+                {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+                {successMsg && <Alert closable type="success" description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
 
                 <Form form={form} onFinish={savewithdrawal} autoComplete="off">
                     <Translate
@@ -167,7 +167,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 <Text className="input-label">Address</Text>
                                 <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
                             </div>
-                            <Input className="cust-input"  maxLength="30" placeholder="Enter Address" />
+                            <Input className="cust-input" maxLength="30" placeholder="Enter Address" />
                         </div>
                     </Form.Item>
                     <Form.Item
@@ -178,7 +178,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                             { required: true, message: "Is required" },
                         ]}
                     >
-                        <WalletList valueFeild={'currencyCode'} placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} />
+                        <WalletList hideBalance={true} valueFeild={'currencyCode'} placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput mb-24"
@@ -265,24 +265,24 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 }
                             }
                         ]}
-                        // rules={[
-                        //     { required: true, message: "Is required" },
-                        //     {
-                        //         validator: (rule, value, callback) => {
-                        //             var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
-                        //             if (value) {
-                        //                 if (!regx.test(value)) {
-                        //                     callback("Invalid bank name")
-                        //                 } else if (regx.test(value)) {
-                        //                     callback();
-                        //                 }
-                        //             } else {
-                        //                 callback();
-                        //             }
-                        //             return;
-                        //         }
-                        //     }
-                        // ]}
+                    // rules={[
+                    //     { required: true, message: "Is required" },
+                    //     {
+                    //         validator: (rule, value, callback) => {
+                    //             var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
+                    //             if (value) {
+                    //                 if (!regx.test(value)) {
+                    //                     callback("Invalid bank name")
+                    //                 } else if (regx.test(value)) {
+                    //                     callback();
+                    //                 }
+                    //             } else {
+                    //                 callback();
+                    //             }
+                    //             return;
+                    //         }
+                    //     }
+                    // ]}
 
                     >
                         <div>
@@ -325,7 +325,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         </div>
 
                     </Form.Item>
-                   
+
                     <Translate
                         content="Beneficiary_Details"
                         component={Paragraph}
@@ -381,7 +381,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 }
                             }
                         ]}>
-                    
+
                         <div>
                             <div className="d-flex">
                                 <Translate
@@ -468,13 +468,13 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         </div>
                     </Form.Item> */}
                     <Form.Item className="mb-0 mt-16">
-                        <Button disabled= {isLoading}
+                        <Button disabled={isLoading}
                             htmlType="submit"
                             size="large"
                             block
                             className="pop-btn"
                         >
-                             { isLoading  && <Spin indicator={antIcon} />}  Save
+                            {isLoading && <Spin indicator={antIcon} />}  Save
                         </Button>
                     </Form.Item>
                 </Form>
