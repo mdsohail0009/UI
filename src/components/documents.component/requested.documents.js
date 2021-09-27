@@ -32,7 +32,8 @@ class RequestedDocs extends Component {
 
         },
         docReplyObjs: [],
-        previewPath: null
+        previewPath: null,
+        isSubmitting:false,
     }
     componentDidMount() {
         this.getDocument(QueryString.parse(this.props.location.search).id);
@@ -103,6 +104,7 @@ class RequestedDocs extends Component {
         item.path = item.path ? typeof (item.path) == "object" ? JSON.stringify(item.path) : item.path : item.path;
         item.status = "Submitted";
         item.repliedDate = Mome().format("YYYY-MM-DDThh:mm:ss");
+        this.setState({...this.state,isSubmitting:true});
         const response = await saveDocReply(item);
         message.destroy()
         if (response.ok) {
@@ -119,7 +121,7 @@ class RequestedDocs extends Component {
         }
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(item => item.docunetDetailId != doc.id);
-        this.setState({ ...this.state, docReplyObjs: objs });
+        this.setState({ ...this.state, docReplyObjs: objs,isSubmitting:false });
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
     deleteDocument = async (doc, idx, isAdd) => {
@@ -293,7 +295,7 @@ class RequestedDocs extends Component {
                             </div>
                             <div className="text-center my-36">
 
-                                <Button className="pop-btn px-36" onClick={() => this.docReject(doc)}>Submit</Button>
+                                <Button disabled={this.state.isSubmitting} className="pop-btn px-36" onClick={() => this.docReject(doc)}>Submit</Button>
                             </div>
                         </>}
                     </Panel>
