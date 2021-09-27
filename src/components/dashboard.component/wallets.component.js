@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, List, Button } from 'antd';
+import { Typography, List, Button, notification } from 'antd';
 import Translate from 'react-translate-component';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import { fetchMemberWalletsData } from '../../reducers/dashboardReducer';
@@ -29,7 +29,15 @@ this.fetchWallets();
         //     this.setState({ ...this.state, wallets: [], loading: false, error: response.data });
         // }
     }
-    showSendReceiveDrawer = (e,value) => {
+    showDocsError() {
+        notification.error({ message: "Complete document requests", description: "Please complete document requests" })
+    }
+    showSendReceiveDrawer = (e, value) => {
+        const isDocsRequested = this.props?.dashboard?.notices?.data.length > 0;
+        if (isDocsRequested) {
+            this.showDocsError();
+            return;
+        }
         this.setState({
             valNum: e
         }, () => {
