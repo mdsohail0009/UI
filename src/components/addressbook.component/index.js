@@ -36,6 +36,7 @@ class AddressBook extends Component {
                 "status": [],
                 type:''
             },
+            memberId:this.props.userConfig.id,
 
             gridUrlCrypto: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressCryptoK",
             gridUrlFiat: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressFiatK",
@@ -73,6 +74,7 @@ class AddressBook extends Component {
     ];
     componentDidMount() {
         this.coinList()
+        //this.setState({memberId:userConfig.id})
     }
     handleInputChange = (prop, e) => {
         const rowObj = prop.dataItem;
@@ -204,7 +206,7 @@ class AddressBook extends Component {
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
     }
     render() {
-        const { cryptoFiat, gridUrlCrypto, gridUrlFiat } = this.state;
+        const { cryptoFiat, gridUrlCrypto, gridUrlFiat,memberId } = this.state;
         const { Title, Paragraph } = Typography;
         return (
             <>
@@ -248,7 +250,7 @@ class AddressBook extends Component {
                             </div>}
                             {this.state.successMsg  && <Alert type="success"
                              description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'Inactivated' : 'Activated') + ' Successfully'}  showIcon />}
-                        <List columns={this.columnsFiat} ref={this.gridFiatRef} key={gridUrlFiat} url={gridUrlFiat} />
+                        <List columns={this.columnsFiat} ref={this.gridFiatRef} key={gridUrlFiat} url={gridUrlFiat} additionalParams={{memberId:memberId}} />
                     </> :
                         <>
                             <div className="d-flex justify-content align-center mb-16">
@@ -277,7 +279,7 @@ class AddressBook extends Component {
                             </div>}
                             {this.state.successMsg  && <Alert type="success"
                              description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'Inactivated' : 'Activated') + ' Successfully'}  showIcon />}
-                            <List columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridCryptoRef} url={gridUrlCrypto} />
+                            <List columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridCryptoRef} url={gridUrlCrypto} additionalParams={{memberId:memberId}}/>
                         </>}
                 </div>
                 <Drawer destroyOnClose={true}
