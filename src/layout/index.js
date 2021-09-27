@@ -16,6 +16,9 @@ class Layout extends Component {
             userManager.signinRedirect();
         }
     }
+    redirect = () =>{
+        window.open(process.env.REACT_APP_ADMIN_URL,"_self")
+    }
     render() {
         if ((!this.props.user || this.props.user.expired) && !window.location.pathname.includes('callback')) {
             return <div className="loader">Loading .....</div>
@@ -23,7 +26,9 @@ class Layout extends Component {
             return <CallbackPage />
         }else if(this.props.user && !this.props.userProfile){
             return <OnBoarding />
-        }
+        }else if( this.props.userProfile && this.props.userProfile?.membership=='Admin'){
+            return <>{this.redirect()}</>
+        }else{
         return <>
             <AntLayout>
             <Header />
@@ -31,7 +36,7 @@ class Layout extends Component {
             <Footer />
           </AntLayout>
         </>
-        
+        }
         
     }
 }
