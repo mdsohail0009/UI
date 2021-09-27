@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Typography, List, Button, notification } from 'antd';
+import { Typography, List, Button, notification, message } from 'antd';
 import Translate from 'react-translate-component';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import { fetchMemberWalletsData } from '../../reducers/dashboardReducer';
 import connectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import MassPayment from '../buyfiat.component'
+import { withRouter } from 'react-router-dom';
 
 const { Title, Paragraph } = Typography;
 
@@ -30,10 +31,12 @@ this.fetchWallets();
         // }
     }
     showDocsError() {
-        notification.error({ message: "Complete document requests", description: "Please complete document requests" })
+        message.destroy();
+        message.error({ content: "Please complete document requests" });
+        this.props.history.push("/userprofile?key=3");
     }
     showSendReceiveDrawer = (e, value) => {
-        const isDocsRequested = this.props?.dashboard?.notices?.data.length > 0;
+        const isDocsRequested = this.props.userProfile.isDocsRequested;
         if (isDocsRequested) {
             this.showDocsError();
             return;
@@ -85,4 +88,4 @@ this.fetchWallets();
     }
 }
 
-export default connectStateProps(Wallets);
+export default connectStateProps(withRouter(Wallets));

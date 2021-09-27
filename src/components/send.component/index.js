@@ -31,7 +31,6 @@ class SendReceive extends Component {
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
     }
     selectCrypto = () =>{
-        debugger
         this.props.dispatch(setStep("step9"));
     }
     renderContent = () => {
