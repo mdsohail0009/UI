@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Button, Typography } from 'antd';
+import { List, Button, Typography, message } from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import connectStateProps from '../../utils/state.connect';
@@ -9,6 +9,7 @@ import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reduc
 import { setStep } from '../../reducers/buysellReducer';
 import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
+import { withRouter } from 'react-router-dom';
 
 class YourPortfolio extends Component {
     state = {
@@ -25,6 +26,12 @@ class YourPortfolio extends Component {
         }
     }
     showBuyDrawer = (item, key) => {
+        if (this.props?.userProfile?.isDocsRequested) {
+            message.destroy();
+            message.error({ content: "Please complete document requests" });
+            this.props.history.push("/userprofile?key=3");
+            return;
+        }
         if (key == "buy") {
             this.props.dispatch(fetchSelectedCoinDetails(item.coin, this.props.userProfile?.id));
             this.props.dispatch(setCoin({...item, toWalletCode:item.coin, toWalletId:item.id,toWalletName:item.coinFullName}));
@@ -85,4 +92,4 @@ class YourPortfolio extends Component {
     }
 }
 
-export default connectStateProps(YourPortfolio);
+export default connectStateProps(withRouter(YourPortfolio));

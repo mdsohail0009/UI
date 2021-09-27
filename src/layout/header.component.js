@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Typography, Dropdown, Tabs, Row, Col, Divider, Avatar, Carousel, Switch, Drawer, notification, Button } from 'antd';
+import { Layout, Menu, Modal, Typography, Dropdown, Tabs, Row, Col, Divider, Avatar, Carousel, Switch, Drawer, notification, Button, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Link, withRouter } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
@@ -177,9 +177,6 @@ class Header extends Component {
         this.carousel = React.createRef();
         this.userProfile = this.userProfile.bind(this);
     }
-    isDocsRequested() {
-        return this.props?.dashboard?.notices?.data?.length > 0;
-    }
     userProfile() {
         this.props.history.push("/userprofile");
     }
@@ -202,8 +199,13 @@ class Header extends Component {
             megamenu: false
         })
     }
+    showDocRequestError() {
+        message.destroy();
+        message.error({ content: "Please complete document requests" });
+        this.props.history.push("/userprofile?key=3");
+    }
     showBuyDrawer = () => {
-        if (this.props.userConfig.isKYC && !this.isDocsRequested()) {
+        if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
             this.setState({
                 buyDrawer: true
             })
@@ -212,13 +214,13 @@ class Header extends Component {
             if (isKyc) {
                 this.props.history.push("/notkyc");
             } else {
-                notification.error({ message: "Complete document requests", description: 'Please complete your document requests'});
-                this.props.history.push("/userprofile?key=3");
+                this.showDocRequestError();
+               
             }
         }
     }
     showSendDrawer = () => {
-        if (this.props.userConfig.isKYC && !this.isDocsRequested()) {
+        if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
             this.setState({
                 sendDrawer: true
             })
@@ -227,8 +229,7 @@ class Header extends Component {
             if (isKyc) {
                 this.props.history.push("/notkyc");
             } else {
-                notification.error({ message: "Complete document requests", description: 'Please complete your document requests' });
-                this.props.history.push("/userprofile?key=3");
+                this.showDocRequestError();
             }
         }
     }
@@ -243,7 +244,7 @@ class Header extends Component {
         })
     }
     showSwapDrawer = () => {
-        if (this.props.userConfig.isKYC && !this.isDocsRequested()) {
+        if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
             this.setState({
                 swapDrawer: true
             })
@@ -252,13 +253,12 @@ class Header extends Component {
             if (isKyc) {
                 this.props.history.push("/notkyc");
             } else {
-                notification.error({ message: "Complete document requests", description: 'Please complete your document requests' });
-                this.props.history.push("/userprofile?key=3");
+                this.showDocRequestError();
             }
         }
     }
     showBuyFiatDrawer = () => {
-        if (this.props.userConfig.isKYC&& !this.isDocsRequested()) {
+        if (this.props.userConfig.isKYC&& !this.props.userConfig.isDocsRequested) {
             this.setState({
                 buyFiatDrawer: true
             })
@@ -267,8 +267,7 @@ class Header extends Component {
             if (isKyc) {
                 this.props.history.push("/notkyc");
             } else {
-                notification.error({ message: "Complete document requests", description: 'Please complete your document requests' });
-                this.props.history.push("/userprofile?key=3");
+                this.showDocRequestError();
             }
             // notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
         }
