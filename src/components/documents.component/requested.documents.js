@@ -247,11 +247,9 @@ class RequestedDocs extends Component {
             <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=3" />{this.state?.docDetails?.note}</div>
             <div className="bank-view">
                 {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
-                    <Panel header={doc.documentName} key={idx + 1} extra={(doc.status === "Approved" || doc.status === "approved") && <span className="approved-lbl">Approved</span>}>
-                        {/* <span className={`${doc.status === "Approved" || doc.status === "approved" ? "icon md greenCheck" : "icon md greyCheck"}`} /> */}
+                    <Panel header={doc.documentName} key={idx + 1} extra={doc.status ? <span className={`${doc.status ? doc.status.toLowerCase() + " staus-lbl" : ""}`}>{doc.status}</span> : ""}>
                         {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
                         {this.state.documentReplies[doc.id]?.data?.map((reply, idx) => <div key={idx} className="reply-container">
-                            {/* <img src={profile} className="mr-16" /> */}
                             <div className="user-shortname">{this.props?.userProfileInfo?.firstName.charAt('0')}{this.props?.userProfileInfo?.lastName.charAt('0')}</div>
                             <div className="reply-body">
                                 <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment format="DD MMM YY hh:mm">{reply.repliedDate}</Moment> </Text>
@@ -298,38 +296,6 @@ class RequestedDocs extends Component {
                                 <Button className="pop-btn px-36" onClick={() => this.docReject(doc)}>Submit</Button>
                             </div>
                         </>}
-
-                        {/* {this.state.documentReplies[doc.id]?.data && this.state.documentReplies[doc.id]?.data?.length != 0 && doc.status != "Approved" && <div className="reply-container mb-0">
-                            <img src={profile} className="mr-16" />
-                            <div className="user-shortname">{this.props?.userProfileInfo?.firstName.charAt('0')}{this.props?.userProfileInfo?.lastName.charAt('0')}</div>
-                            <div className="reply-body">
-                                <div className="chat-send">
-                                    <Input className={doc.id.replace(/-/g, "")} onChange={({ currentTarget: { value } }) => this.handleReplymessage(value, doc)} type="text" placeholder="Write your message..." size="large" bordered={false} multiple={true} />
-                                    <div className="d-flex align-center">
-                                        <Tooltip title="Attachments">
-                                            <Upload accept=".pdf,.jpg,.jpeg,.png.gif" showUploadList={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} onChange={(props) => this.handleUpload(props, doc)}>
-                                                <span className="icon md attach mr-16 c-pointer" />
-                                            </Upload>
-                                        </Tooltip>
-                                        <div className="send-circle c-pointer" onClick={() => this.docReject(doc)}>
-                                            <Tooltip title="Send">
-                                                <span className="icon md send-icon" />
-                                            </Tooltip>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="docfile-container">
-                                    {this.getUploadedFiles(doc.id)?.path?.map((file, idx) => <div key={idx} className="docfile">
-                                        <span className="icon xl image mr-16" />
-                                        <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
-                                            <EllipsisMiddle suffixCount={12}>{file.filename}</EllipsisMiddle>
-                                            <span className="fs-12 text-secondary">{file.size}</span>
-                                        </div>
-                                        <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx, true)} />
-                                    </div>)}
-                                </div>
-                            </div>
-                        </div>} */}
                     </Panel>
                 </Collapse>)}
 
@@ -346,7 +312,6 @@ class RequestedDocs extends Component {
                 </>}
             >
                 <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.state.previewPath.includes(".pdf") ? "https://suissebasecors.herokuapp.com/" + this.state.previewPath : this.state.previewPath : null }} />
-                {/* <img style={{ width: "100%" }} src={uploadImage} alt="User" /> */}
             </Modal>
         </div>;
     }

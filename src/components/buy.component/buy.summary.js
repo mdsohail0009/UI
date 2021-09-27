@@ -34,7 +34,7 @@ class BuySummary extends Component {
                 fromWalletName,
                 "fromValue": this.props.sellData.previewDetails?.data?.amountNativeCurrency,
                 toWalletId,
-                "toWalletCode":this.props.sellData?.coinWallet.toWalletCode,
+                toWalletCode,
                 toWalletName,
                 "toValue": this.props.sellData.previewDetails?.data?.amount,
                 "description": "Buy Crypto",
@@ -43,6 +43,9 @@ class BuySummary extends Component {
                 "totalAmount": this.props.sellData.previewDetails?.data?.amount
 
             }
+            obj.toWalletId = obj.toWalletId?obj.toWalletId:this.props.sellData?.id;
+            obj.toWalletCode = obj.toWalletCode?obj.toWalletCode:this.props.sellData?.coinWallet?.coin;
+            obj.toWalletName = obj.toWalletName?obj.toWalletName:this.props.sellData?.coinWallet?.coinFullName;
             this.setState({ isLoading: true });
             const response = await buyCrypto(obj);
             if (response.ok) {
