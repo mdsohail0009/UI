@@ -100,7 +100,7 @@ class RequestedDocs extends Component {
             });
             return;
         }
-        item.path = item.path ? JSON.stringify(item.path) : item.path;
+        item.path = item.path ? typeof (item.path) == "object" ? JSON.stringify(item.path) : item.path : item.path;
         item.status = "Submitted";
         item.repliedDate = Mome().format("YYYY-MM-DDThh:mm:ss");
         const response = await saveDocReply(item);
