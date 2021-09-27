@@ -17,6 +17,7 @@ class Layout extends Component {
         }
     }
     redirect = () =>{
+        userManager.removeUser()
         window.open(process.env.REACT_APP_ADMIN_URL,"_self")
     }
     render() {
