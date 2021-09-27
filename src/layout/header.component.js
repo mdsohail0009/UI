@@ -177,6 +177,9 @@ class Header extends Component {
         this.carousel = React.createRef();
         this.userProfile = this.userProfile.bind(this);
     }
+    isDocsRequested() {
+        return this.props?.dashboard?.notices?.data?.length > 0;
+    }
     userProfile() {
         this.props.history.push("/userprofile");
     }
@@ -200,29 +203,33 @@ class Header extends Component {
         })
     }
     showBuyDrawer = () => {
-        // this.setState({
-        //     buyDrawer: true
-        // })
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig.isKYC && !this.isDocsRequested()) {
             this.setState({
                 buyDrawer: true
             })
         } else {
-            this.props.history.push("/notkyc");
-            //notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+            const isKyc = !this.props.userConfig.isKYC;
+            if (isKyc) {
+                this.props.history.push("/notkyc");
+            } else {
+                notification.error({ message: "Complete document requests", description: 'Please complete your document requests'});
+                this.props.history.push("/userprofile?key=3");
+            }
         }
     }
     showSendDrawer = () => {
-        // this.setState({
-        //     sendDrawer: true
-        // })
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig.isKYC && !this.isDocsRequested()) {
             this.setState({
                 sendDrawer: true
             })
         } else {
-            this.props.history.push("/notkyc");
-            //notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
+            const isKyc = !this.props.userConfig.isKYC;
+            if (isKyc) {
+                this.props.history.push("/notkyc");
+            } else {
+                notification.error({ message: "Complete document requests", description: 'Please complete your document requests' });
+                this.props.history.push("/userprofile?key=3");
+            }
         }
     }
     showTransactionHistoryDrawer = () => {
@@ -235,31 +242,34 @@ class Header extends Component {
             auditlogsDrawer: true
         })
     }
-
-
-
     showSwapDrawer = () => {
-        // this.setState({
-        //     swapDrawer: true
-        // })
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig.isKYC && !this.isDocsRequested()) {
             this.setState({
                 swapDrawer: true
             })
         } else {
-            this.props.history.push("/notkyc");
+            const isKyc = !this.props.userConfig.isKYC;
+            if (isKyc) {
+                this.props.history.push("/notkyc");
+            } else {
+                notification.error({ message: "Complete document requests", description: 'Please complete your document requests' });
+                this.props.history.push("/userprofile?key=3");
+            }
         }
     }
     showBuyFiatDrawer = () => {
-        // this.setState({
-        //     buyFiatDrawer: true,
-        // })
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig.isKYC&& !this.isDocsRequested()) {
             this.setState({
                 buyFiatDrawer: true
             })
         } else {
-            this.props.history.push("/notkyc");
+            const isKyc = !this.props.userConfig.isKYC;
+            if (isKyc) {
+                this.props.history.push("/notkyc");
+            } else {
+                notification.error({ message: "Complete document requests", description: 'Please complete your document requests' });
+                this.props.history.push("/userprofile?key=3");
+            }
             // notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
         }
     }
@@ -620,8 +630,8 @@ class Header extends Component {
     }
 }
 
-const connectStateToProps = ({ swapStore, userConfig, oidc }) => {
-    return { swapStore, userConfig: userConfig.userProfileInfo }
+const connectStateToProps = ({ swapStore, userConfig, oidc, dashboard }) => {
+    return { swapStore, userConfig: userConfig.userProfileInfo, dashboard }
 }
 const connectDispatchToProps = dispatch => {
     return {

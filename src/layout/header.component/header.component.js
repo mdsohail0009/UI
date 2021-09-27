@@ -40,44 +40,51 @@ class Header extends Component {
             initLoading: true,
             buyFiatDrawer: false,
             showChangePassword: false,
-            headerTitle:"Hello World"
+            headerTitle: "Hello World"
         }
 
     }
+    isDocsRequested() {
+        return this.props?.dashnboard?.notices?.data?.length > 0;
+    }
     showBuyDrawer = () => {
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig.isKYC && !this.isDocsRequested()) {
             this.setState({
                 buyDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your ' + (this.props.userConfig.isBusiness ? 'KYB.' : 'KYC.') });
+            const isKyc = !this.props.userConfig.isKYC;
+            notification.error({ message: "", description: 'Please complete Your ' + isKyc ? (this.props.userConfig.isBusiness ? 'KYB.' : 'KYC.') : "Document requests" });
         }
     }
     showSendDrawer = () => {
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig.isKYC && !this.isDocsRequested()) {
             this.setState({
                 sendDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your ' + (this.props.userConfig.isBusiness ? 'KYB.' : 'KYC.') });
+            const isKyc = !this.props.userConfig.isKYC;
+            notification.error({ message: "", description: 'Please complete Your ' + isKyc ? (this.props.userConfig.isBusiness ? 'KYB.' : 'KYC.') : "Document requests" });
         }
     }
     showSwapDrawer = () => {
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig.isKYC && !this.isDocsRequested()) {
             this.setState({
                 swapDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your ' + (this.props.userConfig.isBusiness ? 'KYB.' : 'KYC.') });
+            const isKyc = !this.props.userConfig.isKYC;
+            notification.error({ message: "", description: 'Please complete Your ' + isKyc ? (this.props.userConfig.isBusiness ? 'KYB.' : 'KYC.') : "Document requests" });
         }
     }
     showBuyFiatDrawer = () => {
-        if (this.props.userConfig.isKYC) {
+        if (this.props.userConfig.isKYC && !this.isDocsRequested()) {
             this.setState({
                 buyFiatDrawer: true
             })
         } else {
-            notification.error({ message: "", description: 'Please complete Your ' + (this.props.userConfig.isBusiness ? 'KYB.' : 'KYC.') });
+            const isKyc = !this.props.userConfig.isKYC;
+            notification.error({ message: "", description: 'Please complete Your ' + isKyc ? (this.props.userConfig.isBusiness ? 'KYB.' : 'KYC.') : "Document requests" });
         }
     }
     closeDrawer = () => {
@@ -140,7 +147,7 @@ class Header extends Component {
                                 <li className="pr-30 p-relative"><img src={logoColor} alt="logo" className="tlv-logo" /></li>
                                 <MegaMenu />
                                 <li className="mb-d-none" onClick={() => this.props.history.push("/dashboard")}>
-                                    <Translate  content="header_title_business" component="p" className="text-white-30 mb-0 fs-24" />
+                                    <Translate content="header_title_business" component="p" className="text-white-30 mb-0 fs-24" />
                                 </li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
@@ -187,8 +194,8 @@ class Header extends Component {
     }
 }
 
-const connectStateToProps = ({ swapStore, userConfig, oidc }) => {
-    return { swapStore, userConfig: userConfig.userProfileInfo }
+const connectStateToProps = ({ swapStore, userConfig, oidc, dashnboard }) => {
+    return { swapStore, userConfig: userConfig.userProfileInfo, dashnboard }
 }
 const connectDispatchToProps = dispatch => {
     return {
