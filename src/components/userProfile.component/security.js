@@ -52,10 +52,10 @@ const Security =({userConfig,onChange})=> {
                             <label className="mb-0 profile-label">Password</label>
                             <div style={{ flexGrow: 12 }}>
                                 <p className="mb-0 ml-8 profile-value"> ************</p>
-                                <p className="mb-0 ml-8 fs-14 text-white">Modified on <Moment format="DD-MM-YYYY">{userConfig?.pwdModifiedDate}</Moment></p>
+                                {userConfig?.pwdModifiedDate!=null&&<p className="mb-0 ml-8 fs-14 text-white">Modified on <Moment format="DD-MM-YYYY">{userConfig?.pwdModifiedDate}</Moment></p>}
                             </div>
                             <div>
-                                <span className="icon md rarrow-white" />
+                            <span className='text-white'>Click here to change password</span><span className="icon md rarrow-white" />
                             </div>
                         </div>
                     </li>
