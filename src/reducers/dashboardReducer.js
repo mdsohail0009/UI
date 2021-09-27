@@ -1,8 +1,9 @@
 import { fetchMemberWallets, fetchPortfolio, fetchYourPortfolio, getPortfolioGraph } from '../components/dashboard.component/api'
+import { getDashboardNotices } from '../components/documents.component/api';
 const FETCH_DETAIL_DATA = "fetchDetailData";
 const SET_DETAIL_DATA = "setDetailData";
 const REJECT_DETAIL_DATA = "rejectDetailData";
-
+const HANDLE_NOTICES = "handleNotices";
 const fetchDetailData = (payload) => {
     return { type: FETCH_DETAIL_DATA, payload }
 }
@@ -11,6 +12,12 @@ const setDetailData = (payload) => {
 }
 const rejectDetailData = (payload) => {
     return { type: REJECT_DETAIL_DATA, payload }
+}
+const handleNotices = (payload) => {
+    return {
+        type: HANDLE_NOTICES,
+        payload
+    }
 }
 const fetchDashboardcalls = (member_id) => {
     return async (dispatch) => {
@@ -46,7 +53,7 @@ const fetchGraphInfo = (member_id, type) => {
         dispatch(setDetailData({ key: "portFolioGraph", loading: true, data: [] }));
         const response = await getPortfolioGraph(member_id, type);
         if (response.ok) {
-            dispatch(setDetailData({ key: "portFolioGraph", loading: false, data: {BTC:response.data.map(item => { return { time: item.datetime, value: item.value } })} }));
+            dispatch(setDetailData({ key: "portFolioGraph", loading: false, data: { BTC: response.data.map(item => { return { time: item.datetime, value: item.value } }) } }));
         } else {
             dispatch(rejectDetailData({ key: "portFolioGraph", loading: false, data: [], error: response.originalError.message }));
         }
@@ -63,11 +70,23 @@ const fetchYourPortfoliodata = (member_id) => {
         }
     }
 }
+const fetchNotices = (memberId) => {
+    return async dispatch => {
+        dispatch(handleNotices({ data: [], loading: true }));
+        const response = await getDashboardNotices(memberId);
+        if (response.ok) {
+            dispatch(handleNotices({ data: response.data, loading: false }));
+        } else {
+            dispatch(handleNotices({ data: [], loading: false }));
+        }
+    }
+}
 let initialState = {
     isLoading: true,
     wallets: { loading: false, data: [] },
     portFolio: { loading: false, data: {} },
     cryptoPortFolios: { loading: false, data: [] },
+    notices: { loading: false, data: [] }
 }
 let dashboardReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -80,9 +99,11 @@ let dashboardReducer = (state = initialState, action) => {
         case REJECT_DETAIL_DATA:
             state = { ...state, [action.payload.key]: { data: action.payload.data, loading: false } };
             return state;
+        case HANDLE_NOTICES:
+            state = { ...state, notices: { data: action.payload.data, loading: action.payload.loading } }
         default:
             return state;
     }
 }
 export default dashboardReducer;
-export { fetchMemberWalletsData, fetchPortfolioData, fetchYourPortfoliodata, fetchDashboardcalls, fetchGraphInfo }
+export { fetchMemberWalletsData, fetchPortfolioData, fetchYourPortfoliodata, fetchDashboardcalls, fetchGraphInfo, fetchNotices }

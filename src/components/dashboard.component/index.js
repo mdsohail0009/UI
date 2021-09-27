@@ -3,13 +3,12 @@ import { Row, Col, Typography, Button, Carousel } from 'antd';
 import Wallets from './wallets.component';
 import Translate from 'react-translate-component';
 import Portfolio from './portfolio.component';
-// import Coins from './coins.component';
 import YourPortfolio from './yourportfolio.component';
 import MarketCap from './marketcap.component';
 import Notices from './notices';
 import AlertConfirmation from '../shared/alertconfirmation';
 import { connect } from 'react-redux';
-import { getDashboardNotices } from '../documents.component/api';
+import { fetchNotices } from '../../reducers/dashboardReducer';
 const { Title, Paragraph } = Typography;
 class Home extends Component {
     state = {
@@ -19,19 +18,17 @@ class Home extends Component {
         childrenDrawer: false,
     };
     componentDidMount() {
-        this.fetchNotices();
+        this.getNotices();
     }
-    fetchNotices = async () => {
-        const response = await getDashboardNotices(this.props?.userProfileInfo.id);
-        if (response.ok) {
-            this.setState({ ...this.state, notices: response.data })
-        }
+    getNotices = async () => {
+       this.props.dispatch(fetchNotices(this.props.userProfileInfo.id))
     }
     render() {
+        const { data: notices } = this.props.dashboard?.notices;
         return (
             <div className="main-container">
-                {this.state.notices != null && this.state.notices != undefined && <Carousel className="docreq-slider" autoplay={true}>
-                    {this.state.notices?.map((notice, idx) => <div className="mb-24" key={idx}>
+                {notices != null && notices != undefined && <Carousel className="docreq-slider" autoplay={true}>
+                    {notices?.map((notice, idx) => <div className="mb-24" key={idx}>
                         <AlertConfirmation type="error" title={notice.title} showIcon description="Dear user please check the details for requesting documents to approval your deposit/withdraw."
                             action={
                                 <Button size="small" type="text" onClick={() => this.props.history.push(`/documents?id=${notice.typeId}`)}>
@@ -50,7 +47,6 @@ class Home extends Component {
                                 <Translate content="markets_title" component={Title} className="fs-24 fw-600 mb-0 text-white-30" />
                                 <Translate content="markets_subtitle" component={Paragraph} className="text-white-30 fs-16 fw-200 mb-0" />
                             </div>
-                            {/* <Translate content="search_currency" component={Search} size="middle" bordered={false} enterButton className="mt-24" /> */}
                             <MarketCap />
                         </div>
                     </Col>
@@ -72,7 +68,7 @@ class Home extends Component {
 
     }
 }
-const mapStateToProps = ({ userConfig }) => {
-    return { userProfileInfo: userConfig.userProfileInfo }
+const mapStateToProps = ({ userConfig,dashboard }) => {
+    return { userProfileInfo: userConfig.userProfileInfo,dashboard }
 }
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, (dispatch) => { return {dispatch} })(Home);
