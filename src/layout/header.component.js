@@ -201,7 +201,7 @@ class Header extends Component {
     }
     showDocRequestError() {
         message.destroy();
-        message.error({ content: "Please complete document requests" });
+        message.error({ content: "Please complete document requests" , className:'custom-msg'});
         this.props.history.push("/userprofile?key=3");
     }
     showBuyDrawer = () => {
