@@ -40,9 +40,17 @@ class FaitDeposit extends Component {
   componentDidMount() {
     this.props.fiatRef(this)
     this.props.fetchCurrencyWithBankDetails()
-    appInsights.trackEvent({
-      name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": ('Deposit page view'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
-    });
+    if (this.props.sendReceive.withdrawFiatEnable) {
+      this.handleshowTab(2);
+      appInsights.trackEvent({
+        name: 'Withdraw Fiat', properties: { "Type": 'User', "Action": 'page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Withdraw Fiat', "Remarks": ('Withdraw page view'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' }
+      });
+    } else {
+      this.handleshowTab(1);
+      appInsights.trackEvent({
+        name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": ('Deposit page view'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
+      });
+    }
   }
   clearfiatValues = () => {
     this.props.fetchCurrencyWithBankDetails()
@@ -57,15 +65,18 @@ class FaitDeposit extends Component {
     });
   }
   handleBuySellToggle = e => {
+    this.handleshowTab(e.target.value)
+  }
+  handleshowTab = (tabKey) =>{
     this.setState({
       ...this.state,
-      faitdeposit: e.target.value === 2,
-      tabValue: e.target.value,
+      faitdeposit: tabKey === 2,
+      tabValue: tabKey,
       BankDetails: [],
       BankInfo: null,
       depObj: { currency: null, BankName: null, Amount: null }, Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false
     });
-    if(e.target.value === 1){
+    if(tabKey === 1){
       appInsights.trackEvent({
         name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": ('Deposit page view'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
       });
@@ -380,8 +391,8 @@ class FaitDeposit extends Component {
   }
 }
 
-const connectStateToProps = ({ faitdeposit, depositInfo, userConfig }) => {
-  return { faitdeposit, depositInfo, member: userConfig.userProfileInfo }
+const connectStateToProps = ({ faitdeposit, depositInfo, userConfig, sendReceive }) => {
+  return { faitdeposit, depositInfo, member: userConfig.userProfileInfo, sendReceive }
 }
 const connectDispatchToProps = dispatch => {
   return {
