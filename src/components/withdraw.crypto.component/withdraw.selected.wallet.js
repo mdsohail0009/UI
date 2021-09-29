@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Button, Card, Input, Radio, List, Alert, Row, Col, Form, Modal, Select, Tooltip } from 'antd';
-import { handleSendFetch, setStep, setSubTitle } from '../../reducers/sendreceiveReducer';
+import { handleSendFetch, setStep, setSubTitle,setWithdrawcrypto } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import Currency from '../shared/number.formate';
@@ -29,7 +29,12 @@ class CryptoWithDrawWallet extends Component {
         addressLu: []
     }
     componentDidMount() {
-        this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
+        if(this.props.sendReceive.withdrawCryptoObj){
+            this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.withdrawCryptoObj?.totalValue, localValue: 0 })
+            this.setState({ ...this.state, walletAddress:this.props.sendReceive.withdrawCryptoObj.toWalletAddress});
+        }else{
+            this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
+        }
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 2 }))
         this.props.dispatch(setSubTitle("Select wallet address"));
         this.trackevent();
@@ -114,16 +119,22 @@ class CryptoWithDrawWallet extends Component {
             "totalValue": this.state.CryptoAmnt,
             "tag": ""
         }
-        const response = await withDrawCrypto(obj);
-        this.setState({ ...this.state, loading: false, showModal: false })
-        if (response.ok) {
-            this.setState({ ...this.state, isWithdrawSuccess: true });
-            this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
-            appInsights.trackEvent({
-                name: 'WithDraw Crypto', properties: { "Type": 'User', "Action": 'Save', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'WithDraw Crypto', "Remarks": "WithDraw crypto save", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Crypto' }
-            });
+        if (this.props.userProfile.isBusiness) {
+            const response = await withDrawCrypto(obj);
+            this.setState({ ...this.state, loading: false, showModal: false })
+            if (response.ok) {
+                this.setState({ ...this.state, isWithdrawSuccess: true });
+                this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
+                appInsights.trackEvent({
+                    name: 'WithDraw Crypto', properties: { "Type": 'User', "Action": 'Save', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'WithDraw Crypto', "Remarks": "WithDraw crypto save", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Crypto' }
+                });
+            } else {
+                this.setState({ ...this.state, error: response.data, confirmationStep: "step1", showModal: false, isWithdrawSuccess: false })
+            }
         } else {
-            this.setState({ ...this.state, error: response.data, confirmationStep: "step1", showModal: false, isWithdrawSuccess: false })
+            this.props.dispatch(setSubTitle("Live verification"));
+            this.props.dispatch(setWithdrawcrypto(obj))
+            this.props.changeStep('withdraw_crypto_liveness');
         }
     }
     renderModalContent = () => {
@@ -277,7 +288,7 @@ class CryptoWithDrawWallet extends Component {
                                 </div>
                             </Tooltip> */}
                         {/* </div> */}
-                    </Form.Item>
+                    </Form.Item >
                 </Form>
 
 

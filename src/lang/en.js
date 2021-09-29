@@ -300,5 +300,7 @@ export default {
   withdraw_fiat_summary:'Withdraw fiat summary',
   withdraw_live:'Withdraw Face recognition',
   confirm_withdraw:'Withdraw confirm',
-  back:'Back'
+  back:'Back',
+  liveVarification:'Withdraw Crypto',
+  Withdraw_liveness:'Live verification',
 }

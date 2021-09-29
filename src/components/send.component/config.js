@@ -7,5 +7,6 @@ export const sendreceiveSteps = {
   step6: "verifyidentity",
   step7: "withdrawscan",
   step8: "addnewAddress",
-  step9: "selectCrypto"
+  step9: "selectCrypto",
+  withdraw_crypto_liveness: "withdraw_crypto_liveness"
 }
