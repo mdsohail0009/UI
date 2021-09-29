@@ -1,4 +1,4 @@
-import { favouriteFiatAddress, getSelectedCoinDetails } from "../components/addressbook.component/api";
+import { favouriteFiatAddress, getSelectedCoinDetails, getAddress } from "../components/addressbook.component/api";
 const SET_ADDRESS_STEP = "setAddressStep";
 const CLEAR_STEP = "clearStep";
 const FETCH_ADDRESS = 'fetchAddress';
@@ -6,6 +6,7 @@ const HANDLE_FETCH = 'handleFetch';
 const SET_COIN = "setCoin";
 const SET_EXCHANGE_VALUE = "setExchangeValue";
 const REJECT_COIN = 'rejectCoin';
+const FETCH_USERSID_UPDATE = 'fetchUsersIdUpdate';
 
 const handleFetch = (payload) => {
     return { type: HANDLE_FETCH, payload }
@@ -46,6 +47,12 @@ const rejectCoin = (payload) => {
         payload
     }
 }
+const fetchUsersIdUpdate = (payload) => {
+    return {
+        type: FETCH_USERSID_UPDATE,
+        payload
+    }
+}
 const handleFavouritAddress = () => {
     return async (dispatch) => {
         dispatch(fetchAddress({ key: "favouriteAddress", loading: true, data: [] }));
@@ -68,12 +75,25 @@ const fetchSelectedCoinDetails = (coin, member_id) => {
         }
     }
 }
+const fetchGetAddress = (member_id, type) => {
+    return async (dispatch) => {
+        dispatch(handleFetch({ key: "getAddress", loading: true, data: [] }));
+        const response = await getAddress(member_id,type);
+        if (response.ok) {
+            dispatch(handleFetch({ key: "getAddress", loading: false, data: response.data }));
+        } else {
+            dispatch(handleFetch({ key: "getAddress", loading: false, data: [], error: response.originalError.message }));
+        }
+    }
+}
 
 let initialState = {
     selectedCoin: {},
     favouriteAddress: [],
     coinWallet: {},
+    selectedRowData:{},
     exchangeValues: {},
+    getAddress: { loading: false, data: [] },
     stepcode: "step1",
     stepTitles: {
         newaddress: "suissebase_personal",
@@ -103,16 +123,18 @@ const AddressBookReducer = (state = initialState, action) => {
         case SET_COIN:
             state = { ...state, coinWallet: action.payload };
             return state;
-            case REJECT_COIN:
-                state = { ...state, coinWallet: {} };
-                return state;
+        case REJECT_COIN:
+            state = { ...state, coinWallet: {} };
+            return state;
         case SET_EXCHANGE_VALUE:
             state = { ...state, exchangeValues: { ...state.exchangeValues, [action.payload.key]: action.payload.value } };
             return state;
+        case FETCH_USERSID_UPDATE:
+            state = { ...state, selectedRowData: action.payload }
         default:
             return state;
     }
 
 }
 export default AddressBookReducer;
-export {setAddressStep, clearStep, setCoin, handleFavouritAddress, fetchSelectedCoinDetails,setExchangeValue ,rejectCoin}
+export { setAddressStep, clearStep, setCoin, handleFavouritAddress, fetchSelectedCoinDetails, setExchangeValue, rejectCoin,fetchUsersIdUpdate, fetchGetAddress}
