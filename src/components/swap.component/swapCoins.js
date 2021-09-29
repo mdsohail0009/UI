@@ -46,7 +46,7 @@ class SwapCoins extends Component {
     async setOneCoinValue() {
         this.setState({ ...this.props.swapStore.swapdata })
         if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
-            let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, 1);
+            let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, 1, this.props.userProfile.id,'swap');
             if (res.ok) {
                 this.setState({ ...this.state, price: res.data })
             }
@@ -55,7 +55,7 @@ class SwapCoins extends Component {
     }
     async setSwapOneCoinValue(fromCoin, toCoin) {
         if (fromCoin && toCoin) {
-            let res = await fetchCurrConvertionValue(fromCoin, toCoin, 1);
+            let res = await fetchCurrConvertionValue(fromCoin, toCoin, 1,this.props.userProfile.id,'swap');
             if (res.ok) {
                 this.setState({ ...this.state, price: res.data })
             }
@@ -69,7 +69,7 @@ class SwapCoins extends Component {
         }
         if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
             this.setState({ ...this.state, loadingToValue:true})
-            let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, e);
+            let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, e, this.props.userProfile.id,'swap');
             if (res.ok) {
                 this.setState({ ...this.state, receiveValue: res.data,errorMessage: null,loadingToValue:false})
                 this.props.updateSwapdataobj({ ...this.state, receiveValue: res.data })
@@ -155,7 +155,7 @@ class SwapCoins extends Component {
         this.state.receiveValue = e;
         if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
             this.setState({ ...this.state,loadingFromValue:true})
-            let res = await fetchCurrConvertionValue(this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.coinDetailData.coin, e);
+            let res = await fetchCurrConvertionValue(this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.coinDetailData.coin, e, this.props.userProfile.id,'swap');
             if (res.ok) {
                 this.setState({ ...this.state, fromValue: res.data,errorMessage:null,loadingFromValue:false })
                 this.props.updateSwapdataobj({ ...this.state, fromValue: res.data })

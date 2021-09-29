@@ -558,7 +558,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   }
   const handleOk = async () => {
     let currentStep = parseInt(confirmationStep.split("step")[1]);
-    if(userConfig.isBusiness && confirmationStep=='step2'){
+    if(confirmationStep=='step2'){
       let withdrawal = await withdrawSave(saveObj)
       if (withdrawal.ok) {
         dispatch(fetchDashboardcalls(userConfig.id))
