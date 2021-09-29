@@ -8,6 +8,7 @@ import { getMemberCoins,updateCoinDetail } from '../../reducers/sellReducer';
 import { setCoin, setExchangeValue } from '../../reducers/buyReducer';
 import Currency from '../shared/number.formate';
 import { appInsights } from "../../Shared/appinsights";
+import {getSelectedCoinDetails} from '../buy.component/api'
 
 class SellToggle extends Component {
     componentDidMount() {
@@ -24,13 +25,19 @@ class SellToggle extends Component {
             buyToggle: e.target.value,
         });
     };
+    setCoinDetailData=async(coin)=>{
+        let res = await getSelectedCoinDetails(coin.coin,this.props.member?.id);
+        if (res.ok) {
+            this.props.setSelectedCoin(res.data);this.props.changeStep('step10');
+        }
+    }
     render() {
         const { Text } = Typography;
         if(this.props.sellData?.memberCoins?.loading){return <Loader/>}
         return (
             <>
                <div className="sellcrypto-container auto-scroll">
-                    {this.props.sellData?.memberCoins?.data?.map((coin, idx) => <Card key={idx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { this.props.changeStep('step10'); this.props.setSelectedCoin(coin);this.props.setExchangeValue({ key: coin.coin, value: coin.oneCoinValue }) }} >
+                    {this.props.sellData?.memberCoins?.data?.map((coin, idx) => <Card key={idx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => {  this.setCoinDetailData(coin);this.props.setExchangeValue({ key: coin.coin, value: coin.oneCoinValue }) }} >
                         <span className="d-flex align-center">
                             <span className={`coin lg ${coin.coin}`} />
                             <Text className="fs-24 textc-white crypto-name ml-12">{coin.coinFullName}</Text>

@@ -5,6 +5,7 @@ import { getSellPreviewData, savesellData } from '../buy.component/api'
 import Summary from '../summary.component';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
+import { message } from 'antd';
 class SellSummary extends Component {
     state = { sellpreviewData: {}, loader: true, disableConfirm: false, isTermsAgree: false, error: {valid:true,message:null} }
     componentDidMount() {
@@ -41,6 +42,7 @@ class SellSummary extends Component {
                     name: 'Sell', properties: {"Type": 'User',"Action": 'Save',"Username":this.props.member.userName,"MemeberId": this.props.member.id,"Feature": 'Sell',"Remarks": obj.fromValue+" "+this.state.sellpreviewData.coin+" selled","Duration": 1,"Url": window.location.href,"FullFeatureName": 'sell Crypto'}
                 });
             } else {
+                message.error({ content: res.data.errors , className:'custom-msg'});
                 this.setState({ ...this.state, loader: false, disableConfirm: false })
             }
         }
