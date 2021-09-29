@@ -38,7 +38,7 @@ class SelectCrypto extends Component {
     handleCoinSelection = (selectedCoin) => {
             this.props.getCoinDetails(selectedCoin, this.props.userProfile?.userId);
             this.props.setSelectedCoin(selectedCoin);
-            convertCurrency({ from: selectedCoin.walletCode, to: "USD", value: 1, isCrypto: false }).then(val => {
+            convertCurrency({ from: selectedCoin.walletCode, to: "USD", value: 1, isCrypto: false,memId:this.props.userProfile?.id,screenName:null }).then(val => {
                 this.props.setExchangeValue({ key: selectedCoin.walletCode, value: val });
             })
             this.props.changeStep('step1')
