@@ -3,6 +3,7 @@ import { Drawer, Typography, Menu, Dropdown } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import { buyFiatSteps as config } from './config';
 import { setStep } from '../../reducers/buysellReducer';
+import {rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
 import connectStateProps from '../../utils/state.connect';
 import Translate from 'react-translate-component';
 import BuyFiat from './buyFiat';
@@ -16,6 +17,7 @@ import FaitDepositSummary from './faitdepositSummary';
 import NewFiatAddress from '../addressbook.component/addFiatAddressbook';
 import WithdrawalSummary from '../withDraw.component/withdrawalSummary';
 import WithdrawalLive from '../withDraw.component/withdrawLive';
+import WithdrawalSuccess from '../withDraw.component/withdrwSuccess';
 
 import ConfirmMsg from './confirm'
 class MassPayment extends Component {
@@ -23,6 +25,8 @@ class MassPayment extends Component {
         withdraw: false,
     }
     closeDrawer = () => {
+        this.props.dispatch(setWithdrawfiatenaable(false))
+        this.props.dispatch(rejectWithdrawfiat())
         this.props.dispatch(setStep("step1"))
         if (this.props.onClose) {
             this.props.onClose();
@@ -35,6 +39,7 @@ class MassPayment extends Component {
     }
     onAddressClick = () => {
       //  console.log('trigger')
+        this.props.dispatch(setWithdrawfiatenaable(true))
         this.props.dispatch(setStep("step1"))
     }
     renderContent = () => {
@@ -51,6 +56,7 @@ class MassPayment extends Component {
             addAddress:<NewFiatAddress onCancel = { () =>this.onAddressClick() } />,
             withdrwalfiatsummary: < WithdrawalSummary/>,
             withdrwlive: < WithdrawalLive/>,
+            withdrwsuccess: < WithdrawalSuccess/>,
         }
         return stepcodes[config[this.props.buyFiat.stepcode]]
     }
@@ -63,9 +69,10 @@ class MassPayment extends Component {
             selectwallet: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             billingaddress: <span onClick={() => this.props.dispatch(setStep("step3"))} className="icon md lftarw-white c-pointer" />,
             confirmation: <span />,
-            addAddress: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            addAddress: <span onClick={() => this.onAddressClick()} className="icon md lftarw-white c-pointer" />,
             withdrwalfiatsummary: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             withdrwlive: <span onClick={() => this.props.dispatch(setStep("step5"))} className="icon md lftarw-white c-pointer" />,
+            withdrwsuccess: <span onClick={() => this.onAddressClick()} className="icon md lftarw-white c-pointer" />,
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }
@@ -91,7 +98,8 @@ class MassPayment extends Component {
             confirmation: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             addAddress: <span />,
             withdrwalfiatsummary: <span />,
-            withdrwlive: <span />
+            withdrwlive: <span />,
+            withdrwsuccess: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }

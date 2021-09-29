@@ -1,9 +1,7 @@
-import React, { Component, useState, useRef, useEffect } from 'react';
-import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert, Tooltip, Select } from 'antd';
-import Currency from '../shared/number.formate';
+import React, { useState, useEffect } from 'react';
+import { Typography, Button } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import SuisseBtn from '../shared/butons';
 import Translate from 'react-translate-component';
 import LiveNessSumsub from '../sumSub.component/liveness'
 import { withdrawSave } from '../../api/apiServer';
@@ -29,8 +27,7 @@ const WithdrawalLive = ({ userConfig, sendReceive, changeStep,dispatch,onConfirm
         dispatch(fetchDashboardcalls(userConfig.id))
         setIsWithdrawSuccess(true)
         dispatch(rejectWithdrawfiat())
-        onConfirm()
-        setIsLoding(true)
+        changeStep("step7")
         appInsights.trackEvent({
           name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
         });

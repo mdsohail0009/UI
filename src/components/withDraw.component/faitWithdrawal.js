@@ -563,8 +563,8 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
       if (withdrawal.ok) {
         dispatch(fetchDashboardcalls(userConfig.id))
         dispatch(rejectWithdrawfiat())
-        //setIsLoding(true)
-        setConfirmationStep("step4")
+        changeStep("step7")
+        // setConfirmationStep("step4")
         appInsights.trackEvent({
           name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
         });
