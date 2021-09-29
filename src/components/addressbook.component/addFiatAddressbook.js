@@ -119,7 +119,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                                 <Text className="input-label">Address Label</Text>
                                 <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
                             </div>
-                            <Input className="cust-input" maxLength="20" placeholder="Enter Address label" />
+                            <Input className="cust-input" maxLength="20" placeholder="Enter address label" />
                         </div>
                     </Form.Item>
                     <Form.Item
@@ -143,7 +143,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                                 <Text className="input-label">Address</Text>
                                 <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
                             </div>
-                            <Input className="cust-input" maxLength="30" placeholder="Enter Address" />
+                            <Input className="cust-input" maxLength="30" placeholder="Enter address" />
                         </div>
                     </Form.Item>
                     <Form.Item
@@ -154,7 +154,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                             { required: true, message: "Is required" },
                         ]}
                     >
-                        <WalletList hideBalance={true} valueFeild={'currencyCode'} placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} />
+                        <WalletList hideBalance={true} valueFeild={'currencyCode'} placeholder="Select currency" onWalletSelect={(e) => handleWalletSelection(e)} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput mb-24"
