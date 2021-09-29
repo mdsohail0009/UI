@@ -60,7 +60,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
       const result = await changePassword(initialValues);
       if (result.ok) {
         message.success({content:'Password changed successfully',className: 'custom-msg'});
-        setChangePasswordResponse({ error: false, messsage: 'Password changed successfully', isLoading: false });
+        setChangePasswordResponse({ error: false, messsage: '', isLoading: false });
         form.resetFields();
         onSubmit()
         getmemeberInfoa(userConfig.email)
