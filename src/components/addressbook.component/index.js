@@ -64,7 +64,7 @@ class AddressBook extends Component {
                 <span></span> </label></td>)
         },
         { field: "addressLable", title: "Address Label", filter: true, width: 250 },
-        { field: "coin", title: "Coins", filter: true, width: 120 },
+        { field: "coins", title: "Coins", filter: true, width: 120 },
         { field: "address", title: "Address", filter: true, width: 380 },
         { field: "status", title: "Status", filter: true, width: 100 }
     ];
