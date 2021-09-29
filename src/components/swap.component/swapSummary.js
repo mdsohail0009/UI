@@ -56,14 +56,14 @@ class SwapSummary extends Component {
 
     async setOneCoinValue() {
         if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
-            let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, 1);
+            let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, 1, this.props.userProfile.id,'swap');
             if (res.ok) {
                 this.setState({ ...this.state, price: res.data })
             }
         }
     }
     async setReceiveAmount(e) {
-        let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.fromCoinInputValue);
+        let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.fromCoinInputValue,this.props.userProfile.id,'swap');
         if (res.ok) {
             this.setState({ ...this.state, receiveValue: res.data })
         }
