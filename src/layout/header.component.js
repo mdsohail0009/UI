@@ -170,7 +170,7 @@ class Header extends Component {
             buyFiatDrawer: false,
             showChangePassword: false,
             transactionDrawer: false,
-            auditlogsDrawer: false
+            auditlogsDrawer: false,Visibleprofilemenu:false
         }
         this.next = this.next.bind(this);
         this.previous = this.previous.bind(this);
@@ -179,6 +179,7 @@ class Header extends Component {
     }
     userProfile() {
         this.props.history.push("/userprofile");
+        this.setState({...this.state,Visibleprofilemenu:false})
     }
     next() {
         this.carousel.next();
@@ -240,7 +241,7 @@ class Header extends Component {
     }
     showAuditLogsDrawer = () => {
         this.setState({
-            auditlogsDrawer: true
+            auditlogsDrawer: true,Visibleprofilemenu:false
         })
     }
     showSwapDrawer = () => {
@@ -383,7 +384,7 @@ class Header extends Component {
                             </Dropdown> */}
                             <Translate content="menu_transactions_history" component={Menu.Item} key="4" onClick={this.showTransactionHistoryDrawer} className="list-item" />
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
-                            <Dropdown overlay={userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                            <Dropdown visible={this.state.Visibleprofilemenu} onClick={()=>this.setState({...this.state,Visibleprofilemenu:true})} overlay={userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Menu.Item key="7" className="ml-16" >{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" />}
                                     {this.props.userConfig?.imageURL == null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" />}</Menu.Item>
                             </Dropdown>
