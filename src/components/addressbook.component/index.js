@@ -236,8 +236,18 @@ class AddressBook extends Component {
                             <div><Title className="fs-26 text-white-30 fw-500">Withdraw Fiat</Title>
                                 {/* <Paragraph className="basic-decs fw-200">Basic Info, like your name and photo, that you use on Suissebase</Paragraph> */}
                             </div>
-                           
-                                {/* <Button className="c-pointer pop-btn ant-btn px-24 mr-16" onClick={this.handleFiatAddress}> Add Address</Button> */}
+                            <div className="d-flex align-center">
+                                    <Button className="c-pointer pop-btn ant-btn px-24 mr-16" onClick={this.handleFiatAddress}> Add Address</Button>
+                                    <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0 }}>
+                                        <li onClick={this.statusUpdate}>
+                                            <Tooltip placement="topRight" title="Active/Inactive">
+                                                <Link className="icon md status mr-0"
+                                                ></Link>
+                                            </Tooltip>
+                                        </li>
+                                    </ul>
+                                </div>
+                                {/* <Button className="c-pointer pop-btn ant-btn px-24 mr-16" onClick={this.handleFiatAddress}> Add Address</Button>
                                 <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0 ,display:'flex'}}>
                                 <li onClick={this.handleFiatAddress} className="mr-16">
                                         <Tooltip placement="topRight" title="Add">
@@ -245,19 +255,19 @@ class AddressBook extends Component {
                                             ></Link>
                                         </Tooltip>
                                     </li>
-                                <li onClick={this.editFiatAddress} className="mr-16">
+                                {/* <li onClick={this.editFiatAddress} className="mr-16">
                                         <Tooltip placement="topRight" title="Edit">
                                             <Link className="icon md edit-icon mr-0"
                                             ></Link>
                                         </Tooltip>
-                                    </li>
-                                    <li onClick={this.statusUpdate}>
+                                    </li> */}
+                                    {/* <li onClick={this.statusUpdate}>
                                         <Tooltip placement="topRight" title="Active/Inactive">
                                             <Link className="icon md status mr-0"
                                             ></Link>
                                         </Tooltip>
                                     </li>
-                                </ul>
+                                </ul>  */}
                             
                         </div>
                         {this.state.alert &&

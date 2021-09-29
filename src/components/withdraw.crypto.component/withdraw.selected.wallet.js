@@ -11,6 +11,7 @@ import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import WalletAddressValidator from 'wallet-address-validator';
 import { appInsights } from "../../Shared/appinsights";
 import { favouriteFiatAddress } from '../addressbook.component/api'
+import oops from '../../assets/images/oops.png'
 
 const { Option } = Select;
 class CryptoWithDrawWallet extends Component {
@@ -276,19 +277,27 @@ class CryptoWithDrawWallet extends Component {
                 /> */}
                     <Form>
                         <Form.Item
-                            name="bankId"
-                            className="custom-forminput mb-16"
+                            name="toWalletAddress"
+                            className="custom-forminput custom-label  mb-16"
+                            required
+                            label="Address"
                             rules={[
                                 {
-                                    required: true,
-                                    message: 'Is required',
-                                },
+                                    type: "toWalletAddress", validator: async (rule, value, callback) => {
+                                        if (value == null || value.trim() == "") {
+                                            throw new Error("Is required")
+                                        }
+                                        else {
+                                            callback();
+                                        }
+                                    }
+                                }
                             ]}
                         >
-                            <div className="d-flex"><Text
+                            {/* <div className="d-flex"><Text
                                 className="input-label" >Address</Text>
                                 <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span>
-                            </div>
+                            </div> */}
                             <div className="p-relative d-flex align-center">
                                 {!this.state.isAddressValue ?
                                     <Input className="cust-input custom-add-select mb-0" placeholder="Enter address"
@@ -325,7 +334,9 @@ class CryptoWithDrawWallet extends Component {
                             <li onClick={(selectadd) => this.handleSelectAdd(selectadd)} key={idx} > {item.name}</li>
                         )}
                     </ul> </>:
-                        <div className="success-pop text-center" style={{marginTop:'40px'}}>
+                        <div className="success-pop text-center" style={{marginTop:'20px'}}>
+                            <img src={oops} className="confirm-icon" style={{marginBottom:'10px'}} />
+                           <h1 className="fs-36 text-white-30 fw-200 mb-0" >OOPS </h1>
                             <p className="fs-16 text-white-30 fw-200"> No Address Avaliable </p>
                         </div>
                     }
