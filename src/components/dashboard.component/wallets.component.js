@@ -7,7 +7,7 @@ import connectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import MassPayment from '../buyfiat.component'
 import { withRouter } from 'react-router-dom';
-
+import {setWithdrawfiatenaable} from '../../reducers/sendreceiveReducer'
 const { Title, Paragraph } = Typography;
 
 class Wallets extends Component {
@@ -40,6 +40,9 @@ this.fetchWallets();
         if (isDocsRequested) {
             this.showDocsError();
             return;
+        }
+        if(e==2){
+            this.props.dispatch(setWithdrawfiatenaable(true))
         }
         this.setState({
             valNum: e
