@@ -8,6 +8,7 @@ const SET_WITHDRAWFIAT = "setWithdrawfiat";
 const REJECT_WITHDRAWFIAT = "rejectWithdrawfiat";
 const SET_WITHDRAWFIAT_ENABLE = "setWithdrawfiatenaable";
 const REJECT_WITHDRAWFIAT_ENABLE = "rejectWithdrawfiatenaable";
+const SET_WITHDRAWCRYPTO = "setWithdrawcrypto";
 const SET_SUB_TITLE = "setSubTitle";
 const setStep = (payload) => {
     return {
@@ -24,6 +25,12 @@ const setSubTitle = (payload) => {
 const setWithdrawfiat = (payload) => {
     return {
         type: SET_WITHDRAWFIAT,
+        payload
+    }
+}
+const setWithdrawcrypto = (payload) => {
+    return {
+        type: SET_WITHDRAWCRYPTO,
         payload
     }
 }
@@ -89,6 +96,7 @@ let initialState = {
         withdrawscan: 'deposit',
         addnewAddress: 'cryptoAddress',
         selectCrypto:null,
+        withdraw_crypto_liveness:'liveVarification',
 
     },
     stepSubTitles: {
@@ -99,7 +107,8 @@ let initialState = {
         withdrawsummary: 'withdraw_summary_sub',
         withdrawscan: 'withdraw_summary_sub',
         addnewAddress: null,
-        selectCrypto:null
+        selectCrypto:null,
+        withdraw_crypto_liveness:'Withdraw_liveness'
 
 
     },
@@ -107,7 +116,8 @@ let initialState = {
     cryptoWithdraw: {},
     withdrawFiatObj: null,
     withdrawFiatEnable: false,
-    subTitle: null
+    subTitle: null,
+    withdrawCryptoObj: null
 }
 const sendReceiveReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -122,6 +132,9 @@ const sendReceiveReducer = (state = initialState, action) => {
             return state;
         case SET_WITHDRAWFIAT:
             state = { ...state, withdrawFiatObj: action.payload };
+            return state;
+        case SET_WITHDRAWCRYPTO:
+            state = { ...state, withdrawCryptoObj: action.payload };
             return state;
         case REJECT_WITHDRAWFIAT:
             state = { ...state, withdrawFiatObj: null };
@@ -144,4 +157,4 @@ const sendReceiveReducer = (state = initialState, action) => {
 
 }
 export default sendReceiveReducer;
-export { setStep, clearStep, setWalletAddress, fetchWithDrawWallets, setSelectedWithDrawWallet, handleSendFetch, setSubTitle, setWithdrawfiat, rejectWithdrawfiat, setWithdrawfiatenaable, rejectWithdrawfiatenaable }
+export { setStep, clearStep, setWalletAddress, fetchWithDrawWallets, setSelectedWithDrawWallet, handleSendFetch, setSubTitle, setWithdrawfiat, rejectWithdrawfiat, setWithdrawfiatenaable, rejectWithdrawfiatenaable,setWithdrawcrypto }
