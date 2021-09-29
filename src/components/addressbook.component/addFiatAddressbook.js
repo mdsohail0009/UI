@@ -1,68 +1,45 @@
-import React, { Component, useState, useRef, useEffect } from 'react';
-import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert, Tooltip, Select, Spin } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Form, Typography, Input, Button,  Alert, Select, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import WalletList from '../shared/walletList';
-import NumberFormat from 'react-number-format';
-import { withdrawRecepientNamecheck, withdrawSave, getCountryStateLu, getStateLookup } from '../../api/apiServer';
-import Currency from '../shared/number.formate';
-import success from '../../assets/images/success.png';
-import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
-import { appInsights } from "../../Shared/appinsights";
-import { saveAddress, favouriteNameCheck } from './api';
+import { saveAddress, favouriteNameCheck,getAddress } from './api';
+import{ fetchGetAddress} from '../../reducers/addressBookReducer';
 
-
-const LinkValue = (props) => {
-    return (
-        <Translate className="textpure-yellow text-underline c-pointer"
-            content={props.content}
-            component={Link}
-        />
-    )
-}
 const { Option } = Select;
-const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, changeStep, onCancel, hideBalance }) => {
+const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,getAddressList}) => {
     const [form] = Form.useForm();
     const [selectedWallet, setSelectedWallet] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
-    const [loading, setLoading] = useState(false);
-    // const [saveObj, setSaveObj] = useState(null);
-    const [countryLu, setCountryLu] = useState([]);
-    const [stateLu, setStateLu] = useState([]);
-    const [country, setCountry] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [successMsg, setSuccessMsg] = useState(null);
-
-
-    const [fiatDrawer, setFiatDrawer] = useState(false);
+    const [ fiatAddress, setFiatAddress] =useState({});
 
     const useDivRef = React.useRef(null);
-    useEffect(() => {
-        getCountryLu();
-    }, [])
-    const getCountryLu = async () => {
-        let recName = await getCountryStateLu()
-        if (recName.ok) {
-            setCountryLu(recName.data);
-        }
-    }
-    const getStateLu = async (countryname) => {
-        let recName = await getStateLookup(countryname)
-        if (recName.ok) {
-            setStateLu(recName.data);
-        }
-        // let statelu = countryLu.filter((item) => { if (item.name == countryname) return item })
-        // if (statelu[0].states.length > 0) {
-        //   setStateLu(statelu[0].states)
-        // } else {
-        //   setStateLu([{ name: countryname, code: countryname }])
-        // }
-        form.setFieldsValue({ state: null })
 
+    useEffect(() => {
+        debugger
+        if(addressBookReducer?.selectedRowData != "00000000-0000-0000-0000-000000000000"){
+            getAddressList(addressBookReducer?.selectedRowData, 'fiat')
+            loadData();
+        }
+    }, [])
+    const loadData = async () => {
+      debugger
+        let response = await getAddress(addressBookReducer?.selectedRowData, 'fiat');
+        if (response.ok) {
+            bindEditableData(response.data)
+            setIsLoading(false)
+        }
     }
+    const bindEditableData = (obj) => {
+       debugger
+        setFiatAddress({ ...obj });
+        form.setFieldsValue({ ...obj });
+    };
+
     const handleWalletSelection = (walletId) => {
         form.setFieldsValue({ toCoin: walletId })
         if (buyInfo.memberFiat?.data) {
@@ -72,6 +49,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
             setSelectedWallet(wallet[0])
         }
     }
+
     const savewithdrawal = async (values) => {
         setIsLoading(true)
         if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
@@ -98,14 +76,12 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                 form.resetFields();
                 setTimeout(() => { onCancel(); }, 1500)
                 setIsLoading(false)
-
             }
             else { setIsLoading(false) }
         }
     }
 
     const { Paragraph, Title, Text } = Typography;
-    const link = <LinkValue content="terms_service" />;
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
 
     return (
@@ -116,7 +92,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                 {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
                 {successMsg && <Alert closable type="success" description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
 
-                <Form form={form} onFinish={savewithdrawal} autoComplete="off">
+                <Form form={form} onFinish={savewithdrawal} autoComplete="off"  initialValues={fiatAddress}>
                     <Translate
                         content="Beneficiary_BankDetails"
                         component={Paragraph}
@@ -265,25 +241,6 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 }
                             }
                         ]}
-                    // rules={[
-                    //     { required: true, message: "Is required" },
-                    //     {
-                    //         validator: (rule, value, callback) => {
-                    //             var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
-                    //             if (value) {
-                    //                 if (!regx.test(value)) {
-                    //                     callback("Invalid bank name")
-                    //                 } else if (regx.test(value)) {
-                    //                     callback();
-                    //                 }
-                    //             } else {
-                    //                 callback();
-                    //             }
-                    //             return;
-                    //         }
-                    //     }
-                    // ]}
-
                     >
                         <div>
                             <div className="d-flex">
@@ -335,24 +292,6 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                         className="custom-forminput mb-24"
                         name="beneficiaryAccountName"
                         required
-                    // rules={[
-                    //   { required: true, message: "Is required" },
-                    //   {
-                    //     validator: (rule, value, callback) => {
-                    //       var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
-                    //       if (value) {
-                    //         if (!regx.test(value)) {
-                    //           callback("Invalid recipient full name")
-                    //         } else if (regx.test(value)) {
-                    //           callback();
-                    //         }
-                    //       } else {
-                    //         callback();
-                    //       }
-                    //       return;
-                    //     }
-                    //   }
-                    // ]}
                     >
                         <div>
                             <div className="d-flex">
@@ -394,79 +333,7 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                                 </span></div>
                             <Input className="cust-input" placeholder="Recipient address line 1" />
                         </div>
-
                     </Form.Item>
-                    {/* <Form.Item
-                        className="custom-forminput mb-24"
-                        name="beneficiaryAccountAddress1"
-                    >
-                        <div>
-                            <div className="d-flex">
-                                <Translate
-                                    className="input-label"
-                                    content="Recipient_address2"
-                                    component={Text}
-                                /></div>
-                            <Input className="cust-input" placeholder="Recipient address line 2" />
-                        </div>
-                    </Form.Item>
-                    <Form.Item
-                        className="custom-forminput mb-24"
-                        name="description"
-                    // rules={[
-                    //   {
-                    //     validator: (rule, value, callback) => {
-                    //       var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                    //       if (value) {
-                    //         if (!regx.test(value)) {
-                    //           callback("Invalid reference")
-                    //         } else if (regx.test(value)) {
-                    //           callback();
-                    //         }
-                    //       } else {
-                    //         callback();
-                    //       }
-                    //       return;
-                    //     }
-                    //   }
-                    // ]}
-                    >
-                        <div>
-                            <div className="d-flex">
-                                <Translate
-                                    className="input-label"
-                                    content="remarks"
-                                    component={Text}
-                                /></div>
-                            <Input className="cust-input" placeholder="Remarks" />
-                        </div>
-                    </Form.Item> */}
-                    {/* <Form.Item
-                        className="custom-forminput mb-36 agree"
-                        name="isAccept"
-                        valuePropName="checked"
-                        required
-                        rules={[
-                            {
-                                validator: (_, value) =>
-                                    value ? Promise.resolve() : Promise.reject(new Error('Please agree terms of service')),
-                            },
-                        ]}
-                    >
-                        <div className="d-flex pt-16 agree-check">
-                            <label>
-                                <input type="checkbox" id="agree-check" />
-                                <span for="agree-check" />
-                            </label>
-                            <Translate
-                                content="agree_to_suissebase"
-                                with={{ link }}
-                                component={Paragraph}
-                                className="fs-14 text-white-30 ml-16 mb-4"
-                                style={{ flex: 1 }}
-                            />
-                        </div>
-                    </Form.Item> */}
                     <Form.Item className="mb-0 mt-16">
                         <Button disabled={isLoading}
                             htmlType="submit"
@@ -479,28 +346,23 @@ const NewFiatAddress = ({ selectedWalletCode, buyInfo, userConfig, dispatch, cha
                     </Form.Item>
                 </Form>
             </div>
-            {/* <Modal className="widthdraw-pop" maskClosable={false} onCancel={handleCancel} title="Withdraw" closeIcon={<Tooltip title="Close"><span onClick={handleCancel} className="icon md close" /></Tooltip>} footer={[
-                <>{confirmationStep != 'step2' && <div className="text-right withdraw-footer"><Button key="back" type="text" className="text-white-30 pop-cancel fw-400 text-captz text-center" onClick={handleCancel} disabled={loading}>
-                    Cancel
-                </Button>
-                    <Button key="submit" className="pop-btn px-36 ml-36" onClick={handleOk} loading={loading}>
-                        Confirm
-                    </Button></div>}</>
-            ]} visible={showModal}>
-                {renderModalContent()}
-            </Modal> */}
+           
         </>
     );
 }
 
-const connectStateToProps = ({ buyInfo, userConfig }) => {
-    return { buyInfo, userConfig: userConfig.userProfileInfo }
+const connectStateToProps = ({ buyInfo, userConfig , addressBookReducer}) => {
+    return { buyInfo, userConfig: userConfig.userProfileInfo,addressBookReducer }
 }
 const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
+        getAddressList: (id, type) => {
+            dispatch(fetchGetAddress(id, type));
+        },
+        
         dispatch
     }
 

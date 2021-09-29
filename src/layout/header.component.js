@@ -170,7 +170,7 @@ class Header extends Component {
             buyFiatDrawer: false,
             showChangePassword: false,
             transactionDrawer: false,
-            auditlogsDrawer: false
+            auditlogsDrawer: false,Visibleprofilemenu:false
         }
         this.next = this.next.bind(this);
         this.previous = this.previous.bind(this);
@@ -179,6 +179,7 @@ class Header extends Component {
     }
     userProfile() {
         this.props.history.push("/userprofile");
+        this.setState({...this.state,Visibleprofilemenu:false})
     }
     next() {
         this.carousel.next();
@@ -240,7 +241,7 @@ class Header extends Component {
     }
     showAuditLogsDrawer = () => {
         this.setState({
-            auditlogsDrawer: true
+            auditlogsDrawer: true,Visibleprofilemenu:false
         })
     }
     showSwapDrawer = () => {
@@ -357,9 +358,9 @@ class Header extends Component {
                             <ul className="header-logo pl-0">
                                 {/* <li className="pr-30 p-relative">{this.props.userConfig.isKYC ? <Link to="/dashboard"><img src={logoColor} alt="logo" className="tlv-logo" /></Link> : <Link ><img src={logoColor} alt="logo" className="tlv-logo" /></Link>}</li> */}
                                 <li className="pr-30 p-relative">{this.props.userConfig.isKYC ? <img src={logoColor} alt="logo" className="tlv-logo" /> : <img src={logoColor} alt="logo" className="tlv-logo" />}</li>
-                                <li className="px-36"><span className="icon md hamburger c-pointer" /></li>
+                                {/* <li className="px-36"><span className="icon md hamburger c-pointer" /></li> */}
                                 {/* Mega menu ==> onClick={this.showMegaMenu} */}
-                                <li className="mb-d-none"><Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? " Business" : " Personal" }} onClick={() => this.props.history.push('/dashboard')} component="p" className="text-white-30 mb-0 fs-24 c-pointer" /></li>
+                                <li className="mb-d-none px-36"><Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? " Business" : " Personal" }} onClick={() => this.props.history.push('/dashboard')} component="p" className="text-white-30 mb-0 fs-24 c-pointer" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
 
@@ -383,7 +384,7 @@ class Header extends Component {
                             </Dropdown> */}
                             <Translate content="menu_transactions_history" component={Menu.Item} key="4" onClick={this.showTransactionHistoryDrawer} className="list-item" />
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
-                            <Dropdown overlay={userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                            <Dropdown visible={this.state.Visibleprofilemenu} onClick={()=>this.setState({...this.state,Visibleprofilemenu:true})} overlay={userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Menu.Item key="7" className="ml-16" >{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" />}
                                     {this.props.userConfig?.imageURL == null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" />}</Menu.Item>
                             </Dropdown>

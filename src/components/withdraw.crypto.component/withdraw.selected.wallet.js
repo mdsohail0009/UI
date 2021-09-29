@@ -26,7 +26,9 @@ class CryptoWithDrawWallet extends Component {
         showModal: false,
         confirmationStep: "step1",
         isWithdrawSuccess: false,
-        addressLu: []
+        addressLu: [],
+        isSelectAddress: false,
+        isAddressValue:false
     }
     componentDidMount() {
         if(this.props.sendReceive.withdrawCryptoObj){
@@ -38,7 +40,6 @@ class CryptoWithDrawWallet extends Component {
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 2 }))
         this.props.dispatch(setSubTitle("Select wallet address"));
         this.trackevent();
-        this.getAddressLu();
     }
     trackevent = () => {
         appInsights.trackEvent({
@@ -55,6 +56,21 @@ class CryptoWithDrawWallet extends Component {
         if (recAddress.ok) {
             this.setState({ addressLu: recAddress.data });
         }
+    }
+    selectCrypto = () => {
+        this.setState({ ...this.state, isSelectAddress: true, isAddressValue:true })
+        this.getAddressLu();
+    }
+    handleSelectAdd = (selectadd) => {
+        debugger;
+        let val= selectadd.currentTarget.innerText
+        let res = this.state.addressLu;
+        let index = res.findIndex(function (o) { return o.name == val; })
+        let labelname = res[index].name;
+        if(labelname === val){
+            let setAddress = res[index].id
+        this.setState({ ...this.state, walletAddress:setAddress, isSelectAddress: false })
+    }
     }
     clickMinamnt(type) {
         let usdamnt; let cryptoamnt;
@@ -218,91 +234,91 @@ class CryptoWithDrawWallet extends Component {
         }
         return (
             <div ref={this.myRef}>
-                {this.state.error != null && <Alert closable type="error" 
-                //message={"Withdraw Crypto"}
-                 description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
-                <Card className="crypto-card select mb-36" bordered={false}>
-                    <span className="d-flex align-center">
-                        <span className={`coin lg ${selectedWallet?.coin}`} />
-                        <Text className="fs-24 text-purewhite ml-8">{selectedWallet?.coinFullName}</Text>
-                    </span>
-                    <div className="crypto-details">
-                        <Text className="crypto-percent fw-700">{selectedWallet?.percentage}<sup className="percent fw-700">%</sup></Text>
-                        <div className="crypto-amount">
-                            <Currency defaultValue={selectedWallet?.coinBalance} prefix={""} type={"text"} suffixText={selectedWallet?.coin} />
-                            <Currency defaultValue={selectedWallet?.coinValueinNativeCurrency} prefix={"$"} type={"text"} />
+                {this.state.error != null && <Alert closable type="error"
+                    //message={"Withdraw Crypto"}
+                    description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
+                {!this.state.isSelectAddress ?
+                    <div> <Card className="crypto-card select mb-36" bordered={false}>
+                        <span className="d-flex align-center">
+                            <span className={`coin lg ${selectedWallet?.coin}`} />
+                            <Text className="fs-24 text-purewhite ml-8">{selectedWallet?.coinFullName}</Text>
+                        </span>
+                        <div className="crypto-details">
+                            <Text className="crypto-percent fw-700">{selectedWallet?.percentage}<sup className="percent fw-700">%</sup></Text>
+                            <div className="crypto-amount">
+                                <Currency defaultValue={selectedWallet?.coinBalance} prefix={""} type={"text"} suffixText={selectedWallet?.coin} />
+                                <Currency defaultValue={selectedWallet?.coinValueinNativeCurrency} prefix={"$"} type={"text"} />
+                            </div>
                         </div>
-                    </div>
-                </Card>
-                <LocalCryptoSwap ref={this.eleRef}
-                    isSwap={this.state.isSwap}
-                    cryptoAmt={this.state.CryptoAmnt}
-                    localAmt={this.state.USDAmnt}
-                    cryptoCurrency={selectedWallet?.coin}
-                    localCurrency={"USD"}
-                    selectedCoin={selectedWallet?.coin}
-                    onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }} />
-                <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
-                    <Translate value="min" content="min" component={Radio.Button} onClick={() => this.clickMinamnt("min")} />
-                    <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt("half")} />
-                    <Translate value="all" content="all" component={Radio.Button} onClick={() => this.clickMinamnt("all")} />
-                </Radio.Group>
+                    </Card>
+                        <LocalCryptoSwap ref={this.eleRef}
+                            isSwap={this.state.isSwap}
+                            cryptoAmt={this.state.CryptoAmnt}
+                            localAmt={this.state.USDAmnt}
+                            cryptoCurrency={selectedWallet?.coin}
+                            localCurrency={"USD"}
+                            selectedCoin={selectedWallet?.coin}
+                            onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }} />
+                        <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
+                            <Translate value="min" content="min" component={Radio.Button} onClick={() => this.clickMinamnt("min")} />
+                            <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt("half")} />
+                            <Translate value="all" content="all" component={Radio.Button} onClick={() => this.clickMinamnt("all")} />
+                        </Radio.Group>
 
-                {/* <Translate
+                        {/* <Translate
                     className="fs-14 text-aqua fw-500 text-upper"
                     content="address"
                     component={Paragraph}
                 /> */}
-                <Form>
-                    <Form.Item
-                        name="bankId"
-                        className="custom-forminput mb-16"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Is required',
-                            },
-                        ]}
-                    >
-                        <div className="d-flex"><Text
-                            className="input-label" >Address</Text>
-                            <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span>
-                        </div>
-                        {/* <div className="p-relative d-flex align-center"> */}
-                            {/* <Select dropdownClassName="select-drpdwn"
-                                className="cust-input custom-add-select mb-0"
-                                placeholder="Select Address"
-                                onChange={(e) => this.handleChange(e)}
+                        <Form>
+                            <Form.Item
+                                name="bankId"
+                                className="custom-forminput mb-16"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Is required',
+                                    },
+                                ]}
                             >
-                                {addressLu?.map((item, idx) =>
-                                    <Option key={idx} value={item.id}>{item.name}
-                                    </Option>
-                                )}
-                            </Select> */}
-                            <Input className="cust-input mb-0" placeholder="Enter address" value={this.state.walletAddress}
-                                onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })}
-                            />
-                            {/* <Tooltip placement="top" title={<span>New Address</span>} style={{ flexGrow: 1 }}>
-                                <div className="new-add c-pointer" onClick={() => this.props.changeStep('step8')}>
-                                    <span className="icon md address-book d-block c-pointer"></span>
+                                <div className="d-flex"><Text
+                                    className="input-label" >Address</Text>
+                                    <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span>
                                 </div>
-                            </Tooltip> */}
-                        {/* </div> */}
-                    </Form.Item >
-                </Form>
-
-
-                <Translate content="with_draw" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
-                <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[
-                    <Button key="back" onClick={this.handleCancel} disabled={this.state.loading}>
-                        Return
-                    </Button>,
-                    <Button key="submit" type="primary" onClick={this.handleOk} loading={this.state.loading}>
-                        Confirm
-                    </Button>
-                ]} visible={this.state.showModal}>
-                    {this.renderModalContent()}
-                </Modal>
+                                <div className="p-relative d-flex align-center">
+                                    {!this.state.isAddressValue?
+                                        <Input className="cust-input custom-add-select mb-0" placeholder="Enter address" />
+                                        :
+                                        <Input className="cust-input custom-add-select mb-0" placeholder="Enter address" value={this.state.walletAddress}
+                                            onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })}
+                                        />
+                                    }
+                                    <Tooltip placement="top" title={<span>Select Address</span>} style={{ flexGrow: 1 }}>
+                                        <div className="new-add c-pointer" onClick={() =>  this.selectCrypto()}>
+                                            <span className="icon md address-book d-block c-pointer"></span>
+                                        </div>
+                                    </Tooltip>
+                                </div>
+                            </Form.Item>
+                        </Form>
+                        <Translate content="with_draw" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
+                        <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[
+                            <Button key="back" onClick={this.handleCancel} disabled={this.state.loading}>
+                                Return
+                            </Button>,
+                            <Button key="submit" type="primary" onClick={this.handleOk} loading={this.state.loading}>
+                                Confirm
+                            </Button>
+                        ]} visible={this.state.showModal}>
+                            {this.renderModalContent()}
+                        </Modal>
+                    </div> :
+                        <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
+                            {addressLu?.map((item, idx) =>
+                                <li onClick={(selectadd) => this.handleSelectAdd(selectadd)} key={idx} > {item.name}</li>
+                            )}
+                        </ul>
+                }
             </div>
 
 

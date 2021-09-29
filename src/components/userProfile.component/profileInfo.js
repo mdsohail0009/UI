@@ -94,6 +94,15 @@ class ProfileInfo extends Component {
                     </li>
                     <li className="profileinfo">
                         <div className="d-flex profile-block ">
+                            <label className="mb-0 profile-label" >Middle Name</label>
+                            <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.middleName || '---'}</p>
+                            <div >
+                                {/* <span className="icon md rarrow-white" /> */}
+                            </div>
+                        </div>
+                    </li>
+                    <li className="profileinfo">
+                        <div className="d-flex profile-block ">
                             <label className="mb-0 profile-label" >Last Name</label>
                             <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.lastName}</p>
                             <div >

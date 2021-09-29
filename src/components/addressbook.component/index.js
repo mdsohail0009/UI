@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
 import { Typography, Drawer, Button, Tabs, Radio, Tooltip, Modal, Alert,message } from 'antd'
-import { setAddressStep,rejectCoin } from '../../reducers/addressBookReducer';
-import connectStateProps from '../../utils/state.connect';
+import { setAddressStep,rejectCoin,setCoin,fetchUsersIdUpdate } from '../../reducers/addressBookReducer';
 import Translate from 'react-translate-component';
 import { processSteps as config } from './config';
 import NewAddressBook from './newAddressBook';
 import List from '../grid.component';
-import FaitWithdrawal from '../withDraw.component/faitWithdrawal'
-import CryptoList from '../shared/cryptolist';
 import NewFiatAddress from './addFiatAddressbook';
 import { getCoinList, activeInactive } from './api';
 import SelectCrypto from './selectCrypto';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { OKShareButton } from 'react-share';
 
 
 class AddressBook extends Component {
@@ -164,6 +160,19 @@ class AddressBook extends Component {
     handleFiatAddress = () => {
         this.setState({ ...this.state,fiatDrawer: true })
     }
+    editFiatAddress =() =>{
+        debugger
+        if (!this.state.isCheck) {
+            this.setState({ alert: true })
+            setTimeout(() => this.setState({ alert: false }), 2000)
+        } else {
+            const obj = this.state.selectedObj;
+            let val = obj.id;
+            this.props.rowSelectedData(val)
+            console.log(val);
+            this.setState({ ...this.state,fiatDrawer: true });
+        }
+    }
     handleCryptoAddress = () => {
         this.setState({ ...this.state,visible: true })
     }
@@ -227,9 +236,21 @@ class AddressBook extends Component {
                             <div><Title className="fs-26 text-white-30 fw-500">Withdraw Fiat</Title>
                                 {/* <Paragraph className="basic-decs fw-200">Basic Info, like your name and photo, that you use on Suissebase</Paragraph> */}
                             </div>
-                            <div className="d-flex align-center">
-                                <Button className="c-pointer pop-btn ant-btn px-24 mr-16" onClick={this.handleFiatAddress}> Add Address</Button>
-                                <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0 }}>
+                           
+                                {/* <Button className="c-pointer pop-btn ant-btn px-24 mr-16" onClick={this.handleFiatAddress}> Add Address</Button> */}
+                                <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0 ,display:'flex'}}>
+                                <li onClick={this.handleFiatAddress} className="mr-16">
+                                        <Tooltip placement="topRight" title="Add">
+                                            <Link className="icon md add-icon mr-0"
+                                            ></Link>
+                                        </Tooltip>
+                                    </li>
+                                <li onClick={this.editFiatAddress} className="mr-16">
+                                        <Tooltip placement="topRight" title="Edit">
+                                            <Link className="icon md edit-icon mr-0"
+                                            ></Link>
+                                        </Tooltip>
+                                    </li>
                                     <li onClick={this.statusUpdate}>
                                         <Tooltip placement="topRight" title="Active/Inactive">
                                             <Link className="icon md status mr-0"
@@ -237,7 +258,7 @@ class AddressBook extends Component {
                                         </Tooltip>
                                     </li>
                                 </ul>
-                            </div>
+                            
                         </div>
                         {this.state.alert &&
                             <div className="custom-alert" ><Alert
@@ -344,7 +365,11 @@ const connectDispatchToProps = dispatch => {
     return {
         rejectCoinWallet: () => {
             dispatch(rejectCoin())
-        }
+        },
+        rowSelectedData: (selectedRowData) => {
+            dispatch(fetchUsersIdUpdate(selectedRowData));
+        },
+
     }
 }
 export default connect(connectStateToProps,connectDispatchToProps)(AddressBook);
