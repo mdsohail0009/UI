@@ -117,6 +117,7 @@ class SelectSellCrypto extends Component {
             if (this.props.sellData.memberFiat.data[k].id == walletId) {
                 obj.toWalletId = this.props.sellData.memberFiat.data[k].id;
                 obj.toWalletCode = this.props.sellData.memberFiat.data[k].currencyCode;
+                obj.toWalletName = this.props.sellData.memberFiat.data[k].currencyCode;
             }
         }
         this.setState({ ...this.state, sellSaveData: obj })
