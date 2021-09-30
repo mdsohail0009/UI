@@ -183,12 +183,12 @@ class Header extends Component {
     }
     showMegaMenu = () => {
         this.setState({
-            megamenu: true
+            megamenu: true,Visibleprofilemenu:false
         })
     }
     closeMegaMenu = () => {
         this.setState({
-            megamenu: false
+            megamenu: false,Visibleprofilemenu:false
         })
     }
     showDocRequestError() {
@@ -197,7 +197,7 @@ class Header extends Component {
     showBuyDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
             this.setState({
-                buyDrawer: true
+                buyDrawer: true,Visibleprofilemenu:false
             })
         } else {
             const isKyc = !this.props.userConfig.isKYC;
@@ -207,12 +207,15 @@ class Header extends Component {
                 this.showDocRequestError();
                
             }
+            this.setState({
+                ...this.state,Visibleprofilemenu:false
+            })
         }
     }
     showSendDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
             this.setState({
-                sendDrawer: true
+                sendDrawer: true,Visibleprofilemenu:false
             })
         } else {
             const isKyc = !this.props.userConfig.isKYC;
@@ -221,11 +224,14 @@ class Header extends Component {
             } else {
                 this.showDocRequestError();
             }
+            this.setState({
+                ...this.state,Visibleprofilemenu:false
+            })
         }
     }
     showTransactionHistoryDrawer = () => {
         this.setState({
-            transactionDrawer: true
+            transactionDrawer: true,Visibleprofilemenu:false
         })
     }
     showAuditLogsDrawer = () => {
@@ -236,7 +242,7 @@ class Header extends Component {
     showSwapDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
             this.setState({
-                swapDrawer: true
+                swapDrawer: true,Visibleprofilemenu:false
             })
         } else {
             const isKyc = !this.props.userConfig.isKYC;
@@ -245,12 +251,15 @@ class Header extends Component {
             } else {
                 this.showDocRequestError();
             }
+            this.setState({
+                ...this.state,Visibleprofilemenu:false
+            })
         }
     }
     showBuyFiatDrawer = () => {
         if (this.props.userConfig.isKYC&& !this.props.userConfig.isDocsRequested) {
             this.setState({
-                buyFiatDrawer: true
+                buyFiatDrawer: true,Visibleprofilemenu:false
             })
         } else {
             const isKyc = !this.props.userConfig.isKYC;
@@ -259,6 +268,9 @@ class Header extends Component {
             } else {
                 this.showDocRequestError();
             }
+            this.setState({
+                ...this.state,Visibleprofilemenu:false
+            })
         }
     }
     closeDrawer = () => {
@@ -287,7 +299,7 @@ class Header extends Component {
             swapDrawer: false,
             buyFiatDrawer: false,
             transactionDrawer: false,
-            auditlogsDrawer: false
+            auditlogsDrawer: false,Visibleprofilemenu:false
         })
     }
     enableDisable2fa = (status) => {
@@ -356,13 +368,13 @@ class Header extends Component {
                         <Menu theme="light" mode="horizontal" className="header-right" >
                             <Translate content="menu_buy_sell" component={Menu.Item} key="1" onClick={this.showBuyDrawer} className="list-item" />
                             <Translate content="menu_swap" component={Menu.Item} key="2" onClick={this.showSwapDrawer} className="list-item" />
-                            <Dropdown overlay={depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" getPopupContainer={() => document.getElementById('area')}>
+                            <Dropdown onClick={()=>this.setState({...this.state,Visibleprofilemenu:false})} overlay={depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Translate content="menu_send_receive" component={Menu.Item} key="3" className="mr-16" />
                             </Dropdown>
                            
                             <Translate content="menu_transactions_history" component={Menu.Item} key="4" onClick={this.showTransactionHistoryDrawer} className="list-item" />
-                            <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
-                            <Dropdown visible={this.state.Visibleprofilemenu} onClick={()=>this.setState({...this.state,Visibleprofilemenu:true})} overlay={userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                            {/* <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item> */}
+                            <Dropdown onVisibleChange={()=>this.setState({...this.state,Visibleprofilemenu:!this.state.Visibleprofilemenu})} visible={this.state.Visibleprofilemenu} onClick={()=>this.setState({...this.state,Visibleprofilemenu:true})} overlay={userProfileMenu} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Menu.Item key="7" className="ml-16" >{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
                                     {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}</Menu.Item>
                             </Dropdown>
