@@ -54,11 +54,11 @@ function Footer() {
                 <span>
                     <Button type="primary" shape="circle" size="large" className='darkTheme' onClick={handleTheme}> {theme}</Button>
                     
-                    <select value={lang} onChange={onLangChange} className="selct-lang ml-8 f-12" removeIcon={true}>
+                    {/* <select value={lang} onChange={onLangChange} className="selct-lang ml-8 f-12" removeIcon={true}>
                         <option value="en">EN</option>
                         <option value="ch">英语</option>
                         <option value="my">MY</option>
-                    </select>
+                    </select> */}
                 </span>
             </div>
         </div>
