@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Drawer, Typography, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input, message} from "antd";
+import { Drawer, Typography, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input} from "antd";
 import List from "../grid.component";
 import Loader from '../../Shared/loader'
 import { userNameLuSearch, getFeatureLuSearch } from './api';
@@ -49,7 +49,6 @@ class AuditLogs extends Component {
     { field: "date", title: "Date", filter: true, filterType: "date", width: 250 },
     { field: "feature", title: "Feature", filter: true, width: 190 },
     { field: "featurePath", title: "Feature Path", filter: true, width: 230 },
-    //{ field: "userName", title: "Name", filter: true, width: 250, },
     { field: "action", title: "Action", width: 200, filter: true },
     { field: "remarks", title: "Remarks",filter: true },
   ]
@@ -92,12 +91,6 @@ class AuditLogs extends Component {
     searchObj[id] = val;
     this.setState({ ...this.state, searchObj: searchObj });
   };
-
-  // handleChange = (val, id) => {
-  //   let { searchObj } = this.state;
-  //   searchObj[id] = val;
-  //   this.setState({ ...this.state, searchObj: searchObj });
-  // };
 
   handleDateChange = (prop, val) => {
     let { searchObj, customFromdata, customTodate } = this.state;
@@ -146,8 +139,6 @@ class AuditLogs extends Component {
   handleSearch = (values) => {
     let { searchObj, timeSpanfromdate, timeSpantodate } = this.state;
     if (searchObj.timeSpan == "Custom") {
-      // searchObj.fromdate = new Date(timeSpanfromdate)
-       //searchObj.todate = new Date(timeSpantodate)
        searchObj.fromdate = moment(timeSpanfromdate).format('MM/DD/YYYY');
        searchObj.todate = moment(timeSpantodate).format('MM/DD/YYYY');
        }
@@ -156,10 +147,6 @@ class AuditLogs extends Component {
 
   render() {
     const { gridUrl, searchObj, featureData, userData, timeListSpan} = this.state;
-
-    // const options1 = featureData.map((d) => (
-    //   <Option key={d} value={d}>{d}</Option>
-    // ));
     const options2 = userData.map((d) => (
       <Option key={d.name} value={d.code}>{d.name}</Option>
     ));
@@ -228,38 +215,6 @@ class AuditLogs extends Component {
                   <Input disabled className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
                 </Form.Item>
               </Col> : ""}
-              {/* <Col sm={24} md={7} className="px-8">
-                <Form.Item
-                  name="feature"
-                  className="input-label selectcustom-input mb-0"
-                  label="Features"
-                >
-                  <Select
-                   defaultValue="All Features"
-                   className="cust-input mb-0"
-                   dropdownClassName="select-drpdwn"
-                    showSearch
-                    onChange={(e) => this.TransactionFeatureSearch(e, "feature")}
-                    onChange={(e) => this.handleChange(e, 'feature')}
-                    placeholder="Select Features"
-                    optionFilterProp="children"
-                    filterOption={(input, option) =>
-                      option.children
-                        .toLowerCase()
-                        .indexOf(input.toLowerCase()) >= 0
-                    }
-                    filterSort={(optionA, optionB) =>
-                      optionA.children
-                        .toLowerCase()
-                        .localeCompare(optionB.children.toLowerCase())
-                    }
-                  >
-                    {options1}
-
-                  </Select>
-                </Form.Item>
-              </Col> */}
-
               <Col sm={24} md={7} className="px-8">
                 <Form.Item
                    name="feature"
