@@ -15,6 +15,7 @@ import oops from '../../assets/images/oops.png'
 import Loader from '../../Shared/loader';
 
 const { Option } = Select;
+const { Search } = Input;
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
     myRef = React.createRef();
@@ -32,6 +33,7 @@ class CryptoWithDrawWallet extends Component {
         isSelectAddress: false,
         isAddressValue: false,
         isLoading:false,
+        addressLabelName :'',
 
     }
     componentDidMount() {
@@ -65,6 +67,7 @@ class CryptoWithDrawWallet extends Component {
         }
     }
     selectCrypto = () => {
+        this.props.dispatch(setSubTitle('Select Address Book'));
         this.setState({ ...this.state, isSelectAddress: true, isAddressValue:true })
         this.getAddressLu();
     }
@@ -74,9 +77,19 @@ class CryptoWithDrawWallet extends Component {
         let index = res.findIndex(function (o) { return o.name == val; })
         let labelname = res[index].name;
         if(labelname === val){
-            let setAddress = res[index].id
-            this.setState({ ...this.state, walletAddress: setAddress, isSelectAddress: false })
+            let setAddress = res[index].code
+            this.setState({ ...this.state, walletAddress: setAddress,addressLabelName:val, isSelectAddress: false })
         }
+        this.props.dispatch(setSubTitle('Select wallet address'));
+    }
+    handleSearch = (value) => {
+        let filteraddresslabel;
+        if (!value) {
+            filteraddresslabel = this.state.addressLu;
+        } else {
+            filteraddresslabel =  this.state.addressLu.filter(item => (item.name).toLowerCase().includes(value.toLowerCase()));
+        }
+        this.setState({...this.state, addressLu:filteraddresslabel})
     }
     clickMinamnt(type) {
         let usdamnt; let cryptoamnt;
@@ -147,6 +160,7 @@ class CryptoWithDrawWallet extends Component {
             if (response.ok) {
                 this.setState({ ...this.state, isWithdrawSuccess: true });
                 this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
+                this.props.dispatch(setSubTitle('withdraw success'));
                 appInsights.trackEvent({
                     name: 'WithDraw Crypto', properties: { "Type": 'User', "Action": 'Save', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'WithDraw Crypto', "Remarks": "WithDraw crypto save", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Crypto' }
                 });
@@ -326,10 +340,14 @@ class CryptoWithDrawWallet extends Component {
                     </Modal>
                 </div> : <>
                     {addressLu.length > 0 ? <>
-                        <h1 className="basicinfo">Address Book</h1>
+                        {/* <h1 className="basicinfo">Address Book</h1> */}
+                        <Search placeholder="Search Address label" 
+                        addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { this.handleSearch(currentTarget.value) }} size="middle" bordered={false} className="my-16" />
                         <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                             {addressLu?.map((item, idx) =>
-                                <li onClick={(selectadd) => this.handleSelectAdd(selectadd)} key={idx} > {item.name}</li>
+                                <li onClick={(selectadd) => this.handleSelectAdd(selectadd)} key={idx} 
+                                className={item.name == this.state.addressLabelName ? "select":" " }
+                                 > {item.name}</li>
                             )}
                         </ul> </>:
                         <div className="success-pop text-center" style={{ marginTop: '20px' }}>
