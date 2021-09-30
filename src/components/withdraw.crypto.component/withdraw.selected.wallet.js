@@ -126,6 +126,10 @@ class CryptoWithDrawWallet extends Component {
             this.setState({ ...this.state, error: `Entered amount should be less than available balance` });
             this.myRef.current.scrollIntoView();
         }
+        else if (this.state.walletAddress == null) {
+            this.setState({ ...this.state, error: `Please enter wallet address` });
+            this.myRef.current.scrollIntoView();
+        }
         else if (!this.state.walletAddress) {
             this.setState({ ...this.state, error: `Please enter valid wallet address` });
             this.myRef.current.scrollIntoView();

@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from 'react';
-import { Form, Input, Button, Alert,Spin } from 'antd';
+import { Form, Input, Button, Alert,Spin,message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { rejectCoin } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
@@ -123,8 +123,10 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                         name="toWalletAddress"
                         label="Address"
                         rules={[
+                           
                             {
                                 type: "toWalletAddress", validator: async (rule, value, callback) => {
+                                     debugger;
                                     if (value === null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
@@ -168,9 +170,9 @@ const connectStateToProps = ({ addressBookReducer, userConfig }) => {
 }
 const connectDispatchToProps = dispatch => {
     return {
-        changeStep: (stepcode) => {
-            dispatch(setAddressStep(stepcode))
-        },
+        // changeStep: (stepcode) => {
+        //     dispatch(setAddressStep(stepcode))
+        // },
         rejectCoinWallet: () => {
             dispatch(rejectCoin())
         }
