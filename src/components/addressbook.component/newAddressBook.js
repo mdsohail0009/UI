@@ -8,7 +8,7 @@ import SelectCrypto from './selectCrypto';
 
 
 
-const NewAddressBook = ({ addressBookReducer, userConfig, onCancel,rejectCoinWallet }) => {
+const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,rejectCoinWallet }) => {
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
     const[isLoading, setIsLoading] =useState(false);
@@ -41,10 +41,12 @@ const NewAddressBook = ({ addressBookReducer, userConfig, onCancel,rejectCoinWal
             setErrorMsg('')
             let response = await saveAddress(values);
             if (response.ok) {
-              setSuccessMsg('Address saved successfully');
-              form.resetFields();
+                message.success({ content: 'Address saved successfull', className: 'custom-msg' });
+                //setSuccessMsg('Address saved successfully');
+                form.resetFields();
                 rejectCoinWallet();
-                setTimeout(() => {onCancel();}, 1500)
+                //setTimeout(() => { onCancel(); }, 1500)
+                onCancel();
                 setIsLoading(false)
             }
             else{ setIsLoading(false)}
@@ -65,7 +67,7 @@ const NewAddressBook = ({ addressBookReducer, userConfig, onCancel,rejectCoinWal
      
            {!isSelect  ? <div className="mt-16">
                 {errorMsg  && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-                {successMsg  && <Alert closable type="success" description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
+                {/* {successMsg  && <Alert closable type="success" description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />} */}
                 <Form
                     form={form}
                     onFinish={saveAddressBook} autoComplete="off" >
@@ -73,6 +75,7 @@ const NewAddressBook = ({ addressBookReducer, userConfig, onCancel,rejectCoinWal
                         className="custom-forminput custom-label  mb-24 pr-0"
                         label="Address Label"
                         name="favouriteName"
+                        required
                         rules={[
                             {
                                 type: "favouriteName", validator: async (rule, value, callback) => {
@@ -165,6 +168,9 @@ const connectStateToProps = ({ addressBookReducer, userConfig }) => {
 }
 const connectDispatchToProps = dispatch => {
     return {
+        changeStep: (stepcode) => {
+            dispatch(setAddressStep(stepcode))
+        },
         rejectCoinWallet: () => {
             dispatch(rejectCoin())
         }
