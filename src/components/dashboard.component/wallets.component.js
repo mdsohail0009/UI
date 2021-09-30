@@ -7,7 +7,7 @@ import connectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import MassPayment from '../buyfiat.component'
 import { withRouter } from 'react-router-dom';
-import { setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer'
+import {setWithdrawfiatenaable} from '../../reducers/sendreceiveReducer'
 const { Title, Paragraph } = Typography;
 
 class Wallets extends Component {
@@ -15,8 +15,8 @@ class Wallets extends Component {
         sendReceiveDrawer: false,
         valNum: 1,
         wallets: [], loading: true,
-        buyFiatDrawer: false,
-        selctedVal: ''
+        buyFiatDrawer:false,
+        selctedVal:''
     }
     componentDidMount() {
         this.fetchWallets();
@@ -33,18 +33,17 @@ class Wallets extends Component {
             this.showDocsError();
             return;
         }
-        if (e == 2) {
+        if(e===2){
             this.props.dispatch(setWithdrawfiatenaable(true))
         }
         this.setState({
             valNum: e
         }, () => {
-            this.setState({
-                ...this.state,
+            this.setState({...this.state,
                 buyFiatDrawer: true,
-                selctedVal: value
+                selctedVal:value
             })
-
+            
         })
     }
     closeDrawer = () => {
@@ -69,16 +68,16 @@ class Wallets extends Component {
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item?.walletCode.toLowerCase()} mr-4`} />}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 mb-0">{item.walletCode}</div>}
-                                description={<Currency className="fs-16 text-white-30 fw-200 m-0" defaultValue={item.amount} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
+                                description={<Currency className="fs-16 text-white-30 fw-200 m-0" defaultValue={item.amount} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }}/>}
                             />
                             <div className="crypto-btns">
-                                <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
-                                <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2, item.walletId)} component={Button} className="custom-btn sec ml-16" />
+                                <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1,item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
+                                <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2,item.walletId)} component={Button} className="custom-btn sec ml-16" />
                             </div>
                         </List.Item>}
                 />
                 <SuissebaseFiat showDrawer={this.state.sendReceiveDrawer} valNum={this.state.valNum} onClose={() => this.closeDrawer()} />
-                {this.state.buyFiatDrawer && <MassPayment showDrawer={this.state.buyFiatDrawer} tabData={{ tabVal: this.state.valNum, walletCode: this.state.selctedVal }} onClose={() => this.closeDrawer()} />}
+                {this.state.buyFiatDrawer && <MassPayment showDrawer={this.state.buyFiatDrawer} tabData={{tabVal:this.state.valNum,walletCode:this.state.selctedVal}} onClose={() => this.closeDrawer()} />}
             </>
         );
     }
