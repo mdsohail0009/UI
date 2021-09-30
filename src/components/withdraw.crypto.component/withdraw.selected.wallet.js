@@ -11,6 +11,7 @@ import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
 import { favouriteFiatAddress } from '../addressbook.component/api'
 import oops from '../../assets/images/oops.png'
+const { Search } = Input;
 
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
