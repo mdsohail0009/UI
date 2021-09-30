@@ -41,7 +41,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
             setErrorMsg('')
             let response = await saveAddress(values);
             if (response.ok) {
-                message.success({ content: 'Address saved successfull', className: 'custom-msg' });
+                message.success({ content: 'Address saved successfully ', className: 'custom-msg' });
                 form.resetFields();
                 rejectCoinWallet();
                 onCancel();
@@ -120,6 +120,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                         className="custom-forminput custom-label mb-24 pr-0"
                         name="toWalletAddress"
                         label="Address"
+                        required
                         rules={[
                            
                             {

@@ -67,7 +67,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
             if (response.ok) {
                 setErrorMsg('')
                 useDivRef.current.scrollIntoView();
-                message.success({ content: 'Address saved successfull', className: 'custom-msg' });
+                message.success({ content: 'Address saved successfully ', className: 'custom-msg' });
                 form.resetFields();
                 onCancel()
                 setIsLoading(false)
@@ -292,7 +292,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                                     content="Recipient_full_name"
                                     component={Text}
                                 />{" "}
-                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
+                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
                             <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
                         </div>
 

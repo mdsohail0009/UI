@@ -44,6 +44,9 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
       console.log(selectedWalletCode, buyInfo.memberFiat?.data)
       handleWalletSelection(selectedWalletCode)
     }
+    // else if(buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj){
+    //   handleWalletSelection(sendReceive.withdrawFiatObj.walletCode)
+    // }
   }, [buyInfo.memberFiat?.data])
 
   useEffect(() => {
@@ -64,6 +67,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   
   const getAddressLu = async (obj) => {
     let selectedFiat = obj.currencyCode;
+  //  form.resetFields();
     let recAddress = await favouriteFiatAddress(userConfig.id, 'fiat', selectedFiat)
     if (recAddress.ok) {
       setAddressLu(recAddress.data);
@@ -81,7 +85,14 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   };
 
   const getCountryLu = async () => {
+    // let objj = sendReceive.withdrawFiatObj
+    // if(objj){
+    //   debugger
+    //   form.setFieldsValue({ ...objj, walletCode:objj.walletCode, beneficiaryAccountName: (userConfig.firstName + " " + userConfig.lastName) })
+    //   handleWalletSelection(objj.walletCode);
+    // }else{
     form.setFieldsValue({ beneficiaryAccountName: (userConfig.firstName + " " + userConfig.lastName) })
+    // }
     let recName = await getCountryStateLu()
     if (recName.ok) {
       setCountryLu(recName.data);
@@ -97,9 +108,13 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
       setStateLu(recName.data);
     }
     form.setFieldsValue({ state: null })
-
   }
-
+const selectAddress = () =>{
+  debugger
+  let values = form.getFieldsValue()
+  dispatch(setWithdrawfiat(values));
+  changeStep('step4');
+}
   const savewithdrawal = async (values) => {
     if (parseFloat(typeof values.totalValue === 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
       useDivRef.current.scrollIntoView()
@@ -184,7 +199,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                   )}
                 </Select>
                 <Tooltip placement="top" title={<span>New Address</span>} style={{ flexGrow: 1 }}>
-                  <div className="new-add c-pointer" onClick={() => changeStep('step4')} >
+                  <div className="new-add c-pointer" onClick={() => selectAddress()}  >
                     <span className="icon md address-book d-block c-pointer"></span>
                   </div>
                 </Tooltip>
