@@ -64,7 +64,7 @@ class AddressBook extends Component {
                 <span></span> </label></td>)
         },
         { field: "addressLable", title: "Address Label", filter: true, width: 250 },
-        { field: "coins", title: "Coins", filter: true, width: 120 },
+        { field: "coin", title: "Coin", filter: true, width: 120 },
         { field: "address", title: "Address", filter: true, width: 380 },
         { field: "status", title: "Status", filter: true, width: 100 }
     ];
@@ -92,7 +92,7 @@ class AddressBook extends Component {
     statusUpdate = () => {
         if (!this.state.isCheck) {
             this.setState({ alert: true })
-            setTimeout(() => this.setState({ alert: false }), 2000)
+            setTimeout(() => this.setState({ alert: false }), 2500)
         }
         else {
             this.setState({ modal: true, })
@@ -125,7 +125,7 @@ class AddressBook extends Component {
                     "modifiedBy": "",
                     "status": []
                 },successMsg:true })
-                setTimeout(() => this.setState({ successMsg:false}), 1500)
+                setTimeout(() => this.setState({ successMsg:false}), 2500)
                 if(this.state.cryptoFiat){
                     this.gridFiatRef.current.refreshGrid();
                 }

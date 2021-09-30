@@ -120,6 +120,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                         className="custom-forminput custom-label mb-24 pr-0"
                         name="toWalletAddress"
                         label="Address"
+                        required
                         rules={[
                            
                             {
