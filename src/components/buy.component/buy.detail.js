@@ -44,7 +44,7 @@ class SelectCrypto extends Component {
     fetchConvertionValue = async () => {
         const { coin } = this.props.buyInfo?.selectedCoin?.data;
         const { isSwaped, cryptoValue, localValue } = this.state.swapValues;
-        const value = await convertCurrency({ from: coin, to: "USD", value: isSwaped ? cryptoValue : localValue, isCrypto: !isSwaped,memId:this.props.userProfileInfo.id,screenName:'buy' })
+        const value = await convertCurrency({ from: coin, to: "USD", value: isSwaped ? cryptoValue : localValue, isCrypto: !isSwaped,memId:this.props.userProfileInfo.id,screenName:null})
         this.setState({ ...this.state, disableConfirm: false, swapValues: { ...this.state.swapValues, [isSwaped ? "localValue" : "cryptoValue"]: value } })
     }
     onValueChange = ({ cryptoValue, localValue, isSwaped }) => {
@@ -92,7 +92,7 @@ class SelectCrypto extends Component {
                             </div>
                         </div>
                     </Card>
-                    <LocalCryptoSwapper selectedCoin={coin} localAmt={localValue} cryptoAmt={cryptoValue} localCurrency={"USD"} cryptoCurrency={coin} onChange={(obj) => this.onValueChange(obj)} memberId={this.props.userProfileInfo?.id}/>
+                    <LocalCryptoSwapper selectedCoin={coin} localAmt={localValue} cryptoAmt={cryptoValue} localCurrency={"USD"} cryptoCurrency={coin} onChange={(obj) => this.onValueChange(obj)} memberId={this.props.userProfileInfo?.id} screenName='buy'/>
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua pt-16" />
                     <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     <div className="fs-12 text-white-30 text-center mt-24">Your amount might be changed with in <span style={{color: 'var(--bgDarkYellow)'}} >10</span> seconds.</div>

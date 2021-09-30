@@ -192,9 +192,7 @@ class Header extends Component {
         })
     }
     showDocRequestError() {
-        message.destroy();
-        message.error({ content: "Please complete document requests" , className:'custom-msg'});
-        this.props.history.push("/userprofile?key=3");
+        this.props.history.push("/docnotices");
     }
     showBuyDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {

@@ -429,7 +429,6 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
       step4: <>
         <div className="success-pop text-center mb-24">
           <img src={success} className="confirm-icon" />
-
           <Translate className="fs-30 mb-4 d-block text-white-30" content="withdrawal_success" component={Title} />
           <Link onClick={() => { setSaveObj(null); setAddressDetails({});
           setConfirmationStep("step1",()=>{

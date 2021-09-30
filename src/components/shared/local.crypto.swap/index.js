@@ -26,7 +26,7 @@ const LocalCryptoSwapper = (props, ref) => {
     const fetchConvertionValue = async ({ inputvalue }) => {
             const coin = selectedCoin || sellData?.selectedCoin?.data?.coin;
             setConvertionLoad(true);
-            const value = await convertCurrency({ from: coin, to: "USD", value: (inputvalue||0), isCrypto: !isSwaped ,memId:props.memberId,screenName:'buy'})
+            const value = await convertCurrency({ from: coin, to: "USD", value: (inputvalue||0), isCrypto: !isSwaped ,memId:props.memberId,screenName:props.screenName})
             if (!isSwaped) {
                 setCryptoValue(value||0);
             } else { setLocalValue(value||0) }

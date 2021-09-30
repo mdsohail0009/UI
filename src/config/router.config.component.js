@@ -12,6 +12,7 @@ const OnBoarding = React.lazy(() => import('../layout/onboard.component'));
 const userProfile = React.lazy(() => import('../components/userProfile.component/userProfile'));
 const AddressBookGrid = React.lazy(() => import('../components/addressbook.component/addressBookGrid'));
 const RequestedDocs = React.lazy(() => import('../components/documents.component/requested.documents'));
+const DocNotices = React.lazy(() => import("../components/shared/doc.notices"))
 class RoutingComponent extends Component {
   render() {
     return <Switch>
@@ -26,7 +27,8 @@ class RoutingComponent extends Component {
         <ReactRoute path="/onboading" component={OnBoarding} />
         <ReactRoute path='/userprofile' component={userProfile} />
         <ReactRoute path='/documents' component={RequestedDocs} />
-        <ReactRoute path='/addressbook' component={AddressBookGrid}/>
+        <ReactRoute path='/addressbook' component={AddressBookGrid} />
+        <ReactRoute path='/docnotices' component={DocNotices} />
         {/* <Redirect to="/onboading" path="/" exact/> */}
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>
