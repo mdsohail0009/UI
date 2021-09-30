@@ -42,10 +42,8 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
             let response = await saveAddress(values);
             if (response.ok) {
                 message.success({ content: 'Address saved successfull', className: 'custom-msg' });
-                //setSuccessMsg('Address saved successfully');
                 form.resetFields();
                 rejectCoinWallet();
-                //setTimeout(() => { onCancel(); }, 1500)
                 onCancel();
                 setIsLoading(false)
             }
