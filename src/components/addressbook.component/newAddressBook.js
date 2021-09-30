@@ -79,7 +79,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                         rules={[
                             {
                                 type: "favouriteName", validator: async (rule, value, callback) => {
-                                    if (value === null || value.trim() === "") {
+                                    if (value == null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -127,7 +127,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                             {
                                 type: "toWalletAddress", validator: async (rule, value, callback) => {
                                      debugger;
-                                    if (value === null || value.trim() === "") {
+                                    if (value == null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
