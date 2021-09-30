@@ -324,7 +324,7 @@ class FaitDeposit extends Component {
                     </div>}
                     <Paragraph
                       className="fs-14 text-white-30 fw-200 l-height-normal"
-                    ><span className="text-yellow">IMPORTANT:</span> This code identifies your deposit include this code when submitting the wire transfer in the transaction description or purpose</Paragraph>
+                    ><span className="textpure-yellow">IMPORTANT:</span> This code identifies your deposit include this code when submitting the wire transfer in the transaction description or purpose</Paragraph>
                     <Form.Item
                       className="custom-forminput mb-36 agree"
                       name="isAccept"
