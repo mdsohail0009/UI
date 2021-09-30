@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Tooltip, Input, Checkbox } from 'antd';
+import { Typography, Button } from 'antd';
 import Translate from 'react-translate-component';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buyFiatReducer';
@@ -61,7 +61,7 @@ class FiatSummary extends Component {
         )
     }
 }
-const connectStateToProps = ({ buyFiat, oidc }) => {
+const connectStateToProps = ({ buyFiat }) => {
     return { buyFiat }
 }
 const connectDispatchToProps = dispatch => {

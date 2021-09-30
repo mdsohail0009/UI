@@ -1,12 +1,11 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Input, Button, label, Select, Radio, Tabs, Form, Alert, Modal, Tooltip, Space } from 'antd';
+import { Typography, Input, Button, Select, Radio, Form, Alert, Space } from 'antd';
 import { Link } from 'react-router-dom';
-import { changeStep, setStep } from '../../reducers/buysellReducer';
+import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import SellToggle from '../withDraw.component/faitWithdrawal';
 import config from '../../config/config';
-import SelectCurrency from '../buyfiat.component/selectCurrency';
 import NumberFormat from 'react-number-format';
 import { getCurrencieswithBankDetails } from '../../reducers/depositReducer'
 import { savedepositFiat, requestDepositFiat } from './api';
@@ -88,11 +87,11 @@ class FaitDeposit extends Component {
     depObj.BankName = null;
     depObj.Amount = null;
     for (var k in currencyLu) {
-      if (currencyLu[k].walletCode == e) {
-        if (currencyLu[k].bankDetailModel?.length == 1) {
+      if (currencyLu[k].walletCode === e) {
+        if (currencyLu[k].bankDetailModel?.length === 1) {
           this.setState({ ...this.state, Loader: true })
           let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
-          if (reqdepositObj.ok == true) {
+          if (reqdepositObj.ok === true) {
             this.setState({
               ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], depObj: depObj, Loader: false, isTermsAgreed: false
             });
@@ -111,10 +110,10 @@ class FaitDeposit extends Component {
     depObj.BankName = e;
     depObj.Amount = null;
     for (var k in this.state.BankDetails) {
-      if (this.state.BankDetails[k].bankName == e) {
+      if (this.state.BankDetails[k].bankName === e) {
         this.setState({ ...this.state, Loader: true })
         let reqdepositObj = await requestDepositFiat(this.state.BankDetails[k].bankId, this.props.member?.id);
-        if (reqdepositObj.ok == true) {
+        if (reqdepositObj.ok === true) {
           this.setState({
             ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, depObj: depObj, Loader: false, isTermsAgreed: false
           });
@@ -125,11 +124,11 @@ class FaitDeposit extends Component {
   }
   ConfirmDeposit = async () => {
     let { BankInfo, depObj } = this.state;
-    if (parseFloat(typeof depObj.Amount == 'string' ? depObj.Amount.replace(/,/g, '') : depObj.Amount) <= 0) {
+    if (parseFloat(typeof depObj.Amount === 'string' ? depObj.Amount.replace(/,/g, '') : depObj.Amount) <= 0) {
       this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero.' })
       this.myRef.current.scrollIntoView()
     }
-    else if (depObj.Amount == '.') {
+    else if (depObj.Amount === '.') {
       this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero.' }); this.myRef.current.scrollIntoView()
     }
     else {
@@ -137,7 +136,7 @@ class FaitDeposit extends Component {
         this.setState({ ...this.state, Loader: true, errorMessage: null })
         let createObj = { "id": "00000000-0000-0000-0000-000000000000", "bankId": BankInfo.id, "currency": depObj.currency, "bankName": BankInfo.bankName, "bankAddress": BankInfo.bankAddress, "amount": parseFloat(depObj.Amount), "accountNumber": BankInfo.accountNumber, "routingNumber": BankInfo.routingNumber, "swiftorBICCode": BankInfo.networkCode, "benficiaryBankName": BankInfo.accountName, "reference": BankInfo.depReferenceNo, "benficiaryAccountAddrress": BankInfo.accountAddress }
         let Obj = await savedepositFiat(createObj);
-        if (Obj.ok == true) {
+        if (Obj.ok === true) {
           this.props.changeStep('step2')
           this.setState({
             buyDrawer: false,
@@ -146,7 +145,7 @@ class FaitDeposit extends Component {
             tabValue: 1, Loader: false, isTermsAgreed: false, showSuccessMsg: true
           });
           appInsights.trackEvent({
-            name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": (createObj.amount + ' ' + createObj.currency +' '+ 'deposited.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
+            name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": (createObj.amount + ' ' + createObj.currency +' deposited.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
           });
         }
       });
@@ -158,7 +157,7 @@ class FaitDeposit extends Component {
   renderModalContent = () => {
     return <>
       <div className="success-pop text-center mb-24">
-        <img src={success} className="confirm-icon" />
+        <img src={success} className="confirm-icon" alt={'success'} />
         <Translate className="fs-30 mb-4 d-block text-white-30" content="Deposit_success" component='Deposit' />
         <Link onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} className="f-16 mt-16 text-underline text-green">Back to Deposit<span className="icon md diag-arrow ml-4" /></Link>
       </div>
@@ -184,7 +183,7 @@ class FaitDeposit extends Component {
           : <> {this.state.Loader && <Loader />}
 
             {!this.state.Loader && <Form layout="vertical" initialValues={{ ...depObj }} ref={this.formRef} onFinish={(values) => this.ConfirmDeposit(values)}><div className="suisfiat-container auto-scroll"><div ref={this.myRef}></div>
-              {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="" description={this.state?.errorMessage} closable />}
+              {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="" description={this.state?.errorMessage} closable />}
               {!this.state.showSuccessMsg && <Translate
                 className="mb-0 text-white-30 fs-14 fw-200"
                 content="desposite_text"
@@ -211,7 +210,7 @@ class FaitDeposit extends Component {
                         </Option>
                       )}
                     </Select></div></Form.Item>}
-                {this.state.BankInfo == null && depObj.currency != null && this.state.BankDetails?.length == 0 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}>Bank details not available</Text>}
+                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}>Bank details not available</Text>}
                 {this.state.BankDetails?.length > 1 && <Form.Item><Translate
                   className="input-label"
                   content="BankName"
@@ -309,7 +308,7 @@ class FaitDeposit extends Component {
                       content="Fifth_Avenue"
                       component={Text}
                       with={{ value: BankInfo.bankAddress }} />
-                    {BankInfo.depReferenceNo != '' && <div className="crypto-address mb-36 mx-0">
+                    {BankInfo.depReferenceNo !== '' && <div className="crypto-address mb-36 mx-0">
                       <Translate
                         className="mb-0 fw-400 fs-14 text-secondary"
                         content="reference"
@@ -376,7 +375,7 @@ class FaitDeposit extends Component {
               {this.renderModalContent()}
             </Modal> */}
             {this.state.showSuccessMsg && <div className="success-pop text-center">
-              <img src={success} className="confirm-icon" />
+              <img src={success} className="confirm-icon" alt={'success'} />
               <div><Translate content="success_msg" component='Success' className="text-white-30 fs-36 fw-200 mb-4" /></div>
               <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" />
               <Space direction="vertical" size="large">

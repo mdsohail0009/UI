@@ -1,6 +1,6 @@
 import React from "react";
 import { useField, useFormikContext } from "formik";
-import {DatePicker, Col, Row} from "antd";
+import {DatePicker} from "antd";
 
 export const DateField = ({ errors,label,...props }) => {
   const { setFieldValue } = useFormikContext();

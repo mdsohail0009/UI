@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Typography, Button, Upload, notification, message } from 'antd'
+import { Typography, Button, Upload, notification, message } from 'antd'
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
 import { uploadClient } from '../../api'
@@ -47,12 +47,7 @@ class ProfileInfo extends Component {
         this.setState({ ...this.state, Loader: true })
         let res1 = await ProfileImageSave(Obj);
         if (res1.ok) {
-            //  message.success('Profile uploaded successfully');
              message.success({content:'Profile uploaded successfully' ,className: 'custom-msg'});
-            // notification.open({
-            //     description: 'Profile uploaded successfully',
-            //     placement: "bottomRight"
-            // });
             this.setState({ ...this.state, Loader: false })
             this.props.getmemeberInfoa(this.props.userConfig.email)
         } else {
@@ -60,12 +55,12 @@ class ProfileInfo extends Component {
         }
     }
     render() {
-        const { Title, Text, Paragraph } = Typography;
+        const { Title, Paragraph } = Typography;
         return (<>
             <div className="profile-info text-center">
                 {this.state.Loader && <Loader />}
-                {!this.state.Loader && <>{this.props.userConfig.imageURL != null && <img src={this.props.userConfig.imageURL ? this.props.userConfig.imageURL : DefaultUser} className="user-profile" />}
-                    {this.props.userConfig.imageURL == null && <img src={this.props.userConfig.imageURL ? this.props.userConfig.imageURL : DefaultUser} className="user-profile" />}
+                {!this.state.Loader && <>{this.props.userConfig.imageURL != null && <img src={this.props.userConfig.imageURL ? this.props.userConfig.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
+                    {this.props.userConfig.imageURL == null && <img src={this.props.userConfig.imageURL ? this.props.userConfig.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
                     <Upload {...this.uploadProps} accept=".png,.jpeg,.jpg">
                         <Button shape="circle" type="primary" className="img-upld" size="large" icon={<span className="icon md camera" />} />
                     </Upload></>}
@@ -79,7 +74,6 @@ class ProfileInfo extends Component {
                             <label className="mb-0 profile-label" >Username</label>
                             <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.userName}</p>
                             <div >
-                                {/* <span className="icon md rarrow-white" /> */}
                             </div>
                         </div>
                     </li>
@@ -88,7 +82,6 @@ class ProfileInfo extends Component {
                             <label className="mb-0 profile-label" >First Name</label>
                             <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.firstName}</p>
                             <div >
-                                {/* <span className="icon md rarrow-white" /> */}
                             </div>
                         </div>
                     </li>
@@ -97,7 +90,6 @@ class ProfileInfo extends Component {
                             <label className="mb-0 profile-label" >Middle Name</label>
                             <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.middleName || '---'}</p>
                             <div >
-                                {/* <span className="icon md rarrow-white" /> */}
                             </div>
                         </div>
                     </li>
@@ -106,7 +98,6 @@ class ProfileInfo extends Component {
                             <label className="mb-0 profile-label" >Last Name</label>
                             <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.lastName}</p>
                             <div >
-                                {/* <span className="icon md rarrow-white" /> */}
                             </div>
                         </div>
                     </li>
@@ -116,7 +107,6 @@ class ProfileInfo extends Component {
                             {this.props.userConfig.dob!=null&&<p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>
                                 <Moment format="DD/MM/YYYY">{this.props.userConfig.dob}</Moment></p>}
                             <div >
-                                {/* <span className="icon md rarrow-white" /> */}
                             </div>
                         </div>
                     </li>
@@ -126,7 +116,6 @@ class ProfileInfo extends Component {
                             <label className="mb-0 profile-label">Reference Code</label>
                             <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.depositReference}</p>
                             <div >
-                                {/* <span className="icon md rarrow-white" /> */}
                             </div>
                         </div>
                     </li>
@@ -140,7 +129,6 @@ class ProfileInfo extends Component {
                             <label className="mb-0 profile-label">Country</label>
                             <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.country}</p>
                             <div >
-                                {/* <span className="icon md rarrow-white" /> */}
                             </div>
                         </div>
                     </li>
@@ -149,7 +137,6 @@ class ProfileInfo extends Component {
                             <label className="mb-0 profile-label">Email Address</label>
                             <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.email}</p>
                             <div>
-                                {/* <span className="icon md rarrow-white" /> */}
                             </div>
                         </div>
                     </li>
@@ -158,11 +145,9 @@ class ProfileInfo extends Component {
                             <label className="mb-0 profile-label">Phone Number</label>
                             <div style={{ flexGrow: 12 }}>
                                 <p className="mb-0 ml-8 profile-value" >
-                                    {/* <span className="mr-12"><img src={flag} style={{width:'30px', height:'30px'}}/></span> */}
                                     {this.props.userConfig.phoneNo}</p>
                             </div>
                             <div >
-                                {/* <span className="icon md rarrow-white" /> */}
                             </div>
                         </div>
                     </li>

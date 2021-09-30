@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import confirm from '../../assets/images/confirm.png';
-import success from '../../assets/images/success.png';
-import { Drawer, Typography, Button, Card, Input, Tooltip, Space } from 'antd';
-import { Link } from 'react-router-dom';
+import { Typography } from 'antd';
 import Translate from 'react-translate-component';
 import SuccessMsg from './success';
-const { Title, Paragraph, Text } = Typography;
+const { Title, Paragraph } = Typography;
 class ConfirmMsg extends Component {
     state={
         success:false,

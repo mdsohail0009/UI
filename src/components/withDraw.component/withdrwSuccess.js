@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
@@ -7,16 +7,8 @@ import Translate from 'react-translate-component';
 import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
 import success from '../../assets/images/success.png';  
 
-const LinkValue = (props) => {
-    return (
-      <Translate className="textpure-yellow text-underline c-pointer"
-        content={props.content}
-        component={Link}
-      />
-    )
-  }
-const WithdrawalSuccess = ({ userConfig, sendReceive, changeStep, dispatch, onConfirm, onCancel }) => {
-    const { Paragraph, Title, Text } = Typography;
+const WithdrawalSuccess = ({ changeStep, dispatch }) => {
+    const { Title } = Typography;
     const goBack = async () => {
         dispatch(rejectWithdrawfiat())
         dispatch(setWithdrawfiatenaable(true))
@@ -26,7 +18,7 @@ const WithdrawalSuccess = ({ userConfig, sendReceive, changeStep, dispatch, onCo
     return (
         <>
             <div className="success-pop text-center mb-24">
-                <img src={success} className="confirm-icon" />
+                <img src={success} className="confirm-icon" alt={"success"}/>
                 <Translate className="fs-30 mb-4 d-block text-white-30" content="withdrawal_success" component={Title} />
                 <Link onClick={() => goBack()} className="f-16 mt-16 text-underline text-green">Back to Withdraw<span className="icon md diag-arrow ml-4" /></Link>
             </div>

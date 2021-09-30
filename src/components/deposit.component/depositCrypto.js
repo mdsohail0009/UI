@@ -52,7 +52,7 @@ class depositCrypto extends Component {
         );
     }
 }
-const connectStateToProps = ({ buySell, oidc }) => {
+const connectStateToProps = ({ buySell }) => {
     return { buySell }
 }
 const connectDispatchToProps = dispatch => {

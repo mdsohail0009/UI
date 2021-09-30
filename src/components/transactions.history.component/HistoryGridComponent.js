@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Drawer, Tabs, Table, Collapse} from 'antd';
 import List from "../grid.component";
 
 

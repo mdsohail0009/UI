@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Typography, Select,Divider } from 'antd'
-import Translate from 'react-translate-component';
-import ChangePassword from './changePassword';
+import { Typography, Select } from 'antd'
 
 class Settings extends Component {
     state = {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Typography, Drawer, Button, Tabs, Radio, Tooltip, Modal, Alert,message } from 'antd'
-import { setAddressStep,rejectCoin,setCoin,fetchUsersIdUpdate } from '../../reducers/addressBookReducer';
+import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert } from 'antd'
+import { setAddressStep,rejectCoin,fetchUsersIdUpdate } from '../../reducers/addressBookReducer';
 import Translate from 'react-translate-component';
 import { processSteps as config } from './config';
 import NewAddressBook from './newAddressBook';
@@ -161,7 +161,6 @@ class AddressBook extends Component {
         this.setState({ ...this.state,fiatDrawer: true })
     }
     editFiatAddress =() =>{
-        debugger
         if (!this.state.isCheck) {
             this.setState({ alert: true })
             setTimeout(() => this.setState({ alert: false }), 2000)
@@ -346,7 +345,7 @@ class AddressBook extends Component {
                     <NewFiatAddress onCancel={() => this.closeBuyDrawer()} />
                 </Drawer>
                 <Modal
-                    title={this.state.selectedObj.status == 'Active' ? 'Confirm Inactive?' : 'Confirm Active?'}
+                    title={this.state.selectedObj.status === 'Active' ? 'Confirm Inactive?' : 'Confirm Active?'}
                     visible={this.state.modal}
                     closeIcon={<Tooltip title="Close"><span className="icon md close-white c-pointer" onClick={this.handleCancel} /></Tooltip>}
                     footer={<>
@@ -362,7 +361,7 @@ class AddressBook extends Component {
                         </Button>
                     </>}
                 >
-                    <p className="fs-16 mb-0">Do you really want to {this.state.selectedObj.status == 'Active' ? 'Inactive?' : 'Active?'}</p>
+                    <p className="fs-16 mb-0">Do you really want to {this.state.selectedObj.status === 'Active' ? 'Inactive?' : 'Active?'}</p>
                 </Modal>
             </>
         )

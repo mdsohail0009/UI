@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Input, Button, Select } from 'antd';
 import { Link } from 'react-router-dom';
-// import sacnner from '../../assets/images/sacnner.png';
 import Translate from 'react-translate-component';
 import connectStateProps from '../../utils/state.connect';
 import { setStep } from '../../reducers/sendreceiveReducer';
@@ -10,7 +9,7 @@ const { Option } = Select;
 class VerifyIDentity extends Component {
     state = {}
     render() {
-        const { Title, Paragraph, Text } = Typography;
+        const { Title, Paragraph } = Typography;
         return (
             <div className="verify-container auto-scroll">
                 <Translate content="lets_verified" component={Title} className="text-white-30 fs-36 fw-200 mb-8" />
@@ -33,7 +32,6 @@ class VerifyIDentity extends Component {
                     <Translate content="qption1" component={Paragraph} className="fs-16 fw-600 text-white-30 mb-0" />
                     <Translate content="qption1_answer" component={Paragraph} className="fs-16 fw-300 text-white-30" />
                     <div className="text-center">
-                        {/* <img src={sacnner} alt="" className="confirm-icon" /> */}
                     </div>
                     <Paragraph className="fs-16 fw-600 text-white-30 mb-0">Option 2: Send link via SMS</Paragraph>
                     <Paragraph className="fs-16 fw-300 text-white-30">We’ll text a secure link to your mobile at no extra cost.</Paragraph>

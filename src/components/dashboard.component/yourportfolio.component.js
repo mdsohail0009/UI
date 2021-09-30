@@ -30,14 +30,14 @@ class YourPortfolio extends Component {
             this.props.history.push("/docnotices");
             return;
         }
-        if (key == "buy") {
+        if (key === "buy") {
             this.props.dispatch(fetchSelectedCoinDetails(item.coin, this.props.userProfile?.id));
             this.props.dispatch(setCoin({...item, toWalletCode:item.coin, toWalletId:item.id,toWalletName:item.coinFullName}));
             convertCurrency({ from: item.coin, to: "USD", value: 1, isCrypto: false,memId:this.props.userProfile?.id,screenName:null }).then(val => {
                 this.props.dispatch(setExchangeValue({ key: item.coin, value: val }));
             });
             this.props.dispatch(setStep("step2"));
-        } else if (key == "sell") {
+        } else if (key === "sell") {
             this.props.dispatch(setCoin(item));
             this.props.dispatch(setExchangeValue({ key: item.coin, value: item.oneCoinValue }));
             this.props.dispatch(updateCoinDetail(item))

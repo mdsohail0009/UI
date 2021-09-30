@@ -9,11 +9,9 @@ import Loader from "../../Shared/loader";
 class LiveNessSumsub extends Component {
     state = {loading:true,applicantId:null,applicantActionid:null}
     componentDidMount() {
-        this.launchWebSdk(process.env.REACT_APP_SUMSUB_URI, 'basic-kyc', 'tst:N2Kvt7SOOVp1jMf7wyQy9BSO.KlnFBjZadRJWK1A0rHckzIlaHQqbRDTO');  
+        this.launchWebSdk();  
     }
-    launchWebSdk = async (apiUrl, flowName, accessToken, applicantEmail, applicantPhone, customI18nMessages) => {
-        applicantEmail = "test@example.org"
-        applicantPhone = "+491758764512"
+    launchWebSdk = async () => {
         apicalls.sumsublivenessacesstoken(this.props.userConfig.userId,"Liveness Check - Withdrawals",this.state.applicantActionid).then((res) => {
         let snsWebSdkInstance = snsWebSdk.Builder(process.env.REACT_APP_SUMSUB_URI, "Liveness Check - Withdrawals")
             .withAccessToken(res.data.token, (newAccessTokenCallback) => {
@@ -25,16 +23,16 @@ class LiveNessSumsub extends Component {
                 phone: this.props.userConfig.phoneNo, // if available
                 onMessage: (type, payload) => {
                    // console.log('WebSDK onMessage', type, payload)
-                    if(type == 'idCheck.actionCompleted'){
-                        if(payload.answer=="GREEN"){
+                    if(type === 'idCheck.actionCompleted'){
+                        if(payload.answer==="GREEN"){
                         this.setState({...this.state, applicantActionid:payload.applicantActionId})
                         this.props.onConfirm(this.state)
                         }
                     }
-                    if(type == 'idCheck.onActionSubmitted'){
+                    if(type === 'idCheck.onActionSubmitted'){
                         this.setState({...this.state, applicantActionid:payload.applicantActionId})
                     }
-                    if(type == 'idCheck.onApplicantLoaded '){
+                    if(type === 'idCheck.onApplicantLoaded '){
                         this.setState({...this.state, applicantId:payload.applicantId})
                     }  
                 },

@@ -1,5 +1,5 @@
-import React, { Component, useState } from 'react';
-import { Row, Col, Typography, Switch, Drawer } from 'antd'
+import React, { useState } from 'react';
+import { Typography, Switch, Drawer } from 'antd'
 import Translate from 'react-translate-component';
 import Changepassword from '../../components/changepassword';
 import { connect } from 'react-redux';
@@ -7,7 +7,7 @@ import { updatechange } from '../../reducers/UserprofileReducer';
 import {store} from '../../store'
 import Moment from 'react-moment';
 
-const Security =({userConfig,onChange})=> {
+const Security =({userConfig})=> {
     const [isChangepassword,setisChangepassword]=useState(false)
     
     const showDrawer = () => {
@@ -24,10 +24,10 @@ const Security =({userConfig,onChange})=> {
         } else {
             url = process.env.REACT_APP_AUTHORITY + "/account/login?returnUrl=/manage/Disable2faWarning"
         }
-        var win = window.open(url,"_self");
+        window.open(url,"_self");
         
     }
-        const { Title, Text, Paragraph } = Typography;
+        const { Title, Paragraph } = Typography;
         return (<>
             <div className="box basic-info">
                 <Title className="basicinfo">Two Factor Authentication</Title>
