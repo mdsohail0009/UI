@@ -80,7 +80,7 @@ class AuditLogs extends Component {
       this.setState({ ...this.state, modal: true, isCustomDate: true, searchObj: searchObj })
     } else {
       this.setState({ ...this.state, searchObj: {...searchObj,fromdate: '',todate: ''}, isCustomDate: false,customFromdata: "",customTodate: "" });
-      this.formDateRef.current.resetFields();
+     // this.formDateRef.current.resetFields();
     }
   }
 
@@ -108,7 +108,8 @@ class AuditLogs extends Component {
 
   handleOk = (values) => {
     let { selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate } = this.state;
-    if(moment(values.fromdate).format('DD/MM/YYYY') > moment(values.todate).format('DD/MM/YYYY') ) {
+
+    if(new Date(moment(values.fromdate).format('MM/DD/YYYY')).getTime() > new Date(moment(values.todate).format('MM/DD/YYYY')).getTime() ) {
       this.setState({...this.state, message:'Start date must be less than or equal to the end date.'})
      return
    }
