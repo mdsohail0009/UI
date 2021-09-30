@@ -25,7 +25,7 @@ class SelectSellCrypto extends Component {
     }
     fetchdefaultMinAmntValues = async () => {
         this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue })
-        let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true, this.props.sellData?.coinDetailData?.coin,false,this.props.member?.id,'sell');
+        let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true, this.props.sellData?.coinDetailData?.coin,false,this.props.member?.id,null);
         if (res.ok) {
             this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: false }, () => {
                 this.swapRef.current.changeInfo({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt });
@@ -34,7 +34,7 @@ class SelectSellCrypto extends Component {
     }
     setAmount = async ({ currentTarget }, fn, fnRes) => {
         this.setState({ ...this.state, [fn]: currentTarget.value })
-        let res = await getSellamnt(currentTarget.value, !this.state.isSwap, this.props.sellData.coinDetailData?.coin,this.props.member?.id,'sell');
+        let res = await getSellamnt(currentTarget.value, !this.state.isSwap, this.props.sellData.coinDetailData?.coin,this.props.member?.id,null);
         if (res.ok) {
             this.setState({ ...this.state, [fnRes]: res.data })
         }
@@ -106,7 +106,7 @@ class SelectSellCrypto extends Component {
     async swapChange(value) {
         let obj = Object.assign({}, this.state);
         this.setState({ isSwap: value })
-        let res = await getSellamnt(!this.state.isSwap ? obj.CryptoAmnt : obj.USDAmnt, value, this.props.sellData.coinDetailData?.coin,this.props.member?.id,'sell');
+        let res = await getSellamnt(!this.state.isSwap ? obj.CryptoAmnt : obj.USDAmnt, value, this.props.sellData.coinDetailData?.coin,this.props.member?.id,null);
         if (res.ok) {
             this.setState({ USDAmnt: this.state.isSwap ? res.data ? parseFloat(res.data).toFixed(8) : 0 : obj.USDAmnt, CryptoAmnt: !this.state.isSwap ? res.data ? res.data : 0 : obj.CryptoAmnt, isSwap: value })
         }
@@ -123,7 +123,7 @@ class SelectSellCrypto extends Component {
     }
     refreshAmnts=async()=>{
         this.setState({ ...this.state, CryptoAmnt: this.state.CryptoAmnt })
-        let res = await getSellamnt(this.state.CryptoAmnt, true, this.props.sellData?.coinDetailData?.coin,false,this.props.member?.id,'sell');
+        let res = await getSellamnt(this.state.CryptoAmnt, true, this.props.sellData?.coinDetailData?.coin,false,this.props.member?.id,null);
         if (res.ok) {
             this.setState({ CryptoAmnt: this.state.CryptoAmnt, USDAmnt: res.data, isSwap: false }, () => {
                 this.swapRef.current.changeInfo({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt });
@@ -157,7 +157,7 @@ class SelectSellCrypto extends Component {
                     cryptoCurrency={coinDetailData?.coin}
                     localCurrency={"USD"}
                     selectedCoin={coinDetailData?.coin}
-                    onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }}  memberId={this.props.member?.id}/>
+                    onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }}  memberId={this.props.member?.id} screenName='sell'/>
                 <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills">
                     <Translate value="min" content="min" component={Radio.Button} onClick={() => this.clickMinamnt('min')} />
                     <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt('half')} />

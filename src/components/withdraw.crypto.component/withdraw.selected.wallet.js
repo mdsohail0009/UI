@@ -263,7 +263,7 @@ class CryptoWithDrawWallet extends Component {
                         cryptoCurrency={selectedWallet?.coin}
                         localCurrency={"USD"}
                         selectedCoin={selectedWallet?.coin}
-                        onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }}   memberId={this.props.userProfile.id}/>
+                        onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }}   memberId={this.props.userProfile.id}  screenName=''/>
                     <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
                         <Translate value="min" content="min" component={Radio.Button} onClick={() => this.clickMinamnt("min")} />
                         <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt("half")} />
