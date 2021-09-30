@@ -11,6 +11,7 @@ import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
 import { favouriteFiatAddress } from '../addressbook.component/api'
 import oops from '../../assets/images/oops.png'
+import Loader from '../../Shared/loader';
 const { Search } = Input;
 
 class CryptoWithDrawWallet extends Component {
@@ -55,12 +56,12 @@ class CryptoWithDrawWallet extends Component {
         let coin_code = this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coin;
         let recAddress = await favouriteFiatAddress(membershipId, 'crypto', coin_code)
         if (recAddress.ok) {
-            this.setState({ addressLu: recAddress.data });
+            this.setState({ addressLu: recAddress.data,loading:false  });
         }
     }
     selectCrypto = () => {
         this.props.dispatch(setSubTitle('Select Address Book'));
-        this.setState({ ...this.state, isSelectAddress: true, isAddressValue:true })
+        this.setState({ ...this.state, isSelectAddress: true, isAddressValue:true,loading:true })
         this.getAddressLu();
     }
     handleSelectAdd = (selectadd) => {
@@ -118,14 +119,14 @@ class CryptoWithDrawWallet extends Component {
             this.setState({ ...this.state, error: `Entered amount should be less than available balance` });
             this.myRef.current.scrollIntoView();
         }
-        else if (this.state.walletAddress == null) {
+        else if (this.state.walletAddress != null || this.state.walletAddress.trim()) {
             this.setState({ ...this.state, error: `Please enter wallet address` });
             this.myRef.current.scrollIntoView();
         }
-        else if (!this.state.walletAddress) {
-            this.setState({ ...this.state, error: `Please enter valid wallet address` });
-            this.myRef.current.scrollIntoView();
-        }
+        // else if (!this.state.walletAddress) {
+        //     this.setState({ ...this.state, error: `Please enter valid wallet address` });
+        //     this.myRef.current.scrollIntoView();
+        // }
         else {
             this.withDraw();
         }
@@ -235,7 +236,7 @@ class CryptoWithDrawWallet extends Component {
     render() {
         const { Text } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
-        const { addressLu } = this.state;
+        const { addressLu ,loading} = this.state;
         const { Search } = Input;
         if (this.state.isWithdrawSuccess) {
             return <SuccessMsg onBackCLick={() => this.props.changeStep("step1")} />
@@ -310,8 +311,8 @@ class CryptoWithDrawWallet extends Component {
                         </Form.Item>
                     </Form>
                     <Translate content="with_draw" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
-                    <Translate content="back" component={Button} type="text" size="large" className="text-center text-white-30 pop-cancel pwd-popup fw-400 text-captz text-center" block
-                        onClick={() => { this.props.dispatch(setStep("step1")); this.props.dispatch(setWithdrawcrypto(null)) }} />
+                    {/* <Translate content="back" component={Button} type="text" size="large" className="text-center text-white-30 pop-cancel pwd-popup fw-400 text-captz text-center" block
+                        onClick={() => { this.props.dispatch(setStep("step1")); this.props.dispatch(setWithdrawcrypto(null)) }} /> */}
                     <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[
                         <Button key="back" onClick={this.handleCancel} disabled={this.state.loading}>
                             Return
@@ -323,27 +324,29 @@ class CryptoWithDrawWallet extends Component {
                         {this.renderModalContent()}
                     </Modal>
                 </div> : <>
-                    {addressLu.length > 0 ? <>
-                        <Search placeholder="Search Address label" 
+                {loading ? <Loader/> :
+                   <>     
+                   {addressLu.length > 0 ? <>
+                        <Search placeholder="Search address label" 
                         addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { this.handleSearch(currentTarget.value) }} size="middle" bordered={false} className="my-16" />
-                        <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
-                            {addressLu?.map((item, idx) =>
-                                <li onClick={(selectadd) => this.handleSelectAdd(selectadd)} key={idx} 
-                                className={item.name === this.state.addressLabelName ? "select":" " }
-                                 > {item.name}</li>
-                            )}
-                        </ul> </>:
+                       <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
+                        {addressLu?.map((item, idx) =>
+                            <li onClick={(selectadd) => this.handleSelectAdd(selectadd)} key={idx} 
+                            className={item.name === this.state.addressLabelName ? "select":" " }
+                             > {item.name}</li>
+                        )}
+                    </ul> </>:
                         <div className="success-pop text-center" style={{ marginTop: '20px' }}>
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" >OOPS </h1>
-                            <p className="fs-16 text-white-30 fw-200 mb-0"> No Address Available </p>
+                            <p className="fs-16 text-white-30 fw-200 mb-0"> No address available </p>
                             <Translate content="back" component={Button} type="text" size="large" className="text-center text-white-30 pop-cancel pwd-popup fw-400 text-captz text-center" block
                                 onClick={() => { 
                                  this.setState({ ...this.state, isSelectAddress: false }) }} />
                         </div>
                     }
                 </>
-                }
+                }</> }
             </div>
 
 
