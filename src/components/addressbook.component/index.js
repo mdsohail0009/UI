@@ -280,7 +280,7 @@ class AddressBook extends Component {
                           />
                             </div>}
                             {this.state.successMsg  && <Alert type="success"
-                             description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'Inactivated' : 'Activated') + ' Successfully'}  showIcon />}
+                             description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'inactivated' : 'activated') + ' successfully'}  showIcon />}
                         <List columns={this.columnsFiat} ref={this.gridFiatRef} key={gridUrlFiat} url={gridUrlFiat} additionalParams={{memberId:memberId}} />
                     </> :
                         <>
@@ -309,7 +309,7 @@ class AddressBook extends Component {
                           />
                             </div>}
                             {this.state.successMsg  && <Alert type="success"
-                             description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'Inactivated' : 'Activated') + ' Successfully'}  showIcon />}
+                             description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'inactivated' : 'activated') + ' successfully'}  showIcon />}
                             <List columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridCryptoRef} url={gridUrlCrypto} additionalParams={{memberId:memberId}}/>
                         </>}
                 </div>
