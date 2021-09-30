@@ -769,6 +769,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .custom-crypto-address .fs-12{font-size: 14px !important;}
     .markets-panel .custom-table .ant-table-body{height: 1046px !important;padding: 0 16px 0 24px;}
     .crypto-address .walletadrs{font-size: 14px;}
+    .addbook-height{max-height: calc(100vh - 112px);}
 }
 .currencyContains {display: inline;color: var(--textWhite30);}
 .spinLoader {margin: 20px 0;margin-bottom: 20px;padding: 30px 50px;text-align: center;background: var(--bgWhiteSpin);border-radius: 4px;}
