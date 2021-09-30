@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Card, Input, Radio, List, Alert, Row, Col, Form, Modal, Select, Tooltip } from 'antd';
+import { Typography, Button, Card, Input, Radio, Alert, Row, Col, Form, Modal, Tooltip } from 'antd';
 import { handleSendFetch, setStep, setSubTitle, setWithdrawcrypto } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -8,14 +8,10 @@ import LocalCryptoSwap from '../shared/local.crypto.swap';
 import { withDrawCrypto } from '../send.component/api';
 import SuccessMsg from './success';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
-import WalletAddressValidator from 'wallet-address-validator';
 import { appInsights } from "../../Shared/appinsights";
 import { favouriteFiatAddress } from '../addressbook.component/api'
 import oops from '../../assets/images/oops.png'
-import Loader from '../../Shared/loader';
 
-const { Option } = Select;
-const { Search } = Input;
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
     myRef = React.createRef();
@@ -31,10 +27,8 @@ class CryptoWithDrawWallet extends Component {
         isWithdrawSuccess: false,
         addressLu: [],
         isSelectAddress: false,
-        isAddressValue: false,
-        isLoading:false,
-        addressLabelName :'',
-
+        isAddressValue:false,
+      
     }
     componentDidMount() {
         if(this.props.sendReceive.withdrawCryptoObj){
@@ -62,9 +56,6 @@ class CryptoWithDrawWallet extends Component {
         if (recAddress.ok) {
             this.setState({ addressLu: recAddress.data });
         }
-        else{
-            this.setState({...this.state});  
-        }
     }
     selectCrypto = () => {
         this.props.dispatch(setSubTitle('Select Address Book'));
@@ -74,7 +65,7 @@ class CryptoWithDrawWallet extends Component {
     handleSelectAdd = (selectadd) => {
         let val= selectadd.currentTarget.innerText
         let res = this.state.addressLu;
-        let index = res.findIndex(function (o) { return o.name == val; })
+        let index = res.findIndex(function (o) { return o.name === val; })
         let labelname = res[index].name;
         if(labelname === val){
             let setAddress = res[index].code
@@ -94,12 +85,12 @@ class CryptoWithDrawWallet extends Component {
     clickMinamnt(type) {
         let usdamnt; let cryptoamnt;
         let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
-        if (type == 'half') {
+        if (type === 'half') {
             usdamnt = (obj.coinValueinNativeCurrency / 2).toString();
             cryptoamnt = (obj.coinBalance / 2)
             this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt });
             this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
-        } else if (type == 'all') {
+        } else if (type === 'all') {
             usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
             cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
             this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt });
@@ -135,19 +126,13 @@ class CryptoWithDrawWallet extends Component {
             this.myRef.current.scrollIntoView();
         }
         else {
-            // this.setState({ ...this.state, showModal: true })
             this.withDraw();
         }
     }
     withDraw = async () => {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null, loading: true, isWithdrawSuccess: false });
-        // const valid = WalletAddressValidator.validate(this.state.walletAddress, coin);
-        // if (!valid) {
-        //  this.myRef.current.scrollIntoView();
-        //     this.setState({ ...this.state, error: "Please enter valid address", confirmationStep: "step1", showModal: false, isWithdrawSuccess: false })
-        //     return;
-        // }
+        
         let obj = {
             "membershipId": this.props.userProfile.id,
             "memberWalletId": id,
@@ -239,20 +224,17 @@ class CryptoWithDrawWallet extends Component {
     }
     handleOk = () => {
         let currentStep = parseInt(this.state.confirmationStep.split("step")[1]);
-        if (currentStep == 3) {
+        if (currentStep === 3) {
             this.withDraw();
         } else {
             this.setState({ ...this.state, confirmationStep: "step" + (currentStep + 1) })
         }
 
     }
-    handleChange = () => {
-        debugger
-    }
     render() {
-        const { Text, Paragraph } = Typography;
+        const { Text } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
-        const { addressLu ,isLoading} = this.state;
+        const { addressLu } = this.state;
         if (this.state.isWithdrawSuccess) {
             return <SuccessMsg onBackCLick={() => this.props.changeStep("step1")} />
         }
@@ -261,6 +243,7 @@ class CryptoWithDrawWallet extends Component {
                 {!this.state.isSelectAddress ? <div> {this.state.error != null && <Alert closable type="error"
                     //message={"Withdraw Crypto"}
                     description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
+
                     <Card className="crypto-card select mb-36" bordered={false}>
                         <span className="d-flex align-center">
                             <span className={`coin lg ${selectedWallet?.coin}`} />
@@ -281,18 +264,13 @@ class CryptoWithDrawWallet extends Component {
                         cryptoCurrency={selectedWallet?.coin}
                         localCurrency={"USD"}
                         selectedCoin={selectedWallet?.coin}
-                        onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }}   memberId={this.props.userProfile.id}  screenName=''/>
+                        onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }} memberId={this.props.userProfile.id} screenName=''/>
                     <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
                         <Translate value="min" content="min" component={Radio.Button} onClick={() => this.clickMinamnt("min")} />
                         <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt("half")} />
                         <Translate value="all" content="all" component={Radio.Button} onClick={() => this.clickMinamnt("all")} />
                     </Radio.Group>
 
-                    {/* <Translate
-                    className="fs-14 text-aqua fw-500 text-upper"
-                    content="address"
-                    component={Paragraph}
-                /> */}
                     <Form>
                         <Form.Item
                             name="toWalletAddress"
@@ -302,7 +280,7 @@ class CryptoWithDrawWallet extends Component {
                             rules={[
                                 {
                                     type: "toWalletAddress", validator: async (rule, value, callback) => {
-                                        if (value == null || value.trim() == "") {
+                                        if (value === null || value.trim() === "") {
                                             throw new Error("Is required")
                                         }
                                         else {
@@ -344,13 +322,12 @@ class CryptoWithDrawWallet extends Component {
                     </Modal>
                 </div> : <>
                     {addressLu.length > 0 ? <>
-                        {/* <h1 className="basicinfo">Address Book</h1> */}
                         <Search placeholder="Search Address label" 
                         addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { this.handleSearch(currentTarget.value) }} size="middle" bordered={false} className="my-16" />
                         <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                             {addressLu?.map((item, idx) =>
                                 <li onClick={(selectadd) => this.handleSelectAdd(selectadd)} key={idx} 
-                                className={item.name == this.state.addressLabelName ? "select":" " }
+                                className={item.name === this.state.addressLabelName ? "select":" " }
                                  > {item.name}</li>
                             )}
                         </ul> </>:
@@ -360,13 +337,11 @@ class CryptoWithDrawWallet extends Component {
                             <p className="fs-16 text-white-30 fw-200 mb-0"> No Address Available </p>
                             <Translate content="back" component={Button} type="text" size="large" className="text-center text-white-30 pop-cancel pwd-popup fw-400 text-captz text-center" block
                                 onClick={() => { 
-                                // this.props.dispatch(setStep("step1"));
-                                //  this.props.dispatch(setWithdrawcrypto(null));
                                  this.setState({ ...this.state, isSelectAddress: false }) }} />
                         </div>
                     }
-               
-                </>}
+                </>
+                }
             </div>
 
 
