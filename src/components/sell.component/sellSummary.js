@@ -42,7 +42,7 @@ class SellSummary extends Component {
                     name: 'Sell', properties: {"Type": 'User',"Action": 'Save',"Username":this.props.member.userName,"MemeberId": this.props.member.id,"Feature": 'Sell',"Remarks": obj.fromValue+" "+this.state.sellpreviewData.coin+" selled","Duration": 1,"Url": window.location.href,"FullFeatureName": 'sell Crypto'}
                 });
             } else {
-                message.error({ content: res.data.errors , className:'custom-msg'});
+                message.error({ content: res.data , className:'custom-msg'});
                 this.setState({ ...this.state, loader: false, disableConfirm: false })
             }
         }
