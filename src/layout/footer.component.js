@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { Layout, Typography, Button } from 'antd';
-import counterpart from 'counterpart';
-import en from '../lang/en';
-import ch from '../lang/ch';
-import my from '../lang/my';
+// import counterpart from 'counterpart';
+// import en from '../lang/en';
+// import ch from '../lang/ch';
+// import my from '../lang/my';
 import { useThemeSwitcher } from 'react-css-theme-switcher';
 
-counterpart.registerTranslations('en', en);
-counterpart.registerTranslations('ch', ch);
-counterpart.registerTranslations('my', my);
-counterpart.setLocale('en');
+// counterpart.registerTranslations('en', en);
+// counterpart.registerTranslations('ch', ch);
+// counterpart.registerTranslations('my', my);
+// counterpart.setLocale('en');
 
 const { Footer: AntFooter } = Layout
 
 function Footer() {
     const { switcher, themes, status } = useThemeSwitcher();
     const [isDarkMode, setIsDarkMode] = React.useState(true);
-    const [lang, setLang] = useState('en')
+    //const [lang, setLang] = useState('en')
     const [theme, setTheme] = useState('LRT')
     if (status === 'loading') {
         return <div>Loading styles...</div>;
@@ -34,10 +34,10 @@ function Footer() {
             return !previous;
         });
     };
-    const onLangChange = (e) => {
-        setLang({ lang: e.target.value });
-        counterpart.setLocale(e.target.value);
-    }
+    // const onLangChange = (e) => {
+    //     setLang({ lang: e.target.value });
+    //     counterpart.setLocale(e.target.value);
+    // }
 
 
     return (<AntFooter style={{ backgroundColor: 'transparent', padding: 0 }}>
@@ -54,11 +54,11 @@ function Footer() {
                 <span>
                     <Button type="primary" shape="circle" size="large" className='darkTheme' onClick={handleTheme}> {theme}</Button>
                     
-                    <select value={lang} onChange={onLangChange} className="selct-lang ml-8 f-12" removeIcon={true}>
+                    {/* <select value={lang} onChange={onLangChange} className="selct-lang ml-8 f-12" removeIcon={true}>
                         <option value="en">EN</option>
                         <option value="ch">英语</option>
                         <option value="my">MY</option>
-                    </select>
+                    </select> */}
                 </span>
             </div>
         </div>
