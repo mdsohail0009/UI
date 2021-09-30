@@ -34,7 +34,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
         values['type'] = type;
         values['toCoin'] = addressBookReducer.coinWallet.coin;
         let namecheck = values.favouriteName.trim();
-        let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
+        let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'crypto');
         if (responsecheck.data != null) {
             setIsLoading(false)
             return setErrorMsg('Address label already existed');

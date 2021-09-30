@@ -30,6 +30,7 @@ class CryptoWithDrawWallet extends Component {
         addressLu: [],
         isSelectAddress: false,
         isAddressValue:false,
+        filterObj:[]
       
     }
     componentDidMount() {
@@ -56,7 +57,7 @@ class CryptoWithDrawWallet extends Component {
         let coin_code = this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coin;
         let recAddress = await favouriteFiatAddress(membershipId, 'crypto', coin_code)
         if (recAddress.ok) {
-            this.setState({ addressLu: recAddress.data,loading:false  });
+            this.setState({ addressLu: recAddress.data,loading:false , filterObj: recAddress.data });
         }
     }
     selectCrypto = () => {
@@ -82,7 +83,7 @@ class CryptoWithDrawWallet extends Component {
         } else {
             filteraddresslabel =  this.state.addressLu.filter(item => (item.name).toLowerCase().includes(value.toLowerCase()));
         }
-        this.setState({...this.state, addressLu:filteraddresslabel})
+        this.setState({...this.state, filterObj:filteraddresslabel})
     }
     clickMinamnt(type) {
         let usdamnt; let cryptoamnt;
@@ -236,7 +237,7 @@ class CryptoWithDrawWallet extends Component {
     render() {
         const { Text } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
-        const { addressLu ,loading} = this.state;
+        const { filterObj ,loading} = this.state;
         const { Search } = Input;
         if (this.state.isWithdrawSuccess) {
             return <SuccessMsg onBackCLick={() => this.props.changeStep("step1")} />
@@ -280,18 +281,19 @@ class CryptoWithDrawWallet extends Component {
                             className="custom-forminput custom-label  mb-16"
                             required
                             label="Address"
-                            rules={[
-                                {
-                                    type: "toWalletAddress", validator: async (rule, value, callback) => {
-                                        if (value === null || value.trim() === "") {
-                                            throw new Error("Is required")
-                                        }
-                                        else {
-                                            callback();
-                                        }
-                                    }
-                                }
-                            ]}
+                            required
+                            // rules={[
+                            //     {
+                            //         type: "toWalletAddress", validator: async (rule, value, callback) => {
+                            //             if (value === null || value.trim() === "") {
+                            //                 throw new Error("Is required")
+                            //             }
+                            //             else {
+                            //                 callback();
+                            //             }
+                            //         }
+                            //     }
+                            // ]}
                         >
                             <div className="p-relative d-flex align-center">
                                 {!this.state.isAddressValue ?
@@ -325,12 +327,11 @@ class CryptoWithDrawWallet extends Component {
                     </Modal>
                 </div> : <>
                 {loading ? <Loader/> :
-                   <>     
-                   {addressLu.length > 0 ? <>
-                        <Search placeholder="Search address label" 
-                        addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { this.handleSearch(currentTarget.value) }} size="middle" bordered={false} className="my-16" />
+                   <><Search placeholder="Search address label" 
+                   addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { this.handleSearch(currentTarget.value) }} size="middle" bordered={false} className="my-16" />  
+                   {filterObj.length > 0 ? <>
                        <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
-                        {addressLu?.map((item, idx) =>
+                        {filterObj?.map((item, idx) =>
                             <li onClick={(selectadd) => this.handleSelectAdd(selectadd)} key={idx} 
                             className={item.name === this.state.addressLabelName ? "select":" " }
                              > {item.name}</li>
@@ -340,9 +341,9 @@ class CryptoWithDrawWallet extends Component {
                             <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" >OOPS </h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> No address available </p>
-                            <Translate content="back" component={Button} type="text" size="large" className="text-center text-white-30 pop-cancel pwd-popup fw-400 text-captz text-center" block
+                            {/* <Translate content="back" component={Button} type="text" size="large" className="text-center text-white-30 pop-cancel pwd-popup fw-400 text-captz text-center" block
                                 onClick={() => { 
-                                 this.setState({ ...this.state, isSelectAddress: false }) }} />
+                                 this.setState({ ...this.state, isSelectAddress: false }) }} /> */}
                         </div>
                     }
                 </>
