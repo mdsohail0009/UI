@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Drawer, Typography, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input} from "antd";
+import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input} from "antd";
 import List from "../grid.component";
 import Loader from '../../Shared/loader'
 import { userNameLuSearch, getFeatureLuSearch } from './api';
-import * as _ from 'lodash';
 import moment from 'moment';
 
 
-const { Title } = Typography;
 const { Option } = Select;
 
 class AuditLogs extends Component {
@@ -78,7 +76,7 @@ class AuditLogs extends Component {
   handleTimeSpan = (val, id) => {
     let { searchObj } = this.state;
     searchObj[id] = val;
-    if (val == "Custom") {
+    if (val === "Custom") {
       this.setState({ ...this.state, modal: true, isCustomDate: true, searchObj: searchObj })
     } else {
       this.setState({ ...this.state, searchObj: {...searchObj,fromdate: '',todate: ''}, isCustomDate: false,customFromdata: "",customTodate: "" });
@@ -98,7 +96,7 @@ class AuditLogs extends Component {
     this.setState({ ...this.state, searchObj, fromdate: customFromdata, todate: customTodate });
   };
 
-  datePopup = (prop, val) => {
+  datePopup = () => {
     let { searchObj,timeSpanfromdate,timeSpantodate,customFromdata, customTodate } = this.state;
     searchObj.fromdate = new Date(timeSpanfromdate)
     searchObj.fromdate = new Date(timeSpantodate)
@@ -120,7 +118,7 @@ class AuditLogs extends Component {
     values.todate = moment(values.todate).format('MM/DD/YYYY');
     timeSpanfromdate = values.fromdate;
     timeSpantodate = values.todate;
-    selectedTimespan = moment(timeSpanfromdate).format('DD/MM/YYYY') + " " + "-" + " " + moment(timeSpantodate).format('DD/MM/YYYY');
+    selectedTimespan = moment(timeSpanfromdate).format('DD/MM/YYYY') + " - " + moment(timeSpantodate).format('DD/MM/YYYY');
     this.formRef.current.setFieldsValue({ ...this.state, selectedTimespan })
     this.setState({ ...this.state, selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate, modal: false,message:'' });
   };
@@ -136,9 +134,9 @@ class AuditLogs extends Component {
     }
   }
 
-  handleSearch = (values) => {
+  handleSearch = () => {
     let { searchObj, timeSpanfromdate, timeSpantodate } = this.state;
-    if (searchObj.timeSpan == "Custom") {
+    if (searchObj.timeSpan === "Custom") {
        searchObj.fromdate = moment(timeSpanfromdate).format('MM/DD/YYYY');
        searchObj.todate = moment(timeSpantodate).format('MM/DD/YYYY');
        }
@@ -146,10 +144,8 @@ class AuditLogs extends Component {
   };
 
   render() {
-    const { gridUrl, searchObj, featureData, userData, timeListSpan} = this.state;
-    const options2 = userData.map((d) => (
-      <Option key={d.name} value={d.code}>{d.name}</Option>
-    ));
+    const { gridUrl, searchObj, featureData, timeListSpan} = this.state;
+    
     const options3 = timeListSpan.map((d) => (
       <Option key={d} value={d}>{d}</Option>
     ));
@@ -230,7 +226,7 @@ class AuditLogs extends Component {
                   >
                    <Option value="All Features">All Features</Option>
                       {featureData?.map((item, idx) => {
-                        if (item.groupName == "User Features") {
+                        if (item.groupName === "User Features") {
                           return <Option key={idx} value={item.name}>{item.name}</Option>
                         }
                       })}
