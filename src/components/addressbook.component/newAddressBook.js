@@ -94,7 +94,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                         // ]} 
                         
                         >
-                            <Input className="cust-input"  maxLength="20" placeholder="Enter Address label" />
+                            <Input className="cust-input"  maxLength="20" placeholder="Enter address label" />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24 pr-0"
@@ -114,7 +114,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                                     <span className="icon md rarrow-white c-pointer coin-select" onClick={selectCrypto} />
                                 </div>:
                                  <div className="cust-input  p-relative">
-                                 <p className="text-center mb-0  " style={{color:'#bfbfbf', lineHeight:'46px'}}>Select from Coins</p>
+                                 <p className="text-center mb-0  " style={{color:'#bfbfbf', lineHeight:'46px'}}>Select coin</p>
                                  <span className="icon md rarrow-white c-pointer coin-select" onClick={selectCrypto} />
                                  
                              </div>}
@@ -136,7 +136,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                                 }
                             }
                         ]} >
-                            <Input className="cust-input" maxLength="30" placeholder="Enter Address" />
+                            <Input className="cust-input" maxLength="30" placeholder="Enter address" />
                     </Form.Item>
                     <div style={{ marginTop: '50px' }} className="">
                         <Button disabled={isLoading}

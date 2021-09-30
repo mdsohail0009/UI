@@ -157,7 +157,7 @@ class SelectSellCrypto extends Component {
                     cryptoCurrency={coinDetailData?.coin}
                     localCurrency={"USD"}
                     selectedCoin={coinDetailData?.coin}
-                    onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }} />
+                    onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }}  memberId={this.props.member?.id}/>
                 <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills">
                     <Translate value="min" content="min" component={Radio.Button} onClick={() => this.clickMinamnt('min')} />
                     <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt('half')} />
