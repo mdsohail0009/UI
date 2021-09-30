@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Dropdown, Radio } from 'antd';
+import { Drawer, Typography} from 'antd';
 import { buyFiatSteps as config } from './config';
 import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
@@ -58,9 +58,6 @@ class SuissebaseFiat extends Component {
                                 <Translate className="text-white-50 mb-0 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                             </div>
                             {this.renderIcon()}
-                            {/* <Dropdown overlay={menu} overlayClassName="secureDropdown" arrow>
-                            <a className="pop-drpdwn-toogle" onClick={e => e.preventDefault()}><span className="icon md h-more" /></a>
-                        </Dropdown> */}
                         </div>
                     ]}
                 placement="right"
@@ -70,13 +67,6 @@ class SuissebaseFiat extends Component {
                 className="side-drawer"
             >
                 {this.renderContent()}
-                {/* <Radio.Group
-                    defaultValue={1}
-                    onChange={this.handleBuyFiatToggle}
-                    className="buysell-toggle crypto-toggle">
-                    <Translate content="add_fund" component={Radio.Button} value={1} />
-                    <Translate content="withdraw" component={Radio.Button} value={2} />
-                </Radio.Group> */}
             </Drawer >
         );
     }

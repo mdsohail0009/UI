@@ -6,14 +6,13 @@ const SuisseBtn = ({ title, onClick, autoDisable = false, duration = 10000, clas
     const [refresh, setRefresh] = useState(false);
     const [seconds, setSeconds] = useState(10);
     let timeInterval;
-    let maxCount = duration / 1000;
     let count = 10;
     const startTimer = () => {
         timeInterval = setInterval(() => {
             let sec = count - 1;
             setSeconds(sec);
             count = count - 1;
-            if (sec == 0) { count = 10; setSeconds(10); clearInterval(timeInterval); setRefresh(true); }
+            if (sec === 0) { count = 10; setSeconds(10); clearInterval(timeInterval); setRefresh(true); }
         }, 1000);
     }
     const refreshTimer = () => {

@@ -5,8 +5,6 @@ import grapheth from '../../assets/images/graph-eth.png';
 import graphgbp from '../../assets/images/graph-gbp.png';
 
 class Coins extends Component {
-    state = {
-    }
     render() {
         const { Paragraph } = Typography;
         return (

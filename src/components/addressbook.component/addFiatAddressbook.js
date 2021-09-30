@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Typography, Input, Button,  Alert, Select, Spin } from 'antd';
+import { Form, Typography, Input, Button,  Alert, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -8,7 +8,6 @@ import WalletList from '../shared/walletList';
 import { saveAddress, favouriteNameCheck,getAddress } from './api';
 import{ fetchGetAddress} from '../../reducers/addressBookReducer';
 
-const { Option } = Select;
 const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,getAddressList}) => {
     const [form] = Form.useForm();
     const [selectedWallet, setSelectedWallet] = useState(null);
@@ -20,14 +19,12 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
     const useDivRef = React.useRef(null);
 
     useEffect(() => {
-        debugger
-        if(addressBookReducer?.selectedRowData != "00000000-0000-0000-0000-000000000000"){
+        if(addressBookReducer?.selectedRowData !== "00000000-0000-0000-0000-000000000000"){
             getAddressList(addressBookReducer?.selectedRowData, 'fiat')
             loadData();
         }
     }, [])
     const loadData = async () => {
-      debugger
         let response = await getAddress(addressBookReducer?.selectedRowData, 'fiat');
         if (response.ok) {
             bindEditableData(response.data)
@@ -35,7 +32,6 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
         }
     }
     const bindEditableData = (obj) => {
-       debugger
         setFiatAddress({ ...obj });
         form.setFieldsValue({ ...obj });
     };
@@ -52,7 +48,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
 
     const savewithdrawal = async (values) => {
         setIsLoading(true)
-        if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
+        if (parseFloat(typeof values.totalValue === 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
             useDivRef.current.scrollIntoView()
             return setErrorMsg('Insufficient balance');
         }
@@ -81,7 +77,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
         }
     }
 
-    const { Paragraph, Title, Text } = Typography;
+    const { Paragraph, Text } = Typography;
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
 
     return (
@@ -104,8 +100,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                         rules={[
                             {
                                 type: "favouriteName", validator: async (rule, value, callback) => {
-                                    debugger;
-                                    if (value == null || value.trim() == "") {
+                                    if (value === null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -128,7 +123,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                         rules={[
                             {
                                 type: "toWalletAddress", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() == "") {
+                                    if (value === null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -232,7 +227,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                         rules={[
                             {
                                 type: "bankName", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() == "") {
+                                    if (value === null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -261,7 +256,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                         rules={[
                             {
                                 type: "bankAddress", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() == "") {
+                                    if (value === null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -311,7 +306,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                         rules={[
                             {
                                 type: "beneficiaryAccountAddress", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() == "") {
+                                    if (value === null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -362,7 +357,6 @@ const connectDispatchToProps = dispatch => {
         getAddressList: (id, type) => {
             dispatch(fetchGetAddress(id, type));
         },
-        
         dispatch
     }
 

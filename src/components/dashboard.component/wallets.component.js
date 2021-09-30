@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, List, Button, notification, message } from 'antd';
+import { Typography, List, Button, message } from 'antd';
 import Translate from 'react-translate-component';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import { fetchMemberWalletsData } from '../../reducers/dashboardReducer';
@@ -23,12 +23,6 @@ this.fetchWallets();
     }
     async fetchWallets() {
         this.props.dispatch(fetchMemberWalletsData(this.props.userProfile.id))
-        // const response = await fetchMemberWallets(this.props.userProfile.id);
-        // if (response.ok) {
-        //     this.setState({ ...this.state, wallets: response.data, loading: false });
-        // } else {
-        //     this.setState({ ...this.state, wallets: [], loading: false, error: response.data });
-        // }
     }
     showDocsError() {
         message.destroy();
@@ -41,7 +35,7 @@ this.fetchWallets();
             this.showDocsError();
             return;
         }
-        if(e==2){
+        if(e===2){
             this.props.dispatch(setWithdrawfiatenaable(true))
         }
         this.setState({

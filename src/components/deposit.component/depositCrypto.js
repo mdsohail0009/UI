@@ -12,7 +12,6 @@ class depositCrypto extends Component {
         depositeFiat: false
     }
     handleBuySellToggle = e => {
-        // console.log(this.state);
         this.setState({
             depositeFiat: e.target.value === 2
         });
@@ -53,7 +52,7 @@ class depositCrypto extends Component {
         );
     }
 }
-const connectStateToProps = ({ buySell, oidc }) => {
+const connectStateToProps = ({ buySell }) => {
     return { buySell }
 }
 const connectDispatchToProps = dispatch => {

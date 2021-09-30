@@ -1,13 +1,10 @@
-import React, { Component, useEffect, useState } from 'react';
-import { Button, Input, Form, Divider, Row, Col, notification, Typography, Alert,message } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Button, Input, Form, notification, Typography, Alert,message } from 'antd';
 import { EyeInvisibleOutlined, EyeOutlined  } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
-//import connectStateProps from '../../shared/stateConnect';
-//import notify from '../../shared/components/notification';
 import { changePassword } from '../../api/apiServer';
-import { Link } from 'react-router-dom';
 import { getmemeberInfo } from '../../reducers/configReduser';
 import apiClient from "../../api/apiCalls"
 
@@ -22,9 +19,8 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
     "Password": "",
     "ConfirmPassword": ""
   })
-  const { Paragraph, Title, Text } = Typography;
+  const { Text } = Typography;
   const [form] = Form.useForm();
-  const [requiredMark, setRequiredMarkType] = useState('required');
   const [changePasswordResponse, setChangePasswordResponse] = useState({ error: false, messsage: "", isLoading: false });
   useEffect(() => {
     if (userProfile?.isNew) {
@@ -39,22 +35,12 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
   const trakEvet = () =>{
     apiClient.trackEvent({"Action": 'Page View', "Feature": 'Change password', "Remarks": "Password page view","FullFeatureName": 'Change password',"userName":userConfig.userName,id:userConfig.id });
   }
-  const onFinishFailed = (error) => {
-
-  }
   const saveUserPass = async (values) => {
-    let pwdregEx=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/;
-    let minLength=/^.{8,}$/
+    
     if (values.CurrentPassword === values.Password) {
-      //notify({ message: "Error", type: "error", description: "New password and re entered password must same" });
       setChangePasswordResponse({ error: true, messsage: "Current password and New password should not be same", isLoading: false });
     }
-    //  else if (!minLength.test(values.Password)) {
-    //   setChangePasswordResponse({ error: true, messsage: "Password should be atleast 8 characters", isLoading: false });
-    // }
-    //  else if (!pwdregEx.test(values.Password)) {
-    //   setChangePasswordResponse({ error: true, messsage: "Passwords must have at least one non alphanumeric character. Passwords must have at least one lowercase ('a'-'z'). Passwords must have at least one uppercase ('A'-'Z').", isLoading: false });
-    // }
+    
     else {
       setChangePasswordResponse({ error: false, messsage: "", isLoading: true });
       const result = await changePassword(initialValues);
@@ -71,10 +57,6 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
       }
     }
   }
-  const clearValues = () => {
-    form.resetFields();
-
-  }
   const handleChange = (prop, val) => {
     let object = { ...initialValues };
     object[prop] = val.currentTarget.value;
@@ -88,27 +70,17 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
           "CurrentPassword": "",
           "Password": "",
           "ConfirmPassword": ""
-        }} onFinishFailed={onFinishFailed} onFinish={(values) => saveUserPass(values)} enableReinitialize>
+        }} onFinish={(values) => saveUserPass(values)} enableReinitialize>
         {changePasswordResponse.messsage !== "" && (
           <Typography>
             <Alert
               type={changePasswordResponse?.error ? "error" : "success"}
               showIcon
-              //message="Change Password"
               description={changePasswordResponse.messsage}
             />
           </Typography>
         )}
-        {/* <Translate
-          content="Change_password"
-          component={Title}
-          className="mb-0 fs-24 text-white-30 fw-400"
-        />
-        <Translate
-          content="Choose_a_unique_password_to_protect_your_account"
-          component={Paragraph}
-          className="mt-36 mb-24 fs-14 text-white-30 fw-400"
-        /> */}
+       
         <div className="d-flex">
           <Translate
             className="text-white input-label"
@@ -141,7 +113,6 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
           className="custom-forminput mb-24"
           required
           rules={[{ required: true, message: "New password  required" },
-          //  { min: 8, message: "password  atleast 8 characters" },
            { pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/,
             message: 'Password must be at least 8 Characters long one uppercase with one lowercase, one numeric & special character' },
            ]}
@@ -153,14 +124,6 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
               onChange={(e) => handleChange("Password", e)}
               className="text-left cust-input mb-8 pr-0 change-space pass-onhover" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeOutlined style={{ color: '#fff' }} />)}
             />
-          {/* <div class="hover-passlwngth">
-                                <span>At least:</span>
-                                <span>8 characters</span>
-                                <span>1 uppercase</span>
-                                <span>1 lowercase</span>
-                                <span>1 number</span>
-                                <span>1 special character</span>
-                            </div> */}
         </Form.Item>
         <div className="d-flex">
           <Translate
@@ -226,7 +189,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
   </>)
 }
 
-const connectStateToProps = ({ buySell, oidc, userConfig, userProfile }) => {
+const connectStateToProps = ({ buySell, userConfig, userProfile }) => {
   return { buySell, userConfig: userConfig.userProfileInfo, userProfile }
 }
 const connectDispatchToProps = dispatch => {

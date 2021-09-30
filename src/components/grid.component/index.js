@@ -13,9 +13,6 @@ class List extends React.Component {
     refreshGrid() {
         this.eleRef.current.refreshGrid();
     }
-    // renderDate = (props) => {
-    //     return <td><Moment format="DD/MM/YYYY">{props.dataItem[props.field]}</Moment></td>
-    // }
     renderDate = (props) => {
         if(props.dataItem[props.field]){
             return <td><Moment format="DD/MM/YYYY">{props.dataItem[props.field]}</Moment></td>
@@ -42,8 +39,7 @@ class List extends React.Component {
                         columnMenu={column.filter ? ColumnMenu : null}
                         field={column.field}
                         title={column.title} width={column.width}
-                        //cell={column.customCell || (column.filterType == "date" ? this.renderDate : (column.dataType == 'number' ? this.renderNumber : null))}
-                        cell={column.customCell || (column.filterType == "date" ? this.renderDate : (column.dataType == 'number' ? this.renderNumber : (column.filterType == "datetime" ? this.renderDateTime : null )))}
+                        cell={column.customCell || (column.filterType === "date" ? this.renderDate : (column.dataType === 'number' ? this.renderNumber : (column.filterType === "datetime" ? this.renderDateTime : null )))}
                         filter={column.filterType || 'text'}
                         format="{0:,0.##}"
                     />

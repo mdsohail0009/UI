@@ -56,7 +56,6 @@ class BuySell extends Component {
             billtype: <span />,
             addcard: <span onClick={() => this.props.dispatch(setStep("step4"))} className="icon md lftarw-white c-pointer" />,
             depositcrypto: <span onClick={() => this.props.dispatch(setStep("step4"))} className="icon md lftarw-white c-pointer" />,
-            selectcrypto: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             summary: <span onClick={() => this.props.dispatch(setStep("step2"))} className="icon md lftarw-white c-pointer" />,
             billingaddress: <span onClick={() => this.props.dispatch(setStep("step5"))} className="icon md lftarw-white c-pointer" />,
             addressscanner: <span onClick={() => this.props.dispatch(setStep("step6"))} className="icon md lftarw-white c-pointer" />,

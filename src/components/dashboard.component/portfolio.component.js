@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Typography, Button, Radio } from 'antd';
+import { Typography, Radio } from 'antd';
 import Translate from 'react-translate-component';
 import connectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
-import { fetchGraphInfo, fetchPortfolioData } from '../../reducers/dashboardReducer';
-import { createChart, LineStyle, ColorType, PriceScaleMode } from "lightweight-charts";
+import { fetchPortfolioData } from '../../reducers/dashboardReducer';
+import { createChart, ColorType, PriceScaleMode } from "lightweight-charts";
 import { getPortfolioGraph } from './api';
 class Portfolio extends Component {
     chart;
@@ -113,9 +113,7 @@ class Portfolio extends Component {
                         <Currency defaultValue={totalFiatValue} className={`fs-40 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }} />
                         <Currency defaultValue={totalCryptoValue} prefix={""} suffixText={"BTC"} className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
                     </div>
-                    {/* <Button type="primary" className={`mt-16 trade-btn ${totalCryptoValue < 0 ? 'bgred' : 'bggreen'}`}  size="small">{crypto_stock} {totalCryptoValue < 0 ? <span className="icon sm downarrow-white ml-4" />:<span className="icon sm uparrow-white ml-4" />}</Button> */}
                 </div>
-                {/* <img src={chart} width="100%" /> */}
                 <div className="text-center mb-16 wmy-graph" >
                     <Radio.Group defaultValue="week" buttonStyle="solid" onChange={({ target: { value } }) => {
                         this.getGraph(value)

@@ -27,7 +27,7 @@ class Home extends Component {
         const { data: notices } = this.props.dashboard?.notices;
         return (
             <div className="main-container">
-                {notices != null && notices != undefined && <Carousel className="docreq-slider" autoplay={true}>
+                {notices !== null && notices !== undefined && <Carousel className="docreq-slider" autoplay={true}>
                     {notices?.map((notice, idx) => <div className="mb-24" key={idx}>
                         <AlertConfirmation type="error" title={notice.title} showIcon description="Dear user please check the details for requesting documents to approval your deposit/withdraw."
                             action={
@@ -59,7 +59,6 @@ class Home extends Component {
 
                         <Notices />
                         <YourPortfolio />
-                        {/* <Coins /> */}
                     </Col>
                 </Row>
             </div>

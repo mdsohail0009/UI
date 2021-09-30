@@ -7,10 +7,9 @@ import { swapobj as config } from './config';
 import SwapCoins from './swapCoins';
 import SwapSummary from './swapSummary'
 import SelectCrypto from './selectcrypto';
-import Success from './success';
 import SuccessMessage from './success';
 
-const { Title, Paragraph } = Typography
+const { Paragraph } = Typography
 class SwapCrypto extends Component {
     state = {
 

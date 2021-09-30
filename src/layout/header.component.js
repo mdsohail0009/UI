@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Typography, Dropdown, Tabs, Row, Col, Divider, Avatar, Carousel, Switch, Drawer, notification, Button, message } from 'antd';
+import { Layout, Menu, Modal, Typography, Dropdown, Row, Col, Divider, Avatar, Carousel, Switch, Drawer, Button, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Link, withRouter } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
 import logoColor from '../assets/images/logo-color.png';
 import counterpart from 'counterpart';
@@ -36,9 +35,7 @@ const LinkValue = (props) => {
         />
     )
 }
-const { menuHeader } = Layout;
-const { Title, Paragraph, Text } = Typography;
-const { TabPane } = Tabs;
+const { Title, Paragraph } = Typography;
 
 
 class Header extends Component {
@@ -48,14 +45,13 @@ class Header extends Component {
             <Translate className="fs-24 text-white my-16 fw-500 mx-30" content="security" component={Title} />
             <ul className="pl-0 drpdwn-list">
                 <li className="no-hover dropdown-flex text-white fs-14 pb-16">2FA<Switch size="small" checked={this.props.userConfig?.twofactorVerified} onChange={(status) => {
-                    if (status == true) {
+                    if (status === true) {
                         window.open(process.env.REACT_APP_AUTHORITY + "/account/login?returnUrl=/manage/EnableAuthenticator", "_self");
                     } else {
                         window.open(process.env.REACT_APP_AUTHORITY + "/account/login?returnUrl=/manage/Disable2faWarning", "_self");
                     }
                 }} /> </li>
                 <li className="">
-                    {/* <Translate content="change_password" component={Link} to="/changepassword" /> */}
                     <Link className="dropdown-flex" to="/changepassword" >Change Password <span className="icon md rarrow-white" /></Link>
 
                 </li>
@@ -139,12 +135,7 @@ class Header extends Component {
                         <span className="icon md rarrow-white" />
                     </div>
                 </li>
-                {/* <li onClick={() => this.setState({ ...this.state, showChangePassword: true })}>
-                    <div className="dropdown-flex">
-                        <Translate content="change_password" component={Link} />
-                        <span className="icon md rarrow-white" />
-                    </div>
-                </li> */}
+               
                 <li className="d-flex justify-content align-center c-pointer" onClick={() => userManager.signoutRedirect()}>
                     <Translate content="logout" component={Link} />
                     <span className="icon md rarrow-white" />
@@ -270,7 +261,6 @@ class Header extends Component {
             } else {
                 this.showDocRequestError();
             }
-            // notification.error({ message: "", description: 'Please complete Your '+ (this.props.userConfig.isbusines?'KYB.':'KYC.') });
         }
     }
     closeDrawer = () => {
@@ -309,12 +299,11 @@ class Header extends Component {
         } else {
             url = process.env.REACT_APP_AUTHORITY + "/account/login?returnUrl=/manage/Disable2faWarning"
         }
-        var win = window.open(url);
+        window.open(url);
 
     }
 
     render() {
-        const { initLoading, loading } = this.state;
         const link = <LinkValue content="medium" />;
         const depostWithdrawMenu = (
             <Menu>
@@ -331,12 +320,10 @@ class Header extends Component {
         const userProfileMenu = (
             <Menu>
                 <div className="profile-dropdown">
-                    {this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" />}
-                    {this.props.userConfig?.imageURL == null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" />}
+                    {this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
+                    {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
                     <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.firstName} {this.props.userConfig.lastName}</p>
-                    {/* <Translate className="fs-16 text-white my-16 fw-500 mx-30" content="userName" component={this.props.userConfig.userName} /> */}
                     <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={() => this.userProfile()} />
-                    {/* <Link className="profile-btn" to="/userprofile" >Manage Your Account</Link> */}
                     <ul className="pl-0 drpdwn-list">
                         <Menu.Item className="px-0" onClick={() => this.showAuditLogsDrawer()}>
                             <li className="c-pointer px-0">
@@ -356,44 +343,37 @@ class Header extends Component {
                     <menuHeader className="tlv-header" id="area">
                         <div className="login-user">
                             <ul className="header-logo pl-0">
-                                {/* <li className="pr-30 p-relative">{this.props.userConfig.isKYC ? <Link to="/dashboard"><img src={logoColor} alt="logo" className="tlv-logo" /></Link> : <Link ><img src={logoColor} alt="logo" className="tlv-logo" /></Link>}</li> */}
-                                <li className="pr-30 p-relative">{this.props.userConfig.isKYC ? <img src={logoColor} alt="logo" className="tlv-logo" /> : <img src={logoColor} alt="logo" className="tlv-logo" />}</li>
-                                {/* <li className="px-36"><span className="icon md hamburger c-pointer" /></li> */}
-                                {/* Mega menu ==> onClick={this.showMegaMenu} */}
+                                <li className="pr-30 p-relative">{this.props.userConfig.isKYC ? <img src={logoColor} alt="logo" className="tlv-logo" alt={"image"} /> : <img src={logoColor} alt="logo" className="tlv-logo" alt={"image"} />}</li>
                                 <li className="mb-d-none px-36"><Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? " Business" : " Personal" }} onClick={() => this.props.userConfig.isKYC?this.props.history.push('/dashboard'):this.props.history.push("/notkyc")} component="p" className="text-white-30 mb-0 fs-24 c-pointer" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
 
                                 <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
                                 <Dropdown overlay={userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                    <Menu.Item key="7">{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" />}
-                                        {this.props.userConfig?.imageURL == null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" />}</Menu.Item>
+                                    <Menu.Item key="7">{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
+                                        {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}</Menu.Item>
                                 </Dropdown>
                             </Menu>
                         </div>
                         <Menu theme="light" mode="horizontal" className="header-right" >
-                            {/* <Menu.Item key="1" className="list-item" onClick={this.showBuyDrawer}>Buy / Sell</Menu.Item> */}
                             <Translate content="menu_buy_sell" component={Menu.Item} key="1" onClick={this.showBuyDrawer} className="list-item" />
                             <Translate content="menu_swap" component={Menu.Item} key="2" onClick={this.showSwapDrawer} className="list-item" />
                             <Dropdown overlay={depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Translate content="menu_send_receive" component={Menu.Item} key="3" className="mr-16" />
                             </Dropdown>
-                            {/* <Translate content="menu_mass_pay" component={Menu.Item} key="4" onClick={this.showBuyFiatDrawer} className="list-item" /> */}
-                            {/* <Dropdown overlay={this.securityMenu} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                <Translate key="5" content="security" component={Menu.Item} />
-                            </Dropdown> */}
+                           
                             <Translate content="menu_transactions_history" component={Menu.Item} key="4" onClick={this.showTransactionHistoryDrawer} className="list-item" />
                             <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item>
                             <Dropdown visible={this.state.Visibleprofilemenu} onClick={()=>this.setState({...this.state,Visibleprofilemenu:true})} overlay={userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                <Menu.Item key="7" className="ml-16" >{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" />}
-                                    {this.props.userConfig?.imageURL == null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" />}</Menu.Item>
+                                <Menu.Item key="7" className="ml-16" >{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
+                                    {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}</Menu.Item>
                             </Dropdown>
                         </Menu>
                     </menuHeader>
                 </Layout >
                 <Modal
                     title={[<div className="megamenu-title fs-24 text-white">
-                        <img src={logoWhite} alt="logo" className="tlv-logo" />
+                        <img src={logoWhite} alt="logo" className="tlv-logo" alt={"image"}/>
                         <div><span className="icon sm r-arrow-o-white mr-16 c-pointer" style={{ transform: 'rotate(180deg)' }} onClick={this.previous} ></span>
                             <span className="icon sm r-arrow-o-white c-pointer ml-24" onClick={this.next}></span>
                             <Translate content="sign_in" className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link ml-16" /></div>
@@ -406,11 +386,6 @@ class Header extends Component {
                     closeIcon={<span className="icon xl closewhite" />}
                 >
 
-                    {/* before login megamenu */}
-
-                    {/* <BusinessMenu/> */}
-
-                    {/* mega menu login after */}
                     <Carousel dots={false} className="mb-24 menu-carousel" ref={node => (this.carousel = node)}>
                         <div className="mega-menu">
                             <Row gutter={16} className="megamenu-link"   >
@@ -475,7 +450,7 @@ class Header extends Component {
                                 <Col lg={5} xl={4} className="mobile-none p-0">
 
                                 </Col>
-                                <Col md={16} lg={16} lg={7} xl={6}>
+                                <Col md={16} lg={7} xl={6}>
                                     <Translate className="text-white megamenu-label  mb-16 fw-500 mt-0" content="connect" component={Title} />
                                     <Translate className="text-white-30 fs-18 fw-300 mb-0" content="meet_our_team" component={Paragraph} />
                                     <Translate className="text-white-30 fs-18 fw-300 mb-0" content="report_a_bug" component={Paragraph} />
@@ -545,9 +520,7 @@ class Header extends Component {
                                             <Translate className="text-white megamenu-label fw-500" content="support" component={Title} />
                                         </div>
                                         <div className="item-wrapper">
-                                            {/* <Link>Help Center</Link>
-                                            <Link>About</Link>
-                                            <Link>Social Networks</Link> */}
+                                            
                                             <Translate className="fs-18 text-white-30 fw-200 mb-0" content="help_center" component={Paragraph} />
                                             <Translate className="fs-18 text-white-30 fw-200 mb-0" content="about" component={Paragraph} />
                                             <Translate className="fs-18 text-white-30 fw-200 mb-0" content="social_networks" component={Paragraph} />
@@ -571,9 +544,7 @@ class Header extends Component {
                                     <div className="d-flex align-center">
                                         <Translate className="fs-18 text-white-30 fw-200 mb-0" content="chat" component={Paragraph} />
                                         <span className="icon lg chat"></span></div>
-                                    {/* <Link>Report A Bug</Link>
-                                    <Link>FAQ</Link>
-                                    <Link>Chat <span className="icon lg chat"></span></Link> */}
+                                   
                                 </Col>
                                 <Col lg={16} xl={1} className=" mobile-none p-0" />
                                 <Col md={16} lg={16} xl={6} >
@@ -581,8 +552,7 @@ class Header extends Component {
                                     <Translate content="medium_text" with={{ link }} component={Paragraph} className="text-white fs-16" />
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="backup_wallet" component={Paragraph} />
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="reset_wallet" component={Paragraph} />
-                                    {/* <Link>Backup Wallet</Link>
-                                    <Link>Reset Wallet</Link> */}
+                                    
                                     <div className="d-flex align-center">
                                         <Translate className="fs-18 mb-0 text-white-30 fw-300" content="always_ask_pin" component={Paragraph} />
                                         <Switch onChange={this.onChange} size="small" className="custom-toggle ml-12" />
@@ -651,5 +621,4 @@ const connectDispatchToProps = dispatch => {
     }
 }
 
-// export default Header;
 export default connect(connectStateToProps, connectDispatchToProps)(withRouter(Header));

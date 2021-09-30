@@ -10,7 +10,6 @@ import { appInsights } from "../../Shared/appinsights";
 import {
     EmailShareButton, EmailIcon,
     FacebookShareButton, FacebookIcon,
-    LinkedinShareButton, LinkedinIcon,
     TelegramShareButton, TelegramIcon,
     TwitterShareButton, TwitterIcon,
     WhatsappShareButton, WhatsappIcon
@@ -40,11 +39,6 @@ class QRScan extends Component {
                     <WhatsappIcon size={32} round={true} />
                 </WhatsappShareButton>
             </Menu.Item>
-            {/* <Menu.Item>
-                <LinkedinShareButton url={process.env.REACT_APP_WEB_URL}  title={this.walletAddress}>
-                    <LinkedinIcon size={32} round={true} />
-                </LinkedinShareButton>
-            </Menu.Item> */}
             <Menu.Item>
                 <EmailShareButton url={process.env.REACT_APP_WEB_URL} subject={"Wallet Address"} body={this.walletAddress} separator={";"} >
                     <EmailIcon size={32} round={true} />
@@ -97,8 +91,6 @@ class QRScan extends Component {
                 <Dropdown overlay={this.shareMenu}>
                     <Button className="pop-btn mt-36" block>Share</Button>
                 </Dropdown>
-                {/* <Translate size="large" block className="pop-btn" style={{ marginTop: '100px' }} content="copy" component={Button} onClick={this.success} /> */}
-                {/* <Translate type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" onClick={() => this.props.changeStep('step1')} block content="share" component={Button} /> */}
             </div>
         )
     }

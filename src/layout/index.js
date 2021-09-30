@@ -27,7 +27,7 @@ class Layout extends Component {
             return <CallbackPage />
         }else if(this.props.user && !this.props.userProfile){
             return <OnBoarding />
-        }else if( this.props.userProfile && this.props.userProfile?.membership=='Admin'){
+        }else if( this.props.userProfile && this.props.userProfile?.membership==='Admin'){
             return <>{this.redirect()}</>
         }else{
         return <>

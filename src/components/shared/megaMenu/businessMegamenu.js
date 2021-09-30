@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Tooltip, Row, Col, Divider } from 'antd';
+import { Typography, Row, Col, Divider } from 'antd';
 import { Link } from 'react-router-dom';
 import megamenu from '../../../assets/images/megamenu.png';
 import Translate from 'react-translate-component';
@@ -20,13 +20,6 @@ class BusinessMenu extends Component {
 
         }
     }
-    depositCrypto = () => {
-        console.log(this.state);
-    }
-    showCardDrawer = () => {
-        console.log(this.state);
-    }
-
 
     render() {
         const { Title, Paragraph, Text } = Typography;
@@ -45,8 +38,7 @@ class BusinessMenu extends Component {
 
                                     <Link to="/dashboard" onClick={() => { this.setState({ ...this.state, megamenu: false }) }}>The Dashboard</Link>
                                     <Link to="/dashboard" onClick={() => { this.setState({ ...this.state, megamenu: false }) }}>Your Portfolio</Link>
-                                    {/* <Link>The Dashboard</Link>
-                                            <Link>Your Portfolio</Link> */}
+                                   
                                 </div>
                             </div>
                         </Col>
@@ -70,11 +62,8 @@ class BusinessMenu extends Component {
                                     <Translate className="text-white megamenu-label fw-500 mb-24 mt-0" content="personal" component={Title} />
                                 </div>
                                 <div className="item-wrapper">
-                                    {/* <Link onClick={() => { this.closeMegaMenu(); this.showBuyDrawer(); }}>Buy and Sell</Link> */}
                                     <Translate content="menu_buy_sell" with={{ link }} component={Paragraph} className="menu_Link" onClick={() => { this.closeMegaMenu(); this.showBuyDrawer(); }} />
-                                    {/* <Link onClick={() => { this.closeMegaMenu(); this.showSwapDrawer(); }}>Swap Services</Link> */}
                                     <Translate content="menu_swap" with={{ link }} component={Paragraph} className="menu_Link" onClick={() => { this.closeMegaMenu(); this.showSwapDrawer(); }} />
-                                    {/* <Link onClick={() => { this.closeMegaMenu(); this.showSendDrawer(); }}>Deposit and Withdraw</Link> */}
                                     <Translate content="menu_send_receive" with={{ link }} component={Paragraph} className="menu_Link" onClick={() => { this.closeMegaMenu(); this.showSendDrawer(); }} />
                                 </div>
                             </div>
@@ -87,7 +76,6 @@ class BusinessMenu extends Component {
                                 </div>
                                 <div className="item-wrapper">
                                     <Translate className="text-white-30 fs-18 fw-200 mb-0" content="corporate_wallet" component={Paragraph} />
-                                    {/* <Link onClick={() => { this.closeMegaMenu(); this.showBuyFiatDrawer(); }}>Mass Payments</Link> */}
                                     <Translate content="menu_mass_pay" with={{ link }} component={Paragraph} className="menu_Link" onClick={() => { this.closeMegaMenu(); this.showBuyFiatDrawer(); }} />
                                 </div>
                             </div>
@@ -99,7 +87,6 @@ class BusinessMenu extends Component {
                         <Col lg={5} xl={5}>
                             <Translate className="text-white mb-16 fw-500  megamenu-label mt-0" content="spend" component={Title} />
                             <Translate className="text-white-30 fs-16 mb-8 fw-300" content="spend_text" component={Paragraph} />
-                            {/* <Link className="text-secondary">Exchange</Link> */}
                             <Translate className="text-white-30 fs-18 fw-200 mb-0" content="exchange" component={Paragraph} />
                         </Col>
                         <Col lg={5} xl={4} style={{ marginTop: '44px' }}>
@@ -116,7 +103,6 @@ class BusinessMenu extends Component {
                         </Col>
                         <Col lg={5} xl={6}>
                         <Translate className="text-white mb-16 fw-500  megamenu-label mt-0" content="security" component={Title} />
-                            {/* <Title className=" text-white mb-16 fw-500 megamenu-label ">Security</Title> */}
                             <Translate className="text-white fs-14 fw-300 mb-0" content="current_security_level" component={Paragraph} />
                             <Translate className="text-green fw-700 mr-4" content="sign_in" component={Text} />
                             <Translate className="text-white fs-14 fw-300" content="status" component={Text} />

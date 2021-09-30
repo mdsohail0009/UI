@@ -48,7 +48,7 @@ class SelectFiat extends Component {
 }
 
 
-const connectStateToProps = ({ buyFiat, oidc }) => {
+const connectStateToProps = ({ buyFiat }) => {
     return { buyFiat }
 }
 const connectDispatchToProps = dispatch => {

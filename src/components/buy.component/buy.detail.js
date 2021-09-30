@@ -51,7 +51,7 @@ class SelectCrypto extends Component {
         this.setState({ ...this.state, swapValues: { localValue, cryptoValue, isSwaped } });
     }
     handleWalletSelection = (walletId) => {
-        const selectedWallet = this.props.buyInfo?.memberFiat?.data?.filter(item => item.id == walletId)[0];
+        const selectedWallet = this.props.buyInfo?.memberFiat?.data?.filter(item => item.id === walletId)[0];
         this.setState({ ...this.state, selectedWallet });
         this.props.setWallet(selectedWallet);
     }

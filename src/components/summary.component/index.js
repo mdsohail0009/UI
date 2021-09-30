@@ -19,7 +19,7 @@ class Summary extends Component {
             return <Loader />
         }
         const { Paragraph, Text } = Typography;
-        const { coin, oneCoinValue, amount, amountNativeCurrency, nativeCurrency, error, isButtonLoad, showFee, feeAmount, feeCurrency, okBtnTitle, showEstimatedTotal = true, showConvert = false, convertValue, convertCoin, showEstimated = true, exchangeCoin, decimalPlaces, currencyPrefix, onErrorClose } = this.props;
+        const { coin, oneCoinValue, amount, amountNativeCurrency, nativeCurrency, error, isButtonLoad, showFee, feeAmount, feeCurrency, okBtnTitle, showEstimatedTotal = true, showConvert = false, convertValue, convertCoin, showEstimated = true, exchangeCoin, decimalPlaces, onErrorClose } = this.props;
         const link = <LinkValue content="terms_service" />;
         return (
             <>
@@ -50,7 +50,6 @@ class Summary extends Component {
                     </div>}
                     {showConvert && <div className="pay-list fs-16 mb-16">
                         <Translate className="fw-400 text-white" content="convert" component={Text} />
-                        {/* <Text className="fw-300 text-white-30">{this.props.swapStore.fromCoinInputValue} {this.props.swapStore?.coinDetailData?.coin} </Text> */}
                         <Currency defaultValue={convertValue} prefix={""} decimalPlaces={decimalPlaces} className="fw-300 text-white-30" suffixText={convertCoin} />
                     </div>}
                     <div className="fs-12 text-white-30 text-center my-16">Your final amount might be changed with in

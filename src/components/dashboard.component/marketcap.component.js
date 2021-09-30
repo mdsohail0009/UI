@@ -22,7 +22,7 @@ const MarketCap = () => {
             setIsLoading(false);
         }
     }
-    const onFullScreenChange = useCallback((state, handle) => {
+    const onFullScreenChange = useCallback((state) => {
         setDetailView(state);
     });
     const onSearch = ({ currentTarget: { value } }) => {

@@ -1,16 +1,14 @@
 import React, { useState ,useEffect} from 'react';
-import { Form, Input, Typography, Button, Alert,Spin } from 'antd';
+import { Form, Input, Button, Alert,Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import { setAddressStep ,rejectCoin } from '../../reducers/addressBookReducer';
+import { rejectCoin } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
 import { saveAddress, favouriteNameCheck } from './api';
-import Loader from '../../Shared/loader';
 import SelectCrypto from './selectCrypto';
 
 
 
-const { Text } = Typography;
-const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,rejectCoinWallet, onCoinClick  }) => {
+const NewAddressBook = ({ addressBookReducer, userConfig, onCancel,rejectCoinWallet }) => {
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
     const[isLoading, setIsLoading] =useState(false);
@@ -37,7 +35,6 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
         let namecheck = values.favouriteName.trim();
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck);
         if (responsecheck.data != null) {
-            debugger
             setIsLoading(false)
             return setErrorMsg('Address label already existed');
         } else {
@@ -79,8 +76,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                         rules={[
                             {
                                 type: "favouriteName", validator: async (rule, value, callback) => {
-                                    debugger;
-                                    if (value == null || value.trim() == "") {
+                                    if (value === null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -126,8 +122,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                         rules={[
                             {
                                 type: "toWalletAddress", validator: async (rule, value, callback) => {
-                                    debugger;
-                                    if (value == null || value.trim() == "") {
+                                    if (value === null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -170,9 +165,6 @@ const connectStateToProps = ({ addressBookReducer, userConfig }) => {
 }
 const connectDispatchToProps = dispatch => {
     return {
-        changeStep: (stepcode) => {
-            dispatch(setAddressStep(stepcode))
-        },
         rejectCoinWallet: () => {
             dispatch(rejectCoin())
         }

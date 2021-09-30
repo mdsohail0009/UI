@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import config from '../../config/config';
 import { Link } from 'react-router-dom';
-import { List, Skeleton, Typography } from 'antd';
+import { List, Typography } from 'antd';
 import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -10,7 +10,7 @@ const { Text } = Typography;
 class SavedCards extends Component {
     state = {}
     render() {
-        const { initLoading, loading } = this.state;
+        const { loading } = this.state;
         const loadMore =
             !loading ? (
                 <div
@@ -49,7 +49,7 @@ class SavedCards extends Component {
     }
 }
 
-const connectStateToProps = ({ buyFiat, oidc }) => {
+const connectStateToProps = ({ buyFiat }) => {
     return { buyFiat }
 }
 const connectDispatchToProps = dispatch => {

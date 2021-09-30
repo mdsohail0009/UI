@@ -1,4 +1,4 @@
-import { apiClient, firebaseServer,identityClient } from '.';
+import { apiClient, firebaseServer } from '.';
 import { ApiControllers } from './config'
 export const sendNotification = ({ message, from, type, tokens }) => {
     const obj = {
@@ -22,7 +22,7 @@ export const withdrawRecepientNamecheck = (memberid,name) => {
 
     return apiClient.get(ApiControllers.exchange + "FavouriteNameCheck?memberId="+memberid+"&name="+name);
 }
-export const getCountryStateLu = (memberid,name) => {
+export const getCountryStateLu = () => {
 
     return apiClient.get(ApiControllers.exchange +"ControlCodes?codeCategory=country");
 }

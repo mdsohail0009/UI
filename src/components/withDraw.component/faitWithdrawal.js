@@ -1,13 +1,12 @@
-import React, { Component, useState, useRef, useEffect } from 'react';
-import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert, Tooltip, Select,Checkbox } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Form, Typography, Input, Button, Modal, Alert, Tooltip, Select,Checkbox } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import WalletList from '../shared/walletList';
 import NumberFormat from 'react-number-format';
-import { withdrawRecepientNamecheck, withdrawSave, getCountryStateLu, getStateLookup } from '../../api/apiServer';
-import Currency from '../shared/number.formate';
+import { withdrawSave, getCountryStateLu, getStateLookup } from '../../api/apiServer';
 import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { handleFavouritAddress } from '../../reducers/addressBookReducer';
@@ -36,13 +35,11 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   const [saveObj, setSaveObj] = useState(null);
   const [countryLu, setCountryLu] = useState([]);
   const [stateLu, setStateLu] = useState([]);
-  const [country, setCountry] = useState(null);
   const [addressLu, setAddressLu] = useState([]);
   const [addressDetails, setAddressDetails] = useState({});
 
   const useDivRef = React.useRef(null);
   useEffect(() => {
-    // props.fetchFavouirtAddresss();
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       console.log(selectedWalletCode, buyInfo.memberFiat?.data)
       handleWalletSelection(selectedWalletCode)
@@ -51,7 +48,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
 
   useEffect(() => {
     getCountryLu();
-    // getAddressLu();
+    setLoading(false)
   }, [])
 
   const handleWalletSelection = (walletId) => {
@@ -64,15 +61,8 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
       getAddressLu(wallet[0]);
     }
   }
-  const checkRecipeantName = async (name) => {
-    let recName = await withdrawRecepientNamecheck(userConfig.id, name.target.value)
-    if (recName.ok) {
-      console.log(recName)
-    } else {
-    }
-  }
+  
   const getAddressLu = async (obj) => {
-    debugger
     let selectedFiat = obj.currencyCode;
     let recAddress = await favouriteFiatAddress(userConfig.id, 'fiat', selectedFiat)
     if (recAddress.ok) {
@@ -106,26 +96,20 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     if (recName.ok) {
       setStateLu(recName.data);
     }
-    // let statelu = countryLu.filter((item) => { if (item.name == countryname) return item })
-    // if (statelu[0].states.length > 0) {
-    //   setStateLu(statelu[0].states)
-    // } else {
-    //   setStateLu([{ name: countryname, code: countryname }])
-    // }
     form.setFieldsValue({ state: null })
 
   }
 
   const savewithdrawal = async (values) => {
-    if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
+    if (parseFloat(typeof values.totalValue === 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
       useDivRef.current.scrollIntoView()
       return setErrorMsg('Insufficient balance');
     }
-    if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) <= 0) {
+    if (parseFloat(typeof values.totalValue === 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) <= 0) {
       useDivRef.current.scrollIntoView()
       return setErrorMsg('Amount must be greater than zero.');
     }
-    if (values.totalValue == '.') {
+    if (values.totalValue === '.') {
       useDivRef.current.scrollIntoView()
       return setErrorMsg('Amount must be greater than zero.');
     }
@@ -135,7 +119,6 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName
     setSaveObj(values);
     dispatch(setWithdrawfiat(values))
-    //changeStep('step5')
     setConfirmationStep('step2')
     form.resetFields();
   }
@@ -145,7 +128,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
       step1: <>
         <div className="suisfiat-height auto-scroll">
           <div ref={useDivRef}></div>
-          {errorMsg != null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+          {errorMsg !== null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
           <Form form={form} onFinish={savewithdrawal} initialValues={addressDetails} autoComplete="off">
             <div className="p-relative d-flex align-center"> <Translate
               content="Beneficiary_BankDetails"
@@ -164,15 +147,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
               ]}
             >
               <WalletList  valueFeild={'currencyCode'}  selectedvalue={saveObj?.walletCode} placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} />
-              {/* <WalletList placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} /> */}
-
-              {/* <div> <div className="d-flex"><Translate
-              className="input-label"
-              content="currency"
-              component={Text}
-            />
-            </div>
-              <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div> */}
+              
             </Form.Item>
             <Form.Item
               className="custom-forminput custom-label  mb-24"
@@ -186,21 +161,8 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                 placeholder="0.00"
                 allowNegative={false}
                 maxlength={24}
-              //value={}
-              // onValueChange={({ value }) => {
-              //     this.setReceiveAmount(value)
-              // }}
               />
-              {/* <div ><div className="d-flex">
-              <Translate
-                className="input-label"
-                content="amount"
-                component={Text}
-
-              /><span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
               
-
-            </div> */}
             </Form.Item>
             <Form.Item
               className="custom-forminput mb-24"
@@ -254,16 +216,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
               ]}
             >
               <Input className="cust-input" placeholder="Bank account number/IBAN" />
-              {/* <div>
-              <div className="d-flex">
-                <Translate
-                  className="input-label"
-                  content="Bank_account"
-                  component={Text}
-                />
-                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
-              <Input className="cust-input" placeholder="Bank account number/IBAN" />
-            </div> */}
+              
             </Form.Item>
             <Form.Item
               className="custom-forminput custom-label mb-24"
@@ -291,15 +244,6 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
             >
               <Input value={addressDetails.routingNumber} className="cust-input" placeholder="BIC/SWIFT/Routing number" />
 
-              {/* <div>
-              <div className="d-flex">
-                <Translate
-                  className="input-label"
-                  content="BIC_SWIFT_routing_number"
-                  component={Text}
-                />
-                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
-            </div> */}
 
             </Form.Item>
             <Form.Item
@@ -328,16 +272,6 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
             >
               <Input value={addressDetails.bankName} className="cust-input" placeholder="Bank name" />
 
-              {/* <div>
-              <div className="d-flex">
-                <Translate
-                  className="input-label"
-                  content="Bank_name"
-                  component={Text}
-                />
-                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
-            </div> */}
-
             </Form.Item>
             <Form.Item
               className="custom-forminput custom-label mb-24"
@@ -349,15 +283,6 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
               ]}
             >
               <Input value={addressDetails.bankAddress} className="cust-input" placeholder="Bank address line 1" />
-              {/* <div>
-                <div className="d-flex">
-                  <Translate
-                    className="input-label"
-                    content="Bank_address1"
-                    component={Text}
-                  />
-                  <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
-              </div> */}
 
             </Form.Item>
 
@@ -433,24 +358,6 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
               name="beneficiaryAccountName"
               label="Recipient full name"
               required
-            // rules={[
-            //   { required: true, message: "Is required" },
-            //   {
-            //     validator: (rule, value, callback) => {
-            //       var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
-            //       if (value) {
-            //         if (!regx.test(value)) {
-            //           callback("Invalid recipient full name")
-            //         } else if (regx.test(value)) {
-            //           callback();
-            //         }
-            //       } else {
-            //         callback();
-            //       }
-            //       return;
-            //     }
-            //   }
-            // ]}
             >
               <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
             </Form.Item>
@@ -475,23 +382,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
               className="custom-forminput custom-label mb-24"
               name="description"
               label="Remarks"
-            // rules={[
-            //   {
-            //     validator: (rule, value, callback) => {
-            //       var regx = new RegExp(/^[A-Za-z0-9]+$/);
-            //       if (value) {
-            //         if (!regx.test(value)) {
-            //           callback("Invalid reference")
-            //         } else if (regx.test(value)) {
-            //           callback();
-            //         }
-            //       } else {
-            //         callback();
-            //       }
-            //       return;
-            //     }
-            //   }
-            // ]}
+            
             >
               <Input className="cust-input" placeholder="Remarks" />
             </Form.Item>
@@ -558,13 +449,12 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   }
   const handleOk = async () => {
     let currentStep = parseInt(confirmationStep.split("step")[1]);
-    if(confirmationStep=='step2'){
+    if(confirmationStep==='step2'){
       let withdrawal = await withdrawSave(saveObj)
       if (withdrawal.ok) {
         dispatch(fetchDashboardcalls(userConfig.id))
         dispatch(rejectWithdrawfiat())
         changeStep("step7")
-        // setConfirmationStep("step4")
         appInsights.trackEvent({
           name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
         });
@@ -581,7 +471,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
       {renderModalContent()}
 
       <Modal className="widthdraw-pop" maskClosable={false} onCancel={handleCancel} title="Withdraw" closeIcon={<Tooltip title="Close"><span onClick={handleCancel} className="icon md close" /></Tooltip>} footer={[
-        <>{confirmationStep != 'step2' && <div className="text-right withdraw-footer"><Button key="back" type="text" className="text-white-30 pop-cancel fw-400 text-captz text-center" onClick={handleCancel} disabled={loading}>
+        <>{confirmationStep !== 'step2' && <div className="text-right withdraw-footer"><Button key="back" type="text" className="text-white-30 pop-cancel fw-400 text-captz text-center" onClick={handleCancel} disabled={loading}>
           Back
         </Button>
           <Button key="submit" className="pop-btn px-36 ml-36" onClick={handleOk} loading={loading}>

@@ -49,7 +49,6 @@ class RequestedDocs extends Component {
         });
     }
     render() {
-        const { TextArea } = Input;
         return <div className="main-container">
             <div className="mb-24 text-white-50"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile" />/&nbsp;&nbsp;&nbsp;Payment Bill, Identity Document</div>
             <div className="bank-view">
