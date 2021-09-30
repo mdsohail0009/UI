@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Typography, Input, Button,  Alert, Select, Spin,message } from 'antd';
+import { Form, Typography, Input, Button,  Alert, Spin,message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -8,26 +8,22 @@ import WalletList from '../shared/walletList';
 import { saveAddress, favouriteNameCheck,getAddress } from './api';
 import{ fetchGetAddress} from '../../reducers/addressBookReducer';
 
-const { Option } = Select;
 const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,getAddressList}) => {
     const [form] = Form.useForm();
     const [selectedWallet, setSelectedWallet] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [successMsg, setSuccessMsg] = useState(null);
     const [ fiatAddress, setFiatAddress] =useState({});
 
     const useDivRef = React.useRef(null);
 
     useEffect(() => {
-        debugger
         if(addressBookReducer?.selectedRowData != "00000000-0000-0000-0000-000000000000"){
             getAddressList(addressBookReducer?.selectedRowData, 'fiat')
             loadData();
         }
     }, [])
     const loadData = async () => {
-      debugger
         let response = await getAddress(addressBookReducer?.selectedRowData, 'fiat');
         if (response.ok) {
             bindEditableData(response.data)
@@ -35,7 +31,6 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
         }
     }
     const bindEditableData = (obj) => {
-       debugger
         setFiatAddress({ ...obj });
         form.setFieldsValue({ ...obj });
     };
@@ -52,7 +47,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
 
     const savewithdrawal = async (values) => {
         setIsLoading(true)
-        if (parseFloat(typeof values.totalValue == 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
+        if (parseFloat(typeof values.totalValue === 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
             useDivRef.current.scrollIntoView()
             return setErrorMsg('Insufficient balance');
         }
@@ -73,9 +68,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                 setErrorMsg('')
                 useDivRef.current.scrollIntoView();
                 message.success({ content: 'Address saved successfull', className: 'custom-msg' });
-                // setSuccessMsg('Address saved successfully');
                 form.resetFields();
-             //   setTimeout(() => { onCancel(); }, 1500);
                 onCancel()
                 setIsLoading(false)
             }
@@ -83,16 +76,14 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
         }
     }
 
-    const { Paragraph, Title, Text } = Typography;
+    const { Paragraph, Text } = Typography;
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
 
     return (
         <>
-            {/* // <div ref={useDivRef}></div> */}
             <div className="addbook-height auto-scroll">
                 <div ref={useDivRef}></div>
                 {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-            {/* {successMsg && <Alert closable type="success" description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />} */}
 
                 <Form form={form} onFinish={savewithdrawal} autoComplete="off"  initialValues={fiatAddress}>
                     <Translate
@@ -106,8 +97,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                         rules={[
                             {
                                 type: "favouriteName", validator: async (rule, value, callback) => {
-                                    debugger;
-                                    if (value == null || value.trim() == "") {
+                                    if (value === null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -130,7 +120,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                         rules={[
                             {
                                 type: "toWalletAddress", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() == "") {
+                                    if (value === null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -234,7 +224,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                         rules={[
                             {
                                 type: "bankName", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() == "") {
+                                    if (value === null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -263,7 +253,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                         rules={[
                             {
                                 type: "bankAddress", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() == "") {
+                                    if (value === null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -313,7 +303,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                         rules={[
                             {
                                 type: "beneficiaryAccountAddress", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() == "") {
+                                    if (value === null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
