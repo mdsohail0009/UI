@@ -231,6 +231,7 @@ class CryptoWithDrawWallet extends Component {
         const { Text } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
         const { addressLu } = this.state;
+        const { Search } = Input;
         if (this.state.isWithdrawSuccess) {
             return <SuccessMsg onBackCLick={() => this.props.changeStep("step1")} />
         }
