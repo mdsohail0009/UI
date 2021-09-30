@@ -43,10 +43,9 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       console.log(selectedWalletCode, buyInfo.memberFiat?.data)
       handleWalletSelection(selectedWalletCode)
+    }else if(buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj){
+      handleWalletSelection(sendReceive.withdrawFiatObj.walletCode)
     }
-    // else if(buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj){
-    //   handleWalletSelection(sendReceive.withdrawFiatObj.walletCode)
-    // }
   }, [buyInfo.memberFiat?.data])
 
   useEffect(() => {
@@ -61,7 +60,9 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
         return walletId === item.currencyCode
       })
       setSelectedWallet(wallet[0])
-      getAddressLu(wallet[0]);
+      if (wallet[0]) {
+        getAddressLu(wallet[0]);
+      }
     }
   }
   
@@ -85,14 +86,13 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   };
 
   const getCountryLu = async () => {
-    // let objj = sendReceive.withdrawFiatObj
-    // if(objj){
-    //   debugger
-    //   form.setFieldsValue({ ...objj, walletCode:objj.walletCode, beneficiaryAccountName: (userConfig.firstName + " " + userConfig.lastName) })
-    //   handleWalletSelection(objj.walletCode);
-    // }else{
+    let objj = sendReceive.withdrawFiatObj
+    setSaveObj(objj);
+    if(objj){
+      form.setFieldsValue({ ...objj, walletCode:objj.walletCode, beneficiaryAccountName: (userConfig.firstName + " " + userConfig.lastName) })
+    }else{
     form.setFieldsValue({ beneficiaryAccountName: (userConfig.firstName + " " + userConfig.lastName) })
-    // }
+    }
     let recName = await getCountryStateLu()
     if (recName.ok) {
       setCountryLu(recName.data);
