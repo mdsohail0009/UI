@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, List, Button, message } from 'antd';
+import { Typography, List, Button } from 'antd';
 import Translate from 'react-translate-component';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import { fetchMemberWalletsData } from '../../reducers/dashboardReducer';
@@ -19,15 +19,13 @@ class Wallets extends Component {
         selctedVal:''
     }
     componentDidMount() {
-this.fetchWallets();
+        this.fetchWallets();
     }
     async fetchWallets() {
         this.props.dispatch(fetchMemberWalletsData(this.props.userProfile.id))
     }
     showDocsError() {
-        message.destroy();
-        message.error({ content: "Please complete document requests" });
-        this.props.history.push("/userprofile?key=3");
+        this.props.history.push("/docnotices");
     }
     showSendReceiveDrawer = (e, value) => {
         const isDocsRequested = this.props.userProfile.isDocsRequested;
