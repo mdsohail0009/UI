@@ -42,12 +42,12 @@ class SelectSellCrypto extends Component {
     clickMinamnt(type) {
         let usdamnt; let cryptoamnt;
         let obj = Object.assign({}, this.props.sellData.coinDetailData)
-        if (type == 'half') {
+        if (type === 'half') {
             usdamnt = (obj.coinValueinNativeCurrency / 2).toString();
             cryptoamnt = (obj.coinBalance / 2)
             this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt });
             this.swapRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
-        } else if (type == 'all') {
+        } else if (type === 'all') {
             usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
             cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
             this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt });
@@ -61,7 +61,7 @@ class SelectSellCrypto extends Component {
         this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
         let { sellMinValue } = this.props.sellData.coinDetailData;
-        if ((!this.state.USDAmnt && !this.state.CryptoAmnt) || (parseFloat(this.state.USDAmnt) == 0 || parseFloat(this.state.CryptoAmnt) == 0)) {
+        if ((!this.state.USDAmnt && !this.state.CryptoAmnt) || (parseFloat(this.state.USDAmnt) === 0 || parseFloat(this.state.CryptoAmnt) === 0)) {
             this.setState({ ...this.state, errorMessage: 'Enter amount' })
             this.myRef.current.scrollIntoView();
             return;
@@ -114,7 +114,7 @@ class SelectSellCrypto extends Component {
     handleWalletSelection = (walletId) => {
         let obj = Object.assign({}, this.state.sellSaveData);
         for (var k in this.props.sellData.memberFiat.data) {
-            if (this.props.sellData.memberFiat.data[k].id == walletId) {
+            if (this.props.sellData.memberFiat.data[k].id === walletId) {
                 obj.toWalletId = this.props.sellData.memberFiat.data[k].id;
                 obj.toWalletCode = this.props.sellData.memberFiat.data[k].currencyCode;
                 obj.toWalletName = this.props.sellData.memberFiat.data[k].currencyCode;
@@ -136,7 +136,7 @@ class SelectSellCrypto extends Component {
         const { coinDetailData } = this.props.sellData;
         return (
             <>
-              <div ref={this.myRef}>  {this.state?.errorMessage != null && this.state?.errorMessage != '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="Sell crypto" description={this.state?.errorMessage} closable />}
+              <div ref={this.myRef}>  {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message="Sell crypto" description={this.state?.errorMessage} closable />}
                 {coinDetailData && <Card className="crypto-card select mb-36" bordered={false}>
                     <span className="d-flex align-center">
                         <span className={`coin lg ${coinDetailData.coin}`} />
@@ -145,8 +145,6 @@ class SelectSellCrypto extends Component {
                     <div className="crypto-details">
                         <Text className="crypto-percent textc-white fw-700">{coinDetailData.percentage}<sup className="percent textc-white fw-700">%</sup></Text>
                         <div className="fs-16 textc-white fw-200 crypto-amount">
-                            {/* <div>{coinDetailData.coinBalance?.toFixed(8)} {coinDetailData.coin}</div>
-                            <div>$ {coinDetailData.coinValueinNativeCurrency?.toFixed(2)}</div> */}
                                 <Currency prefix={""} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} />
                                 <Currency prefix={"$ "} defaultValue={coinDetailData.coinValueinNativeCurrency} suffixText="" />
                         </div>

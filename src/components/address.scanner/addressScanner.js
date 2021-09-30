@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Typography, Button, message } from 'antd';
-import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-// import sacnner from '../../assets/images/sacnner.png';
 import Translate from 'react-translate-component';
 
 class addressScanner extends Component {
@@ -30,7 +28,7 @@ class addressScanner extends Component {
     }
 }
 
-const connectStateToProps = ({ buySell, oidc }) => {
+const connectStateToProps = ({ buySell }) => {
     return { buySell }
 }
 const connectDispatchToProps = dispatch => {

@@ -1,4 +1,4 @@
-import { Input, Typography } from 'antd';
+import { Input } from 'antd';
 import React, { Component } from 'react';
 import NumberFormat from 'react-number-format';
 
@@ -13,7 +13,7 @@ class Currency extends Component {
 
     }
     render() {
-        const { type, defaultValue, prefixText, suffixText, onChange, prefix = "$", className, bordered = false, inputCustomStyle, textCustomStyle, autoFocus = false, } = this.props;
+        const { type, defaultValue, prefixText, suffixText, onChange, prefix = "$", className, bordered = false, inputCustomStyle, autoFocus = false, } = this.props;
         return <>{type === "input" ? <NumberFormat className={className} customInput={Input} thousandSeparator={true} prefix={prefix}
             placeholder="0.00"
             bordered={bordered}

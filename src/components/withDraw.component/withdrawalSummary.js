@@ -1,14 +1,13 @@
-import React, { Component, useState, useRef, useEffect } from 'react';
-import { Drawer, Form, Typography, Input, Button, label, Modal, Row, Col, Alert, Tooltip, Select } from 'antd';
+import React, { useState} from 'react';
+import { Typography, Button } from 'antd';
 import Currency from '../shared/number.formate';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import SuisseBtn from '../shared/butons';
 import Translate from 'react-translate-component';
 
 
-const WithdrawalSummary = ({ userConfig, sendReceive,changeStep, onConfirm,onCancel }) => {
-  const { Paragraph, Title, Text } = Typography;
+const WithdrawalSummary = ({ sendReceive, onConfirm,onCancel }) => {
+  const { Text } = Typography;
   const [isLoding, setIsLoding] = useState(false);
   const saveWithdrwal = async() =>{
     setIsLoding(true)

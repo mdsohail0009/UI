@@ -13,7 +13,7 @@ const getSellamnt = (Value, isSwap,coin,isCrypto,memId,screenName) => {
     return apiClient.get(ApiControllers.exchange + 'CryptoFiatConverter?coin='+coin+'&currency=USD&amount=' + Value + '&isCrypto=' + isCrypto+'&memberId='+memId+'&screenName='+screenName);
 }
 const getSellPreviewData = (sellObject) => {
-    return apiClient.get(ApiControllers.exchange + 'Preview?coin=' + sellObject.fromWalletCode + '&currency=USD&amount=' + (sellObject.isSwap?sellObject.fromValue:sellObject.toValue)+'&isCrypto='+(sellObject.isSwap==true?false:true));
+    return apiClient.get(ApiControllers.exchange + 'Preview?coin=' + sellObject.fromWalletCode + '&currency=USD&amount=' + (sellObject.isSwap?sellObject.fromValue:sellObject.toValue)+'&isCrypto='+(sellObject.isSwap===true?false:true));
 }
 const savesellData = (obj) => {
     return apiClient.post(ApiControllers.exchange + 'SellCrypto', obj);

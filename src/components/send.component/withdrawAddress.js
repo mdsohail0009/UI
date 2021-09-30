@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Input, Button, label, Radio, Form } from 'antd';
+import { Typography, Input, Button, Radio } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
-import Paragraph from 'antd/lib/skeleton/Paragraph';
 
 class WithdrawAddress extends Component {
     state = {}
@@ -13,7 +11,6 @@ class WithdrawAddress extends Component {
         const { Paragraph, Text } = Typography;
         return (
             <>
-
                 <div className="d-flex justify-content align-center">
                     <Radio.Group defaultValue="half" buttonStyle="outline" className=" default-radio" >
                         <Translate value="min" content="assets" className="fs-16 fw-400" component={Radio.Button} onClick={() => this.props.changeStep('step2')} />
@@ -40,7 +37,7 @@ class WithdrawAddress extends Component {
     }
 }
 
-const connectStateToProps = ({ sendReceive, oidc }) => {
+const connectStateToProps = ({ sendReceive }) => {
     return { sendReceive }
 }
 const connectDispatchToProps = dispatch => {

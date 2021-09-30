@@ -13,7 +13,6 @@ class Documents extends Component {
         this.gridRef = React.createRef();
     }
     gridColumns = [
-        //{ field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="ischecked" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
         { field: "walletCode", title: "Title", filter: true, width: 350, customCell: (props) => <td><div className="gridLink" onClick={() => this.update(props)}> {props.dataItem.firstName}</div></td> },
         { field: "txDate", title: "Date", filter: true, filterType: "date", width: 150 },
         { field: "credit", title: "User Name", filter: true, width: 250 },

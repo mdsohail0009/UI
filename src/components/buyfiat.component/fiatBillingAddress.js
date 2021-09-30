@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Tooltip } from 'antd';
-import { Link } from 'react-router-dom';
+import { Typography, Button } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -31,7 +30,7 @@ class FiatBillingAddress extends Component {
         )
     }
 }
-const connectStateToProps = ({ buySell, oidc }) => {
+const connectStateToProps = ({ buySell }) => {
     return { buySell }
 }
 const connectDispatchToProps = dispatch => {

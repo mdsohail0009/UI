@@ -1,31 +1,14 @@
-import React, { Component } from 'react';
-import { Drawer, Typography, Input, Button, label, Select, Switch, Form } from 'antd';
-import { Link } from 'react-router-dom';
-import { setStep } from '../../reducers/buysellReducer';
+import React from 'react';
+import { Typography, Input, Button, Form } from 'antd';
 import Translate from 'react-translate-component';
-import { connect } from 'react-redux';
 
-const LinkValue = (props) => {
-  const onFinish = () => {
-
-  }
-  return (
-    <Translate className="text-yellow text-underline c-pointer"
-      content={props.content}
-      component={Link}
-      to="./#"
-    />
-  )
-}
-const { Option } = Select;
 const ChangePassword = ({ onDrawerCancel }) => {
   const [form] = Form.useForm();
   const onFinish = () => {
 
   }
 
-  const { Paragraph, Title, Text } = Typography;
-  const link = <LinkValue content="terms_service" />;
+  const { Text } = Typography;
   return (
     <>
       <div className=" mt-16">
@@ -37,7 +20,6 @@ const ChangePassword = ({ onDrawerCancel }) => {
             <div>
               <div className="d-flex">
                 <Text className="input-label">Current Password</Text>
-                {/* <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span> */}
               </div>
               <Input.Password className="cust-input" placeholder="Type your current password" />
             </div>
@@ -50,7 +32,6 @@ const ChangePassword = ({ onDrawerCancel }) => {
             <div>
               <div className="d-flex">
                 <Text className="input-label">New Password</Text>
-                {/* <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span> */}
               </div>
               <Input.Password className="cust-input" placeholder="Type your new password" /></div>
               
@@ -58,12 +39,10 @@ const ChangePassword = ({ onDrawerCancel }) => {
           <Form.Item
             name="confirmpassword"
             className="custom-forminput mb-0"
-          // rules={[{ required: true, message: 'Please input your password!' }]}
           >
             <div>
               <div className="d-flex">
                 <Text className="input-label">Confirm Password</Text>
-                {/* <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span> */}
               </div>
               <Input.Password className="cust-input" placeholder="Re-Type your new password" /></div>
           </Form.Item>

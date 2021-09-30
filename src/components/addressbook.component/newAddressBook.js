@@ -1,7 +1,7 @@
 import React, { useState ,useEffect} from 'react';
 import { Form, Input, Button, Alert,Spin,message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import { rejectCoin } from '../../reducers/addressBookReducer';
+import { rejectCoin, setAddressStep } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
 import { saveAddress, favouriteNameCheck } from './api';
 import SelectCrypto from './selectCrypto';

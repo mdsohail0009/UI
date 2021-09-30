@@ -6,7 +6,6 @@ import * as yup from 'yup'
 import {formData} from '../../Shared/formValidations.js'
 import {createYupSchema} from '../../Shared/yupSchema.js'
 import { Dropdown } from '../../Shared/Dropdown';
-import {ErrorMessage} from 'formik'
 import TextArea from "antd/lib/input/TextArea";
 import {Button, Row, Col} from 'antd'
 import {DateField} from '../../Shared/DatePicker'
@@ -15,17 +14,7 @@ const Formvalidations=()=> {
      const yupSchema= formData.reduce(createYupSchema, {});
      const [LookupData]=useState([{name:'JNTUH',value:'JNTUH'},{name:'JNTUK',value:'JNTUK'},{name:'BVRIT',value:'BVRIT'},{name:'CMR',value:'CMR'},{name:'CMRIT',value:'CMRIT'},{name:'NMREC',value:'NMREC'}])
     const [createData, setData] = useState({ FirstName: "", LastName: "", Email: '', College: '', aboutme: '', Date: '', Phone: '',Country:'',State:'',City:'',PinCode:'' })
-    const validatePhone = (value) => {
-        let error;
-        let regex = /^[0-9]*$/
-        if (!regex.test(value)) {
-            error = 'Enter valid Phone no.'
-        }else if(value.length>12){
-            error = 'Phone no. maxlength should be 12'
-        }
-
-        return error;
-    }
+    
         return (
             <Formik initialValues={createData} validationSchema={yup.object().shape(yupSchema)} onSubmit={(values)=>console.log(values)}>
                 {({values, errors, handleSubmit, handleChange})=>(
@@ -69,7 +58,6 @@ const Formvalidations=()=> {
                 </Col>
                 
                 </Row>
-                {/* <Button type="submit" onClick={handleSubmit}>Sign Up</Button> */}
                 <div className="float-right">
                     <Button className="btn-theme mt-16" type="primary" onClick={handleSubmit}>Save</Button>
                 </div>

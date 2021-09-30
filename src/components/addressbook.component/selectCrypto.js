@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Typography, Button, Input, List, Empty, Alert } from 'antd';
-import Translate from 'react-translate-component';
+import { Alert } from 'antd';
 import { setAddressStep, setCoin, fetchSelectedCoinDetails, setExchangeValue} from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
 import CryptoList from '../shared/cryptolist';
-import { appInsights } from "../../Shared/appinsights";
 import { getCoinList } from './api';
 import { convertCurrency } from '../buy.component/buySellService';
 
@@ -45,9 +43,6 @@ class SelectCrypto extends Component {
             this.props.onCoinClick(selectedCoin)
     }
     render() {
-        const { Search } = Input;
-        const { addLinks } = this.state;
-        const { Paragraph, Text } = Typography;
 
         return (<><div ref={this.useDivRef}></div>
             {this.state.errorMessage != null && <Alert

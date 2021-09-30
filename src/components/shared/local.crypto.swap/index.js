@@ -10,7 +10,6 @@ const LocalCryptoSwapper = (props, ref) => {
     const [cryptovalue, setCryptoValue] = useState(cryptoAmt);
     const [isConvertionLoad,setConvertionLoad] = useState(false);
     const [isInputChange,setInputChange] = useState(true);
-    const [inputValue,setInputValue] = useState('');
     useImperativeHandle(ref, () => ({
         changeInfo(info) {
             setInputChange(true)
@@ -24,8 +23,7 @@ const LocalCryptoSwapper = (props, ref) => {
            }
         }
     }), []);
-    const fetchConvertionValue = async ({ cryptoValue, localValue, inputvalue }) => {
-        // if (inputvalue) {
+    const fetchConvertionValue = async ({ inputvalue }) => {
             const coin = selectedCoin || sellData?.selectedCoin?.data?.coin;
             setConvertionLoad(true);
             const value = await convertCurrency({ from: coin, to: "USD", value: (inputvalue||0), isCrypto: !isSwaped ,memId:props.memberId,screenName:props.screenName})
@@ -34,15 +32,6 @@ const LocalCryptoSwapper = (props, ref) => {
             } else { setLocalValue(value||0) }
             setConvertionLoad(false);
             onChange({ cryptoValue: isSwaped ? inputvalue : value, localValue: isSwaped ? value : inputvalue, isSwaped });
-        // } else { 
-        //     console.log('trigger1')
-        //     if(isSwaped){
-        //         setLocalValue(0)
-        //     }else{
-        //         setCryptoValue(0)
-        //     }
-        //     onChange({ cryptoValue: isSwaped ? inputvalue : null, localValue: isSwaped ? null : inputvalue, isSwaped });
-        // }
     }
 
     return <div className="p-relative">
@@ -58,7 +47,6 @@ const LocalCryptoSwapper = (props, ref) => {
                     setInputChange(true)
                 }}
                 value={isSwaped ? cryptovalue : localvalue}
-                //defaultValue={isSwaped ? cryptoValue : localvalue}
                 onValueChange={({ value }) => {
                     if (isSwaped) {
                         setCryptoValue(value);
@@ -66,7 +54,6 @@ const LocalCryptoSwapper = (props, ref) => {
                          setLocalValue(value)
                     }
                     if(isInputChange){
-                        setInputValue(value)
                     fetchConvertionValue({ cryptoValue:cryptovalue, localValue:localvalue, inputvalue:value });
                     }else{
                         setInputChange(true)

@@ -1,38 +1,17 @@
 import React, { Component } from 'react';
-import { Typography, Input, Button, label, Select, Radio, Tabs } from 'antd';
-import { Link } from 'react-router-dom';
+import { Typography, Select } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
-import config from '../../config/config';
 
-const LinkValue = (props) => {
-  return (
-    <Translate className="text-yellow text-underline c-pointer"
-      content={props.content}
-      component={Link}
-      to="./#"
-    />
-  )
-}
 const { Option } = Select;
 class SelectCurrency extends Component {
   state = {}
   render() {
-    const { TabPane } = Tabs;
-    const { Paragraph, Title, Text } = Typography;
-    const link = <LinkValue content="terms_service" />;
-    const { faitdeposit } = this.state;
+    const { Paragraph, Text } = Typography;
     return (
       <>
-        {/* <Radio.Group
-          defaultValue={1}
-          onChange={this.handleBuySellToggle}
-          className="buysell-toggle">
-          <Translate content="deposit" component={Radio.Button} value={1} />
-          <Translate content="withdraw" component={Radio.Button} value={2} />
-        </Radio.Group> */}
-
+       
         <div className="suisfiat-container auto-scroll"><Translate
           className="mb-0 text-white-30 fs-14 fw-200"
           content="EUR_text"
@@ -60,7 +39,6 @@ class SelectCurrency extends Component {
               </Select>
             </div>
             <div className="d-flex mb-24">
-              {/* <span className="coin deposit-white mt-4" /> */}
               <div style={{ flex: 1 }}>
                 <Paragraph className="mb-0 fs-16 text-white fw-500">UAB epayblock</Paragraph>
                 <Paragraph className="mb-0 fs-12 text-white-30 fw-300">
@@ -69,14 +47,6 @@ class SelectCurrency extends Component {
                 <Paragraph className="mb-0 fs-14 text-yellow fw-500"><Text className="text-white-30 fs-14">A/C </Text>LT41*** *** 1796</Paragraph>
               </div>
             </div>
-
-
-
-            {/* <Translate
-                className="mt-24 fs-14 text-aqua fw-500 text-upper"
-                content="for_international_wires"
-                component={Paragraph}
-              /> */}
             <Translate
               className=" fw-200 text-white-30 fs-16 "
               content="BICcode"
@@ -120,7 +90,7 @@ class SelectCurrency extends Component {
   }
 }
 
-const connectStateToProps = ({ SelectCurrency, oidc }) => {
+const connectStateToProps = ({ SelectCurrency }) => {
   return { SelectCurrency }
 }
 const connectDispatchToProps = dispatch => {

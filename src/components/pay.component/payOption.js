@@ -10,12 +10,6 @@ class BillType extends Component {
 
         }
     }
-    depositCrypto = () => {
-        console.log(this.state);
-    }
-    showCardDrawer = () => {
-        console.log(this.state);
-    }
     render() {
         const { Paragraph } = Typography;
         return (

@@ -6,8 +6,6 @@ import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.css'
 import './assets/css/styles.css';
 import './assets/css/framework.css';
-//import './assets/css/dark-theme.css';
-// import './assets/css/light-theme.css';
 
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
 ReactDOM.render(

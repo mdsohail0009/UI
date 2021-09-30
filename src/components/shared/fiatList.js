@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import config from '../../config/config';
 import { Link } from 'react-router-dom';
 import { List } from 'antd';
-import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 
