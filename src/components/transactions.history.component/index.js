@@ -109,55 +109,55 @@ class TransactionsHistory extends Component {
               <TabPane tab="All" key='1' className="alltab-space" onClick={()=>  this.changeTab("1")}>
               <Collapse onChange={collapseGrids} className="mb-16">
                 <Panel header="Buy/Sell" key="1">
-                  {this.state.activeTab===1&&<HistoryGridComponent  columns={BuySellColmns} gridUrl={BuySellURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
+                  {this.state.activeTab==='1'&&<HistoryGridComponent  columns={BuySellColmns} gridUrl={BuySellURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
                 </Panel>
                 </Collapse>
 
                 <Collapse onChange={collapseGrids} className="mb-16">
                 <Panel header="Swap" key="2">
-                {this.state.activeTab===1&&<HistoryGridComponent  columns={SwapColmns} gridUrl={SwapURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
+                {this.state.activeTab==='1'&&<HistoryGridComponent  columns={SwapColmns} gridUrl={SwapURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
                 </Panel>
                 </Collapse>
 
                 <Collapse onChange={collapseGrids} className="mb-16">
                 <Panel header="Deposit Fiat" key="3">
-                {this.state.activeTab===1&&<HistoryGridComponent  columns={DepositColmns} gridUrl={DepositURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
+                {this.state.activeTab==='1'&&<HistoryGridComponent  columns={DepositColmns} gridUrl={DepositURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
                 </Panel>
               </Collapse>
               <Collapse onChange={collapseGrids} className="mb-16">
                 <Panel header="Deposit Crypto" key="4">
-                {this.state.activeTab===1&&<HistoryGridComponent  columns={depositCryptoColomns} gridUrl={DepositCryptoURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
+                {this.state.activeTab==='1'&&<HistoryGridComponent  columns={depositCryptoColomns} gridUrl={DepositCryptoURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
                 </Panel>
               </Collapse>
               <Collapse onChange={collapseGrids} className="mb-16">
                 <Panel header="Withdraw Fiat" key="5">
-                {this.state.activeTab===1&&<HistoryGridComponent  columns={withdrawcolumns} gridUrl={WithdrawURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
+                {this.state.activeTab==='1'&&<HistoryGridComponent  columns={withdrawcolumns} gridUrl={WithdrawURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
                 </Panel>
               </Collapse>
               <Collapse onChange={collapseGrids} className="mb-16">
                 <Panel header="Withdraw Crypto" key="6">
-                {this.state.activeTab===1&&<HistoryGridComponent  columns={withdrwCryptoColomns} gridUrl={WithdrawCryptoURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
+                {this.state.activeTab==='1'&&<HistoryGridComponent  columns={withdrwCryptoColomns} gridUrl={WithdrawCryptoURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
                 </Panel>
               </Collapse>
               </TabPane>
 
               <TabPane tab="Buy/Sell" key='2' onClick={()=>  this.changeTab("2")}>
-              {this.state.activeTab===2&&<HistoryGridComponent  columns={BuySellColmns} gridUrl={BuySellURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
+              {this.state.activeTab==='2'&&<HistoryGridComponent  columns={BuySellColmns} gridUrl={BuySellURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
               </TabPane>
               <TabPane tab="Swap" key='3' onClick={()=>  this.changeTab("3")}>
-              {this.state.activeTab===3&&<HistoryGridComponent  columns={SwapColmns} gridUrl={SwapURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
+              {this.state.activeTab==='3'&&<HistoryGridComponent  columns={SwapColmns} gridUrl={SwapURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
               </TabPane>
               <TabPane tab="Deposit Fiat" key='4' onClick={()=> this.changeTab("4")}>
-              {this.state.activeTab===4&&<HistoryGridComponent  columns={DepositColmns} gridUrl={DepositURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
+              {this.state.activeTab==='4'&&<HistoryGridComponent  columns={DepositColmns} gridUrl={DepositURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
               </TabPane>
               <TabPane tab="Deposit Crypto" key='5' onClick={()=> this.changeTab("5")}>
-              {this.state.activeTab===5&&<HistoryGridComponent  columns={depositCryptoColomns} gridUrl={DepositCryptoURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
+              {this.state.activeTab==='5'&&<HistoryGridComponent  columns={depositCryptoColomns} gridUrl={DepositCryptoURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
               </TabPane>
               <TabPane tab="Withdraw Fiat" key='6' onClick={()=> this.changeTab("6")}>
-              {this.state.activeTab===6&&<HistoryGridComponent  columns={withdrawcolumns} gridUrl={WithdrawURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
+              {this.state.activeTab==='6'&&<HistoryGridComponent  columns={withdrawcolumns} gridUrl={WithdrawURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
               </TabPane>
               <TabPane tab="Withdraw Crypto" key='7' onClick={()=> this.changeTab("7")}>
-              {this.state.activeTab===7&&<HistoryGridComponent  columns={withdrwCryptoColomns} gridUrl={WithdrawCryptoURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
+              {this.state.activeTab==='7'&&<HistoryGridComponent  columns={withdrwCryptoColomns} gridUrl={WithdrawCryptoURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
               </TabPane>
             </Tabs>
             </div>
