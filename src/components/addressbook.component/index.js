@@ -255,13 +255,13 @@ class AddressBook extends Component {
                                             ></Link>
                                         </Tooltip>
                                     </li>
-                                {/* <li onClick={this.editFiatAddress} className="mr-16">
+                                <li onClick={this.editFiatAddress} className="mr-16">
                                         <Tooltip placement="topRight" title="Edit">
                                             <Link className="icon md edit-icon mr-0"
                                             ></Link>
                                         </Tooltip>
-                                    </li> */}
-                                    {/* <li onClick={this.statusUpdate}>
+                                    </li>
+                                    <li onClick={this.statusUpdate}>
                                         <Tooltip placement="topRight" title="Active/Inactive">
                                             <Link className="icon md status mr-0"
                                             ></Link>

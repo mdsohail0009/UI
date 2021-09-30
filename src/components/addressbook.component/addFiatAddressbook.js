@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Typography, Input, Button,  Alert, Select, Spin } from 'antd';
+import { Form, Typography, Input, Button,  Alert, Select, Spin,message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -71,10 +71,12 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
             let response = await saveAddress(values);
             if (response.ok) {
                 setErrorMsg('')
-                useDivRef.current.scrollIntoView()
-                setSuccessMsg('Address saved successfully');
+                useDivRef.current.scrollIntoView();
+                message.success({ content: 'Address saved successfull', className: 'custom-msg' });
+                // setSuccessMsg('Address saved successfully');
                 form.resetFields();
-                setTimeout(() => { onCancel(); }, 1500)
+             //   setTimeout(() => { onCancel(); }, 1500);
+                onCancel()
                 setIsLoading(false)
             }
             else { setIsLoading(false) }
@@ -90,7 +92,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
             <div className="addbook-height auto-scroll">
                 <div ref={useDivRef}></div>
                 {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-                {successMsg && <Alert closable type="success" description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
+            {/* {successMsg && <Alert closable type="success" description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />} */}
 
                 <Form form={form} onFinish={savewithdrawal} autoComplete="off"  initialValues={fiatAddress}>
                     <Translate

@@ -54,7 +54,8 @@ class SendReceive extends Component {
     renderTitle = () => {
         const stepcodes = {
             depositecrypto: <span />,
-            withdraw: <span onClick={() => {this.props.dispatch(setStep("step1"));this.props.dispatch(setWithdrawcrypto(null))}} className="icon md lftarw-white c-pointer" />,
+            withdraw: <span />,
+            // <span onClick={() => {this.props.dispatch(setStep("step1"));this.props.dispatch(setWithdrawcrypto(null))}} className="icon md lftarw-white c-pointer" />,
             scanner: <span onClick={() => this.props.dispatch(setStep("step4"))} className="icon md lftarw-white c-pointer" />,
             withdrawscan: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             withdrawaddress: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,

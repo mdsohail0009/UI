@@ -1,7 +1,7 @@
-import React, { useState ,useEffect} from 'react';
-import { Form, Input, Typography, Button, Alert,Spin } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Form, Input, Typography, Button, Alert, Spin, message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import { setAddressStep ,rejectCoin } from '../../reducers/addressBookReducer';
+import { setAddressStep, rejectCoin } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
 import { saveAddress, favouriteNameCheck } from './api';
 import Loader from '../../Shared/loader';
@@ -10,25 +10,25 @@ import SelectCrypto from './selectCrypto';
 
 
 const { Text } = Typography;
-const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,rejectCoinWallet, onCoinClick  }) => {
+const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, rejectCoinWallet, onCoinClick }) => {
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
-    const[isLoading, setIsLoading] =useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [successMsg, setSuccessMsg] = useState(null);
-    const[isSelect,setIsSelect] = useState(false);
-    const[obj,setObj] =useState({});
+    const [isSelect, setIsSelect] = useState(false);
+    const [obj, setObj] = useState({});
     useEffect(() => {
-       if(addressBookReducer?.coinWallet?.coin){
-           form.setFieldsValue({toCoin:addressBookReducer?.coinWallet?.coin })
-       }
+        if (addressBookReducer?.coinWallet?.coin) {
+            form.setFieldsValue({ toCoin: addressBookReducer?.coinWallet?.coin })
+        }
     }, [addressBookReducer?.coinWallet?.coin])
-    const selectCrypto = () =>{
+    const selectCrypto = () => {
         let getvalues = form.getFieldsValue()
         setObj(getvalues)
         setIsSelect(true)
     }
     const saveAddressBook = async (values) => {
-       setIsLoading(true)
+        setIsLoading(true)
         const type = 'crypto';
         values['membershipId'] = userConfig.id;
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
@@ -44,42 +44,44 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
             setErrorMsg('')
             let response = await saveAddress(values);
             if (response.ok) {
-              setSuccessMsg('Address saved successfully');
-              form.resetFields();
+                message.success({ content: 'Address saved successfull', className: 'custom-msg' });
+                //setSuccessMsg('Address saved successfully');
+                form.resetFields();
                 rejectCoinWallet();
-                setTimeout(() => {onCancel();}, 1500)
+                //setTimeout(() => { onCancel(); }, 1500)
+                onCancel();
                 setIsLoading(false)
             }
-            else{ setIsLoading(false)}
+            else { setIsLoading(false) }
         }
     }
-    const onCoinSelected =(selectedCoin) =>{
+    const onCoinSelected = (selectedCoin) => {
         let coinObj = obj;
         coinObj.toCoin = selectedCoin.coin
         setIsSelect(false)
         setTimeout(() => {
             form.setFieldsValue(coinObj);
         }, 500)
-        
+
     }
-    const antIcon = <LoadingOutlined style={{ fontSize: 18, color:'#fff', marginRight:'16px' }} spin />;
+    const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     return (
         <>
-     
-           {!isSelect  ? <div className="mt-16">
-                {errorMsg  && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-                {successMsg  && <Alert closable type="success" description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
+
+            {!isSelect ? <div className="mt-16">
+                {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+                {/* {successMsg && <Alert closable type="success" description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />} */}
                 <Form
                     form={form}
                     onFinish={saveAddressBook} autoComplete="off" >
                     <Form.Item
-                        className="custom-forminput custom-label  mb-24 pr-0"
+                        className="custom-forminput custom-label mb-24 pr-0"
                         label="Address Label"
                         name="favouriteName"
+                        required
                         rules={[
                             {
                                 type: "favouriteName", validator: async (rule, value, callback) => {
-                                    debugger;
                                     if (value == null || value.trim() == "") {
                                         throw new Error("Is required")
                                     }
@@ -88,13 +90,9 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                                     }
                                 }
                             }
-                        ]} 
-                        // rules={[
-                        //     { required: true, message: "Is required" },
-                        // ]} 
-                        
-                        >
-                            <Input className="cust-input"  maxLength="20" placeholder="Enter address label" />
+                        ]}
+                    >
+                        <Input className="cust-input" maxLength="20" placeholder="Enter address label" />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24 pr-0"
@@ -104,25 +102,26 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                             { required: true, message: "Is required" },
                         ]}
                     >
-                            {/* {addressBookReducer.coinWallet.coinFullName ? <Input  value={addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} className="cust-input cust-adon c-pointer" placeholder="Select from Coin"
+                        {/* {addressBookReducer.coinWallet.coinFullName ? <Input  value={addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} className="cust-input cust-adon c-pointer" placeholder="Select from Coin"
                                 addonAfter={<i className="icon md rarrow-white c-pointer" onClick={selectCrypto} />} /> :
                                 <Input disabled className="cust-input cust-adon" placeholder="Select from Coins"
                                     addonAfter={<i className="icon md rarrow-white c-pointer" onClick={selectCrypto} />}
                                 />} */}
-                              {addressBookReducer.coinWallet.coinFullName ? <div className="cust-input p-relative">
-                                    <p className=" text-center mb-0" style={{ lineHeight:'46px'}}>{addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} </p>
-                                    <span className="icon md rarrow-white c-pointer coin-select" onClick={selectCrypto} />
-                                </div>:
-                                 <div className="cust-input  p-relative">
-                                 <p className="text-center mb-0  " style={{color:'#bfbfbf', lineHeight:'46px'}}>Select coin</p>
-                                 <span className="icon md rarrow-white c-pointer coin-select" onClick={selectCrypto} />
-                                 
-                             </div>}
+                        {addressBookReducer.coinWallet.coinFullName ? <div className="cust-input p-relative">
+                            <p className=" text-center mb-0" style={{ lineHeight: '46px' }}>{addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} </p>
+                            <span className="icon md rarrow-white c-pointer coin-select" onClick={selectCrypto} />
+                        </div> :
+                            <div className="cust-input  p-relative">
+                                <p className="text-center mb-0  " style={{ color: '#bfbfbf', lineHeight: '46px' }}>Select coin</p>
+                                <span className="icon md rarrow-white c-pointer coin-select" onClick={selectCrypto} />
+
+                            </div>}
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24 pr-0"
                         name="toWalletAddress"
                         label="Address"
+                        required
                         rules={[
                             {
                                 type: "toWalletAddress", validator: async (rule, value, callback) => {
@@ -136,7 +135,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                                 }
                             }
                         ]} >
-                            <Input className="cust-input" maxLength="30" placeholder="Enter address" />
+                        <Input className="cust-input" maxLength="30" placeholder="Enter address" />
                     </Form.Item>
                     <div style={{ marginTop: '50px' }} className="">
                         <Button disabled={isLoading}
@@ -145,7 +144,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                             block
                             className="pop-btn"
                         >
-                          { isLoading  && <Spin indicator={antIcon} />} Save
+                            {isLoading && <Spin indicator={antIcon} />} Save
                         </Button>
                         {/* <Button
                                 htmlType="cancel"
@@ -159,7 +158,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel,r
                     </div>
 
                 </Form>
-            </div>:<SelectCrypto  onCoinClick ={(selectedCoin) => onCoinSelected(selectedCoin)} />}
+            </div> : <SelectCrypto onCoinClick={(selectedCoin) => onCoinSelected(selectedCoin)} />}
         </>
     )
 }
