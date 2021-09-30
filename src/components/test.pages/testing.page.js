@@ -1,11 +1,7 @@
-import React, { Component,useState }  from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { Component }  from 'react';
 import { List, Layout, Divider,notification,Space } from 'antd';
 import {  Button,Modal } from "antd";
-const HighChartComponent = React.lazy(() => import("./highchart"))
-const Form = React.lazy(()=>import("./form.validations") )
 const { Content } = Layout;
-
 class TestingPage extends Component {
     state = {
         selectWalletModal : false,
@@ -106,11 +102,6 @@ class TestingPage extends Component {
 
             <Divider />
 
-
-            {/* <Switch>
-                <Route path="/test/highchart" component={HighChartComponent} />
-                <Route path="/test/formvalidations" component={Form}/>
-            </Switch> */}
         </Content>
 
     }

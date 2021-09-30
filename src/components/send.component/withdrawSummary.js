@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Tooltip, Input, Checkbox } from 'antd';
+import { Typography, Button, Input } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -21,7 +21,7 @@ class WithdrawSummary extends Component {
             <>
                 <div className="enter-val-container mr-0  p-relative">
                     <div className="text-center">
-                        <Input className="enter-val p-0 fs-36 text-white-30 fw-200" style={{ lineHeight: '28px' }}
+                        <Input className="enter-val p-0 fs-36 text-white-30 fw-200"
                             bordered={false}
                             suffix="BTC"
                             placeholder="0.002497"
@@ -41,10 +41,6 @@ class WithdrawSummary extends Component {
                     <Translate className="fw-400 text-white" content="amount" component={Text} />
                     <Text className="fw-300 text-white-30">USD 106.79</Text>
                 </div>
-                {/* <div className="pay-list fs-16">
-                    <Text className="fw-400 text-white">Suissebase Fee<Tooltip title="Suissebase Fee"><span className="icon md info c-pointer ml-4" /></Tooltip></Text>
-                    <Text className="text-darkgreen fw-400">USD $2.71</Text>
-                </div> */}
                 <div className="pay-list fs-16">
                     <Translate className="fw-400 text-white" content="total" component={Text} />
                     <Text className="fw-300 text-white-30">0.00279935 BTC (USD 104.08)</Text>
@@ -70,7 +66,7 @@ class WithdrawSummary extends Component {
     }
 }
 
-const connectStateToProps = ({ sendReceive, oidc }) => {
+const connectStateToProps = ({ sendReceive }) => {
     return { sendReceive }
 }
 const connectDispatchToProps = dispatch => {

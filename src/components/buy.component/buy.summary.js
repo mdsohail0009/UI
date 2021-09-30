@@ -17,10 +17,6 @@ class BuySummary extends Component {
             isTermsAgreed:false
         }
     }
-    componentDidMount() {
-
-    }
-
     pay = async () => {
         this.setState({ ...this.state, error: { valid: true, message: null } });
         if (this.state.isTermsAgreed) {
@@ -66,7 +62,7 @@ class BuySummary extends Component {
         if (this.props.sellData?.previewDetails?.loading || !this.props.sellData?.previewDetails?.data) {
             return <Loader />
         }
-        const { coin, oneCoinValue, amount, amountNativeCurrency,isCrypto,currency } = this.props.sellData?.previewDetails?.data;
+        const { coin, oneCoinValue, amount, amountNativeCurrency,isCrypto } = this.props.sellData?.previewDetails?.data;
         return <Summary
             loading={this.props.sellData?.previewDetails?.loading || !this.props.sellData?.previewDetails?.data}
             coin={coin}
@@ -84,7 +80,7 @@ class BuySummary extends Component {
         />
     }
 }
-const connectStateToProps = ({ buySell, oidc, buyInfo, userConfig }) => {
+const connectStateToProps = ({ buySell, buyInfo, userConfig }) => {
     return { buySell, sellData:buyInfo, member: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {

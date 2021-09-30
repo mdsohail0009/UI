@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Tabs, Table, Collapse} from 'antd';
+import { Drawer, Tabs, Collapse} from 'antd';
 import HistoryGridComponent from './HistoryGridComponent';
 import { connect } from 'react-redux';
 
@@ -12,9 +12,6 @@ function collapseGrids(key) {
 }
 
 const withdrawcolumns = [
-  // { field: "username", title: "User Name", filter: true, width: 150},
-  // { field: "memberName", title: "Full Name", filter: true, width: 150},
-  // { field: "email", title: "Email", filter: true, width: 200 },
   { field: "accountType", title: "Account Type", filter: true, width: 200 },
   { field: "walletCode", title: "Wallet", filter: true, width: 200 },
   { field: "amount", title: "Amount", filter: true, width: 220, dataType: "number", filterType: "numeric", },
@@ -22,21 +19,19 @@ const withdrawcolumns = [
   { field: "accountNumber", title: "Bank account number/IBAN", width: 220, filter: true },
   { field: "swiftCode", title: " BIC/SWIFT/Routing number", filter: true, width: 250 },
   { field: "createdDate", title: "Request Date", filter: true, width: 210, footerCell: true, filterType: "date" },
-  { field: "status", title: "State", filter: true, width: 200, filter: true },
-  { field: "statusRemarks", title: "Remarks", filter: true, width: 280, filter: true }
+  { field: "status", title: "State", width: 200, filter: true },
+  { field: "statusRemarks", title: "Remarks", width: 280, filter: true }
 ];
 const DepositColmns = [
-  // { field: "memberUserName", title: "Name", filter: true },
   { field: "refrenceId", title: "Reference Id", filter: true,width: 346 },
   { field: "currency", title: "Currency", filter: true, width: 210 },
   { field: "bankName", title: "Bank Name", filter: true, width: 260 },
   { field: "amountDeposit", title: "Amount", filter: true, width: 250 },
   { field: "date", title: "Date", filter: true, width: 210, filterType: "date" },
-  { field: "status", title: "State", filter: true, width: 260, filter: true },
-  { field: "statusRemarks", title: "Remarks", filter: true, width: 460, filter: true }
+  { field: "status", title: "State", filter: true, width: 260 },
+  { field: "statusRemarks", title: "Remarks", filter: true, width: 460 }
 ]
 const SwapColmns = [
-  // { field: "memberFirtName", title: "Name",filter: true },
   { field: "date", title: "Date", filter: true, filterType: "date", },
   { field: "fromWalletCode", title: "From Wallet", filter: true },
   { field: "toWalletCode", title: "To Wallet", width: 170, filter: true },
@@ -46,7 +41,6 @@ const SwapColmns = [
   { field: "amountInUsd", title: "Amount in USD", width: 150, filter: true, dataType: 'number' },
 ]
 const BuySellColmns = [
-  // { field: "memberFirstName", title: "Name", filter: true, width: 200 },
   { field: "date", title: "Date", filter: true, filterType: "date", width: 184 },
   { field: "type", title: "Type", filter: true,width: 190  },
   { field: "fromWalletCode", title: "From Wallet", filter: true, width: 200 },
@@ -59,7 +53,6 @@ const BuySellColmns = [
   { field: "amountInUsd", title: "Amount In Usd", filter: true, width: 200, dataType: 'number' },
 ]
 const depositCryptoColomns = [
-  // { field: "memberUserName", title: "Name", filter: true },
   { field: "walletCode", title: "Wallet", filter: true},
   { field: "coinName", title: "Wallet Name", filter: true, width: 180 },
   { field: "availableCoins", title: "Deposited Coins", filter: true, width: 200 },
@@ -67,15 +60,12 @@ const depositCryptoColomns = [
   { field: "createdDate", title: "Date", width: 150, filterType: "date", filter: true, },
 ]
 const withdrwCryptoColomns = [
-  // { field: "username", title: "User Name", filter: true},
-  // { field: "email", title: "Email", filter: true },
   { field: "walletCode", title: "Wallet", filter: true },
   { field: "amount", title: "Amount", filter: true, width: 200,filterType: "numeric",dataType:'number' },
   { field: "walletAddress", title: "Wallet Address", filter: true, width: 200 },
-  // { field: "type", title: "Type", width: 150, filter: true, },
-  { field: "createdDate", title: "Request Date", filter: true, width: 200, filter: true,filterType: "date" },
-  { field: "status", title: "State", filter: true, width: 200, filter: true },
-  { field: "statusRemarks", title: "Remarks", filter: true, width: 200, filter: true }
+  { field: "createdDate", title: "Request Date", filter: true, width: 200,filterType: "date" },
+  { field: "status", title: "State", filter: true, width: 200 },
+  { field: "statusRemarks", title: "Remarks", filter: true, width: 200, }
 ]
 class TransactionsHistory extends Component { 
   componentDidMount(){
@@ -119,61 +109,59 @@ class TransactionsHistory extends Component {
               <TabPane tab="All" key='1' className="alltab-space" onClick={()=>  this.changeTab("1")}>
               <Collapse onChange={collapseGrids} className="mb-16">
                 <Panel header="Buy/Sell" key="1">
-                  {/* <Table columns={columns}   /> */}
-                  {this.state.activeTab==1&&<HistoryGridComponent  columns={BuySellColmns} gridUrl={BuySellURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
+                  {this.state.activeTab===1&&<HistoryGridComponent  columns={BuySellColmns} gridUrl={BuySellURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
                 </Panel>
                 </Collapse>
 
                 <Collapse onChange={collapseGrids} className="mb-16">
                 <Panel header="Swap" key="2">
-                {this.state.activeTab==1&&<HistoryGridComponent  columns={SwapColmns} gridUrl={SwapURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
+                {this.state.activeTab===1&&<HistoryGridComponent  columns={SwapColmns} gridUrl={SwapURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
                 </Panel>
                 </Collapse>
 
                 <Collapse onChange={collapseGrids} className="mb-16">
                 <Panel header="Deposit Fiat" key="3">
-                {this.state.activeTab==1&&<HistoryGridComponent  columns={DepositColmns} gridUrl={DepositURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
+                {this.state.activeTab===1&&<HistoryGridComponent  columns={DepositColmns} gridUrl={DepositURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
                 </Panel>
               </Collapse>
               <Collapse onChange={collapseGrids} className="mb-16">
                 <Panel header="Deposit Crypto" key="4">
-                {this.state.activeTab==1&&<HistoryGridComponent  columns={depositCryptoColomns} gridUrl={DepositCryptoURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
+                {this.state.activeTab===1&&<HistoryGridComponent  columns={depositCryptoColomns} gridUrl={DepositCryptoURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
                 </Panel>
               </Collapse>
               <Collapse onChange={collapseGrids} className="mb-16">
                 <Panel header="Withdraw Fiat" key="5">
-                {this.state.activeTab==1&&<HistoryGridComponent  columns={withdrawcolumns} gridUrl={WithdrawURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
+                {this.state.activeTab===1&&<HistoryGridComponent  columns={withdrawcolumns} gridUrl={WithdrawURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
                 </Panel>
               </Collapse>
               <Collapse onChange={collapseGrids} className="mb-16">
                 <Panel header="Withdraw Crypto" key="6">
-                {this.state.activeTab==1&&<HistoryGridComponent  columns={withdrwCryptoColomns} gridUrl={WithdrawCryptoURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
+                {this.state.activeTab===1&&<HistoryGridComponent  columns={withdrwCryptoColomns} gridUrl={WithdrawCryptoURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
                 </Panel>
               </Collapse>
               </TabPane>
 
               <TabPane tab="Buy/Sell" key='2' onClick={()=>  this.changeTab("2")}>
-              {this.state.activeTab==2&&<HistoryGridComponent  columns={BuySellColmns} gridUrl={BuySellURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
+              {this.state.activeTab===2&&<HistoryGridComponent  columns={BuySellColmns} gridUrl={BuySellURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
               </TabPane>
               <TabPane tab="Swap" key='3' onClick={()=>  this.changeTab("3")}>
-              {this.state.activeTab==3&&<HistoryGridComponent  columns={SwapColmns} gridUrl={SwapURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
+              {this.state.activeTab===3&&<HistoryGridComponent  columns={SwapColmns} gridUrl={SwapURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
               </TabPane>
               <TabPane tab="Deposit Fiat" key='4' onClick={()=> this.changeTab("4")}>
-              {this.state.activeTab==4&&<HistoryGridComponent  columns={DepositColmns} gridUrl={DepositURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
+              {this.state.activeTab===4&&<HistoryGridComponent  columns={DepositColmns} gridUrl={DepositURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
               </TabPane>
               <TabPane tab="Deposit Crypto" key='5' onClick={()=> this.changeTab("5")}>
-              {this.state.activeTab==5&&<HistoryGridComponent  columns={depositCryptoColomns} gridUrl={DepositCryptoURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
+              {this.state.activeTab===5&&<HistoryGridComponent  columns={depositCryptoColomns} gridUrl={DepositCryptoURL} params={{memberId:this.props.member?.id}}></HistoryGridComponent>}
               </TabPane>
               <TabPane tab="Withdraw Fiat" key='6' onClick={()=> this.changeTab("6")}>
-              {this.state.activeTab==6&&<HistoryGridComponent  columns={withdrawcolumns} gridUrl={WithdrawURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
+              {this.state.activeTab===6&&<HistoryGridComponent  columns={withdrawcolumns} gridUrl={WithdrawURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
               </TabPane>
               <TabPane tab="Withdraw Crypto" key='7' onClick={()=> this.changeTab("7")}>
-              {this.state.activeTab==7&&<HistoryGridComponent  columns={withdrwCryptoColomns} gridUrl={WithdrawCryptoURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
+              {this.state.activeTab===7&&<HistoryGridComponent  columns={withdrwCryptoColomns} gridUrl={WithdrawCryptoURL} params={{memberId:this.props.member?.id }}></HistoryGridComponent>}
               </TabPane>
             </Tabs>
             </div>
 
-          {/* <Table columns={columns}   /> */}
         </Drawer>
       </>
     );

@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Card, List, Avatar, Alert } from 'antd';
-import { CloseOutlined } from '@ant-design/icons';
-import success from '../../assets/images/success.png';
-import { Link } from 'react-router-dom';
+import { Alert } from 'antd';
 
 class AlertConfirmation extends Component {
   render() {

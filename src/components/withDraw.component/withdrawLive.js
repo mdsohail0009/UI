@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Button } from 'antd';
+import { Button } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -11,8 +11,7 @@ import { appInsights } from "../../Shared/appinsights";
 import SuccessMsg from '../withdraw.crypto.component/success';
 
 
-const WithdrawalLive = ({ userConfig, sendReceive, changeStep,dispatch,onConfirm,onCancel }) => {
-  const { Paragraph, Title, Text } = Typography;
+const WithdrawalLive = ({ userConfig, sendReceive, changeStep,dispatch,onCancel }) => {
   const [faceCapture, setFaceCapture] = useState(false);
   const [livefacerecognization, setLivefacerecognization] = useState({});
   const [isWithdrawSuccess, setIsWithdrawSuccess] = useState(false);
@@ -32,9 +31,6 @@ const WithdrawalLive = ({ userConfig, sendReceive, changeStep,dispatch,onConfirm
           name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
         });
       }
-  }
-  const Cancel = async() =>{
-    changeStep('step1');
   }
   const confirmFaceLive = (obj)=>{
     setFaceCapture(true)

@@ -5,7 +5,6 @@ import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSt
 import connectStateProps from "../../utils/state.connect";
 import Currency from '../shared/number.formate';
 import Loader from '../../Shared/loader';
-import { appInsights } from "../../Shared/appinsights";
 
 const { Paragraph, Text, Title } = Typography;
 const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
@@ -22,13 +21,7 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
     if (wallets?.loading) {
         return <Loader />
     }
-    const trackevent =() =>{
-        appInsights.trackEvent({
-            name: 'WithDraw Crypto', properties: {"Type": 'User',"Action": 'Page view',"Username":userProfile.userName,"MemeberId": userProfile.id,"Feature": 'WithDraw Crypto',"Remarks": "WithDraw crypto page view","Duration": 1,"Url": window.location.href,"FullFeatureName": 'WithDraw Crypto'}
-        });
-    }
     return <>
-
         <Translate content="withdraw_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-8" />
         <Translate content="withdraw_a_crypto_text" component={Paragraph} className="fs-16 text-secondary" />
         <div className="dep-withdraw auto-scroll">

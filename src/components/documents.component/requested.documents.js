@@ -56,7 +56,7 @@ class RequestedDocs extends Component {
                 ...this.state, documentReplies: {
                     ...this.state.documentReplies, [id]: {
                         loading: false, data: response.data.map(item => {
-                            return { ...item, path: item.path && item?.path != "string" ? JSON.parse(item.path) : [] }
+                            return { ...item, path: item.path && item?.path !== "string" ? JSON.parse(item.path) : [] }
                         }), error: null
                     }
                 }
@@ -101,7 +101,7 @@ class RequestedDocs extends Component {
             });
             return;
         }
-        item.path = item.path ? typeof (item.path) == "object" ? JSON.stringify(item.path) : item.path : item.path;
+        item.path = item.path ? typeof (item.path) === "object" ? JSON.stringify(item.path) : item.path : item.path;
         item.status = "Submitted";
         item.repliedDate = Mome().format("YYYY-MM-DDThh:mm:ss");
         this.setState({...this.state,isSubmitting:true});
@@ -120,7 +120,7 @@ class RequestedDocs extends Component {
             });
         }
         let objs = [...this.state.docReplyObjs];
-        objs = objs.filter(item => item.docunetDetailId != doc.id);
+        objs = objs.filter(item => item.docunetDetailId !== doc.id);
         this.setState({ ...this.state, docReplyObjs: objs,isSubmitting:false });
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
@@ -132,7 +132,7 @@ class RequestedDocs extends Component {
         item.status = "Rejected";
         if (isAdd) {
             let objs = [...this.state.docReplyObjs];
-            objs = objs.filter(item => item.docunetDetailId != doc.id);
+            objs = objs.filter(item => item.docunetDetailId !== doc.id);
             this.setState({ ...this.state, docReplyObjs: objs });
             return;
         }
@@ -145,7 +145,7 @@ class RequestedDocs extends Component {
             });
             this.loadDocReplies(doc.id);
             let objs = [...this.state.docReplyObjs];
-            objs = objs.filter(item => item.docunetDetailId != doc.id);
+            objs = objs.filter(item => item.docunetDetailId !== doc.id);
             this.setState({ ...this.state, docReplyObjs: objs });
         } else {
             message.warning({
@@ -156,7 +156,7 @@ class RequestedDocs extends Component {
     }
     isDocExist(lstObj, id) {
         const lst = lstObj.filter(obj => {
-            return obj.docunetDetailId == id
+            return obj.docunetDetailId === id
         });
         return lst[0]
     }
@@ -178,7 +178,7 @@ class RequestedDocs extends Component {
             let obj;
             if (item) {
                 obj = item;
-                obj.path = (obj.path && typeof (obj.path) == "string") ? JSON.parse(obj.path) : obj.path ? obj.path : [];
+                obj.path = (obj.path && typeof (obj.path) === "string") ? JSON.parse(obj.path) : obj.path ? obj.path : [];
                 obj.repliedDate = new Date();
                 obj.path.push({ filename: file.name, path: file.response[0], size: file.size });
                 obj.repliedBy = this.props.userProfileInfo?.firstName;
@@ -223,7 +223,7 @@ class RequestedDocs extends Component {
     getUploadedFiles = (id) => {
         let data = this.state.docReplyObjs.filter(item => item.docunetDetailId === id)[0];
         if (data && data.path) {
-            data.path = (typeof (data.path) == "string" ? JSON.parse(data.path) : data.path) || [];
+            data.path = (typeof (data.path) === "string" ? JSON.parse(data.path) : data.path) || [];
             return data
         } else {
             return { path: [] }
@@ -245,7 +245,7 @@ class RequestedDocs extends Component {
             return <Loader />
         }
         return <div className="main-container">
-            {!this.state.docDetails?.details || this.state.docDetails?.details.length == 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
+            {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
             <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=3" />{this.state?.docDetails?.note}</div>
             <div className="bank-view">
                 {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>

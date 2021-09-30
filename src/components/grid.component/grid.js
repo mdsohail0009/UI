@@ -105,8 +105,6 @@ export function withState(WrappedGrid) {
                     _additionalParams = _additionalParams + `&${key}=${this.props.additionalParams[key]}`
                 }
                 queryStr = queryStr + _additionalParams;
-            } else {
-                queryStr = queryStr;
             }
             const base_url = this.props.url;
             const init = { method: 'GET', accept: 'application/json', headers: { "Authorization": `Bearer ${user.access_token}` } };

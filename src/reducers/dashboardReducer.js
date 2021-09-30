@@ -101,6 +101,7 @@ let dashboardReducer = (state = initialState, action) => {
             return state;
         case HANDLE_NOTICES:
             state = { ...state, notices: { data: action.payload.data, loading: action.payload.loading } }
+            return state;
         default:
             return state;
     }

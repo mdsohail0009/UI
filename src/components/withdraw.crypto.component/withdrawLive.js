@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Button } from 'antd';
+import { Button } from 'antd';
 import { setStep,setSubTitle } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -10,8 +10,7 @@ import { appInsights } from "../../Shared/appinsights";
 import SuccessMsg from '../withdraw.crypto.component/success';
 import { withDrawCrypto } from '../send.component/api';
 
-const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep,dispatch,onConfirm }) => {
-  const { Paragraph, Title, Text } = Typography;
+const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep,dispatch }) => {
   const [faceCapture, setFaceCapture] = useState(false);
   const [livefacerecognization, setLivefacerecognization] = useState({});
   const [isWithdrawSuccess, setIsWithdrawSuccess] = useState(false);

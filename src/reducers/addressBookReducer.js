@@ -131,6 +131,7 @@ const AddressBookReducer = (state = initialState, action) => {
             return state;
         case FETCH_USERSID_UPDATE:
             state = { ...state, selectedRowData: action.payload }
+            return state;
         default:
             return state;
     }

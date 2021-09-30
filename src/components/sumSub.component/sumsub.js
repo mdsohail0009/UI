@@ -11,14 +11,11 @@ class SumSub extends Component {
         if (this.props.userConfig.isKYC) {
             this.props.history.push("/dashboard")
         }
-        this.launchWebSdk(process.env.REACT_APP_SUMSUB_URI, 'basic-kyc', 'tst:N2Kvt7SOOVp1jMf7wyQy9BSO.KlnFBjZadRJWK1A0rHckzIlaHQqbRDTO');
+        this.launchWebSdk();
         
     }
-    launchWebSdk = async (apiUrl, flowName, accessToken, applicantEmail, applicantPhone, customI18nMessages) => {
-        applicantEmail = "test@example.org"
-        applicantPhone = "+491758764512"
+    launchWebSdk = async () => {
         apicalls.sumsubacesstoken(this.props.userConfig.userId).then((res) => {
-            debugger
         let snsWebSdkInstance = snsWebSdk.Builder(process.env.REACT_APP_SUMSUB_URI, this.props.userConfig.isBusiness? "SuisseBase KYB":"SuisseBase KYC")
             .withAccessToken(res.data.token, (newAccessTokenCallback) => {
                     newAccessTokenCallback(res.data.token)
@@ -28,14 +25,9 @@ class SumSub extends Component {
                 lang: "en",
                 email: this.props.userConfig.email,
                 phone: this.props.userConfig.phoneNo, // if available
-                // firstName:'NARESH',
-                // fixedInfo: {
-                //     "firstName": "London",
-                //     "lastName": "GBR"
-                // },
                 onMessage: (type, payload) => {
                     console.log('WebSDK onMessage', type, payload)
-                    if (type === 'idCheck.applicantStatus' && payload.reviewStatus == "completed")
+                    if (type === 'idCheck.applicantStatus' && payload.reviewStatus === "completed")
                         apicalls.updateKyc(this.props.userConfig.userId).then((res) => {
                             this.props.getmemeberInfoa(this.props.userConfig.email)
                             this.props.history.push("/dashboard")

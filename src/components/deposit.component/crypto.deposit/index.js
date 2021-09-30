@@ -1,14 +1,14 @@
 import { Typography } from "antd";
 import { useEffect } from "react";
 import Translate from "react-translate-component";
-import { setSendSelectedCoin, setStep, setSubTitle, setWalletAddress } from "../../../reducers/sendreceiveReducer";
+import { setStep, setSubTitle, setWalletAddress } from "../../../reducers/sendreceiveReducer";
 import { getMemberCoins } from "../../../reducers/swapReducer";
 import connectStateProps from "../../../utils/state.connect";
 import CryptoList from "../../shared/cryptolist"
 import { createCryptoDeposit } from "../api";
 import { appInsights } from "../../../Shared/appinsights";
 const { Title, Paragraph } = Typography;
-const CryptoDeposit = ({ dispatch, userProfile, sellData: buyInfo,swapStore }) => {
+const CryptoDeposit = ({ dispatch, userProfile,swapStore }) => {
     useEffect(() => { fetchMemberCoins(); trackevent()}, []);
     const fetchMemberCoins = () => {
         dispatch(getMemberCoins(userProfile.id));

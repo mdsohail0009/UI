@@ -1,21 +1,14 @@
 
-import { Typography, Input, Button, Select, Switch, Form, notification, Alert } from 'antd';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { notification } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
-import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
-import React, { useEffect, useState } from 'react';
-import { changePassword } from '../../api/apiServer';
+import React from 'react';
 notification.config({
   placement: "topRight",
   rtl: true
 });
-const Twofa = ({ profile, onSubmit, info }) => {
-  const [form] = Form.useForm();
-  const [requiredMark, setRequiredMarkType] = useState('required');
-  const [changePasswordResponse, setChangePasswordResponse] = useState({ error: false, messsage: "", isLoading: false });
+const Twofa = () => {
 
-  const { Paragraph, Title, Text } = Typography;
   return (<>
 
      <a href={process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/EnableAuthenticator"}>2FA Enable</a>
@@ -24,7 +17,7 @@ const Twofa = ({ profile, onSubmit, info }) => {
   );
 }
 
-const connectStateToProps = ({ buySell, oidc }) => {
+const connectStateToProps = ({ buySell }) => {
   return { buySell }
 }
 const connectDispatchToProps = dispatch => {

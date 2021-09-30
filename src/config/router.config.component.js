@@ -1,4 +1,4 @@
-import { Switch, Route as ReactRoute, Redirect } from 'react-router-dom';
+import { Switch, Route as ReactRoute } from 'react-router-dom';
 import React, { Component } from 'react';
 import Route from '../authentication/protected.route';
 const Dashboard = React.lazy(() => import('../components/dashboard.component'));

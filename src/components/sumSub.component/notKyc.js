@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 
 class NotKyc extends Component {
     state = {loading:true}
-    
-    
     render() {
         return (
             <>

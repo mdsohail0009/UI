@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Typography, Button, Input, List, Empty, Alert } from 'antd';
+import { Typography, Button, Alert } from 'antd';
 import Translate from 'react-translate-component';
 import { setStep, updateCoinDetails, getMemberCoins,updateReceiveCoinDetails } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
-import cryptolist from '../shared/cryptolist';
 import CryptoList from '../shared/cryptolist';
 import { appInsights } from "../../Shared/appinsights";
 import { getfromCoinList, gettoCoinList } from './api'
@@ -20,8 +19,6 @@ class SelectCrypto extends Component {
     }
     useDivRef = React.createRef();
     componentDidMount() {
-        //this.props.fetchMemberCoins(this.props.userProfile?.id);
-        //this.trackEvent()
         if(this.props.swapfrom){
             this.fromCoinList()
         }else{
@@ -74,19 +71,15 @@ class SelectCrypto extends Component {
         }
     }
     render() {
-        const { Search } = Input;
-        const { addLinks } = this.state;
-        const { Paragraph, Text } = Typography;
+        const { Paragraph } = Typography;
 
         return (<><div ref={this.useDivRef}></div>
             {this.state.errorMessage != null && <Alert
-                //message="this.state.errorMessage"
                 description={this.state.errorMessage}
                 type="error"
                 showIcon
                 closable={false}
             />}
-            {/*<Search placeholder="Search for a Currency" onChange={(value) => this.onSearch(value)} className="crypto-search fs-14" />*/}
             <Paragraph className="to-receive">Swap {this.props.swapfrom?'from':'to'}<span className="icon sm rightthemearrow ml-12 mb-4" /></Paragraph>
             
             <CryptoList coinType="swap" showSearch={true} showValues={true} titleField={'coin'} iconField={'coin'} selectedCoin={this.props.swapfrom?this.props.swapStore.coinDetailData:this.props.swapStore.coinReceiveDetailData} coinList={this.props.swapfrom?this.state.fromCoinsList:this.state.toCoinsList} isLoading={this.state.isLoading} onCoinSelected={(selectedCoin) => this.selectToggle(selectedCoin)} />

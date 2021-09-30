@@ -1,7 +1,7 @@
 import Currency from "../shared/number.formate";
 
 const infoColumns = [
-    { dataIndex: "image", render: val => <img style={{ height: 20, width: 20 }} src={val} />, width: 40 },
+    { dataIndex: "image", render: val => <img style={{ height: 20, width: 20 }} src={val} alt={'coin'}/>, width: 40 },
     { title: "Coin", dataIndex: "symbol", render: text => <span className="fs-18 fw-500 text-upper text-white mb-0 mt-12">{text.toUpperCase()}</span>, sorter: (a, b) => ('' + a.symbol).localeCompare(b.symbol), },
     {
         title: "Price", dataIndex: "current_price", render: (val) => <Currency defaultValue={val} type={"text"} className="fs-16 fw-400 text-upper text-white" />, sorter: (a, b) => a.current_price - b.current_price
@@ -11,7 +11,7 @@ const infoColumns = [
 ];
 
 const detailInfoColumns = [
-    { title: "", dataIndex: "image", render: val => <img style={{ height: 20, width: 20 }} src={val} />, width: 80 },
+    { title: "", dataIndex: "image", render: val => <img style={{ height: 20, width: 20 }} src={val} alt={'coin'}/>, width: 80 },
     { title: "", dataIndex: "name", width: 250, render: text => <span className="fs-18 fw-500 text-upper text-white mb-0 mt-12">{text}</span> },
     { title: "Coin", dataIndex: "symbol", render: text => <span className="fs-18 fw-500 text-upper text-white mb-0 mt-12">{text.toUpperCase()}</span>, sorter: (a, b) => ('' + a.symbol).localeCompare(b.symbol), },
     {

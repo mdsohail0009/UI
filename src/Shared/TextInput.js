@@ -1,6 +1,6 @@
 import React from 'react';
 import {useField} from 'formik'
-import {Input, Row, Col} from 'antd'
+import {Input} from 'antd'
 export const TextInput=({label,type,value,errors,...props})=>{
     const [field]=useField(props)
     return (

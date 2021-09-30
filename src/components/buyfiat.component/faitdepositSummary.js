@@ -1,20 +1,10 @@
 import React, { Component } from 'react';
-import { Typography, Button, Tooltip, Checkbox ,Space} from 'antd';
+import { Typography, Space} from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import success from '../../assets/images/success.png';
-
-const LinkValue = (props) => {
-    return (
-        <Translate className="text-yellow text-underline c-pointer"
-            content={props.content}
-            component={Link}
-            to="./#"
-        />
-    )
-}
 
 class FaitdepositSummary extends Component {
     constructor(props) {
@@ -28,12 +18,11 @@ class FaitdepositSummary extends Component {
     }
 
     render() {
-        const { Title, Paragraph, Text } = Typography;
-        const link = <LinkValue content="terms_service" />;
+        const { Paragraph} = Typography;
         return (
             <>
                 <div className="success-pop text-center">
-              <img src={success} className="confirm-icon" />
+              <img src={success} className="confirm-icon" alt={'success'} />
               <div><Translate content="success_msg" component='Success' className="text-white-30 fs-36 fw-200 mb-4" /></div>
               <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" />
               <Space direction="vertical" size="large">

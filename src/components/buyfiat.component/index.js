@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
 import { Drawer, Typography, Menu, Dropdown } from 'antd';
-import { EllipsisOutlined } from '@ant-design/icons';
 import { buyFiatSteps as config } from './config';
 import { setStep } from '../../reducers/buysellReducer';
 import {rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
 import connectStateProps from '../../utils/state.connect';
 import Translate from 'react-translate-component';
-import BuyFiat from './buyFiat';
 import SelectFiat from './selectFiat';
 import AddCard from './addCard';
 import SelectWallet from './selectWallet';
 import FiatDeposit from '../../components/deposit.component/faitDeposit';
-import FiatSummary from './buyfiatSummary';
 import BillingAddress from './fiatBillingAddress';
 import FaitDepositSummary from './faitdepositSummary';
 import NewFiatAddress from '../addressbook.component/addFiatAddressbook';
@@ -38,7 +35,6 @@ class MassPayment extends Component {
         this.props.changeStep("step3");
     }
     onAddressClick = () => {
-      //  console.log('trigger')
         this.props.dispatch(setWithdrawfiatenaable(true))
         this.props.dispatch(setStep("step1"))
     }
@@ -46,7 +42,6 @@ class MassPayment extends Component {
         const stepcodes = {
             fiatdeposit: <FiatDeposit tab={this.props.tabData} fiatRef={(cd) => this.child = cd} />,
             faitsummary: <FaitDepositSummary />,
-            //buyfiat: <BuyFiat activeTab={this.props.valNum} />,
             selectfiat: <SelectFiat />,
             addcard: <AddCard />,
             selectwallet: <SelectWallet />,
@@ -103,7 +98,6 @@ class MassPayment extends Component {
         return stepcodes[config[this.props.buySell.stepcode]]
     }
     render() {
-        const { withdraw } = this.state;
         const { Paragraph } = Typography
         return (
             <Drawer

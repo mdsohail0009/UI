@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { Drawer, Typography, Input, Button, label } from 'antd';
+import { Typography, Input, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buyFiatReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
-import Paragraph from 'antd/lib/skeleton/Paragraph';
 
 class addCard extends Component {
     state = {}
     render() {
-        const { Paragraph, Text } = Typography;
+        const { Text } = Typography;
         return (
             <>
                 <form className="form">
@@ -44,7 +43,7 @@ class addCard extends Component {
     }
 }
 
-const connectStateToProps = ({ buyFiat, oidc }) => {
+const connectStateToProps = ({ buyFiat }) => {
     return { buyFiat }
 }
 const connectDispatchToProps = dispatch => {
