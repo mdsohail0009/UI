@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Typography, Input, Button,  Alert, Spin } from 'antd';
+import { Form, Typography, Input, Button,  Alert, Spin,message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -13,13 +13,12 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
     const [selectedWallet, setSelectedWallet] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [successMsg, setSuccessMsg] = useState(null);
     const [ fiatAddress, setFiatAddress] =useState({});
 
     const useDivRef = React.useRef(null);
 
     useEffect(() => {
-        if(addressBookReducer?.selectedRowData !== "00000000-0000-0000-0000-000000000000"){
+        if(addressBookReducer?.selectedRowData != "00000000-0000-0000-0000-000000000000"){
             getAddressList(addressBookReducer?.selectedRowData, 'fiat')
             loadData();
         }
@@ -67,10 +66,10 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
             let response = await saveAddress(values);
             if (response.ok) {
                 setErrorMsg('')
-                useDivRef.current.scrollIntoView()
-                setSuccessMsg('Address saved successfully');
+                useDivRef.current.scrollIntoView();
+                message.success({ content: 'Address saved successfull', className: 'custom-msg' });
                 form.resetFields();
-                setTimeout(() => { onCancel(); }, 1500)
+                onCancel()
                 setIsLoading(false)
             }
             else { setIsLoading(false) }
@@ -82,11 +81,9 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
 
     return (
         <>
-            {/* // <div ref={useDivRef}></div> */}
             <div className="addbook-height auto-scroll">
                 <div ref={useDivRef}></div>
                 {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-                {successMsg && <Alert closable type="success" description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />}
 
                 <Form form={form} onFinish={savewithdrawal} autoComplete="off"  initialValues={fiatAddress}>
                     <Translate
@@ -357,6 +354,7 @@ const connectDispatchToProps = dispatch => {
         getAddressList: (id, type) => {
             dispatch(fetchGetAddress(id, type));
         },
+        
         dispatch
     }
 
