@@ -12,6 +12,7 @@ import WalletAddressValidator from 'wallet-address-validator';
 import { appInsights } from "../../Shared/appinsights";
 import { favouriteFiatAddress } from '../addressbook.component/api'
 import oops from '../../assets/images/oops.png'
+import Loader from '../../Shared/loader';
 
 const { Option } = Select;
 class CryptoWithDrawWallet extends Component {
@@ -29,8 +30,9 @@ class CryptoWithDrawWallet extends Component {
         isWithdrawSuccess: false,
         addressLu: [],
         isSelectAddress: false,
-        isAddressValue:false,
-      
+        isAddressValue: false,
+        isLoading:false,
+
     }
     componentDidMount() {
         if(this.props.sendReceive.withdrawCryptoObj){
@@ -58,8 +60,8 @@ class CryptoWithDrawWallet extends Component {
         if (recAddress.ok) {
             this.setState({ addressLu: recAddress.data });
         }
-        else {
-            this.setState({ isaddressLu: true })
+        else{
+            this.setState({...this.state});  
         }
     }
     selectCrypto = () => {
@@ -67,7 +69,6 @@ class CryptoWithDrawWallet extends Component {
         this.getAddressLu();
     }
     handleSelectAdd = (selectadd) => {
-        debugger;
         let val= selectadd.currentTarget.innerText
         let res = this.state.addressLu;
         let index = res.findIndex(function (o) { return o.name == val; })
@@ -233,7 +234,7 @@ class CryptoWithDrawWallet extends Component {
     render() {
         const { Text, Paragraph } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
-        const { addressLu } = this.state;
+        const { addressLu ,isLoading} = this.state;
         if (this.state.isWithdrawSuccess) {
             return <SuccessMsg onBackCLick={() => this.props.changeStep("step1")} />
         }
@@ -242,7 +243,6 @@ class CryptoWithDrawWallet extends Component {
                 {!this.state.isSelectAddress ? <div> {this.state.error != null && <Alert closable type="error"
                     //message={"Withdraw Crypto"}
                     description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
-
                     <Card className="crypto-card select mb-36" bordered={false}>
                         <span className="d-flex align-center">
                             <span className={`coin lg ${selectedWallet?.coin}`} />
@@ -294,10 +294,6 @@ class CryptoWithDrawWallet extends Component {
                                 }
                             ]}
                         >
-                            {/* <div className="d-flex"><Text
-                                className="input-label" >Address</Text>
-                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span>
-                            </div> */}
                             <div className="p-relative d-flex align-center">
                                 {!this.state.isAddressValue ?
                                     <Input className="cust-input custom-add-select mb-0" placeholder="Enter address"
@@ -316,6 +312,8 @@ class CryptoWithDrawWallet extends Component {
                         </Form.Item>
                     </Form>
                     <Translate content="with_draw" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
+                    <Translate content="back" component={Button} type="text" size="large" className="text-center text-white-30 pop-cancel pwd-popup fw-400 text-captz text-center" block
+                        onClick={() => { this.props.dispatch(setStep("step1")); this.props.dispatch(setWithdrawcrypto(null)) }} />
                     <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[
                         <Button key="back" onClick={this.handleCancel} disabled={this.state.loading}>
                             Return
@@ -328,23 +326,25 @@ class CryptoWithDrawWallet extends Component {
                     </Modal>
                 </div> : <>
                     {addressLu.length > 0 ? <>
-                    <h1 className="basicinfo">Address Book</h1>
-                    <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
-                        {addressLu?.map((item, idx) =>
-                            <li onClick={(selectadd) => this.handleSelectAdd(selectadd)} key={idx} > {item.name}</li>
-                        )}
-                    </ul> </>:
-                        <div className="success-pop text-center" style={{marginTop:'20px'}}>
-                            <img src={oops} className="confirm-icon" style={{marginBottom:'10px'}} />
-                           <h1 className="fs-36 text-white-30 fw-200 mb-0" >OOPS </h1>
-                            <p className="fs-16 text-white-30 fw-200"> No Address Avaliable </p>
+                        <h1 className="basicinfo">Address Book</h1>
+                        <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
+                            {addressLu?.map((item, idx) =>
+                                <li onClick={(selectadd) => this.handleSelectAdd(selectadd)} key={idx} > {item.name}</li>
+                            )}
+                        </ul> </>:
+                        <div className="success-pop text-center" style={{ marginTop: '20px' }}>
+                            <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} />
+                            <h1 className="fs-36 text-white-30 fw-200 mb-0" >OOPS </h1>
+                            <p className="fs-16 text-white-30 fw-200 mb-0"> No Address Available </p>
+                            <Translate content="back" component={Button} type="text" size="large" className="text-center text-white-30 pop-cancel pwd-popup fw-400 text-captz text-center" block
+                                onClick={() => { 
+                                // this.props.dispatch(setStep("step1"));
+                                //  this.props.dispatch(setWithdrawcrypto(null));
+                                 this.setState({ ...this.state, isSelectAddress: false }) }} />
                         </div>
                     }
-
-
-
-                </>
-                }
+               
+                </>}
             </div>
 
 

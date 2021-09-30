@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Typography, Button, Radio } from 'antd';
+import { Typography, Radio } from 'antd';
 import Translate from 'react-translate-component';
 import connectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
-import { fetchGraphInfo, fetchPortfolioData } from '../../reducers/dashboardReducer';
-import { createChart, LineStyle, ColorType, PriceScaleMode } from "lightweight-charts";
+import { fetchPortfolioData } from '../../reducers/dashboardReducer';
+import { createChart, ColorType, PriceScaleMode } from "lightweight-charts";
 import { getPortfolioGraph } from './api';
 class Portfolio extends Component {
     chart;

@@ -50,7 +50,6 @@ class MassPayment extends Component {
             selectfiat: <SelectFiat />,
             addcard: <AddCard />,
             selectwallet: <SelectWallet />,
-
             billingaddress: <BillingAddress />,
             confirmation: <ConfirmMsg />,
             addAddress:<NewFiatAddress onCancel = { () =>this.onAddressClick() } />,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Button, Typography, message } from 'antd';
+import { List, Button, Typography } from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import connectStateProps from '../../utils/state.connect';
@@ -27,9 +27,7 @@ class YourPortfolio extends Component {
     }
     showBuyDrawer = (item, key) => {
         if (this.props?.userProfile?.isDocsRequested) {
-            message.destroy();
-            message.error({ content: "Please complete document requests" });
-            this.props.history.push("/userprofile?key=3");
+            this.props.history.push("/docnotices");
             return;
         }
         if (key == "buy") {
@@ -75,14 +73,10 @@ class YourPortfolio extends Component {
                                 avatar={<span className={`coin ${item.coin}`} />}
                                 title={<div className="fs-18 fw-300 text-upper text-white mb-0 mt-12">{item.coin}</div>}
                             />
-
-                            {/* <div className={`text-right fs-20 ${item.coinBalance>0 ? 'text-green' : 'text-red'}`}><Currency defaultValue={item.coinBalance} prefix={""} type={"text"}/></div> */}
                             <div className='text-right fs-20 text-white'>
                                 <Currency defaultValue={item.coinBalance} type={"text"} prefix={""} />
                                 <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
                             </div>
-                            {/* {item.coinBalance>0? <span className="icon md gain mr-8" /> : <span className="icon md lose mr-8" />} */}
-                            {/* <div className="fs-16 text-white-30 fw-300 ml-24  text-upper ">{item.totalcoin} {item.shortcode}</div> */}
                         </List.Item>
                     )}
                 />

@@ -12,7 +12,6 @@ class depositCrypto extends Component {
         depositeFiat: false
     }
     handleBuySellToggle = e => {
-        // console.log(this.state);
         this.setState({
             depositeFiat: e.target.value === 2
         });

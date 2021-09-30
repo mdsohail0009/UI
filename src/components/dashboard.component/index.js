@@ -59,7 +59,6 @@ class Home extends Component {
 
                         <Notices />
                         <YourPortfolio />
-                        {/* <Coins /> */}
                     </Col>
                 </Row>
             </div>
