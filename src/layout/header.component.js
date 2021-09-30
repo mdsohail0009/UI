@@ -360,7 +360,7 @@ class Header extends Component {
                                 <li className="pr-30 p-relative">{this.props.userConfig.isKYC ? <img src={logoColor} alt="logo" className="tlv-logo" /> : <img src={logoColor} alt="logo" className="tlv-logo" />}</li>
                                 {/* <li className="px-36"><span className="icon md hamburger c-pointer" /></li> */}
                                 {/* Mega menu ==> onClick={this.showMegaMenu} */}
-                                <li className="mb-d-none px-36"><Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? " Business" : " Personal" }} onClick={() => this.props.history.push('/dashboard')} component="p" className="text-white-30 mb-0 fs-24 c-pointer" /></li>
+                                <li className="mb-d-none px-36"><Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? " Business" : " Personal" }} onClick={() => this.props.userConfig.isKYC?this.props.history.push('/dashboard'):this.props.history.push("/notkyc")} component="p" className="text-white-30 mb-0 fs-24 c-pointer" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
 
