@@ -184,7 +184,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
                   )}
                 </Select>
                 <Tooltip placement="top" title={<span>New Address</span>} style={{ flexGrow: 1 }}>
-                  <div className="new-add c-pointer" onClick={() => changeStep('step4')}>
+                  <div className="new-add c-pointer" onClick={() => changeStep('step4')} >
                     <span className="icon md address-book d-block c-pointer"></span>
                   </div>
                 </Tooltip>
@@ -357,7 +357,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
               className="custom-forminput custom-label mb-24"
               name="beneficiaryAccountName"
               label="Recipient full name"
-              required
+              
             >
               <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
             </Form.Item>
