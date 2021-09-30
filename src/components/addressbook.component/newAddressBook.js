@@ -14,6 +14,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
     const[isLoading, setIsLoading] =useState(false);
     const [successMsg, setSuccessMsg] = useState(null);
     const[isSelect,setIsSelect] = useState(false);
+    const[isShowWallets, setIsShowWallets] = useState(false)
     const[obj,setObj] =useState({});
     useEffect(() => {
        if(addressBookReducer?.coinWallet?.coin){
@@ -57,7 +58,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
         setTimeout(() => {
             form.setFieldsValue(coinObj);
         }, 500)
-        
+    
     }
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color:'#fff', marginRight:'16px' }} spin />;
     return (
@@ -106,8 +107,9 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                                 <Input disabled className="cust-input cust-adon" placeholder="Select from Coins"
                                     addonAfter={<i className="icon md rarrow-white c-pointer" onClick={selectCrypto} />}
                                 />} */}
-                              {addressBookReducer.coinWallet.coinFullName ? <div className="cust-input p-relative">
-                                    <p className=" text-center mb-0" style={{ lineHeight:'46px'}}>{addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} </p>
+                       
+                              {addressBookReducer?.coinWallet?.coinFullName ? <div className="cust-input p-relative">
+                                    <p className=" text-center mb-0" style={{ lineHeight:'46px'}}> {addressBookReducer.coinWallet.coinFullName + '-' + addressBookReducer.coinWallet.coin} </p>
                                     <span className="icon md rarrow-white c-pointer coin-select" onClick={selectCrypto} />
                                 </div>:
                                  <div className="cust-input  p-relative">

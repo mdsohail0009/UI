@@ -3,7 +3,7 @@ const SET_ADDRESS_STEP = "setAddressStep";
 const CLEAR_STEP = "clearStep";
 const FETCH_ADDRESS = 'fetchAddress';
 const HANDLE_FETCH = 'handleFetch';
-const SET_COIN = "setCoin";
+const SET_COIN = "setAddressCoin";
 const SET_EXCHANGE_VALUE = "setExchangeValue";
 const REJECT_COIN = 'rejectCoin';
 const FETCH_USERSID_UPDATE = 'fetchUsersIdUpdate';
@@ -11,7 +11,7 @@ const FETCH_USERSID_UPDATE = 'fetchUsersIdUpdate';
 const handleFetch = (payload) => {
     return { type: HANDLE_FETCH, payload }
 }
-const setCoin = (payload) => {
+const setAddressCoin = (payload) => {
     return {
         type: SET_COIN,
         payload
@@ -90,7 +90,7 @@ const fetchGetAddress = (member_id, type) => {
 let initialState = {
     selectedCoin: {},
     favouriteAddress: [],
-    coinWallet: {},
+    coinWallet: null,
     selectedRowData:{},
     exchangeValues: {},
     getAddress: { loading: false, data: [] },
@@ -124,7 +124,7 @@ const AddressBookReducer = (state = initialState, action) => {
             state = { ...state, coinWallet: action.payload };
             return state;
         case REJECT_COIN:
-            state = { ...state, coinWallet: {} };
+            state = { ...state, coinWallet: null };
             return state;
         case SET_EXCHANGE_VALUE:
             state = { ...state, exchangeValues: { ...state.exchangeValues, [action.payload.key]: action.payload.value } };
@@ -138,4 +138,4 @@ const AddressBookReducer = (state = initialState, action) => {
 
 }
 export default AddressBookReducer;
-export { setAddressStep, clearStep, setCoin, handleFavouritAddress, fetchSelectedCoinDetails, setExchangeValue, rejectCoin,fetchUsersIdUpdate, fetchGetAddress}
+export { setAddressStep, clearStep, setAddressCoin, handleFavouritAddress, fetchSelectedCoinDetails, setExchangeValue, rejectCoin,fetchUsersIdUpdate, fetchGetAddress}

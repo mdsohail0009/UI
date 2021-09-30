@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert } from 'antd';
-import { setAddressStep, setCoin, fetchSelectedCoinDetails, setExchangeValue} from '../../reducers/addressBookReducer';
+import { setAddressStep, setAddressCoin, fetchSelectedCoinDetails, setExchangeValue} from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
 import CryptoList from '../shared/cryptolist';
 import { getCoinList } from './api';
@@ -51,8 +51,8 @@ class SelectCrypto extends Component {
                 showIcon
                 closable={false}
             />}
-            <CryptoList coinType="swap" showSearch={true} showValues={true} titleField={'coin'} iconField={'coin'}
-             coinList={this.state.coinsList} isLoading={this.state.isLoading} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
+            <CryptoList coinType="swap" showSearch={true} showValues={true} titleField={'coin'} iconField={'coin'} 
+             coinList={this.state.coinsList} selectedCoin={this.props.addressBookReducer.coinWallet} onReturnCoin={true} isLoading={this.state.isLoading} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
         </>)
     }
 }
@@ -68,7 +68,7 @@ const connectDispatchToProps = dispatch => {
             dispatch(fetchSelectedCoinDetails(coin, memid));
         },
         setSelectedCoin: (coinWallet) => {
-            dispatch(setCoin(coinWallet));
+            dispatch(setAddressCoin(coinWallet));
         },
         setExchangeValue: ({ key, value }) => {
             dispatch(setExchangeValue({ key, value }))

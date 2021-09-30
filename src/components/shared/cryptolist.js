@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import { List, Empty, Input } from 'antd';
 import NumberFormat from 'react-number-format';
 
-const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, showSearch, selectedCoin, iconField, titleField}) => {
+const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, showSearch, selectedCoin, iconField, titleField, onReturnCoin}) => {
     const [coinListData, setCoinListData] = useState([]);
     const [selList, setselList] = useState({});
+    
     const { Search } = Input;
     useEffect(() => {
         setCoinListData(coinList)
@@ -13,7 +14,10 @@ const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, s
     useEffect(() => {
         if (selectedCoin) {
             setselList(selectedCoin)
+            // selectList(selectedCoin)
+           if(!onReturnCoin){
             selectList(selectedCoin)
+           }
         }
     }, [selectedCoin])
     const handleSearch = (value) => {
