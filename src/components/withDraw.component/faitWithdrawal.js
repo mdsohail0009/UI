@@ -53,7 +53,15 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     setLoading(false)
   }, [])
 
-  const handleWalletSelection = (walletId) => {
+  const handleWalletSelection = (walletId, isClearObj) => {
+    if(isClearObj){
+      let clearobj = 
+        {"walletCode":"","totalValue":"","accountNumber":"","routingNumber":"","bankName":"","bankAddress":"","bankAddress2":"","zipcode":"","beneficiaryAccountName":"","beneficiaryAccountAddress":"","beneficiaryAccountAddress1":"","description":"","isAccept":false}
+      
+       setSaveObj({...clearobj, walletCode: walletId});
+       setAddressDetails({});
+       form.setFieldsValue({ ...clearobj, walletCode: walletId,  })
+    }
     form.setFieldsValue({ walletCode: walletId })
     if (buyInfo.memberFiat?.data) {
       let wallet = buyInfo.memberFiat.data.filter((item) => {
@@ -161,7 +169,7 @@ const selectAddress = () =>{
                 { required: true, message: "Is required" },
               ]}
             >
-              <WalletList  valueFeild={'currencyCode'}  selectedvalue={saveObj?.walletCode} placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e)} />
+              <WalletList  valueFeild={'currencyCode'}  selectedvalue={saveObj?.walletCode} placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e, true)} />
               
             </Form.Item>
             <Form.Item
