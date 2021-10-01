@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Button } from 'antd';
+import { Drawer } from 'antd';
 import { Table } from 'antd';
 
 const columns = [

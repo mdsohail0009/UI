@@ -67,6 +67,7 @@ class SwapCoins extends Component {
             this.setState({ ...this.state, errorMessage: null })
         }
         if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
+            if(e){
             this.setState({ ...this.state, loadingToValue:true})
             let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, e, this.props.userProfile.id,'swap');
             if (res.ok) {
@@ -75,6 +76,9 @@ class SwapCoins extends Component {
             } else {
                 this.setState({ ...this.state, receiveValue: "", loadingToValue:false })
             }
+        }else{
+            this.setState({ ...this.state, receiveValue: "", loadingToValue:false })
+        }
         } else {
             this.setState({ ...this.state, errorMessage: 'Please select from and receive coins to swap' })
         }

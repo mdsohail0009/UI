@@ -33,7 +33,7 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep,dispatch }) 
       
   }
   const Cancel = async() =>{
-    changeStep('step2');
+    changeStep('withdraw_crypto_selected');
   }
   const confirmFaceLive = (obj)=>{
     setFaceCapture(true)
