@@ -9,7 +9,7 @@ const LinkValue = (props) => {
         <Translate className="text-defaultylw text-underline c-pointer"
             content={props.content}
             component={Link}
-            to="./#"
+            onClick={()=>window.open("https://www.iubenda.com/terms-and-conditions/42856099",'_blank')}
         />
     )
 }
