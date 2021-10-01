@@ -27,7 +27,6 @@ const rootReducer = combineReducers({
     sendReceive: SendReceive,
     swapStore: SwapReducer,
     buyFiat: BuyFiat,
-    //sellData:buyReducer,
     userConfig:UserConfig,
     buyInfo:buyReducer,
     sellInfo:sellReducer,

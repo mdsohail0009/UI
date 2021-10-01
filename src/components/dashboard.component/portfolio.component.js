@@ -80,8 +80,6 @@ class Portfolio extends Component {
                 pinch: true,
             },
         });
-      
-       
         const response = await getPortfolioGraph(this.props.userProfile?.id, type);
         if (response.ok) {
             const areaSeries = this.chart.addLineSeries({
