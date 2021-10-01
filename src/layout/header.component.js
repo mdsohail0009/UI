@@ -89,7 +89,7 @@ class Header extends Component {
                 </li>
                 <li>
                     <div className="dropdown-flex">
-                        <Translate content="terms_service" component={Link} />
+                        <Translate content="terms_service" component={Link} onClick={()=>window.open("https://www.iubenda.com/terms-and-conditions/42856099",'_blank')}/>
                         <span className="icon md rarrow-white" />
                     </div>
                 </li>

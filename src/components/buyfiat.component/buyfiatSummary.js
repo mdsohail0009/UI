@@ -10,7 +10,7 @@ const LinkValue = (props) => {
         <Translate className="text-yellow text-underline c-pointer"
             content={props.content}
             component={Link}
-            to="./#"
+            onClick={()=>window.open("https://www.iubenda.com/terms-and-conditions/42856099",'_blank')}
         />
     )
 }
@@ -18,7 +18,7 @@ const LinkValue = (props) => {
 class FiatSummary extends Component {
     render() {
         const { Paragraph, Text } = Typography;
-        const link = <LinkValue content="terms_service" />;
+        const link = <LinkValue content="terms_service"  />;
         return (
             <>
                 <div className="mb-24">
