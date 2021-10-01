@@ -64,7 +64,6 @@ class SelectSellCrypto extends Component {
         if ((!this.state.USDAmnt && !this.state.CryptoAmnt) || (parseFloat(this.state.USDAmnt) === 0 || parseFloat(this.state.CryptoAmnt) === 0)) {
             this.setState({ ...this.state, errorMessage: 'Enter amount' })
             this.myRef.current.scrollIntoView();
-            return;
         }
         else if (!obj.toWalletId) {
             this.setState({ ...this.state, errorMessage: 'Please select wallet' })
