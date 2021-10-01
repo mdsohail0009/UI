@@ -61,7 +61,7 @@ class Summary extends Component {
                             <span for="agree-check" />
                         </label>
                         <Paragraph className="fs-14 text-white-30 ml-16 mb-0" style={{ flex: 1 }} >
-                            I agree to Suissebase’s <a href="https://www.iubenda.com/terms-and-conditions/42856099" target="_blank">Terms of Service</a> and its return, refund and cancellation policy.
+                            I agree to Suissebase’s <a className="textpure-yellow" href="https://www.iubenda.com/terms-and-conditions/42856099" target="_blank">Terms of Service</a> and its return, refund and cancellation policy.
                         </Paragraph>
                     </div>
                     <SuisseBtn className={"pop-btn"} onRefresh={() => this.props.onRefresh()} title={okBtnTitle || "pay"} loading={isButtonLoad} autoDisable={true} onClick={() => this.props.onClick()} />

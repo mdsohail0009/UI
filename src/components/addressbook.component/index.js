@@ -279,7 +279,7 @@ class AddressBook extends Component {
                           />
                             </div>}
                             {this.state.successMsg  && <Alert type="success"
-                             description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'inactivated' : 'activated') + ' successfully'}  showIcon />}
+                             description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'deactivated' : 'activated') + ' successfully'}  showIcon />}
                         <List columns={this.columnsFiat} ref={this.gridFiatRef} key={gridUrlFiat} url={gridUrlFiat} additionalParams={{memberId:memberId}} />
                     </> :
                         <>
@@ -345,7 +345,7 @@ class AddressBook extends Component {
                     <NewFiatAddress onCancel={() => this.closeBuyDrawer()} />
                 </Drawer>
                 <Modal
-                    title={this.state.selectedObj.status === 'Active' ? 'Confirm Inactive?' : 'Confirm Active?'}
+                    title={this.state.selectedObj.status === 'Active' ? 'Deactivate Account?' : 'Activate Account'}
                     visible={this.state.modal}
                     closeIcon={<Tooltip title="Close"><span className="icon md close-white c-pointer" onClick={this.handleCancel} /></Tooltip>}
                     footer={<>
@@ -361,7 +361,7 @@ class AddressBook extends Component {
                         </Button>
                     </>}
                 >
-                    <p className="fs-16 mb-0">Do you really want to {this.state.selectedObj.status === 'Active' ? 'Inactive?' : 'Active?'}</p>
+                    <p className="fs-16 mb-0">Do you really want to {this.state.selectedObj.status === 'Active' ? 'deactivate?' : 'activate?'}</p>
                 </Modal>
             </>
         )

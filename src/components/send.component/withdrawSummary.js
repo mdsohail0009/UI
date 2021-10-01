@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 const LinkValue = (props) => {
     return (
-        <Translate className="text-defaultylw text-underline c-pointer"
+        <Translate className="text-defaultylw textpure-yellow text-underline c-pointer"
             content={props.content}
             component={Link}
             onClick={()=>window.open("https://www.iubenda.com/terms-and-conditions/42856099",'_blank')}
