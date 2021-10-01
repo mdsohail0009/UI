@@ -25,7 +25,7 @@ class SellSummary extends Component {
         this.setState({ ...this.state, error: {valid:true,message:''} })
         if (!this.state.isTermsAgree) {
             this.setState({ ...this.state, error:{valid:false,message: 'Please accept terms of service'} })
-            return;
+            
         } else {
             this.setState({ ...this.state, loader: true, error: {valid:true,message:''} })
             let obj = Object.assign({}, this.props.sellData.sellsaveObject)
