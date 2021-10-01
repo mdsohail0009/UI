@@ -1,6 +1,6 @@
 export const sendreceiveSteps = {
   step1: 'depositecrypto',
-  step2: 'withdraw',
+  withdraw_crypto_selected: 'withdraw',
   step3: "scanner",
   step4: 'withdrawaddress',
   step5: "withdrawsummary",

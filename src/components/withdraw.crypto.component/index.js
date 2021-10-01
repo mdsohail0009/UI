@@ -25,7 +25,7 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
         <Translate content="withdraw_a_crypto" component={Title} className="text-white-30 fs-36 fw-200 mb-8" />
         <Translate content="withdraw_a_crypto_text" component={Paragraph} className="fs-16 text-secondary" />
         <div className="dep-withdraw auto-scroll">
-            {wallets?.data?.map((wallet, indx) => <Card key={indx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { dispatch(setSelectedWithDrawWallet(wallet)); dispatch(setStep('step2')) }} >
+            {wallets?.data?.map((wallet, indx) => <Card key={indx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { dispatch(setSelectedWithDrawWallet(wallet)); dispatch(setStep('withdraw_crypto_selected')) }} >
                 <span className="d-flex align-center">
                     <span className={`coin lg ${wallet.coin}`} />
                     <Text className="fs-24 text-purewhite ml-8">{wallet.coinFullName}</Text>
