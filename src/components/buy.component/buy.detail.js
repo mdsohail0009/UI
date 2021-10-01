@@ -86,7 +86,6 @@ class SelectCrypto extends Component {
                         <div className="crypto-details">
                             <Text className="crypto-percent text-purewhite fw-700">{percentage}<sup className="percent text-purewhite fw-700">%</sup></Text>
                             <div className="fs-16 text-purewhite fw-200 crypto-amount">
-                                {/* <div>{coinBalance.toFixed(8)} {coin}</div> */}
                                 <Currency prefix={""} defaultValue={coinBalance} suffixText={coin} />
                                 <NumberFormat value={coinValueinNativeCurrency} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} />
                             </div>
@@ -96,9 +95,6 @@ class SelectCrypto extends Component {
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua pt-16" />
                     <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     <div className="fs-12 text-white-30 text-center mt-24">Your amount might be changed with in <span style={{color: 'var(--bgDarkYellow)'}} >10</span> seconds.</div>
-                    {/* <div className="text-center">
-                        <Translate content="refresh_newprice" component={Link} onClick={() => this.fetchConvertionValue()} className="mb-36 fs-14 text-yellow fw-200 mb-16 text-underline" />
-                    </div> */}
                     <div className="mt-24">
                         <SuisseBtn title="confirm_btn_text" onRefresh={() => this.fetchConvertionValue()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
                     </div>

@@ -6,14 +6,13 @@ function uuidv4() {
         return v.toString(16);
     });
 }
-const getDocList = (category) => {
+const getDocList = () => {
     return clientApi.get(ApiControllers.exchange + ``);
 }
 const sendRequest = (obj) => {
     return clientApi.post(ApiControllers.exchange + `SaveDoument`, obj);
 }
-
-const uploadFile = (obj) => {
+const uploadFile = () => {
     return clientApi.get(ApiControllers.exchange + ``);
 }
 const getDocDetails = (docId) => {

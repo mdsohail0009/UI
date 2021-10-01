@@ -47,7 +47,6 @@ class CryptoComponent extends Component {
                 </div>
                 {this.props.buySell.tabKey === 2 ?
                     <>
-                        {/* <Paragraph className="mb-0 text-white-30 fw-200 fs-36">Sell your Crypto for Cash</Paragraph> */}
                         <Translate content="sell_your_crypto_for_cash" component={Title} className="drawer-title fs-36" />
                         <Translate content="sell_your_crypto_for_cash_text" component={Paragraph} className="text-secondary fw-300 fs-16" />
                         <SellToggle /></>

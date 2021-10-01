@@ -12,8 +12,6 @@ import { appInsights } from "../../Shared/appinsights";
 import { favouriteFiatAddress } from '../addressbook.component/api'
 import oops from '../../assets/images/oops.png'
 import Loader from '../../Shared/loader';
-const { Search } = Input;
-
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
     myRef = React.createRef();
@@ -281,19 +279,6 @@ class CryptoWithDrawWallet extends Component {
                             className="custom-forminput custom-label  mb-16"
                             required
                             label="Address"
-                            required
-                            // rules={[
-                            //     {
-                            //         type: "toWalletAddress", validator: async (rule, value, callback) => {
-                            //             if (value === null || value.trim() === "") {
-                            //                 throw new Error("Is required")
-                            //             }
-                            //             else {
-                            //                 callback();
-                            //             }
-                            //         }
-                            //     }
-                            // ]}
                         >
                             <div className="p-relative d-flex align-center">
                                 {!this.state.isAddressValue ?
@@ -338,7 +323,7 @@ class CryptoWithDrawWallet extends Component {
                         )}
                     </ul> </>:
                         <div className="success-pop text-center" style={{ marginTop: '20px' }}>
-                            <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} />
+                            <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
                             <h1 className="fs-36 text-white-30 fw-200 mb-0" >OOPS </h1>
                             <p className="fs-16 text-white-30 fw-200 mb-0"> No address available </p>
                             {/* <Translate content="back" component={Button} type="text" size="large" className="text-center text-white-30 pop-cancel pwd-popup fw-400 text-captz text-center" block
