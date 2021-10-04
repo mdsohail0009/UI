@@ -1,40 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Typography, Input, Button,  Alert, Spin,message } from 'antd';
+import { Form, Typography, Input, Button, Alert, Spin, message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import WalletList from '../shared/walletList';
-import { saveAddress, favouriteNameCheck,getAddress } from './api';
-import{ fetchGetAddress} from '../../reducers/addressBookReducer';
+import { saveAddress, favouriteNameCheck, getAddress } from './api';
+import { fetchGetAddress } from '../../reducers/addressBookReducer';
 
-const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,getAddressList}) => {
+const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, getAddressList }) => {
     const [form] = Form.useForm();
     const [selectedWallet, setSelectedWallet] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [ fiatAddress, setFiatAddress] =useState({});
-
+    const [fiatAddress, setFiatAddress] = useState({});
     const useDivRef = React.useRef(null);
 
     useEffect(() => {
-        if(addressBookReducer?.selectedRowData != "00000000-0000-0000-0000-000000000000"){
+        if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000") {
             getAddressList(addressBookReducer?.selectedRowData, 'fiat')
             loadData();
         }
     }, [])
     const loadData = async () => {
-        let response = await getAddress(addressBookReducer?.selectedRowData, 'fiat');
+        let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'fiat');
         if (response.ok) {
-            bindEditableData(response.data)
+            setFiatAddress(response.data)
+            if (addressBookReducer?.selectedRowData?.id) {
+                handleWalletSelection(addressBookReducer?.selectedRowData?.toCoin)
+            }
+            form.setFieldsValue({...response.data});
             setIsLoading(false)
         }
     }
-    const bindEditableData = (obj) => {
-        setFiatAddress({ ...obj });
-        form.setFieldsValue({ ...obj });
-    };
-
     const handleWalletSelection = (walletId) => {
         form.setFieldsValue({ toCoin: walletId })
         if (buyInfo.memberFiat?.data) {
@@ -46,13 +44,15 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
     }
 
     const savewithdrawal = async (values) => {
+        debugger;
         setIsLoading(true)
-        if (parseFloat(typeof values.totalValue === 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
-            useDivRef.current.scrollIntoView()
-            return setErrorMsg('Insufficient balance');
-        }
+        // if (parseFloat(typeof values.totalValue === 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
+        //     useDivRef.current.scrollIntoView()
+        //     return setErrorMsg('Insufficient balance');
+        // }
         setErrorMsg(null)
         const type = 'fiat';
+        values['id'] = addressBookReducer?.selectedRowData?.id;
         values['membershipId'] = userConfig.id;
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
@@ -75,29 +75,27 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
             else { setIsLoading(false) }
         }
     }
-
     const { Paragraph, Text } = Typography;
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
-
     return (
         <>
             <div className="addbook-height auto-scroll">
                 <div ref={useDivRef}></div>
                 {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-
-                <Form form={form} onFinish={savewithdrawal} autoComplete="off"  initialValues={fiatAddress}>
+                <Form form={form} onFinish={savewithdrawal} autoComplete="off" initialValues={fiatAddress}>
                     <Translate
                         content="Beneficiary_BankDetails"
                         component={Paragraph}
                         className="mb-16 fs-14 text-aqua fw-500 text-upper"
                     />
                     <Form.Item
-                        className="custom-forminput mb-24 pr-0"
+                        className="custom-forminput  custom-label mb-24 pr-0"
                         name="favouriteName" required
+                        label="Address Label"
                         rules={[
                             {
                                 type: "favouriteName", validator: async (rule, value, callback) => {
-                                    if (value === null || value.trim() === "") {
+                                    if (value == null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -106,21 +104,16 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                                 }
                             }
                         ]} >
-                        <div>
-                            <div className="d-flex">
-                                <Text className="input-label">Address Label</Text>
-                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
-                            </div>
-                            <Input className="cust-input" maxLength="20" placeholder="Enter address label" />
-                        </div>
+                        <Input className="cust-input"  maxLength="20" placeholder="Enter address label" />
                     </Form.Item>
                     <Form.Item
-                        className="custom-forminput mb-24 pr-0"
+                        className="custom-forminput custom-label mb-24 pr-0"
+                        label="Address"
                         name="toWalletAddress" required
                         rules={[
                             {
                                 type: "toWalletAddress", validator: async (rule, value, callback) => {
-                                    if (value === null || value.trim() === "") {
+                                    if (value == null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -130,13 +123,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                             }
                         ]}
                     >
-                        <div>
-                            <div className="d-flex">
-                                <Text className="input-label">Address</Text>
-                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
-                            </div>
-                            <Input className="cust-input" maxLength="30" placeholder="Enter address" />
-                        </div>
+                        <Input className="cust-input"  maxLength="30" placeholder="Enter address" />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
@@ -146,11 +133,12 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                             { required: true, message: "Is required" },
                         ]}
                     >
-                        <WalletList hideBalance={true} valueFeild={'currencyCode'} placeholder="Select currency" onWalletSelect={(e) => handleWalletSelection(e)} />
+                        <WalletList hideBalance={true} valueFeild={'currencyCode'}  placeholder="Select currency" onWalletSelect={(e) => handleWalletSelection(e)} />
                     </Form.Item>
                     <Form.Item
-                        className="custom-forminput mb-24"
+                        className="custom-forminput custom-label mb-24"
                         name="accountNumber"
+                        label="Bank account number/IBAN"
                         required
                         rules={[
                             { required: true, message: "Is required" },
@@ -171,20 +159,12 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                             }
                         ]}
                     >
-                        <div>
-                            <div className="d-flex">
-                                <Translate
-                                    className="input-label"
-                                    content="Bank_account"
-                                    component={Text}
-                                />
-                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
-                            <Input className="cust-input" placeholder="Bank account number/IBAN" />
-                        </div>
+                        <Input className="cust-input"  placeholder="Bank account number/IBAN" />
                     </Form.Item>
                     <Form.Item
-                        className="custom-forminput mb-24"
+                        className="custom-forminput custom-label mb-24"
                         name="routingNumber"
+                        label="BIC/SWIFT/Routing number"
                         required
                         rules={[
                             { required: true, message: "Is required" },
@@ -205,26 +185,17 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                             }
                         ]}
                     >
-                        <div>
-                            <div className="d-flex">
-                                <Translate
-                                    className="input-label"
-                                    content="BIC_SWIFT_routing_number"
-                                    component={Text}
-                                />
-                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
-                            <Input className="cust-input" placeholder="BIC/SWIFT/Routing number" />
-                        </div>
-
+                        <Input className="cust-input" placeholder="BIC/SWIFT/Routing number" />
                     </Form.Item>
                     <Form.Item
-                        className="custom-forminput mb-24"
+                        className="custom-forminput custom-label mb-24"
                         name="bankName"
+                        label="Bank name"
                         required
                         rules={[
                             {
                                 type: "bankName", validator: async (rule, value, callback) => {
-                                    if (value === null || value.trim() === "") {
+                                    if (value == null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -234,26 +205,17 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                             }
                         ]}
                     >
-                        <div>
-                            <div className="d-flex">
-                                <Translate
-                                    className="input-label"
-                                    content="Bank_name"
-                                    component={Text}
-                                />
-                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
-                            <Input className="cust-input" placeholder="Bank name" />
-                        </div>
-
+                        <Input className="cust-input"  placeholder="Bank name" />
                     </Form.Item>
                     <Form.Item
-                        className="custom-forminput mb-24"
+                        className="custom-forminput custom-label mb-24"
                         name="bankAddress"
+                        label="Bank address line 1"
                         required
                         rules={[
                             {
                                 type: "bankAddress", validator: async (rule, value, callback) => {
-                                    if (value === null || value.trim() === "") {
+                                    if (value == null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -262,17 +224,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                                 }
                             }
                         ]}>
-                        <div>
-                            <div className="d-flex">
-                                <Translate
-                                    className="input-label"
-                                    content="Bank_address1"
-                                    component={Text}
-                                />
-                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
-                            <Input className="cust-input" placeholder="Bank address line 1" />
-                        </div>
-
+                        <Input className="cust-input" placeholder="Bank address line 1" />
                     </Form.Item>
 
                     <Translate
@@ -298,12 +250,13 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
 
                     </Form.Item>
                     <Form.Item
-                        className="custom-forminput mb-24"
+                        className="custom-forminput custom-label mb-24"
                         name="beneficiaryAccountAddress"
+                        label="Recipient address line 1"
                         rules={[
                             {
                                 type: "beneficiaryAccountAddress", validator: async (rule, value, callback) => {
-                                    if (value === null || value.trim() === "") {
+                                    if (value == null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }
                                     else {
@@ -312,19 +265,7 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                                 }
                             }
                         ]}>
-
-                        <div>
-                            <div className="d-flex">
-                                <Translate
-                                    className="input-label"
-                                    content="Recipient_address1"
-                                    component={Text}
-                                />{" "}
-                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>
-                                    {" * "}
-                                </span></div>
-                            <Input className="cust-input" placeholder="Recipient address line 1" />
-                        </div>
+                        <Input className="cust-input" placeholder="Recipient address line 1" />
                     </Form.Item>
                     <Form.Item className="mb-0 mt-16">
                         <Button disabled={isLoading}
@@ -338,13 +279,13 @@ const NewFiatAddress = ({  buyInfo, userConfig,  onCancel,addressBookReducer,get
                     </Form.Item>
                 </Form>
             </div>
-           
+
         </>
     );
 }
 
-const connectStateToProps = ({ buyInfo, userConfig , addressBookReducer}) => {
-    return { buyInfo, userConfig: userConfig.userProfileInfo,addressBookReducer }
+const connectStateToProps = ({ buyInfo, userConfig, addressBookReducer }) => {
+    return { buyInfo, userConfig: userConfig.userProfileInfo, addressBookReducer }
 }
 const connectDispatchToProps = dispatch => {
     return {
@@ -354,7 +295,7 @@ const connectDispatchToProps = dispatch => {
         getAddressList: (id, type) => {
             dispatch(fetchGetAddress(id, type));
         },
-        
+
         dispatch
     }
 

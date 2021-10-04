@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert } from 'antd'
-import { setAddressStep,rejectCoin,fetchUsersIdUpdate } from '../../reducers/addressBookReducer';
+import { setAddressStep, rejectCoin, fetchUsersIdUpdate,clearValues } from '../../reducers/addressBookReducer';
 import Translate from 'react-translate-component';
 import { processSteps as config } from './config';
 import NewAddressBook from './newAddressBook';
@@ -24,15 +24,15 @@ class AddressBook extends Component {
             selectedObj: {},
             modal: false,
             alert: false,
-            successMsg:false,
+            successMsg: false,
             obj: {
                 "id": [],
                 "tableName": "Member.FavouriteAddress",
                 "modifiedBy": "",
                 "status": [],
-                type:''
+                type: ''
             },
-            memberId:this.props.userConfig.id,
+            memberId: this.props.userConfig.id,
 
             gridUrlCrypto: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressCryptoK",
             gridUrlFiat: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressFiatK",
@@ -45,13 +45,13 @@ class AddressBook extends Component {
         { field: "favouriteName", title: "Address Label", filter: true, width: 180 },
         { field: "toWalletAddress", title: "Address", filter: true, width: 380 },
         { field: "currency", title: "Currency", width: 150, filter: true, with: 150 },
-        { field: "accountNumber", title: "Bank account number/IBAN" , filter: true, width: 220 },
+        { field: "accountNumber", title: "Bank account number/IBAN", filter: true, width: 220 },
         { field: "routingNumber", title: "BIC/SWIFT/Routing Number", filter: true, width: 180 },
         { field: "bankName", title: "Bank Name", filter: true, width: 200 },
         { field: "bankAddress", title: "Bank address line 1", filter: true, width: 250 },
         { field: "beneficiaryAccountName", title: "Recipient full name", filter: true, width: 200 },
         { field: "beneficiaryAccountAddress", title: "Recipient address line 1", filter: true, width: 250 },
-       // { field: "swiftCode", title: "Swift Code", filter: true, },
+        // { field: "swiftCode", title: "Swift Code", filter: true, },
         { field: "status", title: "Status", filter: true, width: 100 }
     ];
     columnsCrypto = [
@@ -73,6 +73,7 @@ class AddressBook extends Component {
         //this.setState({memberId:userConfig.id})
     }
     handleInputChange = (prop, e) => {
+        debugger;
         const rowObj = prop.dataItem;
         const value = e.currentTarget.type === 'checkbox' ? e.currentTarget.checked : e.currentTarget.value;
         const name = e.currentTarget.name;
@@ -90,6 +91,7 @@ class AddressBook extends Component {
         this.setState({ ...this.state, [name]: value, selectedObj: rowObj, selection});
     }
     statusUpdate = () => {
+        debugger
         if (!this.state.isCheck) {
             this.setState({ alert: true })
             setTimeout(() => this.setState({ alert: false }), 2500)
@@ -100,42 +102,46 @@ class AddressBook extends Component {
     }
     handleCancel = e => {
         this.setState({ ...this.state, modal: false, selection: [], isCheck: false });
-        if(this.state.cryptoFiat){
+        if (this.state.cryptoFiat) {
             this.gridFiatRef.current.refreshGrid();
         }
-        else{
+        else {
             this.gridCryptoRef.current.refreshGrid();
- 
+
         }
     }
     handleSatatuSave = async () => {
+        debugger
         this.setState({ ...this.state, isLoading: true })
         let statusObj = this.state.obj;
         statusObj.id.push(this.state.selectedObj.id);
-        statusObj.modifiedBy =  this.props.oidc.user.profile.unique_name;
+        statusObj.modifiedBy = this.props.oidc.user.profile.unique_name;
         statusObj.status.push(this.state.selectedObj.status);
-        statusObj.type = this.state.cryptoFiat? "fiat":'crypto';
+        statusObj.type = this.state.cryptoFiat ? "fiat" : 'crypto';
         let response = await activeInactive(statusObj)
         if (response.ok) {
             // this.success();
-            this.setState({ ...this.state, modal: false, selection: [], isCheck: false, isLoading: false,
+            this.setState({
+                ...this.state, modal: false, selection: [], isCheck: false, isLoading: false,
                 obj: {
                     "id": [],
                     "tableName": "Member.FavouriteAddress",
                     "modifiedBy": "",
                     "status": []
-                },successMsg:true })
-                setTimeout(() => this.setState({ successMsg:false}), 2500)
-                if(this.state.cryptoFiat){
-                    this.gridFiatRef.current.refreshGrid();
-                }
-                else{
-                    this.gridCryptoRef.current.refreshGrid();
-         
-                }
+                },successMsg:true
+            })
+            setTimeout(() => this.setState({ successMsg:false}), 2500)
+            if(this.state.cryptoFiat){
+                this.gridFiatRef.current.refreshGrid();
+            }
+            else{
+                this.gridCryptoRef.current.refreshGrid();
+
+            }
         }
         else {
-            this.setState({ ...this.state, modal: false, selection: [], isCheck: false,
+            this.setState({
+                ...this.state, modal: false, selection: [], isCheck: false,
                 obj: {
                     "id": [],
                     "tableName": "Member.FavouriteAddress",
@@ -144,8 +150,8 @@ class AddressBook extends Component {
                 }, });
         }
     }
-    setSuccessMsg=()=>{
-        this.setState({ ...this.state,successMsg:false}) 
+    setSuccessMsg = () => {
+        this.setState({ ...this.state,successMsg:false})
     }
     coinList = async () => {
         let fromlist = await getCoinList(this.props.userProfile?.id)
@@ -155,46 +161,52 @@ class AddressBook extends Component {
             this.setState({ ...this.state, fromCoinsList: [], isLoading: false })
         }
     }
-
-
-    handleFiatAddress = () => {
-        this.setState({ ...this.state,fiatDrawer: true })
+    addAddressBook = () => {
+        if (this.state.cryptoFiat) {
+            this.setState({ ...this.state,fiatDrawer: true })
+            this.props.clearFormValues();
+        }
+        else {
+            this.setState({ ...this.state, visible: true })
+            this.props.clearFormValues();
+        }
     }
-    editFiatAddress =() =>{
+    editAddressBook = () =>{
         if (!this.state.isCheck) {
             this.setState({ alert: true })
             setTimeout(() => this.setState({ alert: false }), 2000)
         } else {
             const obj = this.state.selectedObj;
-            let val = obj.id;
-            this.props.rowSelectedData(val)
-            console.log(val);
-            this.setState({ ...this.state,fiatDrawer: true });
+            this.props.rowSelectedData(obj)
+            if (this.state.cryptoFiat) {
+                this.setState({ ...this.state,fiatDrawer: true , selection: []})
+            }
+            else {
+                this.setState({ ...this.state, visible: true , selection: []})
+            }
         }
     }
-    handleCryptoAddress = () => {
-        this.setState({ ...this.state,visible: true })
-    }
-
     closeBuyDrawer = () => {
-        this.setState({ ...this.state,visible: false, fiatDrawer: false })
+        debugger;
+        this.setState({ ...this.state, visible: false, fiatDrawer: false })
         this.props.rejectCoinWallet();
-        if(this.state.cryptoFiat){
+        this.props.clearFormValues();
+        if (this.state.cryptoFiat) {
             this.gridFiatRef.current.refreshGrid();
         }
-        else{
+        else {
             this.gridCryptoRef.current.refreshGrid();
- 
+
         }
     }
     handleWithdrawToggle = e => {
         this.setState({
-            ...this.state,cryptoFiat: e.target.value === 2
+            ...this.state, cryptoFiat: e.target.value === 2
         })
     }
     renderContent = () => {
         const stepcodes = {
-            cryptoaddressbook: <NewAddressBook onCancel={() => this.closeBuyDrawer() } />,
+            cryptoaddressbook: <NewAddressBook onCancel={() => this.closeBuyDrawer()} />,
             selectcrypto: <SelectCrypto />
         }
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
@@ -214,7 +226,7 @@ class AddressBook extends Component {
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
     }
     render() {
-        const { cryptoFiat, gridUrlCrypto, gridUrlFiat,memberId } = this.state;
+        const { cryptoFiat, gridUrlCrypto, gridUrlFiat, memberId } = this.state;
         const { Title, Paragraph } = Typography;
         return (
             <>
@@ -229,89 +241,41 @@ class AddressBook extends Component {
                         <Translate content="withdrawCrypto" component={Radio.Button} value={1} />
                         <Translate content="withdrawFiat" component={Radio.Button} value={2} />
                     </Radio.Group>
-
-                    {cryptoFiat ? <>
-                        <div className="d-flex justify-content align-center mb-16">
-                            <div><Title className="fs-26 text-white-30 fw-500">Withdraw Fiat</Title>
-                                {/* <Paragraph className="basic-decs fw-200">Basic Info, like your name and photo, that you use on Suissebase</Paragraph> */}
-                            </div>
-                            <div className="d-flex align-center">
-                                    <Button className="c-pointer pop-btn ant-btn px-24 mr-16" onClick={this.handleFiatAddress}> Add Address</Button>
-                                    <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0 }}>
-                                        <li onClick={this.statusUpdate}>
-                                            <Tooltip placement="topRight" title="Active/Inactive">
-                                                <Link className="icon md status mr-0"
-                                                ></Link>
-                                            </Tooltip>
-                                        </li>
-                                    </ul>
-                                </div>
-                                {/* <Button className="c-pointer pop-btn ant-btn px-24 mr-16" onClick={this.handleFiatAddress}> Add Address</Button>
-                                <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0 ,display:'flex'}}>
-                                <li onClick={this.handleFiatAddress} className="mr-16">
-                                        <Tooltip placement="topRight" title="Add">
-                                            <Link className="icon md add-icon mr-0"
-                                            ></Link>
-                                        </Tooltip>
-                                    </li>
-                                <li onClick={this.editFiatAddress} className="mr-16">
-                                        <Tooltip placement="topRight" title="Edit">
-                                            <Link className="icon md edit-icon mr-0"
-                                            ></Link>
-                                        </Tooltip>
-                                    </li>
-                                    <li onClick={this.statusUpdate}>
-                                        <Tooltip placement="topRight" title="Active/Inactive">
-                                            <Link className="icon md status mr-0"
-                                            ></Link>
-                                        </Tooltip>
-                                    </li>
-                                </ul>  */}
-                            
+                    <div className="d-flex justify-content align-center mb-16">
+                        <div><Title className="fs-26 text-white-30 fw-500">{cryptoFiat ? "Withdraw Fiat" : "Withdraw Crypto"}</Title>
                         </div>
-                        {this.state.alert &&
-                            <div className="custom-alert" ><Alert
-                          //  message="Warning"
+                        <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0, display: 'flex' }}>
+                            <li onClick={this.addAddressBook} className="mr-16">
+                                <Tooltip placement="topRight" title="Add">
+                                    <Link className="icon md add-icon mr-0"></Link>
+                                </Tooltip>
+                            </li>
+                            <li onClick={this.editAddressBook} className="mr-16">
+                                <Tooltip placement="topRight" title="Edit">
+                                    <Link className="icon md edit-icon mr-0"></Link>
+                                </Tooltip>
+                            </li>
+                            <li onClick={this.statusUpdate}>
+                                <Tooltip placement="topRight" title="Active/Inactive">
+                                    <Link className="icon md status mr-0" ></Link>
+                                </Tooltip>
+                            </li>
+                        </ul>
+                    </div>
+                    {this.state.alert &&
+                        <div className="custom-alert" ><Alert
                             description="Please select one record"
                             type="warning"
-                            showIcon
-                           // closable
-                          />
-                            </div>}
-                            {this.state.successMsg  && <Alert type="success"
-                             description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'deactivated' : 'activated') + ' successfully'}  showIcon />}
-                        <List columns={this.columnsFiat} ref={this.gridFiatRef} key={gridUrlFiat} url={gridUrlFiat} additionalParams={{memberId:memberId}} />
-                    </> :
-                        <>
-                            <div className="d-flex justify-content align-center mb-16">
-                                <div> <Title className="fs-26 text-white-30 fw-500">Withdraw Crypto</Title>
-                                </div>
-                                <div className="d-flex align-center">
-                                    <Button className="c-pointer pop-btn ant-btn px-24 mr-16" onClick={this.handleCryptoAddress}> Add Address</Button>
-                                    <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0 }}>
-                                        <li onClick={this.statusUpdate}>
-                                            <Tooltip placement="topRight" title="Active/Inactive">
-                                                <Link className="icon md status mr-0"
-                                                ></Link>
-                                            </Tooltip>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            {this.state.alert &&
-                            <div className="custom-alert" ><Alert
-                          //  message="Warning"
-                            description="Please select one record"
-                            type="warning"
-                            showIcon
-                           // closable
-                          />
-                            </div>}
-                            {this.state.successMsg  && <Alert type="success"
-                             description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'inactivated' : 'activated') + ' successfully'}  showIcon />}
-                            <List columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridCryptoRef} url={gridUrlCrypto} additionalParams={{memberId:memberId}}/>
-                        </>}
+                            showIcon/></div>}
+                    {this.state.successMsg && <Alert type="success"
+                        description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'deactivated' : 'activated') + ' successfully'} showIcon />}
+                    {cryptoFiat ?
+                        <List columns={this.columnsFiat} ref={this.gridFiatRef} key={gridUrlFiat} url={gridUrlFiat} additionalParams={{ memberId: memberId }} />
+                        :
+                        <List columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridCryptoRef} url={gridUrlCrypto} additionalParams={{ memberId: memberId }} />
+                    }
                 </div>
+
                 <Drawer destroyOnClose={true}
                     title={[<div className="side-drawer-header">
                         {this.renderTitle()}
@@ -342,7 +306,7 @@ class AddressBook extends Component {
                     closeIcon={null}
                     className="side-drawer"
                 >
-                    <NewFiatAddress onCancel={() => this.closeBuyDrawer()} />
+                   {this.state.fiatDrawer && <NewFiatAddress onCancel={() => this.closeBuyDrawer()} />}
                 </Drawer>
                 <Modal
                     title={this.state.selectedObj.status === 'Active' ? 'Deactivate Account?' : 'Activate Account'}
@@ -378,7 +342,10 @@ const connectDispatchToProps = dispatch => {
         rowSelectedData: (selectedRowData) => {
             dispatch(fetchUsersIdUpdate(selectedRowData));
         },
+        clearFormValues: () => {
+            dispatch(clearValues())
+        },
 
     }
 }
-export default connect(connectStateToProps,connectDispatchToProps)(AddressBook);
+export default connect(connectStateToProps, connectDispatchToProps)(AddressBook);
