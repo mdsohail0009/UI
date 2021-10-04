@@ -19,8 +19,9 @@ const uploadClient=create({
     baseURL: process.env.REACT_APP_UPLOAD_API
 })
 apiClient.axiosInstance.interceptors.request.use((config) => {
-    const { oidc: { user } } = store.getState()
+    const { oidc: { user }, userConfig:{ userProfileInfo } } = store.getState()
     config.headers.Authorization = `Bearer ${user.access_token}`
+    if(userProfileInfo?.id)config.headers.Authentication = `{Memberid:"${userProfileInfo?.id}"}`
     return config;
 })
 export { firebaseServer, apiClient, coinGekoClient,identityClient,uploadClient }
