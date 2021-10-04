@@ -44,7 +44,7 @@ let initialState = {
     },
     stepSubTitles: {
         buycrypto: null,
-        selectcrypto: "crypto_compare_val",
+        selectcrypto: null,
         summary: "crypto_compare_val",
         billtype: "select_from_below",
         addcard: null,
@@ -52,7 +52,7 @@ let initialState = {
         billingaddress: null,
         addressscanner: "select_a_currency",
         depositfiat: "select_a_currency",
-        selectedcrypto: "sell_compare_val",
+        selectedcrypto: null,
         sellsummary: "confirm_sell",
         wiretransfor: "select_a_method"
     },
@@ -78,4 +78,4 @@ const buySellReducer = (state = initialState, action) => {
 
 }
 export default buySellReducer;
-export { setStep, clearStep, changeStep,setTab }
+export { setStep, clearStep, changeStep, setTab }
