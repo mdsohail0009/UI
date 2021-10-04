@@ -23,6 +23,6 @@ const activeInactive = (obj) => {
     return apiClient.post(ApiControllers.exchange + "activeinactive", obj)
 }
 const getAddress = (addreddId, type) => {
-    return apiClient.get(ApiControllers.exchange + `CreateAddressFavourite?id=${addreddId}&type=${type}`)
+    return apiClient.get(ApiControllers.exchange + `CreateAddressFavourite?addrId=${addreddId}&type=${type}`)
 }
 export {getCoinList,favouriteFiatAddress, saveAddress,getSelectedCoinDetails,detailsAddress,favouriteNameCheck,activeInactive,getAddress}
