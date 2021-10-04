@@ -7,8 +7,9 @@ import { connect } from 'react-redux';
 import WalletList from '../shared/walletList';
 import { saveAddress, favouriteNameCheck, getAddress } from './api';
 import { fetchGetAddress } from '../../reducers/addressBookReducer';
+import Loader from '../../Shared/loader';
 
-const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, getAddressList }) => {
+const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) => {
     const [form] = Form.useForm();
     const [selectedWallet, setSelectedWallet] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -18,22 +19,22 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, get
 
     useEffect(() => {
         if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000") {
-            getAddressList(addressBookReducer?.selectedRowData, 'fiat')
-            loadData();
+            loadDataAddress();
         }
     }, [])
-    const loadData = async () => {
+    const loadDataAddress = async () => {
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'fiat');
         if (response.ok) {
             setFiatAddress(response.data)
-            if (addressBookReducer?.selectedRowData?.id) {
-                handleWalletSelection(addressBookReducer?.selectedRowData?.toCoin)
+            if (addressBookReducer?.selectedRowData && buyInfo.memberFiat?.data ) {
+                handleWalletSelection(addressBookReducer?.selectedRowData?.currency)
             }
             form.setFieldsValue({...response.data});
             setIsLoading(false)
         }
     }
     const handleWalletSelection = (walletId) => {
+        setFiatAddress({toCoin: walletId})
         form.setFieldsValue({ toCoin: walletId })
         if (buyInfo.memberFiat?.data) {
             let wallet = buyInfo.memberFiat.data.filter((item) => {
@@ -44,12 +45,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, get
     }
 
     const savewithdrawal = async (values) => {
-        debugger;
         setIsLoading(true)
-        // if (parseFloat(typeof values.totalValue === 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
-        //     useDivRef.current.scrollIntoView()
-        //     return setErrorMsg('Insufficient balance');
-        // }
         setErrorMsg(null)
         const type = 'fiat';
         values['id'] = addressBookReducer?.selectedRowData?.id;
@@ -79,8 +75,9 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, get
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     return (
         <>
+         <div ref={useDivRef}></div>
+           {isLoading && <Loader/> }
             <div className="addbook-height auto-scroll">
-                <div ref={useDivRef}></div>
                 {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
                 <Form form={form} onFinish={savewithdrawal} autoComplete="off" initialValues={fiatAddress}>
                     <Translate
@@ -133,7 +130,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, get
                             { required: true, message: "Is required" },
                         ]}
                     >
-                        <WalletList hideBalance={true} valueFeild={'currencyCode'}  placeholder="Select currency" onWalletSelect={(e) => handleWalletSelection(e)} />
+                        <WalletList hideBalance={true} valueFeild={'currencyCode'}   selectedvalue={fiatAddress?.toCoin} placeholder="Select currency" onWalletSelect={(e) => handleWalletSelection(e)} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
@@ -279,7 +276,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, get
                     </Form.Item>
                 </Form>
             </div>
-
+ 
         </>
     );
 }
@@ -292,10 +289,6 @@ const connectDispatchToProps = dispatch => {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
-        getAddressList: (id, type) => {
-            dispatch(fetchGetAddress(id, type));
-        },
-
         dispatch
     }
 

@@ -41,10 +41,12 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
 
   const useDivRef = React.useRef(null);
   useEffect(() => {
+
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       console.log(selectedWalletCode, buyInfo.memberFiat?.data)
       handleWalletSelection(selectedWalletCode)
     }else if(buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj){
+      debugger
       handleWalletSelection(sendReceive.withdrawFiatObj.walletCode)
     }
   }, [buyInfo.memberFiat?.data])
@@ -55,6 +57,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   }, [])
 
   const handleWalletSelection = (walletId, isClearObj) => {
+    debugger;
     if(isClearObj){
       let clearobj = 
         {"walletCode":"","totalValue":"","accountNumber":"","routingNumber":"","bankName":"","bankAddress":"","bankAddress2":"","zipcode":"","beneficiaryAccountName":"","beneficiaryAccountAddress":"","beneficiaryAccountAddress1":"","description":"","isAccept":false}

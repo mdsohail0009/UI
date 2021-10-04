@@ -3,21 +3,26 @@ import { Form, Input, Button, Alert,Spin,message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { rejectCoin, setAddressStep } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
-import { saveAddress, favouriteNameCheck } from './api';
+import { saveAddress, favouriteNameCheck ,getAddress} from './api';
 import SelectCrypto from './selectCrypto';
 
 
 
-const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,rejectCoinWallet }) => {
+const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,rejectCoinWallet}) => {
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
     const[isLoading, setIsLoading] =useState(false);
     const [successMsg, setSuccessMsg] = useState(null);
     const[isSelect,setIsSelect] = useState(false);
     const[isShowWallets, setIsShowWallets] = useState(false)
+    const [cryptoAddress, setCryptoAddress] = useState({});
     const[obj,setObj] =useState({});
     useEffect(() => {
-       if(addressBookReducer?.coinWallet?.coin){
+        if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000") {
+            loadDataAddress();
+
+        }
+       else if(addressBookReducer?.coinWallet?.coin){
            form.setFieldsValue({toCoin:addressBookReducer?.coinWallet?.coin })
        }
     }, [addressBookReducer?.coinWallet?.coin])
@@ -26,9 +31,18 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
         setObj(getvalues)
         setIsSelect(true)
     }
+    const loadDataAddress = async () => {
+        let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'crypto');
+        if (response.ok) {
+            setCryptoAddress(response.data)
+            form.setFieldsValue({...response.data,toCoin:addressBookReducer?.selectedRowData?.currency});
+            setIsLoading(false)
+        }
+    }
     const saveAddressBook = async (values) => {
        setIsLoading(true)
         const type = 'crypto';
+        values['id'] = addressBookReducer?.selectedRowData?.id;
         values['membershipId'] = userConfig.id;
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
@@ -63,12 +77,11 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color:'#fff', marginRight:'16px' }} spin />;
     return (
         <>
-     
            {!isSelect  ? <div className="mt-16">
                 {errorMsg  && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
                 {/* {successMsg  && <Alert closable type="success" description={successMsg} onClose={() => setSuccessMsg(null)} showIcon />} */}
                 <Form
-                    form={form}
+                    form={form} initialValues={cryptoAddress}
                     onFinish={saveAddressBook} autoComplete="off" >
                     <Form.Item
                         className="custom-forminput custom-label  mb-24 pr-0"
@@ -113,7 +126,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                                     <span className="icon md rarrow-white c-pointer coin-select" onClick={selectCrypto} />
                                 </div>:
                                  <div className="cust-input  p-relative">
-                                 <p className="text-center mb-0  " style={{color:'#bfbfbf', lineHeight:'46px'}}>Select coin</p>
+                                 <p className="text-center mb-0  " style={{color:'#bfbfbf', lineHeight:'46px'}}>{addressBookReducer?.selectedRowData? 'Select coin' : `${addressBookReducer.selectedRowData?.currency}`}</p>
                                  <span className="icon md rarrow-white c-pointer coin-select" onClick={selectCrypto} />
                                  
                              </div>}
