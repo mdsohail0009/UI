@@ -8,7 +8,7 @@ const getCryptos=()=>{
     return apiClient.get(Portfolio +'Coins');
 }
 const getMember=(useremail)=>{
-    return apiClient.get(Portfolio +'/Member?email='+useremail);
+    return apiClient.get(Portfolio +'/MemberBySubId?subId='+useremail);
 }
 const sumsubacesstoken=(userid)=>{
     return apiClient.get('Sumsub/AccessToken?applicantId='+userid);
