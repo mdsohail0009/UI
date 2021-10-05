@@ -8,6 +8,7 @@ const SET_EXCHANGE_VALUE = "setExchangeValue";
 const REJECT_COIN = 'rejectCoin';
 const CLEAR_VALUES = 'clearValues';
 const FETCH_USERSID_UPDATE = 'fetchUsersIdUpdate';
+const FETCH_ADDRESS_CRYPTO = 'fetchAddressCrypto';
 
 const handleFetch = (payload) => {
     return { type: HANDLE_FETCH, payload }
@@ -60,6 +61,12 @@ const fetchUsersIdUpdate = (payload) => {
         payload
     }
 }
+const fetchAddressCrypto = (payload) => {
+    return {
+        type: FETCH_ADDRESS_CRYPTO,
+        payload
+    }
+}
 const handleFavouritAddress = () => {
     return async (dispatch) => {
         dispatch(fetchAddress({ key: "favouriteAddress", loading: true, data: [] }));
@@ -85,7 +92,7 @@ const fetchSelectedCoinDetails = (coin, member_id) => {
 const fetchGetAddress = (member_id, type) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "getAddress", loading: true, data: [] }));
-        const response = await getAddress(member_id,type);
+        const response = await getAddress(member_id, type);
         if (response.ok) {
             dispatch(handleFetch({ key: "getAddress", loading: false, data: response.data }));
         } else {
@@ -98,17 +105,18 @@ let initialState = {
     selectedCoin: {},
     favouriteAddress: [],
     coinWallet: null,
-    selectedRowData:null,
+    selectedRowData: null,
     exchangeValues: {},
+    cryptoValues: null,
     getAddress: { loading: false, data: [] },
     stepcode: "step1",
     stepTitles: {
-        newaddress: "suissebase_personal",
-        fiataddress: "",
+        cryptoaddressbook: "cryptoAddress",
+        selectcrypto: "cryptoAddress",
     },
     stepSubTitles: {
-        newaddress: "avail_wallet_weprovide",
-        fiataddress: "",
+        cryptoaddressbook: null,
+        selectcrypto: "select_a_currency",
 
     }
 
@@ -139,7 +147,10 @@ const AddressBookReducer = (state = initialState, action) => {
         case FETCH_USERSID_UPDATE:
             state = { ...state, selectedRowData: action.payload }
             return state;
-            case CLEAR_VALUES:
+        case FETCH_ADDRESS_CRYPTO:
+            state = { ...state, cryptoValues: action.payload };
+            return state;
+        case CLEAR_VALUES:
             state = { ...state, selectedRowData: null };
             return state;
         default:
@@ -148,4 +159,4 @@ const AddressBookReducer = (state = initialState, action) => {
 
 }
 export default AddressBookReducer;
-export { setAddressStep, clearStep, setAddressCoin, handleFavouritAddress, fetchSelectedCoinDetails, setExchangeValue, rejectCoin,fetchUsersIdUpdate, fetchGetAddress, clearValues}
+export { setAddressStep, clearStep, setAddressCoin, handleFavouritAddress, fetchSelectedCoinDetails, setExchangeValue, rejectCoin, fetchUsersIdUpdate, fetchGetAddress, clearValues, fetchAddressCrypto }

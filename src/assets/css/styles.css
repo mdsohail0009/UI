@@ -895,3 +895,4 @@ text-align: center !important;}
 
 .transaction-tabs .k-grid-header-wrap{margin-right: -13px;}
 .customaudit-select .ant-form-item-label > label::after{display: none;}
+.noticeNxtLine{overflow-wrap: break-word;}
