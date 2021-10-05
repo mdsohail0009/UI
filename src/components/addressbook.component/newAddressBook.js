@@ -45,7 +45,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
         let namecheck = values.favouriteName.trim();
-        let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'crypto');
+        let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'crypto',addressBookReducer?.selectedRowData?.id );
         if (responsecheck.data != null) {
             setIsLoading(false)
             return setErrorMsg('Address label already existed');

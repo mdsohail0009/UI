@@ -53,7 +53,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
         let namecheck = values.favouriteName.trim();
-        let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'fiat');
+        let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'fiat', addressBookReducer?.selectedRowData?.id);
         if (responsecheck.data != null) {
             setIsLoading(false)
             useDivRef.current.scrollIntoView()
