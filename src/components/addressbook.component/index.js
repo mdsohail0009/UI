@@ -73,7 +73,6 @@ class AddressBook extends Component {
         //this.setState({memberId:userConfig.id})
     }
     handleInputChange = (prop, e) => {
-        debugger;
         const rowObj = prop.dataItem;
         const value = e.currentTarget.type === 'checkbox' ? e.currentTarget.checked : e.currentTarget.value;
         const name = e.currentTarget.name;
@@ -91,7 +90,6 @@ class AddressBook extends Component {
         this.setState({ ...this.state, [name]: value, selectedObj: rowObj, selection});
     }
     statusUpdate = () => {
-        debugger
         if (!this.state.isCheck) {
             this.setState({ alert: true })
             setTimeout(() => this.setState({ alert: false }), 2500)
@@ -111,7 +109,6 @@ class AddressBook extends Component {
         }
     }
     handleSatatuSave = async () => {
-        debugger
         this.setState({ ...this.state, isLoading: true })
         let statusObj = this.state.obj;
         statusObj.id.push(this.state.selectedObj.id);
@@ -187,7 +184,6 @@ class AddressBook extends Component {
         }
     }
     closeBuyDrawer = () => {
-        debugger;
         this.setState({ ...this.state, visible: false, fiatDrawer: false })
         this.props.rejectCoinWallet();
         this.props.clearFormValues();

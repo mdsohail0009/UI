@@ -75,9 +75,10 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     return (
         <>
-         <div ref={useDivRef}></div>
-           {isLoading && <Loader/> }
+         
+           {/* {isLoading && <Loader/> } */}
             <div className="addbook-height auto-scroll">
+            <div ref={useDivRef}></div>
                 {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
                 <Form form={form} onFinish={savewithdrawal} autoComplete="off" initialValues={fiatAddress}>
                     <Translate
