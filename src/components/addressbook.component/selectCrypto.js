@@ -40,7 +40,7 @@ class SelectCrypto extends Component {
                 this.props.setExchangeValue({ key: selectedCoin.walletCode, value: val });
             })
             this.props.changeStep('step1')
-            this.props.onCoinClick(selectedCoin)
+           //this.props.onCoinClick(selectedCoin)
     }
     render() {
 
