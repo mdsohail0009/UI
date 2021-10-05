@@ -626,11 +626,12 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .docreq-slider .slick-dots li{width: 30px;}
 .coin-select{position: absolute; right:13px; bottom: 13px;}
 .ant-modal-close-x{cursor: default;}
-
 .addCryptoList{list-style: none; padding-left: 0;}
 .addCryptoList li{padding:10px; color: var(--textWhite);border-bottom: 1px solid var(--borderLight);font-size: 16px;}
 .addCryptoList li:hover{background-color:var(--bgBlu); cursor: pointer;}
 .addCryptoList{max-height: calc(100vh - 188px); overflow-y: auto; }
+.tinycontent{word-break: break-all;max-height: 100px;height: 100px;overflow:hidden;}
+.carousel-card:hover .tinycontent{overflow-y: auto;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}
