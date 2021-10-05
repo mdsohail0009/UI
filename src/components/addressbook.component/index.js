@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert } from 'antd'
-import { setAddressStep, rejectCoin, fetchUsersIdUpdate,clearValues } from '../../reducers/addressBookReducer';
+import { setAddressStep, rejectCoin, fetchUsersIdUpdate, clearValues } from '../../reducers/addressBookReducer';
 import Translate from 'react-translate-component';
 import { processSteps as config } from './config';
 import NewAddressBook from './newAddressBook';
@@ -87,7 +87,7 @@ class AddressBook extends Component {
         else {
             selection.push(rowObj.id)
         }
-        this.setState({ ...this.state, [name]: value, selectedObj: rowObj, selection});
+        this.setState({ ...this.state, [name]: value, selectedObj: rowObj, selection });
     }
     statusUpdate = () => {
         if (!this.state.isCheck) {
@@ -125,15 +125,14 @@ class AddressBook extends Component {
                     "tableName": "Member.FavouriteAddress",
                     "modifiedBy": "",
                     "status": []
-                },successMsg:true
+                }, successMsg: true
             })
-            setTimeout(() => this.setState({ successMsg:false}), 2500)
-            if(this.state.cryptoFiat){
+            setTimeout(() => this.setState({ successMsg: false }), 2500)
+            if (this.state.cryptoFiat) {
                 this.gridFiatRef.current.refreshGrid();
             }
-            else{
+            else {
                 this.gridCryptoRef.current.refreshGrid();
-
             }
         }
         else {
@@ -144,11 +143,12 @@ class AddressBook extends Component {
                     "tableName": "Member.FavouriteAddress",
                     "modifiedBy": "",
                     "status": []
-                }, });
+                },
+            });
         }
     }
     setSuccessMsg = () => {
-        this.setState({ ...this.state,successMsg:false})
+        this.setState({ ...this.state, successMsg: false })
     }
     coinList = async () => {
         let fromlist = await getCoinList(this.props.userProfile?.id)
@@ -160,7 +160,7 @@ class AddressBook extends Component {
     }
     addAddressBook = () => {
         if (this.state.cryptoFiat) {
-            this.setState({ ...this.state,fiatDrawer: true })
+            this.setState({ ...this.state, fiatDrawer: true })
             this.props.clearFormValues();
         }
         else {
@@ -168,7 +168,7 @@ class AddressBook extends Component {
             this.props.clearFormValues();
         }
     }
-    editAddressBook = () =>{
+    editAddressBook = () => {
         if (!this.state.isCheck) {
             this.setState({ alert: true })
             setTimeout(() => this.setState({ alert: false }), 2000)
@@ -176,10 +176,10 @@ class AddressBook extends Component {
             const obj = this.state.selectedObj;
             this.props.rowSelectedData(obj)
             if (this.state.cryptoFiat) {
-                this.setState({ ...this.state,fiatDrawer: true , selection: []})
+                this.setState({ ...this.state, fiatDrawer: true, selection: [] })
             }
             else {
-                this.setState({ ...this.state, visible: true , selection: []})
+                this.setState({ ...this.state, visible: true, selection: [] })
             }
         }
     }
@@ -195,6 +195,9 @@ class AddressBook extends Component {
 
         }
     }
+    backStep = () => {
+        this.props.changeStep('step1')
+    }
     handleWithdrawToggle = e => {
         this.setState({
             ...this.state, cryptoFiat: e.target.value === 2
@@ -203,14 +206,14 @@ class AddressBook extends Component {
     renderContent = () => {
         const stepcodes = {
             cryptoaddressbook: <NewAddressBook onCancel={() => this.closeBuyDrawer()} />,
-            selectcrypto: <SelectCrypto />
+            selectcrypto:<SelectCrypto />
         }
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
     }
     renderTitle = () => {
         const titles = {
-            cryptoaddressbook: <span />,
-            selectcrypto: <span onClick={() => this.props.dispatch(setAddressStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            cryptoaddressbook: <span/>,
+            selectcrypto: <span onClick={this.backStep} className="icon md lftarw-white c-pointer" />,
         }
         return titles[config[this.props.addressBookReducer.stepcode]]
     }
@@ -262,7 +265,7 @@ class AddressBook extends Component {
                         <div className="custom-alert" ><Alert
                             description="Please select one record"
                             type="warning"
-                            showIcon/></div>}
+                            showIcon /></div>}
                     {this.state.successMsg && <Alert type="success"
                         description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'deactivated' : 'activated') + ' successfully'} showIcon />}
                     {cryptoFiat ?
@@ -276,7 +279,9 @@ class AddressBook extends Component {
                     title={[<div className="side-drawer-header">
                         {this.renderTitle()}
                         <div className="text-center fs-16">
-                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Add Crypto Address</Paragraph>
+                            {/* <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Add Crypto Address</Paragraph> */}
+                            <Translate className="text-white-30 fw-600 text-upper mb-4" content={this.props.addressBookReducer.stepTitles[config[this.props.addressBookReducer.stepcode]]} component={Paragraph} />
+                            <Translate className="text-white-50 mb-0 fw-300 fs-14 swap-subtitlte" content={this.props.addressBookReducer.stepSubTitles[config[this.props.addressBookReducer.stepcode]]} component={Paragraph} />
                         </div>
                         {this.renderIcon()}
                     </div>]}
@@ -302,7 +307,7 @@ class AddressBook extends Component {
                     closeIcon={null}
                     className="side-drawer"
                 >
-                   {this.state.fiatDrawer && <NewFiatAddress onCancel={() => this.closeBuyDrawer()} />}
+                    {this.state.fiatDrawer && <NewFiatAddress onCancel={() => this.closeBuyDrawer()} />}
                 </Drawer>
                 <Modal
                     title={this.state.selectedObj.status === 'Active' ? 'Deactivate Account?' : 'Activate Account'}
@@ -341,7 +346,10 @@ const connectDispatchToProps = dispatch => {
         clearFormValues: () => {
             dispatch(clearValues())
         },
-
+        changeStep: (stepcode) => {
+            dispatch(setAddressStep(stepcode))
+        },
+     
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(AddressBook);

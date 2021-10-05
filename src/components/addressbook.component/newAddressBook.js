@@ -1,12 +1,12 @@
 import React, { useState ,useEffect} from 'react';
 import { Form, Input, Button, Alert,Spin,message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import { rejectCoin, setAddressStep } from '../../reducers/addressBookReducer';
+import { rejectCoin, setAddressStep,fetchAddressCrypto } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
 import { saveAddress, favouriteNameCheck ,getAddress} from './api';
 import SelectCrypto from './selectCrypto';
 
-const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,rejectCoinWallet}) => {
+const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,rejectCoinWallet, InputFormValues}) => {
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
     const[isLoading, setIsLoading] =useState(false);
@@ -16,18 +16,24 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
     const [cryptoAddress, setCryptoAddress] = useState({});
     const[obj,setObj] =useState({});
     useEffect(() => {
-        if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000") {
+        if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" ) {
             loadDataAddress();
+           }
+    }, [])
 
+    useEffect(() => {
+        if(addressBookReducer?.cryptoValues ){
+            form.setFieldsValue({toCoin:addressBookReducer?.coinWallet?.coin ,favouriteName:addressBookReducer?.cryptoValues.favouriteName,
+             toWalletAddress: addressBookReducer?.cryptoValues.toWalletAddress })
         }
-       else if(addressBookReducer?.coinWallet?.coin){
-           form.setFieldsValue({toCoin:addressBookReducer?.coinWallet?.coin })
-       }
-    }, [addressBookReducer?.coinWallet?.coin])
+    }, [addressBookReducer?.cryptoValues])
+
     const selectCrypto = () =>{
         let getvalues = form.getFieldsValue()
-        setObj(getvalues)
-        setIsSelect(true)
+        setObj(getvalues);
+        InputFormValues(getvalues);
+        changeStep("step2");
+       // setIsSelect(true)
     }
     const loadDataAddress = async () => {
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'crypto');
@@ -40,12 +46,14 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
     const saveAddressBook = async (values) => {
        setIsLoading(true)
         const type = 'crypto';
+        let Id = '00000000-0000-0000-0000-000000000000';
         values['id'] = addressBookReducer?.selectedRowData?.id;
         values['membershipId'] = userConfig.id;
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
         let namecheck = values.favouriteName.trim();
-        let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'crypto',addressBookReducer?.selectedRowData?.id );
+        let favaddrId = !Id ? addressBookReducer?.selectedRowData?.id : Id;
+        let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'crypto',favaddrId );
         if (responsecheck.data != null) {
             setIsLoading(false)
             return setErrorMsg('Address label already existed');
@@ -56,24 +64,31 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                 message.success({ content: 'Address saved successfully ', className: 'custom-msg' });
                 form.resetFields();
                 rejectCoinWallet();
+                InputFormValues(null);
                 onCancel();
                 setIsLoading(false)
             }
-            else{ setIsLoading(false)}
+            else{ 
+                message.error({
+                    content: response.data,
+                    className: 'custom-msg',
+                    duration: 0.5
+                });
+                setIsLoading(false)}
         }
     }
-    const onCoinSelected =(selectedCoin) =>{
-        let coinObj = obj;
-        coinObj.toCoin = selectedCoin.coin
-        setIsSelect(false)
-        setTimeout(() => {
-            form.setFieldsValue(coinObj);
-        }, 500)
-    }
+    // const onCoinSelected =(selectedCoin) =>{
+    //     let coinObj = obj;
+    //     coinObj.toCoin = selectedCoin.coin
+    //     setIsSelect(false)
+    //     setTimeout(() => {
+    //         form.setFieldsValue(coinObj);
+    //     }, 500)
+    // }
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color:'#fff', marginRight:'16px' }} spin />;
     return (
         <>
-           {!isSelect  ? <div className="mt-16">
+           <div className="mt-16">
                 {errorMsg  && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
                 <Form
                     form={form} initialValues={cryptoAddress}
@@ -105,7 +120,6 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                         rules={[
                             { required: true, message: "Is required" },
                         ]} >
-                   
                              <Input disabled placeholder="Select coin"  className="cust-input cust-adon c-pointer" 
                                 addonAfter={<i className="icon md rarrow-white c-pointer" onClick={selectCrypto} />}/>
                     </Form.Item>
@@ -151,7 +165,8 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                     </div>
 
                 </Form>
-            </div>:<SelectCrypto  onCoinClick ={(selectedCoin) => onCoinSelected(selectedCoin)} />}
+            </div>
+            {/* <SelectCrypto  onCoinClick ={(selectedCoin) => onCoinSelected(selectedCoin)} /> */}
         </>
     )
 }
@@ -162,12 +177,16 @@ const connectStateToProps = ({ addressBookReducer, userConfig }) => {
 }
 const connectDispatchToProps = dispatch => {
     return {
-        // changeStep: (stepcode) => {
-        //     dispatch(setAddressStep(stepcode))
-        // },
+        changeStep: (stepcode) => {
+            dispatch(setAddressStep(stepcode))
+        },
         rejectCoinWallet: () => {
             dispatch(rejectCoin())
-        }
+        },
+        InputFormValues: (cryptoValues) => {
+            dispatch(fetchAddressCrypto(cryptoValues));
+        },
+
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(NewAddressBook);
