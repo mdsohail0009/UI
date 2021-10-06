@@ -1,4 +1,4 @@
-import { getCryptoWithDrawWallets } from "../components/send.component/api";
+import { getCryptoWithDrawWallets,getWithdrawmemberCrypto } from "../components/send.component/api";
 
 const SET_STEP = "setStep";
 const CLEAR_STEP = "clearStep";
@@ -71,7 +71,7 @@ const setWalletAddress = (payload) => {
 const fetchWithDrawWallets = ({ memberId }) => {
     return async dispatch => {
         dispatch(handleSendFetch({ key: "cryptoWithdraw", wallets: { loading: true, data: [], error: null } }));
-        const response = await getCryptoWithDrawWallets({ memberId });
+        const response = await getWithdrawmemberCrypto({ memberId });
         if (response.ok) {
             dispatch(handleSendFetch({ key: "cryptoWithdraw", wallets: { loading: false, data: response.data } }));
         } else {
