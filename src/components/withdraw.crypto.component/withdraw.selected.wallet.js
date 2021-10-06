@@ -312,7 +312,7 @@ class CryptoWithDrawWallet extends Component {
                                 <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                                     {filterObj?.map((item, idx) =>
                                         <li onClick={() => this.handleSelectAdd(item)} key={idx}
-                                            className={item.name === this.state.addressLabelName ? "select" : " "}
+                                            className={item.code === this.state.walletAddress ? "select" : " "}
                                         > <p className="fs-14 mb-0 "> <span className=" text-white-50 fs-12 fw-200"> Label:</span> {item.name}</p>
                                             <p className="fs-14 mb-0"> <span className=" text-white-50 fs-12 fw-200"> Address:</span> {item.code}</p>
                                         </li>

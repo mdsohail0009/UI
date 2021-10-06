@@ -53,7 +53,7 @@ class SelectCrypto extends Component {
                 closable={false}
             />}
             <CryptoList coinType="swap" showSearch={true} showValues={true} titleField={'coin'} iconField={'coin'} 
-             coinList={this.state.coinsList} selectedCoin={this.props.addressBookReducer.coinWallet} onReturnCoin={true} isLoading={this.state.isLoading} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
+             coinList={this.state.coinsList} selectedCoin={this.props.addressBookReducer.coinWallet ? this.props.addressBookReducer.coinWallet : this.props.addressBookReducer?.selectedRowData } onReturnCoin={true} isLoading={this.state.isLoading} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
         </>)
     }
 }

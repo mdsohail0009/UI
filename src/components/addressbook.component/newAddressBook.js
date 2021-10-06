@@ -22,18 +22,22 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
     }, [])
 
     useEffect(() => {
-        if(addressBookReducer?.cryptoValues ){
+        debugger
+        if(addressBookReducer?.coinWallet){
+        if(addressBookReducer?.cryptoValues){
             form.setFieldsValue({toCoin:addressBookReducer?.coinWallet?.coin ,favouriteName:addressBookReducer?.cryptoValues.favouriteName,
              toWalletAddress: addressBookReducer?.cryptoValues.toWalletAddress })
         }
-    }, [addressBookReducer?.cryptoValues])
+    } 
+    form.setFieldsValue({toCoin:addressBookReducer?.coinWallet?.coin , ...obj  })
+    
+    }, [addressBookReducer?.cryptoValues, addressBookReducer?.coinWallet ])
 
     const selectCrypto = () =>{
-        let getvalues = form.getFieldsValue()
+        let getvalues = form.getFieldsValue();
         setObj(getvalues);
         InputFormValues(getvalues);
         changeStep("step2");
-       // setIsSelect(true)
     }
     const loadDataAddress = async () => {
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'crypto');
