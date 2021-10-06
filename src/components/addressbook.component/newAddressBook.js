@@ -16,26 +16,37 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
     const [cryptoAddress, setCryptoAddress] = useState({});
     const[obj,setObj] =useState({});
     useEffect(() => {
-        if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" ) {
-            loadDataAddress();
-           }
+        if(addressBookReducer?.cryptoValues){
+            form.setFieldsValue({toCoin:addressBookReducer?.cryptoValues?.toCoin ,favouriteName:addressBookReducer?.cryptoValues.favouriteName,
+             toWalletAddress: addressBookReducer?.cryptoValues.toWalletAddress })
+        }else {
+            if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" ) {
+                loadDataAddress();
+               }
+        }
     }, [])
 
     useEffect(() => {
-        if(addressBookReducer?.cryptoValues ){
-            form.setFieldsValue({toCoin:addressBookReducer?.coinWallet?.coin ,favouriteName:addressBookReducer?.cryptoValues.favouriteName,
+        debugger
+     // if(addressBookReducer?.coinWallet){
+        if(addressBookReducer?.cryptoValues){
+            form.setFieldsValue({toCoin:addressBookReducer?.cryptoValues?.toCoin ,favouriteName:addressBookReducer?.cryptoValues.favouriteName,
              toWalletAddress: addressBookReducer?.cryptoValues.toWalletAddress })
         }
+ //  } 
+//  form.setFieldsValue({toCoin:addressBookReducer?.coinWallet?.coin })
+
     }, [addressBookReducer?.cryptoValues])
 
     const selectCrypto = () =>{
-        let getvalues = form.getFieldsValue()
+        debugger
+        let getvalues = form.getFieldsValue();
         setObj(getvalues);
         InputFormValues(getvalues);
         changeStep("step2");
-       // setIsSelect(true)
     }
     const loadDataAddress = async () => {
+        debugger
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'crypto');
         if (response.ok) {
             setCryptoAddress(response.data)
