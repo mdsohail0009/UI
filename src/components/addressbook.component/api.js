@@ -7,8 +7,8 @@ const favouriteFiatAddress = (member_id, type, coin_code) => {
 const detailsAddress = (id) => {
     return apiClient.get(ApiControllers.exchange + `RequestFavourite?id=${id}` );
 }
-const favouriteNameCheck = (member_id, name, type,) => {
-    return apiClient.get(ApiControllers.exchange + `FavouriteNameCheck?memberId=${member_id}&name=${name}&type=${type}`);
+const favouriteNameCheck = (member_id, name, type,favaddrId) => {
+    return apiClient.get(ApiControllers.exchange + `FavouriteNameCheck?memberId=${member_id}&name=${name}&type=${type}&favaddrId=${favaddrId}`);
 }
 const saveAddress = (obj) => {
     return apiClient.post(ApiControllers.exchange + `AddFavourite`, obj);
@@ -23,6 +23,6 @@ const activeInactive = (obj) => {
     return apiClient.post(ApiControllers.exchange + "activeinactive", obj)
 }
 const getAddress = (addreddId, type) => {
-    return apiClient.get(ApiControllers.exchange + `CreateAddressFavourite?id=${addreddId}&type=${type}`)
+    return apiClient.get(ApiControllers.exchange + `CreateAddressFavourite?addrId=${addreddId}&type=${type}`)
 }
 export {getCoinList,favouriteFiatAddress, saveAddress,getSelectedCoinDetails,detailsAddress,favouriteNameCheck,activeInactive,getAddress}

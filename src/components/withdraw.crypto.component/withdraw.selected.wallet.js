@@ -63,15 +63,8 @@ class CryptoWithDrawWallet extends Component {
         this.setState({ ...this.state, isSelectAddress: true, isAddressValue: true, loading: true })
         this.getAddressLu();
     }
-    handleSelectAdd = (selectadd) => {
-        let val = selectadd.currentTarget.innerText
-        let res = this.state.addressLu;
-        let index = res.findIndex(function (o) { return o.name === val; })
-        let labelname = res[index].name;
-        if (labelname === val) {
-            let setAddress = res[index].code
-            this.setState({ ...this.state, walletAddress: setAddress, addressLabelName: val, isSelectAddress: false })
-        }
+    handleSelectAdd = (item) => {
+            this.setState({ ...this.state, walletAddress: item.code, isSelectAddress: false })
         this.props.dispatch(setSubTitle('Select wallet address'));
     }
     handleSearch = (value) => {
@@ -318,9 +311,11 @@ class CryptoWithDrawWallet extends Component {
                             {filterObj.length > 0 ? <>
                                 <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                                     {filterObj?.map((item, idx) =>
-                                        <li onClick={(selectadd) => this.handleSelectAdd(selectadd)} key={idx}
+                                        <li onClick={() => this.handleSelectAdd(item)} key={idx}
                                             className={item.name === this.state.addressLabelName ? "select" : " "}
-                                        > {item.name}</li>
+                                        > <p className="fs-14 mb-0 "> <span className=" text-white-50 fs-12 fw-200"> Label:</span> {item.name}</p>
+                                            <p className="fs-14 mb-0"> <span className=" text-white-50 fs-12 fw-200"> Address:</span> {item.code}</p>
+                                        </li>
                                     )}
                                 </ul> </> :
                                 <div className="success-pop text-center" style={{ marginTop: '20px' }}>

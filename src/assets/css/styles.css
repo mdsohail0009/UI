@@ -145,8 +145,8 @@ line-height: 16px;min-width:90px}
 .icon.md.file{background-position:-156px -70px;}
 .icon.md.user{background-position:-212px -70px;}
 .icon.md.calendar{background-position:-481px -36px;}
-.icon.md.status{background-position:-184px -70px;}
-.icon.md.add-icon{background-position:-184px -70px;}
+.icon.md.status{background-position:-365px -69px}
+.icon.md.add-icon{background-position:-397px -71px;}
 .icon.md.edit-icon{background-position:-336px -70px;}
 .icon.md.email{background-position:-127px -70px;}
 .icon.xl.image{background-position:-47px -241px;}
@@ -163,6 +163,8 @@ line-height: 16px;min-width:90px}
 .side-drawer .ant-drawer-mask, .side-drawer-full .ant-drawer-mask{background-color: var(--bgDarkGrey-95);}
 .side-drawer .ant-drawer-header,.side-drawer-full .ant-drawer-header, .crypto-list-tabs .ant-tabs-nav::before{border: none;}
 .side-drawer-header.custom-drawer-header{padding: 30px 46px 30px 0px !important;}
+.side-drawer-full .ant-drawer-body{padding-top: 0 !important;}
+.side-drawer-full .side-drawer-header{font-size: 22px;font-weight: 400;}
 .buysell-toggle{border-radius: 20px; background: var(--bgDarkGrey); padding: 10px;display: inline-block;margin: 0 auto 50px}
 .buysell-toggle .ant-radio-button-wrapper{width: auto;border-radius: 15px;border: none;background: transparent;color: var(--textYellow);text-transform: uppercase;font-weight: 600;padding: 20px 40px; line-height: 0;font-size: 14px;text-align: center;}
 .buysell-toggle .ant-radio-button{border-radius: 15px;font-size: 12px;}
@@ -463,7 +465,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .custom-table .ant-table-tbody > tr:first-child td{padding:0 !important; }
 .custom-table .ant-table-thead th.ant-table-column-has-sorters:hover{background: var(--bgGrey)}
 .custom-table .ant-table-tbody > tr > td {border-bottom: 1px solid #313c46 !important;padding:20px 0 20px 4px !important;}
-.ant-table-tbody > tr > td ,.custom-table .ant-table-thead > tr > th{border-bottom: 1px solid #313c46;transition: background 0.3s;}
+.ant-table-tbody > tr > td ,.custom-table .ant-table-thead > tr > th{border-bottom: 1px solid #313c46 !important;transition: background 0.3s;}
 .custom-table .ant-table-row:first-child td{padding:0 16px 16px !important ;}
 .custom-table .ant-table-container table > thead > tr:first-child th:first-child{border-top-left-radius:0}
 .custom-table .ant-table-container table > thead > tr:first-child th{border: none;}
@@ -474,6 +476,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .widthdraw-pop .ant-modal-close-x{position: absolute;right: 0;width: 22px;height: 22px;line-height: 22px;top: 16px;right: 16px;}
 .markets-panel .ant-table-tbody > tr.ant-table-placeholder:hover > td{background-color: transparent;}
 .markets-panel .ant-table-tbody > tr.ant-table-placeholder > td{border-bottom: none !important;}
+.markets-popup .custom-table .ant-table-row:first-child td, .markets-popup .custom-table .ant-table-tbody > tr > td{padding: 16px !important;}
 .user-profile{ border-radius: 50%; background: var(--bgDarkGrey);object-fit: cover;}
 .profile-dropdown .user-profile{width:112px;height: 112px; border-radius: 50%;display: block;margin: 0 auto;}
 .profile-dropdown {text-align: center;padding:12px 34px;}
@@ -624,11 +627,12 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .docreq-slider .slick-dots li{width: 30px;}
 .coin-select{position: absolute; right:13px; bottom: 13px;}
 .ant-modal-close-x{cursor: default;}
-
 .addCryptoList{list-style: none; padding-left: 0;}
 .addCryptoList li{padding:10px; color: var(--textWhite);border-bottom: 1px solid var(--borderLight);font-size: 16px;}
 .addCryptoList li:hover{background-color:var(--bgBlu); cursor: pointer;}
 .addCryptoList{max-height: calc(100vh - 188px); overflow-y: auto; }
+.tinycontent{word-break: break-all;max-height: 100px;height: 100px;overflow:hidden;}
+.carousel-card:hover .tinycontent{overflow-y: auto;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}
@@ -729,7 +733,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .coin-typo{font-size: 16px !important;}
 }
 @media (min-width: 1200px){
-    .main-container{max-width: 1232px; padding: 55px 16px 24px;}
+    .main-container{max-width: 1232px; padding: 30px 16px 24px;}
     .mega-menu{max-width: 1140px;  padding: 29px 0px 24px 60px;}
     .side-drawer .ant-drawer-content-wrapper{width: 420px !important;}
     .side-drawer .ant-drawer-body{padding: 0 20px 20px 20px;}
