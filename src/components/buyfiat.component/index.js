@@ -66,7 +66,7 @@ class MassPayment extends Component {
             addAddress: <span onClick={() => this.onAddressClick()} className="icon md lftarw-white c-pointer" />,
             withdrwalfiatsummary: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             withdrwlive: <span onClick={() => this.props.dispatch(setStep("step5"))} className="icon md lftarw-white c-pointer" />,
-            withdrwsuccess: <span onClick={() => this.onAddressClick()} className="icon md lftarw-white c-pointer" />,
+            withdrwsuccess: null,
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }
