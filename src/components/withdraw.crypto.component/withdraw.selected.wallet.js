@@ -65,7 +65,7 @@ class CryptoWithDrawWallet extends Component {
         this.getAddressLu();
     }
     handleSelectAdd = (item) => {
-            this.setState({ ...this.state, walletAddress: item.code, isSelectAddress: false })
+        this.setState({ ...this.state, walletAddress: item.code, isSelectAddress: false })
         this.props.dispatch(setSubTitle('Select wallet address'));
     }
     handleSearch = (value) => {
@@ -138,9 +138,9 @@ class CryptoWithDrawWallet extends Component {
             "totalValue": this.state.CryptoAmnt,
             "tag": ""
         }
-        this.props.dispatch(setSubTitle("Wiithdraw Summary"));
-            this.props.dispatch(setWithdrawcrypto(obj))
-            this.props.changeStep('withdraw_crpto_summary');
+        this.props.dispatch(setSubTitle("Withdraw Summary"));
+        this.props.dispatch(setWithdrawcrypto(obj))
+        this.props.changeStep('withdraw_crpto_summary');
 
         // if (this.props.userProfile.isBusiness) {
         //     const response = await withDrawCrypto(obj);
@@ -277,7 +277,7 @@ class CryptoWithDrawWallet extends Component {
                             required
                             label="Address"
                         >
-                            
+
                             <div className="p-relative d-flex align-center">
                                 <Input className="cust-input custom-add-select mb-0" placeholder="Enter address" value={this.state.walletAddress}
                                     onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })}
