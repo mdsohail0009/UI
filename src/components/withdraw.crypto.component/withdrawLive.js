@@ -25,7 +25,8 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep,dispatch }) 
         dispatch(fetchDashboardcalls(userConfig.id))
         setIsWithdrawSuccess(true)
         dispatch(setWithdrawcrypto(null))
-        dispatch(setSubTitle("Withdraw crypto Success"));
+        dispatch(setSubTitle(""));
+        changeStep('withdraw_crpto_success');
         appInsights.trackEvent({
           name: 'WithDraw Crypto', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'WithDraw Crypto', "Remarks": 'WithDraw crypto save', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Crypto' }
         });
@@ -33,15 +34,15 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep,dispatch }) 
       
   }
   const Cancel = async() =>{
-    changeStep('withdraw_crypto_selected');
+    changeStep('withdraw_crpto_summary');
   }
   const confirmFaceLive = (obj)=>{
     setFaceCapture(true)
     setLivefacerecognization(obj)
   }
-    if (isWithdrawSuccess) {
-        return <SuccessMsg onBackCLick={() => changeStep('step1')} />
-    }else{
+    // if (isWithdrawSuccess) {
+    //     return <SuccessMsg onBackCLick={() => changeStep('step1')} />
+    // }else{
     return (
         <div>
         <LiveNessSumsub onConfirm = {confirmFaceLive}/>
@@ -57,7 +58,7 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep,dispatch }) 
         <Translate content="back" component={Button} onClick={() => Cancel()} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
       </div>
     )}
-}
+// }
 
 const connectStateToProps = ({ userConfig, sendReceive }) => {
   return { userConfig: userConfig.userProfileInfo,sendReceive }

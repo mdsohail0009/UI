@@ -49,7 +49,7 @@ class SendReceive extends Component {
             selectCrypto: <SelectCrypto/>,
             withdraw_crypto_liveness: <WithdrawaCryptolLive/>,
             withdraw_crpto_summary: <WithdrawSummary/>,
-            withdraw_crpto_success: <SuccessMsg/>
+            withdraw_crpto_success: <SuccessMsg onBackCLick={()=>this.props.dispatch(setStep("step1"))}/>
 
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
@@ -65,7 +65,9 @@ class SendReceive extends Component {
             withdrawsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             addnewAddress:<span onClick={() => this.props.dispatch(setStep("step2"))} className="icon md lftarw-white c-pointer" />,
             selectCrypto: <span onClick={() => this.props.dispatch(setStep("step8"))} className="icon md lftarw-white c-pointer" />,
-            withdraw_crypto_liveness: <span onClick={() => this.props.dispatch(setStep("step2"))} className="icon md lftarw-white c-pointer" />,
+            withdraw_crypto_liveness: <span onClick={() => this.props.dispatch(setStep("withdraw_crpto_summary"))} className="icon md lftarw-white c-pointer" />,
+            withdraw_crpto_summary: <span onClick={() => this.props.dispatch(setStep("withdraw_crypto_selected"))} className="icon md lftarw-white c-pointer" />,
+            withdraw_crpto_success: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
     }
@@ -81,6 +83,8 @@ class SendReceive extends Component {
             addnewAddress:<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             selectCrypto: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdraw_crypto_liveness: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            withdraw_crpto_summary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            withdraw_crpto_success: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
 
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
