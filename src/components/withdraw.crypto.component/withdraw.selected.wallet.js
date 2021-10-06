@@ -12,6 +12,7 @@ import { appInsights } from "../../Shared/appinsights";
 import { favouriteFiatAddress } from '../addressbook.component/api'
 import oops from '../../assets/images/oops.png'
 import Loader from '../../Shared/loader';
+
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
     myRef = React.createRef();
@@ -137,7 +138,7 @@ class CryptoWithDrawWallet extends Component {
             "totalValue": this.state.CryptoAmnt,
             "tag": ""
         }
-        this.props.dispatch(setSubTitle("Live verification"));
+        this.props.dispatch(setSubTitle("Wiithdraw Summary"));
             this.props.dispatch(setWithdrawcrypto(obj))
             this.props.changeStep('withdraw_crpto_summary');
 
@@ -276,15 +277,11 @@ class CryptoWithDrawWallet extends Component {
                             required
                             label="Address"
                         >
+                            
                             <div className="p-relative d-flex align-center">
-                                {!this.state.isAddressValue ?
-                                    <Input className="cust-input custom-add-select mb-0" placeholder="Enter address"
-                                        onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })} />
-                                    :
-                                    <Input className="cust-input custom-add-select mb-0" placeholder="Enter address" value={this.state.walletAddress}
-                                        onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })}
-                                    />
-                                }
+                                <Input className="cust-input custom-add-select mb-0" placeholder="Enter address" value={this.state.walletAddress}
+                                    onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })}
+                                />
                                 <Tooltip placement="top" title={<span>Select Address</span>} style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" onClick={() => this.selectCrypto()}>
                                         <span className="icon md address-book d-block c-pointer"></span>

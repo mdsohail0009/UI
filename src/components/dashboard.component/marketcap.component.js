@@ -1,10 +1,12 @@
-import { Table, Tooltip, Input, Empty, Drawer } from 'antd';
+import { Table, Tooltip, Input, Empty, Drawer, Typography } from 'antd';
 import { FullscreenOutlined, ReloadOutlined } from '@ant-design/icons'
 import React, { useEffect, useState, useCallback } from 'react';
+import Translate from 'react-translate-component';
 import Loader from '../../Shared/loader';
 import { fetchMarketCaps } from './api';
 import { useFullScreenHandle } from 'react-full-screen'
 import { detailInfoColumns, infoColumns } from './marketcap.columns';
+const { Title, Paragraph } = Typography;
 const MarketCap = () => {
     const marketsFullScreen = useFullScreenHandle();
     const { Search } = Input;
@@ -30,7 +32,7 @@ const MarketCap = () => {
         let matches = originalMarketCaps.filter(item => item.symbol.toLowerCase().includes(value.toLowerCase()));
         setMarketCaps(matches)
     }
-    
+
     const showDrawer = () => {
         setIsOpen(true);
     }
@@ -41,14 +43,20 @@ const MarketCap = () => {
     if (isLoading) { return <Loader /> }
     return <>
         <div handle={marketsFullScreen} onChange={onFullScreenChange}>
-        <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey" }}>
-            <div style={{ marginBottom: '8px', textAlign: 'right', paddingRight: 16 }}>
-                <Tooltip title="Full screen"><FullscreenOutlined onClick={()=>showDrawer()} className="fs-18 text-white ml-8 fw-500" /></Tooltip>
-                    <Tooltip title="Reload"><ReloadOutlined onClick={fetchMarketCapsInfo} className="fs-18 text-white ml-16 fw-500" /></Tooltip>
+            <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey" }}>
+                <div className="d-flex justify-content" style={{ padding: '30px 24px 10px' }}>
+                    <div>
+                        <Translate content="markets_title" component={Title} className="fs-24 fw-600 mb-0 text-white-30" />
+                        <Translate content="markets_subtitle" component={Paragraph} className="text-white-30 fs-16 fw-200 mb-0" />
+                    </div>
+                    <div>
+                        <Tooltip title="Full screen"><FullscreenOutlined onClick={() => showDrawer()} className="fs-18 text-white ml-8 fw-500" /></Tooltip>
+                        <Tooltip title="Reload"><ReloadOutlined onClick={fetchMarketCapsInfo} className="fs-18 text-white ml-16 fw-500" /></Tooltip>
+                    </div>
+                </div>
+                <Search placeholder="Search Currency" addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="px-16 mt-8 mb-8" />
+                <Table locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> }} sortDirections={["ascend", "descend"]} style={{ background: "grey" }} scroll={{ y: isDetailView ? '100vh' : '' }} pagination={false} columns={infoColumns} dataSource={marketCaps} loading={isLoading} className="custom-table" />
             </div>
-            <Search placeholder="Search Currency" addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="px-16 mt-8 mb-8" />
-            <Table locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> }} sortDirections={["ascend", "descend"]} style={{ background: "grey" }} scroll={{ y: isDetailView ? '100vh' : '' }} pagination={false} columns={infoColumns} dataSource={marketCaps} loading={isLoading} className="custom-table" />
-        </div>
         </div>
         <Drawer
             title={[<div className="side-drawer-header">
@@ -64,12 +72,12 @@ const MarketCap = () => {
             className="side-drawer-full"
         >
             <div className="markets-panel mr-0 markets-popup">
-            <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey" }}>
-            <div style={{ marginBottom: '8px', textAlign: 'right', padding: 16  }}>
-                <Search placeholder="Search Currency" addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="px-16 mt-8 mb-8" />
-                <Table locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> }} sortDirections={["ascend", "descend"]} style={{ background: "grey"}} pagination={false} columns={detailInfoColumns} dataSource={marketCaps} loading={isLoading} className="custom-table"/>
-            </div>
-            </div>
+                <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey" }}>
+                    <div style={{ marginBottom: '8px', textAlign: 'right', padding: 16 }}>
+                        <Search placeholder="Search Currency" addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="px-16 mt-8 mb-8" />
+                        <Table locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /> }} sortDirections={["ascend", "descend"]} style={{ background: "grey" }} pagination={false} columns={detailInfoColumns} dataSource={marketCaps} loading={isLoading} className="custom-table" />
+                    </div>
+                </div>
             </div>
         </Drawer>
     </>
