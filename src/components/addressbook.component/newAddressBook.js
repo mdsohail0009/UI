@@ -52,7 +52,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
         let namecheck = values.favouriteName.trim();
-        let favaddrId = !Id ? addressBookReducer?.selectedRowData?.id : Id;
+        let favaddrId = addressBookReducer?.selectedRowData ? addressBookReducer?.selectedRowData?.id : Id;
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'crypto',favaddrId );
         if (responsecheck.data != null) {
             setIsLoading(false)

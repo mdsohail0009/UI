@@ -303,4 +303,5 @@ export default {
   back:'Back',
   liveVarification:'Withdraw Crypto',
   Withdraw_liveness:'Live verification',
+  confirm:'Confirm %(counter)s',
 }
