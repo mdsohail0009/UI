@@ -176,10 +176,10 @@ class AddressBook extends Component {
             const obj = this.state.selectedObj;
             this.props.rowSelectedData(obj)
             if (this.state.cryptoFiat) {
-                this.setState({ ...this.state, fiatDrawer: true, selection: [] })
+                this.setState({ ...this.state, fiatDrawer: true, selection: [],isCheck: false, })
             }
             else {
-                this.setState({ ...this.state, visible: true, selection: [] })
+                this.setState({ ...this.state, visible: true, selection: [],isCheck: false, })
             }
         }
     }
@@ -192,7 +192,6 @@ class AddressBook extends Component {
         }
         else {
             this.gridCryptoRef.current.refreshGrid();
-
         }
     }
     backStep = () => {
