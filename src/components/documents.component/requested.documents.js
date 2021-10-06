@@ -10,7 +10,8 @@ import QueryString from 'query-string'
 import Mome from 'moment'
 const { Panel } = Collapse;
 const { Text } = Typography;
-const { Dragger } = Upload
+const { Dragger } = Upload;
+const { TextArea } = Input;
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
@@ -33,7 +34,7 @@ class RequestedDocs extends Component {
         },
         docReplyObjs: [],
         previewPath: null,
-        isSubmitting:false,
+        isSubmitting: false,
     }
     componentDidMount() {
         this.getDocument(QueryString.parse(this.props.location.search).id);
@@ -104,7 +105,7 @@ class RequestedDocs extends Component {
         item.path = item.path ? typeof (item.path) === "object" ? JSON.stringify(item.path) : item.path : item.path;
         item.status = "Submitted";
         item.repliedDate = Mome().format("YYYY-MM-DDThh:mm:ss");
-        this.setState({...this.state,isSubmitting:true});
+        this.setState({ ...this.state, isSubmitting: true });
         const response = await saveDocReply(item);
         message.destroy()
         if (response.ok) {
@@ -121,7 +122,7 @@ class RequestedDocs extends Component {
         }
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(item => item.docunetDetailId !== doc.id);
-        this.setState({ ...this.state, docReplyObjs: objs,isSubmitting:false });
+        this.setState({ ...this.state, docReplyObjs: objs, isSubmitting: false });
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
     deleteDocument = async (doc, idx, isAdd) => {
@@ -269,7 +270,7 @@ class RequestedDocs extends Component {
                         </div>)}
                         {!this.state.documentReplies[doc.id]?.loading && doc.status !== "Approved" && <><div className="mb-24">
                             <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
-                            <Input onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
+                            <TextArea autoSize={{ minRows: 1, maxRows: 6 }} onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
                                 className="mb-24 cust-input"
                                 placeholder="Write your message"
                             />
@@ -307,10 +308,10 @@ class RequestedDocs extends Component {
                 title="Preview"
                 width={1000}
                 visible={this.state.previewModal}
-                closeIcon={<Tooltip title="Close"><span className="icon md close" onClick={this.docPreviewClose} /></Tooltip>}
+                closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
                 footer={<>
                     <Button className="pop-btn px-36 mr-36" onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
-                    <Button type="primary" onClick={this.docPreviewClose} className="text-center text-white-30 pop-cancel fw-400 text-captz">Close</Button>
+                    <Button type="primary" onClick={this.docPreviewClose} className="text-center text-white-30 pop-cancel fw-400">Close</Button>
                 </>}
             >
                 <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.state.previewPath.includes(".pdf") ? "https://suissebasecors.herokuapp.com/" + this.state.previewPath : this.state.previewPath : null }} />
