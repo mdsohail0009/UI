@@ -97,6 +97,8 @@ let initialState = {
         addnewAddress: 'cryptoAddress',
         selectCrypto:null,
         withdraw_crypto_liveness:'liveVarification',
+        withdraw_crpto_summary:'withdraw',
+        //withdraw_crpto_success:'withdraw_summary',
 
     },
     stepSubTitles: {

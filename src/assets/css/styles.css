@@ -465,7 +465,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .custom-table .ant-table-tbody > tr:first-child td{padding:0 !important; }
 .custom-table .ant-table-thead th.ant-table-column-has-sorters:hover{background: var(--bgGrey)}
 .custom-table .ant-table-tbody > tr > td {border-bottom: 1px solid #313c46 !important;padding:20px 0 20px 4px !important;}
-.ant-table-tbody > tr > td ,.custom-table .ant-table-thead > tr > th{border-bottom: 1px solid #313c46 !important;transition: background 0.3s;}
+.ant-table-tbody > tr > td, .custom-table .ant-table-thead > tr > th{border-bottom: 1px solid #313c46 !important;transition: background 0.3s;}
+.markets-panel .custom-table .ant-table-thead > tr > th{border-bottom:none !important}
 .custom-table .ant-table-row:first-child td{padding:0 16px 16px !important ;}
 .custom-table .ant-table-container table > thead > tr:first-child th:first-child{border-top-left-radius:0}
 .custom-table .ant-table-container table > thead > tr:first-child th{border: none;}
@@ -474,9 +475,9 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .custom-table tr>.ant-table-row-level-0:first-child td{border-bottom: 0 !important;}
 .custom-table .ant-table-column-title{z-index: 0;}
 .widthdraw-pop .ant-modal-close-x{position: absolute;right: 0;width: 22px;height: 22px;line-height: 22px;top: 16px;right: 16px;}
-.markets-panel .ant-table-tbody > tr.ant-table-placeholder:hover > td{background-color: transparent;}
+.markets-panel .ant-table-tbody > tr.ant-table-placeholder:hover > td{background: var(--bgGrey) !important;}
 .markets-panel .ant-table-tbody > tr.ant-table-placeholder > td{border-bottom: none !important;}
-.markets-popup .custom-table .ant-table-row:first-child td, .markets-popup .custom-table .ant-table-tbody > tr > td{padding: 16px !important;}
+.markets-popup .custom-table .ant-table-body{padding: 0 0 0 24px !important;}
 .user-profile{ border-radius: 50%; background: var(--bgDarkGrey);object-fit: cover;}
 .profile-dropdown .user-profile{width:112px;height: 112px; border-radius: 50%;display: block;margin: 0 auto;}
 .profile-dropdown {text-align: center;padding:12px 34px;}
@@ -737,7 +738,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .mega-menu{max-width: 1140px;  padding: 29px 0px 24px 60px;}
     .side-drawer .ant-drawer-content-wrapper{width: 420px !important;}
     .side-drawer .ant-drawer-body{padding: 0 20px 20px 20px;}
-    .portfolio-list .mobile-list{height: 720px;max-height: 720px; overflow: auto;}
+    .portfolio-list .mobile-list{height: 690px;max-height: 690px; overflow: auto;}
     .markets-panel .custom-table .ant-table-body{height: 1050px !important;padding: 0 16px 0 24px;}
     .crypto-address .walletadrs{font-size: 12px;}
 }
