@@ -14,6 +14,7 @@ import WithdrawSummary from './withdrawSummary';
 import NewAddressBook from '../addressbook.component/newAddressBook';
 import SelectCrypto from '../addressbook.component/selectCrypto';
 import WithdrawaCryptolLive from '../withdraw.crypto.component/withdrawLive';
+import SuccessMsg from '../withdraw.crypto.component/success';
 const { Paragraph } = Typography
 class SendReceive extends Component {
     state = {
@@ -46,7 +47,9 @@ class SendReceive extends Component {
             withdrawscan: <WithdrawScan />,
             addnewAddress: <NewAddressBook onStepchange={() => this.selectCrypto()}/>,
             selectCrypto: <SelectCrypto/>,
-            withdraw_crypto_liveness: <WithdrawaCryptolLive/>
+            withdraw_crypto_liveness: <WithdrawaCryptolLive/>,
+            withdraw_crpto_summary: <WithdrawSummary/>,
+            withdraw_crpto_success: <SuccessMsg/>
 
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]

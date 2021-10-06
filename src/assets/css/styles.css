@@ -465,7 +465,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .custom-table .ant-table-tbody > tr:first-child td{padding:0 !important; }
 .custom-table .ant-table-thead th.ant-table-column-has-sorters:hover{background: var(--bgGrey)}
 .custom-table .ant-table-tbody > tr > td {border-bottom: 1px solid #313c46 !important;padding:20px 0 20px 4px !important;}
-.ant-table-tbody > tr > td ,.custom-table .ant-table-thead > tr > th{border-bottom: 1px solid #313c46;transition: background 0.3s;}
+.ant-table-tbody > tr > td ,.custom-table .ant-table-thead > tr > th{border-bottom: 1px solid #313c46 !important;transition: background 0.3s;}
 .custom-table .ant-table-row:first-child td{padding:0 16px 16px !important ;}
 .custom-table .ant-table-container table > thead > tr:first-child th:first-child{border-top-left-radius:0}
 .custom-table .ant-table-container table > thead > tr:first-child th{border: none;}
@@ -476,6 +476,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .widthdraw-pop .ant-modal-close-x{position: absolute;right: 0;width: 22px;height: 22px;line-height: 22px;top: 16px;right: 16px;}
 .markets-panel .ant-table-tbody > tr.ant-table-placeholder:hover > td{background-color: transparent;}
 .markets-panel .ant-table-tbody > tr.ant-table-placeholder > td{border-bottom: none !important;}
+.markets-popup .custom-table .ant-table-row:first-child td, .markets-popup .custom-table .ant-table-tbody > tr > td{padding: 16px !important;}
 .user-profile{ border-radius: 50%; background: var(--bgDarkGrey);object-fit: cover;}
 .profile-dropdown .user-profile{width:112px;height: 112px; border-radius: 50%;display: block;margin: 0 auto;}
 .profile-dropdown {text-align: center;padding:12px 34px;}
@@ -626,11 +627,12 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .docreq-slider .slick-dots li{width: 30px;}
 .coin-select{position: absolute; right:13px; bottom: 13px;}
 .ant-modal-close-x{cursor: default;}
-
 .addCryptoList{list-style: none; padding-left: 0;}
 .addCryptoList li{padding:10px; color: var(--textWhite);border-bottom: 1px solid var(--borderLight);font-size: 16px;}
 .addCryptoList li:hover{background-color:var(--bgBlu); cursor: pointer;}
 .addCryptoList{max-height: calc(100vh - 188px); overflow-y: auto; }
+.tinycontent{word-break: break-all;max-height: 100px;height: 100px;overflow:hidden;}
+.carousel-card:hover .tinycontent{overflow-y: auto;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}
@@ -894,4 +896,3 @@ text-align: center !important;}
 
 .transaction-tabs .k-grid-header-wrap{margin-right: -13px;}
 .customaudit-select .ant-form-item-label > label::after{display: none;}
-.noticeNxtLine{overflow-wrap: break-word;}
