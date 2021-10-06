@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Input } from 'antd';
+import { Typography, Button, Input, Alert } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -51,7 +51,7 @@ class WithdrawSummary extends Component {
     }
     onClick = async () => {
         if (this.state.onTermsChange) {
-            this.setState({ ...this.state, errorMsg:false })
+            this.setState({ ...this.state, errorMsg: false })
             if (this.props.userProfile.isBusiness) {
                 let saveObj = this.props.sendReceive.withdrawCryptoObj;
                 //saveObj.livefacerecognization = livefacerecognization?.applicantActionid;
@@ -80,7 +80,7 @@ class WithdrawSummary extends Component {
         const link = <LinkValue content="terms_service" />;
         return (
             <><div ref={this.useDivRef}></div>
-                {this.state.errorMsg && <Alert showIcon type="info" message={error?.title || "Buy crypto"} description={this.state.errorMsg} closable={false} />}
+                {this.state.errorMsg && <Alert showIcon type="info" message={"Withdraw crypto"} description={this.state.errorMsg} closable={false} />}
                 <div className="cryptosummary-container auto-scroll">
                     <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}><Currency prefix={""} decimalPlaces={8} defaultValue={this.props.sendReceive.withdrawCryptoObj?.totalValue} suffixText={this.props.sendReceive.withdrawCryptoObj?.walletCode} /> </div>
                     <div className="text-white-50 fw-300 text-center fs-14 mb-16"><Currency defaultValue={this.state.usdAmount} prefix={""} decimalPlaces={8} type={'text'} prefixText={'USD'} /></div>
