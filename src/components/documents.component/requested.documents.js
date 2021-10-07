@@ -289,7 +289,7 @@ class RequestedDocs extends Component {
                                     <span className="icon xl image mr-16" />
                                     <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                         <EllipsisMiddle suffixCount={12}>{file.filename}</EllipsisMiddle>
-                                        <span className="fs-12 text-secondary">{file.size}</span>
+                                        <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
                                     </div>
                                     <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx, true)} />
                                 </div>)}
