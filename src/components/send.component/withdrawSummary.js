@@ -47,6 +47,7 @@ class WithdrawSummary extends Component {
         this.loadData();
     }
     onCancel = () => {
+        this.props.dispatch(setWithdrawcrypto(null))
         this.props.changeStep('step1');
     }
     onClick = async () => {
