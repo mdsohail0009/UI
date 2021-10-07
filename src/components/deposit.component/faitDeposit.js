@@ -50,6 +50,13 @@ class FaitDeposit extends Component {
         name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": ('Deposit page view'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
       });
     }
+    let { depObj } = this.state;
+   depObj.currency=this.props.depositInfo?this.props.depositInfo.depositCurrency:null;
+   this.setState({...this.state,depObj:depObj})
+    this.formRef.current.setFieldsValue({ ...depObj })
+    if (this.props.depositInfo?.depositCurrency&&this.props.depositInfo?.currenciesWithBankInfo) {
+      this.handlFiatDep(this.props.depositInfo?.depositCurrency, this.props.depositInfo?.currenciesWithBankInfo)
+    }
   }
   clearfiatValues = () => {
     this.props.fetchCurrencyWithBankDetails()
