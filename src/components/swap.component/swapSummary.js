@@ -22,7 +22,7 @@ class SwapSummary extends Component {
     componentDidMount() {
         this.setOneCoinValue();
         this.setReceiveAmount();
-        
+
     }
     componentWillUnmount() {
         clearInterval(this.updateTimer);
@@ -45,27 +45,27 @@ class SwapSummary extends Component {
         }
     }
     async setReceiveAmount(e) {
-        let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.fromCoinInputValue,this.props.userProfile.id,'swap');
+        let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.fromCoinInputValue, this.props.userProfile.id, 'swap');
         if (res.ok) {
             this.setState({ ...this.state, receiveValue: res.data })
         }
     }
     confirmswapvalidation() {
         if (!this.state.agreeValue) {
-            this.setState({...this.state,errorMessage: 'Please agree to all Term of Use'})
+            this.setState({ ...this.state, errorMessage: 'Please agree terms of service' })
         }
         else if (!this.props.swapStore.coinDetailData.coinBalance) {
-            this.setState({...this.state,errorMessage: 'Insufficiant funds to swap'})
+            this.setState({ ...this.state, errorMessage: 'Insufficiant funds to swap' })
         }
     }
     async confirmSwap() {
-        
+
         if (!this.state.agreeValue) {
-            this.setState({...this.state,errorMessage: 'Please agree to all Term of Use'})
+            this.setState({ ...this.state, errorMessage: 'Please agree terms of service' })
             this.useDivRef.current.scrollIntoView()
         }
         else if (!this.props.swapStore.coinDetailData.coinBalance) {
-            this.setState({...this.state,errorMessage: 'Insufficiant funds to swap'})
+            this.setState({ ...this.state, errorMessage: 'Insufficiant funds to swap' })
         }
         else {
 
@@ -82,45 +82,45 @@ class SwapSummary extends Component {
             obj.toWalletName = this.props.swapStore.coinReceiveDetailData.coinFullName
             obj.toValue = this.state.receiveValue
             obj.totalAmount = this.state.receiveValue
-            this.setState({ ...this.state, isLoading:true})
+            this.setState({ ...this.state, isLoading: true })
             let res = await saveSwapData(obj);
             if (res.ok) {
                 this.props.changeStep('confirm');
-                this.setState({ ...this.state, loader: false, isLoading:false })
+                this.setState({ ...this.state, loader: false, isLoading: false })
                 this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
                 appInsights.trackEvent({
-                    name: 'Swap', properties: {"Type": 'User',"Action": 'Save swap',"Username": this.props.userProfile.userName,"MemeberId": this.props.userProfile.id,"Feature": 'Swap',"Remarks": (obj.fromValue +" "+obj.fromWalletName+" to "+obj.toValue +" "+obj.toWalletName),"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Swap Crypto'}
+                    name: 'Swap', properties: { "Type": 'User', "Action": 'Save swap', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Swap', "Remarks": (obj.fromValue + " " + obj.fromWalletName + " to " + obj.toValue + " " + obj.toWalletName), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap Crypto' }
                 });
             } else {
-                this.setState({ ...this.state, loader: false,isLoading:false, errorMessage:res.error })
+                this.setState({ ...this.state, loader: false, isLoading: false, errorMessage: res.error })
             }
         }
     }
 
     render() {
         return (
-            <><div ref={this.useDivRef}></div>{(this.state.receiveValue &&this.state.price &&this.props.swapStore.fromCoinInputValue && this.props.swapStore?.coinDetailData?.coin)?<Summary
-            loading={false}
-            coin={this.props.swapStore?.coinReceiveDetailData?.coin}
-            nativeCurrency={this.props.swapStore?.coinReceiveDetailData?.coin}
-            oneCoinValue={this.state.price}
-            amount={this.state.receiveValue}
-            showEstimated={false}
-            showEstimatedTotal={false}
-            currencyPrefix=''
-            exchangeCoin={this.props.swapStore?.coinDetailData?.coin}
-            showConvert={true}
-            convertValue={parseFloat(this.props.swapStore.fromCoinInputValue)}
-            convertCoin={this.props.swapStore?.coinDetailData?.coin}
-            error={{ valid: this.state.errorMessage?false:true,title:'Swap', message: this.state.errorMessage }} iButtonLoad={this.state.isLoading}
-            onRefresh={() => {this.setOneCoinValue(); this.setReceiveAmount();}}
-            onCancel={() => this.props.changeStep('step1')}
-            onClick={() => this.confirmSwap()}
-            onTermsChange={(checked)=>{this.setState({...this.state,agreeValue:checked})}}
-            onErrorClose = {()=>this.setState({...this.state,errorMessage:null})}
-            isButtonLoad = {this.state.isLoading}
-        />:<Loader />}
-           </>
+            <><div ref={this.useDivRef}></div>{(this.state.receiveValue && this.state.price && this.props.swapStore.fromCoinInputValue && this.props.swapStore?.coinDetailData?.coin) ? <Summary
+                loading={false}
+                coin={this.props.swapStore?.coinReceiveDetailData?.coin}
+                nativeCurrency={this.props.swapStore?.coinReceiveDetailData?.coin}
+                oneCoinValue={this.state.price}
+                amount={this.state.receiveValue}
+                showEstimated={false}
+                showEstimatedTotal={false}
+                currencyPrefix=''
+                exchangeCoin={this.props.swapStore?.coinDetailData?.coin}
+                showConvert={true}
+                convertValue={parseFloat(this.props.swapStore.fromCoinInputValue)}
+                convertCoin={this.props.swapStore?.coinDetailData?.coin}
+                error={{ valid: this.state.errorMessage ? false : true, title: 'Swap', message: this.state.errorMessage }} iButtonLoad={this.state.isLoading}
+                onRefresh={() => { this.setOneCoinValue(); this.setReceiveAmount(); }}
+                onCancel={() => this.props.changeStep('step1')}
+                onClick={() => this.confirmSwap()}
+                onTermsChange={(checked) => { this.setState({ ...this.state, agreeValue: checked }) }}
+                onErrorClose={() => this.setState({ ...this.state, errorMessage: null })}
+                isButtonLoad={this.state.isLoading}
+            /> : <Loader />}
+            </>
         )
     }
 }
