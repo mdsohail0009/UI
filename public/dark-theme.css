@@ -45,3 +45,5 @@
     --cryptoIcons:url(https://scmcdn.blob.core.windows.net/scmcdn/suissebase/images/dark-crypto-icons.svg);
     --logo: url(../../assets/images/logo-white.png);
 }
+.header-logo img { display: none; }
+.header-logo img.dark { display: inline-block; }
