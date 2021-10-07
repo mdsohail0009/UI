@@ -92,6 +92,15 @@ class RequestedDocs extends Component {
             });
         }
     }
+    updateDocRepliesStatus = (doc, Status) => {
+        let docDetails = [...this.state.docDetails.details];
+        for (let item of docDetails) {
+            if (item.id === doc.id) {
+                item.status = Status;
+            }
+        }
+        this.setState({ ...this.state, docDetails: { ...this.state.docDetails, details: docDetails } });
+    }
     docReject = async (doc) => {
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
         if (!item || !item.reply) {
@@ -113,6 +122,7 @@ class RequestedDocs extends Component {
                 content: 'Document has been submitted',
                 className: 'custom-msg',
             });
+            this.updateDocRepliesStatus(doc, "Submitted");
             this.loadDocReplies(doc.id)
         } else {
             message.warning({
