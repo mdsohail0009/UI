@@ -119,7 +119,9 @@ class SelectSellCrypto extends Component {
                 obj.toWalletName = this.props.sellData.memberFiat.data[k].currencyCode;
             }
         }
-        this.setState({ ...this.state, sellSaveData: obj })
+        this.setState({ ...this.state, sellSaveData: obj },()=>{
+            this.swapRef.current.handleConvertion({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt,locCurrency:obj.toWalletCode });
+        })
     }
     refreshAmnts=async()=>{
         this.setState({ ...this.state, CryptoAmnt: this.state.CryptoAmnt })
@@ -153,7 +155,7 @@ class SelectSellCrypto extends Component {
                     cryptoAmt={this.state.CryptoAmnt}
                     localAmt={this.state.USDAmnt}
                     cryptoCurrency={coinDetailData?.coin}
-                    localCurrency={"USD"}
+                    localCurrency={this.state.sellSaveData.toWalletCode?this.state.sellSaveData.toWalletCode:"USD"}
                     selectedCoin={coinDetailData?.coin}
                     onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }}  memberId={this.props.member?.id} screenName='sell'/>
                 <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills">
