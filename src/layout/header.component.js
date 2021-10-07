@@ -20,6 +20,7 @@ import AuditLogs from '../components/auditlogs.component';
 import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata, clearSwapData } from '../reducers/swapReducer';
 import { connect } from 'react-redux';
 import DefaultUser from '../assets/images/defaultuser.jpg';
+import { setHeaderTab } from '../reducers/buysellReducer';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -365,7 +366,7 @@ class Header extends Component {
                                 </Dropdown>
                             </Menu>
                         </div>
-                        <Menu theme="light" mode="horizontal" className="header-right" >
+                        <Menu theme="light" mode="horizontal" className="header-right" selectedKeys={[this.props.buySell?.headerTab]} onSelect={(key)=>{debugger;this.props.dispatch(setHeaderTab(key.key))}}>
                             <Translate content="menu_buy_sell" component={Menu.Item} key="1" onClick={this.showBuyDrawer} className="list-item" />
                             <Translate content="menu_swap" component={Menu.Item} key="2" onClick={this.showSwapDrawer} className="list-item" />
                             <Dropdown onClick={()=>this.setState({...this.state,Visibleprofilemenu:false})} overlay={depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" getPopupContainer={() => document.getElementById('area')}>
@@ -610,8 +611,8 @@ class Header extends Component {
     }
 }
 
-const connectStateToProps = ({ swapStore, userConfig, oidc, dashboard }) => {
-    return { swapStore, userConfig: userConfig.userProfileInfo, dashboard }
+const connectStateToProps = ({ swapStore, userConfig, oidc, dashboard,buySell }) => {
+    return { swapStore, userConfig: userConfig.userProfileInfo, dashboard,buySell }
 }
 const connectDispatchToProps = dispatch => {
     return {

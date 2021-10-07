@@ -8,6 +8,7 @@ import SwapCoins from './swapCoins';
 import SwapSummary from './swapSummary'
 import SelectCrypto from './selectcrypto';
 import SuccessMessage from './success';
+import { setHeaderTab } from '../../reducers/buysellReducer';
 
 const { Paragraph } = Typography
 class SwapCrypto extends Component {
@@ -22,6 +23,7 @@ class SwapCrypto extends Component {
             this.child.clearSwapCoinValues();
     }
     closeBuyDrawer = () => {
+        this.props.dispatch(setHeaderTab(""))
         this.props.dispatch(setStep("step1"))
         if (this.props.onClose) {
             this.props.onClose();

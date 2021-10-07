@@ -61,7 +61,6 @@ const handleFetch = (payload) => {
         payload
     }
 }
-
 const fetchCoins = (type) => {
     return async (dispatch) => {
         dispatch(handleCoinsFetch({ key: type, loading: true, data: [] }));
@@ -134,7 +133,6 @@ const getMemberCoins = (memberId) => {
                 dispatch(fetchMemberCoinsRejected(error));
             },
         );
-        // dispatch(fetchMemberFiat());
     }
 }
 let initialState = {
@@ -149,7 +147,8 @@ let initialState = {
     previewDetails: { loading: false, data: null },
     selectedWallet: null,
     coinWallet: null,
-    exchangeValues: {}
+    exchangeValues: {},
+    headerTab: ""
 }
 
 
