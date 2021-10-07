@@ -256,7 +256,6 @@ export default {
   Require_all_devices_to_signin: '要求所有设备登录 ',
   with_new_password: '使用新密码',
   Yes: '是的',
-  change_password: "更改密码",
   summar_info: '概要信息',
   convert: '兌換',
   EUR_text: '请选择您要存入的货币，然后将显示所选货币的银行帐户详细信息。下一步是您将资金电汇到所提供的银行详细信息，并记住包括参考号。',
