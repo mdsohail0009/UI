@@ -23,6 +23,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
         }
     }, [])
     const loadDataAddress = async () => {
+        setIsLoading(false)
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'fiat');
         if (response.ok) {
             setFiatAddress(response.data)
@@ -78,7 +79,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
     return (
         <>
          
-           {/* {isLoading && <Loader/> } */}
+           { isLoading && <Loader /> }
             <div className="addbook-height auto-scroll">
             <div ref={useDivRef}></div>
                 {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
@@ -279,7 +280,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                     </Form.Item>
                 </Form>
             </div>
- 
+
         </>
     );
 }
