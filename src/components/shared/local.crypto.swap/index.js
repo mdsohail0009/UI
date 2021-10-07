@@ -43,7 +43,7 @@ const LocalCryptoSwapper = (props, ref) => {
                 bordered={false}
                 style={{ lineHeight: '48px', fontSize: 30, paddingRight: '40px !important' }}
                 onKeyPress={(e) => {
-                    e.currentTarget.value.length >= 8 ? e.currentTarget.style.fontSize = "30px" : e.currentTarget.style.fontSize = "30px";
+                    e.currentTarget.style.fontSize = "30px";
                     setInputChange(true)
                 }}
                 value={isSwaped ? cryptovalue : localvalue}

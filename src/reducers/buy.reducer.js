@@ -109,17 +109,17 @@ const fetchPreview = ({ coin, wallet, amount }) => {
 }
 const getMemberCoins = (memberId) => {
     return dispatch => {
-        dispatch(fetchMemberCoins({ key: "MemberCoins", loading: true, data: [] }));
+        dispatch(fetchMemberCoins());
         getportfolio(memberId).then(
             (response) => {
                 if (response.ok) {
                     dispatch(fetchMemberCoinsSuccess(response.data, 'MemberCoins'));
                 } else {
-                    dispatch(fetchMemberCoinsRejected(response.data, 'MemberCoins'));
+                    dispatch(fetchMemberCoinsRejected(response.data));
                 }
             },
             (error) => {
-                dispatch(fetchMemberCoinsRejected(error, 'MemberCoins'));
+                dispatch(fetchMemberCoinsRejected(error));
             },
         );
         getMemberfiat(memberId).then(
@@ -127,11 +127,11 @@ const getMemberCoins = (memberId) => {
                 if (response.ok) {
                     dispatch(fetchMemberCoinsSuccess(response.data, 'MemberFiat'));
                 } else {
-                    dispatch(fetchMemberCoinsRejected(response.data, 'MemberFiat'));
+                    dispatch(fetchMemberCoinsRejected(response.data));
                 }
             },
             (error) => {
-                dispatch(fetchMemberCoinsRejected(error, 'MemberFiat'));
+                dispatch(fetchMemberCoinsRejected(error));
             },
         );
         // dispatch(fetchMemberFiat());

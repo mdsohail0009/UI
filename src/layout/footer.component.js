@@ -18,7 +18,7 @@ function Footer() {
     const [isDarkMode, setIsDarkMode] = React.useState(true);
     //const [lang, setLang] = useState('en')
     const [theme, setTheme] = useState('LRT')
-    if (status === 'loading') {
+    if (status == 'loading') {
         return <div>Loading styles...</div>;
     }
 

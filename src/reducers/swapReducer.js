@@ -61,12 +61,12 @@ const clearSwapData = (paylaod) => {
 
 const getMemberCoins = (member_id) => {
     return async (dispatch) => {
-        dispatch(fetchMemberCoins({ key: "MemberCoins", loading: true, data: [] }));
+        dispatch(fetchMemberCoins());
         const response = await getportfolio(member_id);
         if (response.ok) {
             dispatch(fetchMemberCoinsSuccess(response.data, 'MemberCoins'));
         } else {
-            dispatch(fetchMemberCoinsRejected(response.data, 'MemberCoins'));
+            dispatch(fetchMemberCoinsRejected(response.data));
         }
     }
 }

@@ -70,7 +70,6 @@ class BuySell extends Component {
     renderIcon = () => {
         const stepcodes = {
             buycrypto: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
-            selectcrypto: <span />,
             billtype: <span onClick={() => this.props.dispatch(setStep("step3"))} className="icon md close-white c-pointer" />,
             addcard: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             depositcrypto: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,

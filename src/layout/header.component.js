@@ -353,7 +353,7 @@ class Header extends Component {
                     <menuHeader className="tlv-header" id="area">
                         <div className="login-user">
                             <ul className="header-logo pl-0">
-                                <li className="pr-30 p-relative">{this.props.userConfig.isKYC ? <img src={logoColor} alt="logo" className="tlv-logo" alt={"image"} /> : <img src={logoColor} alt="logo" className="tlv-logo" alt={"image"} />}</li>
+                                <li className="pr-30 p-relative">{<img src={logoColor} alt="logo" className="tlv-logo" alt={"image"} />}</li>
                                 <li className="mb-d-none px-36"><Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? " Business" : " Personal" }} onClick={() => this.props.userConfig.isKYC?this.props.history.push('/dashboard'):this.props.history.push("/notkyc")} component="p" className="text-white-30 mb-0 fs-24 c-pointer" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">

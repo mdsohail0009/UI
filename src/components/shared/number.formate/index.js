@@ -20,7 +20,7 @@ class Currency extends Component {
             style={inputCustomStyle}
             value={defaultValue}
             onValueChange={({ value }) => {
-                if (onChange) { onchange(value ? value : value) }
+                if (onChange) { onchange(value) }
             }}
             autoFocus={autoFocus}
         /> : <NumberFormat
