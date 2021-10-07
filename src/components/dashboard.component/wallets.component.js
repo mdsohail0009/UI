@@ -8,6 +8,7 @@ import Currency from '../shared/number.formate';
 import MassPayment from '../buyfiat.component'
 import { withRouter } from 'react-router-dom';
 import {setWithdrawfiatenaable} from '../../reducers/sendreceiveReducer'
+import {setdepositCurrency,getCurrencieswithBankDetails} from '../../reducers/depositReducer'
 const { Title, Paragraph } = Typography;
 
 class Wallets extends Component {
@@ -20,6 +21,7 @@ class Wallets extends Component {
     }
     componentDidMount() {
         this.fetchWallets();
+        this.props.dispatch(getCurrencieswithBankDetails())
     }
     async fetchWallets() {
         this.props.dispatch(fetchMemberWalletsData(this.props.userProfile.id))
@@ -35,6 +37,8 @@ class Wallets extends Component {
         }
         if(e===2){
             this.props.dispatch(setWithdrawfiatenaable(true))
+        }else{
+            this.props.dispatch(setdepositCurrency(value))
         }
         this.setState({
             valNum: e

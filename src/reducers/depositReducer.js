@@ -2,6 +2,7 @@ import {getCurrencywithBank} from '../../src/components/deposit.component/api';
 const FETCH_CURRENCIESWITHBANKDETAILS = "fetchcurrencieswithbankdetails";
 const FETCH_CURRENCIESWITHBANKDETAILS_REJECTED = "fetchcurrencieswithbankdetailsRejected";
 const FETCH_CURRENCIESWITHBANKDETAILS_SUCCESS = "fetchcurrencieswithbankdetailsSuccess";
+const SET_DEPOSITCURRENCY='setdepositCurrency'
 
 const fetchcurrencieswithbankdetails = () => {
     return { type: FETCH_CURRENCIESWITHBANKDETAILS,payload:true };
@@ -18,10 +19,16 @@ const fetchcurrencieswithbankdetailsRejected = (payload) => {
         payload: payload
     }
 }
+const setdepositCurrency=(payload)=>{
+    return {
+        type: SET_DEPOSITCURRENCY,
+        payload: payload
+    }  
+}
 const initialState = {
     isLoading: true,
     error: null,
-    currenciesWithBankInfo: []
+    currenciesWithBankInfo: [],depositCurrency:null
 }
 const getCurrencieswithBankDetails = () => {
     return async (dispatch) => {
@@ -50,10 +57,12 @@ const depositReducer = (state = initialState, action) => {
         case FETCH_CURRENCIESWITHBANKDETAILS_REJECTED:
             state = { ...state, isLoading: false, error: action.payload }
             return state;
+            case SET_DEPOSITCURRENCY:
+                state={...state,depositCurrency:action.payload}
         default:
             return state;
     }
 }
 
 export default depositReducer;
-export { getCurrencieswithBankDetails }
+export { getCurrencieswithBankDetails,setdepositCurrency }
