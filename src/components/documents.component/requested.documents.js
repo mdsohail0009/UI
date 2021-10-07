@@ -270,7 +270,7 @@ class RequestedDocs extends Component {
                         </div>)}
                         {!this.state.documentReplies[doc.id]?.loading && doc.status !== "Approved" && <><div className="mb-24">
                             <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
-                            <TextArea autoSize={{ minRows: 1, maxRows: 6 }} onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
+                            <TextArea autoSize onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
                                 className="mb-24 cust-input"
                                 placeholder="Write your message"
                             />
@@ -308,6 +308,7 @@ class RequestedDocs extends Component {
                 title="Preview"
                 width={1000}
                 visible={this.state.previewModal}
+                destroyOnClose={true}
                 closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
                 footer={<>
                     <Button className="pop-btn px-36 mr-36" onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>

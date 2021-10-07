@@ -23,7 +23,7 @@ class Documents extends Component {
         this.props.history.push("/documents?id=" + dataItem.id)
     }
     gridColumns = [
-        { field: "title", title: "Note", filter: true, customCell: (props) => <td><div className="gridLink" onClick={() => this.details(props)}>{props.dataItem?.title}</div></td> },
+        { field: "title", title: "Title", filter: true, customCell: (props) => <td><div className="gridLink" onClick={() => this.details(props)}>{props.dataItem?.title}</div></td> },
         { field: "date", title: "Requested Date", filter: true, filterType: "date" },
         { field: "status", title: "Status", filter: true },
     ]
@@ -38,7 +38,7 @@ class Documents extends Component {
         return (<>
             <div className="box basic-info">
                 <Title className="basicinfo mb-16">Documents</Title>
-                <List url={gridUrl} ref={this.gridRef} columns={this.gridColumns} additionalParams={{"memberId":this.props.userProfileInfo?.id}} />
+                <List url={gridUrl} ref={this.gridRef} columns={this.gridColumns} additionalParams={{ "memberId": this.props.userProfileInfo?.id }} />
             </div>
         </>
         );
