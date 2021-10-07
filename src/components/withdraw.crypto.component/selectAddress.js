@@ -11,21 +11,20 @@ class SelectAddress extends Component {
     state={
         addressLu: [],
         filterObj: [],
-        
-        //loading:false
+        loading:false,
     }
     componentDidMount() {
-        debugger
         this.getAddressLu();
     }
     getAddressLu = async () => {
-        debugger
+
         let membershipId = this.props.userProfile.id;
         let coin_code = this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coin;
         let recAddress = await favouriteFiatAddress(membershipId, 'crypto', coin_code)
         if (recAddress.ok) {
-            this.setState({ addressLu: recAddress.data, loading: false, filterObj: recAddress.data });
+            this.setState({...this.state, addressLu: recAddress.data, loading: false, filterObj: recAddress.data });
         }
+        else{this.setState({...this.state, loading: true})}
     }
     handleSearch = (value) => {
         let filteraddresslabel;
@@ -37,8 +36,6 @@ class SelectAddress extends Component {
         this.setState({ ...this.state, filterObj: filteraddresslabel })
     }
     handleSelectAdd= (item) =>{
-        debugger
-        //const obj = item.code;
         this.props.SelectedAddress(item)
        let obj= this.props.sendReceive.withdrawCryptoObj;
         this.props.dispatch(setWithdrawcrypto({...obj, toWalletAddress: item.code}))
@@ -51,14 +48,14 @@ class SelectAddress extends Component {
         const { Search } = Input;
         return (
             <>
-                {/* {loading ? <Loader /> :<> */}
+                {loading ? <Loader /> :<>
                 <Search placeholder="Search address label"
                     addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { this.handleSearch(currentTarget.value) }} size="middle" bordered={false} className="my-16" />
                 {filterObj.length > 0 ? <>
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
                         {filterObj?.map((item, idx) =>
                             <li onClick={() => this.handleSelectAdd(item)} key={idx}
-                                className={item.code === this.state.walletAddress ? "select" : " "}
+                                className={item.name === this.props.sendReceive?.addressObj?.name ? "select" : " "}
                             > <p className="fs-16 mb-0 "> <span className=" text-white-50 fs-14 fw-100"> Label:</span> {item.name}</p>
                                 <p className="fs-16 mb-0"> <span className=" text-white-50 fs-14 fw-100"> Address:</span> {item.code}</p>
                             </li>
@@ -69,7 +66,7 @@ class SelectAddress extends Component {
                         <h1 className="fs-36 text-white-30 fw-200 mb-0" >OOPS </h1>
                         <p className="fs-16 text-white-30 fw-200 mb-0"> No address available </p>
                     </div>
-        //    }</>
+           }</>
            }
             </>
         );

@@ -737,6 +737,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .coin-typo{font-size: 16px !important;}
 }
 @media (min-width: 1200px){
+    .custom-font{font-size:30px !important;}
     .main-container{max-width: 1232px; padding: 30px 16px 24px;}
     .mega-menu{max-width: 1140px;  padding: 29px 0px 24px 60px;}
     .side-drawer .ant-drawer-content-wrapper{width: 420px !important;}
@@ -746,6 +747,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .crypto-address .walletadrs{font-size: 12px;}
 }
 @media (min-width: 1400px){
+    .custom-font{font-size:36px !important;}
     .main-container{max-width: 1320px; }
     .mega-menu{max-width: 1320px;}
     .side-drawer .ant-drawer-content-wrapper{width: 510px !important;}
