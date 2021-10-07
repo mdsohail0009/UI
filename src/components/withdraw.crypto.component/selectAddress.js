@@ -17,7 +17,7 @@ class SelectAddress extends Component {
         this.getAddressLu();
     }
     getAddressLu = async () => {
-
+       this.setState({...this.state,loading: true})
         let membershipId = this.props.userProfile.id;
         let coin_code = this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coin;
         let recAddress = await favouriteFiatAddress(membershipId, 'crypto', coin_code)

@@ -2,6 +2,8 @@ const SET_STEP = "setStep";
 const CLEAR_STEP = "clearStep";
 const CHANGE_STEP = "changeStep"
 const SET_TAB = "setTab";
+const SET_HEADER_TAB = "setHeaderTab";
+
 const setStep = (payload) => {
     return {
         type: SET_STEP,
@@ -23,6 +25,12 @@ const changeStep = (payload) => {
 const clearStep = (payload) => {
     return {
         type: CLEAR_STEP,
+        payload
+    }
+}
+const setHeaderTab = (payload) => {
+    return {
+        type: SET_HEADER_TAB,
         payload
     }
 }
@@ -56,7 +64,8 @@ let initialState = {
         sellsummary: "confirm_sell",
         wiretransfor: "select_a_method"
     },
-    tabKey: 1
+    tabKey: 1,
+    headerTab:""
 }
 const buySellReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -72,10 +81,13 @@ const buySellReducer = (state = initialState, action) => {
         case SET_TAB:
             state = { ...state, tabKey: action.payload };
             return state;
+        case SET_HEADER_TAB:
+            state = { ...state, headerTab: action.payload };
+            return state;
         default:
             return state;
     }
 
 }
 export default buySellReducer;
-export { setStep, clearStep, changeStep, setTab }
+export { setStep, clearStep, changeStep, setTab,setHeaderTab }
