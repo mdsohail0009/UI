@@ -253,7 +253,7 @@ class RequestedDocs extends Component {
                     <Panel header={doc.documentName} key={idx + 1} extra={doc.status ? <span className={`${doc.status ? doc.status.toLowerCase() + " staus-lbl" : ""}`}>{doc.status}</span> : ""}>
                         {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
                         {this.state.documentReplies[doc.id]?.data?.map((reply, idx) => <div key={idx} className="reply-container">
-                            <div className="user-shortname">{this.props?.userProfileInfo?.firstName.charAt('0')}{this.props?.userProfileInfo?.lastName.charAt('0')}</div>
+                            <div className="user-shortname">{reply.repliedBy.slice(0, 2)}</div>
                             <div className="reply-body">
                                 <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment format="DD MMM YY hh:mm">{reply.repliedDate}</Moment> </Text>
                                 <p className="reply-txt">{reply.reply}</p>
