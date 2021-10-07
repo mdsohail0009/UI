@@ -71,7 +71,7 @@ class WithdrawSummary extends Component {
                 this.props.changeStep('withdraw_crypto_liveness');
             }
         } else {
-            this.setState({ ...this.state, errorMsg: 'Please agree to all Term of Use' })
+            this.setState({ ...this.state, errorMsg: 'Please agree terms of service' })
             this.useDivRef.current.scrollIntoView()
         }
     }
