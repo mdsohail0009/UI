@@ -6,5 +6,7 @@ const getCryptoWithDrawWallets = ({ memberId }) => {
 const withDrawCrypto = (obj)=>{
     return apiClient.post(ApiControllers.exchange+`WithdrawCrypto`,obj)
 }
-
-export { getCryptoWithDrawWallets,withDrawCrypto }
+const getWithdrawmemberCrypto = ({ memberId }) => {
+    return apiClient.get(ApiControllers.exchange + `WithDrawMemberCrypto?memberId=${memberId}`)
+}
+export { getCryptoWithDrawWallets,withDrawCrypto,getWithdrawmemberCrypto }

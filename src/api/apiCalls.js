@@ -32,5 +32,8 @@ const trackPageview = (obj) => {
         name: obj.Feature, properties: { "Type": 'Admin', "Action": 'Page view', "Username": obj.userName, "MemeberId": obj.id, "Feature": obj.Feature, "Remarks": obj.Remarks, "Duration": 1, "Url": window.location.href, "FullFeatureName": obj.FullFeatureName }
     });
 }
-let apicalls = {getportfolio,getCryptos,getMember,sumsubacesstoken, updateKyc,sumsubacesstokennew,sumsublivenessacesstoken,trackEvent,trackPageview}
+const sellMemberCrypto=(memID)=>{
+    return apiClient.get(Portfolio +`SellMemberCrypto?memberId=`+memID);
+}
+let apicalls = {getportfolio,getCryptos,getMember,sumsubacesstoken, updateKyc,sumsubacesstokennew,sumsublivenessacesstoken,trackEvent,trackPageview,sellMemberCrypto}
 export default apicalls

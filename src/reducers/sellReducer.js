@@ -21,7 +21,7 @@ const updatesellsaveObject = (payload) => {
 const getMemberCoins = (memberId) => {
     return async dispatch => {
         dispatch(handleApiFetch({ key: "memberCoins", loading: true, data: [] }));
-        const response = await api.getportfolio(memberId);
+        const response = await api.sellMemberCrypto(memberId);
         if (response.ok) {
             dispatch(handleApiFetch({ data: response.data, loading: false, key: 'memberCoins' }));
         } else {
