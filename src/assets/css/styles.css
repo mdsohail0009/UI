@@ -902,3 +902,6 @@ text-align: center !important;}
 
 .transaction-tabs .k-grid-header-wrap{margin-right: -13px;}
 .customaudit-select .ant-form-item-label > label::after{display: none;}
+
+[data-theme='DRT'] .header-logo img, [data-theme='LHT'] .header-logo img{display: none;}
+[data-theme='DRT'] .header-logo img.dark, [data-theme='LHT'] .header-logo img.light {display: inline-block;}
