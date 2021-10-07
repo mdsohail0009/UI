@@ -9,9 +9,6 @@ import { withDrawCrypto } from '../send.component/api';
 import SuccessMsg from './success';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
-import { favouriteFiatAddress } from '../addressbook.component/api'
-import oops from '../../assets/images/oops.png'
-import Loader from '../../Shared/loader';
 
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
@@ -26,10 +23,6 @@ class CryptoWithDrawWallet extends Component {
         showModal: false,
         confirmationStep: "step1",
         isWithdrawSuccess: false,
-        addressLu: [],
-        isSelectAddress: false,
-        isAddressValue: false,
-        filterObj: []
 
     }
     componentDidMount() {
@@ -51,32 +44,26 @@ class CryptoWithDrawWallet extends Component {
     componentWillUnmount() {
         this.setState({ ...this.state, isWithdrawSuccess: false });
     }
-    getAddressLu = async () => {
-        let membershipId = this.props.userProfile.id;
-        let coin_code = this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coin;
-        let recAddress = await favouriteFiatAddress(membershipId, 'crypto', coin_code)
-        if (recAddress.ok) {
-            this.setState({ addressLu: recAddress.data, loading: false, filterObj: recAddress.data });
-        }
-    }
+
     selectCrypto = () => {
+        const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.props.dispatch(setSubTitle('Select Address Book'));
-        this.setState({ ...this.state, isSelectAddress: true, isAddressValue: true, loading: true })
-        this.getAddressLu();
-    }
-    handleSelectAdd = (item) => {
-        this.setState({ ...this.state, walletAddress: item.code, isSelectAddress: false })
-        this.props.dispatch(setSubTitle('Select wallet address'));
-    }
-    handleSearch = (value) => {
-        let filteraddresslabel;
-        if (!value) {
-            filteraddresslabel = this.state.addressLu;
-        } else {
-            filteraddresslabel = this.state.addressLu.filter(item => (item.name).toLowerCase().includes(value.toLowerCase()));
+        let obj = {
+            "membershipId": this.props.userProfile.id,
+            "memberWalletId": id,
+            "walletCode": coin,
+            "toWalletAddress": this.state.walletAddress,
+            "reference": "",
+            "description": "",
+            "totalValue": this.state.CryptoAmnt,
+            "tag": ""
         }
-        this.setState({ ...this.state, filterObj: filteraddresslabel })
+        this.props.dispatch(setWithdrawcrypto(obj))
+        this.setState({ ...this.state, loading: true})
+        this.props.changeStep('step8');
+
     }
+   
     clickMinamnt(type) {
         let usdamnt; let cryptoamnt;
         let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
@@ -240,7 +227,7 @@ class CryptoWithDrawWallet extends Component {
         }
         return (
             <div ref={this.myRef}>
-                {!this.state.isSelectAddress ? <div> {this.state.error != null && <Alert closable type="error"
+                <div> {this.state.error != null && <Alert closable type="error"
                     description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
 
                     <Card className="crypto-card select mb-36" bordered={false}>
@@ -301,31 +288,8 @@ class CryptoWithDrawWallet extends Component {
                     ]} visible={this.state.showModal}>
                         {this.renderModalContent()}
                     </Modal>
-                </div> : <>
-                    {loading ? <Loader /> :
-                        <><Search placeholder="Search address label"
-                            addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { this.handleSearch(currentTarget.value) }} size="middle" bordered={false} className="my-16" />
-                            {filterObj.length > 0 ? <>
-                                <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
-                                    {filterObj?.map((item, idx) =>
-                                        <li onClick={() => this.handleSelectAdd(item)} key={idx}
-                                            className={item.code === this.state.walletAddress ? "select" : " "}
-                                        > <p className="fs-14 mb-0 "> <span className=" text-white-50 fs-12 fw-200"> Label:</span> {item.name}</p>
-                                            <p className="fs-14 mb-0"> <span className=" text-white-50 fs-12 fw-200"> Address:</span> {item.code}</p>
-                                        </li>
-                                    )}
-                                </ul> </> :
-                                <div className="success-pop text-center" style={{ marginTop: '20px' }}>
-                                    <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
-                                    <h1 className="fs-36 text-white-30 fw-200 mb-0" >OOPS </h1>
-                                    <p className="fs-16 text-white-30 fw-200 mb-0"> No address available </p>
-                                </div>
-                            }
-                        </>
-                    }</>}
+                </div> 
             </div>
-
-
         )
     }
 }
