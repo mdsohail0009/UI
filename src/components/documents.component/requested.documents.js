@@ -110,7 +110,7 @@ class RequestedDocs extends Component {
         message.destroy()
         if (response.ok) {
             message.warning({
-                content: 'Documenst has been submitted',
+                content: 'Document has been submitted',
                 className: 'custom-msg',
             });
             this.loadDocReplies(doc.id)
@@ -141,7 +141,7 @@ class RequestedDocs extends Component {
         message.destroy()
         if (response.ok) {
             message.warning({
-                content: 'Documenst has been Deleted',
+                content: 'Document has been deleted',
                 className: 'custom-msg',
             });
             this.loadDocReplies(doc.id);
