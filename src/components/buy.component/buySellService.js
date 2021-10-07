@@ -8,6 +8,14 @@ export const convertCurrency = async ({ from, to, value, isCrypto ,memId,screenN
         return 0;
     }
 }
+export const convertCurrencyDuplicate = async ({ from, to, value, isCrypto ,memId,screenName}) => {
+    const response = await fetchCurrencyConvertionValue({ from, to, value, isCrypto,memId,screenName });
+    if (response.ok) {
+        return response;
+    } else {
+        return 0;
+    }
+}
 export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, maxPurchase }) => {
     const validate = {
         message: null,

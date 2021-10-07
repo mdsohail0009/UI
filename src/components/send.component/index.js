@@ -15,6 +15,7 @@ import NewAddressBook from '../addressbook.component/newAddressBook';
 import SelectCrypto from '../addressbook.component/selectCrypto';
 import WithdrawaCryptolLive from '../withdraw.crypto.component/withdrawLive';
 import SuccessMsg from '../withdraw.crypto.component/success';
+import SelectAddress from '../withdraw.crypto.component/selectAddress';
 const { Paragraph } = Typography
 class SendReceive extends Component {
     state = {
@@ -45,7 +46,7 @@ class SendReceive extends Component {
             verifyidentity: <VerifyIDentity />,
             withdrawsummary: <WithdrawSummary />,
             withdrawscan: <WithdrawScan />,
-            addnewAddress: <NewAddressBook onStepchange={() => this.selectCrypto()}/>,
+            selectAddress: <SelectAddress />,
             selectCrypto: <SelectCrypto/>,
             withdraw_crypto_liveness: <WithdrawaCryptolLive/>,
             withdraw_crpto_summary: <WithdrawSummary/>,
@@ -63,7 +64,7 @@ class SendReceive extends Component {
             withdrawaddress: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             verifyidentity: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdrawsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
-            addnewAddress:<span onClick={() => this.props.dispatch(setStep("step2"))} className="icon md lftarw-white c-pointer" />,
+            selectAddress:<span onClick={() => this.props.dispatch(setStep("withdraw_crypto_selected"))} className="icon md lftarw-white c-pointer" />,
             selectCrypto: <span onClick={() => this.props.dispatch(setStep("step8"))} className="icon md lftarw-white c-pointer" />,
             withdraw_crypto_liveness: <span onClick={() => this.props.dispatch(setStep("withdraw_crpto_summary"))} className="icon md lftarw-white c-pointer" />,
             withdraw_crpto_summary: <span onClick={() => this.props.dispatch(setStep("withdraw_crypto_selected"))} className="icon md lftarw-white c-pointer" />,
@@ -80,7 +81,7 @@ class SendReceive extends Component {
             withdrawaddress: <span />,
             verifyidentity: <span />,
             withdrawsummary: <span />,
-            addnewAddress:<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            selectAddress:<span />,
             selectCrypto: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdraw_crypto_liveness: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdraw_crpto_summary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,

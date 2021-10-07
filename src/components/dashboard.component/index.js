@@ -19,7 +19,7 @@ class Home extends Component {
         this.getNotices();
     }
     getNotices = async () => {
-       this.props.dispatch(fetchNotices(this.props.userProfileInfo.id))
+        this.props.dispatch(fetchNotices(this.props.userProfileInfo.id))
     }
     render() {
         const { data: notices } = this.props.dashboard?.notices;
@@ -27,7 +27,7 @@ class Home extends Component {
             <div className="main-container">
                 {notices !== null && notices !== undefined && <Carousel className="docreq-slider" autoplay={true}>
                     {notices?.map((notice, idx) => <div className="mb-24" key={idx}>
-                        <AlertConfirmation type="error" title={notice.title} showIcon description="Dear user please check the details for requesting documents to approval your deposit/withdraw."
+                        <AlertConfirmation type="error" title={notice.title} showIcon description="Our Compliance Team is requesting documents in line with your recent transaction, please click View Details. Thank you for your patience."
                             action={
                                 <Button size="small" type="text" onClick={() => this.props.history.push(`/documents?id=${notice.typeId}`)}>
                                     View Details
@@ -61,7 +61,7 @@ class Home extends Component {
 
     }
 }
-const mapStateToProps = ({ userConfig,dashboard }) => {
-    return { userProfileInfo: userConfig.userProfileInfo,dashboard }
+const mapStateToProps = ({ userConfig, dashboard }) => {
+    return { userProfileInfo: userConfig.userProfileInfo, dashboard }
 }
-export default connect(mapStateToProps, (dispatch) => { return {dispatch} })(Home);
+export default connect(mapStateToProps, (dispatch) => { return { dispatch } })(Home);

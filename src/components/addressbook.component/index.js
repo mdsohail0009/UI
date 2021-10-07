@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert } from 'antd'
-import { setAddressStep, rejectCoin, fetchUsersIdUpdate, clearValues } from '../../reducers/addressBookReducer';
+import { setAddressStep, rejectCoin, fetchUsersIdUpdate, clearValues ,clearCryptoValues} from '../../reducers/addressBookReducer';
 import Translate from 'react-translate-component';
 import { processSteps as config } from './config';
 import NewAddressBook from './newAddressBook';
@@ -187,6 +187,7 @@ class AddressBook extends Component {
         this.setState({ ...this.state, visible: false, fiatDrawer: false })
         this.props.rejectCoinWallet();
         this.props.clearFormValues();
+        this.props.clearCrypto()
         if (this.state.cryptoFiat) {
             this.gridFiatRef.current.refreshGrid();
         }
@@ -344,6 +345,9 @@ const connectDispatchToProps = dispatch => {
         },
         clearFormValues: () => {
             dispatch(clearValues())
+        },
+        clearCrypto: () => {
+            dispatch(clearCryptoValues())
         },
         changeStep: (stepcode) => {
             dispatch(setAddressStep(stepcode))

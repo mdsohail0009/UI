@@ -287,7 +287,7 @@ export default {
   withdrawCrypto:'Withdraw Crypto',
   withdrawFiat:'Withdraw Fiat',
   cryptoAddress:'Add Crypto Address',
-  fiatAddress:'Add Fiat Address',
+  fiatAddress:'Select Fiat Address',
   withdraw_fiat_summary:'Withdraw fiat summary',
   withdraw_live:'Withdraw Face recognition',
   confirm_withdraw:'Withdraw confirm',

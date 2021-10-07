@@ -10,6 +10,7 @@ const SET_WITHDRAWFIAT_ENABLE = "setWithdrawfiatenaable";
 const REJECT_WITHDRAWFIAT_ENABLE = "rejectWithdrawfiatenaable";
 const SET_WITHDRAWCRYPTO = "setWithdrawcrypto";
 const SET_SUB_TITLE = "setSubTitle";
+const SET_ADDRESS = "setAddress";
 const setStep = (payload) => {
     return {
         type: SET_STEP,
@@ -67,7 +68,12 @@ const handleSendFetch = (payload) => {
 const setWalletAddress = (payload) => {
     return { type: SET_WALLET_ADDRESS, payload }
 }
-
+const setAddress = (payload) => {
+    return {
+        type: SET_ADDRESS,
+        payload
+    }
+}
 const fetchWithDrawWallets = ({ memberId }) => {
     return async dispatch => {
         dispatch(handleSendFetch({ key: "cryptoWithdraw", wallets: { loading: true, data: [], error: null } }));
@@ -94,7 +100,7 @@ let initialState = {
         withdrawsummary: 'withdraw_Btc',
         verifyidentity: 'verify_identity',
         withdrawscan: 'deposit',
-        addnewAddress: 'cryptoAddress',
+        selectAddress: 'withdraw',
         selectCrypto:null,
         withdraw_crypto_liveness:'liveVarification',
         withdraw_crpto_summary:'withdraw',
@@ -108,18 +114,17 @@ let initialState = {
         withdrawaddress: 'send_wallet_fiat',
         withdrawsummary: 'withdraw_summary_sub',
         withdrawscan: 'withdraw_summary_sub',
-        addnewAddress: null,
+        selectAddress: 'null',
         selectCrypto:null,
         withdraw_crypto_liveness:'Withdraw_liveness'
-
-
     },
     depositWallet: "",
     cryptoWithdraw: {},
     withdrawFiatObj: null,
     withdrawFiatEnable: false,
     subTitle: null,
-    withdrawCryptoObj: null
+    withdrawCryptoObj: null,
+    addressObj:null
 }
 const sendReceiveReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -153,10 +158,13 @@ const sendReceiveReducer = (state = initialState, action) => {
         case SET_SUB_TITLE:
             state = { ...state, subTitle: action.payload };
             return state;
+            case SET_ADDRESS:
+                state = { ...state, addressObj: action.payload  };
+                return state;
         default:
             return state;
     }
 
 }
 export default sendReceiveReducer;
-export { setStep, clearStep, setWalletAddress, fetchWithDrawWallets, setSelectedWithDrawWallet, handleSendFetch, setSubTitle, setWithdrawfiat, rejectWithdrawfiat, setWithdrawfiatenaable, rejectWithdrawfiatenaable,setWithdrawcrypto }
+export { setStep, clearStep, setWalletAddress, fetchWithDrawWallets, setSelectedWithDrawWallet, handleSendFetch, setSubTitle, setWithdrawfiat, rejectWithdrawfiat, setWithdrawfiatenaable, rejectWithdrawfiatenaable,setWithdrawcrypto,setAddress }
