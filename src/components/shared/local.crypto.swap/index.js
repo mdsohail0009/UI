@@ -17,17 +17,17 @@ const LocalCryptoSwapper = (props, ref) => {
             setLocalValue(info.localValue);
             setCryptoValue(info.cryptoValue);
         },
-        handleConvertion({ cryptoValue, localValue }) {
-            fetchConvertionValue({ cryptoValue, localValue, inputvalue: isSwaped ? cryptoValue : localValue });
+        handleConvertion({ cryptoValue, localValue,locCurrency }) {
+            fetchConvertionValue({ cryptoValue, localValue, inputvalue: isSwaped ? cryptoValue : localValue,locCurrency });
             if (isSwaped) {
                 setCryptoValue(cryptoValue);
             }
         }
     }), []);
-    const fetchConvertionValue = async ({ inputvalue }) => {
+    const fetchConvertionValue = async ({ inputvalue,locCurrency }) => {
         const coin = selectedCoin || sellData?.selectedCoin?.data?.coin;
         setConvertionLoad(true);
-        const response = await convertCurrencyDuplicate({ from: coin, to: localCurrency || "USD", value: (inputvalue || 0), isCrypto: !isSwaped, memId: props.memberId, screenName: props.screenName });
+        const response = await convertCurrencyDuplicate({ from: coin, to: locCurrency||localCurrency || "USD", value: (inputvalue || 0), isCrypto: !isSwaped, memId: props.memberId, screenName: props.screenName });
         if (response.ok) {
             const { data: value, config: { url } } = response;
             const _obj = QueryString.parse("?" + url.split("?")[1]);

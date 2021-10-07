@@ -14,6 +14,7 @@ import Currency from '../shared/number.formate';
 import { appInsights } from "../../Shared/appinsights";
 class SelectCrypto extends Component {
     myRef = React.createRef();
+    swapRef = React.createRef();
     constructor(props) {
         super(props);
         this.state = {
@@ -52,7 +53,9 @@ class SelectCrypto extends Component {
     }
     handleWalletSelection = (walletId) => {
         const selectedWallet = this.props.buyInfo?.memberFiat?.data?.filter(item => item.id === walletId)[0];
-        this.setState({ ...this.state, selectedWallet });
+        this.setState({ ...this.state, selectedWallet },()=>{
+            this.swapRef.current.handleConvertion({cryptoValue:this.state.swapValues.cryptoValue,localValue:this.state.swapValues.localValue,locCurrency:selectedWallet.currencyCode})
+        });
         this.props.setWallet(selectedWallet);
     }
     handlePreview = () => {
@@ -91,7 +94,7 @@ class SelectCrypto extends Component {
                             </div>
                         </div>
                     </Card>
-                    <LocalCryptoSwapper selectedCoin={coin} localAmt={localValue} cryptoAmt={cryptoValue} localCurrency={this.state.selectedWallet?.currencyCode||"USD"} cryptoCurrency={coin} onChange={(obj) => this.onValueChange(obj)} memberId={this.props.userProfileInfo?.id} screenName='buy'/>
+                    <LocalCryptoSwapper ref={this.swapRef} selectedCoin={coin} localAmt={localValue} cryptoAmt={cryptoValue} localCurrency={this.state.selectedWallet?.currencyCode||"USD"} cryptoCurrency={coin} onChange={(obj) => this.onValueChange(obj)} memberId={this.props.userProfileInfo?.id} screenName='buy'/>
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua pt-16" />
                     <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     <div className="fs-12 text-white-30 text-center mt-24">Your amount might be changed with in <span style={{color: 'var(--bgDarkYellow)'}} >10</span> seconds.</div>
