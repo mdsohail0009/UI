@@ -259,9 +259,9 @@ class RequestedDocs extends Component {
                                 <p className="reply-txt">{reply.reply}</p>
                                 <div className="docfile-container">
                                     {reply?.path?.map((file, idx) => <div key={idx} className="docfile">
-                                        <span className="icon xl image mr-16" />
+                                        <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                         <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
-                                            <EllipsisMiddle suffixCount={12}>{file.filename}</EllipsisMiddle>
+                                            <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
                                             <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
                                         </div>
                                     </div>)}
@@ -270,9 +270,10 @@ class RequestedDocs extends Component {
                         </div>)}
                         {!this.state.documentReplies[doc.id]?.loading && doc.status !== "Approved" && <><div className="mb-24">
                             <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
-                            <TextArea autoSize onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
+                            <Input onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
                                 className="mb-24 cust-input"
                                 placeholder="Write your message"
+                                maxLength={200}
                             />
                             <Dragger accept=".pdf,.jpg,.jpeg,.png.gif" className="upload" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} onChange={(props) => { this.handleUpload(props, doc) }}>
                                 <p className="ant-upload-drag-icon">
@@ -286,9 +287,9 @@ class RequestedDocs extends Component {
                         </div>
                             <div className="docfile-container">
                                 {this.getUploadedFiles(doc.id)?.path?.map((file, idx) => <div key={idx} className="docfile">
-                                    <span className="icon xl image mr-16" />
+                                    <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                     <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
-                                        <EllipsisMiddle suffixCount={12}>{file.filename}</EllipsisMiddle>
+                                        <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
                                         <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
                                     </div>
                                     <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx, true)} />
@@ -311,8 +312,8 @@ class RequestedDocs extends Component {
                 destroyOnClose={true}
                 closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
                 footer={<>
-                    <Button className="pop-btn px-36 mr-36" onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
-                    <Button type="primary" onClick={this.docPreviewClose} className="text-center text-white-30 pop-cancel fw-400">Close</Button>
+                    <Button type="primary" onClick={this.docPreviewClose} className="text-center text-white-30 pop-cancel fw-400 mr-36">Close</Button>
+                    <Button className="pop-btn px-36" onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
                 </>}
             >
                 <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.state.previewPath.includes(".pdf") ? "https://suissebasecors.herokuapp.com/" + this.state.previewPath : this.state.previewPath : null }} />
