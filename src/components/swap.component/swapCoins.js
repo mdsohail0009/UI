@@ -201,7 +201,7 @@ class SwapCoins extends Component {
                             }}
                             value={this.state.fromValue}
                            
-                            autoFocus = {(coinDetailData.coin && coinReceiveDetailData.coin) ? true : false}
+                            //autoFocus = {(coinDetailData.coin && coinReceiveDetailData.coin) ? true : false}
                         />}
                         {coinDetailData.coinBalance && <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} /></Text>}
                     </div>

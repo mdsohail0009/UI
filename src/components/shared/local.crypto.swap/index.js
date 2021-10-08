@@ -17,31 +17,34 @@ const LocalCryptoSwapper = (props, ref) => {
             setLocalValue(info.localValue);
             setCryptoValue(info.cryptoValue);
         },
-        handleConvertion({ cryptoValue, localValue,locCurrency }) {
-            fetchConvertionValue({ cryptoValue, localValue, inputvalue: isSwaped ? cryptoValue : localValue,locCurrency });
+        handleConvertion({ cryptoValue, localValue, locCurrency }) {
+            fetchConvertionValue({ cryptoValue, localValue, inputvalue: isSwaped ? cryptoValue : localValue, locCurrency });
             if (isSwaped) {
                 setCryptoValue(cryptoValue);
             }
         }
     }), []);
-    const fetchConvertionValue = async ({ inputvalue,locCurrency }) => {
+    const fetchConvertionValue = async ({ inputvalue, locCurrency }) => {
         const coin = selectedCoin || sellData?.selectedCoin?.data?.coin;
         setConvertionLoad(true);
-        const response = await convertCurrencyDuplicate({ from: coin, to: locCurrency||localCurrency || "USD", value: (inputvalue || 0), isCrypto: !isSwaped, memId: props.memberId, screenName: props.screenName });
+        const response = await convertCurrencyDuplicate({ from: coin, to: locCurrency || localCurrency || "USD", value: (inputvalue || 0), isCrypto: !isSwaped, memId: props.memberId, screenName: props.screenName });
         if (response.ok) {
             const { data: value, config: { url } } = response;
             const _obj = QueryString.parse("?" + url.split("?")[1]);
             let _val = document.getElementById("ABC").value;
             _val = _val ? _val.replace(/,/g, "") : _val;
             _val = _val.replace("$", "");
-            if (_obj.amount == _val) {
+            if (_obj.amount == _val||_obj.amount==0) {
                 if (!isSwaped) {
                     setCryptoValue(value || 0);
                 } else { setLocalValue(value || 0) }
                 onChange({ cryptoValue: isSwaped ? inputvalue : value, localValue: isSwaped ? value : inputvalue, isSwaped });
+                setConvertionLoad(false);
             }
+        } else {
+            setConvertionLoad(false);
         }
-        setConvertionLoad(false);
+
 
     }
     return <div className="p-relative">

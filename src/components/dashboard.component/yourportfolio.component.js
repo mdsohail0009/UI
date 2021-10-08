@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Button, Typography } from 'antd';
+import { List, Button, Typography, Empty } from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import connectStateProps from '../../utils/state.connect';
@@ -62,6 +62,7 @@ class YourPortfolio extends Component {
                     itemLayout="horizontal"
                     dataSource={cryptoPortFolios.data}
                     loading={cryptoPortFolios.loading}
+                    locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No data found" /> }}
                     renderItem={item => (
                         <List.Item className="" extra={
                             <div className="crypto_btns">

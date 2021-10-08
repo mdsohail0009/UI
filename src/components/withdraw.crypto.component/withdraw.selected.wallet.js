@@ -5,9 +5,7 @@ import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import Currency from '../shared/number.formate';
 import LocalCryptoSwap from '../shared/local.crypto.swap';
-import { withDrawCrypto } from '../send.component/api';
 import SuccessMsg from './success';
-import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
 
 class CryptoWithDrawWallet extends Component {
@@ -103,10 +101,6 @@ class CryptoWithDrawWallet extends Component {
             this.setState({ ...this.state, error: `Please enter wallet address` });
             this.myRef.current.scrollIntoView();
         }
-        // else if (!this.state.walletAddress) {
-        //     this.setState({ ...this.state, error: `Please enter valid wallet address` });
-        //     this.myRef.current.scrollIntoView();
-        // }
         else {
             this.withDraw();
         }
@@ -114,7 +108,6 @@ class CryptoWithDrawWallet extends Component {
     withDraw = async () => {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null, loading: true, isWithdrawSuccess: false });
-
         let obj = {
             "membershipId": this.props.userProfile.id,
             "memberWalletId": id,
@@ -128,25 +121,6 @@ class CryptoWithDrawWallet extends Component {
         this.props.dispatch(setSubTitle("Withdraw Summary"));
         this.props.dispatch(setWithdrawcrypto(obj))
         this.props.changeStep('withdraw_crpto_summary');
-
-        // if (this.props.userProfile.isBusiness) {
-        //     const response = await withDrawCrypto(obj);
-        //     this.setState({ ...this.state, loading: false, showModal: false })
-        //     if (response.ok) {
-        //         this.setState({ ...this.state, isWithdrawSuccess: true });
-        //         this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
-        //         this.props.dispatch(setSubTitle('withdraw success'));
-        //         appInsights.trackEvent({
-        //             name: 'WithDraw Crypto', properties: { "Type": 'User', "Action": 'Save', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'WithDraw Crypto', "Remarks": "WithDraw crypto save", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Crypto' }
-        //         });
-        //     } else {
-        //         this.setState({ ...this.state, error: response.data, confirmationStep: "step1", showModal: false, isWithdrawSuccess: false })
-        //     }
-        // } else {
-        //     this.props.dispatch(setSubTitle("Live verification"));
-        //     this.props.dispatch(setWithdrawcrypto(obj))
-        //     this.props.changeStep('withdraw_crypto_liveness');
-        // }
     }
     renderModalContent = () => {
         if (!this.props?.sendReceive?.cryptoWithdraw?.selectedWallet) { return null }
@@ -220,8 +194,6 @@ class CryptoWithDrawWallet extends Component {
     render() {
         const { Text } = Typography;
         const { cryptoWithdraw: { selectedWallet } } = this.props.sendReceive;
-        const { filterObj, loading } = this.state;
-        const { Search } = Input;
         if (this.state.isWithdrawSuccess) {
             return <SuccessMsg onBackCLick={() => this.props.changeStep("step1")} />
         }

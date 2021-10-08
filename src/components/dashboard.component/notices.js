@@ -8,7 +8,6 @@ const Notices = ({ userProfile }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState({ hasError: false, message: null });
     const [notices, setNotices] = useState([]);
-    useEffect(() => { fetchNotices(); }, []);
     const fetchNotices = async () => {
         const response = await getNotices(userProfile.id);
         if (response.ok) {
@@ -19,6 +18,8 @@ const Notices = ({ userProfile }) => {
         }
         setLoading(false)
     }
+    useEffect(() => { fetchNotices(); }, []);
+
     if (loading) {
         return <Loader />
     }

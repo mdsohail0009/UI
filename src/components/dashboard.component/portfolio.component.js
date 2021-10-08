@@ -4,7 +4,7 @@ import Translate from 'react-translate-component';
 import connectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import { fetchPortfolioData } from '../../reducers/dashboardReducer';
-import { createChart, ColorType, PriceScaleMode, CrosshairMode } from "lightweight-charts";
+import { createChart, ColorType, PriceScaleMode } from "lightweight-charts";
 import { getPortfolioGraph } from './api';
 class Portfolio extends Component {
     chart;
