@@ -38,8 +38,10 @@ class SwapCoins extends Component {
          this.setState({ ...this.state, fromCoin: null,receiveCoin: null,price: null, fromValue: '', receiveValue: '',errorMessage: null})
      }
     loadamount() {
-        if (this.state.fromValue || this.props.swapStore.swapdata.fromValue) {
-            this.setReceiveAmount(this.state.fromValue || this.props.swapStore.swapdata.fromValue);
+        debugger
+        if (this.state.fromValue || this.props.swapStore.fromCoinInputValue) {
+            this.setState({...this.state, fromValue:(this.state.fromValue || this.props.swapStore.fromCoinInputValue)})
+            this.setReceiveAmount(this.state.fromValue || this.props.swapStore.fromCoinInputValue);
         }
     }
     async setOneCoinValue() {
@@ -80,7 +82,7 @@ class SwapCoins extends Component {
             this.setState({ ...this.state, receiveValue: "", loadingToValue:false })
         }
         } else {
-            this.setState({ ...this.state, errorMessage: 'Please select from and receive coins to swap' })
+            //this.setState({ ...this.state, errorMessage: 'Please select from and receive coins to swap' })
         }
         
     }
@@ -187,12 +189,15 @@ class SwapCoins extends Component {
                             maxlength={24}
                             onKeyPress={(e) => {
                                 e.currentTarget.value.length >= 6 ? e.currentTarget.style.fontSize = "20px" : e.currentTarget.style.fontSize = "24px";
-                                if(!(coinDetailData.coin &&coinReceiveDetailData.coin)){
-                                    e.preventDefault()
-                                }
+                                // if(!(coinDetailData.coin &&coinReceiveDetailData.coin)){
+                                //     e.preventDefault()
+                                // }
                             }}
-                            onKeyUp={(e) => {
-                                this.setReceiveAmount(e.target.value)
+                            // onKeyUp={(e) => {
+                            //     this.setReceiveAmount(e.target.value)
+                            // }}
+                            onValueChange={({ value }) => {
+                                this.setReceiveAmount(value)
                             }}
                             value={this.state.fromValue}
                            

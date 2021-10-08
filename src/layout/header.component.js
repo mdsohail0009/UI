@@ -369,7 +369,7 @@ class Header extends Component {
                                 </Dropdown>
                             </Menu>
                         </div>
-                        <Menu theme="light" mode="horizontal" className="header-right" selectedKeys={[this.props.buySell?.headerTab]} onSelect={(key)=>{debugger;this.props.dispatch(setHeaderTab(key.key))}}>
+                        <Menu theme="light" mode="horizontal" className="header-right" selectedKeys={[this.props.buySell?.headerTab]} onSelect={(key)=>{this.props.dispatch(setHeaderTab(key.key))}}>
                             <Translate content="menu_buy_sell" component={Menu.Item} key="1" onClick={this.showBuyDrawer} className="list-item" />
                             <Translate content="menu_swap" component={Menu.Item} key="2" onClick={this.showSwapDrawer} className="list-item" />
                             <Dropdown onClick={()=>this.setState({...this.state,Visibleprofilemenu:false})} overlay={depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" getPopupContainer={() => document.getElementById('area')}>
