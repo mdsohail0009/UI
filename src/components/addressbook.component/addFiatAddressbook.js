@@ -23,15 +23,15 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
         }
     }, [])
     const loadDataAddress = async () => {
-        setIsLoading(false)
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'fiat');
         if (response.ok) {
+            setIsLoading(true)
             setFiatAddress(response.data)
             if (addressBookReducer?.selectedRowData && buyInfo.memberFiat?.data ) {
                 handleWalletSelection(addressBookReducer?.selectedRowData?.currency)
             }
             form.setFieldsValue({...response.data});
-            setIsLoading(false)
+            setTimeout(() => { setIsLoading(false) }, 150)
         }
     }
     const handleWalletSelection = (walletId) => {
@@ -78,7 +78,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     return (
         <>
-         
+        
            { isLoading && <Loader /> }
             <div className="addbook-height auto-scroll">
             <div ref={useDivRef}></div>

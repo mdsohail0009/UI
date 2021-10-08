@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Space ,Input} from 'antd';
+import { Typography ,Input} from 'antd';
 import { favouriteFiatAddress } from '../addressbook.component/api';
 import {  setAddress, setStep,setWithdrawcrypto} from '../../reducers/sendreceiveReducer';
 import oops from '../../assets/images/oops.png'
@@ -43,7 +43,6 @@ class SelectAddress extends Component {
          
     }
     render() {
-        const { Title, Paragraph } = Typography;
         const {filterObj ,loading} = this.state;
         const { Search } = Input;
         return (

@@ -587,7 +587,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .reply-container{display: flex;margin-bottom: 24px;}
 .reply-container .user-shortname{width: 46px; height: 46px; border-radius: 50%;background-color: #64869b;margin-right: 16px;color: #FFFFFF;font-size: 18px;text-align: center;line-height: 46px;font-weight: 500;text-transform: uppercase;}
 .reply-body{flex: 1;}
-.reply-txt{font-size: 16px;color: var(--textWhite50);font-weight: 200;margin-bottom: 10px;}
+.reply-txt{font-size: 16px;color: var(--textWhite50);font-weight: 200;margin-bottom: 10px;word-break: break-all;}
 .reply-date{font-size: 12px; color: var(--textSecondary);}
 .reply-username{font-size: 14px; color: var(--textWhite30);font-weight: 600;display: inline-block;margin-right: 10px;}
 .send-circle{background: var(--bgYellow); width: 40px;height: 40px; line-height: 40px; text-align: center;border-radius: 50%;}
