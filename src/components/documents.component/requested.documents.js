@@ -50,7 +50,7 @@ class RequestedDocs extends Component {
         }
     }
     loadDocReplies = async (id) => {
-        this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } },docReplyObjs:[] });
+        this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: [] });
         const response = await getDocumentReplies(id);
         if (response.ok) {
             this.setState({
@@ -113,7 +113,7 @@ class RequestedDocs extends Component {
         }
         item.path = item.path ? typeof (item.path) === "object" ? JSON.stringify(item.path) : item.path : item.path;
         item.status = "Submitted";
-        item.repliedDate = Mome().format("YYYY-MM-DDThh:mm:ss");
+        item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         this.setState({ ...this.state, isSubmitting: true });
         const response = await saveDocReply(item);
         message.destroy()
