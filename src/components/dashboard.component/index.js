@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Typography, Button, Carousel } from 'antd';
+import { Row, Col, Button, Carousel, Spin } from 'antd';
 import Wallets from './wallets.component';
 import Portfolio from './portfolio.component';
 import YourPortfolio from './yourportfolio.component';
@@ -25,7 +25,7 @@ class Home extends Component {
         const { data: notices } = this.props.dashboard?.notices;
         return (
             <div className="main-container">
-                {notices !== null && notices !== undefined && <Carousel className="docreq-slider" autoplay={true}>
+                {notices !== null && notices !== undefined && notices.length !== 0 ? <Carousel className="docreq-slider" autoplay={true}>
                     {notices?.map((notice, idx) => <div className="mb-24" key={idx}>
                         <AlertConfirmation type="error" title={notice.title} showIcon description="Our Compliance Team is requesting documents in line with your recent transaction, please click View Details. Thank you for your patience."
                             action={
@@ -34,7 +34,7 @@ class Home extends Component {
                                 </Button>
                             } />
                     </div>)}
-                </Carousel>}
+                </Carousel> : <div className="text-center"><Spin size="large" /></div>}
                 <Row justify="center mt-36">
                     <Col xs={24} md={12} xl={10}>
                         <div className="markets-panel mb-36">
