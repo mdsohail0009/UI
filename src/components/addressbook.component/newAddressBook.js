@@ -5,6 +5,7 @@ import { rejectCoin, setAddressStep,fetchAddressCrypto } from '../../reducers/ad
 import { connect } from 'react-redux';
 import { saveAddress, favouriteNameCheck ,getAddress} from './api';
 import SelectCrypto from './selectCrypto';
+import Loader from '../../Shared/loader';
 
 const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,rejectCoinWallet, InputFormValues}) => {
     const [form] = Form.useForm();
@@ -27,7 +28,6 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
     }, [])
 
     useEffect(() => {
-        debugger
      // if(addressBookReducer?.coinWallet){
         if(addressBookReducer?.cryptoValues){
             form.setFieldsValue({toCoin:addressBookReducer?.cryptoValues?.toCoin ,favouriteName:addressBookReducer?.cryptoValues.favouriteName,
@@ -39,19 +39,18 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
     }, [addressBookReducer?.cryptoValues])
 
     const selectCrypto = () =>{
-        debugger
         let getvalues = form.getFieldsValue();
         setObj(getvalues);
         InputFormValues(getvalues);
         changeStep("step2");
     }
     const loadDataAddress = async () => {
-        debugger
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'crypto');
         if (response.ok) {
+            setIsLoading(true)
             setCryptoAddress(response.data)
             form.setFieldsValue({...response.data,toCoin:addressBookReducer?.selectedRowData?.coin});
-            setIsLoading(false)
+         setTimeout(() => { setIsLoading(false) }, 150)
         }
     }
     const saveAddressBook = async (values) => {
@@ -85,7 +84,8 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                     className: 'custom-msg',
                     duration: 0.5
                 });
-                setIsLoading(false)}
+                setIsLoading(false)
+            }
         }
     }
     // const onCoinSelected =(selectedCoin) =>{
@@ -101,6 +101,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
         <>
            <div className="mt-16">
                 {errorMsg  && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+                { isLoading && <Loader /> }
                 <Form
                     form={form} initialValues={cryptoAddress}
                     onFinish={saveAddressBook} autoComplete="off" >

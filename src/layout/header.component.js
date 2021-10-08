@@ -589,7 +589,7 @@ class Header extends Component {
                 <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
                 <SwapCrypto swapRef={(cd) => this.child = cd} showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
                 <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
-                {this.state.transactionDrawer && <TransactionsHistory showDrawer={this.state.transactionDrawer} onClose={() => { this.closeDrawer(); if (this.child1) { this.child1.setKy() } }} thref={(cd) => this.child1 = cd} />}
+                {this.state.transactionDrawer && <TransactionsHistory showDrawer={this.state.transactionDrawer} onClose={() => { this.closeDrawer(this.props.dispatch(setHeaderTab(""))); if (this.child1) { this.child1.setKy() } }} thref={(cd) => this.child1 = cd} />}
                 {this.state.auditlogsDrawer && <AuditLogs showDrawer={this.state.auditlogsDrawer} onClose={() => this.closeDrawer()} />}
                 <Drawer
                     title={[<div className="side-drawer-header">
