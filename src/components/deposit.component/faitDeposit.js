@@ -72,6 +72,7 @@ class FaitDeposit extends Component {
   }
   handleBuySellToggle = e => {
     this.handleshowTab(e.target.value)
+    if(e.target.value==1){this.props.fetchCurrencyWithBankDetails()}
   }
   handleshowTab = (tabKey) =>{
     this.setState({
