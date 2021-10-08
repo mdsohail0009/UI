@@ -50,7 +50,7 @@ class RequestedDocs extends Component {
         }
     }
     loadDocReplies = async (id) => {
-        this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } } });
+        this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } },docReplyObjs:[] });
         const response = await getDocumentReplies(id);
         if (response.ok) {
             this.setState({
