@@ -30,8 +30,8 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
             if (addressBookReducer?.selectedRowData && buyInfo.memberFiat?.data ) {
                 handleWalletSelection(addressBookReducer?.selectedRowData?.currency)
             }
-            form.setFieldsValue({...response.data});
-            setTimeout(() => { setIsLoading(false) }, 150)
+            form.setFieldsValue({...response.data,});
+            setIsLoading(false)
         }
     }
     const handleWalletSelection = (walletId) => {

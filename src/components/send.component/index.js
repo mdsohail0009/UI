@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
 import connectStateProps from '../../utils/state.connect';
-import { handleSendFetch, setWithdrawcrypto, setStep, setSubTitle } from '../../reducers/sendreceiveReducer';
+import { handleSendFetch, setWithdrawcrypto, setStep, setSubTitle, setAddress } from '../../reducers/sendreceiveReducer';
 import { sendreceiveSteps as config } from './config';
 import DepositeCrypto from '../send.component/depositeToggle';
 import CryptoWithDrawWallet from '../withdraw.crypto.component/withdraw.selected.wallet';
@@ -29,6 +29,7 @@ class SendReceive extends Component {
         }
         this.props.dispatch(setWithdrawcrypto(null))
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
+        this.props.dispatch(setAddress(null))
     }
     componentWillUnmount() {
         this.props.dispatch(setStep("step1"));

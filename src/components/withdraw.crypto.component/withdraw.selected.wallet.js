@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Button, Card, Input, Radio, Alert, Row, Col, Form, Modal, Tooltip } from 'antd';
-import { handleSendFetch, setStep, setSubTitle, setWithdrawcrypto } from '../../reducers/sendreceiveReducer';
+import { handleSendFetch, setStep, setSubTitle, setWithdrawcrypto, setAddress } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import Currency from '../shared/number.formate';
@@ -239,7 +239,7 @@ class CryptoWithDrawWallet extends Component {
 
                             <div className="p-relative d-flex align-center">
                                 <Input className="cust-input custom-add-select mb-0" placeholder="Enter address" value={this.state.walletAddress}
-                                    onChange={({ currentTarget: { value } }) => this.setState({ ...this.state, walletAddress: value })}
+                                    onChange={({ currentTarget: { value } }) => {this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null)}}
                                     maxLength="30"/>
                                 <Tooltip placement="top" title={<span>Select Address</span>} style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" onClick={() => this.selectCrypto()}>
@@ -272,6 +272,9 @@ const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
+        },
+        clearAddress: (stepcode) => {
+            dispatch(setAddress(stepcode))
         },
         dispatch
     }

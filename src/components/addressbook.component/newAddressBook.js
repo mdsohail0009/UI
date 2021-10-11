@@ -50,7 +50,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
             setIsLoading(true)
             setCryptoAddress(response.data)
             form.setFieldsValue({...response.data,toCoin:addressBookReducer?.selectedRowData?.coin});
-         setTimeout(() => { setIsLoading(false) }, 150)
+            setIsLoading(false)
         }
     }
     const saveAddressBook = async (values) => {
