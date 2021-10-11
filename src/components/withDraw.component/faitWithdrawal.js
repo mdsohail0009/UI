@@ -60,9 +60,9 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     debugger;
     if(isClearObj){
       let clearobj = 
-        {"walletCode":"","totalValue":"","accountNumber":"","routingNumber":"","bankName":"","bankAddress":"","bankAddress2":"","zipcode":"","beneficiaryAccountName":"","beneficiaryAccountAddress":"","beneficiaryAccountAddress1":"","description":"","isAccept":false}
+      {"walletCode":"","totalValue":"","accountNumber":"","routingNumber":"","bankName":"","bankAddress":"","bankAddress2":"","zipcode":"","beneficiaryAccountName":"","beneficiaryAccountAddress":"","beneficiaryAccountAddress1":"","description":"","isAccept":false}
       
-       setSaveObj({...clearobj, walletCode: walletId});
+      setSaveObj({...clearobj, walletCode: walletId});
        setAddressDetails({});
        form.setFieldsValue({ ...clearobj, walletCode: walletId,  })
     }
@@ -122,7 +122,6 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     form.setFieldsValue({ state: null })
   }
 const selectAddress = () =>{
-  debugger
   let values = form.getFieldsValue()
   dispatch(setWithdrawfiat(values));
   changeStep('step4');
@@ -139,6 +138,10 @@ const selectAddress = () =>{
     if (values.totalValue === '.') {
       useDivRef.current.scrollIntoView()
       return setErrorMsg('Amount must be greater than zero.');
+    }
+    if ((values.totalValue.indexOf('.') > -1 && values.totalValue.split('.')[0].length >= 9) || (values.totalValue.indexOf('.') < 0 && values.totalValue.length >= 9)) {
+      useDivRef.current.scrollIntoView()
+      return setErrorMsg('Exceeded the maximum allowable amount');
     }
     setErrorMsg(null)
     values['membershipId'] = userConfig.id
@@ -187,7 +190,7 @@ const selectAddress = () =>{
               <NumberFormat decimalScale={2} className="cust-input" customInput={Input} thousandSeparator={true} prefix={""}
                 placeholder="0.00"
                 allowNegative={false}
-                maxlength={24}
+                maxlength={13}
               />
               
             </Form.Item>
@@ -279,7 +282,7 @@ const selectAddress = () =>{
               label="Bank name"
               required
               rules={[
-                { required: true, message: "Is required" },
+                { required: true, message: "Is required" , whitespace:true},
                 {
                   validator: (rule, value, callback) => {
                     var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
@@ -306,7 +309,7 @@ const selectAddress = () =>{
               label="Bank address line 1"
               required
               rules={[
-                { required: true, message: "Is required" }
+                { required: true, message: "Is required", whitespace:true }
               ]}
             >
               <Input value={addressDetails.bankAddress} className="cust-input" placeholder="Bank address line 1" />
@@ -333,7 +336,6 @@ const selectAddress = () =>{
                   </Option>
                 )}
               </Select>
-
             </Form.Item>
 
             <Form.Item
@@ -393,7 +395,7 @@ const selectAddress = () =>{
               name="beneficiaryAccountAddress"
               label="Recipient address line 1"
               rules={[
-                { required: true, message: "Is required" }
+                { required: true, message: "Is required", whitespace:true }
               ]}
             >
               <Input value={addressDetails.beneficiaryAccountAddress} className="cust-input" placeholder="Recipient address line 1" />
