@@ -7,7 +7,7 @@ import connectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import MassPayment from '../buyfiat.component'
 import { withRouter } from 'react-router-dom';
-import {setWithdrawfiatenaable} from '../../reducers/sendreceiveReducer'
+import {setWithdrawfiatenaable, setWithdrawfiat} from '../../reducers/sendreceiveReducer'
 import {setdepositCurrency,getCurrencieswithBankDetails} from '../../reducers/depositReducer'
 const { Title, Paragraph } = Typography;
 
@@ -37,6 +37,7 @@ class Wallets extends Component {
         }
         if(e===2){
             this.props.dispatch(setWithdrawfiatenaable(true))
+            this.props.dispatch(setWithdrawfiat({walletCode:value}))
         }else{
             this.props.dispatch(setdepositCurrency(value))
         }
@@ -76,7 +77,7 @@ class Wallets extends Component {
                             />
                             <div className="crypto-btns">
                                 <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1,item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
-                                <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2,item.walletId)} component={Button} className="custom-btn sec ml-16" />
+                                <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2,item.walletCode)} component={Button} className="custom-btn sec ml-16" />
                             </div>
                         </List.Item>}
                 />

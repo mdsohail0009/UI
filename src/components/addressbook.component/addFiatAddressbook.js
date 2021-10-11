@@ -18,20 +18,20 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
     const useDivRef = React.useRef(null);
 
     useEffect(() => {
-        if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000") {
+        if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && addressBookReducer?.selectedRowData?.id ) {
             loadDataAddress();
         }
     }, [])
     const loadDataAddress = async () => {
+        setIsLoading(true)
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'fiat');
         if (response.ok) {
-            setIsLoading(true)
             setFiatAddress(response.data)
             if (addressBookReducer?.selectedRowData && buyInfo.memberFiat?.data ) {
                 handleWalletSelection(addressBookReducer?.selectedRowData?.currency)
             }
-            form.setFieldsValue({...response.data});
-            setTimeout(() => { setIsLoading(false) }, 150)
+            form.setFieldsValue({...response.data,});
+            setIsLoading(false)
         }
     }
     const handleWalletSelection = (walletId) => {
@@ -46,7 +46,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
     }
 
     const savewithdrawal = async (values) => {
-        setIsLoading(true)
+        setIsLoading(false)
         setErrorMsg(null)
         const type = 'fiat';
         values['id'] = addressBookReducer?.selectedRowData?.id;

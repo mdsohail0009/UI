@@ -22,8 +22,8 @@ class SwapCoins extends Component {
     }
     async componentDidMount() {
         this.props.swapCoinsRef(this)
-        await this.setOneCoinValue();
         this.loadamount()
+        await this.setOneCoinValue();
         this.trackEvent()
     }
     trackEvent = () =>{
@@ -38,14 +38,13 @@ class SwapCoins extends Component {
          this.setState({ ...this.state, fromCoin: null,receiveCoin: null,price: null, fromValue: '', receiveValue: '',errorMessage: null})
      }
     loadamount() {
-        debugger
         if (this.state.fromValue || this.props.swapStore.fromCoinInputValue) {
             this.setState({...this.state, fromValue:(this.state.fromValue || this.props.swapStore.fromCoinInputValue)})
             this.setReceiveAmount(this.state.fromValue || this.props.swapStore.fromCoinInputValue);
         }
     }
     async setOneCoinValue() {
-        this.setState({ ...this.props.swapStore.swapdata })
+        this.setState({ ...this.props.swapStore.swapdata, fromValue:(this.state.fromValue || this.props.swapStore.fromCoinInputValue) })
         if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
             let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, 1, this.props.userProfile.id);
             if (res.ok) {

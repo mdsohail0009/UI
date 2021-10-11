@@ -21,7 +21,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
             form.setFieldsValue({toCoin:addressBookReducer?.cryptoValues?.toCoin ,favouriteName:addressBookReducer?.cryptoValues.favouriteName,
              toWalletAddress: addressBookReducer?.cryptoValues.toWalletAddress })
         }else {
-            if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" ) {
+            if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && addressBookReducer?.selectedRowData?.id ) {
                 loadDataAddress();
                }
         }
@@ -45,16 +45,16 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
         changeStep("step2");
     }
     const loadDataAddress = async () => {
+        setIsLoading(true)
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'crypto');
         if (response.ok) {
-            setIsLoading(true)
             setCryptoAddress(response.data)
             form.setFieldsValue({...response.data,toCoin:addressBookReducer?.selectedRowData?.coin});
-         setTimeout(() => { setIsLoading(false) }, 150)
+            setIsLoading(false)
         }
     }
     const saveAddressBook = async (values) => {
-       setIsLoading(true)
+       setIsLoading(false)
         const type = 'crypto';
         let Id = '00000000-0000-0000-0000-000000000000';
         values['id'] = addressBookReducer?.selectedRowData?.id;

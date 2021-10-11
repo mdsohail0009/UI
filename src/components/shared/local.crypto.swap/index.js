@@ -36,9 +36,9 @@ const LocalCryptoSwapper = (props, ref) => {
         if (response.ok) {
             const { data: value, config: { url } } = response;
             const _obj = QueryString.parse("?" + url.split("?")[1]);
-            let _val = document.getElementById("ABC").value;
+            let _val = document.getElementById("ABC")?.value;
             _val = _val ? _val.replace(/,/g, "") : _val;
-            _val = _val.replace(symbols[localCurrency], "");
+            _val = _val?.replace(symbols[localCurrency], "");
             if (_obj.amount == _val || _obj.amount == 0) {
                 if (!isSwaped) {
                     setCryptoValue(value || 0);
@@ -57,6 +57,7 @@ const LocalCryptoSwapper = (props, ref) => {
             <Text className="fs-30 fw-100 text-white-30 text-defaultylw mr-4">{!isSwaped ? localCurrency : cryptoCurrency}</Text>
             <NumberFormat id="ABC" className="fw-100 text-white-30 text-center enter-val p-0" maxLength={25} customInput={Input} thousandSeparator={true} prefix={isSwaped ? "" : symbols[localCurrency]}
                 decimalScale={isSwaped ? 8 : 2}
+                autoComplete="off"
                 placeholder="0.00"
                 bordered={false}
                 style={{ lineHeight: '48px', fontSize: 30, paddingRight: '40px !important' }}

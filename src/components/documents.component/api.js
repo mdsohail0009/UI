@@ -16,7 +16,7 @@ const uploadFile = () => {
     return clientApi.get(ApiControllers.exchange + ``);
 }
 const getDocDetails = (docId) => {
-    return clientApi.get(ApiControllers.exchange + `GetDocument?docId=${docId}`)
+    return clientApi.get(ApiControllers.exchange + `GetUserDocument?docId=${docId}`)
 }
 const getDocumentReplies = (docDetailId) => {
     return clientApi.get(ApiControllers.exchange + `GetMessages?docdetailId=${docDetailId}`)

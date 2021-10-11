@@ -34,7 +34,7 @@ class RequestedDocs extends Component {
         },
         docReplyObjs: [],
         previewPath: null,
-        isSubmitting: false,
+        isSubmitting: false,uploadLoader:false
     }
     componentDidMount() {
         this.getDocument(QueryString.parse(this.props.location.search).id);
@@ -183,6 +183,7 @@ class RequestedDocs extends Component {
         }
     }
     handleUpload = ({ file }, doc) => {
+        this.setState({...this.state,uploadLoader:true})
         if (file.status === "done") {
             let replyObjs = [...this.state.docReplyObjs];
             let item = this.isDocExist(replyObjs, doc.id);
@@ -201,7 +202,7 @@ class RequestedDocs extends Component {
                 obj.repliedBy = this.props.userProfileInfo?.firstName;
                 replyObjs.push(obj);
             }
-            this.setState({ ...this.state, docReplyObjs: replyObjs });
+            this.setState({ ...this.state, docReplyObjs: replyObjs,uploadLoader:false });
         }
     }
     uopdateReplyObj = (item, list) => {
@@ -294,6 +295,7 @@ class RequestedDocs extends Component {
                                     PNG, JPG,JPEG and PDF files are allowed
                                 </p>
                             </Dragger>
+                            {this.state.uploadLoader&&<Loader />}
                         </div>
                             <div className="docfile-container">
                                 {this.getUploadedFiles(doc.id)?.path?.map((file, idx) => <div key={idx} className="docfile">

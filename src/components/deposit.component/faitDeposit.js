@@ -49,14 +49,15 @@ class FaitDeposit extends Component {
       appInsights.trackEvent({
         name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": ('Deposit page view'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
       });
+      let { depObj } = this.state;
+      depObj.currency = this.props.depositInfo ? this.props.depositInfo.depositCurrency : null;
+      this.setState({ ...this.state, depObj: depObj })
+      this.formRef.current.setFieldsValue({ ...depObj })
+      if (this.props.depositInfo?.depositCurrency && this.props.depositInfo?.currenciesWithBankInfo) {
+        this.handlFiatDep(this.props.depositInfo?.depositCurrency, this.props.depositInfo?.currenciesWithBankInfo)
+      }
     }
-    let { depObj } = this.state;
-    depObj.currency=this.props.depositInfo?this.props.depositInfo.depositCurrency:null;
-    this.setState({...this.state,depObj:depObj})
-    this.formRef.current.setFieldsValue({ ...depObj })
-    if (this.props.depositInfo?.depositCurrency&&this.props.depositInfo?.currenciesWithBankInfo) {
-      this.handlFiatDep(this.props.depositInfo?.depositCurrency, this.props.depositInfo?.currenciesWithBankInfo)
-    }
+    
   }
   clearfiatValues = () => {
     this.props.fetchCurrencyWithBankDetails()
@@ -277,17 +278,17 @@ class FaitDeposit extends Component {
                         <Text className="text-white-30 fs-14">A/C </Text><Text copyable className="mb-0 fs-14 text-yellow fw-500">{BankInfo.accountNumber}</Text>
                       </div>
                     </div>
-                    <Translate
+                    {BankInfo.routingNumber!=null&&<Translate
                       className="mt-36 fs-14 text-aqua fw-500 text-upper"
                       content="for_Domestic_wires"
                       component={Paragraph}
-                    />
-                    <Translate
+                    />}
+                    {BankInfo.routingNumber!=null&&<Translate
                       className="fw-200 text-white-50 fs-14"
                       content="Routing_number"
                       component={Text}
-                    />
-                    <Text copyable className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text>
+                    />}
+                    {BankInfo.routingNumber!=null&&<Text copyable className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text>}
                     <Translate
                       className="mt-24 fs-14 text-aqua fw-500 text-upper"
                       content="for_international_wires"
