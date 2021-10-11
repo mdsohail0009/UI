@@ -49,14 +49,15 @@ class FaitDeposit extends Component {
       appInsights.trackEvent({
         name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": ('Deposit page view'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
       });
+      let { depObj } = this.state;
+      depObj.currency = this.props.depositInfo ? this.props.depositInfo.depositCurrency : null;
+      this.setState({ ...this.state, depObj: depObj })
+      this.formRef.current.setFieldsValue({ ...depObj })
+      if (this.props.depositInfo?.depositCurrency && this.props.depositInfo?.currenciesWithBankInfo) {
+        this.handlFiatDep(this.props.depositInfo?.depositCurrency, this.props.depositInfo?.currenciesWithBankInfo)
+      }
     }
-    let { depObj } = this.state;
-   depObj.currency=this.props.depositInfo?this.props.depositInfo.depositCurrency:null;
-   this.setState({...this.state,depObj:depObj})
-    this.formRef.current.setFieldsValue({ ...depObj })
-    if (this.props.depositInfo?.depositCurrency&&this.props.depositInfo?.currenciesWithBankInfo) {
-      this.handlFiatDep(this.props.depositInfo?.depositCurrency, this.props.depositInfo?.currenciesWithBankInfo)
-    }
+    
   }
   clearfiatValues = () => {
     this.props.fetchCurrencyWithBankDetails()
@@ -134,6 +135,10 @@ class FaitDeposit extends Component {
     let { BankInfo, depObj } = this.state;
     if (parseFloat(typeof depObj.Amount === 'string' ? depObj.Amount.replace(/,/g, '') : depObj.Amount) <= 0) {
       this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero.' })
+      this.myRef.current.scrollIntoView()
+    }
+    if ((depObj.Amount.indexOf('.') > -1 && depObj.Amount.split('.')[0].length >= 9) || (depObj.Amount.indexOf('.') < 0 && depObj.Amount.length >= 9)) {
+      this.setState({ ...this.state, errorMessage: 'Exceeded the maximum allowable amount' });
       this.myRef.current.scrollIntoView()
     }
     else if (depObj.Amount === '.') {
@@ -235,31 +240,34 @@ class FaitDeposit extends Component {
                   </div></Form.Item>}
                 {this.state.BankInfo &&
                   // !fiatDepEur?
-                  <div className="fiatdep-info"> <Form.Item
-                    className="custom-forminput mb-16"
-                    name="Amount"
-                    required
-                    rules={[
-                      { required: true, message: "Is required" },
-                    ]}
-                  > <div ><div className="d-flex">
-                    <Translate
-                      className="input-label"
-                      content="amount"
-                      component={Text}
+                  <div className="fiatdep-info">
+                    <Form.Item
+                      className="custom-forminput mb-16"
+                      name="Amount"
+                      required
+                      rules={[
+                        { required: true, message: "Is required" },
+                      ]}
+                    > <div ><div className="d-flex">
+                      <Translate
+                        className="input-label"
+                        content="amount"
+                        component={Text}
 
-                    /><span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
-                      <NumberFormat className="cust-input mb-0" customInput={Input} thousandSeparator={true} prefix={""}
-                        placeholder="0.00"
-                        decimalScale={2}
-                        allowNegative={false}
-                        maxlength={24}
-                        onValueChange={({ value }) => {
-                          let { depObj } = this.state; depObj.Amount = value; this.formRef.current.setFieldsValue({ ...depObj })
-                        }}
-                        value={depObj.Amount} />
+                      /><span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
+                        <NumberFormat className="cust-input mb-0" customInput={Input} thousandSeparator={true} prefix={""}
+                          placeholder="0.00"
+                          decimalScale={2}
+                          allowNegative={false}
+                          maxlength={13}
+                          onValueChange={({ value }) => {
+                            let { depObj } = this.state;
+                            depObj.Amount = value;
+                            this.formRef.current.setFieldsValue({ ...depObj })
+                          }}
+                          value={depObj.Amount} />
 
-                    </div></Form.Item>
+                      </div></Form.Item>
 
                     <div className="d-flex">
                       {/* <span className="coin deposit-white mt-4" /> */}
