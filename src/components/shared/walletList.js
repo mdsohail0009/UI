@@ -10,6 +10,11 @@ class WalletList extends Component {
     state = {
         isArrow: true,
         selectedvalue: null,
+        symbols: {
+            "EUR": "€",
+            "USD": "$",
+            "GBP": "£"
+        }
     }
     componentDidMount() {
         this.props.getFiat(this.props.member?.id);
@@ -25,7 +30,7 @@ class WalletList extends Component {
                         }}>
                         {this.props.buyInfo.memberFiat?.data?.map((item, idx) =>
                             <Option key={idx} value={item[this.props.valueFeild || 'id']}>{item.currencyCode}
-                                {!this.props.hideBalance && <NumberFormat value={item.avilable} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <span {...props}> Balance: {value}</span>} />}
+                                {!this.props.hideBalance && <NumberFormat value={item.avilable} displayType={'text'} thousandSeparator={true} prefix={this.state.symbols[item.currencyCode]} renderText={(value, props) => <span {...props}> Balance: {value}</span>} />}
                             </Option>
                         )}
                     </Select>

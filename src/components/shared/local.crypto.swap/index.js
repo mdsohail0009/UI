@@ -11,6 +11,11 @@ const LocalCryptoSwapper = (props, ref) => {
     const [cryptovalue, setCryptoValue] = useState(cryptoAmt);
     const [isConvertionLoad, setConvertionLoad] = useState(false);
     const [isInputChange, setInputChange] = useState(true);
+    const [symbols] = useState({
+        "EUR": "€",
+        "USD": "$",
+        "GBP": "£"
+    });
     useImperativeHandle(ref, () => ({
         changeInfo(info) {
             setInputChange(true)
@@ -33,8 +38,8 @@ const LocalCryptoSwapper = (props, ref) => {
             const _obj = QueryString.parse("?" + url.split("?")[1]);
             let _val = document.getElementById("ABC")?.value;
             _val = _val ? _val.replace(/,/g, "") : _val;
-            _val = _val?.replace("$", "");
-            if (_obj.amount == _val||_obj.amount==0) {
+            _val = _val?.replace(symbols[localCurrency], "");
+            if (_obj.amount == _val || _obj.amount == 0) {
                 if (!isSwaped) {
                     setCryptoValue(value || 0);
                 } else { setLocalValue(value || 0) }
@@ -50,11 +55,12 @@ const LocalCryptoSwapper = (props, ref) => {
     return <div className="p-relative">
         <div className="enter-val-container">
             <Text className="fs-30 fw-100 text-white-30 text-defaultylw mr-4">{!isSwaped ? localCurrency : cryptoCurrency}</Text>
-            <NumberFormat id="ABC" className="fw-100 text-white-30 text-center enter-val p-0" maxLength={25} customInput={Input} thousandSeparator={true} prefix={isSwaped ? "" : "$"}
+            <NumberFormat id="ABC" className="fw-100 text-white-30 text-center enter-val p-0" maxLength={25} customInput={Input} thousandSeparator={true} prefix={isSwaped ? "" : symbols[localCurrency]}
                 decimalScale={isSwaped ? 8 : 2}
                 placeholder="0.00"
                 bordered={false}
                 style={{ lineHeight: '48px', fontSize: 30, paddingRight: '40px !important' }}
+                onPaste={()=>setInputChange(true)}
                 onKeyPress={(e) => {
                     e.currentTarget.style.fontSize = "30px";
                     setInputChange(true)
@@ -75,7 +81,7 @@ const LocalCryptoSwapper = (props, ref) => {
                 autoFocus
             />
         </div>
-        <NumberFormat value={isSwaped ? localvalue : cryptovalue} displayType={'text'} thousandSeparator={true} prefix={isSwaped ? '$' : ""} renderText={(value, props) => <div {...props} className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{value} {isSwaped ? localCurrency : cryptoCurrency} {isConvertionLoad && <Spin size="small" />}</div>
+        <NumberFormat value={isSwaped ? localvalue : cryptovalue} displayType={'text'} thousandSeparator={true} prefix={isSwaped ? symbols[localCurrency] : ""} renderText={(value, props) => <div {...props} className="fs-14 text-white-30 fw-200 text-center d-block mb-36">{value} {isSwaped ? localCurrency : cryptoCurrency} {isConvertionLoad && <Spin size="small" />}</div>
         } />
         <span className="val-updown c-pointer" onClick={() => { setInputChange(false); isSwaped ? setSwapped(false) : setSwapped(true) }}>
             <span className="icon md swaparrow" />
