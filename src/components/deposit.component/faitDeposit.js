@@ -270,17 +270,17 @@ class FaitDeposit extends Component {
                         <Text className="text-white-30 fs-14">A/C </Text><Text copyable className="mb-0 fs-14 text-yellow fw-500">{BankInfo.accountNumber}</Text>
                       </div>
                     </div>
-                    <Translate
+                    {BankInfo.routingNumber!=null&&<Translate
                       className="mt-36 fs-14 text-aqua fw-500 text-upper"
                       content="for_Domestic_wires"
                       component={Paragraph}
-                    />
-                    <Translate
+                    />}
+                    {BankInfo.routingNumber!=null&&<Translate
                       className="fw-200 text-white-50 fs-14"
                       content="Routing_number"
                       component={Text}
-                    />
-                    <Text copyable className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text>
+                    />}
+                    {BankInfo.routingNumber!=null&&<Text copyable className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text>}
                     <Translate
                       className="mt-24 fs-14 text-aqua fw-500 text-upper"
                       content="for_international_wires"
