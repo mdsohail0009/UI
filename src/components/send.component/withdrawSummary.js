@@ -27,7 +27,9 @@ class WithdrawSummary extends Component {
         isButtonLoad: false,
         usdAmount: 0,
         OneusdAmount: 0,
-        errorMsg: false
+        errorMsg: false,
+        usdLoading:false,
+        oneUsdLoading:false
     }
     useDivRef = React.createRef();
     componentDidMount() {
@@ -35,12 +37,14 @@ class WithdrawSummary extends Component {
         this.loadData();
     }
     loadData = async () => {
+        this.setState({ ...this.state, usdLoading:true });
         const value = await convertCurrency({ from: this.props.sendReceive.withdrawCryptoObj?.walletCode, to: "USD", value: this.props.sendReceive.withdrawCryptoObj?.totalValue, isCrypto: false, memId: this.props.userProfile.id, screenName: '' })
-        this.setState({ ...this.state, usdAmount: value })
+        this.setState({ ...this.state, usdAmount: value,usdLoading:false });
     }
     loadOneCoinData = async () => {
+        this.setState({ ...this.state, oneUsdLoading:true });
         const value = await convertCurrency({ from: this.props.sendReceive.withdrawCryptoObj?.walletCode, to: "USD", value: 1, isCrypto: false, memId: this.props.userProfile.id, screenName: '' })
-        this.setState({ ...this.state, OneusdAmount: value })
+        this.setState({ ...this.state, OneusdAmount: value,oneUsdLoading:false });
     }
     onRefresh = () => {
         this.loadOneCoinData();
@@ -79,6 +83,9 @@ class WithdrawSummary extends Component {
     render() {
         const { Paragraph, Text } = Typography;
         const link = <LinkValue content="terms_service" />;
+        if(this.state.usdLoading||this.state.oneUsdLoading){
+            return <Loader/>
+        }
         return (
             <><div ref={this.useDivRef}></div>
                 {this.state.errorMsg && <Alert showIcon type="info" message={"Withdraw crypto"} description={this.state.errorMsg} closable={false} />}
