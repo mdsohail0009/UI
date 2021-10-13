@@ -21,6 +21,7 @@ import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata, clearSwapD
 import { connect } from 'react-redux';
 import DefaultUser from '../assets/images/defaultuser.jpg';
 import { setHeaderTab } from '../reducers/buysellReducer';
+import {setdepositCurrency} from '../reducers/depositReducer'
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -273,6 +274,7 @@ class Header extends Component {
                 ...this.state,Visibleprofilemenu:false
             })
         }
+        this.props.dispatch(setdepositCurrency(null))
     }
     closeDrawer = () => {
         if (this.child) this.child.clearValues();

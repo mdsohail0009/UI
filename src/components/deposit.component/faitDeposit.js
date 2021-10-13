@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import SellToggle from '../withDraw.component/faitWithdrawal';
 import config from '../../config/config';
 import NumberFormat from 'react-number-format';
-import { getCurrencieswithBankDetails } from '../../reducers/depositReducer'
+import { getCurrencieswithBankDetails,setdepositCurrency } from '../../reducers/depositReducer'
 import { savedepositFiat, requestDepositFiat } from './api';
 import Loader from '../../Shared/loader';
 import success from '../../assets/images/success.png';
@@ -70,6 +70,7 @@ class FaitDeposit extends Component {
       faitdeposit: false,
       tabValue: 1, Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false
     });
+    this.props.dispatch(setdepositCurrency(null))
   }
   handleBuySellToggle = e => {
     this.handleshowTab(e.target.value)
@@ -226,7 +227,7 @@ class FaitDeposit extends Component {
                       )}
                     </Select></div></Form.Item>}
                 {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}>Bank details not available</Text>}
-                {this.state.BankDetails?.length > 1 && <Form.Item><Translate
+                {this.state.BankDetails?.length > 1 &&depObj.currency !== null && <Form.Item><Translate
                   className="input-label"
                   content="BankName"
                   component={Text}
@@ -418,7 +419,8 @@ const connectDispatchToProps = dispatch => {
     },
     fetchCurrencyWithBankDetails: () => {
       dispatch(getCurrencieswithBankDetails())
-    }
+    },
+    dispatch
   }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(FaitDeposit);
