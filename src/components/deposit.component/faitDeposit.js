@@ -136,10 +136,11 @@ class FaitDeposit extends Component {
     let { BankInfo, depObj } = this.state;
     if (parseFloat(typeof depObj.Amount === 'string' ? depObj.Amount.replace(/,/g, '') : depObj.Amount) <= 0) {
       this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero.' })
-      this.myRef.current.scrollIntoView()
+      this.myRef.current.scrollIntoView();
+      return;
     }
     if ((depObj.Amount.indexOf('.') > -1 && depObj.Amount.split('.')[0].length >= 9) || (depObj.Amount.indexOf('.') < 0 && depObj.Amount.length >= 9)) {
-      this.setState({ ...this.state, errorMessage: 'Exceeded the maximum allowable amount' });
+      this.setState({ ...this.state, errorMessage: 'You have exceeded maximum amount' });
       this.myRef.current.scrollIntoView()
     }
     else if (depObj.Amount === '.') {
@@ -271,7 +272,7 @@ class FaitDeposit extends Component {
                       </div></Form.Item>
 
                     <div className="d-flex">
-                      {/* <span className="coin deposit-white mt-4" /> */}
+                      <span className={`coin ${depObj.currency.toLowerCase()}`} style={{marginRight: '8px',marginTop:'15px'}}/>
                       <div style={{ flex: 1 }}>
                         <Paragraph className="mb-0 fs-16 text-white-30 fw-500 mt-16 text-upper">{BankInfo.accountName}</Paragraph>
                         <Paragraph className="mb-0 fs-14 text-white-30 fw-300">

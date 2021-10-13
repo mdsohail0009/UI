@@ -141,7 +141,7 @@ const selectAddress = () =>{
     }
     if ((values.totalValue.indexOf('.') > -1 && values.totalValue.split('.')[0].length >= 9) || (values.totalValue.indexOf('.') < 0 && values.totalValue.length >= 9)) {
       useDivRef.current.scrollIntoView()
-      return setErrorMsg('Exceeded the maximum allowable amount');
+      return setErrorMsg('You have exceeded maximum amount');
     }
     setErrorMsg(null)
     values['membershipId'] = userConfig.id
