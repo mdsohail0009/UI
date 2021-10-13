@@ -37,10 +37,9 @@ class SelectAddress extends Component {
     }
     handleSelectAdd= (item) =>{
         this.props.SelectedAddress(item)
-       let obj= this.props.sendReceive.withdrawCryptoObj;
+        let obj= this.props.sendReceive.withdrawCryptoObj;
         this.props.dispatch(setWithdrawcrypto({...obj, toWalletAddress: item.code}))
-        this.props.changeStep('withdraw_crypto_selected');
-         
+        this.props.changeStep('withdraw_crypto_selected');   
     }
     render() {
         const {filterObj ,loading} = this.state;

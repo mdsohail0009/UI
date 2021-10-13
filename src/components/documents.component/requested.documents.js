@@ -266,7 +266,7 @@ class RequestedDocs extends Component {
                         {this.state.documentReplies[doc.id]?.data?.map((reply, idx) => <div key={idx} className="reply-container">
                             <div className="user-shortname">{reply.repliedBy.slice(0, 2)}</div>
                             <div className="reply-body">
-                                <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment format="DD MMM YY hh:mm a">{reply.repliedDate}</Moment> </Text>
+                                <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment format="DD MMM YY hh:mm A">{reply.repliedDate}</Moment> </Text>
                                 <p className="reply-txt">{reply.reply}</p>
                                 <div className="docfile-container">
                                     {reply?.path?.map((file, idx) => <div key={idx} className="docfile">
