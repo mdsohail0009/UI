@@ -19,6 +19,7 @@ class SellSummary extends Component {
         }
     }
     refreshPage() {
+        this.setState({ ...this.state, loader: true })
         this.fetchPreviewData()
     }
     async saveSellData() {
