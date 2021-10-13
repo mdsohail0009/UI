@@ -38,15 +38,15 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   const [stateLu, setStateLu] = useState([]);
   const [addressLu, setAddressLu] = useState([]);
   const [addressDetails, setAddressDetails] = useState({});
-
   const useDivRef = React.useRef(null);
   useEffect(() => {
-    debugger
+ 
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       console.log(selectedWalletCode, buyInfo.memberFiat?.data)
       handleWalletSelection(selectedWalletCode)
     }else if(buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj){
       handleWalletSelection(sendReceive.withdrawFiatObj.walletCode)
+      getStateLu(sendReceive.withdrawFiatObj.country);
     }
   }, [buyInfo.memberFiat?.data])
 
@@ -116,7 +116,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     if (recName.ok) {
       setStateLu(recName.data);
     }
-    form.setFieldsValue({ state: null })
+   // form.setFieldsValue({ state: null })
   }
 const selectAddress = () =>{
   let values = form.getFieldsValue()
@@ -174,7 +174,6 @@ const selectAddress = () =>{
               ]}
             >
               <WalletList  valueFeild={'currencyCode'}  selectedvalue={saveObj?.walletCode} placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e, true)} />
-              
             </Form.Item>
             <Form.Item
               className="custom-forminput custom-label  mb-24"
