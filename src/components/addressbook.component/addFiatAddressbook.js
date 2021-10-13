@@ -254,6 +254,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                         className="custom-forminput custom-label mb-24"
                         name="beneficiaryAccountAddress"
                         label="Recipient address line 1"
+                        required
                         rules={[
                             {
                                 type: "beneficiaryAccountAddress", validator: async (rule, value, callback) => {

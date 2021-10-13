@@ -41,12 +41,11 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
 
   const useDivRef = React.useRef(null);
   useEffect(() => {
-
+    debugger
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       console.log(selectedWalletCode, buyInfo.memberFiat?.data)
       handleWalletSelection(selectedWalletCode)
     }else if(buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj){
-      debugger
       handleWalletSelection(sendReceive.withdrawFiatObj.walletCode)
     }
   }, [buyInfo.memberFiat?.data])
@@ -57,11 +56,9 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   }, [])
 
   const handleWalletSelection = (walletId, isClearObj) => {
-    debugger;
     if(isClearObj){
       let clearobj = 
-      {"walletCode":"","totalValue":"","accountNumber":"","routingNumber":"","bankName":"","bankAddress":"","bankAddress2":"","zipcode":"","beneficiaryAccountName":"","beneficiaryAccountAddress":"","beneficiaryAccountAddress1":"","description":"","country":"","state":"", "isAccept":false}
-
+      {"walletCode":"","totalValue":"","accountNumber":"","routingNumber":"","bankName":"","bankAddress":"","bankAddress2":"","zipcode":"","beneficiaryAccountName":"","beneficiaryAccountAddress":"","beneficiaryAccountAddress1":"","description":"","country":null,"state":null, "isAccept":false}
       setSaveObj({...clearobj, walletCode: walletId});
        setAddressDetails({});
        form.setFieldsValue({ ...clearobj, walletCode: walletId,  })
@@ -123,6 +120,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   }
 const selectAddress = () =>{
   let values = form.getFieldsValue()
+  values.favouriteName = addressDetails.favouriteName
   dispatch(setWithdrawfiat(values));
   changeStep('step4');
 }
@@ -147,6 +145,7 @@ const selectAddress = () =>{
     values['membershipId'] = userConfig.id
     values['memberWalletId'] = selectedWallet.id
     values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName
+    values['favouriteName'] = addressDetails.favouriteName
     setSaveObj(values);
     dispatch(setWithdrawfiat(values))
     setConfirmationStep('step2')
@@ -165,9 +164,7 @@ const selectAddress = () =>{
               component={Paragraph}
               className="mb-16 fs-14 text-aqua fw-500 text-upper"
             />
-
             </div>
-
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="walletCode"
@@ -195,13 +192,10 @@ const selectAddress = () =>{
               
             </Form.Item>
             <Form.Item
-              className="custom-forminput mb-24"
+              className="custom-forminput custom-label mb-24"
+              label="Address Book"
+              name="favouriteName"
             >
-              <div className="d-flex"><Text
-                className="input-label" >Address Book</Text>
-
-                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span>
-              </div>
               <div className="p-relative d-flex align-center">
                 <Select dropdownClassName="select-drpdwn"
                   className="cust-input custom-add-select" value={addressDetails.favouriteName}
