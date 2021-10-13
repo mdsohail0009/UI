@@ -80,9 +80,10 @@ class FaitDeposit extends Component {
       ...this.state,
       faitdeposit: tabKey === 2,
       tabValue: tabKey,
-      BankDetails: [],
-      BankInfo: null,
-      depObj: { currency: null, BankName: null, Amount: null }, Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false
+      // BankDetails: [],
+       BankInfo: null,
+       depObj: { currency: this.props.depositInfo ? this.props.depositInfo.depositCurrency : null, BankName: null, Amount: null }, 
+      Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false
     });
     if(tabKey === 1){
       appInsights.trackEvent({
