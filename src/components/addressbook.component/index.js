@@ -151,7 +151,7 @@ class AddressBook extends Component {
         this.setState({ ...this.state, successMsg: false })
     }
     coinList = async () => {
-        let fromlist = await getCoinList(this.props.userProfile?.id)
+        let fromlist = await getCoinList(this.props.userConfig?.id)
         if (fromlist.ok) {
             this.setState({ ...this.state, fromCoinsList: fromlist.data, isLoading: false })
         } else {
