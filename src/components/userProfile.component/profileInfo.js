@@ -47,9 +47,9 @@ class ProfileInfo extends Component {
         this.setState({ ...this.state, Loader: true })
         let res1 = await ProfileImageSave(Obj);
         if (res1.ok) {
-             message.success({content:'Profile uploaded successfully' ,className: 'custom-msg'});
+            message.success({ content: 'Profile uploaded successfully', className: 'custom-msg' });
             this.setState({ ...this.state, Loader: false })
-            this.props.getmemeberInfoa(this.props.userConfig.email)
+            this.props.getmemeberInfoa(this.props.userConfig.userId)
         } else {
             this.setState({ ...this.state, Loader: false })
         }
@@ -59,8 +59,8 @@ class ProfileInfo extends Component {
         return (<>
             <div className="profile-info text-center">
                 {this.state.Loader && <Loader />}
-                {!this.state.Loader && <>{this.props.userConfig.imageURL != null && <img src={this.props.userConfig.imageURL ? this.props.userConfig.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
-                    {this.props.userConfig.imageURL == null && <img src={this.props.userConfig.imageURL ? this.props.userConfig.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
+                {!this.state.Loader && <>{this.props.userConfig.imageURL != null && <img src={this.props.userConfig.imageURL ? this.props.userConfig.imageURL : DefaultUser} className="user-profile" alt={"image"} />}
+                    {this.props.userConfig.imageURL == null && <img src={this.props.userConfig.imageURL ? this.props.userConfig.imageURL : DefaultUser} className="user-profile" alt={"image"} />}
                     <Upload {...this.uploadProps} accept=".png,.jpeg,.jpg">
                         <Button shape="circle" type="primary" className="img-upld" size="large" icon={<span className="icon md camera" />} />
                     </Upload></>}
@@ -104,13 +104,13 @@ class ProfileInfo extends Component {
                     <li className="profileinfo">
                         <div className="d-flex profile-block">
                             <label className="mb-0 profile-label" >Birthday</label>
-                            {this.props.userConfig.dob!=null&&<p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>
+                            {this.props.userConfig.dob != null && <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>
                                 <Moment format="DD/MM/YYYY">{this.props.userConfig.dob}</Moment></p>}
                             <div >
                             </div>
                         </div>
                     </li>
-                    
+
                     <li className="profileinfo">
                         <div className="d-flex profile-block">
                             <label className="mb-0 profile-label">Reference Code</label>
@@ -124,7 +124,7 @@ class ProfileInfo extends Component {
             <div className="box contact-info">
                 <Title className="basicinfo">Contact Info</Title>
                 <ul className="user-list pl-0">
-                <li className="profileinfo">
+                    <li className="profileinfo">
                         <div className="d-flex profile-block">
                             <label className="mb-0 profile-label">Country</label>
                             <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.country}</p>
