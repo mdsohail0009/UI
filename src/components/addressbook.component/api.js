@@ -17,12 +17,12 @@ const getCoinList = (member_id) => {
     return apiClient.get(ApiControllers.swap+`MemberCoins?memberId=${member_id}`);
 }
 const getSelectedCoinDetails = (coin_code, member_id) => {
-    return apiClient.get(ApiControllers.exchange + `MemberCoinDetail?memberId=${member_id}&coin=${coin_code}`)
+    return apiClient.get(ApiControllers.buySell + `MemberCoinDetail?memberId=${member_id}&coin=${coin_code}`)
 }
 const activeInactive = (obj) => {
-    return apiClient.post(ApiControllers.exchange + "activeinactive", obj)
+    return apiClient.post(ApiControllers.master + "useractiveinactive", obj)
 }
 const getAddress = (addreddId, type) => {
-    return apiClient.get(ApiControllers.exchange + `CreateAddressFavourite?addrId=${addreddId}&type=${type}`)
+    return apiClient.get(ApiControllers.depositWithdraw + `CreateAddressFavourite?addrId=${addreddId}&type=${type}`)
 }
 export {getCoinList,favouriteFiatAddress, saveAddress,getSelectedCoinDetails,detailsAddress,favouriteNameCheck,activeInactive,getAddress}
