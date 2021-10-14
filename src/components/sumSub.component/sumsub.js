@@ -29,7 +29,7 @@ class SumSub extends Component {
                     console.log('WebSDK onMessage', type, payload)
                     if (type === 'idCheck.applicantStatus' && payload.reviewStatus === "completed")
                         apicalls.updateKyc(this.props.userConfig.userId).then((res) => {
-                            this.props.getmemeberInfoa(this.props.userConfig.email)
+                            this.props.getmemeberInfoa(this.props.user.profile.sub)
                             this.props.history.push("/dashboard")
                         })
                 },
@@ -56,8 +56,8 @@ class SumSub extends Component {
     }
 }
 
-const connectStateToProps = ({ userConfig }) => {
-    return { userConfig: userConfig.userProfileInfo }
+const connectStateToProps = ({ userConfig, oidc }) => {
+    return { userConfig: userConfig.userProfileInfo, user: oidc.user }
 }
 const connectDispatchToProps = dispatch => {
     return {

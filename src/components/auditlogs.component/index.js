@@ -37,7 +37,7 @@ class AuditLogs extends Component {
         IsUser:true
       },
       timeListSpan: ["Last 1 Day", "Last One Week", "Custom"],
-      gridUrl: process.env.REACT_APP_GRID_API+"AuditLog/GetAdminLogsK",
+      gridUrl: process.env.REACT_APP_GRID_API+"AuditLog/GetUserLogsK?",
     };
 
     this.gridRef = React.createRef();

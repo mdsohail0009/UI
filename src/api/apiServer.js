@@ -16,11 +16,11 @@ export const sendNotification = ({ message, from, type, tokens }) => {
 }
 export const changePassword = (obj) => {
 
-    return apiClient.post(ApiControllers.exchange + "changePassword", obj);
+    return apiClient.post(ApiControllers.member + "changePassword", obj);
 }
 export const withdrawRecepientNamecheck = (memberid,name) => {
 
-    return apiClient.get(ApiControllers.exchange + "FavouriteNameCheck?memberId="+memberid+"&name="+name);
+    return apiClient.get(ApiControllers.depositWithdraw + "FavouriteNameCheck?memberId="+memberid+"&name="+name);
 }
 export const getCountryStateLu = () => {
 
@@ -32,8 +32,8 @@ export const getStateLookup = (country) => {
 }
 export const withdrawSave = (obj) => {
 
-    return apiClient.post(ApiControllers.exchange + "WithdrawFiat", obj);
+    return apiClient.post(ApiControllers.depositWithdraw + "WithdrawFiat", obj);
 }
 export const ProfileImageSave=(obj)=>{
-    return apiClient.post(ApiControllers.exchange + "SaveImage", obj); 
+    return apiClient.post(ApiControllers.member + "SaveImage", obj); 
 }
