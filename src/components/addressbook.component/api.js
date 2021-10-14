@@ -20,7 +20,7 @@ const getSelectedCoinDetails = (coin_code, member_id) => {
     return apiClient.get(ApiControllers.buySell + `MemberCoinDetail?memberId=${member_id}&coin=${coin_code}`)
 }
 const activeInactive = (obj) => {
-    return apiClient.post(ApiControllers.admin + "useractiveinactive", obj)
+    return apiClient.post(ApiControllers.master + "useractiveinactive", obj)
 }
 const getAddress = (addreddId, type) => {
     return apiClient.get(ApiControllers.depositWithdraw + `CreateAddressFavourite?addrId=${addreddId}&type=${type}`)
