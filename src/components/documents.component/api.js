@@ -10,24 +10,24 @@ const getDocList = () => {
     return clientApi.get(ApiControllers.exchange + ``);
 }
 const sendRequest = (obj) => {
-    return clientApi.post(ApiControllers.exchange + `SaveDoument`, obj);
+    return clientApi.post(ApiControllers.member + `SaveDoument`, obj);
 }
 const uploadFile = () => {
     return clientApi.get(ApiControllers.exchange + ``);
 }
 const getDocDetails = (docId) => {
-    return clientApi.get(ApiControllers.exchange + `GetUserDocument?docId=${docId}`)
+    return clientApi.get(ApiControllers.member + `GetUserDocument?docId=${docId}`)
 }
 const getDocumentReplies = (docDetailId) => {
-    return clientApi.get(ApiControllers.exchange + `GetMessages?docdetailId=${docDetailId}`)
+    return clientApi.get(ApiControllers.member + `GetMessages?docdetailId=${docDetailId}`)
 }
 const saveDocReply = (obj) => {
-    return clientApi.post(ApiControllers.exchange + `SaveMessages`, obj)
+    return clientApi.post(ApiControllers.member + `SaveMessages`, obj)
 }
 const approveDoc = (obj) => {
-    return clientApi.post(ApiControllers.exchange + `DocumentStateChange`, obj)
+    return clientApi.post(ApiControllers.member + `DocumentStateChange`, obj)
 }
 const getDashboardNotices = (id) => {
-    return clientApi.get(ApiControllers.exchange+`GetDashboardNotices?memberId=${id}`)
+    return clientApi.get(ApiControllers.member+`GetDashboardNotices?memberId=${id}`)
 }
 export { sendRequest, getDocList, uploadFile, uuidv4, getDocDetails, getDocumentReplies, saveDocReply, approveDoc,getDashboardNotices }
