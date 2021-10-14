@@ -28,7 +28,7 @@ export const getCountryStateLu = () => {
 }
 export const getStateLookup = (country) => {
 
-    return apiClient.get(ApiControllers.masters +"States?countryName="+country);
+    return apiClient.get(ApiControllers.master +"States?countryName="+country);
 }
 export const withdrawSave = (obj) => {
 

@@ -37,7 +37,7 @@ class SelectCrypto extends Component {
         debugger
         let cryptoValues = this.props.addressBookReducer.cryptoValues;
         this.props.InputFormValues({ ...cryptoValues, toCoin: selectedCoin.coin })
-        this.props.getCoinDetails(selectedCoin, this.props.userProfile?.userId);
+        this.props.getCoinDetails(selectedCoin.coin, this.props.userProfile?.userId);
         this.props.setSelectedCoin(selectedCoin);
         convertCurrency({ from: selectedCoin.walletCode, to: "USD", value: 1, isCrypto: false, memId: this.props.userProfile?.id, screenName: null }).then(val => {
             this.props.setExchangeValue({ key: selectedCoin.walletCode, value: val });

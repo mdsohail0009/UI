@@ -6,7 +6,7 @@ const getportfolio = (member_id) => {
     return apiClient.get(ApiControllers.member + `MemberCrypto?memberId=${member_id}`);
 }
 const fetchCurrConvertionValue = (from, to, value, memeberid, screenName) => {
-    return apiClient.get(ApiControllers.swap+`CryptoToCrypto?fromCoin=${from}&toCoin=${to}&fromValue=${value}&memberId=${memeberid}&screenName=${screenName||''}`);
+    return apiClient.get(ApiControllers.master+`CryptoToCrypto?fromCoin=${from}&toCoin=${to}&fromValue=${value}&memberId=${memeberid}&screenName=${screenName||''}`);
 }
 const swapPreviewData = (coin, currency, amount) => {
     return apiClient.get(ApiControllers.swap+`Preview?coin=${coin}&currency=${currency}&amount=${amount}`);
