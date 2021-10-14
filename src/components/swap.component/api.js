@@ -3,7 +3,7 @@ import { ApiControllers } from '../../api/config'
 const Portfolio = "Exchange/";
 
 const getportfolio = (member_id) => {
-    return apiClient.get(Portfolio + `MemberCrypto?memberId=${member_id}`);
+    return apiClient.get(ApiControllers.member + `MemberCrypto?memberId=${member_id}`);
 }
 const fetchCurrConvertionValue = (from, to, value, memeberid, screenName) => {
     return apiClient.get(ApiControllers.exchange+`CryptoToCrypto?fromCoin=${from}&toCoin=${to}&fromValue=${value}&memberId=${memeberid}&screenName=${screenName||''}`);

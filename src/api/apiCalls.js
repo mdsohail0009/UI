@@ -3,7 +3,7 @@ import { appInsights } from "../Shared/appinsights";
 import { ApiControllers } from './config';
 const Portfolio = "Exchange/";
 const getportfolio = (memID) => {
-    return apiClient.get(Portfolio +`MemberCrypto?memberId=`+memID);
+    return apiClient.get(ApiControllers.member +`MemberCrypto?memberId=`+memID);
 }
 const getCryptos=()=>{
     return apiClient.get(ApiControllers.buySell +'Coins');
