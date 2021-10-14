@@ -6,14 +6,8 @@ function uuidv4() {
         return v.toString(16);
     });
 }
-const getDocList = () => {
-    return clientApi.get(ApiControllers.exchange + ``);
-}
 const sendRequest = (obj) => {
     return clientApi.post(ApiControllers.member + `SaveDoument`, obj);
-}
-const uploadFile = () => {
-    return clientApi.get(ApiControllers.exchange + ``);
 }
 const getDocDetails = (docId) => {
     return clientApi.get(ApiControllers.member + `GetUserDocument?docId=${docId}`)
@@ -30,4 +24,4 @@ const approveDoc = (obj) => {
 const getDashboardNotices = (id) => {
     return clientApi.get(ApiControllers.member+`GetDashboardNotices?memberId=${id}`)
 }
-export { sendRequest, getDocList, uploadFile, uuidv4, getDocDetails, getDocumentReplies, saveDocReply, approveDoc,getDashboardNotices }
+export { sendRequest, uuidv4, getDocDetails, getDocumentReplies, saveDocReply, approveDoc,getDashboardNotices }

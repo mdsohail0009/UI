@@ -7,7 +7,7 @@ const fetchMemberWallets = (member_id) => {
     return apiClient.get(ApiControllers.member + `MemberFiatDashboard?memberId=${member_id}`)
 }
 const fetchPortfolio=(member_id)=>{
-    return apiClient.get(ApiControllers.member+`membershipcreate?memberId=${member_id}`)
+    return apiClient.get(ApiControllers.member+`Portfolio?memberId=${member_id}`)
 }
 const fetchYourPortfolio=(member_id)=>{
     return apiClient.get(ApiControllers.member+`MemberCryptofolio?memberId=${member_id}`)
