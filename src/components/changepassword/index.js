@@ -49,7 +49,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
         setChangePasswordResponse({ error: false, messsage: '', isLoading: false });
         form.resetFields();
         onSubmit()
-        getmemeberInfoa(userConfig.email)
+        getmemeberInfoa(userConfig.userId)
         apiClient.trackEvent({"Action": 'Save', "Feature": 'Change password', "Remarks": "Password changed","FullFeatureName": 'Change password',"userName":userConfig.userName,id:userConfig.id });
       }
       else {

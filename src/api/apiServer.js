@@ -16,7 +16,7 @@ export const sendNotification = ({ message, from, type, tokens }) => {
 }
 export const changePassword = (obj) => {
 
-    return apiClient.post(ApiControllers.exchange + "changePassword", obj);
+    return apiClient.post(ApiControllers.member + "changePassword", obj);
 }
 export const withdrawRecepientNamecheck = (memberid,name) => {
 
