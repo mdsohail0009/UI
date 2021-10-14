@@ -4,7 +4,7 @@ const createCryptoDeposit = ({ memberId, walletCode }) => {
     return apiClient.get(ApiControllers.depositWithdraw + `RequestDepositCrypto?memberId=${memberId}&walletCode=${walletCode}`)
 }
 const getCurrencywithBank=()=>{
-    return apiClient.get(ApiControllers.admin + `CommissionCurrencyWithBank`)
+    return apiClient.get(ApiControllers.depositWithdraw + `CurrencyWithBank`)
 }
 const savedepositFiat=(obj)=>{
     return apiClient.post(ApiControllers.exchange + `UserDepositFiat`,obj)
