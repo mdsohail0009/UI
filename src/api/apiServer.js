@@ -35,5 +35,5 @@ export const withdrawSave = (obj) => {
     return apiClient.post(ApiControllers.depositWithdraw + "WithdrawFiat", obj);
 }
 export const ProfileImageSave=(obj)=>{
-    return apiClient.post(ApiControllers.exchange + "SaveImage", obj); 
+    return apiClient.post(ApiControllers.member + "SaveImage", obj); 
 }
