@@ -1,14 +1,15 @@
 import { apiClient } from './';
 import { appInsights } from "../Shared/appinsights";
+import { ApiControllers } from './config';
 const Portfolio = "Exchange/";
 const getportfolio = (memID) => {
     return apiClient.get(Portfolio +`MemberCrypto?memberId=`+memID);
 }
 const getCryptos=()=>{
-    return apiClient.get(Portfolio +'Coins');
+    return apiClient.get(ApiControllers.buySell +'Coins');
 }
 const getMember=(useremail)=>{
-    return apiClient.get(Portfolio +'/MemberBySubId?subId='+useremail);
+    return apiClient.get(ApiControllers.member +'/MemberBySubId?subId='+useremail);
 }
 const sumsubacesstoken=(userid)=>{
     return apiClient.get('Sumsub/AccessToken?applicantId='+userid);
@@ -33,7 +34,7 @@ const trackPageview = (obj) => {
     });
 }
 const sellMemberCrypto=(memID)=>{
-    return apiClient.get(Portfolio +`SellMemberCrypto?memberId=`+memID);
+    return apiClient.get(ApiControllers.buySell +`SellMemberCrypto?memberId=`+memID);
 }
 let apicalls = {getportfolio,getCryptos,getMember,sumsubacesstoken, updateKyc,sumsubacesstokennew,sumsublivenessacesstoken,trackEvent,trackPageview,sellMemberCrypto}
 export default apicalls
