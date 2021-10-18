@@ -249,7 +249,6 @@ export default {
   Amount_to_pay: '支付数量',
   place_an_order: '下订单',
   Routing_number: '路由号码',
-  Change_password: '更改密码',
   Choose_a_unique_password_to_protect_your_account: '选择一个唯一的密码来保护您的帐户。',
   Save_btn_text: '保存',
   forgot_your_password: '忘记密码了吗？',

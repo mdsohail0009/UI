@@ -250,7 +250,6 @@ export default {
   Amount_to_pay: 'Amount to pay',
   place_an_order: 'place an order',
   Routing_number: 'Routing Number',
-  Change_password: 'Change Password',
   Choose_a_unique_password_to_protect_your_account: 'Choose a unique password to protect your account.',
   Save_btn_text: 'Save',
   forgot_your_password: 'Forgot your password?',

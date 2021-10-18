@@ -249,7 +249,6 @@ export default {
   Amount_to_pay: 'Amaun yang perlu dibayar',
   place_an_order: 'membuat pesanan',
   Routing_number: 'Nombor Laluan',
-  Change_password: 'Tukar kata laluan',
   Choose_a_unique_password_to_protect_your_account: 'Pilih kata laluan yang unik untuk melindungi akaun anda.',
   Save_btn_text: 'Jimat',
   forgot_your_password: 'Lupa kata laluan anda?',
