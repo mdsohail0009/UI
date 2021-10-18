@@ -51,7 +51,7 @@ class SellSummary extends Component {
     }
     render() {
         const { sellpreviewData } = this.state;
-        const {amount,amountNativeCurrency,oneCoinValue,coin} = sellpreviewData;
+        const {amount,amountNativeCurrency,oneCoinValue,coin,currency} = sellpreviewData;
 
         return <Summary
             loading={this.state.loader}
@@ -59,7 +59,7 @@ class SellSummary extends Component {
             oneCoinValue={oneCoinValue}
             amount={amount}
             amountNativeCurrency={amountNativeCurrency}
-            nativeCurrency={"USD"}
+            nativeCurrency={currency?currency:"USD"}
             error={this.state.error} iButtonLoad={this.state.isLoading}
             onRefresh={() => {this.refreshPage()}}
             onCancel={() => this.props.changeStep('step1')}
