@@ -1,7 +1,7 @@
 import { apiClient } from './';
 import { appInsights } from "../Shared/appinsights";
 import { ApiControllers } from './config';
-const Portfolio = "Exchange/";
+
 const getportfolio = (memID) => {
     return apiClient.get(ApiControllers.member +`MemberCrypto?memberId=`+memID);
 }

@@ -1,6 +1,5 @@
 import { apiClient } from '../../api';
 import { ApiControllers } from '../../api/config'
-const Portfolio = "Exchange/";
 
 const getportfolio = (member_id) => {
     return apiClient.get(ApiControllers.member + `MemberCrypto?memberId=${member_id}`);
