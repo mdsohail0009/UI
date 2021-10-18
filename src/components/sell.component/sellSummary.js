@@ -19,8 +19,13 @@ class SellSummary extends Component {
         }
     }
     refreshPage() {
-        this.setState({ ...this.state, loader: true })
-        this.fetchPreviewData()
+        if (!this.state.isTermsAgree) {
+            this.setState({ ...this.state, error: { valid: false, message: 'Please accept terms of service' } })
+
+        } else {
+            this.setState({ ...this.state, loader: true , error: {valid:true,message:''}})
+            this.fetchPreviewData()
+        }
     }
     async saveSellData() {
         this.setState({ ...this.state, error: {valid:true,message:''} })
