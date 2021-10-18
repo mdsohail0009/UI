@@ -38,15 +38,17 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   const [stateLu, setStateLu] = useState([]);
   const [addressLu, setAddressLu] = useState([]);
   const [addressDetails, setAddressDetails] = useState({});
+  //const [addressbook, setAddressBook] = useState();
   const useDivRef = React.useRef(null);
   useEffect(() => {
- 
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       console.log(selectedWalletCode, buyInfo.memberFiat?.data)
       handleWalletSelection(selectedWalletCode)
     }else if(buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj){
       handleWalletSelection(sendReceive.withdrawFiatObj.walletCode)
       getStateLu(sendReceive.withdrawFiatObj.country);
+      let selectObj =sendReceive.withdrawFiatObj
+      form.setFieldsValue(selectObj)
     }
   }, [buyInfo.memberFiat?.data])
 
@@ -157,7 +159,7 @@ const selectAddress = () =>{
       step1: <>
         <div className="suisfiat-height auto-scroll">
           <div ref={useDivRef}></div>
-          {errorMsg !== null && <Alert closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+          {errorMsg !== null && <Alert className="mb-12" closable type="error" message={"Error"} description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
           <Form form={form} onFinish={savewithdrawal} initialValues={addressDetails} autoComplete="off">
             <div className="p-relative d-flex align-center"> <Translate
               content="Beneficiary_BankDetails"
@@ -190,30 +192,30 @@ const selectAddress = () =>{
               />
               
             </Form.Item>
+            <div style={{ position:'relative' }}>
             <Form.Item
               className="custom-forminput custom-label mb-24"
               label="Address Book"
               name="favouriteName"
             >
-              <div className="p-relative d-flex align-center">
                 <Select dropdownClassName="select-drpdwn"
-                  className="cust-input custom-add-select" value={addressDetails.favouriteName}
+                  className="cust-input"
+                // setAddressBook  
+               //  value={addressDetails.favouriteName}
                   onChange={(e) => handleAddressChange(e)}
-                  placeholder="Select Address"
-                >
+                  placeholder="Select Address">
                   {addressLu?.map((item, idx) =>
                     <Option key={idx} value={item.id}>{item.name}
                     </Option>
                   )}
                 </Select>
-                <Tooltip placement="top" title={<span>New Address</span>} style={{ flexGrow: 1 }}>
-                  <div className="new-add c-pointer" onClick={() => selectAddress()}  >
+            </Form.Item> 
+            <Tooltip placement="top" title={<span>New Address</span>} >
+                  <div className="c-pointer" onClick={() => selectAddress()} style={{ position:'absolute', left:0, top:3, marginLeft:'110px',cursor:"pointer" }} >
                     <span className="icon md address-book d-block c-pointer"></span>
                   </div>
                 </Tooltip>
-              </div>
-
-            </Form.Item>
+            </div>
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="accountNumber"
@@ -420,19 +422,14 @@ const selectAddress = () =>{
                 },
               ]}
             >
-               <div className="d-flex pt-16 agree-check">
-                <label>
-                  <input type="checkbox" id="agree-check" />
-                  <span for="agree-check" />
-                </label>
-                <Translate
-                  content="agree_to_suissebase"
-                  with={{ link }}
-                  component={Paragraph}
-                  className="fs-14 text-white-30 ml-16 mb-4"
-                  style={{ flex: 1 }}
-                />
-              </div>
+               <Checkbox className="ant-custumcheck"><span className="withdraw-check"></span><Translate
+                content="agree_to_suissebase"
+                with={{ link }}
+                component={Paragraph}
+                className="fs-14 text-white-30 ml-16 mb-4"
+                style={{ flex: 1 }}
+              /></Checkbox>
+             
             </Form.Item>
             <Form.Item className="mb-0 mt-16">
               <Button
