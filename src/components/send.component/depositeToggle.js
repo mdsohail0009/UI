@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Radio } from 'antd';
 import config from '../../config/config';
 import Translate from 'react-translate-component';
-import { handleSendFetch, setStep, setSubTitle } from '../../reducers/sendreceiveReducer';
+import { handleSendFetch, setStep, setSubTitle ,setWithdrawcrypto, setAddress,rejectWithdrawfiat} from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import CryptoDeposit from '../deposit.component/crypto.deposit';
 import WithdrawCrypto from '../withdraw.crypto.component';
@@ -23,7 +23,14 @@ class DepositeCrypto extends Component {
             ...this.state,
             activeKey: e.target.value
         });
-        e.target.value === 1 ? this.props.dispatch(setSubTitle(`USD ${this.props.dashboard?.totalFiatValue} Total balance`)) : this.props.dispatch(setSubTitle(`Select a currency in your wallet`));;
+        if(e.target.value === 1 ){
+            this.props.dispatch(setSubTitle(`USD ${this.props.dashboard?.totalFiatValue} Total balance`));
+            this.props.dispatch(setAddress(null))
+            this.props.dispatch(rejectWithdrawfiat(null))
+        }  else{
+            this.props.dispatch(setSubTitle(`Select a currency in your wallet`));
+        }
+    
     }
     componentDidMount() {
         this.setState({ ...this.state, activeKey: this.props.sendReceive?.cryptoWithdraw?.activeKey || 1, sendReceive: true });
@@ -44,7 +51,8 @@ class DepositeCrypto extends Component {
                     <Translate value={2} content="withdraw" component={Radio.Button} />
                 </Radio.Group>
                 </div>
-                {activeKey === 2 ? <WithdrawCrypto /> : <CryptoDeposit />}
+                {activeKey === 2 && <WithdrawCrypto />}
+                {activeKey === 1 &&<CryptoDeposit />}
             </>
         )
     }

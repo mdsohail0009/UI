@@ -320,7 +320,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .loader{position: fixed;top: 0; right: 0; bottom: 0; left: 0;display: flex; align-items: center;font-size: 36px;color: var(--textWhite);background-color: var(--bgDarkGrey);justify-content: center;}
 .select-drpdwn{background-color: var(--bgGloom);margin-right: 30px;padding: 24px 0;border-radius: 10px;}
 .select-drpdwn .ant-select-item{padding: 10px 24px;color: var(--textWhite);}
-.select-drpdwn .ant-select-item:hover, .select-drpdwn .ant-select-item.ant-select-item-option-active, .select-drpdwn .ant-select-item.ant-select-item-option-selected{background-color: var(--bgDarkGrey);}
+.select-drpdwn .ant-select-item:hover, .select-drpdwn .ant-select-item.ant-select-item-option-active, .select-drpdwn .ant-select-item.ant-select-item-option-selected, .select-drpdwn .ant-select-item.ant-select-item-option-active.ant-select-item-option-selected{background-color: var(--bgDarkGrey);}
 .cust-input.ant-select{padding: 0 !important;}
 .wallet-title{font-size: 16px; text-transform: uppercase; color: var(--textWhite30); margin-bottom: 0; font-weight: 600;}
 .crypto-list .ant-list-item-meta, .wallet-list .ant-list-item-meta{display: flex;align-items: center;}

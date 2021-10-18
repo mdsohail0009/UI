@@ -76,7 +76,7 @@ class FaitDeposit extends Component {
     this.handleshowTab(e.target.value)
     if(e.target.value==1){this.props.fetchCurrencyWithBankDetails()}
   }
-  handleshowTab = (tabKey) =>{
+  handleshowTab = async(tabKey) =>{
     this.setState({
       ...this.state,
       faitdeposit: tabKey === 2,
@@ -90,6 +90,26 @@ class FaitDeposit extends Component {
       appInsights.trackEvent({
         name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": ('Deposit page view'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
       });
+      let currencyLu=this.props.depositInfo?.currenciesWithBankInfo;
+      for (var k in currencyLu) {
+        if (currencyLu[k].walletCode === this.props.depositInfo?.depositCurrency) {
+          if (currencyLu[k].bankDetailModel?.length === 1) {
+            this.setState({ ...this.state, Loader: true })
+            let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
+            if (reqdepositObj.ok === true) {
+              this.setState({
+                ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], Loader: false, isTermsAgreed: false,faitdeposit: tabKey === 2,
+                tabValue: tabKey,
+              });
+            }
+          }else{
+            this.setState({
+              ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankDetails: currencyLu[k].bankDetailModel, BankInfo: null, isTermsAgreed: false,faitdeposit: tabKey === 2,
+              tabValue: tabKey,
+            });
+          }
+        }
+      }
     }
   }
   handlFiatDep = async (e, currencyLu) => {
