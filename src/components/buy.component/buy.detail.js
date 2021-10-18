@@ -70,6 +70,18 @@ class SelectCrypto extends Component {
         this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue), !isSwaped);
         this.props.setStep('step3');
     }
+    refresh=()=>{
+        const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
+        const { buyMin, buyMax, coin } = this.props.buyInfo?.selectedCoin?.data;
+        const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin })
+        if (!_vaidator.valid) {
+            this.setState({ ...this.state, error: { ..._vaidator } });
+            this.myRef.current.scrollIntoView();
+            return;
+        }else{
+           this.fetchConvertionValue() 
+        }  
+    }
     render() {
         if (this.props.buyInfo?.selectedCoin?.loading || !this.props.buyInfo?.selectedCoin?.data) {
             return <Loader />
@@ -99,7 +111,7 @@ class SelectCrypto extends Component {
                     <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     <div className="fs-12 text-white-30 text-center mt-24">Your amount might be changed with in <span style={{color: 'var(--bgDarkYellow)'}} >10</span> seconds.</div>
                     <div className="mt-24">
-                        <SuisseBtn title="confirm_btn_text" onRefresh={() => this.fetchConvertionValue()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
+                        <SuisseBtn title="confirm_btn_text" onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
                     </div>
                 </div>
 
