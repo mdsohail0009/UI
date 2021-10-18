@@ -37,17 +37,18 @@ class SwapSummary extends Component {
     }
 
     async setOneCoinValue() {
+        this.setState({ ...this.state,loader:true })
         if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
             let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, 1, this.props.userProfile.id);
             if (res.ok) {
-                this.setState({ ...this.state, price: res.data })
+                this.setState({ ...this.state,loader:false, price: res.data })
             }
         }
     }
     async setReceiveAmount(e) {
         let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.fromCoinInputValue, this.props.userProfile.id, 'swap');
         if (res.ok) {
-            this.setState({ ...this.state, receiveValue: res.data })
+            this.setState({ ...this.state,loader:false, receiveValue: res.data })
         }
     }
     confirmswapvalidation() {
@@ -100,7 +101,7 @@ class SwapSummary extends Component {
     render() {
         return (
             <><div ref={this.useDivRef}></div>{(this.state.receiveValue && this.state.price && this.props.swapStore.fromCoinInputValue && this.props.swapStore?.coinDetailData?.coin) ? <Summary
-                loading={false}
+                loading={this.state.loader}
                 coin={this.props.swapStore?.coinReceiveDetailData?.coin}
                 nativeCurrency={this.props.swapStore?.coinReceiveDetailData?.coin}
                 oneCoinValue={this.state.price}
