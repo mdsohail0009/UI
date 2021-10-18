@@ -25,7 +25,7 @@ class SelectSellCrypto extends Component {
     }
     fetchdefaultMinAmntValues = async () => {
         this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue })
-        let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true, this.props.sellData?.coinDetailData?.coin,false,this.props.member?.id,null);
+        let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true, this.props.sellData?.coinDetailData?.coin,false,this.props.member?.id,null,this.state.sellSaveData.toWalletCode?this.state.sellSaveData.toWalletCode:"USD");
         if (res.ok) {
             this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: false }, () => {
                 this.swapRef.current.changeInfo({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt });
@@ -125,7 +125,7 @@ class SelectSellCrypto extends Component {
     }
     refreshAmnts=async()=>{
         this.setState({ ...this.state, CryptoAmnt: this.state.CryptoAmnt })
-        let res = await getSellamnt(this.state.CryptoAmnt, true, this.props.sellData?.coinDetailData?.coin,false,this.props.member?.id,null);
+        let res = await getSellamnt(this.state.CryptoAmnt, true, this.props.sellData?.coinDetailData?.coin,false,this.props.member?.id,null,this.state.sellSaveData.toWalletCode?this.state.sellSaveData.toWalletCode:"USD");
         if (res.ok) {
             this.setState({ CryptoAmnt: this.state.CryptoAmnt, USDAmnt: res.data, isSwap: false }, () => {
                 this.swapRef.current.changeInfo({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt });
