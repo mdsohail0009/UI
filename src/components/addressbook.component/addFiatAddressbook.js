@@ -6,7 +6,6 @@ import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import WalletList from '../shared/walletList';
 import { saveAddress, favouriteNameCheck, getAddress } from './api';
-import { fetchGetAddress } from '../../reducers/addressBookReducer';
 import Loader from '../../Shared/loader';
 
 const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) => {
@@ -20,8 +19,8 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
     useEffect(() => {
         if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && addressBookReducer?.selectedRowData?.id ) {
             loadDataAddress();
-        }
-    }, [])
+           }
+        }, [])
     const loadDataAddress = async () => {
         setIsLoading(true)
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'fiat');

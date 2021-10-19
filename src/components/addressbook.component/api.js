@@ -13,8 +13,8 @@ const favouriteNameCheck = (member_id, name, type,favaddrId) => {
 const saveAddress = (obj) => {
     return apiClient.post(ApiControllers.depositWithdraw + `AddFavourite`, obj);
 }
-const getCoinList = (member_id) => {
-    return apiClient.get(ApiControllers.swap+`MemberCoins?memberId=${member_id}`);
+const getCoinList = (type) => {
+    return apiClient.get(ApiControllers.buySell+`Coins?type=${type}`);
 }
 const getSelectedCoinDetails = (coin_code, member_id) => {
     return apiClient.get(ApiControllers.buySell + `MemberCoinDetail?memberId=${member_id}&coin=${coin_code}`)
