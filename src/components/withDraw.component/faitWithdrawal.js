@@ -63,6 +63,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
       {"walletCode":"","totalValue":"","accountNumber":"","routingNumber":"","bankName":"","bankAddress":"","bankAddress2":"","zipcode":"","beneficiaryAccountName":"","beneficiaryAccountAddress":"","beneficiaryAccountAddress1":"","description":"","country":null,"state":null, "isAccept":false}
       setSaveObj({...clearobj, walletCode: walletId});
        setAddressDetails({});
+       setStateLu([]);
        form.setFieldsValue({ ...clearobj, walletCode: walletId,  })
     }
     form.setFieldsValue({ walletCode: walletId })
@@ -118,7 +119,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     if (recName.ok) {
       setStateLu(recName.data);
     }
-   // form.setFieldsValue({ state: null })
+   //form.setFieldsValue({ state: null })
   }
 const selectAddress = () =>{
   let values = form.getFieldsValue()
