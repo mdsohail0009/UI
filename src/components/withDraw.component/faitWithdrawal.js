@@ -60,7 +60,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   const handleWalletSelection = (walletId, isClearObj) => {
     if(isClearObj){
       let clearobj = 
-      {"walletCode":"","totalValue":"","accountNumber":"","routingNumber":"","bankName":"","bankAddress":"","bankAddress2":"","zipcode":"","beneficiaryAccountName":"","beneficiaryAccountAddress":"","beneficiaryAccountAddress1":"","description":"","country":null,"state":null, "isAccept":false}
+      {"walletCode":"","totalValue":"","accountNumber":"","routingNumber":"","bankName":"","bankAddress":"","bankAddress2":"","zipcode":"","beneficiaryAccountName":"","beneficiaryAccountAddress":"","beneficiaryAccountAddress1":"","description":"","country":null,"state":null, "isAccept":false, "favouriteName":null}
       setSaveObj({...clearobj, walletCode: walletId});
        setAddressDetails({});
        setStateLu([]);
