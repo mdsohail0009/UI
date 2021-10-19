@@ -124,12 +124,17 @@ class SelectSellCrypto extends Component {
         })
     }
     refreshAmnts=async()=>{
-        this.setState({ ...this.state, CryptoAmnt: this.state.CryptoAmnt })
-        let res = await getSellamnt(this.state.CryptoAmnt, true, this.props.sellData?.coinDetailData?.coin,false,this.props.member?.id,null,this.state.sellSaveData.toWalletCode?this.state.sellSaveData.toWalletCode:"USD");
-        if (res.ok) {
-            this.setState({ CryptoAmnt: this.state.CryptoAmnt, USDAmnt: res.data, isSwap: false }, () => {
-                this.swapRef.current.changeInfo({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt });
-            })
+        if ((!this.state.USDAmnt && !this.state.CryptoAmnt) || (parseFloat(this.state.USDAmnt) === 0 || parseFloat(this.state.CryptoAmnt) === 0)) {
+            this.setState({ ...this.state, errorMessage: 'Enter amount' })
+            this.myRef.current.scrollIntoView();
+        }else{
+            this.setState({ ...this.state, CryptoAmnt: this.state.CryptoAmnt, errorMessage: '' })
+            let res = await getSellamnt(this.state.CryptoAmnt, true, this.props.sellData?.coinDetailData?.coin,false,this.props.member?.id,null,this.state.sellSaveData.toWalletCode?this.state.sellSaveData.toWalletCode:"USD");
+            if (res.ok) {
+                this.setState({ CryptoAmnt: this.state.CryptoAmnt, USDAmnt: res.data, isSwap: false }, () => {
+                    this.swapRef.current.changeInfo({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt });
+                })
+            }
         }
     }
     render() {

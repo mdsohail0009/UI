@@ -122,7 +122,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   }
 const selectAddress = () =>{
   let values = form.getFieldsValue()
-  values.favouriteName = addressDetails.favouriteName
+  values.favouriteName = values.favouriteName || addressDetails.favouriteName
   dispatch(setWithdrawfiat(values));
   changeStep('step4');
 }
@@ -147,7 +147,7 @@ const selectAddress = () =>{
     values['membershipId'] = userConfig.id
     values['memberWalletId'] = selectedWallet.id
     values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName
-    values['favouriteName'] = addressDetails.favouriteName
+    values['favouriteName'] = values.favouriteName||addressDetails.favouriteName
     setSaveObj(values);
     dispatch(setWithdrawfiat(values))
     setConfirmationStep('step2')
