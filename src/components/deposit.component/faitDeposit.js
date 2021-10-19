@@ -8,6 +8,7 @@ import SellToggle from '../withDraw.component/faitWithdrawal';
 import config from '../../config/config';
 import NumberFormat from 'react-number-format';
 import { getCurrencieswithBankDetails,setdepositCurrency } from '../../reducers/depositReducer'
+import { rejectWithdrawfiat } from '../../reducers/sendreceiveReducer'
 import { savedepositFiat, requestDepositFiat } from './api';
 import Loader from '../../Shared/loader';
 import success from '../../assets/images/success.png';
@@ -74,7 +75,10 @@ class FaitDeposit extends Component {
   }
   handleBuySellToggle = e => {
     this.handleshowTab(e.target.value)
-    if(e.target.value==1){this.props.fetchCurrencyWithBankDetails()}
+    if(e.target.value==1){
+      this.props.fetchCurrencyWithBankDetails()
+      this.props.dispatch(rejectWithdrawfiat())
+    }
   }
   handleshowTab = async(tabKey) =>{
     this.setState({
