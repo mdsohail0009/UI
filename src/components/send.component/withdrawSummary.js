@@ -117,7 +117,7 @@ class WithdrawSummary extends Component {
                     </div> */}
                     <div className="d-flex p-16 mb-36 agree-check">
                         <label>
-                            <input type="checkbox" id="agree-check" onChange={({ currentTarget: { checked } }) => { this.setState({ onTermsChange: checked ? true : false }) }} />
+                            <input type="checkbox" id="agree-check" checked={this.state.onTermsChange} onChange={({ currentTarget: { checked } }) => { this.setState({ onTermsChange: checked ? true : false }) }} />
                             <span for="agree-check" />
                         </label>
                         <Paragraph className="fs-14 text-white-30 ml-16 mb-0" style={{ flex: 1 }} >

@@ -100,7 +100,8 @@ class SwapSummary extends Component {
 
     render() {
         return (
-            <><div ref={this.useDivRef}></div>{(this.state.receiveValue && this.state.price && this.props.swapStore.fromCoinInputValue && this.props.swapStore?.coinDetailData?.coin) ? <Summary
+            <><div ref={this.useDivRef}></div>
+            {(this.state.receiveValue && this.state.price && this.props.swapStore.fromCoinInputValue && this.props.swapStore?.coinDetailData?.coin) ? <Summary
                 loading={this.state.loader}
                 coin={this.props.swapStore?.coinReceiveDetailData?.coin}
                 nativeCurrency={this.props.swapStore?.coinReceiveDetailData?.coin}
@@ -118,6 +119,7 @@ class SwapSummary extends Component {
                 onCancel={() => this.props.changeStep('step1')}
                 onClick={() => this.confirmSwap()}
                 onTermsChange={(checked) => { this.setState({ ...this.state, agreeValue: checked }) }}
+                onCheked = {this.state.agreeValue}
                 onErrorClose={() => this.setState({ ...this.state, errorMessage: null })}
                 isButtonLoad={this.state.isLoading}
             /> : <Loader />}

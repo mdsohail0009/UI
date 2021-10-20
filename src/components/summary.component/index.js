@@ -20,7 +20,7 @@ class Summary extends Component {
             return <Loader />
         }
         const { Paragraph, Text } = Typography;
-        const { coin, oneCoinValue, amount, amountNativeCurrency, nativeCurrency, error, isButtonLoad, showFee, feeAmount, feeCurrency, okBtnTitle, showEstimatedTotal = true, showConvert = false, convertValue, convertCoin, showEstimated = true, exchangeCoin, decimalPlaces, onErrorClose } = this.props;
+        const { coin, oneCoinValue, amount, amountNativeCurrency, nativeCurrency, error, isButtonLoad, showFee, feeAmount, feeCurrency, okBtnTitle, showEstimatedTotal = true, showConvert = false, convertValue, convertCoin, showEstimated = true, exchangeCoin, decimalPlaces, onErrorClose,onCheked } = this.props;
         const link = <LinkValue content="terms_service" />;
         return (
             <>
@@ -57,7 +57,7 @@ class Summary extends Component {
                         10 seconds.</div>
                     <div className="d-flex p-16 mb-36 agree-check">
                         <label>
-                            <input type="checkbox" id="agree-check" onChange={({ currentTarget: { checked } }) => { this.props.onTermsChange(checked) }} />
+                            <input type="checkbox" id="agree-check" checked={onCheked} onChange={({ currentTarget: { checked } }) => { this.props.onTermsChange(checked) }} />
                             <span for="agree-check" />
                         </label>
                         <Paragraph className="fs-14 text-white-30 ml-16 mb-0" style={{ flex: 1 }} >

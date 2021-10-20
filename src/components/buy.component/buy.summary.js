@@ -75,6 +75,7 @@ class BuySummary extends Component {
             onCancel={() => this.props.setStep('step1')}
             onClick={() => this.pay()}
             onTermsChange={(checked)=>{this.setState({...this.state,isTermsAgreed:checked})}}
+            onCheked = {this.state.isTermsAgreed}
             isButtonLoad={this.state.isLoading}
             onErrorClose = {()=>this.setState({...this.state,error:{valid:true,message:null}})}
         />
