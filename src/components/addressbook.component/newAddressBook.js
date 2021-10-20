@@ -144,7 +144,6 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                            
                             {
                                 type: "toWalletAddress", validator: async (rule, value, callback) => {
-                                     debugger;
                                     if (value == null || value.trim() === "") {
                                         throw new Error("Is required")
                                     }

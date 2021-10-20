@@ -6,7 +6,7 @@ import { processSteps as config } from './config';
 import NewAddressBook from './newAddressBook';
 import List from '../grid.component';
 import NewFiatAddress from './addFiatAddressbook';
-import { getCoinList, activeInactive } from './api';
+import { activeInactive } from './api';
 import SelectCrypto from './selectCrypto';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -68,10 +68,6 @@ class AddressBook extends Component {
         { field: "address", title: "Address", filter: true, width: 380 },
         { field: "status", title: "Status", filter: true, width: 100 }
     ];
-    componentDidMount() {
-        this.coinList()
-        //this.setState({memberId:userConfig.id})
-    }
     handleInputChange = (prop, e) => {
         const rowObj = prop.dataItem;
         const value = e.currentTarget.type === 'checkbox' ? e.currentTarget.checked : e.currentTarget.value;
@@ -150,15 +146,8 @@ class AddressBook extends Component {
     setSuccessMsg = () => {
         this.setState({ ...this.state, successMsg: false })
     }
-    coinList = async () => {
-        let fromlist = await getCoinList(this.props.userConfig?.id)
-        if (fromlist.ok) {
-            this.setState({ ...this.state, fromCoinsList: fromlist.data, isLoading: false })
-        } else {
-            this.setState({ ...this.state, fromCoinsList: [], isLoading: false })
-        }
-    }
     addAddressBook = () => {
+        debugger
         if (this.state.cryptoFiat) {
             this.setState({ ...this.state, fiatDrawer: true })
             this.props.clearFormValues();

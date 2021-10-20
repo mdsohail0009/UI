@@ -4,7 +4,7 @@ import { setAddressStep, setAddressCoin, fetchSelectedCoinDetails, setExchangeVa
 import { connect } from 'react-redux';
 import CryptoList from '../shared/cryptolist';
 import { getCoinList } from './api';
-import { convertCurrency } from '../buy.component/buySellService';
+// import { convertCurrency } from '../buy.component/buySellService';
 
 class SelectCrypto extends Component {
     state = {
@@ -20,8 +20,8 @@ class SelectCrypto extends Component {
         this.coinList();
     }
     coinList = async () => {
-        let fromlist = await getCoinList(this.props.userProfile?.id)
-        if (fromlist.ok) {
+        let fromlist = await getCoinList("All")      
+          if (fromlist.ok) {
             this.setState({ ...this.state, coinsList: fromlist.data, isLoading: false })
         } else {
             this.setState({ ...this.state, coinsList: [], isLoading: false })
@@ -34,19 +34,12 @@ class SelectCrypto extends Component {
     }
 
     handleCoinSelection = (selectedCoin) => {
-        debugger
         let cryptoValues = this.props.addressBookReducer.cryptoValues;
-        this.props.InputFormValues({ ...cryptoValues, toCoin: selectedCoin.coin })
-        this.props.getCoinDetails(selectedCoin.coin, this.props.userProfile?.userId);
+        this.props.InputFormValues({ ...cryptoValues, toCoin: selectedCoin.walletCode })
         this.props.setSelectedCoin(selectedCoin);
-        convertCurrency({ from: selectedCoin.walletCode, to: "USD", value: 1, isCrypto: false, memId: this.props.userProfile?.id, screenName: null }).then(val => {
-            this.props.setExchangeValue({ key: selectedCoin.walletCode, value: val });
-        })
         this.props.changeStep('step1')
-        //this.props.onCoinClick(selectedCoin)
     }
     render() {
-
         return (<><div ref={this.useDivRef}></div>
             {this.state.errorMessage != null && <Alert
                 description={this.state.errorMessage}
@@ -54,7 +47,7 @@ class SelectCrypto extends Component {
                 showIcon
                 closable={false}
             />}
-            <CryptoList coinType="swap" showSearch={true} showValues={true} titleField={'coin'} iconField={'coin'}
+            <CryptoList showSearch={true} showValues={true} titleField={'walletCode'} iconField={'walletCode'}
                 coinList={this.state.coinsList} selectedCoin={this.props.addressBookReducer.coinWallet ? this.props.addressBookReducer.coinWallet : this.props.addressBookReducer?.selectedRowData} onReturnCoin={true} isLoading={this.state.isLoading} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
         </>)
     }
