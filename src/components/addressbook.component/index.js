@@ -162,7 +162,8 @@ class AddressBook extends Component {
             this.setState({ alert: true })
             setTimeout(() => this.setState({ alert: false }), 2000)
         } else {
-            const obj = this.state.selectedObj;
+            let obj = this.state.selectedObj;
+            obj.walletCode = obj.coin;
             this.props.rowSelectedData(obj)
             if (this.state.cryptoFiat) {
                 this.setState({ ...this.state, fiatDrawer: true, selection: [],isCheck: false, })
