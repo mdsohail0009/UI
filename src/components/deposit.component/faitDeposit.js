@@ -243,7 +243,7 @@ class FaitDeposit extends Component {
                   content="currency"
                   component={Text}
                 /><span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
-                    <Select dropdownClassName="select-drpdwn" placeholder="Select Currency" className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true} getPopupContainer={() => document.getElementById('currency')}
+                    <Select dropdownClassName="select-drpdwn" placeholder="Select Currency" className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true} 
                       onChange={(e) => { this.handlFiatDep(e, currenciesWithBankInfo) }} value={depObj.currency}>
                       {currenciesWithBankInfo?.map((item, idx) =>
                         <Option key={idx} value={item.walletCode}>{item.walletCode}
