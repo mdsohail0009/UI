@@ -1,19 +1,19 @@
 import React from 'react';
 import { List, Drawer, Typography } from 'antd';
 const { Text } = Typography;
-const Notifications = (props) => {
+const Notifications = ({onClose,showDrawer}) => {
     return (
         <>
             <Drawer
                 title={[<div className="side-drawer-header">
                     <span className="text-white">Notifications</span>
                     <div className="text-center fs-16"></div>
-                    <span onClick={props.onClose} className="icon md close-white c-pointer" />
+                    <span onClick={onClose} className="icon md close-white c-pointer" />
                 </div>]}
                 placement="right"
                 closable={false}
-                onClose={props.onClose}
-                visible={props.showDrawer}
+                onClose={onClose}
+                visible={showDrawer}
                 className="side-drawer"
             >
                 <List
