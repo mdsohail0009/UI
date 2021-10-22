@@ -51,7 +51,7 @@ class Notificationslist extends Component {
                         <List.Item style={{ borderWidth: '0px' }} >
                             <List.Item.Meta
                                 className="approvebg"
-                                avatar={<span className="icon md close-white c-pointer" />}
+                                avatar={<span className="icon md approve c-pointer" />}
                                 title={<div className="d-flex justify-content align-center text-white-30"><p className="mb-0">Approve</p><p className="mb-0 text-secondary fs-14">Otc 20, 4.30 PM</p></div>}
                             />
                             <Text className="text-white-30">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an printer </Text>
