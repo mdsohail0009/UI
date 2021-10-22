@@ -6,7 +6,7 @@ import { getmemeberInfo } from '../../reducers/configReduser';
 class Settings extends Component {
     formRef = createRef();
     state = {
-        SettingsLu: '',theme:false,settingsObj:{MemberId:'',Language:null,LCurrency:null,Theme:''}
+        SettingsLu: '',theme:this.props.member?.Theme=='Light Theme'?true:false,settingsObj:{MemberId:'',Language:this.props.member?.Language?this.props.member?.Language:null,LCurrency:this.props.member?.LCurrency?this.props.member?.LCurrency:null,Theme:this.props.member?.Theme?this.props.member?.Theme:null}
     }
     componentDidMount(){
       this.getSettingsLu()
