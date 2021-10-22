@@ -4,6 +4,14 @@ import {getSettingsLuData,saveSettingsData} from '../../api/apiServer'
 import { connect } from 'react-redux';
 import { getmemeberInfo } from '../../reducers/configReduser';
 import { useThemeSwitcher } from 'react-css-theme-switcher';
+import counterpart from 'counterpart';
+import en from '../../lang/en';
+import ch from '../../lang/ch';
+import my from '../../lang/my';
+counterpart.registerTranslations('en', en);
+counterpart.registerTranslations('ch', ch);
+counterpart.registerTranslations('my', my);
+counterpart.setLocale('en');
 const Settings =({member,getmemeberInfoa})=> {
     const { switcher, themes, status } = useThemeSwitcher();
     const [isDarkMode, setIsDarkMode] = React.useState(true);
@@ -33,6 +41,7 @@ const Settings =({member,getmemeberInfoa})=> {
                 switcher({ theme: previous ? themes.LHT : themes.DRT });
                 return !previous;
             });
+            counterpart.setLocale(settingsObj.Language);
         } 
     }
     const themeSwitch=() =>{
