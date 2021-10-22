@@ -37,10 +37,7 @@ const Settings =({member,getmemeberInfoa})=> {
             message.destroy()
             message.success({ content: 'Settings saved successfully' , className:'custom-msg'});
             getmemeberInfoa(member.userId)
-            setIsDarkMode(previous => {
-                switcher({ theme: previous ? themes.LHT : themes.DRT });
-                return !previous;
-            });
+                switcher({ theme: theme ? themes.LHT : themes.DRT });
             counterpart.setLocale(settingsObj.Language);
         } 
     }
@@ -62,6 +59,7 @@ const Settings =({member,getmemeberInfoa})=> {
                 <Paragraph className="basic-decs">User customized settings</Paragraph>
         
                 <div className="pb-16 border-bottom">
+                <Text className="input-label">Language</Text>
                 <Form.Item
                   className="custom-forminput mb-24"
                   name="Language"
@@ -70,7 +68,7 @@ const Settings =({member,getmemeberInfoa})=> {
                   rules={[
                     { required: true, message: "Is required" },
                   ]}
-                ><Text className="input-label">Language</Text>
+                >
                     <Select placeholder="Select Language"  bordered={false}
                      className="cust-input cust-select mb-0"
                      dropdownClassName="select-drpdwn"
@@ -80,6 +78,7 @@ const Settings =({member,getmemeberInfoa})=> {
                     </Select></Form.Item>
                 </div>
                 <div className="py-16 border-bottom">
+                <Text className="input-label">Currency</Text>
                 <Form.Item
                   className="custom-forminput mb-24"
                   name="LCurrency"
@@ -88,7 +87,7 @@ const Settings =({member,getmemeberInfoa})=> {
                   rules={[
                     { required: true, message: "Is required" },
                   ]}
-                ><Text className="input-label">Currency</Text>
+                >
                     <Select placeholder="Select Currency"  bordered={false}
                      className="cust-input cust-select mb-0"
                      dropdownClassName="select-drpdwn"
