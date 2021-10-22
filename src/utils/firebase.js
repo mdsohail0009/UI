@@ -17,7 +17,6 @@ messaging.requestPermission().then(() => {
 })
     .then((token) => {
         store.dispatch(setToken(token))
-        console.log(token)
     })
     .catch(err => {
         console.log(err)

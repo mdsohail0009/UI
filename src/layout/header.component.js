@@ -17,7 +17,7 @@ import { userManager } from '../authentication';
 import Changepassword from '../components/changepassword';
 import TransactionsHistory from '../components/transactions.history.component';
 import AuditLogs from '../components/auditlogs.component';
-import Notificationslist from '../notifications/notificationsList'
+import Notifications from '../notifications'
 import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata, clearSwapData } from '../reducers/swapReducer';
 import { connect } from 'react-redux';
 import DefaultUser from '../assets/images/defaultuser.jpg';
@@ -600,7 +600,7 @@ class Header extends Component {
                 <SwapCrypto swapRef={(cd) => this.child = cd} showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
                 <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
                 {this.state.transactionDrawer && <TransactionsHistory showDrawer={this.state.transactionDrawer} onClose={() => { this.closeDrawer(this.props.dispatch(setHeaderTab(""))); if (this.child1) { this.child1.setKy() } }} thref={(cd) => this.child1 = cd} />}
-                {this.state.notificationsDrawer && <Notificationslist showDrawer={this.state.notificationsDrawer} onClose={() => this.closeDrawer()} />}
+                {this.state.notificationsDrawer && <Notifications showDrawer={this.state.notificationsDrawer} onClose={() => this.closeDrawer()} />}
                 {this.state.auditlogsDrawer && <AuditLogs showDrawer={this.state.auditlogsDrawer} onClose={() => this.closeDrawer()} />}
                 <Drawer
                     title={[<div className="side-drawer-header">
