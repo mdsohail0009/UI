@@ -10,12 +10,14 @@ import ErrorBoundary from "antd/lib/alert/ErrorBoundary";
 import { AppInsightsContext } from "@microsoft/applicationinsights-react-js";
 import { reactPlugin } from "../../Shared/appinsights";
 import Notifications from "../../notifications";
-
+import { setNotificationCount } from '../../reducers/dashboardReducer'
 function App() {
   const [loading, setLoading] = useState(true);
   const [showNotifications, setNotifications] = useState(false);
   useEffect(() => {
     onMessageListener().then(payload => {
+      const { dashboard: { notificationCount } } = store.getState();
+      setNotificationCount(notificationCount ? notificationCount + 1 : 1);
       //setNotifications(true);
     })
     localStorage.setItem("__url", window.location.pathname);
