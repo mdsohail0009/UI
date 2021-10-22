@@ -17,12 +17,13 @@ import { userManager } from '../authentication';
 import Changepassword from '../components/changepassword';
 import TransactionsHistory from '../components/transactions.history.component';
 import AuditLogs from '../components/auditlogs.component';
-import Notificationslist from '../notifications/notificationsList'
+import Notifications from '../notifications'
 import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata, clearSwapData } from '../reducers/swapReducer';
 import { connect } from 'react-redux';
 import DefaultUser from '../assets/images/defaultuser.jpg';
 import { setHeaderTab } from '../reducers/buysellReducer';
 import {setdepositCurrency} from '../reducers/depositReducer'
+import { deleteToken } from '../notifications/api';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -139,7 +140,7 @@ class Header extends Component {
                     </div>
                 </li>
                
-                <li className="d-flex justify-content align-center c-pointer" onClick={() => userManager.signoutRedirect()}>
+                <li className="d-flex justify-content align-center c-pointer" onClick={() => {userManager.signoutRedirect();deleteToken({UserId:this.props?.userConfig?.id,Token:this.props?.oidc?.deviceToken})}}>
                     <Translate content="logout" component={Link} />
                     <span className="icon md rarrow-white" />
                 </li>
@@ -387,7 +388,7 @@ class Header extends Component {
                             </Dropdown>
                            
                             <Translate content="menu_transactions_history" component={Menu.Item} key="4" onClick={this.showTransactionHistoryDrawer} className="list-item" />
-                            <Menu.Item key="5" onClick={this.showNotificationsDrawer}><span className="icon md bell ml-4" /></Menu.Item>
+                            <Menu.Item key="5" onClick={this.showNotificationsDrawer}><span className="icon md bell ml-4" />{this.props.dashboard?.notificationCount}</Menu.Item>
                             <Dropdown onVisibleChange={()=>this.setState({...this.state,Visibleprofilemenu:!this.state.Visibleprofilemenu})} visible={this.state.Visibleprofilemenu} onClick={()=>this.setState({...this.state,Visibleprofilemenu:true})} overlay={userProfileMenu} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Menu.Item key="7" className="ml-16" >{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
                                     {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}</Menu.Item>
@@ -600,7 +601,7 @@ class Header extends Component {
                 <SwapCrypto swapRef={(cd) => this.child = cd} showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
                 <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
                 {this.state.transactionDrawer && <TransactionsHistory showDrawer={this.state.transactionDrawer} onClose={() => { this.closeDrawer(this.props.dispatch(setHeaderTab(""))); if (this.child1) { this.child1.setKy() } }} thref={(cd) => this.child1 = cd} />}
-                {this.state.notificationsDrawer && <Notificationslist showDrawer={this.state.notificationsDrawer} onClose={() => this.closeDrawer()} />}
+                {this.state.notificationsDrawer && <Notifications showDrawer={this.state.notificationsDrawer} onClose={() => this.closeDrawer()} />}
                 {this.state.auditlogsDrawer && <AuditLogs showDrawer={this.state.auditlogsDrawer} onClose={() => this.closeDrawer()} />}
                 <Drawer
                     title={[<div className="side-drawer-header">
@@ -626,7 +627,7 @@ class Header extends Component {
 }
 
 const connectStateToProps = ({ swapStore, userConfig, oidc, dashboard,buySell }) => {
-    return { swapStore, userConfig: userConfig.userProfileInfo, dashboard,buySell }
+    return { swapStore, userConfig: userConfig.userProfileInfo, dashboard,buySell,oidc }
 }
 const connectDispatchToProps = dispatch => {
     return {
