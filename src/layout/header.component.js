@@ -23,6 +23,7 @@ import { connect } from 'react-redux';
 import DefaultUser from '../assets/images/defaultuser.jpg';
 import { setHeaderTab } from '../reducers/buysellReducer';
 import {setdepositCurrency} from '../reducers/depositReducer'
+import { deleteToken } from '../notifications/api';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -139,7 +140,7 @@ class Header extends Component {
                     </div>
                 </li>
                
-                <li className="d-flex justify-content align-center c-pointer" onClick={() => userManager.signoutRedirect()}>
+                <li className="d-flex justify-content align-center c-pointer" onClick={() => {userManager.signoutRedirect();deleteToken({UserId:this.props?.userConfig?.id,Token:this.props?.oidc?.deviceToken})}}>
                     <Translate content="logout" component={Link} />
                     <span className="icon md rarrow-white" />
                 </li>
@@ -626,7 +627,7 @@ class Header extends Component {
 }
 
 const connectStateToProps = ({ swapStore, userConfig, oidc, dashboard,buySell }) => {
-    return { swapStore, userConfig: userConfig.userProfileInfo, dashboard,buySell }
+    return { swapStore, userConfig: userConfig.userProfileInfo, dashboard,buySell,oidc }
 }
 const connectDispatchToProps = dispatch => {
     return {

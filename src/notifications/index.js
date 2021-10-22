@@ -14,7 +14,6 @@ const Notifications = ({ onClose, showDrawer, userProfile,dispatch }) => {
     }, []);
     const fetchNotifications = async () => {
         setLoading(true);
-        debugger
         const response = await getNotifications(userProfile.id);
         if (response.ok) {
             setNotifications(response.data.listNotificationsModel || []);
@@ -48,11 +47,11 @@ const Notifications = ({ onClose, showDrawer, userProfile,dispatch }) => {
                 >
                     {notifications.data?.map((item, indx) => <List.Item key={indx} style={{ borderWidth: '0px' }} >
                         <List.Item.Meta
-                            className={`${item.notificationType}bg`}
+                            className={`${item.Action.toLowerCase()}bg`}
                             avatar={<span className="icon md recivewhitearrow c-pointer" />}
-                            title={<div className="d-flex justify-content align-center text-white-30"><p className="mb-0">{item.type}</p><p className="mb-0 text-secondary fs-14"><Moment format={"DD MMM YY"}></Moment></p></div>}
+                            title={<div className="d-flex justify-content align-center text-white-30"><p className="mb-0">{item.Action}</p><p className="mb-0 text-secondary fs-14"><Moment format={"DD MMM YY"}>{item.NotifiedDate }</Moment></p></div>}
                         />
-                        <Text className="text-white-30">{item?.description} </Text>
+                        <Text className="text-white-30">{item?.Message } </Text>
                     </List.Item>)}
                 </List>
             </Drawer>
