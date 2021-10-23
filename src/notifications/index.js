@@ -59,4 +59,4 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch }) => {
         </>
     )
 }
-export default connectStateProps(Notifications);;
+export default connectStateProps(Notifications);
