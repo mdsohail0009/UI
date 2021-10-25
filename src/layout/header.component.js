@@ -388,8 +388,7 @@ class Header extends Component {
                             </Dropdown>
                            
                             <Translate content="menu_transactions_history" component={Menu.Item} key="4" onClick={this.showTransactionHistoryDrawer} className="list-item" />
-                            {/* {this.props.dashboard?.notificationCount} */}
-                            <Menu.Item key="5" className="notification-conunt" onClick={this.showNotificationsDrawer}><span className="icon md bell ml-4 p-relative"><span>0</span></span></Menu.Item>
+                            <Menu.Item key="5" className="notification-conunt" onClick={this.showNotificationsDrawer}><span className="icon md bell ml-4 p-relative"><span>{this.props.dashboard?.notificationCount}</span></span></Menu.Item>
                             <Dropdown onVisibleChange={()=>this.setState({...this.state,Visibleprofilemenu:!this.state.Visibleprofilemenu})} visible={this.state.Visibleprofilemenu} onClick={()=>this.setState({...this.state,Visibleprofilemenu:true})} overlay={userProfileMenu} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Menu.Item key="7" className="ml-16" >{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
                                     {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}</Menu.Item>
