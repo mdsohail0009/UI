@@ -1,6 +1,7 @@
 import { apiClient } from './';
 import { appInsights } from "../Shared/appinsights";
 import { ApiControllers } from './config';
+import counterpart from 'counterpart';
 
 const getportfolio = (memID) => {
     return apiClient.get(ApiControllers.member +`MemberCrypto?memberId=`+memID);
@@ -36,5 +37,8 @@ const trackPageview = (obj) => {
 const sellMemberCrypto=(memID)=>{
     return apiClient.get(ApiControllers.buySell +`SellMemberCrypto?memberId=`+memID);
 }
-let apicalls = {getportfolio,getCryptos,getMember,sumsubacesstoken, updateKyc,sumsubacesstokennew,sumsublivenessacesstoken,trackEvent,trackPageview,sellMemberCrypto}
+const convertLocalLang=(key)=>{
+    return counterpart.translate(key)
+}
+let apicalls = {getportfolio,getCryptos,getMember,sumsubacesstoken, updateKyc,sumsubacesstokennew,sumsublivenessacesstoken,trackEvent,trackPageview,sellMemberCrypto,convertLocalLang}
 export default apicalls

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { List, Empty, Input } from 'antd';
 import NumberFormat from 'react-number-format';
+import apiCalls from '../../api/apiCalls';
 
 const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, showSearch, selectedCoin, iconField, titleField, onReturnCoin}) => {
     const [coinListData, setCoinListData] = useState([]);
@@ -34,7 +35,7 @@ const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, s
         if (onCoinSelected) { onCoinSelected(item) };
     }
     return (<>
-        {showSearch && <Search placeholder="Search Currency" addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { handleSearch(currentTarget.value) }} size="middle" bordered={false} className="my-16" />}
+        {showSearch && <Search placeholder={apiCalls.convertLocalLang('withdrawal_success')} addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { handleSearch(currentTarget.value) }} size="middle" bordered={false} className="my-16" />}
         <List
             itemLayout="horizontal"
             dataSource={coinListData}
