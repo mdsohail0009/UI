@@ -11,7 +11,7 @@ import my from '../../lang/my';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
-counterpart.setLocale('en');
+// counterpart.setLocale('en');
 const Settings =({member,getmemeberInfoa})=> {
     const { switcher, themes, status } = useThemeSwitcher();
     const [isDarkMode, setIsDarkMode] = React.useState(true);

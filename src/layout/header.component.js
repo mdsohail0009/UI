@@ -28,8 +28,6 @@ import { deleteToken } from '../notifications/api';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
-counterpart.setLocale('en');
-
 const LinkValue = (props) => {
     return (
         <Translate className="text-yellow fw-700 fs-16 d-inlineblock"
@@ -43,6 +41,9 @@ const { Title, Paragraph } = Typography;
 
 
 class Header extends Component {
+    componentDidMount(){
+        counterpart.setLocale(this.props.userConfig?this.props.userConfig.language:'en');
+    }
     securityMenu = (
 
         <Menu>
