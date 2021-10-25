@@ -15,14 +15,14 @@ class List extends React.Component {
     }
     renderDate = (props) => {
         if(props.dataItem[props.field]){
-            return <td><Moment format="DD/MM/YYYY">{props.dataItem[props.field]}</Moment></td>
+            return <td><Moment format="DD/MM/YYYY">{this.convertUTCToLocalTime(props.dataItem[props.field])}</Moment></td>
         }else{
             return <td>{props.dataItem[props.field]}</td>
         }
     }
     renderDateTime = (props) => {
         if(props.dataItem[props.field]){
-            return <td><Moment format="DD/MM/YYYY hh:mm:ss a" globalLocal={true}>{props.dataItem[props.field] + '.000Z'}</Moment></td>
+            return <td><Moment format="DD/MM/YYYY hh:mm:ss A" globalLocal={true}>{this.convertUTCToLocalTime(props.dataItem[props.field])}</Moment></td>
         }else{
             return <td>{props.dataItem[props.field]}</td>
         }
@@ -30,6 +30,22 @@ class List extends React.Component {
     renderNumber = (props) => {
         return <td>  <NumberFormat value={props?.dataItem[props.field]} decimalSeparator="." displayType={'text'} thousandSeparator={true} /></td>
     }
+    convertUTCToLocalTime = (dateString) => {
+        let date = new Date(dateString);
+        const milliseconds = Date.UTC(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate(),
+          date.getHours(),
+          date.getMinutes(),
+          date.getSeconds(),
+        );
+        const localTime = new Date(milliseconds);
+        let datetime = localTime.toISOString()
+        return datetime
+        // localTime.getDate() // local date
+        // localTime.getHours() // local hour
+      };
     render() {
         const { columns, url, additionalParams } = this.props
         return (
