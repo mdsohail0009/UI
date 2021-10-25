@@ -50,7 +50,7 @@ class userProfile extends Component {
                         <Security />
                     </TabPane>
                     <TabPane tab={<span><span className="icon lg settings-icon mr-16" />Settings</span>} key="3">
-                        <Settings />
+                    {this.state.activeTab == 3 &&<Settings />}
                     </TabPane>
                     <TabPane tab={<span><span className="icon lg documents-icon mr-16" />Documents</span>} key="4" destroyInactiveTabPane={true}>
                      
