@@ -202,7 +202,7 @@ class SwapCoins extends Component {
                            
                             //autoFocus = {(coinDetailData.coin && coinReceiveDetailData.coin) ? true : false}
                         />}
-                        {coinDetailData.coinBalance && <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} /></Text>}
+                        {coinDetailData.coinBalance && <Text className="text-purewhite mt-4 fs-12 fw-100"><Translate content="balance" component={Text} className="custom-font fw-300 fs-14 text-white" /> <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} /></Text>}
                     </div>
                     <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step3')} >
                         <div className="crypto-coin">
@@ -211,7 +211,9 @@ class SwapCoins extends Component {
                                 <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinDetailData.coinFullName}</Paragraph></>
                                 :
                                 <div className="text-center mt-4"><span className="default-circle swap-from"><span className="icon lg usd-default"></span></span>
-                                    <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-8">Select</Paragraph></div>}
+                            
+                                    <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-8">  <Translate content="Select" component={Paragraph} className="custom-font fw-300 fs-14 text-white " /></Paragraph>
+                                    </div>}
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>
                     </div>
@@ -241,7 +243,7 @@ class SwapCoins extends Component {
                             value={this.state.receiveValue}
                             
                         />}
-                        {(coinReceiveDetailData.coinBalance||coinReceiveDetailData.coinBalance===0) && <Text className="text-purewhite mt-4 fs-12 fw-100">Balance - <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinReceiveDetailData.coinBalance} suffixText={coinReceiveDetailData.coin} /></Text>}
+                        {(coinReceiveDetailData.coinBalance||coinReceiveDetailData.coinBalance===0) && <Text className="text-purewhite mt-4 fs-12 fw-100"><Translate content="balance" component={Text} className="custom-font fw-300 fs-14 text-white" /> <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinReceiveDetailData.coinBalance} suffixText={coinReceiveDetailData.coin} /></Text>}
                     </div>
                     <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => {if(coinDetailData.coinFullName){this.props.changeStep('step4');this.setState({ ...this.state, errorMessage:'' })}else{this.setState({ ...this.state, errorMessage: 'Please select from coin' })}}} >
                         <div className="crypto-coin">
@@ -249,7 +251,9 @@ class SwapCoins extends Component {
                                 <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinReceiveDetailData.coinFullName}</Paragraph></>
                                 :
                                 <div className="text-center mt-4"><span className="default-circle swap-to"><span className="icon lg usd-default"></span></span>
-                                    <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-8">Select</Paragraph></div>}
+                            
+                                    <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-8">  <Translate content="Select" component={Paragraph} className="custom-font fw-300 fs-14 text-white " /></Paragraph>
+                                    </div>}
 
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>
@@ -257,10 +261,10 @@ class SwapCoins extends Component {
                 </div>}
                 <div className="p-16 mt-24 text-center fw-200">
                     {coinDetailData.coinBalance && <Paragraph className="fs-16 text-white-30 mb-0 l-height-normal">
-                        Available <Currency className={'currencyContains'} prefix={""} decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} />
+                    <Translate content="available" component={Text} className="custom-font fw-300 fs-14 text-white" /> <Currency className={'currencyContains'} prefix={""} decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} />
                     </Paragraph>}
                     {(this.state.price && coinReceiveDetailData.coin)&& <Paragraph className="fs-16 text-white-30 l-height-normal">
-                        Exchange Rate <Currency className={'currencyContains fw-300 text-white-30'} defaultValue={this.state.price} decimalPlaces={"8"} prefix={""} suffixText={coinReceiveDetailData.coin} prefixText={`1 ${coinDetailData.coin} =  `}/>
+                    <Translate content="ExchangeRate" component={Text} className="custom-font fw-300 fs-14 text-white" /><Currency className={'currencyContains fw-300 text-white-30'} defaultValue={this.state.price} decimalPlaces={"8"} prefix={""} suffixText={coinReceiveDetailData.coin} prefixText={`1 ${coinDetailData.coin} =  `}/>
                     </Paragraph>}
                 </div>
                 <Translate size="large" block className="pop-btn mt-36" content="preview_swap" component={Button} onClick={() => { this.previewClick() }} />
