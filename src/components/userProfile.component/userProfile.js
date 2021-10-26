@@ -5,6 +5,7 @@ import Security from './security'
 import Documents from '../documents.component/documents';
 import AddressBook from '../addressbook.component';
 import QueryString from 'query-string'
+import Settings from './settings';
 const { TabPane } = Tabs;
 class userProfile extends Component {
     state = {
@@ -48,12 +49,15 @@ class userProfile extends Component {
                     <TabPane tab={<span><span className="icon lg security-icon mr-16" />Security</span>} key="2">
                         <Security />
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg documents-icon mr-16" />Documents</span>} key="3" destroyInactiveTabPane={true}>
-                     
-                        {this.state.activeTab == 3 &&     <Documents />}
+                    <TabPane tab={<span><span className="icon lg settings-icon mr-16" />Settings</span>} key="3">
+                    {this.state.activeTab == 3 &&<Settings />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg addressbook-icon mr-16" />Address Book</span>} key="4">
-                   {this.state.activeTab == 4 &&  <AddressBook  />}
+                    <TabPane tab={<span><span className="icon lg documents-icon mr-16" />Documents</span>} key="4" destroyInactiveTabPane={true}>
+                     
+                        {this.state.activeTab == 4 &&     <Documents />}
+                    </TabPane>
+                    <TabPane tab={<span><span className="icon lg addressbook-icon mr-16" />Address Book</span>} key="5">
+                   {this.state.activeTab == 5 &&  <AddressBook  />}
                     </TabPane>
                     
                 </Tabs>

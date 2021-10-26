@@ -37,3 +37,9 @@ export const withdrawSave = (obj) => {
 export const ProfileImageSave=(obj)=>{
     return apiClient.post(ApiControllers.member + "SaveImage", obj); 
 }
+export const getSettingsLuData=()=>{
+    return apiClient.get(ApiControllers.member + "settingslookup"); 
+}
+export const saveSettingsData=(obj)=>{
+    return apiClient.post(ApiControllers.member + "SaveSettings", obj); 
+}

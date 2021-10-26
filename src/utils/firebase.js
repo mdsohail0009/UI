@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import { saveUserToken } from '../notifications/api';
 import { setToken } from '../reducers/authReducer';
 import { store } from '../store'
 var firebaseConfig = {
@@ -16,8 +17,8 @@ messaging.requestPermission().then(() => {
     return messaging.getToken()
 })
     .then((token) => {
-        store.dispatch(setToken(token))
-        console.log(token)
+        store.dispatch(setToken(token));
+        saveUserToken({ UserId: store.getState().userConfig?.userProfileInfo?.id, Token: token });
     })
     .catch(err => {
         console.log(err)

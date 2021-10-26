@@ -17,17 +17,17 @@ import { userManager } from '../authentication';
 import Changepassword from '../components/changepassword';
 import TransactionsHistory from '../components/transactions.history.component';
 import AuditLogs from '../components/auditlogs.component';
+import Notifications from '../notifications'
 import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata, clearSwapData } from '../reducers/swapReducer';
 import { connect } from 'react-redux';
 import DefaultUser from '../assets/images/defaultuser.jpg';
 import { setHeaderTab } from '../reducers/buysellReducer';
 import {setdepositCurrency} from '../reducers/depositReducer'
+import { deleteToken } from '../notifications/api';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
-counterpart.setLocale('en');
-
 const LinkValue = (props) => {
     return (
         <Translate className="text-yellow fw-700 fs-16 d-inlineblock"
@@ -41,6 +41,9 @@ const { Title, Paragraph } = Typography;
 
 
 class Header extends Component {
+    componentDidMount(){
+        counterpart.setLocale(this.props.userConfig?this.props.userConfig.language:'en');
+    }
     securityMenu = (
 
         <Menu>
@@ -138,7 +141,7 @@ class Header extends Component {
                     </div>
                 </li>
                
-                <li className="d-flex justify-content align-center c-pointer" onClick={() => userManager.signoutRedirect()}>
+                <li className="d-flex justify-content align-center c-pointer" onClick={() => {userManager.signoutRedirect();deleteToken({UserId:this.props?.userConfig?.id,Token:this.props?.oidc?.deviceToken})}}>
                     <Translate content="logout" component={Link} />
                     <span className="icon md rarrow-white" />
                 </li>
@@ -163,6 +166,7 @@ class Header extends Component {
             buyFiatDrawer: false,
             showChangePassword: false,
             transactionDrawer: false,
+            notificationsDrawer: false,
             auditlogsDrawer: false,Visibleprofilemenu:false
         }
         this.next = this.next.bind(this);
@@ -236,6 +240,11 @@ class Header extends Component {
             transactionDrawer: true,Visibleprofilemenu:false
         })
     }
+    showNotificationsDrawer = () => {
+        this.setState({
+            notificationsDrawer: true,Visibleprofilemenu:false
+        })
+    }
     showAuditLogsDrawer = () => {
         this.setState({
             auditlogsDrawer: true,Visibleprofilemenu:false
@@ -302,6 +311,7 @@ class Header extends Component {
             swapDrawer: false,
             buyFiatDrawer: false,
             transactionDrawer: false,
+            notificationsDrawer: false,
             auditlogsDrawer: false,Visibleprofilemenu:false
         })
     }
@@ -363,7 +373,6 @@ class Header extends Component {
                                 <li className="mb-d-none px-36"><Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? " Business" : " Personal" }} onClick={() => this.props.userConfig.isKYC?this.props.history.push('/dashboard'):this.props.history.push("/notkyc")} component="p" className="text-white-30 mb-0 fs-24 c-pointer" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
-
                                 <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
                                 <Dropdown overlay={userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                     <Menu.Item key="7">{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
@@ -379,7 +388,7 @@ class Header extends Component {
                             </Dropdown>
                            
                             <Translate content="menu_transactions_history" component={Menu.Item} key="4" onClick={this.showTransactionHistoryDrawer} className="list-item" />
-                            {/* <Menu.Item key="6"><span className="icon md bell ml-4" /></Menu.Item> */}
+                            <Menu.Item key="5" className="notification-conunt" onClick={this.showNotificationsDrawer}><span className="icon md bell ml-4 p-relative"><span>{this.props.dashboard?.notificationCount}</span></span></Menu.Item>
                             <Dropdown onVisibleChange={()=>this.setState({...this.state,Visibleprofilemenu:!this.state.Visibleprofilemenu})} visible={this.state.Visibleprofilemenu} onClick={()=>this.setState({...this.state,Visibleprofilemenu:true})} overlay={userProfileMenu} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Menu.Item key="7" className="ml-16" >{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
                                     {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}</Menu.Item>
@@ -592,6 +601,7 @@ class Header extends Component {
                 <SwapCrypto swapRef={(cd) => this.child = cd} showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
                 <MassPayment showDrawer={this.state.buyFiatDrawer} onClose={() => this.closeDrawer()} />
                 {this.state.transactionDrawer && <TransactionsHistory showDrawer={this.state.transactionDrawer} onClose={() => { this.closeDrawer(this.props.dispatch(setHeaderTab(""))); if (this.child1) { this.child1.setKy() } }} thref={(cd) => this.child1 = cd} />}
+                {this.state.notificationsDrawer && <Notifications showDrawer={this.state.notificationsDrawer} onClose={() => this.closeDrawer()} />}
                 {this.state.auditlogsDrawer && <AuditLogs showDrawer={this.state.auditlogsDrawer} onClose={() => this.closeDrawer()} />}
                 <Drawer
                     title={[<div className="side-drawer-header">
@@ -617,7 +627,7 @@ class Header extends Component {
 }
 
 const connectStateToProps = ({ swapStore, userConfig, oidc, dashboard,buySell }) => {
-    return { swapStore, userConfig: userConfig.userProfileInfo, dashboard,buySell }
+    return { swapStore, userConfig: userConfig.userProfileInfo, dashboard,buySell,oidc }
 }
 const connectDispatchToProps = dispatch => {
     return {

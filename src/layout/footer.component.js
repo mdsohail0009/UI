@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Layout, Typography, Button } from 'antd';
-// import counterpart from 'counterpart';
-// import en from '../lang/en';
-// import ch from '../lang/ch';
-// import my from '../lang/my';
+import counterpart from 'counterpart';
+import en from '../lang/en';
+import ch from '../lang/ch';
+import my from '../lang/my';
 import { useThemeSwitcher } from 'react-css-theme-switcher';
+import { connect } from 'react-redux';
 
-// counterpart.registerTranslations('en', en);
-// counterpart.registerTranslations('ch', ch);
-// counterpart.registerTranslations('my', my);
+counterpart.registerTranslations('en', en);
+counterpart.registerTranslations('ch', ch);
+counterpart.registerTranslations('my', my);
 // counterpart.setLocale('en');
 
 const { Footer: AntFooter } = Layout
 
-function Footer() {
+function Footer({member}) {
     const { switcher, themes, status } = useThemeSwitcher();
     const [isDarkMode, setIsDarkMode] = React.useState(true);
     //const [lang, setLang] = useState('en')
     const [theme, setTheme] = useState('LRT')
+    useEffect(()=>{
+        switcher({ theme: member?.theme =='Light Theme'? themes.LHT : themes.DRT });
+        counterpart.setLocale(member?.language?member?.language:'en');
+      },[])
     if (status == 'loading') {
         return <div>Loading styles...</div>;
     }
@@ -66,5 +71,7 @@ function Footer() {
 
 
 }
-
-export default Footer
+const connectStateToProps = ({ userConfig }) => {
+    return { member: userConfig.userProfileInfo }
+}
+export default connect(connectStateToProps)(Footer)
