@@ -19,7 +19,7 @@ const Settings =({member,getmemeberInfoa})=> {
   const [form] = Form.useForm();
     const [SettingsLu,setSettingsLu]=useState('')
     const [theme,setTheme]=useState(member?.theme=='Light Theme'?true:false);
-    const [settingsObj,setSettingsObj]=useState({MemberId:'',Language:member?.language?member.language:null,LCurrency:member?.lCurrency?member.lCurrency:null,Theme:member?.theme?member.theme:null})
+    const [settingsObj,setSettingsObj]=useState({MemberId:'',Language:member?.language?member.language:'en',LCurrency:member?.lCurrency?member.lCurrency:'USD',Theme:member?.theme?member.theme:null})
     useEffect(()=>{
       getSettingsLu()
       switcher({ theme: member?.theme =='Light Theme'? themes.LHT : themes.DRT });
