@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import WalletList from '../shared/walletList';
 import { saveAddress, favouriteNameCheck, getAddress } from './api';
 import Loader from '../../Shared/loader';
+import apicalls from '../../api/apiCalls';
 
 const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) => {
     const [form] = Form.useForm();
@@ -71,6 +72,15 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                 setIsLoading(false)
             }
             else { setIsLoading(false) }
+        }
+    }
+    const getIbanData = async(val) =>{
+        if(val){
+            let response = await apicalls.getIBANData(val);
+            if (response.ok) {
+                const oldVal= form.getFieldValue();
+                form.setFieldsValue({ routingNumber:response.data.routingNumber||oldVal.routingNumber, bankName:response.data.bankName||oldVal.bankName,bankAddress:response.data.bankAddress||oldVal.bankAddress })
+            }
         }
     }
     const { Paragraph, Text } = Typography;
@@ -159,7 +169,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             }
                         ]}
                     >
-                        <Input className="cust-input"  placeholder="Bank account number/IBAN" />
+                        <Input className="cust-input"  placeholder="Bank account number/IBAN" onBlur={(val)=>getIbanData(val.currentTarget.value)} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"

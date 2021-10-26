@@ -55,7 +55,7 @@ class SelectCrypto extends Component {
     handleWalletSelection = (walletId) => {
         const selectedWallet = this.props.buyInfo?.memberFiat?.data?.filter(item => item.id === walletId)[0];
         this.setState({ ...this.state, selectedWallet },()=>{
-            this.swapRef.current.handleConvertion({cryptoValue:this.state.swapValues.cryptoValue,localValue:this.state.swapValues.localValue,locCurrency:selectedWallet.currencyCode})
+            this.swapRef.current.handleWalletChange({cryptoValue:this.state.swapValues.cryptoValue,localValue:this.state.swapValues.localValue,locCurrency:selectedWallet.currencyCode})
         });
         this.props.setWallet(selectedWallet);
     }
@@ -68,7 +68,7 @@ class SelectCrypto extends Component {
             this.myRef.current.scrollIntoView();
             return;
         }
-        this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue), !isSwaped);
+        this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue), !isSwaped,this.props?.userProfileInfo.id);
         this.props.setStep('step3');
     }
     refresh=()=>{
@@ -128,8 +128,8 @@ const connectDispatchToProps = dispatch => {
         setStep: (stepcode) => {
             dispatch(changeStep(stepcode))
         },
-        preview: (wallet, coin, amount, isCrypto) => {
-            dispatch(fetchPreview({ coin, wallet, amount, isCrypto }))
+        preview: (wallet, coin, amount, isCrypto,memberId) => {
+            dispatch(fetchPreview({ coin, wallet, amount, isCrypto,memberId }))
         },
         setWallet: (wallet) => {
             dispatch(setWallet(wallet))

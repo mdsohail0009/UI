@@ -6,6 +6,7 @@ import { uploadClient } from '../../api'
 import { ProfileImageSave } from '../../api/apiServer'
 import { getmemeberInfo } from '../../reducers/configReduser';
 import DefaultUser from '../../assets/images/defaultuser.jpg';
+import Translate from 'react-translate-component';
 
 import Loader from '../../Shared/loader'
 
@@ -55,7 +56,7 @@ class ProfileInfo extends Component {
         }
     }
     render() {
-        const { Title, Paragraph } = Typography;
+        const { Title, Paragraph,Text} = Typography;
         return (<>
             <div className="profile-info text-center">
                 {this.state.Loader && <Loader />}
@@ -65,8 +66,9 @@ class ProfileInfo extends Component {
                         <Button shape="circle" type="primary" className="img-upld" size="large" icon={<span className="icon md camera" />} />
                     </Upload></>}
             </div>
+        
             <div className="box basic-info">
-                <Title className="basicinfo">Basic Info</Title>
+                <Title className="basicinfo"> <Translate content="BasicInfo" component={Text} className="custom-font text-white " /></Title>
                 <Paragraph className="basic-decs">Basic Info, like your name and photo, that you use on Suissebase</Paragraph>
                 <ul className="user-list pl-0">
                     <li className="profileinfo">
