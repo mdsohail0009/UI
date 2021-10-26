@@ -32,7 +32,7 @@ class CryptoComponent extends Component {
     }
     render() {
         const { TabPane } = Tabs;
-        const { Title, Paragraph } = Typography;
+        const { Title, Paragraph,Text } = Typography;
         const { coins: coinListdata } = this.props?.buyInfo;
         return (
             <>
@@ -60,13 +60,13 @@ class CryptoComponent extends Component {
                             };
                             this.props.dispatch(fetchCoins(types[key]));
                         }}>
-                            <TabPane tab="All" key="1">
+                            <TabPane tab={<Translate content="tabs_All" component={Text}></Translate>} key="1">
                                 <CryptoList isLoading={coinListdata["All"]?.loading} showSearch={true} coinList={coinListdata["All"]?.data} coinType="All" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                             </TabPane>
-                            <TabPane tab="Gainers" key="2">
+                            <TabPane tab={<Translate content="gainers" component={Text}></Translate> }key="2">
                                 <CryptoList coinType="Gainers" showSearch={true} isLoading={coinListdata["Gainers"]?.loading} coinList={coinListdata["Gainers"]?.data} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                             </TabPane>
-                            <TabPane tab="Losers" key="3">
+                            <TabPane tab={<Translate content="losers" component={Text}></Translate> }key="3">
                                 <CryptoList coinType="Losers" showSearch={true} isLoading={coinListdata["Losers"]?.loading} coinList={coinListdata["Losers"]?.data} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                             </TabPane>
                         </Tabs></>

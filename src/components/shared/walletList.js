@@ -3,7 +3,8 @@ import { Select } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import { fetchMemberFiat } from '../../reducers/buyReducer';
-import NumberFormat from 'react-number-format';
+import NumberFormat from 'react-number-format'
+import apicalls from '../../api/apiCalls';
 
 const { Option } = Select;
 class WalletList extends Component {
@@ -23,8 +24,8 @@ class WalletList extends Component {
         return (<>
             {this.props.buyInfo.memberFiat &&
                 <form className="form" id="withdrawCurrency">
-                    <Select getPopupContainer={() => document.getElementById('withdrawCurrency')} dropdownClassName="select-drpdwn" loading={this.props?.buyInfo?.memberFiat?.loading} placeholder={this.props.placeholder || "Select Wallet"} className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-                        value={this.props.selectedvalue ? this.props.selectedvalue : this.state.selectedvalue} onChange={(e) => {
+                       <Select getPopupContainer={() => document.getElementById('withdrawCurrency')} dropdownClassName="select-drpdwn" loading={this.props?.buyInfo?.memberFiat?.loading} placeholder={this.props.placeholder || apicalls.convertLocalLang("selectWallet")} className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+                       value={this.props.selectedvalue ? this.props.selectedvalue : this.state.selectedvalue} onChange={(e) => {
                             if (this.props.onWalletSelect) { this.props.onWalletSelect(e) };
                             this.setState({ ...this.state, selectedvalue: e });
                         }}>

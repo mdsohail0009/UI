@@ -22,6 +22,7 @@ export default {
   purchase_a_crypto: '以現金購買您的加密貨幣',
   // purchase_a_cryto_txt: '你的钱包是空的，你没有任何资产可以进行交易。点击此链接并存入一些现金。',
   all: '全部',
+  tabs_All:'全部',
   gainers: '赢家',
   losers: '失败者',
   db_slider_title: '获得 $10 个免费加密货币',
@@ -31,7 +32,7 @@ export default {
   crypto_compare_val: '1 ETH - $2,495.31 ',
   find_with_wallet: '選擇你的錢包',
   refresh_newprice: '请刷新以获取新价格',
-  confirm_btn_text: '确认',
+  confirm_btn_text: '确认 %(counter)s',
   exchange_rate: '汇率',
   amount: '数量',
   suissebase_fee: '瑞士基地 费用',
@@ -276,5 +277,9 @@ export default {
   withdrawFiat:'Withdraw Fiat',
   fiatAddress:'Add Fiat Address',  
   cryptoAddress:'Add Crypto Address',
-
+  change_10Sec_amount:'您的金額可能會在 10 秒內更改',
+  tabName_All:'全部',
+  Ethereum_Text:'以太坊',
+  searchCurrency:'搜索貨幣',
+  selectWallet:'選擇錢包',
 }

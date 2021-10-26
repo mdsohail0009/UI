@@ -22,6 +22,7 @@ export default {
   purchase_a_crypto: 'Buy your Crypto for Cash',
   // purchase_a_cryto_txt: 'Your wallet is empty, you don’t have any assets to make transactions. Follow this link and Deposit some cash.',
   all: 'Max',
+  tabs_All:'All',
   gainers: 'Gainers',
   losers: 'Losers',
   db_slider_title: 'Get $10 in free crypto',
@@ -294,4 +295,8 @@ export default {
   liveVarification:'Withdraw Crypto',
   Withdraw_liveness:'Live verification',
   confirm:'Confirm %(counter)s',
+  change_10Sec_amount:'Your amount might be changed within 10 sec',
+  tabName_All:'All',
+  searchCurrency:'Search Currency',
+  selectWallet:'Select Wallet',
 }

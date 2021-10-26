@@ -14,7 +14,7 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch }) => {
     }, []);
     const fetchNotifications = async () => {
         setLoading(true);
-        const response = await getNotifications(userProfile.id);
+        const response = await getNotifications(userProfile?.id);
         if (response.ok) {
             setNotifications(response.data.listNotificationsModel || []);
             dispatch(setNotificationCount(response?.data?.unReadCount));

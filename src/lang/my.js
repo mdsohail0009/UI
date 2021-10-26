@@ -22,6 +22,7 @@ export default {
   purchase_a_crypto: 'Beli Crypto anda dengan Wang Tunai',
   // purchase_a_cryto_txt: 'Dompet anda kosong, anda tidak mempunyai aset untuk membuat transaksi. Ikuti pautan ini dan Deposit sejumlah wang.',
   all: 'semua',
+  tabs_All:'Lahat',
   gainers: 'peraih',
   losers: 'orang yang kalah',
   db_slider_title: 'Get $10 in free crypto',
@@ -31,7 +32,7 @@ export default {
   crypto_compare_val: '1 ETH - $2,495.31 ',
   find_with_wallet: 'Pilih dompet anda',
   refresh_newprice: 'Segarkan untuk mendapatkan harga baru',
-  confirm_btn_text: 'Sahkan',
+  confirm_btn_text: 'Sahkan %(counter)s',
   exchange_rate: 'Kadar pertukaran',
   amount: 'Jumlah',
   suissebase_fee: 'Yuran Suissebase',
@@ -277,5 +278,9 @@ export default {
   withdrawFiat:'Withdraw Fiat',
   fiatAddress:'Add Fiat Address',
   cryptoAddress:'Add Crypto Address',
-
+  change_10Sec_amount:'Ang iyong halaga ay maaaring mabago sa loob ng 10 seg',
+  tabName_All:'Lahat',
+  Ethereum_Text:'Ethereum',
+  searchCurrency:'Pera sa Paghahanap',
+  selectWallet:'Piliin ang Wallet'
 }
