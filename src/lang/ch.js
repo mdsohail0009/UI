@@ -342,4 +342,5 @@ export default {
   Enteraddress:'輸入地址',
   AddFiatAddress:'添加 FAIT 地址',
   Selectcoin:'選擇硬幣',
+  documents:'文件',
 }

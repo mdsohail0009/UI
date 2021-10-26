@@ -342,4 +342,5 @@ export default {
   Enteraddress:'Ilagay ang address',
   AddFiatAddress:'MAGDAGDAG NG FAIT ADDRESS',
   Selectcoin:'Piliin ang Coin',
+  documents:'Mga dokumento',
 }

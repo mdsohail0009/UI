@@ -357,4 +357,5 @@ export default {
   Enteraddress:'Enter address',
   AddFiatAddress:'ADD FAIT ADDRESS',
   Selectcoin:'Select Coin',
+  documents:'Documents',
 }
