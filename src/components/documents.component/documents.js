@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { ApiControllers } from '../../api/config';
 import List from '../grid.component'
 import { withRouter } from 'react-router';
+import Translate from 'react-translate-component';
 const { Title } = Typography;
 
 
@@ -37,7 +38,7 @@ class Documents extends Component {
         const { gridUrl } = this.state;
         return (<>
             <div className="box basic-info">
-                <Title className="basicinfo mb-16">Documents</Title>
+            <Translate content="Documents" className="f-16 text-white-30 mt-16 "  />
                 <List url={gridUrl} ref={this.gridRef} columns={this.gridColumns} additionalParams={{ "memberId": this.props.userProfileInfo?.id }} />
             </div>
         </>

@@ -294,4 +294,9 @@ export default {
   liveVarification:'Withdraw Crypto',
   Withdraw_liveness:'Live verification',
   confirm:'Confirm %(counter)s',
+  Profile_Info:'Profile Info',
+  Security:'Security',
+  Settings:'Settings',
+  Documents:'Documents',
+  Address_Book:'AddressBook'
 }

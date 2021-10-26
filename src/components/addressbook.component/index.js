@@ -221,7 +221,7 @@ class AddressBook extends Component {
             <>
 
                 <div className="box basic-info">
-                    <Title className="basicinfo">Address Book</Title>
+                <Translate content="address_book" className="f-16 text-white-30 mt-16 "  />
                     <Paragraph className="basic-decs mb-16">User customized address book</Paragraph>
                     <Radio.Group
                         defaultValue={1}
