@@ -12,6 +12,7 @@ import NumberFormat from 'react-number-format';
 import LocalCryptoSwapper from '../shared/local.crypto.swap';
 import Currency from '../shared/number.formate';
 import { appInsights } from "../../Shared/appinsights";
+import apicalls from '../../api/apiCalls';
 class SelectCrypto extends Component {
     myRef = React.createRef();
     swapRef = React.createRef();
@@ -91,7 +92,7 @@ class SelectCrypto extends Component {
         const { coin, coinValueinNativeCurrency, coinBalance, percentage} = this.props.buyInfo?.selectedCoin?.data;
         return (
             <div id="divScroll" ref={this.myRef}>
-                {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="info" message="Buy crypto" description={this.state.error?.message} closable />}
+                {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="info" message={apicalls.convertLocalLang('buy_crypto')}  description={this.state.error?.message} closable />}
                 <div className="selectcrypto-container">
                     <Card className="crypto-card select mb-36" bordered={false}>
                         <span className="d-flex align-center">
