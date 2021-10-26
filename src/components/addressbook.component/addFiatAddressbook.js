@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import WalletList from '../shared/walletList';
 import { saveAddress, favouriteNameCheck, getAddress } from './api';
 import Loader from '../../Shared/loader';
+import apiCalls from '../../api/apiCalls';
 
 const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) => {
     const [form] = Form.useForm();
@@ -91,7 +92,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                     <Form.Item
                         className="custom-forminput  custom-label mb-24 pr-0"
                         name="favouriteName" required
-                        label="Address Label"
+                        label={<Translate content="AddressLabel" component={Form.label}/>}
                         rules={[
                             {
                                 type: "favouriteName", validator: async (rule, value, callback) => {
@@ -104,11 +105,11 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                                 }
                             }
                         ]} >
-                        <Input className="cust-input"  maxLength="20" placeholder="Enter address label" />
+                        <Input className="cust-input"  maxLength="20" placeholder={apiCalls.convertLocalLang('Enteraddresslabel')} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24 pr-0"
-                        label="Address"
+                        label={<Translate content="address" component={Form.label}/>}
                         name="toWalletAddress" required
                         rules={[
                             {
@@ -123,22 +124,22 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             }
                         ]}
                     >
-                        <Input className="cust-input"  maxLength="30" placeholder="Enter address" />
+                        <Input className="cust-input"  maxLength="30" placeholder={apiCalls.convertLocalLang('Enteraddress')} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
                         name="toCoin"
-                        label="Currency"
+                        label={<Translate content="currency" component={Form.label}/>}
                         rules={[
                             { required: true, message: "Is required" },
                         ]}
                     >
-                        <WalletList hideBalance={true} valueFeild={'currencyCode'}   selectedvalue={fiatAddress?.toCoin} placeholder="Select currency" onWalletSelect={(e) => handleWalletSelection(e)} />
+                        <WalletList hideBalance={true} valueFeild={'currencyCode'}   selectedvalue={fiatAddress?.toCoin} placeholder={apiCalls.convertLocalLang('searchCurrency')} onWalletSelect={(e) => handleWalletSelection(e)} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
                         name="accountNumber"
-                        label="Bank account number/IBAN"
+                        label={ <Translate content="Bank_account" component={Text}/>}
                         required
                         rules={[
                             { required: true, message: "Is required" },
@@ -159,12 +160,12 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             }
                         ]}
                     >
-                        <Input className="cust-input"  placeholder="Bank account number/IBAN" />
+                        <Input className="cust-input"  placeholder={apiCalls.convertLocalLang('Bank_account')} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
                         name="routingNumber"
-                        label="BIC/SWIFT/Routing number"
+                        label={<Translate content="BIC_SWIFT_routing_number" component={Text}/>}
                         required
                         rules={[
                             { required: true, message: "Is required" },
@@ -185,12 +186,12 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             }
                         ]}
                     >
-                        <Input className="cust-input" placeholder="BIC/SWIFT/Routing number" />
+                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('BIC_SWIFT_routing_number')} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
                         name="bankName"
-                        label="Bank name"
+                        label={ <Translate content="Bank_name" component={Text}/>}
                         required
                         rules={[
                             {
@@ -205,12 +206,12 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             }
                         ]}
                     >
-                        <Input className="cust-input"  placeholder="Bank name" />
+                        <Input className="cust-input"  placeholder={apiCalls.convertLocalLang('Bank_name')} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
                         name="bankAddress"
-                        label="Bank address line 1"
+                        label={<Translate content="Bank_address1" component={Text}/>}
                         required
                         rules={[
                             {
@@ -224,7 +225,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                                 }
                             }
                         ]}>
-                        <Input className="cust-input" placeholder="Bank address line 1" />
+                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_address1')} />
                     </Form.Item>
 
                     <Translate
@@ -252,7 +253,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
                         name="beneficiaryAccountAddress"
-                        label="Recipient address line 1"
+                        label={<Translate content="Recipient_full_name" component={Text}/>}
                         required
                         rules={[
                             {
@@ -266,7 +267,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                                 }
                             }
                         ]}>
-                        <Input className="cust-input" placeholder="Recipient address line 1" />
+                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_full_name')} />
                     </Form.Item>
                     <Form.Item className="mb-0 mt-16">
                         <Button disabled={isLoading}
@@ -275,7 +276,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             block
                             className="pop-btn"
                         >
-                            {isLoading && <Spin indicator={antIcon} />}  Save
+                            {isLoading && <Spin indicator={antIcon} />}  <Translate content="Save_btn_text" component={Text}/>
                         </Button>
                     </Form.Item>
                 </Form>

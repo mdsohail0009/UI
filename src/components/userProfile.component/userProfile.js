@@ -6,6 +6,7 @@ import Documents from '../documents.component/documents';
 import AddressBook from '../addressbook.component';
 import QueryString from 'query-string'
 import Settings from './settings';
+import Translate from 'react-translate-component';
 const { TabPane } = Tabs;
 class userProfile extends Component {
     state = {
@@ -43,7 +44,7 @@ class userProfile extends Component {
            
             <div className="main-container">
                 <Tabs tabPosition={tabPosition} className="user-list"  activeKey={this.state.activeTab} onChange={(key)=>this.setState({...this.state,activeTab:key})}>
-                    <TabPane tab={<span><span className="icon lg profile-icon mr-16" />Profile Info</span>} key="1" className=" ">
+                    <TabPane tab={<span><span className="icon lg profile-icon mr-16" /><Translate content="ProfileInfo" component={Tabs.TabPane.tab}/></span>} key="1" className=" ">
                         <ProfileInfo />
                     </TabPane>
                     <TabPane tab={<span><span className="icon lg security-icon mr-16" />Security</span>} key="2">
@@ -56,7 +57,7 @@ class userProfile extends Component {
                      
                         {this.state.activeTab == 4 &&     <Documents />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg addressbook-icon mr-16" />Address Book</span>} key="5">
+                    <TabPane tab={<span><span className="icon lg addressbook-icon mr-16" /><Translate content="address_book" component={Tabs.TabPane.tab}/></span>} key="5">
                    {this.state.activeTab == 5 &&  <AddressBook  />}
                     </TabPane>
                     
