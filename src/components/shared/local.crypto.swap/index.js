@@ -27,6 +27,9 @@ const LocalCryptoSwapper = (props, ref) => {
             if (isSwaped) {
                 setCryptoValue(cryptoValue);
             }
+        },
+        handleWalletChange() {
+          if(isSwaped){setSwapped(false);}
         }
     }), []);
     const fetchConvertionValue = async ({ inputvalue, locCurrency }) => {
@@ -61,7 +64,7 @@ const LocalCryptoSwapper = (props, ref) => {
                 placeholder="0.00"
                 bordered={false}
                 style={{ lineHeight: '48px', fontSize: 30, paddingRight: '40px !important' }}
-                onPaste={()=>setInputChange(true)}
+                onPaste={() => setInputChange(true)}
                 onKeyPress={(e) => {
                     e.currentTarget.style.fontSize = "30px";
                     setInputChange(true)
