@@ -276,5 +276,9 @@ export default {
   withdrawFiat:'Withdraw Fiat',
   fiatAddress:'Add Fiat Address',  
   cryptoAddress:'Add Crypto Address',
-
+  Profile_Info:'简介_信息',
+  Security:'安全',
+  Settings:'设置',
+  Documents:'文件',
+  Address_Book:'地址簿'
 }

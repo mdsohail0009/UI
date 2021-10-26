@@ -277,5 +277,9 @@ export default {
   withdrawFiat:'Withdraw Fiat',
   fiatAddress:'Add Fiat Address',
   cryptoAddress:'Add Crypto Address',
-
+  Profile_Info:'Profil_Info',
+  Security:'Keselamatan',
+  Settings:'tetapan',
+  Documents:'Dokumen',
+  Address_Book:'Buku alamat'
 }
