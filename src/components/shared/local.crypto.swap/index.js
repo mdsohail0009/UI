@@ -29,7 +29,7 @@ const LocalCryptoSwapper = (props, ref) => {
             }
         },
         handleWalletChange() {
-          if(isSwaped){setSwapped(false);}
+          setSwapped(false);
         }
     }), []);
     const fetchConvertionValue = async ({ inputvalue, locCurrency }) => {
