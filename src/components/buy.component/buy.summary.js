@@ -7,6 +7,7 @@ import Summary from '../summary.component';
 import Loader from '../../Shared/loader';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
+import apicalls from '../../api/apiCalls';
 class BuySummary extends Component {
     constructor(props) {
         super(props);
@@ -55,7 +56,8 @@ class BuySummary extends Component {
             }
             this.setState({ isLoading: false })
         } else {
-            this.setState({ ...this.state, error: { valid: false, message: "Please agree to terms & conditions" } })
+            this.setState({ ...this.state, error: { valid: false, message: apicalls.convertLocalLang('agree_terms')} })
+           
         }
     }
     render() {

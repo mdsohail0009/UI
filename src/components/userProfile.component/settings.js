@@ -8,6 +8,7 @@ import counterpart from 'counterpart';
 import en from '../../lang/en';
 import ch from '../../lang/ch';
 import my from '../../lang/my';
+import Translate from 'react-translate-component';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
@@ -18,7 +19,7 @@ const Settings =({member,getmemeberInfoa})=> {
   const [form] = Form.useForm();
     const [SettingsLu,setSettingsLu]=useState('')
     const [theme,setTheme]=useState(member?.theme=='Light Theme'?true:false);
-    const [settingsObj,setSettingsObj]=useState({MemberId:'',Language:member?.language?member.language:null,LCurrency:member?.lCurrency?member.lCurrency:null,Theme:member?.theme?member.theme:null})
+    const [settingsObj,setSettingsObj]=useState({MemberId:'',Language:member?.language?member.language:'en',LCurrency:member?.lCurrency?member.lCurrency:'USD',Theme:member?.theme?member.theme:null})
     useEffect(()=>{
       getSettingsLu()
       switcher({ theme: member?.theme =='Light Theme'? themes.LHT : themes.DRT });
@@ -55,7 +56,7 @@ const Settings =({member,getmemeberInfoa})=> {
         const { Title, Text, Paragraph } = Typography;
         return (<><Form layout="vertical" initialValues={{ ...settingsObj }} onFinish={saveSettings} form={form}>
             <div className="box basic-info">
-                <Title className="basicinfo">Settigns</Title>
+            <Translate content="Settings" className="f-16 text-white-30 mt-16 "  />
                 <Paragraph className="basic-decs">User customized settings</Paragraph>
         
                 <div className="pb-16 border-bottom">
@@ -99,14 +100,14 @@ const Settings =({member,getmemeberInfoa})=> {
                 <div className="pt-16">
                     <Text className="input-label">Theme</Text>
                     <div className="d-flex">
-                    <div className="theme-switch theme-active" onClick={()=>theme?themeSwitch(true):''}>
+                    <div className="theme-switch theme-active">
                         <div className="d-flex align-center">
-                            <p className="switch-circle mb-0">{!theme&&<span className="icon md check-arrow c-pointer"></span>}{theme&&<span></span>}</p>
+                            <p className="switch-circle mb-0" onClick={()=>theme?themeSwitch(true):''}>{!theme&&<span className="icon md check-arrow c-pointer"></span>}{theme&&<span></span>}</p>
                             <p className="mb-0 ml-16 theme-txt">Dark Theme</p></div>
                     </div>
-                    <div className="theme-switch ml-24" onClick={()=>!theme?themeSwitch(false):''}>
+                    <div className="theme-switch ml-24">
                         <div className="d-flex align-center">
-                            <p className="switch-circle mb-0">{theme&&<span className="icon md check-arrow c-pointer"></span>}{!theme&&<span></span>}</p>
+                            <p className="switch-circle mb-0" onClick={()=>!theme?themeSwitch(false):''}>{theme&&<span className="icon md check-arrow c-pointer"></span>}{!theme&&<span></span>}</p>
                             <p className="mb-0 ml-16 theme-txt">Light Theme</p></div>
                     </div>
                     </div>

@@ -47,13 +47,19 @@ class userProfile extends Component {
                     <TabPane tab={<span><span className="icon lg profile-icon mr-16" /><Translate content="ProfileInfo" component={Tabs.TabPane.tab}/></span>} key="1" className=" ">
                         <ProfileInfo />
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg security-icon mr-16" />Security</span>} key="2">
+                    <TabPane tab={<span><span className="icon lg security-icon mr-16" />
+                    <Translate content="Security" className="f-16  mt-16"  />
+                    </span>} key="2">
                         <Security />
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg settings-icon mr-16" />Settings</span>} key="3">
+                    <TabPane tab={<span><span className="icon lg settings-icon mr-16" />
+                    <Translate content="Settings" className="f-16  mt-16"  />
+                    </span>} key="3">
                     {this.state.activeTab == 3 &&<Settings />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg documents-icon mr-16" />Documents</span>} key="4" destroyInactiveTabPane={true}>
+                    <TabPane tab={<span><span className="icon lg documents-icon mr-16" />
+                    <Translate content="Documents" className="f-16  mt-16"  />
+                    </span>} key="4" destroyInactiveTabPane={true}>
                      
                         {this.state.activeTab == 4 &&     <Documents />}
                     </TabPane>

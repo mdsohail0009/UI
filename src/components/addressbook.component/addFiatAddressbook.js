@@ -74,6 +74,15 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
             else { setIsLoading(false) }
         }
     }
+    const getIbanData = async(val) =>{
+        if(val){
+            let response = await apiCalls.getIBANData(val);
+            if (response.ok) {
+                const oldVal= form.getFieldValue();
+                form.setFieldsValue({ routingNumber:response.data.routingNumber||oldVal.routingNumber, bankName:response.data.bankName||oldVal.bankName,bankAddress:response.data.bankAddress||oldVal.bankAddress })
+            }
+        }
+    }
     const { Paragraph, Text } = Typography;
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     return (
@@ -160,7 +169,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             }
                         ]}
                     >
-                        <Input className="cust-input"  placeholder={apiCalls.convertLocalLang('Bank_account')} />
+                        <Input className="cust-input"  placeholder={apiCalls.convertLocalLang('Bank_account')} onBlur={(val)=>getIbanData(val.currentTarget.value)} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"

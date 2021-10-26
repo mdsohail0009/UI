@@ -1,4 +1,5 @@
 import { fetchCurrencyConvertionValue } from "./api"
+import apicalls from "../../api/apiCalls";
 
 export const convertCurrency = async ({ from, to, value, isCrypto ,memId,screenName}) => {
     const response = await fetchCurrencyConvertionValue({ from, to, value, isCrypto,memId,screenName });
@@ -22,23 +23,23 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
         valid: true
     };
     if (!localValue || !cryptValue) {
-        validate.message = "Please enter amount to buy";
+        validate.message = apicalls.convertLocalLang('enter_wallet')
         validate.valid = false;
     } else if (!wallet) {
-        validate.message = "Please select wallet to proceed";
+        validate.message = apicalls.convertLocalLang('select_wallet')
         validate.valid = false;
     }
     else if (wallet.avilable < localValue) {
-        validate.message = "Insufficient funds";
+        validate.message =apicalls.convertLocalLang('insufficientFunds')
         validate.valid = false;
     }
     else {
         if (cryptValue < minPurchase) {
             validate.valid = false;
-            validate.message = `You have to purchase for minimum of ${minPurchase}`
+            validate.message =  apicalls.convertLocalLang('purchase_min') +" "+minPurchase
         } else if (cryptValue > maxPurchase) {
             validate.valid = false;
-            validate.message = `You can only purchase for maximum of ${maxPurchase}`
+            validate.message = apicalls.convertLocalLang('purchase_max') +" "+maxPurchase
         }
     }
     return validate;

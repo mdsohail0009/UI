@@ -5,7 +5,7 @@ import connectStateProps from '../utils/state.connect';
 import Moment from 'react-moment';
 import { setNotificationCount } from '../reducers/dashboardReducer';
 const { Text } = Typography;
-const Notifications = ({ onClose, showDrawer, userProfile, dispatch }) => {
+const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard }) => {
     const [loading, setLoading] = useState(false);
     const [notifications, setNotifications] = useState([]);
     const [error, setError] = useState(null);
@@ -45,14 +45,14 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch }) => {
                     loading={loading}
                     locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No data found" /> }}
                 >
-                    {notifications.data?.map((item, indx) => <List.Item onClick={() => readNotification(item.Id)} key={indx} style={{ borderWidth: '0px' }} >
+                    {notifications?.map((item, indx) => <List.Item onClick={() => { if (!item.isRead) { readNotification(item.id); dispatch(setNotificationCount(dashboard.notificationCount - 1)) } }} key={indx} style={{ borderWidth: '0px' }} >
                         <List.Item.Meta
-                            className={`${item.Action.toLowerCase()}bg`}
-                            avatar={<span className="icon md recivewhitearrow c-pointer" />}
-                            title={<div className="d-flex justify-content align-center text-white-30"><p className="mb-0">{item.Action}</p><p className="mb-0 text-secondary fs-14"><Moment format={"DD MMM YY"}>{item.NotifiedDate}</Moment></p></div>}
+                            className={`${item?.action?.toLowerCase()}bg`}
+                            avatar={<span className={`icon md ${item?.action?.toLowerCase()}whitearrow c-pointer`} />}
+                            title={<div className="d-flex justify-content align-center text-white-30"><p className="mb-0">{item.action}</p><p className="mb-0 text-secondary fs-14"><Moment format={"DD MMM YY"}>{item.notifiedDate}</Moment></p></div>}
 
                         />
-                        <Text className="text-white-30">{item?.Message} </Text>
+                        <Text className="text-white-30">{item?.message} </Text>
                     </List.Item>)}
                 </List>
             </Drawer>
