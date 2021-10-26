@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Typography } from 'antd';
 import List from "../../grid.component";
 import { Link } from 'react-router-dom';
-
+import Translate from 'react-translate-component';
 class Documents extends Component {
     constructor(props) {
         super(props);
@@ -25,7 +25,7 @@ class Documents extends Component {
         const { gridUrl } = this.state;
         return <>
             <div className="box basic-info">
-                <Title className="basicinfo mb-16">Documents</Title>
+            <Translate content="Documents" className="f-16 text-white-30 mt-16 "  />
                 <Link to="/requesteddocs/">Documents View</Link>
                 <List url={gridUrl} ref={this.gridRef} columns={this.gridColumns} />
             </div>
