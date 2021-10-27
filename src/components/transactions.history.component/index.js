@@ -107,7 +107,7 @@ class TransactionsHistory extends Component {
           <div className="transaction-tabs">
             <Tabs className="crypto-list-tabs mt-0" activeKey={this.state.activeTab} onChange={this.changeTab}>
               <TabPane tab="All" key='1' className="alltab-space" onClick={() => this.changeTab("1")}>
-                <Collapse onChange={collapseGrids} className="mb-16">
+              {this.state.activeTab === '1' && <><Collapse onChange={collapseGrids} className="mb-16">
                   <Panel header="Buy/Sell" key="1">
                     {this.state.activeTab === '1' && <HistoryGridComponent columns={BuySellColmns} gridUrl={BuySellURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
                   </Panel>
@@ -138,7 +138,7 @@ class TransactionsHistory extends Component {
                   <Panel header="Withdraw Crypto" key="6">
                     {this.state.activeTab === '1' && <HistoryGridComponent columns={withdrwCryptoColomns} gridUrl={WithdrawCryptoURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
                   </Panel>
-                </Collapse>
+                </Collapse></>}
               </TabPane>
 
               <TabPane tab="Buy/Sell" key='2' onClick={() => this.changeTab("2")}>
