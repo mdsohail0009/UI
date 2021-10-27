@@ -114,8 +114,11 @@ line-height: 16px;min-width:90px}
 .icon.lg.logout-icon{background-position:-73px -330px}
 .icon.lg.documents-icon{background-position:-176px -329px;}
 .icon.lg.addressbook-icon{background-position: -140px -329px}
-.icon.md.sentwhitearrow{background-position: -376px -1px;transform: rotateZ( 45deg);}
-.icon.md.recivewhitearrow{background-position: -375px 0px;transform: rotateZ(235deg);}
+/* .icon.md.sentwhitearrow{background-position: -376px -1px;transform: rotateZ( 45deg);}
+.icon.md.recivewhitearrow{background-position: -375px 0px;transform: rotateZ(235deg);} */
+.icon.md.notifyIcon.deposit{background-position: -375px 0px;transform: rotateZ(235deg);}
+.icon.md.notifyIcon.deposits{background-position: -376px -1px;transform: rotateZ( 45deg);}
+.icon.md.notifyIcon.documents{background-position: -156px -71px;}
 .user-labels.active .icon.lg.profile-icon,.user-labels:hover .icon.lg.profile-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.profile-icon, .ant-tabs-tab:hover .icon.lg.profile-icon{background-position: -3px -363px} 
 .user-labels.active .icon.lg.security-icon, .user-labels:hover .icon.lg.security-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.security-icon,.ant-tabs-tab:hover .icon.lg.security-icon{background-position:-107px -363px}
 .user-labels.active .icon.lg.settings-icon, .user-labels:hover .icon.lg.settings-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.settings-icon,.ant-tabs-tab:hover .icon.lg.settings-icon{background-position:-38px -363px}
@@ -912,8 +915,8 @@ text-align: center !important;}
 .notifications-list .ant-list-item-meta-avatar{border-radius: 50%;width: 38px;height: 38px;text-align: center;line-height: 38px;}
 .notifications-list .ant-list-item-meta-title{margin-bottom: 0 !important;}
 .notifications-list .ant-list-item-meta{align-items: center;}
-.notifications-list .ant-list-item{padding:18px 0; border-bottom: 1px solid var(--borderGrey) !important;}
-.depositbg .ant-list-item-meta-avatar, .approvebg .ant-list-item-meta-avatar{background-color: var(--bgDarkGreen);}
-.withdrawbg .ant-list-item-meta-avatar{background-color: var(--bgDarkRed);}
-.requestbg .ant-list-item-meta-avatar{background-color: var(--bgBlue);}
+.notifications-list .ant-list-item{padding:16px 0; border-bottom: 1px solid var(--borderGrey) !important;}
+.approvebg .ant-list-item-meta-avatar, .depositbg .ant-list-item-meta-avatar{background-color: var(--bgDarkGreen);}
+.withdrawbg .ant-list-item-meta-avatar, .depositsbg .ant-list-item-meta-avatar{background-color: var(--bgDarkRed);}
+.requestbg .ant-list-item-meta-avatar, .documentsbg .ant-list-item-meta-avatar{background-color: var(--bgBlue);}
 .notification-conunt .bell span{position: absolute;right: -5px;top: -7px;width: 18px;height: 18px;background: #f6921e;border-radius: 50%;line-height: 18px;text-align: center;font-size: 10px;font-weight: 600;}
