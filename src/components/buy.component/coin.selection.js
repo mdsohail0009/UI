@@ -60,13 +60,13 @@ class CryptoComponent extends Component {
                             };
                             this.props.dispatch(fetchCoins(types[key]));
                         }}>
-                            <TabPane tab={<Translate content="tabs_All" component={Text}></Translate>} key="1">
+                            <TabPane tab={<Translate content="tabs_All"  component={Tabs.TabPane.tab} className="custom-font fw-400 fs-16" ></Translate>} key="1">
                                 <CryptoList isLoading={coinListdata["All"]?.loading} showSearch={true} coinList={coinListdata["All"]?.data} coinType="All" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                             </TabPane>
-                            <TabPane tab={<Translate content="gainers" component={Text}></Translate> }key="2">
+                            <TabPane tab={<Translate content="gainers"  component={Tabs.TabPane.tab} className="custom-font fw-400 fs-16" ></Translate> }key="2">
                                 <CryptoList coinType="Gainers" showSearch={true} isLoading={coinListdata["Gainers"]?.loading} coinList={coinListdata["Gainers"]?.data} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                             </TabPane>
-                            <TabPane tab={<Translate content="losers" component={Text}></Translate> }key="3">
+                            <TabPane tab={<Translate content="losers"  component={Tabs.TabPane.tab} className="custom-font fw-400 fs-16" ></Translate> }key="3">
                                 <CryptoList coinType="Losers" showSearch={true} isLoading={coinListdata["Losers"]?.loading} coinList={coinListdata["Losers"]?.data} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                             </TabPane>
                         </Tabs></>

@@ -23,7 +23,7 @@ class SuccessMessage extends Component {
                                 receiveValue: null,
                                 errorMessage: null
                             })); this.props.dispatch(setStep("step1"));this.props.clearSwapfullData()
-                        }} className="f-16 text-white-30 mt-16 text-underline">Back to Swap<span className="icon md diag-arrow ml-4" /></Link>
+                        }} className="f-16 text-white-30 mt-16 text-underline"><Translate content="Back_to_Swap" component={Link} className="f-16 text-white-30 mt-16 text-underline"/><span className="icon md diag-arrow ml-4" /></Link>
                     </Space>
                 </div>
             </>

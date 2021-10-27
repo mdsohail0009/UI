@@ -47,7 +47,7 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
       handleWalletSelection(selectedWalletCode)
     }else if(buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj){
       handleWalletSelection(sendReceive.withdrawFiatObj.walletCode)
-      getStateLu(sendReceive.withdrawFiatObj.country);
+      if(sendReceive.withdrawFiatObj.country){getStateLu(sendReceive.withdrawFiatObj.country);}
       let selectObj =sendReceive.withdrawFiatObj
       form.setFieldsValue(selectObj)
     }
@@ -155,6 +155,18 @@ const selectAddress = () =>{
     setConfirmationStep('step2')
     form.resetFields();
   }
+  const getIbanData = async(val) =>{
+    if(val && val.length>14){
+        let response = await apicalls.getIBANData(val);
+        if (response.ok) {
+            const oldVal= form.getFieldValue();
+            form.setFieldsValue({ routingNumber:response.data.routingNumber||oldVal.routingNumber, bankName:response.data.bankName||oldVal.bankName,bankAddress:response.data.bankAddress||oldVal.bankAddress,country: response.data.country||oldVal.country,state:response.data.state||oldVal.state,zipcode:response.data.zipCode||oldVal.zipcode})
+            if(response.data.country){
+              getStateLu(response.data.country)
+            }
+        }
+    }
+}
 
   const renderModalContent = () => {
     const _types = {
@@ -242,7 +254,7 @@ const selectAddress = () =>{
                 }
               ]}
             >
-              <Input className="cust-input" placeholder={apicalls.convertLocalLang('Bank_account')}/>
+              <Input className="cust-input" placeholder={apicalls.convertLocalLang('Bank_account') onBlur={(val)=>getIbanData(val.currentTarget.value)} />
               
             </Form.Item>
             <Form.Item

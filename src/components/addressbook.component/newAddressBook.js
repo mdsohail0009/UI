@@ -1,11 +1,13 @@
 import React, { useState ,useEffect} from 'react';
-import { Form, Input, Button, Alert,Spin,message } from 'antd';
+import { Form, Input, Button, Alert,Spin,message,Typography} from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { rejectCoin, setAddressStep,fetchAddressCrypto } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
 import { saveAddress, favouriteNameCheck ,getAddress} from './api';
 import SelectCrypto from './selectCrypto';
 import Loader from '../../Shared/loader';
+import Translate from 'react-translate-component';
+import apiCalls from '../../api/apiCalls';
 
 const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,rejectCoinWallet, InputFormValues}) => {
     const [form] = Form.useForm();
@@ -97,6 +99,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
     //     }, 500)
     // }
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color:'#fff', marginRight:'16px' }} spin />;
+    const {Text } = Typography;
     return (
         <>
            <div className="mt-16">
@@ -107,7 +110,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                     onFinish={saveAddressBook} autoComplete="off" >
                     <Form.Item
                         className="custom-forminput custom-label  mb-24 pr-0"
-                        label="Address Label"
+                        label={<Translate content="AddressLabel" component={Form.label}/>}
                         name="favouriteName"
                         required
                         rules={[
@@ -123,22 +126,22 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                             }
                         ]} 
                         >
-                            <Input className="cust-input"  maxLength="20" placeholder="Enter address label" />
+                            <Input className="cust-input"  maxLength="20" placeholder={apiCalls.convertLocalLang('Enteraddresslabel')} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24 pr-0"
                         name="toCoin"
-                        label="Coin"
+                        label={<Translate content="Coin" component={Form.label}/>}
                         rules={[
                             { required: true, message: "Is required" },
                         ]} >
-                             <Input disabled placeholder="Select coin"  className="cust-input cust-adon c-pointer" 
+                             <Input disabled placeholder={apiCalls.convertLocalLang('Selectcoin')}  className="cust-input cust-adon c-pointer" 
                                 addonAfter={<i className="icon md rarrow-white c-pointer" onClick={selectCrypto} />}/>
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24 pr-0"
                         name="toWalletAddress"
-                        label="Address"
+                        label={<Translate content="address" component={Form.label}/>}
                         required
                         rules={[
                            
@@ -153,7 +156,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                                 }
                             }
                         ]} >
-                            <Input className="cust-input" maxLength="30" placeholder="Enter address" />
+                            <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('Enteraddress')} />
                     </Form.Item>
                     <div style={{ marginTop: '50px' }} className="">
                         <Button disabled={isLoading}
@@ -162,7 +165,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                             block
                             className="pop-btn"
                         >
-                          { isLoading  && <Spin indicator={antIcon} />} Save
+                          { isLoading  && <Spin indicator={antIcon} />} <Translate content="Save_btn_text" component={Text}/>
                         </Button>
                         {/* <Button
                                 htmlType="cancel"

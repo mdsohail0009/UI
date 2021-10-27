@@ -40,5 +40,8 @@ const sellMemberCrypto=(memID)=>{
 const convertLocalLang=(key)=>{
     return counterpart.translate(key)
 }
-let apicalls = {getportfolio,getCryptos,getMember,sumsubacesstoken, updateKyc,sumsubacesstokennew,sumsublivenessacesstoken,trackEvent,trackPageview,sellMemberCrypto,convertLocalLang}
+const getIBANData=(ibannumber)=>{
+    return apiClient.get(ApiControllers.master +`GetIBANAccountDetails?ibanNumber=`+ibannumber);
+}
+let apicalls = {getportfolio,getCryptos,getMember,sumsubacesstoken, updateKyc,sumsubacesstokennew,sumsublivenessacesstoken,trackEvent,trackPageview,sellMemberCrypto,convertLocalLang, getIBANData}
 export default apicalls

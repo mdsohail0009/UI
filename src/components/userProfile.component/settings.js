@@ -8,6 +8,7 @@ import counterpart from 'counterpart';
 import en from '../../lang/en';
 import ch from '../../lang/ch';
 import my from '../../lang/my';
+import Translate from 'react-translate-component';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
@@ -18,7 +19,7 @@ const Settings =({member,getmemeberInfoa})=> {
   const [form] = Form.useForm();
     const [SettingsLu,setSettingsLu]=useState('')
     const [theme,setTheme]=useState(member?.theme=='Light Theme'?true:false);
-    const [settingsObj,setSettingsObj]=useState({MemberId:'',Language:member?.language?member.language:null,LCurrency:member?.lCurrency?member.lCurrency:null,Theme:member?.theme?member.theme:null})
+    const [settingsObj,setSettingsObj]=useState({MemberId:'',Language:member?.language?member.language:'en',LCurrency:member?.lCurrency?member.lCurrency:'USD',Theme:member?.theme?member.theme:null})
     useEffect(()=>{
       getSettingsLu()
       switcher({ theme: member?.theme =='Light Theme'? themes.LHT : themes.DRT });
@@ -55,11 +56,11 @@ const Settings =({member,getmemeberInfoa})=> {
         const { Title, Text, Paragraph } = Typography;
         return (<><Form layout="vertical" initialValues={{ ...settingsObj }} onFinish={saveSettings} form={form}>
             <div className="box basic-info">
-                <Title className="basicinfo">Settigns</Title>
-                <Paragraph className="basic-decs">User customized settings</Paragraph>
+            <Translate content="settings" className="basicinfo"  />
+                <Paragraph className="basic-decs"><Translate content="User_customized_settings" className="basic-decs"  /></Paragraph>
         
                 <div className="pb-16 border-bottom">
-                <Text className="input-label">Language</Text>
+                <Text className="input-label"><Translate content="language" className="input-label"  /></Text>
                 <Form.Item
                   className="custom-forminput mb-24"
                   name="Language"
@@ -78,7 +79,7 @@ const Settings =({member,getmemeberInfoa})=> {
                     </Select></Form.Item>
                 </div>
                 <div className="py-16 border-bottom">
-                <Text className="input-label">Currency</Text>
+                <Text className="input-label"><Translate content="currency" className="input-label" component={Text} /></Text>
                 <Form.Item
                   className="custom-forminput mb-24"
                   name="LCurrency"
@@ -97,17 +98,17 @@ const Settings =({member,getmemeberInfoa})=> {
                     </Select></Form.Item>
                 </div>
                 <div className="pt-16">
-                    <Text className="input-label">Theme</Text>
+                    <Text className="input-label"><Translate content="theme" className="input-label" component={Text} /></Text>
                     <div className="d-flex">
-                    <div className="theme-switch theme-active" onClick={()=>theme?themeSwitch(true):''}>
+                    <div className="theme-switch theme-active">
                         <div className="d-flex align-center">
-                            <p className="switch-circle mb-0">{!theme&&<span className="icon md check-arrow c-pointer"></span>}{theme&&<span></span>}</p>
-                            <p className="mb-0 ml-16 theme-txt">Dark Theme</p></div>
+                            <p className="switch-circle mb-0" onClick={()=>theme?themeSwitch(true):''}>{!theme&&<span className="icon md check-arrow c-pointer"></span>}{theme&&<span></span>}</p>
+                            <p className="mb-0 ml-16 theme-txt"><Translate content="dark_theme" className="mb-0 ml-16 theme-txt" component={Text.p} /></p></div>
                     </div>
-                    <div className="theme-switch ml-24" onClick={()=>!theme?themeSwitch(false):''}>
+                    <div className="theme-switch ml-24">
                         <div className="d-flex align-center">
-                            <p className="switch-circle mb-0">{theme&&<span className="icon md check-arrow c-pointer"></span>}{!theme&&<span></span>}</p>
-                            <p className="mb-0 ml-16 theme-txt">Light Theme</p></div>
+                            <p className="switch-circle mb-0" onClick={()=>!theme?themeSwitch(false):''}>{theme&&<span className="icon md check-arrow c-pointer"></span>}{!theme&&<span></span>}</p>
+                            <p className="mb-0 ml-16 theme-txt"><Translate content="light_theme" className="mb-0 ml-16 theme-txt" component={Text.p} /></p></div>
                     </div>
                     </div>
                 </div>
@@ -117,7 +118,7 @@ const Settings =({member,getmemeberInfoa})=> {
                 block
                 className="pop-btn mt-36"
             >
-                Save
+                <Translate className="pop-btn" content="Save_btn_text" component={Button}/>
             </Button>
             </div>
             </Form>

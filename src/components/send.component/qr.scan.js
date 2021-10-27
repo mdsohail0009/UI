@@ -62,7 +62,7 @@ class QRScan extends Component {
         </Menu>
     }
     render() {
-        const { Paragraph, Text } = Typography;
+        const { Paragraph, Text,Button} = Typography;
         if (!this.props?.sendReceive?.depositWallet?.walletAddress) {
             return <Loader />
         }
@@ -81,7 +81,7 @@ class QRScan extends Component {
                 </div>
 
                 {this.props?.sendReceive?.depositWallet?.tag && <div className="crypto-address mt-36">
-                    <Text className="mb-0 fw-400 text-secondary">Tag</Text>
+                    <Translate className="mb-0 fw-400 text-secondary" content="tag" component={Text} />
                     <div className="mb-0 fs-14 fw-500 text-white-30">{this.props?.sendReceive?.depositWallet?.tag}
                         <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.tag}>
                             <Text copyable className="fs-20 text-white-30 custom-display"></Text>
@@ -89,6 +89,7 @@ class QRScan extends Component {
                 </div>}
                 <Translate className="text-center f-12 text-white fw-200 mt-16" content="address_hint_text" component={Paragraph} />
                 <Dropdown overlay={this.shareMenu}>
+                    {/* <Button className="pop-btn mt-36" block>Share</Button> */}
                     <Button className="pop-btn mt-36" block>Share</Button>
                 </Dropdown>
             </div>

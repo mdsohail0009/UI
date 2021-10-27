@@ -27,16 +27,16 @@ const Security =({userConfig})=> {
         window.open(url,"_self");
         
     }
-        const { Title, Paragraph } = Typography;
+        const { Title, Paragraph,Text } = Typography;
         return (<>
             <div className="box basic-info">
-                <Title className="basicinfo">Two Factor Authentication</Title>
-                <Paragraph className="basic-decs">Protect your account with 2-Step Verification</Paragraph>
+                <Title className="basicinfo"><Translate content="TwoFactorAuthentication" component={Title} className="basicinfo"/></Title>
+                <Paragraph className="basic-decs"><Translate content="TwoFactorAuthentication_tag" component={Paragraph} className="basic-decs"/></Paragraph>
                 <ul className="user-list pl-0">
                     <li className="profileinfo">
                         <div className="d-flex profile-block">
-                            <label className="mb-0 profile-label" >2FA</label>
-                            <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{userConfig?.twofactorVerified?'Enabled':'Disabled'}</p>
+                            <label className="mb-0 profile-label" ><Translate content="FA_tag" component={Paragraph.label} className="mb-0 profile-label"/></label>
+                            <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{userConfig?.twofactorVerified?<Translate content="Enabled" component={Paragraph.p} className="mb-0 ml-8 profile-value" />:<Translate content="Disabled" component={Paragraph.p} className="mb-0 ml-8 profile-value"/>}</p>
                             <div>
                                 <Switch onChange={(status)=>enableDisable2fa(status)} checked={userConfig?.twofactorVerified} size="medium" className="custom-toggle ml-12" /></div>
                         </div>
@@ -44,18 +44,18 @@ const Security =({userConfig})=> {
                 </ul>
             </div>
             <div className="box contact-info">
-                <Title className="basicinfo">Change Password</Title>
-                <Paragraph className="basic-decs">Choose a unique password to protect your account</Paragraph>
+                <Title className="basicinfo"><Translate content="change_password" component={Title} className="basicinfo"/></Title>
+                <Paragraph className="basic-decs"><Translate content="Choose_a_unique_password_to_protect_your_account" component={Paragraph} className="basic-decs"/></Paragraph>
                 <ul className="user-list pl-0">
                     <li className="profileinfo c-pointer" onClick={()=>showDrawer()}>
                         <div className="d-flex profile-block">
-                            <label className="mb-0 profile-label">Password</label>
+                            <label className="mb-0 profile-label"><Translate content="Password" component={Paragraph.label} className="mb-0 profile-label"/></label>
                             <div style={{ flexGrow: 12 }}>
                                 <p className="mb-0 ml-8 profile-value"> ************</p>
-                                {userConfig?.pwdModifiedDate!=null&&<p className="mb-0 ml-8 fs-14 text-white">Modified on <Moment format="DD-MM-YYYY">{userConfig?.pwdModifiedDate}</Moment></p>}
+                                {userConfig?.pwdModifiedDate!=null&&<p className="mb-0 ml-8 fs-14 text-white"><Translate content="Password" component={Paragraph.p} className="mb-0 ml-8 fs-14 text-white"/> <Moment format="DD-MM-YYYY">{userConfig?.pwdModifiedDate}</Moment></p>}
                             </div>
                             <div>
-                            <span className='text-white'>Click here to change password</span><span className="icon md rarrow-white" />
+                            <span className='text-white'><Translate content="Click_here_to_change_password" component={Paragraph.span} className='text-white'/></span><span className="icon md rarrow-white" />
                             </div>
                         </div>
                     </li>
@@ -65,7 +65,7 @@ const Security =({userConfig})=> {
                 title={[<div className="side-drawer-header">
                     <span onClick={()=>onClose()} className="icon md lftarw-white c-pointer" />
                     <div className="text-center fs-14">
-                        <Translate className="mb-0 text-white-30 fw-600 text-upper" content="change_password" component={Paragraph} />
+                        <Translate className="text-center fs-14 text-white" content="change_password" component={Drawer.title} />
                     </div>
                     <span onClick={()=>onClose()} className="icon md close-white c-pointer" />
 
@@ -77,7 +77,7 @@ const Security =({userConfig})=> {
                 onClose={() => setisChangepassword(false)}
                 className="side-drawer"
             >
-                <Paragraph className="mb-16 ml-8 fs-14 text-white mt-8 fw-200 py-16">Choose a unique password to protect your account</Paragraph>
+                <Paragraph className="mb-16 ml-8 fs-14 text-white mt-8 fw-200 py-16"><Translate content="Choose_a_unique_password_to_protect_your_account" component={Paragraph} className="mb-16 ml-8 fs-14 text-white mt-8 fw-200 py-16"/></Paragraph>
                 <Changepassword onSubmit={() => setisChangepassword(false)} />
             </Drawer>
 

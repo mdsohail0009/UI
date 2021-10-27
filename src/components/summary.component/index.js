@@ -5,6 +5,7 @@ import Translate from 'react-translate-component';
 import Loader from '../../Shared/loader';
 import SuisseBtn from '../shared/butons';
 import Currency from '../shared/number.formate';
+import apicalls from '../../api/apiCalls';
 const LinkValue = (props) => {
     return (
         <Translate className="textpure-yellow text-underline c-pointer"
@@ -24,7 +25,8 @@ class Summary extends Component {
         const link = <LinkValue content="terms_service" />;
         return (
             <>
-                {!error?.valid && <Alert showIcon type="info" message={error?.title || "Buy crypto"} description={error?.message} closable onClose={() => onErrorClose ? onErrorClose() : ""} />}
+                {!error?.valid && <Alert showIcon type="info" message={error?.title || apicalls.convertLocalLang('buy_crypto')}description={error?.message} closable onClose={() => onErrorClose ? onErrorClose() : ""} />}
+               
                 <div className="cryptosummary-container auto-scroll">
                     <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}><Currency prefix={""} decimalPlaces={decimalPlaces} defaultValue={amount} suffixText={coin} /> </div>
                     {showEstimated && <div className="text-white-50 fw-300 text-center fs-14 mb-16"><Currency defaultValue={amountNativeCurrency} prefix={""} decimalPlaces={decimalPlaces} type={'text'} prefixText={nativeCurrency} /></div>}
@@ -52,16 +54,15 @@ class Summary extends Component {
                     {showConvert && <div className="pay-list fs-16 mb-16">
                         <Translate className="fw-400 text-white" content="convert" component={Text} />
                         <Currency defaultValue={convertValue} prefix={""} decimalPlaces={decimalPlaces} className="fw-300 text-white-30" suffixText={convertCoin} />
-                    </div>}
-                    <div className="fs-12 text-white-30 text-center my-16">Your final amount might be changed with in
-                        10 seconds.</div>
+                    </div>}                   
+                        <div className="fs-12 text-white-30 text-center my-16"><Translate className="fw-400 text-white" content="final_Amount" component={Text} /></div>
                     <div className="d-flex p-16 mb-36 agree-check">
                         <label>
                             <input type="checkbox" id="agree-check" checked={onCheked} onChange={({ currentTarget: { checked } }) => { this.props.onTermsChange(checked) }} />
                             <span for="agree-check" />
-                        </label>
+                        </label>                    
                         <Paragraph className="fs-14 text-white-30 ml-16 mb-0" style={{ flex: 1 }} >
-                            I agree to Suissebase’s <a className="textpure-yellow" href="https://www.iubenda.com/terms-and-conditions/42856099" target="_blank">Terms of Service</a> and its return, refund and cancellation policy.
+                           <Translate content="agree_sell" component="Paragraph"/>  <a className="textpure-yellow" href="https://www.iubenda.com/terms-and-conditions/42856099" target="_blank"><Translate content="terms" component="Text"/></a> <Translate content="refund_cancellation" component="Text"/>
                         </Paragraph>
                     </div>
                     <SuisseBtn className={"pop-btn"} onRefresh={() => this.props.onRefresh()} title={okBtnTitle || "pay"} loading={isButtonLoad} autoDisable={true} onClick={() => this.props.onClick()} />

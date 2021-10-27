@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input} from "antd";
+import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input,Typography} from "antd";
 import List from "../grid.component";
 import Loader from '../../Shared/loader'
 import { userNameLuSearch, getFeatureLuSearch } from './api';
 import moment from 'moment';
+import Translate from 'react-translate-component';
+import apicalls from '../../api/apiCalls';
 
 
 const { Option } = Select;
@@ -43,14 +45,7 @@ class AuditLogs extends Component {
     this.gridRef = React.createRef();
 
   }
-  gridColumns = [
-    { field: "date", title: "Date", filter: true, filterType: "date", width: 250 },
-    { field: "feature", title: "Feature", filter: true, width: 190 },
-    { field: "featurePath", title: "Feature Path", filter: true, width: 230 },
-    { field: "action", title: "Action", width: 200, filter: true },
-    { field: "remarks", title: "Remarks",filter: true },
-  ]
-
+ 
   componentDidMount = () => {
    this.TransactionFeatureSearch(this.props.userProfile?.userName);
   };
@@ -146,6 +141,15 @@ class AuditLogs extends Component {
 
   render() {
     const { gridUrl, searchObj, featureData, timeListSpan} = this.state;
+    const {Text } = Typography;
+    const gridColumns = [
+      { field: "date", title: <Translate content="Date" component={Text} className="custom-font fw-300 fs-14 text-white" />, filter: true, filterType: "date", width: 250 },
+      { field: "feature", title: <Translate content="feacture" component={Text} className="custom-font fw-300 fs-14 text-white" />, filter: true, width: 190 },
+      { field: "featurePath", title: <Translate content="Feature_Path" component={Text} className="custom-font fw-300 fs-14 text-white" />, filter: true, width: 230 },
+      { field: "action", title:<Translate content="Action" component={Text} className="custom-font fw-300 fs-14 text-white" />, width: 200, filter: true },
+      { field: "remarks", title:<Translate content="remarks" component={Text} className="custom-font fw-300 fs-14 text-white" />,filter: true },
+    ]
+  
     
     const options3 = timeListSpan.map((d) => (
       <Option key={d} value={d}>{d}</Option>
@@ -155,7 +159,7 @@ class AuditLogs extends Component {
       <>
        <Drawer
           title={[<div className="side-drawer-header">
-            <span className="text-white">Audit Logs</span>
+            <span className="text-white"><Translate content="AuditLogs" component={Drawer.span} className="text-white" /></span>
             <div className="text-center fs-14"></div>
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
           </div>]}
@@ -177,13 +181,14 @@ class AuditLogs extends Component {
                 <Form.Item
                   name="timeSpan"
                   className="input-label selectcustom-input mb-0"
-                  label="Time Span"
-                >
+                  label={<Translate content="TimeSpan" component={Form.label} className="input-label selectcustom-input mb-0"/>}
+                  >
                   <Select
                      className="cust-input mb-0 custom-search"
                      dropdownClassName="select-drpdwn"
                     showSearch
-                    defaultValue="Last 1 Day"
+                     defaultValue={apicalls.convertLocalLang('Last_1_Day')}
+                    //  {<Translate content="Last_1_Day" component={Select}className="cust-input mb-0 custom-search"/>}
                     onChange={(e) => this.handleTimeSpan(e, 'timeSpan')}
                     placeholder="Time Span"
                     optionFilterProp="children"
@@ -216,16 +221,16 @@ class AuditLogs extends Component {
                 <Form.Item
                    name="feature"
                    className="input-label selectcustom-input mb-0"
-                   label="Features"
+                   label={<Translate content="Features" component={Form.label} className="input-label selectcustom-input mb-0" />}
                 >
                   <Select
-                    defaultValue="All Features"
+                    defaultValue={apicalls.convertLocalLang('All_Features')}
                     className="cust-input mb-0"
                     dropdownClassName="select-drpdwn"
                     onChange={(e) => this.TransactionFeatureSearch(e, "feature")}
                     onChange={(e) => this.handleChange(e, 'feature')}
                   >
-                   <Option value="All Features">All Features</Option>
+                   <Option value="All Features">All Feactures</Option>
                       {featureData?.map((item, idx) => {
                         if (item.groupName === "User Features") {
                           return <Option key={idx} value={item.name}>{item.name}</Option>
@@ -241,7 +246,7 @@ class AuditLogs extends Component {
                   className="primary-btn px-24 search-btn custom-btn prime mt-16 mb-8"
                   htmlType="submit"
                   onClick={this.handleSearch}
-                >Search
+                ><Translate  content="search"/>
                 </Button>
               </Col>
             </Row>
@@ -250,10 +255,10 @@ class AuditLogs extends Component {
         <List
           url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
           key={gridUrl}
-          columns={this.gridColumns}
+          columns={gridColumns}
         />
         <Modal
-          title="Custom Dates"
+          title={<Translate content="Custom_Dates" component={Modal.title} />}
           className="widthdraw-pop"
           visible={this.state.modal}
           closeIcon={<Tooltip title="Close"><span className="icon md close" onClick={this.handleCancel} /></Tooltip>}
@@ -273,7 +278,7 @@ class AuditLogs extends Component {
                   <Form.Item
                     name="fromdate"
                     className="input-label ml-0"
-                    label="Start Date"
+                    label={<Translate content="Start_Date" component={Form.label} className="input-label ml-0" />}
                     rules={[
                       { required: true, message: "Is required" }, {
                           type: "date", validator: async (rule, value, callback) => {
@@ -285,6 +290,7 @@ class AuditLogs extends Component {
                   >
                     <DatePicker 
                     format={"DD/MM/YYYY"} 
+                    placeholder={apicalls.convertLocalLang('Select_Date')}
                     onChange={(e) => this.handleDateChange(e, 'fromdate')}
                     className="cust-input mb-0" style={{width:'100%'}}/>
                   </Form.Item>
@@ -293,7 +299,7 @@ class AuditLogs extends Component {
                   <Form.Item
                     name="todate"
                     className="input-label ml-0"
-                    label="End Date"
+                    label={<Translate content="End_Date" component={Form.label} className="input-label ml-0" />}
                     rules={[
                       { required: true, message: "Is required" }, {
                           type: "date", validator: async (rule, value, callback) => {
@@ -310,6 +316,7 @@ class AuditLogs extends Component {
                   > 
                     <DatePicker 
                     className="cust-input mb-0" 
+                    placeholder={apicalls.convertLocalLang('Select_Date')}
                     onChange={(e) => this.handleDateChange(e, 'todate')}
                     format={"DD/MM/YYYY"} 
                     style={{width:'100%'}}
@@ -319,8 +326,8 @@ class AuditLogs extends Component {
               </Row>
               <Form.Item className="mb-0">
                 <div className="text-right">
-                  <Button type="button" className="c-pointer text-center ant-btn-lg text-white-30 pop-cancel fw-400 text-captz text-center mr-12" onClick={this.handleCancel} ><span>Cancel</span></Button>
-                  <Button type="button" key="submit" className="c-pointer pop-btn ant-btn px-24" htmlType="submit"><span>Ok</span></Button>
+                  <Button type="button" className="c-pointer text-center ant-btn-lg text-white-30 pop-cancel fw-400 text-captz text-center mr-12" onClick={this.handleCancel} ><span><Translate  content="cancel"/></span></Button>
+                  <Button type="button" key="submit" className="c-pointer pop-btn ant-btn px-24" htmlType="submit"><span><Translate content="ok"/></span></Button>
                 </div>
               </Form.Item>
             </Form>

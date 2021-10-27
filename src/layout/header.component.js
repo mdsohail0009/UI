@@ -332,13 +332,15 @@ class Header extends Component {
             <Menu>
                 <ul className="pl-0 drpdwn-list">
                     <li onClick={this.showSendDrawer}>
-                        <Link>Crypto <span className="icon md rarrow-white" /></Link>
+                        <Link><Translate content="tab_crypto" conmponent={Text}/> <span className="icon md rarrow-white" /></Link>
+
                     </li>
                     <li onClick={this.showBuyFiatDrawer}>
-                        <Link>Fiat <span className="icon md rarrow-white" /></Link>
+                        <Link><Translate content="tab_fiat" conmponent={Text}/>  <span className="icon md rarrow-white" /></Link>
                     </li>
                 </ul>
             </Menu>
+
         )
         const userProfileMenu = (
             <Menu>
@@ -350,7 +352,7 @@ class Header extends Component {
                     <ul className="pl-0 drpdwn-list">
                         <Menu.Item className="px-0" onClick={() => this.showAuditLogsDrawer()}>
                             <li className="c-pointer px-0">
-                                <Link>Audit Logs</Link>
+                                <Link><Translate content="AuditLogs" component={Link} className="c-pointer px-0"/></Link>
                             </li>
                         </Menu.Item>
                         <li className="c-pointer px-0" onClick={() => userManager.signoutRedirect()}>
