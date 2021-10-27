@@ -23,11 +23,7 @@ class Documents extends Component {
     details = ({ dataItem }) => {
         this.props.history.push("/documents?id=" + dataItem.id)
     }
-    gridColumns = [
-        { field: "title", title: "Title", filter: true, customCell: (props) => <td><div className="gridLink" onClick={() => this.details(props)}>{props.dataItem?.title}</div></td> },
-        { field: "date", title: "Requested Date", filter: true, filterType: "date" },
-        { field: "status", title: "Status", filter: true },
-    ]
+   
     handleAllDocuments = e => {
         this.setState({
             allDocs: e.target.value === 1
@@ -36,10 +32,16 @@ class Documents extends Component {
     }
     render() {
         const { gridUrl } = this.state;
+        const {Text} = Typography;
+        const gridColumns = [
+            { field: "title", title:  <Translate content="title" component={Text} className="custom-font fw-300 fs-14 text-white" />, filter: true, customCell: (props) => <td><div className="gridLink" onClick={() => this.details(props)}>{props.dataItem?.title}</div></td> },
+            { field: "date", title: <Translate content="RequestedDate" component={Text} className="custom-font fw-300 fs-14 text-white" />, filter: true, filterType: "date" },
+            { field: "status", title:  <Translate content="Status" component={Text} className="custom-font fw-300 fs-14 text-white" />, filter: true },
+        ]
         return (<>
             <div className="box basic-info">
-            <Translate content="Documents" className="f-16 text-white-30 mt-16 "  />
-                <List url={gridUrl} ref={this.gridRef} columns={this.gridColumns} additionalParams={{ "memberId": this.props.userProfileInfo?.id }} />
+            <Translate content="documents" className="basicinfo"/>
+                <List url={gridUrl} ref={this.gridRef} columns={gridColumns} additionalParams={{ "memberId": this.props.userProfileInfo?.id }} />
             </div>
         </>
         );
