@@ -50,7 +50,7 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard }
                             className={`${item?.action?.toLowerCase()}bg mb-0`}
                             avatar={<span className={`icon md notifyIcon ${item?.action?.toLowerCase()}`} />}
                             title={<div className="d-flex justify-content align-center"><Text className="text-white-30 fs-14">{item.action}</Text><Text className="text-secondary fs-12"><Moment format={"DD MMM YY"}>{item.notifiedDate}</Moment></Text></div>}
-                            description={<Text className="text-white-50 fw-200 fs-12">{item?.message} </Text>}
+                            description={<Text className={`text-white-50 ${!item.isRead ? "fw-200" : "fw-500"} fs-12`}>{item?.message} </Text>}
                         />
                     </List.Item>)}
                 </List>
