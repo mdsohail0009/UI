@@ -159,12 +159,11 @@ const selectAddress = () =>{
     if(val && val.length>14){
         let response = await apicalls.getIBANData(val);
         if (response.ok) {
-          if(response.data.country){
-            getStateLu(response.data.country)
-          }
             const oldVal= form.getFieldValue();
             form.setFieldsValue({ routingNumber:response.data.routingNumber||oldVal.routingNumber, bankName:response.data.bankName||oldVal.bankName,bankAddress:response.data.bankAddress||oldVal.bankAddress,country: response.data.country||oldVal.country,state:response.data.state||oldVal.state,zipcode:response.data.zipCode||oldVal.zipcode})
-            
+            if(response.data.country){
+              getStateLu(response.data.country)
+            }
         }
     }
 }

@@ -219,17 +219,17 @@ class AddressBook extends Component {
         const { Title, Paragraph,Text } = Typography;
        const columnsFiat = [
             { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
-            { field: "favouriteName", title: <Translate content="AddressLabel" component={Text}/>, filter: true, width: 180 },
-            { field: "toWalletAddress", title: <Translate content="address" component={Text}/>, filter: true, width: 380 },
-            { field: "currency", title: <Translate content="currency" component={Text}/>, width: 150, filter: true, with: 150 },
-            { field: "accountNumber", title: <Translate content="Bank_account" component={Text}/>, filter: true, width: 220 },
-            { field: "routingNumber", title:  <Translate content="BIC_SWIFT_routing_number" component={Text}/>, filter: true, width: 180 },
-            { field: "bankName", title: <Translate content="Bank_name" component={Text}/>, filter: true, width: 200 },
-            { field: "bankAddress", title: <Translate content="Bank_address1" component={Text}/>, filter: true, width: 250 },
-            { field: "beneficiaryAccountName", title: <Translate content="Recipient_full_name" component={Text}/>, filter: true, width: 200 },
-            { field: "beneficiaryAccountAddress", title: <Translate content="Recipient_address1" component={Text}/>, filter: true, width: 250 },
+            { field: "favouriteName", title: <Translate content="AddressLabel" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 180 },
+            { field: "toWalletAddress", title: <Translate content="address" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 380 },
+            { field: "currency", title: <Translate content="currency" component={Text} className="custom-font fw-400 fs-14 text-white"/>, width: 150, filter: true, with: 150 },
+            { field: "accountNumber", title: <Translate content="Bank_account" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 220 },
+            { field: "routingNumber", title:  <Translate content="BIC_SWIFT_routing_number" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 180 },
+            { field: "bankName", title: <Translate content="Bank_name" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 200 },
+            { field: "bankAddress", title: <Translate content="Bank_address1" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 250 },
+            { field: "beneficiaryAccountName", title: <Translate content="Recipient_full_name" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 200 },
+            { field: "beneficiaryAccountAddress", title: <Translate content="Recipient_address1" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 250 },
             // { field: "swiftCode", title: "Swift Code", filter: true, },
-            { field: "status", title: <Translate content="Status" component={Text}/>, filter: true, width: 100 }
+            { field: "status", title: <Translate content="Status" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 100 }
         ];
        const columnsCrypto = [
             {
@@ -240,26 +240,26 @@ class AddressBook extends Component {
                         onChange={(e) => this.handleInputChange(props, e)} />
                     <span></span> </label></td>)
             },
-            { field: "addressLable", title:<Translate content="AddressLabel" component={Text}/>, filter: true, width: 250 },
-            { field: "coin", title: <Translate content="Coin" component={Text}/>, filter: true, width: 120 },
-            { field: "address", title: <Translate content="address" component={Text}/>, filter: true, width: 380 },
-            { field: "status", title: <Translate content="Status" component={Text}/>, filter: true, width: 100 }
+            { field: "addressLable", title:<Translate content="AddressLabel" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 250 },
+            { field: "coin", title: <Translate content="Coin" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 120 },
+            { field: "address", title: <Translate content="address" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 380 },
+            { field: "status", title: <Translate content="Status" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 100 }
         ];
         return (
             <>
 
                 <div className="box basic-info">
-                    <Title className="basicinfo"><Translate content="address_book" component={Text}/></Title>
-                    <Paragraph className="basic-decs mb-16"><Translate content="address_book_tag" component={Paragraph}/></Paragraph>
+                    <Title className="basicinfo"><Translate content="address_book" component={Text} className="basicinfo"/></Title>
+                    <Paragraph className="basic-decs mb-16"><Translate content="address_book_tag" component={Paragraph} className="basic-decs mb-16"/></Paragraph>
                     <Radio.Group
                         defaultValue={1}
                         onChange={this.handleWithdrawToggle}
                         className="buysell-toggle mx-0" style={{ display: "inline-block" }}>
-                        <Translate content="withdrawCrypto" component={Radio.Button} value={1} />
-                        <Translate content="withdrawFiat" component={Radio.Button} value={2} />
+                        <Translate content="withdrawCrypto" component={Radio.Button} value={1} className="buysell-toggle mx-0"/>
+                        <Translate content="withdrawFiat" component={Radio.Button} value={2} className="buysell-toggle mx-0"/>
                     </Radio.Group>
                     <div className="d-flex justify-content align-center mb-16">
-                        <div><Title className="fs-26 text-white-30 fw-500">{cryptoFiat ? <Translate content="withdrawFiat" component={Paragraph}/> : <Translate content="withdrawCrypto" component={Paragraph}/>}</Title>
+                        <div><Title className="fs-26 text-white-30 fw-500">{cryptoFiat ? <Translate content="withdrawFiat" className="fs-26 text-white-30 fw-500" component={Title}/> : <Translate content="withdrawCrypto" component={Title} className="fs-26 text-white-30 fw-500"/>}</Title>
                         </div>
                         <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0, display: 'flex' }}>
                             <li onClick={this.addAddressBook} className="mr-16">
@@ -315,7 +315,7 @@ class AddressBook extends Component {
                     title={[<div className="side-drawer-header">
                         <span />
                         <div className="text-center fs-16">
-                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper"><Translate content="AddFiatAddress" component={Text}/></Paragraph>
+                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper"><Translate content="AddFiatAddress" component={Text} className="mb-0 text-white-30 fw-600 text-upper"/></Paragraph>
                         </div>
                         <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
                     </div>]}
