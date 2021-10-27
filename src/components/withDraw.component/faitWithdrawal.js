@@ -254,7 +254,7 @@ const selectAddress = () =>{
                 }
               ]}
             >
-              <Input className="cust-input" placeholder={apicalls.convertLocalLang('Bank_account') onBlur={(val)=>getIbanData(val.currentTarget.value)} />
+              <Input className="cust-input" placeholder={apicalls.convertLocalLang('Bank_account')} onBlur={(val)=>getIbanData(val.currentTarget.value)} />
               
             </Form.Item>
             <Form.Item
