@@ -280,7 +280,7 @@ export default {
   Country: "Country",
   state: 'State',
   zipcode: 'Zip code',
-  userName: 'John Huh',
+  userName: 'User Name',
   manage_account: 'Manage your Account',
   Deposit_success:'Deposit Success',
   return_to_depositfiat:'Return to Deposit Fiat',
