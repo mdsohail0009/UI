@@ -11,7 +11,7 @@ import { withDrawCrypto } from '../send.component/api';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
 import { setStep, setSubTitle, setWithdrawcrypto } from '../../reducers/sendreceiveReducer';
-
+import apicalls from '../../api/apiCalls';
 const LinkValue = (props) => {
     return (
         <Translate className="text-defaultylw textpure-yellow text-underline c-pointer"
@@ -72,11 +72,11 @@ class WithdrawSummary extends Component {
                     });
                 }
             } else {
-                this.props.dispatch(setSubTitle("Live verification"));
+                this.props.dispatch(setSubTitle(apicalls.convertLocalLang('Withdraw_liveness')));
                 this.props.changeStep('withdraw_crypto_liveness');
             }
         } else {
-            this.setState({ ...this.state, errorMsg: 'Please agree terms of service' })
+            this.setState({ ...this.state, errorMsg: +" "+apicalls.convertLocalLang('agree_termsofservice') })
             this.useDivRef.current.scrollIntoView()
         }
     }
@@ -88,7 +88,7 @@ class WithdrawSummary extends Component {
         }
         return (
             <><div ref={this.useDivRef}></div>
-                {this.state.errorMsg && <Alert showIcon type="info" message={"Withdraw crypto"} description={this.state.errorMsg} closable={false} />}
+                {this.state.errorMsg && <Alert showIcon type="info" message={apicalls.convertLocalLang('withdraw_crypto')} description={this.state.errorMsg} closable={false} />}
                 <div className="cryptosummary-container auto-scroll">
                     <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}><Currency prefix={""} decimalPlaces={8} defaultValue={this.props.sendReceive.withdrawCryptoObj?.totalValue} suffixText={this.props.sendReceive.withdrawCryptoObj?.walletCode} /> </div>
                     <div className="text-white-50 fw-300 text-center fs-14 mb-16"><Currency defaultValue={this.state.usdAmount} prefix={""} decimalPlaces={8} type={'text'} prefixText={'USD'} /></div>
@@ -106,25 +106,18 @@ class WithdrawSummary extends Component {
                         <Translate className="fw-400 text-white" content="address" component={Text} />
                         <Text className="fw-400 text-white">{this.props.sendReceive.withdrawCryptoObj?.toWalletAddress}</Text>
                     </div>
-                    <div className="fs-12 text-white-30 text-center my-16">Your final amount might be changed with in
-                        10 seconds.</div>
-                    {/* <div className="p-16 mt-16 mb-0 text-center">
-                        <Translate className="fs-16 text-white-30 text-center mb-0" content="withdraw_to" component={Paragraph} />
-                        <div className={'text-white'}>{this.props.sendReceive.withdrawCryptoObj?.walletCode} Coin Address</div>
-                        <Paragraph className="fs-16 text-white-30 text-center mb-0">
-                            {this.props.sendReceive.withdrawCryptoObj?.toWalletAddress}
-                        </Paragraph>
-                    </div> */}
-                    <div className="d-flex p-16 mb-36 agree-check">
+                    <Translate className="fs-14 text-center text-white-30 mt-24" content="summary_hint_text" component={Paragraph} />
+<div className="d-flex p-16 mb-36 agree-check">
                         <label>
                             <input type="checkbox" id="agree-check" checked={this.state.onTermsChange} onChange={({ currentTarget: { checked } }) => { this.setState({ onTermsChange: checked ? true : false }) }} />
                             <span for="agree-check" />
                         </label>
-                        <Paragraph className="fs-14 text-white-30 ml-16 mb-0" style={{ flex: 1 }} >
-                            I agree to Suissebase’s <a className="textpure-yellow" href="https://www.iubenda.com/terms-and-conditions/42856099" target="_blank">Terms of Service</a> and its return, refund and cancellation policy.
+                       
+                         <Paragraph className="fs-14 text-white-30 ml-16 mb-0" style={{ flex: 1 }} >
+                           <Translate content="agree_sell" component="Paragraph"/>  <a className="textpure-yellow" href="https://www.iubenda.com/terms-and-conditions/42856099" target="_blank"><Translate content="terms" component="Text"/></a> <Translate content="refund_cancellation" component="Text"/>
                         </Paragraph>
                     </div>
-                    <SuisseBtn className={"pop-btn"} onRefresh={() => this.onRefresh()} title={'confirm'} loading={this.state.isButtonLoad} autoDisable={true} onClick={() => this.onClick()} />
+                    <SuisseBtn className={"pop-btn"} onRefresh={() => this.onRefresh()} title={'confirm_btn_text'} loading={this.state.isButtonLoad} autoDisable={true} onClick={() => this.onClick()} />
                     <div className="text-center mt-16">
                         <Translate content="cancel" component={Button} onClick={() => this.onCancel()} type="text" size="large" className="text-white-30 pop-cancel fw-400" />
                     </div>

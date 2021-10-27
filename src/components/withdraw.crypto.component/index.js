@@ -5,6 +5,7 @@ import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSt
 import connectStateProps from "../../utils/state.connect";
 import Currency from '../shared/number.formate';
 import Loader from '../../Shared/loader';
+import apicalls from "../../api/apiCalls";
 
 const { Paragraph, Text, Title } = Typography;
 const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
@@ -14,7 +15,7 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
     const loadData = () =>{
         dispatch(fetchWithDrawWallets({ memberId: userProfile?.id }));
         dispatch(handleSendFetch({key:"cryptoWithdraw",activeTab:null}));
-        dispatch(setSubTitle("Select a currency in your wallet"));
+        dispatch(setSubTitle(apicalls.convertLocalLang("selectCurrencyinWallet")));
     }
     const { cryptoWithdraw: { wallets } } = sendReceive;
 

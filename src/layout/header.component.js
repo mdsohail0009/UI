@@ -332,13 +332,15 @@ class Header extends Component {
             <Menu>
                 <ul className="pl-0 drpdwn-list">
                     <li onClick={this.showSendDrawer}>
-                        <Link>Crypto <span className="icon md rarrow-white" /></Link>
+                        <Link><Translate content="tab_crypto" conmponent={Text}/> <span className="icon md rarrow-white" /></Link>
+
                     </li>
                     <li onClick={this.showBuyFiatDrawer}>
-                        <Link>Fiat <span className="icon md rarrow-white" /></Link>
+                        <Link><Translate content="tab_fiat" conmponent={Text}/>  <span className="icon md rarrow-white" /></Link>
                     </li>
                 </ul>
             </Menu>
+
         )
         const userProfileMenu = (
             <Menu>

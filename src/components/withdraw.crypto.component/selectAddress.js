@@ -5,7 +5,7 @@ import {  setAddress, setStep,setWithdrawcrypto} from '../../reducers/sendreceiv
 import oops from '../../assets/images/oops.png'
 import Loader from '../../Shared/loader';
 import { connect } from 'react-redux';
-
+import apicalls from '../../api/apiCalls';
 
 class SelectAddress extends Component {
     state={
@@ -47,7 +47,7 @@ class SelectAddress extends Component {
         return (
             <>
                 {loading ? <Loader /> :<>
-                <Search placeholder="Search address label"
+                 <Search placeholder={apicalls.convertLocalLang('searchAddress')}
                     addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { this.handleSearch(currentTarget.value) }} size="middle" bordered={false} className="my-16" />
                 {filterObj.length > 0 ? <>
                     <ul style={{ listStyle: 'none', paddingLeft: 0, }} className="addCryptoList">
@@ -61,8 +61,8 @@ class SelectAddress extends Component {
                     </ul> </> :
                     <div className="success-pop text-center" style={{ marginTop: '20px' }}>
                         <img src={oops} className="confirm-icon" style={{ marginBottom: '10px' }} alt="Confirm" />
-                        <h1 className="fs-36 text-white-30 fw-200 mb-0" >OOPS </h1>
-                        <p className="fs-16 text-white-30 fw-200 mb-0"> No address available </p>
+                        <h1 className="fs-36 text-white-30 fw-200 mb-0" > {apicalls.convertLocalLang('oops')}</h1>
+                        <p className="fs-16 text-white-30 fw-200 mb-0"> {apicalls.convertLocalLang('address_available')} </p>
                     </div>
            }</>
            }
