@@ -56,11 +56,11 @@ const Settings =({member,getmemeberInfoa})=> {
         const { Title, Text, Paragraph } = Typography;
         return (<><Form layout="vertical" initialValues={{ ...settingsObj }} onFinish={saveSettings} form={form}>
             <div className="box basic-info">
-            <Translate content="Settings" className="f-16 text-white-30 mt-16 "  />
-                <Paragraph className="basic-decs">User customized settings</Paragraph>
+            <Translate content="settings" className="basicinfo"  />
+                <Paragraph className="basic-decs"><Translate content="User_customized_settings" className="basic-decs"  /></Paragraph>
         
                 <div className="pb-16 border-bottom">
-                <Text className="input-label">Language</Text>
+                <Text className="input-label"><Translate content="language" className="input-label"  /></Text>
                 <Form.Item
                   className="custom-forminput mb-24"
                   name="Language"
@@ -79,7 +79,7 @@ const Settings =({member,getmemeberInfoa})=> {
                     </Select></Form.Item>
                 </div>
                 <div className="py-16 border-bottom">
-                <Text className="input-label">Currency</Text>
+                <Text className="input-label"><Translate content="currency" className="input-label" component={Text} /></Text>
                 <Form.Item
                   className="custom-forminput mb-24"
                   name="LCurrency"
@@ -98,17 +98,17 @@ const Settings =({member,getmemeberInfoa})=> {
                     </Select></Form.Item>
                 </div>
                 <div className="pt-16">
-                    <Text className="input-label">Theme</Text>
+                    <Text className="input-label"><Translate content="theme" className="input-label" component={Text} /></Text>
                     <div className="d-flex">
                     <div className="theme-switch theme-active">
                         <div className="d-flex align-center">
                             <p className="switch-circle mb-0" onClick={()=>theme?themeSwitch(true):''}>{!theme&&<span className="icon md check-arrow c-pointer"></span>}{theme&&<span></span>}</p>
-                            <p className="mb-0 ml-16 theme-txt">Dark Theme</p></div>
+                            <p className="mb-0 ml-16 theme-txt"><Translate content="dark_theme" className="mb-0 ml-16 theme-txt" component={Text.p} /></p></div>
                     </div>
                     <div className="theme-switch ml-24">
                         <div className="d-flex align-center">
                             <p className="switch-circle mb-0" onClick={()=>!theme?themeSwitch(false):''}>{theme&&<span className="icon md check-arrow c-pointer"></span>}{!theme&&<span></span>}</p>
-                            <p className="mb-0 ml-16 theme-txt">Light Theme</p></div>
+                            <p className="mb-0 ml-16 theme-txt"><Translate content="light_theme" className="mb-0 ml-16 theme-txt" component={Text.p} /></p></div>
                     </div>
                     </div>
                 </div>
@@ -118,7 +118,7 @@ const Settings =({member,getmemeberInfoa})=> {
                 block
                 className="pop-btn mt-36"
             >
-                Save
+                <Translate className="pop-btn" content="Save_btn_text" component={Button}/>
             </Button>
             </div>
             </Form>

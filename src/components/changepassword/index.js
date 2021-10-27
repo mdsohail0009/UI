@@ -6,7 +6,8 @@ import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import { changePassword } from '../../api/apiServer';
 import { getmemeberInfo } from '../../reducers/configReduser';
-import apiClient from "../../api/apiCalls"
+import apiClient from "../../api/apiCalls";
+
 
 notification.config({
   placement: "topRight",
@@ -98,7 +99,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
           ]}
         >
 
-          <Input.Password placeholder="Type your current password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8 pr-0 change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeOutlined style={{ color: '#fff' }} />)} />
+          <Input.Password placeholder={apiClient.convertLocalLang('Type_your_current_password')} value={initialValues.CurrentPassword} className="text-left cust-input mb-8 pr-0 change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeOutlined style={{ color: '#fff' }} />)} />
         </Form.Item>
         <div className="d-flex">
           <Translate
@@ -119,7 +120,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
         >
          
             <Input.Password
-              placeholder="Type your new password"
+             placeholder={apiClient.convertLocalLang('Type_your_new_password')}
               value={initialValues.Password}
               onChange={(e) => handleChange("Password", e)}
               className="text-left cust-input mb-8 pr-0 change-space pass-onhover" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeOutlined style={{ color: '#fff' }} />)}
@@ -158,7 +159,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
         >
 
           <Input.Password
-            placeholder="Re-type your new password"
+            placeholder={apiClient.convertLocalLang('Re_type_your_new_password')}
             value={initialValues.ConfirmPassword}
             onChange={(e) => handleChange("ConfirmPassword", e)}
             className="text-left cust-input mb-8 pr-0 change-space" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeOutlined style={{ color: '#fff' }} />)}
@@ -173,7 +174,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
             block
             className="pop-btn"
           >
-            Save
+            <Translate className="pop-btn" content="Save_btn_text" component={Button}/>
           </Button>
           <Button
             htmlType="cancel"
@@ -181,7 +182,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
             block
             className="pwd-popup pop-cancel"
             onClick={() => onSubmit()}>
-            Cancel
+            <Translate className="pwd-popup pop-cancel" content="cancel" component={Button}/>
           </Button>
         </div>
       </Form>

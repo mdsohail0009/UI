@@ -350,7 +350,7 @@ class Header extends Component {
                     <ul className="pl-0 drpdwn-list">
                         <Menu.Item className="px-0" onClick={() => this.showAuditLogsDrawer()}>
                             <li className="c-pointer px-0">
-                                <Link>Audit Logs</Link>
+                                <Link><Translate content="AuditLogs" component={Link} className="c-pointer px-0"/></Link>
                             </li>
                         </Menu.Item>
                         <li className="c-pointer px-0" onClick={() => userManager.signoutRedirect()}>
