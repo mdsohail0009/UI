@@ -316,4 +316,13 @@ export default {
   zipcode:'zipcode',
   ProfileInfo:'Impormasyon sa Profile',
   BasicInfo:'Pangunahing Impormasyon',
+  SelectAddress:'Piliin angAddress',
+  SelectCurrency:'Piliin ang Currency',
+  account_details:'Tiyaking tama ang mga detalye ng account',
+  Cancel_select:'Hindi maaaring kanselahin ang transaksyon',
+  Confirm:'Kumpirmahin',
+  back:'pabalik',
+  totalbalance:'Kabuuang balanse',
+  select_currency:'Pumili ng pera sa iyong wallet',
+  
 }

@@ -316,4 +316,13 @@ export default {
   zipcode:'郵政編碼',
   ProfileInfo:'個人資料',
   BasicInfo:'基礎信息',
+  SelectAddress:'選擇地址',
+  SelectCurrency:'選擇貨幣 ',
+  account_details:'確保帳戶詳細信息正確無誤',
+  Cancel_select:'交易無法取消',
+  Confirm:'確認',
+  back:'背部 ',
+  totalbalance:'總餘額 ',
+  select_currency:'在您的錢包中選擇一種貨幣',
+
 }

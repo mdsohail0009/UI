@@ -15,6 +15,7 @@ import { favouriteFiatAddress, detailsAddress } from '../addressbook.component/a
 import { setWithdrawfiat, rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import WithdrawalSummary from './withdrawalSummary';
 import WithdrawalLive from './withdrawLive';
+import apicalls from '../../api/apiCalls';
 
 const LinkValue = (props) => {
   return (
@@ -171,17 +172,17 @@ const selectAddress = () =>{
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="walletCode"
-              label="Currency"
+              label={<Translate content="currency" component={Form.label}   />}
               rules={[
                 { required: true, message: "Is required" },
               ]}
             >
-              <WalletList  valueFeild={'currencyCode'}  selectedvalue={saveObj?.walletCode} placeholder="Select Currency" onWalletSelect={(e) => handleWalletSelection(e, true)} />
+              <WalletList  valueFeild={'currencyCode'}  selectedvalue={saveObj?.walletCode} placeholder={apicalls.convertLocalLang('SelectCurrency')} onWalletSelect={(e) => handleWalletSelection(e, true)} />
             </Form.Item>
             <Form.Item
               className="custom-forminput custom-label  mb-24"
               name="totalValue"
-              label="Amount"
+              label={<Translate content="amount" component={Form.label}   />}
               rules={[
                 { required: true, message: "Is required" },
               ]}
@@ -196,7 +197,7 @@ const selectAddress = () =>{
             <div style={{ position:'relative' }}>
             <Form.Item
               className="custom-forminput custom-label mb-24"
-              label="Address Book"
+              label={<Translate content="address_book" component={Form.label}   />}
               name="favouriteName"
             >
                 <Select dropdownClassName="select-drpdwn"
@@ -204,7 +205,7 @@ const selectAddress = () =>{
                 // setAddressBook  
                //  value={addressDetails.favouriteName}
                   onChange={(e) => handleAddressChange(e)}
-                  placeholder="Select Address">
+                  placeholder={apicalls.convertLocalLang('SelectAddress')}>
                   {addressLu?.map((item, idx) =>
                     <Option key={idx} value={item.id}>{item.name}
                     </Option>
@@ -220,7 +221,7 @@ const selectAddress = () =>{
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="accountNumber"
-              label="Bank account number/IBAN"
+              label={<Translate content="Bank_account" component={Form.label}   />}
               required
               rules={[
                 { required: true, message: "Is required" },
@@ -241,13 +242,13 @@ const selectAddress = () =>{
                 }
               ]}
             >
-              <Input className="cust-input" placeholder="Bank account number/IBAN" />
+              <Input className="cust-input" placeholder={apicalls.convertLocalLang('Bank_account')}/>
               
             </Form.Item>
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="routingNumber"
-              label="BIC/SWIFT/Routing number"
+              label={<Translate content="BIC_SWIFT_routing_number" component={Form.label}   />}
               required
               rules={[
                 { required: true, message: "Is required" },
@@ -268,14 +269,14 @@ const selectAddress = () =>{
                 }
               ]}
             >
-              <Input value={addressDetails.routingNumber} className="cust-input" placeholder="BIC/SWIFT/Routing number" />
+              <Input value={addressDetails.routingNumber} className="cust-input" placeholder={apicalls.convertLocalLang('BIC_SWIFT_routing_number')} />
 
 
             </Form.Item>
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="bankName"
-              label="Bank name"
+              label={<Translate content="Bank_name" component={Form.label}   />}
               required
               rules={[
                 { required: true, message: "Is required" , whitespace:true},
@@ -296,36 +297,36 @@ const selectAddress = () =>{
                 }
               ]}
             >
-              <Input value={addressDetails.bankName} className="cust-input" placeholder="Bank name" />
+              <Input value={addressDetails.bankName} className="cust-input" placeholder={apicalls.convertLocalLang('Bank_name')} ></Input>
 
             </Form.Item>
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="bankAddress"
-              label="Bank address line 1"
+              label={<Translate content="Bank_address1" component={Form.label}   />}
               required
               rules={[
                 { required: true, message: "Is required", whitespace:true }
               ]}
             >
-              <Input value={addressDetails.bankAddress} className="cust-input" placeholder="Bank address line 1" />
+              <Input value={addressDetails.bankAddress} className="cust-input" placeholder={apicalls.convertLocalLang('Bank_address1')}/>
 
             </Form.Item>
 
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="bankAddress2"
-              label="Bank address line 2"
+              label={<Translate content="Bank_address2" component={Form.label}   />}
             >
-              <Input className="cust-input" placeholder="Bank address line 2" />
+              <Input className="cust-input" placeholder={apicalls.convertLocalLang('Bank_address2')} />
             </Form.Item>
 
             <Form.Item
               className="custom-forminput custom-label  mb-24"
               name="country"
-              label="Country"
+              label={<Translate content="Country" component={Form.label}   />}
             >
-              <Select dropdownClassName="select-drpdwn" placeholder="Select Country" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+              <Select dropdownClassName="select-drpdwn" placeholder={apicalls.convertLocalLang('Country')} className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                 onChange={(e) => getStateLu(e)} >
                 {countryLu?.map((item, idx) =>
                   <Option key={idx} value={item.name}>{item.name}
@@ -337,10 +338,10 @@ const selectAddress = () =>{
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="state"
-              label="State"
+              label={<Translate content="state" component={Form.label}   />}
             >
 
-              <Select dropdownClassName="select-drpdwn" placeholder="Select State" className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+              <Select dropdownClassName="select-drpdwn" placeholder={apicalls.convertLocalLang('state')} className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                 onChange={(e) => ''} >
                 {stateLu?.map((item, idx) =>
                   <Option key={idx} value={item.code}>{item.code}
@@ -352,7 +353,7 @@ const selectAddress = () =>{
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="zipcode"
-              label="Zipcode"
+              label={<Translate content="zipcode" component={Form.label}   />}
               rules={[
                 {
                   validator: (rule, value, callback) => {
@@ -371,7 +372,7 @@ const selectAddress = () =>{
                 }
               ]}
             >
-              <Input className="cust-input" maxLength={8} placeholder="Zip code" />
+              <Input className="cust-input" maxLength={8} placeholder={apicalls.convertLocalLang('zipcode')}/>
             </Form.Item>
             <Translate
               content="Beneficiary_Details"
@@ -381,7 +382,7 @@ const selectAddress = () =>{
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="beneficiaryAccountName"
-              label="Recipient full name"
+              label={<Translate content="Recipient_full_name" component={Form.label}   />}
               
             >
               <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
@@ -389,27 +390,27 @@ const selectAddress = () =>{
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="beneficiaryAccountAddress"
-              label="Recipient address line 1"
+              label={<Translate content="Recipient_address1" component={Form.label}   />}
               rules={[
                 { required: true, message: "Is required", whitespace:true }
               ]}
             >
-              <Input value={addressDetails.beneficiaryAccountAddress} className="cust-input" placeholder="Recipient address line 1" />
+              <Input value={addressDetails.beneficiaryAccountAddress} className="cust-input" placeholder={apicalls.convertLocalLang('Recipient_address1')} />
             </Form.Item>
             <Form.Item
               className="custom-forminput custom-label  mb-24"
               name="beneficiaryAccountAddress1"
-              label="Recipient address line 2"
+              label={<Translate content="Recipient_address2" component={Form.label}   />}
             >
-              <Input className="cust-input" placeholder="Recipient address line 2" />
+              <Input className="cust-input" placeholder={apicalls.convertLocalLang('Recipient_address2')} />
             </Form.Item>
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="description"
-              label="Remarks"
+              label={<Translate content="remarks" component={Form.label}   />}
             
             >
-              <Input className="cust-input" placeholder="Remarks" />
+              <Input className="cust-input" placeholder={apicalls.convertLocalLang('remarks')}/>
             </Form.Item>
             <Form.Item
               className="custom-forminput mb-36 agree"
@@ -439,7 +440,7 @@ const selectAddress = () =>{
                 block
                 className="pop-btn"
               >
-                Proceed
+               <Translate content="proceed" component={Form.label}   /> 
               </Button>
             </Form.Item>
           </Form>

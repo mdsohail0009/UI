@@ -330,5 +330,11 @@ export default {
   ExchangeRate:'Exchange Rate',
   ProfileInfo:'Profile Info',
   BasicInfo:'Basic Info',
-
+  SelectAddress:'Select Address',
+  SelectCurrency:'Select Currency',
+  account_details:'Ensure that the account details is correct',
+  Cancel_select:'Transaction cant be cancelled'  ,
+  Confirm:'Confirm',
+  totalbalance:'Total balance',
+  select_currency:'Select a currency in your wallet',
 }
