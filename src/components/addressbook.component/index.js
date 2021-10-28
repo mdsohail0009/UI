@@ -10,6 +10,7 @@ import { activeInactive } from './api';
 import SelectCrypto from './selectCrypto';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import apiCalls from '../../api/apiCalls';
 
 
 class AddressBook extends Component {
@@ -40,34 +41,34 @@ class AddressBook extends Component {
         this.gridFiatRef = React.createRef();
         this.gridCryptoRef = React.createRef();
     }
-    // columnsFiat = [
-    //     { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
-    //     { field: "favouriteName", title: <Translate content="AddressLabel" component={Text}/>, filter: true, width: 180 },
-    //     { field: "toWalletAddress", title: "Address", filter: true, width: 380 },
-    //     { field: "currency", title: "Currency", width: 150, filter: true, with: 150 },
-    //     { field: "accountNumber", title: "Bank account number/IBAN", filter: true, width: 220 },
-    //     { field: "routingNumber", title: "BIC/SWIFT/Routing Number", filter: true, width: 180 },
-    //     { field: "bankName", title: "Bank Name", filter: true, width: 200 },
-    //     { field: "bankAddress", title: "Bank address line 1", filter: true, width: 250 },
-    //     { field: "beneficiaryAccountName", title: "Recipient full name", filter: true, width: 200 },
-    //     { field: "beneficiaryAccountAddress", title: "Recipient address line 1", filter: true, width: 250 },
-    //     // { field: "swiftCode", title: "Swift Code", filter: true, },
-    //     { field: "status", title: "Status", filter: true, width: 100 }
-    // ];
-    // columnsCrypto = [
-    //     {
-    //         field: "", title: "", width: 50,
-    //         customCell: (props) => (<td > <label className="text-center custom-checkbox">
-    //             <input id={props.dataItem.id} name="isCheck" type="checkbox"
-    //                 checked={this.state.selection.indexOf(props.dataItem.id) > -1}
-    //                 onChange={(e) => this.handleInputChange(props, e)} />
-    //             <span></span> </label></td>)
-    //     },
-    //     { field: "addressLable", title: "Address Label", filter: true, width: 250 },
-    //     { field: "coin", title: "Coin", filter: true, width: 120 },
-    //     { field: "address", title: "Address", filter: true, width: 380 },
-    //     { field: "status", title: "Status", filter: true, width: 100 }
-    // ];
+     columnsFiat = [
+        { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
+        { field: "favouriteName", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 180 },
+        { field: "toWalletAddress", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
+        { field: "currency", title: apiCalls.convertLocalLang('currency'), width: 150, filter: true, with: 150 },
+        { field: "accountNumber", title: apiCalls.convertLocalLang('Bank_account'), filter: true, width: 220 },
+        { field: "routingNumber", title:  apiCalls.convertLocalLang('BIC_SWIFT_routing_number'), filter: true, width: 180 },
+        { field: "bankName", title: apiCalls.convertLocalLang('Bank_name'), filter: true, width: 200 },
+        { field: "bankAddress", title: apiCalls.convertLocalLang('Bank_address1'), filter: true, width: 250 },
+        { field: "beneficiaryAccountName", title: apiCalls.convertLocalLang('Recipient_full_name'), filter: true, width: 200 },
+        { field: "beneficiaryAccountAddress", title: apiCalls.convertLocalLang('Recipient_address1'), filter: true, width: 250 },
+        // { field: "swiftCode", title: "Swift Code", filter: true, },
+        { field: "status", title:apiCalls.convertLocalLang('Status') , filter: true, width: 100 }
+    ];
+    columnsCrypto = [
+        {
+            field: "", title: "", width: 50,
+            customCell: (props) => (<td > <label className="text-center custom-checkbox">
+                <input id={props.dataItem.id} name="isCheck" type="checkbox"
+                    checked={this.state.selection.indexOf(props.dataItem.id) > -1}
+                    onChange={(e) => this.handleInputChange(props, e)} />
+                <span></span> </label></td>)
+        },
+        { field: "addressLable", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 250 },
+        { field: "coin", title: apiCalls.convertLocalLang('Coin'), filter: true, width: 120 },
+        { field: "address", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
+        { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 100 }
+    ];
     handleInputChange = (prop, e) => {
         const rowObj = prop.dataItem;
         const value = e.currentTarget.type === 'checkbox' ? e.currentTarget.checked : e.currentTarget.value;
@@ -217,34 +218,7 @@ class AddressBook extends Component {
     render() {
         const { cryptoFiat, gridUrlCrypto, gridUrlFiat, memberId } = this.state;
         const { Title, Paragraph,Text } = Typography;
-       const columnsFiat = [
-            { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
-            { field: "favouriteName", title: <Translate content="AddressLabel" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 180 },
-            { field: "toWalletAddress", title: <Translate content="address" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 380 },
-            { field: "currency", title: <Translate content="currency" component={Text} className="custom-font fw-400 fs-14 text-white"/>, width: 150, filter: true, with: 150 },
-            { field: "accountNumber", title: <Translate content="Bank_account" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 220 },
-            { field: "routingNumber", title:  <Translate content="BIC_SWIFT_routing_number" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 180 },
-            { field: "bankName", title: <Translate content="Bank_name" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 200 },
-            { field: "bankAddress", title: <Translate content="Bank_address1" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 250 },
-            { field: "beneficiaryAccountName", title: <Translate content="Recipient_full_name" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 200 },
-            { field: "beneficiaryAccountAddress", title: <Translate content="Recipient_address1" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 250 },
-            // { field: "swiftCode", title: "Swift Code", filter: true, },
-            { field: "status", title: <Translate content="Status" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 100 }
-        ];
-       const columnsCrypto = [
-            {
-                field: "", title: "", width: 50,
-                customCell: (props) => (<td > <label className="text-center custom-checkbox">
-                    <input id={props.dataItem.id} name="isCheck" type="checkbox"
-                        checked={this.state.selection.indexOf(props.dataItem.id) > -1}
-                        onChange={(e) => this.handleInputChange(props, e)} />
-                    <span></span> </label></td>)
-            },
-            { field: "addressLable", title:<Translate content="AddressLabel" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 250 },
-            { field: "coin", title: <Translate content="Coin" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 120 },
-            { field: "address", title: <Translate content="address" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 380 },
-            { field: "status", title: <Translate content="Status" component={Text} className="custom-font fw-400 fs-14 text-white"/>, filter: true, width: 100 }
-        ];
+    
         return (
             <>
 
@@ -287,9 +261,9 @@ class AddressBook extends Component {
                     {this.state.successMsg && <Alert type="success"
                         description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'deactivated' : 'activated') + ' successfully'} showIcon />}
                     {cryptoFiat ?
-                        <List columns={columnsFiat} ref={this.gridFiatRef} key={gridUrlFiat} url={gridUrlFiat} additionalParams={{ memberId: memberId }} />
+                        <List columns={this.columnsFiat} ref={this.gridFiatRef} key={gridUrlFiat} url={gridUrlFiat} additionalParams={{ memberId: memberId }} />
                         :
-                        <List columns={columnsCrypto} key={gridUrlCrypto} ref={this.gridCryptoRef} url={gridUrlCrypto} additionalParams={{ memberId: memberId }} />
+                        <List columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridCryptoRef} url={gridUrlCrypto} additionalParams={{ memberId: memberId }} />
                     }
                 </div>
 

@@ -45,7 +45,15 @@ class AuditLogs extends Component {
     this.gridRef = React.createRef();
 
   }
- 
+  gridColumns = [
+    { field: "date", title: apicalls.convertLocalLang('Date'), filter: true, filterType: "date", width: 250 },
+    { field: "feature", title: apicalls.convertLocalLang('feacture'), filter: true, width: 190 },
+    { field: "featurePath", title: apicalls.convertLocalLang('Feature_Path'), filter: true, width: 230 },
+    { field: "action", title: apicalls.convertLocalLang('Action'), width: 200, filter: true },
+    { field: "remarks", title: apicalls.convertLocalLang('remarks'),filter: true },
+  ]
+
+  
   componentDidMount = () => {
    this.TransactionFeatureSearch(this.props.userProfile?.userName);
   };
@@ -142,15 +150,7 @@ class AuditLogs extends Component {
   render() {
     const { gridUrl, searchObj, featureData, timeListSpan} = this.state;
     const {Text } = Typography;
-    const gridColumns = [
-      { field: "date", title: <Translate content="Date" component={Text} className="custom-font fw-300 fs-14 text-white" />, filter: true, filterType: "date", width: 250 },
-      { field: "feature", title: <Translate content="feacture" component={Text} className="custom-font fw-300 fs-14 text-white" />, filter: true, width: 190 },
-      { field: "featurePath", title: <Translate content="Feature_Path" component={Text} className="custom-font fw-300 fs-14 text-white" />, filter: true, width: 230 },
-      { field: "action", title:<Translate content="Action" component={Text} className="custom-font fw-300 fs-14 text-white" />, width: 200, filter: true },
-      { field: "remarks", title:<Translate content="remarks" component={Text} className="custom-font fw-300 fs-14 text-white" />,filter: true },
-    ]
   
-    
     const options3 = timeListSpan.map((d) => (
       <Option key={d} value={d}>{d}</Option>
     ));
@@ -255,7 +255,7 @@ class AuditLogs extends Component {
         <List
           url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
           key={gridUrl}
-          columns={gridColumns}
+          columns={this.gridColumns}
         />
         <Modal
           title={<Translate content="Custom_Dates" component={Modal.title} />}

@@ -118,7 +118,7 @@ const Settings =({member,getmemeberInfoa})=> {
                 block
                 className="pop-btn mt-36"
             >
-                <Translate className="pop-btn" content="Save_btn_text" component={Button}/>
+                <Translate  content="Save_btn_text" />
             </Button>
             </div>
             </Form>

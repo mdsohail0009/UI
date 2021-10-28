@@ -340,6 +340,13 @@ export default {
   ExchangeRate:'Exchange Rate',
   ProfileInfo:'Profile Info',
   BasicInfo:'Basic Info',
+  SelectAddress:'Select Address',
+  SelectCurrency:'Select Currency',
+  account_details:'Ensure that the account details is correct',
+  Cancel_select:'Transaction cant be cancelled'  ,
+  Confirm:'Confirm',
+  totalbalance:'Total balance',
+  select_currency:'Select a currency in your wallet',
   BasicInfotag:'Basic Info, like your name and photo, that you use on Suissebase',
   FirstName:'First Name',
   MiddleName:'Middle Name',
@@ -420,4 +427,5 @@ export default {
   home:'Home',
   careers:'Careers',
   legal_policy:'',
+  select_bank:'Select Bank Name'
 }
