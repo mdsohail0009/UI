@@ -6,6 +6,7 @@ import Loader from '../../Shared/loader';
 import { fetchMarketCaps } from './api';
 import { useFullScreenHandle } from 'react-full-screen'
 import { detailInfoColumns, infoColumns } from './marketcap.columns';
+import apicalls from '../../api/apiCalls';
 const { Title, Paragraph } = Typography;
 const MarketCap = () => {
     const marketsFullScreen = useFullScreenHandle();
@@ -56,7 +57,8 @@ const MarketCap = () => {
                         <Tooltip title="Reload"><ReloadOutlined onClick={fetchMarketCapsInfo} className="fs-18 text-white ml-16 fw-500" /></Tooltip>
                     </div>
                 </div>
-                <Search placeholder="Search Currency" value={searchVal} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="px-16 mt-8 mb-8" />
+                {/* <Search placeholder="Search Currency" value={searchVal} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="px-16 mt-8 mb-8" /> */}
+                <Search placeholder={apicalls.convertLocalLang('searchCurrency')} value={searchVal} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="px-16 mt-8 mb-8" />
                 <Table locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No data found" /> }} sortDirections={["ascend", "descend"]} style={{ background: "daryGrey" }} scroll={{ y: '' }} pagination={false} columns={infoColumns} dataSource={marketCaps} loading={isLoading} className="custom-table" />
             </div>
         <Drawer
