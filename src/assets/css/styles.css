@@ -643,6 +643,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .documentmodal-width .preview-pdf-page{border: 1px solid var(--bgDark);margin-bottom: 10px;}
 .accordian textarea.ant-input:placeholder-shown{line-height: 48px;}
 .accordian textarea.ant-input{min-height: 48px !important;padding-top: 0px !important;}
+.coininfo-badge{font-size: 16px;color: var(--textYellow);background-color: var(--bgDarkGrey-95);padding: 4px 16px;border-radius: 10px;cursor: pointer;margin: 0 4px 8px 0;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}
