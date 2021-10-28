@@ -421,4 +421,5 @@ export default {
   End_Date:'End Date',
   Select_Date:'Select Date',
   ok:'OK',
+  select_bank:'Select Bank Name'
 }

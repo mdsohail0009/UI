@@ -237,7 +237,7 @@ export default {
   for_Domestic_wires: 'Untuk Wayar Domestik',
   for_international_wires: 'Untuk Wayar Antarabangsa',
   Swift_BICcode: 'Kod Swift / BIC',
-  SIGNU: 'SIGNU533XXX',
+  SIGNU: '%(value)s',
   beneficiaryBank: 'Bank Penerima',
   signature_bank: 'Bank Tandatangan',
   beneficiary_Bank_address: 'Alamat Bank Penerima',
@@ -414,4 +414,10 @@ export default {
   End_Date:'Petsa ng Pagtatapos',
   Select_Date:'Piliin ang Petsa',
   ok:'OK',
+  Deposit_success:'Tagumpay sa Deposito',
+  SelectCurrency:'Piliin ang Pera',
+  select_bank:'Piliin ang Pangalan ng Bangko',
+  BankName:'Pangalan ng bangko',
+  return_to_depositfiat:'Bumalik sa Deposit Fiat',
+
 }

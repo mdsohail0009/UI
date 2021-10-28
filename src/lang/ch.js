@@ -238,7 +238,7 @@ export default {
   for_Domestic_wires: '国内电线用',
   for_international_wires: '对于国际电线',
   Swift_BICcode: 'Swift/BIC 代码',
-  SIGNU: 'SIGNU533XXX',
+  SIGNU: '%(值)s',
   beneficiaryBank: '收款银行',
   signature_bank: '签名银行',
   beneficiary_Bank_address: '收款银行地址',
@@ -414,4 +414,10 @@ export default {
   End_Date:'結束日期',
   Select_Date:'選擇日期',
   ok:'好的',
+  Deposit_success:'入金成功',
+  SelectCurrency:'選擇貨幣',
+  select_bank:'選擇銀行名稱 ',
+  BankName:'銀行名',
+  return_to_depositfiat:'返回存款法幣',
+
 }
