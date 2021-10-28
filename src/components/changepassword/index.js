@@ -174,7 +174,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
             block
             className="pop-btn"
           >
-            <Translate className="pop-btn" content="Save_btn_text" component={Button}/>
+            <Translate  content="Save_btn_text" />
           </Button>
           <Button
             htmlType="cancel"
@@ -182,7 +182,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
             block
             className="pwd-popup pop-cancel"
             onClick={() => onSubmit()}>
-            <Translate className="pwd-popup pop-cancel" content="cancel" component={Button}/>
+            <Translate  content="cancel" />
           </Button>
         </div>
       </Form>
