@@ -414,4 +414,10 @@ export default {
   End_Date:'End Date',
   Select_Date:'Select Date',
   ok:'OK',
+  coin:'Coin',
+  price:'Price',
+  last_24hrs:'Last 24hrs',
+  home:'Home',
+  careers:'Careers',
+  legal_policy:'',
 }

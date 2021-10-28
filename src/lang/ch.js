@@ -405,4 +405,10 @@ export default {
   End_Date:'結束日期',
   Select_Date:'選擇日期',
   ok:'好的',
+  coin:'硬幣',
+  price:'價錢',
+  last_24hrs:'過去 24 小時',
+  home:'家',
+  careers:'職業',
+  legal_policy:'法律與政策',
 }

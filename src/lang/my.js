@@ -405,4 +405,10 @@ export default {
   End_Date:'Petsa ng Pagtatapos',
   Select_Date:'Piliin ang Petsa',
   ok:'OK',
+  coin:'barya',
+  price:'Presyo',
+  last_24hrs:'Huling 24 oras',
+  home:'Bahay',
+  careers:'Mga karera',
+  legal_policy:'Legal at Patakaran',
 }
