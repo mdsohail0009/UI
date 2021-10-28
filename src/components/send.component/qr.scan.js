@@ -7,6 +7,7 @@ import QRCodeComponent from '../qr.code.component';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Loader from '../../Shared/loader';
 import { appInsights } from "../../Shared/appinsights";
+import apicalls from '../../api/apiCalls';
 import {
     EmailShareButton, EmailIcon,
     FacebookShareButton, FacebookIcon,
@@ -62,7 +63,7 @@ class QRScan extends Component {
         </Menu>
     }
     render() {
-        const { Paragraph, Text,Button} = Typography;
+        const { Paragraph, Text} = Typography;
         if (!this.props?.sendReceive?.depositWallet?.walletAddress) {
             return <Loader />
         }
@@ -90,7 +91,7 @@ class QRScan extends Component {
                 <Translate className="text-center f-12 text-white fw-200 mt-16" content="address_hint_text" component={Paragraph} />
                 <Dropdown overlay={this.shareMenu}>
                     {/* <Button className="pop-btn mt-36" block>Share</Button> */}
-                    <Button className="pop-btn mt-36" block>Share</Button>
+                    <Button className="pop-btn mt-36" block>{apicalls.convertLocalLang('button')}</Button>
                 </Dropdown>
             </div>
         )

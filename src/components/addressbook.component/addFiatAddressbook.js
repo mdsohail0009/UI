@@ -299,7 +299,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             block
                             className="pop-btn"
                         >
-                            {isLoading && <Spin indicator={antIcon} />}  <Translate  className="mb-0 mt-16"content="Save_btn_text" component={Text}/>
+                            {isLoading && <Spin indicator={antIcon} />}  <Translate  content="Save_btn_text" />
                         </Button>
                     </Form.Item>
                 </Form>

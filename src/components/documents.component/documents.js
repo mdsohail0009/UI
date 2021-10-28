@@ -5,6 +5,7 @@ import { ApiControllers } from '../../api/config';
 import List from '../grid.component'
 import { withRouter } from 'react-router';
 import Translate from 'react-translate-component';
+import apiCalls from '../../api/apiCalls';
 const { Title } = Typography;
 
 
@@ -20,6 +21,11 @@ class Documents extends Component {
         }
         this.gridRef = React.createRef();
     };
+     gridColumns = [
+        { field: "title", title: apiCalls.convertLocalLang('title') , filter: true, customCell: (props) => <td><div className="gridLink" onClick={() => this.details(props)}>{props.dataItem?.title}</div></td> },
+        { field: "date", title: apiCalls.convertLocalLang('RequestedDate'), filter: true, filterType: "date" },
+        { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true },
+    ]
     details = ({ dataItem }) => {
         this.props.history.push("/documents?id=" + dataItem.id)
     }
@@ -33,15 +39,11 @@ class Documents extends Component {
     render() {
         const { gridUrl } = this.state;
         const {Text} = Typography;
-        const gridColumns = [
-            { field: "title", title:  <Translate content="title" component={Text} className="custom-font fw-300 fs-14 text-white" />, filter: true, customCell: (props) => <td><div className="gridLink" onClick={() => this.details(props)}>{props.dataItem?.title}</div></td> },
-            { field: "date", title: <Translate content="RequestedDate" component={Text} className="custom-font fw-300 fs-14 text-white" />, filter: true, filterType: "date" },
-            { field: "status", title:  <Translate content="Status" component={Text} className="custom-font fw-300 fs-14 text-white" />, filter: true },
-        ]
+       
         return (<>
             <div className="box basic-info">
             <Translate content="documents" className="basicinfo"/>
-                <List url={gridUrl} ref={this.gridRef} columns={gridColumns} additionalParams={{ "memberId": this.props.userProfileInfo?.id }} />
+                <List url={gridUrl} ref={this.gridRef} columns={this.gridColumns} additionalParams={{ "memberId": this.props.userProfileInfo?.id }} />
             </div>
         </>
         );
