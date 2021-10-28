@@ -6,6 +6,7 @@ import { handleSendFetch, setStep, setSubTitle ,setWithdrawcrypto, setAddress,re
 import { connect } from 'react-redux';
 import CryptoDeposit from '../deposit.component/crypto.deposit';
 import WithdrawCrypto from '../withdraw.crypto.component';
+import apicalls from '../../api/apiCalls';
 
 
 class DepositeCrypto extends Component {
@@ -35,7 +36,8 @@ class DepositeCrypto extends Component {
     componentDidMount() {
         this.setState({ ...this.state, activeKey: this.props.sendReceive?.cryptoWithdraw?.activeKey || 1, sendReceive: true });
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
-        this.props.dispatch(setSubTitle(`USD ${this.props.dashboard?.totalFiatValue} Total balance`));
+        this.props.dispatch(setSubTitle(`USD ${this.props.dashboard?.totalFiatValue}`+" "+apicalls.convertLocalLang('total_balance')));
+
     }
     componentWillUnmount() {
         this.setState({ ...this.state, activeKey: 1 });

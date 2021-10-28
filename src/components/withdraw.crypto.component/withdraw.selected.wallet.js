@@ -7,6 +7,7 @@ import Currency from '../shared/number.formate';
 import LocalCryptoSwap from '../shared/local.crypto.swap';
 import SuccessMsg from './success';
 import { appInsights } from "../../Shared/appinsights";
+import apicalls from '../../api/apiCalls';
 
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
@@ -31,7 +32,7 @@ class CryptoWithDrawWallet extends Component {
             this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
         }
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 2 }))
-        this.props.dispatch(setSubTitle("Select wallet address"));
+        this.props.dispatch(setSubTitle(apicalls.convertLocalLang('wallet_address')));
         this.trackevent();
     }
     trackevent = () => {
@@ -45,7 +46,7 @@ class CryptoWithDrawWallet extends Component {
 
     selectCrypto = () => {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
-        this.props.dispatch(setSubTitle('Select Address Book'));
+        this.props.dispatch(setSubTitle(apicalls.convertLocalLang('select_address')));
         let obj = {
             "membershipId": this.props.userProfile.id,
             "memberWalletId": id,
@@ -84,21 +85,21 @@ class CryptoWithDrawWallet extends Component {
         const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
         if (!amt) {
-            this.setState({ ...this.state, error: `Enter amount` });
+            this.setState({ ...this.state, error: +" "+apicalls.convertLocalLang('enter_amount')});
             this.myRef.current.scrollIntoView();
         }
         else if (amt < withdrawMinValue) {
-            this.setState({ ...this.state, error: `Please enter min value of ${withdrawMinValue}` });
+            this.setState({ ...this.state, error: apicalls.convertLocalLang('amount_min')+ " "+ withdrawMinValue });
             this.myRef.current.scrollIntoView();
         } else if (amt > withdrawMaxValue) {
-            this.setState({ ...this.state, error: `Entered amount should be less than max withdraw amount of ${withdrawMaxValue}` });
+            this.setState({ ...this.state, error:+" "+ apicalls.convertLocalLang('amount_max') +" "+withdrawMaxValue});
             this.myRef.current.scrollIntoView();
         } else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
-            this.setState({ ...this.state, error: `Entered amount should be less than available balance` });
+            this.setState({ ...this.state, error:+" "+apicalls.convertLocalLang('amount_less') });
             this.myRef.current.scrollIntoView();
         }
         else if (this.state.walletAddress == null || this.state.walletAddress.trim() === "") {
-            this.setState({ ...this.state, error: `Please enter wallet address` });
+            this.setState({ ...this.state, error:+" "+apicalls.convertLocalLang('enter_wallet_address')});
             this.myRef.current.scrollIntoView();
         }
         else {
@@ -118,7 +119,7 @@ class CryptoWithDrawWallet extends Component {
             "totalValue": this.state.CryptoAmnt,
             "tag": ""
         }
-        this.props.dispatch(setSubTitle("Withdraw Summary"));
+        this.props.dispatch(setSubTitle(apicalls.convertLocalLang('withdrawSummary')));
         this.props.dispatch(setWithdrawcrypto(obj))
         this.props.changeStep('withdraw_crpto_summary');
     }
@@ -234,11 +235,14 @@ class CryptoWithDrawWallet extends Component {
                             name="toWalletAddress"
                             className="custom-forminput custom-label  mb-16"
                             required
-                            label="Address"
+                            // label="Address"
+                            label= {apicalls.convertLocalLang('address')}
                         >
 
                             <div className="p-relative d-flex align-center">
-                                <Input className="cust-input custom-add-select mb-0" placeholder="Enter address" value={this.state.walletAddress}
+                                {/* <Input className="cust-input custom-add-select mb-0" placeholder="Enter address" value={this.state.walletAddress} */}
+                               <Input className="cust-input custom-add-select mb-0" placeholder={apicalls.convertLocalLang('enter_address')} value={this.state.walletAddress}
+
                                     onChange={({ currentTarget: { value } }) => {this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null)}}
                                     maxLength="30"/>
                                 <Tooltip placement="top" title={<span>Select Address</span>} style={{ flexGrow: 1 }}>
