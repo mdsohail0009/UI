@@ -190,9 +190,7 @@ class SwapCoins extends Component {
                             maxlength={24}
                             onKeyPress={(e) => {
                                 e.currentTarget.value.length >= 6 ? e.currentTarget.style.fontSize = "20px" : e.currentTarget.style.fontSize = "24px";
-                                // if(!(coinDetailData.coin &&coinReceiveDetailData.coin)){
-                                //     e.preventDefault()
-                                // }
+                              
                             }}
                             // onKeyUp={(e) => {
                             //     this.setReceiveAmount(e.target.value)

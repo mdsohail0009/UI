@@ -32,7 +32,7 @@ const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, s
     }
     const selectList = (item) => {
         setselList(item);
-        if (onCoinSelected) { onCoinSelected(item) };
+        if (onCoinSelected) { onCoinSelected(item) }
     }
     return (<>
         {showSearch && <Search placeholder={apiCalls.convertLocalLang('searchCurrency')} addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { handleSearch(currentTarget.value) }} size="middle" bordered={false} className="my-16" />}
