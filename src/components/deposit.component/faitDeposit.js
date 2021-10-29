@@ -376,7 +376,8 @@ class FaitDeposit extends Component {
                       rules={[
                         {
                           validator: (_, value) =>
-                            value ? Promise.resolve() : Promise.reject(new Error('Please agree terms of service')),
+                            value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice')
+                            )),
                         },
                       ]}
                     >

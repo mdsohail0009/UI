@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import CryptoList from '../shared/cryptolist';
 import { appInsights } from "../../Shared/appinsights";
 import { getfromCoinList, gettoCoinList } from './api'
+import apicalls from '../../api/apiCalls';
 
 class SelectCrypto extends Component {
     state = {
@@ -67,7 +68,8 @@ class SelectCrypto extends Component {
             this.props.changeStep('step1') 
         } else { 
             this.useDivRef.current.scrollIntoView()
-            this.setState({ ...this.state, errorMessage: 'Please select coin to swap' })
+            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('coin_swap')
+        })
         }
     }
     render() {

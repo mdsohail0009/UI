@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import NumberFormat from 'react-number-format';
 import Currency from '../shared/number.formate';
 import { appInsights } from "../../Shared/appinsights";
+import apicalls from '../../api/apiCalls';
 
 class SwapCoins extends Component {
     state = {
@@ -87,24 +88,25 @@ class SwapCoins extends Component {
     }
     previewClick() {
         if (!this.props.swapStore.coinDetailData.coin) {
-             this.setState({ ...this.state, errorMessage: 'Please select from coin to swap' })
+             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('coin_swap')})
         }
         else if (!this.props.swapStore.coinReceiveDetailData.coin) {
-             this.setState({ ...this.state, errorMessage: 'Please select receive coin to swap' })
+             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('receive_coin')})
         }
         else if (!this.state.fromValue) {
-             this.setState({ ...this.state, errorMessage: 'Please enter from coin Value' })
+             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_coinvalue') })
         }
         else if (parseFloat(this.state.fromValue)===0) {
-             this.setState({ ...this.state, errorMessage: 'Please enter from coin Value' })
+             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_coinvalue')
+            })
         }
         else if (!this.props.swapStore.coinDetailData.coinBalance) {
-             this.setState({ ...this.state, errorMessage: 'Insufficient balance' })
+             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('insufficient_balance') })
         }
         else if (this.props.swapStore.coinReceiveDetailData.coin === this.props.swapStore.coinDetailData.coin) {
             this.setState({ ...this.state, errorMessage: 'Selected coins are both same' })
         } else if (parseFloat(typeof this.state.fromValue==='string'?this.state.fromValue.replace(/,/g, ''):this.state.fromValue) > parseFloat(this.props.swapStore.coinDetailData.coinBalance)) {
-            this.setState({ ...this.state, errorMessage: 'Insufficient balance' })
+            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('insufficient_balance') })
         } else {
 
             this.props.updateSwapdataobj({ ...this.state })
@@ -245,8 +247,8 @@ class SwapCoins extends Component {
                         />}
                         {(coinReceiveDetailData.coinBalance||coinReceiveDetailData.coinBalance===0) && <Text className="text-purewhite mt-4 fs-12 fw-100"><Translate content="balance" component={Text} className="custom-font fw-300 fs-14 text-white" /> <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinReceiveDetailData.coinBalance} suffixText={coinReceiveDetailData.coin} /></Text>}
                     </div>
-                    <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => {if(coinDetailData.coinFullName){this.props.changeStep('step4');this.setState({ ...this.state, errorMessage:'' })}else{this.setState({ ...this.state, errorMessage: 'Please select from coin' })}}} >
-                        <div className="crypto-coin">
+                    <div className="mr-20 text-center d-flex justify-content align-center c-pointer"  onClick={() => {if(coinDetailData.coinFullName){this.props.changeStep('step4'); this.setState({ ...this.state, errorMessage:'' })}else{this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('select_coin')  })}}} >
+                            <div className="crypto-coin">
                             {coinReceiveDetailData.coin ? <> <span className={`coin md ${coinReceiveDetailData.coin}`}></span>
                                 <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinReceiveDetailData.coinFullName}</Paragraph></>
                                 :

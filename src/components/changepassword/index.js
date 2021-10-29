@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { changePassword } from '../../api/apiServer';
 import { getmemeberInfo } from '../../reducers/configReduser';
 import apiClient from "../../api/apiCalls";
+import apicalls from '../../api/apiCalls';
 
 
 notification.config({
@@ -95,7 +96,9 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
           name="CurrentPassword"
           required
           rules={[
-            { required: true, message: "Please enter current password" },
+            { required: true, message: apicalls.convertLocalLang('current_password')
+          },
+
           ]}
         >
 
@@ -113,7 +116,8 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
           name="Password"
           className="custom-forminput mb-24"
           required
-          rules={[{ required: true, message: "New password  required" },
+          rules={[{ required: true, message: apicalls.convertLocalLang('new_password')
+        },
            { pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/,
             message: 'Password must be at least 8 Characters long one uppercase with one lowercase, one numeric & special character' },
            ]}
@@ -143,7 +147,9 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
           rules={[
             {
               required: true,
-              message: "Please enter confirm password",
+              message: apicalls.convertLocalLang('confirm_password')
+              ,
+
             },
             ({ getFieldValue }) => ({
               validator(rule, value) {
