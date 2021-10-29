@@ -36,6 +36,7 @@ const authReducer = (state = initialState, action) => {
             return state;
         case USER_EXPIRED:
             state = { ...state, user: null, profile: null };
+            processSilentRenew();
             return state;
         case GET_PROFILE_SUCCESS:
             state = { ...state, profile: action.payload };

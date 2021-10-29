@@ -131,7 +131,7 @@ class RequestedDocs extends Component {
             });
         }
         let objs = [...this.state.docReplyObjs];
-        objs = objs.filter(item => item.docunetDetailId !== doc.id);
+        objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
         this.setState({ ...this.state, docReplyObjs: objs, isSubmitting: false });
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
@@ -143,7 +143,7 @@ class RequestedDocs extends Component {
         item.status = "Rejected";
         if (isAdd) {
             let objs = [...this.state.docReplyObjs];
-            objs = objs.filter(item => item.docunetDetailId !== doc.id);
+            objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
             this.setState({ ...this.state, docReplyObjs: objs });
             return;
         }
@@ -156,7 +156,7 @@ class RequestedDocs extends Component {
             });
             this.loadDocReplies(doc.id);
             let objs = [...this.state.docReplyObjs];
-            objs = objs.filter(item => item.docunetDetailId !== doc.id);
+            objs = objs.filter(item1 => item1.docunetDetailId !== doc.id);
             this.setState({ ...this.state, docReplyObjs: objs });
         } else {
             message.warning({
@@ -263,13 +263,13 @@ class RequestedDocs extends Component {
                 {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
                     <Panel header={doc.documentName} key={idx + 1} extra={doc.status ? <span className={`${doc.status ? doc.status.toLowerCase() + " staus-lbl" : ""}`}>{doc.status}</span> : ""}>
                         {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
-                        {this.state.documentReplies[doc.id]?.data?.map((reply, idx) => <div key={idx} className="reply-container">
+                        {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
                             <div className="user-shortname">{reply.repliedBy.slice(0, 2)}</div>
                             <div className="reply-body">
                                 <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment format="DD MMM YY hh:mm A">{reply.repliedDate}</Moment> </Text>
                                 <p className="reply-txt">{reply.reply}</p>
                                 <div className="docfile-container">
-                                    {reply?.path?.map((file, idx) => <div key={idx} className="docfile">
+                                    {reply?.path?.map((file, idx1) => <div key={idx1} className="docfile">
                                         <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                         <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                             <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>

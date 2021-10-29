@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'antd';
-import { setStep,setSubTitle } from '../../reducers/sendreceiveReducer';
+import { setStep,setSubTitle,setWithdrawcrypto } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import LiveNessSumsub from '../sumSub.component/liveness'
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
-import { setWithdrawcrypto } from '../../reducers/sendreceiveReducer';
 import { appInsights } from "../../Shared/appinsights";
 import SuccessMsg from '../withdraw.crypto.component/success';
 import { withDrawCrypto } from '../send.component/api';
@@ -13,7 +12,6 @@ import { withDrawCrypto } from '../send.component/api';
 const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep,dispatch }) => {
   const [faceCapture, setFaceCapture] = useState(false);
   const [livefacerecognization, setLivefacerecognization] = useState({});
-  const [isWithdrawSuccess, setIsWithdrawSuccess] = useState(false);
   const [isLoding, setIsLoding] = useState(false);
   useEffect(() => { setFaceCapture(false) }, []);
   const saveWithdrwal = async() =>{
@@ -23,7 +21,6 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep,dispatch }) 
     let withdrawal = await withDrawCrypto(saveObj)
       if (withdrawal.ok) {
         dispatch(fetchDashboardcalls(userConfig.id))
-        setIsWithdrawSuccess(true)
         dispatch(setWithdrawcrypto(null))
         dispatch(setSubTitle(""));
         changeStep('withdraw_crpto_success');
@@ -40,9 +37,6 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep,dispatch }) 
     setFaceCapture(true)
     setLivefacerecognization(obj)
   }
-    // if (isWithdrawSuccess) {
-    //     return <SuccessMsg onBackCLick={() => changeStep('step1')} />
-    // }else{
     return (
         <div>
         <LiveNessSumsub onConfirm = {confirmFaceLive}/>
@@ -53,7 +47,7 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep,dispatch }) 
               className="pop-btn"
               onClick={() => saveWithdrwal()}
             >
-              Confirm
+             <Translate content="confirm_button" />
             </Button>}
         <Translate content="back" component={Button} onClick={() => Cancel()} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center" block />
       </div>

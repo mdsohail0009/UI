@@ -17,7 +17,7 @@ class menuCarousel extends Component {
         console.log(this.state);
     }
     render() {
-        const { Title, Paragraph, Text } = Typography;
+        const { Title, Paragraph } = Typography;
         return (
             <>
               

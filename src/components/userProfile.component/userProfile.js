@@ -32,12 +32,7 @@ class userProfile extends Component {
     handleSetting = () => {
         this.setState({ isSetting: true, isProfile: false })
     }
-    handleAbout = () => {
-
-    }
-    handleLogout = () => {
-
-    }
+   
     render() {
         const { tabPosition } = this.state;
         return (<>

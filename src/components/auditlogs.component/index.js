@@ -187,7 +187,8 @@ class AuditLogs extends Component {
                      className="cust-input mb-0 custom-search"
                      dropdownClassName="select-drpdwn"
                     showSearch
-                     defaultValue={apicalls.convertLocalLang('Last_1_Day')}
+                     defaultValue="Last 1 Day"
+                    //  {apicalls.convertLocalLang('Last_1_Day')}
                     //  {<Translate content="Last_1_Day" component={Select}className="cust-input mb-0 custom-search"/>}
                     onChange={(e) => this.handleTimeSpan(e, 'timeSpan')}
                     placeholder="Time Span"
@@ -224,7 +225,8 @@ class AuditLogs extends Component {
                    label={<Translate content="Features" component={Form.label} className="input-label selectcustom-input mb-0" />}
                 >
                   <Select
-                    defaultValue={apicalls.convertLocalLang('All_Features')}
+                    defaultValue="All Features"
+                    // {apicalls.convertLocalLang('All_Features')}
                     className="cust-input mb-0"
                     dropdownClassName="select-drpdwn"
                     onChange={(e) => this.TransactionFeatureSearch(e, "feature")}

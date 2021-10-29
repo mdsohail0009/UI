@@ -25,7 +25,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
   const [form] = Form.useForm();
   const [changePasswordResponse, setChangePasswordResponse] = useState({ error: false, messsage: "", isLoading: false });
   useEffect(() => {
-    if (userProfile?.isNew) {
+    if (userProfile && userProfile?.isNew) {
       setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
       form.resetFields();
     }
@@ -41,9 +41,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
     
     if (values.CurrentPassword === values.Password) {
       setChangePasswordResponse({ error: true, messsage: "Current password and New password should not be same", isLoading: false });
-    }
-    
-    else {
+    }else {
       setChangePasswordResponse({ error: false, messsage: "", isLoading: true });
       const result = await changePassword(initialValues);
       if (result.ok) {
@@ -53,8 +51,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
         onSubmit()
         getmemeberInfoa(userConfig.userId)
         apiClient.trackEvent({"Action": 'Save', "Feature": 'Change password', "Remarks": "Password changed","FullFeatureName": 'Change password',"userName":userConfig.userName,id:userConfig.id });
-      }
-      else {
+      }else {
         setChangePasswordResponse({ error: true, messsage: result.data, isLoading: false });
       }
     }
@@ -86,7 +83,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
         <div className="d-flex">
           <Translate
             className="text-white input-label"
-            content="current_password"
+            content="current_pass_word"
             component={Text}
           />
           <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
@@ -96,18 +93,18 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
           name="CurrentPassword"
           required
           rules={[
-            { required: true, message: apicalls.convertLocalLang('current_password')
+            { required: true, message: apicalls.convertLocalLang('current_pass_word_msg')
           },
 
           ]}
         >
 
-          <Input.Password placeholder={apiClient.convertLocalLang('Type_your_current_password')} value={initialValues.CurrentPassword} className="text-left cust-input mb-8 pr-0 change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeOutlined style={{ color: '#fff' }} />)} />
+          <Input.Password placeholder={apiClient.convertLocalLang('Type_your_current_pass_word')} value={initialValues.CurrentPassword} className="text-left cust-input mb-8 pr-0 change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeOutlined style={{ color: '#fff' }} />)} />
         </Form.Item>
         <div className="d-flex">
           <Translate
             className="text-white input-label"
-            content="new_password"
+            content="new_pass_word"
             component={Text}
           />
           <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
@@ -116,7 +113,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
           name="Password"
           className="custom-forminput mb-24"
           required
-          rules={[{ required: true, message: apicalls.convertLocalLang('new_password')
+          rules={[{ required: true, message: apicalls.convertLocalLang('new_pass_word_msg')
         },
            { pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/,
             message: 'Password must be at least 8 Characters long one uppercase with one lowercase, one numeric & special character' },
@@ -124,7 +121,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
         >
          
             <Input.Password
-             placeholder={apiClient.convertLocalLang('Type_your_new_password')}
+             placeholder={apiClient.convertLocalLang('Type_your_new_pass_word')}
               value={initialValues.Password}
               onChange={(e) => handleChange("Password", e)}
               className="text-left cust-input mb-8 pr-0 change-space pass-onhover" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeOutlined style={{ color: '#fff' }} />)}
@@ -133,7 +130,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
         <div className="d-flex">
           <Translate
             className="text-white input-label"
-            content="confirm_password"
+            content="confirm_pass_word"
             component={Text}
           />
           <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
@@ -147,7 +144,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
           rules={[
             {
               required: true,
-              message: apicalls.convertLocalLang('confirm_password')
+              message: apicalls.convertLocalLang('confirm_pass_word_msg')
               ,
 
             },
@@ -165,7 +162,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
         >
 
           <Input.Password
-            placeholder={apiClient.convertLocalLang('Re_type_your_new_password')}
+            placeholder={apiClient.convertLocalLang('Re_type_your_new_pass_word')}
             value={initialValues.ConfirmPassword}
             onChange={(e) => handleChange("ConfirmPassword", e)}
             className="text-left cust-input mb-8 pr-0 change-space" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeOutlined style={{ color: '#fff' }} />)}

@@ -6,6 +6,7 @@ import Summary from '../summary.component';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
 import Loader from '../../Shared/loader';
+import apiCalls from '../../api/apiCalls';
 
 class SwapSummary extends Component {
     state = {
@@ -53,20 +54,22 @@ class SwapSummary extends Component {
     }
     confirmswapvalidation() {
         if (!this.state.agreeValue) {
-            this.setState({ ...this.state, errorMessage: 'Please agree terms of service' })
+            
+            // this.setState({ ...this.state, errorMessage: 'Please agree terms of service' })
+            this.setState({ ...this.state, errorMessage: apiCalls.convertLocalLang('agree_termsofservice')})
         }
         else if (!this.props.swapStore.coinDetailData.coinBalance) {
-            this.setState({ ...this.state, errorMessage: 'Insufficiant funds to swap' })
+            this.setState({ ...this.state, errorMessage: apiCalls.convertLocalLang('funds_to_swap') })
         }
     }
     async confirmSwap() {
 
         if (!this.state.agreeValue) {
-            this.setState({ ...this.state, errorMessage: 'Please agree terms of service' })
+            this.setState({ ...this.state, errorMessage:apiCalls.convertLocalLang('agree_termsofservice') })
             this.useDivRef.current.scrollIntoView()
         }
         else if (!this.props.swapStore.coinDetailData.coinBalance) {
-            this.setState({ ...this.state, errorMessage: 'Insufficiant funds to swap' })
+            this.setState({ ...this.state, errorMessage: apiCalls.convertLocalLang('funds_to_swap') })
         }
         else {
 

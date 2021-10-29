@@ -10,6 +10,7 @@ import { setStep } from '../../reducers/buysellReducer';
 import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import { withRouter } from 'react-router-dom';
+import apiCalls from '../../api/apiCalls';
 
 class YourPortfolio extends Component {
     state = {
@@ -62,7 +63,7 @@ class YourPortfolio extends Component {
                     itemLayout="horizontal"
                     dataSource={cryptoPortFolios.data}
                     loading={cryptoPortFolios.loading}
-                    locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No data found" /> }}
+                    locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data') } /> }}
                     renderItem={item => (
                         <List.Item className="" extra={
                             <div className="crypto_btns">

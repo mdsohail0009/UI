@@ -6,12 +6,8 @@ class Currency extends Component {
     state = {
 
     }
-    componentDidMount() {
-
-    }
-    renderElement = () => {
-
-    }
+   
+   
     render() {
         const { type, defaultValue, prefixText, suffixText, onChange, prefix = "$", className, bordered = false, inputCustomStyle, autoFocus = false, } = this.props;
         return <>{type === "input" ? <NumberFormat className={className} customInput={Input} thousandSeparator={true} prefix={prefix}

@@ -1,4 +1,4 @@
-import { Alert, Result, Button, Row, Col, Spin } from 'antd'
+import { Alert, Result, Button, Spin } from 'antd'
 import React, { useEffect } from 'react'
 import { updateDocRequest } from '../../reducers/configReduser';
 import { fetchNotices } from '../../reducers/dashboardReducer'

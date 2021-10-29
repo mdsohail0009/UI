@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography ,Input} from 'antd';
+import { Input} from 'antd';
 import { favouriteFiatAddress } from '../addressbook.component/api';
 import {  setAddress, setStep,setWithdrawcrypto} from '../../reducers/sendreceiveReducer';
 import oops from '../../assets/images/oops.png'

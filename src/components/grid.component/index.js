@@ -43,8 +43,6 @@ class List extends React.Component {
         const localTime = new Date(milliseconds);
         let datetime = localTime.toISOString()
         return datetime
-        // localTime.getDate() // local date
-        // localTime.getHours() // local hour
       };
     render() {
         const { columns, url, additionalParams } = this.props

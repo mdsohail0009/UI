@@ -20,7 +20,7 @@ class Documents extends Component {
             selection: []
         }
         this.gridRef = React.createRef();
-    };
+    }
      gridColumns = [
         { field: "title", title: apiCalls.convertLocalLang('title') , filter: true, customCell: (props) => <td><div className="gridLink" onClick={() => this.details(props)}>{props.dataItem?.title}</div></td> },
         { field: "date", title: apiCalls.convertLocalLang('RequestedDate'), filter: true, filterType: "date" },
