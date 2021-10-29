@@ -11,6 +11,7 @@ import SelectCrypto from './selectCrypto';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import apiCalls from '../../api/apiCalls';
+import apicalls from '../../api/apiCalls';
 
 
 class AddressBook extends Component {
@@ -254,7 +255,7 @@ class AddressBook extends Component {
                     </div>
                     {this.state.alert &&
                         <div className="custom-alert" ><Alert
-                            description="Please select one record"
+                            description={apicalls.convertLocalLang('one_record')}
                             type="warning"
                             showIcon /></div>}
                     {this.state.successMsg && <Alert type="success"
@@ -270,7 +271,6 @@ class AddressBook extends Component {
                     title={[<div className="side-drawer-header">
                         {this.renderTitle()}
                         <div className="text-center fs-16">
-                            {/* <Paragraph className="mb-0 text-white-30 fw-600 text-upper">Add Crypto Address</Paragraph> */}
                             <Translate className="text-white-30 fw-600 text-upper mb-4" content={this.props.addressBookReducer.stepTitles[config[this.props.addressBookReducer.stepcode]]} component={Paragraph} />
                             <Translate className="text-white-50 mb-0 fw-300 fs-14 swap-subtitlte" content={this.props.addressBookReducer.stepSubTitles[config[this.props.addressBookReducer.stepcode]]} component={Paragraph} />
                         </div>

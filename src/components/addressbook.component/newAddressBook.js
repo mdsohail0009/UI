@@ -7,6 +7,7 @@ import { saveAddress, favouriteNameCheck ,getAddress} from './api';
 import Loader from '../../Shared/loader';
 import Translate from 'react-translate-component';
 import apiCalls from '../../api/apiCalls';
+import apicalls from '../../api/apiCalls';
 
 const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,rejectCoinWallet, InputFormValues}) => {
     const [form] = Form.useForm();
@@ -100,7 +101,8 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                             {
                                 type: "favouriteName", validator: async (rule, value, callback) => {
                                     if (value == null || value.trim() === "") {
-                                        throw new Error("Is required")
+                                        throw new Error(apicalls.convertLocalLang('is_required')
+                                        )
                                     }
                                     else {
                                         callback();
@@ -116,7 +118,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                         name="toCoin"
                         label={<Translate content="Coin" component={Form.label}/>}
                         rules={[
-                            { required: true, message: "Is required" },
+                            { required: true, message:apicalls.convertLocalLang('is_required') },
                         ]} >
                              <Input disabled placeholder={apiCalls.convertLocalLang('Selectcoin')}  className="cust-input cust-adon c-pointer" 
                                 addonAfter={<i className="icon md rarrow-white c-pointer" onClick={selectCrypto} />}/>
@@ -131,7 +133,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                             {
                                 type: "toWalletAddress", validator: async (rule, value, callback) => {
                                     if (value == null || value.trim() === "") {
-                                        throw new Error("Is required")
+                                        throw new Error(apicalls.convertLocalLang('is_required'))
                                     }
                                     else {
                                         callback();
