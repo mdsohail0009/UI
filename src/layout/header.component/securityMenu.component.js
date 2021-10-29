@@ -9,7 +9,7 @@ class SecurityMenu extends Component {
     securityMenu=(<Menu><Translate className="fs-24 text-white my-16 fw-500 mx-30" content="security" component={Title} />
     <ul className="pl-0 drpdwn-list">
         <li className="no-hover dropdown-flex text-white fs-14 pb-16">2FA<Switch size="small" checked={this.props.userConfig?.twofactorVerified} onChange={(status)=>{
-            if(status==true){
+            if(status){
                 window.open(process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/EnableAuthenticator","_self");
             }else{
                 window.open(process.env.REACT_APP_AUTHORITY+ "/account/login?returnUrl=/manage/Disable2faWarning","_self");

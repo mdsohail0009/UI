@@ -13,7 +13,6 @@ import Translate from 'react-translate-component';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
-// counterpart.setLocale('en');
 
 const { Footer: AntFooter } = Layout
 
@@ -21,7 +20,6 @@ const { Footer: AntFooter } = Layout
 function Footer({member}) {
     const { switcher, themes, status } = useThemeSwitcher();
     const [isDarkMode, setIsDarkMode] = React.useState(true);
-    //const [lang, setLang] = useState('en')
     const [theme, setTheme] = useState('LRT');
 
 
@@ -45,10 +43,7 @@ function Footer({member}) {
             return !previous;
         });
     };
-    // const onLangChange = (e) => {
-    //     setLang({ lang: e.target.value });
-    //     counterpart.setLocale(e.target.value);
-    // }
+   
 
 
     return (<AntFooter style={{ backgroundColor: 'transparent', padding: 0 }}>

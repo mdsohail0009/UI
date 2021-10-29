@@ -39,7 +39,6 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   const [stateLu, setStateLu] = useState([]);
   const [addressLu, setAddressLu] = useState([]);
   const [addressDetails, setAddressDetails] = useState({});
-  //const [addressbook, setAddressBook] = useState();
   const useDivRef = React.useRef(null);
   useEffect(() => {
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
@@ -81,7 +80,6 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   
   const getAddressLu = async (obj) => {
     let selectedFiat = obj.currencyCode;
-  //  form.resetFields();
     let recAddress = await favouriteFiatAddress(userConfig.id, 'fiat', selectedFiat)
     if (recAddress.ok) {
       setAddressLu(recAddress.data);
@@ -505,7 +503,7 @@ const selectAddress = () =>{
     }
   }
 
-  const { Paragraph, Title, Text } = Typography;
+  const { Paragraph, Title } = Typography;
   const link = <LinkValue content="terms_service" />;
   return (
     <>

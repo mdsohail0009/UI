@@ -12,10 +12,8 @@ import Translate from 'react-translate-component';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
-// counterpart.setLocale('en');
 const Settings =({member,getmemeberInfoa})=> {
-    const { switcher, themes, status } = useThemeSwitcher();
-    const [isDarkMode, setIsDarkMode] = React.useState(true);
+    const { switcher, themes } = useThemeSwitcher();
   const [form] = Form.useForm();
     const [SettingsLu,setSettingsLu]=useState('')
     const [theme,setTheme]=useState(member?.theme=='Light Theme'?true:false);
@@ -45,12 +43,7 @@ const Settings =({member,getmemeberInfoa})=> {
     const themeSwitch=() =>{
         setTheme(!theme)
     }
-    const handleChange = (e, fn) => {
-        let obj={...settingsObj}
-        obj[fn] = e;
-        setSettingsObj(obj)
-        form.setFieldsValue({settingsObj:obj});
-    }
+    
     // render() {
         const { Option } = Select;
         const { Title, Text, Paragraph } = Typography;

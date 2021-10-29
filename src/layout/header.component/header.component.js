@@ -121,7 +121,7 @@ class Header extends Component {
         } else {
             url = process.env.REACT_APP_AUTHORITY + "/account/login?returnUrl=/manage/Disable2faWarning"
         }
-        var win = window.open(url);
+       
 
     }
     depostWithdrawMenu = (
@@ -215,5 +215,4 @@ const connectDispatchToProps = dispatch => {
     }
 }
 
-// export default Header;
 export default withRouter(connect(connectStateToProps, connectDispatchToProps)(Header));
