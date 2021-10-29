@@ -643,12 +643,27 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .documentmodal-width .preview-pdf-page{border: 1px solid var(--bgDark);margin-bottom: 10px;}
 .accordian textarea.ant-input:placeholder-shown{line-height: 48px;}
 .accordian textarea.ant-input{min-height: 48px !important;padding-top: 0px !important;}
-.coininfo-badge{font-size: 14px;color: var(--textYellow);background-color: var(--bgDarkGrey-95);padding: 2px 12px;border-radius: 10px;cursor: pointer;margin: 0 4px 8px 0;display: inline-block;}
-.coin-info{padding: 16px 0;border-bottom: 1px solid var(--borderLight);font-size: 16px;display: flex;justify-content: space-between;}
-.coin-info:last-child{border: none;}
-.coin-info span{color: var(--textWhite50);}
-.coin-actions button{height: auto;background-color: var(--bgDarkGrey) !important;border: 1px solid var(--bgYellow);border-radius: 8px;padding: 10px 20px;margin: 0 8px 8px 0;}
-.coin-actions button span{display: block;font-size: 12px;font-weight: 700;margin-top: 12px;color: var(--textYellow);}
+.coin-details{background-color: var(--bgGloom);}
+.coin-info{padding: 16px 0;border-top: 1px solid var(--borderGrey);font-size: 16px;display: flex;justify-content: space-between;}
+.coin-info span{font-size: 16px;color: var(--textWhite30);font-weight: 600;}
+.coin-info>span:first-child{font-size: 14px;color: var(--textWhite50);font-weight: 200;}
+.trade-graph .ant-radio-button-wrapper{background: none;color: var(--textSecondary);font-weight: 500;border-color: var(--borderLight);overflow: hidden;}
+.trade-graph .ant-radio-button-wrapper:first-child{border-radius: 8px 0 0 8px;}
+.trade-graph .ant-radio-button-wrapper:last-child{border-radius: 0 8px 8px 0;}
+.trade-graph .ant-radio-button-checked{background-color: var(--bgYellow);border-color: var(--bgYellow) !important;}
+.trade-graph .ant-radio-button-wrapper:not(:first-child)::before{content: none;}
+.trade-graph .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{background: none;}
+.trade-graph .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){background: none;color: var(--textDark) !important;}
+.coin-bal{display: flex;justify-content: space-between;align-items: center;}
+.coin-bal ul li{display: inline-block;list-style: none;font-size: 12px;text-align: center;color: var(--textWhite30);font-weight: 500;margin: 0 12px;visibility: hidden;}
+.coin-bal:hover ul li{visibility: visible; animation: zoom linear 0.25s;}
+@keyframes zoom {
+    0%{transform: scale(0);}
+    50%{transform: scale(0.5);}
+    100%{transform: scale(1);}
+}
+.coin-bal ul li div{width: 50px;height: 50px;border-radius: 50%;background-color: var(--bgGloom);margin: 0 auto 6px;line-height: 50px;cursor: pointer;}
+.coin-bal ul li div:hover{box-shadow: 0 3px 16px rgba(0, 0, 0, 0.15);}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}
@@ -757,6 +772,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .portfolio-list .mobile-list{height: 690px;max-height: 690px; overflow: auto;}
     .markets-panel .custom-table .ant-table-body{height: 1050px !important;padding: 0 16px 0 24px;}
     .crypto-address .walletadrs{font-size: 12px;}
+    .trade-legends{display: flex; justify-content: space-between;}
 }
 @media (min-width: 1400px){
     .custom-font{font-size:36px !important;}
