@@ -444,4 +444,5 @@ export default {
   new_password:'New password  required',
   confirm_password:'Please enter confirm password',
   one_record:'Please select one record',
+  accept_terms:'Please accept terms of service',
 }
