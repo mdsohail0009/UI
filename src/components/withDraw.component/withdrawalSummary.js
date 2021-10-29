@@ -28,8 +28,8 @@ const WithdrawalSummary = ({ sendReceive, onConfirm,onCancel }) => {
         <Text className="fs-14 text-white-50 fw-200"><Translate content="Recipient_full_name" component={Text} className="fs-14 text-white-50 fw-200"   /></Text>
         <Text className="fs-20 text-white-30 d-block mb-36">{sendReceive.withdrawFiatObj?.beneficiaryAccountName}</Text>
         <ul className="pl-0 ml-16 text-white-50 mb-24">
-          <li> <Translate content="account_details" component={Text}/> </li>
-          <li><Translate content="Cancel_select" component={Text}/></li>
+          <li> <Translate className="pl-0 ml-16 text-white-50" content="account_details" component={Text}/> </li>
+          <li><Translate className="pl-0 ml-16 text-white-50" content="Cancel_select" component={Text}/></li>
         </ul>
         <Button
         disabled={isLoding}
