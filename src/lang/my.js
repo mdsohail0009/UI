@@ -414,4 +414,12 @@ export default {
   End_Date:'Petsa ng Pagtatapos',
   Select_Date:'Piliin ang Petsa',
   ok:'OK',
+  funds_to_swap:'Hindi sapat na pondo para ipagpalit',
+  No_data:'Walang nakitang data',
+  confirm_button:'Kumpirmahin',
+  crypto_with_draw_success:'Bumalik',
+  Please_enter_New_password:'Pakipasok ang Bagong password',
+  Back_to_Withdraw:'Bumalik sa Withdraw',
+  New_Address:'Bagong tirahan',
+  return_to_depositfiat:'Bumalik sa Deposit Fiat',
 }

@@ -414,4 +414,12 @@ export default {
   End_Date:'結束日期',
   Select_Date:'選擇日期',
   ok:'好的',
+  funds_to_swap:'交換資金不足',
+  No_data:'沒有找到數據',
+  confirm_button:'確認',
+  crypto_with_draw_success:'後退',
+  Please_enter_New_password:'請輸入新密碼',
+  Back_to_Withdraw:'返回提款',
+  New_Address:'新地址',
+  return_to_depositfiat:'返回存款法幣',
 }

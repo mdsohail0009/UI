@@ -20,7 +20,7 @@ const WithdrawalSuccess = ({ changeStep, dispatch }) => {
             <div className="success-pop text-center mb-24">
                 <img src={success} className="confirm-icon" alt={"success"}/>
                 <Translate className="fs-30 mb-4 d-block text-white-30" content="withdrawal_success" component={Title} />
-                <Link onClick={() => goBack()} className="f-16 mt-16 text-underline text-green">Back to Withdraw<span className="icon md diag-arrow ml-4" /></Link>
+                <Link onClick={() => goBack()} className="f-16 mt-16 text-underline text-green"><Translate className="f-16 mt-16 text-underline text-green" content="Back_to_Withdraw" component={Link} /><span className="icon md diag-arrow ml-4" /></Link>
             </div>
         </>
     )

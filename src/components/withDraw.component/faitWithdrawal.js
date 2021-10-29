@@ -224,7 +224,7 @@ const selectAddress = () =>{
                   )}
                 </Select>
             </Form.Item> 
-            <Tooltip placement="top" title={<span>New Address</span>} >
+            <Tooltip placement="top" title={<span> <Translate  content="New_Address" /></span>} >
                   <div className="c-pointer" onClick={() => selectAddress()} style={{ position:'absolute', left:0, top:3, marginLeft:'110px',cursor:"pointer" }} >
                     <span className="icon md address-book d-block c-pointer"></span>
                   </div>
@@ -473,7 +473,7 @@ const selectAddress = () =>{
           setConfirmationStep("step1",()=>{
            setTimeout(() => {
             form.resetFields();
-           }, 1000); }); }} className="f-16 mt-16 text-underline text-green">Back to Withdraw<span className="icon md diag-arrow ml-4" /></Link>
+           }, 1000); }); }} className="f-16 mt-16 text-underline text-green"><Translate className="f-16 mt-16 text-underline text-green" content="Back_to_Withdraw" component={Link} /><span className="icon md diag-arrow ml-4" /></Link>
 
         </div>
       </>,

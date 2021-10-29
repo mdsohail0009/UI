@@ -421,4 +421,10 @@ export default {
   End_Date:'End Date',
   Select_Date:'Select Date',
   ok:'OK',
+  funds_to_swap:'Insufficiant funds to swap',
+  No_data:'No data found',
+  confirm_button:'Confirm',
+  Please_enter_New_password:'Please enter New password',
+  Back_to_Withdraw:'Back to Withdraw',
+  New_Address:'New Address',
 }

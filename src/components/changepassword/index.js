@@ -113,7 +113,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
           name="Password"
           className="custom-forminput mb-24"
           required
-          rules={[{ required: true, message: "New password  required" },
+          rules={[{ required: true, message: <Translate content="Please_enter_New_password"  className="custom-forminput mb-24" component={Form.message}/> },
            { pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/,
             message: 'Password must be at least 8 Characters long one uppercase with one lowercase, one numeric & special character' },
            ]}
