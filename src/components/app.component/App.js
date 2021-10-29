@@ -18,7 +18,6 @@ function App() {
     onMessageListener().then(payload => {
       const { dashboard: { notificationCount } } = store.getState();
       setNotificationCount(notificationCount ? notificationCount + 1 : 1);
-      //setNotifications(true);
     })
     localStorage.setItem("__url", window.location.pathname);
     loadUser(store, userManager).then(user => {
