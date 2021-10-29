@@ -441,4 +441,5 @@ export default {
   new_password:'需要新密碼',
   confirm_password:'請輸入確認密碼',
   one_record:'請選擇一項記錄',
+  Back_to_Withdraw:'返回提款'
 }

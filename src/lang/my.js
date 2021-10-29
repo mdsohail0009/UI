@@ -441,4 +441,5 @@ export default {
   new_password:'Kailangan ng bagong password',
   confirm_password:'Mangyaring ipasok ang kumpirmahin ang password',
   one_record:'Mangyaring pumili ng isang tala',
+  Back_to_Withdraw:'Bumalik sa Withdraw'
 }

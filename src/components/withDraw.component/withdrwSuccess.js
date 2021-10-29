@@ -5,7 +5,8 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
-import success from '../../assets/images/success.png';  
+import success from '../../assets/images/success.png';
+import apicalls from '../../api/apiCalls';  
 
 const WithdrawalSuccess = ({ changeStep, dispatch }) => {
     const { Title } = Typography;
@@ -20,7 +21,7 @@ const WithdrawalSuccess = ({ changeStep, dispatch }) => {
             <div className="success-pop text-center mb-24">
                 <img src={success} className="confirm-icon" alt={"success"}/>
                 <Translate className="fs-30 mb-4 d-block text-white-30" content="withdrawal_success" component={Title} />
-                <Link onClick={() => goBack()} className="f-16 mt-16 text-underline text-green">Back to Withdraw<span className="icon md diag-arrow ml-4" /></Link>
+                <Link onClick={() => goBack()} className="f-16 mt-16 text-underline text-green">{apicalls.convertLocalLang('Back_to_Withdraw')}<span className="icon md diag-arrow ml-4" /></Link>
             </div>
         </>
     )
