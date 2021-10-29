@@ -4,7 +4,6 @@ import { setAddressStep, setAddressCoin, fetchSelectedCoinDetails, setExchangeVa
 import { connect } from 'react-redux';
 import CryptoList from '../shared/cryptolist';
 import { getCoinList } from './api';
-// import { convertCurrency } from '../buy.component/buySellService';
 
 class SelectCrypto extends Component {
     state = {

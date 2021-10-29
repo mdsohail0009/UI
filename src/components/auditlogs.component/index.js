@@ -83,7 +83,7 @@ class AuditLogs extends Component {
       this.setState({ ...this.state, modal: true, isCustomDate: true, searchObj: searchObj })
     } else {
       this.setState({ ...this.state, searchObj: {...searchObj,fromdate: '',todate: ''}, isCustomDate: false,customFromdata: "",customTodate: "" });
-     // this.formDateRef.current.resetFields();
+  
     }
   }
 
@@ -280,12 +280,7 @@ class AuditLogs extends Component {
                     className="input-label ml-0"
                     label={<Translate content="Start_Date" component={Form.label} className="input-label ml-0" />}
                     rules={[
-                        { required: true, message: apicalls.convertLocalLang('is_required') },{
-                          type: "date", validator: async (rule, value, callback) => {
-                              if (value && searchObj.fromdate) {
-                              }
-                          }
-                      }
+                      { required: true, message: "Is required" }
                   ]}
                   >
                     <DatePicker 

@@ -444,5 +444,6 @@ export default {
   new_password:'New password  required',
   confirm_password:'Please enter confirm password',
   one_record:'Please select one record',
-  Back_to_Withdraw:'Back to Withdraw'
+  Back_to_Withdraw:'Back to Withdraw',
+  accept_terms:'Please accept terms of service',
 }
