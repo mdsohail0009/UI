@@ -46,6 +46,7 @@ const setExchangeValue = (payload) => {
 const fetchPreview = ({ coin, wallet, amount,isCrypto=false,memberId }) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "previewDetails", loading: true, data: null }));
+        debugger
         const response = await getPreview({ coin, currency: wallet.currencyCode, amount,isCrypto,memberId });
         if (response.ok) {
             dispatch(handleFetch({ key: "previewDetails", loading: false, data: response.data }));

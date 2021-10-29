@@ -73,7 +73,7 @@ class BuySummary extends Component {
             amountNativeCurrency={amountNativeCurrency}
             nativeCurrency={this.props.sellData?.selectedWallet?.currencyCode}
             error={this.state.error} iButtonLoad={this.state.isLoading}
-            onRefresh={() => this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, isCrypto?amountNativeCurrency:amount,isCrypto)}
+            onRefresh={() => this.props.refreshDetails(this.props.sellData?.selectedWallet, coin, isCrypto?amountNativeCurrency:amount,isCrypto,this.props.member.id)}
             onCancel={() => this.props.setStep('step1')}
             onClick={() => this.pay()}
             onTermsChange={(checked)=>{this.setState({...this.state,isTermsAgreed:checked})}}
@@ -91,8 +91,8 @@ const connectDispatchToProps = dispatch => {
         setStep: (stepcode) => {
             dispatch(changeStep(stepcode))
         },
-        refreshDetails: (wallet, coin, amount,isCrypto) => {
-            dispatch(fetchPreview({ coin, wallet, amount,isCrypto }))
+        refreshDetails: (wallet, coin, amount,isCrypto,memberid) => {
+            dispatch(fetchPreview({ coin, wallet, amount,isCrypto,memberId:memberid }))
         },
         fetchDashboardData: (member_id) => {
             dispatch(fetchDashboardcalls(member_id))
