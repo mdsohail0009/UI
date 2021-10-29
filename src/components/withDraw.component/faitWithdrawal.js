@@ -135,15 +135,15 @@ const selectAddress = () =>{
     }
     if (parseFloat(typeof values.totalValue === 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) <= 0) {
       useDivRef.current.scrollIntoView()
-      return setErrorMsg('Amount must be greater than zero.');
+      return setErrorMsg(apicalls.convertLocalLang('amount_greater_zero'));
     }
     if (values.totalValue === '.') {
       useDivRef.current.scrollIntoView()
-      return setErrorMsg('Amount must be greater than zero.');
+      return setErrorMsg(apicalls.convertLocalLang('amount_greater_zero'));
     }
     if ((values.totalValue.indexOf('.') > -1 && values.totalValue.split('.')[0].length >= 9) || (values.totalValue.indexOf('.') < 0 && values.totalValue.length >= 9)) {
       useDivRef.current.scrollIntoView()
-      return setErrorMsg('You have exceeded maximum amount');
+      return setErrorMsg(apicalls.convertLocalLang('exceeded_amount'));
     }
     setErrorMsg(null)
     values['membershipId'] = userConfig.id

@@ -334,7 +334,6 @@ export default {
   back:'背部 ',
   totalbalance:'總餘額 ',
   select_currency:'在您的錢包中選擇一種貨幣',
-
   BasicInfotag:'您在 Suissebase 上使用的基本信息，例如您的姓名和照片',
   FirstName:'名',
   MiddleName:'中間名字',
@@ -443,4 +442,6 @@ export default {
   one_record:'請選擇一項記錄',
   crypto_with_draw_success:'後退',
   accept_terms:'請接受服務條款',
+  amount_greater_zero:'金額必須大於零。',
+  exceeded_amount:'您已超過最大金額',
 }

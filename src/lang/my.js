@@ -334,7 +334,6 @@ export default {
   back:'pabalik',
   totalbalance:'Kabuuang balanse',
   select_currency:'Pumili ng pera sa iyong wallet',
-  
   BasicInfotag:'Pangunahing Impormasyon, tulad ng iyong pangalan at larawan, na ginagamit mo sa Suissebase',
   FirstName:'Pangalan',
   MiddleName:'Gitnang pangalan',
@@ -443,4 +442,6 @@ export default {
   one_record:'Mangyaring pumili ng isang tala',
   crypto_with_draw_success:'Bumalik',
   accept_terms:'Mangyaring tanggapin ang mga tuntunin ng serbisyo',
+  amount_greater_zero:'Ang halaga ay dapat na mas malaki kaysa sa zero.',
+  exceeded_amount:'Lumampas ka sa maximum na halaga',
 }

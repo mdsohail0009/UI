@@ -7,6 +7,7 @@ import connectStateProps from "../../../utils/state.connect";
 import CryptoList from "../../shared/cryptolist"
 import { createCryptoDeposit } from "../api";
 import { appInsights } from "../../../Shared/appinsights";
+import apicalls from "../../../api/apiCalls";
 const { Title, Paragraph } = Typography;
 const CryptoDeposit = ({ dispatch, userProfile,swapStore }) => {
     useEffect(() => { fetchMemberCoins(); trackevent()}, []);
@@ -15,7 +16,8 @@ const CryptoDeposit = ({ dispatch, userProfile,swapStore }) => {
     }
     const onCryptoCoinSelect = async (coin) => {
         dispatch(setStep("step7"));
-        dispatch(setSubTitle(`${coin.coinBalance?coin.coinBalance:'0'} ${coin.coin} available`));
+        dispatch(setSubTitle(`${coin.coinBalance?coin.coinBalance:'0'} ${coin.coin}`+" " +apicalls.convertLocalLang('available')
+        ));
         const response = await createCryptoDeposit({ memberId: userProfile?.id, walletCode: coin?.coin });
         if (response.ok) {
             dispatch(setWalletAddress(response.data));

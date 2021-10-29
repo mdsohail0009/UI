@@ -245,7 +245,7 @@ class CryptoWithDrawWallet extends Component {
 
                                     onChange={({ currentTarget: { value } }) => {this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null)}}
                                     maxLength="30"/>
-                                <Tooltip placement="top" title={<span>Select Address</span>} style={{ flexGrow: 1 }}>
+                                <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" onClick={() => this.selectCrypto()}>
                                         <span className="icon md address-book d-block c-pointer"></span>
                                     </div>

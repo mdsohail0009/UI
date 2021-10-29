@@ -161,16 +161,18 @@ class FaitDeposit extends Component {
   ConfirmDeposit = async () => {
     let { BankInfo, depObj } = this.state;
     if (parseFloat(typeof depObj.Amount === 'string' ? depObj.Amount.replace(/,/g, '') : depObj.Amount) <= 0) {
-      this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero.' })
+      this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('amount_greater_zero')
+    })
       this.myRef.current.scrollIntoView();
       return;
     }
     if ((depObj.Amount.indexOf('.') > -1 && depObj.Amount.split('.')[0].length >= 9) || (depObj.Amount.indexOf('.') < 0 && depObj.Amount.length >= 9)) {
-      this.setState({ ...this.state, errorMessage: 'You have exceeded maximum amount' });
+      this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('exceeded_amount') });
       this.myRef.current.scrollIntoView()
     }
     else if (depObj.Amount === '.') {
-      this.setState({ ...this.state, errorMessage: 'Amount must be greater than zero.' }); this.myRef.current.scrollIntoView()
+      this.setState({ ...this.state, errorMessage:apicalls.convertLocalLang('amount_greater_zero')}); this.myRef.current.scrollIntoView()
+
     }
     else {
       this.formRef.current.validateFields().then(async () => {
