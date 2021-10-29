@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Input, Alert } from 'antd';
+import { Typography, Button, Alert } from 'antd';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -59,7 +59,6 @@ class WithdrawSummary extends Component {
             this.setState({ ...this.state, errorMsg: false })
             if (this.props.userProfile.isBusiness) {
                 let saveObj = this.props.sendReceive.withdrawCryptoObj;
-                //saveObj.livefacerecognization = livefacerecognization?.applicantActionid;
                 let withdrawal = await withDrawCrypto(saveObj)
                 if (withdrawal.ok) {
                     this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
@@ -82,7 +81,6 @@ class WithdrawSummary extends Component {
     }
     render() {
         const { Paragraph, Text } = Typography;
-        const link = <LinkValue content="terms_service" />;
         if(this.state.usdLoading||this.state.oneUsdLoading){
             return <Loader/>
         }

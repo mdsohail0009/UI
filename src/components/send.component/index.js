@@ -11,7 +11,6 @@ import WithdrawAddress from './withdrawAddress'
 import VerifyIDentity from './verifyIdentity';
 import WithdrawScan from './qr.scan';
 import WithdrawSummary from './withdrawSummary';
-import NewAddressBook from '../addressbook.component/newAddressBook';
 import SelectCrypto from '../addressbook.component/selectCrypto';
 import WithdrawaCryptolLive from '../withdraw.crypto.component/withdrawLive';
 import SuccessMsg from '../withdraw.crypto.component/success';

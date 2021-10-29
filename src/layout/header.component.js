@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Typography, Dropdown, Row, Col, Divider, Avatar, Carousel, Switch, Drawer, Button, message } from 'antd';
+import { Layout, Menu, Modal, Typography, Dropdown, Row, Col, Divider, Avatar, Carousel, Switch, Drawer, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Link, withRouter } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
@@ -609,7 +609,7 @@ class Header extends Component {
                     title={[<div className="side-drawer-header">
                         <span onClick={() => this.setState({ ...this.state, showChangePassword: false })} className="icon md close-white c-pointer" />
                         <div className="text-center fs-14">
-                            <Translate className="mb-0 text-white-30 fw-600 text-upper" content="change_password" component={Paragraph} />
+                            <Translate className="mb-0 text-white-30 fw-600 text-upper" content="change_pass_word" component={Paragraph} />
                         </div>
 
                     </div>]}

@@ -6,13 +6,12 @@ import Loader from '../../Shared/loader';
 import { fetchMarketCaps } from './api';
 import { useFullScreenHandle } from 'react-full-screen'
 import { detailInfoColumns, infoColumns } from './marketcap.columns';
-import apiCalls from '../../api/apiCalls';
+import apicalls from '../../api/apiCalls';
 const { Title, Paragraph } = Typography;
 
 const MarketCap = () => {
     const marketsFullScreen = useFullScreenHandle();
     const { Search } = Input;
-    const [isDetailView, setDetailView] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [marketCaps, setMarketCaps] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
@@ -28,9 +27,7 @@ const MarketCap = () => {
             setIsLoading(false);
         }
     }
-    const onFullScreenChange = useCallback((state) => {
-        setDetailView(state);
-    });
+
     const onSearch = ({ currentTarget: { value } }) => {
         let matches = originalMarketCaps.filter(item => item.symbol.toLowerCase().includes(value.toLowerCase()));
         setSearchVal(value)
@@ -46,7 +43,7 @@ const MarketCap = () => {
 
     if (isLoading) { return <Loader /> }
     return <>
-        <div handle={marketsFullScreen} onChange={onFullScreenChange}>
+        <div handle={marketsFullScreen}>
             <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey" }}>
                 <div className="d-flex justify-content" style={{ padding: '30px 24px 10px' }}>
                     <div>
@@ -58,8 +55,9 @@ const MarketCap = () => {
                         <Tooltip title="Reload"><ReloadOutlined onClick={fetchMarketCapsInfo} className="fs-18 text-white ml-16 fw-500" /></Tooltip>
                     </div>
                 </div>
-                <Search placeholder="Search Currency" value={searchVal} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="px-16 mt-8 mb-8" />
-                <Table locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data') }/> }} sortDirections={["ascend", "descend"]} style={{ background: "daryGrey" }} scroll={{ y: '' }} pagination={false} columns={infoColumns} dataSource={marketCaps} loading={isLoading} className="custom-table" />
+                {/* <Search placeholder="Search Currency" value={searchVal} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="px-16 mt-8 mb-8" /> */}
+                <Search placeholder={apicalls.convertLocalLang('searchCurrency')} value={searchVal} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="px-16 mt-8 mb-8" />
+                <Table locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data') } /> }} sortDirections={["ascend", "descend"]} style={{ background: "daryGrey" }} scroll={{ y: '' }} pagination={false} columns={infoColumns} dataSource={marketCaps} loading={isLoading} className="custom-table" />
             </div>
         <Drawer
             title={[<div className="side-drawer-header">

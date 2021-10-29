@@ -65,7 +65,6 @@
 .p-16{padding: 16px !important;}
 .p-24{padding: 24px !important;}
 .p-28{padding: 28px;}
-.p-16{padding: 16px !important;}
 .pt-16{padding-top: 16px !important;}
 .pt-24{padding-top: 24px !important;}
 .pt-0{padding-top: 0 !important;}
@@ -147,7 +146,6 @@
     .fs-24{font-size: 24px !important;}
 }
 @media (min-width: 320px){
-    .fs-36{font-size: 28px !important;}
     .fs-24{font-size: 18px !important;}
     .fs-18{font-size: 16px !important;}
     .fs-20{font-size: 18px !important;}

@@ -4,20 +4,16 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { rejectCoin, setAddressStep,fetchAddressCrypto } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
 import { saveAddress, favouriteNameCheck ,getAddress} from './api';
-import SelectCrypto from './selectCrypto';
 import Loader from '../../Shared/loader';
 import Translate from 'react-translate-component';
 import apiCalls from '../../api/apiCalls';
+import apicalls from '../../api/apiCalls';
 
 const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,rejectCoinWallet, InputFormValues}) => {
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
     const[isLoading, setIsLoading] =useState(false);
-    const [successMsg, setSuccessMsg] = useState(null);
-    const[isSelect,setIsSelect] = useState(false);
-    const[isShowWallets, setIsShowWallets] = useState(false)
     const [cryptoAddress, setCryptoAddress] = useState({});
-    const[obj,setObj] =useState({});
     useEffect(() => {
         if(addressBookReducer?.cryptoValues){
             form.setFieldsValue({toCoin:addressBookReducer?.cryptoValues?.toCoin ,favouriteName:addressBookReducer?.cryptoValues.favouriteName,
@@ -30,19 +26,15 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
     }, [])
 
     useEffect(() => {
-     // if(addressBookReducer?.coinWallet){
         if(addressBookReducer?.cryptoValues){
             form.setFieldsValue({toCoin:addressBookReducer?.cryptoValues?.toCoin ,favouriteName:addressBookReducer?.cryptoValues.favouriteName,
              toWalletAddress: addressBookReducer?.cryptoValues.toWalletAddress })
         }
- //  } 
-//  form.setFieldsValue({toCoin:addressBookReducer?.coinWallet?.coin })
 
     }, [addressBookReducer?.cryptoValues])
 
     const selectCrypto = () =>{
         let getvalues = form.getFieldsValue();
-        setObj(getvalues);
         InputFormValues(getvalues);
         changeStep("step2");
     }
@@ -90,14 +82,6 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
             }
         }
     }
-    // const onCoinSelected =(selectedCoin) =>{
-    //     let coinObj = obj;
-    //     coinObj.toCoin = selectedCoin.coin
-    //     setIsSelect(false)
-    //     setTimeout(() => {
-    //         form.setFieldsValue(coinObj);
-    //     }, 500)
-    // }
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color:'#fff', marginRight:'16px' }} spin />;
     const {Text } = Typography;
     return (
@@ -117,7 +101,8 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                             {
                                 type: "favouriteName", validator: async (rule, value, callback) => {
                                     if (value == null || value.trim() === "") {
-                                        throw new Error("Is required")
+                                        throw new Error(apicalls.convertLocalLang('is_required')
+                                        )
                                     }
                                     else {
                                         callback();
@@ -133,7 +118,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                         name="toCoin"
                         label={<Translate content="Coin" component={Form.label}/>}
                         rules={[
-                            { required: true, message: "Is required" },
+                            { required: true, message:apicalls.convertLocalLang('is_required') },
                         ]} >
                              <Input disabled placeholder={apiCalls.convertLocalLang('Selectcoin')}  className="cust-input cust-adon c-pointer" 
                                 addonAfter={<i className="icon md rarrow-white c-pointer" onClick={selectCrypto} />}/>
@@ -148,7 +133,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                             {
                                 type: "toWalletAddress", validator: async (rule, value, callback) => {
                                     if (value == null || value.trim() === "") {
-                                        throw new Error("Is required")
+                                        throw new Error(apicalls.convertLocalLang('is_required'))
                                     }
                                     else {
                                         callback();

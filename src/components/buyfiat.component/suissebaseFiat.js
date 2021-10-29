@@ -16,8 +16,8 @@ class SuissebaseFiat extends Component {
         if (this.props.onClose) {
             this.props.onClose();
         }
-        if(this.child)
-        this.child.clearfiatValues();
+        if(this.child){
+        this.child.clearfiatValues();}
     }
     renderTitle = () => {
         const stepcodes = {

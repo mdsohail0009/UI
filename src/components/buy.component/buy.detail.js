@@ -72,8 +72,8 @@ class SelectCrypto extends Component {
         this.props.setStep('step3');
     }
     refresh=()=>{
-        const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
-        const { buyMin, buyMax, coin } = this.props.buyInfo?.selectedCoin?.data;
+        const { localValue, cryptoValue } = this.state.swapValues;
+        const { buyMin, buyMax } = this.props.buyInfo?.selectedCoin?.data;
         const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin })
         if (!_vaidator.valid) {
             this.setState({ ...this.state, error: { ..._vaidator } });

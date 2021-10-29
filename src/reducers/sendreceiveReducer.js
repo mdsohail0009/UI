@@ -1,4 +1,4 @@
-import { getCryptoWithDrawWallets,getWithdrawmemberCrypto } from "../components/send.component/api";
+import { getWithdrawmemberCrypto } from "../components/send.component/api";
 
 const SET_STEP = "setStep";
 const CLEAR_STEP = "clearStep";

@@ -10,8 +10,7 @@ export const sendNotification = ({ message, from, type, tokens }) => {
         registration_ids: tokens
     }
     if (tokens && tokens.length > 0) {
-        firebaseServer.post("fcm/send", obj).then(response => {
-        });
+        firebaseServer.post("fcm/send", obj)
     }
 }
 export const changePassword = (obj) => {

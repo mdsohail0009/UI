@@ -6,6 +6,7 @@ import Summary from '../summary.component';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
 import { message } from 'antd';
+import apicalls from '../../api/apiCalls';
 class SellSummary extends Component {
     state = { sellpreviewData: {}, loader: true, disableConfirm: false, isTermsAgree: false, error: {valid:true,message:null} }
     componentDidMount() {
@@ -30,7 +31,8 @@ class SellSummary extends Component {
     async saveSellData() {
         this.setState({ ...this.state, error: {valid:true,message:''} })
         if (!this.state.isTermsAgree) {
-            this.setState({ ...this.state, error:{valid:false,message: 'Please accept terms of service'} })
+            this.setState({ ...this.state, error:{valid:false,message: apicalls.convertLocalLang('accept_terms')
+        } })
             
         } else {
             this.setState({ ...this.state, loader: true, error: {valid:true,message:''} })

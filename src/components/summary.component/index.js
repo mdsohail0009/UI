@@ -22,7 +22,7 @@ class Summary extends Component {
         }
         const { Paragraph, Text } = Typography;
         const { coin, oneCoinValue, amount, amountNativeCurrency, nativeCurrency, error, isButtonLoad, showFee, feeAmount, feeCurrency, okBtnTitle, showEstimatedTotal = true, showConvert = false, convertValue, convertCoin, showEstimated = true, exchangeCoin, decimalPlaces, onErrorClose,onCheked } = this.props;
-        const link = <LinkValue content="terms_service" />;
+       
         return (
             <>
                 {!error?.valid && <Alert showIcon type="info" message={error?.title || apicalls.convertLocalLang('buy_crypto')}description={error?.message} closable onClose={() => onErrorClose ? onErrorClose() : ""} />}

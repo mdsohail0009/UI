@@ -12,10 +12,8 @@ import Translate from 'react-translate-component';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
-// counterpart.setLocale('en');
 const Settings =({member,getmemeberInfoa})=> {
-    const { switcher, themes, status } = useThemeSwitcher();
-    const [isDarkMode, setIsDarkMode] = React.useState(true);
+    const { switcher, themes } = useThemeSwitcher();
   const [form] = Form.useForm();
     const [SettingsLu,setSettingsLu]=useState('')
     const [theme,setTheme]=useState(member?.theme=='Light Theme'?true:false);
@@ -45,12 +43,7 @@ const Settings =({member,getmemeberInfoa})=> {
     const themeSwitch=() =>{
         setTheme(!theme)
     }
-    const handleChange = (e, fn) => {
-        let obj={...settingsObj}
-        obj[fn] = e;
-        setSettingsObj(obj)
-        form.setFieldsValue({settingsObj:obj});
-    }
+    
     // render() {
         const { Option } = Select;
         const { Title, Text, Paragraph } = Typography;
@@ -102,12 +95,12 @@ const Settings =({member,getmemeberInfoa})=> {
                     <div className="d-flex">
                     <div className="theme-switch theme-active">
                         <div className="d-flex align-center">
-                            <p className="switch-circle mb-0" onClick={()=>theme?themeSwitch(true):''}>{!theme&&<span className="icon md check-arrow c-pointer"></span>}{theme&&<span></span>}</p>
+                            <p className="switch-circle mb-0" onClick={()=>theme?themeSwitch():''}>{!theme&&<span className="icon md check-arrow c-pointer"></span>}{theme&&<span></span>}</p>
                             <p className="mb-0 ml-16 theme-txt"><Translate content="dark_theme" className="mb-0 ml-16 theme-txt" component={Text.p} /></p></div>
                     </div>
                     <div className="theme-switch ml-24">
                         <div className="d-flex align-center">
-                            <p className="switch-circle mb-0" onClick={()=>!theme?themeSwitch(false):''}>{theme&&<span className="icon md check-arrow c-pointer"></span>}{!theme&&<span></span>}</p>
+                            <p className="switch-circle mb-0" onClick={()=>!theme?themeSwitch():''}>{theme&&<span className="icon md check-arrow c-pointer"></span>}{!theme&&<span></span>}</p>
                             <p className="mb-0 ml-16 theme-txt"><Translate content="light_theme" className="mb-0 ml-16 theme-txt" component={Text.p} /></p></div>
                     </div>
                     </div>

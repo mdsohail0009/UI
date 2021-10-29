@@ -14,6 +14,7 @@ import Loader from '../../Shared/loader';
 import success from '../../assets/images/success.png';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { appInsights } from "../../Shared/appinsights";
+import apicalls from '../../api/apiCalls';
 
 const LinkValue = (props) => {
   return (
@@ -243,7 +244,7 @@ class FaitDeposit extends Component {
                   content="currency"
                   component={Text}
                 /><span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
-                    <Select dropdownClassName="select-drpdwn" placeholder="Select Currency" className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true} 
+                    <Select dropdownClassName="select-drpdwn" placeholder={apicalls.convertLocalLang('SelectCurrency')} className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true} 
                       onChange={(e) => { this.handlFiatDep(e, currenciesWithBankInfo) }} value={depObj.currency}>
                       {currenciesWithBankInfo?.map((item, idx) =>
                         <Option key={idx} value={item.walletCode}>{item.walletCode}
@@ -257,7 +258,7 @@ class FaitDeposit extends Component {
                   component={Text}
                 />
                   <div id="_bankname">
-                    <Select dropdownClassName="select-drpdwn" placeholder="Select Bank Name" className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true} getPopupContainer={() => document.getElementById('_bankname')}
+                    <Select dropdownClassName="select-drpdwn" placeholder={apicalls.convertLocalLang('select_bank')} className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true} getPopupContainer={() => document.getElementById('_bankname')}
                       onChange={(e) => { this.handlebankName(e) }} value={depObj.BankName}>
                       {this.state.BankDetails.map((item, idx) =>
                         <Option key={idx} value={item.bankName}>{item.bankName}
@@ -288,7 +289,7 @@ class FaitDeposit extends Component {
                           allowNegative={false}
                           maxlength={13}
                           onValueChange={({ value }) => {
-                            let { depObj } = this.state;
+                            // let { depObj } = this.state;
                             depObj.Amount = value;
                             this.formRef.current.setFieldsValue({ ...depObj })
                           }}
@@ -366,7 +367,7 @@ class FaitDeposit extends Component {
                     </div>}
                     <Paragraph
                       className="fs-14 text-white-30 fw-200 l-height-normal"
-                    ><span className="textpure-yellow">IMPORTANT:</span> This code identifies your deposit include this code when submitting the wire transfer in the transaction description or purpose</Paragraph>
+                    ><span className="textpure-yellow">{apicalls.convertLocalLang('reference_hint_text')}</span> </Paragraph>
                     <Form.Item
                       className="custom-forminput mb-36 agree"
                       name="isAccept"
@@ -375,7 +376,8 @@ class FaitDeposit extends Component {
                       rules={[
                         {
                           validator: (_, value) =>
-                            value ? Promise.resolve() : Promise.reject(new Error('Please agree terms of service')),
+                            value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice')
+                            )),
                         },
                       ]}
                     >
@@ -408,7 +410,7 @@ class FaitDeposit extends Component {
                   block
                   className="pop-btn mt-36"
                 >
-                  Confirm
+               <Translate content="Confirm" component='Text'/> 
                 </Button></>}
             </div>
             </Form>}

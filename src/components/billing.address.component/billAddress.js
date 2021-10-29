@@ -11,9 +11,6 @@ class BillingAddress extends Component {
 
         }
     }
-    showPayDrawer = () => {
-        // console.log(this.state);
-    }
 
     render() {
         const { Title, Text, Paragraph} = Typography;

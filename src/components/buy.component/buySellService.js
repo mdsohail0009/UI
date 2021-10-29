@@ -26,7 +26,7 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
         validate.message = apicalls.convertLocalLang('enter_wallet')
         validate.valid = false;
     } else if (!wallet) {
-        validate.message = apicalls.convertLocalLang('select_wallet')
+        validate.message = apicalls.convertLocalLang('select_wallet1')
         validate.valid = false;
     }
     else if (wallet.avilable < localValue) {

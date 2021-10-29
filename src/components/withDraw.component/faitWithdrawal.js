@@ -39,7 +39,6 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   const [stateLu, setStateLu] = useState([]);
   const [addressLu, setAddressLu] = useState([]);
   const [addressDetails, setAddressDetails] = useState({});
-  //const [addressbook, setAddressBook] = useState();
   const useDivRef = React.useRef(null);
   useEffect(() => {
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
@@ -81,7 +80,6 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
   
   const getAddressLu = async (obj) => {
     let selectedFiat = obj.currencyCode;
-  //  form.resetFields();
     let recAddress = await favouriteFiatAddress(userConfig.id, 'fiat', selectedFiat)
     if (recAddress.ok) {
       setAddressLu(recAddress.data);
@@ -186,7 +184,8 @@ const selectAddress = () =>{
               name="walletCode"
               label={<Translate content="currency" component={Form.label}   />}
               rules={[
-                { required: true, message: "Is required" },
+                { required: true, message: apicalls.convertLocalLang('is_required')
+              },
               ]}
             >
               <WalletList  valueFeild={'currencyCode'}  selectedvalue={saveObj?.walletCode} placeholder={apicalls.convertLocalLang('SelectCurrency')} onWalletSelect={(e) => handleWalletSelection(e, true)} />
@@ -196,7 +195,7 @@ const selectAddress = () =>{
               name="totalValue"
               label={<Translate content="amount" component={Form.label}   />}
               rules={[
-                { required: true, message: "Is required" },
+                { required: true, message: apicalls.convertLocalLang('is_required')}
               ]}
             >
               <NumberFormat decimalScale={2} className="cust-input" customInput={Input} thousandSeparator={true} prefix={""}
@@ -236,7 +235,8 @@ const selectAddress = () =>{
               label={<Translate content="Bank_account" component={Form.label}   />}
               required
               rules={[
-                { required: true, message: "Is required" },
+                { required: true, message: apicalls.convertLocalLang('is_required') },
+
                 {
                   validator: (rule, value, callback) => {
                     var regx = new RegExp(/^[A-Za-z0-9]+$/);
@@ -263,7 +263,7 @@ const selectAddress = () =>{
               label={<Translate content="BIC_SWIFT_routing_number" component={Form.label}   />}
               required
               rules={[
-                { required: true, message: "Is required" },
+                 { required: true, message: apicalls.convertLocalLang('is_required') },
                 {
                   validator: (rule, value, callback) => {
                     var regx = new RegExp(/^[A-Za-z0-9]+$/);
@@ -291,7 +291,7 @@ const selectAddress = () =>{
               label={<Translate content="Bank_name" component={Form.label}   />}
               required
               rules={[
-                { required: true, message: "Is required" , whitespace:true},
+                { required: true, message: apicalls.convertLocalLang('is_required') },
                 {
                   validator: (rule, value, callback) => {
                     var regx = new RegExp(/^[A-Za-z0-9\s]+$/);
@@ -318,7 +318,8 @@ const selectAddress = () =>{
               label={<Translate content="Bank_address1" component={Form.label}   />}
               required
               rules={[
-                { required: true, message: "Is required", whitespace:true }
+                { required: true, message: apicalls.convertLocalLang('is_required'),whitespace:true },
+
               ]}
             >
               <Input value={addressDetails.bankAddress} className="cust-input" placeholder={apicalls.convertLocalLang('Bank_address1')}/>
@@ -404,7 +405,7 @@ const selectAddress = () =>{
               name="beneficiaryAccountAddress"
               label={<Translate content="Recipient_address1" component={Form.label}   />}
               rules={[
-                { required: true, message: "Is required", whitespace:true }
+                { required: true, message: apicalls.convertLocalLang('is_required'),whitespace:true },
               ]}
             >
               <Input value={addressDetails.beneficiaryAccountAddress} className="cust-input" placeholder={apicalls.convertLocalLang('Recipient_address1')} />
@@ -432,7 +433,7 @@ const selectAddress = () =>{
               rules={[
                 {
                   validator: (_, value) =>
-                    value ? Promise.resolve() : Promise.reject(new Error('Please agree terms of service')),
+                    value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice'))),
                 },
               ]}
             >
@@ -502,7 +503,7 @@ const selectAddress = () =>{
     }
   }
 
-  const { Paragraph, Title, Text } = Typography;
+  const { Paragraph, Title } = Typography;
   const link = <LinkValue content="terms_service" />;
   return (
     <>

@@ -59,6 +59,7 @@ const depositReducer = (state = initialState, action) => {
             return state;
             case SET_DEPOSITCURRENCY:
                 state={...state,depositCurrency:action.payload}
+                return state;
         default:
             return state;
     }

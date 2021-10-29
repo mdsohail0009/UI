@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Radio } from 'antd';
 import config from '../../config/config';
 import Translate from 'react-translate-component';
-import { handleSendFetch, setStep, setSubTitle ,setWithdrawcrypto, setAddress,rejectWithdrawfiat} from '../../reducers/sendreceiveReducer';
+import { handleSendFetch, setStep, setSubTitle , setAddress,rejectWithdrawfiat} from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import CryptoDeposit from '../deposit.component/crypto.deposit';
 import WithdrawCrypto from '../withdraw.crypto.component';
