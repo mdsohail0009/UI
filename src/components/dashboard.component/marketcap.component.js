@@ -11,7 +11,6 @@ const { Title, Paragraph } = Typography;
 const MarketCap = () => {
     const marketsFullScreen = useFullScreenHandle();
     const { Search } = Input;
-    const [isDetailView, setDetailView] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [marketCaps, setMarketCaps] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +27,6 @@ const MarketCap = () => {
         }
     }
     const onFullScreenChange = useCallback((state) => {
-        setDetailView(state);
     });
     const onSearch = ({ currentTarget: { value } }) => {
         let matches = originalMarketCaps.filter(item => item.symbol.toLowerCase().includes(value.toLowerCase()));
