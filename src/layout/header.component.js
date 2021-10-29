@@ -609,7 +609,7 @@ class Header extends Component {
                     title={[<div className="side-drawer-header">
                         <span onClick={() => this.setState({ ...this.state, showChangePassword: false })} className="icon md close-white c-pointer" />
                         <div className="text-center fs-14">
-                            <Translate className="mb-0 text-white-30 fw-600 text-upper" content="change_password" component={Paragraph} />
+                            <Translate className="mb-0 text-white-30 fw-600 text-upper" content="change_pass_word" component={Paragraph} />
                         </div>
 
                     </div>]}

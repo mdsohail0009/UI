@@ -44,7 +44,7 @@ const Security =({userConfig})=> {
                 </ul>
             </div>
             <div className="box contact-info">
-                <Title className="basicinfo"><Translate content="change_password" component={Title} className="basicinfo"/></Title>
+                <Title className="basicinfo"><Translate content="change_pass_word" component={Title} className="basicinfo"/></Title>
                 <Paragraph className="basic-decs"><Translate content="Choose_a_unique_pass_word_to_protect_your_account" component={Paragraph} className="basic-decs"/></Paragraph>
                 <ul className="user-list pl-0">
                     <li className="profileinfo c-pointer" onClick={()=>showDrawer()}>
@@ -65,7 +65,7 @@ const Security =({userConfig})=> {
                 title={[<div className="side-drawer-header">
                     <span onClick={()=>onClose()} className="icon md lftarw-white c-pointer" />
                     <div className="text-center fs-14">
-                        <Translate className="text-center fs-14 text-white" content="change_password" component={Drawer.title} />
+                        <Translate className="text-center fs-14 text-white" content="change_pass_word" component={Drawer.title} />
                     </div>
                     <span onClick={()=>onClose()} className="icon md close-white c-pointer" />
 

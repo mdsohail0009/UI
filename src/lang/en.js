@@ -155,7 +155,7 @@ export default {
   current_security_level: 'CURRENT SECURITY LEVEL',
   current_security_text: 'Your account has security features switched off, leaving it potentially vulnerable to specific attacks. Set up these security features to improve the security of your account.',
   medium: 'Medium',
-  change_password: 'Change Password',
+  change_pass_word: 'Change Password',
   protect_your_account: 'Protect your account',
   settings: 'Settings',
   general: 'General',

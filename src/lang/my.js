@@ -154,7 +154,7 @@ export default {
   current_security_level: 'TAHAP KESELAMATAN SEMASA',
   current_security_text: 'Akaun anda mempunyai ciri keselamatan yang dimatikan, sehingga berpotensi rentan terhadap serangan tertentu. Sediakan ciri keselamatan ini untuk meningkatkan keselamatan akaun anda.',
   medium: 'sederhana',
-  change_password: 'Tukar kata laluan',
+  change_pass_word: 'Tukar kata laluan',
   protect_your_account: 'Lindungi akaun anda',
   settings: 'Tetapan',
   general: 'Am',

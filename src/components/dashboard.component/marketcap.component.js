@@ -26,8 +26,7 @@ const MarketCap = () => {
             setIsLoading(false);
         }
     }
-    const onFullScreenChange = useCallback((state) => {
-    });
+
     const onSearch = ({ currentTarget: { value } }) => {
         let matches = originalMarketCaps.filter(item => item.symbol.toLowerCase().includes(value.toLowerCase()));
         setSearchVal(value)
@@ -43,7 +42,7 @@ const MarketCap = () => {
 
     if (isLoading) { return <Loader /> }
     return <>
-        <div handle={marketsFullScreen} onChange={onFullScreenChange}>
+        <div handle={marketsFullScreen}>
             <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey" }}>
                 <div className="d-flex justify-content" style={{ padding: '30px 24px 10px' }}>
                     <div>

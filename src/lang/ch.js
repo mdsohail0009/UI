@@ -155,7 +155,7 @@ export default {
   current_security_level: '当前的安全级别',
   current_security_text: '您的帐户已关闭安全功能，使其可能容易受到特定攻击。设置这些安全功能以提高您帐户的安全性。',
   medium: '中等的',
-  change_password: '更改密码',
+  change_pass_word: '更改密码',
   protect_your_account: '保护您的帐户',
   settings: '设置',
   general: '一般的',

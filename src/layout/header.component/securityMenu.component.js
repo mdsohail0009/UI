@@ -16,7 +16,7 @@ class SecurityMenu extends Component {
             }
         }} /> </li>
         <li className="">
-            {/* <Translate content="change_password" component={Link} to="/changepassword" /> */}
+            {/* <Translate content="change_pass_word" component={Link} to="/changepassword" /> */}
             <Link className="dropdown-flex" to="/changepassword" >Change Password <span className="icon md rarrow-white" /></Link>
 
         </li>

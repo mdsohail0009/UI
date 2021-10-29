@@ -25,7 +25,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
   const [form] = Form.useForm();
   const [changePasswordResponse, setChangePasswordResponse] = useState({ error: false, messsage: "", isLoading: false });
   useEffect(() => {
-    if (userProfile?.isNew) {
+    if (userProfile && userProfile?.isNew) {
       setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
       form.resetFields();
     }
@@ -41,9 +41,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
     
     if (values.CurrentPassword === values.Password) {
       setChangePasswordResponse({ error: true, messsage: "Current password and New password should not be same", isLoading: false });
-    }
-    
-    else {
+    }else {
       setChangePasswordResponse({ error: false, messsage: "", isLoading: true });
       const result = await changePassword(initialValues);
       if (result.ok) {
@@ -53,8 +51,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
         onSubmit()
         getmemeberInfoa(userConfig.userId)
         apiClient.trackEvent({"Action": 'Save', "Feature": 'Change password', "Remarks": "Password changed","FullFeatureName": 'Change password',"userName":userConfig.userName,id:userConfig.id });
-      }
-      else {
+      }else {
         setChangePasswordResponse({ error: true, messsage: result.data, isLoading: false });
       }
     }
