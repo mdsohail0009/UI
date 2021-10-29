@@ -12,7 +12,6 @@ class BillingAddress extends Component {
         }
     }
     showPayDrawer = () => {
-        // console.log(this.state);
     }
 
     render() {

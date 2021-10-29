@@ -114,7 +114,6 @@ class AddressBook extends Component {
         statusObj.type = this.state.cryptoFiat ? "fiat" : 'crypto';
         let response = await activeInactive(statusObj)
         if (response.ok) {
-            // this.success();
             this.setState({
                 ...this.state, modal: false, selection: [], isCheck: false, isLoading: false,
                 obj: {

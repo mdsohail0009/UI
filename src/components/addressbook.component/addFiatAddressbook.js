@@ -11,7 +11,6 @@ import apiCalls from '../../api/apiCalls';
 
 const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) => {
     const [form] = Form.useForm();
-    const [selectedWallet, setSelectedWallet] = useState(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [fiatAddress, setFiatAddress] = useState({});
@@ -41,7 +40,6 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
             let wallet = buyInfo.memberFiat.data.filter((item) => {
                 return walletId === item.currencyCode
             })
-            setSelectedWallet(wallet[0])
         }
     }
 
