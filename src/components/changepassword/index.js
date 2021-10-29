@@ -96,7 +96,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
           name="CurrentPassword"
           required
           rules={[
-            { required: true, message: apicalls.convertLocalLang('current_password')
+            { required: true, message: apicalls.convertLocalLang('current_password_msg')
           },
 
           ]}
@@ -116,7 +116,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
           name="Password"
           className="custom-forminput mb-24"
           required
-          rules={[{ required: true, message: apicalls.convertLocalLang('new_password')
+          rules={[{ required: true, message: apicalls.convertLocalLang('new_password_msg')
         },
            { pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/,
             message: 'Password must be at least 8 Characters long one uppercase with one lowercase, one numeric & special character' },
@@ -147,7 +147,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
           rules={[
             {
               required: true,
-              message: apicalls.convertLocalLang('confirm_password')
+              message: apicalls.convertLocalLang('confirm_password_msg')
               ,
 
             },
