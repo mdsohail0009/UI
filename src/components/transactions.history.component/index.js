@@ -112,7 +112,6 @@ class TransactionsHistory extends Component {
         >
           <div className="transaction-tabs">
             <Tabs className="crypto-list-tabs mt-0" activeKey={this.state.activeTab} onChange={this.changeTab}>
-
               <TabPane
                 key='1'
                 className="alltab-space"
@@ -120,7 +119,7 @@ class TransactionsHistory extends Component {
                 tab={<Translate content="All" component={Tabs.TabPane.tab} className="custom-font fw-300 fs-14" />}
               >
 
-                <Collapse onChange={collapseGrids} className="mb-16">
+                  {this.state.activeTab === '1' && <><Collapse onChange={collapseGrids} className="mb-16">
                   <Panel
                     header={<Translate content="BuyandSell" component={Collapse.Panel.header} className="custom-font fw-300 fs-14 text-white" />}
                     key="1">
@@ -167,7 +166,7 @@ class TransactionsHistory extends Component {
                     key="6">
                     {this.state.activeTab === '1' && <HistoryGridComponent columns={this.withdrwCryptoColomns} gridUrl={WithdrawCryptoURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
                   </Panel>
-                </Collapse>
+                </Collapse></>}
               </TabPane>
 
               <TabPane
