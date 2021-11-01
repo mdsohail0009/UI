@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { Typography } from 'antd';
 import { connect } from 'react-redux';
 import { ApiControllers } from '../../api/config';
 import List from '../grid.component'
 import { withRouter } from 'react-router';
 import Translate from 'react-translate-component';
 import apiCalls from '../../api/apiCalls';
-const { Title } = Typography;
 
 
 class Documents extends Component {
@@ -38,7 +36,6 @@ class Documents extends Component {
     }
     render() {
         const { gridUrl } = this.state;
-        const {Text} = Typography;
        
         return (<>
             <div className="box basic-info">

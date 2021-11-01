@@ -291,7 +291,6 @@ class FaitDeposit extends Component {
                           allowNegative={false}
                           maxlength={13}
                           onValueChange={({ value }) => {
-                            // let { depObj } = this.state;
                             depObj.Amount = value;
                             this.formRef.current.setFieldsValue({ ...depObj })
                           }}

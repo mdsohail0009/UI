@@ -105,14 +105,7 @@ class SelectSellCrypto extends Component {
              this.props.dispatch(updatesellsaveObject(obj))
         }
     }
-    async swapChange(value) {
-        let obj = Object.assign({}, this.state);
-        this.setState({ isSwap: value })
-        let res = await getSellamnt(!this.state.isSwap ? obj.CryptoAmnt : obj.USDAmnt, value, this.props.sellData.coinDetailData?.coin,this.props.member?.id,null);
-        if (res.ok) {
-            this.setState({ USDAmnt: this.state.isSwap ? res.data ? parseFloat(res.data).toFixed(8) : 0 : obj.USDAmnt, CryptoAmnt: !this.state.isSwap ? res.data ? res.data : 0 : obj.CryptoAmnt, isSwap: value })
-        }
-    }
+   
     handleWalletSelection = (walletId) => {
         let obj = Object.assign({}, this.state.sellSaveData);
         for (var k in this.props.sellData.memberFiat.data) {

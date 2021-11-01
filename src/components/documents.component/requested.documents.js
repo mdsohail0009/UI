@@ -298,13 +298,13 @@ class RequestedDocs extends Component {
                             {this.state.uploadLoader&&<Loader />}
                         </div>
                             <div className="docfile-container">
-                                {this.getUploadedFiles(doc.id)?.path?.map((file, idx) => <div key={idx} className="docfile">
+                                {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) => <div key={idx1} className="docfile">
                                     <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                     <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                         <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
                                         <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
                                     </div>
-                                    <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx, true)} />
+                                    <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx1, true)} />
                                 </div>)}
                             </div>
                             <div className="text-center my-36">
