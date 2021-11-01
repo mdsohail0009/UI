@@ -149,7 +149,6 @@ class AuditLogs extends Component {
 
   render() {
     const { gridUrl, searchObj, featureData, timeListSpan} = this.state;
-    const {Text } = Typography;
   
     const options3 = timeListSpan.map((d) => (
       <Option key={d} value={d}>{d}</Option>
@@ -189,7 +188,6 @@ class AuditLogs extends Component {
                     showSearch
                      defaultValue="Last 1 Day"
                     //  {apicalls.convertLocalLang('Last_1_Day')}
-                    //  {<Translate content="Last_1_Day" component={Select}className="cust-input mb-0 custom-search"/>}
                     onChange={(e) => this.handleTimeSpan(e, 'timeSpan')}
                     placeholder="Time Span"
                     optionFilterProp="children"

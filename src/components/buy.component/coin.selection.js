@@ -32,7 +32,7 @@ class CryptoComponent extends Component {
     }
     render() {
         const { TabPane } = Tabs;
-        const { Title, Paragraph,Text } = Typography;
+        const { Title, Paragraph } = Typography;
         const { coins: coinListdata } = this.props?.buyInfo;
         return (
             <>

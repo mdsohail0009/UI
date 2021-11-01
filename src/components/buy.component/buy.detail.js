@@ -78,7 +78,6 @@ class SelectCrypto extends Component {
         if (!_vaidator.valid) {
             this.setState({ ...this.state, error: { ..._vaidator } });
             this.myRef.current.scrollIntoView();
-            return;
         }else{
            this.fetchConvertionValue() 
         }  
