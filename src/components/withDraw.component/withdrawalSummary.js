@@ -4,8 +4,6 @@ import Currency from '../shared/number.formate';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-import { List } from 'rc-field-form';
-import Paragraph from 'antd/lib/skeleton/Paragraph';
 
 
 const WithdrawalSummary = ({ sendReceive, onConfirm,onCancel }) => {

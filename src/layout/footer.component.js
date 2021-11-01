@@ -6,7 +6,6 @@ import ch from '../lang/ch';
 import my from '../lang/my';
 import { useThemeSwitcher } from 'react-css-theme-switcher';
 import { connect } from 'react-redux';
-//import apicalls from '../../api/apiCalls';
 import Translate from 'react-translate-component';
 
 
@@ -19,7 +18,6 @@ const { Footer: AntFooter } = Layout
 
 function Footer({member}) {
     const { switcher, themes, status } = useThemeSwitcher();
-    const [isDarkMode, setIsDarkMode] = React.useState(true);
     const [theme, setTheme] = useState('LRT');
 
 
@@ -31,18 +29,7 @@ function Footer({member}) {
         return <div>Loading styles...</div>;
     }
 
-    const handleTheme = () => {
-        setIsDarkMode(previous => {
-            if(previous){
-                setTheme('DRT');
-            }
-            else{
-                setTheme('LRT');
-            }
-            switcher({ theme: previous ? themes.LHT : themes.DRT });
-            return !previous;
-        });
-    };
+   
    
 
 

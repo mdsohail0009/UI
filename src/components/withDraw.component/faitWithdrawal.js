@@ -249,7 +249,6 @@ const selectAddress = () =>{
                     } else {
                       callback();
                     }
-                    return;
                   }
                 }
               ]}
@@ -276,7 +275,6 @@ const selectAddress = () =>{
                     } else {
                       callback();
                     }
-                    return;
                   }
                 }
               ]}
@@ -304,7 +302,6 @@ const selectAddress = () =>{
                     } else {
                       callback();
                     }
-                    return;
                   }
                 }
               ]}
@@ -380,7 +377,6 @@ const selectAddress = () =>{
                     } else {
                       callback();
                     }
-                    return;
                   }
                 }
               ]}

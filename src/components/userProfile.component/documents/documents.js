@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Typography } from 'antd';
 import List from "../../grid.component";
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
@@ -21,7 +20,6 @@ class Documents extends Component {
         { field: "status", title: "Status", filter: true, width: 200 }
     ]
     render() {
-        const { Title } = Typography;
         const { gridUrl } = this.state;
         return <>
             <div className="box basic-info">

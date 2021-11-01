@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import apiCalls from '../../api/apiCalls';
 
-const { TabPane } = Tabs;
 const { Panel } = Collapse;
 
 
@@ -91,7 +90,7 @@ class TransactionsHistory extends Component {
   ];
   render() {
     const { BuySellURL, SwapURL, WithdrawURL, DepositURL, DepositCryptoURL, WithdrawCryptoURL } = this.state
-    const { Paragraph, Text } = Typography;
+    const { Text } = Typography;
     const { TabPane } = Tabs;
     return (
       <>

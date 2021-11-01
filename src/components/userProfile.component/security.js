@@ -27,7 +27,7 @@ const Security =({userConfig})=> {
         window.open(url,"_self");
         
     }
-        const { Title, Paragraph,Text } = Typography;
+        const { Title, Paragraph} = Typography;
         return (<>
             <div className="box basic-info">
                 <Title className="basicinfo"><Translate content="TwoFactorAuthentication" component={Title} className="basicinfo"/></Title>

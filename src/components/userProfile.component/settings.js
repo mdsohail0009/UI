@@ -46,7 +46,7 @@ const Settings =({member,getmemeberInfoa})=> {
     
     // render() {
         const { Option } = Select;
-        const { Title, Text, Paragraph } = Typography;
+        const {  Text, Paragraph } = Typography;
         return (<><Form layout="vertical" initialValues={{ ...settingsObj }} onFinish={saveSettings} form={form}>
             <div className="box basic-info">
             <Translate content="settings" className="basicinfo"  />
