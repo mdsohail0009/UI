@@ -1,6 +1,7 @@
 import { Switch, Route as ReactRoute } from 'react-router-dom';
 import React, { Component } from 'react';
 import Route from '../authentication/protected.route';
+import SignInSilent from '../authentication/signinSilent';
 const Dashboard = React.lazy(() => import('../components/dashboard.component'));
 const CallbackPage = React.lazy(() => import('../authentication/callback.component'));
 const Login = React.lazy(() => import('../authentication/login.component'));
@@ -29,6 +30,7 @@ class RoutingComponent extends Component {
         <ReactRoute path='/documents' component={RequestedDocs} />
         <ReactRoute path='/docnotices' component={DocNotices} />
         <ReactRoute path='/coindetails' component={CoinDetails} />
+        <ReactRoute path="/silent_redirect" component={SignInSilent}/>
         {/* <Redirect to="/onboading" path="/" exact/> */}
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>
