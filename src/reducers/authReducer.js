@@ -28,11 +28,10 @@ let initialState = {
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case USER_FOUND:
-            debugger
             state = { ...state, user: action.payload }
             return state;
         case USER_EXPIRING:
-            userManager.signinSilentCallback().then();
+           processSilentRenew();
             break;
         case USER_LOG_OUT:
             state = { user: null, profile: null };
