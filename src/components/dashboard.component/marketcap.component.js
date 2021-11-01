@@ -7,6 +7,7 @@ import { fetchMarketCaps } from './api';
 import { useFullScreenHandle } from 'react-full-screen'
 import { detailInfoColumns, infoColumns } from './marketcap.columns';
 import apicalls from '../../api/apiCalls';
+import apiCalls from '../../api/apiCalls';
 const { Title, Paragraph } = Typography;
 
 const MarketCap = () => {

@@ -37,11 +37,6 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
     const handleWalletSelection = (walletId) => {
         setFiatAddress({toCoin: walletId})
         form.setFieldsValue({ toCoin: walletId })
-        if (buyInfo.memberFiat?.data) {
-            let wallet = buyInfo.memberFiat.data.filter((item) => {
-                return walletId === item.currencyCode
-            })
-        }
     }
 
     const savewithdrawal = async (values) => {
@@ -82,7 +77,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
             }
         }
     }
-    const { Paragraph, Text } = Typography;
+    const { Paragraph} = Typography;
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     return (
         <>
@@ -164,7 +159,6 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                                     } else {
                                         callback();
                                     }
-                                    return;
                                 }
                             }
                         ]}
@@ -190,7 +184,6 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                                     } else {
                                         callback();
                                     }
-                                    return;
                                 }
                             }
                         ]}
