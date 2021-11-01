@@ -215,8 +215,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .crypto-card.normal-card{background-color: var(--bgDark);box-shadow:none;}
 .crypto-card.select, .crypto-card:hover{background-image: url(../images/select-card-bg.png);background-size: cover;border-radius: 1.8rem;}
 .crypto-card.fiatcard{background-image: url(../images/fiatcard-bg.png);background-size: cover;border-radius: 1.8rem;}
-.crypto-card-top{display: flex; align-items: center;justify-content: space-between;}
-.crypto-card-top{align-items: flex-start;}
+.crypto-card-top{display: flex; align-items: center;justify-content: space-between;align-items: flex-start;}
 .textc-white{color:var(--textPureWhite);}
 .enter-val-container{display: flex; align-items: flex-start;}
 .crypto-details{display: flex;justify-content: space-between;align-items: center;}
@@ -252,7 +251,6 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .coin.usd-d{background-position: -216px -1px;}
 .coin.oxbtc{background-position: -108px -1px;}
 .coin.act{background-position: -270px -1px;}
-.coin.DOT{background-position: -324px -1px;}
 .coin.EUR{background-position: -378px -1px;}
 .coin.usd{background-position: -216px -1px;}
 .coin.eur{background-position: -378px -1px;}
@@ -358,7 +356,6 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .coin.USDT{background-position: -596px -1px;}
 .coin.eth{background-position: -55px -1px;}
 .coin.btc {background-position: -108px -1px;}
-.coin.oxbtc{background-position: -596px -180px;}
 .coin.dat{background-position: -323px -1px;}
 .coin.DAT{background-position: -323px -1px;}
 .coin.ETH{background-position: -55px -1px;}
@@ -367,7 +364,6 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .coin.ADA{background-position: -702px -1px;}
 .coin.USDC{background-position: -649px -60px;}
 .coin.DOGE{background-position: -756px -1px;}
-.coin.DOT{background-position: -55px -60px;}
 .coin.BUSD{background-position: -378px -60px;}
 .coin.UNI{background-position: -702px -60px;}
 .coin.LTC{background-position: -108px -60px;}
@@ -689,9 +685,9 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 }
 @media (min-width: 768px){
     .crypto-card .ant-card-body{padding: 33px;height: 200px;}
-    .tlv-header{display: flex;height: 100px;align-items: center; justify-content: space-between;padding: 30px 16px !important;}
+    .tlv-header{display: flex;height: 100px;align-items: center; justify-content: space-between;padding: 30px 16px !important;border-radius: 0 0 30px 30px;}
     .markets-panel{margin-right: 16px;}
-    .megamenu-label{margin-top: 0px;}
+    .megamenu-label{margin-top: 0px;font-size: 33px !important;}
     .footer-links{display: flex; justify-content: space-between; align-items: center;}
     .footer-links a{margin: 0 34px 0 0; display: inline-block;}
     .side-drawer .ant-drawer-content-wrapper{width: 420px !important;}
@@ -701,7 +697,6 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .megamenu .ant-modal-header{border: none; padding: 24px 32px;}
     .megamenu .ant-modal-body{background-color: var(--bgGloom) !important}
     .megamenu .ant-modal-close{top: 13px; right: 30px;}
-    .megamenu-label{font-size: 33px !important;}
     .megamenu-divider{height: 2px;background-color: var(--bgWhite); margin: 30px 0;}
     .megamenu-link{padding-left: 15px;padding-right: 15px; margin: 0 auto;}
     .mega-menu{padding-right: 30px; padding-left: 30px;}
@@ -712,7 +707,6 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .enter-val-container{margin-right: 35px;}
     .buysell-toggle{ margin: 0 auto 10px !important;}
     /* .buysell-toggle .ant-radio-button-wrapper{min-width:163px !important; } */
-    .tlv-header{border-radius: 0 0 30px 30px;}
     .pay-list{display: flex;justify-content: space-between;align-items: center;}
     .verify-options{padding: 24px 70px;}
     .side-drawer .ant-drawer-header{padding:20px !important}
@@ -829,7 +823,6 @@ main.ant-layout-content{min-height: calc(100vh - 220px);}
     color: var(--textWhite);
     background-color: transparent;
 }
-.ant-drawer{z-index: 99 !important;}
 .change-space .ant-input-password-icon{padding: 10px 16px 10px 0 !important;cursor: pointer;}
 .change-space .ant-input-password-icon svg{color: var(--textWhite)}
 .hover-passlwngth {display: none}
@@ -851,8 +844,7 @@ main.ant-layout-content{min-height: calc(100vh - 220px);}
             padding: 0;
             margin-top: -5px;
             margin-left: -3px;}
-.hover-passlwngth:after {border-top-color: #000 !important;}
-.hover-passlwngth:after {
+.hover-passlwngth:after {border-top-color: #000 !important;
     content: "";
     position: absolute;
     border-top: 12px solid transparent;
@@ -863,10 +855,8 @@ main.ant-layout-content{min-height: calc(100vh - 220px);}
     left: 2px;
     transform: rotate( 175deg );
     top: -7px;
-    z-index: 99;
-}
-.hover-passlwngth span:after {border-top-color: #fff !important;}
-.hover-passlwngth span:after {
+    z-index: 99;}
+.hover-passlwngth span:after {border-top-color: #fff !important;
     content: "";
     position: absolute;
     border-top: 6px solid transparent;
@@ -877,8 +867,7 @@ main.ant-layout-content{min-height: calc(100vh - 220px);}
     left: -7px;
     transform: rotate( 135deg );
     top: 4px;
-    z-index: 99;
-}
+    z-index: 99;}
 .hover-passlwngth span:first-child:after {display: none}
 .pwd-popup.pop-cancel{vertical-align: middle;
     margin: 10px auto !important;
@@ -887,9 +876,8 @@ main.ant-layout-content{min-height: calc(100vh - 220px);}
 text-align: center !important;}
 .pwd-popup.pop-cancel.ant-btn-block{width: auto !important;}
 .colr-comn{color: var(--textPureWhite)!important}
-.ant-custumcheck{display: flex;}
+.ant-custumcheck{display: flex;align-items: center;}
 .ant-checkbox-inner{width: 32px !important;height: 32px !important;background-color: transparent !important;border: 0 !important;}
-.ant-custumcheck {align-items: center;}
 .ant-custumcheck .ant-checkbox{display: inline-block;width: 34px;height: 34px;vertical-align: text-top;cursor: pointer;border: 1px solid var(--borderLight);background: transparent;}
 .ant-checkbox-checked .ant-checkbox-inner::after{height: 16px;transform: rotate(50deg) scale(1.3) translate(-50%, -50%) !important;  border: 2px solid var(--bgDarkYellow);border-top: 0;border-left: 0;}
 
