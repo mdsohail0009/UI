@@ -67,7 +67,7 @@ const Settings =({member,getmemeberInfoa})=> {
                      className="cust-input cust-select mb-0"
                      dropdownClassName="select-drpdwn"
                      onChange={(e) => {settingsObj.Language=e; setSettingsObj(settingsObj);form.setFieldsValue({...settingsObj}) }}>
-                        {SettingsLu.languageLookup?.map((item, idx) => <Option key={idx} value={item}>{item}
+                        {SettingsLu.languageLookup?.map((item, idx) => <Option key={idx} value={item}>{item.toUpperCase()}
                         </Option>)}
                     </Select></Form.Item>
                 </div>

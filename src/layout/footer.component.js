@@ -63,7 +63,7 @@ function Footer({member}) {
             <div className="copyright-block">
                 <Typography className="copyright text-white-30">Suissebase<sup className="fs-10">TM</sup> {new Date().getFullYear()}</Typography>
                 <span>
-                    <Button type="primary" shape="circle" size="large" className='darkTheme' onClick={handleTheme}> {theme}</Button>
+                    {/* <Button type="primary" shape="circle" size="large" className='darkTheme' onClick={handleTheme}> {theme}</Button> */}
                     
                     {/* <select value={lang} onChange={onLangChange} className="selct-lang ml-8 f-12" removeIcon={true}>
                         <option value="en">EN</option>
