@@ -6,7 +6,8 @@ const config = {
     redirect_uri: process.env.REACT_APP_REDIRECT_URI,
     response_type: "id_token token",
     scope: "openid profile",
-    silent_redirect_uri: 'http://localhost:3000/silent_redirect',
+    silent_redirect_uri:`${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ""}/silent_redirect`,
+    automaticSilentRenew: true,
     userStore: new WebStorageStateStore({ store: window.localStorage })
 }
 const userManager = createUserManager(config);
