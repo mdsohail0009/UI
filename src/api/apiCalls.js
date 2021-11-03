@@ -34,8 +34,8 @@ const trackPageview = (obj) => {
         name: obj.Feature, properties: { "Type": 'Admin', "Action": 'Page view', "Username": obj.userName, "MemeberId": obj.id, "Feature": obj.Feature, "Remarks": obj.Remarks, "Duration": 1, "Url": window.location.href, "FullFeatureName": obj.FullFeatureName }
     });
 }
-const sellMemberCrypto=(memID)=>{
-    return apiClient.get(ApiControllers.buySell +`SellMemberCrypto?memberId=`+memID);
+const sellMemberCrypto = (memID) => {
+    return apiClient.get(ApiControllers.wallets + memID);
 }
 const convertLocalLang=(key)=>{
     return counterpart.translate(key)

@@ -17,7 +17,7 @@ const getCoinList = (type) => {
     return apiClient.get(ApiControllers.buySell+`Coins?type=${type}`);
 }
 const getSelectedCoinDetails = (coin_code, member_id) => {
-    return apiClient.get(ApiControllers.buySell + `MemberCoinDetail?memberId=${member_id}&coin=${coin_code}`)
+    return apiClient.get(ApiControllers.buySell + `${member_id}/Coins/${coin_code}`)
 }
 const activeInactive = (obj) => {
     return apiClient.post(ApiControllers.master + "useractiveinactive", obj)
