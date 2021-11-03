@@ -9,5 +9,7 @@ export const ApiControllers = {
     admin:"Admin/",
     buy:"Buy/",
     sell:"Sell/",
-    accounts:"Accounts/"
+    accounts:"Accounts/",
+    markets:"Markets/",
+    wallets:"Wallets/"
 }
