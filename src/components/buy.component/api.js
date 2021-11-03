@@ -9,17 +9,17 @@ const getCryptos = () => {
 const getMemberfiat = (member_id) => {
     return apiClient.get(ApiControllers.member + 'MemberFiat?memberId=' + member_id);
 }
-const getSellamnt = (Value, isSwap, coin, isCrypto, memId, screenName,currencyCode) => {
-    return apiClient.get(ApiControllers.master + 'CryptoFiatConverter?coin=' + coin + '&currency='+currencyCode+'&amount=' + Value + '&isCrypto=' + isCrypto + '&memberId=' + memId + '&screenName=' + screenName);
+const getSellamnt = (Value, isSwap, coin, isCrypto, memId, screenName, currencyCode) => {
+    return apiClient.get(ApiControllers.master + 'CryptoFiatConverter?coin=' + coin + '&currency=' + currencyCode + '&amount=' + Value + '&isCrypto=' + isCrypto + '&memberId=' + memId + '&screenName=' + screenName);
 }
 const getSellPreviewData = (sellObject) => {
-    return apiClient.get(ApiControllers.buySell + 'Preview?coin=' + sellObject.fromWalletCode + '&currency='+sellObject.toWalletCode+'&amount=' + (sellObject.isSwap ? sellObject.fromValue : sellObject.toValue) + '&isCrypto=' + (sellObject.isSwap === true ? false : true)+'&memberId='+sellObject.membershipId+'&screenName=Sell');
+    return apiClient.get(ApiControllers.sell + `Preview/${sellObject?.fromWalletCode}/${sellObject?.toWalletCode}/${(sellObject.isSwap ? sellObject.fromValue : sellObject.toValue)}/${(sellObject.isSwap === true ? false : true)}`);
 }
 const savesellData = (obj) => {
-    return apiClient.post(ApiControllers.buySell + 'SellCrypto', obj);
+    return apiClient.post(ApiControllers.sell + 'Sell', obj);
 }
 const getCoins = (type) => {
-    return apiClient.get(ApiControllers.buySell + "Coins?type=" + type);
+    return apiClient.get(ApiControllers.buySell + `Coins/${type}`);
 }
 const getSelectedCoinDetails = (coin_code, member_id) => {
     return apiClient.get(ApiControllers.buySell + `MemberCoinDetail?memberId=${member_id}&coin=${coin_code}`)
@@ -27,11 +27,11 @@ const getSelectedCoinDetails = (coin_code, member_id) => {
 const fetchCurrencyConvertionValue = ({ from, to, value, isCrypto, memId, screenName }) => {
     return apiClient.get(ApiControllers.master + `CryptoFiatConverter?coin=${from}&currency=${to}&amount=${value}&isCrypto=${isCrypto}&memberId=${memId}&screenName=${screenName}`);
 }
-const getPreview = ({ coin, currency = "USD", amount, isCrypto,memberId }) => {
-    return apiClient.get(ApiControllers.buySell + `Preview?coin=${coin}&currency=${currency}&amount=${amount}&isCrypto=${isCrypto}&memberId=${memberId}&screenName=buy`)
+const getPreview = ({ coin, currency = "USD", amount, isCrypto }) => {
+    return apiClient.get(ApiControllers.buy + `Preview/${coin}/${currency}/${amount}/${isCrypto}`)
 }
 const buyCrypto = (obj) => {
-    return apiClient.post(ApiControllers.buySell + `BuyCrypto`, obj);
+    return apiClient.post(ApiControllers.buy + `Buy`, obj);
 }
 export { getportfolio, getCryptos, getMemberfiat, getSellamnt, getCoins, getSelectedCoinDetails, fetchCurrencyConvertionValue, getSellPreviewData, savesellData, getPreview, buyCrypto }
 

@@ -10,7 +10,7 @@ const getCryptos=()=>{
     return apiClient.get(ApiControllers.buySell +'Coins');
 }
 const getMember=(useremail)=>{
-    return apiClient.get(ApiControllers.member +'/MemberBySubId?subId='+useremail);
+    return apiClient.get(ApiControllers.accounts +'/'+useremail);
 }
 const sumsubacesstoken=(userid)=>{
     return apiClient.get('Sumsub/AccessToken?applicantId='+userid);
