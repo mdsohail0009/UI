@@ -15,7 +15,7 @@ export const sendNotification = ({ message, from, type, tokens }) => {
 }
 export const changePassword = (obj) => {
 
-    return apiClient.post(ApiControllers.member + "changePassword", obj);
+    return apiClient.put(ApiControllers.accounts + "ChangePassword", obj);
 }
 export const withdrawRecepientNamecheck = (memberid,name) => {
 
@@ -34,11 +34,11 @@ export const withdrawSave = (obj) => {
     return apiClient.post(ApiControllers.depositWithdraw + "WithdrawFiat", obj);
 }
 export const ProfileImageSave=(obj)=>{
-    return apiClient.post(ApiControllers.member + "SaveImage", obj); 
+    return apiClient.put(ApiControllers.accounts + "Avatar", obj); 
 }
 export const getSettingsLuData=()=>{
-    return apiClient.get(ApiControllers.member + "settingslookup"); 
+    return apiClient.get(ApiControllers.accounts + "Settings"); 
 }
 export const saveSettingsData=(obj)=>{
-    return apiClient.post(ApiControllers.member + "SaveSettings", obj); 
+    return apiClient.post(ApiControllers.accounts + "Settings", obj); 
 }
