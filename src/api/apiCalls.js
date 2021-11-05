@@ -4,7 +4,7 @@ import { ApiControllers } from './config';
 import counterpart from 'counterpart';
 
 const getportfolio = (memID) => {
-    return apiClient.get(ApiControllers.member + `MemberCrypto?memberId=` + memID);
+    return apiClient.get(ApiControllers.wallets + `Crypto/${memID}`);
 }
 const getCryptos = () => {
     return apiClient.get(ApiControllers.buySell + 'Coins');
