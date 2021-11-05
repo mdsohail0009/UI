@@ -10,18 +10,18 @@ const sendRequest = (obj) => {
     return clientApi.post(ApiControllers.member + `SaveDoument`, obj);
 }
 const getDocDetails = (docId) => {
-    return clientApi.get(ApiControllers.member + `GetUserDocument?docId=${docId}`)
+    return clientApi.get(ApiControllers.documents + `${docId}`)
 }
 const getDocumentReplies = (docDetailId) => {
-    return clientApi.get(ApiControllers.member + `GetMessages?docdetailId=${docDetailId}`)
+    return clientApi.get(ApiControllers.documents + `Messages/${docDetailId}`)
 }
 const saveDocReply = (obj) => {
-    return clientApi.post(ApiControllers.member + `SaveMessages`, obj)
+    return clientApi.post(ApiControllers.documents + `Messages`, obj)
 }
 const approveDoc = (obj) => {
-    return clientApi.post(ApiControllers.member + `DocumentStateChange`, obj)
+    return clientApi.post(ApiControllers.documents + `Actions/Status`, obj)
 }
 const getDashboardNotices = (id) => {
-    return clientApi.get(ApiControllers.member+`GetDashboardNotices?memberId=${id}`)
+    return clientApi.get(ApiControllers.notifications+`Notices?memberId=${id}`)
 }
 export { sendRequest, uuidv4, getDocDetails, getDocumentReplies, saveDocReply, approveDoc,getDashboardNotices }
