@@ -1,4 +1,4 @@
-import { getCoins, getSelectedCoinDetails, getPreview,getMemberfiat } from '../components/buy.component/api'
+import { getCoins, getSelectedCoinDetails, getPreview, getMemberfiat } from '../components/buy.component/api'
 const HANDLE_FETCH = "handleFetch";
 const SET_COIN = "setCoin";
 const SET_EXCHANGE_VALUE = "setExchangeValue";
@@ -43,11 +43,11 @@ const setExchangeValue = (payload) => {
         payload
     }
 }
-const fetchPreview = ({ coin, wallet, amount,isCrypto=false,memberId }) => {
+const fetchPreview = ({ coin, wallet, amount, isCrypto = false, memberId }) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "previewDetails", loading: true, data: null }));
-        debugger
-        const response = await getPreview({ coin, currency: wallet.currencyCode, amount,isCrypto,memberId });
+
+        const response = await getPreview({ coin, currency: wallet.currencyCode, amount, isCrypto, memberId });
         if (response.ok) {
             dispatch(handleFetch({ key: "previewDetails", loading: false, data: response.data }));
         } else {
@@ -97,4 +97,4 @@ const buyReducer = (state = initialState, action) => {
 }
 
 export default buyReducer;
-export { fetchCoins, fetchSelectedCoinDetails, setCoin, setExchangeValue, fetchPreview,setWallet,fetchMemberFiat }
+export { fetchCoins, fetchSelectedCoinDetails, setCoin, setExchangeValue, fetchPreview, setWallet, fetchMemberFiat }

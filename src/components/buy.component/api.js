@@ -27,8 +27,8 @@ const getSelectedCoinDetails = (coin_code, member_id) => {
 const fetchCurrencyConvertionValue = ({ from, to, value, isCrypto, memId, screenName }) => {
     return apiClient.get(ApiControllers.master + `CryptoFiatConverter/${from}/${to}/${value}/${isCrypto}/${screenName}`);
 }
-const getPreview = ({ coin, currency = "USD", amount, isCrypto }) => {
-    return apiClient.get(ApiControllers.buySell + `Preview/${coin}/${currency}/${amount}/${isCrypto}`)
+const getPreview = ({ coin, currency = "USD", amount, isCrypto, memberId }) => {
+    return apiClient.get(ApiControllers.buySell + `Buy/${memberId}/Coins/${coin}/${currency}/${amount}/${isCrypto}`)
 }
 const buyCrypto = (obj) => {
     return apiClient.post(ApiControllers.buySell + `Buy`, obj);

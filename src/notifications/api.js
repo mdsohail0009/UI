@@ -1,7 +1,7 @@
 import { apiClient } from '../api';
 import { ApiControllers } from '../api/config';
 const getNotifications = (memberId) => {
-    return apiClient.get(ApiControllers.member + `GetNotifications?memberId=${memberId}`)
+    return apiClient.get(ApiControllers.notifications + `${memberId}`)
 }
 const readNotification = (id) => {
     return apiClient.get(ApiControllers.member + `UpdateReadMsg?id=${id}&isRead=true`)

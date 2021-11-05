@@ -95,10 +95,10 @@ const fetchMemberFiat = (member_id) => {
         }
     }
 }
-const fetchPreview = ({ coin, wallet, amount }) => {
+const fetchPreview = ({ coin, wallet, amount, memberId }) => {
     return async (dispatch) => {
         dispatch(handleFetch({ key: "previewDetails", loading: true, data: null }));
-        const response = await getPreview({ coin, currency: wallet.currencyCode, amount });
+        const response = await getPreview({ coin, currency: wallet.currencyCode, amount, memberId });
         if (response.ok) {
             dispatch(handleFetch({ key: "previewDetails", loading: false, data: response.data }));
         } else {

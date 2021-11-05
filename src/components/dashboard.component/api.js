@@ -6,16 +6,16 @@ const fetchMarketCaps = ({ pageNo }) => {
 const fetchMemberWallets = (member_id) => {
     return apiClient.get(ApiControllers.wallets + `FiatDashboard/${member_id}`);
 }
-const fetchPortfolio=(member_id)=>{
-    return apiClient.get(ApiControllers.accounts+`/${member_id}/Portfolio`);
+const fetchPortfolio = (member_id) => {
+    return apiClient.get(ApiControllers.accounts + `/${member_id}/Portfolio`);
 }
-const fetchYourPortfolio=(member_id)=>{
-    return apiClient.get(ApiControllers.wallets+`CryptoPortFolio/${member_id}`);
+const fetchYourPortfolio = (member_id) => {
+    return apiClient.get(ApiControllers.wallets + `CryptoPortFolio/${member_id}`);
 }
-const getNotices = (member_id)=>{
-    return apiClient.get(ApiControllers.member+`MemberNoticesDashboard?memberId=${member_id}`);
+const getNotices = (member_id) => {
+    return apiClient.get(ApiControllers.notifications + `MemberNoticesDashboard/${member_id}`);
 }
-const getPortfolioGraph =(memId,type)=>{
-    return apiClient.get(ApiControllers.accounts+`/${memId}/DashBoard/${type}`);
+const getPortfolioGraph = (memId, type) => {
+    return apiClient.get(ApiControllers.accounts + `/${memId}/DashBoard/${type}`);
 }
-export { fetchMarketCaps,fetchMemberWallets,fetchPortfolio,fetchYourPortfolio,getNotices,getPortfolioGraph }
+export { fetchMarketCaps, fetchMemberWallets, fetchPortfolio, fetchYourPortfolio, getNotices, getPortfolioGraph }

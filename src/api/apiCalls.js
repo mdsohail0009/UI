@@ -4,25 +4,25 @@ import { ApiControllers } from './config';
 import counterpart from 'counterpart';
 
 const getportfolio = (memID) => {
-    return apiClient.get(ApiControllers.member +`MemberCrypto?memberId=`+memID);
+    return apiClient.get(ApiControllers.member + `MemberCrypto?memberId=` + memID);
 }
-const getCryptos=()=>{
-    return apiClient.get(ApiControllers.buySell +'Coins');
+const getCryptos = () => {
+    return apiClient.get(ApiControllers.buySell + 'Coins');
 }
-const getMember=(useremail)=>{
-    return apiClient.get(ApiControllers.accounts +'/'+useremail);
+const getMember = (useremail) => {
+    return apiClient.get(ApiControllers.accounts + '/' + useremail);
 }
-const sumsubacesstoken=(userid)=>{
-    return apiClient.get('Sumsub/AccessToken?applicantId='+userid);
+const sumsubacesstoken = (userid) => {
+    return apiClient.get('Sumsub/AccessToken?applicantId=' + userid);
 }
-const sumsublivenessacesstoken=(userid,flow)=>{
-    return apiClient.get('Sumsub/ExternalAccessToken?userId='+userid);
+const sumsublivenessacesstoken = (userid, flow) => {
+    return apiClient.get('Sumsub/ExternalAccessToken?userId=' + userid);
 }
-const sumsubacesstokennew=(userid)=>{
-    return apiClient.get('Sumsub/KYBAccessToken?applicantId='+userid);
+const sumsubacesstokennew = (userid) => {
+    return apiClient.get('Sumsub/KYBAccessToken?applicantId=' + userid);
 }
-const updateKyc=(userid)=>{
-    return apiClient.get(ApiControllers.member +'UpdateKYC?isKyc=true&userId='+userid);
+const updateKyc = (userid) => {
+    return apiClient.get(ApiControllers.member + 'UpdateKYC?isKyc=true&userId=' + userid);
 }
 const trackEvent = (obj) => {
     return appInsights.trackEvent({
@@ -37,11 +37,11 @@ const trackPageview = (obj) => {
 const sellMemberCrypto = (memID) => {
     return apiClient.get(ApiControllers.wallets + memID);
 }
-const convertLocalLang=(key)=>{
+const convertLocalLang = (key) => {
     return counterpart.translate(key)
 }
-const getIBANData=(ibannumber)=>{
-    return apiClient.get(ApiControllers.master +`GetIBANAccountDetails?ibanNumber=`+ibannumber);
+const getIBANData = (ibannumber) => {
+    return apiClient.get(ApiControllers.master + `GetIBANAccountDetails?ibanNumber=` + ibannumber);
 }
-let apicalls = {getportfolio,getCryptos,getMember,sumsubacesstoken, updateKyc,sumsubacesstokennew,sumsublivenessacesstoken,trackEvent,trackPageview,sellMemberCrypto,convertLocalLang, getIBANData}
+let apicalls = { getportfolio, getCryptos, getMember, sumsubacesstoken, updateKyc, sumsubacesstokennew, sumsublivenessacesstoken, trackEvent, trackPageview, sellMemberCrypto, convertLocalLang, getIBANData }
 export default apicalls
