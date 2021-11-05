@@ -17,12 +17,12 @@ class TransactionsHistory extends Component {
     this.props.thref(this)
   }
   state = {
-    BuySellURL: process.env.REACT_APP_GRID_API + "BuySell/MemberBuyandSellK",
-    SwapURL: process.env.REACT_APP_GRID_API + "Swap/MemberSwapK",
-    WithdrawURL: process.env.REACT_APP_GRID_API + "Withdrawal/MemberWithdrawalFiatK",
-    DepositURL: process.env.REACT_APP_GRID_API + "Deposit/MemberDepositFiatK",
-    WithdrawCryptoURL: process.env.REACT_APP_GRID_API + "Withdrawal/MemberWithdrawalCryptoK",
-    DepositCryptoURL: process.env.REACT_APP_GRID_API + "Deposit/MemberDepositCryptoK", activeTab: "1"
+    BuySellURL: process.env.REACT_APP_GRID_API + "BuySell/Accounts",
+    SwapURL: process.env.REACT_APP_GRID_API + "Swap/Accounts",
+    WithdrawURL: process.env.REACT_APP_GRID_API + "Withdraw/Accounts/Fiat",
+    DepositURL: process.env.REACT_APP_GRID_API + "Deposits/Accounts/Fiat",
+    WithdrawCryptoURL: process.env.REACT_APP_GRID_API + "Withdraw/Accounts/Crypto",
+    DepositCryptoURL: process.env.REACT_APP_GRID_API + "Deposits/Accounts/Crypto", activeTab: "1"
   }
   setKy = () => {
     this.setState({ activeTab: '1' })
