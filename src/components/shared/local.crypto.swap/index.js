@@ -29,7 +29,7 @@ const LocalCryptoSwapper = (props, ref) => {
             }
         },
         handleWalletChange() {
-          setSwapped(false);
+            setSwapped(false);
         }
     }), []);
     const fetchConvertionValue = async ({ inputvalue, locCurrency }) => {
@@ -38,11 +38,11 @@ const LocalCryptoSwapper = (props, ref) => {
         const response = await convertCurrencyDuplicate({ from: coin, to: locCurrency || localCurrency || "USD", value: (inputvalue || 0), isCrypto: !isSwaped, memId: props.memberId, screenName: props.screenName });
         if (response.ok) {
             const { data: value, config: { url } } = response;
-            const _obj = QueryString.parse("?" + url.split("?")[1]);
+            const _obj = url.split("CryptoFiatConverter")[1].split("/");
             let _val = document.getElementById("ABC")?.value;
             _val = _val ? _val.replace(/,/g, "") : _val;
             _val = _val?.replace(symbols[localCurrency], "");
-            if (_obj.amount == _val || _obj.amount == 0) {
+            if (_obj[3] == _val || _obj[3] == 0) {
                 if (!isSwaped) {
                     setCryptoValue(value || 0);
                 } else { setLocalValue(value || 0) }
