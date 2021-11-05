@@ -1,7 +1,7 @@
 import { apiClient } from '../../api';
 import { ApiControllers } from '../../api/config';
 const getportfolio = (member_id) => {
-    return apiClient.get(ApiControllers.member + `MemberCrypto?memberId=${member_id}`);
+    return apiClient.get(ApiControllers.wallets + `Crypto/${member_id}`);
 }
 const getCryptos = () => {
     return apiClient.get(ApiControllers.buySell + 'Coins');

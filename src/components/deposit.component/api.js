@@ -1,7 +1,7 @@
 import { apiClient } from '../../api'
 import { ApiControllers } from '../../api/config'
 const createCryptoDeposit = ({ memberId, walletCode }) => {
-    return apiClient.get(ApiControllers.depositWithdraw + `RequestDepositCrypto?memberId=${memberId}&walletCode=${walletCode}`)
+    return apiClient.get(ApiControllers.depositWithdraw + `Deposit/Fiat/${memberId}/${walletCode}`)
 }
 const getCurrencywithBank=()=>{
     return apiClient.get(ApiControllers.depositWithdraw + `Withdraw/CurrencyWithBank`)
