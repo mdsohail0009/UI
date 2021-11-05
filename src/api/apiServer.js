@@ -31,7 +31,7 @@ export const getStateLookup = (country) => {
 }
 export const withdrawSave = (obj) => {
 
-    return apiClient.post(ApiControllers.depositWithdraw + "WithdrawFiat", obj);
+    return apiClient.post(ApiControllers.withdraw + "Fiat", obj);
 }
 export const ProfileImageSave=(obj)=>{
     return apiClient.put(ApiControllers.accounts + "Avatar", obj); 

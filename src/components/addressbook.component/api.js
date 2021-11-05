@@ -2,10 +2,11 @@ import { apiClient } from '../../api';
 import { ApiControllers } from '../../api/config';
 
 const favouriteFiatAddress = (member_id, type, coin_code) => {
-    return apiClient.get(ApiControllers.depositWithdraw + `FavouriteLu?memberId=${member_id}&type=${type}&coin=${coin_code}`);
+    return apiClient.get(ApiControllers.depositWithdraw + `Favourite/${member_id}/${type}/${coin_code}`);
+
 }
 const detailsAddress = (id) => {
-    return apiClient.get(ApiControllers.depositWithdraw + `RequestFavourite?id=${id}` );
+    return apiClient.get(ApiControllers.depositWithdraw + `Favourite` );
 }
 const favouriteNameCheck = (member_id, name, type,favaddrId) => {
     return apiClient.get(ApiControllers.depositWithdraw + `FavouriteNameCheck?memberId=${member_id}&name=${name}&type=${type}&favaddrId=${favaddrId}`);

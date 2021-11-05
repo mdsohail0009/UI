@@ -1,5 +1,5 @@
 export const ApiControllers = {
-    withdraw:"Withdrawal/",
+    withdraw:"Withdraw/",
     transaction:"Transaction/",
     buySell:"Buysell/",
     master:"Master/",
@@ -14,4 +14,5 @@ export const ApiControllers = {
     wallets:"Wallets/",
     notifications:"Notifications/",
     documents:"Documents/"
+    
 }
