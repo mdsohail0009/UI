@@ -4,9 +4,9 @@ const getCryptoWithDrawWallets = ({ memberId }) => {
     return apiClient.get(ApiControllers.member + `MemberCrypto?memberId=${memberId}`)
 }
 const withDrawCrypto = (obj)=>{
-    return apiClient.post(ApiControllers.depositWithdraw+`WithdrawCrypto`,obj)
+    return apiClient.post(ApiControllers.depositWithdraw+`Withdraw/Crypto`,obj)
 }
 const getWithdrawmemberCrypto = ({ memberId }) => {
-    return apiClient.get(ApiControllers.depositWithdraw + `WithDrawMemberCrypto?memberId=${memberId}`)
+    return apiClient.get(ApiControllers.depositWithdraw + `Withdraw/Crypto/${memberId}`)
 }
 export { getCryptoWithDrawWallets,withDrawCrypto,getWithdrawmemberCrypto }
