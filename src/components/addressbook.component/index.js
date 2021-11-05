@@ -36,8 +36,8 @@ class AddressBook extends Component {
             },
             memberId: this.props.userConfig.id,
 
-            gridUrlCrypto: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressCryptoK",
-            gridUrlFiat: process.env.REACT_APP_GRID_API + "/AddressBook/FavouriteAddressFiatK",
+            gridUrlCrypto: process.env.REACT_APP_GRID_API + "Address/Crypto",
+            gridUrlFiat: process.env.REACT_APP_GRID_API + "Address/Fiat",
         }
         this.gridFiatRef = React.createRef();
         this.gridCryptoRef = React.createRef();
@@ -233,7 +233,8 @@ class AddressBook extends Component {
                         <Translate content="withdrawFiat" component={Radio.Button} value={2} className="buysell-toggle mx-0"/>
                     </Radio.Group>
                     <div className="d-flex justify-content align-center mb-16">
-                        <div><Title className="fs-26 text-white-30 fw-500">{cryptoFiat ? <Translate content="withdrawFiat" className="fs-26 text-white-30 fw-500" component={Title}/> : <Translate content="withdrawCrypto" component={Title} className="fs-26 text-white-30 fw-500"/>}</Title>
+                        <div>
+                            {/* <Title className="fs-26 text-white-30 fw-500">{cryptoFiat ? <Translate content="withdrawFiat" className="fs-26 text-white-30 fw-500" component={Title}/> : <Translate content="withdrawCrypto" component={Title} className="fs-26 text-white-30 fw-500"/>}</Title> */}
                         </div>
                         <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0, display: 'flex' }}>
                             <li onClick={this.addAddressBook} className="mr-16">

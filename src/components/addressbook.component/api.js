@@ -3,7 +3,6 @@ import { ApiControllers } from '../../api/config';
 
 const favouriteFiatAddress = (member_id, type, coin_code) => {
     return apiClient.get(ApiControllers.depositWithdraw + `Favourite/${member_id}/${type}/${coin_code}`);
-
 }
 const detailsAddress = (id) => {
     return apiClient.get(ApiControllers.depositWithdraw + `Favourite` );
