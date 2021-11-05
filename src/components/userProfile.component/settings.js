@@ -95,12 +95,12 @@ const Settings =({member,getmemeberInfoa})=> {
                     <div className="d-flex">
                     <div className="theme-switch theme-active">
                         <div className="d-flex align-center">
-                            <p className="switch-circle mb-0" onClick={()=>theme?themeSwitch():''}>{!theme&&<span className="icon md check-arrow c-pointer"></span>}{theme&&<span></span>}</p>
+                            <p className="switch-circle mb-0 c-pointer" onClick={()=>theme?themeSwitch():''}>{!theme&&<span className="icon md check-arrow c-pointer"></span>}{theme&&<span></span>}</p>
                             <p className="mb-0 ml-16 theme-txt"><Translate content="dark_theme" className="mb-0 ml-16 theme-txt" component={Text.p} /></p></div>
                     </div>
-                    <div className="theme-switch ml-24">
+                    <div className={"theme-switch ml-24" +  (theme ? " themeSwitchOn " : " themeSwitchOff ")}>
                         <div className="d-flex align-center">
-                            <p className="switch-circle mb-0" onClick={()=>!theme?themeSwitch():''}>{theme&&<span className="icon md check-arrow c-pointer"></span>}{!theme&&<span></span>}</p>
+                            <p className="switch-circle mb-0 c-pointer" onClick={()=>!theme?themeSwitch():''}>{theme&&<span className="icon md check-arrow c-pointer"></span>}{!theme&&<span></span>}</p>
                             <p className="mb-0 ml-16 theme-txt"><Translate content="light_theme" className="mb-0 ml-16 theme-txt" component={Text.p} /></p></div>
                     </div>
                     </div>
