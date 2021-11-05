@@ -102,14 +102,16 @@ export function withState(WrappedGrid) {
             if (this.props.additionalParams) {
                 let _additionalParams = '';
                 for (let key in this.props.additionalParams) {
-                    _additionalParams = _additionalParams + `&${key}=${this.props.additionalParams[key]}`
+                    _additionalParams = _additionalParams + `/${this.props.additionalParams[key]}`
                 }
-                queryStr = queryStr + _additionalParams;
+                queryStr = _additionalParams+'?'+queryStr ;
+            }else{
+                queryStr ='?'+queryStr
             }
             const base_url = this.props.url;
             const init = { method: 'GET', accept: 'application/json', headers: { "Authorization": `Bearer ${user.access_token}` } };
 
-            fetch(`${base_url}?${queryStr}`, init)
+            fetch(`${base_url}${queryStr}`, init)
                 .then(response => response.json())
                 .then(({ data, total }) => {
                     this.setState({
