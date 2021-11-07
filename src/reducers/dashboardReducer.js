@@ -5,6 +5,7 @@ const SET_DETAIL_DATA = "setDetailData";
 const REJECT_DETAIL_DATA = "rejectDetailData";
 const HANDLE_NOTICES = "handleNotices";
 const SET_NOTIF_COUNT = "setNotificationCount";
+const SET_COIN_DETAIL = "setSelctedCoinDetail";
 const fetchDetailData = (payload) => {
     return { type: FETCH_DETAIL_DATA, payload }
 }
@@ -23,6 +24,12 @@ const handleNotices = (payload) => {
 const setNotificationCount = (payload) => {
     return {
         type: SET_NOTIF_COUNT,
+        payload
+    }
+}
+const setSelctedCoinDetail = (payload) => {
+    return {
+        type: SET_COIN_DETAIL,
         payload
     }
 }
@@ -94,7 +101,8 @@ let initialState = {
     portFolio: { loading: false, data: {} },
     cryptoPortFolios: { loading: false, data: [] },
     notices: { loading: false, data: [] },
-    notificationCount: null
+    notificationCount: null,
+    marketSelectedCoin:null
 }
 let dashboardReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -110,6 +118,9 @@ let dashboardReducer = (state = initialState, action) => {
         case HANDLE_NOTICES:
             state = { ...state, notices: { data: action.payload.data, loading: action.payload.loading } }
             return state;
+        case SET_COIN_DETAIL:
+            state = { ...state, marketSelectedCoin: action.payload }
+            return state;
         case SET_NOTIF_COUNT:
             let _count = action.payload
             if (action?.payload < 0) {
@@ -122,4 +133,4 @@ let dashboardReducer = (state = initialState, action) => {
     }
 }
 export default dashboardReducer;
-export { fetchMemberWalletsData, fetchPortfolioData, fetchYourPortfoliodata, fetchDashboardcalls, fetchGraphInfo, fetchNotices, setNotificationCount }
+export { fetchMemberWalletsData, fetchPortfolioData, fetchYourPortfoliodata, fetchDashboardcalls, fetchGraphInfo, fetchNotices, setNotificationCount, setSelctedCoinDetail }

@@ -15,7 +15,10 @@ const fetchYourPortfolio = (member_id) => {
 const getNotices = (member_id) => {
     return apiClient.get(ApiControllers.notifications + `MemberNoticesDashboard/${member_id}`);
 }
+const getcoinDetails = (member_id,coinName) => {
+    return apiClient.get(ApiControllers.markets + `Coins/PriceChart/${coinName}/${member_id}`);
+}
 const getPortfolioGraph = (memId, type) => {
     return apiClient.get(ApiControllers.accounts + `/${memId}/DashBoard/${type}`);
 }
-export { fetchMarketCaps, fetchMemberWallets, fetchPortfolio, fetchYourPortfolio, getNotices, getPortfolioGraph }
+export { fetchMarketCaps, fetchMemberWallets, fetchPortfolio, fetchYourPortfolio, getNotices, getPortfolioGraph, getcoinDetails }
