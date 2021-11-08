@@ -141,8 +141,8 @@ class AuditLogs extends Component {
   handleSearch = () => {
     let { searchObj, timeSpanfromdate, timeSpantodate } = this.state;
     if (searchObj.timeSpan === "Custom") {
-       searchObj.fromdate = moment(timeSpanfromdate).format('MM/DD/YYYY');
-       searchObj.todate = moment(timeSpantodate).format('MM/DD/YYYY');
+       searchObj.fromdate = moment(timeSpanfromdate).format('MM-DD-YYYY');
+       searchObj.todate = moment(timeSpantodate).format('MM-DD-YYYY');
        }
     this.setState({ ...this.state, searchObj }, () => { this.gridRef.current.refreshGrid(); });
   };
