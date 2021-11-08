@@ -11,7 +11,8 @@ class Documents extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            gridUrl: process.env.REACT_APP_GRID_API + ApiControllers.transaction + "/GetUserDocumentsK",
+            // gridUrl: process.env.REACT_APP_GRID_API + ApiControllers.transaction + "/GetUserDocumentsK",
+            gridUrl: process.env.REACT_APP_GRID_API +"Documents/Accounts",
             alert: false,
             errorMessage: "",
             allDocs: false,
