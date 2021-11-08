@@ -4,7 +4,7 @@ const userNameLuSearch = (user_name) => {
     return apiClient.get(ApiControllers.master + `${user_name}`);
 }
 const getFeatureLuSearch = () => {
-    return apiClient.get(ApiControllers.master + "AuditLogs/User");
+    return apiClient.get(ApiControllers.master + `AuditLogs/Accounts`);
 }
 
 export {userNameLuSearch, getFeatureLuSearch}
