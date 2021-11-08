@@ -13,7 +13,7 @@ const fetchYourPortfolio = (member_id) => {
     return apiClient.get(ApiControllers.wallets + `CryptoPortFolio/${member_id}`);
 }
 const getNotices = (member_id) => {
-    return apiClient.get(ApiControllers.notifications + `MemberNoticesDashboard/${member_id}`);
+    return apiClient.get(ApiControllers.accounts + `Dashboard/Notices/${member_id}`);
 }
 const getcoinDetails = (member_id,coinName) => {
     return apiClient.get(ApiControllers.markets + `Coins/PriceChart/${coinName}/${member_id}`);
