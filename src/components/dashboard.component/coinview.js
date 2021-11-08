@@ -5,6 +5,7 @@ import tradeGraph1 from '../../assets/images/tradegraph.PNG';
 import {getcoinDetails} from './api'
 import connectStateProps from '../../utils/state.connect';
 import { withRouter } from 'react-router-dom';
+import TradingViewChart from './tradingview';
 
 class CoinView extends React.Component {
     state = {
@@ -59,7 +60,7 @@ class CoinView extends React.Component {
                                 <Radio.Button value="90">90d</Radio.Button>
                             </Radio.Group>
                         </div>
-                        <Image src={tradeGraph1} preview={false} />
+                        <TradingViewChart />
                     </div>
                 </Col>
                 <Col lg={10} xl={10} xxl={10}>
