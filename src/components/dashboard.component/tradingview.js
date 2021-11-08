@@ -1,8 +1,8 @@
 import { Fragment, useEffect, useRef, useState } from "react";
-import { createChart, LineStyle } from "lightweight-charts"; //npm install --save lightweight-charts
+import { createChart, LineStyle, ColorType, PriceScaleMode } from "lightweight-charts"; //npm install --save lightweight-charts
 //import LoadingSpinner from "../components/ui/LoadingSpinner";
 
-const apiDummyData = {"prices":[]}
+const apiDummyData = { "prices": [] }
 
 const assets = Object.keys(apiDummyData);
 const assetColors = [];
@@ -12,7 +12,7 @@ const rndInt = () => {
   return Math.floor(Math.random() * 150) + 75;
 };
 
-const TradingViewChart = ({data}) => {
+const TradingViewChart = ({ data }) => {
   const ref = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,28 +22,76 @@ const TradingViewChart = ({data}) => {
   useEffect(() => {
     // creates an empty grid for the chart
     const chart = createChart(ref.current, {
-      width: 400,
-      height: 300,
+      height: 340,
       localization: {
         dateFormat: "dd MMM yy",
       },
-      watermark: {
-        color: "rgba(11, 94, 29, 0.4)",
-        visible: true,
-        text: "Your portfolio",
-        fontSize: 24,
-        horzAlign: "left",
-        vertAlign: "bottom",
+      priceScale: { position: "left", mode: PriceScaleMode.Normal },
+      crosshair: {
+        vertLine: {
+          color: '#FFDB1A',
+          width: 1,
+          style: 1,
+          visible: true,
+          labelVisible: false,
+        },
+        horzLine: {
+          color: '#FFDB1A',
+          width: 1,
+          style: 0,
+          visible: true,
+          labelVisible: true,
+        },
+        mode: 1,
       },
+      layout: {
+        background: {
+          type: ColorType.VerticalGradient,
+          topColor: 'transparent',
+          bottomColor: 'transparent',
+        },
+        textColor: '#9797AA',
+        fontSize: 16,
+        fontFamily: 'SF Pro Text, sans-serif !important',
+      },
+      grid: {
+        vertLines: {
+          color: '#313c46',
+          style: 1,
+          visible: true,
+        },
+        horzLines: {
+          color: '#313c46',
+          style: 1,
+          visible: true,
+        },
+      },
+      handleScroll: {
+        mouseWheel: true,
+        pressedMouseMove: true,
+      },
+      handleScale: {
+        axisPressedMouseMove: true,
+        mouseWheel: true,
+        pinch: true,
+      },
+      // watermark: {
+      //   color: "rgba(11, 94, 29, 0.4)",
+      //   visible: true,
+      //   text: "Your portfolio",
+      //   fontSize: 24,
+      //   horzAlign: "left",
+      //   vertAlign: "bottom",
+      // },
     });
 
     // for total ; adds an area series to the chart
     const areaSeries = chart.addAreaSeries();
-    areaSeries.setData(data.prices.map(item => { return { time: formatDate(new Date(1000*item[0])), value: item[1] } }));
+    areaSeries.setData(data.prices.map(item => { return { time: formatDate(new Date(1000 * item[0])), value: item[1] } }));
     areaSeries.applyOptions({
-      lineColor: "#8B0000",
-      topColor: "rgba(100,0,0,0.5)",
-      bottomColor: "rgba(100,0,0,0.05)",
+      lineColor: "rgba(255,219,26,1)",
+      topColor: "rgba(255,219,26,0.15)",
+      bottomColor: "rgba(255,219,26,0)",
       lineStyle: LineStyle.Solid,
       lineWidth: 2,
     });
@@ -77,18 +125,18 @@ const TradingViewChart = ({data}) => {
       </span>
     ))
   );
-  const formatDate=(d)=> {
-        let month = '' + (d.getMonth() + 1);
-        let day = '' + d.getDate();
-        let year = d.getFullYear();
+  const formatDate = (d) => {
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    let year = d.getFullYear();
 
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
 
     return [year, month, day].join('-');
-}
+  }
 
   return (
     <Fragment>
