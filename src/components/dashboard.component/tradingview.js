@@ -2,29 +2,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { createChart, LineStyle } from "lightweight-charts"; //npm install --save lightweight-charts
 //import LoadingSpinner from "../components/ui/LoadingSpinner";
 
-const apiDummyData = {
-  total: [
-    { time: "1539043200000", value: 13636 },
-    { time: "2021-09-02", value: 10006 },
-    { time: "2021-09-03", value: 13945 },
-    { time: "2021-09-04", value: 17282 },
-    { time: "2021-09-05", value: 19482 },
-  ],
-  BTC: [
-    { time: "2021-09-01", value: 8312 },
-    { time: "2021-09-02", value: 8601 },
-    { time: "2021-09-03", value: 7399 },
-    { time: "2021-09-04", value: 6656 },
-    { time: "2021-09-05", value: 11358 },
-  ],
-  ETH: [
-    { time: "2021-09-01", value: 5324 },
-    { time: "2021-09-02", value: 1405 },
-    { time: "2021-09-03", value: 6546 },
-    { time: "2021-09-04", value: 10626 },
-    { time: "2021-09-05", value: 8124 },
-  ],
-};
+const apiDummyData = {"prices":[]}
 
 const assets = Object.keys(apiDummyData);
 const assetColors = [];
@@ -34,7 +12,7 @@ const rndInt = () => {
   return Math.floor(Math.random() * 150) + 75;
 };
 
-const TradingViewChart = () => {
+const TradingViewChart = ({data}) => {
   const ref = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -61,7 +39,7 @@ const TradingViewChart = () => {
 
     // for total ; adds an area series to the chart
     const areaSeries = chart.addAreaSeries();
-    areaSeries.setData(apiDummyData.total);
+    areaSeries.setData(data.prices.map(item => { return { time: formatDate(new Date(1000*item[0])), value: item[1] } }));
     areaSeries.applyOptions({
       lineColor: "#8B0000",
       topColor: "rgba(100,0,0,0.5)",
@@ -71,18 +49,18 @@ const TradingViewChart = () => {
     });
 
     // generates a line series for each asset to the chart
-    for (let asset of assets) {
-      const assetColor = `rgb(${rndInt()},${rndInt()},${rndInt()})`;
-      const assetColorObject={};
-      assetColorObject[asset] = assetColor;
-      assetColors.push(assetColorObject);
-      const lineSeries = chart.addLineSeries();
-      lineSeries.setData(apiDummyData[asset]);
-      lineSeries.applyOptions({
-        color: assetColor,
-        lineWidth: 2,
-      });
-    }
+    // for (let asset of assets) {
+    //   const assetColor = `rgb(${rndInt()},${rndInt()},${rndInt()})`;
+    //   const assetColorObject={};
+    //   assetColorObject[asset] = assetColor;
+    //   assetColors.push(assetColorObject);
+    //   const lineSeries = chart.addLineSeries();
+    //   lineSeries.setData(apiDummyData[asset].map(item => { return { time: formatDate(new Date(1000*item[0])), value: item[1] } }));
+    //   lineSeries.applyOptions({
+    //     color: assetColor,
+    //     lineWidth: 2,
+    //   });
+    // }
     setIsLoading(false);
   }, []);
 
@@ -99,6 +77,18 @@ const TradingViewChart = () => {
       </span>
     ))
   );
+  const formatDate=(d)=> {
+        let month = '' + (d.getMonth() + 1);
+        let day = '' + d.getDate();
+        let year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
 
   return (
     <Fragment>

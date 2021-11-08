@@ -2,23 +2,32 @@ import React from 'react';
 import { Typography, Radio, Row, Col, Image } from 'antd';
 import { Link } from "react-router-dom";
 import tradeGraph1 from '../../assets/images/tradegraph.PNG';
-import {getcoinDetails} from './api'
+import {getcoinDetails, getCoinChatData} from './api'
 import connectStateProps from '../../utils/state.connect';
 import { withRouter } from 'react-router-dom';
 import TradingViewChart from './tradingview';
 
 class CoinView extends React.Component {
     state = {
-        coinData:null
+        coinData:null,
+        chatData:null
     }
 
     componentDidMount(){
         this.loadCoinDetailData();
+        this.coinChartData();
     }
     loadCoinDetailData = async() =>{
         const response = await getcoinDetails(this.props.userProfile.id,this.props.dashboard?.marketSelectedCoin?.id);
         if (response.ok) {
-            this.setState({coinData:response.data})
+            this.setState({...this.state,coinData:response.data})
+        } else {
+        }
+    }
+    coinChartData = async() =>{
+        const response = await getCoinChatData('btc',967874112,2072325312);
+        if (response.ok) {
+            this.setState({...this.state,chatData:response.data})
         } else {
         }
     }
@@ -52,15 +61,15 @@ class CoinView extends React.Component {
                                 <Radio.Button value="Market Cap">Market Cap</Radio.Button>
                                 <Radio.Button value="Trading View">Trading View</Radio.Button>
                             </Radio.Group>
-                            <Radio.Group defaultValue="24" buttonStyle="outline" className="trade-graph">
-                                <Radio.Button value="24">24h</Radio.Button>
+                            <Radio.Group defaultValue="1" buttonStyle="outline" className="trade-graph">
+                                <Radio.Button value="1">24h</Radio.Button>
                                 <Radio.Button value="7">7d</Radio.Button>
                                 <Radio.Button value="14">14d</Radio.Button>
                                 <Radio.Button value="30">30d</Radio.Button>
                                 <Radio.Button value="90">90d</Radio.Button>
                             </Radio.Group>
                         </div>
-                        <TradingViewChart />
+                        {this.state.chatData && <TradingViewChart data={this.state.chatData} />}
                     </div>
                 </Col>
                 <Col lg={10} xl={10} xxl={10}>
