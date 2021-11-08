@@ -31,15 +31,15 @@ class AuditLogs extends Component {
       message:"",
       searchObj: {
         timeSpan: "Last 1 Day",
-        fromdate: '',
-        todate: '',
         userName: this.props.userProfile?.userName,
         feature: "All Features",
-        IsAdmin:false,
-        IsUser:true
+        admin:false,
+        user:true,
+        fromdate: '',
+        todate: '',
       },
       timeListSpan: ["Last 1 Day", "Last One Week", "Custom"],
-      gridUrl: process.env.REACT_APP_GRID_API+"AuditLog/GetUserLogsK",
+      gridUrl: process.env.REACT_APP_GRID_API+"AuditLogs/Accounts",
     };
 
     this.gridRef = React.createRef();
