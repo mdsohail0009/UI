@@ -2,20 +2,39 @@ import React from 'react';
 import { Typography, Radio, Row, Col, Image } from 'antd';
 import { Link } from "react-router-dom";
 import tradeGraph1 from '../../assets/images/tradegraph.PNG';
+import {getcoinDetails} from './api'
+import connectStateProps from '../../utils/state.connect';
+import { withRouter } from 'react-router-dom';
 
 class CoinView extends React.Component {
+    state = {
+        coinData:null
+    }
+
+    componentDidMount(){
+        this.loadCoinDetailData();
+    }
+    loadCoinDetailData = async() =>{
+        const response = await getcoinDetails(this.props.userProfile.id,this.props.dashboard?.marketSelectedCoin?.id);
+        if (response.ok) {
+            this.setState({coinData:response.data})
+        } else {
+        }
+    }
     render() {
         const { Paragraph, Text, Title } = Typography
+        const {coinData} = this.state;
+        const {marketSelectedCoin} = this.props.dashboard;
         return <div className="main-container">
-            <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/dashboard" />Bitcoin (BTC)</div>
+            <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/dashboard" />{marketSelectedCoin?.name} ({marketSelectedCoin?.symbol.toUpperCase()})</div>
             <Row gutter={[24, 24]}>
                 <Col lg={14} xl={14} xxl={14}>
                     <div className="box p-24 coin-bal">
                         <div className="d-flex align-center">
                             <span className="coin lg btc" />
                             <div className="summary-count ml-8">
-                                <Paragraph className="text-white-30 fs-36 mb-0 fw-500">1.0147658<Text className="fs-24 ml-8 text-white-30 fw-500">BTC</Text></Paragraph>
-                                <Text className="text-white-30 fs-16 m-0" style={{ lineHeight: '18px' }}>1BTC = 60714.20 USD<Text className="text-green ml-16">7.41%</Text></Text>
+                                <Paragraph className="text-white-30 fs-36 mb-0 fw-500">{coinData?.avilableBalance}<Text className="fs-24 ml-8 text-white-30 fw-500">{marketSelectedCoin?.symbol.toUpperCase()}</Text></Paragraph>
+                                <Text className="text-white-30 fs-16 m-0" style={{ lineHeight: '18px' }}>1{marketSelectedCoin?.symbol.toUpperCase()} = {coinData?.btC_Price} USD<Text className="text-green ml-16">7.41%</Text></Text>
                             </div>
                         </div>
                         <ul className="m-0">
@@ -45,47 +64,47 @@ class CoinView extends React.Component {
                 </Col>
                 <Col lg={10} xl={10} xxl={10}>
                     <div className="box p-24 coin-details">
-                        <Title component={Title} className="fs-24 fw-600 mb-36 text-white-30">BTC Price and Market Stats</Title>
+                        <Title component={Title} className="fs-24 fw-600 mb-36 text-white-30">{marketSelectedCoin?.symbol.toUpperCase()} Price and Market Stats</Title>
                         <div className="coin-info">
                             <Text>BTC Price</Text>
-                            <Text>$61,048.42</Text>
+                            <Text>${marketSelectedCoin?.current_price}</Text>
                         </div>
                         <div className="coin-info">
                             <Text>Market Cap</Text>
-                            <Text>$1,152,252,696,454</Text>
+                            <Text>${marketSelectedCoin?.market_cap}</Text>
                         </div>
                         <div className="coin-info">
                             <Text>24 Hour Trading Vol</Text>
-                            <Text>$36,844,445,206</Text>
+                            <Text>${marketSelectedCoin?.market_cap_change_24h}</Text>
                         </div>
                         <div className="coin-info">
                             <Text>Fully Diluted Valuation</Text>
-                            <Text>$1,283,867,928,000</Text>
+                            <Text>${marketSelectedCoin?.fully_diluted_valuation}</Text>
                         </div>
                         <div className="coin-info">
                             <Text>Circulating Supply</Text>
-                            <Text>18,847,193</Text>
+                            <Text>{marketSelectedCoin?.circulating_supply}</Text>
                         </div>
                         <div className="coin-info">
                             <Text>Total Supply</Text>
-                            <Text>21,000,000</Text>
+                            <Text>{marketSelectedCoin?.total_supply}</Text>
                         </div>
                         <div className="coin-info">
                             <Text>Max Supply</Text>
-                            <Text>21,000,000</Text>
+                            <Text>{marketSelectedCoin?.max_supply}</Text>
                         </div>
                         <div className="coin-info">
                             <Text>All-Time High</Text>
                             <div>
-                                <Text>$67,276.79</Text><Text className="fs-14 fw-200 text-green ml-8">-9.5%</Text>
-                                <Text className="fs-10 fw-200 text-secondary d-block text-right">Oct 20, 2021 (9 days)</Text>
+                                <Text>${marketSelectedCoin?.ath}</Text><Text className="fs-14 fw-200 text-green ml-8">{marketSelectedCoin?.ath_change_percentage}%</Text>
+                                <Text className="fs-10 fw-200 text-secondary d-block text-right">{marketSelectedCoin?.ath_date}</Text>
                             </div>
                         </div>
                         <div className="coin-info">
                             <Text>All-Time Low</Text>
                             <div>
-                                <Text>$67.81</Text><Text className="fs-14 fw-200 text-green ml-8">89732.0%</Text>
-                                <Text className="fs-10 fw-200 text-secondary d-block text-right">Oct 20, 2021 (9 days)</Text>
+                                <Text>${marketSelectedCoin?.atl}</Text><Text className="fs-14 fw-200 text-green ml-8">{marketSelectedCoin?.atl_change_percentage}%</Text>
+                                <Text className="fs-10 fw-200 text-secondary d-block text-right">{marketSelectedCoin?.atl_date}</Text>
                             </div>
                         </div>
                     </div>
@@ -95,4 +114,4 @@ class CoinView extends React.Component {
     }
 }
 
-export default CoinView;
+export default connectStateProps(withRouter(CoinView));
