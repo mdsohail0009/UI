@@ -30,15 +30,15 @@ const authReducer = (state = initialState, action) => {
         case USER_FOUND:
             state = { ...state, user: action.payload }
             return state;
-        case USER_EXPIRING:
-           processSilentRenew();
-            break;
+        // case USER_EXPIRING:
+        //    processSilentRenew();
+        //     break;
         case USER_LOG_OUT:
             state = { user: null, profile: null };
             return state;
         case USER_EXPIRED:
             state = { ...state, user: null, profile: null };
-            processSilentRenew();
+            //processSilentRenew();
             return state;
         case GET_PROFILE_SUCCESS:
             state = { ...state, profile: action.payload };
