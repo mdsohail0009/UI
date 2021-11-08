@@ -22,6 +22,6 @@ const approveDoc = (obj) => {
     return clientApi.post(ApiControllers.documents + `Actions/Status`, obj)
 }
 const getDashboardNotices = (id) => {
-    return clientApi.get(ApiControllers.notifications + `Notices/${id}`)
+    return clientApi.get(ApiControllers.accounts + `Dashboard/Notifications/${id}`)
 }
 export { sendRequest, uuidv4, getDocDetails, getDocumentReplies, saveDocReply, approveDoc, getDashboardNotices }
