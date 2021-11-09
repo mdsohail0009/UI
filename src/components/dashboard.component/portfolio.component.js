@@ -25,11 +25,11 @@ class Portfolio extends Component {
     getGraph = async (type) => {
         this.portFolioGraphRef.current.innerHTML = ""
         this.chart = createChart(this.portFolioGraphRef.current, {
-            width: 750, height: 300,
+            height: 300,
             localization: {
                 dateFormat: "dd MMM yy",
             },
-           
+
             priceScale: { position: "left", mode: PriceScaleMode.Normal },
             crosshair: {
                 vertLine: {
@@ -56,7 +56,7 @@ class Portfolio extends Component {
                 },
                 textColor: '#9797AA',
                 fontSize: 12,
-                fontFamily: 'Calibri',
+                fontFamily: 'SF Pro Text, sans-serif !important',
             },
             grid: {
                 vertLines: {
@@ -132,7 +132,7 @@ class Portfolio extends Component {
             //     { time: "2021-10-04", value: 40 },
             //     { time: "2021-10-05", value: 45 },
             //     { time: "2021-10-06", value: 59.57 }
-                
+
             //   ],
             //  year : [
             //     { time: "2021-09-01", value: 50 },
@@ -147,7 +147,7 @@ class Portfolio extends Component {
             //     { time: "2020-12-01", value: 57 },
             //     { time: "2020-11-01", value: 70 },
             //     { time: "2020-10-01", value: 62 },
-                
+
             //   ]}
             const data = { BTC: objData.map(item => { return { time: item.datetime, value: item.value } }) }
             areaSeries.setData(data.BTC);
