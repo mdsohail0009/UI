@@ -27,18 +27,6 @@ class CoinView extends React.Component {
         } else {
         }
     }
-    formatDate = (d) => {
-        let month = '' + (d.getMonth() + 1);
-        let day = '' + d.getDate();
-        let year = d.getFullYear();
-    
-        if (month.length < 2)
-          month = '0' + month;
-        if (day.length < 2)
-          day = '0' + day;
-    
-        console.log([year, month, day].join('-'));
-      }
     coinChartData = async (days) => {
         if (this.state.coinData) {
             const response = await getCoinChatData(this.state.coinData.id,'usd', days);
@@ -71,7 +59,7 @@ class CoinView extends React.Component {
                         </ul>
                     </div>
                     <div className="box p-24 coin-details">
-                        <Title component={Title} className="fs-24 fw-600 mb-36 text-white-30">Bitcoin (BTC) Price Chart</Title>
+                        <Title component={Title} className="fs-24 fw-600 mb-36 text-white-30">{coinData?.name} ({coinData?.symbol.toUpperCase()}) Price Chart</Title>
                         <div className="trade-legends mb-24">
                             <Radio.Group defaultValue="prices" buttonStyle="outline" className="trade-graph" onChange={(e)=>this.setState({...this.state, type:e.target.value})}>
                                 <Radio.Button value="prices">Price</Radio.Button>
