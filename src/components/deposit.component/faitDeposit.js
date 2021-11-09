@@ -217,7 +217,7 @@ class FaitDeposit extends Component {
         {!this.state.showSuccessMsg && <div className="text-center"><Radio.Group
           onChange={this.handleBuySellToggle}
           value={this.state.tabValue}
-          className="buysell-toggle">
+          className="buysell-toggle mb-16">
           <Translate content="deposit" component={Radio.Button} value={1} />
           <Translate content="withdraw" component={Radio.Button} value={2} />
         </Radio.Group></div>}
@@ -304,11 +304,11 @@ class FaitDeposit extends Component {
                         <Paragraph className="mb-0 fs-16 text-white-30 fw-500 mt-16 text-upper">{BankInfo.accountName}</Paragraph>
                         <Paragraph className="mb-0 fs-14 text-white-30 fw-300">
                           {BankInfo.accountAddress}</Paragraph>
-                        <Text className="text-white-30 fs-14">A/C </Text><Text copyable className="mb-0 fs-14 text-yellow fw-500">{BankInfo.accountNumber}</Text>
                       </div>
                     </div>
+                    <Text className="text-white-30 fs-14">A/C </Text><Text copyable className="mb-0 fs-14 text-yellow fw-500">{BankInfo.accountNumber}</Text>
                     {BankInfo.routingNumber!=null&&BankInfo.routingNumber!=''&&<Translate
-                      className="mt-36 fs-14 text-aqua fw-500 text-upper"
+                      className="mt-36 fs-14 text-white fw-500 text-upper"
                       content="for_Domestic_wires"
                       component={Paragraph}
                     />}
@@ -319,7 +319,7 @@ class FaitDeposit extends Component {
                     />}
                     {BankInfo.routingNumber!=null&&BankInfo.routingNumber!=''&&<Text copyable className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text>}
                     <Translate
-                      className="mt-24 fs-14 text-aqua fw-500 text-upper"
+                      className="mt-24 fs-14 text-white fw-500 text-upper"
                       content="for_international_wires"
                       component={Paragraph}
                     />

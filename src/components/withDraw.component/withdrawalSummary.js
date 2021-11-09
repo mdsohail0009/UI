@@ -39,7 +39,7 @@ const WithdrawalSummary = ({ sendReceive, onConfirm,onCancel }) => {
              <Translate content="Confirm" component={Text}/>
              </Button>
             <div className="text-center">
-        <Translate content="back" component={Button} onClick={() => onCancel()} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 text-captz text-center"/>
+        <Translate content="back" component={Button} onClick={() => onCancel()} type="text" size="large" className="text-center text-white-30 pop-cancel fw-400 fs-14 text-upper text-center"/>
       </div>
       </div>
     )
