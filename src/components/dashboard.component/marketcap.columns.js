@@ -4,8 +4,8 @@ import {setSelctedCoinDetail} from "../../reducers/dashboardReducer"
 import { store } from "../../store";
 
 const infoColumns = [
-    { dataIndex: "image", render: (val,data) => <Link className="c-pointer" to="/coindetails" onClick={()=>store.dispatch(setSelctedCoinDetail(data))} ><img style={{ height: 20, width: 20 }} src={val} alt={'coin'} /></Link>, width: 40 },
-    { title: "Coin", dataIndex: "symbol", render: text => <span className="fs-18 fw-500 text-upper text-white mb-0 mt-12">{text.toUpperCase()}</span>, sorter: (a, b) => ('' + a.symbol).localeCompare(b.symbol), },
+    { dataIndex: "image", render: (val,data) => <Link className="c-pointer" to={"/coindetails/"+data.id} onClick={()=>store.dispatch(setSelctedCoinDetail(data))} ><img style={{ height: 20, width: 20 }} src={val} alt={'coin'} /></Link>, width: 40 },
+    { title: "Coin", dataIndex: "symbol", render: (text,data) => <Link className="c-pointer" to={"/coindetails/"+data.id} onClick={()=>store.dispatch(setSelctedCoinDetail(data))} ><span className="fs-18 fw-500 text-upper text-white mb-0 mt-12">{text.toUpperCase()}</span></Link>, sorter: (a, b) => ('' + a.symbol).localeCompare(b.symbol), },
     {
         title: "Price", dataIndex: "current_price", render: (val) => <Currency defaultValue={val} type={"text"} className="fs-16 fw-400 text-upper text-white" />, sorter: (a, b) => a.current_price - b.current_price
     },

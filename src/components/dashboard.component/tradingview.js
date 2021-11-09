@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useRef, useState } from "react";
-import { createChart, LineStyle, ColorType, PriceScaleMode } from "lightweight-charts"; //npm install --save lightweight-charts
+import { createChart, LineStyle, ColorType, PriceScaleMode, isBusinessDay } from "lightweight-charts"; //npm install --save lightweight-charts
 //import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 const apiDummyData = { "prices": [] }
@@ -12,7 +12,7 @@ const rndInt = () => {
   return Math.floor(Math.random() * 150) + 75;
 };
 
-const TradingViewChart = ({ data }) => {
+const TradingViewChart = ({ data, type }) => {
   const ref = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -20,97 +20,104 @@ const TradingViewChart = ({ data }) => {
   note: format for the chart data must be like this:
    [{time: yyyy-mm-dd, value: 123},{time: yyyy-mm-dd, value: 123},.... ] */
   useEffect(() => {
-    // creates an empty grid for the chart
+    loadGrph()
+  }, [type]);
+  useEffect(() => {
+    loadGrph()
+  }, [data]);
+
+  const loadGrph = () =>{
+    ref.current.innerHTML = '';
     const chart = createChart(ref.current, {
-      height: 340,
-      localization: {
-        dateFormat: "dd MMM yy",
-      },
-      priceScale: { position: "left", mode: PriceScaleMode.Normal },
-      crosshair: {
-        vertLine: {
-          color: '#FFDB1A',
-          width: 1,
-          style: 1,
-          visible: true,
-          labelVisible: false,
+        height: 340,
+        localization: {
+            dateFormat: "yyyy/MM/dd hh:mm",
+          },
+        priceScale: { position: "left", mode: PriceScaleMode.Normal },
+        crosshair: {
+          vertLine: {
+            color: '#FFDB1A',
+            width: 1,
+            style: 1,
+            visible: true,
+            labelVisible: false,
+          },
+          horzLine: {
+            color: '#FFDB1A',
+            width: 1,
+            style: 0,
+            visible: true,
+            labelVisible: true,
+          },
+          mode: 1,
         },
-        horzLine: {
-          color: '#FFDB1A',
-          width: 1,
-          style: 0,
-          visible: true,
-          labelVisible: true,
+        layout: {
+          background: {
+            type: ColorType.VerticalGradient,
+            topColor: 'transparent',
+            bottomColor: 'transparent',
+          },
+          textColor: '#9797AA',
+          fontSize: 16,
+          fontFamily: 'SF Pro Text, sans-serif !important',
         },
-        mode: 1,
-      },
-      layout: {
-        background: {
-          type: ColorType.VerticalGradient,
-          topColor: 'transparent',
-          bottomColor: 'transparent',
+        grid: {
+          vertLines: {
+            color: '#313c46',
+            style: 1,
+            visible: true,
+          },
+          horzLines: {
+            color: '#313c46',
+            style: 1,
+            visible: true,
+          },
         },
-        textColor: '#9797AA',
-        fontSize: 16,
-        fontFamily: 'SF Pro Text, sans-serif !important',
-      },
-      grid: {
-        vertLines: {
-          color: '#313c46',
-          style: 1,
-          visible: true,
+        handleScroll: {
+          mouseWheel: true,
+          pressedMouseMove: true,
         },
-        horzLines: {
-          color: '#313c46',
-          style: 1,
-          visible: true,
+        handleScale: {
+          axisPressedMouseMove: true,
+          mouseWheel: true,
+          pinch: true,
         },
-      },
-      handleScroll: {
-        mouseWheel: true,
-        pressedMouseMove: true,
-      },
-      handleScale: {
-        axisPressedMouseMove: true,
-        mouseWheel: true,
-        pinch: true,
-      },
-      // watermark: {
-      //   color: "rgba(11, 94, 29, 0.4)",
-      //   visible: true,
-      //   text: "Your portfolio",
-      //   fontSize: 24,
-      //   horzAlign: "left",
-      //   vertAlign: "bottom",
-      // },
-    });
-
-    // for total ; adds an area series to the chart
-    const areaSeries = chart.addAreaSeries();
-    areaSeries.setData(data.prices.map(item => { return { time: formatDate(new Date(1000 * item[0])), value: item[1] } }));
-    areaSeries.applyOptions({
-      lineColor: "rgba(255,219,26,1)",
-      topColor: "rgba(255,219,26,0.15)",
-      bottomColor: "rgba(255,219,26,0)",
-      lineStyle: LineStyle.Solid,
-      lineWidth: 2,
-    });
-
-    // generates a line series for each asset to the chart
-    // for (let asset of assets) {
-    //   const assetColor = `rgb(${rndInt()},${rndInt()},${rndInt()})`;
-    //   const assetColorObject={};
-    //   assetColorObject[asset] = assetColor;
-    //   assetColors.push(assetColorObject);
-    //   const lineSeries = chart.addLineSeries();
-    //   lineSeries.setData(apiDummyData[asset].map(item => { return { time: formatDate(new Date(1000*item[0])), value: item[1] } }));
-    //   lineSeries.applyOptions({
-    //     color: assetColor,
-    //     lineWidth: 2,
-    //   });
-    // }
-    setIsLoading(false);
-  }, []);
+        // watermark: {
+        //   color: "rgba(11, 94, 29, 0.4)",
+        //   visible: true,
+        //   text: "Your portfolio",
+        //   fontSize: 24,
+        //   horzAlign: "left",
+        //   vertAlign: "bottom",
+        // },
+      });
+      // for total ; adds an area series to the chart
+      const areaSeries = chart.addAreaSeries();
+    //   areaSeries.setData(data[type].map(item => { return { time: formatDate(item[0].toString().substr(0,10)), value: item[1] } }));
+      areaSeries.setData(data[type].map(item => { return { time: formatDate(item[0]), value: item[1] } }));
+      areaSeries.applyOptions({
+        lineColor: "rgba(255,219,26,1)",
+        topColor: "rgba(255,219,26,0.15)",
+        bottomColor: "rgba(255,219,26,0)",
+        lineStyle: LineStyle.Solid,
+        lineWidth: 2,
+      });
+  
+      // generates a line series for each asset to the chart
+      // for (let asset of assets) {
+      //   const assetColor = `rgb(${rndInt()},${rndInt()},${rndInt()})`;
+      //   const assetColorObject={};
+      //   assetColorObject[asset] = assetColor;
+      //   assetColors.push(assetColorObject);
+      //   const lineSeries = chart.addLineSeries();
+      //   lineSeries.setData(apiDummyData[asset].map(item => { return { time: formatDate(new Date(1000*item[0])), value: item[1] } }));
+      //   lineSeries.applyOptions({
+      //     color: assetColor,
+      //     lineWidth: 2,
+      //   });
+      // }
+      setIsLoading(false);
+  }
 
   // setting the labels for the asset at the bottom of the chart
   const assetLabels = isLoading ? (
@@ -126,16 +133,23 @@ const TradingViewChart = ({ data }) => {
     ))
   );
   const formatDate = (d) => {
-    let month = '' + (d.getMonth() + 1);
-    let day = '' + d.getDate();
-    let year = d.getFullYear();
-
+    let date = new Date((d * 1000))
+    let month = '' + (date.getMonth() + 1);
+    let day = '' + date.getDate();
+    let year = date.getFullYear();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+   // console.log(date.toUTCString())
     if (month.length < 2)
       month = '0' + month;
     if (day.length < 2)
       day = '0' + day;
-
-    return [year, month, day].join('-');
+    if (hours.length < 2)
+    hours = '0' + hours;
+    if (minutes.length < 2)
+    minutes = '0' + minutes;
+    //console.log([year, month, day ].join('-')+' '+[hours,minutes ].join(':'))
+    return [year, month, day ].join('-')+' '+[hours,minutes ].join(':');
   }
 
   return (

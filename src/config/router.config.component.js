@@ -29,7 +29,7 @@ class RoutingComponent extends Component {
         <ReactRoute path='/userprofile' component={userProfile} />
         <ReactRoute path='/documents' component={RequestedDocs} />
         <ReactRoute path='/docnotices' component={DocNotices} />
-        <ReactRoute path='/coindetails' component={CoinDetails} />
+        <ReactRoute path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent}/>
         {/* <Redirect to="/onboading" path="/" exact/> */}
         <ReactRoute path="/" component={Dashboard} exact />
