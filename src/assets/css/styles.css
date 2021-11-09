@@ -482,7 +482,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .user-labels{padding:12px; font-size: 16px; font-weight: 600; color: var(--textWhite); margin-bottom: 0; margin-left:8px}
 .user-list{list-style: none;}
 .user-labels.active, .user-labels:hover{background: var(--bgDarkYellow);font-weight: 700; border-radius: 30px; padding:12px; color: var(--textDark);}
-.profile-info{width: 180px;height: 180px;padding: 5px;border-radius: 50%; margin: 0 auto 24px;background-image: linear-gradient(128deg, var(--bgDark1) 50%, var(--bgYellow) 50%); position: relative;}
+.profile-info{width: 180px;height: 180px;padding: 5px;border-radius: 50%; margin: 0 auto 24px;background-image: linear-gradient(128deg, var(--bgDark1) 50%, var(--bgDark1) 50%); position: relative;}
 .profile-info .user-profile{width:100%;height: 100%; border-radius: 50%;padding: 6px;background-color: var(--bgDarkGrey);object-fit: cover;}
 .profile-info .img-upld{position: absolute;right: -5px;bottom: 20px;background-color: var(--bgYellow);border-color: var(--bgYellow);}
 .basic-info,.contact-info{padding: 24px;}
@@ -502,8 +502,9 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .theme-switch.theme-active{background: var(--bgDark);}
 .themeSwitchOn{background: #0E0E2C; }
 .themeSwitchOn .theme-txt{color: #fff;}
-.switch-circle { width: 39px; height: 39px; border-radius: 50%;padding: 8px; background: #d5d7d8;}
+.switch-circle { width: 39px; height: 39px; border-radius: 50%;padding: 8px; background: #e9f3ff;}
 .theme-active .switch-circle{background: var(--borderGrey);}
+.themeSwitchOn .switch-circle{background: #313c46;}
 .theme-txt{font-size: 14px; font-weight: 500; color: var(--textDark);}
 .theme-active .theme-txt{color: var(--textWhite);font-weight: 400;}
 .custom-forminput .cust-input .ant-input{text-align: center !important;}

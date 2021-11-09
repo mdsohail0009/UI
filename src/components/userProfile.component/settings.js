@@ -42,6 +42,7 @@ const Settings =({member,getmemeberInfoa})=> {
     }
     const themeSwitch=() =>{
         setTheme(!theme)
+        switcher({ theme: theme ? themes.DRT : themes.LHT });
     }
     
     // render() {
