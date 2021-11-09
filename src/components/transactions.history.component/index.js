@@ -96,7 +96,7 @@ class TransactionsHistory extends Component {
       <>
         <Drawer
           title={[<div className="side-drawer-header">
-             <Translate content="menu_transactions_history" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
+            <Translate content="menu_transactions_history" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
 
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
           </div>]}
@@ -116,7 +116,7 @@ class TransactionsHistory extends Component {
                 tab={<Translate content="All" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-14" />}
               >
 
-                  {this.state.activeTab === '1' && <><Collapse onChange={collapseGrids} className="mb-16">
+                {this.state.activeTab === '1' && <><Collapse onChange={collapseGrids} className="mb-16">
                   <Panel
                     header={<Translate content="BuyandSell" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white" />}
                     key="1">
@@ -124,46 +124,46 @@ class TransactionsHistory extends Component {
                   </Panel>
                 </Collapse>
 
-                <Collapse onChange={collapseGrids} className="mb-16">
-                  <Panel
-                    header={<Translate content="menu_swap" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white " />}
-                    key="2">
-                    {this.state.activeTab === '1' && <HistoryGridComponent columns={this.SwapColmns} gridUrl={SwapURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
-                  </Panel>
-                </Collapse>
+                  <Collapse onChange={collapseGrids} className="mb-16">
+                    <Panel
+                      header={<Translate content="menu_swap" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white " />}
+                      key="2">
+                      {this.state.activeTab === '1' && <HistoryGridComponent columns={this.SwapColmns} gridUrl={SwapURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
+                    </Panel>
+                  </Collapse>
 
-                <Collapse onChange={collapseGrids} className="mb-16">
-                  <Panel
-                    header={<Translate content="DepositandFiat" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white " />}
-                    key="3">
-                    {this.state.activeTab === '1' && <HistoryGridComponent columns={this.DepositColmns} gridUrl={DepositURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
-                  </Panel>
-                </Collapse>
+                  <Collapse onChange={collapseGrids} className="mb-16">
+                    <Panel
+                      header={<Translate content="DepositandFiat" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white " />}
+                      key="3">
+                      {this.state.activeTab === '1' && <HistoryGridComponent columns={this.DepositColmns} gridUrl={DepositURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
+                    </Panel>
+                  </Collapse>
 
 
-                <Collapse onChange={collapseGrids} className="mb-16">
-                  <Panel
-                    header={<Translate content="DepositandCrypto" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white " />}
-                    key="4">
-                    {this.state.activeTab === '1' && <HistoryGridComponent columns={this.depositCryptoColomns} gridUrl={DepositCryptoURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
-                  </Panel>
-                </Collapse>
+                  <Collapse onChange={collapseGrids} className="mb-16">
+                    <Panel
+                      header={<Translate content="DepositandCrypto" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white " />}
+                      key="4">
+                      {this.state.activeTab === '1' && <HistoryGridComponent columns={this.depositCryptoColomns} gridUrl={DepositCryptoURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
+                    </Panel>
+                  </Collapse>
 
-                <Collapse onChange={collapseGrids} className="mb-16">
-                  <Panel
-                    header={<Translate content="withdrawFiat" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white " />}
-                    key="5">
-                    {this.state.activeTab === '1' && <HistoryGridComponent columns={this.withdrawcolumns} gridUrl={WithdrawURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
-                  </Panel>
-                </Collapse>
+                  <Collapse onChange={collapseGrids} className="mb-16">
+                    <Panel
+                      header={<Translate content="withdrawFiat" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white " />}
+                      key="5">
+                      {this.state.activeTab === '1' && <HistoryGridComponent columns={this.withdrawcolumns} gridUrl={WithdrawURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
+                    </Panel>
+                  </Collapse>
 
-                <Collapse onChange={collapseGrids} className="mb-16">
-                  <Panel
-                    header={<Translate content="withdrawCrypto" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white " />}
-                    key="6">
-                    {this.state.activeTab === '1' && <HistoryGridComponent columns={this.withdrwCryptoColomns} gridUrl={WithdrawCryptoURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
-                  </Panel>
-                </Collapse></>}
+                  <Collapse onChange={collapseGrids} className="mb-16">
+                    <Panel
+                      header={<Translate content="withdrawCrypto" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white " />}
+                      key="6">
+                      {this.state.activeTab === '1' && <HistoryGridComponent columns={this.withdrwCryptoColomns} gridUrl={WithdrawCryptoURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
+                    </Panel>
+                  </Collapse></>}
               </TabPane>
 
               <TabPane

@@ -112,10 +112,8 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .icon.lg.logout-icon{background-position:-73px -330px}
 .icon.lg.documents-icon{background-position:-176px -329px;}
 .icon.lg.addressbook-icon{background-position: -140px -329px}
-/* .icon.md.sentwhitearrow{background-position: -376px -1px;transform: rotateZ( 45deg);}
-.icon.md.recivewhitearrow{background-position: -375px 0px;transform: rotateZ(235deg);} */
 .icon.md.notifyIcon.deposit{background-position: -375px 0px;transform: rotateZ(235deg);}
-.icon.md.notifyIcon.deposits{background-position: -376px -1px;transform: rotateZ( 45deg);}
+.icon.md.notifyIcon.deposits, .icon.md.notifyIcon.withdraw{background-position: -376px -1px;transform: rotateZ( 45deg);}
 .icon.md.notifyIcon.documents{background-position: -156px -71px;}
 .user-labels.active .icon.lg.profile-icon,.user-labels:hover .icon.lg.profile-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.profile-icon, .ant-tabs-tab:hover .icon.lg.profile-icon{background-position: -3px -363px} 
 .user-labels.active .icon.lg.security-icon, .user-labels:hover .icon.lg.security-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.security-icon,.ant-tabs-tab:hover .icon.lg.security-icon{background-position:-107px -363px}

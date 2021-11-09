@@ -40,9 +40,17 @@ const Settings = ({ member, getmemeberInfoa }) => {
             counterpart.setLocale(settingsObj.Language);
         }
     }
-    const themeSwitch = () => {
+    const themeSwitch=async() =>{
         setTheme(!theme)
-        switcher({ theme: theme ? themes.DRT : themes.LHT });
+         switcher({ theme: theme ? themes.DRT : themes.LHT });
+        settingsObj.Theme=!theme?'Light Theme':'Dark Theme';
+        settingsObj.MemberId=member?.id
+        let res = await saveSettingsData(settingsObj);
+        if (res.ok) {
+            message.destroy()
+            getmemeberInfoa(member.userId)
+            counterpart.setLocale(settingsObj.Language);
+        } 
     }
 
     // render() {
