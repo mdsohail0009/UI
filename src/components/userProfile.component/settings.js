@@ -118,7 +118,7 @@ const Settings = ({ member, getmemeberInfoa }) => {
             </div>
             <Button
                 htmlType="submit"
-                size="large"
+                size="medium"
                 block
                 className="pop-btn mt-36"
             >
