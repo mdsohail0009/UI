@@ -40,7 +40,7 @@ class Documents extends Component {
        
         return (<>
             <div className="box basic-info">
-            <Translate content="documents" className="basicinfo"/>
+            <Translate content="documents" className="basicinfo mb-16"/>
                 <List url={gridUrl} ref={this.gridRef} columns={this.gridColumns} additionalParams={{ "memberId": this.props.userProfileInfo?.id }} />
             </div>
         </>

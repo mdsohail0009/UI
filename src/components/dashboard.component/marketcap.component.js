@@ -62,7 +62,7 @@ const MarketCap = () => {
             </div>
         <Drawer
             title={[<div className="side-drawer-header">
-                <span className="text-white">Markets</span>
+                <Translate content="markets_title" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
                 <span onClick={() => onClose()} className="icon md close-white c-pointer" />
             </div>]}
             placement="right"
