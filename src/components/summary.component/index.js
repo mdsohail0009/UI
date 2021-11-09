@@ -32,7 +32,7 @@ class Summary extends Component {
                     {showEstimated && <div className="text-white-50 fw-400 text-center fs-14 mb-16"><Currency defaultValue={amountNativeCurrency} prefix={""} decimalPlaces={decimalPlaces} type={'text'} prefixText={nativeCurrency} /></div>}
                     <div className="pay-list fs-14">
                         <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
-                        <Currency defaultValue={oneCoinValue} decimalPlaces={decimalPlaces} prefix={""} className="fw-400 text-white-30" prefixText={`1 ${exchangeCoin || coin} = ${nativeCurrency}`}
+                        <Currency defaultValue={oneCoinValue} decimalPlaces={decimalPlaces} prefix={""} className="fw-500 text-white-50" prefixText={`1 ${exchangeCoin || coin} = ${nativeCurrency}`}
                         />
 
                     </div>
