@@ -4,6 +4,8 @@ import { getNotifications, readNotification } from './api';
 import connectStateProps from '../utils/state.connect';
 import Moment from 'react-moment';
 import { setNotificationCount } from '../reducers/dashboardReducer';
+import Translate from 'react-translate-component';
+
 const { Text } = Typography;
 const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard }) => {
     const [loading, setLoading] = useState(false);
@@ -27,8 +29,7 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard }
         <>
             <Drawer
                 title={[<div className="side-drawer-header p-0">
-                    <span className="text-white">Notifications</span>
-                    <div className="text-center fs-16"></div>
+                    <Translate className="text-white-30 fs-20 fw-500" component={Text} content="notifications" />
                     <span onClick={onClose} className="icon md close-white c-pointer" />
                 </div>]}
                 placement="right"
@@ -43,7 +44,11 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard }
                     size="large"
                     className="notifications-list"
                     loading={loading}
-                    locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No data found" /> }}
+                    locale={{
+                        emptyText: <Empty image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg" imageStyle={{
+                            height: 120, marginBottom: 24
+                        }} description="No Notifications Available" />
+                    }}
                 >
                     {notifications?.map((item, indx) => <List.Item onClick={() => { if (!item.isRead) { readNotification(item.id); dispatch(setNotificationCount(dashboard.notificationCount - 1)) } }} key={indx} style={{ borderWidth: '0px' }} >
                         <List.Item.Meta
