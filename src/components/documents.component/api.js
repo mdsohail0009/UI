@@ -10,10 +10,10 @@ const sendRequest = (obj) => {
 return clientApi.post(ApiControllers.member + `SaveDoument`, obj);
 }
 const getDocDetails = (docId) => {
-return clientApi.get(ApiControllers.documents + `Accounts/${docId}`)
+return clientApi.get(ApiControllers.documents + `Accouts/${docId}`)
 }
 const getDocumentReplies = (docDetailId) => {
-return clientApi.get(ApiControllers.documents + `Accounts/${docDetailId}`)
+return clientApi.get(ApiControllers.documents + `Accounts/${docDetailId}/Messages`)
 }
 const saveDocReply = (obj) => {
 // return clientApi.post(ApiControllers.member + `SaveMessages`, obj)
