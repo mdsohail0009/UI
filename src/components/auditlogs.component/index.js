@@ -261,7 +261,7 @@ class AuditLogs extends Component {
             title={<Translate content="Custom_Dates" component={Modal.title} />}
             className="widthdraw-pop"
             visible={this.state.modal}
-            closeIcon={<Tooltip title="Close"><span className="icon md close" onClick={this.handleCancel} /></Tooltip>}
+            closeIcon={<Tooltip title="Close"><span className="icon md close c-pointer" onClick={this.handleCancel} /></Tooltip>}
             footer={null}
           >
             <div style={{ marginLeft: -16 }}>
