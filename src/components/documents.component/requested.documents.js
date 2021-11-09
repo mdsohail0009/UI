@@ -34,7 +34,8 @@ class RequestedDocs extends Component {
         },
         docReplyObjs: [],
         previewPath: null,
-        isSubmitting: false,uploadLoader:false
+        isSubmitting: false, uploadLoader: false,
+        isMessageError: null
     }
     componentDidMount() {
         this.getDocument(QueryString.parse(this.props.location.search).id);
@@ -77,7 +78,8 @@ class RequestedDocs extends Component {
             "id": this.state.docDetails.id,
             "documentDetailId": doc.id,
             "status": "Approved"
-        })
+        });
+        this.setState({...this.state,isMessageError:null});
         message.destroy()
         if (response.ok) {
             message.success({
@@ -103,12 +105,9 @@ class RequestedDocs extends Component {
     }
     docReject = async (doc) => {
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
+        this.setState({...this.state,isMessageError:null});
         if (!item || !item.reply) {
-            message.destroy();
-            message.warning({
-                content: "Please enter a message",
-                className: "custom-msg"
-            });
+            this.setState({...this.state,isMessageError:doc.id.replace(/-/g,"")});
             return;
         }
         item.path = item.path ? typeof (item.path) === "object" ? JSON.stringify(item.path) : item.path : item.path;
@@ -132,7 +131,7 @@ class RequestedDocs extends Component {
         }
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
-        this.setState({ ...this.state, docReplyObjs: objs, isSubmitting: false });
+        this.setState({ ...this.state, docReplyObjs: objs, isSubmitting: false,isMessageError:null });
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
     deleteDocument = async (doc, idx, isAdd) => {
@@ -183,7 +182,7 @@ class RequestedDocs extends Component {
         }
     }
     handleUpload = ({ file }, doc) => {
-        this.setState({...this.state,uploadLoader:true})
+        this.setState({ ...this.state, uploadLoader: true })
         if (file.status === "done") {
             let replyObjs = [...this.state.docReplyObjs];
             let item = this.isDocExist(replyObjs, doc.id);
@@ -202,7 +201,7 @@ class RequestedDocs extends Component {
                 obj.repliedBy = this.props.userProfileInfo?.firstName;
                 replyObjs.push(obj);
             }
-            this.setState({ ...this.state, docReplyObjs: replyObjs,uploadLoader:false });
+            this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false });
         }
     }
     uopdateReplyObj = (item, list) => {
@@ -286,6 +285,7 @@ class RequestedDocs extends Component {
                                 placeholder="Write your message"
                                 maxLength={200}
                             />
+                            {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
                             <Dragger accept=".pdf,.jpg,.jpeg,.png.gif" className="upload" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} onChange={(props) => { this.handleUpload(props, doc) }}>
                                 <p className="ant-upload-drag-icon">
                                     <span className="icon xxxl doc-upload" />
@@ -295,7 +295,7 @@ class RequestedDocs extends Component {
                                     PNG, JPG,JPEG and PDF files are allowed
                                 </p>
                             </Dragger>
-                            {this.state.uploadLoader&&<Loader />}
+                            {this.state.uploadLoader && <Loader />}
                         </div>
                             <div className="docfile-container">
                                 {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) => <div key={idx1} className="docfile">

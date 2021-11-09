@@ -4,10 +4,10 @@ import { List, Empty, Input } from 'antd';
 import NumberFormat from 'react-number-format';
 import apiCalls from '../../api/apiCalls';
 
-const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, showSearch, selectedCoin, iconField, titleField, onReturnCoin}) => {
+const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, showSearch, selectedCoin, iconField, titleField, onReturnCoin }) => {
     const [coinListData, setCoinListData] = useState([]);
     const [selList, setselList] = useState({});
-    
+
     const { Search } = Input;
     useEffect(() => {
         setCoinListData(coinList)
@@ -16,9 +16,9 @@ const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, s
         if (selectedCoin) {
             setselList(selectedCoin)
             // selectList(selectedCoin)
-           if(!onReturnCoin){
-            selectList(selectedCoin)
-           }
+            if (!onReturnCoin) {
+                selectList(selectedCoin)
+            }
         }
     }, [selectedCoin])
     const handleSearch = (value) => {
@@ -35,14 +35,14 @@ const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, s
         if (onCoinSelected) { onCoinSelected(item) }
     }
     return (<>
-        {showSearch && <Search placeholder={apiCalls.convertLocalLang('searchCurrency')} addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { handleSearch(currentTarget.value) }} size="middle" bordered={false} className="my-16" />}
+        {showSearch && <Search placeholder={apiCalls.convertLocalLang('searchCurrency')} addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { handleSearch(currentTarget.value) }} size="middle" bordered={false} className="mb-16" />}
         <List
             itemLayout="horizontal"
             dataSource={coinListData}
             loadMore={loadMore ? loadMore : ''}
             className="crypto-list auto-scroll wallet-list c-pointer"
             loading={isLoading ? isLoading : false}
-            locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data') } /> }}
+            locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }}
             renderItem={item => (
 
                 <List.Item className={(item[titleField || 'walletCode'] === selList[titleField || 'walletCode'] ? " select" : "")}>
@@ -52,9 +52,9 @@ const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, s
                             title={<div className="wallet-title">{item[titleField || 'walletCode']}</div>}
                         />
                         <><div className="text-right coin-typo">
-                            {coinType === "swap" &&item.coinBalance!=null&& <NumberFormat value={item.coinBalance} displayType={'text'} thousandSeparator={true} prefix={''} renderText={(value, props) => <div {...props} className="text-white-30 fw-600">{value}</div>} />}
-                            {item.coinValueinNativeCurrency !== 0 && <NumberFormat value={coinType === "swap" ? item.coinValueinNativeCurrency : item.amountInUSD} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} className={`fs-16 ${coinType === "swap" ? (item.coinBalance > 0 ? "text-green" : "text-red") : 'text-white'}`}>{value}</div>} />}
-                            {coinType !== "swap" && <div className={item.percent_change_1h < 0 ? 'text-red' : 'text-green'}>{item.percent_change_1h} % </div>}
+                            {coinType === "swap" && item.coinBalance != null && <NumberFormat value={item.coinBalance} displayType={'text'} thousandSeparator={true} prefix={''} renderText={(value, props) => <div {...props} className="text-white-30 fw-600">{value}</div>} />}
+                            {item.coinValueinNativeCurrency !== 0 && <NumberFormat value={coinType === "swap" ? item.coinValueinNativeCurrency : item.amountInUSD} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} className={` ${coinType !== "swap" ? "fs-16 fw-500" : "fs-14 fw-400"} ${coinType === "swap" ? (item.coinBalance > 0 ? "text-green" : "text-red") : 'text-white'}`}>{value}</div>} />}
+                            {coinType !== "swap" && <div className={item.percent_change_1h < 0 ? 'text-red fs-14' : 'text-green fs-14'}>{item.percent_change_1h} %</div>}
                         </div>
                             {coinType !== "swap" && <> {item.percent_change_1h > 0 ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}</>}</>
                     </Link>

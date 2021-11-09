@@ -38,15 +38,15 @@ class SelectCrypto extends Component {
         this.props.setTabKey();
         this.trackEvent()
     }
-    trackEvent = () =>{
+    trackEvent = () => {
         appInsights.trackEvent({
-            name: 'Buy', properties: {"Type": 'User',"Action": 'Page view',"Username": this.props.userProfileInfo.userName,"MemeberId": this.props.userProfileInfo.id,"Feature": 'Buy',"Remarks": 'Buy coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Buy crypto'}
+            name: 'Buy', properties: { "Type": 'User', "Action": 'Page view', "Username": this.props.userProfileInfo.userName, "MemeberId": this.props.userProfileInfo.id, "Feature": 'Buy', "Remarks": 'Buy coins', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy crypto' }
         });
     }
     fetchConvertionValue = async () => {
         const { coin } = this.props.buyInfo?.selectedCoin?.data;
         const { isSwaped, cryptoValue, localValue } = this.state.swapValues;
-        const value = await convertCurrency({ from: coin, to: "USD", value: isSwaped ? cryptoValue : localValue, isCrypto: !isSwaped,memId:this.props.userProfileInfo.id,screenName:null})
+        const value = await convertCurrency({ from: coin, to: "USD", value: isSwaped ? cryptoValue : localValue, isCrypto: !isSwaped, memId: this.props.userProfileInfo.id, screenName: null })
         this.setState({ ...this.state, disableConfirm: false, swapValues: { ...this.state.swapValues, [isSwaped ? "localValue" : "cryptoValue"]: value } })
     }
     onValueChange = ({ cryptoValue, localValue, isSwaped }) => {
@@ -54,8 +54,8 @@ class SelectCrypto extends Component {
     }
     handleWalletSelection = (walletId) => {
         const selectedWallet = this.props.buyInfo?.memberFiat?.data?.filter(item => item.id === walletId)[0];
-        this.setState({ ...this.state, selectedWallet },()=>{
-            this.swapRef.current.handleWalletChange({cryptoValue:this.state.swapValues.cryptoValue,localValue:this.state.swapValues.localValue,locCurrency:selectedWallet.currencyCode})
+        this.setState({ ...this.state, selectedWallet }, () => {
+            this.swapRef.current.handleWalletChange({ cryptoValue: this.state.swapValues.cryptoValue, localValue: this.state.swapValues.localValue, locCurrency: selectedWallet.currencyCode })
         });
         this.props.setWallet(selectedWallet);
     }
@@ -68,19 +68,19 @@ class SelectCrypto extends Component {
             this.myRef.current.scrollIntoView();
             return;
         }
-        this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue), !isSwaped,this.props?.userProfileInfo.id);
+        this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue), !isSwaped, this.props?.userProfileInfo.id);
         this.props.setStep('step3');
     }
-    refresh=()=>{
+    refresh = () => {
         const { localValue, cryptoValue } = this.state.swapValues;
         const { buyMin, buyMax } = this.props.buyInfo?.selectedCoin?.data;
         const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin })
         if (!_vaidator.valid) {
             this.setState({ ...this.state, error: { ..._vaidator } });
             this.myRef.current.scrollIntoView();
-        }else{
-           this.fetchConvertionValue() 
-        }  
+        } else {
+            this.fetchConvertionValue()
+        }
     }
     render() {
         if (this.props.buyInfo?.selectedCoin?.loading || !this.props.buyInfo?.selectedCoin?.data) {
@@ -88,10 +88,10 @@ class SelectCrypto extends Component {
         }
         const { Paragraph, Text } = Typography;
         const { localValue, cryptoValue } = this.state.swapValues;
-        const { coin, coinValueinNativeCurrency, coinBalance, percentage} = this.props.buyInfo?.selectedCoin?.data;
+        const { coin, coinValueinNativeCurrency, coinBalance, percentage } = this.props.buyInfo?.selectedCoin?.data;
         return (
             <div id="divScroll" ref={this.myRef}>
-                {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="info" message={apicalls.convertLocalLang('buy_crypto')}  description={this.state.error?.message} closable />}
+                {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="info" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} closable />}
                 <div className="selectcrypto-container">
                     <Card className="crypto-card select mb-36" bordered={false}>
                         <span className="d-flex align-center">
@@ -106,8 +106,8 @@ class SelectCrypto extends Component {
                             </div>
                         </div>
                     </Card>
-                    <LocalCryptoSwapper ref={this.swapRef} selectedCoin={coin} localAmt={localValue} cryptoAmt={cryptoValue} localCurrency={this.state.selectedWallet?.currencyCode||"USD"} cryptoCurrency={coin} onChange={(obj) => this.onValueChange(obj)} memberId={this.props.userProfileInfo?.id} screenName='buy'/>
-                    <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-aqua pt-16" />
+                    <LocalCryptoSwapper ref={this.swapRef} selectedCoin={coin} localAmt={localValue} cryptoAmt={cryptoValue} localCurrency={this.state.selectedWallet?.currencyCode || "USD"} cryptoCurrency={coin} onChange={(obj) => this.onValueChange(obj)} memberId={this.props.userProfileInfo?.id} screenName='buy' />
+                    <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
                     <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     <div className="fs-12 text-white-30 text-center mt-24"><Translate content="change_10Sec_amount" component={Paragraph} className="fs-12 text-white-30 text-center mt-24" /></div>
                     <div className="mt-24">
@@ -127,8 +127,8 @@ const connectDispatchToProps = dispatch => {
         setStep: (stepcode) => {
             dispatch(changeStep(stepcode))
         },
-        preview: (wallet, coin, amount, isCrypto,memberId) => {
-            dispatch(fetchPreview({ coin, wallet, amount, isCrypto,memberId }))
+        preview: (wallet, coin, amount, isCrypto, memberId) => {
+            dispatch(fetchPreview({ coin, wallet, amount, isCrypto, memberId }))
         },
         setWallet: (wallet) => {
             dispatch(setWallet(wallet))
