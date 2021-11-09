@@ -190,7 +190,6 @@ class SwapCoins extends Component {
                             maxlength={24}
                             onKeyPress={(e) => {
                                 e.currentTarget.value.length >= 6 ? e.currentTarget.style.fontSize = "20px" : e.currentTarget.style.fontSize = "24px";
-                              
                             }}
                             // onKeyUp={(e) => {
                             //     this.setReceiveAmount(e.target.value)
@@ -199,10 +198,9 @@ class SwapCoins extends Component {
                                 this.setReceiveAmount(value)
                             }}
                             value={this.state.fromValue}
-                           
                             //autoFocus = {(coinDetailData.coin && coinReceiveDetailData.coin) ? true : false}
                         />}
-                        {coinDetailData.coinBalance && <Text className="text-purewhite mt-4 fs-12 fw-100"><Translate content="balance" component={Text} className="custom-font fw-300 fs-14 text-white" /> <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} /></Text>}
+                        {coinDetailData.coinBalance && <Text className="text-purewhite mt-4 fs-12 fw-100"><Translate content="balance" component={Text} className="custom-font fw-300 fs-14 text-purewhite" /> <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} /></Text>}
                     </div>
                     <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step3')} >
                         <div className="crypto-coin">
@@ -212,12 +210,11 @@ class SwapCoins extends Component {
                                 :
                                 <div className="text-center mt-4"><span className="default-circle swap-from"><span className="icon lg usd-default"></span></span>
                             
-                                    <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-8">  <Translate content="Select" component={Paragraph} className="custom-font fw-300 fs-14 text-white " /></Paragraph>
+                                    <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-8">  <Translate content="Select" component={Paragraph} className="custom-font fw-300 fs-14 text-purewhite " /></Paragraph>
                                     </div>}
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>
                     </div>
-                  
                 </div>
                 }
 
@@ -243,7 +240,7 @@ class SwapCoins extends Component {
                             value={this.state.receiveValue}
                             
                         />}
-                        {(coinReceiveDetailData.coinBalance||coinReceiveDetailData.coinBalance===0) && <Text className="text-purewhite mt-4 fs-12 fw-100"><Translate content="balance" component={Text} className="custom-font fw-300 fs-14 text-white" /> <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinReceiveDetailData.coinBalance} suffixText={coinReceiveDetailData.coin} /></Text>}
+                        {(coinReceiveDetailData.coinBalance||coinReceiveDetailData.coinBalance===0) && <Text className="text-purewhite mt-4 fs-12 fw-100"><Translate content="balance" component={Text} className="custom-font fw-300 fs-14 text-purewhite" /> <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinReceiveDetailData.coinBalance} suffixText={coinReceiveDetailData.coin} /></Text>}
                     </div>
                     <div className="mr-20 text-center d-flex justify-content align-center c-pointer"  onClick={() => {if(coinDetailData.coinFullName){this.props.changeStep('step4'); this.setState({ ...this.state, errorMessage:'' })}else{this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('select_coin')  })}}} >
                             <div className="crypto-coin">
@@ -252,7 +249,7 @@ class SwapCoins extends Component {
                                 :
                                 <div className="text-center mt-4"><span className="default-circle swap-to"><span className="icon lg usd-default"></span></span>
                             
-                                    <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-8">  <Translate content="Select" component={Paragraph} className="custom-font fw-300 fs-14 text-white " /></Paragraph>
+                                    <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-8">  <Translate content="Select" component={Paragraph} className="custom-font fw-300 fs-14  text-purewhite " /></Paragraph>
                                     </div>}
 
                         </div>
