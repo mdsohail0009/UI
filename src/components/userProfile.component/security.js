@@ -64,8 +64,9 @@ const Security =({userConfig})=> {
             <Drawer
                 title={[<div className="side-drawer-header">
                     <span onClick={()=>onClose()} className="icon md lftarw-white c-pointer" />
-                    <div className="text-center fs-14">
-                        <Translate className="text-center fs-14 text-white" content="change_pass_word" component={Drawer.title} />
+                    <div className="text-center fs-16">
+                        <Translate className="text-white-30 fw-600 text-upper mb-4 d-block" content="change_pass_word" component={Drawer.title} />
+                        <Translate content="Choose_a_unique_pass_word_to_protect_your_account" component={Drawer.Paragraph} className="mb-16 ml-8 fs-14 text-white mt-8 fw-200 py-16"/>
                     </div>
                     <span onClick={()=>onClose()} className="icon md close-white c-pointer" />
 
@@ -77,7 +78,6 @@ const Security =({userConfig})=> {
                 onClose={() => setisChangepassword(false)}
                 className="side-drawer"
             >
-                <Paragraph className="mb-16 ml-8 fs-14 text-white mt-8 fw-200 py-16"><Translate content="Choose_a_unique_pass_word_to_protect_your_account" component={Paragraph} className="mb-16 ml-8 fs-14 text-white mt-8 fw-200 py-16"/></Paragraph>
                 <Changepassword onSubmit={() => setisChangepassword(false)} />
             </Drawer>
 

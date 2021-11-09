@@ -181,9 +181,9 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
           </Button>
           <Button
             htmlType="cancel"
-            size="large"
+            size="medium"
             block
-            className="pwd-popup pop-cancel"
+            className="pwd-popup pop-cancel fs-14"
             onClick={() => onSubmit()}>
             <Translate  content="cancel" />
           </Button>

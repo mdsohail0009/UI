@@ -39,7 +39,7 @@ export default {
   estimated_total: 'Estimated Total',
   summary_hint_text: 'Your final amount might be changed with in 10 seconds.',
   pay: 'Pay %(counter)s',
-  cancel: 'Cancel',
+  cancel: 'CANCEL',
   link_a_card: 'Link a Card or Receive',
   select_from_below: 'Select from below',
   credit_card: 'Credit Card',

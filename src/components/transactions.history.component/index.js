@@ -90,15 +90,13 @@ class TransactionsHistory extends Component {
   ];
   render() {
     const { BuySellURL, SwapURL, WithdrawURL, DepositURL, DepositCryptoURL, WithdrawCryptoURL } = this.state
-    const { Text } = Typography;
+    const { Text, Title } = Typography;
     const { TabPane } = Tabs;
     return (
       <>
         <Drawer
           title={[<div className="side-drawer-header">
-
-            <span className="text-white">
-              <Translate content="menu_transactions_history" component={Text} className="custom-font fw-300 fs-14 text-white " /></span>
+             <Translate content="menu_transactions_history" component={Title} className="fs-26 fw-400 mb-0 text-white-30" />
 
             <span onClick={this.props.onClose} className="icon md close-white c-pointer" />
           </div>]}
@@ -115,12 +113,12 @@ class TransactionsHistory extends Component {
                 key='1'
                 className="alltab-space"
                 onClick={() => this.changeTab("1")}
-                tab={<Translate content="All" component={Tabs.TabPane.tab} className="custom-font fw-300 fs-14" />}
+                tab={<Translate content="All" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-14" />}
               >
 
                   {this.state.activeTab === '1' && <><Collapse onChange={collapseGrids} className="mb-16">
                   <Panel
-                    header={<Translate content="BuyandSell" component={Collapse.Panel.header} className="custom-font fw-300 fs-14 text-white" />}
+                    header={<Translate content="BuyandSell" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white" />}
                     key="1">
                     {this.state.activeTab === '1' && <HistoryGridComponent columns={this.BuySellColmns} gridUrl={BuySellURL} params={{ memberId: this.props.member?.id }} ></HistoryGridComponent>}
                   </Panel>
@@ -128,7 +126,7 @@ class TransactionsHistory extends Component {
 
                 <Collapse onChange={collapseGrids} className="mb-16">
                   <Panel
-                    header={<Translate content="menu_swap" component={Collapse.Panel.header} className="custom-font fw-300 fs-14 text-white " />}
+                    header={<Translate content="menu_swap" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white " />}
                     key="2">
                     {this.state.activeTab === '1' && <HistoryGridComponent columns={this.SwapColmns} gridUrl={SwapURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
                   </Panel>
@@ -136,7 +134,7 @@ class TransactionsHistory extends Component {
 
                 <Collapse onChange={collapseGrids} className="mb-16">
                   <Panel
-                    header={<Translate content="DepositandFiat" component={Collapse.Panel.header} className="custom-font fw-300 fs-14 text-white " />}
+                    header={<Translate content="DepositandFiat" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white " />}
                     key="3">
                     {this.state.activeTab === '1' && <HistoryGridComponent columns={this.DepositColmns} gridUrl={DepositURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
                   </Panel>
@@ -145,7 +143,7 @@ class TransactionsHistory extends Component {
 
                 <Collapse onChange={collapseGrids} className="mb-16">
                   <Panel
-                    header={<Translate content="DepositandCrypto" component={Collapse.Panel.header} className="custom-font fw-300 fs-14 text-white " />}
+                    header={<Translate content="DepositandCrypto" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white " />}
                     key="4">
                     {this.state.activeTab === '1' && <HistoryGridComponent columns={this.depositCryptoColomns} gridUrl={DepositCryptoURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
                   </Panel>
@@ -153,7 +151,7 @@ class TransactionsHistory extends Component {
 
                 <Collapse onChange={collapseGrids} className="mb-16">
                   <Panel
-                    header={<Translate content="withdrawFiat" component={Collapse.Panel.header} className="custom-font fw-300 fs-14 text-white " />}
+                    header={<Translate content="withdrawFiat" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white " />}
                     key="5">
                     {this.state.activeTab === '1' && <HistoryGridComponent columns={this.withdrawcolumns} gridUrl={WithdrawURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
                   </Panel>
@@ -161,7 +159,7 @@ class TransactionsHistory extends Component {
 
                 <Collapse onChange={collapseGrids} className="mb-16">
                   <Panel
-                    header={<Translate content="withdrawCrypto" component={Collapse.Panel.header} className="custom-font fw-300 fs-14 text-white " />}
+                    header={<Translate content="withdrawCrypto" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white " />}
                     key="6">
                     {this.state.activeTab === '1' && <HistoryGridComponent columns={this.withdrwCryptoColomns} gridUrl={WithdrawCryptoURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
                   </Panel>
@@ -169,27 +167,27 @@ class TransactionsHistory extends Component {
               </TabPane>
 
               <TabPane
-                tab={<Translate content="BuyandSell" component={Tabs.TabPane.tab} className="custom-font fw-300 fs-14" />}
+                tab={<Translate content="BuyandSell" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-14" />}
                 key='2'
                 onClick={() => this.changeTab("2")}>
                 {this.state.activeTab === '2' && <HistoryGridComponent columns={this.BuySellColmns} gridUrl={BuySellURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
               </TabPane>
               <TabPane
-                tab={<Translate content="menu_swap" component={Tabs.TabPane.tab} className="custom-font fw-300 fs-14" />}
+                tab={<Translate content="menu_swap" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-14" />}
                 key='3'
                 onClick={() => this.changeTab("3")}>
                 {this.state.activeTab === '3' && <HistoryGridComponent columns={this.SwapColmns} gridUrl={SwapURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
               </TabPane>
-              <TabPane tab={<Translate content="DepositandFiat" component={Tabs.TabPane.tab} className="custom-font fw-300 fs-14" />} key='4' onClick={() => this.changeTab("4")}>
+              <TabPane tab={<Translate content="DepositandFiat" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-14" />} key='4' onClick={() => this.changeTab("4")}>
                 {this.state.activeTab === '4' && <HistoryGridComponent columns={this.DepositColmns} gridUrl={DepositURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
               </TabPane>
-              <TabPane tab={<Translate content="DepositandCrypto" component={Tabs.TabPane.tab} className="custom-font fw-300 fs-14 " />} key='5' onClick={() => this.changeTab("5")}>
+              <TabPane tab={<Translate content="DepositandCrypto" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-14 " />} key='5' onClick={() => this.changeTab("5")}>
                 {this.state.activeTab === '5' && <HistoryGridComponent columns={this.depositCryptoColomns} gridUrl={DepositCryptoURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
               </TabPane>
-              <TabPane tab={<Translate content="withdrawFiat" component={Tabs.TabPane.tab} className="custom-font fw-300 fs-14 " />} key='6' onClick={() => this.changeTab("6")}>
+              <TabPane tab={<Translate content="withdrawFiat" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-14 " />} key='6' onClick={() => this.changeTab("6")}>
                 {this.state.activeTab === '6' && <HistoryGridComponent columns={this.withdrawcolumns} gridUrl={WithdrawURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
               </TabPane>
-              <TabPane tab={<Translate content="withdrawCrypto" component={Tabs.TabPane.tab} className="custom-font fw-300 fs-14" />} key='7' onClick={() => this.changeTab("7")}>
+              <TabPane tab={<Translate content="withdrawCrypto" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-14" />} key='7' onClick={() => this.changeTab("7")}>
                 {this.state.activeTab === '7' && <HistoryGridComponent columns={this.withdrwCryptoColomns} gridUrl={WithdrawCryptoURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
               </TabPane>
             </Tabs>

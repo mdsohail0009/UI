@@ -4,7 +4,7 @@ import Translate from 'react-translate-component';
 import connectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import { fetchPortfolioData } from '../../reducers/dashboardReducer';
-import { createChart, ColorType, PriceScaleMode } from "lightweight-charts";
+import { createChart, ColorType, PriceScaleMode, LineStyle } from "lightweight-charts";
 import { getPortfolioGraph } from './api';
 class Portfolio extends Component {
     chart;
@@ -34,14 +34,14 @@ class Portfolio extends Component {
             crosshair: {
                 vertLine: {
                     color: '#FFDB1A',
-                    width: 0.5,
+                    width: 2,
                     style: 1,
                     visible: true,
                     labelVisible: false,
                 },
                 horzLine: {
                     color: '#FFDB1A',
-                    width: 0.5,
+                    width: 2,
                     style: 0,
                     visible: true,
                     labelVisible: true,
@@ -55,7 +55,7 @@ class Portfolio extends Component {
                     bottomColor: 'transparent',
                 },
                 textColor: '#9797AA',
-                fontSize: 12,
+                fontSize: 16,
                 fontFamily: 'SF Pro Text, sans-serif !important',
             },
             grid: {
@@ -89,6 +89,11 @@ class Portfolio extends Component {
                         maxValue: 70,
                     },
                 }),
+            });
+            areaSeries.applyOptions({
+                lineColor: "rgba(255,219,26,1)",
+                lineStyle: LineStyle.Solid,
+                lineWidth: 2,
             });
             let objData = response.data
             // {week : [
