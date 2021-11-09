@@ -90,36 +90,35 @@ class WithdrawSummary extends Component {
                 <div className="cryptosummary-container auto-scroll">
                     <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}><Currency prefix={""} decimalPlaces={8} defaultValue={this.props.sendReceive.withdrawCryptoObj?.totalValue} suffixText={this.props.sendReceive.withdrawCryptoObj?.walletCode} /> </div>
                     <div className="text-white-50 fw-400 text-center fs-14 mb-16"><Currency defaultValue={this.state.usdAmount} prefix={""} decimalPlaces={8} type={'text'} prefixText={'USD'} /></div>
-                    <div className="pay-list fs-14"></div>
-                    <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
-                    <Currency defaultValue={this.state.OneusdAmount} decimalPlaces={8} prefix={""} className="fw-400 text-white-30" prefixText={`1 ${this.props.sendReceive.withdrawCryptoObj?.walletCode} = ${'USD'}`}
-                    />
+                    <div className="pay-list fs-14">
+                        <Translate className="fw-400 text-white" content="exchange_rate" component={Text} />
+                        <Currency defaultValue={this.state.OneusdAmount} decimalPlaces={8} prefix={""} className="fw-400 text-white-30" prefixText={`1 ${this.props.sendReceive.withdrawCryptoObj?.walletCode} = ${'USD'}`}
+                        />
+                    </div>
+                    <div className="pay-list fs-14">
+                        <Translate className="fw-400 text-white" content="amount" component={Text} />
+                        <Currency prefix={""} className={'text-white'} decimalPlaces={8} defaultValue={this.props.sendReceive.withdrawCryptoObj?.totalValue} suffixText={this.props.sendReceive.withdrawCryptoObj?.walletCode} />
+                    </div>
+                    <div className="pay-list fs-14">
+                        <Translate className="fw-400 text-white" content="address" component={Text} />
+                        <Text className="fw-400 text-white">{this.props.sendReceive.withdrawCryptoObj?.toWalletAddress}</Text>
+                    </div>
+                    <Translate className="fs-14 text-center text-white-30 mt-24" content="summary_hint_text" component={Paragraph} />
+                    <div className="d-flex p-16 mb-36 agree-check">
+                        <label>
+                            <input type="checkbox" id="agree-check" checked={this.state.onTermsChange} onChange={({ currentTarget: { checked } }) => { this.setState({ onTermsChange: checked ? true : false }) }} />
+                            <span for="agree-check" />
+                        </label>
 
+                        <Paragraph className="fs-14 text-white-30 ml-16 mb-0" style={{ flex: 1 }} >
+                            <Translate content="agree_sell" component="Paragraph" />  <a className="textpure-yellow" href="https://www.iubenda.com/terms-and-conditions/42856099" target="_blank"><Translate content="terms" component="Text" /></a> <Translate content="refund_cancellation" component="Text" />
+                        </Paragraph>
+                    </div>
+                    <SuisseBtn className={"pop-btn"} onRefresh={() => this.onRefresh()} title={'confirm_btn_text'} loading={this.state.isButtonLoad} autoDisable={true} onClick={() => this.onClick()} />
+                    <div className="text-center mt-16">
+                        <Translate content="cancel" component={Button} onClick={() => this.onCancel()} type="text" size="large" className="text-white-30 pop-cancel fw-400" />
+                    </div>
                 </div>
-                <div className="pay-list fs-14">
-                    <Translate className="fw-400 text-white" content="amount" component={Text} />
-                    <Currency prefix={""} className={'text-white'} decimalPlaces={8} defaultValue={this.props.sendReceive.withdrawCryptoObj?.totalValue} suffixText={this.props.sendReceive.withdrawCryptoObj?.walletCode} />
-                </div>
-                <div className="pay-list fs-14">
-                    <Translate className="fw-400 text-white" content="address" component={Text} />
-                    <Text className="fw-400 text-white">{this.props.sendReceive.withdrawCryptoObj?.toWalletAddress}</Text>
-                </div>
-                <Translate className="fs-14 text-center text-white-30 mt-24" content="summary_hint_text" component={Paragraph} />
-                <div className="d-flex p-16 mb-36 agree-check">
-                    <label>
-                        <input type="checkbox" id="agree-check" checked={this.state.onTermsChange} onChange={({ currentTarget: { checked } }) => { this.setState({ onTermsChange: checked ? true : false }) }} />
-                        <span for="agree-check" />
-                    </label>
-
-                    <Paragraph className="fs-14 text-white-30 ml-16 mb-0" style={{ flex: 1 }} >
-                        <Translate content="agree_sell" component="Paragraph" />  <a className="textpure-yellow" href="https://www.iubenda.com/terms-and-conditions/42856099" target="_blank"><Translate content="terms" component="Text" /></a> <Translate content="refund_cancellation" component="Text" />
-                    </Paragraph>
-                </div>
-                <SuisseBtn className={"pop-btn"} onRefresh={() => this.onRefresh()} title={'confirm_btn_text'} loading={this.state.isButtonLoad} autoDisable={true} onClick={() => this.onClick()} />
-                <div className="text-center mt-16">
-                    <Translate content="cancel" component={Button} onClick={() => this.onCancel()} type="text" size="large" className="text-white-30 pop-cancel fw-400" />
-                </div>
-            </div>
             </>
         )
     }
