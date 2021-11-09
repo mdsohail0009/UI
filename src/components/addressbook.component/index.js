@@ -223,8 +223,9 @@ class AddressBook extends Component {
             <>
 
                 <div className="box basic-info">
-                    <Title className="basicinfo"><Translate content="address_book" component={Text} className="basicinfo"/></Title>
+                    <Title className="basicinfo mb-0"><Translate content="address_book" component={Text} className="basicinfo"/></Title>
                     <Paragraph className="basic-decs mb-16"><Translate content="address_book_tag" component={Paragraph} className="basic-decs mb-16"/></Paragraph>
+                    <div className="d-flex justify-content align-center mb-16">
                     <Radio.Group
                         defaultValue={1}
                         onChange={this.handleWithdrawToggle}
@@ -232,10 +233,6 @@ class AddressBook extends Component {
                         <Translate content="withdrawCrypto" component={Radio.Button} value={1} className="buysell-toggle mx-0"/>
                         <Translate content="withdrawFiat" component={Radio.Button} value={2} className="buysell-toggle mx-0"/>
                     </Radio.Group>
-                    <div className="d-flex justify-content align-center mb-16">
-                        <div>
-                            {/* <Title className="fs-26 text-white-30 fw-500">{cryptoFiat ? <Translate content="withdrawFiat" className="fs-26 text-white-30 fw-500" component={Title}/> : <Translate content="withdrawCrypto" component={Title} className="fs-26 text-white-30 fw-500"/>}</Title> */}
-                        </div>
                         <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0, display: 'flex' }}>
                             <li onClick={this.addAddressBook} className="mr-16">
                                 <Tooltip placement="topRight" title="Add">
