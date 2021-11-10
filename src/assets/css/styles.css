@@ -475,7 +475,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .market-actions{width: 60px;}
 .user-profile{ border-radius: 50%; background: var(--bgDarkGrey);object-fit: cover;}
 .profile-dropdown .user-profile{width:112px;height: 112px; border-radius: 50%;display: block;margin: 0 auto;}
-.profile-dropdown {text-align: center;}
+.profile-dropdown {text-align: center;padding:12px 34px;}
+.profile-dropdown .drpdwn-list{padding-top: 0px; padding-left: 0; padding-right: 0; margin-left: -35px; margin-right: -35px;}
 .profile-btn, .profile-btn:hover, .profile-btn:active, .profile-btn:focus{background: var(--bgDarkGrey);border: 1px solid #ED4B9E;height: 38px;border-radius: 19px;color: var(--textWhite); text-transform: uppercase; font-size: 12px;font-weight: normal;margin: 0 0 24px;padding: 10px 14px;width: 200px;}
 .user-labels{padding:12px; font-size: 16px; font-weight: 600; color: var(--textWhite); margin-bottom: 0; margin-left:8px}
 .user-list{list-style: none;}

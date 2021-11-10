@@ -349,13 +349,11 @@ class Header extends Component {
                     <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.firstName} {this.props.userConfig.lastName}</p>
                     <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={() => this.userProfile()} />
                     <ul className="pl-0 drpdwn-list">
-                        <Menu.Item className="px-0" onClick={() => this.showAuditLogsDrawer()}>
-                            <li className="c-pointer">
-                                <Translate content="AuditLogs" component={Link} className="c-pointer px-0"/>
-                            </li>
-                        </Menu.Item>
+                        <li className="c-pointer" onClick={() => this.showAuditLogsDrawer()}>
+                            <Translate content="AuditLogs" component={Link} className="c-pointer px-0" />
+                        </li>
                         <li className="c-pointer" onClick={() => userManager.signoutRedirect()}>
-                            <Translate content="logout" component={Link} />
+                            <Translate content="logout" className="c-pointer px-0"  component={Link} />
                         </li>
                     </ul>
                 </div>
