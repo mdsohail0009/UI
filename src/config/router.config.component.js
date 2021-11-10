@@ -14,6 +14,7 @@ const userProfile = React.lazy(() => import('../components/userProfile.component
 const RequestedDocs = React.lazy(() => import('../components/documents.component/requested.documents'));
 const DocNotices = React.lazy(() => import("../components/shared/doc.notices"))
 const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"))
+const DashboardCharts=React.lazy(()=>import("../components/dashboard.component/dashboardCharts"))
 class RoutingComponent extends Component {
   render() {
     return <Switch>
@@ -32,6 +33,7 @@ class RoutingComponent extends Component {
         <ReactRoute path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent}/>
         {/* <Redirect to="/onboading" path="/" exact/> */}
+        <ReactRoute path='/dashboardCharts' component={DashboardCharts} />
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>
     </Switch>

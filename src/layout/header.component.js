@@ -22,7 +22,7 @@ import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata, clearSwapD
 import { connect } from 'react-redux';
 import DefaultUser from '../assets/images/defaultuser.jpg';
 import { setHeaderTab } from '../reducers/buysellReducer';
-import {setdepositCurrency} from '../reducers/depositReducer'
+import { setdepositCurrency } from '../reducers/depositReducer'
 import { deleteToken } from '../notifications/api';
 
 counterpart.registerTranslations('en', en);
@@ -41,8 +41,8 @@ const { Title, Paragraph } = Typography;
 
 
 class Header extends Component {
-    componentDidMount(){
-        counterpart.setLocale(this.props.userConfig?this.props.userConfig.language:'en');
+    componentDidMount() {
+        counterpart.setLocale(this.props.userConfig ? this.props.userConfig.language : 'en');
     }
     securityMenu = (
 
@@ -94,7 +94,7 @@ class Header extends Component {
                 </li>
                 <li>
                     <div className="dropdown-flex">
-                        <Translate content="terms_service" component={Link} onClick={()=>window.open("https://www.iubenda.com/terms-and-conditions/42856099",'_blank')}/>
+                        <Translate content="terms_service" component={Link} onClick={() => window.open("https://www.iubenda.com/terms-and-conditions/42856099", '_blank')} />
                         <span className="icon md rarrow-white" />
                     </div>
                 </li>
@@ -140,8 +140,8 @@ class Header extends Component {
                         <span className="icon md rarrow-white" />
                     </div>
                 </li>
-               
-                <li className="d-flex justify-content align-center c-pointer" onClick={() => {userManager.signoutRedirect();deleteToken({UserId:this.props?.userConfig?.id,Token:this.props?.oidc?.deviceToken})}}>
+
+                <li className="d-flex justify-content align-center c-pointer" onClick={() => { userManager.signoutRedirect(); deleteToken({ UserId: this.props?.userConfig?.id, Token: this.props?.oidc?.deviceToken }) }}>
                     <Translate content="logout" component={Link} />
                     <span className="icon md rarrow-white" />
                 </li>
@@ -167,7 +167,7 @@ class Header extends Component {
             showChangePassword: false,
             transactionDrawer: false,
             notificationsDrawer: false,
-            auditlogsDrawer: false,Visibleprofilemenu:false
+            auditlogsDrawer: false, Visibleprofilemenu: false
         }
         this.next = this.next.bind(this);
         this.previous = this.previous.bind(this);
@@ -176,7 +176,7 @@ class Header extends Component {
     }
     userProfile() {
         this.props.history.push("/userprofile");
-        this.setState({...this.state,Visibleprofilemenu:false})
+        this.setState({ ...this.state, Visibleprofilemenu: false })
     }
     next() {
         this.carousel.next();
@@ -189,12 +189,12 @@ class Header extends Component {
     }
     showMegaMenu = () => {
         this.setState({
-            megamenu: true,Visibleprofilemenu:false
+            megamenu: true, Visibleprofilemenu: false
         })
     }
     closeMegaMenu = () => {
         this.setState({
-            megamenu: false,Visibleprofilemenu:false
+            megamenu: false, Visibleprofilemenu: false
         })
     }
     showDocRequestError() {
@@ -203,7 +203,7 @@ class Header extends Component {
     showBuyDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
             this.setState({
-                buyDrawer: true,Visibleprofilemenu:false
+                buyDrawer: true, Visibleprofilemenu: false
             })
         } else {
             const isKyc = !this.props.userConfig.isKYC;
@@ -211,17 +211,17 @@ class Header extends Component {
                 this.props.history.push("/notkyc");
             } else {
                 this.showDocRequestError();
-               
+
             }
             this.setState({
-                ...this.state,Visibleprofilemenu:false
+                ...this.state, Visibleprofilemenu: false
             })
         }
     }
     showSendDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
             this.setState({
-                sendDrawer: true,Visibleprofilemenu:false
+                sendDrawer: true, Visibleprofilemenu: false
             })
         } else {
             const isKyc = !this.props.userConfig.isKYC;
@@ -231,29 +231,29 @@ class Header extends Component {
                 this.showDocRequestError();
             }
             this.setState({
-                ...this.state,Visibleprofilemenu:false
+                ...this.state, Visibleprofilemenu: false
             })
         }
     }
     showTransactionHistoryDrawer = () => {
         this.setState({
-            transactionDrawer: true,Visibleprofilemenu:false
+            transactionDrawer: true, Visibleprofilemenu: false
         })
     }
     showNotificationsDrawer = () => {
         this.setState({
-            notificationsDrawer: true,Visibleprofilemenu:false
+            notificationsDrawer: true, Visibleprofilemenu: false
         })
     }
     showAuditLogsDrawer = () => {
         this.setState({
-            auditlogsDrawer: true,Visibleprofilemenu:false
+            auditlogsDrawer: true, Visibleprofilemenu: false
         })
     }
     showSwapDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
             this.setState({
-                swapDrawer: true,Visibleprofilemenu:false
+                swapDrawer: true, Visibleprofilemenu: false
             })
         } else {
             const isKyc = !this.props.userConfig.isKYC;
@@ -263,14 +263,14 @@ class Header extends Component {
                 this.showDocRequestError();
             }
             this.setState({
-                ...this.state,Visibleprofilemenu:false
+                ...this.state, Visibleprofilemenu: false
             })
         }
     }
     showBuyFiatDrawer = () => {
-        if (this.props.userConfig.isKYC&& !this.props.userConfig.isDocsRequested) {
+        if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
             this.setState({
-                buyFiatDrawer: true,Visibleprofilemenu:false
+                buyFiatDrawer: true, Visibleprofilemenu: false
             })
         } else {
             const isKyc = !this.props.userConfig.isKYC;
@@ -280,7 +280,7 @@ class Header extends Component {
                 this.showDocRequestError();
             }
             this.setState({
-                ...this.state,Visibleprofilemenu:false
+                ...this.state, Visibleprofilemenu: false
             })
         }
         this.props.dispatch(setdepositCurrency(null))
@@ -312,7 +312,7 @@ class Header extends Component {
             buyFiatDrawer: false,
             transactionDrawer: false,
             notificationsDrawer: false,
-            auditlogsDrawer: false,Visibleprofilemenu:false
+            auditlogsDrawer: false, Visibleprofilemenu: false
         })
     }
     enableDisable2fa = (status) => {
@@ -332,31 +332,28 @@ class Header extends Component {
             <Menu>
                 <ul className="pl-0 drpdwn-list">
                     <li onClick={this.showSendDrawer}>
-                        <Link><Translate content="tab_crypto" conmponent={Text}/> <span className="icon md rarrow-white" /></Link>
+                        <Link><Translate content="tab_crypto" conmponent={Text} /> <span className="icon md rarrow-white" /></Link>
 
                     </li>
                     <li onClick={this.showBuyFiatDrawer}>
-                        <Link><Translate content="tab_fiat" conmponent={Text}/>  <span className="icon md rarrow-white" /></Link>
+                        <Link><Translate content="tab_fiat" conmponent={Text} />  <span className="icon md rarrow-white" /></Link>
                     </li>
                 </ul>
             </Menu>
-
         )
         const userProfileMenu = (
             <Menu>
                 <div className="profile-dropdown">
-                    {this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
-                    {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
+                    {this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"} />}
+                    {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"} />}
                     <p className="mb-15 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.firstName} {this.props.userConfig.lastName}</p>
                     <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={() => this.userProfile()} />
                     <ul className="pl-0 drpdwn-list">
-                        <Menu.Item className="px-0" onClick={() => this.showAuditLogsDrawer()}>
-                            <li className="c-pointer px-0">
-                                <Link><Translate content="AuditLogs" component={Link} className="c-pointer px-0"/></Link>
-                            </li>
-                        </Menu.Item>
-                        <li className="c-pointer px-0" onClick={() => userManager.signoutRedirect()}>
-                            <Translate content="logout" component={Link} />
+                        <li className="c-pointer" onClick={() => this.showAuditLogsDrawer()}>
+                            <Translate content="AuditLogs" component={Link} className="c-pointer px-0" />
+                        </li>
+                        <li className="c-pointer" onClick={() => userManager.signoutRedirect()}>
+                            <Translate content="logout" className="c-pointer px-0"  component={Link} />
                         </li>
                     </ul>
                 </div>
@@ -372,35 +369,35 @@ class Header extends Component {
                                     {<img src={logoWhite} alt="logo" className="tlv-logo dark" alt={"image"} />}
                                     {<img src={logoColor} alt="logo" className="tlv-logo light" alt={"image"} />}
                                 </li>
-                                <li className="mb-d-none px-36"><Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? " Business" : " Personal" }} onClick={() => this.props.userConfig.isKYC?this.props.history.push('/dashboard'):this.props.history.push("/notkyc")} component="p" className="text-white-30 mb-0 fs-24 c-pointer" /></li>
+                                <li className="mb-d-none px-36"><Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? " Business" : " Personal" }} onClick={() => this.props.userConfig.isKYC ? this.props.history.push('/dashboard') : this.props.history.push("/notkyc")} component="p" className="text-white-30 mb-0 fs-24 c-pointer" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
                                 <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
                                 <Dropdown overlay={userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                    <Menu.Item key="7">{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
-                                        {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}</Menu.Item>
+                                    <Menu.Item key="7">{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"} />}
+                                        {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"} />}</Menu.Item>
                                 </Dropdown>
                             </Menu>
                         </div>
-                        <Menu theme="light" mode="horizontal" className="header-right" selectedKeys={[this.props.buySell?.headerTab]} onSelect={(key)=>{this.props.dispatch(setHeaderTab(key.key))}}>
+                        <Menu theme="light" mode="horizontal" className="header-right" selectedKeys={[this.props.buySell?.headerTab]} onSelect={(key) => { this.props.dispatch(setHeaderTab(key.key)) }}>
                             <Translate content="menu_buy_sell" component={Menu.Item} key="1" onClick={this.showBuyDrawer} className="list-item" />
                             <Translate content="menu_swap" component={Menu.Item} key="2" onClick={this.showSwapDrawer} className="list-item" />
-                            <Dropdown onClick={()=>this.setState({...this.state,Visibleprofilemenu:false})} overlay={depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" getPopupContainer={() => document.getElementById('area')}>
+                            <Dropdown onClick={() => this.setState({ ...this.state, Visibleprofilemenu: false })} overlay={depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Translate content="menu_send_receive" component={Menu.Item} key="3" className="mr-16" />
                             </Dropdown>
-                           
+
                             <Translate content="menu_transactions_history" component={Menu.Item} key="4" onClick={this.showTransactionHistoryDrawer} className="list-item" />
                             <Menu.Item key="5" className="notification-conunt" onClick={this.showNotificationsDrawer}><span className="icon md bell ml-4 p-relative"><span>{this.props.dashboard?.notificationCount}</span></span></Menu.Item>
-                            <Dropdown onVisibleChange={()=>this.setState({...this.state,Visibleprofilemenu:!this.state.Visibleprofilemenu})} visible={this.state.Visibleprofilemenu} onClick={()=>this.setState({...this.state,Visibleprofilemenu:true})} overlay={userProfileMenu} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
-                                <Menu.Item key="7" className="ml-16" >{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}
-                                    {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"}/>}</Menu.Item>
+                            <Dropdown onVisibleChange={() => this.setState({ ...this.state, Visibleprofilemenu: !this.state.Visibleprofilemenu })} visible={this.state.Visibleprofilemenu} onClick={() => this.setState({ ...this.state, Visibleprofilemenu: true })} overlay={userProfileMenu} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
+                                <Menu.Item key="7" className="ml-16" >{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"} />}
+                                    {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"} />}</Menu.Item>
                             </Dropdown>
                         </Menu>
                     </menuHeader>
                 </Layout >
                 <Modal
                     title={[<div className="megamenu-title fs-24 text-white">
-                        <img src={logoWhite} alt="logo" className="tlv-logo" alt={"image"}/>
+                        <img src={logoWhite} alt="logo" className="tlv-logo" alt={"image"} />
                         <div><span className="icon sm r-arrow-o-white mr-16 c-pointer" style={{ transform: 'rotate(180deg)' }} onClick={this.previous} ></span>
                             <span className="icon sm r-arrow-o-white c-pointer ml-24" onClick={this.next}></span>
                             <Translate content="sign_in" className="text-white-30 fs-18 fw-300 c-pointer menu-items menu_Link ml-16" /></div>
@@ -547,7 +544,7 @@ class Header extends Component {
                                             <Translate className="text-white megamenu-label fw-500" content="support" component={Title} />
                                         </div>
                                         <div className="item-wrapper">
-                                            
+
                                             <Translate className="fs-18 text-white-30 fw-200 mb-0" content="help_center" component={Paragraph} />
                                             <Translate className="fs-18 text-white-30 fw-200 mb-0" content="about" component={Paragraph} />
                                             <Translate className="fs-18 text-white-30 fw-200 mb-0" content="social_networks" component={Paragraph} />
@@ -571,7 +568,7 @@ class Header extends Component {
                                     <div className="d-flex align-center">
                                         <Translate className="fs-18 text-white-30 fw-200 mb-0" content="chat" component={Paragraph} />
                                         <span className="icon lg chat"></span></div>
-                                   
+
                                 </Col>
                                 <Col lg={16} xl={1} className=" mobile-none p-0" />
                                 <Col md={16} lg={16} xl={6} >
@@ -579,7 +576,7 @@ class Header extends Component {
                                     <Translate content="medium_text" with={{ link }} component={Paragraph} className="text-white fs-16" />
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="backup_wallet" component={Paragraph} />
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="reset_wallet" component={Paragraph} />
-                                    
+
                                     <div className="d-flex align-center">
                                         <Translate className="fs-18 mb-0 text-white-30 fw-300" content="always_ask_pin" component={Paragraph} />
                                         <Switch onChange={this.onChange} size="small" className="custom-toggle ml-12" />
@@ -628,8 +625,8 @@ class Header extends Component {
     }
 }
 
-const connectStateToProps = ({ swapStore, userConfig, oidc, dashboard,buySell }) => {
-    return { swapStore, userConfig: userConfig.userProfileInfo, dashboard,buySell,oidc }
+const connectStateToProps = ({ swapStore, userConfig, oidc, dashboard, buySell }) => {
+    return { swapStore, userConfig: userConfig.userProfileInfo, dashboard, buySell, oidc }
 }
 const connectDispatchToProps = dispatch => {
     return {

@@ -210,7 +210,7 @@ class SwapCoins extends Component {
                                 :
                                 <div className="text-center mt-4"><span className="default-circle swap-from"><span className="icon lg usd-default"></span></span>
                             
-                                    <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-8">  <Translate content="Select" component={Paragraph} className="custom-font fw-300 fs-14 text-purewhite " /></Paragraph>
+                                    <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-8">  <Translate content="Select" component={Paragraph} className="custom-font fw-300 fs-14 text-purewhite mb-0" /></Paragraph>
                                     </div>}
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>
@@ -249,9 +249,8 @@ class SwapCoins extends Component {
                                 :
                                 <div className="text-center mt-4"><span className="default-circle swap-to"><span className="icon lg usd-default"></span></span>
                             
-                                    <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-8">  <Translate content="Select" component={Paragraph} className="custom-font fw-300 fs-14  text-purewhite " /></Paragraph>
+                                    <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-8">  <Translate content="Select" component={Paragraph} className="custom-font fw-300 fs-14 text-purewhite mb-0" /></Paragraph>
                                     </div>}
-
                         </div>
                         <span className="icon sm rightarrow swap-arrow"></span>
                     </div>

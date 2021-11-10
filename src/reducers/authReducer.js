@@ -28,18 +28,16 @@ let initialState = {
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case USER_FOUND:
-            debugger;
             state = { ...state, user: action.payload }
             return state;
         case USER_EXPIRING:
-           // processSilentRenew();
+            // processSilentRenew();
             break;
         case USER_LOG_OUT:
             state = { user: null, profile: null };
             return state;
         case USER_EXPIRED:
-            debugger
-           userManager.signinSilent();
+            userManager.signinSilent();
             return state;
         case GET_PROFILE_SUCCESS:
             state = { ...state, profile: action.payload };
@@ -48,7 +46,6 @@ const authReducer = (state = initialState, action) => {
             state = { ...state, deviceToken: action.payload };
             return state;
         case SILENT_RENEW_ERROR:
-            debugger
             console.log("Silent renew error : " + action.payload);
             break;
         default:

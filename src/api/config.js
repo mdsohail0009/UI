@@ -13,6 +13,6 @@ export const ApiControllers = {
     markets:"Markets/",
     wallets:"Wallets/",
     notifications:"Notifications/",
-    documents:"Documents/"
-    
+    documents:"Documents/",
+    dashboard:"Dashboard/" 
 }

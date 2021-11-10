@@ -43,5 +43,25 @@ const convertLocalLang = (key) => {
 const getIBANData = (ibannumber) => {
     return apiClient.get(ApiControllers.master + `GetIBANAccountDetails?ibanNumber=` + ibannumber);
 }
-let apicalls = { getportfolio, getCryptos, getMember, sumsubacesstoken, updateKyc, sumsubacesstokennew, sumsublivenessacesstoken, trackEvent, trackPageview, sellMemberCrypto, convertLocalLang, getIBANData }
+
+const getdshKpis = (userid) => {
+    return apiClient.get(ApiControllers.dashboard + `KPI/${userid}`);
+}
+const getdshcumulativePnl = (userid,days) => {
+    return apiClient.get(ApiControllers.dashboard + `CumulativePNL/${userid}/${days}`);
+}
+const getAssetNetwroth = (userid,days) => {
+    return apiClient.get(ApiControllers.dashboard + `AssetsNetWorth/${userid}/${days}`);
+}
+const getAssetAllowcation = (userid,days) => {
+    return apiClient.get(ApiControllers.dashboard + `AssetAllocation/${userid}/${days}`);
+}
+const getprofits = (userid,days) => {
+    return apiClient.get(ApiControllers.dashboard + `Profits/${userid}/${days}`);
+}
+const getdailypnl = (userid,days) => {
+    return apiClient.get(ApiControllers.dashboard + `DailyPNL/${userid}/${days}`);
+}
+let apicalls = { getportfolio, getCryptos, getMember, sumsubacesstoken, updateKyc, sumsubacesstokennew, sumsublivenessacesstoken, trackEvent, trackPageview, sellMemberCrypto, convertLocalLang, getIBANData,
+    getdshKpis,getdshcumulativePnl,getAssetNetwroth,getAssetAllowcation,getprofits,getdailypnl }
 export default apicalls
