@@ -176,7 +176,7 @@ const selectAddress = () =>{
             <div className="p-relative d-flex align-center"> <Translate
               content="Beneficiary_BankDetails"
               component={Paragraph}
-              className="mb-16 fs-14 text-aqua fw-500 text-upper"
+              className="mb-16 fs-14 text-white fw-500 text-upper"
             />
             </div>
             <Form.Item
