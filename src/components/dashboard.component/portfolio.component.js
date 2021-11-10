@@ -170,14 +170,12 @@ class Portfolio extends Component {
 
         return (
             <div className="mb-24">
-                <Translate content="Portfolio_title"  component={Title} level={3} className="fs-24 fw-600 mb-0 text-white-30" />
-                <div>
-                <Link to="/dashboardCharts">DashboardCharts</Link>
-                 </div>
+                <Translate content="Portfolio_title" component={Title} level={3} className="fs-24 fw-600 mb-0 text-white-30" />
+
                 <div className="portfolio-count py-36">
                     <div className="summary-count mr-16">
-                        <Currency defaultValue={totalFiatValue} className={`fs-40 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }} />
-                        <Currency defaultValue={totalCryptoValue} prefix={""} suffixText={"BTC"} className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
+                        <Currency defaultValue={100000 || totalFiatValue} className={`fs-40 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }} />
+                        <div style={{ display: 'flex' }}><Currency defaultValue={1000.25125 || totalCryptoValue} prefix={""} suffixText={"BTC"} className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} /><Link to="/dashboardCharts" className="dbchart-link fs-14 fw-500">Dashboard</Link></div>
                     </div>
                 </div>
                 <div className="text-center mb-16 wmy-graph" >

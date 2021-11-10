@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Typography, Radio, Image, Tooltip } from 'antd';
+import { Card, Row, Col, Typography, Radio, Image, Tooltip, Empty } from 'antd';
 import apiCalls from "../../api/apiCalls";
 import { connect } from 'react-redux';
 import BarChart from '../trading.components/bar.component';
 import PieChart from '../trading.components/pie.component';
 import LineChart from '../trading.components/line.graph.component';
+import { Link } from 'react-router-dom';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -23,30 +24,30 @@ class DashboardCharts extends Component {
         this.loadKpis();
         this.loadDashboards(1);
     }
-    loadDashboards = async(days) => {
-        this.setState({ ...this.state, cumulativePNL:null,profits:null,dailyPnl:null,assetnetWorth:null,assetAlloction:null })
+    loadDashboards = async (days) => {
+        this.setState({ ...this.state, cumulativePNL: null, profits: null, dailyPnl: null, assetnetWorth: null, assetAlloction: null })
         await Promise.all([
-            apiCalls.getdshcumulativePnl(this.props.userConfig.id,days).then(_response => {
+            apiCalls.getdshcumulativePnl(this.props.userConfig.id, days).then(_response => {
                 if (_response.ok) {
                     this.setState({ ...this.state, cumulativePNL: _response.data })
                 }
             }),
-            apiCalls.getprofits(this.props.userConfig.id,days).then(_res => {
+            apiCalls.getprofits(this.props.userConfig.id, days).then(_res => {
                 if (_res.ok) {
                     this.setState({ ...this.state, profits: _res.data })
                 }
             }),
-            apiCalls.getdailypnl(this.props.userConfig.id,days).then(_dailyPnlres => {
+            apiCalls.getdailypnl(this.props.userConfig.id, days).then(_dailyPnlres => {
                 if (_dailyPnlres.ok) {
                     this.setState({ ...this.state, dailyPnl: _dailyPnlres.data })
                 }
             }),
-            apiCalls.getAssetNetwroth(this.props.userConfig.id,days).then(assetnetWorthres => {
+            apiCalls.getAssetNetwroth(this.props.userConfig.id, days).then(assetnetWorthres => {
                 if (assetnetWorthres.ok) {
                     this.setState({ ...this.state, assetnetWorth: assetnetWorthres.data })
                 }
             }),
-            apiCalls.getAssetAllowcation(this.props.userConfig.id,days).then(assetAlloctionres => {
+            apiCalls.getAssetAllowcation(this.props.userConfig.id, days).then(assetAlloctionres => {
                 if (assetAlloctionres.ok) {
                     this.setState({ ...this.state, assetAlloction: assetAlloctionres.data })
                 }
@@ -60,7 +61,7 @@ class DashboardCharts extends Component {
         }
     }
     loadKpis = async () => {
-        let response = await apiCalls.getdshKpis(this.props.userConfig.id);
+        let response = await apiCalls.getdshKpis(this.props?.userConfig?.id);
         if (response.ok) {
             this.setState({ ...this.state, kpis: response.data })
         }
@@ -73,7 +74,8 @@ class DashboardCharts extends Component {
 
     render() {
         return (<>
-            <div className="db-container">
+            <div className="main-container db-container">
+                <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/dashboard" />Back</div>
                 {this.state.kpis && <Row gutter={16} className="mb-8">
                     <Col xs={24} sm={24} md={24} lg={12} xl={8} xxl={6}>
                         <div className="db-kpi">
@@ -135,32 +137,32 @@ class DashboardCharts extends Component {
                 </Radio.Group>
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                        <Card size="small" className="graph" title={<><Text className="text-textDark fs-14">Cumulative PNL(%)</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-purple">-1.85%</Text>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.cumulativePNL && <LineChart id="cumlitavePNL" data={this.state.cumulativePNL} width="600" height="400" />}
+                        <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Cumulative PNL(%)</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-red">-1.85%</Text>} headStyle={{ padding: "4px 16px" }}>
+                            {this.state.cumulativePNL ? <LineChart id="cumlitavePNL" data={this.state.cumulativePNL} width="600" height="400" /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
                         </Card>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                        <Card size="small" className="graph" title={<><Text className="text-textDark fs-14">Daily PNL(%)</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-purple">-$0.19</Text>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.dailyPnl && <BarChart data={this.state.dailyPnl?.series} categories={this.state.dailyPnl?.categories} id={'dailypnl'} />}
+                        <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Daily PNL(%)</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-red">-$0.19</Text>} headStyle={{ padding: "4px 16px" }}>
+                            {this.state.dailyPnl ? <BarChart data={this.state.dailyPnl?.series} categories={this.state.dailyPnl?.categories} id={'dailypnl'} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
                         </Card>
                     </Col>
                 </Row>
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={9} xxl={9}>
-                        <Card size="small" className="graph" title={<><Text className="text-textDark fs-14">Asset Allocation</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.assetAlloction && <PieChart data={this.state.assetAlloction} />}
+                        <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Asset Allocation</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} headStyle={{ padding: "4px 16px" }}>
+                            {this.state.assetAlloction ? <PieChart data={this.state.assetAlloction} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
                         </Card>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={12} xl={15} xxl={15}>
-                        <Card size="small" className="graph" title={<><Text className="text-textDark fs-14">Assets Net Worth</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-purple">$30.61</Text>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.assetnetWorth && <LineChart id="cumlitavePNL" data={this.state.assetnetWorth} width="750" height="400" />}
+                        <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Assets Net Worth</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-green">$30.61</Text>} headStyle={{ padding: "4px 16px" }}>
+                            {this.state.assetnetWorth ? <LineChart id="cumlitavePNL" data={this.state.assetnetWorth} width="750" height="400" /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
                         </Card>
                     </Col>
                 </Row>
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
-                        <Card size="small" className="graph" title={<><Text className="text-textDark fs-14">Profits</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-purple">+1.85%</Text>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.profits && <LineChart id="cumlitavePNL" data={this.state.profits} />}
+                        <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Profits</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-green">+1.85%</Text>} headStyle={{ padding: "4px 16px" }}>
+                            {this.state.profits ? <LineChart id="cumlitavePNL" data={this.state.profits} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
                         </Card>
                     </Col>
                 </Row>
