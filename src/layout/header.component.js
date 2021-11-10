@@ -351,11 +351,11 @@ class Header extends Component {
                     <Translate content="manage_account" component={Button} size="medium" block className="profile-btn" onClick={() => this.userProfile()} />
                     <ul className="pl-0 drpdwn-list">
                         <Menu.Item className="px-0" onClick={() => this.showAuditLogsDrawer()}>
-                            <li className="c-pointer px-0">
+                            <li className="c-pointer">
                                 <Link><Translate content="AuditLogs" component={Link} className="c-pointer px-0"/></Link>
                             </li>
                         </Menu.Item>
-                        <li className="c-pointer px-0" onClick={() => userManager.signoutRedirect()}>
+                        <li className="c-pointer" onClick={() => userManager.signoutRedirect()}>
                             <Translate content="logout" component={Link} />
                         </li>
                     </ul>

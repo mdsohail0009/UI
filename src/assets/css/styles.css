@@ -306,7 +306,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 /* swap */
 .swap{border-radius:25px; display: flex; justify-content: space-between; align-items: center; padding: 16px 24px;min-height: 105px;}
 .swapfrom-card{background-color: var(--bgPitch);  border-bottom-right-radius: 0 !important; }
-.swapreceive-card{background-color: var(--bgOrient);  border-top-right-radius: 0 !important;box-shadow: var(--bgDark) 0px 7px 0; }
+.swapreceive-card{background-color: var(--bgOrient);  border-top-right-radius: 0 !important;box-shadow: #0e0e2c 0px 7px 0; }
 .card-input{padding:0 !important; font-size: 24px; line-height: 24px; color:var(--textPureWhite);}
 .icon.swapfrom-arrow{position: absolute; bottom: 0; right:0;width:43px;height: 26px; background-position: -54px -288px;}
 .icon.swapto-arrow{position: absolute; top: 0; right:0;width:43px;height: 26px;margin-right: 12px; background-position: -3px -287px;}
@@ -437,7 +437,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .cust-input .ant-input{text-align: left !important;padding: 0 !important;background-color: transparent !important;}
 .icon.lg.usd-default{background-position:-1px -70px;width:32px !important}
 .icon.lg.swap-arrow{background-position:-8px -186px;}
-.to-receive{text-transform: uppercase;font-size: 14px;text-align: center;color: var(--textWhite30);font-weight: 500;margin-bottom: 0 !important;margin-top: 26px;}
+.to-receive{text-transform: uppercase;font-size: 14px;text-align: center;color: var(--textWhite30);font-weight: 500;margin-bottom: 16px !important;margin-top: 0px;}
 .swap-updown{position: absolute;right: 0;bottom: -17px;width: 40px;height: 40px; z-index: 1;margin-right: 20px; border-radius: 15px;background-color: var(--bgDark);text-align: center;line-height: 38px}
 .swap-updown:hover{background: var(--bgDark);}
 .default-circle{border-radius: 50%;padding:12px 4px;}
@@ -476,7 +476,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .user-profile{ border-radius: 50%; background: var(--bgDarkGrey);object-fit: cover;}
 .profile-dropdown .user-profile{width:112px;height: 112px; border-radius: 50%;display: block;margin: 0 auto;}
 .profile-dropdown {text-align: center;padding:12px 34px;}
-.profile-dropdown .drpdwn-list{padding-top: 32px; padding-left: 0; padding-right: 0;}
+.profile-dropdown .drpdwn-list{padding-top: 32px; padding-left: 0; padding-right: 0; margin-left: -35px; margin-right: -35px;}
 .profile-btn, .profile-btn:hover, .profile-btn:active, .profile-btn:focus{background: var(--bgDarkGrey);border: 1px solid #ED4B9E;height: 38px;border-radius: 17px;color: var(--textWhite); text-transform: uppercase; font-size: 12px;font-weight: normal;margin-top: 10px;padding: 10px 14px ;}
 .user-labels{padding:12px; font-size: 16px; font-weight: 600; color: var(--textWhite); margin-bottom: 0; margin-left:8px}
 .user-list{list-style: none;}
@@ -787,7 +787,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .crypto-search.ant-input-search .ant-input-group input{height: 58px !important;}
     .cancel-btn{height: 57px !important;}
     .custon-btngroup{height: 57px !important;}
-    .to-receive{margin-top: 36px;}
+    .to-receive{margin-top: 0px;}
     .pop-btn, .confirm-btn{height: 57px;}
     .crypto-list .ant-list-item, .wallet-list .ant-list-item{padding:10px 8px 8px !important}
     .crypto-search.ant-input-search .ant-input-group .ant-input-group-addon{border-radius: 0 30px 30px 0;}
