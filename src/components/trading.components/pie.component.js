@@ -14,7 +14,8 @@ const PieChart = ({ data }) => {
                 type: 'pie',
                 style: {
                     fontFamily: 'SF Pro Text, sans-serif !important'
-                }
+                },
+                backgroundColor: "transparent",
             },
             title: {
                 text: ''

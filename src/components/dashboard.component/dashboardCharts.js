@@ -129,7 +129,7 @@ class DashboardCharts extends Component {
                         </div>
                     </Col>}
                 </Row>}
-                <Radio.Group defaultValue={1} buttonStyle="solid" className="mb-16 wmy-graph" onChange={(e) => this.loadDashboards(e.target.value)}>
+                <Radio.Group defaultValue={1} buttonStyle="solid" className="my-16 wmy-graph" onChange={(e) => this.loadDashboards(e.target.value)}>
                     <Radio.Button value={1}>1 Day</Radio.Button>
                     <Radio.Button value={7}>7 Days</Radio.Button>
                     <Radio.Button value={14}>14 Days</Radio.Button>
@@ -148,12 +148,12 @@ class DashboardCharts extends Component {
                     </Col>
                 </Row>
                 <Row gutter={16}>
-                    <Col xs={24} sm={24} md={24} lg={12} xl={9} xxl={9}>
+                    <Col xs={24} sm={24} md={24} lg={12} xl={10} xxl={10}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Asset Allocation</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} headStyle={{ padding: "4px 16px" }}>
                             {this.state.assetAlloction ? <PieChart data={this.state.assetAlloction} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
                         </Card>
                     </Col>
-                    <Col xs={24} sm={24} md={24} lg={12} xl={15} xxl={15}>
+                    <Col xs={24} sm={24} md={24} lg={12} xl={14} xxl={14}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Assets Net Worth</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-green">$30.61</Text>} headStyle={{ padding: "4px 16px" }}>
                             {this.state.assetnetWorth ? <LineChart id="cumlitavePNL" data={this.state.assetnetWorth} width="750" height="400" /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
                         </Card>
