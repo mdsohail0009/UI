@@ -6,6 +6,7 @@ import Currency from '../shared/number.formate';
 import { fetchPortfolioData } from '../../reducers/dashboardReducer';
 import { createChart, ColorType, PriceScaleMode, LineStyle } from "lightweight-charts";
 import { getPortfolioGraph } from './api';
+import { Link } from 'react-router-dom';
 class Portfolio extends Component {
     chart;
     state = {
@@ -169,7 +170,10 @@ class Portfolio extends Component {
 
         return (
             <div className="mb-24">
-                <Translate content="Portfolio_title" component={Title} level={3} className="fs-24 fw-600 mb-0 text-white-30" />
+                <Translate content="Portfolio_title"  component={Title} level={3} className="fs-24 fw-600 mb-0 text-white-30" />
+                <div>
+                <Link to="/dashboardCharts">DashboardCharts</Link>
+                 </div>
                 <div className="portfolio-count py-36">
                     <div className="summary-count mr-16">
                         <Currency defaultValue={totalFiatValue} className={`fs-40 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }} />
