@@ -11,7 +11,8 @@ const BarChart = ({ data, title, categories, id }) => {
                 type: 'column',
                 style: {
                     fontFamily: 'SF Pro Text, sans-serif !important'
-                }
+                },
+                backgroundColor: "transparent",
             },
             title: {
                 text: '',
@@ -22,6 +23,14 @@ const BarChart = ({ data, title, categories, id }) => {
             credits: {
                 enabled: false
             },
+            legend: {
+                itemHoverStyle: { "color": "#9797AA" },
+                itemStyle: { "color": "#9797AA" }
+            },
+            colorAxis: [{
+                gridLineColor: "#FFDB1A",
+                gridLineWidth: 0
+            }],
             series: data || [],
             responsive: {
                 rules: [{
