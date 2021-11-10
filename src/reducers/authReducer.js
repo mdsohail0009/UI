@@ -31,13 +31,13 @@ const authReducer = (state = initialState, action) => {
             state = { ...state, user: action.payload }
             return state;
         case USER_EXPIRING:
-           // processSilentRenew();
+            // processSilentRenew();
             break;
         case USER_LOG_OUT:
             state = { user: null, profile: null };
             return state;
         case USER_EXPIRED:
-           userManager.signinSilent();
+            userManager.signinSilent();
             return state;
         case GET_PROFILE_SUCCESS:
             state = { ...state, profile: action.payload };
