@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { createChart, LineStyle, ColorType, PriceScaleMode, isBusinessDay } from "lightweight-charts"; //npm install --save lightweight-charts
 //import LoadingSpinner from "../components/ui/LoadingSpinner";
+import moment from 'moment'
 
 const apiDummyData = { "prices": [] }
 
@@ -31,7 +32,7 @@ const TradingViewChart = ({ data, type }) => {
     const chart = createChart(ref.current, {
         height: 340,
         localization: {
-            dateFormat: "yyyy/MM/dd hh:mm",
+            dateFormat: "yyyy-MM-dd",
           },
         priceScale: { position: "left", mode: PriceScaleMode.Normal },
         crosshair: {
@@ -94,7 +95,9 @@ const TradingViewChart = ({ data, type }) => {
       // for total ; adds an area series to the chart
       const areaSeries = chart.addAreaSeries();
     //   areaSeries.setData(data[type].map(item => { return { time: formatDate(item[0].toString().substr(0,10)), value: item[1] } }));
-      areaSeries.setData(data[type].map(item => { return { time: formatDate(item[0]), value: item[1] } }));
+    const chartdata = { BTC: data[type].map(item => { return { time: formatDate(item[0]), value: item[1] } }) }
+    areaSeries.setData(chartdata.BTC);
+    // areaSeries.setData(data[type].map(item => { return { time: formatDate(item[0]), value: item[1] } }));
       areaSeries.applyOptions({
         lineColor: "rgba(255,219,26,1)",
         topColor: "rgba(255,219,26,0.15)",
@@ -133,23 +136,10 @@ const TradingViewChart = ({ data, type }) => {
     ))
   );
   const formatDate = (d) => {
-    let date = new Date((d * 1000))
-    let month = '' + (date.getMonth() + 1);
-    let day = '' + date.getDate();
-    let year = date.getFullYear();
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-   // console.log(date.toUTCString())
-    if (month.length < 2)
-      month = '0' + month;
-    if (day.length < 2)
-      day = '0' + day;
-    if (hours.length < 2)
-    hours = '0' + hours;
-    if (minutes.length < 2)
-    minutes = '0' + minutes;
-    //console.log([year, month, day ].join('-')+' '+[hours,minutes ].join(':'))
-    return [year, month, day ].join('-')+' '+[hours,minutes ].join(':');
+    
+    let date = new Date(d)
+    console.log(moment(date).format('YYYY-MM-DD hh:mm'))
+    return date;
   }
 
   return (
