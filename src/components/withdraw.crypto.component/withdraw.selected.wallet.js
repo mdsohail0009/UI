@@ -85,21 +85,21 @@ class CryptoWithDrawWallet extends Component {
         const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
         if (!amt) {
-            this.setState({ ...this.state, error: +" "+apicalls.convertLocalLang('enter_amount')});
+            this.setState({ ...this.state, error: " "+apicalls.convertLocalLang('enter_amount')});
             this.myRef.current.scrollIntoView();
         }
         else if (amt < withdrawMinValue) {
             this.setState({ ...this.state, error: apicalls.convertLocalLang('amount_min')+ " "+ withdrawMinValue });
             this.myRef.current.scrollIntoView();
         } else if (amt > withdrawMaxValue) {
-            this.setState({ ...this.state, error:+" "+ apicalls.convertLocalLang('amount_max') +" "+withdrawMaxValue});
+            this.setState({ ...this.state, error:" "+ apicalls.convertLocalLang('amount_max') +" "+withdrawMaxValue});
             this.myRef.current.scrollIntoView();
         } else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
-            this.setState({ ...this.state, error:+" "+apicalls.convertLocalLang('amount_less') });
+            this.setState({ ...this.state, error:" "+apicalls.convertLocalLang('amount_less') });
             this.myRef.current.scrollIntoView();
         }
         else if (this.state.walletAddress == null || this.state.walletAddress.trim() === "") {
-            this.setState({ ...this.state, error:+" "+apicalls.convertLocalLang('enter_wallet_address')});
+            this.setState({ ...this.state, error:" "+apicalls.convertLocalLang('enter_wallet_address')});
             this.myRef.current.scrollIntoView();
         }
         else {
