@@ -22,7 +22,7 @@ const sumsubacesstokennew = (userid) => {
     return apiClient.get('Sumsub/KYBAccessToken?applicantId=' + userid);
 }
 const updateKyc = (userid) => {
-    return apiClient.get(ApiControllers.accounts+`${userid}/KYC`);
+    return apiClient.put(ApiControllers.accounts+`${userid}/KYC`);
 }
 const trackEvent = (obj) => {
     return appInsights.trackEvent({
