@@ -19,14 +19,15 @@ body, h1, h2, h3, h4, h5, h6, a, p div{font-family: 'SF Pro Text', sans-serif !i
 .depwith-drpdown .ant-dropdown-menu{min-width: 173px !important; max-width: 173px !important;}
 /*--Dashboard--*/
 .db-container{padding: 0;}
-.db-kpi{background-color: #FFFFFF;border-radius: 20px;padding: 16px 24px;margin-bottom: 16px;min-height: 112px;}
-.db-kpi-label{font-size: 12px;color: var(--textSecondary);display: block;}
-.db-kpi-val{font-size: 24px;color: var(--textDark);font-weight: 500;line-height: 34px;margin-right: 16px;}
-.db-kpi .badge{background-color: #F0F0F0;padding: 3px 10px;font-size: 12px;font-weight: 500;color: #D13F00;border-radius: 16px;vertical-align: text-bottom;display: inline-block;}
-.db-kpi .icon-bg{width: 48px;height: 48px;border-radius: 8px;background-color: #FFF7E9;margin-right: 20px;text-align: center; line-height: 48px;}
+.db-kpi{background-color: var(--bgGrey);border-radius: 20px;padding: 16px 24px;margin-bottom: 16px;min-height: 112px;}
+.db-kpi-label{font-size: 12px;color: var(--textWhite50);display: block;}
+.db-kpi-val{font-size: 24px;color: var(--textWhite30);font-weight: 500;line-height: 34px;margin: 0 16px 3px 0;display: block;}
+.db-kpi .badge{background-color: var(--bgDarkGrey);padding: 3px 10px;font-size: 12px;font-weight: 500;color: #D13F00;border-radius: 16px;vertical-align: text-bottom;display: inline-block;}
+.db-kpi .icon-bg{width: 48px;height: 48px;border-radius: 8px;background-color: var(--bgDarkGrey);margin-right: 20px;text-align: center; line-height: 48px;}
 .db-kpi.vthicon{display: flex;align-items: center;min-height: 112px;}
 .graph{border-radius: 20px;margin-bottom: 16px;background-color: var(--bgGloom);border-color: var(--borderGrey);}
 .graph .ant-card-head{border-color: var(--borderGrey);}
+.graph .ant-card-body{min-height: 430px;display: flex;justify-content: center;align-items: center;}
 #graph-container, #container{width: 100%; height: 100%;}
 .markets-panel .ant-list-split .ant-list-item, .portfolio-list .ant-list-split .ant-list-item{border-color: var(--borderGrey) !important; padding: 14px 5px;transition: 0.3s ease;}
 .portfolio-list h1{padding: 30px 24px 26px;}
@@ -116,6 +117,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .icon.md.camera{background-position: -400px -34px;}
 .icon.md.address-book{background-position:-239px -70px}
 .icon.md.approve{background-position:-184px -70px}
+.icon.md.profit-arw{background-position:-308px -34px}
 .icon.lg.profile-icon{background-position: -4px -329px}
 .icon.lg.security-icon{background-position:-107px -330px}
 .icon.lg.settings-icon{background-position: -38px -330px}

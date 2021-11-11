@@ -44,12 +44,12 @@ const LineChart = ({ data, lineColor, id, height }) => {
             },
             grid: {
                 vertLines: {
-                    color: '#ECF1F4',
+                    color: '#313c46',
                     style: 1,
                     visible: true,
                 },
                 horzLines: {
-                    color: '#ECF1F4',
+                    color: '#313c46',
                     style: 1,
                     visible: true,
                 },
