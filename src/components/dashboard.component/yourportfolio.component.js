@@ -11,6 +11,7 @@ import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import { withRouter } from 'react-router-dom';
 import apiCalls from '../../api/apiCalls';
+import { Link } from "react-router-dom";
 
 class YourPortfolio extends Component {
     state = {
@@ -71,10 +72,10 @@ class YourPortfolio extends Component {
                                 <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer(item, "sell")} />
                             </div>
                         }>
-                            <List.Item.Meta
+                            <Link className="c-pointer" to={"/coindetails/" + item.coinFullName.toLowerCase()} ><List.Item.Meta
                                 avatar={<span className={`coin ${item.coin}`} />}
                                 title={<div className="fs-18 fw-300 text-upper text-white mb-0 mt-12">{item.coin}</div>}
-                            />
+                            /></Link>
                             <div className='text-right fs-20 text-white'>
                                 <Currency defaultValue={item.coinBalance} type={"text"} prefix={""} />
                                 <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />

@@ -22,7 +22,7 @@ class DashboardCharts extends Component {
 
     componentDidMount() {
         this.loadKpis();
-        this.loadDashboards(1);
+        this.loadDashboards(30);
     }
     loadDashboards = async (days) => {
         this.setState({ ...this.state, cumulativePNL: null, profits: null, dailyPnl: null, assetnetWorth: null, assetAlloction: null })
@@ -118,18 +118,13 @@ class DashboardCharts extends Component {
                                     <Text className="db-kpi-val text-green"><span>+</span>${this.state.kpis.monthPNL}</Text>
                                 </>}
                                 {this.state.kpis?.monthPNL < 0 && <>
-
-                                    <div className="icon-bg">
-                                        <span className="icon md lose-arw" />
-                                    </div>
-
                                     <Text className="db-kpi-val text-red"><span>$</span>{this.state.kpis.monthPNL}</Text><Text className="badge ml-16"><span>+</span>${this.state.kpis.monthPNL}</Text>
                                 </>}
                             </div>
                         </div>
                     </Col>}
                 </Row>}
-                <Radio.Group defaultValue={1} buttonStyle="solid" className="my-16 wmy-graph" onChange={(e) => this.loadDashboards(e.target.value)}>
+                <Radio.Group defaultValue={30} buttonStyle="solid" className="my-16 wmy-graph" onChange={(e) => this.loadDashboards(e.target.value)}>
                     <Radio.Button value={1}>1 Day</Radio.Button>
                     <Radio.Button value={7}>7 Days</Radio.Button>
                     <Radio.Button value={14}>14 Days</Radio.Button>
