@@ -12,7 +12,7 @@
     <script src="oidc-client.min.js"></script>
 
     <script>
-        new UserManager().signinSilentCallback(function(){},function(err){
+        new UserManager().signinSilent(function(){},function(err){
             console.log("Silent renew Error: " + err);
         });
     </script>
