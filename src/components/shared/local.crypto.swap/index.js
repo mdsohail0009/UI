@@ -42,7 +42,7 @@ const LocalCryptoSwapper = (props, ref) => {
             let _val = document.getElementById("ABC")?.value;
             _val = _val ? _val.replace(/,/g, "") : _val;
             _val = _val?.replace(symbols[locCurrency||localCurrency], "");
-            if (_obj[3] == _val || _obj[3] == 0) {
+            if (_obj[4] == _val || _obj[4] == 0) {
                 if (!isSwaped) {
                     setCryptoValue(value || 0);
                 } else { setLocalValue(value || 0) }
