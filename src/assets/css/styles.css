@@ -192,7 +192,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .sellcrypto-container{max-height: calc(100vh - 262px);}
 .crypto-container{max-height: calc(100vh - 270px);}
 .suisfiat-container{max-height: calc(100vh - 155px);}
-.suisfiat-height{max-height: calc(100vh - 155px);}
+.suisfiat-height{max-height: calc(100vh - 158px);}
 .addbook-height{max-height: calc(100vh - 84px);}
 .verify-container{max-height: calc(100vh - 140px);}
 .dep-withdraw{max-height: calc(100vh - 265px);}
@@ -926,7 +926,7 @@ text-align: center !important;}
     width: 34px;
     height: 34px;
     vertical-align: text-top;
-    cursor: pointer;transform:rotate(0deg);margin-top: -15px; }
+    cursor: pointer;transform:rotate(0deg);margin-top: -15px; transition: none !important;left: 0;}
 .ant-custumcheck .ant-checkbox-checked , label:hover .ant-checkbox-checked, .ant-checkbox-checked::after{ border: 1px solid transparent !important;}
 .customaudit-select .ant-select-single .ant-select-selector .ant-select-selection-search{left: 17px!important}
 /* .ant-alert-with-description .ant-alert-message{margin-bottom: 0 !important;} */
