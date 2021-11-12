@@ -2,7 +2,6 @@ import { Input, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { convertCurrencyDuplicate } from '../../buy.component/buySellService';
-import QueryString from 'query-string';
 import NumberFormat from 'react-number-format';
 const LocalCryptoSwapper = (props, ref) => {
     const { localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, sellData, selectedCoin = null } = props;
