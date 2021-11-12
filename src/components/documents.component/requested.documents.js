@@ -51,7 +51,8 @@ class RequestedDocs extends Component {
         }
     }
     loadDocReplies = async (id) => {
-        this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: [] });
+        let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId != id);
+        this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: docReObj });
         const response = await getDocumentReplies(id);
         if (response.ok) {
             this.setState({
@@ -79,7 +80,7 @@ class RequestedDocs extends Component {
             "documentDetailId": doc.id,
             "status": "Approved"
         });
-        this.setState({...this.state,isMessageError:null});
+        this.setState({ ...this.state, isMessageError: null });
         message.destroy()
         if (response.ok) {
             message.success({
@@ -105,9 +106,9 @@ class RequestedDocs extends Component {
     }
     docReject = async (doc) => {
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
-        this.setState({...this.state,isMessageError:null});
+        this.setState({ ...this.state, isMessageError: null });
         if (!item || !item.reply) {
-            this.setState({...this.state,isMessageError:doc.id.replace(/-/g,"")});
+            this.setState({ ...this.state, isMessageError: doc.id.replace(/-/g, "") });
             return;
         }
         item.path = item.path ? typeof (item.path) === "object" ? JSON.stringify(item.path) : item.path : item.path;
@@ -131,7 +132,7 @@ class RequestedDocs extends Component {
         }
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
-        this.setState({ ...this.state, docReplyObjs: objs, isSubmitting: false,isMessageError:null });
+        this.setState({ ...this.state, docReplyObjs: objs, isSubmitting: false, isMessageError: null });
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
     deleteDocument = async (doc, idx, isAdd) => {
