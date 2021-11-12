@@ -99,7 +99,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
           ]}
         >
 
-          <Input.Password placeholder={apiClient.convertLocalLang('Type_your_current_pass_word')} value={initialValues.CurrentPassword} className="text-left cust-input mb-8 pr-0 change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeOutlined style={{ color: '#fff' }} />)} />
+          <Input.Password placeholder={apiClient.convertLocalLang('Type_your_current_pass_word')} value={initialValues.CurrentPassword} className="text-left cust-input mb-8 pr-0 change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeOutlined style={{ color: '#fff' }} />:<EyeInvisibleOutlined /> )} />
         </Form.Item>
         <div className="d-flex">
           <Translate
@@ -124,7 +124,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
              placeholder={apiClient.convertLocalLang('Type_your_new_pass_word')}
               value={initialValues.Password}
               onChange={(e) => handleChange("Password", e)}
-              className="text-left cust-input mb-8 pr-0 change-space pass-onhover" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeOutlined style={{ color: '#fff' }} />)}
+              className="text-left cust-input mb-8 pr-0 change-space pass-onhover" iconRender={visible => (visible ?  <EyeOutlined style={{ color: '#fff' }} />:<EyeInvisibleOutlined /> )}
             />
         </Form.Item>
         <div className="d-flex">
@@ -165,7 +165,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
             placeholder={apiClient.convertLocalLang('Re_type_your_new_pass_word')}
             value={initialValues.ConfirmPassword}
             onChange={(e) => handleChange("ConfirmPassword", e)}
-            className="text-left cust-input mb-8 pr-0 change-space" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeOutlined style={{ color: '#fff' }} />)}
+            className="text-left cust-input mb-8 pr-0 change-space" iconRender={visible => (visible ? <EyeOutlined style={{ color: '#fff' }} />:<EyeInvisibleOutlined />  )}
           />
         </Form.Item>
 
