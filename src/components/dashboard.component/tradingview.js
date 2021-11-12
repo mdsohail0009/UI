@@ -31,10 +31,7 @@ const TradingViewChart = ({ data, type }) => {
     ref.current.innerHTML = '';
     const chart = createChart(ref.current, {
         height: 340,
-        localization: {
-            dateFormat: "yyyy-MM-dd",
-          },
-        priceScale: { position: "left", mode: PriceScaleMode.Normal },
+        priceScale: { position: "left" },
         crosshair: {
           vertLine: {
             color: '#FFDB1A',
@@ -104,6 +101,23 @@ const TradingViewChart = ({ data, type }) => {
         bottomColor: "rgba(255,219,26,0)",
         lineStyle: LineStyle.Solid,
         lineWidth: 2,
+        timeScale: {
+          rightOffset: 12,
+          barSpacing: 3,
+          fixLeftEdge: true,
+          lockVisibleTimeRangeOnResize: true,
+          rightBarStaysOnScroll: true,
+          borderVisible: false,
+          borderColor: '#fff000',
+          visible: true,
+          timeVisible: true,
+          secondsVisible: false,
+          tickMarkFormatter: (time, tickMarkType, locale) => {
+              console.log(time, tickMarkType, locale);
+              const year = isBusinessDay(time) ? time.year : new Date(time * 1000).getUTCFullYear();
+              return String(year);
+          },
+      }
       });
   
       // generates a line series for each asset to the chart
@@ -138,8 +152,8 @@ const TradingViewChart = ({ data, type }) => {
   const formatDate = (d) => {
     
     let date = new Date(d)
-    console.log(moment(date).format('YYYY-MM-DD hh:mm'))
-    return date;
+    // console.log(moment(date).format('YYYY-MM-DD hh:mm'))
+    return moment(date).format('YYYY-MM-DD hh:mm');
   }
 
   return (
