@@ -60,7 +60,7 @@ const FaitWithdrawal = ({member, selectedWalletCode, buyInfo, userConfig, dispat
   const handleWalletSelection = (walletId, isClearObj) => {
     if(isClearObj){
       let clearobj = 
-      {"walletCode":"","totalValue":"","accountNumber":"","routingNumber":"","bankName":"","bankAddress":"","bankAddress2":"","zipcode":"","beneficiaryAccountName":"","beneficiaryAccountAddress":"","beneficiaryAccountAddress1":"","description":"","country":null,"state":null, "isAccept":false, "favouriteName":null}
+      {"walletCode":"","totalValue":"","accountNumber":"","routingNumber":"","bankName":"","bankAddress":"","bankAddress2":"","zipcode":"","beneficiaryAccountName":"","beneficiaryAccountAddress":"","beneficiaryAccountAddress1":"","description":"","country":null,"state":null, "isAccept":false, "id":null}
       setSaveObj({...clearobj, walletCode: walletId});
        setAddressDetails({});
        setStateLu([]);
@@ -208,7 +208,7 @@ const selectAddress = () =>{
             <div style={{ position:'relative' }}>
             <Form.Item
               className="custom-forminput custom-label mb-24"
-              name="favouriteName"
+              name="id"
               label={<Translate content="address_book" component={Form.label}   />}
             >
                 <Select dropdownClassName="select-drpdwn"
