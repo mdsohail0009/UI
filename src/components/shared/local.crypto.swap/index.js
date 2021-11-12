@@ -22,8 +22,8 @@ const LocalCryptoSwapper = (props, ref) => {
             setLocalValue(info.localValue);
             setCryptoValue(info.cryptoValue);
         },
-        handleConvertion({ cryptoValue, localValue, locCurrency }) {
-            fetchConvertionValue({ cryptoValue, localValue, inputvalue: isSwaped ? cryptoValue : localValue, locCurrency });
+        handleConvertion({ cryptoValue, localValue, locCurrency,isSwap }) {
+            fetchConvertionValue({ cryptoValue, localValue, inputvalue: (isSwap|| isSwaped) ? cryptoValue : localValue, locCurrency });
             if (isSwaped) {
                 setCryptoValue(cryptoValue);
             }
@@ -37,7 +37,6 @@ const LocalCryptoSwapper = (props, ref) => {
         setConvertionLoad(true);
         const response = await convertCurrencyDuplicate({ from: coin, to: locCurrency || localCurrency || "USD", value: (inputvalue || 0), isCrypto: !isSwaped, memId: props.memberId, screenName: props.screenName });
         if (response.ok) {
-            debugger
             const { data: value, config: { url } } = response;
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
             let _val = document.getElementById("ABC")?.value;
