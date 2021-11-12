@@ -448,4 +448,7 @@ export default {
   accept_terms: 'Please accept terms of service',
   amount_greater_zero: 'Amount must be greater than zero.',
   exceeded_amount: 'You have exceeded maximum amount',
+  mkt_Cap:'Mkt Cap',
+  total_volume :'Total Volume',
+  total_supply:'Total Supply',
 }
