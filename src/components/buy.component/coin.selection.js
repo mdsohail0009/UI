@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { fetchCoins, fetchSelectedCoinDetails, setCoin, setExchangeValue } from '../../reducers/buyReducer';
 import { convertCurrency } from './buySellService';
 class CryptoComponent extends Component {
+    ref = React.createRef();
     state = {
         buyDrawer: false,
         crypto: config.tlvCoinsList,
@@ -25,7 +26,7 @@ class CryptoComponent extends Component {
     handleCoinSelection = (selectedCoin) => {
         this.props.getCoinDetails(selectedCoin.walletCode, this.props.member?.id);
         this.props.setSelectedCoin(selectedCoin);
-        convertCurrency({ from: selectedCoin.walletCode, to: "USD", value: 1, isCrypto: false ,memId:this.props.member?.id,screenName:null}).then(val => {
+        convertCurrency({ from: selectedCoin.walletCode, to: "USD", value: 1, isCrypto: false, memId: this.props.member?.id, screenName: null }).then(val => {
             this.props.setExchangeValue({ key: selectedCoin.walletCode, value: val });
         })
         this.props.changeStep("step2");
@@ -59,15 +60,16 @@ class CryptoComponent extends Component {
                                 1: "All", 2: "Gainers", 3: "Losers"
                             };
                             this.props.dispatch(fetchCoins(types[key]));
+                            this.ref.current.clearSearch();
                         }}>
-                            <TabPane tab={<Translate content="tabs_All"  component={Tabs.TabPane.tab} className="custom-font fw-400 fs-16" ></Translate>} key="1">
-                                <CryptoList isLoading={coinListdata["All"]?.loading} showSearch={true} coinList={coinListdata["All"]?.data} coinType="All" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
+                            <TabPane tab={<Translate content="tabs_All" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-16" ></Translate>} key="1">
+                                <CryptoList ref={this.ref} isLoading={coinListdata["All"]?.loading} showSearch={true} coinList={coinListdata["All"]?.data} coinType="All" onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                             </TabPane>
-                            <TabPane tab={<Translate content="gainers"  component={Tabs.TabPane.tab} className="custom-font fw-400 fs-16" ></Translate> }key="2">
-                                <CryptoList coinType="Gainers" showSearch={true} isLoading={coinListdata["Gainers"]?.loading} coinList={coinListdata["Gainers"]?.data} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
+                            <TabPane tab={<Translate content="gainers" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-16" ></Translate>} key="2">
+                                <CryptoList ref={this.ref} coinType="Gainers" showSearch={true} isLoading={coinListdata["Gainers"]?.loading} coinList={coinListdata["Gainers"]?.data} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                             </TabPane>
-                            <TabPane tab={<Translate content="losers"  component={Tabs.TabPane.tab} className="custom-font fw-400 fs-16" ></Translate> }key="3">
-                                <CryptoList coinType="Losers" showSearch={true} isLoading={coinListdata["Losers"]?.loading} coinList={coinListdata["Losers"]?.data} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
+                            <TabPane tab={<Translate content="losers" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-16" ></Translate>} key="3">
+                                <CryptoList ref={this.ref} coinType="Losers" showSearch={true} isLoading={coinListdata["Losers"]?.loading} coinList={coinListdata["Losers"]?.data} onCoinSelected={(selectedCoin) => this.handleCoinSelection(selectedCoin)} />
                             </TabPane>
                         </Tabs></>
                 }

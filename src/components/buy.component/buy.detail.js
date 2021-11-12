@@ -46,7 +46,8 @@ class SelectCrypto extends Component {
     fetchConvertionValue = async () => {
         const { coin } = this.props.buyInfo?.selectedCoin?.data;
         const { isSwaped, cryptoValue, localValue } = this.state.swapValues;
-        const value = await convertCurrency({ from: coin, to: "USD", value: isSwaped ? cryptoValue : localValue, isCrypto: !isSwaped, memId: this.props.userProfileInfo.id, screenName: null })
+        const value = await convertCurrency({ from: coin, to: "USD", value: isSwaped ? cryptoValue : localValue, isCrypto: !isSwaped, memId: this.props.userProfileInfo.id, screenName: "buy" })
+        
         this.setState({ ...this.state, disableConfirm: false, swapValues: { ...this.state.swapValues, [isSwaped ? "localValue" : "cryptoValue"]: value } })
     }
     onValueChange = ({ cryptoValue, localValue, isSwaped }) => {
@@ -79,7 +80,8 @@ class SelectCrypto extends Component {
             this.setState({ ...this.state, error: { ..._vaidator } });
             this.myRef.current.scrollIntoView();
         } else {
-            this.fetchConvertionValue()
+            this.fetchConvertionValue();
+            this.swapRef.current.handleConvertion({cryptoValue,localValue,locCurrency:this.state.selectedWallet?.currencyCode})
         }
     }
     render() {
