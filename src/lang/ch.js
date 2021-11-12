@@ -444,4 +444,7 @@ export default {
   accept_terms:'請接受服務條款',
   amount_greater_zero:'金額必須大於零。',
   exceeded_amount:'您已超過最大金額',
+  mkt_Cap:'馬克帽',
+  total_volume:'總容積',
+  total_supply:'總供應量',
 }

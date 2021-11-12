@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { List, Empty, Input } from 'antd';
 import NumberFormat from 'react-number-format';
 import apiCalls from '../../api/apiCalls';
 
-const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, showSearch, selectedCoin, iconField, titleField, onReturnCoin }) => {
+const CryptoList = forwardRef(({ coinList, isLoading, onCoinSelected, coinType, loadMore, showSearch, selectedCoin, iconField, titleField, onReturnCoin }, ref) => {
     const [coinListData, setCoinListData] = useState([]);
     const [selList, setselList] = useState({});
-
+    const [searchVal, setSearchVal] = useState("");
     const { Search } = Input;
     useEffect(() => {
         setCoinListData(coinList)
@@ -20,7 +20,12 @@ const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, s
                 selectList(selectedCoin)
             }
         }
-    }, [selectedCoin])
+    }, [selectedCoin]);
+    useImperativeHandle(ref, () => ({
+        clearSearch() {
+            setSearchVal("");
+        }
+    }))
     const handleSearch = (value) => {
         let filtercoinsList;
         if (!value) {
@@ -35,7 +40,7 @@ const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, s
         if (onCoinSelected) { onCoinSelected(item) }
     }
     return (<>
-        {showSearch && <Search placeholder={apiCalls.convertLocalLang('searchCurrency')} addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { handleSearch(currentTarget.value) }} size="middle" bordered={false} className="mb-16" />}
+        {showSearch && <Search value={searchVal} placeholder={apiCalls.convertLocalLang('searchCurrency')} addonAfter={<span className="icon md search-white" />} onChange={({ currentTarget }) => { setSearchVal(currentTarget.value); handleSearch(currentTarget.value) }} size="middle" bordered={false} className="mb-16" />}
         <List
             itemLayout="horizontal"
             dataSource={coinListData}
@@ -63,5 +68,5 @@ const CryptoList = ({ coinList, isLoading, onCoinSelected, coinType, loadMore, s
         />
     </>
     );
-}
+});
 export default CryptoList;

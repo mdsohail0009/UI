@@ -37,11 +37,12 @@ const LocalCryptoSwapper = (props, ref) => {
         setConvertionLoad(true);
         const response = await convertCurrencyDuplicate({ from: coin, to: locCurrency || localCurrency || "USD", value: (inputvalue || 0), isCrypto: !isSwaped, memId: props.memberId, screenName: props.screenName });
         if (response.ok) {
+            debugger
             const { data: value, config: { url } } = response;
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
             let _val = document.getElementById("ABC")?.value;
             _val = _val ? _val.replace(/,/g, "") : _val;
-            _val = _val?.replace(symbols[localCurrency], "");
+            _val = _val?.replace(symbols[locCurrency||localCurrency], "");
             if (_obj[3] == _val || _obj[3] == 0) {
                 if (!isSwaped) {
                     setCryptoValue(value || 0);
