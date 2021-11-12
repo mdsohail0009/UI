@@ -20,7 +20,8 @@ const MarketCap = () => {
     const [originalMarketCaps, setOriginalMarketCaps] = useState([])
     useEffect(() => { fetchMarketCapsInfo() }, [])
     const fetchMarketCapsInfo = async () => {
-        setIsLoading(true)
+        setIsLoading(true);
+        setSearchVal("");
         const response = await fetchMarketCaps({ pageNo: 1 });
         if (response.ok) {
             setMarketCaps(response.data);
