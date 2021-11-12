@@ -50,6 +50,7 @@ const fetchPreview = ({ coin, wallet, amount, isCrypto = false, memberId }) => {
         const response = await getPreview({ coin, currency: wallet.currencyCode, amount, isCrypto, memberId });
         if (response.ok) {
             dispatch(handleFetch({ key: "previewDetails", loading: false, data: response.data }));
+            dispatch(setExchangeValue({key:coin,value:response.data?.oneCoinValue}));
         } else {
             dispatch(handleFetch({ key: "previewDetails", loading: false, data: null, error: response.originalError.message }));
         }
