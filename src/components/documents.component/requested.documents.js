@@ -51,7 +51,8 @@ class RequestedDocs extends Component {
         }
     }
     loadDocReplies = async (id) => {
-        this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: [] });
+        let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId != id);
+        this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: docReObj });
         const response = await getDocumentReplies(id);
         if (response.ok) {
             this.setState({
