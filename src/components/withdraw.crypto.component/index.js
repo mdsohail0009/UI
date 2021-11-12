@@ -12,9 +12,9 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
     useEffect(() => {
         loadData()
     }, [])
-    const loadData = () =>{
+    const loadData = () => {
         dispatch(fetchWithDrawWallets({ memberId: userProfile?.id }));
-        dispatch(handleSendFetch({key:"cryptoWithdraw",activeTab:null}));
+        dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
         dispatch(setSubTitle(apicalls.convertLocalLang("selectCurrencyinWallet")));
     }
     const { cryptoWithdraw: { wallets } } = sendReceive;
@@ -23,7 +23,7 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
         return <Loader />
     }
     return <>
-        <Translate content="withdraw_a_crypto" component={Title} className="text-white-30 fw-200 mb-8 custom-font" />
+        <Translate content="withdraw_a_crypto" component={Title} className="text-white-30 fw-200 mb-8 mt-16 custom-font" />
         <Translate content="withdraw_a_crypto_text" component={Paragraph} className="fs-16 text-secondary" />
         <div className="dep-withdraw auto-scroll">
             {wallets?.data?.map((wallet, indx) => <Card key={indx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { dispatch(setSelectedWithDrawWallet(wallet)); dispatch(setStep('withdraw_crypto_selected')) }} >

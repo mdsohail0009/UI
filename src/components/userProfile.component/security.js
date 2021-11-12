@@ -30,8 +30,8 @@ const Security =({userConfig})=> {
         const { Title, Paragraph} = Typography;
         return (<>
             <div className="box basic-info">
-                <Title className="basicinfo"><Translate content="TwoFactorAuthentication" component={Title} className="basicinfo"/></Title>
-                <Paragraph className="basic-decs"><Translate content="TwoFactorAuthentication_tag" component={Paragraph} className="basic-decs"/></Paragraph>
+               <Translate content="TwoFactorAuthentication" component={Title} className="basicinfo mb-0"/>
+                <Translate content="TwoFactorAuthentication_tag" component={Paragraph} className="basic-decs"/>
                 <ul className="user-list pl-0">
                     <li className="profileinfo">
                         <div className="d-flex profile-block">
@@ -44,15 +44,15 @@ const Security =({userConfig})=> {
                 </ul>
             </div>
             <div className="box contact-info">
-                <Title className="basicinfo"><Translate content="change_pass_word" component={Title} className="basicinfo"/></Title>
-                <Paragraph className="basic-decs"><Translate content="Choose_a_unique_pass_word_to_protect_your_account" component={Paragraph} className="basic-decs"/></Paragraph>
+               <Translate content="change_pass_word" component={Title} className="basicinfo mb-0"/>
+                <Translate content="Choose_a_unique_pass_word_to_protect_your_account" component={Paragraph} className="basic-decs"/>
                 <ul className="user-list pl-0">
                     <li className="profileinfo c-pointer" onClick={()=>showDrawer()}>
                         <div className="d-flex profile-block">
                             <label className="mb-0 profile-label"><Translate content="Password" component={Paragraph.label} className="mb-0 profile-label"/></label>
                             <div style={{ flexGrow: 12 }}>
                                 <p className="mb-0 ml-8 profile-value"> ************</p>
-                                {userConfig?.pwdModifiedDate!=null&&<p className="mb-0 ml-8 fs-14 text-white"><Translate content="Password" component={Paragraph.p} className="mb-0 ml-8 fs-14 text-white"/> <Moment format="DD-MM-YYYY">{userConfig?.pwdModifiedDate}</Moment></p>}
+                                {userConfig?.pwdModifiedDate!=null&&<p className="mb-0 ml-8 fs-14 text-white"><Translate content="Modifiedon" component={Paragraph.p} className="mb-0 ml-8 fs-14 text-white"/> <Moment format="DD-MM-YYYY">{userConfig?.pwdModifiedDate}</Moment></p>}
                             </div>
                             <div>
                             <span className='text-white'><Translate content="Click_here_to_change_pass_word" component={Paragraph.span} className='text-white'/></span><span className="icon md rarrow-white" />

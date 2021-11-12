@@ -444,4 +444,7 @@ export default {
   accept_terms:'Mangyaring tanggapin ang mga tuntunin ng serbisyo',
   amount_greater_zero:'Ang halaga ay dapat na mas malaki kaysa sa zero.',
   exceeded_amount:'Lumampas ka sa maximum na halaga',
+  mkt_Cap:'Mkt Cap',
+  total_volume:'Kabuuang Dami',
+  total_supply:'Kabuuang Supply',
 }

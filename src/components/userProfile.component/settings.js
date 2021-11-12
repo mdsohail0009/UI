@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Select, Form, Button, message,Row ,Col } from 'antd'
+import { Typography, Select, Form, Button, message, Row, Col } from 'antd'
 import { getSettingsLuData, saveSettingsData } from '../../api/apiServer'
 import { connect } from 'react-redux';
 import { getmemeberInfo } from '../../reducers/configReduser';
@@ -40,17 +40,17 @@ const Settings = ({ member, getmemeberInfoa }) => {
             counterpart.setLocale(settingsObj.Language);
         }
     }
-    const themeSwitch=async() =>{
+    const themeSwitch = async () => {
         setTheme(!theme)
-         switcher({ theme: theme ? themes.DRT : themes.LHT });
-        settingsObj.Theme=!theme?'Light Theme':'Dark Theme';
-        settingsObj.MemberId=member?.id
+        switcher({ theme: theme ? themes.DRT : themes.LHT });
+        settingsObj.Theme = !theme ? 'Light Theme' : 'Dark Theme';
+        settingsObj.MemberId = member?.id
         let res = await saveSettingsData(settingsObj);
         if (res.ok) {
             message.destroy()
             getmemeberInfoa(member.userId)
             counterpart.setLocale(settingsObj.Language);
-        } 
+        }
     }
 
     // render() {
@@ -62,48 +62,48 @@ const Settings = ({ member, getmemeberInfoa }) => {
             <Paragraph className="basic-decs"><Translate content="User_customized_settings" className="basic-decs" /></Paragraph>
             <Row gutter={16} className="py-16 border-bottom">
                 <Col span={12}>
-                <Text className="input-label"><Translate content="language"/></Text>
-                <Form.Item
-                    className="custom-forminput mb-24"
-                  
-                    name="Language"
-                    required
-                    id="Language"
-                    rules={[
-                        { required: true, message: "Is required" },
-                    ]}
-                >
-                    <Select placeholder="Select Language" bordered={false}
-                        className="cust-input cust-select mb-0"
-                        dropdownClassName="select-drpdwn"
-                        onChange={(e) => { settingsObj.Language = e; setSettingsObj(settingsObj); form.setFieldsValue({ ...settingsObj }) }}>
-                        {SettingsLu.languageLookup?.map((item, idx) => <Option key={idx} value={item}>{item.toUpperCase()}
-                        </Option>)}
-                    </Select></Form.Item>
-            </Col>
-            <Col span={12}>
-                <Text className="input-label"><Translate content="currency" /></Text>
-                <Form.Item
-                    className="custom-forminput mb-24"
-                    name="LCurrency"
-                    required
-                    id="LCurrency"
-                    rules={[
-                        { required: true, message: "Is required" },
-                    ]}
-                >
-                    <Select placeholder="Select Currency" bordered={false}
-                        className="cust-input cust-select mb-0"
-                        dropdownClassName="select-drpdwn"
-                        onChange={(e) => { settingsObj.LCurrency = e; setSettingsObj(settingsObj); form.setFieldsValue({ ...settingsObj }) }}>
-                        {SettingsLu.currencyLookup?.map((item, idx) => <Option key={idx} value={item}>{item}
-                        </Option>)}
-                    </Select></Form.Item>
-            </Col>
+                    <Text className="input-label"><Translate content="language" /></Text>
+                    <Form.Item
+                        className="custom-forminput mb-24"
+
+                        name="Language"
+                        required
+                        id="Language"
+                        rules={[
+                            { required: true, message: "Is required" },
+                        ]}
+                    >
+                        <Select placeholder="Select Language" bordered={false}
+                            className="cust-input cust-select mb-0"
+                            dropdownClassName="select-drpdwn"
+                            onChange={(e) => { settingsObj.Language = e; setSettingsObj(settingsObj); form.setFieldsValue({ ...settingsObj }) }}>
+                            {SettingsLu.languageLookup?.map((item, idx) => <Option key={idx} value={item}>{item.toUpperCase()}
+                            </Option>)}
+                        </Select></Form.Item>
+                </Col>
+                <Col span={12}>
+                    <Text className="input-label"><Translate content="currency" /></Text>
+                    <Form.Item
+                        className="custom-forminput mb-24"
+                        name="LCurrency"
+                        required
+                        id="LCurrency"
+                        rules={[
+                            { required: true, message: "Is required" },
+                        ]}
+                    >
+                        <Select placeholder="Select Currency" bordered={false}
+                            className="cust-input cust-select mb-0"
+                            dropdownClassName="select-drpdwn"
+                            onChange={(e) => { settingsObj.LCurrency = e; setSettingsObj(settingsObj); form.setFieldsValue({ ...settingsObj }) }}>
+                            {SettingsLu.currencyLookup?.map((item, idx) => <Option key={idx} value={item}>{item}
+                            </Option>)}
+                        </Select></Form.Item>
+                </Col>
             </Row>
-            <div className="pt-16">
+            <div className="pt-16 border-bottom pb-36">
                 <Text className="input-label"><Translate content="theme" className="input-label" component={Text} /></Text>
-                <div className="d-flex">
+                <div className="d-flex mb-36">
                     <div className="theme-switch theme-active c-pointer" onClick={() => theme ? themeSwitch() : ''}>
                         <div className="d-flex align-center " >
                             <p className="switch-circle mb-0" >{!theme && <span className="icon md check-arrow c-pointer"></span>}{theme && <span></span>}</p>
@@ -116,14 +116,16 @@ const Settings = ({ member, getmemeberInfoa }) => {
                     </div>
                 </div>
             </div>
-            <Button
-                htmlType="submit"
-                size="large"
-                block
-                className="pop-btn mt-36"
-            >
-                <Translate content="Save_btn_text" />
-            </Button>
+            <div className="text-center">
+                <Button
+                    htmlType="submit"
+                    size="medium"
+                    className="pop-btn mt-36"
+                    style={{ width: 300 }}
+                >
+                    <Translate content="Save_btn_text" />
+                </Button>
+            </div>
         </div>
     </Form>
     </>)

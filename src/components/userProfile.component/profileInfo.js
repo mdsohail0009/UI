@@ -68,7 +68,7 @@ class ProfileInfo extends Component {
             </div>
         
             <div className="box basic-info">
-                <Title className="basicinfo"> <Translate content="BasicInfo" component={Text} className="basicinfo"/></Title>
+                <Title className="basicinfo mb-0"> <Translate content="BasicInfo" component={Text} className="basicinfo"/></Title>
                 <Paragraph className="basic-decs"><Translate content="BasicInfotag" component={Text} className="basic-decs" /></Paragraph>
                 <ul className="user-list pl-0">
                     <li className="profileinfo">

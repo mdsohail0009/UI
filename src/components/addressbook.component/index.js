@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert } from 'antd'
-import { setAddressStep, rejectCoin, fetchUsersIdUpdate, clearValues ,clearCryptoValues} from '../../reducers/addressBookReducer';
+import { setAddressStep, rejectCoin, fetchUsersIdUpdate, clearValues, clearCryptoValues } from '../../reducers/addressBookReducer';
 import Translate from 'react-translate-component';
 import { processSteps as config } from './config';
 import NewAddressBook from './newAddressBook';
@@ -42,19 +42,19 @@ class AddressBook extends Component {
         this.gridFiatRef = React.createRef();
         this.gridCryptoRef = React.createRef();
     }
-     columnsFiat = [
+    columnsFiat = [
         { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
         { field: "favouriteName", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 180 },
         { field: "toWalletAddress", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
         { field: "currency", title: apiCalls.convertLocalLang('currency'), width: 150, filter: true, with: 150 },
         { field: "accountNumber", title: apiCalls.convertLocalLang('Bank_account'), filter: true, width: 220 },
-        { field: "routingNumber", title:  apiCalls.convertLocalLang('BIC_SWIFT_routing_number'), filter: true, width: 180 },
+        { field: "routingNumber", title: apiCalls.convertLocalLang('BIC_SWIFT_routing_number'), filter: true, width: 180 },
         { field: "bankName", title: apiCalls.convertLocalLang('Bank_name'), filter: true, width: 200 },
         { field: "bankAddress", title: apiCalls.convertLocalLang('Bank_address1'), filter: true, width: 250 },
         { field: "beneficiaryAccountName", title: apiCalls.convertLocalLang('Recipient_full_name'), filter: true, width: 200 },
         { field: "beneficiaryAccountAddress", title: apiCalls.convertLocalLang('Recipient_address1'), filter: true, width: 250 },
         // { field: "swiftCode", title: "Swift Code", filter: true, },
-        { field: "status", title:apiCalls.convertLocalLang('Status') , filter: true, width: 100 }
+        { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 100 }
     ];
     columnsCrypto = [
         {
@@ -148,7 +148,6 @@ class AddressBook extends Component {
         this.setState({ ...this.state, successMsg: false })
     }
     addAddressBook = () => {
-        debugger
         if (this.state.cryptoFiat) {
             this.setState({ ...this.state, fiatDrawer: true })
             this.props.clearFormValues();
@@ -167,10 +166,10 @@ class AddressBook extends Component {
             obj.walletCode = obj.coin;
             this.props.rowSelectedData(obj)
             if (this.state.cryptoFiat) {
-                this.setState({ ...this.state, fiatDrawer: true, selection: [],isCheck: false, })
+                this.setState({ ...this.state, fiatDrawer: true, selection: [], isCheck: false, })
             }
             else {
-                this.setState({ ...this.state, visible: true, selection: [],isCheck: false, })
+                this.setState({ ...this.state, visible: true, selection: [], isCheck: false, })
             }
         }
     }
@@ -197,13 +196,13 @@ class AddressBook extends Component {
     renderContent = () => {
         const stepcodes = {
             cryptoaddressbook: <NewAddressBook onCancel={() => this.closeBuyDrawer()} />,
-            selectcrypto:<SelectCrypto />
+            selectcrypto: <SelectCrypto />
         }
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
     }
     renderTitle = () => {
         const titles = {
-            cryptoaddressbook: <span/>,
+            cryptoaddressbook: <span />,
             selectcrypto: <span onClick={this.backStep} className="icon md lftarw-white c-pointer" />,
         }
         return titles[config[this.props.addressBookReducer.stepcode]]
@@ -217,25 +216,22 @@ class AddressBook extends Component {
     }
     render() {
         const { cryptoFiat, gridUrlCrypto, gridUrlFiat, memberId } = this.state;
-        const { Title, Paragraph,Text } = Typography;
-    
+        const { Title, Paragraph, Text } = Typography;
+
         return (
             <>
 
                 <div className="box basic-info">
-                    <Title className="basicinfo"><Translate content="address_book" component={Text} className="basicinfo"/></Title>
-                    <Paragraph className="basic-decs mb-16"><Translate content="address_book_tag" component={Paragraph} className="basic-decs mb-16"/></Paragraph>
-                    <Radio.Group
-                        defaultValue={1}
-                        onChange={this.handleWithdrawToggle}
-                        className="buysell-toggle mx-0" style={{ display: "inline-block" }}>
-                        <Translate content="withdrawCrypto" component={Radio.Button} value={1} className="buysell-toggle mx-0"/>
-                        <Translate content="withdrawFiat" component={Radio.Button} value={2} className="buysell-toggle mx-0"/>
-                    </Radio.Group>
+                    <Title className="basicinfo mb-0"><Translate content="address_book" component={Text} className="basicinfo" /></Title>
+                    <Paragraph className="basic-decs mb-16"><Translate content="address_book_tag" component={Paragraph} className="basic-decs mb-16" /></Paragraph>
                     <div className="d-flex justify-content align-center mb-16">
-                        <div>
-                            {/* <Title className="fs-26 text-white-30 fw-500">{cryptoFiat ? <Translate content="withdrawFiat" className="fs-26 text-white-30 fw-500" component={Title}/> : <Translate content="withdrawCrypto" component={Title} className="fs-26 text-white-30 fw-500"/>}</Title> */}
-                        </div>
+                        <Radio.Group
+                            defaultValue={1}
+                            onChange={this.handleWithdrawToggle}
+                            className="buysell-toggle mx-0" style={{ display: "inline-block" }}>
+                            <Translate content="withdrawCrypto" component={Radio.Button} value={1} className="buysell-toggle mx-0" />
+                            <Translate content="withdrawFiat" component={Radio.Button} value={2} className="buysell-toggle mx-0" />
+                        </Radio.Group>
                         <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0, display: 'flex' }}>
                             <li onClick={this.addAddressBook} className="mr-16">
                                 <Tooltip placement="topRight" title="Add">
@@ -289,7 +285,7 @@ class AddressBook extends Component {
                     title={[<div className="side-drawer-header">
                         <span />
                         <div className="text-center fs-16">
-                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper"><Translate content="AddFiatAddress" component={Text} className="mb-0 text-white-30 fw-600 text-upper"/></Paragraph>
+                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper"><Translate content="AddFiatAddress" component={Text} className="mb-0 text-white-30 fw-600 text-upper" /></Paragraph>
                         </div>
                         <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
                     </div>]}
@@ -344,7 +340,7 @@ const connectDispatchToProps = dispatch => {
         changeStep: (stepcode) => {
             dispatch(setAddressStep(stepcode))
         },
-     
+
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(AddressBook);

@@ -9,29 +9,29 @@ import { createCryptoDeposit } from "../api";
 import { appInsights } from "../../../Shared/appinsights";
 import apicalls from "../../../api/apiCalls";
 const { Title, Paragraph } = Typography;
-const CryptoDeposit = ({ dispatch, userProfile,swapStore }) => {
-    useEffect(() => { fetchMemberCoins(); trackevent()}, []);
+const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
+    useEffect(() => { fetchMemberCoins(); trackevent() }, []);
     const fetchMemberCoins = () => {
         dispatch(getMemberCoins(userProfile.id));
     }
     const onCryptoCoinSelect = async (coin) => {
         dispatch(setStep("step7"));
-        dispatch(setSubTitle(`${coin.coinBalance?coin.coinBalance:'0'} ${coin.coin}`+" " +apicalls.convertLocalLang('available')
+        dispatch(setSubTitle(`${coin.coinBalance ? coin.coinBalance : '0'} ${coin.coin}` + " " + apicalls.convertLocalLang('available')
         ));
         const response = await createCryptoDeposit({ memberId: userProfile?.id, walletCode: coin?.coin });
         if (response.ok) {
             dispatch(setWalletAddress(response.data));
         }
     }
-    const trackevent =() =>{
+    const trackevent = () => {
         appInsights.trackEvent({
-            name: 'Deposit Crypto', properties: {"Type": 'User',"Action": 'Page view',"Username":userProfile.userName,"MemeberId": userProfile.id,"Feature": 'Deposit Crypto',"Remarks": "Deposit crypto page view","Duration": 1,"Url": window.location.href,"FullFeatureName": 'Deposit Crypto'}
+            name: 'Deposit Crypto', properties: { "Type": 'User', "Action": 'Page view', "Username": userProfile.userName, "MemeberId": userProfile.id, "Feature": 'Deposit Crypto', "Remarks": "Deposit crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto' }
         });
     }
-    return <> <Translate content="deposite_a_crypto" component={Title} className="text-white-30 fw-200 mb-8 custom-font" />
+    return <> <Translate content="deposite_a_crypto" component={Title} className="text-white-30 fw-200 mb-8 custom-font mt-16" />
         <Translate content="deposite_a_cryto_txt" component={Paragraph} className="fs-16 text-secondary fw-200" />
         <div className="dep-withdraw auto-scroll">
-            <CryptoList showSearch={true} titleField={'coin'} iconField={'coin'} showValues={true} coinList={swapStore.isLoading?[]:swapStore.MemberCoins} isLoading={swapStore.isLoading} onCoinSelected={(coin) => onCryptoCoinSelect(coin)} coinType={"swap"} />
+            <CryptoList showSearch={true} titleField={'coin'} iconField={'coin'} showValues={true} coinList={swapStore.isLoading ? [] : swapStore.MemberCoins} isLoading={swapStore.isLoading} onCoinSelected={(coin) => onCryptoCoinSelect(coin)} coinType={"swap"} />
         </div></>
 }
 

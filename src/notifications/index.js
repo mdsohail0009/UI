@@ -18,6 +18,7 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard }
         setLoading(true);
         const response = await getNotifications(userProfile?.id);
         if (response.ok) {
+            debugger
             setNotifications(response.data.listNotificationsModel || []);
             dispatch(setNotificationCount(response?.data?.unReadCount));
         } else {
@@ -45,9 +46,7 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard }
                     className="notifications-list"
                     loading={loading}
                     locale={{
-                        emptyText: <Empty image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg" imageStyle={{
-                            height: 120, marginBottom: 24
-                        }} description="No Notifications Available" />
+                        emptyText: <Empty className="mt-36" image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Notifications Available" />
                     }}
                 >
                     {notifications?.map((item, indx) => <List.Item onClick={() => { if (!item.isRead) { readNotification(item.id); dispatch(setNotificationCount(dashboard.notificationCount - 1)) } }} key={indx} style={{ borderWidth: '0px' }} >

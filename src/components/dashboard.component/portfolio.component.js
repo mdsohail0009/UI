@@ -6,6 +6,7 @@ import Currency from '../shared/number.formate';
 import { fetchPortfolioData } from '../../reducers/dashboardReducer';
 import { createChart, ColorType, PriceScaleMode, LineStyle } from "lightweight-charts";
 import { getPortfolioGraph } from './api';
+import { Link } from 'react-router-dom';
 class Portfolio extends Component {
     chart;
     state = {
@@ -173,7 +174,7 @@ class Portfolio extends Component {
                 <div className="portfolio-count py-36">
                     <div className="summary-count mr-16">
                         <Currency defaultValue={totalFiatValue} className={`fs-40 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }} />
-                        <Currency defaultValue={totalCryptoValue} prefix={""} suffixText={"BTC"} className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
+                        <div style={{ display: 'flex' }}><Currency defaultValue={totalCryptoValue} prefix={""} suffixText={"BTC"} className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} /><Link to="/dashboardCharts" className="dbchart-link fs-14 fw-500">Dashboard</Link></div>
                     </div>
                 </div>
                 <div className="text-center mb-16 wmy-graph" >
