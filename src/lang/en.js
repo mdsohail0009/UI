@@ -308,7 +308,7 @@ export default {
   enter_wallet: 'Please enter amount to buy',
   select_wallet: 'Please select wallet to proceed',
   insufficientFunds: 'Insufficient funds',
-  agree_terms: 'Please agree to terms & conditions',
+  agree_terms: 'Please accept terms of service',
   All: 'All',
   BuyandSell: 'Buy/Sell',
   DepositandFiat: 'Deposit Fiat',
