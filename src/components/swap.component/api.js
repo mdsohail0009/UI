@@ -5,7 +5,7 @@ const getportfolio = (member_id) => {
     return apiClient.get(ApiControllers.depositWithdraw + `Withdraw/Crypto/${member_id}`);
 }
 const fetchCurrConvertionValue = (from, to, value, memeberid, screenName) => {
-    return apiClient.get(ApiControllers.master + `CryptoToCrypto/${from}/${to}/${value}/${screenName || null}`);
+    return apiClient.get(ApiControllers.master + `CryptoToCrypto/${memeberid}/${from}/${to}/${value}/${screenName || null}`);
 }
 const swapPreviewData = (coin, currency, amount) => {
     return apiClient.get(ApiControllers.swap + `Preview?coin=${coin}&currency=${currency}&amount=${amount}`);

@@ -86,7 +86,8 @@ const FaitWithdrawal = ({member, selectedWalletCode, buyInfo, userConfig, dispat
     }
   }
   const handleAddressChange = async (e) => {
-    let recAddressDetails = await detailsAddress(e)
+    let val = addressLu.filter((item)=> {if(item.name==e){return item}})
+    let recAddressDetails = await detailsAddress(val[0].id)
     if (recAddressDetails.ok) {
       bindEditableData(recAddressDetails.data)
     }
@@ -216,7 +217,7 @@ const selectAddress = () =>{
                   onChange={(e) => handleAddressChange(e)}
                   placeholder={apicalls.convertLocalLang('SelectAddress')}>
                   {addressLu?.map((item, idx) =>
-                    <Option key={idx} value={item.id}>{item.name}
+                    <Option key={idx} value={item.name}>{item.name}
                     </Option>
                   )}
                 </Select>
