@@ -371,7 +371,7 @@ export default {
   wallet_address: 'Select wallet address',
   enter_address: 'Enter address',
   enter_wallet_address: 'Please enter wallet address',
-  enter_amount: 'Enter amount to sell',
+  enter_amount: 'Please enter amount',
   amount_less: 'Entered amount should be less than available balance',
   amount_max: 'Entered amount should be less than max withdraw amount of ',
   amount_min: 'Please enter min value of ',
