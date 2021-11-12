@@ -282,12 +282,12 @@ class RequestedDocs extends Component {
                         {!this.state.documentReplies[doc.id]?.loading && doc.status !== "Approved" && <><div className="mb-24">
                             <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
                             <Input onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
-                                className="mb-24 cust-input"
+                                className="cust-input"
                                 placeholder="Write your message"
                                 maxLength={200}
                             />
                             {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
-                            <Dragger accept=".pdf,.jpg,.jpeg,.png.gif" className="upload" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} onChange={(props) => { this.handleUpload(props, doc) }}>
+                            <Dragger accept=".pdf,.jpg,.jpeg,.png.gif" className="upload mt-24" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} onChange={(props) => { this.handleUpload(props, doc) }}>
                                 <p className="ant-upload-drag-icon">
                                     <span className="icon xxxl doc-upload" />
                                 </p>
