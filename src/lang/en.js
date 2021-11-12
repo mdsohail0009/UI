@@ -410,7 +410,7 @@ export default {
   Last_1_Day:'Last 1 Day',
   All_Features:'All Features',
   search:'Search',
-  feacture:'Feacture',
+  feature:'Feature',
   Feature_Path:'Feature Path',
   Action:'Action',
   Custom_Dates:'Custom Dates',

@@ -400,7 +400,7 @@ export default {
   Last_1_Day:'過去 1 天',
   All_Features:'所有功能',
   search:'搜索',
-  feacture:'特徵',
+  feature:'特徵',
   Feature_Path:'特征路徑',
   Action:'行動',
   Custom_Dates:'自定義日期',
