@@ -113,12 +113,12 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     });
   }
 
-  const getStateLu = async(countryname) => {
+  const getStateLu = async(countryname,isChange) => {
     let recName = await getStateLookup(countryname)
     if (recName.ok) {
       setStateLu(recName.data);
     }
-   //form.setFieldsValue({ state: null })
+   if(isChange)form.setFieldsValue({ state: null })
   }
 const selectAddress = () =>{
   let values = form.getFieldsValue()
@@ -337,7 +337,7 @@ const selectAddress = () =>{
               label={<Translate content="Country" component={Form.label}   />}
             >
               <Select dropdownClassName="select-drpdwn" placeholder={apicalls.convertLocalLang('Country')} className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-                onChange={(e) => getStateLu(e)} >
+                onChange={(e) => getStateLu(e,true)} >
                 {countryLu?.map((item, idx) =>
                   <Option key={idx} value={item.name}>{item.name}
                   </Option>
