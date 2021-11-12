@@ -27,7 +27,7 @@ const LinkValue = (props) => {
   )
 }
 const { Option } = Select;
-const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sendReceive, changeStep }) => {
+const FaitWithdrawal = ({member, selectedWalletCode, buyInfo, userConfig, dispatch, sendReceive, changeStep }) => {
   const [form] = Form.useForm();
   const [selectedWallet, setSelectedWallet] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -86,7 +86,8 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     }
   }
   const handleAddressChange = async (e) => {
-    let recAddressDetails = await detailsAddress(e)
+    let val = addressLu.filter((item)=> {if(item.name==e){return item}})
+    let recAddressDetails = await detailsAddress(val[0].id)
     if (recAddressDetails.ok) {
       bindEditableData(recAddressDetails.data)
     }
@@ -113,12 +114,12 @@ const FaitWithdrawal = ({ selectedWalletCode, buyInfo, userConfig, dispatch, sen
     });
   }
 
-  const getStateLu = async(countryname) => {
+  const getStateLu = async(countryname,isChange) => {
     let recName = await getStateLookup(countryname)
     if (recName.ok) {
       setStateLu(recName.data);
     }
-   //form.setFieldsValue({ state: null })
+   if(isChange)form.setFieldsValue({ state: null })
   }
 const selectAddress = () =>{
   let values = form.getFieldsValue()
@@ -208,23 +209,22 @@ const selectAddress = () =>{
             <div style={{ position:'relative' }}>
             <Form.Item
               className="custom-forminput custom-label mb-24"
-              label={<Translate content="address_book" component={Form.label}   />}
               name="favouriteName"
+              label={<Translate content="address_book" component={Form.label}   />}
             >
                 <Select dropdownClassName="select-drpdwn"
-                  className="cust-input"
-                // setAddressBook  
-               //  value={addressDetails.favouriteName}
+                  className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                   onChange={(e) => handleAddressChange(e)}
                   placeholder={apicalls.convertLocalLang('SelectAddress')}>
                   {addressLu?.map((item, idx) =>
-                    <Option key={idx} value={item.id}>{item.name}
+                    <Option key={idx} value={item.name}>{item.name}
                     </Option>
                   )}
                 </Select>
             </Form.Item> 
             <Tooltip placement="top" title={<span> <Translate  content="New_Address" /></span>} >
-                  <div className="c-pointer" onClick={() => selectAddress()} style={{ position:'absolute', left:0, top:3, marginLeft:'110px',cursor:"pointer" }} >
+                  <div className={"c-pointer"+ (userConfig.language == "ch" ? " customicon" : " defaulticon")}onClick={() => selectAddress()} 
+                  >
                     <span className="icon md address-book d-block c-pointer"></span>
                   </div>
                 </Tooltip>
@@ -337,9 +337,9 @@ const selectAddress = () =>{
               label={<Translate content="Country" component={Form.label}   />}
             >
               <Select dropdownClassName="select-drpdwn" placeholder={apicalls.convertLocalLang('Country')} className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-                onChange={(e) => getStateLu(e)} >
+                onChange={(e) => getStateLu(e,true)} >
                 {countryLu?.map((item, idx) =>
-                  <Option key={idx} value={item.name}>{item.name}
+                  <Option key={idx} value={item.code}>{item.name}
                   </Option>
                 )}
               </Select>
@@ -392,7 +392,6 @@ const selectAddress = () =>{
               className="custom-forminput custom-label mb-24"
               name="beneficiaryAccountName"
               label={<Translate content="Recipient_full_name" component={Form.label}   />}
-              
             >
               <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
             </Form.Item>
