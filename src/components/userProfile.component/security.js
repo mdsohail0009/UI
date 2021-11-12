@@ -52,7 +52,7 @@ const Security =({userConfig})=> {
                             <label className="mb-0 profile-label"><Translate content="Password" component={Paragraph.label} className="mb-0 profile-label"/></label>
                             <div style={{ flexGrow: 12 }}>
                                 <p className="mb-0 ml-8 profile-value"> ************</p>
-                                {userConfig?.pwdModifiedDate!=null&&<p className="mb-0 ml-8 fs-14 text-white"><Translate content="Password" component={Paragraph.p} className="mb-0 ml-8 fs-14 text-white"/> <Moment format="DD-MM-YYYY">{userConfig?.pwdModifiedDate}</Moment></p>}
+                                {userConfig?.pwdModifiedDate!=null&&<p className="mb-0 ml-8 fs-14 text-white"><Translate content="Modifiedon" component={Paragraph.p} className="mb-0 ml-8 fs-14 text-white"/> <Moment format="DD-MM-YYYY">{userConfig?.pwdModifiedDate}</Moment></p>}
                             </div>
                             <div>
                             <span className='text-white'><Translate content="Click_here_to_change_pass_word" component={Paragraph.span} className='text-white'/></span><span className="icon md rarrow-white" />

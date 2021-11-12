@@ -35,6 +35,7 @@ class WithdrawSummary extends Component {
     componentDidMount() {
         this.loadOneCoinData();
         this.loadData();
+        this.props.dispatch(setSubTitle(apicalls.convertLocalLang('withdrawSummary')));
     }
     loadData = async () => {
         this.setState({ ...this.state, usdLoading: true });
@@ -75,7 +76,7 @@ class WithdrawSummary extends Component {
                 this.props.changeStep('withdraw_crypto_liveness');
             }
         } else {
-            this.setState({ ...this.state, errorMsg: +" " + apicalls.convertLocalLang('agree_termsofservice') })
+            this.setState({ ...this.state, errorMsg:apicalls.convertLocalLang('agree_termsofservice') })
             this.useDivRef.current.scrollIntoView()
         }
     }

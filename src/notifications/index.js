@@ -18,6 +18,7 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard }
         setLoading(true);
         const response = await getNotifications(userProfile?.id);
         if (response.ok) {
+            debugger
             setNotifications(response.data.listNotificationsModel || []);
             dispatch(setNotificationCount(response?.data?.unReadCount));
         } else {
@@ -48,7 +49,7 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard }
                         emptyText: <Empty className="mt-36" image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Notifications Available" />
                     }}
                 >
-                    {!notifications?.map((item, indx) => <List.Item onClick={() => { if (!item.isRead) { readNotification(item.id); dispatch(setNotificationCount(dashboard.notificationCount - 1)) } }} key={indx} style={{ borderWidth: '0px' }} >
+                    {notifications?.map((item, indx) => <List.Item onClick={() => { if (!item.isRead) { readNotification(item.id); dispatch(setNotificationCount(dashboard.notificationCount - 1)) } }} key={indx} style={{ borderWidth: '0px' }} >
                         <List.Item.Meta
                             className={`${item?.action?.toLowerCase()}bg mb-0`}
                             avatar={<span className={`icon md notifyIcon ${item?.action?.toLowerCase()}`} />}
