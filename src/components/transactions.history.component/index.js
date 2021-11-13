@@ -105,7 +105,7 @@ class TransactionsHistory extends Component {
           width="100%"
           onClose={this.props.onClose}
           visible={this.props.showDrawer}
-          className="side-drawer-full"
+          className="side-drawer-full custom-gridresponsive"
         >
           <div className="transaction-tabs">
             <Tabs className="crypto-list-tabs mt-0" activeKey={this.state.activeTab} onChange={this.changeTab}>
