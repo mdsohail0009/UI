@@ -239,7 +239,7 @@ class FaitDeposit extends Component {
                   required
                   id="currency"
                   rules={[
-                    { required: true, message: "Is required" },
+                    { required: true, message: apicalls.convertLocalLang('is_required') },
                   ]}
                 ><div> <div className="d-flex"><Translate
                   className="input-label"
@@ -253,7 +253,7 @@ class FaitDeposit extends Component {
                         </Option>
                       )}
                     </Select></div></Form.Item>}
-                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}>Bank details not available</Text>}
+                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="bank_msg"/></Text>}
                 {this.state.BankDetails?.length > 1 &&depObj.currency !== null && <Form.Item><Translate
                   className="input-label"
                   content="BankName"
@@ -276,7 +276,7 @@ class FaitDeposit extends Component {
                       name="Amount"
                       required
                       rules={[
-                        { required: true, message: "Is required" },
+                        { required: true, message: apicalls.convertLocalLang('is_required') },
                       ]}
                     > <div ><div className="d-flex">
                       <Translate

@@ -65,7 +65,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
             setErrorMsg('')
             let response = await saveAddress(values);
             if (response.ok) {
-                message.success({ content: 'Address saved successfully ', className: 'custom-msg' });
+                message.success({ content:apiCalls.convertLocalLang('address_msg'), className: 'custom-msg' });
                 form.resetFields();
                 rejectCoinWallet();
                 InputFormValues(null);

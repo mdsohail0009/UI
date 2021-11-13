@@ -51,7 +51,8 @@ class RequestedDocs extends Component {
         }
     }
     loadDocReplies = async (id) => {
-        this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: [] });
+        let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId != id);
+        this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: docReObj });
         const response = await getDocumentReplies(id);
         if (response.ok) {
             this.setState({
@@ -79,7 +80,7 @@ class RequestedDocs extends Component {
             "documentDetailId": doc.id,
             "status": "Approved"
         });
-        this.setState({...this.state,isMessageError:null});
+        this.setState({ ...this.state, isMessageError: null });
         message.destroy()
         if (response.ok) {
             message.success({
@@ -105,9 +106,9 @@ class RequestedDocs extends Component {
     }
     docReject = async (doc) => {
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
-        this.setState({...this.state,isMessageError:null});
+        this.setState({ ...this.state, isMessageError: null });
         if (!item || !item.reply) {
-            this.setState({...this.state,isMessageError:doc.id.replace(/-/g,"")});
+            this.setState({ ...this.state, isMessageError: doc.id.replace(/-/g, "") });
             return;
         }
         item.path = item.path ? typeof (item.path) === "object" ? JSON.stringify(item.path) : item.path : item.path;
@@ -131,7 +132,7 @@ class RequestedDocs extends Component {
         }
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
-        this.setState({ ...this.state, docReplyObjs: objs, isSubmitting: false,isMessageError:null });
+        this.setState({ ...this.state, docReplyObjs: objs, isSubmitting: false, isMessageError: null });
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
     deleteDocument = async (doc, idx, isAdd) => {
@@ -259,7 +260,7 @@ class RequestedDocs extends Component {
             {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
             <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=4" />{this.state?.docDetails?.note}</div>
             <div className="bank-view">
-                {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
+                {this.state.docDetails?.details?.map((doc, idx) => <Collapse collapsible="header" onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
                     <Panel header={doc.documentName} key={idx + 1} extra={doc.status ? <span className={`${doc.status ? doc.status.toLowerCase() + " staus-lbl" : ""}`}>{doc.status}</span> : ""}>
                         {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
                         {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
@@ -278,15 +279,15 @@ class RequestedDocs extends Component {
                                 </div>
                             </div>
                         </div>)}
-                        {!this.state.documentReplies[doc.id]?.loading && doc.status !== "Approved" && <><div className="mb-24">
+                        {!this.state.documentReplies[doc.id]?.loading && doc.status !== "Approved" && <><div>
                             <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
                             <Input onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
-                                className="mb-24 cust-input"
+                                className="cust-input"
                                 placeholder="Write your message"
                                 maxLength={200}
                             />
                             {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
-                            <Dragger accept=".pdf,.jpg,.jpeg,.png.gif" className="upload" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} onChange={(props) => { this.handleUpload(props, doc) }}>
+                            <Dragger accept=".pdf,.jpg,.jpeg,.png.gif" className="upload mt-24" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} onChange={(props) => { this.handleUpload(props, doc) }}>
                                 <p className="ant-upload-drag-icon">
                                     <span className="icon xxxl doc-upload" />
                                 </p>

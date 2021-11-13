@@ -9,6 +9,9 @@ import en from '../../lang/en';
 import ch from '../../lang/ch';
 import my from '../../lang/my';
 import Translate from 'react-translate-component';
+
+
+
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
@@ -34,7 +37,7 @@ const Settings = ({ member, getmemeberInfoa }) => {
         let res = await saveSettingsData(settingsObj);
         if (res.ok) {
             message.destroy()
-            message.success({ content: 'Settings saved successfully', className: 'custom-msg' });
+            message.success({ content: <Translate content="settings_msg"/>, className: 'custom-msg' });
             getmemeberInfoa(member.userId)
             switcher({ theme: theme ? themes.LHT : themes.DRT });
             counterpart.setLocale(settingsObj.Language);
@@ -61,7 +64,7 @@ const Settings = ({ member, getmemeberInfoa }) => {
             <Translate content="settings" className="basicinfo" />
             <Paragraph className="basic-decs"><Translate content="User_customized_settings" className="basic-decs" /></Paragraph>
             <Row gutter={16} className="py-16 border-bottom">
-                <Col span={12}>
+                <Col sm={24} md={12}>
                     <Text className="input-label"><Translate content="language" /></Text>
                     <Form.Item
                         className="custom-forminput mb-24"
@@ -81,7 +84,7 @@ const Settings = ({ member, getmemeberInfoa }) => {
                             </Option>)}
                         </Select></Form.Item>
                 </Col>
-                <Col span={12}>
+                <Col sm={24} md={12}>
                     <Text className="input-label"><Translate content="currency" /></Text>
                     <Form.Item
                         className="custom-forminput mb-24"
@@ -102,14 +105,14 @@ const Settings = ({ member, getmemeberInfoa }) => {
                 </Col>
             </Row>
             <div className="pt-16 border-bottom pb-36">
-                <Text className="input-label"><Translate content="theme" className="input-label" component={Text} /></Text>
-                <div className="d-flex mb-36">
-                    <div className="theme-switch theme-active c-pointer" onClick={() => theme ? themeSwitch() : ''}>
+               <Translate content="theme" className="input-label" component={Text} />
+                <div className="custom-theme-btn mb-36">
+                    <div className="theme-switch theme-active mobile-mb-16 c-pointer" onClick={() => theme ? themeSwitch() : ''}>
                         <div className="d-flex align-center " >
                             <p className="switch-circle mb-0" >{!theme && <span className="icon md check-arrow c-pointer"></span>}{theme && <span></span>}</p>
                             <p className="mb-0 ml-16 theme-txt"><Translate content="dark_theme" className="mb-0 ml-16 theme-txt" component={Text.p} /></p></div>
                     </div>
-                    <div className={"theme-switch ml-24  c-pointer" + (theme ? " themeSwitchOn " : " themeSwitchOff ")} onClick={() => !theme ? themeSwitch() : ''}>
+                    <div className={"theme-switch c-pointer" + (theme ? " themeSwitchOn " : " themeSwitchOff ")} onClick={() => !theme ? themeSwitch() : ''}>
                         <div className="d-flex align-center c-pointer" >
                             <p className="switch-circle mb-0 c-pointer" >{theme && <span className="icon md check-arrow c-pointer"></span>}{!theme && <span></span>}</p>
                             <p className="mb-0 ml-16 theme-txt"><Translate content="light_theme" className="mb-0 ml-16 theme-txt" component={Text.p} /></p></div>

@@ -11,10 +11,10 @@ const DocNotices = (props) => {
     }, [])
     return <React.Fragment style={{ top: 10 }}>
         <div className="main-container">
-            {props?.dashboard?.notices?.data.length !== 0 && <Alert style={{ margin: 20, height: 50, padding: 10 }} type="info" message={"Please submit the listed documents to proceed"} showIcon />}
-            {props?.dashboard?.notices.loading === true ? <div className="text-center p-24"><Spin size="default" /></div> : <>{props?.dashboard?.notices?.data?.map(item => <Alert style={{ margin: 20, cursor: "pointer" }} type="error" showIcon onClick={() => props.history?.push("/documents?id=" + item.typeId)} message={item.title} description="Our Compliance Team is requesting documents in line with your recent transaction, please click View Details. Thank you for your patience." />)}</>}
+            {props?.dashboard?.notices?.data.length !== 0 && <Alert style={{ padding: 16 }} type="info" message={"Please submit the listed documents to proceed"} showIcon />}
+            {props?.dashboard?.notices.loading === true ? <div className="text-center p-24"><Spin size="default" /></div> : <>{props?.dashboard?.notices?.data?.map(item => <Alert style={{ cursor: "pointer" }} type="error" showIcon onClick={() => props.history?.push("/documents?id=" + item.typeId)} message={item.title} description="Our Compliance Team is requesting documents in line with your recent transaction, please click View Details. Thank you for your patience." />)}</>}
             {(props?.dashboard?.notices?.data == null || props?.dashboard?.notices?.data.length === 0) && !props?.dashboard?.notices.loading && < Result status="404"
-                title={<h4 className="text-white">No request documents, Plese click bellow button to goto dashboard.</h4>}
+                title={<h4 className="text-white">No request documents, Please click bellow button to goto dashboard.</h4>}
                 extra={<Button className="pop-btn px-36" onClick={() => { props.dispatch(updateDocRequest(false)); props.history.push("/dashboard") }}>Go to Dashboard</Button>}
             />}
         </div>
