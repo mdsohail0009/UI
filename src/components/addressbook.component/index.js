@@ -234,17 +234,17 @@ class AddressBook extends Component {
                         </Radio.Group>
                         <ul style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0, display: 'flex' }}>
                             <li onClick={this.addAddressBook} className="mr-16">
-                                <Tooltip placement="topRight" title="Add">
+                                <Tooltip placement="topRight" title={<Translate content="add"/>}>
                                     <Link className="icon md add-icon mr-0"></Link>
                                 </Tooltip>
                             </li>
                             <li onClick={this.editAddressBook} className="mr-16">
-                                <Tooltip placement="topRight" title="Edit">
+                                <Tooltip placement="topRight" title={<Translate content="edit"/>}>
                                     <Link className="icon md edit-icon mr-0"></Link>
                                 </Tooltip>
                             </li>
                             <li onClick={this.statusUpdate}>
-                                <Tooltip placement="topRight" title="Active/Inactive">
+                                <Tooltip placement="topRight" title={<Translate content="active_inactive"/>}>
                                     <Link className="icon md status mr-0" ></Link>
                                 </Tooltip>
                             </li>
@@ -285,7 +285,7 @@ class AddressBook extends Component {
                     title={[<div className="side-drawer-header">
                         <span />
                         <div className="text-center fs-16">
-                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper"><Translate content="AddFiatAddress" component={Text} className="mb-0 text-white-30 fw-600 text-upper" /></Paragraph>
+                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper"><Translate content="AddFiatAddress"  component={Paragraph} className="mb-0 text-white-30 fw-600 text-upper" /></Paragraph>
                         </div>
                         <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
                     </div>]}

@@ -5,6 +5,7 @@ import connectStateProps from '../utils/state.connect';
 import Moment from 'react-moment';
 import { setNotificationCount } from '../reducers/dashboardReducer';
 import Translate from 'react-translate-component';
+import apiCalls from '../api/apiCalls';
 
 const { Text } = Typography;
 const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard }) => {
@@ -46,7 +47,7 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard }
                     className="notifications-list"
                     loading={loading}
                     locale={{
-                        emptyText: <Empty className="mt-36" image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Notifications Available" />
+                        emptyText: <Empty className="mt-36" image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('notification_msg')} />
                     }}
                 >
                     {notifications?.map((item, indx) => <List.Item onClick={() => { if (!item.isRead) { readNotification(item.id); dispatch(setNotificationCount(dashboard.notificationCount - 1)) } }} key={indx} style={{ borderWidth: '0px' }} >

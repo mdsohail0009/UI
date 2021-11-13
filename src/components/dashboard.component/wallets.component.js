@@ -67,7 +67,7 @@ class Wallets extends Component {
                     itemLayout="horizontal"
                     dataSource={wallets.data}
                     bordered={false}
-                    className="mx-24 mobile-list"
+                    className="mobile-list"
                     loading={wallets.loading}
                     renderItem={item =>
                         <List.Item className="py-10 px-0">

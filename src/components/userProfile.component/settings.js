@@ -9,6 +9,9 @@ import en from '../../lang/en';
 import ch from '../../lang/ch';
 import my from '../../lang/my';
 import Translate from 'react-translate-component';
+
+
+
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
@@ -34,7 +37,7 @@ const Settings = ({ member, getmemeberInfoa }) => {
         let res = await saveSettingsData(settingsObj);
         if (res.ok) {
             message.destroy()
-            message.success({ content: 'Settings saved successfully', className: 'custom-msg' });
+            message.success({ content: <Translate content="settings_msg"/>, className: 'custom-msg' });
             getmemeberInfoa(member.userId)
             switcher({ theme: theme ? themes.LHT : themes.DRT });
             counterpart.setLocale(settingsObj.Language);

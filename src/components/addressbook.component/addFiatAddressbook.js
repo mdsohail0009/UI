@@ -60,7 +60,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
             if (response.ok) {
                 setErrorMsg('')
                 useDivRef.current.scrollIntoView();
-                message.success({ content: 'Address saved successfully ', className: 'custom-msg' });
+                message.success({ content: apiCalls.convertLocalLang('address_msg'), className: 'custom-msg' });
                 form.resetFields();
                 onCancel()
                 setIsLoading(false)
