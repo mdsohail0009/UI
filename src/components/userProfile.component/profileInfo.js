@@ -97,7 +97,7 @@ class ProfileInfo extends Component {
                     </li>
                     <li className="profileinfo">
                         <div className="profile-block ">
-                            <label className="mb-0 profile-label" ><Translate content="MiddleName" component={Text} className="mb-0 profile-label"/></label>
+                            <label className="mb-0 profile-label" ><Translate content="LastName" component={Text} className="mb-0 profile-label"/></label>
                             <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.lastName}</p>
                             <div >
                             </div>
