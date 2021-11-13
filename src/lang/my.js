@@ -399,7 +399,7 @@ export default {
   Last_1_Day:'Huling 1 Araw',
   All_Features:'Lahat ng Mga Tampok',
   search:'Maghanap',
-  feacture:'Tampok',
+  feature:'Tampok',
   Feature_Path:'Tampok na Landas',
   Action:'Aksyon',
   Custom_Dates:'Mga Custom na Petsa',
