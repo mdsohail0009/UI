@@ -39,7 +39,7 @@ class WithdrawSummary extends Component {
     }
     loadData = async () => {
         this.setState({ ...this.state, usdLoading: true });
-        const value = await convertCurrency({ from: this.props.sendReceive.withdrawCryptoObj?.walletCode, to: "USD", value: this.props.sendReceive.withdrawCryptoObj?.totalValue, isCrypto: false, memId: this.props.userProfile.id, screenName: '' })
+        const value = await convertCurrency({ from: this.props.sendReceive.withdrawCryptoObj?.walletCode, to: "USD", value: this.props.sendReceive.withdrawCryptoObj?.totalValue, isCrypto: false, memId: this.props.userProfile.id, screenName: 'withdrawcrypto' })
         this.setState({ ...this.state, usdAmount: value, usdLoading: false });
     }
     loadOneCoinData = async () => {
