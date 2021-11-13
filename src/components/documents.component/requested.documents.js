@@ -260,7 +260,7 @@ class RequestedDocs extends Component {
             {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
             <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=4" />{this.state?.docDetails?.note}</div>
             <div className="bank-view">
-                {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
+                {this.state.docDetails?.details?.map((doc, idx) => <Collapse collapsible="header" onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
                     <Panel header={doc.documentName} key={idx + 1} extra={doc.status ? <span className={`${doc.status ? doc.status.toLowerCase() + " staus-lbl" : ""}`}>{doc.status}</span> : ""}>
                         {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
                         {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
@@ -279,7 +279,7 @@ class RequestedDocs extends Component {
                                 </div>
                             </div>
                         </div>)}
-                        {!this.state.documentReplies[doc.id]?.loading && doc.status !== "Approved" && <><div className="mb-24">
+                        {!this.state.documentReplies[doc.id]?.loading && doc.status !== "Approved" && <><div>
                             <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
                             <Input onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
                                 className="cust-input"

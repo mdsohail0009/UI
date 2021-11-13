@@ -6,7 +6,7 @@ class AlertConfirmation extends Component {
     const { title, description, type, showIcon, closable, action } = this.props
     return (
       <>
-        <Alert className="notify mb-0" message={title} type={type} description={description} showIcon={showIcon} closable={closable} action={action} />
+        <Alert className="notify" message={title} type={type} description={description} showIcon={showIcon} closable={closable} action={action} />
       </>
     )
   }
