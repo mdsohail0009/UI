@@ -60,7 +60,7 @@ const FaitWithdrawal = ({member, selectedWalletCode, buyInfo, userConfig, dispat
   const handleWalletSelection = (walletId, isClearObj) => {
     if(isClearObj){
       let clearobj = 
-      {"walletCode":"","totalValue":"","accountNumber":"","routingNumber":"","bankName":"","bankAddress":"","bankAddress2":"","zipcode":"","beneficiaryAccountName":"","beneficiaryAccountAddress":"","beneficiaryAccountAddress1":"","description":"","country":null,"state":null, "isAccept":false, "id":null}
+      {"walletCode":"","totalValue":"","accountNumber":"","routingNumber":"","bankName":"","bankAddress":"","bankAddress2":"","zipcode":"","beneficiaryAccountName":"","beneficiaryAccountAddress":"","beneficiaryAccountAddress1":"","description":"","country":null,"state":null, "isAccept":false, "favouriteName":null}
       setSaveObj({...clearobj, walletCode: walletId});
        setAddressDetails({});
        setStateLu([]);
@@ -86,6 +86,7 @@ const FaitWithdrawal = ({member, selectedWalletCode, buyInfo, userConfig, dispat
     }
   }
   const handleAddressChange = async (e) => {
+    debugger
     let val = addressLu.filter((item)=> {if(item.name==e){return item}})
     let recAddressDetails = await detailsAddress(val[0].id)
     if (recAddressDetails.ok) {
@@ -110,7 +111,7 @@ const FaitWithdrawal = ({member, selectedWalletCode, buyInfo, userConfig, dispat
       setCountryLu(recName.data);
     }
     appInsights.trackEvent({
-      name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'Page view', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": 'WithDraw Fiat', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
+      name: 'Withdraw Fiat', properties: { "Type": 'User', "Action": 'Page view', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' }
     });
   }
 
@@ -209,7 +210,7 @@ const selectAddress = () =>{
             <div style={{ position:'relative' }}>
             <Form.Item
               className="custom-forminput custom-label mb-24"
-              name="id"
+              name="favouriteName"
               label={<Translate content="address_book" component={Form.label}   />}
             >
                 <Select dropdownClassName="select-drpdwn"
@@ -490,7 +491,7 @@ const selectAddress = () =>{
         dispatch(rejectWithdrawfiat())
         changeStep("step7")
         appInsights.trackEvent({
-          name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
+          name: 'Withdraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' }
         });
       }
     }else{

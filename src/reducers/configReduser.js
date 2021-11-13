@@ -1,4 +1,5 @@
 import apiCalls from "../api/apiCalls";
+import { setNotificationCount } from "./dashboardReducer";
 
 const USEER_INFO = "userInfo";
 const UPDATE_DOC_REQUEST = "updateDocRequest";
@@ -18,7 +19,8 @@ const getmemeberInfo = (useremail) => {
     return async (dispatch) => {
         apiCalls.getMember(useremail).then((res) => {
             if(res.ok){
-            dispatch(userInfo(res.data))
+            dispatch(userInfo(res.data));
+            dispatch(setNotificationCount(res.data?.unReadCount))
             }
         });
     }
