@@ -56,22 +56,22 @@ class TransactionsHistory extends Component {
     { field: "date", title: apiCalls.convertLocalLang('Date'), filter: true, filterType: "date", },
     { field: "fromWalletCode", title: apiCalls.convertLocalLang('FromWallet'), filter: true },
     { field: "toWalletCode", title: apiCalls.convertLocalLang('ToWallet'), width: 170, filter: true },
-    { field: "fromValue", title: apiCalls.convertLocalLang('FromValue'), width: 180, filter: true, dataType: 'number' },
-    { field: "toValue", title: apiCalls.convertLocalLang('ToValue'), width: 140, filter: true, dataType: 'number' },
-    { field: "totalAmount", title: apiCalls.convertLocalLang('TotalAmount'), width: 180, filter: true, dataType: 'number' },
-    { field: "amountInUsd", title: apiCalls.convertLocalLang('AmountInUsd'), width: 150, filter: true, dataType: 'number' },
+    { field: "fromValue", title: apiCalls.convertLocalLang('FromValue'), width: 180, filter: true, dataType: 'number',filterType: "numeric" },
+    { field: "toValue", title: apiCalls.convertLocalLang('ToValue'), width: 140, filter: true, dataType: 'number',filterType: "numeric" },
+    { field: "totalAmount", title: apiCalls.convertLocalLang('TotalAmount'), width: 180, filter: true, dataType: 'number',filterType: "numeric" },
+    { field: "amountInUsd", title: apiCalls.convertLocalLang('AmountInUsd'), width: 150, filter: true, dataType: 'number',filterType: "numeric" },
   ];
   BuySellColmns = [
     { field: "date", title: apiCalls.convertLocalLang('Date'), filter: true, filterType: "date", width: 184 },
     { field: "type", title: apiCalls.convertLocalLang('Type'), filter: true, width: 190 },
     { field: "fromWalletCode", title: apiCalls.convertLocalLang('FromWallet'), filter: true, width: 200 },
-    { field: "fromValue", title: apiCalls.convertLocalLang('FromValue'), filter: true, width: 190, dataType: 'number' },
+    { field: "fromValue", title: apiCalls.convertLocalLang('FromValue'), filter: true, width: 190, dataType: 'number',filterType: "numeric" },
     { field: "toWalletCode", title: apiCalls.convertLocalLang('ToWallet'), filter: true, width: 190 },
-    { field: "tovalue", title: apiCalls.convertLocalLang('ToValue'), filter: true, width: 200, dataType: 'number' },
-    { field: "beforeValue", title: apiCalls.convertLocalLang('BeforeValue'), width: 200, filter: true, dataType: 'number' },
-    { field: "afterValue", title: apiCalls.convertLocalLang('AfterValue'), width: 200, filter: true, dataType: 'number' },
-    { field: "totalAmount", title: apiCalls.convertLocalLang('TotalAmount'), filter: true, width: 210, dataType: 'number' },
-    { field: "amountInUsd", title: apiCalls.convertLocalLang('AmountInUsd'), filter: true, width: 200, dataType: 'number' },
+    { field: "tovalue", title: apiCalls.convertLocalLang('ToValue'), filter: true, width: 200, dataType: 'number',filterType: "numeric" },
+    { field: "beforeValue", title: apiCalls.convertLocalLang('BeforeValue'), width: 200, filter: true, dataType: 'number' ,filterType: "numeric"},
+    { field: "afterValue", title: apiCalls.convertLocalLang('AfterValue'), width: 200, filter: true, dataType: 'number' ,filterType: "numeric"},
+    { field: "totalAmount", title: apiCalls.convertLocalLang('TotalAmount'), filter: true, width: 210, dataType: 'number',filterType: "numeric" },
+    { field: "amountInUsd", title: apiCalls.convertLocalLang('AmountInUsd'), filter: true, width: 200, dataType: 'number',filterType: "numeric" },
   ];
   depositCryptoColomns = [
     { field: "walletCode", title: apiCalls.convertLocalLang('Wallet'), filter: true },
@@ -82,7 +82,7 @@ class TransactionsHistory extends Component {
   ];
   withdrwCryptoColomns = [
     { field: "walletCode", title: apiCalls.convertLocalLang('Wallet'), filter: true },
-    { field: "amount", title: apiCalls.convertLocalLang('amount'), filter: true, width: 200, filterType: "numeric", dataType: 'number' },
+    { field: "amount", title: apiCalls.convertLocalLang('amount'), filter: true, width: 200, filterType: "numeric", dataType: 'number',filterType: "numeric" },
     { field: "walletAddress", title: apiCalls.convertLocalLang('walletAddress'), filter: true, width: 200 },
     { field: "createdDate", title: apiCalls.convertLocalLang('RequestDate'), filter: true, width: 200, filterType: "date" },
     { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 200 },
