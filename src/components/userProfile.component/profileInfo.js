@@ -72,41 +72,41 @@ class ProfileInfo extends Component {
                 <Paragraph className="basic-decs"><Translate content="BasicInfotag" component={Text} className="basic-decs" /></Paragraph>
                 <ul className="user-list pl-0">
                     <li className="profileinfo">
-                        <div className="d-flex profile-block">
+                        <div className="profile-block">
                             <label className="mb-0 profile-label" ><Translate content="userName" component={Text} className="mb-0 profile-label"/></label>
-                            <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.userName}</p>
+                            <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.userName}</p>
                             <div >
                             </div>
                         </div>
                     </li>
                     <li className="profileinfo">
-                        <div className="d-flex profile-block ">
+                        <div className="profile-block ">
                             <label className="mb-0 profile-label" ><Translate content="FirstName" component={Text} className="mb-0 profile-label"/></label>
-                            <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.firstName}</p>
+                            <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.firstName}</p>
                             <div >
                             </div>
                         </div>
                     </li>
                     <li className="profileinfo">
-                        <div className="d-flex profile-block ">
+                        <div className="profile-block ">
                             <label className="mb-0 profile-label" ><Translate content="MiddleName" component={Text} className="mb-0 profile-label"/></label>
-                            <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.middleName || '---'}</p>
+                            <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.middleName || '---'}</p>
                             <div >
                             </div>
                         </div>
                     </li>
                     <li className="profileinfo">
-                        <div className="d-flex profile-block ">
+                        <div className="profile-block ">
                             <label className="mb-0 profile-label" ><Translate content="MiddleName" component={Text} className="mb-0 profile-label"/></label>
-                            <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.lastName}</p>
+                            <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.lastName}</p>
                             <div >
                             </div>
                         </div>
                     </li>
                     <li className="profileinfo">
-                        <div className="d-flex profile-block">
+                        <div className="profile-block">
                             <label className="mb-0 profile-label" ><Translate content="Birthday" component={Text} className="mb-0 profile-label"/></label>
-                            {this.props.userConfig.dob != null && <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>
+                            {this.props.userConfig.dob != null && <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
                                 <Moment format="DD/MM/YYYY">{this.props.userConfig.dob}</Moment></p>}
                             <div >
                             </div>
@@ -114,9 +114,9 @@ class ProfileInfo extends Component {
                     </li>
 
                     <li className="profileinfo">
-                        <div className="d-flex profile-block">
+                        <div className="profile-block">
                             <label className="mb-0 profile-label"><Translate content="ReferenceCode" component={Text} className="mb-0 profile-label"/></label>
-                            <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.depositReference}</p>
+                            <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.depositReference}</p>
                             <div >
                             </div>
                         </div>
@@ -127,26 +127,26 @@ class ProfileInfo extends Component {
                 <Title className="basicinfo"><Translate content="ContactInfo" component={Text} className="basicinfo"/></Title>
                 <ul className="user-list pl-0">
                     <li className="profileinfo">
-                        <div className="d-flex profile-block">
+                        <div className="profile-block">
                             <label className="mb-0 profile-label"><Translate content="Country" component={Text} className="mb-0 profile-label"/></label>
-                            <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.country}</p>
+                            <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.country}</p>
                             <div >
                             </div>
                         </div>
                     </li>
                     <li className="profileinfo">
-                        <div className="d-flex profile-block">
+                        <div className="profile-block">
                             <label className="mb-0 profile-label"><Translate content="EmailAddress" component={Text} className="mb-0 profile-label"/></label>
-                            <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.email}</p>
+                            <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.email}</p>
                             <div>
                             </div>
                         </div>
                     </li>
                     <li className="profileinfo">
-                        <div className="d-flex profile-block ">
+                        <div className="profile-block ">
                             <label className="mb-0 profile-label"><Translate content="PhoneNumber" component={Text} className="mb-0 profile-label"/></label>
                             <div style={{ flexGrow: 12 }}>
-                                <p className="mb-0 ml-8 profile-value" >
+                                <p className="mb-0 profile-value" >
                                     {this.props.userConfig.phoneNo}</p>
                             </div>
                             <div >

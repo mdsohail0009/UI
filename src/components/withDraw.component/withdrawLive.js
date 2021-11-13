@@ -28,7 +28,7 @@ const WithdrawalLive = ({ userConfig, sendReceive, changeStep,dispatch,onCancel 
         dispatch(rejectWithdrawfiat())
         changeStep("step7")
         appInsights.trackEvent({
-          name: 'WithDraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'WithDraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Fiat' }
+          name: 'Withdraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' }
         });
       }
   }

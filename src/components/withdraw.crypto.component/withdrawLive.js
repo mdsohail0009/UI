@@ -25,7 +25,7 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep,dispatch }) 
         dispatch(setSubTitle(""));
         changeStep('withdraw_crpto_success');
         appInsights.trackEvent({
-          name: 'WithDraw Crypto', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'WithDraw Crypto', "Remarks": 'WithDraw crypto save', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Crypto' }
+          name: 'Withdraw Crypto', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Crypto', "Remarks": 'Withdraw crypto save', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto' }
         });
       }
       

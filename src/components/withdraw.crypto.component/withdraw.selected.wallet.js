@@ -37,7 +37,7 @@ class CryptoWithDrawWallet extends Component {
     }
     trackevent = () => {
         appInsights.trackEvent({
-            name: 'WithDraw Crypto', properties: { "Type": 'User', "Action": 'Page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'WithDraw Crypto', "Remarks": "WithDraw crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Crypto' }
+            name: 'Withdraw Crypto', properties: { "Type": 'User', "Action": 'Page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto' }
         });
     }
     componentWillUnmount() {
@@ -223,7 +223,7 @@ class CryptoWithDrawWallet extends Component {
                         cryptoCurrency={selectedWallet?.coin}
                         localCurrency={"USD"}
                         selectedCoin={selectedWallet?.coin}
-                        onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }} memberId={this.props.userProfile.id} screenName='' />
+                        onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }} memberId={this.props.userProfile.id} screenName='withdrawcrypto' />
                     <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
                         <Translate value="min" content="min" component={Radio.Button} onClick={() => this.clickMinamnt("min")} />
                         <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt("half")} />

@@ -34,11 +34,11 @@ const Security =({userConfig})=> {
                 <Translate content="TwoFactorAuthentication_tag" component={Paragraph} className="basic-decs"/>
                 <ul className="user-list pl-0">
                     <li className="profileinfo">
-                        <div className="d-flex profile-block">
+                        <div className="profile-block">
                             <label className="mb-0 profile-label" ><Translate content="FA_tag" component={Paragraph.label} className="mb-0 profile-label"/></label>
-                            <p className="mb-0 ml-8 profile-value" style={{ flexGrow: 12 }}>{userConfig?.twofactorVerified?<Translate content="Enabled" component={Paragraph.p} className="mb-0 ml-8 profile-value" />:<Translate content="Disabled" component={Paragraph.p} className="mb-0 ml-8 profile-value"/>}</p>
+                            <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>{userConfig?.twofactorVerified?<Translate content="Enabled" component={Paragraph.p} className="mb-0 profile-value" />:<Translate content="Disabled" component={Paragraph.p} className="mb-0 profile-value"/>}</p>
                             <div>
-                                <Switch onChange={(status)=>enableDisable2fa(status)} checked={userConfig?.twofactorVerified} size="medium" className="custom-toggle ml-12" /></div>
+                                <Switch onChange={(status)=>enableDisable2fa(status)} checked={userConfig?.twofactorVerified} size="medium" className="custom-toggle" /></div>
                         </div>
                     </li>
                 </ul>
@@ -48,11 +48,11 @@ const Security =({userConfig})=> {
                 <Translate content="Choose_a_unique_pass_word_to_protect_your_account" component={Paragraph} className="basic-decs"/>
                 <ul className="user-list pl-0">
                     <li className="profileinfo c-pointer" onClick={()=>showDrawer()}>
-                        <div className="d-flex profile-block">
+                        <div className="profile-block">
                             <label className="mb-0 profile-label"><Translate content="Password" component={Paragraph.label} className="mb-0 profile-label"/></label>
                             <div style={{ flexGrow: 12 }}>
-                                <p className="mb-0 ml-8 profile-value"> ************</p>
-                                {userConfig?.pwdModifiedDate!=null&&<p className="mb-0 ml-8 fs-14 text-white"><Translate content="Modifiedon" component={Paragraph.p} className="mb-0 ml-8 fs-14 text-white"/> <Moment format="DD-MM-YYYY">{userConfig?.pwdModifiedDate}</Moment></p>}
+                                <p className="mb-0 profile-value"> ************</p>
+                                {userConfig?.pwdModifiedDate!=null&&<p className="mb-0 mobile-ml-8 fs-14 text-white"><Translate content="Modifiedon" component={Paragraph.p} className="mb-0 mobile-ml-8  fs-14 text-white"/> <Moment format="DD-MM-YYYY">{userConfig?.pwdModifiedDate}</Moment></p>}
                             </div>
                             <div>
                             <span className='text-white'><Translate content="Click_here_to_change_pass_word" component={Paragraph.span} className='text-white'/></span><span className="icon md rarrow-white" />
