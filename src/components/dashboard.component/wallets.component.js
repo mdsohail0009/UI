@@ -30,6 +30,14 @@ class Wallets extends Component {
         this.props.history.push("/docnotices");
     }
     showSendReceiveDrawer = (e, value) => {
+        if (this.props?.userProfile?.isDocsRequested) {
+            this.props.history.push("/docnotices");
+            return;
+        }
+        if (!this.props?.userProfile?.isKYC) {
+            this.props.history.push("/notkyc");
+            return;
+        }
         const isDocsRequested = this.props.userProfile.isDocsRequested;
         if (isDocsRequested) {
             this.showDocsError();

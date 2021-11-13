@@ -32,6 +32,10 @@ class YourPortfolio extends Component {
             this.props.history.push("/docnotices");
             return;
         }
+        if (!this.props?.userProfile?.isKYC) {
+            this.props.history.push("/notkyc");
+            return;
+        }
         if (key === "buy") {
             this.props.dispatch(fetchSelectedCoinDetails(item.coin, this.props.userProfile?.id));
             this.props.dispatch(setCoin({...item, toWalletCode:item.coin, toWalletId:item.id,toWalletName:item.coinFullName}));
