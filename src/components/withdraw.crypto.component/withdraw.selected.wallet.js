@@ -37,7 +37,7 @@ class CryptoWithDrawWallet extends Component {
     }
     trackevent = () => {
         appInsights.trackEvent({
-            name: 'WithDraw Crypto', properties: { "Type": 'User', "Action": 'Page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'WithDraw Crypto', "Remarks": "WithDraw crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Crypto' }
+            name: 'Withdraw Crypto', properties: { "Type": 'User', "Action": 'Page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto' }
         });
     }
     componentWillUnmount() {
