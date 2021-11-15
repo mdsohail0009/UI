@@ -721,6 +721,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .address-clear{clear: both; margin-top: 12px;}
     .customaudit-select .selectcustom-input{margin-left:0 !important}
     .customaudit-select .custom-btn{width: 100%;}
+    .add-custom.ant-row{display: block !important;}
 }
 @media (max-width: 1024px){
     .custom-gridresponsive .ant-drawer-body{word-wrap: unset !important;}
@@ -792,6 +793,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .profile-label{width: 100px;}
     .display-flex {display:flex; align-items: center;justify-content: space-between;}
     .address-icons{list-style: none; padding-left: 0; margin-bottom: 0; display: flex;}
+    .add-custom.ant-row{flex-flow: initial !important;}
         
 
 }

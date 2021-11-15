@@ -63,8 +63,8 @@ const Settings = ({ member, getmemeberInfoa }) => {
         <div className="box basic-info">
             <Translate content="settings" className="basicinfo" />
             <Paragraph className="basic-decs"><Translate content="User_customized_settings" className="basic-decs" /></Paragraph>
-            <Row gutter={16} className="py-16 border-bottom">
-                <Col sm={24} md={12}>
+            <Row className="py-16 border-bottom add-custom">
+                <Col sm={24} md={12} className="mr-4">
                     <Text className="input-label"><Translate content="language" /></Text>
                     <Form.Item
                         className="custom-forminput mb-24"
@@ -84,7 +84,7 @@ const Settings = ({ member, getmemeberInfoa }) => {
                             </Option>)}
                         </Select></Form.Item>
                 </Col>
-                <Col sm={24} md={12}>
+                <Col sm={24} md={12} className="ml-4">
                     <Text className="input-label"><Translate content="currency" /></Text>
                     <Form.Item
                         className="custom-forminput mb-24"
