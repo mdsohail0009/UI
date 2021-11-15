@@ -18,24 +18,24 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
     const useDivRef = React.useRef(null);
 
     useEffect(() => {
-        if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && addressBookReducer?.selectedRowData?.id ) {
+        if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && addressBookReducer?.selectedRowData?.id) {
             loadDataAddress();
-           }
-        }, [])
+        }
+    }, [])
     const loadDataAddress = async () => {
         setIsLoading(true)
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'fiat');
         if (response.ok) {
             setFiatAddress(response.data)
-            if (addressBookReducer?.selectedRowData && buyInfo.memberFiat?.data ) {
+            if (addressBookReducer?.selectedRowData && buyInfo.memberFiat?.data) {
                 handleWalletSelection(addressBookReducer?.selectedRowData?.currency)
             }
-            form.setFieldsValue({...response.data,});
+            form.setFieldsValue({ ...response.data, });
             setIsLoading(false)
         }
     }
     const handleWalletSelection = (walletId) => {
-        setFiatAddress({toCoin: walletId})
+        setFiatAddress({ toCoin: walletId })
         form.setFieldsValue({ toCoin: walletId })
     }
 
@@ -60,7 +60,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
             if (response.ok) {
                 setErrorMsg('')
                 useDivRef.current.scrollIntoView();
-                message.success({ content: 'Address saved successfully ', className: 'custom-msg' });
+                message.success({ content: apiCalls.convertLocalLang('address_msg'), className: 'custom-msg' });
                 form.resetFields();
                 onCancel()
                 setIsLoading(false)
@@ -68,23 +68,23 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
             else { setIsLoading(false) }
         }
     }
-    const getIbanData = async(val) =>{
-        if(val){
+    const getIbanData = async (val) => {
+        if (val) {
             let response = await apiCalls.getIBANData(val);
             if (response.ok) {
-                const oldVal= form.getFieldValue();
-                form.setFieldsValue({ routingNumber:response.data.routingNumber||oldVal.routingNumber, bankName:response.data.bankName||oldVal.bankName,bankAddress:response.data.bankAddress||oldVal.bankAddress })
+                const oldVal = form.getFieldValue();
+                form.setFieldsValue({ routingNumber: response.data.routingNumber || oldVal.routingNumber, bankName: response.data.bankName || oldVal.bankName, bankAddress: response.data.bankAddress || oldVal.bankAddress })
             }
         }
     }
-    const { Paragraph} = Typography;
+    const { Paragraph } = Typography;
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     return (
         <>
-        
-           { isLoading && <Loader /> }
+
+            {isLoading && <Loader />}
             <div className="addbook-height auto-scroll">
-            <div ref={useDivRef}></div>
+                <div ref={useDivRef}></div>
                 {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
                 <Form form={form} onFinish={savewithdrawal} autoComplete="off" initialValues={fiatAddress}>
                     <Translate
@@ -109,7 +109,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                                 }
                             }
                         ]} >
-                        <Input className="cust-input"  maxLength="20" placeholder={apiCalls.convertLocalLang('Enteraddresslabel')} />
+                        <Input className="cust-input" maxLength="20" placeholder={apiCalls.convertLocalLang('Enteraddresslabel')} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24 pr-0"
@@ -128,7 +128,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             }
                         ]}
                     >
-                        <Input className="cust-input"  maxLength="30" placeholder={apiCalls.convertLocalLang('Enteraddress')} />
+                        <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('Enteraddress')} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
@@ -138,12 +138,12 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             { required: true, message: apicalls.convertLocalLang('is_required') },
                         ]}
                     >
-                        <WalletList hideBalance={true} valueFeild={'currencyCode'}   selectedvalue={fiatAddress?.toCoin} placeholder={apiCalls.convertLocalLang('searchCurrency')} onWalletSelect={(e) => handleWalletSelection(e)} />
+                        <WalletList hideBalance={true} valueFeild={'currencyCode'} selectedvalue={fiatAddress?.toCoin} placeholder={apiCalls.convertLocalLang('searchCurrency')} onWalletSelect={(e) => handleWalletSelection(e)} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
                         name="accountNumber"
-                        label={ <Translate content="Bank_account" component={Form.label} />}
+                        label={<Translate content="Bank_account" component={Form.label} />}
                         required
                         rules={[
                             { required: true, message: apicalls.convertLocalLang('is_required') },
@@ -163,7 +163,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             }
                         ]}
                     >
-                        <Input className="cust-input"  placeholder={apiCalls.convertLocalLang('Bank_account')} onBlur={(val)=>getIbanData(val.currentTarget.value)} />
+                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_account')} onBlur={(val) => getIbanData(val.currentTarget.value)} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
@@ -193,7 +193,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
                         name="bankName"
-                        label={ <Translate content="Bank_name" component={Form.label} />}
+                        label={<Translate content="Bank_name" component={Form.label} />}
                         required
                         rules={[
                             {
@@ -208,7 +208,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             }
                         ]}
                     >
-                        <Input className="cust-input"  placeholder={apiCalls.convertLocalLang('Bank_name')} />
+                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_name')} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
@@ -235,26 +235,14 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                         component={Paragraph}
                         className="mb-16 fs-14 text-aqua fw-500 text-upper"
                     />
-                    <Form.Item
+                    {/* <Form.Item
                         className="custom-forminput custom-label mb-24"
                         name="beneficiaryAccountName"
                         label={<Translate content="Recipient_full_name" component={Form.label} />}
-                        required
-                        rules={[
-                            {
-                                type: "beneficiaryAccountName", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() === "") {
-                                        throw new Error(apicalls.convertLocalLang('is_required'))
-                                    }
-                                    else {
-                                        callback();
-                                    }
-                                }
-                            }
-                        ]}>
-                    <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_full_name')}  />
-                    </Form.Item>
-                        {/* <div>
+                    >
+                        <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
+                    </Form.Item> */}
+                    <Form.Item>
                             <div className="d-flex">
                                 <Translate
                                     className="input-label"
@@ -263,9 +251,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                                 />{" "}
                                 <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
                             <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
-                        </div>
-
-                    </Form.Item> */}
+                    </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
                         name="beneficiaryAccountAddress"
@@ -283,7 +269,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                                 }
                             }
                         ]}>
-                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')}  />
+                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
                     </Form.Item>
                     <Form.Item className="mb-0 mt-16">
                         <Button disabled={isLoading}
@@ -292,7 +278,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             block
                             className="pop-btn"
                         >
-                            {isLoading && <Spin indicator={antIcon} />}  <Translate  content="Save_btn_text" />
+                            {isLoading && <Spin indicator={antIcon} />}  <Translate content="Save_btn_text" />
                         </Button>
                     </Form.Item>
                 </Form>

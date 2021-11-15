@@ -35,10 +35,11 @@ class WithdrawSummary extends Component {
     componentDidMount() {
         this.loadOneCoinData();
         this.loadData();
+        this.props.dispatch(setSubTitle(apicalls.convertLocalLang('withdrawSummary')));
     }
     loadData = async () => {
         this.setState({ ...this.state, usdLoading: true });
-        const value = await convertCurrency({ from: this.props.sendReceive.withdrawCryptoObj?.walletCode, to: "USD", value: this.props.sendReceive.withdrawCryptoObj?.totalValue, isCrypto: false, memId: this.props.userProfile.id, screenName: '' })
+        const value = await convertCurrency({ from: this.props.sendReceive.withdrawCryptoObj?.walletCode, to: "USD", value: this.props.sendReceive.withdrawCryptoObj?.totalValue, isCrypto: false, memId: this.props.userProfile.id, screenName: 'withdrawcrypto' })
         this.setState({ ...this.state, usdAmount: value, usdLoading: false });
     }
     loadOneCoinData = async () => {
@@ -67,7 +68,7 @@ class WithdrawSummary extends Component {
                     this.props.dispatch(setSubTitle(""));
                     this.props.changeStep('withdraw_crpto_success');
                     appInsights.trackEvent({
-                        name: 'WithDraw Crypto', properties: { "Type": 'User', "Action": 'save', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'WithDraw Crypto', "Remarks": 'WithDraw crypto save', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'WithDraw Crypto' }
+                        name: 'Withdraw Crypto', properties: { "Type": 'User', "Action": 'save', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": 'Withdraw crypto save', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto' }
                     });
                 }
             } else {
@@ -75,7 +76,7 @@ class WithdrawSummary extends Component {
                 this.props.changeStep('withdraw_crypto_liveness');
             }
         } else {
-            this.setState({ ...this.state, errorMsg: +" " + apicalls.convertLocalLang('agree_termsofservice') })
+            this.setState({ ...this.state, errorMsg:apicalls.convertLocalLang('agree_termsofservice') })
             this.useDivRef.current.scrollIntoView()
         }
     }

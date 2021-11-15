@@ -24,7 +24,7 @@ class SellSummary extends Component {
             this.setState({ ...this.state, error: { valid: false, message: 'Please accept terms of service' } })
 
         } else {
-            this.setState({ ...this.state, loader: true , error: {valid:true,message:''},isTermsAgree:false})
+            this.setState({ ...this.state, loader: true , error: {valid:true,message:''}})
             this.fetchPreviewData()
         }
     }

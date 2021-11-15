@@ -77,20 +77,20 @@ class DashboardCharts extends Component {
             <div className="main-container db-container">
                 <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/dashboard" />Back</div>
                 {this.state.kpis && <Row gutter={16} className="mb-8">
-                    <Col xs={24} sm={24} md={24} lg={12} xl={8} xxl={6}>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                         <div className="db-kpi">
                             <Text className="db-kpi-label">{'Crypto Balance'} </Text>
                             <Text className="db-kpi-val"> ${this.state.kpis.cryptoBalance}</Text><Text className="badge">BTC=${this.state.kpis.cryptoBTC} </Text>
                         </div>
                     </Col>
-                    <Col xs={24} sm={24} md={24} lg={12} xl={8} xxl={6}>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                         <div className="db-kpi">
                             <Text className="db-kpi-label">{'Fiat Balance'}</Text>
                             <Text className="db-kpi-val">${this.state.kpis.currency}{this.state.kpis.fiatBalance}</Text><Text className="badge">BTC<span>=</span>${this.state.kpis.cryptoBTC}</Text>
                         </div>
                     </Col>
 
-                    {this.state.kpis?.yesterdayPNL != 0 && <Col xs={24} sm={24} md={24} lg={12} xl={8} xxl={6}>
+                    {this.state.kpis?.yesterdayPNL != 0 && <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                         <div className="db-kpi vthicon">
                             <div className="icon-bg">
                                 <span className="icon md lose-arw" />
@@ -103,11 +103,11 @@ class DashboardCharts extends Component {
                                     <div className="icon-bg">
                                         <span className="icon md profit-arw" />
                                     </div>
-                                    <Text className="db-kpi-val text-red">{this.state.kpis.currency}{this.state.kpis.yesterdayPNL}</Text><Text className="badge ml-16"><span>-</span>{this.state.kpis.percentage}</Text></>}
+                                    <Text className="db-kpi-val text-red">{this.state.kpis.currency}{this.state.kpis.yesterdayPNL}</Text><Text className="badge"><span>-</span>{this.state.kpis.percentage}</Text></>}
                             </div>
                         </div>
                     </Col>}
-                    {this.state.kpis?.monthPNL != 0 && <Col xs={24} sm={24} md={24} lg={12} xl={8} xxl={6}>
+                    {this.state.kpis?.monthPNL != 0 && <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                         <div className="db-kpi vthicon">
                             <div className="icon-bg">
                                 <span className="icon md profit-arw" />
@@ -118,7 +118,7 @@ class DashboardCharts extends Component {
                                     <Text className="db-kpi-val text-green"><span>+</span>${this.state.kpis.monthPNL}</Text>
                                 </>}
                                 {this.state.kpis?.monthPNL < 0 && <>
-                                    <Text className="db-kpi-val text-red"><span>$</span>{this.state.kpis.monthPNL}</Text><Text className="badge ml-16"><span>+</span>${this.state.kpis.monthPNL}</Text>
+                                    <Text className="db-kpi-val text-red"><span>$</span>{this.state.kpis.monthPNL}</Text><Text className="badge"><span>+</span>${this.state.kpis.monthPNL}</Text>
                                 </>}
                             </div>
                         </div>

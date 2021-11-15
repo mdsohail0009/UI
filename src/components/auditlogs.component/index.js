@@ -46,11 +46,11 @@ class AuditLogs extends Component {
 
   }
   gridColumns = [
-    { field: "date", title: apicalls.convertLocalLang('Date'), filter: true, filterType: "date", width: 250 },
-    { field: "feature", title: apicalls.convertLocalLang('feacture'), filter: true, width: 190 },
-    { field: "featurePath", title: apicalls.convertLocalLang('Feature_Path'), filter: true, width: 230 },
-    { field: "action", title: apicalls.convertLocalLang('Action'), width: 200, filter: true },
-    { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true },
+    { field: "date", title: apicalls.convertLocalLang('Date'), filter: true, filterType: "date", width: 200 },
+    { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 190 },
+    { field: "featurePath", title: apicalls.convertLocalLang('Feature_Path'), filter: true, width: 200 },
+    { field: "action", title: apicalls.convertLocalLang('Action'), width: 230, filter: true },
+    { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true},
   ]
 
 
@@ -167,7 +167,7 @@ class AuditLogs extends Component {
           width="100%"
           onClose={this.props.onClose}
           visible={this.props.showDrawer}
-          className="side-drawer-full"
+          className="side-drawer-full custom-gridresponsive"
         >
           <div>
             <Form
@@ -176,7 +176,7 @@ class AuditLogs extends Component {
               ref={this.formRef}
             >
               <Row style={{ alignItems: 'flex-end' }}>
-                <Col sm={24} md={7} className="px-8">
+                <Col xs={24} sm={24} md={7} className="px-8">
                   <Form.Item
                     name="timeSpan"
                     className="input-label selectcustom-input mb-0"
@@ -207,7 +207,7 @@ class AuditLogs extends Component {
                   </Form.Item>
                 </Col>
 
-                {this?.state?.isCustomDate ? <Col sm={24} md={7} className="px-8">
+                {this?.state?.isCustomDate ? <Col xs={24} sm={24} md={7} className="px-8">
                   <Form.Item
                     name="selectedTimespan"
                     className="input-label selectcustom-input mb-0"
@@ -216,7 +216,7 @@ class AuditLogs extends Component {
                     <Input disabled className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
                   </Form.Item>
                 </Col> : ""}
-                <Col sm={24} md={7} className="px-8">
+                <Col xs={24} sm={24} md={7} className="px-8">
                   <Form.Item
                     name="feature"
                     className="input-label selectcustom-input mb-0"
@@ -230,7 +230,7 @@ class AuditLogs extends Component {
                       onChange={(e) => this.TransactionFeatureSearch(e, "feature")}
                       onChange={(e) => this.handleChange(e, 'feature')}
                     >
-                      <Option value="All Features">All Feactures</Option>
+                      <Option value="All Features">All Features</Option>
                       {featureData?.map((item, idx) => {
                         if (item.groupName === "User Features") {
                           return <Option key={idx} value={item.name}>{item.name}</Option>
@@ -240,10 +240,10 @@ class AuditLogs extends Component {
                   </Form.Item>
                 </Col>
 
-                <Col sm={24} md={3} className="px-8">
+                <Col xs={24} sm={24} md={3} className="px-8">
                   <Button
                     type="primary"
-                    className="primary-btn px-24 search-btn custom-btn prime mt-16 mb-8"
+                    className="primary-btn px-24 search-btn ant-btn-lg custom-btn prime mt-16 mb-8"
                     htmlType="submit"
                     onClick={this.handleSearch}
                   ><Translate content="search" />

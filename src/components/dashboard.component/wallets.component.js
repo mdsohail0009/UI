@@ -30,6 +30,14 @@ class Wallets extends Component {
         this.props.history.push("/docnotices");
     }
     showSendReceiveDrawer = (e, value) => {
+        if (this.props?.userProfile?.isDocsRequested) {
+            this.props.history.push("/docnotices");
+            return;
+        }
+        if (!this.props?.userProfile?.isKYC) {
+            this.props.history.push("/notkyc");
+            return;
+        }
         const isDocsRequested = this.props.userProfile.isDocsRequested;
         if (isDocsRequested) {
             this.showDocsError();
@@ -67,7 +75,7 @@ class Wallets extends Component {
                     itemLayout="horizontal"
                     dataSource={wallets.data}
                     bordered={false}
-                    className="mx-24 mobile-list"
+                    className="mobile-list"
                     loading={wallets.loading}
                     renderItem={item =>
                         <List.Item className="py-10 px-0">

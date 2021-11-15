@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Card } from 'antd';
+import { Typography, Card, Empty } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import {  setCoinWallet,updateCoinDetails } from '../../reducers/buy.reducer';   // do not remove this line time being i will check // subbareddy
@@ -9,6 +9,7 @@ import { setCoin, setExchangeValue } from '../../reducers/buyReducer';
 import Currency from '../shared/number.formate';
 import { appInsights } from "../../Shared/appinsights";
 import {getSelectedCoinDetails} from '../buy.component/api'
+import apicalls from '../../api/apiCalls';
 
 class SellToggle extends Component {
     componentDidMount() {
@@ -36,6 +37,7 @@ class SellToggle extends Component {
         if(this.props.sellData?.memberCoins?.loading){return <Loader/>}
         return (
             <>
+            {!this.props?.sellData?.memberCoins?.loading && (!this.props.sellData?.memberCoins?.data||this.props.sellData?.memberCoins?.data?.length==0)&&<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />}
                <div className="sellcrypto-container auto-scroll">
                     {this.props.sellData?.memberCoins?.data?.map((coin, idx) => <Card key={idx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => {  this.setCoinDetailData(coin);this.props.setExchangeValue({ key: coin.coin, value: coin.oneCoinValue }) }} >
                         <span className="d-flex align-center">

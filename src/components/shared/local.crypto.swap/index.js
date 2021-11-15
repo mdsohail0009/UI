@@ -2,7 +2,6 @@ import { Input, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { convertCurrencyDuplicate } from '../../buy.component/buySellService';
-import QueryString from 'query-string';
 import NumberFormat from 'react-number-format';
 const LocalCryptoSwapper = (props, ref) => {
     const { localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, sellData, selectedCoin = null } = props;
@@ -22,8 +21,8 @@ const LocalCryptoSwapper = (props, ref) => {
             setLocalValue(info.localValue);
             setCryptoValue(info.cryptoValue);
         },
-        handleConvertion({ cryptoValue, localValue, locCurrency }) {
-            fetchConvertionValue({ cryptoValue, localValue, inputvalue: isSwaped ? cryptoValue : localValue, locCurrency });
+        handleConvertion({ cryptoValue, localValue, locCurrency,isSwap }) {
+            fetchConvertionValue({ cryptoValue, localValue, inputvalue: (isSwap|| isSwaped) ? cryptoValue : localValue, locCurrency });
             if (isSwaped) {
                 setCryptoValue(cryptoValue);
             }
@@ -37,13 +36,12 @@ const LocalCryptoSwapper = (props, ref) => {
         setConvertionLoad(true);
         const response = await convertCurrencyDuplicate({ from: coin, to: locCurrency || localCurrency || "USD", value: (inputvalue || 0), isCrypto: !isSwaped, memId: props.memberId, screenName: props.screenName });
         if (response.ok) {
-            debugger
             const { data: value, config: { url } } = response;
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
             let _val = document.getElementById("ABC")?.value;
             _val = _val ? _val.replace(/,/g, "") : _val;
             _val = _val?.replace(symbols[locCurrency||localCurrency], "");
-            if (_obj[3] == _val || _obj[3] == 0) {
+            if (_obj[4] == _val || _obj[4] == 0) {
                 if (!isSwaped) {
                     setCryptoValue(value || 0);
                 } else { setLocalValue(value || 0) }
