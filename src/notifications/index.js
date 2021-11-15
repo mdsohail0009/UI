@@ -13,7 +13,7 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard }
     const [notifications, setNotifications] = useState([]);
     const [error, setError] = useState(null);
     useEffect(() => {
-        fetchNotifications();
+        fetchNotifications();  
     }, []);
     const fetchNotifications = async () => {
         if (userProfile?.id) {
