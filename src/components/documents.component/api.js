@@ -1,10 +1,17 @@
 import { apiClient as clientApi } from "../../api"
 import { ApiControllers } from "../../api/config"
+const crypto = require('crypto');
 function uuidv4() {
-return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-return v.toString(16);
-});
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = rendamNumber() | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+const rendamNumber = () =>{
+    return  crypto.randomBytes(16, (err, buf) => {
+       return buf.toString('hex');
+      });
+      
 }
 const sendRequest = (obj) => {
 return clientApi.post(ApiControllers.member + `SaveDoument`, obj);
