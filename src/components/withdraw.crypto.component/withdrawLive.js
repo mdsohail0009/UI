@@ -6,7 +6,6 @@ import Translate from 'react-translate-component';
 import LiveNessSumsub from '../sumSub.component/liveness'
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
-import SuccessMsg from '../withdraw.crypto.component/success';
 import { withDrawCrypto } from '../send.component/api';
 
 const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep,dispatch }) => {
