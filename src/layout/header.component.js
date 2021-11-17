@@ -353,7 +353,7 @@ class Header extends Component {
                             <Translate content="AuditLogs" component={Link} className="c-pointer px-0" />
                         </li>
                         <li className="c-pointer" onClick={() => userManager.signoutRedirect()}>
-                            <Translate content="logout" className="c-pointer px-0"  component={Link} />
+                            <Translate content="logout" className="c-pointer px-0" component={Link} />
                         </li>
                     </ul>
                 </div>
@@ -372,7 +372,7 @@ class Header extends Component {
                                 <li className="mb-d-none px-36"><Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? " Business" : " Personal" }} onClick={() => this.props.userConfig.isKYC ? this.props.history.push('/dashboard') : this.props.history.push("/notkyc")} component="p" className="text-white-30 mb-0 fs-24 c-pointer" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
-                                <Menu.Item key="6"><span className="icon md bell" /></Menu.Item>
+                                <Menu.Item key="6"><span className="icon md bell" onClick={this.showNotificationsDrawer} /></Menu.Item>
                                 <Dropdown overlay={userProfileMenu} trigger={['click']} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                     <Menu.Item key="7">{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"} />}
                                         {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"} />}</Menu.Item>

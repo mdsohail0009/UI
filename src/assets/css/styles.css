@@ -189,7 +189,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .crypto-list-tabs .crypto-list{max-height: calc(100vh - 391px); overflow-y: auto; padding-right: 10px;}
 .crypto-list-tabs .ant-input-search-button, .ant-input-search-middle .ant-input-search-button{display: none;}
 .crypto-list-tabs .ant-input-group-addon .icon, .ant-input-search .ant-input-group-addon .icon{margin-right: 16px !important;}
-.sellcrypto-container{max-height: calc(100vh - 262px);}
+.sellcrypto-container{max-height: calc(100vh - 285px);}
 .crypto-container{max-height: calc(100vh - 270px);}
 .suisfiat-container{max-height: calc(100vh - 155px);}
 .suisfiat-height{max-height: calc(100vh - 158px);}
@@ -721,6 +721,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .address-clear{clear: both; margin-top: 12px;}
     .customaudit-select .selectcustom-input{margin-left:0 !important}
     .customaudit-select .custom-btn{width: 100%;}
+    .add-custom.ant-row{display: block !important;}
     .k-pager-sizes {display: none;}
 }
 @media (max-width: 1024px){
@@ -793,6 +794,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .profile-label{width: 100px;}
     .display-flex {display:flex; align-items: center;justify-content: space-between;}
     .address-icons{list-style: none; padding-left: 0; margin-bottom: 0; display: flex;}
+    .add-custom.ant-row{flex-flow: initial !important;}
         
 
 }
@@ -1000,7 +1002,7 @@ text-align: center !important;}
 .notifications-list .ant-list-item-meta-title{margin-bottom: 0 !important;}
 .notifications-list .ant-list-item-meta{align-items: center;}
 .notifications-list .ant-list-item{padding:16px 0; border-bottom: 1px solid var(--borderGrey) !important;}
-.approvebg .ant-list-item-meta-avatar, .depositbg .ant-list-item-meta-avatar, .deposit.fiatbg .ant-list-item-meta-avatar{background-color: var(--bgDarkGreen);}
+.approvebg .ant-list-item-meta-avatar, .depositbg .ant-list-item-meta-avatar, .deposit.fiatbg .ant-list-item-meta-avatar, .deposit.cryptobg .ant-list-item-meta-avatar{background-color: var(--bgDarkGreen);}
 .withdrawbg .ant-list-item-meta-avatar, .depositsbg .ant-list-item-meta-avatar, .withdraw.fiatbg .ant-list-item-meta-avatar, .withdraw.cryptobg .ant-list-item-meta-avatar{background-color: var(--bgDarkRed);}
 .requestbg .ant-list-item-meta-avatar, .documentsbg .ant-list-item-meta-avatar, .cutomersbg .ant-list-item-meta-avatar{background-color: var(--bgBlue);}
 .notification-conunt .bell span{position: absolute;right: -5px;top: -7px;width: 18px;height: 18px;background: #f6921e;border-radius: 50%;line-height: 18px;text-align: center;font-size: 10px;font-weight: 600;}
