@@ -85,12 +85,12 @@ const TradingViewChart = ({ data, type }) => {
       // setIsLoading(false);
   }
 
-  const assetLabels = <span key={Object.keys(item)[0]}>
-        <span style={{ color: `${Object.values(item)[0]}`, fontSize: "30px" }}>
-          &#9632;{" "}
-        </span>
-        <span>{Object.keys(item)[0]} </span>
-      </span>
+  // const assetLabels = <span key={Object.keys(item)[0]}>
+  //       <span style={{ color: `${Object.values(item)[0]}`, fontSize: "30px" }}>
+  //         &#9632;{" "}
+  //       </span>
+  //       <span>{Object.keys(item)[0]} </span>
+  //     </span>
 
   const formatDate = (d) => {
     
@@ -101,7 +101,7 @@ const TradingViewChart = ({ data, type }) => {
   return (
     <Fragment>
       <div ref={ref} />
-      <div>{assetLabels}</div>
+      {/* <div>{assetLabels}</div> */}
     </Fragment>
   );
 };
