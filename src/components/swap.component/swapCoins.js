@@ -82,7 +82,6 @@ class SwapCoins extends Component {
             this.setState({ ...this.state, receiveValue: "", loadingToValue:false })
         }
         } else {
-            //this.setState({ ...this.state, errorMessage: 'Please select from and receive coins to swap' })
         }
         
     }
@@ -96,7 +95,7 @@ class SwapCoins extends Component {
         else if (!this.state.fromValue) {
              this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_coinvalue') })
         }
-        else if (parseFloat(this.state.fromValue)===0) {
+        else if (parseFloat(this.state.fromValue === 0)) {
              this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_coinvalue')
             })
         }
@@ -189,16 +188,12 @@ class SwapCoins extends Component {
                             bordered={false}
                             maxlength={24}
                             onKeyPress={(e) => {
-                                e.currentTarget.value.length >= 6 ? e.currentTarget.style.fontSize = "20px" : e.currentTarget.style.fontSize = "24px";
+                                e.currentTarget.style.fontSize=  e.currentTarget.value.length >= 6 ? "20px" : "24px";
                             }}
-                            // onKeyUp={(e) => {
-                            //     this.setReceiveAmount(e.target.value)
-                            // }}
                             onValueChange={({ value }) => {
                                 this.setReceiveAmount(value)
                             }}
                             value={this.state.fromValue}
-                            //autoFocus = {(coinDetailData.coin && coinReceiveDetailData.coin) ? true : false}
                         />}
                         {coinDetailData.coinBalance && <Text className="text-purewhite mt-4 fs-12 fw-100"><Translate content="balance" component={Text} className="custom-font fw-300 fs-14 text-purewhite" /> <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} /></Text>}
                     </div>
@@ -229,7 +224,7 @@ class SwapCoins extends Component {
                             disabled={true}
                             bordered={false}
                             onKeyPress={(e) => {
-                                e.currentTarget.value.length >= 6 ? e.currentTarget.style.fontSize = "20px" : e.currentTarget.style.fontSize = "24px";
+                                e.currentTarget.style.fontSize = e.currentTarget.value.length >= 6 ? '20px' : "24px";
                                 if(!(coinDetailData.coin &&coinReceiveDetailData.coin)){
                                     e.preventDefault()
                                 }

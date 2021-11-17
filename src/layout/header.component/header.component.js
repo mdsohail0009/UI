@@ -54,7 +54,7 @@ class Header extends Component {
             })
         } else {
             const isKyc = !this.props.userConfig.isKYC;
-            notification.error({ message: "", description: 'Please complete Your ' + isKyc ? (this.props.userConfig.isBusiness ? 'KYB.' : 'KYC.') : "Document requests" });
+            notification.error({ message: "", description: `Please complete Your ${isKyc ? (this.props.userConfig.isBusiness ? `KYB` : `KYC`) : `Document requests`}` });
         }
     }
     showSendDrawer = () => {
@@ -121,7 +121,7 @@ class Header extends Component {
         } else {
             url = process.env.REACT_APP_AUTHORITY + "/account/login?returnUrl=/manage/Disable2faWarning"
         }
-       
+
 
     }
     depostWithdrawMenu = (

@@ -91,7 +91,7 @@ class TransactionsHistory extends Component {
   ];
   render() {
     const { BuySellURL, SwapURL, WithdrawURL, DepositURL, DepositCryptoURL, WithdrawCryptoURL } = this.state
-    const { Text, Title } = Typography;
+    const { Title } = Typography;
     const { TabPane } = Tabs;
     return (
       <>

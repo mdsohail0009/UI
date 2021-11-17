@@ -68,6 +68,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
         }
     }
     const getIbanData = async (val) => {
+        if(val && val.length>14){
         if (val) {
             let response = await apiCalls.getIBANData(val);
             if (response.ok) {
@@ -75,6 +76,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                 form.setFieldsValue({ routingNumber: response.data.routingNumber || oldVal.routingNumber, bankName: response.data.bankName || oldVal.bankName, bankAddress: response.data.bankAddress || oldVal.bankAddress })
             }
         }
+    }
     }
     const { Paragraph } = Typography;
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;

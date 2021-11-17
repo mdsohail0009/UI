@@ -111,6 +111,14 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, isMessageError: doc.id.replace(/-/g, "") });
             return;
         }
+        const itemPath = function () {
+            if (item.path) {
+                return typeof (item.path) === "object" ? JSON.stringify(item.path) : item.path
+            } else {
+                return item.path
+            }
+        }();
+        item.path = itemPath;
         item.path = item.path ? (typeof (item.path) === "object" ? JSON.stringify(item.path) : item.path) : item.path;
         item.status = "Submitted";
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
@@ -206,7 +214,6 @@ class RequestedDocs extends Component {
         }
     }
     uopdateReplyObj = (item, list) => {
-        debugger
         for (let obj of list) {
             if (obj.id === item.id) {
                 obj = item
@@ -330,7 +337,7 @@ class RequestedDocs extends Component {
                     <Button className="pop-btn px-36" onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
                 </>}
             >
-                <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.state.previewPath.includes(".pdf") ? "https://suissebasecors.herokuapp.com/" + this.state.previewPath : this.state.previewPath : null }} />
+                <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? (this.state.previewPath.includes(".pdf") ? "https://suissebasecors.herokuapp.com/" + this.state.previewPath : this.state.previewPath) : null }} />
             </Modal>
         </div>;
     }
