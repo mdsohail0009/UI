@@ -5,7 +5,7 @@ import { setStep } from '../../reducers/buyFiatReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 
-class addCard extends Component {
+class AddBuyFiatCard extends Component {
     state = {}
     render() {
         const { Text } = Typography;
@@ -53,4 +53,4 @@ const connectDispatchToProps = dispatch => {
         }
     }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(addCard);
+export default connect(connectStateToProps, connectDispatchToProps)(AddBuyFiatCard);

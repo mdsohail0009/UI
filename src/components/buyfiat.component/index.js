@@ -6,7 +6,7 @@ import {rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendre
 import connectStateProps from '../../utils/state.connect';
 import Translate from 'react-translate-component';
 import SelectFiat from './selectFiat';
-import AddCard from './addCard';
+import AddBuyFiatCard from './addCard';
 import SelectWallet from './selectWallet';
 import FiatDeposit from '../../components/deposit.component/faitDeposit';
 import BillingAddress from './fiatBillingAddress';
@@ -16,7 +16,7 @@ import WithdrawalSummary from '../withDraw.component/withdrawalSummary';
 import WithdrawalLive from '../withDraw.component/withdrawLive';
 import WithdrawalSuccess from '../withDraw.component/withdrwSuccess';
 
-import ConfirmMsg from './confirm'
+import ConfirmMsg from './confirmMsg'
 class MassPayment extends Component {
     state = {
         withdraw: false,
@@ -43,7 +43,7 @@ class MassPayment extends Component {
             fiatdeposit: <FiatDeposit tab={this.props.tabData} fiatRef={(cd) => this.child = cd} />,
             faitsummary: <FaitDepositSummary />,
             selectfiat: <SelectFiat />,
-            addcard: <AddCard />,
+            addcard: <AddBuyFiatCard />,
             selectwallet: <SelectWallet />,
             billingaddress: <BillingAddress />,
             confirmation: <ConfirmMsg />,

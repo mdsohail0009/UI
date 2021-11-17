@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import DepositFiat from './depositFiat'
 import Translate from 'react-translate-component';
 
-class depositCrypto extends Component {
+class Deposit_Crypto extends Component {
     state = {
         depositToggle: 'From Crypto',
         depositeFiat: false
@@ -62,4 +62,4 @@ const connectDispatchToProps = dispatch => {
         }
     }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(depositCrypto);
+export default connect(connectStateToProps, connectDispatchToProps)(Deposit_Crypto);

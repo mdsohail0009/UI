@@ -90,7 +90,7 @@ class SelectCurrency extends Component {
   }
 }
 
-const connectStateToProps = ({ SelectCurrency }) => {
+const connectStateToProps = ({  }) => {
   return { SelectCurrency }
 }
 const connectDispatchToProps = dispatch => {
