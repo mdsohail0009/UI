@@ -113,13 +113,12 @@ class RequestedDocs extends Component {
         }
         const itemPath = function () {
             if (item.path) {
-                return typeof (item.path) === "object" ? JSON.stringify(item.path) : item.path
+                return typeof (item.path) === "object" ? JSON.stringify(item.path) : item.path;
             } else {
-                return item.path
+                return item.path;
             }
         }();
         item.path = itemPath;
-        item.path = item.path ? (typeof (item.path) === "object" ? JSON.stringify(item.path) : item.path) : item.path;
         item.status = "Submitted";
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         this.setState({ ...this.state, isSubmitting: true });
@@ -198,7 +197,14 @@ class RequestedDocs extends Component {
             let obj;
             if (item) {
                 obj = item;
-                obj.path = (obj.path && typeof (obj.path) === "string") ? JSON.parse(obj.path) : (obj.path ? obj.path : []);
+                const ObjPath = function () {
+                    if (obj.path === "string") {
+                        return JSON.parse(obj.path);
+                    } else {
+                        return obj.path ? obj.path : [];
+                    }
+                }();
+                obj.path = obj.path && typeof ObjPath;
                 obj.repliedDate = new Date();
                 obj.path.push({ filename: file.name, path: file.response[0], size: file.size });
                 obj.repliedBy = this.props.userProfileInfo?.firstName;
@@ -260,6 +266,15 @@ class RequestedDocs extends Component {
 
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
+
+    filePreviewPath() {
+        if (this.state.previewPath.includes(".pdf")) {
+            return "https://suissebasecors.herokuapp.com/" + this.state.previewPath;
+        } else {
+            return this.state.previewPath;
+        }
+    }
+
     render() {
         if (this.state.loading) {
             return <Loader />
@@ -337,7 +352,7 @@ class RequestedDocs extends Component {
                     <Button className="pop-btn px-36" onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
                 </>}
             >
-                <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? (this.state.previewPath.includes(".pdf") ? "https://suissebasecors.herokuapp.com/" + this.state.previewPath : this.state.previewPath) : null }} />
+                <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath : null }} />
             </Modal>
         </div>;
     }
