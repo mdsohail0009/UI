@@ -68,15 +68,13 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
         }
     }
     const getIbanData = async (val) => {
-        if(val && val.length>14){
-        if (val) {
-            let response = await apiCalls.getIBANData(val);
-            if (response.ok) {
-                const oldVal = form.getFieldValue();
-                form.setFieldsValue({ routingNumber: response.data.routingNumber || oldVal.routingNumber, bankName: response.data.bankName || oldVal.bankName, bankAddress: response.data.bankAddress || oldVal.bankAddress })
-            }
+        if (val && val.length > 14) {
+                let response = await apiCalls.getIBANData(val);
+                if (response.ok) {
+                    const oldVal = form.getFieldValue();
+                    form.setFieldsValue({ routingNumber: response.data.routingNumber || oldVal.routingNumber, bankName: response.data.bankName || oldVal.bankName, bankAddress: response.data.bankAddress || oldVal.bankAddress })
+                }
         }
-    }
     }
     const { Paragraph } = Typography;
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
@@ -99,15 +97,12 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                         label={<Translate content="AddressLabel" component={Form.label} />}
                         rules={[
                             {
-                                type: "favouriteName", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() === "") {
-                                        throw new Error(apiCalls.convertLocalLang('is_required')
-                                        )
-                                    }
-                                    else {
-                                        callback();
-                                    }
-                                }
+                                required: true,
+                                message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                whitespace: true,
+                                message: apiCalls.convertLocalLang('is_required')
                             }
                         ]} >
                         <Input className="cust-input" maxLength="20" placeholder={apiCalls.convertLocalLang('Enteraddresslabel')} />
@@ -118,14 +113,12 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                         name="toWalletAddress" required
                         rules={[
                             {
-                                type: "toWalletAddress", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() === "") {
-                                        throw new Error(apiCalls.convertLocalLang('is_required'))
-                                    }
-                                    else {
-                                        callback();
-                                    }
-                                }
+                                required: true,
+                                message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                whitespace: true,
+                                message: apiCalls.convertLocalLang('is_required')
                             }
                         ]}
                     >
@@ -149,19 +142,24 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                         rules={[
                             { required: true, message: apiCalls.convertLocalLang('is_required') },
                             {
-                                validator: (rule, value, callback) => {
-                                    var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                                    if (value) {
-                                        if (!regx.test(value)) {
-                                            callback("Invalid account number")
-                                        } else if (regx.test(value)) {
-                                            callback();
-                                        }
-                                    } else {
-                                        callback();
-                                    }
-                                }
-                            }
+                                pattern:/^[A-Za-z0-9]+$/,
+                                message: 'Invalid account number'
+                            },
+
+                            // {
+                            //     validator: (rule, value, callback) => {
+                            //         var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                            //         if (value) {
+                            //             if (!regx.test(value)) {
+                            //                 callback("Invalid account number")
+                            //             } else if (regx.test(value)) {
+                            //                 callback();
+                            //             }
+                            //         } else {
+                            //             callback();
+                            //         }
+                            //     }
+                            // }
                         ]}
                     >
                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_account')} onBlur={(val) => getIbanData(val.currentTarget.value)} />
@@ -174,19 +172,23 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                         rules={[
                             { required: true, message: apiCalls.convertLocalLang('is_required') },
                             {
-                                validator: (rule, value, callback) => {
-                                    var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                                    if (value) {
-                                        if (!regx.test(value)) {
-                                            callback("Invalid BIC/SWIFT/Routing number")
-                                        } else if (regx.test(value)) {
-                                            callback();
-                                        }
-                                    } else {
-                                        callback();
-                                    }
-                                }
-                            }
+                                pattern:/^[A-Za-z0-9]+$/,
+                                message: 'Invalid BIC/SWIFT/Routing number'
+                            },
+                            // {
+                            //     validator: (rule, value, callback) => {
+                            //         var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                            //         if (value) {
+                            //             if (!regx.test(value)) {
+                            //                 callback("Invalid BIC/SWIFT/Routing number")
+                            //             } else if (regx.test(value)) {
+                            //                 callback();
+                            //             }
+                            //         } else {
+                            //             callback();
+                            //         }
+                            //     }
+                            // }
                         ]}
                     >
                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('BIC_SWIFT_routing_number')} />
@@ -198,14 +200,12 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                         required
                         rules={[
                             {
-                                type: "bankName", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() === "") {
-                                        throw new Error(apiCalls.convertLocalLang('is_required'))
-                                    }
-                                    else {
-                                        callback();
-                                    }
-                                }
+                                required: true,
+                                message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                whitespace: true,
+                                message: apiCalls.convertLocalLang('is_required')
                             }
                         ]}
                     >
@@ -218,14 +218,12 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                         required
                         rules={[
                             {
-                                type: "bankAddress", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() === "") {
-                                        throw new Error(apiCalls.convertLocalLang('is_required'))
-                                    }
-                                    else {
-                                        callback();
-                                    }
-                                }
+                                required: true,
+                                message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                whitespace: true,
+                                message: apiCalls.convertLocalLang('is_required')
                             }
                         ]}>
                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_address1')} />
@@ -236,22 +234,15 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                         component={Paragraph}
                         className="mb-16 fs-14 text-aqua fw-500 text-upper"
                     />
-                    {/* <Form.Item
-                        className="custom-forminput custom-label mb-24"
-                        name="beneficiaryAccountName"
-                        label={<Translate content="Recipient_full_name" component={Form.label} />}
-                    >
-                        <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
-                    </Form.Item> */}
                     <Form.Item>
-                            <div className="d-flex">
-                                <Translate
-                                    className="input-label"
-                                    content="Recipient_full_name"
-                                    component={Form.label}
-                                />{" "}
-                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
-                            <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
+                        <div className="d-flex">
+                            <Translate
+                                className="input-label"
+                                content="Recipient_full_name"
+                                component={Form.label}
+                            />{" "}
+                            <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
+                        <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
@@ -260,14 +251,12 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                         required
                         rules={[
                             {
-                                type: "beneficiaryAccountAddress", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() === "") {
-                                        throw new Error(apiCalls.convertLocalLang('is_required'))
-                                    }
-                                    else {
-                                        callback();
-                                    }
-                                }
+                                required: true,
+                                message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                whitespace: true,
+                                message: apiCalls.convertLocalLang('is_required')
                             }
                         ]}>
                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
