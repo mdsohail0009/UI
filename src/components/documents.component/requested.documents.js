@@ -111,7 +111,7 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, isMessageError: doc.id.replace(/-/g, "") });
             return;
         }
-        item.path = item.path ? typeof (item.path) === "object" ? JSON.stringify(item.path) : item.path : item.path;
+        item.path = item.path ? (typeof (item.path) === "object" ? JSON.stringify(item.path) : item.path) : item.path;
         item.status = "Submitted";
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         this.setState({ ...this.state, isSubmitting: true });
@@ -190,7 +190,7 @@ class RequestedDocs extends Component {
             let obj;
             if (item) {
                 obj = item;
-                obj.path = (obj.path && typeof (obj.path) === "string") ? JSON.parse(obj.path) : obj.path ? obj.path : [];
+                obj.path = (obj.path && typeof (obj.path) === "string") ? JSON.parse(obj.path) : (obj.path ? obj.path : []);
                 obj.repliedDate = new Date();
                 obj.path.push({ filename: file.name, path: file.response[0], size: file.size });
                 obj.repliedBy = this.props.userProfileInfo?.firstName;
@@ -206,6 +206,7 @@ class RequestedDocs extends Component {
         }
     }
     uopdateReplyObj = (item, list) => {
+        debugger
         for (let obj of list) {
             if (obj.id === item.id) {
                 obj = item
@@ -213,19 +214,19 @@ class RequestedDocs extends Component {
         }
         return list;
     }
-    handleReplymessage = (message, doc) => {
+    handleReplymessage = (msg, doc) => {
         let replyObjs = [...this.state.docReplyObjs];
         let item = this.isDocExist(replyObjs, doc.id);
         let obj;
         if (item) {
             obj = item;
-            obj.reply = message;
+            obj.reply = msg;
             obj.repliedBy = this.props.userProfileInfo?.firstName;
             replyObjs = this.uopdateReplyObj(obj, replyObjs);
 
         } else {
             obj = this.messageObject(doc.id);
-            obj.reply = message;
+            obj.reply = msg;
             obj.repliedDate = new Date();
             obj.repliedBy = this.props.userProfileInfo?.firstName;
             replyObjs.push(obj);
@@ -261,7 +262,7 @@ class RequestedDocs extends Component {
             <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=4" />{this.state?.docDetails?.note}</div>
             <div className="bank-view">
                 {this.state.docDetails?.details?.map((doc, idx) => <Collapse collapsible="header" onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
-                    <Panel header={doc.documentName} key={idx + 1} extra={doc.status ? <span className={`${doc.status ? doc.status.toLowerCase() + " staus-lbl" : ""}`}>{doc.status}</span> : ""}>
+                    <Panel header={doc.documentName} key={idx + 1} extra={doc.status ? (<span className={`${doc.status ? doc.status.toLowerCase() + " staus-lbl" : ""}`}>{doc.status}</span>) : ""}>
                         {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
                         {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
                             <div className="user-shortname">{reply.repliedBy.slice(0, 2)}</div>
