@@ -8,7 +8,6 @@ import WalletList from '../shared/walletList';
 import { saveAddress, favouriteNameCheck, getAddress } from './api';
 import Loader from '../../Shared/loader';
 import apiCalls from '../../api/apiCalls';
-import apicalls from '../../api/apiCalls';
 
 const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) => {
     const [form] = Form.useForm();
@@ -100,7 +99,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             {
                                 type: "favouriteName", validator: async (rule, value, callback) => {
                                     if (value == null || value.trim() === "") {
-                                        throw new Error(apicalls.convertLocalLang('is_required')
+                                        throw new Error(apiCalls.convertLocalLang('is_required')
                                         )
                                     }
                                     else {
@@ -119,7 +118,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             {
                                 type: "toWalletAddress", validator: async (rule, value, callback) => {
                                     if (value == null || value.trim() === "") {
-                                        throw new Error(apicalls.convertLocalLang('is_required'))
+                                        throw new Error(apiCalls.convertLocalLang('is_required'))
                                     }
                                     else {
                                         callback();
@@ -135,7 +134,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                         name="toCoin"
                         label={<Translate content="currency" component={Form.label} />}
                         rules={[
-                            { required: true, message: apicalls.convertLocalLang('is_required') },
+                            { required: true, message: apiCalls.convertLocalLang('is_required') },
                         ]}
                     >
                         <WalletList hideBalance={true} valueFeild={'currencyCode'} selectedvalue={fiatAddress?.toCoin} placeholder={apiCalls.convertLocalLang('searchCurrency')} onWalletSelect={(e) => handleWalletSelection(e)} />
@@ -146,7 +145,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                         label={<Translate content="Bank_account" component={Form.label} />}
                         required
                         rules={[
-                            { required: true, message: apicalls.convertLocalLang('is_required') },
+                            { required: true, message: apiCalls.convertLocalLang('is_required') },
                             {
                                 validator: (rule, value, callback) => {
                                     var regx = new RegExp(/^[A-Za-z0-9]+$/);
@@ -171,7 +170,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                         label={<Translate content="BIC_SWIFT_routing_number" component={Form.label} />}
                         required
                         rules={[
-                            { required: true, message: apicalls.convertLocalLang('is_required') },
+                            { required: true, message: apiCalls.convertLocalLang('is_required') },
                             {
                                 validator: (rule, value, callback) => {
                                     var regx = new RegExp(/^[A-Za-z0-9]+$/);
@@ -199,7 +198,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             {
                                 type: "bankName", validator: async (rule, value, callback) => {
                                     if (value == null || value.trim() === "") {
-                                        throw new Error(apicalls.convertLocalLang('is_required'))
+                                        throw new Error(apiCalls.convertLocalLang('is_required'))
                                     }
                                     else {
                                         callback();
@@ -219,7 +218,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             {
                                 type: "bankAddress", validator: async (rule, value, callback) => {
                                     if (value == null || value.trim() === "") {
-                                        throw new Error(apicalls.convertLocalLang('is_required'))
+                                        throw new Error(apiCalls.convertLocalLang('is_required'))
                                     }
                                     else {
                                         callback();
@@ -261,7 +260,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             {
                                 type: "beneficiaryAccountAddress", validator: async (rule, value, callback) => {
                                     if (value == null || value.trim() === "") {
-                                        throw new Error(apicalls.convertLocalLang('is_required'))
+                                        throw new Error(apiCalls.convertLocalLang('is_required'))
                                     }
                                     else {
                                         callback();

@@ -11,7 +11,7 @@ import { processSteps as config } from './config';
 import DepositFiat from '../deposit.component/depositFiat'
 import WireTransfer from '../wire.transfer.component/wireTransfer';
 import AddCard from './addCard';
-import DepositCrypto from '../deposit.component/depositCrypto';
+import Deposit_Crypto from '../deposit.component/depositCrypto';
 import BillingAddress from '../billing.address.component/billAddress';
 import AddressScanner from '../address.scanner/addressScanner';
 import SellSummary from '../sell.component/sellSummary';
@@ -37,7 +37,7 @@ class BuySell extends Component {
             buycrypto: <CryptoComponent />,
             billtype: <BillType />,
             addcard: <AddCard />,
-            depositcrypto: <DepositCrypto />,
+            depositcrypto: <Deposit_Crypto />,
             selectcrypto: <SelectCrypto />,
             summary: <BuySummary />,
             billingaddress: <BillingAddress />,

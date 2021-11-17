@@ -83,7 +83,7 @@ class TransactionsHistory extends Component {
   ];
   withdrwCryptoColomns = [
     { field: "walletCode", title: apiCalls.convertLocalLang('Wallet'), filter: true },
-    { field: "amount", title: apiCalls.convertLocalLang('amount'), filter: true, width: 200, filterType: "numeric", dataType: 'number',filterType: "numeric" },
+    { field: "amount", title: apiCalls.convertLocalLang('amount'), filter: true, width: 200, filterType: "numeric", dataType: 'number', },
     { field: "walletAddress", title: apiCalls.convertLocalLang('walletAddress'), filter: true, width: 200 },
     { field: "createdDate", title: apiCalls.convertLocalLang('RequestDate'), filter: true, width: 200, filterType: "date" },
     { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 200 },
