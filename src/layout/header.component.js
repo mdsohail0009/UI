@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Layout, Menu, Modal, Typography, Dropdown, Row, Col, Divider, Avatar, Carousel, Switch, Drawer, Button } from 'antd';
+import { Layout, Menu, Modal, Typography, Dropdown, Row, Col, Divider, Avatar, Carousel, Switch, Drawer, Button, message } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Link, withRouter } from 'react-router-dom';
 import logoWhite from '../assets/images/logo-white.png';
@@ -24,7 +24,7 @@ import DefaultUser from '../assets/images/defaultuser.jpg';
 import { setHeaderTab } from '../reducers/buysellReducer';
 import { setdepositCurrency } from '../reducers/depositReducer'
 import { deleteToken } from '../notifications/api';
-
+import { connection } from '../utils/signalR';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
@@ -38,11 +38,12 @@ const LinkValue = (props) => {
     )
 }
 const { Title, Paragraph } = Typography;
-
-
 class Header extends Component {
     componentDidMount() {
         counterpart.setLocale(this.props.userConfig ? this.props.userConfig.language : 'en');
+        connection.on("ReceiveMessage", (user, message) => {
+            // nptification display code here
+        });
     }
     securityMenu = (
 
@@ -353,7 +354,7 @@ class Header extends Component {
                             <Translate content="AuditLogs" component={Link} className="c-pointer px-0" />
                         </li>
                         <li className="c-pointer" onClick={() => userManager.signoutRedirect()}>
-                            <Translate content="logout" className="c-pointer px-0"  component={Link} />
+                            <Translate content="logout" className="c-pointer px-0" component={Link} />
                         </li>
                     </ul>
                 </div>
