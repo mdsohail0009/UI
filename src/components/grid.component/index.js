@@ -40,8 +40,8 @@ class List extends React.Component {
           date.getMinutes(),
           date.getSeconds(),
         );
-        let datetime = new Date(milliseconds).toISOString()
-        return datetime
+        let datetime
+        return datetime = new Date(milliseconds).toISOString()
       };
     render() {
         const { columns, url, additionalParams } = this.props
