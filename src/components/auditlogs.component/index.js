@@ -46,11 +46,11 @@ class AuditLogs extends Component {
 
   }
   gridColumns = [
-    { field: "date", title: apicalls.convertLocalLang('Date'), filter: true, filterType: "date", width: 200 },
-    { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 190 },
-    { field: "featurePath", title: apicalls.convertLocalLang('Feature_Path'), filter: true, width: 200 },
-    { field: "action", title: apicalls.convertLocalLang('Action'), width: 230, filter: true },
-    { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true},
+    { field: "date", title: apicalls.convertLocalLang('Date'), filter: true, filterType: "date", width: 250 },
+    { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 250 },
+    { field: "featurePath", title: apicalls.convertLocalLang('Feature_Path'), filter: true, width: 250 },
+    { field: "action", title: apicalls.convertLocalLang('Action'), width: 250, filter: true },
+    { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true,width: 985},
   ]
 
 

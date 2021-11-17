@@ -721,6 +721,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
     .address-clear{clear: both; margin-top: 12px;}
     .customaudit-select .selectcustom-input{margin-left:0 !important}
     .customaudit-select .custom-btn{width: 100%;}
+    .k-pager-sizes {display: none;}
 }
 @media (max-width: 1024px){
     .custom-gridresponsive .ant-drawer-body{word-wrap: unset !important;}
