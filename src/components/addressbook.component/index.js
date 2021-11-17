@@ -11,7 +11,6 @@ import SelectCrypto from './selectCrypto';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import apiCalls from '../../api/apiCalls';
-import apicalls from '../../api/apiCalls';
 
 
 class AddressBook extends Component {
@@ -254,7 +253,7 @@ class AddressBook extends Component {
                     </div>
                     {this.state.alert &&
                         <div className="custom-alert" ><Alert
-                            description={apicalls.convertLocalLang('one_record')}
+                            description={apiCalls.convertLocalLang('one_record')}
                             type="warning"
                             showIcon /></div>}
                     {this.state.successMsg && <Alert type="success"
