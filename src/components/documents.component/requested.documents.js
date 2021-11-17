@@ -330,7 +330,7 @@ class RequestedDocs extends Component {
                     <Button className="pop-btn px-36" onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
                 </>}
             >
-                <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.state.previewPath.includes(".pdf") ? "https://suissebasecors.herokuapp.com/" + this.state.previewPath : this.state.previewPath : null }} />
+                <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? (this.state.previewPath.includes(".pdf") ? "https://suissebasecors.herokuapp.com/" + this.state.previewPath : this.state.previewPath) : null }} />
             </Modal>
         </div>;
     }
