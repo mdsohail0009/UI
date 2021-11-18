@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Layout } from 'antd'
-import RoutingComponent from '../config/router.config.component';
+import RouteConfig from '../config/router.config.component';
 const { Content: AntContent } = Layout;
 class Content extends Component {
   state = {
@@ -9,7 +9,7 @@ class Content extends Component {
   render() {
     return <AntContent className="sidebar-push">
      
-      <RoutingComponent />
+      <RouteConfig />
     </AntContent>
   }
 }

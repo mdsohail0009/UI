@@ -2,7 +2,7 @@ import { Card, Typography } from "antd";
 import { useEffect } from "react";
 import Translate from "react-translate-component";
 import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setStep, setSubTitle } from "../../reducers/sendreceiveReducer";
-import connectStateProps from "../../utils/state.connect";
+import ConnectStateProps from "../../utils/state.connect";
 import Currency from '../shared/number.formate';
 import Loader from '../../Shared/loader';
 import apicalls from "../../api/apiCalls";
@@ -45,4 +45,4 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
     </>
 }
 
-export default connectStateProps(WithdrawCrypto);
+export default ConnectStateProps(WithdrawCrypto);

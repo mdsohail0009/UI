@@ -15,7 +15,7 @@ const RequestedDocs = React.lazy(() => import('../components/documents.component
 const DocNotices = React.lazy(() => import("../components/shared/doc.notices"))
 const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"))
 const DashboardCharts = React.lazy(() => import("../components/dashboard.component/dashboardCharts"))
-class RoutingComponent extends Component {
+class RouteConfig extends Component {
   render() {
     return <Switch>
       <React.Suspense fallback={<div className="loader">Loading...</div>}>
@@ -40,4 +40,4 @@ class RoutingComponent extends Component {
 
 }
 
-export default RoutingComponent;
+export default RouteConfig;

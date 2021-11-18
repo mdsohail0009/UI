@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Typography, Radio } from 'antd';
 import Translate from 'react-translate-component';
-import connectStateProps from '../../utils/state.connect';
+import ConnectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import { fetchPortfolioData } from '../../reducers/dashboardReducer';
 import { createChart, ColorType, PriceScaleMode, LineStyle } from "lightweight-charts";
@@ -192,4 +192,4 @@ class Portfolio extends Component {
     }
 }
 
-export default connectStateProps(Portfolio);
+export default ConnectStateProps(Portfolio);
