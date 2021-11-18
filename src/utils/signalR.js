@@ -1,6 +1,6 @@
-import SignalR from '@microsoft/signalr';
+import * as SignalR from '@microsoft/signalr';
 
-const connection = new signalR.HubConnectionBuilder()
+const connection = new SignalR.HubConnectionBuilder()
     .withUrl("/chathub")
     .configureLogging(SignalR.LogLevel.Information)
     .build();
