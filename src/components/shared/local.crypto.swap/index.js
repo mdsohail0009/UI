@@ -21,8 +21,8 @@ const LocalCryptoSwapper = (props, ref) => {
             setLocalValue(info.localValue);
             setCryptoValue(info.cryptoValue);
         },
-        handleConvertion({ cryptoValue, localValue, locCurrency,isSwap }) {
-            fetchConvertionValue({ cryptoValue, localValue, inputvalue: (isSwap|| isSwaped) ? cryptoValue : localValue, locCurrency });
+        handleConvertion({ cryptoValue, localValue, locCurrency, isSwap }) {
+            fetchConvertionValue({ cryptoValue, localValue, inputvalue: (isSwap || isSwaped) ? cryptoValue : localValue, locCurrency });
             if (isSwaped) {
                 setCryptoValue(cryptoValue);
             }
@@ -40,7 +40,7 @@ const LocalCryptoSwapper = (props, ref) => {
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
             let _val = document.getElementById("ABC")?.value;
             _val = _val ? _val.replace(/,/g, "") : _val;
-            _val = _val?.replace(symbols[locCurrency||localCurrency], "");
+            _val = _val?.replace(symbols[locCurrency || localCurrency], "");
             if (_obj[4] == _val || _obj[4] == 0) {
                 if (!isSwaped) {
                     setCryptoValue(value || 0);
@@ -84,7 +84,7 @@ const LocalCryptoSwapper = (props, ref) => {
                 autoFocus
             />
         </div>
-        <NumberFormat value={isSwaped ? localvalue : cryptovalue} displayType={'text'} thousandSeparator={true} prefix={isSwaped ? symbols[localCurrency] : ""} renderText={(value, props) => <div {...props} className="fs-14 text-white-30 text-center d-block mb-36">{value} {isSwaped ? localCurrency : cryptoCurrency} {isConvertionLoad && <Spin size="small" />}</div>
+        <NumberFormat value={isSwaped ? localvalue : cryptovalue} displayType={'text'} thousandSeparator={true} prefix={isSwaped ? symbols[localCurrency] : ""} renderText={value => <div {...props} className="fs-14 text-white-30 text-center d-block mb-36">{value} {isSwaped ? localCurrency : cryptoCurrency} {isConvertionLoad && <Spin size="small" />}</div>
         } />
         <span className="val-updown c-pointer" onClick={() => { setInputChange(false); isSwaped ? setSwapped(false) : setSwapped(true) }}>
             <span className="icon md swaparrow" />

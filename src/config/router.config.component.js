@@ -11,10 +11,10 @@ const SumSub = React.lazy(() => import('../components/sumSub.component/sumsub'))
 const NotKyc = React.lazy(() => import('../components/sumSub.component/notKyc'));
 const OnBoarding = React.lazy(() => import('../layout/onboard.component'));
 const UserProfile = React.lazy(() => import('../components/userProfile.component/userProfile'));
-const RequestedDocs = React.lazy(() => import('../components/documents.component/requested.documents'));
+const RequestedDocs = React.lazy(() => import('../components/documents.component/requestedDocs'));
 const DocNotices = React.lazy(() => import("../components/shared/doc.notices"))
 const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"))
-const DashboardCharts=React.lazy(()=>import("../components/dashboard.component/dashboardCharts"))
+const DashboardCharts = React.lazy(() => import("../components/dashboard.component/dashboardCharts"))
 class RoutingComponent extends Component {
   render() {
     return <Switch>
@@ -31,7 +31,7 @@ class RoutingComponent extends Component {
         <ReactRoute path='/documents' component={RequestedDocs} />
         <ReactRoute path='/docnotices' component={DocNotices} />
         <ReactRoute path='/coindetails/:coinName' component={CoinDetails} />
-        <ReactRoute path="/silent_redirect" component={SignInSilent}/>
+        <ReactRoute path="/silent_redirect" component={SignInSilent} />
         <ReactRoute path='/dashboardCharts' component={DashboardCharts} />
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>

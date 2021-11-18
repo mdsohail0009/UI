@@ -24,7 +24,7 @@ const _encrypt = (msg, key) =>{
     msg = typeof (msg) == 'object' ? JSON.stringify(msg) : msg;
     var salt = CryptoJS.lib.WordArray.random(128 / 8);
 
-    var key = CryptoJS.PBKDF2(key, salt, {
+    key = CryptoJS.PBKDF2(key, salt, {
         keySize: 256 / 32,
         iterations: 10
     });
@@ -37,7 +37,7 @@ const _encrypt = (msg, key) =>{
         mode: CryptoJS.mode.CBC
 
     });
-    var transitmessage = salt.toString() + iv.toString() + encrypted.toString();
+    var transitmessage = ((salt.toString()) + (iv.toString()) + (encrypted.toString()));
     return transitmessage;
 }
 apiClient.axiosInstance.interceptors.request.use((config) => {

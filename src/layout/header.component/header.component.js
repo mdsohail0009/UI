@@ -53,8 +53,7 @@ class Header extends Component {
                 buyDrawer: true
             })
         } else {
-            const isKyc = !this.props.userConfig.isKYC;
-            notification.error({ message: "", description: `Please complete Your ${isKyc ? (this.props.userConfig.isBusiness ? `KYB` : `KYC`) : `Document requests`}` });
+            this.showNotification()
         }
     }
     showSendDrawer = () => {
@@ -63,8 +62,7 @@ class Header extends Component {
                 sendDrawer: true
             })
         } else {
-            const isKyc = !this.props.userConfig.isKYC;
-            notification.error({ message: "", description: 'Please complete Your ' + isKyc ? (this.props.userConfig.isBusiness ? 'KYB.' : 'KYC.') : "Document requests" });
+            this.showNotification()
         }
     }
     showSwapDrawer = () => {
@@ -73,8 +71,7 @@ class Header extends Component {
                 swapDrawer: true
             })
         } else {
-            const isKyc = !this.props.userConfig.isKYC;
-            notification.error({ message: "", description: 'Please complete Your ' + isKyc ? (this.props.userConfig.isBusiness ? 'KYB.' : 'KYC.') : "Document requests" });
+            this.showNotification()
         }
     }
     showBuyFiatDrawer = () => {
@@ -83,8 +80,15 @@ class Header extends Component {
                 buyFiatDrawer: true
             })
         } else {
-            const isKyc = !this.props.userConfig.isKYC;
-            notification.error({ message: "", description: 'Please complete Your ' + isKyc ? (this.props.userConfig.isBusiness ? 'KYB.' : 'KYC.') : "Document requests" });
+            this.showNotification()
+        }
+    }
+    showNotification = () =>{
+        const isKyc = !this.props.userConfig.isKYC;
+        if(isKyc){
+            notification.error({ message: "", description: `Please complete Your ${this.props.userConfig.isBusiness ? 'KYB' : 'KYC'}` });
+        }else{
+            notification.error({ message: "", description: `Please complete Your ${this.props.userConfig.isBusiness ? 'KYB' : 'KYC'}` });
         }
     }
     closeDrawer = () => {
@@ -114,16 +118,7 @@ class Header extends Component {
             buyFiatDrawer: false,
         })
     }
-    enableDisable2fa = (status) => {
-        var url = '';
-        if (status) {
-            url = process.env.REACT_APP_AUTHORITY + "/account/login?returnUrl=/manage/EnableAuthenticator";
-        } else {
-            url = process.env.REACT_APP_AUTHORITY + "/account/login?returnUrl=/manage/Disable2faWarning"
-        }
 
-
-    }
     depostWithdrawMenu = (
         <Menu>
             <ul className="pl-0 drpdwn-list">
