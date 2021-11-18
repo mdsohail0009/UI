@@ -132,8 +132,7 @@ const sendReceiveReducer = (state = initialState, action) => {
             state = { ...state, stepcode: action.payload };
             return state;
         case CLEAR_STEP:
-            state = { ...state, stepcode: action.payload };
-            return state;
+            return  { ...state, stepcode: action.payload };
         case SET_WALLET_ADDRESS:
             state = { ...state, depositWallet: action.payload };
             return state;

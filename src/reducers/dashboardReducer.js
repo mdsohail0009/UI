@@ -111,7 +111,7 @@ let dashboardReducer = (state = initialState, action) => {
         case SET_DETAIL_DATA:
             return { ...state, [action.payload.key]: { data: action.payload.data, loading: false } };
         case REJECT_DETAIL_DATA:
-            return  state = { ...state, [action.payload.key]: { data: action.payload.data, loading: false } };
+            return { ...state, [action.payload.key]: { data: action.payload.data, loading: false } };
         case HANDLE_NOTICES:
             return { ...state, notices: { data: action.payload.data, loading: action.payload.loading } }
         case SET_COIN_DETAIL:

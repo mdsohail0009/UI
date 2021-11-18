@@ -44,8 +44,7 @@ const BuyFiatReducer = (state = initialState, action) => {
             state = { ...state, stepcode: action.payload };
             return state;
         case CLEAR_STEP:
-            state = { ...state, stepcode: action.payload };
-            return state;
+            return { ...state, stepcode: action.payload };
         default:
             return state;
     }
