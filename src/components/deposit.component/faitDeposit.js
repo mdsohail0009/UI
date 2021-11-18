@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import SellToggle from '../withDraw.component/faitWithdrawal';
 import config from '../../config/config';
 import NumberFormat from 'react-number-format';
-import { getCurrencieswithBankDetails,setdepositCurrency } from '../../reducers/depositReducer'
+import { getCurrencieswithBankDetails, setdepositCurrency } from '../../reducers/depositReducer'
 import { rejectWithdrawfiat } from '../../reducers/sendreceiveReducer'
 import { savedepositFiat, requestDepositFiat } from './api';
 import Loader from '../../Shared/loader';
@@ -21,7 +21,7 @@ const LinkValue = (props) => {
     <Translate className="textpure-yellow text-underline c-pointer"
       content={props.content}
       component={Link}
-      onClick={()=>window.open("https://www.iubenda.com/terms-and-conditions/42856099",'_blank')}
+      onClick={() => window.open("https://www.iubenda.com/terms-and-conditions/42856099", '_blank')}
     />
   )
 }
@@ -59,7 +59,7 @@ class FaitDeposit extends Component {
         this.handlFiatDep(this.props.depositInfo?.depositCurrency, this.props.depositInfo?.currenciesWithBankInfo)
       }
     }
-    
+
   }
   clearfiatValues = () => {
     this.props.fetchCurrencyWithBankDetails()
@@ -76,26 +76,26 @@ class FaitDeposit extends Component {
   }
   handleBuySellToggle = e => {
     this.handleshowTab(e.target.value)
-    if(e.target.value==1){
+    if (e.target.value == 1) {
       this.props.fetchCurrencyWithBankDetails()
       this.props.dispatch(rejectWithdrawfiat())
     }
   }
-  handleshowTab = async(tabKey) =>{
+  handleshowTab = async (tabKey) => {
     this.setState({
       ...this.state,
       faitdeposit: tabKey === 2,
       tabValue: tabKey,
       // BankDetails: [],
-       BankInfo: null,
-       depObj: { currency: this.props.depositInfo ? this.props.depositInfo.depositCurrency : null, BankName: null, Amount: null }, 
+      BankInfo: null,
+      depObj: { currency: this.props.depositInfo ? this.props.depositInfo.depositCurrency : null, BankName: null, Amount: null },
       Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false
     });
-    if(tabKey === 1){
+    if (tabKey === 1) {
       appInsights.trackEvent({
         name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": ('Deposit page view'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
       });
-      let currencyLu=this.props.depositInfo?.currenciesWithBankInfo;
+      let currencyLu = this.props.depositInfo?.currenciesWithBankInfo;
       for (var k in currencyLu) {
         if (currencyLu[k].walletCode === this.props.depositInfo?.depositCurrency) {
           if (currencyLu[k].bankDetailModel?.length === 1) {
@@ -103,13 +103,13 @@ class FaitDeposit extends Component {
             let reqdepositObj = await requestDepositFiat(currencyLu[k].bankDetailModel[0].bankId, this.props.member?.id);
             if (reqdepositObj.ok === true) {
               this.setState({
-                ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], Loader: false, isTermsAgreed: false,faitdeposit: tabKey === 2,
+                ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankInfo: reqdepositObj.data, BankDetails: [], Loader: false, isTermsAgreed: false, faitdeposit: tabKey === 2,
                 tabValue: tabKey,
               });
             }
-          }else{
+          } else {
             this.setState({
-              ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankDetails: currencyLu[k].bankDetailModel, BankInfo: null, isTermsAgreed: false,faitdeposit: tabKey === 2,
+              ...this.state, fiatDepEur: this.props.depositInfo?.depositCurrency === "EUR", BankDetails: currencyLu[k].bankDetailModel, BankInfo: null, isTermsAgreed: false, faitdeposit: tabKey === 2,
               tabValue: tabKey,
             });
           }
@@ -161,8 +161,9 @@ class FaitDeposit extends Component {
   ConfirmDeposit = async () => {
     let { BankInfo, depObj } = this.state;
     if (parseFloat(typeof depObj.Amount === 'string' ? depObj.Amount.replace(/,/g, '') : depObj.Amount) <= 0) {
-      this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('amount_greater_zero')
-    })
+      this.setState({
+        ...this.state, errorMessage: apicalls.convertLocalLang('amount_greater_zero')
+      })
       this.myRef.current.scrollIntoView();
       return;
     }
@@ -171,7 +172,7 @@ class FaitDeposit extends Component {
       this.myRef.current.scrollIntoView()
     }
     else if (depObj.Amount === '.') {
-      this.setState({ ...this.state, errorMessage:apicalls.convertLocalLang('amount_greater_zero')}); this.myRef.current.scrollIntoView()
+      this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('amount_greater_zero') }); this.myRef.current.scrollIntoView()
 
     }
     else {
@@ -188,7 +189,7 @@ class FaitDeposit extends Component {
             tabValue: 1, Loader: false, isTermsAgreed: false, showSuccessMsg: true
           });
           appInsights.trackEvent({
-            name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": (createObj.amount + ' ' + createObj.currency +' deposited.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
+            name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": (createObj.amount + ' ' + createObj.currency + ' deposited.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
           });
         }
       });
@@ -246,15 +247,15 @@ class FaitDeposit extends Component {
                   content="currency"
                   component={Text}
                 /><span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
-                    <Select dropdownClassName="select-drpdwn" placeholder={apicalls.convertLocalLang('SelectCurrency')} className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true} 
+                    <Select dropdownClassName="select-drpdwn" placeholder={apicalls.convertLocalLang('SelectCurrency')} className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true}
                       onChange={(e) => { this.handlFiatDep(e, currenciesWithBankInfo) }} value={depObj.currency}>
                       {currenciesWithBankInfo?.map((item, idx) =>
                         <Option key={idx} value={item.walletCode}>{item.walletCode}
                         </Option>
                       )}
                     </Select></div></Form.Item>}
-                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="bank_msg"/></Text>}
-                {this.state.BankDetails?.length > 1 &&depObj.currency !== null && <Form.Item><Translate
+                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
+                {this.state.BankDetails?.length > 1 && depObj.currency !== null && <Form.Item><Translate
                   className="input-label"
                   content="BankName"
                   component={Text}
@@ -299,7 +300,7 @@ class FaitDeposit extends Component {
                       </div></Form.Item>
 
                     <div className="d-flex">
-                      <span className={`coin ${depObj.currency.toLowerCase()}`} style={{marginRight: '8px',marginTop:'15px'}}/>
+                      <span className={`coin ${depObj.currency.toLowerCase()}`} style={{ marginRight: '8px', marginTop: '15px' }} />
                       <div style={{ flex: 1 }}>
                         <Paragraph className="mb-0 fs-16 text-white-30 fw-500 mt-16 text-upper">{BankInfo.accountName}</Paragraph>
                         <Paragraph className="mb-0 fs-14 text-white-30 fw-300">
@@ -307,17 +308,17 @@ class FaitDeposit extends Component {
                       </div>
                     </div>
                     <Text className="text-white-30 fs-14">A/C </Text><Text copyable className="mb-0 fs-14 text-yellow fw-500">{BankInfo.accountNumber}</Text>
-                    {BankInfo.routingNumber!=null&&BankInfo.routingNumber!=''&&<Translate
+                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
                       className="mt-36 fs-14 text-white fw-500 text-upper"
                       content="for_Domestic_wires"
                       component={Paragraph}
                     />}
-                    {BankInfo.routingNumber!=null&&BankInfo.routingNumber!=''&&<Translate
+                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
                       className="fw-200 text-white-50 fs-14"
                       content="Routing_number"
                       component={Text}
                     />}
-                    {BankInfo.routingNumber!=null&&BankInfo.routingNumber!=''&&<Text copyable className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text>}
+                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Text copyable className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text>}
                     <Translate
                       className="mt-24 fs-14 text-white fw-500 text-upper"
                       content="for_international_wires"
@@ -411,7 +412,7 @@ class FaitDeposit extends Component {
                   block
                   className="pop-btn mt-36"
                 >
-               <Translate content="Confirm" component='Text'/> 
+                  <Translate content="Confirm" component='Text' />
                 </Button></>}
             </div>
             </Form>}
@@ -421,6 +422,30 @@ class FaitDeposit extends Component {
               {this.renderModalContent()}
             </Modal> */}
             {this.state.showSuccessMsg && <div className="success-pop text-center">
+              {/* <div className="fiatdeposit-confirm">
+                <Text className="fw-500 text-white-30 fs-24 text-center">USD 2,849.76</Text>
+                <Text className="fw-200 text-white-50 fs-14 text-center">Amount</Text>
+                <div className="d-flex pt-16 agree-check mt-36">
+                  <label>
+                    <input type="checkbox" id="agree-check" />
+                    <span for="agree-check" />
+                  </label>
+                  <Translate
+                    content="agree_to_suissebase"
+                    with={{ link }}
+                    component={Paragraph}
+                    className="fs-14 text-white-30 ml-16 mb-4"
+                    style={{ flex: 1 }}
+                  />
+                </div>
+                <Button
+                  size="large"
+                  block
+                  className="pop-btn mt-36"
+                >
+                  <Translate content="Confirm" component='Text' />
+                </Button>
+              </div> */}
               <img src={success} className="confirm-icon" alt={'success'} />
               <div><Translate content="success_msg" component='Success' className="text-white-30 fs-36 fw-200 mb-4" /></div>
               <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" />
