@@ -222,7 +222,7 @@ class RequestedDocs extends Component {
     uopdateReplyObj = (item, list) => {
         for (let obj of list) {
             if (obj.id === item.id) {
-                obj = item
+                obj = item;
             }
         }
         return list;
@@ -352,7 +352,7 @@ class RequestedDocs extends Component {
                     <Button className="pop-btn px-36" onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
                 </>}
             >
-                <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath : null }} />
+                <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null }} />
             </Modal>
         </div>;
     }

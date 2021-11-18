@@ -37,8 +37,7 @@ const _encrypt = (msg, key) =>{
         mode: CryptoJS.mode.CBC
 
     });
-    var transitmessage = ((salt.toString()) + (iv.toString()) + (encrypted.toString()));
-    return transitmessage;
+    return ((salt.toString()) + (iv.toString()) + (encrypted.toString()));
 }
 apiClient.axiosInstance.interceptors.request.use((config) => {
     const { oidc: { user }, userConfig:{ userProfileInfo }} = store.getState()
