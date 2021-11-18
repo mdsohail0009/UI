@@ -78,12 +78,14 @@ const LineChart = ({ data, lineColor, id, height }) => {
             bottomColor: 'rgba(77, 178, 5, 0)',
             lineColor: 'rgba(255, 61, 0, 1)',
             lineWidth: 3,
-            autoscaleInfoProvider: () => ({
-                priceRange: {
-                    minValue: -9999999,
-                    maxValue: 9999999,
-                },
-            }),
+            autoscaleInfoProvider: () => {
+                return ({
+                    priceRange: {
+                        minValue: -9999999,
+                        maxValue: 9999999,
+                    },
+                });
+            },
         });
         const data1 = { BTC: ((data && data?.cpnl) ? (data?.cpnl.map(item => { return { time: item.time, value: item.value } })) : []) }
         const data2 = { BTC: ((data && data?.btcTrend) ? (data?.btcTrend.map(item => { return { time: item.time, value: item.value } })) : []) }
