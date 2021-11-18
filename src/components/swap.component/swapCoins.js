@@ -90,13 +90,9 @@ class SwapCoins extends Component {
         else if (!this.props.swapStore.coinReceiveDetailData.coin) {
              this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('receive_coin')})
         }
-        else if (!this.state.fromValue) {
+        else if (!this.state.fromValue || parseFloat(this.state.fromValue === 0)) {
              this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_coinvalue') })
-        }
-        else if (parseFloat(this.state.fromValue === 0)) {
-             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_coinvalue')
-            })
-        }
+        } 
         else if (!this.props.swapStore.coinDetailData.coinBalance) {
              this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('insufficient_balance') })
         }
