@@ -131,42 +131,33 @@ let initialState = {
 const AddressBookReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_ADDRESS_STEP:
-            state = { ...state, stepcode: action.payload };
-            return state;
+            return { ...state, stepcode: action.payload };
         case CLEAR_STEP:
-            state = { ...state, stepcode: action.payload };
-            return state;
+            return { ...state, stepcode: action.payload };
         case FETCH_ADDRESS:
-            state = { ...state, [action.payload.key]: { data: action.payload.data, error: action.payload.error, loading: action.payload.loading } }
-            return state;
+            return { ...state, [action.payload.key]: { data: action.payload.data, error: action.payload.error, loading: action.payload.loading } }
         case HANDLE_FETCH:
             state = { ...state, [action.payload.key]: { ...state[action.payload.key], ...action.payload } };
             return state;
         case SET_COIN:
-            state = { ...state, coinWallet: action.payload };
-            return state;
+            return { ...state, coinWallet: action.payload };
         case REJECT_COIN:
-            state = { ...state, coinWallet: null };
-            return state;
+            return { ...state, coinWallet: null };
         case SET_EXCHANGE_VALUE:
             state = { ...state, exchangeValues: { ...state.exchangeValues, [action.payload.key]: action.payload.value } };
             return state;
         case FETCH_USERSID_UPDATE:
-            state = { ...state, selectedRowData: action.payload }
-            return state;
+            return { ...state, selectedRowData: action.payload }
         case FETCH_ADDRESS_CRYPTO:
-            state = { ...state, cryptoValues: action.payload };
-            return state;
-            case CLEAR_CRYPTO_VALUES:
-                state = { ...state, cryptoValues: null };
-                return state;
+            return { ...state, cryptoValues: action.payload };
+        case CLEAR_CRYPTO_VALUES:
+            return { ...state, cryptoValues: null };
         case CLEAR_VALUES:
-            state = { ...state, selectedRowData: null };
-            return state;
+            return { ...state, selectedRowData: null };
         default:
             return state;
     }
 
 }
 export default AddressBookReducer;
-export { setAddressStep, clearStep, setAddressCoin, handleFavouritAddress, fetchSelectedCoinDetails, setExchangeValue, rejectCoin, fetchUsersIdUpdate, fetchGetAddress, clearValues, fetchAddressCrypto,clearCryptoValues }
+export { setAddressStep, clearStep, setAddressCoin, handleFavouritAddress, fetchSelectedCoinDetails, setExchangeValue, rejectCoin, fetchUsersIdUpdate, fetchGetAddress, clearValues, fetchAddressCrypto, clearCryptoValues }
