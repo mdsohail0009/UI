@@ -222,7 +222,7 @@ class RequestedDocs extends Component {
     uopdateReplyObj = (item, list) => {
         for (let obj of list) {
             if (obj.id === item.id) {
-                obj = item
+                return obj = item;
             }
         }
         return list;
