@@ -81,9 +81,7 @@ class SwapCoins extends Component {
         }else{
             this.setState({ ...this.state, receiveValue: "", loadingToValue:false })
         }
-        } else {
         }
-        
     }
     previewClick() {
         if (!this.props.swapStore.coinDetailData.coin) {

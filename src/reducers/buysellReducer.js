@@ -70,20 +70,15 @@ let initialState = {
 const buySellReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_STEP:
-            state = { ...state, stepcode: action.payload };
-            return state;
+            return { ...state, stepcode: action.payload };
         case CHANGE_STEP:
-            state = { ...state, stepcode: action.payload };
-            return state;
+            return { ...state, stepcode: action.payload };
         case CLEAR_STEP:
-            state = { ...state, stepcode: action.payload };
-            return state;
+            return { ...state, stepcode: action.payload };
         case SET_TAB:
-            state = { ...state, tabKey: action.payload };
-            return state;
+            return { ...state, tabKey: action.payload };
         case SET_HEADER_TAB:
-            state = { ...state, headerTab: action.payload };
-            return state;
+            return { ...state, headerTab: action.payload };
         default:
             return state;
     }

@@ -9,9 +9,8 @@ import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reduc
 import { setStep } from '../../reducers/buysellReducer';
 import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import apiCalls from '../../api/apiCalls';
-import { Link } from "react-router-dom";
 
 class YourPortfolio extends Component {
     state = {

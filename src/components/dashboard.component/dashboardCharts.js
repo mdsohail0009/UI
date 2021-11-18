@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Typography, Radio, Image, Tooltip, Empty } from 'antd';
+import { Card, Row, Col, Typography, Radio, Tooltip, Empty } from 'antd';
 import apiCalls from "../../api/apiCalls";
 import { connect } from 'react-redux';
 import BarChart from '../trading.components/bar.component';

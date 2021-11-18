@@ -1,6 +1,5 @@
 import { createChart, ColorType, PriceScaleMode } from "lightweight-charts";
-import { useState } from "react";
-import { useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 import { useRef } from "react";
 
 
