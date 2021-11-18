@@ -6,12 +6,12 @@ import connectStateProps from '../../utils/state.connect';
 import BuySummary from './buy.summary';
 import BillType from '../pay.component/payOption';
 import SelectCrypto from './buy.detail';
-import { setStep, setTab,setHeaderTab } from '../../reducers/buysellReducer';
+import { setStep, setTab, setHeaderTab } from '../../reducers/buysellReducer';
 import { processSteps as config } from './config';
 import DepositFiat from '../deposit.component/depositFiat'
 import WireTransfer from '../wire.transfer.component/wireTransfer';
 import AddCard from './addCard';
-import Deposit_Crypto from '../deposit.component/depositCrypto';
+import DepositCrypto from '../deposit.component/depositCrypto';
 import BillingAddress from '../billing.address.component/billAddress';
 import AddressScanner from '../address.scanner/addressScanner';
 import SellSummary from '../sell.component/sellSummary';
@@ -37,7 +37,7 @@ class BuySell extends Component {
             buycrypto: <CryptoComponent />,
             billtype: <BillType />,
             addcard: <AddCard />,
-            depositcrypto: <Deposit_Crypto />,
+            depositcrypto: <DepositCrypto />,
             selectcrypto: <SelectCrypto />,
             summary: <BuySummary />,
             billingaddress: <BillingAddress />,
