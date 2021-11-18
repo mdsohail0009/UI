@@ -456,4 +456,9 @@ export default {
   add:'添加',
   edit:'編輯',
   active_inactive:'活動/非活動',
+  
+location:'地點',
+ipAddress:'IP地址',
+
+
 }

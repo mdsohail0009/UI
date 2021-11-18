@@ -86,7 +86,6 @@ const FaitWithdrawal = ({member, selectedWalletCode, buyInfo, userConfig, dispat
     }
   }
   const handleAddressChange = async (e) => {
-    debugger
     let val = addressLu.filter((item)=> {if(item.name==e){return item}})
     let recAddressDetails = await detailsAddress(val[0].id)
     if (recAddressDetails.ok) {

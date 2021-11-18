@@ -1,10 +1,8 @@
 import React from 'react';
-import { Typography, Radio, Row, Col, Image } from 'antd';
-import { Link } from "react-router-dom";
-import tradeGraph1 from '../../assets/images/tradegraph.PNG';
+import { Typography, Radio, Row, Col } from 'antd';
+import { Link, withRouter } from "react-router-dom";
 import {getcoinDetails, getCoinChatData} from './api'
 import connectStateProps from '../../utils/state.connect';
-import { withRouter } from 'react-router-dom';
 import TradingViewChart from './tradingview';
 
 class CoinView extends React.Component {
@@ -24,7 +22,6 @@ class CoinView extends React.Component {
             this.setState({...this.state,coinData:response.data},()=>{
                 this.coinChartData(1);
             })
-        } else {
         }
     }
     coinChartData = async (days) => {
@@ -32,14 +29,12 @@ class CoinView extends React.Component {
             const response = await getCoinChatData(this.state.coinData.id,'usd', days);
             if (response.ok) {
                 this.setState({ ...this.state, chatData: response.data })
-            } else {
             }
         }
     }
     render() {
         const { Paragraph, Text, Title } = Typography
         const {coinData} = this.state;
-        const {marketSelectedCoin} = this.props.dashboard;
         return <div className="main-container">
             <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/dashboard" />{coinData?.name} ({coinData?.symbol.toUpperCase()})</div>
             <Row gutter={[24, 24]}>

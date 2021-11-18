@@ -461,4 +461,7 @@ export default {
   add:'Add',
   edit:'Edit',
   active_inactive:'Active/Inactive',
+  
+location:'Location',
+ipAddress:'IP Address',
 }

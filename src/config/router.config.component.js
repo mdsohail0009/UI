@@ -10,7 +10,7 @@ const Twofa = React.lazy(() => import('../components/twofa'));
 const SumSub = React.lazy(() => import('../components/sumSub.component/sumsub'));
 const NotKyc = React.lazy(() => import('../components/sumSub.component/notKyc'));
 const OnBoarding = React.lazy(() => import('../layout/onboard.component'));
-const userProfile = React.lazy(() => import('../components/userProfile.component/userProfile'));
+const UserProfile = React.lazy(() => import('../components/userProfile.component/userProfile'));
 const RequestedDocs = React.lazy(() => import('../components/documents.component/requested.documents'));
 const DocNotices = React.lazy(() => import("../components/shared/doc.notices"))
 const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"))
@@ -27,12 +27,11 @@ class RoutingComponent extends Component {
         <ReactRoute path="/sumsub" component={SumSub} />
         <ReactRoute path="/notkyc" component={NotKyc} />
         <ReactRoute path="/onboading" component={OnBoarding} />
-        <ReactRoute path='/userprofile' component={userProfile} />
+        <ReactRoute path='/userprofile' component={UserProfile} />
         <ReactRoute path='/documents' component={RequestedDocs} />
         <ReactRoute path='/docnotices' component={DocNotices} />
         <ReactRoute path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent}/>
-        {/* <Redirect to="/onboading" path="/" exact/> */}
         <ReactRoute path='/dashboardCharts' component={DashboardCharts} />
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>

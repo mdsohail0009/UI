@@ -25,22 +25,10 @@ class List extends React.Component {
             return <td><Moment format="DD/MM/YYYY hh:mm:ss A" globalLocal={true}>{this.convertUTCToLocalTime(props.dataItem[props.field])}</Moment></td>
         }else{
             return <td>{props.dataItem[props.field]}</td>
-        }
+        } 
     }
     renderNumber = (props) => {
         return <td>  <NumberFormat value={props?.dataItem[props.field]} decimalSeparator="." displayType={'text'} thousandSeparator={true} /></td>
-    }
-
-    gridFilterData = (column) => {
-        if (column.customCell || column.filterType === "date") {
-            return this.renderDate;
-        } else if (column.customCell || column.filterType === "number") {
-            return this.renderNumber;
-        } else if (column.customCell || column.filterType === "datetime") {
-            return this.renderDateTime;
-        } else {
-            return null
-        }
     }
 
     convertUTCToLocalTime = (dateString) => {
@@ -64,7 +52,7 @@ class List extends React.Component {
                         columnMenu={column.filter ? ColumnMenu : null}
                         field={column.field}
                         title={column.title} width={column.width}
-                        cell={this.gridFilterData(column)}
+                        cell={column.customCell || (column.filterType === "date" ? this.renderDate : (column.dataType === 'number' ? this.renderNumber : (column.filterType === "datetime" ? this.renderDateTime : null )))}
                         filter={column.filterType || 'text'}
                         format="{0:,0.##}"
 

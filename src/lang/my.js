@@ -455,4 +455,6 @@ export default {
   add:'Idagdag',
   edit:'I-edit',
   active_inactive:'Aktibo/Hindi Aktibo',
+  location:'lokasyon',
+  ipAddress:'IP address',
 }
