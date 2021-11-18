@@ -107,20 +107,15 @@ let initialState = {
 let dashboardReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_DETAIL_DATA:
-            state = { ...state, [action.payload.key]: { data: action.payload.data, loading: true } };
-            return state;
+            return  { ...state, [action.payload.key]: { data: action.payload.data, loading: true } };
         case SET_DETAIL_DATA:
-            state = { ...state, [action.payload.key]: { data: action.payload.data, loading: false } };
-            return state;
+            return { ...state, [action.payload.key]: { data: action.payload.data, loading: false } };
         case REJECT_DETAIL_DATA:
-            state = { ...state, [action.payload.key]: { data: action.payload.data, loading: false } };
-            return state;
+            return  state = { ...state, [action.payload.key]: { data: action.payload.data, loading: false } };
         case HANDLE_NOTICES:
-            state = { ...state, notices: { data: action.payload.data, loading: action.payload.loading } }
-            return state;
+            return { ...state, notices: { data: action.payload.data, loading: action.payload.loading } }
         case SET_COIN_DETAIL:
-            state = { ...state, marketSelectedCoin: action.payload }
-            return state;
+            return { ...state, marketSelectedCoin: action.payload }
         case SET_NOTIF_COUNT:
             let _count = action.payload
             if (action?.payload < 0) {
