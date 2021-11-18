@@ -38,7 +38,7 @@ class BusinessMenu extends Component {
 
                                     <Link to="/dashboard" onClick={() => { this.setState({ ...this.state, megamenu: false }) }}>The Dashboard</Link>
                                     <Link to="/dashboard" onClick={() => { this.setState({ ...this.state, megamenu: false }) }}>Your Portfolio</Link>
-                                   
+
                                 </div>
                             </div>
                         </Col>
@@ -99,16 +99,16 @@ class BusinessMenu extends Component {
                             <div className="d-flex">
                                 <Translate className="text-white-30 fs-18 fw-200 mb-0" content="chat" component={Paragraph} /> <span className="icon lg chat ml-8"></span>
                             </div>
-             
+
                         </Col>
                         <Col lg={5} xl={6}>
-                        <Translate className="text-white mb-16 fw-500  megamenu-label mt-0" content="security" component={Title} />
+                            <Translate className="text-white mb-16 fw-500  megamenu-label mt-0" content="security" component={Title} />
                             <Translate className="text-white fs-14 fw-300 mb-0" content="current_security_level" component={Paragraph} />
                             <Translate className="text-green fw-700 mr-4" content="sign_in" component={Text} />
                             <Translate className="text-white fs-14 fw-300" content="status" component={Text} />
 
                             <Translate className="text-white fs-14 fw-300 mt-16" content="security_text" component={Paragraph} />
-                           
+
                         </Col>
                         <Col xl={3} />
                     </Row>

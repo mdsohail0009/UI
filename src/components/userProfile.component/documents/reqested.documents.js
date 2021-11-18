@@ -53,7 +53,7 @@ class RequestedDocs extends Component {
             <div className="mb-24 text-white-50"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile" />/&nbsp;&nbsp;&nbsp;Payment Bill, Identity Document</div>
             <div className="bank-view">
                 <div className="box basic-info pb-0">
-                    <Row gutter={8, 8} className="kpi-List" >
+                    <Row gutter={[8, 8]} className="kpi-List" >
                         <Col xs={24} rarrow-white={24} md={12} lg={8} xxl={6}>
                             <span className="icon md file" />
                             <div>
