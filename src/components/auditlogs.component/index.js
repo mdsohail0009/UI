@@ -50,7 +50,9 @@ class AuditLogs extends Component {
     { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 250 },
     { field: "featurePath", title: apicalls.convertLocalLang('Feature_Path'), filter: true, width: 250 },
     { field: "action", title: apicalls.convertLocalLang('Action'), width: 250, filter: true },
-    { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true,width: 985},
+    { field: "location", title: apicalls.convertLocalLang('location'),width:250, filter: true },
+    { field: "ipAddress", title: apicalls.convertLocalLang('ipAddress'),width:250, filter: true },
+    { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true,width: 740},
   ]
 
 
