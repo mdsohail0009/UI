@@ -4,7 +4,7 @@ import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { convertCurrencyDuplicate } from '../../buy.component/buySellService';
 import NumberFormat from 'react-number-format';
 const LocalCryptoSwapper = (props, ref) => {
-    const { localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, sellData, selectedCoin = null } = props;
+    const { localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, sellData, selectedCoin = null,showConvertion=true } = props;
     const [isSwaped, setSwapped] = useState(props.isSwap || false);
     const [localvalue, setLocalValue] = useState(localAmt);
     const [cryptovalue, setCryptoValue] = useState(cryptoAmt);
@@ -22,8 +22,8 @@ const LocalCryptoSwapper = (props, ref) => {
             setCryptoValue(info.cryptoValue);
             setSwapped(true);
         },
-        handleConvertion({ cryptoValue, localValue, locCurrency,isSwap }) {
-            fetchConvertionValue({ cryptoValue, localValue, inputvalue: (isSwap|| isSwaped) ? cryptoValue : localValue, locCurrency });
+        handleConvertion({ cryptoValue, localValue, locCurrency, isSwap }) {
+            fetchConvertionValue({ cryptoValue, localValue, inputvalue: (isSwap || isSwaped) ? cryptoValue : localValue, locCurrency });
             if (isSwaped) {
                 setCryptoValue(cryptoValue);
             }
@@ -41,7 +41,7 @@ const LocalCryptoSwapper = (props, ref) => {
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
             let _val = document.getElementById("ABC")?.value;
             _val = _val ? _val.replace(/,/g, "") : _val;
-            _val = _val?.replace(symbols[locCurrency||localCurrency], "");
+            _val = _val?.replace(symbols[locCurrency || localCurrency], "");
             if (_obj[4] == _val || _obj[4] == 0) {
                 if (!isSwaped) {
                     setCryptoValue(value || 0);
@@ -63,7 +63,7 @@ const LocalCryptoSwapper = (props, ref) => {
                 autoComplete="off"
                 placeholder="0.00"
                 bordered={false}
-                style={{ lineHeight: '48px', fontSize: 30, paddingRight: '40px !important' }}
+                style={{ lineHeight: '48px', fontSize: 30, paddingRight: '40px !important',marginBottom:showConvertion==false?20:0 }}
                 onPaste={() => setInputChange(true)}
                 onKeyPress={(e) => {
                     e.currentTarget.style.fontSize = "30px";
@@ -85,11 +85,11 @@ const LocalCryptoSwapper = (props, ref) => {
                 autoFocus
             />
         </div>
-        <NumberFormat value={isSwaped ? localvalue : cryptovalue} displayType={'text'} thousandSeparator={true} prefix={isSwaped ? symbols[localCurrency] : ""} renderText={(value, props) => <div {...props} className="fs-14 text-white-30 text-center d-block mb-36">{value} {isSwaped ? localCurrency : cryptoCurrency} {isConvertionLoad && <Spin size="small" />}</div>
+        {showConvertion && <><NumberFormat value={isSwaped ? localvalue : cryptovalue} displayType={'text'} thousandSeparator={true} prefix={isSwaped ? symbols[localCurrency] : ""} renderText={(value, props) => <div {...props} className="fs-14 text-white-30 text-center d-block mb-36">{value} {isSwaped ? localCurrency : cryptoCurrency} {isConvertionLoad && <Spin size="small" />}</div>
         } />
-        <span className="val-updown c-pointer" onClick={() => { setInputChange(false); isSwaped ? setSwapped(false) : setSwapped(true) }}>
-            <span className="icon md swaparrow" />
-        </span>
+            <span className="val-updown c-pointer" onClick={() => { setInputChange(false); isSwaped ? setSwapped(false) : setSwapped(true) }}>
+                <span className="icon md swaparrow" />
+            </span></>}
     </div>
 
 }
