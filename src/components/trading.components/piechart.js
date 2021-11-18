@@ -1,8 +1,6 @@
 import Highcharts from 'highcharts';
 import { useEffect } from 'react';
 
-//import './chart.css'
-
 const PieChart = ({ data }) => {
 
     useEffect(() => {
