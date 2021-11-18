@@ -74,23 +74,14 @@ class SelectSellCrypto extends Component {
             })
             this.myRef.current.scrollIntoView();
             return;
-        } else if (!this.state.isSwap && this.state.USDAmnt > this.props.sellData.coinDetailData.coinValueinNativeCurrency) {
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('available_amount_less') })
-            this.myRef.current.scrollIntoView();
-            return;
-        }
-        else if (this.state.isSwap && this.state.CryptoAmnt > this.props.sellData.coinDetailData.coinBalance) {
+        } 
+        else if ( this.state.CryptoAmnt > this.props.sellData.coinDetailData.coinBalance) {
             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('available_balance_less') })
             this.myRef.current.scrollIntoView();
             return;
-        } else if (!this.state.isSwap && parseFloat(this.state.CryptoAmnt) < sellMinValue) {
+        } else if (parseFloat(this.state.CryptoAmnt) < sellMinValue) {
             this.myRef.current.scrollIntoView();
             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue })
-            return;
-        }
-        else if (this.state.isSwap && parseFloat(this.state.CryptoAmnt) < sellMinValue) {
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue })
-            this.myRef.current.scrollIntoView();
             return;
         }
         else {
