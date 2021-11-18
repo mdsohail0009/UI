@@ -145,21 +145,6 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                                 pattern:/^[A-Za-z0-9]+$/,
                                 message: 'Invalid account number'
                             },
-
-                            // {
-                            //     validator: (rule, value, callback) => {
-                            //         var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                            //         if (value) {
-                            //             if (!regx.test(value)) {
-                            //                 callback("Invalid account number")
-                            //             } else if (regx.test(value)) {
-                            //                 callback();
-                            //             }
-                            //         } else {
-                            //             callback();
-                            //         }
-                            //     }
-                            // }
                         ]}
                     >
                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_account')} onBlur={(val) => getIbanData(val.currentTarget.value)} />
@@ -175,20 +160,6 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                                 pattern:/^[A-Za-z0-9]+$/,
                                 message: 'Invalid BIC/SWIFT/Routing number'
                             },
-                            // {
-                            //     validator: (rule, value, callback) => {
-                            //         var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                            //         if (value) {
-                            //             if (!regx.test(value)) {
-                            //                 callback("Invalid BIC/SWIFT/Routing number")
-                            //             } else if (regx.test(value)) {
-                            //                 callback();
-                            //             }
-                            //         } else {
-                            //             callback();
-                            //         }
-                            //     }
-                            // }
                         ]}
                     >
                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('BIC_SWIFT_routing_number')} />
