@@ -88,7 +88,7 @@ class Header extends Component {
         if(isKyc){
             notification.error({ message: "", description: `Please complete Your ${this.props.userConfig.isBusiness ? 'KYB' : 'KYC'}` });
         }else{
-            notification.error({ message: "", description: `Please complete Your ${this.props.userConfig.isBusiness ? 'KYB' : 'KYC'}` });
+           notification.error({ message: "", description: 'Please complete Your Document requests'});
         }
     }
     closeDrawer = () => {
