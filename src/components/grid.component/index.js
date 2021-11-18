@@ -25,11 +25,12 @@ class List extends React.Component {
             return <td><Moment format="DD/MM/YYYY hh:mm:ss A" globalLocal={true}>{this.convertUTCToLocalTime(props.dataItem[props.field])}</Moment></td>
         }else{
             return <td>{props.dataItem[props.field]}</td>
-        }
+        } 
     }
     renderNumber = (props) => {
         return <td>  <NumberFormat value={props?.dataItem[props.field]} decimalSeparator="." displayType={'text'} thousandSeparator={true} /></td>
     }
+
     convertUTCToLocalTime = (dateString) => {
         let date = new Date(dateString);
         const milliseconds = Date.UTC(
@@ -40,8 +41,7 @@ class List extends React.Component {
           date.getMinutes(),
           date.getSeconds(),
         );
-        let datetime
-        return datetime = new Date(milliseconds).toISOString()
+        return new Date(milliseconds).toISOString()
       };
     render() {
         const { columns, url, additionalParams } = this.props
@@ -55,6 +55,7 @@ class List extends React.Component {
                         cell={column.customCell || (column.filterType === "date" ? this.renderDate : (column.dataType === 'number' ? this.renderNumber : (column.filterType === "datetime" ? this.renderDateTime : null )))}
                         filter={column.filterType || 'text'}
                         format="{0:,0.##}"
+
                     />
                     )}
                 </StatefullGrid>

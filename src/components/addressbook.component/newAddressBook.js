@@ -98,16 +98,13 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                         required
                         rules={[
                             {
-                                type: "favouriteName", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() === "") {
-                                        throw new Error(apiCalls.convertLocalLang('is_required')
-                                        )
-                                    }
-                                    else {
-                                        callback();
-                                    }
-                                }
-                            }
+                                required: true,
+                                message: apiCalls.convertLocalLang('is_required')
+                              },
+                              {
+                                  whitespace: true,
+                                  message: apiCalls.convertLocalLang('is_required')
+                              } 
                         ]} 
                         >
                             <Input className="cust-input"  maxLength="20" placeholder={apiCalls.convertLocalLang('Enteraddresslabel')} />
@@ -128,17 +125,14 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                         label={<Translate content="address" component={Form.label}/>}
                         required
                         rules={[
-                           
                             {
-                                type: "toWalletAddress", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() === "") {
-                                        throw new Error(apiCalls.convertLocalLang('is_required'))
-                                    }
-                                    else {
-                                        callback();
-                                    }
-                                }
-                            }
+                                required: true,
+                                message: apiCalls.convertLocalLang('is_required')
+                              },
+                              {
+                                  whitespace: true,
+                                  message: apiCalls.convertLocalLang('is_required')
+                              } 
                         ]} >
                             <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('Enteraddress')} />
                     </Form.Item>
