@@ -102,12 +102,12 @@ let initialState = {
     cryptoPortFolios: { loading: false, data: [] },
     notices: { loading: false, data: [] },
     notificationCount: null,
-    marketSelectedCoin:null
+    marketSelectedCoin: null
 }
 let dashboardReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_DETAIL_DATA:
-            return  { ...state, [action.payload.key]: { data: action.payload.data, loading: true } };
+            return { ...state, [action.payload.key]: { data: action.payload.data, loading: true } };
         case SET_DETAIL_DATA:
             return { ...state, [action.payload.key]: { data: action.payload.data, loading: false } };
         case REJECT_DETAIL_DATA:

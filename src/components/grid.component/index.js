@@ -31,6 +31,17 @@ class List extends React.Component {
         return <td>  <NumberFormat value={props?.dataItem[props.field]} decimalSeparator="." displayType={'text'} thousandSeparator={true} /></td>
     }
 
+    gridFilterData = (column) => {
+        if (column.filterType === "date") {
+            return this.renderDate;
+        } else if (column.filterType === "number") {
+            return this.renderNumber;
+        } else if (column.filterType === "datetime") {
+            return this.renderDateTime;
+        } else {
+            return null
+        }
+    }
     convertUTCToLocalTime = (dateString) => {
         let date = new Date(dateString);
         const milliseconds = Date.UTC(
@@ -52,7 +63,7 @@ class List extends React.Component {
                         columnMenu={column.filter ? ColumnMenu : null}
                         field={column.field}
                         title={column.title} width={column.width}
-                        cell={column.customCell || (column.filterType === "date" ? this.renderDate : (column.dataType === 'number' ? this.renderNumber : (column.filterType === "datetime" ? this.renderDateTime : null )))}
+                        cell={column.customCell || this.gridFilterData(column)}
                         filter={column.filterType || 'text'}
                         format="{0:,0.##}"
 
