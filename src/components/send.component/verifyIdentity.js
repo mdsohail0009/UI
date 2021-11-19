@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Typography, Input, Button, Select } from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
-import connectStateProps from '../../utils/state.connect';
+import ConnectStateProps from '../../utils/state.connect';
 import { setStep } from '../../reducers/sendreceiveReducer';
 
 const { Option } = Select;
@@ -50,4 +50,4 @@ class VerifyIDentity extends Component {
     }
 }
 
-export default connectStateProps(VerifyIDentity);
+export default ConnectStateProps(VerifyIDentity);

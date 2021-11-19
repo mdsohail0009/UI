@@ -3,7 +3,7 @@ import { Typography, List, Button } from 'antd';
 import Translate from 'react-translate-component';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import { fetchMemberWalletsData } from '../../reducers/dashboardReducer';
-import connectStateProps from '../../utils/state.connect';
+import ConnectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import MassPayment from '../buyfiat.component'
 import { withRouter } from 'react-router-dom';
@@ -97,4 +97,4 @@ class Wallets extends Component {
     }
 }
 
-export default connectStateProps(withRouter(Wallets));
+export default ConnectStateProps(withRouter(Wallets));

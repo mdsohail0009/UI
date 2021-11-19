@@ -4,7 +4,7 @@ import './layout.css'
 import Content from './content.component';
 import Header from '../layout/header.component';
 import Footer from './footer.component';
-import connectStateProps from '../utils/state.connect';
+import ConnectStateProps from '../utils/state.connect';
 import { userManager } from '../authentication';
 import OnBoarding from './onboard.component';
 import CallbackPage from '../authentication/callback.component';
@@ -42,4 +42,4 @@ class Layout extends Component {
     }
 }
 
-export default connectStateProps(Layout);
+export default ConnectStateProps(Layout);

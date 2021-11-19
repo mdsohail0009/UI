@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography, Radio, Row, Col } from 'antd';
 import { Link, withRouter } from "react-router-dom";
 import { getcoinDetails, getCoinChatData } from './api'
-import connectStateProps from '../../utils/state.connect';
+import ConnectStateProps from '../../utils/state.connect';
 import TradingViewChart from './tradingviewchart';
 
 class CoinView extends React.Component {
@@ -124,4 +124,4 @@ class CoinView extends React.Component {
     }
 }
 
-export default connectStateProps(withRouter(CoinView));
+export default ConnectStateProps(withRouter(CoinView));

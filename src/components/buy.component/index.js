@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
 import CryptoComponent from './coin.selection';
-import connectStateProps from '../../utils/state.connect';
+import ConnectStateProps from '../../utils/state.connect';
 import BuySummary from './buy.summary';
 import BillType from '../pay.component/payOption';
 import SelectCrypto from './buy.detail';
@@ -111,4 +111,4 @@ class BuySell extends Component {
 }
 
 
-export default connectStateProps(BuySell);
+export default ConnectStateProps(BuySell);

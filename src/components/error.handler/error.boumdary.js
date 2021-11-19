@@ -10,8 +10,9 @@ class ErrorBoundary extends React.Component {
     render() {
         if (this.state.hasError) {
             return <Alert type="error" message="Alert" description="Something went wrong please try again!" showIcon />
-        }
+        }else{
         return this.props.children
+    }
     }
 }
 

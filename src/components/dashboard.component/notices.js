@@ -1,7 +1,7 @@
 import { Alert, Carousel, Typography } from "antd";
 import { useEffect, useState } from "react"
 import Loader from "../../Shared/loader";
-import connectStateProps from "../../utils/state.connect";
+import ConnectStateProps from "../../utils/state.connect";
 import { getNotices } from "./api";
 const { Title, Text } = Typography;
 const Notices = ({ userProfile }) => {
@@ -38,4 +38,4 @@ const Notices = ({ userProfile }) => {
     </Carousel>
 }
 
-export default connectStateProps(Notices)
+export default ConnectStateProps(Notices)

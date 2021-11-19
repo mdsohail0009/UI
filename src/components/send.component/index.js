@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
-import connectStateProps from '../../utils/state.connect';
+import ConnectStateProps from '../../utils/state.connect';
 import { handleSendFetch, setWithdrawcrypto, setStep, setSubTitle, setAddress } from '../../reducers/sendreceiveReducer';
 import { sendreceiveSteps as config } from './config';
 import DepositeCrypto from '../send.component/depositeToggle';
@@ -110,4 +110,4 @@ class SendReceive extends Component {
     }
 }
 
-export default connectStateProps(SendReceive);
+export default ConnectStateProps(SendReceive);
