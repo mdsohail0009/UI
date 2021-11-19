@@ -1,7 +1,4 @@
-import { Link } from "react-router-dom";
 import Currency from "../shared/number.formate";
-import { setSelctedCoinDetail } from "../../reducers/dashboardReducer"
-import { store } from "../../store";
 import apiCalls from '../../api/apiCalls';
 
 const infoColumns = [
