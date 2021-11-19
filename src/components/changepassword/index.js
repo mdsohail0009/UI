@@ -23,12 +23,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
   const { Text } = Typography;
   const [form] = Form.useForm();
   const [changePasswordResponse, setChangePasswordResponse] = useState({ error: false, messsage: "", isLoading: false });
-  useEffect(() => {
-    if (userProfile && userProfile?.isNew) {
-      setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
-      form.resetFields();
-    }
-  }, [userProfile])
+
   useEffect(() => {
     trakEvet()
   }, [])
