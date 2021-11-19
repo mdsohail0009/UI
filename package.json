@@ -5,6 +5,7 @@
   "dependencies": {
     "@microsoft/applicationinsights-react-js": "^3.2.0",
     "@microsoft/applicationinsights-web": "^2.7.0",
+    "@microsoft/signalr": "^6.0.0",
     "@progress/kendo-data-query": "^1.5.5",
     "@progress/kendo-drawing": "^1.11.0",
     "@progress/kendo-licensing": "^1.2.0",

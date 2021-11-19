@@ -74,23 +74,14 @@ class SelectSellCrypto extends Component {
             })
             this.myRef.current.scrollIntoView();
             return;
-        } else if (!this.state.isSwap && this.state.USDAmnt > this.props.sellData.coinDetailData.coinValueinNativeCurrency) {
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('available_amount_less') })
-            this.myRef.current.scrollIntoView();
-            return;
-        }
-        else if (this.state.isSwap && this.state.CryptoAmnt > this.props.sellData.coinDetailData.coinBalance) {
+        } 
+        else if ( this.state.CryptoAmnt > this.props.sellData.coinDetailData.coinBalance) {
             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('available_balance_less') })
             this.myRef.current.scrollIntoView();
             return;
-        } else if (!this.state.isSwap && parseFloat(this.state.CryptoAmnt) < sellMinValue) {
+        } else if (parseFloat(this.state.CryptoAmnt) < sellMinValue) {
             this.myRef.current.scrollIntoView();
             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue })
-            return;
-        }
-        else if (this.state.isSwap && parseFloat(this.state.CryptoAmnt) < sellMinValue) {
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue })
-            this.myRef.current.scrollIntoView();
             return;
         }
         else {
@@ -123,7 +114,7 @@ class SelectSellCrypto extends Component {
     }
     refreshAmnts = async () => {
         if ((!this.state.USDAmnt && !this.state.CryptoAmnt) || (parseFloat(this.state.USDAmnt) === 0 || parseFloat(this.state.CryptoAmnt) === 0)) {
-            this.setState({ ...this.state, errorMessage: 'Enter amount' })
+            this.setState({ ...this.state, errorMessage: 'Please enter amount' })
             this.myRef.current.scrollIntoView();
         } else {
             this.setState({ ...this.state, CryptoAmnt: this.state.CryptoAmnt, errorMessage: '' })
