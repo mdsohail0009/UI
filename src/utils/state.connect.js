@@ -6,7 +6,7 @@ const mapStateToProps = ({ oidc, buySell, sendReceive, swapStore, buyFiat,buyInf
 const mapDispatchToProps = dispatch => {
     return { dispatch }
 }
-const connectStateProps = connect(mapStateToProps, mapDispatchToProps);
+const ConnectStateProps = connect(mapStateToProps, mapDispatchToProps);
 
 
-export default connectStateProps;
+export default ConnectStateProps;

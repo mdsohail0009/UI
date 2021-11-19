@@ -3,7 +3,7 @@ import { Drawer, Typography} from 'antd';
 import { buyFiatSteps as config } from './config';
 import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
-import connectStateProps from '../../utils/state.connect';
+import ConnectStateProps from '../../utils/state.connect';
 import FaitDeposit from '../../components/deposit.component/faitDeposit';
 import FaitdepositSummary from './faitdepositSummary';
 import SelectCurrency from './selectCurrency';
@@ -72,4 +72,4 @@ class SuissebaseFiat extends Component {
     }
 }
 
-export default connectStateProps(SuissebaseFiat);
+export default ConnectStateProps(SuissebaseFiat);

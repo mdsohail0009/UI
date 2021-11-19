@@ -2,7 +2,7 @@ import { Alert, Result, Button, Spin } from 'antd'
 import React, { useEffect } from 'react'
 import { updateDocRequest } from '../../reducers/configReduser';
 import { fetchNotices } from '../../reducers/dashboardReducer'
-import connectStateProps from '../../utils/state.connect';
+import ConnectStateProps from '../../utils/state.connect';
 
 const DocNotices = (props) => {
 
@@ -21,4 +21,4 @@ const DocNotices = (props) => {
     </React.Fragment>
 }
 
-export default connectStateProps(DocNotices)
+export default ConnectStateProps(DocNotices)

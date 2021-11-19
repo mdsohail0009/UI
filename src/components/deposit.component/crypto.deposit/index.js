@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import Translate from "react-translate-component";
 import { setStep, setSubTitle, setWalletAddress } from "../../../reducers/sendreceiveReducer";
 import { getMemberCoins } from "../../../reducers/swapReducer";
-import connectStateProps from "../../../utils/state.connect";
+import ConnectStateProps from "../../../utils/state.connect";
 import CryptoList from "../../shared/cryptolist"
 import { createCryptoDeposit } from "../api";
 import { appInsights } from "../../../Shared/appinsights";
@@ -35,4 +35,4 @@ const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
         </div></>
 }
 
-export default connectStateProps(CryptoDeposit);
+export default ConnectStateProps(CryptoDeposit);

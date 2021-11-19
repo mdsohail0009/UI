@@ -3,7 +3,7 @@ import { Drawer, Typography, Menu, Dropdown } from 'antd';
 import { buyFiatSteps as config } from './config';
 import { setStep } from '../../reducers/buysellReducer';
 import {rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
-import connectStateProps from '../../utils/state.connect';
+import ConnectStateProps from '../../utils/state.connect';
 import Translate from 'react-translate-component';
 import SelectFiat from './selectFiat';
 import AddBuyFiatCard from './addCard';
@@ -123,4 +123,4 @@ class MassPayment extends Component {
     }
 }
 
-export default connectStateProps(MassPayment);
+export default ConnectStateProps(MassPayment);
