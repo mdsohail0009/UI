@@ -114,7 +114,7 @@ class SelectSellCrypto extends Component {
     }
     refreshAmnts = async () => {
         if ((!this.state.USDAmnt && !this.state.CryptoAmnt) || (parseFloat(this.state.USDAmnt) === 0 || parseFloat(this.state.CryptoAmnt) === 0)) {
-            this.setState({ ...this.state, errorMessage: 'Enter amount' })
+            this.setState({ ...this.state, errorMessage: 'Please enter amount' })
             this.myRef.current.scrollIntoView();
         } else {
             this.setState({ ...this.state, CryptoAmnt: this.state.CryptoAmnt, errorMessage: '' })
