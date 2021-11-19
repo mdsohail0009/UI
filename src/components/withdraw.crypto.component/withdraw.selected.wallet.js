@@ -216,7 +216,7 @@ class CryptoWithDrawWallet extends Component {
                             </div>
                         </div>
                     </Card>
-                    <LocalCryptoSwap ref={this.eleRef}
+                    <LocalCryptoSwap ref={this.eleRef} showConvertion={false}
                         isSwap={this.state.isSwap}
                         cryptoAmt={this.state.CryptoAmnt}
                         localAmt={this.state.USDAmnt}
