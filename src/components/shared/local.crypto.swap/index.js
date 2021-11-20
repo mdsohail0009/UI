@@ -75,7 +75,7 @@ const LocalCryptoSwapper = (props, ref) => {
                     if (isSwaped) {
                         setCryptoValue(value);
                     } else {
-                        setLocalValue(value)
+                        setLocalValue(value);
                     }
                     if (isInputChange) {
                         fetchConvertionValue({ cryptoValue: cryptovalue, localValue: localvalue, inputvalue: value });
@@ -88,7 +88,10 @@ const LocalCryptoSwapper = (props, ref) => {
         </div>
         {showConvertion && <><NumberFormat value={isSwaped ? localvalue : cryptovalue} displayType={'text'} thousandSeparator={true} prefix={isSwaped ? symbols[localCurrency] : ""} renderText={(value, props) => <div {...props} className="fs-14 text-white-30 text-center d-block mb-36">{value} {isSwaped ? localCurrency : cryptoCurrency} {isConvertionLoad && <Spin size="small" />}</div>
         } />
-            <span className="val-updown c-pointer" onClick={() => { setInputChange(false); isSwaped ? setSwapped(false) : setSwapped(true) }}>
+            <span className="val-updown c-pointer" onClick={() => {
+                setInputChange(false);
+                setSwapped(!isSwaped);
+            }}>
                 <span className="icon md swaparrow" />
             </span></>}
     </div>
