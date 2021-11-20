@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
 import CryptoComponent from './coin.selection';
-import connectStateProps from '../../utils/state.connect';
+import ConnectStateProps from '../../utils/state.connect';
 import BuySummary from './buy.summary';
 import BillType from '../pay.component/payOption';
 import SelectCrypto from './buy.detail';
-import { setStep, setTab,setHeaderTab } from '../../reducers/buysellReducer';
+import { setStep, setTab, setHeaderTab } from '../../reducers/buysellReducer';
 import { processSteps as config } from './config';
 import DepositFiat from '../deposit.component/depositFiat'
 import WireTransfer from '../wire.transfer.component/wireTransfer';
@@ -111,4 +111,4 @@ class BuySell extends Component {
 }
 
 
-export default connectStateProps(BuySell);
+export default ConnectStateProps(BuySell);

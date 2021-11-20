@@ -4,7 +4,7 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 
-class addressScanner extends Component {
+class AddressScanner extends Component {
     state = {}
     success = () => {
         message.success('Address was copied!');
@@ -38,4 +38,4 @@ const connectDispatchToProps = dispatch => {
         }
     }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(addressScanner);
+export default connect(connectStateToProps, connectDispatchToProps)(AddressScanner);

@@ -12,7 +12,7 @@ class DocumentsList extends Component {
         selectedDocs: []
     }
     handleDocSelection = ({ currentTarget: { checked } }, doc) => {
-        let _docs = [ ...this.state.selectedDocs ];
+        let _docs = [...this.state.selectedDocs];
         if (checked) {
             _docs.push(doc)
         } else {
@@ -30,7 +30,7 @@ class DocumentsList extends Component {
                         <div className="d-flex align-center mb-2">
                             <p className="mr-4 mb-0">
                                 <label className="text-center custom-checkbox">
-                                    <input name="check" onClick={(e) => this.handleDocSelection(e, doc)} checked={this.state.selectedDocs.filter(item => item.id==doc.id).length > 0} type="checkbox" />
+                                    <input name="check" onClick={(e) => this.handleDocSelection(e, doc)} checked={this.state.selectedDocs.filter(item => item.id == doc.id).length > 0} type="checkbox" />
                                     <span></span>
                                 </label>
 
@@ -44,4 +44,4 @@ class DocumentsList extends Component {
         );
     }
 }
-export default (DocumentsList);
+export default DocumentsList;

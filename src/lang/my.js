@@ -411,7 +411,6 @@ export default {
   No_data:'Walang nakitang data',
   confirm_button:'Kumpirmahin',
   crypto_with_draw_success:'Bumalik',
-  new_pass_word_msg:'Pakipasok ang Bagong password',
   Back_to_Withdraw:'Bumalik sa Withdraw',
   New_Address:'Bagong tirahan',
   return_to_depositfiat:'Bumalik sa Deposit Fiat',
@@ -425,7 +424,6 @@ export default {
   SelectCurrency:'Piliin ang Pera',
   select_bank:'Piliin ang Pangalan ng Bangko',
   BankName:'Pangalan ng bangko',
-  return_to_depositfiat:'Bumalik sa Deposit Fiat',
   sellCrypto:'Magbenta ng crypto',
   pleaseSelectWallet:'Mangyaring pumili ng wallet',
   available_amount_less:'Ang inilagay na halaga ay dapat na mas mababa kaysa sa magagamit na halaga',
@@ -457,4 +455,6 @@ export default {
   add:'Idagdag',
   edit:'I-edit',
   active_inactive:'Aktibo/Hindi Aktibo',
+  location:'lokasyon',
+  ipAddress:'IP address',
 }

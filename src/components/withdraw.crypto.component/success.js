@@ -3,7 +3,7 @@ import success from '../../assets/images/success.png';
 import { Typography, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
-import connectStateProps from '../../utils/state.connect';
+import ConnectStateProps from '../../utils/state.connect';
 import { handleSendFetch } from '../../reducers/sendreceiveReducer';
 class SuccessMsg extends Component {
     render() {
@@ -22,4 +22,4 @@ class SuccessMsg extends Component {
         );
     }
 }
-export default connectStateProps(SuccessMsg);
+export default ConnectStateProps(SuccessMsg);

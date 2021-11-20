@@ -8,7 +8,7 @@ import QueryString from 'query-string'
 import Settings from './settings';
 import Translate from 'react-translate-component';
 const { TabPane } = Tabs;
-class userProfile extends Component {
+class UserProfile extends Component {
     state = {
         isProfile: false,
         isSecurity: false,
@@ -94,4 +94,4 @@ class userProfile extends Component {
         </>);
     }
 }
-export default userProfile;
+export default UserProfile;

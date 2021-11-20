@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, Typography, Button } from 'antd';
+import React, { useEffect } from 'react';
+import { Layout, Typography } from 'antd';
 import counterpart from 'counterpart';
 import en from '../lang/en';
 import ch from '../lang/ch';
@@ -17,12 +17,8 @@ const { Footer: AntFooter } = Layout
 const { Text } = Typography;
 
 function Footer({ member }) {
-    const { switcher, themes, status } = useThemeSwitcher();
-    const [theme, setTheme] = useState('LRT');
-
-
+    const { status } = useThemeSwitcher();
     useEffect(() => {
-        switcher({ theme: member?.theme == 'Light Theme' ? themes.LHT : themes.DRT });
         counterpart.setLocale(member?.language ? member?.language : 'en');
     }, [])
     if (status == 'loading') {

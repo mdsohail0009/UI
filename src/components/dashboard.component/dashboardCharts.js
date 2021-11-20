@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Typography, Radio, Image, Tooltip, Empty } from 'antd';
+import { Card, Row, Col, Typography, Radio, Tooltip, Empty } from 'antd';
 import apiCalls from "../../api/apiCalls";
 import { connect } from 'react-redux';
-import BarChart from '../trading.components/bar.component';
-import PieChart from '../trading.components/pie.component';
-import LineChart from '../trading.components/line.graph.component';
+import BarChart from '../trading.components/barchart';
+import PieChart from '../trading.components/piechart';
+import LineChart from '../trading.components/linechart';
 import { Link } from 'react-router-dom';
 
 const { Title, Paragraph, Text } = Typography;

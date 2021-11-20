@@ -4,7 +4,7 @@ import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { convertCurrencyDuplicate } from '../../buy.component/buySellService';
 import NumberFormat from 'react-number-format';
 const LocalCryptoSwapper = (props, ref) => {
-    const { localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, sellData, selectedCoin = null,showConvertion=true } = props;
+    const { localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, sellData, selectedCoin = null, showConvertion = true } = props;
     const [isSwaped, setSwapped] = useState(props.isSwap || false);
     const [localvalue, setLocalValue] = useState(localAmt);
     const [cryptovalue, setCryptoValue] = useState(cryptoAmt);
@@ -64,7 +64,7 @@ const LocalCryptoSwapper = (props, ref) => {
                 autoComplete="off"
                 placeholder="0.00"
                 bordered={false}
-                style={{ lineHeight: '48px', fontSize: 30, paddingRight: '40px !important',marginBottom:showConvertion==false?20:0 }}
+                style={{ lineHeight: '48px', fontSize: 30, paddingRight: '40px !important', marginBottom: showConvertion == false ? 20 : 0 }}
                 onPaste={() => setInputChange(true)}
                 onKeyPress={(e) => {
                     e.currentTarget.style.fontSize = "30px";

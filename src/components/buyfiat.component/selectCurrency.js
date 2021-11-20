@@ -90,9 +90,6 @@ class SelectCurrency extends Component {
   }
 }
 
-const connectStateToProps = ({ SelectCurrency }) => {
-  return { SelectCurrency }
-}
 const connectDispatchToProps = dispatch => {
   return {
     changeStep: (stepcode) => {
@@ -100,4 +97,4 @@ const connectDispatchToProps = dispatch => {
     }
   }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(SelectCurrency);
+export default connect(connectDispatchToProps)(SelectCurrency);

@@ -426,7 +426,6 @@ export default {
   SelectCurrency:'選擇貨幣',
   select_bank:'選擇銀行名稱 ',
   BankName:'銀行名',
-  return_to_depositfiat:'返回存款法幣',
   sellCrypto:'出售加密貨幣',
   pleaseSelectWallet:'請選擇錢包',
   available_amount_less:'輸入的金額應小於可用金額',
@@ -457,4 +456,9 @@ export default {
   add:'添加',
   edit:'編輯',
   active_inactive:'活動/非活動',
+  
+location:'地點',
+ipAddress:'IP地址',
+
+
 }

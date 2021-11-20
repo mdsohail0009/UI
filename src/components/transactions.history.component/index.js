@@ -79,10 +79,11 @@ class TransactionsHistory extends Component {
     { field: "availableCoins", title: apiCalls.convertLocalLang('availableCoins'), filter: true, width: 200 },
     { field: "fromWalletAddress", title: apiCalls.convertLocalLang('walletAddress'), filter: true, width: 400 },
     { field: "createdDate", title: apiCalls.convertLocalLang('RequestDate'), width: 150, filterType: "date", filter: true, },
+    { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 200 },
   ];
   withdrwCryptoColomns = [
     { field: "walletCode", title: apiCalls.convertLocalLang('Wallet'), filter: true },
-    { field: "amount", title: apiCalls.convertLocalLang('amount'), filter: true, width: 200, filterType: "numeric", dataType: 'number',filterType: "numeric" },
+    { field: "amount", title: apiCalls.convertLocalLang('amount'), filter: true, width: 200, filterType: "numeric", dataType: 'number', },
     { field: "walletAddress", title: apiCalls.convertLocalLang('walletAddress'), filter: true, width: 200 },
     { field: "createdDate", title: apiCalls.convertLocalLang('RequestDate'), filter: true, width: 200, filterType: "date" },
     { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 200 },
@@ -90,7 +91,7 @@ class TransactionsHistory extends Component {
   ];
   render() {
     const { BuySellURL, SwapURL, WithdrawURL, DepositURL, DepositCryptoURL, WithdrawCryptoURL } = this.state
-    const { Text, Title } = Typography;
+    const { Title } = Typography;
     const { TabPane } = Tabs;
     return (
       <>

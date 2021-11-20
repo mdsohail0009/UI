@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input, Typography } from "antd";
+import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input } from "antd";
 import List from "../grid.component";
 import Loader from '../../Shared/loader'
 import { userNameLuSearch, getFeatureLuSearch } from './api';
@@ -46,11 +46,13 @@ class AuditLogs extends Component {
 
   }
   gridColumns = [
-    { field: "date", title: apicalls.convertLocalLang('Date'), filter: true, filterType: "date", width: 200 },
-    { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 190 },
-    { field: "featurePath", title: apicalls.convertLocalLang('Feature_Path'), filter: true, width: 200 },
-    { field: "action", title: apicalls.convertLocalLang('Action'), width: 230, filter: true },
-    { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true},
+    { field: "date", title: apicalls.convertLocalLang('Date'), filter: true, filterType: "date", width: 250 },
+    { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 250 },
+    { field: "featurePath", title: apicalls.convertLocalLang('Feature_Path'), filter: true, width: 250 },
+    { field: "action", title: apicalls.convertLocalLang('Action'), width: 250, filter: true },
+    { field: "location", title: apicalls.convertLocalLang('location'),width:250, filter: true },
+    { field: "ipAddress", title: apicalls.convertLocalLang('ipAddress'),width:250, filter: true },
+    { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true,width: 740},
   ]
 
 
@@ -187,20 +189,8 @@ class AuditLogs extends Component {
                       dropdownClassName="select-drpdwn"
                       showSearch
                       defaultValue="Last 1 Day"
-                      //  {apicalls.convertLocalLang('Last_1_Day')}
                       onChange={(e) => this.handleTimeSpan(e, 'timeSpan')}
                       placeholder="Time Span"
-                      optionFilterProp="children"
-                      filterOption={(input, option) =>
-                        option.children
-                          .toLowerCase()
-                          .indexOf(input.toLowerCase()) >= 0
-                      }
-                      filterSort={(optionA, optionB) =>
-                        optionA.children
-                          .toLowerCase()
-                          .localeCompare(optionB.children.toLowerCase())
-                      }
                     >
                       {options3}
                     </Select>
@@ -224,7 +214,6 @@ class AuditLogs extends Component {
                   >
                     <Select
                       defaultValue="All Features"
-                      // {apicalls.convertLocalLang('All_Features')}
                       className="cust-input mb-0"
                       dropdownClassName="select-drpdwn"
                       onChange={(e) => this.TransactionFeatureSearch(e, "feature")}

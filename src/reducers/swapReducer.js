@@ -100,14 +100,12 @@ let initialState = {
     MemberCoins: [],
 }
 
-const SwapReducer = (state = initialState, action) => {
+const SwapReducer = (state = initialState,action) => {
     switch (action.type) {
         case SET_STEP:
-            state = { ...state, stepcode: action.payload };
-            return state;
+            return { ...state, stepcode: action.payload };
         case CLEAR_STEP:
-            state = { ...state, stepcode: action.payload };
-            return state;
+            return { ...state, stepcode: action.payload };
         case UPDATE_COINDETAILS:
             return { ...state, coinDetailData: action.payload };
         case UPDATE_RECEIVECOINDETAILS:

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { List, Drawer, Typography, Alert, Empty } from 'antd';
 import { getNotifications, readNotification } from './api';
-import connectStateProps from '../utils/state.connect';
+import ConnectStateProps from '../utils/state.connect';
 import Moment from 'react-moment';
 import { setNotificationCount } from '../reducers/dashboardReducer';
 import Translate from 'react-translate-component';
@@ -13,7 +13,7 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard }
     const [notifications, setNotifications] = useState([]);
     const [error, setError] = useState(null);
     useEffect(() => {
-        fetchNotifications();
+        fetchNotifications();  
     }, []);
     const fetchNotifications = async () => {
         if (userProfile?.id) {
@@ -65,4 +65,4 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard }
         </>
     )
 }
-export default connectStateProps(Notifications);
+export default ConnectStateProps(Notifications);

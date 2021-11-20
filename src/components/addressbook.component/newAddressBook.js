@@ -7,7 +7,6 @@ import { saveAddress, favouriteNameCheck ,getAddress} from './api';
 import Loader from '../../Shared/loader';
 import Translate from 'react-translate-component';
 import apiCalls from '../../api/apiCalls';
-import apicalls from '../../api/apiCalls';
 
 const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,rejectCoinWallet, InputFormValues}) => {
     const [form] = Form.useForm();
@@ -99,16 +98,13 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                         required
                         rules={[
                             {
-                                type: "favouriteName", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() === "") {
-                                        throw new Error(apicalls.convertLocalLang('is_required')
-                                        )
-                                    }
-                                    else {
-                                        callback();
-                                    }
-                                }
-                            }
+                                required: true,
+                                message: apiCalls.convertLocalLang('is_required')
+                              },
+                              {
+                                  whitespace: true,
+                                  message: apiCalls.convertLocalLang('is_required')
+                              } 
                         ]} 
                         >
                             <Input className="cust-input"  maxLength="20" placeholder={apiCalls.convertLocalLang('Enteraddresslabel')} />
@@ -118,7 +114,7 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                         name="toCoin"
                         label={<Translate content="Coin" component={Form.label}/>}
                         rules={[
-                            { required: true, message:apicalls.convertLocalLang('is_required') },
+                            { required: true, message:apiCalls.convertLocalLang('is_required') },
                         ]} >
                              <Input disabled placeholder={apiCalls.convertLocalLang('Selectcoin')}  className="cust-input cust-adon c-pointer" 
                                 addonAfter={<i className="icon md rarrow-white c-pointer" onClick={selectCrypto} />}/>
@@ -129,17 +125,14 @@ const NewAddressBook = ({changeStep, addressBookReducer, userConfig, onCancel,re
                         label={<Translate content="address" component={Form.label}/>}
                         required
                         rules={[
-                           
                             {
-                                type: "toWalletAddress", validator: async (rule, value, callback) => {
-                                    if (value == null || value.trim() === "") {
-                                        throw new Error(apicalls.convertLocalLang('is_required'))
-                                    }
-                                    else {
-                                        callback();
-                                    }
-                                }
-                            }
+                                required: true,
+                                message: apiCalls.convertLocalLang('is_required')
+                              },
+                              {
+                                  whitespace: true,
+                                  message: apiCalls.convertLocalLang('is_required')
+                              } 
                         ]} >
                             <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('Enteraddress')} />
                     </Form.Item>

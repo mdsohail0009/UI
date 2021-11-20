@@ -1,5 +1,3 @@
-import { userManager } from "../authentication";
-
 const { USER_FOUND, USER_EXPIRING, processSilentRenew, USER_EXPIRED, SILENT_RENEW_ERROR } = require("redux-oidc");
 const USER_LOG_OUT = "userLogout";
 const GET_PROFILE_SUCCESS = "getProfileSuccess";
@@ -32,17 +30,13 @@ const authReducer = (state = initialState, action) => {
             state = { ...state, user: action.payload,isLogout:false }
             return state;
         case USER_EXPIRING:
-            // processSilentRenew();
             break;
         case USER_LOG_OUT:
             state = { user: null, profile: null,isLogout:true };
             return state;
         case USER_EXPIRED:
-            //if (state.isLogout) {
                 state = { user: null, profile: null };
                 return state;
-           // }
-          //  userManager.signinSilent();
         case GET_PROFILE_SUCCESS:
             state = { ...state, profile: action.payload };
             return state;

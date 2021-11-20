@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
-import connectStateProps from '../../utils/state.connect';
+import ConnectStateProps from '../../utils/state.connect';
 import { setStep } from '../../reducers/swapReducer';
 import { swapobj as config } from './config';
 import SwapCoins from './swapCoins';
@@ -81,4 +81,4 @@ class SwapCrypto extends Component {
     }
 }
 
-export default connectStateProps(SwapCrypto);
+export default ConnectStateProps(SwapCrypto);

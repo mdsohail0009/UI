@@ -2,16 +2,15 @@ import React, { Component } from 'react';
 import { List, Button, Typography, Empty } from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
-import connectStateProps from '../../utils/state.connect';
+import ConnectStateProps from '../../utils/state.connect';
 import { fetchYourPortfoliodata } from '../../reducers/dashboardReducer';
 import Currency from '../shared/number.formate';
 import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reducers/buyReducer';
 import { setStep } from '../../reducers/buysellReducer';
 import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import apiCalls from '../../api/apiCalls';
-import { Link } from "react-router-dom";
 
 class YourPortfolio extends Component {
     state = {
@@ -93,4 +92,4 @@ class YourPortfolio extends Component {
     }
 }
 
-export default connectStateProps(withRouter(YourPortfolio));
+export default ConnectStateProps(withRouter(YourPortfolio));
