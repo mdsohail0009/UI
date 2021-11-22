@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { Typography, Button } from 'antd';
+import { Typography, Button,Form,Input,Row, Col,Search } from 'antd';
 import Currency from '../shared/number.formate';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -24,7 +24,13 @@ const WithdrawalSummary = ({ sendReceive, onConfirm,onCancel }) => {
         <Text className="fs-14 text-white-50 fw-200"><Translate content="Bank_name" component={Text} className="fs-14 text-white-50 fw-200"   /></Text>
         <Text className="fs-20 text-white-30 d-block mb-36">{sendReceive.withdrawFiatObj?.bankName}</Text>
         <Text className="fs-14 text-white-50 fw-200"><Translate content="Recipient_full_name" component={Text} className="fs-14 text-white-50 fw-200"   /></Text>
-        <Text className="fs-20 text-white-30 d-block mb-36">{sendReceive.withdrawFiatObj?.beneficiaryAccountName}</Text>
+        <Text className="fs-20 text-white-30 d-block mb-36">{sendReceive.withdrawFiatObj?.beneficiaryAccountName}</Text>       
+        <Form.Item label="Phone Verification Code" extra="Enter 6 digit code sent to ">
+                        <Input.Group>
+                        <Input style={{ width: 'calc(100% - 100px)' }}  />
+                       <Button type="primary">Get Code</Button>
+                        </Input.Group>
+                    </Form.Item>
         <ul className="pl-0 ml-16 text-white-50 mb-24">
           <li> <Translate className="pl-0 ml-16 text-white-50" content="account_details" component={Text}/> </li>
           <li><Translate className="pl-0 ml-16 text-white-50" content="Cancel_select" component={Text}/></li>
