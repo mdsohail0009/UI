@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Drawer, Typography, Menu, Dropdown } from 'antd';
 import { buyFiatSteps as config } from './config';
 import { setStep } from '../../reducers/buysellReducer';
-import {rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
+import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
 import ConnectStateProps from '../../utils/state.connect';
 import Translate from 'react-translate-component';
 import SelectFiat from './selectFiat';
@@ -15,8 +15,8 @@ import NewFiatAddress from '../addressbook.component/addFiatAddressbook';
 import WithdrawalSummary from '../withDraw.component/withdrawalSummary';
 import WithdrawalLive from '../withDraw.component/withdrawLive';
 import WithdrawalSuccess from '../withDraw.component/withdrwSuccess';
+import ConfirmMsg from './confirmMsg';
 
-import ConfirmMsg from './confirmMsg'
 class MassPayment extends Component {
     state = {
         withdraw: false,
@@ -47,10 +47,10 @@ class MassPayment extends Component {
             selectwallet: <SelectWallet />,
             billingaddress: <BillingAddress />,
             confirmation: <ConfirmMsg />,
-            addAddress:<NewFiatAddress onCancel = { () =>this.onAddressClick() } />,
-            withdrwalfiatsummary: < WithdrawalSummary/>,
-            withdrwlive: < WithdrawalLive/>,
-            withdrwsuccess: < WithdrawalSuccess/>,
+            addAddress: <NewFiatAddress onCancel={() => this.onAddressClick()} />,
+            withdrwalfiatsummary: < WithdrawalSummary />,
+            withdrwlive: < WithdrawalLive />,
+            withdrwsuccess: < WithdrawalSuccess />,
         }
         return stepcodes[config[this.props.buyFiat.stepcode]]
     }

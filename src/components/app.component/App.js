@@ -24,6 +24,22 @@ function App() {
       setLoading(false)
     })
   }, [])
+  window.$zoho = window.$zoho || {};
+  window.$zoho.salesiq = window.$zoho.salesiq || {
+    widgetcode: "a167eaa0dc5b769d131a5fc00e42bf147028842aad73f7affa889acafc17d757084640d749c5a27dc8dc9bbec022e4d0",
+    values: {},
+    ready: function () { },
+  }
+  const d = document;
+  let s;
+  s = d.createElement('script');
+  s.type = 'text/javascript';
+  s.id = 'zsiqscript';
+  s.defer = true;
+  s.src = 'https://salesiq.zoho.in/widget';
+  let t;
+  t = d.getElementsByTagName('script')[0];
+  t.parentNode.insertBefore(s, t);
   return (
     <Provider store={store}>
       <OidcProvider userManager={userManager} store={store}>
