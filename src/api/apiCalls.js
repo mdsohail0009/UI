@@ -62,6 +62,13 @@ const getprofits = (userid,days) => {
 const getdailypnl = (userid,days) => {
     return apiClient.get(ApiControllers.dashboard + `DailyPNL/${userid}/${days}`);
 }
+
+const getCode=(AccountId)=>{
+    return apiClient.get(ApiControllers.master+`SendOTP/${AccountId}`);
+}
+const getVerification=(AccountId,code)=>{
+    return apiClient.get(ApiControllers.master+`OTPVerification/${AccountId}/${code}`)
+}
 let apicalls = { getportfolio, getCryptos, getMember, sumsubacesstoken, updateKyc, sumsubacesstokennew, sumsublivenessacesstoken, trackEvent, trackPageview, sellMemberCrypto, convertLocalLang, getIBANData,
-    getdshKpis,getdshcumulativePnl,getAssetNetwroth,getAssetAllowcation,getprofits,getdailypnl }
+    getdshKpis,getdshcumulativePnl,getAssetNetwroth,getAssetAllowcation,getprofits,getdailypnl,getCode,getVerification }
 export default apicalls

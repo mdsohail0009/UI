@@ -1,18 +1,66 @@
 import React, { useState } from 'react';
-import { Typography, Button, Form, Input, Row, Col, Search } from 'antd';
+import { Typography, Button, Form, Input, Row, Col, Search ,Tooltip,message} from 'antd';
 import Currency from '../shared/number.formate';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
+import { useEffect } from 'react';
+import apicalls from '../../api/apiCalls';
 
 
-const WithdrawalSummary = ({ sendReceive, onConfirm, onCancel }) => {
+
+const WithdrawalSummary = ({ sendReceive, onConfirm, onCancel,userConfig }) => {
   const { Text } = Typography;
   const [isLoding, setIsLoding] = useState(false);
-  const saveWithdrwal = async () => {
+  const [buttonText, setButtonText] = useState("GET CODE");
+  const text = <span>Haven't recieved code?Request new code in 6 seconds.The code will expire after 30 mins.</span>;
+  const [show, setShow] = useState(false);
+  const delay = 5;
+  const [otpSuccess, setotpSuccess] = useState(false);
+  const [form] = Form.useForm();
+  const [otpObj,setotpObj]=useState({code:""})
+
+  
+  useEffect(() => {
+      console.log(userConfig.id)
+  }
+  )
+
+  const saveWithdrwal = async (values) => {
+    let response=await apicalls.getVerification(userConfig.id,values);
+    if(response.ok){
+      message.destroy();
+      message.success({
+        content: 'Verification code sent',
+        className: 'custom-msg',
+        duration: 0.5
+      });
+      //this.props.history.push('/customers');
+    } else {
+      message.destroy();
+      message.error({
+        content: response.data,
+        className: 'custom-msg',
+        duration: 0.5
+      });
+    }
     setIsLoding(true)
     onConfirm()
   }
+  const getOTP=async(val)=>{
+    let response=await apicalls.getCode(userConfig.id);
+      if(response.ok){
+        console.log(response);
+      }  
+  }
+  
+
+const fullNumber = userConfig.phoneNumber;
+const last4Digits = fullNumber.slice(-4);
+const maskedNumber = last4Digits.padStart(fullNumber.length, '*');
+
+  
+
   return (
     <div className="mt-16">
       <Text className="fs-14 text-white-50 fw-200"> <Translate content="amount" component={Text} className="fs-14 text-white-50 fw-200" /></Text>
@@ -29,22 +77,33 @@ const WithdrawalSummary = ({ sendReceive, onConfirm, onCancel }) => {
         <li><Translate className="pl-0 ml-0 text-white-50" content="account_details" component={Text} /> </li>
         <li><Translate className="pl-0 ml-0 text-white-50" content="Cancel_select" component={Text} /></li>
       </ul>
-      <Form className="mt-36">
+      <Form className="mt-36"
+      initialValues={otpObj}
+      form={form}
+      onFinish={saveWithdrwal}
+      >
         <Form.Item
-          name="benficiaryBankName"
-          className="input-label otp-verify my-36"
-          extra={<Text className="fs-12 text-white-30 fw-200">Enter 6 digit code sent to *******1254</Text>}
+          name="code"
+         className="input-label otp-verify my-36"
+          extra={<Text className="fs-12 text-white-30 fw-200">Enter 6 digit code sent to {maskedNumber}</Text>}
         >
           <Input className="cust-input text-left" placeholder="Enter Verification Code" maxLength={8} />
-          <Button type="text">GET CODE</Button>
+          <Button type="text" onClick={getOTP}>GET CODE</Button>
+          {/* <Button type="text" onClick={()=>{setButtonText("Verification code sent");
+          setTimeout(() => {
+            setButtonText("RESEND CODE");
+          }, 6000);
+          }}
+          >{buttonText}</Button>         */}
           {/* <Button type="text">RESEND CODE</Button> */}
-        </Form.Item>
+        </Form.Item>        
         <Button
           disabled={isLoding}
           size="large"
           block
           className="pop-btn"
-          onClick={saveWithdrwal}
+          //onClick={saveWithdrwal}
+          htmlType="submit"
         >
           <Translate content="Confirm" component={Text} />
         </Button>
