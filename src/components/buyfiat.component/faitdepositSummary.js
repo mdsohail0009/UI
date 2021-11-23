@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Space} from 'antd';
+import { Typography, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -18,17 +18,17 @@ class FaitdepositSummary extends Component {
     }
 
     render() {
-        const { Paragraph} = Typography;
+        const { Paragraph } = Typography;
         return (
             <>
                 <div className="success-pop text-center">
-              <img src={success} className="confirm-icon" alt={'success'} />
-              <div><Translate content="success_msg" component='Success' className="text-white-30 fs-36 fw-200 mb-4" /></div>
-              <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" />
-              <Space direction="vertical" size="large">
-                <Translate content="return_to_depositfiat" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.props.changeStep('step1')} />
-              </Space>
-            </div>
+                    <img src={success} className="confirm-icon" alt={'success'} />
+                    <div><Translate content="success_msg" component='Success' className="text-white-30 fs-36 fw-200 mb-4" /></div>
+                    <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" />
+                    <Space direction="vertical" size="large">
+                        <Translate content="return_to_depositfiat" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.props.changeStep("step1")} />
+                    </Space>
+                </div>
             </>
         )
     }

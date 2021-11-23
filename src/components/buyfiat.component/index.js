@@ -11,6 +11,7 @@ import SelectWallet from './selectWallet';
 import FiatDeposit from '../../components/deposit.component/faitDeposit';
 import BillingAddress from './fiatBillingAddress';
 import FaitDepositSummary from './faitdepositSummary';
+import FiatSummary from './buyfiatSummary';
 import NewFiatAddress from '../addressbook.component/addFiatAddressbook';
 import WithdrawalSummary from '../withDraw.component/withdrawalSummary';
 import WithdrawalLive from '../withDraw.component/withdrawLive';
@@ -41,8 +42,8 @@ class MassPayment extends Component {
     renderContent = () => {
         const stepcodes = {
             fiatdeposit: <FiatDeposit tab={this.props.tabData} fiatRef={(cd) => this.child = cd} />,
-            faitsummary: <FaitDepositSummary />,
-            selectfiat: <SelectFiat />,
+            faitsummary: <FiatSummary />,
+            fiatdepositsummary: <FaitDepositSummary />,
             addcard: <AddBuyFiatCard />,
             selectwallet: <SelectWallet />,
             billingaddress: <BillingAddress />,
@@ -57,8 +58,8 @@ class MassPayment extends Component {
     renderTitle = () => {
         const stepcodes = {
             fiatdeposit: <span />,
-            faitsummary: <span />,
-            selectfiat: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            faitsummary: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            fiatdepositsummary: <span />,
             addcard: <span onClick={() => this.props.dispatch(setStep("step2"))} className="icon md lftarw-white c-pointer" />,
             selectwallet: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             billingaddress: <span onClick={() => this.props.dispatch(setStep("step3"))} className="icon md lftarw-white c-pointer" />,
@@ -82,7 +83,7 @@ class MassPayment extends Component {
         const stepcodes = {
             fiatdeposit: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             faitsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
-            selectfiat: <span />,
+            fiatdepositsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             addcard: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             selectwallet: <Dropdown overlay={menu} overlayClassName="secureDropdown" arrow>
                 <a className="pop-drpdwn-toogle" onClick={e => e.preventDefault()}><span className="icon md h-more" /></a>

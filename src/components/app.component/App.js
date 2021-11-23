@@ -10,8 +10,9 @@ import ErrorBoundary from "antd/lib/alert/ErrorBoundary";
 import { AppInsightsContext } from "@microsoft/applicationinsights-react-js";
 import { reactPlugin } from "../../Shared/appinsights";
 import Notifications from "../../notifications";
-import { setNotificationCount } from '../../reducers/dashboardReducer'
-function App() {
+import { setNotificationCount } from '../../reducers/dashboardReducer';
+
+function App(props) {
   const [loading, setLoading] = useState(true);
   const [showNotifications, setNotifications] = useState(false);
   useEffect(() => {
@@ -23,23 +24,29 @@ function App() {
     loadUser(store, userManager).then(user => {
       setLoading(false)
     })
+
+    const { userConfig: { userProfileInfo } } = store.getState();
+    window.$zoho = window.$zoho || {};
+    window.$zoho.salesiq = window.$zoho.salesiq || {
+      widgetcode: "a167eaa0dc5b769d131a5fc00e42bf147028842aad73f7affa889acafc17d757084640d749c5a27dc8dc9bbec022e4d0",
+      values: {},
+      ready: function () {
+        window.$zoho.salesiq.visitor.email(userProfileInfo.email);
+        window.$zoho.salesiq.visitor.name(userProfileInfo.userName);
+      },
+    }
+    const d = document;
+    let s;
+    s = d.createElement('script');
+    s.type = 'text/javascript';
+    s.id = 'zsiqscript';
+    s.defer = true;
+    s.src = 'https://salesiq.zoho.in/widget';
+    let t;
+    t = d.getElementsByTagName('script')[0];
+    t.parentNode.insertBefore(s, t);
   }, [])
-  window.$zoho = window.$zoho || {};
-  window.$zoho.salesiq = window.$zoho.salesiq || {
-    widgetcode: "a167eaa0dc5b769d131a5fc00e42bf147028842aad73f7affa889acafc17d757084640d749c5a27dc8dc9bbec022e4d0",
-    values: {},
-    ready: function () { },
-  }
-  const d = document;
-  let s;
-  s = d.createElement('script');
-  s.type = 'text/javascript';
-  s.id = 'zsiqscript';
-  s.defer = true;
-  s.src = 'https://salesiq.zoho.in/widget';
-  let t;
-  t = d.getElementsByTagName('script')[0];
-  t.parentNode.insertBefore(s, t);
+
   return (
     <Provider store={store}>
       <OidcProvider userManager={userManager} store={store}>

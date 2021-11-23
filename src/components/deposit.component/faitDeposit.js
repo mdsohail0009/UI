@@ -159,6 +159,7 @@ class FaitDeposit extends Component {
     this.formRef.current.setFieldsValue({ ...depObj })
   }
   ConfirmDeposit = async () => {
+    debugger
     let { BankInfo, depObj } = this.state;
     if (parseFloat(typeof depObj.Amount === 'string' ? depObj.Amount.replace(/,/g, '') : depObj.Amount) <= 0) {
       this.setState({
@@ -422,30 +423,6 @@ class FaitDeposit extends Component {
               {this.renderModalContent()}
             </Modal> */}
             {this.state.showSuccessMsg && <div className="success-pop text-center">
-              {/* <div className="fiatdeposit-confirm">
-                <Text className="fw-500 text-white-30 fs-24 text-center">USD 2,849.76</Text>
-                <Text className="fw-200 text-white-50 fs-14 text-center">Amount</Text>
-                <div className="d-flex pt-16 agree-check mt-36">
-                  <label>
-                    <input type="checkbox" id="agree-check" />
-                    <span for="agree-check" />
-                  </label>
-                  <Translate
-                    content="agree_to_suissebase"
-                    with={{ link }}
-                    component={Paragraph}
-                    className="fs-14 text-white-30 ml-16 mb-4"
-                    style={{ flex: 1 }}
-                  />
-                </div>
-                <Button
-                  size="large"
-                  block
-                  className="pop-btn mt-36"
-                >
-                  <Translate content="Confirm" component='Text' />
-                </Button>
-              </div> */}
               <img src={success} className="confirm-icon" alt={'success'} />
               <div><Translate content="success_msg" component='Success' className="text-white-30 fs-36 fw-200 mb-4" /></div>
               <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" />

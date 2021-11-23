@@ -24,6 +24,7 @@ import DefaultUser from '../assets/images/defaultuser.jpg';
 import { setHeaderTab } from '../reducers/buysellReducer';
 import { setdepositCurrency } from '../reducers/depositReducer'
 import { deleteToken } from '../notifications/api';
+import Wallets from '../components/wallets.component.js';
 // import { connection } from '../utils/signalR';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -154,6 +155,7 @@ class Header extends Component {
         this.state = {
             megamenu: false,
             lang: 'en',
+            walletsDrawer: false,
             buyDrawer: false,
             sendDrawer: false,
             swapDrawer: false,
@@ -286,6 +288,13 @@ class Header extends Component {
         }
         this.props.dispatch(setdepositCurrency(null))
     }
+
+    showWalletsDrawer = () => {
+        this.setState({
+            ...this.state, walletsDrawer: true
+        })
+    }
+
     closeDrawer = () => {
         if (this.child) this.child.clearValues();
         let obj = {};
@@ -301,6 +310,7 @@ class Header extends Component {
         })
         this.props.clearSwapfullData()
         this.setState({
+            walletsDrawer: false,
             buyDrawer: false,
             payDrawer: false,
             billingAddress: false,
@@ -381,14 +391,15 @@ class Header extends Component {
                             </Menu>
                         </div>
                         <Menu theme="light" mode="horizontal" className="header-right" selectedKeys={[this.props.buySell?.headerTab]} onSelect={(key) => { this.props.dispatch(setHeaderTab(key.key)) }}>
-                            <Translate content="menu_buy_sell" component={Menu.Item} key="1" onClick={this.showBuyDrawer} className="list-item" />
-                            <Translate content="menu_swap" component={Menu.Item} key="2" onClick={this.showSwapDrawer} className="list-item" />
+                            <Translate content="menu_wallets" component={Menu.Item} key="1" onClick={this.showWalletsDrawer} className="list-item" />
+                            <Translate content="menu_buy_sell" component={Menu.Item} key="2" onClick={this.showBuyDrawer} className="list-item" />
+                            <Translate content="menu_swap" component={Menu.Item} key="3" onClick={this.showSwapDrawer} className="list-item" />
                             <Dropdown onClick={() => this.setState({ ...this.state, Visibleprofilemenu: false })} overlay={depostWithdrawMenu} trigger={['click']} placement="bottomCenter" arrow overlayClassName="secureDropdown depwith-drpdown" getPopupContainer={() => document.getElementById('area')}>
-                                <Translate content="menu_send_receive" component={Menu.Item} key="3" className="mr-16" />
+                                <Translate content="menu_send_receive" component={Menu.Item} key="4" className="mr-16" />
                             </Dropdown>
 
-                            <Translate content="menu_transactions_history" component={Menu.Item} key="4" onClick={this.showTransactionHistoryDrawer} className="list-item" />
-                            <Menu.Item key="5" className="notification-conunt" onClick={this.showNotificationsDrawer}><span className="icon md bell ml-4 p-relative"><span>{this.props.dashboard?.notificationCount}</span></span></Menu.Item>
+                            <Translate content="menu_transactions_history" component={Menu.Item} key="5" onClick={this.showTransactionHistoryDrawer} className="list-item" />
+                            <Menu.Item key="6" className="notification-conunt" onClick={this.showNotificationsDrawer}><span className="icon md bell ml-4 p-relative"><span>{this.props.dashboard?.notificationCount}</span></span></Menu.Item>
                             <Dropdown onVisibleChange={() => this.setState({ ...this.state, Visibleprofilemenu: !this.state.Visibleprofilemenu })} visible={this.state.Visibleprofilemenu} onClick={() => this.setState({ ...this.state, Visibleprofilemenu: true })} overlay={userProfileMenu} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Menu.Item key="7" className="ml-16" >{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"} />}
                                     {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"} />}</Menu.Item>
@@ -596,6 +607,7 @@ class Header extends Component {
                         </div>
                     </Carousel>
                 </Modal>
+                <Wallets showDrawer={this.state.walletsDrawer} onClose={() => this.closeDrawer()} />
                 <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
                 <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
                 <SwapCrypto swapRef={(cd) => this.child = cd} showDrawer={this.state.swapDrawer} onClose={() => this.closeDrawer()} />
