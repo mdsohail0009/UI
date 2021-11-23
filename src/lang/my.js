@@ -457,5 +457,6 @@ export default {
   active_inactive: 'Aktibo/Hindi Aktibo',
   location: 'lokasyon',
   ipAddress: 'alamat IP',
-  menu_wallets: "Dompet"
+  menu_wallets: "Dompet",
+  crypto_wallets: "Dompet Kripto",
 }

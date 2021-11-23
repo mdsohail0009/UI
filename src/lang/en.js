@@ -463,5 +463,6 @@ export default {
   active_inactive: 'Active/Inactive',
   location: 'Location',
   ipAddress: 'IP Address',
-  menu_wallets: "Wallets"
+  menu_wallets: "Wallets",
+  crypto_wallets: "Crypto Wallets",
 }

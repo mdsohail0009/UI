@@ -69,8 +69,8 @@ class Wallets extends Component {
         const { wallets } = this.props.dashboard;
         return (
             <>
-                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 mb-0 text-white-30" />
-                <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16" />
+                <Translate content="suissebase_subtitle" component={Title} className="fs-14 fw-500 text-upper text-white" />
+                {/* <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16" /> */}
                 <List
                     itemLayout="horizontal"
                     dataSource={wallets.data}
@@ -86,7 +86,7 @@ class Wallets extends Component {
                             />
                             <div className="crypto-btns">
                                 <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
-                                <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2, item.walletCode)} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
+                                <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2, item.walletCode)} component={Button} className="custom-btn sec outline ml-16" disabled={item.amount > 0 ? false : true} />
                             </div>
                         </List.Item>}
                 />

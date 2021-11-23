@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
+import FiatWallets from '../dashboard.component/wallets.component';
+import CryptoWallets from '../dashboard.component/yourportfolio.component';
 
 class Wallets extends Component {
     closeBuyDrawer = () => {
@@ -22,9 +24,15 @@ class Wallets extends Component {
             visible={this.props.showDrawer}
             closeIcon={null}
             className="side-drawer"
-            Wallets
         >
-            Wallets
+            <div className="markets-panel walletsdrawer mr-0">
+                <div className="mb-36">
+                    <FiatWallets />
+                </div>
+                <div className="pt-16">
+                    <CryptoWallets />
+                </div>
+            </div>
         </Drawer>);
     }
 }

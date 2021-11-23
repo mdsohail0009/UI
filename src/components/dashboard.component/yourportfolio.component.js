@@ -37,8 +37,8 @@ class YourPortfolio extends Component {
         }
         if (key === "buy") {
             this.props.dispatch(fetchSelectedCoinDetails(item.coin, this.props.userProfile?.id));
-            this.props.dispatch(setCoin({...item, toWalletCode:item.coin, toWalletId:item.id,toWalletName:item.coinFullName}));
-            convertCurrency({ from: item.coin, to: "USD", value: 1, isCrypto: false,memId:this.props.userProfile?.id,screenName:null }).then(val => {
+            this.props.dispatch(setCoin({ ...item, toWalletCode: item.coin, toWalletId: item.id, toWalletName: item.coinFullName }));
+            convertCurrency({ from: item.coin, to: "USD", value: 1, isCrypto: false, memId: this.props.userProfile?.id, screenName: null }).then(val => {
                 this.props.dispatch(setExchangeValue({ key: item.coin, value: val }));
             });
             this.props.dispatch(setStep("step2"));
@@ -61,13 +61,13 @@ class YourPortfolio extends Component {
         const { Title } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
         return (
-            <div className="box portfolio-list">
-                <Translate content="your_portfolio" component={Title} className="fs-24 text-white mb-0 fw-600" />
+            <div className="crypto-wallets">
+                <Translate content="crypto_wallets" component={Title} className="fs-14 fw-500 text-upper text-white" />
                 <List className="mobile-list"
                     itemLayout="horizontal"
                     dataSource={cryptoPortFolios.data}
                     loading={cryptoPortFolios.loading}
-                    locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data') } /> }}
+                    locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }}
                     renderItem={item => (
                         <List.Item className="" extra={
                             <div className="crypto_btns">
@@ -77,12 +77,10 @@ class YourPortfolio extends Component {
                         }>
                             <Link className="c-pointer" to={"/coindetails/" + item.coinFullName.toLowerCase()} ><List.Item.Meta
                                 avatar={<span className={`coin ${item.coin}`} />}
-                                title={<div className="fs-18 fw-300 text-upper text-white mb-0 mt-12">{item.coin}</div>}
+                                title={<><div className="fs-18 fw-300 text-upper text-white-30 mb-0">{item.coin}</div>
+                                    <Currency defaultValue={item.coinBalance} type={"text"} prefix={""} className="text-white-30" />
+                                    <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} /></>}
                             /></Link>
-                            <div className='text-right fs-20 text-white'>
-                                <Currency defaultValue={item.coinBalance} type={"text"} prefix={""} />
-                                <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
-                            </div>
                         </List.Item>
                     )}
                 />

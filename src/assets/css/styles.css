@@ -678,6 +678,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 }
 .coin-bal ul li div{width: 50px;height: 50px;border-radius: 50%;background-color: var(--bgGloom);margin: 0 auto 6px;line-height: 50px;cursor: pointer;}
 .coin-bal ul li div:hover{box-shadow: 0 3px 16px rgba(0, 0, 0, 0.15);}
+.walletsdrawer .mobile-list{margin: 0;}
+.crypto-wallets .ant-list-item-meta-content{width: auto;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}

@@ -458,5 +458,6 @@ export default {
   active_inactive: '活動/非活動',
   location: '地點',
   ipAddress: 'IP地址',
-  menu_wallets: "钱包"
+  menu_wallets: "钱包",
+  crypto_wallets: "加密钱包",
 }
