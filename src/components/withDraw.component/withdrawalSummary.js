@@ -49,12 +49,17 @@ const WithdrawalSummary = ({
     let response = await apicalls.getVerification(userConfig.id, otp);
 
     if (response.ok) {
+      
       message.destroy();
       message.success({
+        
         content: "OTP Verified Successfully",
         className: "custom-msg",
         duration: 0.5
       });
+      setIsLoding(true);
+      onConfirm();
+      
     } else {
       message.destroy();
       message.error({
@@ -63,8 +68,7 @@ const WithdrawalSummary = ({
         duration: 0.5
       });
     }
-    setIsLoding(true);
-    onConfirm();
+   
   };
   const getOTP = async (val) => {
     let response = await apicalls.getCode(userConfig.id);
@@ -73,7 +77,7 @@ const WithdrawalSummary = ({
     }
     setTimeout(() => {
       setButtonText("RESEND CODE");
-    }, 10000);
+    }, 30000);
   }
  
   const fullNumber = userConfig.phoneNumber;
