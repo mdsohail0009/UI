@@ -37,7 +37,10 @@ const WithdrawalSummary = ({
   const [form] = Form.useForm();
   const [otp, setOtp] = useState("");
   const useOtpRef = React.useRef(null);
-  
+  const [isResendAvailable,setisResendAvailable]=useState("false");
+  const [buttonText,setButtonText]=useState("GET CODE");
+
+
   useEffect(() => {
     console.log(userConfig.id);
   });
@@ -67,14 +70,12 @@ const WithdrawalSummary = ({
     let response = await apicalls.getCode(userConfig.id);
     if (response.ok) {
       console.log(response);
-      
     }
-    // setTimeout(() => {
-    //   setButtonText("RESEND CODE");
-    // }, 6000);
+    setTimeout(() => {
+      setButtonText("RESEND CODE");
+    }, 10000);
   }
-
-
+ 
   const fullNumber = userConfig.phoneNumber;
   const last4Digits = fullNumber.slice(-4);
   const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
@@ -178,7 +179,7 @@ const WithdrawalSummary = ({
             onChange={(e) => setOtp(e.target.value)}
           />
           <Button type="text" onClick={getOTP} >
-            GET CODE
+            {buttonText}
           </Button>
                
           {/* <Button type="text">RESEND CODE</Button> */}
