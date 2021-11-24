@@ -11,7 +11,7 @@ import { setWithdrawfiatenaable, setWithdrawfiat } from '../../reducers/sendrece
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
 const { Title, Paragraph } = Typography;
 
-class Wallets extends Component {
+class FiatWallets extends Component {
     state = {
         sendReceiveDrawer: false,
         valNum: 1,
@@ -69,8 +69,7 @@ class Wallets extends Component {
         const { wallets } = this.props.dashboard;
         return (
             <>
-                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 mb-0 text-white" />
-                <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16" />
+                <Translate content="suissebase_subtitle" component={Title} className="fs-14 fw-500 text-upper text-white" />
                 <List
                     itemLayout="horizontal"
                     dataSource={wallets.data}
@@ -81,12 +80,10 @@ class Wallets extends Component {
                         <List.Item className="py-10 px-0">
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item?.walletCode.toLowerCase()} mr-4`} />}
-                                title={<div className="fs-16 fw-600 text-upper text-white-30 l-height-normal">{item.walletCode}</div>}
-                                description={<Currency className="fs-16 text-white-30 m-0" defaultValue={item.amount} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
+                                title={<div className="fs-16 mt-12 fw-600 text-upper text-white-30 l-height-normal">{item.walletCode}</div>}
                             />
-                            <div className="crypto-btns">
-                                <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
-                                <Translate content="withdraw" onClick={() => this.showSendReceiveDrawer(2, item.walletCode)} component={Button} className="custom-btn sec ml-16" disabled={item.amount > 0 ? false : true} />
+                            <div className="text-right">
+                                <Currency className="fs-16 text-white-30 m-0" defaultValue={item.amount} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />
                             </div>
                         </List.Item>}
                 />
@@ -97,4 +94,4 @@ class Wallets extends Component {
     }
 }
 
-export default ConnectStateProps(withRouter(Wallets));
+export default ConnectStateProps(withRouter(FiatWallets));

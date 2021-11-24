@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import { Drawer, Typography } from 'antd';
 import Translate from 'react-translate-component';
-import FiatWallets from '../dashboard.component/wallets.component';
-import CryptoWallets from '../dashboard.component/yourportfolio.component';
+import FiatWallets from './fiatwallets';
+import CryptoWallets from './cryptowallets';
+import { setHeaderTab } from '../../reducers/buysellReducer';
+import ConnectStateProps from '../../utils/state.connect';
 
 class Wallets extends Component {
     closeBuyDrawer = () => {
+        this.props.dispatch(setHeaderTab(""))
         if (this.props.onClose) {
             this.props.onClose();
         }
@@ -29,7 +32,7 @@ class Wallets extends Component {
                 <div className="mb-36">
                     <FiatWallets />
                 </div>
-                <div className="pt-16">
+                <div className="mb-36">
                     <CryptoWallets />
                 </div>
             </div>
@@ -37,4 +40,4 @@ class Wallets extends Component {
     }
 }
 
-export default Wallets;
+export default ConnectStateProps(Wallets);
