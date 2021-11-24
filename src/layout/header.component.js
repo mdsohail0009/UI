@@ -24,7 +24,7 @@ import DefaultUser from '../assets/images/defaultuser.jpg';
 import { setHeaderTab } from '../reducers/buysellReducer';
 import { setdepositCurrency } from '../reducers/depositReducer'
 import { deleteToken } from '../notifications/api';
-// import { connection } from '../utils/signalR';
+import { buildConnection, connection } from '../utils/signalR';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
@@ -41,9 +41,10 @@ const { Title, Paragraph } = Typography;
 class Header extends Component {
     componentDidMount() {
         counterpart.setLocale(this.props.userConfig ? this.props.userConfig.language : 'en');
-        // connection.on("ReceiveMessage", (user, message) => {
-        //     // nptification display code here
-        // });
+        buildConnection();
+        connection.on("ReceiveOne", (user, message) => {
+         debugger
+        });
     }
     securityMenu = (
 

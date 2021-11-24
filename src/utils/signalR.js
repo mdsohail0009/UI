@@ -1,25 +1,28 @@
 import * as SignalR from '@microsoft/signalr';
+import { store } from '../store';
+let connection;
+function buildConnection() {
+    const { userConfig: { userProfileInfo } } = store.getState();
+    connection = new SignalR.HubConnectionBuilder()
+        .withUrl(process.env.REACT_APP_SIGNALR_HUB + "/chatsocket?username=" + userProfileInfo?.id)
+        .configureLogging(SignalR.LogLevel.Information)
+        .build();
 
-const connection = new SignalR.HubConnectionBuilder()
-    .withUrl("/chathub")
-    .configureLogging(SignalR.LogLevel.Information)
-    .build();
-
+    start();
+    connection.onclose(async () => {
+        await start();
+    });
+}
 async function start() {
     try {
         await connection.start();
-        console.log("SignalR Connected.");
     } catch (err) {
         console.log(err);
         setTimeout(start, 5000);
     }
 };
 
-connection.onclose(async () => {
-    await start();
-});
 
 // Start the connection.
-start();
 
-export { connection }
+export { connection, buildConnection }
