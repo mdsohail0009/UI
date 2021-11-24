@@ -24,22 +24,25 @@ class FiatSummary extends Component {
         }
     }
 
+    componentDidMount() {
+        console.log("Save Obj===========", this.props.depositInfo)
+    }
     render() {
-        const { sendReceive } = this.props;
+        //const { depFiatSaveObj } = this.props.depositInfo;
         const { Paragraph, Text } = Typography;
         const link = <LinkValue content="terms_service" />;
         return (
             <>
-                <Text className="fs-14 text-white-50 fw-200"> <Translate content="amount" component={Text} className="fs-14 text-white-50 fw-200" /></Text>
+                {/* <Text className="fs-14 text-white-50 fw-200"> <Translate content="amount" component={Text} className="fs-14 text-white-50 fw-200" /></Text>
                 <Currency className="fs-20 text-white-30 mb-36" prefix={""} defaultValue={sendReceive.withdrawFiatObj?.totalValue} suffixText={sendReceive.withdrawFiatObj?.walletCode} />
                 <Text className="fs-14 text-white-50 fw-200"> <Translate content="Bank_account" component={Text} className="fs-14 text-white-50 fw-200" /></Text>
                 <Text className="fs-20 text-white-30 d-block mb-36">{sendReceive.withdrawFiatObj?.accountNumber}</Text>
                 <Text className="fs-14 text-white-50 fw-200"><Translate content="BIC_SWIFT_routing_number" component={Text} className="fs-14 text-white-50 fw-200" /></Text>
                 <Text className="fs-20 text-white-30 d-block mb-36">{sendReceive.withdrawFiatObj?.routingNumber}</Text>
                 <Text className="fs-14 text-white-50 fw-200"><Translate content="Bank_name" component={Text} className="fs-14 text-white-50 fw-200" /></Text>
-                <Text className="fs-20 text-white-30 d-block mb-36">{sendReceive.withdrawFiatObj?.bankName}</Text>
+                <Text className="fs-20 text-white-30 d-block mb-36">{depFiatSaveObj?.BankName}</Text>
                 <Text className="fs-14 text-white-50 fw-200"><Translate content="Recipient_full_name" component={Text} className="fs-14 text-white-50 fw-200" /></Text>
-                <Text className="fs-20 text-white-30 d-block mb-36">{sendReceive.withdrawFiatObj?.beneficiaryAccountName}</Text>
+                <Text className="fs-20 text-white-30 d-block mb-36">{sendReceive.withdrawFiatObj?.beneficiaryAccountName}</Text> */}
                 <ul className="pl-0 ml-16 text-white-50 mt-36">
                     <li><Translate className="pl-0 ml-0 text-white-50" content="account_details" component={Text} /> </li>
                     <li><Translate className="pl-0 ml-0 text-white-50" content="Cancel_select" component={Text} /></li>
@@ -52,8 +55,8 @@ class FiatSummary extends Component {
         )
     }
 }
-const connectStateToProps = ({ userConfig, sendReceive }) => {
-    return { userConfig: userConfig.userProfileInfo, sendReceive }
+const connectStateToProps = ({ userConfig, depositInfo, sendReceive }) => {
+    return { userConfig: userConfig.userProfileInfo, depositInfo, sendReceive }
 }
 const connectDispatchToProps = dispatch => {
     return {

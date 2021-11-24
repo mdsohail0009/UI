@@ -12,7 +12,7 @@ import { convertCurrency } from '../buy.component/buySellService';
 import { withRouter, Link } from 'react-router-dom';
 import apiCalls from '../../api/apiCalls';
 
-class YourPortfolio extends Component {
+class CryptoWallets extends Component {
     state = {
         loading: true,
         initLoading: true,
@@ -61,28 +61,24 @@ class YourPortfolio extends Component {
         const { Title } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
         return (
-            <div className="box portfolio-list">
-                <Translate content="your_portfolio" component={Title} className="fs-24 text-white mb-0 fw-600" />
+            <div className="crypto-wallets">
+                <Translate content="crypto_wallets" component={Title} className="fs-14 fw-500 text-upper text-white" />
                 <List className="mobile-list"
                     itemLayout="horizontal"
                     dataSource={cryptoPortFolios.data}
                     loading={cryptoPortFolios.loading}
                     locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }}
                     renderItem={item => (
-                        <List.Item className="" extra={
-                            <div className="crypto_btns">
-                                <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(item, "buy")} className="custom-btn prime" />
-                                <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer(item, "sell")} />
+                        <List.Item extra={
+                            <div className="text-right">
+                                <Currency defaultValue={item.coinBalance} type={"text"} prefix={""} className="text-white-30" />
+                                <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
                             </div>
                         }>
                             <Link className="c-pointer" to={"/coindetails/" + item.coinFullName.toLowerCase()} ><List.Item.Meta
                                 avatar={<span className={`coin ${item.coin}`} />}
-                                title={<div className="fs-18 fw-300 text-upper text-white mb-0 mt-12">{item.coin}</div>}
+                                title={<div className="fs-18 fw-500 text-upper text-white-30 mt-12 mb-0">{item.coin}</div>}
                             /></Link>
-                            <div className='text-right fs-20 text-white'>
-                                <Currency defaultValue={item.coinBalance} type={"text"} prefix={""} />
-                                <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
-                            </div>
                         </List.Item>
                     )}
                 />
@@ -92,4 +88,4 @@ class YourPortfolio extends Component {
     }
 }
 
-export default ConnectStateProps(withRouter(YourPortfolio));
+export default ConnectStateProps(withRouter(CryptoWallets));

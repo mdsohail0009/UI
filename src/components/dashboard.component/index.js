@@ -6,6 +6,9 @@ import Notices from './notices';
 import AlertConfirmation from '../shared/alertconfirmation';
 import { connect } from 'react-redux';
 import { fetchNotices } from '../../reducers/dashboardReducer';
+import Wallets from '../dashboard.component/wallets.component';
+import YourPortfolio from '../dashboard.component/yourportfolio.component';
+
 class Home extends Component {
     state = {
         loading: false,
@@ -35,6 +38,9 @@ class Home extends Component {
                 </Carousel> : <div className="text-center"><Spin size="default" /></div>}
                 <Row justify="center mt-36">
                     <Col xs={24} md={12} xl={10}>
+                        <div className="markets-panel mb-36">
+                            <Wallets />
+                        </div>
                         <div className="box markets-panel">
                             <MarketCap />
                         </div>
@@ -47,6 +53,7 @@ class Home extends Component {
                             crypto_stock="0.0%" />
 
                         <Notices />
+                        <YourPortfolio />
                     </Col>
                 </Row>
             </div>
