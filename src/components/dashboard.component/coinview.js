@@ -3,13 +3,19 @@ import { Typography, Radio, Row, Col } from 'antd';
 import { Link, withRouter } from "react-router-dom";
 import { getcoinDetails, getCoinChatData } from './api'
 import ConnectStateProps from '../../utils/state.connect';
-import TradingViewChart from './tradingviewchart';
+import LineChart from './line.graph.component';
+import BuySell from '../buy.component';
+import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reducers/buyReducer';
+import { setStep } from '../../reducers/buysellReducer';
+import { updateCoinDetail } from '../../reducers/sellReducer'
+import { convertCurrency } from '../buy.component/buySellService';
 
 class CoinView extends React.Component {
     state = {
         coinData: null,
         chatData: null,
-        type: 'prices'
+        type: 'prices',
+        buyDrawer: false
     }
 
     componentDidMount() {
@@ -32,6 +38,46 @@ class CoinView extends React.Component {
             }
         }
     }
+    showBuyDrawer = (item, key) => {
+        if (this.props?.userProfile?.isDocsRequested) {
+            this.props.history.push("/docnotices");
+            return;
+        }
+        if (!this.props?.userProfile?.isKYC) {
+            this.props.history.push("/notkyc");
+            return;
+        }
+        if (key === "buy") {
+            if (this.props.dashboard.marketSelectedCoin) {
+                this.props.dispatch(fetchSelectedCoinDetails(item.coin, this.props.userProfile?.id));
+                this.props.dispatch(setCoin({ ...item, toWalletCode: item.coin, toWalletId: item.id, toWalletName: item.coinFullName }));
+                convertCurrency({ from: item.coin, to: "USD", value: 1, isCrypto: false, memId: this.props.userProfile?.id, screenName: null }).then(val => {
+                    this.props.dispatch(setExchangeValue({ key: item.coin, value: val }));
+                });
+                this.props.dispatch(setStep("step2"));
+            } else {
+                this.props.dispatch(fetchSelectedCoinDetails(item.symbol, this.props.userProfile?.id));
+                this.props.dispatch(setCoin({ ...item, toWalletCode: item.symbol, toWalletId: item.id, toWalletName: item.name }));
+                convertCurrency({ from: item.symbol, to: "USD", value: 1, isCrypto: false, memId: this.props.userProfile?.id, screenName: null }).then(val => {
+                    this.props.dispatch(setExchangeValue({ key: item.symbol, value: val }));
+                });
+                this.props.dispatch(setStep("step2"));
+            }
+        } else if (key === "sell") {
+            this.props.dispatch(setCoin(item));
+            this.props.dispatch(setExchangeValue({ key: item.symbol, value: item.current_price }));
+            this.props.dispatch(updateCoinDetail(item))
+            this.props.dispatch(setStep("step10"));
+        }
+        this.setState({
+            buyDrawer: true
+        })
+    }
+    closeDrawer = () => {
+        this.setState({
+            buyDrawer: false,
+        })
+    }
     render() {
         const { Paragraph, Text, Title } = Typography
         const { coinData } = this.state;
@@ -48,9 +94,9 @@ class CoinView extends React.Component {
                             </div>
                         </div>
                         <ul className="m-0">
-                            <li><div><span className="icon md file" /></div>BUY</li>
-                            <li><div><span className="icon md file" /></div>SELL</li>
-                            <li><div><span className="icon md file" /></div>WITHDRAW</li>
+                            {/* <li onClick={() => this.showBuyDrawer(coinData, "buy")}><div><span className="icon md file" /></div>BUY</li> */}
+                            {/* <li  onClick={() => this.showBuyDrawer(coinData, "sell")}><div><span className="icon md file" /></div>SELL</li> */}
+                            {/* <li><div><span className="icon md file" /></div>WITHDRAW</li> */}
                         </ul>
                     </div>
                     <div className="box p-24 coin-details">
@@ -69,7 +115,7 @@ class CoinView extends React.Component {
                                 <Radio.Button value="90">90d</Radio.Button>
                             </Radio.Group>
                         </div>
-                        {this.state.chatData && <TradingViewChart data={this.state.chatData} type={this.state.type} />}
+                        {this.state.chatData && <LineChart data={this.state.chatData} type={this.state.type} />}
                     </div>
                 </Col>
                 <Col lg={10} xl={10} xxl={10}>
@@ -120,6 +166,7 @@ class CoinView extends React.Component {
                     </div>
                 </Col>
             </Row>
+            <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
         </div>
     }
 }

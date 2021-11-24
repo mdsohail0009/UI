@@ -39,21 +39,24 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
   const saveUserPass = async (values) => {
     
     if (values.CurrentPassword === values.Password) {
-      setChangePasswordResponse({ error: true, messsage: "Current password and New password should not be same", isLoading: false });
+      passwordResponce(true,"Current password and New password should not be same",false);
     }else {
-      setChangePasswordResponse({ error: false, messsage: "", isLoading: true });
+      passwordResponce(false,'',false);
       const result = await changePassword(initialValues);
       if (result.ok) {
         message.success({content:'Password changed successfully',className: 'custom-msg'});
-        setChangePasswordResponse({ error: false, messsage: '', isLoading: false });
+        passwordResponce(false,'',false);
         form.resetFields();
         onSubmit()
         getmemeberInfoa(userConfig.userId)
         apiClient.trackEvent({"Action": 'Save', "Feature": 'Change password', "Remarks": "Password changed","FullFeatureName": 'Change password',"userName":userConfig.userName,id:userConfig.id });
       }else {
-        setChangePasswordResponse({ error: true, messsage: result.data, isLoading: false });
+        passwordResponce(true,result.data,false);
       }
     }
+  }
+  const passwordResponce = (isError,msg,isloading)=>{
+    setChangePasswordResponse({ error: isError, messsage: msg, isLoading: isloading });
   }
   const handleChange = (prop, val) => {
     let object = { ...initialValues };
