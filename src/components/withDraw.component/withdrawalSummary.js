@@ -52,7 +52,7 @@ const WithdrawalSummary = ({
       
       message.destroy();
       message.success({
-        
+  
         content: "OTP Verified Successfully",
         className: "custom-msg",
         duration: 0.5
