@@ -17,6 +17,7 @@ class SelectCrypto extends Component {
         fromCoinsList:[],
         toCoinsList:[],
         isLoading:true,
+        
     }
     useDivRef = React.createRef();
     componentDidMount() {
@@ -55,7 +56,8 @@ class SelectCrypto extends Component {
     }
 
     selectToggle = item => {
-        this.setState({ addLinks: item.id, coinDetails: item });
+        this.setState({ addLinks: item.id, coinDetails: item },()=>{this.pickCoin()});
+
     };
     pickCoin = ()=>{
         if (this.state.coinDetails != null && this.state.coinDetails.id) {
@@ -66,10 +68,10 @@ class SelectCrypto extends Component {
                 this.props.dispatch(updateReceiveCoinDetails(this.state.coinDetails));
             }
             this.props.changeStep('step1') 
-        } else { 
-            this.useDivRef.current.scrollIntoView()
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('coin_swap')
-        })
+        // } else { 
+        //     this.useDivRef.current.scrollIntoView()
+        //     this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('coin_swap')
+        // })
         }
     }
     render() {
@@ -87,10 +89,10 @@ class SelectCrypto extends Component {
                 <Translate size="large" content="menu_swap1" component={Text} className="custom-font fw-300 fs-14 text-white font-weight-bold " /> 
         {this.props.swapfrom?(<Translate size="large" content="from" component={Text} className="custom-font fw-300 fs-14 text-white font-weight-bold" />):<Translate size="large" content="to" component={Text} className="custom-font fw-300 fs-14 text-white " />}<span className="icon sm rightthemearrow ml-12 mb-4" /></Paragraph>
          
-            <CryptoList coinType="swap" showSearch={true} showValues={true} titleField={'coin'} iconField={'coin'} selectedCoin={this.props.swapfrom?this.props.swapStore.coinDetailData:this.props.swapStore.coinReceiveDetailData} coinList={this.props.swapfrom?this.state.fromCoinsList:this.state.toCoinsList} isLoading={this.state.isLoading} onCoinSelected={(selectedCoin) => this.selectToggle(selectedCoin)} />
+            <CryptoList coinType="swap" showSearch={true} showValues={true} titleField={'coin'} iconField={'coin'} selectedCoin={this.props.swapfrom?this.props.swapStore.coinDetailData:this.props.swapStore.coinReceiveDetailData} coinList={this.props.swapfrom?this.state.fromCoinsList:this.state.toCoinsList} isLoading={this.state.isLoading} onCoinSelected={(selectedCoin) => this.selectToggle(selectedCoin)} onReturnCoin={true} />
 
-            {(this.state.MemberCoins ? this.state.MemberCoins.length > 0 : true) && <><Translate size="large" className="custon-btngroup cancel-btngroup" content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} />
-                <Translate size="large" className="custon-btngroup pick-btn" content="pick" component={Button} onClick={() => this.pickCoin()} /></>}
+            {/* {(this.state.MemberCoins ? this.state.MemberCoins.length > 0 : true) && <><Translate size="large" className="custon-btngroup cancel-btngroup" content="cancel" component={Button} onClick={() => this.props.changeStep('step1')} />
+                <Translate size="large" className="custon-btngroup pick-btn" content="pick" component={Button} onClick={() => this.pickCoin()} /></>} */}
         </>)
     }
 }
