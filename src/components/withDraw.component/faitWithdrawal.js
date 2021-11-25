@@ -201,12 +201,8 @@ const FaitWithdrawal = ({ member, selectedWalletCode, buyInfo, userConfig, dispa
               ]}
             >
               <div className="min-btn-container">
-                <Button type="text" size="small" className="min-btn">
-                  Min
-                </Button>
-                <Button type="text" size="small" className="min-btn">
-                  Max
-                </Button>
+                <Translate type="text" size="small" className="min-btn" content="min" component={Button} />
+                <Translate type="text" size="small" className="min-btn" content="all" component={Button} />
               </div>
               <NumberFormat decimalScale={2} className="cust-input" customInput={Input} thousandSeparator={true} prefix={""}
                 placeholder="0.00"
