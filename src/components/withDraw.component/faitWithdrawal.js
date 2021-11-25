@@ -193,17 +193,18 @@ const FaitWithdrawal = ({ member, selectedWalletCode, buyInfo, userConfig, dispa
               <WalletList valueFeild={'currencyCode'} selectedvalue={saveObj?.walletCode} placeholder={apicalls.convertLocalLang('SelectCurrency')} onWalletSelect={(e) => handleWalletSelection(e, true)} />
             </Form.Item>
             <Form.Item
-              className="custom-forminput custom-label  mb-24"
+              className="custom-forminput custom-label  mb-24 min-max-btn"
               name="totalValue"
-              label={<Translate content="amount" component={Form.label} />}
+              label={<><Translate content="amount" component={Form.label} />
+                <div className="minmax">
+                  <Translate type="text" size="small" className="min-btn" content="min" component={Button} />
+                  <Translate type="text" size="small" className="min-btn" content="all" component={Button} />
+                </div>
+              </>}
               rules={[
                 { required: true, message: apicalls.convertLocalLang('is_required') }
               ]}
             >
-              <div className="min-btn-container">
-                <Translate type="text" size="small" className="min-btn" content="min" component={Button} />
-                <Translate type="text" size="small" className="min-btn" content="all" component={Button} />
-              </div>
               <NumberFormat decimalScale={2} className="cust-input" customInput={Input} thousandSeparator={true} prefix={""}
                 placeholder="0.00"
                 allowNegative={false}
