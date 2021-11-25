@@ -39,6 +39,7 @@ class MassPayment extends Component {
         this.props.dispatch(setWithdrawfiatenaable(true))
         this.props.dispatch(setStep("step1"))
     }
+
     renderContent = () => {
         const stepcodes = {
             fiatdeposit: <FiatDeposit tab={this.props.tabData} fiatRef={(cd) => this.child = cd} />,
@@ -58,7 +59,7 @@ class MassPayment extends Component {
     renderTitle = () => {
         const stepcodes = {
             fiatdeposit: <span />,
-            faitsummary: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            faitsummary: <span />,
             fiatdepositsummary: <span />,
             addcard: <span onClick={() => this.props.dispatch(setStep("step2"))} className="icon md lftarw-white c-pointer" />,
             selectwallet: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,

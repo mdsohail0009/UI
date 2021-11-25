@@ -1,14 +1,14 @@
 import React, { Component, createRef } from 'react';
 import { Typography, Input, Button, Select, Radio, Form, Alert, Space } from 'antd';
 import { Link } from 'react-router-dom';
-import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import SellToggle from '../withDraw.component/faitWithdrawal';
 import config from '../../config/config';
 import NumberFormat from 'react-number-format';
-import { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject } from '../../reducers/depositReducer'
-import { rejectWithdrawfiat } from '../../reducers/sendreceiveReducer'
+import { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject, cleardepfiatobject } from '../../reducers/depositReducer'
+import { rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
+import { setStep } from '../../reducers/buyFiatReducer';
 import { savedepositFiat, requestDepositFiat } from './api';
 import Loader from '../../Shared/loader';
 import success from '../../assets/images/success.png';
@@ -39,6 +39,7 @@ class FaitDeposit extends Component {
     tabValue: 1, Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false
   }
   componentDidMount() {
+    debugger
     this.props.fiatRef(this)
     this.props.fetchCurrencyWithBankDetails()
     if (this.props.sendReceive.withdrawFiatEnable) {
@@ -159,8 +160,9 @@ class FaitDeposit extends Component {
     this.formRef.current.setFieldsValue({ ...depObj })
   }
   ConfirmDeposit = async () => {
-    debugger
     let { BankInfo, depObj } = this.state;
+    const dFObj = { ...BankInfo, ...depObj };
+    this.props.dispatch(updatdepfiatobject(dFObj));
     if (parseFloat(typeof depObj.Amount === 'string' ? depObj.Amount.replace(/,/g, '') : depObj.Amount) <= 0) {
       this.setState({
         ...this.state, errorMessage: apicalls.convertLocalLang('amount_greater_zero')
@@ -191,7 +193,6 @@ class FaitDeposit extends Component {
             tabValue: 1, Loader: false, isTermsAgreed: false, showSuccessMsg: true,
 
           });
-          this.props.dispatch(updatdepfiatobject(depObj));
           appInsights.trackEvent({
             name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": (createObj.amount + ' ' + createObj.currency + ' deposited.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
           });
@@ -212,6 +213,8 @@ class FaitDeposit extends Component {
     </>
 
   }
+
+
   render() {
     const { Paragraph, Text } = Typography;
     const link = <LinkValue content="terms_service" />;
