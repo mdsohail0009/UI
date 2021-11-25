@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Typography, Input, Button, Modal, Alert, Tooltip, Select,Checkbox } from 'antd';
+import { Form, Typography, Input, Button, Modal, Alert, Tooltip, Select, Checkbox } from 'antd';
 import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -22,12 +22,12 @@ const LinkValue = (props) => {
     <Translate className="textpure-yellow text-underline c-pointer"
       content={props.content}
       component={Link}
-      onClick={()=>window.open("https://www.iubenda.com/terms-and-conditions/42856099",'_blank')}
+      onClick={() => window.open("https://www.iubenda.com/terms-and-conditions/42856099", '_blank')}
     />
   )
 }
 const { Option } = Select;
-const FaitWithdrawal = ({member, selectedWalletCode, buyInfo, userConfig, dispatch, sendReceive, changeStep }) => {
+const FaitWithdrawal = ({ member, selectedWalletCode, buyInfo, userConfig, dispatch, sendReceive, changeStep }) => {
   const [form] = Form.useForm();
   const [selectedWallet, setSelectedWallet] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -44,10 +44,10 @@ const FaitWithdrawal = ({member, selectedWalletCode, buyInfo, userConfig, dispat
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       console.log(selectedWalletCode, buyInfo.memberFiat?.data)
       handleWalletSelection(selectedWalletCode)
-    }else if(buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj){
+    } else if (buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj) {
       handleWalletSelection(sendReceive.withdrawFiatObj.walletCode)
-      if(sendReceive.withdrawFiatObj.country){getStateLu(sendReceive.withdrawFiatObj.country);}
-      let selectObj =sendReceive.withdrawFiatObj
+      if (sendReceive.withdrawFiatObj.country) { getStateLu(sendReceive.withdrawFiatObj.country); }
+      let selectObj = sendReceive.withdrawFiatObj
       form.setFieldsValue(selectObj)
     }
   }, [buyInfo.memberFiat?.data])
@@ -58,13 +58,13 @@ const FaitWithdrawal = ({member, selectedWalletCode, buyInfo, userConfig, dispat
   }, [])
 
   const handleWalletSelection = (walletId, isClearObj) => {
-    if(isClearObj){
-      let clearobj = 
-      {"walletCode":"","totalValue":"","accountNumber":"","routingNumber":"","bankName":"","bankAddress":"","bankAddress2":"","zipcode":"","beneficiaryAccountName":"","beneficiaryAccountAddress":"","beneficiaryAccountAddress1":"","description":"","country":null,"state":null, "isAccept":false, "favouriteName":null}
-      setSaveObj({...clearobj, walletCode: walletId});
-       setAddressDetails({});
-       setStateLu([]);
-       form.setFieldsValue({ ...clearobj, walletCode: walletId,  })
+    if (isClearObj) {
+      let clearobj =
+        { "walletCode": "", "totalValue": "", "accountNumber": "", "routingNumber": "", "bankName": "", "bankAddress": "", "bankAddress2": "", "zipcode": "", "beneficiaryAccountName": "", "beneficiaryAccountAddress": "", "beneficiaryAccountAddress1": "", "description": "", "country": null, "state": null, "isAccept": false, "favouriteName": null }
+      setSaveObj({ ...clearobj, walletCode: walletId });
+      setAddressDetails({});
+      setStateLu([]);
+      form.setFieldsValue({ ...clearobj, walletCode: walletId, })
     }
     form.setFieldsValue({ walletCode: walletId })
     if (buyInfo.memberFiat?.data) {
@@ -77,7 +77,7 @@ const FaitWithdrawal = ({member, selectedWalletCode, buyInfo, userConfig, dispat
       }
     }
   }
-  
+
   const getAddressLu = async (obj) => {
     let selectedFiat = obj.currencyCode;
     let recAddress = await favouriteFiatAddress(userConfig.id, 'fiat', selectedFiat)
@@ -86,7 +86,7 @@ const FaitWithdrawal = ({member, selectedWalletCode, buyInfo, userConfig, dispat
     }
   }
   const handleAddressChange = async (e) => {
-    let val = addressLu.filter((item)=> {if(item.name==e){return item}})
+    let val = addressLu.filter((item) => { if (item.name == e) { return item } })
     let recAddressDetails = await detailsAddress(val[0].id)
     if (recAddressDetails.ok) {
       bindEditableData(recAddressDetails.data)
@@ -100,10 +100,10 @@ const FaitWithdrawal = ({member, selectedWalletCode, buyInfo, userConfig, dispat
   const getCountryLu = async () => {
     let objj = sendReceive.withdrawFiatObj
     setSaveObj(objj);
-    if(objj){
-      form.setFieldsValue({ ...objj, walletCode:objj.walletCode, beneficiaryAccountName: (userConfig.firstName + " " + userConfig.lastName) })
-    }else{
-    form.setFieldsValue({ beneficiaryAccountName: (userConfig.firstName + " " + userConfig.lastName) })
+    if (objj) {
+      form.setFieldsValue({ ...objj, walletCode: objj.walletCode, beneficiaryAccountName: (userConfig.firstName + " " + userConfig.lastName) })
+    } else {
+      form.setFieldsValue({ beneficiaryAccountName: (userConfig.firstName + " " + userConfig.lastName) })
     }
     let recName = await getCountryStateLu()
     if (recName.ok) {
@@ -114,19 +114,19 @@ const FaitWithdrawal = ({member, selectedWalletCode, buyInfo, userConfig, dispat
     });
   }
 
-  const getStateLu = async(countryname,isChange) => {
+  const getStateLu = async (countryname, isChange) => {
     let recName = await getStateLookup(countryname)
     if (recName.ok) {
       setStateLu(recName.data);
     }
-   if(isChange)form.setFieldsValue({ state: null })
+    if (isChange) form.setFieldsValue({ state: null })
   }
-const selectAddress = () =>{
-  let values = form.getFieldsValue()
-  values.favouriteName = values.favouriteName || addressDetails.favouriteName
-  dispatch(setWithdrawfiat(values));
-  changeStep('step4');
-}
+  const selectAddress = () => {
+    let values = form.getFieldsValue()
+    values.favouriteName = values.favouriteName || addressDetails.favouriteName
+    dispatch(setWithdrawfiat(values));
+    changeStep('step4');
+  }
   const savewithdrawal = async (values) => {
     if (parseFloat(typeof values.totalValue === 'string' ? values.totalValue.replace(/,/g, '') : values.totalValue) > parseFloat(selectedWallet.avilable)) {
       useDivRef.current.scrollIntoView()
@@ -148,24 +148,24 @@ const selectAddress = () =>{
     values['membershipId'] = userConfig.id
     values['memberWalletId'] = selectedWallet.id
     values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName
-    values['favouriteName'] = values.favouriteName||addressDetails.favouriteName
+    values['favouriteName'] = values.favouriteName || addressDetails.favouriteName
     setSaveObj(values);
     dispatch(setWithdrawfiat(values))
     setConfirmationStep('step2')
     form.resetFields();
   }
-  const getIbanData = async(val) =>{
-    if(val && val.length>14){
-        let response = await apicalls.getIBANData(val);
-        if (response.ok) {
-            const oldVal= form.getFieldValue();
-            form.setFieldsValue({ routingNumber:response.data.routingNumber||oldVal.routingNumber, bankName:response.data.bankName||oldVal.bankName,bankAddress:response.data.bankAddress||oldVal.bankAddress,country: response.data.country||oldVal.country,state:response.data.state||oldVal.state,zipcode:response.data.zipCode||oldVal.zipcode})
-            if(response.data.country){
-              getStateLu(response.data.country)
-            }
+  const getIbanData = async (val) => {
+    if (val && val.length > 14) {
+      let response = await apicalls.getIBANData(val);
+      if (response.ok) {
+        const oldVal = form.getFieldValue();
+        form.setFieldsValue({ routingNumber: response.data.routingNumber || oldVal.routingNumber, bankName: response.data.bankName || oldVal.bankName, bankAddress: response.data.bankAddress || oldVal.bankAddress, country: response.data.country || oldVal.country, state: response.data.state || oldVal.state, zipcode: response.data.zipCode || oldVal.zipcode })
+        if (response.data.country) {
+          getStateLu(response.data.country)
         }
+      }
     }
-}
+  }
 
   const renderModalContent = () => {
     const _types = {
@@ -183,35 +183,40 @@ const selectAddress = () =>{
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="walletCode"
-              label={<Translate content="currency" component={Form.label}   />}
+              label={<Translate content="currency" component={Form.label} />}
               rules={[
-                { required: true, message: apicalls.convertLocalLang('is_required')
-              },
+                {
+                  required: true, message: apicalls.convertLocalLang('is_required')
+                },
               ]}
             >
-              <WalletList  valueFeild={'currencyCode'}  selectedvalue={saveObj?.walletCode} placeholder={apicalls.convertLocalLang('SelectCurrency')} onWalletSelect={(e) => handleWalletSelection(e, true)} />
+              <WalletList valueFeild={'currencyCode'} selectedvalue={saveObj?.walletCode} placeholder={apicalls.convertLocalLang('SelectCurrency')} onWalletSelect={(e) => handleWalletSelection(e, true)} />
             </Form.Item>
             <Form.Item
               className="custom-forminput custom-label  mb-24"
               name="totalValue"
-              label={<Translate content="amount" component={Form.label}   />}
+              label={<Translate content="amount" component={Form.label} />}
               rules={[
-                { required: true, message: apicalls.convertLocalLang('is_required')}
+                { required: true, message: apicalls.convertLocalLang('is_required') }
               ]}
             >
+              <div className="min-btn-container">
+                <Translate type="text" size="small" className="min-btn" content="min" component={Button} />
+                <Translate type="text" size="small" className="min-btn" content="all" component={Button} />
+              </div>
               <NumberFormat decimalScale={2} className="cust-input" customInput={Input} thousandSeparator={true} prefix={""}
                 placeholder="0.00"
                 allowNegative={false}
                 maxlength={13}
               />
-              
+
             </Form.Item>
-            <div style={{ position:'relative' }}>
-            <Form.Item
-              className="custom-forminput custom-label mb-24"
-              name="favouriteName"
-              label={<Translate content="address_book" component={Form.label}   />}
-            >
+            <div style={{ position: 'relative' }}>
+              <Form.Item
+                className="custom-forminput custom-label mb-24"
+                name="favouriteName"
+                label={<Translate content="address_book" component={Form.label} />}
+              >
                 <Select dropdownClassName="select-drpdwn"
                   className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                   onChange={(e) => handleAddressChange(e)}
@@ -221,18 +226,18 @@ const selectAddress = () =>{
                     </Option>
                   )}
                 </Select>
-            </Form.Item> 
-            <Tooltip placement="top" title={<span> <Translate  content="New_Address" /></span>} >
-                  <div className={"c-pointer"+ (userConfig.language == "ch" ? " customicon" : " defaulticon")}onClick={() => selectAddress()} 
-                  >
-                    <span className="icon md address-book d-block c-pointer"></span>
-                  </div>
-                </Tooltip>
+              </Form.Item>
+              <Tooltip placement="top" title={<span> <Translate content="New_Address" /></span>} >
+                <div className={"c-pointer" + (userConfig.language == "ch" ? " customicon" : " defaulticon")} onClick={() => selectAddress()}
+                >
+                  <span className="icon md address-book d-block c-pointer"></span>
+                </div>
+              </Tooltip>
             </div>
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="accountNumber"
-              label={<Translate content="Bank_account" component={Form.label}   />}
+              label={<Translate content="Bank_account" component={Form.label} />}
               required
               rules={[
                 { required: true, message: apicalls.convertLocalLang('is_required') },
@@ -253,16 +258,16 @@ const selectAddress = () =>{
                 }
               ]}
             >
-              <Input className="cust-input" placeholder={apicalls.convertLocalLang('Bank_account')} onBlur={(val)=>getIbanData(val.currentTarget.value)} />
-              
+              <Input className="cust-input" placeholder={apicalls.convertLocalLang('Bank_account')} onBlur={(val) => getIbanData(val.currentTarget.value)} />
+
             </Form.Item>
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="routingNumber"
-              label={<Translate content="BIC_SWIFT_routing_number" component={Form.label}   />}
+              label={<Translate content="BIC_SWIFT_routing_number" component={Form.label} />}
               required
               rules={[
-                 { required: true, message: apicalls.convertLocalLang('is_required') },
+                { required: true, message: apicalls.convertLocalLang('is_required') },
                 {
                   validator: (rule, value, callback) => {
                     var regx = new RegExp(/^[A-Za-z0-9]+$/);
@@ -286,7 +291,7 @@ const selectAddress = () =>{
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="bankName"
-              label={<Translate content="Bank_name" component={Form.label}   />}
+              label={<Translate content="Bank_name" component={Form.label} />}
               required
               rules={[
                 { required: true, message: apicalls.convertLocalLang('is_required') },
@@ -312,21 +317,21 @@ const selectAddress = () =>{
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="bankAddress"
-              label={<Translate content="Bank_address1" component={Form.label}   />}
+              label={<Translate content="Bank_address1" component={Form.label} />}
               required
               rules={[
-                { required: true, message: apicalls.convertLocalLang('is_required'),whitespace:true },
+                { required: true, message: apicalls.convertLocalLang('is_required'), whitespace: true },
 
               ]}
             >
-              <Input value={addressDetails.bankAddress} className="cust-input" placeholder={apicalls.convertLocalLang('Bank_address1')}/>
+              <Input value={addressDetails.bankAddress} className="cust-input" placeholder={apicalls.convertLocalLang('Bank_address1')} />
 
             </Form.Item>
 
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="bankAddress2"
-              label={<Translate content="Bank_address2" component={Form.label}   />}
+              label={<Translate content="Bank_address2" component={Form.label} />}
             >
               <Input className="cust-input" placeholder={apicalls.convertLocalLang('Bank_address2')} />
             </Form.Item>
@@ -334,10 +339,10 @@ const selectAddress = () =>{
             <Form.Item
               className="custom-forminput custom-label  mb-24"
               name="country"
-              label={<Translate content="Country" component={Form.label}   />}
+              label={<Translate content="Country" component={Form.label} />}
             >
               <Select dropdownClassName="select-drpdwn" placeholder={apicalls.convertLocalLang('Country')} className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-                onChange={(e) => getStateLu(e,true)} >
+                onChange={(e) => getStateLu(e, true)} >
                 {countryLu?.map((item, idx) =>
                   <Option key={idx} value={item.code}>{item.name}
                   </Option>
@@ -348,7 +353,7 @@ const selectAddress = () =>{
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="state"
-              label={<Translate content="state" component={Form.label}   />}
+              label={<Translate content="state" component={Form.label} />}
             >
 
               <Select dropdownClassName="select-drpdwn" placeholder={apicalls.convertLocalLang('state')} className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
@@ -363,7 +368,7 @@ const selectAddress = () =>{
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="zipcode"
-              label={<Translate content="zipcode" component={Form.label}   />}
+              label={<Translate content="zipcode" component={Form.label} />}
               rules={[
                 {
                   validator: (rule, value, callback) => {
@@ -381,7 +386,7 @@ const selectAddress = () =>{
                 }
               ]}
             >
-              <Input className="cust-input" maxLength={8} placeholder={apicalls.convertLocalLang('zipcode')}/>
+              <Input className="cust-input" maxLength={8} placeholder={apicalls.convertLocalLang('zipcode')} />
             </Form.Item>
             <Translate
               content="Beneficiary_Details"
@@ -391,16 +396,16 @@ const selectAddress = () =>{
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="beneficiaryAccountName"
-              label={<Translate content="Recipient_full_name" component={Form.label}   />}
+              label={<Translate content="Recipient_full_name" component={Form.label} />}
             >
               <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
             </Form.Item>
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="beneficiaryAccountAddress"
-              label={<Translate content="Recipient_address1" component={Form.label}   />}
+              label={<Translate content="Recipient_address1" component={Form.label} />}
               rules={[
-                { required: true, message: apicalls.convertLocalLang('is_required'),whitespace:true },
+                { required: true, message: apicalls.convertLocalLang('is_required'), whitespace: true },
               ]}
             >
               <Input value={addressDetails.beneficiaryAccountAddress} className="cust-input" placeholder={apicalls.convertLocalLang('Recipient_address1')} />
@@ -408,17 +413,17 @@ const selectAddress = () =>{
             <Form.Item
               className="custom-forminput custom-label  mb-24"
               name="beneficiaryAccountAddress1"
-              label={<Translate content="Recipient_address2" component={Form.label}   />}
+              label={<Translate content="Recipient_address2" component={Form.label} />}
             >
               <Input className="cust-input" placeholder={apicalls.convertLocalLang('Recipient_address2')} />
             </Form.Item>
             <Form.Item
               className="custom-forminput custom-label mb-24"
               name="description"
-              label={<Translate content="remarks" component={Form.label}   />}
-            
+              label={<Translate content="remarks" component={Form.label} />}
+
             >
-              <Input className="cust-input" placeholder={apicalls.convertLocalLang('remarks')}/>
+              <Input className="cust-input" placeholder={apicalls.convertLocalLang('remarks')} />
             </Form.Item>
             <Form.Item
               className="custom-forminput mb-36 agree"
@@ -432,14 +437,14 @@ const selectAddress = () =>{
                 },
               ]}
             >
-               <Checkbox className="ant-custumcheck"><span className="withdraw-check"></span><Translate
+              <Checkbox className="ant-custumcheck"><span className="withdraw-check"></span><Translate
                 content="agree_to_suissebase"
                 with={{ link }}
                 component={Paragraph}
                 className="fs-14 text-white-30 ml-16 mb-4"
                 style={{ flex: 1 }}
               /></Checkbox>
-             
+
             </Form.Item>
             <Form.Item className="mb-0 mt-16">
               <Button
@@ -448,7 +453,7 @@ const selectAddress = () =>{
                 block
                 className="pop-btn"
               >
-               <Translate content="proceed" component={Form.label}   /> 
+                <Translate content="proceed" component={Form.label} />
               </Button>
             </Form.Item>
           </Form>
@@ -465,11 +470,14 @@ const selectAddress = () =>{
         <div className="success-pop text-center mb-24">
           <img src={success} className="confirm-icon" />
           <Translate className="fs-30 mb-4 d-block text-white-30" content="withdrawal_success" component={Title} />
-          <Link onClick={() => { setSaveObj(null); setAddressDetails({});
-          setConfirmationStep("step1",()=>{
-           setTimeout(() => {
-            form.resetFields();
-           }, 1000); }); }} className="f-16 mt-16 text-underline text-green"><Translate className="f-16 mt-16 text-underline text-green" content="Back_to_Withdraw" component={Link} /><span className="icon md diag-arrow ml-4" /></Link>
+          <Link onClick={() => {
+            setSaveObj(null); setAddressDetails({});
+            setConfirmationStep("step1", () => {
+              setTimeout(() => {
+                form.resetFields();
+              }, 1000);
+            });
+          }} className="f-16 mt-16 text-underline text-green"><Translate className="f-16 mt-16 text-underline text-green" content="Back_to_Withdraw" component={Link} /><span className="icon md diag-arrow ml-4" /></Link>
 
         </div>
       </>,
@@ -483,7 +491,7 @@ const selectAddress = () =>{
   }
   const handleOk = async () => {
     let currentStep = parseInt(confirmationStep.split("step")[1]);
-    if(confirmationStep==='step2'){
+    if (confirmationStep === 'step2') {
       let withdrawal = await withdrawSave(saveObj)
       if (withdrawal.ok) {
         dispatch(fetchDashboardcalls(userConfig.id))
@@ -493,7 +501,7 @@ const selectAddress = () =>{
           name: 'Withdraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' }
         });
       }
-    }else{
+    } else {
       setConfirmationStep("step" + (currentStep + 1))
     }
   }
