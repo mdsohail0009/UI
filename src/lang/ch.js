@@ -460,4 +460,8 @@ export default {
   ipAddress: 'IP地址',
   menu_wallets: "钱包",
   crypto_wallets: "加密钱包",
+  verification_code:"輸入驗證碼",
+  get_code:"獲取一次性密碼",
+  resend_code:"重新發送驗證碼",
+  digit_code:"輸入 6 位代碼發送至",
 }

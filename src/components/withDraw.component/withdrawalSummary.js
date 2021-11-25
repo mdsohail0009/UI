@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import { useEffect } from "react";
 import apicalls from "../../api/apiCalls";
+import apiCalls from "../../api/apiCalls";
 
 const WithdrawalSummary = ({
   sendReceive,
@@ -38,7 +39,7 @@ const WithdrawalSummary = ({
   const [otp, setOtp] = useState("");
   const useOtpRef = React.useRef(null);
   const [isResendAvailable,setisResendAvailable]=useState("false");
-  const [buttonText,setButtonText]=useState("GET CODE");
+  const [buttonText,setButtonText]=useState(<Translate className="pl-0 ml-0 text-white-50" content="get_code" component={Text} />);
 
 
   useEffect(() => {
@@ -76,7 +77,7 @@ const WithdrawalSummary = ({
       console.log(response);
     }
     setTimeout(() => {
-      setButtonText("RESEND CODE");
+      setButtonText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_code" component={Text} />);
     }, 30000);
   }
  
@@ -172,13 +173,13 @@ const WithdrawalSummary = ({
           className="input-label otp-verify my-36"
           extra={
             <Text className="fs-12 text-white-30 fw-200">
-              Enter 6 digit code sent to {maskedNumber}
+             <Translate className="pl-0 ml-0 text-white-50" content="digit_code" component={Text} /> {maskedNumber}
             </Text>
           }
         >
           <Input
-            className="cust-input text-left"
-            placeholder="Enter Verification Code"
+            className="cust-input text-left"    
+            placeholder= {apiCalls.convertLocalLang('verification_code')}
             maxLength={6}
             onChange={(e) => setOtp(e.target.value)}
           />

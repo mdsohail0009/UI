@@ -459,4 +459,8 @@ export default {
   ipAddress: 'alamat IP',
   menu_wallets: "Dompet",
   crypto_wallets: "Dompet Kripto",
+  verification_code:"Ipasok ang verification code",
+  get_code:"KUMUHA NG OTP",
+  resend_code:"RESEND CODE",
+  digit_code:"Ilagay ang 6 na digit na code na ipinadala sa",
 }

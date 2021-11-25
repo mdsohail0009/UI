@@ -16,6 +16,7 @@ import {
   setWithdrawcrypto
 } from "../../reducers/sendreceiveReducer";
 import apicalls from "../../api/apiCalls";
+import apiCalls from "../../api/apiCalls";
 const LinkValue = (props) => {
   return (
     <Translate
@@ -40,7 +41,7 @@ class WithdrawSummary extends Component {
     errorMsg: false,
     usdLoading: false,
     oneUsdLoading: false,
-    buttonText: "GET OTP",
+    buttonText: <Translate className="pl-0 ml-0 text-yellow-50" content="get_code"/>,
     otp: "",
     code: ""
   };
@@ -248,13 +249,13 @@ class WithdrawSummary extends Component {
                 className="input-label otp-verify my-36"
                 extra={
                   <Text className="fs-12 text-white-30 fw-200">
-                    Enter 6 digit code sent to {this.maskedNumber}
+                     <Translate className="pl-0 ml-0 text-white-50" content="digit_code" component={Text} /> {this.maskedNumber}
                   </Text>
                 }
               >
                 <Input
                   className="cust-input text-left"
-                  placeholder="Enter Verification Code"
+                  placeholder={apiCalls.convertLocalLang('verification_code')}
                   maxLength={6}
                   onChange={(e) => this.handleOtp(e.target.value)}
                 />
