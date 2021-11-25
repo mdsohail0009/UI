@@ -465,8 +465,9 @@ export default {
   ipAddress: 'IP Address',
   menu_wallets: "Wallets",
   crypto_wallets: "Crypto Wallets",
-  verification_code:"Enter Verification Code",
-  get_code:"GET OTP",
-  resend_code:"RESEND CODE",
-  digit_code:" Enter 6 digit code sent to",
+  verification_code: "Enter Verification Code",
+  get_code: "GET OTP",
+  resend_code: "RESEND CODE",
+  digit_code: " Enter 6 digit code sent to",
+  selectcurrency: "Select Currency",
 }

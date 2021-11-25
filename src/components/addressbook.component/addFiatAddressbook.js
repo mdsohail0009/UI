@@ -69,11 +69,11 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
     }
     const getIbanData = async (val) => {
         if (val && val.length > 14) {
-                let response = await apiCalls.getIBANData(val);
-                if (response.ok) {
-                    const oldVal = form.getFieldValue();
-                    form.setFieldsValue({ routingNumber: response.data.routingNumber || oldVal.routingNumber, bankName: response.data.bankName || oldVal.bankName, bankAddress: response.data.bankAddress || oldVal.bankAddress })
-                }
+            let response = await apiCalls.getIBANData(val);
+            if (response.ok) {
+                const oldVal = form.getFieldValue();
+                form.setFieldsValue({ routingNumber: response.data.routingNumber || oldVal.routingNumber, bankName: response.data.bankName || oldVal.bankName, bankAddress: response.data.bankAddress || oldVal.bankAddress })
+            }
         }
     }
     const { Paragraph } = Typography;
@@ -132,7 +132,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                             { required: true, message: apiCalls.convertLocalLang('is_required') },
                         ]}
                     >
-                        <WalletList hideBalance={true} valueFeild={'currencyCode'} selectedvalue={fiatAddress?.toCoin} placeholder={apiCalls.convertLocalLang('searchCurrency')} onWalletSelect={(e) => handleWalletSelection(e)} />
+                        <WalletList hideBalance={true} valueFeild={'currencyCode'} selectedvalue={fiatAddress?.toCoin} placeholder={apiCalls.convertLocalLang('selectcurrency')} onWalletSelect={(e) => handleWalletSelection(e)} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
@@ -142,7 +142,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                         rules={[
                             { required: true, message: apiCalls.convertLocalLang('is_required') },
                             {
-                                pattern:/^[A-Za-z0-9]+$/,
+                                pattern: /^[A-Za-z0-9]+$/,
                                 message: 'Invalid account number'
                             },
                         ]}
@@ -157,7 +157,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
                         rules={[
                             { required: true, message: apiCalls.convertLocalLang('is_required') },
                             {
-                                pattern:/^[A-Za-z0-9]+$/,
+                                pattern: /^[A-Za-z0-9]+$/,
                                 message: 'Invalid BIC/SWIFT/Routing number'
                             },
                         ]}
