@@ -1,5 +1,5 @@
 export default {
-  header_title: 'Papan Pemuka | Peribadi',
+  header_title: 'Sabungan| Peribadi',
   Portfolio_title: 'Portfolio Crypto',
   your_portfolio: 'Portfolio anda',
   suissebase_title: 'Pangkalan Suissebase',
@@ -447,7 +447,7 @@ export default {
   total_supply: 'Kabuuang Supply',
   full_screen: 'Buong screen',
   reload: 'Reload',
-  dashboard: 'Dashboard',
+  cockpit: 'Sabungan',
   settings_msg: 'Matagumpay na na-save ang mga setting',
   notification_msg: 'Walang Magagamit na Mga Notification',
   bank_msg: 'Hindi available ang mga detalye ng bangko',

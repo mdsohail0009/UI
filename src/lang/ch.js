@@ -1,5 +1,5 @@
 export default {
-  header_title: '仪表板 |个人的',
+  header_title: '座艙 |个人的',
   Portfolio_title: '加密投资组合',
   your_portfolio: '您的投資組合',
   suissebase_title: '瑞士基地',
@@ -448,7 +448,7 @@ export default {
   total_supply: '總供應量',
   full_screen: '全屏',
   reload: '重新加載',
-  dashboard: '儀錶盤',
+  cockpit: '座艙',
   settings_msg: '設置保存成功',
   notification_msg: '沒有可用的通知',
   bank_msg: '銀行信息不可用',

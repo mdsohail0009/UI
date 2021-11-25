@@ -1,5 +1,5 @@
 export default {
-  header_title: 'Dashboard |%(lable)s',
+  header_title: 'Cockpit |%(lable)s',
   Portfolio_title: 'Crypto Portfolio',
   your_portfolio: 'Your Portfolio',
   suissebase_title: 'Suissebase',
@@ -453,7 +453,7 @@ export default {
   total_supply: 'Total Supply',
   full_screen: 'Full screen',
   reload: 'Reload',
-  dashboard: 'Dashboard',
+  cockpit: 'Cockpit',
   settings_msg: 'Settings saved successfully',
   notification_msg: 'No Notifications Available',
   bank_msg: 'Bank details not available',
