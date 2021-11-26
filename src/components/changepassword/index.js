@@ -13,7 +13,7 @@ notification.config({
   placement: "topRight",
   rtl: true
 });
-const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
+const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa,trackAuidtLogData}) => {
   const [initialValues, setInitialValues] = useState({
     "Email": userConfig?.email,
     "CurrentPassword": "",
@@ -37,11 +37,11 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
     apiClient.trackEvent({"Action": 'Page View', "Feature": 'Change password', "Remarks": "Password page view","FullFeatureName": 'Change password',"userName":userConfig.userName,id:userConfig.id });
   }
   const saveUserPass = async (values) => {
-    
     if (values.CurrentPassword === values.Password) {
       passwordResponce(true,"Current password and New password should not be same",false);
     }else {
       passwordResponce(false,'',false);
+      initialValues.info=JSON.stringify(trackAuidtLogData)
       const result = await changePassword(initialValues);
       if (result.ok) {
         message.success({content:'Password changed successfully',className: 'custom-msg'});
@@ -196,7 +196,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa}) => {
 }
 
 const connectStateToProps = ({ buySell, userConfig, userProfile }) => {
-  return { buySell, userConfig: userConfig.userProfileInfo, userProfile }
+  return { buySell,trackAuidtLogData:userConfig.trackAuidtLogData, userConfig: userConfig.userProfileInfo, userProfile}
 }
 const connectDispatchToProps = dispatch => {
   return {
@@ -205,7 +205,7 @@ const connectDispatchToProps = dispatch => {
     },
     getmemeberInfoa: (useremail) => {
       dispatch(getmemeberInfo(useremail));
-  }
+  },
   }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(ChangePassword);
