@@ -166,7 +166,29 @@ const FaitWithdrawal = ({ member, selectedWalletCode, buyInfo, userConfig, dispa
       }
     }
   }
-
+  const clickMinamnt=(type)=> {
+    let values = form.getFieldsValue()
+    let wallet = buyInfo.memberFiat.data.filter((item) => {
+      return values.walletCode === item.currencyCode
+    })
+    console.log(wallet[0])
+    let avilableamt=wallet[0].avilable;
+    if (type === 'min') {
+      values.totalValue = 100;
+        setSaveObj(values);
+        form.setFieldsValue({ ...values })
+       // dispatch(setWithdrawfiat(values))
+    } else if (type === 'max') {
+        //usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
+        values.totalValue = avilableamt ? avilableamt : 0;
+        setSaveObj(values);
+        form.setFieldsValue({ ...values })
+        //dispatch(setWithdrawfiat(values))
+    } else {
+        
+    }
+    //this.setState({ ...this.state, minmaxTab: type })
+}
   const renderModalContent = () => {
     const _types = {
       step1: <>
@@ -197,8 +219,8 @@ const FaitWithdrawal = ({ member, selectedWalletCode, buyInfo, userConfig, dispa
               name="totalValue"
               label={<><Translate content="amount" component={Form.label} />
                 <div className="minmax">
-                  <Translate type="text" size="small" className="min-btn" content="min" component={Button} />
-                  <Translate type="text" size="small" className="min-btn" content="all" component={Button} />
+                  <Translate type="text" size="small" className="min-btn" content="min" component={Button} onClick={() => clickMinamnt('min')}/>
+                  <Translate type="text" size="small" className="min-btn" content="all" component={Button} onClick={() => clickMinamnt('max')}/>
                 </div>
               </>}
               rules={[

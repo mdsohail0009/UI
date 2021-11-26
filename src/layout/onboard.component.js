@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { userInfo, getmemeberInfo } from '../reducers/configReduser';
+import { userInfo, getmemeberInfo,getIpRegisteryData } from '../reducers/configReduser';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 class OnBoarding extends Component {
@@ -12,7 +12,8 @@ class OnBoarding extends Component {
   }
   getMemberDetails = async () => {
     if (this.props.user && this.props.user.profile) {
-      this.props.getmemeberInfoa(this.props.user.profile.sub)
+      this.props.getmemeberInfoa(this.props.user.profile.sub);
+    this.props.trackauditlogs()
     }
   }
   render() {
@@ -38,6 +39,9 @@ const connectDispatchToProps = dispatch => {
     },
     getmemeberInfoa: (useremail) => {
       dispatch(getmemeberInfo(useremail));
+    },
+    trackauditlogs:()=>{
+      dispatch(getIpRegisteryData());
     }
   }
 }

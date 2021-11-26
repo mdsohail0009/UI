@@ -9,7 +9,7 @@ const firebaseServer = create({
     // }
 });
 const ipRegistry = create({
-    baseURL: process.env.REACT_APP_IPREGISTERY_URL
+    baseURL: 'https://api.ipregistry.co'
 })
 const apiClient = create({
     baseURL: process.env.REACT_APP_API_END_POINT
@@ -44,7 +44,7 @@ const _encrypt = (msg, key) => {
     return ((salt.toString()) + (iv.toString()) + (encrypted.toString()));
 }
 apiClient.axiosInstance.interceptors.request.use((config) => {
-    const { oidc: { user }, userConfig: { userProfileInfo, trackAuidtLogData } } = store.getState()
+    const { oidc: { user }, userConfig: { userProfileInfo } } = store.getState()
     config.headers.Authorization = `Bearer ${user.access_token}`
     if (userProfileInfo?.id) config.headers.AuthInformation = userProfileInfo?.id ? _encrypt(`{MemberId:"${userProfileInfo?.id}"}`, userProfileInfo.sk) : ''
     return config;
