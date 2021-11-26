@@ -1,4 +1,4 @@
-import { apiClient } from './';
+import { apiClient, ipRegistry } from './';
 import { appInsights } from "../Shared/appinsights";
 import { ApiControllers } from './config';
 import counterpart from 'counterpart';
@@ -22,7 +22,7 @@ const sumsubacesstokennew = (userid) => {
     return apiClient.get('Sumsub/KYBAccessToken?applicantId=' + userid);
 }
 const updateKyc = (userid) => {
-    return apiClient.put(ApiControllers.accounts+`${userid}/KYC`);
+    return apiClient.put(ApiControllers.accounts + `${userid}/KYC`);
 }
 const trackEvent = (obj) => {
     return appInsights.trackEvent({
@@ -30,10 +30,16 @@ const trackEvent = (obj) => {
     });
 }
 const trackPageview = (obj) => {
-    return appInsights.trackPageView({
-        name: obj.Feature, properties: { "Type": 'Admin', "Action": 'Page view', "Username": obj.userName, "MemeberId": obj.id, "Feature": obj.Feature, "Remarks": obj.Remarks, "Duration": 1, "Url": window.location.href, "FullFeatureName": obj.FullFeatureName }
-    });
+    // return appInsights.trackPageView({
+    //     name: obj.Feature, properties: { "Type": 'Admin', "Action": 'Page view', "Username": obj.userName, "MemeberId": obj.id, "Feature": obj.Feature, "Remarks": obj.Remarks, "Duration": 1, "Url": window.location.href, "FullFeatureName": obj.FullFeatureName }
+    // });
+    return apiClient.post(ApiControllers.master + `Auditlogs`, obj);
 }
+
+const getIpRegistery = () => {
+    return ipRegistry.get("/?key=" + process.env.REACT_APP_IPREGISTERY_KEY);
+}
+
 const sellMemberCrypto = (memID) => {
     return apiClient.get(ApiControllers.wallets + memID);
 }
@@ -47,28 +53,30 @@ const getIBANData = (ibannumber) => {
 const getdshKpis = (userid) => {
     return apiClient.get(ApiControllers.dashboard + `KPI/${userid}`);
 }
-const getdshcumulativePnl = (userid,days) => {
+const getdshcumulativePnl = (userid, days) => {
     return apiClient.get(ApiControllers.dashboard + `CumulativePNL/${userid}/${days}`);
 }
-const getAssetNetwroth = (userid,days) => {
+const getAssetNetwroth = (userid, days) => {
     return apiClient.get(ApiControllers.dashboard + `AssetsNetWorth/${userid}/${days}`);
 }
-const getAssetAllowcation = (userid,days) => {
+const getAssetAllowcation = (userid, days) => {
     return apiClient.get(ApiControllers.dashboard + `AssetAllocation/${userid}/${days}`);
 }
-const getprofits = (userid,days) => {
+const getprofits = (userid, days) => {
     return apiClient.get(ApiControllers.dashboard + `Profits/${userid}/${days}`);
 }
-const getdailypnl = (userid,days) => {
+const getdailypnl = (userid, days) => {
     return apiClient.get(ApiControllers.dashboard + `DailyPNL/${userid}/${days}`);
 }
 
-const getCode=(AccountId)=>{
-    return apiClient.get(ApiControllers.master+`SendOTP/${AccountId}`);
+const getCode = (AccountId) => {
+    return apiClient.get(ApiControllers.master + `SendOTP/${AccountId}`);
 }
-const getVerification=(AccountId,code)=>{
-    return apiClient.get(ApiControllers.master+`OTPVerification/${AccountId}/${code}`)
+const getVerification = (AccountId, code) => {
+    return apiClient.get(ApiControllers.master + `OTPVerification/${AccountId}/${code}`)
 }
-let apicalls = { getportfolio, getCryptos, getMember, sumsubacesstoken, updateKyc, sumsubacesstokennew, sumsublivenessacesstoken, trackEvent, trackPageview, sellMemberCrypto, convertLocalLang, getIBANData,
-    getdshKpis,getdshcumulativePnl,getAssetNetwroth,getAssetAllowcation,getprofits,getdailypnl,getCode,getVerification }
+let apicalls = {
+    getportfolio, getCryptos, getMember, sumsubacesstoken, updateKyc, sumsubacesstokennew, sumsublivenessacesstoken, trackEvent, trackPageview, sellMemberCrypto, convertLocalLang, getIBANData,
+    getdshKpis, getdshcumulativePnl, getAssetNetwroth, getAssetAllowcation, getprofits, getdailypnl, getCode, getVerification, getIpRegistery
+}
 export default apicalls

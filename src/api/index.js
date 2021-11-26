@@ -3,10 +3,14 @@ import { store } from '../store';
 import CryptoJS from 'crypto-js'
 const firebaseServer = create({
     baseURL: "https://fcm.googleapis.com/",
+
     // headers: {
     //     "AUthorization": "key=" + REACT_APP_FIREBASE_AUTH
     // }
 });
+const ipRegistry = create({
+    baseURL: process.env.REACT_APP_IPREGISTERY_URL
+})
 const apiClient = create({
     baseURL: process.env.REACT_APP_API_END_POINT
 })
@@ -16,10 +20,10 @@ const identityClient = create({
 const coinGekoClient = create({
     baseURL: process.env.REACT_APP_COIN_GECO_API
 })
-const uploadClient=create({
+const uploadClient = create({
     baseURL: process.env.REACT_APP_UPLOAD_API
 })
-const _encrypt = (msg, key) =>{
+const _encrypt = (msg, key) => {
 
     msg = typeof (msg) == 'object' ? JSON.stringify(msg) : msg;
     var salt = CryptoJS.lib.WordArray.random(128 / 8);
@@ -40,9 +44,9 @@ const _encrypt = (msg, key) =>{
     return ((salt.toString()) + (iv.toString()) + (encrypted.toString()));
 }
 apiClient.axiosInstance.interceptors.request.use((config) => {
-    const { oidc: { user }, userConfig:{ userProfileInfo }} = store.getState()
+    const { oidc: { user }, userConfig: { userProfileInfo, trackAuidtLogData } } = store.getState()
     config.headers.Authorization = `Bearer ${user.access_token}`
-    if(userProfileInfo?.id)config.headers.AuthInformation = userProfileInfo?.id?_encrypt(`{MemberId:"${userProfileInfo?.id}"}`, userProfileInfo.sk):''
+    if (userProfileInfo?.id) config.headers.AuthInformation = userProfileInfo?.id ? _encrypt(`{MemberId:"${userProfileInfo?.id}"}`, userProfileInfo.sk) : ''
     return config;
 })
-export { firebaseServer, apiClient, coinGekoClient,identityClient,uploadClient }
+export { firebaseServer, apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry }
