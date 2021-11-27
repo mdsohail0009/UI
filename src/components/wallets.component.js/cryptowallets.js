@@ -9,7 +9,7 @@ import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reduc
 import { setStep } from '../../reducers/buysellReducer';
 import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import apiCalls from '../../api/apiCalls';
 
 class CryptoWallets extends Component {
@@ -75,10 +75,10 @@ class CryptoWallets extends Component {
                                 <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
                             </div>
                         }>
-                            <Link className="c-pointer" to={"/coindetails/" + item.coinFullName.toLowerCase()} ><List.Item.Meta
+                            <List.Item.Meta
                                 avatar={<span className={`coin ${item.coin}`} />}
                                 title={<div className="fs-18 fw-500 text-upper text-white-30 mt-12 mb-0">{item.coin}</div>}
-                            /></Link>
+                            />
                         </List.Item>
                     )}
                 />

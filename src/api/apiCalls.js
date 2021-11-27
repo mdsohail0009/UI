@@ -38,12 +38,12 @@ const trackEvent = (obj) => {
         "type": obj.Type,
         "featurePath": obj.FullFeatureName,
         "username": obj.userName,
-        "memberId": userProfileInfo.id,
+        "memberId": userProfileInfo?.id,
         "feature": obj.Feature,
         "action": obj.Action,
         "remarks": obj.Remarks,
         "ipAddress": trackAuditLogData?.Ip,
-        "countryName": trackAuditLogData?.Location.countryName,
+        "countryName": trackAuditLogData?.Location?.countryName,
         "info": JSON.stringify(trackAuditLogData)
     }
     // return appInsights.trackPageView({

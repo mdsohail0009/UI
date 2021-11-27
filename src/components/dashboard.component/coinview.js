@@ -9,6 +9,7 @@ import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reduc
 import { setStep } from '../../reducers/buysellReducer';
 import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
+import apiCalls from '../../api/apiCalls';
 
 class CoinView extends React.Component {
     state = {
@@ -20,7 +21,10 @@ class CoinView extends React.Component {
 
     componentDidMount() {
         this.loadCoinDetailData();
-
+        this.coinViewTrack();
+    }
+    coinViewTrack = () => {
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Coin page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Coin page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
     }
     loadCoinDetailData = async () => {
         const response = await getcoinDetails(this.props.userProfile.id, this.props.match.params.coinName);

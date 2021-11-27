@@ -50,6 +50,8 @@ class BuySummary extends Component {
             obj.toWalletId = obj.toWalletId ? obj.toWalletId : this.props.sellData?.id;
             obj.toWalletCode = obj.toWalletCode ? obj.toWalletCode : this.props.sellData?.coinWallet?.coin;
             obj.toWalletName = obj.toWalletName ? obj.toWalletName : this.props.sellData?.coinWallet?.coinFullName;
+            this.props.trackAuditLogData.Action='Save';
+            this.props.trackAuditLogData.Remarks=obj.toValue + ' ' + obj.toWalletName + ' buy success';
             obj.info = JSON.stringify(this.props.trackAuditLogData);
             // obj.Action = "Save";
             // obj.Remarks = obj.toValue + ' ' + obj.toWalletName + ' buy success';

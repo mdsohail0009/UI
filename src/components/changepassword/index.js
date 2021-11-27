@@ -28,11 +28,8 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
       form.resetFields();
     }
-  }, [userProfile])
-  useEffect(() => {
     trakEvet()
-  }, [])
-
+  }, [userProfile]);
   const trakEvet = () => {
     apiClient.trackEvent({ "Action": 'Page View', "Feature": 'Change password', "Remarks": "Password page view", "FullFeatureName": 'Change password', "userName": userConfig.userName, id: userConfig.id });
   }

@@ -7,6 +7,7 @@ import { ProfileImageSave } from '../../api/apiServer'
 import { getmemeberInfo } from '../../reducers/configReduser';
 import DefaultUser from '../../assets/images/defaultuser.jpg';
 import Translate from 'react-translate-component';
+import apiCalls from '../../api/apiCalls';
 
 import Loader from '../../Shared/loader'
 
@@ -44,6 +45,12 @@ class ProfileInfo extends Component {
                 });
         }
     };
+    componentDidMount() {
+        this.profileTrack();
+    }
+    profileTrack = () => {
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Profile page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Profile Info', "Remarks": 'Profile Info page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Profile Info' });
+    }
     saveImage = async (Obj, res) => {
         this.setState({ ...this.state, Loader: true })
         let res1 = await ProfileImageSave(Obj);
@@ -56,7 +63,7 @@ class ProfileInfo extends Component {
         }
     }
     render() {
-        const { Title, Paragraph,Text} = Typography;
+        const { Title, Paragraph, Text } = Typography;
         return (<>
             <div className="profile-info text-center">
                 {this.state.Loader && <Loader />}
@@ -66,14 +73,14 @@ class ProfileInfo extends Component {
                         <Button shape="circle" type="primary" className="img-upld" size="large" icon={<span className="icon md camera" />} />
                     </Upload></>}
             </div>
-        
+
             <div className="box basic-info">
-                <Title className="basicinfo mb-0"> <Translate content="BasicInfo" component={Text} className="basicinfo"/></Title>
+                <Title className="basicinfo mb-0"> <Translate content="BasicInfo" component={Text} className="basicinfo" /></Title>
                 <Paragraph className="basic-decs"><Translate content="BasicInfotag" component={Text} className="basic-decs" /></Paragraph>
                 <ul className="user-list pl-0">
                     <li className="profileinfo">
                         <div className="profile-block">
-                            <label className="mb-0 profile-label" ><Translate content="userName" component={Text} className="mb-0 profile-label"/></label>
+                            <label className="mb-0 profile-label" ><Translate content="userName" component={Text} className="mb-0 profile-label" /></label>
                             <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.userName}</p>
                             <div >
                             </div>
@@ -81,7 +88,7 @@ class ProfileInfo extends Component {
                     </li>
                     <li className="profileinfo">
                         <div className="profile-block ">
-                            <label className="mb-0 profile-label" ><Translate content="FirstName" component={Text} className="mb-0 profile-label"/></label>
+                            <label className="mb-0 profile-label" ><Translate content="FirstName" component={Text} className="mb-0 profile-label" /></label>
                             <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.firstName}</p>
                             <div >
                             </div>
@@ -89,7 +96,7 @@ class ProfileInfo extends Component {
                     </li>
                     <li className="profileinfo">
                         <div className="profile-block ">
-                            <label className="mb-0 profile-label" ><Translate content="MiddleName" component={Text} className="mb-0 profile-label"/></label>
+                            <label className="mb-0 profile-label" ><Translate content="MiddleName" component={Text} className="mb-0 profile-label" /></label>
                             <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.middleName || '---'}</p>
                             <div >
                             </div>
@@ -97,7 +104,7 @@ class ProfileInfo extends Component {
                     </li>
                     <li className="profileinfo">
                         <div className="profile-block ">
-                            <label className="mb-0 profile-label" ><Translate content="LastName" component={Text} className="mb-0 profile-label"/></label>
+                            <label className="mb-0 profile-label" ><Translate content="LastName" component={Text} className="mb-0 profile-label" /></label>
                             <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.lastName}</p>
                             <div >
                             </div>
@@ -105,7 +112,7 @@ class ProfileInfo extends Component {
                     </li>
                     <li className="profileinfo">
                         <div className="profile-block">
-                            <label className="mb-0 profile-label" ><Translate content="Birthday" component={Text} className="mb-0 profile-label"/></label>
+                            <label className="mb-0 profile-label" ><Translate content="Birthday" component={Text} className="mb-0 profile-label" /></label>
                             {this.props.userConfig.dob != null && <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
                                 <Moment format="DD/MM/YYYY">{this.props.userConfig.dob}</Moment></p>}
                             <div >
@@ -115,7 +122,7 @@ class ProfileInfo extends Component {
 
                     <li className="profileinfo">
                         <div className="profile-block">
-                            <label className="mb-0 profile-label"><Translate content="ReferenceCode" component={Text} className="mb-0 profile-label"/></label>
+                            <label className="mb-0 profile-label"><Translate content="ReferenceCode" component={Text} className="mb-0 profile-label" /></label>
                             <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.depositReference}</p>
                             <div >
                             </div>
@@ -124,11 +131,11 @@ class ProfileInfo extends Component {
                 </ul>
             </div>
             <div className="box contact-info">
-                <Title className="basicinfo"><Translate content="ContactInfo" component={Text} className="basicinfo"/></Title>
+                <Title className="basicinfo"><Translate content="ContactInfo" component={Text} className="basicinfo" /></Title>
                 <ul className="user-list pl-0">
                     <li className="profileinfo">
                         <div className="profile-block">
-                            <label className="mb-0 profile-label"><Translate content="Country" component={Text} className="mb-0 profile-label"/></label>
+                            <label className="mb-0 profile-label"><Translate content="Country" component={Text} className="mb-0 profile-label" /></label>
                             <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.country}</p>
                             <div >
                             </div>
@@ -136,7 +143,7 @@ class ProfileInfo extends Component {
                     </li>
                     <li className="profileinfo">
                         <div className="profile-block">
-                            <label className="mb-0 profile-label"><Translate content="EmailAddress" component={Text} className="mb-0 profile-label"/></label>
+                            <label className="mb-0 profile-label"><Translate content="EmailAddress" component={Text} className="mb-0 profile-label" /></label>
                             <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>{this.props.userConfig.email}</p>
                             <div>
                             </div>
@@ -144,7 +151,7 @@ class ProfileInfo extends Component {
                     </li>
                     <li className="profileinfo">
                         <div className="profile-block ">
-                            <label className="mb-0 profile-label"><Translate content="PhoneNumber" component={Text} className="mb-0 profile-label"/></label>
+                            <label className="mb-0 profile-label"><Translate content="PhoneNumber" component={Text} className="mb-0 profile-label" /></label>
                             <div style={{ flexGrow: 12 }}>
                                 <p className="mb-0 profile-value" >
                                     {this.props.userConfig.phoneNo}</p>

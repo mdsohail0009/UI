@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { fetchNotices } from '../../reducers/dashboardReducer';
 import Wallets from '../dashboard.component/wallets.component';
 import YourPortfolio from '../dashboard.component/yourportfolio.component';
+import apiCalls from '../../api/apiCalls';
 
 class Home extends Component {
     state = {
@@ -18,6 +19,10 @@ class Home extends Component {
     };
     componentDidMount() {
         this.getNotices();
+        this.dashboardTrack();
+    }
+    dashboardTrack = () => {
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Cockpit page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Cockpit page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
     }
     getNotices = async () => {
         this.props.dispatch(fetchNotices(this.props.userProfileInfo.id))

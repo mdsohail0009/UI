@@ -7,6 +7,7 @@ import ConnectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import MassPayment from '../buyfiat.component'
 import { withRouter } from 'react-router-dom';
+import apicalls from '../../api/apiCalls';
 import { setWithdrawfiatenaable, setWithdrawfiat } from '../../reducers/sendreceiveReducer'
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
 const { Title, Paragraph } = Typography;
@@ -21,10 +22,17 @@ class FiatWallets extends Component {
     }
     componentDidMount() {
         this.fetchWallets();
-        this.props.dispatch(getCurrencieswithBankDetails())
+        this.props.dispatch(getCurrencieswithBankDetails());
+        this.trackEvent()
+
     }
     async fetchWallets() {
         this.props.dispatch(fetchMemberWalletsData(this.props.userProfile.id))
+    }
+    trackEvent = () =>{
+        apicalls.trackEvent({
+            "Type": 'User',"Action": 'Page view',"Username": this.props.userProfile.userName,"MemeberId": this.props.userProfile.id,"Feature": 'Wallets',"Remarks": 'Wallets',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Wallets'
+        });
     }
     showDocsError() {
         this.props.history.push("/docnotices");

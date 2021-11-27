@@ -17,15 +17,18 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep,dispatch }) 
     setIsLoding(true)
       let saveObj = sendReceive.withdrawCryptoObj;
     saveObj.livefacerecognization = livefacerecognization?.applicantActionid;
+    this.props.trackAuditLogData.Action='Save';
+    this.props.trackAuditLogData.Remarks='Withdraw crypto save';
+    saveObj.info=JSON.stringify(this.props.trackAuditLogData)
     let withdrawal = await withDrawCrypto(saveObj)
       if (withdrawal.ok) {
         dispatch(fetchDashboardcalls(userConfig.id))
         dispatch(setWithdrawcrypto(null))
         dispatch(setSubTitle(""));
         changeStep('withdraw_crpto_success');
-        appInsights.trackEvent({
-          name: 'Withdraw Crypto', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Crypto', "Remarks": 'Withdraw crypto save', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto' }
-        });
+        // appInsights.trackEvent({
+        //   "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Crypto', "Remarks": 'Withdraw crypto save', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto' 
+        // });
       }
       
   }
@@ -54,7 +57,7 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep,dispatch }) 
 // }
 
 const connectStateToProps = ({ userConfig, sendReceive }) => {
-  return { userConfig: userConfig.userProfileInfo,sendReceive }
+  return { userConfig: userConfig.userProfileInfo,sendReceive, trackAuditLogData: userConfig.trackAuditLogData}
 }
 const connectDispatchToProps = dispatch => {
   return {

@@ -109,8 +109,8 @@ const FaitWithdrawal = ({ member, selectedWalletCode, buyInfo, userConfig, dispa
     if (recName.ok) {
       setCountryLu(recName.data);
     }
-    appInsights.trackEvent({
-      name: 'Withdraw Fiat', properties: { "Type": 'User', "Action": 'Page view', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' }
+    apicalls.trackEvent({
+       "Type": 'User', "Action": 'Page view', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' 
     });
   }
 
@@ -515,14 +515,17 @@ const FaitWithdrawal = ({ member, selectedWalletCode, buyInfo, userConfig, dispa
   const handleOk = async () => {
     let currentStep = parseInt(confirmationStep.split("step")[1]);
     if (confirmationStep === 'step2') {
+      this.props.trackAuditLogData.Action='Save';
+      this.props.trackAuditLogData.Remarks=(saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.')
+      saveObj.info = JSON.stringify(this.props.trackAuditLogData)
       let withdrawal = await withdrawSave(saveObj)
       if (withdrawal.ok) {
         dispatch(fetchDashboardcalls(userConfig.id))
         dispatch(rejectWithdrawfiat())
         changeStep("step7")
-        appInsights.trackEvent({
-          name: 'Withdraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' }
-        });
+        // appInsights.trackEvent({
+        //   name: 'Withdraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' }
+        // });
       }
     } else {
       setConfirmationStep("step" + (currentStep + 1))
@@ -550,7 +553,7 @@ const FaitWithdrawal = ({ member, selectedWalletCode, buyInfo, userConfig, dispa
 }
 
 const connectStateToProps = ({ buyInfo, userConfig, addressBookReducer, sendReceive }) => {
-  return { addressBookReducer, buyInfo, userConfig: userConfig.userProfileInfo, sendReceive }
+  return { addressBookReducer, buyInfo, userConfig: userConfig.userProfileInfo, sendReceive,trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
   return {

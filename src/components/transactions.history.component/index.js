@@ -15,6 +15,10 @@ function collapseGrids(key) {
 class TransactionsHistory extends Component {
   componentDidMount() {
     this.props.thref(this)
+    this.addressbookTrack();
+  }
+  addressbookTrack = () => {
+    apiCalls.trackEvent({ "Type": 'User', "Action": 'Transactions page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Transactions', "Remarks": 'Transactions page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Transactions' });
   }
   state = {
     BuySellURL: process.env.REACT_APP_GRID_API + "BuySell/Accounts",
@@ -47,7 +51,7 @@ class TransactionsHistory extends Component {
     { field: "refrenceId", title: apiCalls.convertLocalLang('ReferenceId'), filter: true, width: 346 },
     { field: "currency", title: apiCalls.convertLocalLang('currency'), filter: true, width: 210 },
     { field: "bankName", title: apiCalls.convertLocalLang('Bank_name'), filter: true, width: 260 },
-    { field: "amountDeposit", title: apiCalls.convertLocalLang('amount'), filter: true, width: 250 ,dataType: "number", filterType: "numeric"},
+    { field: "amountDeposit", title: apiCalls.convertLocalLang('amount'), filter: true, width: 250, dataType: "number", filterType: "numeric" },
     { field: "date", title: apiCalls.convertLocalLang('Date'), filter: true, width: 210, filterType: "date" },
     { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 260 },
     { field: "statusRemarks", title: apiCalls.convertLocalLang('remarks'), filter: true, width: 460 }
@@ -56,22 +60,22 @@ class TransactionsHistory extends Component {
     { field: "date", title: apiCalls.convertLocalLang('Date'), filter: true, filterType: "date", },
     { field: "fromWalletCode", title: apiCalls.convertLocalLang('FromWallet'), filter: true },
     { field: "toWalletCode", title: apiCalls.convertLocalLang('ToWallet'), width: 170, filter: true },
-    { field: "fromValue", title: apiCalls.convertLocalLang('FromValue'), width: 180, filter: true, dataType: 'number',filterType: "numeric" },
-    { field: "toValue", title: apiCalls.convertLocalLang('ToValue'), width: 140, filter: true, dataType: 'number',filterType: "numeric" },
-    { field: "totalAmount", title: apiCalls.convertLocalLang('TotalAmount'), width: 180, filter: true, dataType: 'number',filterType: "numeric" },
-    { field: "amountInUsd", title: apiCalls.convertLocalLang('AmountInUsd'), width: 150, filter: true, dataType: 'number',filterType: "numeric" },
+    { field: "fromValue", title: apiCalls.convertLocalLang('FromValue'), width: 180, filter: true, dataType: 'number', filterType: "numeric" },
+    { field: "toValue", title: apiCalls.convertLocalLang('ToValue'), width: 140, filter: true, dataType: 'number', filterType: "numeric" },
+    { field: "totalAmount", title: apiCalls.convertLocalLang('TotalAmount'), width: 180, filter: true, dataType: 'number', filterType: "numeric" },
+    { field: "amountInUsd", title: apiCalls.convertLocalLang('AmountInUsd'), width: 150, filter: true, dataType: 'number', filterType: "numeric" },
   ];
   BuySellColmns = [
     { field: "date", title: apiCalls.convertLocalLang('Date'), filter: true, filterType: "date", width: 184 },
     { field: "type", title: apiCalls.convertLocalLang('Type'), filter: true, width: 190 },
     { field: "fromWalletCode", title: apiCalls.convertLocalLang('FromWallet'), filter: true, width: 200 },
-    { field: "fromValue", title: apiCalls.convertLocalLang('FromValue'), filter: true, width: 190, dataType: 'number',filterType: "numeric" },
+    { field: "fromValue", title: apiCalls.convertLocalLang('FromValue'), filter: true, width: 190, dataType: 'number', filterType: "numeric" },
     { field: "toWalletCode", title: apiCalls.convertLocalLang('ToWallet'), filter: true, width: 190 },
-    { field: "tovalue", title: apiCalls.convertLocalLang('ToValue'), filter: true, width: 200, dataType: 'number',filterType: "numeric" },
-    { field: "beforeValue", title: apiCalls.convertLocalLang('BeforeValue'), width: 200, filter: true, dataType: 'number' ,filterType: "numeric"},
-    { field: "afterValue", title: apiCalls.convertLocalLang('AfterValue'), width: 200, filter: true, dataType: 'number' ,filterType: "numeric"},
-    { field: "totalAmount", title: apiCalls.convertLocalLang('TotalAmount'), filter: true, width: 210, dataType: 'number',filterType: "numeric" },
-    { field: "amountInUsd", title: apiCalls.convertLocalLang('AmountInUsd'), filter: true, width: 200, dataType: 'number',filterType: "numeric" },
+    { field: "tovalue", title: apiCalls.convertLocalLang('ToValue'), filter: true, width: 200, dataType: 'number', filterType: "numeric" },
+    { field: "beforeValue", title: apiCalls.convertLocalLang('BeforeValue'), width: 200, filter: true, dataType: 'number', filterType: "numeric" },
+    { field: "afterValue", title: apiCalls.convertLocalLang('AfterValue'), width: 200, filter: true, dataType: 'number', filterType: "numeric" },
+    { field: "totalAmount", title: apiCalls.convertLocalLang('TotalAmount'), filter: true, width: 210, dataType: 'number', filterType: "numeric" },
+    { field: "amountInUsd", title: apiCalls.convertLocalLang('AmountInUsd'), filter: true, width: 200, dataType: 'number', filterType: "numeric" },
   ];
   depositCryptoColomns = [
     { field: "walletCode", title: apiCalls.convertLocalLang('Wallet'), filter: true },
