@@ -5,14 +5,21 @@ import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
+import apicalls from '../../api/apiCalls';
 
 class SuccessMsg extends Component {
+    componentDidMount() {
+        this.EventTrack();
+    }
+    EventTrack = () => {
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Buy', "Remarks": 'Buy Success', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy crypto' });
+    }
     render() {
         const { Title, Paragraph } = Typography;
         return (
             <>
                 <div className="success-pop text-center">
-                    <img src={success} className="confirm-icon" alt={"success"}/>
+                    <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
                     <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" />
                     <Space direction="vertical" size="large">
@@ -23,8 +30,8 @@ class SuccessMsg extends Component {
         );
     }
 }
-const connectStateToProps = ({ buySell }) => {
-    return { buySell }
+const connectStateToProps = ({ buySell, userConfig }) => {
+    return { buySell, member: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {

@@ -46,12 +46,13 @@ class BuySummary extends Component {
                 "comission": 0,
                 "exicutedPrice": this.props.sellData?.previewDetails?.data?.oneCoinValue,
                 "totalAmount": this.props.sellData.previewDetails?.data?.amount
-
             }
             obj.toWalletId = obj.toWalletId ? obj.toWalletId : this.props.sellData?.id;
             obj.toWalletCode = obj.toWalletCode ? obj.toWalletCode : this.props.sellData?.coinWallet?.coin;
             obj.toWalletName = obj.toWalletName ? obj.toWalletName : this.props.sellData?.coinWallet?.coinFullName;
             obj.info = JSON.stringify(this.props.trackAuditLogData);
+            // obj.Action = "Save";
+            // obj.Remarks = obj.toValue + ' ' + obj.toWalletName + ' buy success';
             this.setState({ isLoading: true });
             const response = await buyCrypto(obj);
             if (response.ok) {
@@ -60,32 +61,12 @@ class BuySummary extends Component {
                 appInsights.trackEvent({
                     name: 'Buy', properties: { "Type": 'User', "Action": 'Save ', "Username": this.props?.member.userName, "MemeberId": this.props?.member.id, "Feature": 'Buy', "Remarks": obj.toValue + ' ' + obj.toWalletName + ' buy success', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy crypto' }
                 });
-
-                // const buyAuditLog = {
-                //     "id": "",
-                //     "date": "",
-                //     "featurePath": window.location.href,
-                //     "username": this.props?.member.userName,
-                //     "memberId": this.props.member.id,
-                //     "feature": "Buy",
-                //     "type": "User",
-                //     "action": "Save",
-                //     "remarks": `${obj.toValue} ${obj.toWalletName} buy success`,
-                //     "ipAddress": "",
-                //     "location": "",
-                //     "browser": "",
-                //     "device": "",
-                //     "info": ""
-                // }
-
-
             } else {
                 this.setState({ ...this.state, error: { valid: false, message: response.data || response.originalError.message } })
             }
             this.setState({ isLoading: false })
         } else {
             this.setState({ ...this.state, error: { valid: false, message: apicalls.convertLocalLang('agree_terms') } })
-
         }
     }
     render() {
