@@ -9,7 +9,7 @@ const firebaseServer = create({
     // }
 });
 const ipRegistry = create({
-    baseURL: 'https://api.ipregistry.co'
+    baseURL: 'https://api4.ipregistry.co'
 })
 const apiClient = create({
     baseURL: process.env.REACT_APP_API_END_POINT

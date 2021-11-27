@@ -37,7 +37,6 @@ const getmemeberInfo = (useremail) => {
 const getIpRegisteryData = () => {
     return async (dispatch) => {
         apiCalls.getIpRegistery().then((res) => {
-            debugger
             if (res.ok) {
                 let ipInfo = {
                     "Ip": res.data.ip,

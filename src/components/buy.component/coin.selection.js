@@ -8,6 +8,8 @@ import { setStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import { fetchCoins, fetchSelectedCoinDetails, setCoin, setExchangeValue } from '../../reducers/buyReducer';
 import { convertCurrency } from './buySellService';
+import apiClient from "../../api/apiCalls";
+
 class CryptoComponent extends Component {
     ref = React.createRef();
     state = {
@@ -19,6 +21,10 @@ class CryptoComponent extends Component {
     }
     componentDidMount() {
         this.props.dispatch(fetchCoins("All"));
+        this.EventTrack();
+    }
+    EventTrack = () => {
+        apiClient.trackEvent({ "Type": 'User', "Action": 'Page View', "Feature": 'Buy', "Remarks": "Buy Coin Seclection", "FullFeatureName": 'Buy Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
     }
     handleBuySellToggle = e => {
         this.props.dispatch(setTab(e.target.value))

@@ -32,21 +32,20 @@ const updateKyc = (userid) => {
 // }
 const trackEvent = (obj) => {
     const { userConfig: { userProfileInfo, trackAuidtLogData } } = store.getState()
- let trackObj={
-    "id": "00000000-0000-0000-0000-000000000000",
-    "date": "",
-    "featurePath": obj.FullFeatureName,
-    "username": obj.userName,
-    "memberId": userProfileInfo.id,
-    "feature": obj.Feature,
-    "action": obj.Action,
-    "remarks": obj.Remarks,
-    "ipAddress":trackAuidtLogData.Ip ,
-    "countryName": trackAuidtLogData.Location.countryName,
-    "info": JSON.stringify(trackAuidtLogData)
-  
-
- }
+    let trackObj = {
+        "id": "00000000-0000-0000-0000-000000000000",
+        "date": "",
+        "type": obj.Type,
+        "featurePath": obj.FullFeatureName,
+        "username": obj.userName,
+        "memberId": userProfileInfo.id,
+        "feature": obj.Feature,
+        "action": obj.Action,
+        "remarks": obj.Remarks,
+        "ipAddress": trackAuidtLogData.Ip,
+        "countryName": trackAuidtLogData.Location.countryName,
+        "info": JSON.stringify(trackAuidtLogData)
+    }
     // return appInsights.trackPageView({
     //     name: obj.Feature, properties: { "Type": 'Admin', "Action": 'Page view', "Username": obj.userName, "MemeberId": obj.id, "Feature": obj.Feature, "Remarks": obj.Remarks, "Duration": 1, "Url": window.location.href, "FullFeatureName": obj.FullFeatureName }
     // });
@@ -54,11 +53,8 @@ const trackEvent = (obj) => {
 }
 
 const getIpRegistery = () => {
-    debugger
-   // return ipRegistry.get('https://api.ipregistry.co/?key=v230l9ji9ra7hp7c')
-    return ipRegistry.get("/?key=v230l9ji9ra7hp7c");
+    return ipRegistry.get("/?key=l4rtc0buncs5dej9");
 }
-
 const sellMemberCrypto = (memID) => {
     return apiClient.get(ApiControllers.wallets + memID);
 }
