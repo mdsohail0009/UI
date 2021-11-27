@@ -49,7 +49,7 @@ class ProfileInfo extends Component {
         this.profileTrack();
     }
     profileTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Profile page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Profile Info', "Remarks": 'Profile Info', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Profile Info' });
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Profile page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Profile Info', "Remarks": 'Profile Info page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Profile Info' });
     }
     saveImage = async (Obj, res) => {
         this.setState({ ...this.state, Loader: true })

@@ -9,7 +9,7 @@ import { saveAddress, favouriteNameCheck, getAddress } from './api';
 import Loader from '../../Shared/loader';
 import apiCalls from '../../api/apiCalls';
 
-const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) => {
+const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, userProfileInfo, trackAuditLogData }) => {
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +20,11 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
         if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && addressBookReducer?.selectedRowData?.id) {
             loadDataAddress();
         }
+        addressbkTrack();
     }, [])
+    const addressbkTrack = () => {
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Address book page view', "Username": userProfileInfo?.userName, "MemeberId": userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Address book fiat details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
+    }
     const loadDataAddress = async () => {
         setIsLoading(true)
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'fiat');
@@ -46,6 +50,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
         values['membershipId'] = userConfig.id;
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
+        values['info'] = JSON.stringify(trackAuditLogData);
         let Id = '00000000-0000-0000-0000-000000000000';
         let favaddrId = addressBookReducer?.selectedRowData ? addressBookReducer?.selectedRowData?.id : Id;
         let namecheck = values.favouriteName.trim();
@@ -250,7 +255,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer }) =
 }
 
 const connectStateToProps = ({ buyInfo, userConfig, addressBookReducer }) => {
-    return { buyInfo, userConfig: userConfig.userProfileInfo, addressBookReducer }
+    return { buyInfo, userConfig: userConfig.userProfileInfo, addressBookReducer, trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {

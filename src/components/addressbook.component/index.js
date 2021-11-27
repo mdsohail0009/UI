@@ -41,6 +41,12 @@ class AddressBook extends Component {
         this.gridFiatRef = React.createRef();
         this.gridCryptoRef = React.createRef();
     }
+    componentDidMount() {
+        this.addressbookTrack();
+    }
+    addressbookTrack = () => {
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Address book page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Address book page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
+    }
     columnsFiat = [
         { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
         { field: "favouriteName", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 180 },
@@ -223,29 +229,29 @@ class AddressBook extends Component {
                 <div className="box basic-info">
                     <Title className="basicinfo mb-0"><Translate content="address_book" component={Text} className="basicinfo" /></Title>
                     <Paragraph className="basic-decs mb-16"><Translate content="address_book_tag" component={Paragraph} className="basic-decs mb-16" /></Paragraph>
-                  
+
                     <div className="display-flex mb-16">
-                        <div className=""> 
-                        <Radio.Group 
-                            defaultValue={1}
-                            onChange={this.handleWithdrawToggle}
-                            className="buysell-toggle mx-0" style={{ display: "inline-block" }}>
-                            <Translate content="withdrawCrypto" component={Radio.Button} value={1} className="buysell-toggle mx-0" />
-                            <Translate content="withdrawFiat" component={Radio.Button} value={2} className="buysell-toggle mx-0" />
-                        </Radio.Group></div>
+                        <div className="">
+                            <Radio.Group
+                                defaultValue={1}
+                                onChange={this.handleWithdrawToggle}
+                                className="buysell-toggle mx-0" style={{ display: "inline-block" }}>
+                                <Translate content="withdrawCrypto" component={Radio.Button} value={1} className="buysell-toggle mx-0" />
+                                <Translate content="withdrawFiat" component={Radio.Button} value={2} className="buysell-toggle mx-0" />
+                            </Radio.Group></div>
                         <ul className="address-icons" style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0, display: 'flex' }}>
                             <li onClick={this.addAddressBook} className="mr-16">
-                                <Tooltip placement="topRight" title={<Translate content="add"/>}>
+                                <Tooltip placement="topRight" title={<Translate content="add" />}>
                                     <Link className="icon md add-icon mr-0"></Link>
                                 </Tooltip>
                             </li>
                             <li onClick={this.editAddressBook} className="mr-16">
-                                <Tooltip placement="topRight" title={<Translate content="edit"/>}>
+                                <Tooltip placement="topRight" title={<Translate content="edit" />}>
                                     <Link className="icon md edit-icon mr-0"></Link>
                                 </Tooltip>
                             </li>
                             <li onClick={this.statusUpdate}>
-                                <Tooltip placement="topRight" title={<Translate content="active_inactive"/>}>
+                                <Tooltip placement="topRight" title={<Translate content="active_inactive" />}>
                                     <Link className="icon md status mr-0" ></Link>
                                 </Tooltip>
                             </li>
@@ -259,10 +265,10 @@ class AddressBook extends Component {
                     {this.state.successMsg && <Alert type="success"
                         description={'Record ' + (this.state.selectedObj.status == 'Active' ? 'deactivated' : 'activated') + ' successfully'} showIcon />}
                     {cryptoFiat ?
-                       
-                       <List className="address-clear" columns={this.columnsFiat} ref={this.gridFiatRef} key={gridUrlFiat} url={gridUrlFiat} additionalParams={{ memberId: memberId }} />
+
+                        <List className="address-clear" columns={this.columnsFiat} ref={this.gridFiatRef} key={gridUrlFiat} url={gridUrlFiat} additionalParams={{ memberId: memberId }} />
                         :
-                        <List  className="address-clear" columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridCryptoRef} url={gridUrlCrypto} additionalParams={{ memberId: memberId }} />
+                        <List className="address-clear" columns={this.columnsCrypto} key={gridUrlCrypto} ref={this.gridCryptoRef} url={gridUrlCrypto} additionalParams={{ memberId: memberId }} />
                     }
                 </div>
 
@@ -287,7 +293,7 @@ class AddressBook extends Component {
                     title={[<div className="side-drawer-header">
                         <span />
                         <div className="text-center fs-16">
-                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper"><Translate content="AddFiatAddress"  component={Paragraph} className="mb-0 text-white-30 fw-600 text-upper" /></Paragraph>
+                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper"><Translate content="AddFiatAddress" component={Paragraph} className="mb-0 text-white-30 fw-600 text-upper" /></Paragraph>
                         </div>
                         <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
                     </div>]}
