@@ -10,6 +10,8 @@ import { convertCurrency } from "../buy.component/buySellService";
 import { withDrawCrypto } from "../send.component/api";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
 import { appInsights } from "../../Shared/appinsights";
+import NumberFormat from "react-number-format";
+
 import {
   setStep,
   setSubTitle,
@@ -252,12 +254,15 @@ class WithdrawSummary extends Component {
                      <Translate className="pl-0 ml-0 text-white-50" content="digit_code" component={Text} /> {this.maskedNumber}
                   </Text>
                 }
+                rules={[{ required: true, message: "Is required" }]}
               >
-                <Input
+                <NumberFormat
                   className="cust-input text-left"
                   placeholder={apiCalls.convertLocalLang('verification_code')}
                   maxLength={6}
                   onChange={(e) => this.handleOtp(e.target.value)}
+                  style={{width: "445px"}}
+
                 />
                 <Button type="text" onClick={this.getOTP}>
                   {this.state.buttonText}
