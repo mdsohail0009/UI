@@ -87,6 +87,9 @@ class SwapSummary extends Component {
             obj.toValue = this.state.receiveValue
             obj.totalAmount = this.state.receiveValue
             this.setState({ ...this.state, isLoading: true })
+            this.props.trackAuditLogData.Action='Save';
+            this.props.trackAuditLogData.Remarks=(obj.fromValue + " " + obj.fromWalletName + " to " + obj.toValue + " " + obj.toWalletName)
+            obj.info = JSON.stringify(this.props.trackAuditLogData)
             let res = await saveSwapData(obj);
             if (res.ok) {
                 this.props.changeStep('confirm');
@@ -131,7 +134,7 @@ class SwapSummary extends Component {
     }
 }
 const connectStateToProps = ({ swapStore, oidc, userConfig }) => {
-    return { swapStore, userProfile: userConfig.userProfileInfo }
+    return { swapStore, userProfile: userConfig.userProfileInfo,trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {

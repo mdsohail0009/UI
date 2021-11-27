@@ -9,7 +9,7 @@ import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import { appInsights } from "../../Shared/appinsights";
 import SuccessMsg from '../withdraw.crypto.component/success';
-
+import apicalls from '../../api/apiCalls';
 
 const WithdrawalLive = ({ userConfig, sendReceive, changeStep,dispatch,onCancel }) => {
   const [faceCapture, setFaceCapture] = useState(false);
@@ -19,17 +19,21 @@ const WithdrawalLive = ({ userConfig, sendReceive, changeStep,dispatch,onCancel 
   useEffect(() => { setFaceCapture(false) }, []);
   const saveWithdrwal = async() =>{
     setIsLoding(true)
+    
       let saveObj = sendReceive.withdrawFiatObj;
     saveObj.livefacerecognization = livefacerecognization?.applicantActionid;
+    this.props.trackAuditLogData.Action='Save';
+    this.props.trackAuditLogData.Remarks=(saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.')
+    saveObj.info=JSON.stringify(this.props.trackAuditLogData)
     let withdrawal = await withdrawSave(saveObj)
       if (withdrawal.ok) {
         dispatch(fetchDashboardcalls(userConfig.id))
         setIsWithdrawSuccess(true)
         dispatch(rejectWithdrawfiat())
         changeStep("step7")
-        appInsights.trackEvent({
-          name: 'Withdraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' }
-        });
+        // apicalls.trackEvent({
+        //   "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' 
+        // });
       }
   }
   const confirmFaceLive = (obj)=>{
@@ -57,7 +61,7 @@ const WithdrawalLive = ({ userConfig, sendReceive, changeStep,dispatch,onCancel 
 }
 
 const connectStateToProps = ({ userConfig, sendReceive }) => {
-  return { userConfig: userConfig.userProfileInfo,sendReceive }
+  return { userConfig: userConfig.userProfileInfo,sendReceive,trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
   return {
