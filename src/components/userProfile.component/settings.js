@@ -14,7 +14,7 @@ import apiCalls from '../../api/apiCalls';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
-const Settings = ({ member, getmemeberInfoa }) => {
+const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
     const { switcher, themes } = useThemeSwitcher();
     const [form] = Form.useForm();
     const [SettingsLu, setSettingsLu] = useState('')
@@ -37,6 +37,7 @@ const Settings = ({ member, getmemeberInfoa }) => {
     const saveSettings = async () => {
         settingsObj.Theme = theme ? 'Light Theme' : 'Dark Theme';
         settingsObj.MemberId = member?.id
+        settingsObj.info = JSON.stringify(trackAuditLogData)
         let res = await saveSettingsData(settingsObj);
         if (res.ok) {
             message.destroy()
@@ -138,7 +139,7 @@ const Settings = ({ member, getmemeberInfoa }) => {
     // }
 }
 const connectStateToProps = ({ userConfig }) => {
-    return { member: userConfig.userProfileInfo }
+    return { member: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {
