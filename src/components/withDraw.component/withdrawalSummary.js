@@ -3,11 +3,6 @@ import {
   Typography,
   Button,
   Form,
-  Input,
-  Row,
-  Col,
-  Search,
-  Tooltip,
   message
 } from "antd";
 import Currency from "../shared/number.formate";
@@ -17,7 +12,8 @@ import Translate from "react-translate-component";
 import { useEffect } from "react";
 import apicalls from "../../api/apiCalls";
 import apiCalls from "../../api/apiCalls";
-
+import NumberFormat from "react-number-format";
+//import SuisseBtn from "../shared/butons";
 const WithdrawalSummary = ({
   sendReceive,
   onConfirm,
@@ -32,16 +28,12 @@ const WithdrawalSummary = ({
       after 30 mins.
     </span>
   );
-  const [show, setShow] = useState(false);
   const delay = 5;
-  const [otpSuccess, setotpSuccess] = useState(false);
   const [form] = Form.useForm();
   const [otp, setOtp] = useState("");
   const useOtpRef = React.useRef(null);
-  const [isResendAvailable,setisResendAvailable]=useState("false");
-  const [buttonText,setButtonText]=useState(<Translate className="pl-0 ml-0 text-white-50" content="get_code" component={Text} />);
-
-
+  const [buttonText,setButtonText]=useState(<Translate className="pl-0 ml-0 text-yellow-50" content="get_code"  />);
+  const [verificationText,setVerificationText]=useState("")
   useEffect(() => {
     console.log(userConfig.id);
   });
@@ -76,9 +68,12 @@ const WithdrawalSummary = ({
     if (response.ok) {
       console.log(response);
     }
-    setTimeout(() => {
-      setButtonText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_code" component={Text} />);
-    }, 30000);
+    // setTimeout(() => {
+    //   setButtonText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_code"  />);
+    // }, 30000);
+      setButtonText(<Translate className="pl-0 ml-0 text-yellow-50"  content="resend_code"  />);
+     // <SuisseBtn title="confirm_btn_text" onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
+
   }
  
   const fullNumber = userConfig.phoneNumber;
@@ -172,21 +167,22 @@ const WithdrawalSummary = ({
           name="code"
           className="input-label otp-verify my-36"
           extra={
-            <Text className="fs-12 text-white-30 fw-200">
+            <Text className="fs-12 text-white-30 fw-200" >
              <Translate className="pl-0 ml-0 text-white-50" content="digit_code" component={Text} /> {maskedNumber}
             </Text>
           }
+          rules={[{ required: true, message: "Is required" }]}
         >
-          <Input
+          <NumberFormat
             className="cust-input text-left"    
             placeholder= {apiCalls.convertLocalLang('verification_code')}
             maxLength={6}
             onChange={(e) => setOtp(e.target.value)}
+            style={{width: "445px"}}
           />
           <Button type="text" onClick={getOTP} >
             {buttonText}
           </Button>
-               
           {/* <Button type="text">RESEND CODE</Button> */}
         </Form.Item>
         <Button
