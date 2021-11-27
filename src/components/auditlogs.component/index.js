@@ -50,16 +50,19 @@ class AuditLogs extends Component {
     { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 250 },
     { field: "featurePath", title: apicalls.convertLocalLang('Feature_Path'), filter: true, width: 250 },
     { field: "action", title: apicalls.convertLocalLang('Action'), width: 250, filter: true },
-    { field: "location", title: apicalls.convertLocalLang('location'),width:250, filter: true },
-    { field: "ipAddress", title: apicalls.convertLocalLang('ipAddress'),width:250, filter: true },
-    { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true,width: 740},
+    { field: "location", title: apicalls.convertLocalLang('location'), width: 250, filter: true },
+    { field: "ipAddress", title: apicalls.convertLocalLang('ipAddress'), width: 250, filter: true },
+    { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true, width: 740 },
   ]
 
 
   componentDidMount = () => {
     this.TransactionFeatureSearch(this.props.userProfile?.userName);
+    this.auditlogsTrack();
   };
-
+  auditlogsTrack = () => {
+    apicalls.trackEvent({ "Type": 'User', "Action": 'Audit logs page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Audit Logs', "Remarks": 'Audit logs page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Audit Logs' });
+  }
   TransactionUserSearch = async (userVal) => {
     let response = await userNameLuSearch(userVal);
     if (response.ok) {
