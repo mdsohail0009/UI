@@ -22,7 +22,10 @@ class DashboardCharts extends Component {
 
     componentDidMount() {
         this.loadKpis();
-        this.loadDashboards(30);
+        this.cokpitKpiTrack();
+    }
+    cokpitKpiTrack = () => {
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Cockpit kpi page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Cockpit kpi page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
     }
     loadDashboards = async (days) => {
         this.setState({ ...this.state, cumulativePNL: null, profits: null, dailyPnl: null, assetnetWorth: null, assetAlloction: null })
