@@ -6,12 +6,14 @@ import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import FilePreviewer from 'react-file-previewer';
 import { Link } from 'react-router-dom';
-import QueryString from 'query-string'
+import QueryString from 'query-string';
+import apiCalls from '../../api/apiCalls';
 import Mome from 'moment'
 const { Panel } = Collapse;
 const { Text } = Typography;
 const { Dragger } = Upload;
 const { TextArea } = Input;
+
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
@@ -39,6 +41,10 @@ class RequestedDocs extends Component {
     }
     componentDidMount() {
         this.getDocument(QueryString.parse(this.props.location.search).id);
+        this.docrequestTrack();
+    }
+    docrequestTrack = () => {
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Documents request view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Documents', "Remarks": 'Documents request view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Documents' });
     }
     getDocument = async (id) => {
         this.setState({ ...this.state, loading: true, error: null });
@@ -121,6 +127,7 @@ class RequestedDocs extends Component {
         item.path = itemPath;
         item.status = "Submitted";
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
+        item.info = JSON.stringify(this.props.trackAuditLogData);
         this.setState({ ...this.state, isSubmitting: true });
         const response = await saveDocReply(item);
         message.destroy()
@@ -358,6 +365,6 @@ class RequestedDocs extends Component {
     }
 }
 const mapStateToProps = ({ userConfig }) => {
-    return { userProfileInfo: userConfig.userProfileInfo }
+    return { userProfileInfo: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
 }
 export default connect(mapStateToProps)(RequestedDocs);

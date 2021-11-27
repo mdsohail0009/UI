@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Switch, Drawer } from 'antd'
 import Translate from 'react-translate-component';
 import Changepassword from '../../components/changepassword';
@@ -6,13 +6,20 @@ import { connect } from 'react-redux';
 import { updatechange } from '../../reducers/UserprofileReducer';
 import { store } from '../../store'
 import Moment from 'react-moment';
+import apiCalls from '../../api/apiCalls';
 
-const Security = ({ userConfig }) => {
+const Security = ({ userConfig, userProfileInfo }) => {
     const [isChangepassword, setisChangepassword] = useState(false)
 
     const showDrawer = () => {
         setisChangepassword(true);
         store.dispatch(updatechange())
+    }
+    useEffect(() => {
+        securityTrack();
+    }, [])
+    const securityTrack = () => {
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Security page view', "Username": userProfileInfo?.userName, "MemeberId": userProfileInfo?.id, "Feature": 'Security', "Remarks": 'Security page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Security' });
     }
     const onClose = () => {
         setisChangepassword(false)

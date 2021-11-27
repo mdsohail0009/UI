@@ -43,7 +43,7 @@ const trackEvent = (obj) => {
         "action": obj.Action,
         "remarks": obj.Remarks,
         "ipAddress": trackAuditLogData?.Ip,
-        "countryName": trackAuditLogData?.Location.countryName,
+        "countryName": trackAuditLogData?.Location?.countryName,
         "info": JSON.stringify(trackAuditLogData)
     }
     // return appInsights.trackPageView({

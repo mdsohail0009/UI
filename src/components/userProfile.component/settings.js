@@ -9,8 +9,7 @@ import en from '../../lang/en';
 import ch from '../../lang/ch';
 import my from '../../lang/my';
 import Translate from 'react-translate-component';
-
-
+import apiCalls from '../../api/apiCalls';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -24,7 +23,11 @@ const Settings = ({ member, getmemeberInfoa }) => {
     useEffect(() => {
         getSettingsLu()
         switcher({ theme: member?.theme == 'Light Theme' ? themes.LHT : themes.DRT });
+        settingsTrack();
     }, [])
+    const settingsTrack = () => {
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Settings page view', "Username": member?.userName, "MemeberId": member?.id, "Feature": 'Settings', "Remarks": 'Settings page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Settings' });
+    }
     const getSettingsLu = async () => {
         let res = await getSettingsLuData();
         if (res.ok) {
@@ -37,7 +40,7 @@ const Settings = ({ member, getmemeberInfoa }) => {
         let res = await saveSettingsData(settingsObj);
         if (res.ok) {
             message.destroy()
-            message.success({ content: <Translate content="settings_msg"/>, className: 'custom-msg' });
+            message.success({ content: <Translate content="settings_msg" />, className: 'custom-msg' });
             getmemeberInfoa(member.userId)
             switcher({ theme: theme ? themes.LHT : themes.DRT });
             counterpart.setLocale(settingsObj.Language);
@@ -105,7 +108,7 @@ const Settings = ({ member, getmemeberInfoa }) => {
                 </Col>
             </Row>
             <div className="pt-16 border-bottom pb-36">
-               <Translate content="theme" className="input-label" component={Text} />
+                <Translate content="theme" className="input-label" component={Text} />
                 <div className="custom-theme-btn mb-36">
                     <div className="theme-switch theme-active mobile-mb-16 c-pointer" onClick={() => theme ? themeSwitch() : ''}>
                         <div className="d-flex align-center " >
