@@ -11,7 +11,6 @@ import SuisseBtn from '../shared/butons';
 import NumberFormat from 'react-number-format';
 import LocalCryptoSwapper from '../shared/local.crypto.swap';
 import Currency from '../shared/number.formate';
-import { appInsights } from "../../Shared/appinsights";
 import apicalls from '../../api/apiCalls';
 class SelectCrypto extends Component {
     myRef = React.createRef();

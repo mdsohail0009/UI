@@ -23,6 +23,10 @@ class SelectSellCrypto extends Component {
     componentDidMount() {
         this.fetchdefaultMinAmntValues();
         this.props.dispatch(setTab(2));
+        this.EventTrack();
+    }
+    EventTrack = () => {
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Page View', "Feature": 'Sell', "Remarks": "Sell page view", "FullFeatureName": 'Sell Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
     }
     fetchdefaultMinAmntValues = async () => {
         this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue })
@@ -74,8 +78,8 @@ class SelectSellCrypto extends Component {
             })
             this.myRef.current.scrollIntoView();
             return;
-        } 
-        else if ( this.state.CryptoAmnt > this.props.sellData.coinDetailData.coinBalance) {
+        }
+        else if (this.state.CryptoAmnt > this.props.sellData.coinDetailData.coinBalance) {
             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('available_balance_less') })
             this.myRef.current.scrollIntoView();
             return;

@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Typography, Card, Empty } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import {  setCoinWallet,updateCoinDetails } from '../../reducers/buy.reducer';   // do not remove this line time being i will check // subbareddy
+import { setCoinWallet, updateCoinDetails } from '../../reducers/buy.reducer';   // do not remove this line time being i will check // subbareddy
 import Loader from '../../Shared/loader'
-import { getMemberCoins,updateCoinDetail } from '../../reducers/sellReducer';
+import { getMemberCoins, updateCoinDetail } from '../../reducers/sellReducer';
 import { setCoin, setExchangeValue } from '../../reducers/buyReducer';
 import Currency from '../shared/number.formate';
 import { appInsights } from "../../Shared/appinsights";
-import {getSelectedCoinDetails} from '../buy.component/api'
+import { getSelectedCoinDetails } from '../buy.component/api'
 import apicalls from '../../api/apiCalls';
 
 class SellToggle extends Component {
@@ -16,30 +16,28 @@ class SellToggle extends Component {
         this.props.fetchMemberCoins(this.props.member?.id)
         this.trackevent()
     }
-    trackevent =() =>{
-        appInsights.trackEvent({
-            name: 'Sell', properties: {"Type": 'User',"Action": 'Page view',"Username":this.props.member.userName,"MemeberId": this.props.member.id,"Feature": 'Sell',"Remarks": "Sell page view","Duration": 1,"Url": window.location.href,"FullFeatureName": 'Sell Crypto'}
-        });
+    trackevent = () => {
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Sell', "Remarks": "Sell page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto' });
     }
     handleBuySellToggle = e => {
         this.setState({
             buyToggle: e.target.value,
         });
     };
-    setCoinDetailData=async(coin)=>{
-        let res = await getSelectedCoinDetails(coin.coin,this.props.member?.id);
+    setCoinDetailData = async (coin) => {
+        let res = await getSelectedCoinDetails(coin.coin, this.props.member?.id);
         if (res.ok) {
-            this.props.setSelectedCoin(res.data);this.props.changeStep('step10');
+            this.props.setSelectedCoin(res.data); this.props.changeStep('step10');
         }
     }
     render() {
         const { Text } = Typography;
-        if(this.props.sellData?.memberCoins?.loading){return <Loader/>}
+        if (this.props.sellData?.memberCoins?.loading) { return <Loader /> }
         return (
             <>
-            {!this.props?.sellData?.memberCoins?.loading && (!this.props.sellData?.memberCoins?.data||this.props.sellData?.memberCoins?.data?.length==0)&&<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />}
-               <div className="sellcrypto-container auto-scroll">
-                    {this.props.sellData?.memberCoins?.data?.map((coin, idx) => <Card key={idx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => {  this.setCoinDetailData(coin);this.props.setExchangeValue({ key: coin.coin, value: coin.oneCoinValue }) }} >
+                {!this.props?.sellData?.memberCoins?.loading && (!this.props.sellData?.memberCoins?.data || this.props.sellData?.memberCoins?.data?.length == 0) && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />}
+                <div className="sellcrypto-container auto-scroll">
+                    {this.props.sellData?.memberCoins?.data?.map((coin, idx) => <Card key={idx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { this.setCoinDetailData(coin); this.props.setExchangeValue({ key: coin.coin, value: coin.oneCoinValue }) }} >
                         <span className="d-flex align-center">
                             <span className={`coin lg ${coin.coin}`} />
                             <Text className="fs-24 textc-white crypto-name ml-12">{coin.coinFullName}</Text>
@@ -58,7 +56,7 @@ class SellToggle extends Component {
     }
 }
 const connectStateToProps = ({ buySell, sellInfo, userConfig }) => {
-    return { buySell, sellData:sellInfo, member: userConfig.userProfileInfo }
+    return { buySell, sellData: sellInfo, member: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
@@ -68,7 +66,7 @@ const connectDispatchToProps = dispatch => {
         fetchMemberCoins: (memberId) => {
             dispatch(getMemberCoins(memberId))
         },
-        setSelectedCoin:(coinWallet)=>{
+        setSelectedCoin: (coinWallet) => {
             dispatch(setCoin(coinWallet));
             dispatch(updateCoinDetail(coinWallet))
         },
