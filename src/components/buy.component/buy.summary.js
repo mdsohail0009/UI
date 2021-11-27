@@ -19,6 +19,13 @@ class BuySummary extends Component {
             isTermsAgreed: false
         }
     }
+
+    componentDidMount() {
+        this.EventTrack();
+    }
+    EventTrack = () => {
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Buy', "Remarks": 'Buy coin Summary', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy crypto' });
+    }
     pay = async () => {
         this.setState({ ...this.state, error: { valid: true, message: null } });
         if (this.state.isTermsAgreed) {
@@ -44,6 +51,7 @@ class BuySummary extends Component {
             obj.toWalletId = obj.toWalletId ? obj.toWalletId : this.props.sellData?.id;
             obj.toWalletCode = obj.toWalletCode ? obj.toWalletCode : this.props.sellData?.coinWallet?.coin;
             obj.toWalletName = obj.toWalletName ? obj.toWalletName : this.props.sellData?.coinWallet?.coinFullName;
+            obj.info = JSON.stringify(this.props.trackAuditLogData);
             this.setState({ isLoading: true });
             const response = await buyCrypto(obj);
             if (response.ok) {
@@ -69,7 +77,7 @@ class BuySummary extends Component {
                 //     "device": "",
                 //     "info": ""
                 // }
-                // this.props.fetchAuditTrackObj(buyAuditLog);
+
 
             } else {
                 this.setState({ ...this.state, error: { valid: false, message: response.data || response.originalError.message } })
@@ -103,8 +111,8 @@ class BuySummary extends Component {
         />
     }
 }
-const connectStateToProps = ({ buySell, buyInfo, userConfig }) => {
-    return { buySell, sellData: buyInfo, member: userConfig.userProfileInfo }
+const connectStateToProps = ({ buySell, buyInfo, userConfig, trackAuditLogData }) => {
+    return { buySell, sellData: buyInfo, member: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {

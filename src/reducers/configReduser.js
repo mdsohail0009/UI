@@ -63,7 +63,7 @@ const getIpRegisteryData = () => {
 
 let initialState = {
     userProfileInfo: null,
-    trackAuidtLogData: {}
+    trackAuditLogData: {}
 };
 const UserConfig = (state = initialState, action) => {
     switch (action.type) {
@@ -74,7 +74,7 @@ const UserConfig = (state = initialState, action) => {
             state = { ...state, userProfileInfo: { ...state.userProfileInfo, isDocsRequested: action.payload } }
             return state;
         case FETCH_TRACK_AUDITLOGS:
-            state = { ...state, trackAuidtLogData: action.payload }
+            state = { ...state, trackAuditLogData: action.payload }
             return state;
         default:
             return state;

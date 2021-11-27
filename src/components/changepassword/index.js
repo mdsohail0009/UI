@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input, Form, notification, Typography, Alert,message } from 'antd';
-import { EyeInvisibleOutlined, EyeOutlined  } from '@ant-design/icons';
+import { Button, Input, Form, notification, Typography, Alert, message } from 'antd';
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
@@ -13,7 +13,7 @@ notification.config({
   placement: "topRight",
   rtl: true
 });
-const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa,trackAuidtLogData}) => {
+const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, trackAuditLogData }) => {
   const [initialValues, setInitialValues] = useState({
     "Email": userConfig?.email,
     "CurrentPassword": "",
@@ -33,29 +33,29 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa,trackA
     trakEvet()
   }, [])
 
-  const trakEvet = () =>{
-    apiClient.trackEvent({"Action": 'Page View', "Feature": 'Change password', "Remarks": "Password page view","FullFeatureName": 'Change password',"userName":userConfig.userName,id:userConfig.id });
+  const trakEvet = () => {
+    apiClient.trackEvent({ "Action": 'Page View', "Feature": 'Change password', "Remarks": "Password page view", "FullFeatureName": 'Change password', "userName": userConfig.userName, id: userConfig.id });
   }
   const saveUserPass = async (values) => {
     if (values.CurrentPassword === values.Password) {
-      passwordResponce(true,"Current password and New password should not be same",false);
-    }else {
-      passwordResponce(false,'',false);
-      initialValues.info=JSON.stringify(trackAuidtLogData)
+      passwordResponce(true, "Current password and New password should not be same", false);
+    } else {
+      passwordResponce(false, '', false);
+      initialValues.info = JSON.stringify(trackAuditLogData)
       const result = await changePassword(initialValues);
       if (result.ok) {
-        message.success({content:'Password changed successfully',className: 'custom-msg'});
-        passwordResponce(false,'',false);
+        message.success({ content: 'Password changed successfully', className: 'custom-msg' });
+        passwordResponce(false, '', false);
         form.resetFields();
         onSubmit()
         getmemeberInfoa(userConfig.userId)
-        apiClient.trackEvent({"Action": 'Save', "Feature": 'Change password', "Remarks": "Password changed","FullFeatureName": 'Change password',"userName":userConfig.userName,id:userConfig.id });
-      }else {
-        passwordResponce(true,result.data,false);
+        apiClient.trackEvent({ "Action": 'Save', "Feature": 'Change password', "Remarks": "Password changed", "FullFeatureName": 'Change password', "userName": userConfig.userName, id: userConfig.id });
+      } else {
+        passwordResponce(true, result.data, false);
       }
     }
   }
-  const passwordResponce = (isError,msg,isloading)=>{
+  const passwordResponce = (isError, msg, isloading) => {
     setChangePasswordResponse({ error: isError, messsage: msg, isLoading: isloading });
   }
   const handleChange = (prop, val) => {
@@ -81,7 +81,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa,trackA
             />
           </Typography>
         )}
-       
+
         <div className="d-flex">
           <Translate
             className="text-white input-label"
@@ -95,13 +95,14 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa,trackA
           name="CurrentPassword"
           required
           rules={[
-            { required: true, message: apiClient.convertLocalLang('current_pass_word_msg')
-          },
+            {
+              required: true, message: apiClient.convertLocalLang('current_pass_word_msg')
+            },
 
           ]}
         >
 
-          <Input.Password placeholder={apiClient.convertLocalLang('Type_your_current_pass_word')} value={initialValues.CurrentPassword} className="text-left cust-input mb-8 pr-0 change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeOutlined style={{ color: '#fff' }} />:<EyeInvisibleOutlined /> )} />
+          <Input.Password placeholder={apiClient.convertLocalLang('Type_your_current_pass_word')} value={initialValues.CurrentPassword} className="text-left cust-input mb-8 pr-0 change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeOutlined style={{ color: '#fff' }} /> : <EyeInvisibleOutlined />)} />
         </Form.Item>
         <div className="d-flex">
           <Translate
@@ -115,19 +116,22 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa,trackA
           name="Password"
           className="custom-forminput mb-24"
           required
-          rules={[{ required: true, message: apiClient.convertLocalLang('new_pass_word_msg')
-        },
-           { pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/,
-            message: 'Password must be at least 8 Characters long one uppercase with one lowercase, one numeric & special character' },
-           ]}
+          rules={[{
+            required: true, message: apiClient.convertLocalLang('new_pass_word_msg')
+          },
+          {
+            pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/,
+            message: 'Password must be at least 8 Characters long one uppercase with one lowercase, one numeric & special character'
+          },
+          ]}
         >
-         
-            <Input.Password
-             placeholder={apiClient.convertLocalLang('Type_your_new_pass_word')}
-              value={initialValues.Password}
-              onChange={(e) => handleChange("Password", e)}
-              className="text-left cust-input mb-8 pr-0 change-space pass-onhover" iconRender={visible => (visible ?  <EyeOutlined style={{ color: '#fff' }} />:<EyeInvisibleOutlined /> )}
-            />
+
+          <Input.Password
+            placeholder={apiClient.convertLocalLang('Type_your_new_pass_word')}
+            value={initialValues.Password}
+            onChange={(e) => handleChange("Password", e)}
+            className="text-left cust-input mb-8 pr-0 change-space pass-onhover" iconRender={visible => (visible ? <EyeOutlined style={{ color: '#fff' }} /> : <EyeInvisibleOutlined />)}
+          />
         </Form.Item>
         <div className="d-flex">
           <Translate
@@ -167,7 +171,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa,trackA
             placeholder={apiClient.convertLocalLang('Re_type_your_new_pass_word')}
             value={initialValues.ConfirmPassword}
             onChange={(e) => handleChange("ConfirmPassword", e)}
-            className="text-left cust-input mb-8 pr-0 change-space" iconRender={visible => (visible ? <EyeOutlined style={{ color: '#fff' }} />:<EyeInvisibleOutlined />  )}
+            className="text-left cust-input mb-8 pr-0 change-space" iconRender={visible => (visible ? <EyeOutlined style={{ color: '#fff' }} /> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
 
@@ -179,7 +183,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa,trackA
             block
             className="pop-btn"
           >
-            <Translate  content="Save_btn_text" />
+            <Translate content="Save_btn_text" />
           </Button>
           <Button
             htmlType="button"
@@ -187,7 +191,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa,trackA
             block
             className="pwd-popup pop-cancel fs-14"
             onClick={() => onSubmit()}>
-            <Translate  content="cancel" />
+            <Translate content="cancel" />
           </Button>
         </div>
       </Form>
@@ -196,7 +200,7 @@ const ChangePassword = ({ userConfig,onSubmit,userProfile,getmemeberInfoa,trackA
 }
 
 const connectStateToProps = ({ buySell, userConfig, userProfile }) => {
-  return { buySell,trackAuidtLogData:userConfig.trackAuidtLogData, userConfig: userConfig.userProfileInfo, userProfile}
+  return { buySell, trackAuditLogData: userConfig.trackAuditLogData, userConfig: userConfig.userProfileInfo, userProfile }
 }
 const connectDispatchToProps = dispatch => {
   return {
@@ -205,7 +209,7 @@ const connectDispatchToProps = dispatch => {
     },
     getmemeberInfoa: (useremail) => {
       dispatch(getmemeberInfo(useremail));
-  },
+    },
   }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(ChangePassword);

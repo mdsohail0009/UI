@@ -36,18 +36,16 @@ class SelectCrypto extends Component {
     componentDidMount() {
         this.props.getCoinsList(this.props.userProfileInfo?.id);
         this.props.setTabKey();
-        this.trackEvent()
+        this.EventTrack()
     }
-    trackEvent = () => {
-        appInsights.trackEvent({
-            name: 'Buy', properties: { "Type": 'User', "Action": 'Page view', "Username": this.props.userProfileInfo.userName, "MemeberId": this.props.userProfileInfo.id, "Feature": 'Buy', "Remarks": 'Buy coins', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy crypto' }
-        });
+    EventTrack = () => {
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Page view', "Username": this.props.userProfileInfo.userName, "MemeberId": this.props.userProfileInfo.id, "Feature": 'Buy', "Remarks": 'Buy coin', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy crypto' });
     }
     fetchConvertionValue = async () => {
         const { coin } = this.props.buyInfo?.selectedCoin?.data;
         const { isSwaped, cryptoValue, localValue } = this.state.swapValues;
         const value = await convertCurrency({ from: coin, to: "USD", value: isSwaped ? cryptoValue : localValue, isCrypto: !isSwaped, memId: this.props.userProfileInfo.id, screenName: "buy" })
-        
+
         this.setState({ ...this.state, disableConfirm: false, swapValues: { ...this.state.swapValues, [isSwaped ? "localValue" : "cryptoValue"]: value } })
     }
     onValueChange = ({ cryptoValue, localValue, isSwaped }) => {
@@ -81,7 +79,7 @@ class SelectCrypto extends Component {
             this.myRef.current.scrollIntoView();
         } else {
             this.fetchConvertionValue();
-            this.swapRef.current.handleWalletChange({cryptoValue,localValue,locCurrency:this.state.selectedWallet?.currencyCode,isSwap:this.state.swapValues.isSwaped})
+            this.swapRef.current.handleWalletChange({ cryptoValue, localValue, locCurrency: this.state.selectedWallet?.currencyCode, isSwap: this.state.swapValues.isSwaped })
         }
     }
     render() {
