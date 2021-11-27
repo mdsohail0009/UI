@@ -8,7 +8,7 @@ import Translate from 'react-translate-component';
 import apiCalls from '../api/apiCalls';
 
 const { Text } = Typography;
-const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard, userProfileInfo }) => {
+const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard, userProfileInfo, trackAuditLogData }) => {
     const [loading, setLoading] = useState(false);
     const [notifications, setNotifications] = useState([]);
     const [error, setError] = useState(null);
@@ -17,9 +17,10 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard, 
         notificationsTrack();
     }, []);
     const notificationsTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Notification page view', "Username": userProfileInfo?.userName, "MemeberId": userProfileInfo?.id, "Feature": 'Notifications', "Remarks": 'Notifications page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Notificatons' });
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Notification page view', "Username": userProfileInfo?.userName, "MemeberId": userProfileInfo?.id, "Feature": 'Notifications', "Remarks": 'Notifications page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Notificatons', "info": JSON.stringify(trackAuditLogData) });
     }
     const fetchNotifications = async () => {
+        debugger
         if (userProfile?.id) {
             setLoading(true);
             const response = await getNotifications(userProfile?.id);
@@ -70,7 +71,7 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard, 
     )
 }
 const connectStateToProps = ({ userConfig }) => {
-    return { userConfig: userConfig.userProfileInfo }
+    return { userConfig: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
 }
 
 export default ConnectStateProps(Notifications);
