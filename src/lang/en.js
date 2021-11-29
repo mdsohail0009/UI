@@ -272,7 +272,7 @@ export default {
   proceed: 'Proceed',
   description: 'Description',
   with_draw: "Withdraw",
-  crypto_with_draw_success: "Back",
+  crypto_with_draw_success: "Back to Withdraw Cypto",
   withdrawal_success: 'Withdraw success',
   dep_with_assets: "Crypto Deposit / Withdraw",
   links: "%(link)s",

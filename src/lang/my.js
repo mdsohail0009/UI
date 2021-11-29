@@ -410,7 +410,7 @@ export default {
   funds_to_swap: 'Hindi sapat na pondo para ipagpalit',
   No_data: 'Walang nakitang data',
   confirm_button: 'Kumpirmahin',
-  crypto_with_draw_success: 'Bumalik',
+  crypto_with_draw_success: 'Kembali ke Withdraw Crypto',
   Back_to_Withdraw: 'Bumalik sa Withdraw',
   New_Address: 'Bagong tirahan',
   return_to_depositfiat: 'Bumalik sa Deposit Fiat',
