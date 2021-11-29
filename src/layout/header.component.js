@@ -25,6 +25,7 @@ import { setHeaderTab } from '../reducers/buysellReducer';
 import { setdepositCurrency } from '../reducers/depositReducer'
 import { deleteToken } from '../notifications/api';
 import Wallets from '../components/wallets.component.js';
+import apiCalls from '../api/apiCalls'
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
@@ -335,7 +336,16 @@ class Header extends Component {
         window.open(url);
 
     }
-
+    trackEvent(){
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Page view', "Username":null, "MemeberId": null, "Feature": 'LogOut', "Remarks": 'User Logged Out', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'LogOut' });
+        window.$zoho?.salesiq?.chat.complete();
+        window.$zoho?.salesiq?.reset();
+        userManager.signoutRedirect()
+    }
+    clearEvents(){
+        this.trackEvent();
+       
+    }
     render() {
         const link = <LinkValue content="medium" />;
         const depostWithdrawMenu = (
@@ -362,7 +372,7 @@ class Header extends Component {
                         <li className="c-pointer" onClick={() => this.showAuditLogsDrawer()}>
                             <Translate content="AuditLogs" component={Link} className="c-pointer px-0" />
                         </li>
-                        <li className="c-pointer" onClick={() => userManager.signoutRedirect()}>
+                        <li className="c-pointer" onClick={() => this.clearEvents()}>
                             <Translate content="logout" className="c-pointer px-0" component={Link} />
                         </li>
                     </ul>
