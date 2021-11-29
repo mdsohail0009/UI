@@ -33,7 +33,6 @@ const LinkValue = (props) => {
         <Translate className="text-yellow fw-700 fs-16 d-inlineblock"
             content={props.content}
             component={Link}
-        // to="./#"
         />
     )
 }
@@ -41,9 +40,7 @@ const { Title, Paragraph } = Typography;
 class Header extends Component {
     componentDidMount() {
         counterpart.setLocale(this.props.userConfig ? this.props.userConfig.language : 'en');
-        // connection.on("ReceiveMessage", (user, message) => {
-        //     // nptification display code here
-        // });
+        
     }
     securityMenu = (
 

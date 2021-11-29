@@ -657,9 +657,12 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .otp-verify button{
     position: absolute;
     right: 4px;
-    top: 8px;
+    top: 15px;
     color: var(--textYellow) !important;
     font-weight: 500;
+}
+.otp-verify .ant-form-item-label{
+    width: 100%
 }
 @keyframes zoom {
     0%{transform: scale(0);}

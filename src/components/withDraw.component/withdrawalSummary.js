@@ -156,6 +156,9 @@ const WithdrawalSummary = ({
             </Text>
           }
            rules={[{ required: true, message: "Is required" }]}
+           label={ <Button type="text" onClick={getOTP}>
+           {buttonText}
+         </Button>}
         >
           <NumberFormat
             className="cust-input text-left"
@@ -164,10 +167,9 @@ const WithdrawalSummary = ({
             onChange={(e) => setOtp(e.target.value)}
             style={{ width: "445px" }}
           />
-          <Button type="text" onClick={getOTP}>
-            {buttonText}
-          </Button>
+         
         </Form.Item>
+        
         <Button
           disabled={isLoding}
           size="large"
