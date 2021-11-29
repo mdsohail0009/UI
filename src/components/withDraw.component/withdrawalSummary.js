@@ -1,19 +1,11 @@
-import React, { useState } from "react";
-import {
-  Typography,
-  Button,
-  Form,
-  message
-} from "antd";
+import React, { useState ,useEffect} from "react";
+import { Typography, Button, Form, message } from "antd";
 import Currency from "../shared/number.formate";
 import { setStep } from "../../reducers/buysellReducer";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
-import { useEffect } from "react";
-import apicalls from "../../api/apiCalls";
 import apiCalls from "../../api/apiCalls";
 import NumberFormat from "react-number-format";
-//import SuisseBtn from "../shared/butons";
 const WithdrawalSummary = ({
   sendReceive,
   onConfirm,
@@ -22,37 +14,30 @@ const WithdrawalSummary = ({
 }) => {
   const { Text } = Typography;
   const [isLoding, setIsLoding] = useState(false);
-  const text = (
-    <span>
-      Haven't recieved code?Request new code in 6 seconds.The code will expire
-      after 30 mins.
-    </span>
-  );
-  const delay = 5;
   const [form] = Form.useForm();
   const [otp, setOtp] = useState("");
   const useOtpRef = React.useRef(null);
-  const [buttonText,setButtonText]=useState(<Translate className="pl-0 ml-0 text-yellow-50" content="get_code"  />);
-  const [verificationText,setVerificationText]=useState("")
+  const [buttonText, setButtonText] = useState(
+    <Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />
+  );
+  const [verificationText, setVerificationText] = useState("");
+
   useEffect(() => {
     console.log(userConfig.id);
   });
 
   const saveWithdrwal = async () => {
-    let response = await apicalls.getVerification(userConfig.id, otp);
+    let response = await apiCalls.getVerification(userConfig.id, otp);
 
     if (response.ok) {
-      
       message.destroy();
       message.success({
-  
         content: "OTP Verified Successfully",
         className: "custom-msg",
         duration: 0.5
       });
       setIsLoding(true);
       onConfirm();
-      
     } else {
       message.destroy();
       message.error({
@@ -61,24 +46,24 @@ const WithdrawalSummary = ({
         duration: 0.5
       });
     }
-   
   };
-  const getOTP = async (val) => {
-    let response = await apicalls.getCode(userConfig.id);
-    if (response.ok) {
-      console.log(response);
-    }
-    // setTimeout(() => {
-    //   setButtonText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_code"  />);
-    // }, 30000);
-      setButtonText(<Translate className="pl-0 ml-0 text-yellow-50"  content="resend_code"  />);
-     // <SuisseBtn title="confirm_btn_text" onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
-
-  }
- 
   const fullNumber = userConfig.phoneNumber;
   const last4Digits = fullNumber.slice(-4);
   const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
+
+  const getOTP = async (val) => {
+    let response = await apiCalls.getCode(userConfig.id);
+    if (response.ok) {
+      console.log(response);
+    }
+   
+    setButtonText(
+      <Translate className="pl-0 ml-0 text-yellow-50" content="resend_code" />
+    );
+    setVerificationText(
+      apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
+    );
+  };
 
   return (
     <div className="mt-16">
@@ -157,7 +142,6 @@ const WithdrawalSummary = ({
 
       <Form
         className="mt-36"
-        //initialValues={otpObj}
         name="advanced_search"
         form={form}
         onFinish={saveWithdrwal}
@@ -167,30 +151,28 @@ const WithdrawalSummary = ({
           name="code"
           className="input-label otp-verify my-36"
           extra={
-            <Text className="fs-12 text-white-30 fw-200" >
-             <Translate className="pl-0 ml-0 text-white-50" content="digit_code" component={Text} /> {maskedNumber}
+            <Text className="fs-12 text-white-30 fw-200">
+              {verificationText}
             </Text>
           }
-          rules={[{ required: true, message: "Is required" }]}
+           rules={[{ required: true, message: "Is required" }]}
         >
           <NumberFormat
-            className="cust-input text-left"    
-            placeholder= {apiCalls.convertLocalLang('verification_code')}
+            className="cust-input text-left"
+            placeholder={apiCalls.convertLocalLang("verification_code")}
             maxLength={6}
             onChange={(e) => setOtp(e.target.value)}
-            style={{width: "445px"}}
+            style={{ width: "445px" }}
           />
-          <Button type="text" onClick={getOTP} >
+          <Button type="text" onClick={getOTP}>
             {buttonText}
           </Button>
-          {/* <Button type="text">RESEND CODE</Button> */}
         </Form.Item>
         <Button
           disabled={isLoding}
           size="large"
           block
           className="pop-btn"
-          //onClick={saveWithdrwal}
           htmlType="submit"
         >
           <Translate content="Confirm" component={Text} />

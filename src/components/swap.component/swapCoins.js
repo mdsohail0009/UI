@@ -7,7 +7,6 @@ import { fetchCurrConvertionValue } from '../../components/swap.component/api'
 import * as _ from 'lodash';
 import NumberFormat from 'react-number-format';
 import Currency from '../shared/number.formate';
-import { appInsights } from "../../Shared/appinsights";
 import apicalls from '../../api/apiCalls';
 
 class SwapCoins extends Component {

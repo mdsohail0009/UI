@@ -6,7 +6,6 @@ import { getMemberCoins } from "../../../reducers/swapReducer";
 import ConnectStateProps from "../../../utils/state.connect";
 import CryptoList from "../../shared/cryptolist"
 import { createCryptoDeposit } from "../api";
-import { appInsights } from "../../../Shared/appinsights";
 import apicalls from "../../../api/apiCalls";
 const { Title, Paragraph } = Typography;
 const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {

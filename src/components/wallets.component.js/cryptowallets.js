@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Button, Typography, Empty } from 'antd';
+import { List, Typography, Empty } from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import ConnectStateProps from '../../utils/state.connect';

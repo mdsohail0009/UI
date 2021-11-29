@@ -25,7 +25,6 @@ import { setHeaderTab } from '../reducers/buysellReducer';
 import { setdepositCurrency } from '../reducers/depositReducer'
 import { deleteToken } from '../notifications/api';
 import Wallets from '../components/wallets.component.js';
-// import { connection } from '../utils/signalR';
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
@@ -441,7 +440,6 @@ class Header extends Component {
                                     <div className="wrapper">
                                         <div className="item-wrapper">
                                             <Translate className="text-white megamenu-label fw-500 mb-24 mt-0" content="personal" component={Title} />
-                                            {/* <Link className="pt-24"> Wallets</Link> */}
                                             <Translate className="fs-18 text-white-30 fw-200 mb-0" content="wallets" component={Paragraph} />
                                             <Translate className="text-white-30 fs-16 mb-0 fw-300" content="wallets_text" component={Paragraph} />
                                         </div>

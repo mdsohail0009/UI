@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, List, Button } from 'antd';
+import { Typography, List } from 'antd';
 import Translate from 'react-translate-component';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import { fetchMemberWalletsData } from '../../reducers/dashboardReducer';

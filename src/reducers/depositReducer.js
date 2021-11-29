@@ -1,4 +1,4 @@
-import { getCurrencywithBank, savedepositFiat } from '../../src/components/deposit.component/api';
+import { getCurrencywithBank } from '../../src/components/deposit.component/api';
 const FETCH_CURRENCIESWITHBANKDETAILS = "fetchcurrencieswithbankdetails";
 const FETCH_CURRENCIESWITHBANKDETAILS_REJECTED = "fetchcurrencieswithbankdetailsRejected";
 const FETCH_CURRENCIESWITHBANKDETAILS_SUCCESS = "fetchcurrencieswithbankdetailsSuccess";

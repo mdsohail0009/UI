@@ -5,7 +5,6 @@ import { setStep } from '../../reducers/buysellReducer';
 import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
 import ConnectStateProps from '../../utils/state.connect';
 import Translate from 'react-translate-component';
-import SelectFiat from './selectFiat';
 import AddBuyFiatCard from './addCard';
 import SelectWallet from './selectWallet';
 import FiatDeposit from '../../components/deposit.component/faitDeposit';

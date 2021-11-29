@@ -1,5 +1,4 @@
 import { apiClient, ipRegistry } from './';
-import { appInsights } from "../Shared/appinsights";
 import { ApiControllers } from './config';
 import counterpart from 'counterpart';
 import { store } from '../store';
@@ -25,11 +24,6 @@ const sumsubacesstokennew = (userid) => {
 const updateKyc = (userid) => {
     return apiClient.put(ApiControllers.accounts + `${userid}/KYC`);
 }
-// const trackEvent = (obj) => {
-//     return appInsights.trackEvent({
-//         name: obj.Feature, properties: { "Type": 'Admin', "Action": obj.Action, "Username": obj.userName, "MemeberId": obj.id, "Feature": obj.Feature, "Remarks": obj.Remarks, "Duration": 1, "Url": window.location.href, "FullFeatureName": obj.FullFeatureName }
-//     });
-// }
 const trackEvent = (obj) => {
     const { userConfig: { userProfileInfo, trackAuditLogData } } = store.getState()
     let trackObj = {
@@ -46,9 +40,6 @@ const trackEvent = (obj) => {
         "countryName": trackAuditLogData?.Location?.countryName,
         "info": JSON.stringify(trackAuditLogData)
     }
-    // return appInsights.trackPageView({
-    //     name: obj.Feature, properties: { "Type": 'Admin', "Action": 'Page view', "Username": obj.userName, "MemeberId": obj.id, "Feature": obj.Feature, "Remarks": obj.Remarks, "Duration": 1, "Url": window.location.href, "FullFeatureName": obj.FullFeatureName }
-    // });
     return apiClient.post(ApiControllers.master + `Auditlogs`, trackObj);
 }
 

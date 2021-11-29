@@ -7,9 +7,7 @@ import LiveNessSumsub from '../sumSub.component/liveness'
 import { withdrawSave } from '../../api/apiServer';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
-import { appInsights } from "../../Shared/appinsights";
 import SuccessMsg from '../withdraw.crypto.component/success';
-import apicalls from '../../api/apiCalls';
 
 const WithdrawalLive = ({ userConfig, sendReceive, changeStep,dispatch,onCancel }) => {
   const [faceCapture, setFaceCapture] = useState(false);
@@ -31,9 +29,6 @@ const WithdrawalLive = ({ userConfig, sendReceive, changeStep,dispatch,onCancel 
         setIsWithdrawSuccess(true)
         dispatch(rejectWithdrawfiat())
         changeStep("step7")
-        // apicalls.trackEvent({
-        //   "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' 
-        // });
       }
   }
   const confirmFaceLive = (obj)=>{
