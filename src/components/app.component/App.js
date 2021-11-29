@@ -22,29 +22,32 @@ function App(props) {
     })
     localStorage.setItem("__url", window.location.pathname);
     loadUser(store, userManager).then(user => {
-      setLoading(false)
+      setLoading(false);
+      if(user){
+        
+        const { userConfig: { userProfileInfo } } = store.getState();
+        window.$zoho = window.$zoho || {};
+        window.$zoho.salesiq = window.$zoho.salesiq || {
+          widgetcode: "a167eaa0dc5b769d131a5fc00e42bf147028842aad73f7affa889acafc17d757084640d749c5a27dc8dc9bbec022e4d0",
+          values: {},
+          ready: function () {
+            window.$zoho.salesiq.visitor.email(user.profile.email);
+            window.$zoho.salesiq.visitor.name(user.profile.preferred_username);
+          },
+        }
+        const d = document;
+        let s;
+        s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.id = 'zsiqscript';
+        s.defer = true;
+        s.src = 'https://salesiq.zoho.in/widget';
+        let t;
+        t = d.getElementsByTagName('script')[0];
+        t.parentNode.insertBefore(s, t);
+      }
     })
-
-    const { userConfig: { userProfileInfo } } = store.getState();
-    window.$zoho = window.$zoho || {};
-    window.$zoho.salesiq = window.$zoho.salesiq || {
-      widgetcode: "a167eaa0dc5b769d131a5fc00e42bf147028842aad73f7affa889acafc17d757084640d749c5a27dc8dc9bbec022e4d0",
-      values: {},
-      ready: function () {
-        window.$zoho.salesiq.visitor.email(userProfileInfo.email);
-        window.$zoho.salesiq.visitor.name(userProfileInfo.userName);
-      },
-    }
-    const d = document;
-    let s;
-    s = d.createElement('script');
-    s.type = 'text/javascript';
-    s.id = 'zsiqscript';
-    s.defer = true;
-    s.src = 'https://salesiq.zoho.in/widget';
-    let t;
-    t = d.getElementsByTagName('script')[0];
-    t.parentNode.insertBefore(s, t);
+    
   }, [])
 
   return (
