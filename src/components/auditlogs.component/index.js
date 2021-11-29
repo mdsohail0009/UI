@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input } from "antd";
+import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input, Typography } from "antd";
 import List from "../grid.component";
 import Loader from '../../Shared/loader'
 import { userNameLuSearch, getFeatureLuSearch } from './api';
@@ -10,6 +10,7 @@ import apicalls from '../../api/apiCalls';
 
 
 const { Option } = Select;
+const { Title } = Typography;
 
 class AuditLogs extends Component {
   formRef = React.createRef();
@@ -40,6 +41,7 @@ class AuditLogs extends Component {
       },
       timeListSpan: ["Last 1 Day", "Last One Week", "Custom"],
       gridUrl: process.env.REACT_APP_GRID_API + "AuditLogs/Accounts",
+      moreAuditLogs: false
     };
 
     this.gridRef = React.createRef();
@@ -52,7 +54,8 @@ class AuditLogs extends Component {
     { field: "action", title: apicalls.convertLocalLang('Action'), width: 250, filter: true },
     { field: "location", title: apicalls.convertLocalLang('location'), width: 250, filter: true },
     { field: "ipAddress", title: apicalls.convertLocalLang('ipAddress'), width: 250, filter: true },
-    { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true, width: 740 },
+    { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true, width: 500 },
+    { field: "", title: "", width: 60, customCell: (props) => (<td><Tooltip title="View More"><span className="icon md eye c-pointer" onClick={this.showMoreAuditLogs} /></Tooltip></td>) },
   ]
 
 
@@ -151,9 +154,19 @@ class AuditLogs extends Component {
     }
     this.setState({ ...this.state, searchObj }, () => { this.gridRef.current.refreshGrid(); });
   };
+  showMoreAuditLogs = () => {
+    this.setState({
+      ...this.state, moreAuditLogs: true
+    })
+  }
+  hideMoreAuditLogs = () => {
+    this.setState({
+      moreAuditLogs: false
+    })
+  }
 
   render() {
-    const { gridUrl, searchObj, featureData, timeListSpan } = this.state;
+    const { gridUrl, searchObj, featureData, timeListSpan, moreAuditLogs } = this.state;
 
     const options3 = timeListSpan.map((d) => (
       <Option key={d} value={d}>{d}</Option>
@@ -316,6 +329,22 @@ class AuditLogs extends Component {
               </Form>
             </div>
           </Modal>
+        </Drawer>
+        <Drawer
+          title={[<div className="side-drawer-header">
+            <span />
+            <div className="text-center fs-16">
+              <Title className="text-white-30 fs-16 fw-600 text-upper mb-4 d-block">Audit Logs</Title>
+            </div>
+            <span onClick={this.hideMoreAuditLogs} className="icon md close-white c-pointer" />
+          </div>]}
+          placement="right"
+          closable={true}
+          visible={moreAuditLogs}
+          closeIcon={null}
+          onClose={this.hideMoreAuditLogs}
+          className="side-drawer"
+        >
         </Drawer>
       </>
     );
