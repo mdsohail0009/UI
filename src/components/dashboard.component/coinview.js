@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Radio, Row, Col } from 'antd';
+import { Typography, Radio, Row, Col, Spin } from 'antd';
 import { Link, withRouter } from "react-router-dom";
 import { getcoinDetails, getCoinChatData } from './api'
 import ConnectStateProps from '../../utils/state.connect';
@@ -119,11 +119,11 @@ class CoinView extends React.Component {
                                 <Radio.Button value="90">90d</Radio.Button>
                             </Radio.Group>
                         </div>
-                        {this.state.chatData && <LineChart data={this.state.chatData} type={this.state.type} />}
+                        {this.state.chatData ? <LineChart data={this.state.chatData} type={this.state.type} /> : <div className="coin-details-spin"><Spin className="text-center" /></div>}
                     </div>
                 </Col>
                 <Col lg={10} xl={10} xxl={10}>
-                    <div className="box p-24 coin-details">
+                    <div className="box p-24 coin-details right">
                         <Title component={Title} className="fs-24 fw-600 mb-36 text-white-30">{coinData?.symbol.toUpperCase()} Price and Market Stats</Title>
                         <div className="coin-info">
                             <Text>{coinData?.symbol.toUpperCase()} Price</Text>

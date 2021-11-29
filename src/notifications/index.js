@@ -20,7 +20,6 @@ const Notifications = ({ onClose, showDrawer, userProfile, dispatch, dashboard, 
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Notification page view', "Username": userProfileInfo?.userName, "MemeberId": userProfileInfo?.id, "Feature": 'Notifications', "Remarks": 'Notifications page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Notificatons', "info": JSON.stringify(trackAuditLogData) });
     }
     const fetchNotifications = async () => {
-        debugger
         if (userProfile?.id) {
             setLoading(true);
             const response = await getNotifications(userProfile?.id);
