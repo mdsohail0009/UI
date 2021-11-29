@@ -411,7 +411,7 @@ export default {
   funds_to_swap: '交換資金不足',
   No_data: '沒有找到數據',
   confirm_button: '確認',
-  crypto_with_draw_success: '後退',
+  crypto_with_draw_success: '返回提取加密货币',
   new_pass_word_msg: '請輸入新密碼',
   Back_to_Withdraw: '返回提款',
   New_Address: '新地址',

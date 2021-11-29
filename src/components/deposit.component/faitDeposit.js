@@ -240,16 +240,12 @@ class FaitDeposit extends Component {
                 {!this.state.showSuccessMsg && <Form.Item
                   className="custom-forminput mb-24"
                   name="currency"
-                  required
                   id="currency"
-                  rules={[
-                    { required: true, message: apicalls.convertLocalLang('is_required') },
-                  ]}
                 ><div> <div className="d-flex"><Translate
                   className="input-label"
                   content="currency"
                   component={Text}
-                /><span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
+                /></div>
                     <Select dropdownClassName="select-drpdwn" placeholder={apicalls.convertLocalLang('SelectCurrency')} className="cust-input mb-0" style={{ width: '100%' }} bordered={false} showArrow={true}
                       onChange={(e) => { this.handlFiatDep(e, currenciesWithBankInfo) }} value={depObj.currency}>
                       {currenciesWithBankInfo?.map((item, idx) =>
