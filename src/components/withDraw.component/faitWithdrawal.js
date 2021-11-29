@@ -139,7 +139,8 @@ const FaitWithdrawal = ({ member, selectedWalletCode, buyInfo, userConfig, dispa
       useDivRef.current.scrollIntoView()
       return setErrorMsg(apicalls.convertLocalLang('amount_greater_zero'));
     }
-    if ((values.totalValue.indexOf('.') > -1 && values.totalValue.split('.')[0].length >= 9) || (values.totalValue.indexOf('.') < 0 && values.totalValue.length >= 9)) {
+    let _totalamount=values.totalValue.toString();
+    if ((_totalamount.indexOf('.') > -1 && _totalamount.split('.')[0].length >= 9) || (_totalamount.indexOf('.') < 0 && _totalamount.length >= 9)) {
       useDivRef.current.scrollIntoView()
       return setErrorMsg(apicalls.convertLocalLang('exceeded_amount'));
     }
