@@ -6,14 +6,13 @@ import { connect } from 'react-redux';
 import SellToggle from '../withDraw.component/faitWithdrawal';
 import config from '../../config/config';
 import NumberFormat from 'react-number-format';
-import { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject, cleardepfiatobject } from '../../reducers/depositReducer'
+import { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject } from '../../reducers/depositReducer'
 import { rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import { setStep } from '../../reducers/buyFiatReducer';
 import { savedepositFiat, requestDepositFiat } from './api';
 import Loader from '../../Shared/loader';
 import success from '../../assets/images/success.png';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { appInsights } from "../../Shared/appinsights";
 import apicalls from '../../api/apiCalls';
 
 const LinkValue = (props) => {
@@ -45,7 +44,6 @@ class FaitDeposit extends Component {
     if (this.props.sendReceive.withdrawFiatEnable) {
       this.handleshowTab(2);
       apicalls.trackEvent({
-        //name: 'Withdraw Fiat', properties: { "Type": 'User', "Action": 'page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Withdraw Fiat', "Remarks": ('Withdraw page view'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' }
         "Type": 'User', "Action": 'page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Withdraw Fiat', "Remarks": ('Withdraw page view'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' 
       });
     } else {
@@ -58,10 +56,6 @@ class FaitDeposit extends Component {
       if (this.props.depositInfo?.depositCurrency && this.props.depositInfo?.currenciesWithBankInfo) {
         this.handlFiatDep(this.props.depositInfo?.depositCurrency, this.props.depositInfo?.currenciesWithBankInfo)
       }
-      // apicalls.trackEvent({
-      //   // name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": ('Deposit page view'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
-      //   "Type": 'User', "Action": 'page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": ('Deposit page view'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' 
-      //  });
     }
 
   }
@@ -199,9 +193,6 @@ class FaitDeposit extends Component {
             tabValue: 1, Loader: false, isTermsAgreed: false, showSuccessMsg: true,
 
           });
-          // appInsights.trackEvent({
-          //   name: 'Deposit Fiat', properties: { "Type": 'User', "Action": 'save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": (createObj.amount + ' ' + createObj.currency + ' deposited.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' }
-          // });
         }
       });
     }
@@ -429,11 +420,6 @@ class FaitDeposit extends Component {
                 </Button></>}
             </div>
             </Form>}
-            {/* <Modal className="widthdraw-pop" maskClosable={false} onCancel={() => this.setState({ ...this.state, showSuccessMsg: false })} title="Deposit" closeIcon={<Tooltip title="Close"><span onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} className="icon md close" /></Tooltip>} footer={[
-
-            ]} visible={this.state.showSuccessMsg}>
-              {this.renderModalContent()}
-            </Modal> */}
             {this.state.showSuccessMsg && <div className="success-pop text-center">
               <img src={success} className="confirm-icon" alt={'success'} />
               <div><Translate content="success_msg" component='Success' className="text-white-30 fs-36 fw-200 mb-4" /></div>

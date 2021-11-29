@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import LiveNessSumsub from '../sumSub.component/liveness'
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
-import { appInsights } from "../../Shared/appinsights";
 import { withDrawCrypto } from '../send.component/api';
 
 const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep,dispatch }) => {
@@ -26,9 +25,6 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep,dispatch }) 
         dispatch(setWithdrawcrypto(null))
         dispatch(setSubTitle(""));
         changeStep('withdraw_crpto_success');
-        // appInsights.trackEvent({
-        //   "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Crypto', "Remarks": 'Withdraw crypto save', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto' 
-        // });
       }
       
   }

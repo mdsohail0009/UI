@@ -7,7 +7,6 @@ import Loader from '../../Shared/loader'
 import { getMemberCoins, updateCoinDetail } from '../../reducers/sellReducer';
 import { setCoin, setExchangeValue } from '../../reducers/buyReducer';
 import Currency from '../shared/number.formate';
-import { appInsights } from "../../Shared/appinsights";
 import { getSelectedCoinDetails } from '../buy.component/api'
 import apicalls from '../../api/apiCalls';
 

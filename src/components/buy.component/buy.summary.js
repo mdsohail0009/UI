@@ -53,8 +53,6 @@ class BuySummary extends Component {
             this.props.trackAuditLogData.Action='Save';
             this.props.trackAuditLogData.Remarks=obj.toValue + ' ' + obj.toWalletName + ' buy success';
             obj.info = JSON.stringify(this.props.trackAuditLogData);
-            // obj.Action = "Save";
-            // obj.Remarks = obj.toValue + ' ' + obj.toWalletName + ' buy success';
             this.setState({ isLoading: true });
             const response = await buyCrypto(obj);
             if (response.ok) {

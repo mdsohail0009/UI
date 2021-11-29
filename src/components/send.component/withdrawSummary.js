@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Typography, Button, Alert, message, Form, Input } from "antd";
+import { Typography, Button, Alert, message, Form } from "antd";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
@@ -7,9 +7,6 @@ import Loader from "../../Shared/loader";
 import SuisseBtn from "../shared/butons";
 import Currency from "../shared/number.formate";
 import { convertCurrency } from "../buy.component/buySellService";
-import { withDrawCrypto } from "../send.component/api";
-import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
-import { appInsights } from "../../Shared/appinsights";
 import NumberFormat from "react-number-format";
 
 import {
@@ -17,7 +14,6 @@ import {
   setSubTitle,
   setWithdrawcrypto
 } from "../../reducers/sendreceiveReducer";
-import apicalls from "../../api/apiCalls";
 import apiCalls from "../../api/apiCalls";
 const LinkValue = (props) => {
   return (
@@ -43,7 +39,10 @@ class WithdrawSummary extends Component {
     errorMsg: false,
     usdLoading: false,
     oneUsdLoading: false,
-    buttonText: <Translate className="pl-0 ml-0 text-yellow-50" content="get_code"/>,
+    buttonText: (
+      <Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />
+    ),
+    verificationText: "",
     otp: "",
     code: ""
   };
@@ -52,7 +51,7 @@ class WithdrawSummary extends Component {
     this.loadOneCoinData();
     this.loadData();
     this.props.dispatch(
-      setSubTitle(apicalls.convertLocalLang("withdrawSummary"))
+      setSubTitle(apiCalls.convertLocalLang("withdrawSummary"))
     );
   }
   loadData = async () => {
@@ -89,13 +88,15 @@ class WithdrawSummary extends Component {
   };
 
   getOTP = async (val) => {
-    let response = await apicalls.getCode(this.props.userProfile.id);
+    let response = await apiCalls.getCode(this.props.userProfile.id);
     if (response.ok) {
       console.log(response);
     }
-    setTimeout(() => {
-      this.setState({ buttonText: "RESEND CODE" });
-    }, 30000);
+    this.setState({ buttonText: "RESEND CODE" });
+    this.setState({
+      verificationText:
+        apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber
+    });
   };
   handleOtp = (val) => {
     this.setState({ ...this.state, otp: val });
@@ -103,7 +104,7 @@ class WithdrawSummary extends Component {
 
   onClick = async () => {
     if (this.state.onTermsChange) {
-      let response = await apicalls.getVerification(
+      let response = await apiCalls.getVerification(
         this.props.userProfile.id,
         this.state.otp
       );
@@ -114,9 +115,9 @@ class WithdrawSummary extends Component {
           className: "custom-msg",
           duration: 0.5
         });
-        
+
         this.props.dispatch(
-          setSubTitle(apicalls.convertLocalLang("Withdraw_liveness"))
+          setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
         );
         this.props.changeStep("withdraw_crypto_liveness");
       } else {
@@ -148,7 +149,7 @@ class WithdrawSummary extends Component {
     } else {
       this.setState({
         ...this.state,
-        errorMsg: apicalls.convertLocalLang("agree_termsofservice")
+        errorMsg: apiCalls.convertLocalLang("agree_termsofservice")
       });
       this.useDivRef.current.scrollIntoView();
     }
@@ -169,7 +170,7 @@ class WithdrawSummary extends Component {
           <Alert
             showIcon
             type="info"
-            message={apicalls.convertLocalLang("withdraw_crypto")}
+            message={apiCalls.convertLocalLang("withdraw_crypto")}
             description={this.state.errorMsg}
             closable={false}
           />
@@ -241,28 +242,23 @@ class WithdrawSummary extends Component {
           </div>
 
           <div>
-            <Form
-              className="mt-36"
-              name="advanced_search"
-              autoComplete="off"
-            >
+            <Form className="mt-36" name="advanced_search" autoComplete="off">
               <Form.Item
                 name="code"
                 className="input-label otp-verify my-36"
                 extra={
                   <Text className="fs-12 text-white-30 fw-200">
-                     <Translate className="pl-0 ml-0 text-white-50" content="digit_code" component={Text} /> {this.maskedNumber}
+                    {this.state.verificationText}
                   </Text>
                 }
                 rules={[{ required: true, message: "Is required" }]}
               >
                 <NumberFormat
                   className="cust-input text-left"
-                  placeholder={apiCalls.convertLocalLang('verification_code')}
+                  placeholder={apiCalls.convertLocalLang("verification_code")}
                   maxLength={6}
                   onChange={(e) => this.handleOtp(e.target.value)}
-                  style={{width: "445px"}}
-
+                  style={{ width: "445px" }}
                 />
                 <Button type="text" onClick={this.getOTP}>
                   {this.state.buttonText}

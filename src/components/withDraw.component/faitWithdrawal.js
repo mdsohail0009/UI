@@ -10,7 +10,6 @@ import { withdrawSave, getCountryStateLu, getStateLookup } from '../../api/apiSe
 import success from '../../assets/images/success.png';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { handleFavouritAddress } from '../../reducers/addressBookReducer';
-import { appInsights } from "../../Shared/appinsights";
 import { favouriteFiatAddress, detailsAddress } from '../addressbook.component/api';
 import { setWithdrawfiat, rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import WithdrawalSummary from './withdrawalSummary';
@@ -177,17 +176,11 @@ const FaitWithdrawal = ({ member, selectedWalletCode, buyInfo, userConfig, dispa
       values.totalValue = 100;
         setSaveObj(values);
         form.setFieldsValue({ ...values })
-       // dispatch(setWithdrawfiat(values))
     } else if (type === 'max') {
-        //usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
         values.totalValue = avilableamt ? avilableamt : 0;
         setSaveObj(values);
         form.setFieldsValue({ ...values })
-        //dispatch(setWithdrawfiat(values))
-    } else {
-        
     }
-    //this.setState({ ...this.state, minmaxTab: type })
 }
   const renderModalContent = () => {
     const _types = {
@@ -523,9 +516,6 @@ const FaitWithdrawal = ({ member, selectedWalletCode, buyInfo, userConfig, dispa
         dispatch(fetchDashboardcalls(userConfig.id))
         dispatch(rejectWithdrawfiat())
         changeStep("step7")
-        // appInsights.trackEvent({
-        //   name: 'Withdraw Fiat', properties: { "Type": 'User', "Action": 'save', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": (saveObj?.totalValue + ' ' + saveObj.walletCode + ' withdraw.'), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' }
-        // });
       }
     } else {
       setConfirmationStep("step" + (currentStep + 1))

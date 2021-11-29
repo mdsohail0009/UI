@@ -24,8 +24,6 @@ function App(props) {
     loadUser(store, userManager).then(user => {
       setLoading(false);
       if(user){
-        
-        const { userConfig: { userProfileInfo } } = store.getState();
         window.$zoho = window.$zoho || {};
         window.$zoho.salesiq = window.$zoho.salesiq || {
           widgetcode: "a167eaa0dc5b769d131a5fc00e42bf147028842aad73f7affa889acafc17d757084640d749c5a27dc8dc9bbec022e4d0",

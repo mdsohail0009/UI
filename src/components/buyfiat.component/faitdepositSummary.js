@@ -5,7 +5,7 @@ import { setStep } from '../../reducers/buyFiatReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import success from '../../assets/images/success.png';
-import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
+import { setdepositCurrency } from '../../reducers/depositReducer'
 
 class FaitdepositSummary extends Component {
     constructor(props) {

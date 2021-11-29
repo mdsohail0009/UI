@@ -1,11 +1,11 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import { Typography, Button, Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import Currency from '../shared/number.formate';
 import { setStep } from '../../reducers/buyFiatReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
+import { setdepositCurrency } from '../../reducers/depositReducer'
 
 const LinkValue = (props) => {
     return (
@@ -37,8 +37,7 @@ class FiatSummary extends Component {
 
     render() {
         const { depositFiatData } = this.state;
-        const { Paragraph, Text } = Typography;
-        const link = <LinkValue content="terms_service" />;
+        const {  Text } = Typography;
         return (
             <>
                 {!this.state.loading ? <div className="mt-36"><Spin /></div> : <><Text className="fs-14 text-white-50 fw-200"> <Translate content="amount" component={Text} className="fs-14 text-white-50 fw-200" /></Text>
