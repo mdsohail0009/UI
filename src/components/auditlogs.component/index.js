@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input, Typography } from "antd";
+import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input, Typography, Spin } from "antd";
 import List from "../grid.component";
 import Loader from '../../Shared/loader'
 import { userNameLuSearch, getFeatureLuSearch, getAuditLogInfo } from './api';
@@ -71,17 +71,18 @@ class AuditLogs extends Component {
     this.TransactionFeatureSearch(this.props.userProfile?.userName);
     this.auditlogsTrack();
   };
-
   fetchAuditLoginfo = async (id) => {
-    debugger
     let res = await getAuditLogInfo(id);
     if (res.ok) {
       this.setState({
         ...this.state, logRowData: res.data
       })
-    } else {
-
     }
+  }
+  hideMoreAuditLogs = () => {
+    this.setState({
+      moreAuditLogs: false, logRowData: {}
+    })
   }
   auditlogsTrack = () => {
     apicalls.trackEvent({ "Type": 'User', "Action": 'Audit logs page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Audit Logs', "Remarks": 'Audit logs page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Audit Logs' });
@@ -174,12 +175,6 @@ class AuditLogs extends Component {
     }
     this.setState({ ...this.state, searchObj }, () => { this.gridRef.current.refreshGrid(); });
   };
-
-  hideMoreAuditLogs = () => {
-    this.setState({
-      moreAuditLogs: false
-    })
-  }
 
   render() {
     const { gridUrl, searchObj, featureData, timeListSpan, moreAuditLogs, logRowData } = this.state;
@@ -361,46 +356,46 @@ class AuditLogs extends Component {
           onClose={this.hideMoreAuditLogs}
           className="side-drawer"
         >
-          <div className="coin-info">
+          {logRowData.ip === null ? <div className="text-center"><Spin /></div> : <><div className="coin-info">
             <Text>City</Text>
             <Text>{logRowData?.location?.city}</Text>
           </div>
-          <div className="coin-info">
-            <Text>State</Text>
-            <Text>{logRowData?.location?.state}</Text>
-          </div>
-          <div className="coin-info">
-            <Text>Country</Text>
-            <Text>{logRowData?.location?.countryName}</Text>
-          </div>
-          <div className="coin-info">
-            <Text>Postal</Text>
-            <Text>{logRowData?.location?.postal}</Text>
-          </div>
-          <div className="coin-info">
-            <Text>Latitude</Text>
-            <Text>{logRowData?.location?.latitude}</Text>
-          </div>
-          <div className="coin-info">
-            <Text>Longitude</Text>
-            <Text>{logRowData?.location?.longitude}</Text>
-          </div>
-          <div className="coin-info">
-            <Text>Browser</Text>
-            <Text>{logRowData?.browser}</Text>
-          </div>
-          <div className="coin-info">
-            <Text>Deivce Type</Text>
-            <Text>{logRowData?.deviceType?.type}</Text>
-          </div>
-          <div className="coin-info">
-            <Text>Deivce Name</Text>
-            <Text>{logRowData?.deviceType?.name}</Text>
-          </div>
-          <div className="coin-info">
-            <Text>Deivce Version</Text>
-            <Text>{logRowData?.deviceType?.version}</Text>
-          </div>
+            <div className="coin-info">
+              <Text>State</Text>
+              <Text>{logRowData?.location?.state}</Text>
+            </div>
+            <div className="coin-info">
+              <Text>Country</Text>
+              <Text>{logRowData?.location?.countryName}</Text>
+            </div>
+            <div className="coin-info">
+              <Text>Postal</Text>
+              <Text>{logRowData?.location?.postal}</Text>
+            </div>
+            <div className="coin-info">
+              <Text>Latitude</Text>
+              <Text>{logRowData?.location?.latitude}</Text>
+            </div>
+            <div className="coin-info">
+              <Text>Longitude</Text>
+              <Text>{logRowData?.location?.longitude}</Text>
+            </div>
+            <div className="coin-info">
+              <Text>Browser</Text>
+              <Text>{logRowData?.browser}</Text>
+            </div>
+            <div className="coin-info">
+              <Text>Deivce Type</Text>
+              <Text>{logRowData?.deviceType?.type}</Text>
+            </div>
+            <div className="coin-info">
+              <Text>Deivce Name</Text>
+              <Text>{logRowData?.deviceType?.name}</Text>
+            </div>
+            <div className="coin-info">
+              <Text>Deivce Version</Text>
+              <Text>{logRowData?.deviceType?.version}</Text>
+            </div></>}
         </Drawer>
       </>
     );
