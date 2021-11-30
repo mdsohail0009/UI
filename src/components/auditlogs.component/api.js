@@ -6,5 +6,8 @@ const userNameLuSearch = (user_name) => {
 const getFeatureLuSearch = () => {
     return apiClient.get(ApiControllers.master + `AuditLogs/Accounts`);
 }
+const getAuditLogInfo = (id) => {
+    return apiClient.get(ApiControllers.master + `AuditlogInfo/${id}`);
+}
 
-export {userNameLuSearch, getFeatureLuSearch}
+export { userNameLuSearch, getFeatureLuSearch, getAuditLogInfo }

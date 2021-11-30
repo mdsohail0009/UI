@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input, Typography } from "antd";
 import List from "../grid.component";
 import Loader from '../../Shared/loader'
-import { userNameLuSearch, getFeatureLuSearch } from './api';
+import { userNameLuSearch, getFeatureLuSearch, getAuditLogInfo } from './api';
 import moment from 'moment';
 import Translate from 'react-translate-component';
 import apicalls from '../../api/apiCalls';
@@ -29,6 +29,7 @@ class AuditLogs extends Component {
       customFromdata: "",
       customTodate: "",
       isCustomDate: false,
+      moreAuditLogs: false,
       message: "",
       searchObj: {
         timeSpan: "Last 1 Day",
@@ -39,14 +40,17 @@ class AuditLogs extends Component {
         fromdate: '',
         todate: '',
       },
+      logRowData: {},
       timeListSpan: ["Last 1 Day", "Last One Week", "Custom"],
       gridUrl: process.env.REACT_APP_GRID_API + "AuditLogs/Accounts",
-      moreAuditLogs: false
+
+
     };
 
     this.gridRef = React.createRef();
 
   }
+
   gridColumns = [
     { field: "date", title: apicalls.convertLocalLang('Date'), filter: true, filterType: "date", width: 250 },
     { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 250 },
@@ -55,14 +59,30 @@ class AuditLogs extends Component {
     { field: "countryName", title: apicalls.convertLocalLang('Country'), width: 250, filter: true },
     { field: "ipAddress", title: apicalls.convertLocalLang('ipAddress'), width: 250, filter: true },
     { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true, width: 500 },
-    { field: "", title: "", width: 60, customCell: (props) => (<td><Tooltip title="View More"><span className="icon md info c-pointer" onClick={this.showMoreAuditLogs} /></Tooltip></td>) },
+    { field: "", title: "", width: 60, customCell: (props) => (<td><Tooltip title="View More"><div className="icon md info c-pointer" onClick={() => this.showMoreAuditLogs(props)}></div></Tooltip></td>) },
   ]
 
+  showMoreAuditLogs = (e) => {
+    this.setState({ ...this.state, moreAuditLogs: true })
+    this.fetchAuditLoginfo(e.dataItem.id);
 
+  }
   componentDidMount = () => {
     this.TransactionFeatureSearch(this.props.userProfile?.userName);
     this.auditlogsTrack();
   };
+
+  fetchAuditLoginfo = async (id) => {
+    debugger
+    let res = await getAuditLogInfo(id);
+    if (res.ok) {
+      this.setState({
+        ...this.state, logRowData: res.data
+      })
+    } else {
+
+    }
+  }
   auditlogsTrack = () => {
     apicalls.trackEvent({ "Type": 'User', "Action": 'Audit logs page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Audit Logs', "Remarks": 'Audit logs page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Audit Logs' });
   }
@@ -154,11 +174,7 @@ class AuditLogs extends Component {
     }
     this.setState({ ...this.state, searchObj }, () => { this.gridRef.current.refreshGrid(); });
   };
-  showMoreAuditLogs = () => {
-    this.setState({
-      ...this.state, moreAuditLogs: true
-    })
-  }
+
   hideMoreAuditLogs = () => {
     this.setState({
       moreAuditLogs: false
@@ -166,7 +182,7 @@ class AuditLogs extends Component {
   }
 
   render() {
-    const { gridUrl, searchObj, featureData, timeListSpan, moreAuditLogs } = this.state;
+    const { gridUrl, searchObj, featureData, timeListSpan, moreAuditLogs, logRowData } = this.state;
 
     const options3 = timeListSpan.map((d) => (
       <Option key={d} value={d}>{d}</Option>
@@ -347,43 +363,43 @@ class AuditLogs extends Component {
         >
           <div className="coin-info">
             <Text>City</Text>
-            <Text>Hyderabad</Text>
+            <Text>{logRowData?.location?.city}</Text>
           </div>
           <div className="coin-info">
             <Text>State</Text>
-            <Text>Telangana</Text>
+            <Text>{logRowData?.location?.state}</Text>
           </div>
           <div className="coin-info">
             <Text>Country</Text>
-            <Text>India</Text>
+            <Text>{logRowData?.location?.countryName}</Text>
           </div>
           <div className="coin-info">
             <Text>Postal</Text>
-            <Text>500049</Text>
+            <Text>{logRowData?.location?.postal}</Text>
           </div>
           <div className="coin-info">
             <Text>Latitude</Text>
-            <Text>20.27066</Text>
+            <Text>{logRowData?.location?.latitude}</Text>
           </div>
           <div className="coin-info">
             <Text>Longitude</Text>
-            <Text>85.83342</Text>
+            <Text>{logRowData?.location?.longitude}</Text>
           </div>
           <div className="coin-info">
             <Text>Browser</Text>
-            <Text>Chrome</Text>
+            <Text>{logRowData?.browser}</Text>
           </div>
           <div className="coin-info">
             <Text>Deivce Type</Text>
-            <Text>Desktop</Text>
+            <Text>{logRowData?.deviceType?.type}</Text>
           </div>
           <div className="coin-info">
             <Text>Deivce Name</Text>
-            <Text>Windows</Text>
+            <Text>{logRowData?.deviceType?.name}</Text>
           </div>
           <div className="coin-info">
             <Text>Deivce Version</Text>
-            <Text>10.0</Text>
+            <Text>{logRowData?.deviceType?.version}</Text>
           </div>
         </Drawer>
       </>
