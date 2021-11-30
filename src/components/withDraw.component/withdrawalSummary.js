@@ -21,8 +21,7 @@ const WithdrawalSummary = ({
     <Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />
   );
   const [verificationText, setVerificationText] = useState("");
-  const [count,setCount]=useState("0");
-
+const [resendOtp,setResendOtp]=useState("");
   useEffect(() => {
     console.log(userConfig.id);
   });
@@ -53,17 +52,13 @@ const WithdrawalSummary = ({
   const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
 
   const getOTP = async (val) => {
-    let response = await apiCalls.getCode(userConfig.id);
+    let response = await apiCalls.getCode(userConfig.id,resendOtp);
     if (response.ok) {
       console.log(response);
     }
-   
-    setButtonText(
-      <Translate className="pl-0 ml-0 text-yellow-50" content="resend_code" disabled={true}/>
-    )      
-    //setCount({count: count + 1})
-
-
+      setTimeout(() => {
+        setButtonText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_code"  />);
+      }, 120000);    
 
     setVerificationText(
       apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
@@ -170,6 +165,7 @@ const WithdrawalSummary = ({
             placeholder={apiCalls.convertLocalLang("verification_code")}
             maxLength={6}
             onChange={(e) => setOtp(e.target.value)}
+           // onChange={(e)=>setResendOtp(e.target.value)}
             style={{ width: "445px" }}
           />
          
