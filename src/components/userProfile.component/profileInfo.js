@@ -43,7 +43,18 @@ class ProfileInfo extends Component {
                         });
                     }
                 });
-        }
+        },
+        beforeUpload: file => {
+            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true }
+            let isFileName = (file.name.split('.')).length > 2 ? false : true;
+            if (fileType[file.type] && isFileName) {
+                return true
+            } else {
+                message.error(isFileName ? `${file.type} is not accept` : "File don't allow double Extension")
+                return Upload.LIST_IGNORE;
+            }
+
+        },
     };
     componentDidMount() {
         this.profileTrack();
@@ -52,6 +63,7 @@ class ProfileInfo extends Component {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Profile page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Profile Info', "Remarks": 'Profile Info page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Profile Info' });
     }
     saveImage = async (Obj, res) => {
+        debugger
         this.setState({ ...this.state, Loader: true })
         let res1 = await ProfileImageSave(Obj);
         if (res1.ok) {
@@ -62,6 +74,7 @@ class ProfileInfo extends Component {
             this.setState({ ...this.state, Loader: false })
         }
     }
+
     render() {
         const { Title, Paragraph, Text } = Typography;
         return (<>
@@ -69,7 +82,7 @@ class ProfileInfo extends Component {
                 {this.state.Loader && <Loader />}
                 {!this.state.Loader && <>{this.props.userConfig.imageURL != null && <img src={this.props.userConfig.imageURL ? this.props.userConfig.imageURL : DefaultUser} className="user-profile" alt={"image"} />}
                     {this.props.userConfig.imageURL == null && <img src={this.props.userConfig.imageURL ? this.props.userConfig.imageURL : DefaultUser} className="user-profile" alt={"image"} />}
-                    <Upload {...this.uploadProps} accept=".png,.jpeg,.jpg">
+                    <Upload {...this.uploadProps} accept=".png,.jpeg,.jpg,.JPG,.JPEG,.PNG">
                         <Button shape="circle" type="primary" className="img-upld" size="large" icon={<span className="icon md camera" />} />
                     </Upload></>}
             </div>
