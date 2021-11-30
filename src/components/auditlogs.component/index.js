@@ -10,7 +10,7 @@ import apicalls from '../../api/apiCalls';
 
 
 const { Option } = Select;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 class AuditLogs extends Component {
   formRef = React.createRef();
@@ -52,10 +52,10 @@ class AuditLogs extends Component {
     { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 250 },
     { field: "featurePath", title: apicalls.convertLocalLang('Feature_Path'), filter: true, width: 250 },
     { field: "action", title: apicalls.convertLocalLang('Action'), width: 250, filter: true },
-    { field: "location", title: apicalls.convertLocalLang('location'), width: 250, filter: true },
+    { field: "countryName", title: apicalls.convertLocalLang('Country'), width: 250, filter: true },
     { field: "ipAddress", title: apicalls.convertLocalLang('ipAddress'), width: 250, filter: true },
     { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true, width: 500 },
-    { field: "", title: "", width: 60, customCell: (props) => (<td><Tooltip title="View More"><span className="icon md eye c-pointer" onClick={this.showMoreAuditLogs} /></Tooltip></td>) },
+    { field: "", title: "", width: 60, customCell: (props) => (<td><Tooltip title="View More"><span className="icon md info c-pointer" onClick={this.showMoreAuditLogs} /></Tooltip></td>) },
   ]
 
 
@@ -345,6 +345,46 @@ class AuditLogs extends Component {
           onClose={this.hideMoreAuditLogs}
           className="side-drawer"
         >
+          <div className="coin-info">
+            <Text>City</Text>
+            <Text>Hyderabad</Text>
+          </div>
+          <div className="coin-info">
+            <Text>State</Text>
+            <Text>Telangana</Text>
+          </div>
+          <div className="coin-info">
+            <Text>Country</Text>
+            <Text>India</Text>
+          </div>
+          <div className="coin-info">
+            <Text>Postal</Text>
+            <Text>500049</Text>
+          </div>
+          <div className="coin-info">
+            <Text>Latitude</Text>
+            <Text>20.27066</Text>
+          </div>
+          <div className="coin-info">
+            <Text>Longitude</Text>
+            <Text>85.83342</Text>
+          </div>
+          <div className="coin-info">
+            <Text>Browser</Text>
+            <Text>Chrome</Text>
+          </div>
+          <div className="coin-info">
+            <Text>Deivce Type</Text>
+            <Text>Desktop</Text>
+          </div>
+          <div className="coin-info">
+            <Text>Deivce Name</Text>
+            <Text>Windows</Text>
+          </div>
+          <div className="coin-info">
+            <Text>Deivce Version</Text>
+            <Text>10.0</Text>
+          </div>
         </Drawer>
       </>
     );
