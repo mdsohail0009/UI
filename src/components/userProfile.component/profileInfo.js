@@ -50,7 +50,7 @@ class ProfileInfo extends Component {
             if (fileType[file.type] && isFileName) {
                 return true
             } else {
-                message.error(isFileName ? `${file.type} is not accept` : "File don't allow double Extension")
+                message.error({content: isFileName ? `${file.type} is not accept` : "File don't allow double Extension",className: 'custom-msg' })
                 return Upload.LIST_IGNORE;
             }
 
