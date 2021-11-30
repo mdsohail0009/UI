@@ -21,6 +21,7 @@ const WithdrawalSummary = ({
     <Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />
   );
   const [verificationText, setVerificationText] = useState("");
+  const [count,setCount]=useState("0");
 
   useEffect(() => {
     console.log(userConfig.id);
@@ -58,8 +59,12 @@ const WithdrawalSummary = ({
     }
    
     setButtonText(
-      <Translate className="pl-0 ml-0 text-yellow-50" content="resend_code" />
-    );
+      <Translate className="pl-0 ml-0 text-yellow-50" content="resend_code" disabled={true}/>
+    )      
+    //setCount({count: count + 1})
+
+
+
     setVerificationText(
       apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
     );
@@ -156,7 +161,7 @@ const WithdrawalSummary = ({
             </Text>
           }
            rules={[{ required: true, message: "Is required" }]}
-           label={ <Button type="text" onClick={getOTP}>
+           label={ <Button type="text" onClick={getOTP}  >
            {buttonText}
          </Button>}
         >

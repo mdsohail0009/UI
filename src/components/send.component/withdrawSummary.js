@@ -108,6 +108,7 @@ class WithdrawSummary extends Component {
         this.props.userProfile.id,
         this.state.otp
       );
+      
       if (response.ok) {
         message.destroy();
         message.success({
@@ -240,9 +241,8 @@ class WithdrawSummary extends Component {
               {this.props.sendReceive.withdrawCryptoObj?.toWalletAddress}
             </Text>
           </div>
-
-          <div>
-            <Form className="mt-36" name="advanced_search" autoComplete="off">
+          <Form className="mt-36" name="advanced_search" autoComplete="off">
+            <div>
               <Form.Item
                 name="code"
                 className="input-label otp-verify my-36"
@@ -252,6 +252,11 @@ class WithdrawSummary extends Component {
                   </Text>
                 }
                 rules={[{ required: true, message: "Is required" }]}
+                label={
+                  <Button type="text" onClick={this.getOTP}>
+                    {this.state.buttonText}
+                  </Button>
+                }
               >
                 <NumberFormat
                   className="cust-input text-left"
@@ -260,54 +265,51 @@ class WithdrawSummary extends Component {
                   onChange={(e) => this.handleOtp(e.target.value)}
                   style={{ width: "445px" }}
                 />
-                <Button type="text" onClick={this.getOTP}>
-                  {this.state.buttonText}
-                </Button>
               </Form.Item>
-            </Form>
-          </div>
+            </div>
 
-          <Translate
-            className="fs-14 text-center text-white-30 mt-24"
-            content="summary_hint_text"
-            component={Paragraph}
-          />
-          <div className="d-flex p-16 mb-36 agree-check">
-            <label>
-              <input
-                type="checkbox"
-                id="agree-check"
-                checked={this.state.onTermsChange}
-                onChange={({ currentTarget: { checked } }) => {
-                  this.setState({ onTermsChange: checked ? true : false });
-                }}
-              />
-              <span for="agree-check" />
-            </label>
+            <Translate
+              className="fs-14 text-center text-white-30 mt-24"
+              content="summary_hint_text"
+              component={Paragraph}
+            />
+            <div className="d-flex p-16 mb-36 agree-check">
+              <label>
+                <input
+                  type="checkbox"
+                  id="agree-check"
+                  checked={this.state.onTermsChange}
+                  onChange={({ currentTarget: { checked } }) => {
+                    this.setState({ onTermsChange: checked ? true : false });
+                  }}
+                />
+                <span for="agree-check" />
+              </label>
 
-            <Paragraph
-              className="fs-14 text-white-30 ml-16 mb-0"
-              style={{ flex: 1 }}
-            >
-              <Translate content="agree_sell" component="Paragraph" />{" "}
-              <a
-                className="textpure-yellow"
-                href="https://www.iubenda.com/terms-and-conditions/42856099"
-                target="_blank"
+              <Paragraph
+                className="fs-14 text-white-30 ml-16 mb-0"
+                style={{ flex: 1 }}
               >
-                <Translate content="terms" component="Text" />
-              </a>{" "}
-              <Translate content="refund_cancellation" component="Text" />
-            </Paragraph>
-          </div>
-          <SuisseBtn
-            className={"pop-btn"}
-            onRefresh={() => this.onRefresh()}
-            title={"confirm_btn_text"}
-            loading={this.state.isButtonLoad}
-            autoDisable={true}
-            onClick={() => this.onClick()}
-          />
+                <Translate content="agree_sell" component="Paragraph" />{" "}
+                <a
+                  className="textpure-yellow"
+                  href="https://www.iubenda.com/terms-and-conditions/42856099"
+                  target="_blank"
+                >
+                  <Translate content="terms" component="Text" />
+                </a>{" "}
+                <Translate content="refund_cancellation" component="Text" />
+              </Paragraph>
+            </div>
+            <SuisseBtn
+              className={"pop-btn"}
+              onRefresh={() => this.onRefresh()}
+              title={"confirm_btn_text"}
+              loading={this.state.isButtonLoad}
+              autoDisable={true}
+              onClick={() => this.onClick()}
+            />
+          </Form>
           <div className="text-center mt-16">
             <Translate
               content="cancel"
