@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Spin, Empty } from 'antd';
-import { approveDoc, getDocDetails, getDocumentReplies, saveDocReply, uuidv4 } from './api';
+import { approveDoc, getDocDetails, getDocumentReplies, saveDocReply, uuidv4, getFileURL } from './api';
 import Loader from '../../Shared/loader';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
@@ -74,8 +74,17 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: response.data } } });
         }
     }
-    docPreview = (file) => {
-        this.setState({ ...this.state, previewModal: true, previewPath: file.path });
+    docPreview = async (file) => {
+        let res = await getFileURL({ url: file.path });
+        if (res.ok) {
+            this.setState({ ...this.state, previewModal: true, previewPath: file.path });
+        }
+    }
+    fileDownload = async () => {
+        let res = await getFileURL({ url: this.state.previewPath });
+        if (res.ok) {
+            window.open(this.state.previewPath, "_blank")
+        }
     }
     docPreviewClose = () => {
         this.setState({ ...this.state, previewModal: false, previewPath: null })
@@ -275,12 +284,15 @@ class RequestedDocs extends Component {
     }
 
     filePreviewPath() {
+
         if (this.state.previewPath.includes(".pdf")) {
             return "https://suissebasecors.herokuapp.com/" + this.state.previewPath;
         } else {
             return this.state.previewPath;
         }
     }
+
+
 
     render() {
         if (this.state.loading) {
@@ -356,7 +368,7 @@ class RequestedDocs extends Component {
                 closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
                 footer={<>
                     <Button type="primary" onClick={this.docPreviewClose} className="text-center text-white-30 pop-cancel fw-400 mr-36">Close</Button>
-                    <Button className="pop-btn px-36" onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
+                    <Button className="pop-btn px-36" onClick={() => this.fileDownload()}>Download</Button>
                 </>}
             >
                 <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null }} />
