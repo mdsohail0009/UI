@@ -15,13 +15,14 @@ const WithdrawalSummary = ({
   const { Text } = Typography;
   const [isLoding, setIsLoding] = useState(false);
   const [form] = Form.useForm();
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState(false);
   const useOtpRef = React.useRef(null);
   const [buttonText, setButtonText] = useState(
     <Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />
   );
   const [verificationText, setVerificationText] = useState("");
-const [resendOtp,setResendOtp]=useState("");
+const [isResend,setIsResend]=useState(false);
+
   useEffect(() => {
     console.log(userConfig.id);
   });
@@ -52,13 +53,16 @@ const [resendOtp,setResendOtp]=useState("");
   const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
 
   const getOTP = async (val) => {
-    let response = await apiCalls.getCode(userConfig.id,resendOtp);
+    let response = await apiCalls.getCode(userConfig.id,isResend);
     if (response.ok) {
       console.log(response);
     }
       setTimeout(() => {
         setButtonText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_code"  />);
-      }, 120000);    
+        setIsResend(true);     
+      }, 120000);  
+      //setInterval()  
+      
 
     setVerificationText(
       apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
@@ -164,8 +168,7 @@ const [resendOtp,setResendOtp]=useState("");
             className="cust-input text-left"
             placeholder={apiCalls.convertLocalLang("verification_code")}
             maxLength={6}
-            onChange={(e) => setOtp(e.target.value)}
-           // onChange={(e)=>setResendOtp(e.target.value)}
+            onChange={e => { setOtp(e.target.value) }}
             style={{ width: "445px" }}
           />
          

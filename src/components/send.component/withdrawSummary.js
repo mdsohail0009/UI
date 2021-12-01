@@ -44,7 +44,8 @@ class WithdrawSummary extends Component {
     ),
     verificationText: "",
     otp: "",
-    code: ""
+    code: "",
+    isResend: false
   };
   useDivRef = React.createRef();
   componentDidMount() {
@@ -88,11 +89,14 @@ class WithdrawSummary extends Component {
   };
 
   getOTP = async (val) => {
-    let response = await apiCalls.getCode(this.props.userProfile.id);
+    let response = await apiCalls.getCode(this.props.userProfile.id, this.state.isResend);
     if (response.ok) {
       console.log(response);
     }
-    this.setState({ buttonText: "RESEND CODE" });
+    setTimeout(() => {
+      this.setState({ buttonText: "RESEND CODE" });
+      this.setState({ isResend: true });
+    }, 120000);
     this.setState({
       verificationText:
         apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber
@@ -108,7 +112,7 @@ class WithdrawSummary extends Component {
         this.props.userProfile.id,
         this.state.otp
       );
-      
+
       if (response.ok) {
         message.destroy();
         message.success({
@@ -241,7 +245,12 @@ class WithdrawSummary extends Component {
               {this.props.sendReceive.withdrawCryptoObj?.toWalletAddress}
             </Text>
           </div>
-          <Form className="mt-36" name="advanced_search" autoComplete="off">
+          <Form
+            className="mt-36"
+            name="advanced_search"
+            autoComplete="off"
+            form={this.form}
+          >
             <div>
               <Form.Item
                 name="code"
@@ -303,12 +312,16 @@ class WithdrawSummary extends Component {
             </div>
             <SuisseBtn
               className={"pop-btn"}
+              htmlType="submit"
               onRefresh={() => this.onRefresh()}
               title={"confirm_btn_text"}
               loading={this.state.isButtonLoad}
               autoDisable={true}
               onClick={() => this.onClick()}
             />
+            {/* <Button size="large" block className="pop-btn" htmlType="submit"  onClick={() => this.onClick()}>
+              <Translate content="Confirm" component={Text} />
+            </Button> */}
           </Form>
           <div className="text-center mt-16">
             <Translate
