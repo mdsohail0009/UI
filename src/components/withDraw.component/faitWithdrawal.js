@@ -35,6 +35,7 @@ import {
 import WithdrawalSummary from "./withdrawalSummary";
 import WithdrawalLive from "./withdrawLive";
 import apicalls from "../../api/apiCalls";
+import { validateContentRule } from "../../utils/custom.validator";
 
 const LinkValue = (props) => {
   return (
@@ -534,7 +535,9 @@ const FaitWithdrawal = ({
                   {
                     whitespace: true,
                     message: apicalls.convertLocalLang("is_required")
-                  }
+                  },{
+                    validator: validateContentRule
+                }
                 ]}
               >
                 <Input
@@ -555,7 +558,9 @@ const FaitWithdrawal = ({
                     required: true,
                     message: apicalls.convertLocalLang("is_required"),
                     whitespace: true
-                  }
+                  },{
+                    validator: validateContentRule
+                }
                 ]}
               >
                 <Input
@@ -571,6 +576,11 @@ const FaitWithdrawal = ({
                 label={
                   <Translate content="Bank_address2" component={Form.label} />
                 }
+                rules={[
+                  {
+                    validator: validateContentRule
+                }
+                ]}
               >
                 <Input
                   className="cust-input"
@@ -639,7 +649,9 @@ const FaitWithdrawal = ({
                         callback();
                       }
                     }
-                  }
+                  },{
+                    validator: validateContentRule
+                }
                 ]}
               >
                 <Input
@@ -684,7 +696,9 @@ const FaitWithdrawal = ({
                     required: true,
                     message: apicalls.convertLocalLang("is_required"),
                     whitespace: true
-                  }
+                  },{
+                    validator: validateContentRule
+                }
                 ]}
               >
                 <Input
@@ -702,6 +716,11 @@ const FaitWithdrawal = ({
                     component={Form.label}
                   />
                 }
+                rules={[
+                  {
+                    validator: validateContentRule
+                }
+                ]}
               >
                 <Input
                   className="cust-input"
@@ -712,6 +731,11 @@ const FaitWithdrawal = ({
                 className="custom-forminput custom-label mb-24"
                 name="description"
                 label={<Translate content="remarks" component={Form.label} />}
+                rules={[
+                  {
+                    validator: validateContentRule
+                }
+                ]}
               >
                 <Input
                   className="cust-input"
@@ -722,7 +746,6 @@ const FaitWithdrawal = ({
                 className="custom-forminput mb-36 agree"
                 name="isAccept"
                 valuePropName="checked"
-                required
                 rules={[
                   {
                     validator: (_, value) =>
@@ -734,6 +757,7 @@ const FaitWithdrawal = ({
                             )
                           )
                   }
+
                 ]}
               >
                 <Checkbox className="ant-custumcheck">
