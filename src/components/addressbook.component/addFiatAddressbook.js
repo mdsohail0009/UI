@@ -8,6 +8,7 @@ import WalletList from '../shared/walletList';
 import { saveAddress, favouriteNameCheck, getAddress } from './api';
 import Loader from '../../Shared/loader';
 import apiCalls from '../../api/apiCalls';
+import { validateContentRule } from '../../utils/custom.validator'
 
 const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, userProfileInfo, trackAuditLogData }) => {
     const [form] = Form.useForm();
@@ -108,6 +109,9 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             {
                                 whitespace: true,
                                 message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                validator: validateContentRule
                             }
                         ]} >
                         <Input className="cust-input" maxLength="20" placeholder={apiCalls.convertLocalLang('Enteraddresslabel')} />
@@ -124,6 +128,9 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             {
                                 whitespace: true,
                                 message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                validator: validateContentRule
                             }
                         ]}
                     >
@@ -150,6 +157,9 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                                 pattern: /^[A-Za-z0-9]+$/,
                                 message: 'Invalid account number'
                             },
+                            {
+                                validator: validateContentRule
+                            }
                         ]}
                     >
                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_account')} onBlur={(val) => getIbanData(val.currentTarget.value)} />
@@ -165,6 +175,9 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                                 pattern: /^[A-Za-z0-9]+$/,
                                 message: 'Invalid BIC/SWIFT/Routing number'
                             },
+                            {
+                                validator: validateContentRule
+                            }
                         ]}
                     >
                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('BIC_SWIFT_routing_number')} />
@@ -182,6 +195,9 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             {
                                 whitespace: true,
                                 message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                validator: validateContentRule
                             }
                         ]}
                     >
@@ -200,6 +216,9 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             {
                                 whitespace: true,
                                 message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                validator: validateContentRule
                             }
                         ]}>
                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_address1')} />
@@ -233,6 +252,9 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             {
                                 whitespace: true,
                                 message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                validator: validateContentRule
                             }
                         ]}>
                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />

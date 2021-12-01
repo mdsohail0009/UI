@@ -7,6 +7,8 @@ import { saveAddress, favouriteNameCheck, getAddress } from './api';
 import Loader from '../../Shared/loader';
 import Translate from 'react-translate-component';
 import apiCalls from '../../api/apiCalls';
+import { validateContentRule } from '../../utils/custom.validator'
+
 
 const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, rejectCoinWallet, InputFormValues, userProfileInfo, trackAuditLogData }) => {
     const [form] = Form.useForm();
@@ -113,6 +115,9 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                             {
                                 whitespace: true,
                                 message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                validator: validateContentRule
                             }
                         ]}
                     >
@@ -123,7 +128,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                         name="toCoin"
                         label={<Translate content="Coin" component={Form.label} />}
                         rules={[
-                            { required: true, message: apiCalls.convertLocalLang('is_required') },
+                            { required: true, message: apiCalls.convertLocalLang('is_required') }
                         ]} >
                         <Input disabled placeholder={apiCalls.convertLocalLang('Selectcoin')} className="cust-input cust-adon c-pointer"
                             addonAfter={<i className="icon md rarrow-white c-pointer" onClick={selectCrypto} />} />
@@ -141,6 +146,9 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                             {
                                 whitespace: true,
                                 message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                validator: validateContentRule
                             }
                         ]} >
                         <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('Enteraddress')} />
