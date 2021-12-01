@@ -175,9 +175,6 @@ const FaitWithdrawal = ({
       setCountryLu(recName.data);
     }
     apicalls.trackEvent({
-<<<<<<< HEAD
-       "Type": 'User', "Action": 'Page view', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Page View', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' 
-=======
       Type: "User",
       Action: "Page view",
       Username: userConfig.userName,
@@ -187,7 +184,6 @@ const FaitWithdrawal = ({
       Duration: 1,
       Url: window.location.href,
       FullFeatureName: "Withdraw Fiat"
->>>>>>> 6a3dfe31094cb0222780c07ae54da7d7217fa2f7
     });
   };
 
