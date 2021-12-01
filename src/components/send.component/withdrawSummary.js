@@ -50,9 +50,15 @@ class WithdrawSummary extends Component {
   componentDidMount() {
     this.loadOneCoinData();
     this.loadData();
+    this.trackEvent();
     this.props.dispatch(
       setSubTitle(apiCalls.convertLocalLang("withdrawSummary"))
     );
+  }
+  trackEvent = () => {
+    apiCalls.trackEvent({
+                 "Type": 'User', "Action": 'save', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": 'withdraw Summary', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'withdraw Summary' 
+             });
   }
   loadData = async () => {
     this.setState({ ...this.state, usdLoading: true });

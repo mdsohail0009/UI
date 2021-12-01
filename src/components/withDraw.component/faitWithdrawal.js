@@ -109,7 +109,7 @@ const FaitWithdrawal = ({ member, selectedWalletCode, buyInfo, userConfig, dispa
       setCountryLu(recName.data);
     }
     apicalls.trackEvent({
-       "Type": 'User', "Action": 'Page view', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' 
+       "Type": 'User', "Action": 'Page view', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Page View', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' 
     });
   }
 

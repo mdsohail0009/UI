@@ -1,5 +1,6 @@
 import React from 'react';
-import { Typography, Radio, Row, Col, Spin } from 'antd';
+import { connect } from 'react-redux';
+import { Typography, Row, Col, Spin, Button, Alert, Form, DatePicker, Modal, Tooltip, Input,Radio } from "antd";
 import { Link, withRouter } from "react-router-dom";
 import { getcoinDetails, getCoinChatData } from './api'
 import ConnectStateProps from '../../utils/state.connect';
@@ -10,7 +11,10 @@ import { setStep } from '../../reducers/buysellReducer';
 import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import apiCalls from '../../api/apiCalls';
+import Translate from 'react-translate-component';
 
+import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet,setSubTitle } from "../../reducers/sendreceiveReducer";
+import { setWithdrawfiatenaable, setWithdrawfiat } from '../../reducers/sendreceiveReducer'
 class CoinView extends React.Component {
     state = {
         coinData: null,
@@ -43,6 +47,22 @@ class CoinView extends React.Component {
         }
     }
     showBuyDrawer = (item, key) => {
+        let selectedObj={...item};
+        // selectedObj.impagePath=this.state.chatData.impagePath;
+        // selectedObj.percentage=this.state.chatData.percentage;
+        // selectedObj.sellMaxValue=this.state.chatData.sellMaxValue;
+        // selectedObj.sellMinValue=this.state.chatData.sellMinValue;
+        // selectedObj.swapMaxValue=this.state.chatData.swapMaxValue;
+        // selectedObj.swapMinValue=this.state.chatData.swapMinValue;
+        // selectedObj.withdrawMaxValue=this.state.chatData.withdrawMaxValue;
+        // selectedObj.withdrawMinValue=this.state.chatData.withdrawMinValue;
+        // selectedObj.impageWhitePath=this.state.chatData.impageWhitePath;
+        // selectedObj.coinValueinNativeCurrency=this.state.chatData.coinValueinNativeCurrency;
+        selectedObj.coin=selectedObj.symbol.toUpperCase();
+        selectedObj.coinBalance=selectedObj.avilableBalance
+        selectedObj.coinFullName=selectedObj.name
+        selectedObj.oneCoinValue=selectedObj.current_price;
+        console.log(selectedObj);
         if (this.props?.userProfile?.isDocsRequested) {
             this.props.history.push("/docnotices");
             return;
@@ -52,30 +72,73 @@ class CoinView extends React.Component {
             return;
         }
         if (key === "buy") {
-            if (this.props.dashboard.marketSelectedCoin) {
-                this.props.dispatch(fetchSelectedCoinDetails(item.coin, this.props.userProfile?.id));
-                this.props.dispatch(setCoin({ ...item, toWalletCode: item.coin, toWalletId: item.id, toWalletName: item.coinFullName }));
-                convertCurrency({ from: item.coin, to: "USD", value: 1, isCrypto: false, memId: this.props.userProfile?.id, screenName: null }).then(val => {
-                    this.props.dispatch(setExchangeValue({ key: item.coin, value: val }));
-                });
-                this.props.dispatch(setStep("step2"));
-            } else {
-                this.props.dispatch(fetchSelectedCoinDetails(item.symbol, this.props.userProfile?.id));
-                this.props.dispatch(setCoin({ ...item, toWalletCode: item.symbol, toWalletId: item.id, toWalletName: item.name }));
-                convertCurrency({ from: item.symbol, to: "USD", value: 1, isCrypto: false, memId: this.props.userProfile?.id, screenName: null }).then(val => {
-                    this.props.dispatch(setExchangeValue({ key: item.symbol, value: val }));
-                });
-                this.props.dispatch(setStep("step2"));
-            }
+            this.props.dispatch(fetchSelectedCoinDetails(selectedObj.coin, this.props.userProfile?.id));
+            this.props.dispatch(setCoin({ ...selectedObj, toWalletCode: selectedObj.coin, toWalletId: selectedObj.id, toWalletName: selectedObj.coinFullName }));
+            convertCurrency({ from: selectedObj.coin, to: "USD", value: 1, isCrypto: false, memId: this.props.userProfile?.id, screenName: null }).then(val => {
+                this.props.dispatch(setExchangeValue({ key: selectedObj.coin, value: val }));
+            });
+            this.props.dispatch(setStep("step2"));
         } else if (key === "sell") {
-            this.props.dispatch(setCoin(item));
-            this.props.dispatch(setExchangeValue({ key: item.symbol, value: item.current_price }));
-            this.props.dispatch(updateCoinDetail(item))
+            this.props.dispatch(setCoin(selectedObj));
+            this.props.dispatch(setExchangeValue({ key: selectedObj.coin, value: selectedObj.oneCoinValue }));
+            this.props.dispatch(updateCoinDetail(selectedObj))
             this.props.dispatch(setStep("step10"));
         }
         this.setState({
             buyDrawer: true
         })
+    }
+    showSendReceiveDrawer = (e, value) => {
+        debugger
+        let selectedObj={...value};
+        selectedObj.coin=selectedObj.symbol.toUpperCase();
+        selectedObj.coinBalance=selectedObj.avilableBalance
+        selectedObj.coinFullName=selectedObj.name
+        selectedObj.oneCoinValue=selectedObj.current_price;
+        console.log(selectedObj);
+        this.props.dispatch(fetchWithDrawWallets({ memberId: this.props?.userProfile?.id }));
+        this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
+        this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
+        // amount: "4320.00"
+        // id: "c5707468-c667-4c32-84fe-700a2b5c42a5"
+        // imagePath: "https://suissebase.blob.core.windows.net/assets/usd.svg"
+        // walletCode: "USD"
+        // walletId: "fabc96b7-db27-4e36-a747-76701d76371d"
+        let coin=value.symbol.toUpperCase();
+    //     if (this.props?.userProfile?.isDocsRequested) {
+    //         this.props.history.push("/docnotices");
+    //         return;
+    //     }
+    //     if (!this.props?.userProfile?.isKYC) {
+    //         this.props.history.push("/notkyc");
+    //         return;
+    //     }
+    //     // const isDocsRequested = this.props.userProfile.isDocsRequested;
+    //     // if (isDocsRequested) {
+    //     //     this.showDocsError();
+    //     //     return;
+    //     // }
+    //    // if (e === 2) {
+    //         this.props.dispatch(setWithdrawfiatenaable(true))
+    //         this.props.dispatch(setWithdrawfiat({ walletCode: coin }))
+    //     ////} 
+    //     this.setState({
+    //         valNum: e
+    //     }, () => {
+    //         this.setState({
+    //             ...this.state,
+    //             buyFiatDrawer: true,
+    //             selctedVal: coin
+    //         })
+
+    //     })
+   // this.props.dispatch(setWithdrawcrypto({...obj, toWalletAddress: item.code}))
+  this.props.changeStep('withdraw_crypto_selected');
+    this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
+    //this.closeDrawer()
+    
+   // this.props.dispatch(setStep('withdraw_crypto_selected'));
+
     }
     closeDrawer = () => {
         this.setState({
@@ -97,6 +160,17 @@ class CoinView extends React.Component {
                                 <Text className="text-white-30 fs-16 m-0" style={{ lineHeight: '18px' }}>1{coinData?.symbol.toUpperCase()} = {coinData?.btC_Price} USD<Text className="text-green ml-16">7.41%</Text></Text>
                             </div>
                         </div>
+                        <div className="text-right">
+                        <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(coinData,"buy")} className="custom-btn prime" />
+                                <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer(coinData,"sell")} />
+                                {/* <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer("sell")} /> */}
+                                {/* <Translate content="withdraw" className="ml-16" component={Radio.Button} onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} /> */}
+                  </div>
+                            {/* <div className="crypto_btns">
+                                <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(item, "buy")} className="custom-btn prime" />
+                                <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer(item, "sell")} />
+                            </div> */}
+                        
                         <ul className="m-0">
                             {/* <li onClick={() => this.showBuyDrawer(coinData, "buy")}><div><span className="icon md file" /></div>BUY</li> */}
                             {/* <li  onClick={() => this.showBuyDrawer(coinData, "sell")}><div><span className="icon md file" /></div>SELL</li> */}
@@ -175,4 +249,20 @@ class CoinView extends React.Component {
     }
 }
 
-export default ConnectStateProps(withRouter(CoinView));
+const connectStateToProps = ({ sendReceive, userConfig }) => {
+    return { sendReceive, userProfile: userConfig.userProfileInfo }
+}
+const connectDispatchToProps = dispatch => {
+    return {
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode))
+        },
+
+        // SelectedAddress: (addressObj) => {
+        //     dispatch(setAddress(addressObj));
+        // },
+        dispatch
+    }
+}
+
+export default connect(connectStateToProps, connectDispatchToProps)(withRouter(CoinView));

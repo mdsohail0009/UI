@@ -23,7 +23,12 @@ class SwapSummary extends Component {
     componentDidMount() {
         this.setOneCoinValue();
         this.setReceiveAmount();
-
+        this.trackEvent();
+    }
+    trackEvent = () =>{
+        apiCalls.trackEvent({
+            "Type": 'User',"Action": 'Page view',"Username": this.props.userProfile.userName,"MemeberId": this.props.userProfile.id,"Feature": 'Swap',"Remarks": 'Summary Swap coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Swap'
+        });
     }
     componentWillUnmount() {
         clearInterval(this.updateTimer);

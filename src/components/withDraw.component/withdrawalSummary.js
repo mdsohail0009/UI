@@ -24,8 +24,12 @@ const WithdrawalSummary = ({
 const [resendOtp,setResendOtp]=useState("");
   useEffect(() => {
     console.log(userConfig.id);
+    // trackevent();
+    apiCalls.trackEvent({
+      "Type": 'User', "Action": 'Page view', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Summary Page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' 
+   });
   });
-
+ 
   const saveWithdrwal = async () => {
     let response = await apiCalls.getVerification(userConfig.id, otp);
 
