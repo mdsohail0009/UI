@@ -23,7 +23,7 @@ class Home extends Component {
         this.loginTrack();
     }
     loginTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Page view', "Username":null, "MemeberId": null, "Feature": 'Login', "Remarks": 'User Logged in', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Login' });
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'page view', "Username":null, "MemeberId": null, "Feature": 'Login', "Remarks": 'User Logged in', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Login' });
     }
     dashboardTrack = () => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Cockpit page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Cockpit page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });

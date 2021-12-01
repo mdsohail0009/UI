@@ -28,7 +28,7 @@ class SwapCoins extends Component {
     }
     trackEvent = () =>{
         apicalls.trackEvent({
-            "Type": 'User',"Action": 'Page view',"Username": this.props.userProfile.userName,"MemeberId": this.props.userProfile.id,"Feature": 'Swap',"Remarks": 'Swap coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Swap'
+            "Type": 'User',"Action": 'Swap page view',"Username": this.props.userProfile.userName,"MemeberId": this.props.userProfile.id,"Feature": 'Swap',"Remarks": 'Swap coins page view',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Swap'
         });
     }
     clearSwapCoinValues = () =>{

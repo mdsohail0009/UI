@@ -31,7 +31,7 @@ class FiatWallets extends Component {
     }
     trackEvent = () =>{
         apicalls.trackEvent({
-            "Type": 'User',"Action": 'Page view',"Username": this.props.userProfile.userName,"MemeberId": this.props.userProfile.id,"Feature": 'Wallets',"Remarks": 'Wallets',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Wallets'
+            "Type": 'User',"Action": 'Wallets page view',"Username": this.props.userProfile.userName,"MemeberId": this.props.userProfile.id,"Feature": 'Wallets',"Remarks": 'Wallets page view',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Wallets'
         });
     }
     showDocsError() {

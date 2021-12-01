@@ -48,7 +48,7 @@ class SelectCrypto extends Component {
     
     trackEvent = (val) =>{
         apicalls.trackEvent({
-            "Type": 'User',"Action": val+'Page view',"Username": this.props.userProfile.userName,"MemeberId": this.props.userProfile.userId,"Feature": 'Swap',"Remarks": val+'Swap coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Swap crypto'
+            "Type": 'User',"Action": val+'Swap page view',"Username": this.props.userProfile.userName,"MemeberId": this.props.userProfile.userId,"Feature": 'Swap',"Remarks": val+'Swap coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Swap crypto'
         });
     }
     onSearch = (e) => {

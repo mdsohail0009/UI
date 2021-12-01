@@ -27,7 +27,7 @@ const [isResend,setIsResend]=useState(false);
     console.log(userConfig.id);
     // trackevent();
     apiCalls.trackEvent({
-      "Type": 'User', "Action": 'Page view', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Summary Page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' 
+      "Type": 'User', "Action": 'Withdraw Fiat Summary page view', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' 
    });
   });
  
