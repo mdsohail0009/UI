@@ -16,8 +16,9 @@ class SellSummary extends Component {
     }
     EventTrack = () => {
         apicalls.trackEvent({
-            "Type": 'User', "Action": 'Save', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Sell', "Remarks": this.props.sellData.sellsaveObject.fromValue + " " + this.props.sellData.sellsaveObject.fromWalletCode + " selled", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'sell Crypto'
+            "Type": 'User', "Action": 'Sell summary page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Sell', "Remarks": 'Sell crypto coin summary', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'sell Crypto'
         });
+        //this.props.sellData.sellsaveObject.fromValue + " " + this.props.sellData.sellsaveObject.fromWalletCode + " selled"  //Dont remove*****
     }
     async fetchPreviewData() {
         let res = await getSellPreviewData(this.props.sellData.sellsaveObject);
@@ -50,8 +51,8 @@ class SellSummary extends Component {
             obj.toValue = this.state.sellpreviewData.amountNativeCurrency
             obj.exicutedPrice = this.state.sellpreviewData.oneCoinValue
             obj.totalAmount = this.state.sellpreviewData.amountNativeCurrency + this.props.sellData.sellsaveObject.comission;
-            this.props.trackAuditLogData.Action='Save';
-            this.props.trackAuditLogData.Remarks=obj.fromValue + " " + this.state.sellpreviewData.coin + " selled"
+            this.props.trackAuditLogData.Action = 'Save';
+            this.props.trackAuditLogData.Remarks = obj.fromValue + " " + this.state.sellpreviewData.coin + " selled"
             obj.info = JSON.stringify(this.props.trackAuditLogData)
             let res = await savesellData(obj);
             if (res.ok) {

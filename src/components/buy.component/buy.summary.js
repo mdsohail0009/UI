@@ -24,7 +24,7 @@ class BuySummary extends Component {
         this.EventTrack();
     }
     EventTrack = () => {
-        apicalls.trackEvent({ "Type": 'User', "Action": 'Page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Buy', "Remarks": 'Buy coin Summary', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy crypto' });
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Buy summary page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Buy', "Remarks": 'Buy crypto coin summary', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy crypto' });
     }
     pay = async () => {
         this.setState({ ...this.state, error: { valid: true, message: null } });
@@ -50,8 +50,8 @@ class BuySummary extends Component {
             obj.toWalletId = obj.toWalletId ? obj.toWalletId : this.props.sellData?.id;
             obj.toWalletCode = obj.toWalletCode ? obj.toWalletCode : this.props.sellData?.coinWallet?.coin;
             obj.toWalletName = obj.toWalletName ? obj.toWalletName : this.props.sellData?.coinWallet?.coinFullName;
-            this.props.trackAuditLogData.Action='Save';
-            this.props.trackAuditLogData.Remarks=obj.toValue + ' ' + obj.toWalletName + ' buy success';
+            this.props.trackAuditLogData.Action = 'Save';
+            this.props.trackAuditLogData.Remarks = obj.toValue + ' ' + obj.toWalletName + ' buy success';
             obj.info = JSON.stringify(this.props.trackAuditLogData);
             this.setState({ isLoading: true });
             const response = await buyCrypto(obj);

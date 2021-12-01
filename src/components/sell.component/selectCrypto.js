@@ -26,7 +26,7 @@ class SelectSellCrypto extends Component {
         this.EventTrack();
     }
     EventTrack = () => {
-        apicalls.trackEvent({ "Type": 'User', "Action": 'Page View', "Feature": 'Sell', "Remarks": "Sell page view", "FullFeatureName": 'Sell Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Sell coin page View', "Feature": 'Sell', "Remarks": "Sell crypto coin selection view", "FullFeatureName": 'Sell Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
     }
     fetchdefaultMinAmntValues = async () => {
         this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue })
