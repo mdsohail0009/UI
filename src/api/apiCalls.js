@@ -75,8 +75,9 @@ const getdailypnl = (userid, days) => {
     return apiClient.get(ApiControllers.dashboard + `DailyPNL/${userid}/${days}`);
 }
 
-const getCode = (AccountId) => {
-    return apiClient.get(ApiControllers.master + `SendOTP/${AccountId}`);
+const getCode = (AccountId,isResendOTP) => {
+    return apiClient.get(ApiControllers.master + `SendOTP/${AccountId}/${isResendOTP}`);
+
 }
 const getVerification = (AccountId, code) => {
     return apiClient.get(ApiControllers.master + `OTPVerification/${AccountId}/${code}`)
