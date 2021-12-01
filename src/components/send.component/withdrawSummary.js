@@ -44,7 +44,8 @@ class WithdrawSummary extends Component {
     ),
     verificationText: "",
     otp: "",
-    code: ""
+    code: "",
+    isResend: false
   };
   useDivRef = React.createRef();
   componentDidMount() {
@@ -88,11 +89,14 @@ class WithdrawSummary extends Component {
   };
 
   getOTP = async (val) => {
-    let response = await apiCalls.getCode(this.props.userProfile.id);
+    let response = await apiCalls.getCode(this.props.userProfile.id, this.state.isResend);
     if (response.ok) {
       console.log(response);
     }
-    this.setState({ buttonText: "RESEND CODE" });
+    setTimeout(() => {
+      this.setState({ buttonText: "RESEND CODE" });
+      this.setState({ isResend: true });
+    }, 120000);
     this.setState({
       verificationText:
         apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber
