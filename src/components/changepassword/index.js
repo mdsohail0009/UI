@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { changePassword } from '../../api/apiServer';
 import { getmemeberInfo } from '../../reducers/configReduser';
 import apiClient from "../../api/apiCalls";
+import { validateContentRule } from '../../utils/custom.validator'
 
 
 notification.config({
@@ -95,6 +96,9 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
             {
               required: true, message: apiClient.convertLocalLang('current_pass_word_msg')
             },
+            {
+              validator: validateContentRule
+            }
 
           ]}
         >
@@ -120,6 +124,9 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
             pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/,
             message: 'Password must be at least 8 Characters long one uppercase with one lowercase, one numeric & special character'
           },
+          {
+            validator: validateContentRule
+          }
           ]}
         >
 
@@ -147,8 +154,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
           rules={[
             {
               required: true,
-              message: apiClient.convertLocalLang('confirm_pass_word_msg')
-              ,
+              message: apiClient.convertLocalLang('confirm_pass_word_msg'),
 
             },
             ({ getFieldValue }) => ({
@@ -161,6 +167,9 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
                 );
               },
             }),
+            {
+              validator: validateContentRule
+            }
           ]}
         >
 
