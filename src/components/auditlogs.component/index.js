@@ -40,9 +40,10 @@ class AuditLogs extends Component {
         fromdate: '',
         todate: '',
       },
-      logRowData: {},
+      logRowData: null,
       timeListSpan: ["Last 1 Day", "Last One Week", "Custom"],
       gridUrl: process.env.REACT_APP_GRID_API + "AuditLogs/Accounts",
+      featureName: ''
 
 
     };
@@ -63,19 +64,23 @@ class AuditLogs extends Component {
   ]
 
   showMoreAuditLogs = (e) => {
-    this.setState({ ...this.state, moreAuditLogs: true })
-    this.fetchAuditLoginfo(e.dataItem.id);
+    debugger
+    this.fetchAuditLoginfo(e.dataItem.id, e);
 
   }
   componentDidMount = () => {
     this.TransactionFeatureSearch(this.props.userProfile?.userName);
     this.auditlogsTrack();
   };
-  fetchAuditLoginfo = async (id) => {
+  fetchAuditLoginfo = async (id, e) => {
+    this.setState({
+      ...this.state, isLoading: false, moreAuditLogs: true, featureName: e.dataItem.feature
+    })
+    console.log("data======", e)
     let res = await getAuditLogInfo(id);
     if (res.ok) {
       this.setState({
-        ...this.state, logRowData: res.data
+        ...this.state, logRowData: res.data, isLoading: false
       })
     }
   }
@@ -177,7 +182,7 @@ class AuditLogs extends Component {
   };
 
   render() {
-    const { gridUrl, searchObj, featureData, timeListSpan, moreAuditLogs, logRowData } = this.state;
+    const { gridUrl, searchObj, featureData, timeListSpan, moreAuditLogs, logRowData, isLoading } = this.state;
 
     const options3 = timeListSpan.map((d) => (
       <Option key={d} value={d}>{d}</Option>
@@ -345,7 +350,7 @@ class AuditLogs extends Component {
           title={[<div className="side-drawer-header">
             <span />
             <div className="text-center fs-16">
-              <Title className="text-white-30 fs-16 fw-600 text-upper mb-4 d-block">Audit Logs</Title>
+              <Title className="text-white-30 fs-16 fw-600 text-upper mb-4 d-block">{this.state.featureName}</Title>
             </div>
             <span onClick={this.hideMoreAuditLogs} className="icon md close-white c-pointer" />
           </div>]}
@@ -356,7 +361,7 @@ class AuditLogs extends Component {
           onClose={this.hideMoreAuditLogs}
           className="side-drawer"
         >
-          {logRowData.ip === null ? <div className="text-center"><Spin /></div> : <><div className="coin-info">
+          {(isLoading && logRowData?.browser == null || logRowData?.location == null || logRowData?.ip == null || logRowData?.deviceType == null) ? <div className="text-center"><Spin /></div> : <><div className="coin-info">
             <Text>City</Text>
             <Text>{logRowData?.location?.city}</Text>
           </div>
@@ -369,7 +374,7 @@ class AuditLogs extends Component {
               <Text>{logRowData?.location?.countryName}</Text>
             </div>
             <div className="coin-info">
-              <Text>Postal</Text>
+              <Text>Postal Code</Text>
               <Text>{logRowData?.location?.postal}</Text>
             </div>
             <div className="coin-info">
@@ -385,15 +390,15 @@ class AuditLogs extends Component {
               <Text>{logRowData?.browser}</Text>
             </div>
             <div className="coin-info">
-              <Text>Deivce Type</Text>
-              <Text>{logRowData?.deviceType?.type}</Text>
+              <Text>Device Type</Text>
+              <Text style={{ textTransform: 'capitalize' }}>{logRowData?.deviceType?.type}</Text>
             </div>
             <div className="coin-info">
-              <Text>Deivce Name</Text>
+              <Text>Device Name</Text>
               <Text>{logRowData?.deviceType?.name}</Text>
             </div>
             <div className="coin-info">
-              <Text>Deivce Version</Text>
+              <Text>Device Version</Text>
               <Text>{logRowData?.deviceType?.version}</Text>
             </div></>}
         </Drawer>

@@ -918,6 +918,8 @@ main.ant-layout-content{min-height: calc(100vh - 220px);}
     background-color: transparent !important;
     color: var(--textWhite) !important;
 }
+.k-grid-content{margin-right: -12px;}
+.k-grid-header{padding-right: 0;}
 .k-grid tbody tr:hover, .k-grid tbody tr.k-state-hover {
     background-color: var( --bgDarkGrey) !important;
 }
