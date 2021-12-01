@@ -4,7 +4,7 @@ let connection;
 function buildConnection() {
     const { userConfig: { userProfileInfo } } = store.getState();
     connection = new SignalR.HubConnectionBuilder()
-        .withUrl(process.env.REACT_APP_SIGNALR_HUB + "/chatsocket?username=" + userProfileInfo?.id)
+        .withUrl(process.env.REACT_APP_SIGNALR_HUB + "/chatsocket?username=subreddy" + userProfileInfo?.id)
         .configureLogging(SignalR.LogLevel.Information)
         .build();
 
@@ -21,8 +21,4 @@ async function start() {
         setTimeout(start, 5000);
     }
 };
-
-
-// Start the connection.
-
 export { connection, buildConnection }
