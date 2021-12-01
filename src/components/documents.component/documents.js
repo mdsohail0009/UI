@@ -21,7 +21,7 @@ class Documents extends Component {
         this.documentTrack();
     }
     documentTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Document Grid view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Documents', "Remarks": 'Documents', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Documents' });
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Documents Grid view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Documents', "Remarks": 'Documents Grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Documents' });
     }
     gridColumns = [
         { field: "title", title: apiCalls.convertLocalLang('title'), filter: true, customCell: (props) => <td><div className="gridLink" onClick={() => this.details(props)}>{props.dataItem?.title}</div></td> },

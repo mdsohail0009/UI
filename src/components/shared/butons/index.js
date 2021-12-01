@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import React, { useEffect, useState } from 'react';
 import Translate from 'react-translate-component';
 
-const SuisseBtn = ({ title, onClick, autoDisable = false, duration = 10000, className = "", loading = false, disabled, onRefresh }) => {
+const SuisseBtn = ({ title, onClick, autoDisable = false, duration = 10000, className = "", loading = false, disabled, onRefresh,htmlType="button" }) => {
     const [refresh, setRefresh] = useState(false);
     const [seconds, setSeconds] = useState(10);
     let timeInterval;
@@ -25,8 +25,8 @@ const SuisseBtn = ({ title, onClick, autoDisable = false, duration = 10000, clas
     useEffect(() => {
         startTimer();
     }, [autoDisable]);
-    return refresh ? <Translate content={"suisse_btn_refresh"} component={Button} size="large" block className="pop-btn confirm-btn" onClick={() => refreshTimer()} /> :
-        <Translate with={{ counter: `(${seconds})` }} content={title} component={Button} disabled={disabled} size="large" block className={className} onClick={() => onClick()} loading={loading} />
+    return refresh ? <Translate content={"suisse_btn_refresh"} component={Button} size="large" block className="pop-btn confirm-btn" onClick={() => refreshTimer()} htmlType={htmlType} /> :
+        <Translate with={{ counter: `(${seconds})` }} content={title} component={Button} disabled={disabled} size="large" block className={className} onClick={() => onClick()} loading={loading} htmlType={htmlType} />
 }
 
 export default SuisseBtn;

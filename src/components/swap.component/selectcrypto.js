@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import CryptoList from '../shared/cryptolist';
 import { appInsights } from "../../Shared/appinsights";
 import { getfromCoinList, gettoCoinList } from './api'
-
+import apicalls from '../../api/apiCalls';
 class SelectCrypto extends Component {
     state = {
         addLinks: null,
@@ -21,10 +21,13 @@ class SelectCrypto extends Component {
     useDivRef = React.createRef();
     componentDidMount() {
         if(this.props.swapfrom){
-            this.fromCoinList()
+            this.fromCoinList();
+            this.trackEvent('From');
         }else{
-            this.toCoinList()
+            this.toCoinList();
+            this.trackEvent('To');
         }
+
     }
     fromCoinList = async() =>{
        let  fromlist =  await getfromCoinList(this.props.userProfile?.id)
@@ -43,9 +46,9 @@ class SelectCrypto extends Component {
         }
     }
     
-    trackEvent = () =>{
-        appInsights.trackEvent({
-            name: 'Swap', properties: {"Type": 'User',"Action": 'Page view',"Username": this.props.userProfile.userName,"MemeberId": this.props.userProfile.userId,"Feature": 'Swap',"Remarks": 'Swap coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Swap crypto'}
+    trackEvent = (val) =>{
+        apicalls.trackEvent({
+            "Type": 'User',"Action": val+'Page view',"Username": this.props.userProfile.userName,"MemeberId": this.props.userProfile.userId,"Feature": 'Swap',"Remarks": val+'Swap coins',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Swap crypto'
         });
     }
     onSearch = (e) => {

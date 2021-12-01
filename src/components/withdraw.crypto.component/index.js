@@ -16,7 +16,7 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
         dispatch(fetchWithDrawWallets({ memberId: userProfile?.id }));
         dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
         dispatch(setSubTitle(apicalls.convertLocalLang("selectCurrencyinWallet")));
-        trackevent()
+        trackevent();
     }
     const trackevent = () => {
         apicalls.trackEvent({

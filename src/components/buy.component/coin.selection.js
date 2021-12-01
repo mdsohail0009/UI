@@ -22,9 +22,9 @@ class CryptoComponent extends Component {
     componentDidMount() {
         this.props.dispatch(fetchCoins("All"));
         if (this.state.tabKey === 1) {
-            apiClient.trackEvent({ "Type": 'User', "Action": 'Page View', "Feature": 'Buy', "Remarks": "Buy Coin Seclection", "FullFeatureName": 'Buy Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
+            apiClient.trackEvent({ "Type": 'User', "Action": 'Page View', "Feature": 'Buy', "Remarks": "Buy Coin Selection", "FullFeatureName": 'Buy Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
         } else {
-            apiClient.trackEvent({ "Type": 'User', "Action": 'Page View', "Feature": 'Sell', "Remarks": "Sell Coin Seclection", "FullFeatureName": 'Sell Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
+            apiClient.trackEvent({ "Type": 'User', "Action": 'Page View', "Feature": 'Sell', "Remarks": "Sell Coin Selection", "FullFeatureName": 'Sell Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
         }
     }
     handleBuySellToggle = e => {

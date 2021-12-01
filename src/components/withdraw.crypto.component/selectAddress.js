@@ -15,6 +15,12 @@ class SelectAddress extends Component {
     }
     componentDidMount() {
         this.getAddressLu();
+        this.trackevent()
+    }
+    trackevent = () => {
+        apicalls.trackEvent({
+        "Type": 'User', "Action": 'Page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto Address page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto' 
+        });
     }
     getAddressLu = async () => {
        this.setState({...this.state,loading: true})
