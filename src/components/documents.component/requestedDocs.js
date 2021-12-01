@@ -123,7 +123,7 @@ class RequestedDocs extends Component {
     docReject = async (doc) => {
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
         this.setState({ ...this.state, isMessageError: null });
-        if (!item || !item.reply  || !validateContent(item?.reply)) {
+        if (!item || !item.reply || !validateContent(item?.reply)) {
             this.setState({ ...this.state, isMessageError: doc.id.replace(/-/g, "") });
             return;
         }
@@ -323,14 +323,13 @@ class RequestedDocs extends Component {
                             </div>
                         </div>)}
                         {!this.state.documentReplies[doc.id]?.loading && doc.status !== "Approved" && <><div>
-                            <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>                          
+                            <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
                             <Input onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
                                 className="cust-input"
                                 placeholder="Write your message"
                                 maxLength={200}
-                                validator={validateContent}
-                            />                   
-                            {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter valid message</div>}
+                            />
+                            {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter valid message<Tooltip title="Message should not contain HTML content, please enter valid content"><span className="icon md info" /></Tooltip></div>}
                             <Dragger accept=".pdf,.jpg,.jpeg,.png.gif" className="upload mt-24" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} onChange={(props) => { this.handleUpload(props, doc) }}>
                                 <p className="ant-upload-drag-icon">
                                     <span className="icon xxxl doc-upload" />
