@@ -123,7 +123,7 @@ class RequestedDocs extends Component {
     docReject = async (doc) => {
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
         this.setState({ ...this.state, isMessageError: null });
-        if (!item || !item.reply) {
+        if (!item || !item.reply  || !validateContent(item?.reply)) {
             this.setState({ ...this.state, isMessageError: doc.id.replace(/-/g, "") });
             return;
         }
@@ -330,7 +330,7 @@ class RequestedDocs extends Component {
                                 maxLength={200}
                                 validator={validateContent}
                             />                   
-                            {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
+                            {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter valid message</div>}
                             <Dragger accept=".pdf,.jpg,.jpeg,.png.gif" className="upload mt-24" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} onChange={(props) => { this.handleUpload(props, doc) }}>
                                 <p className="ant-upload-drag-icon">
                                     <span className="icon xxxl doc-upload" />
