@@ -51,8 +51,8 @@ const getIpRegisteryData = () => {
                     "Browser": res.data.user_agent.name,
                     "DeviceType": {
                         "name": res.data.user_agent.device.name,
-                        "type": res.data.user_agent.device.type,
-                        "version": res.data.user_agent.os.version
+                        "type": res.data.user_agent.os.type,
+                        "version": res.data.user_agent.os.name + ' ' + res.data.user_agent.os.version
                     }
                 }
                 dispatch(fetchtrackauditlogs(ipInfo));
