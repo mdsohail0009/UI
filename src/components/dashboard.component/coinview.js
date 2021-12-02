@@ -171,9 +171,9 @@ class CoinView extends React.Component {
             <Row gutter={[24, 24]}>
                 <Col lg={14} xl={14} xxl={14}>
                     <div className="box p-24 coin-bal">
-                        <div className="d-flex align-center">
+                        {this.state.coinData ? <><div className="d-flex align-center">
                             <span className={`coin md ${coinData?.symbol.toUpperCase()}`} />
-                            <div className="summary-count ml-8">
+                            <div className="summary-count ml-16">
                                 <Paragraph className="text-white-30 fs-36 mb-0 fw-500">{coinData?.avilableBalance}<Text className="fs-24 ml-8 text-white-30 fw-500">{coinData?.symbol.toUpperCase()}</Text></Paragraph>
                                 <Text className="text-white-30 fs-16 m-0" style={{ lineHeight: '18px' }}>1{coinData?.symbol.toUpperCase()} = {coinData?.current_price} USD
                                     {coinData?.market_cap_change_percentage_24h > 0 && <>
@@ -185,22 +185,23 @@ class CoinView extends React.Component {
                                 </Text>
                             </div>
                         </div>
-                        <div className="text-right">
-                            <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(coinData, "buy")} className="custom-btn prime" />
-                            <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer(coinData, "sell")} />
-                            {/* <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer("sell")} /> */}
-                            {/* <Translate content="withdraw" className="ml-16" component={Radio.Button} onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} /> */}
-                        </div>
-                        {/* <div className="crypto_btns">
+                            <div className="text-right">
+                                <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(coinData, "buy")} className="custom-btn prime" />
+                                <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer(coinData, "sell")} />
+                                {/* <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer("sell")} /> */}
+                                {/* <Translate content="withdraw" className="ml-16" component={Radio.Button} onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} /> */}
+                            </div>
+                            {/* <div className="crypto_btns">
                                 <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(item, "buy")} className="custom-btn prime" />
                                 <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer(item, "sell")} />
                             </div> */}
 
-                        <ul className="m-0">
-                            {/* <li onClick={() => this.showBuyDrawer(coinData, "buy")}><div><span className="icon md file" /></div>BUY</li> */}
-                            {/* <li  onClick={() => this.showBuyDrawer(coinData, "sell")}><div><span className="icon md file" /></div>SELL</li> */}
-                            {/* <li><div><span className="icon md file" /></div>WITHDRAW</li> */}
-                        </ul>
+                            {/* <ul className="m-0">
+                                <li onClick={() => this.showBuyDrawer(coinData, "buy")}><div><span className="icon md file" /></div>BUY</li>
+                                <li  onClick={() => this.showBuyDrawer(coinData, "sell")}><div><span className="icon md file" /></div>SELL</li>
+                                <li><div><span className="icon md file" /></div>WITHDRAW</li>
+                            </ul> */}
+                        </> : <div className="text-center mt-24"><Spin /></div>}
                     </div>
                     <div className="box p-24 coin-details">
                         <Title component={Title} className="fs-24 fw-600 mb-36 text-white-30">{coinData?.name} ({coinData?.symbol.toUpperCase()}) Price Chart</Title>
@@ -223,49 +224,50 @@ class CoinView extends React.Component {
                 </Col>
                 <Col lg={10} xl={10} xxl={10}>
                     <div className="box p-24 coin-details right">
-                        <Title component={Title} className="fs-24 fw-600 mb-36 text-white-30">{coinData?.symbol.toUpperCase()} Price and Market Stats</Title>
-                        <div className="coin-info">
-                            <Text>{coinData?.symbol.toUpperCase()} Price</Text>
-                            <Text>${coinData?.current_price}</Text>
-                        </div>
-                        <div className="coin-info">
-                            <Text>Market Cap</Text>
-                            <Text>${coinData?.market_cap}</Text>
-                        </div>
-                        <div className="coin-info">
-                            <Text>24 Hour Trading Vol</Text>
-                            <Text>${coinData?.market_cap_change_24h}</Text>
-                        </div>
-                        <div className="coin-info">
-                            <Text>Fully Diluted Valuation</Text>
-                            <Text>${coinData?.fully_diluted_valuation}</Text>
-                        </div>
-                        <div className="coin-info">
-                            <Text>Circulating Supply</Text>
-                            <Text>{coinData?.circulating_supply}</Text>
-                        </div>
-                        <div className="coin-info">
-                            <Text>Total Supply</Text>
-                            <Text>{coinData?.total_supply}</Text>
-                        </div>
-                        <div className="coin-info">
-                            <Text>Max Supply</Text>
-                            <Text>{coinData?.max_supply}</Text>
-                        </div>
-                        <div className="coin-info">
-                            <Text>All-Time High</Text>
-                            <div>
-                                <Text>${coinData?.ath}</Text><Text className="fs-14 fw-200 text-green ml-8">{coinData?.ath_change_percentage}%</Text>
-                                <Text className="fs-10 fw-200 text-secondary d-block text-right">{coinData?.ath_date}</Text>
+
+                        {this.state.coinData ? <><Title component={Title} className="fs-24 fw-600 mb-36 text-white-30">{coinData?.symbol.toUpperCase()} Price and Market Stats</Title>
+                            <div className="coin-info">
+                                <Text>{coinData?.symbol.toUpperCase()} Price</Text>
+                                <Text>${coinData?.current_price}</Text>
                             </div>
-                        </div>
-                        <div className="coin-info">
-                            <Text>All-Time Low</Text>
-                            <div>
-                                <Text>${coinData?.atl}</Text><Text className="fs-14 fw-200 text-green ml-8">{coinData?.atl_change_percentage}%</Text>
-                                <Text className="fs-10 fw-200 text-secondary d-block text-right">{coinData?.atl_date}</Text>
+                            <div className="coin-info">
+                                <Text>Market Cap</Text>
+                                <Text>${coinData?.market_cap}</Text>
                             </div>
-                        </div>
+                            <div className="coin-info">
+                                <Text>24 Hour Trading Vol</Text>
+                                <Text>${coinData?.market_cap_change_24h}</Text>
+                            </div>
+                            <div className="coin-info">
+                                <Text>Fully Diluted Valuation</Text>
+                                <Text>${coinData?.fully_diluted_valuation}</Text>
+                            </div>
+                            <div className="coin-info">
+                                <Text>Circulating Supply</Text>
+                                <Text>{coinData?.circulating_supply}</Text>
+                            </div>
+                            <div className="coin-info">
+                                <Text>Total Supply</Text>
+                                <Text>{coinData?.total_supply}</Text>
+                            </div>
+                            <div className="coin-info">
+                                <Text>Max Supply</Text>
+                                <Text>{coinData?.max_supply}</Text>
+                            </div>
+                            <div className="coin-info">
+                                <Text>All-Time High</Text>
+                                <div>
+                                    <Text>${coinData?.ath}</Text><Text className="fs-14 fw-200 text-green ml-8">{coinData?.ath_change_percentage}%</Text>
+                                    <Text className="fs-10 fw-200 text-secondary d-block text-right">{coinData?.ath_date}</Text>
+                                </div>
+                            </div>
+                            <div className="coin-info">
+                                <Text>All-Time Low</Text>
+                                <div>
+                                    <Text>${coinData?.atl}</Text><Text className="fs-14 fw-200 text-green ml-8">{coinData?.atl_change_percentage}%</Text>
+                                    <Text className="fs-10 fw-200 text-secondary d-block text-right">{coinData?.atl_date}</Text>
+                                </div>
+                            </div></> : <div className="coin-details-spin"><Spin className="text-center" /></div>}
                     </div>
                 </Col>
             </Row>
