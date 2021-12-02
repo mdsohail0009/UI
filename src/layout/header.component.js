@@ -41,7 +41,10 @@ const { Title, Paragraph } = Typography;
 class Header extends Component {
     componentDidMount() {
         counterpart.setLocale(this.props.userConfig ? this.props.userConfig.language : 'en');
-        
+        this.loginTrack()
+    }
+    loginTrack = () => {
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'page view', "Username":null, "MemeberId": null, "Feature": 'Login', "Remarks": 'User Logged in', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Login' });
     }
     securityMenu = (
 

@@ -24,6 +24,7 @@ class CoinView extends React.Component {
     }
 
     componentDidMount() {
+        debugger
         this.loadCoinDetailData();
         this.coinViewTrack();
     }
@@ -86,8 +87,19 @@ class CoinView extends React.Component {
             this.props.dispatch(setStep("step10"));
         }
         this.setState({
+            ...this.state,
             buyDrawer: true
         })
+        // this.setState({
+        //     valNum: e
+        // }, () => {
+        //     this.setState({
+        //         ...this.state,
+        //         buyFiatDrawer: true,
+        //         selctedVal: value
+        //     })
+
+        // })
     }
     showSendReceiveDrawer = (e, value) => {
         debugger
@@ -134,8 +146,13 @@ class CoinView extends React.Component {
 
     //     })
    // this.props.dispatch(setWithdrawcrypto({...obj, toWalletAddress: item.code}))
-  this.props.changeStep('withdraw_crypto_selected');
+  
     this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
+    this.props.changeStep('withdraw_crypto_selected');
+    this.setState({
+        ...this.state,
+        buyDrawer: true
+    })
     //this.closeDrawer()
     
    // this.props.dispatch(setStep('withdraw_crypto_selected'));
@@ -158,14 +175,21 @@ class CoinView extends React.Component {
                             <span className={`coin md ${coinData?.symbol.toUpperCase()}`}/>
                             <div className="summary-count ml-8">
                                 <Paragraph className="text-white-30 fs-36 mb-0 fw-500">{coinData?.avilableBalance}<Text className="fs-24 ml-8 text-white-30 fw-500">{coinData?.symbol.toUpperCase()}</Text></Paragraph>
-                                <Text className="text-white-30 fs-16 m-0" style={{ lineHeight: '18px' }}>1{coinData?.symbol.toUpperCase()} = {coinData?.current_price} USD<Text className="text-green ml-16">{coinData?.market_cap_change_percentage_24h}%</Text></Text>
+                                <Text className="text-white-30 fs-16 m-0" style={{ lineHeight: '18px' }}>1{coinData?.symbol.toUpperCase()} = {coinData?.current_price} USD
+                                {coinData?.market_cap_change_percentage_24h > 0 && <>
+                                    <Text className="text-green ml-16">{coinData?.market_cap_change_percentage_24h}%</Text>
+                                </>}
+                                {coinData?.market_cap_change_percentage_24h < 0 && <>
+                                    <Text className="text-red ml-16">{coinData?.market_cap_change_percentage_24h}%</Text>
+                                </>}
+                                </Text>
                             </div>
                         </div>
                         <div className="text-right">
                         <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(coinData,"buy")} className="custom-btn prime" />
                                 <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer(coinData,"sell")} />
                                 {/* <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer("sell")} /> */}
-                                {/* { <Translate content="withdraw" className="ml-16" component={Radio.Button} onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} /> } */}
+                                {  <Translate content="withdraw" className="ml-16" component={Radio.Button} onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} /> }
                   </div>
                             {/* <div className="crypto_btns">
                                 <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(item, "buy")} className="custom-btn prime" />
