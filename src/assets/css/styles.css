@@ -259,9 +259,9 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .theme-dark, .theme-dark:hover, .theme-dark:focus{background-color: var(--bgWhite) !important;color: var(--textBlack);border-color: var(--bgWhite);}
 /* Coins */
 .coin{width: 43px; height: 43px;background: var(--cryptoIcons) no-repeat; display: inline-block; border-radius: 6px;}
-.coin.DOT{background-position: -1px -1px;}
+.coin.DOT{background-position: -55px -60px}
 .coin.BTC{background-position: -108px -1px;}
-.coin.xlm{background-position: -162px -1px;}
+.coin.XLM{background-position: -162px -1px;}
 .coin.usd-d{background-position: -216px -1px;}
 .coin.oxbtc{background-position: -108px -1px;}
 .coin.act{background-position: -270px -1px;}
