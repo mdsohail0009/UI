@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Typography, Button, Form, message } from "antd";
 import Currency from "../shared/number.formate";
 import { setStep } from "../../reducers/buysellReducer";
@@ -21,16 +21,25 @@ const WithdrawalSummary = ({
     <Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />
   );
   const [verificationText, setVerificationText] = useState("");
-const [isResend,setIsResend]=useState(false);
+  const [isResend, setIsResend] = useState(false);
+  const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {
     console.log(userConfig.id);
     // trackevent();
     apiCalls.trackEvent({
-      "Type": 'User', "Action": 'Page view', "Username": userConfig.userName, "MemeberId": userConfig.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Summary Page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' 
-   });
+      Type: "User",
+      Action: "Page view",
+      Username: userConfig.userName,
+      MemeberId: userConfig.id,
+      Feature: "Withdraw Fiat",
+      Remarks: "Withdraw Fiat Summary Page view",
+      Duration: 1,
+      Url: window.location.href,
+      FullFeatureName: "Withdraw Fiat"
+    });
   });
- 
+
   const saveWithdrwal = async () => {
     let response = await apiCalls.getVerification(userConfig.id, otp);
 
@@ -57,20 +66,17 @@ const [isResend,setIsResend]=useState(false);
   const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
 
   const getOTP = async (val) => {
-    let response = await apiCalls.getCode(userConfig.id,isResend);
+    let response = await apiCalls.getCode(userConfig.id, isResend);
     if (response.ok) {
-      console.log(response);
-    }
-      setTimeout(() => {
-        setButtonText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_code"  />);
-        setIsResend(true);     
-      }, 120000);  
-      //setInterval()  
-      
+      setButtonText(
+        <Translate className="pl-0 ml-0 text-yellow-50" content="resend_code" />
+      );
+      setVerificationText(
+        apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
+      );
 
-    setVerificationText(
-      apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
-    );
+     
+    }
   };
 
   return (
@@ -163,21 +169,25 @@ const [isResend,setIsResend]=useState(false);
               {verificationText}
             </Text>
           }
-           rules={[{ required: true, message: "Is required" }]}
-           label={ <Button type="text" onClick={getOTP}  >
-           {buttonText}
-         </Button>}
+          rules={[{ required: true, message: "Is required" }]}
+          label={
+            <Button type="text" onClick={getOTP}>
+              {buttonText}
+              {/* {seconds} */}
+            </Button>
+          }
         >
           <NumberFormat
             className="cust-input text-left"
             placeholder={apiCalls.convertLocalLang("verification_code")}
             maxLength={6}
-            onChange={e => { setOtp(e.target.value) }}
+            onChange={(e) => {
+              setOtp(e.target.value);
+            }}
             style={{ width: "445px" }}
           />
-         
         </Form.Item>
-        
+
         <Button
           disabled={isLoding}
           size="large"

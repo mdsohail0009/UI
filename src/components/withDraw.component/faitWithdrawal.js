@@ -60,7 +60,8 @@ const FaitWithdrawal = ({
   userConfig,
   dispatch,
   sendReceive,
-  changeStep
+  changeStep,
+  trackAuditLogData
 }) => {
   const [form] = Form.useForm();
   const [selectedWallet, setSelectedWallet] = useState(null);
@@ -848,10 +849,10 @@ const FaitWithdrawal = ({
   const handleOk = async () => {
     let currentStep = parseInt(confirmationStep.split("step")[1]);
     if (confirmationStep === "step2") {
-      this.props.trackAuditLogData.Action = "Save";
-      this.props.trackAuditLogData.Remarks =
+      trackAuditLogData.Action = "Save";
+      trackAuditLogData.Remarks =
         saveObj?.totalValue + " " + saveObj.walletCode + " withdraw.";
-      saveObj.info = JSON.stringify(this.props.trackAuditLogData);
+     saveObj.info = JSON.stringify(trackAuditLogData);
       let withdrawal = await withdrawSave(saveObj);
       if (withdrawal.ok) {
         dispatch(fetchDashboardcalls(userConfig.id));
