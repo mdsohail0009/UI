@@ -61,7 +61,7 @@ const CryptoList = forwardRef(({ coinList, isLoading, onCoinSelected, coinType, 
                             {item.coinValueinNativeCurrency !== 0 && <NumberFormat value={coinType === "swap" ? item.coinValueinNativeCurrency : item.amountInUSD} className="text-white-30 fw-600" displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props} className={` ${coinType !== "swap" ? "fs-16 fw-500" : "fs-14 fw-400"} ${coinType === "swap" ? (item.coinBalance > 0 ? "text-green" : "text-red") : 'text-white'}`}>{value}</div>} />}
                             {coinType !== "swap" && <div className={item.percent_change_1h < 0 ? 'text-red fs-14' : 'text-green fs-14'}>{item.percent_change_1h} %</div>}
                         </div>
-                            {coinType !== "swap" && <> {item.percent_change_1h > 0 ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}</>}</>
+                            {coinType !== "swap" && <> {item.percent_change_1h >= 0 ? <span className="icon sm uparrow ml-12" /> : <span className="icon sm downarrow ml-12" />}</>}</>
                     </Link>
                 </List.Item>
             )}

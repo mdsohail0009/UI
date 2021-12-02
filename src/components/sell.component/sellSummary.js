@@ -18,7 +18,6 @@ class SellSummary extends Component {
         apicalls.trackEvent({
             "Type": 'User', "Action": 'Sell summary page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Sell', "Remarks": 'Sell crypto coin summary', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'sell Crypto'
         });
-        //this.props.sellData.sellsaveObject.fromValue + " " + this.props.sellData.sellsaveObject.fromWalletCode + " selled"  //Dont remove*****
     }
     async fetchPreviewData() {
         let res = await getSellPreviewData(this.props.sellData.sellsaveObject);
@@ -56,7 +55,7 @@ class SellSummary extends Component {
             obj.info = JSON.stringify(this.props.trackAuditLogData)
             let res = await savesellData(obj);
             if (res.ok) {
-                this.props.changeStep('success')
+                this.props.changeStep('sellsuccess')
                 this.setState({ ...this.state, loader: false, disableConfirm: false })
                 this.props.fetchDashboardData(this.props.member.id)
                 appInsights.trackEvent({

@@ -42,7 +42,7 @@ const getIpRegisteryData = () => {
                     "Ip": res.data.ip,
                     "Location": {
                         "countryName": res.data.location.country.name,
-                        "state": res.data.location.region.name,
+                        "state": res.data.location.region.name.replace(/ā/g, 'a'),
                         "city": res.data.location.city,
                         "postal": res.data.location.postal,
                         "latitude": res.data.location.latitude,

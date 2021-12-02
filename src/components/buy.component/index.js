@@ -17,6 +17,7 @@ import AddressScanner from '../address.scanner/addressScanner';
 import SellSummary from '../sell.component/sellSummary';
 import SelectSellCrypto from '../sell.component/selectCrypto'
 import SuccessMsg from '../shared/success';
+import SellSuccessMsg from '../sell.component/successMsg';
 const { Paragraph } = Typography
 class BuySell extends Component {
     constructor(props) {
@@ -46,6 +47,7 @@ class BuySell extends Component {
             selectedcrypto: <SelectSellCrypto />,
             sellsummary: <SellSummary />,
             successmsg: <SuccessMsg />,
+            sellsuccessmsg: <SellSuccessMsg />,
             wiretransfor: <WireTransfer />
         }
         return stepcodes[config[this.props.buySell.stepcode]]
@@ -64,6 +66,7 @@ class BuySell extends Component {
             selectedcrypto: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             sellsummary: <span onClick={() => this.props.dispatch(setStep("step10"))} className="icon md lftarw-white c-pointer" />,
             successmsg: <span />,
+            sellsuccessmsg: <span />,
             wiretransfor: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />
         }
         return titles[config[this.props.buySell.stepcode]]
@@ -82,6 +85,7 @@ class BuySell extends Component {
             selectedcrypto: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             sellsummary: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             successmsg: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
+            sellsuccessmsg: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             wiretransfor: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
         }
         return stepcodes[config[this.props.buySell.stepcode]]

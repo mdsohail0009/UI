@@ -7,7 +7,6 @@ import apiCalls from '../../api/apiCalls';
 
 const { Panel } = Collapse;
 
-
 function collapseGrids(key) {
   console.log(key);
 }
@@ -15,10 +14,7 @@ function collapseGrids(key) {
 class TransactionsHistory extends Component {
   componentDidMount() {
     this.props.thref(this)
-    this.addressbookTrack();
-  }
-  addressbookTrack = () => {
-    apiCalls.trackEvent({ "Type": 'User', "Action": 'Transactions page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Transactions', "Remarks": 'Transactions page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Transactions' });
+    apiCalls.trackEvent({ "Type": 'User', "Action": 'Transactions all page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Transactions', "Remarks": 'Transactions all page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Transactions' });
   }
   state = {
     BuySellURL: process.env.REACT_APP_GRID_API + "BuySell/Accounts",
@@ -33,9 +29,26 @@ class TransactionsHistory extends Component {
   }
   changeTab = activeKey => {
     this.setState({
-      activeTab: activeKey
+      activeTab: activeKey,
     });
+    this.addressbookTrack(activeKey);
+
   };
+  addressbookTrack = () => {
+    if (this.state.activeTab == '1') {
+      apiCalls.trackEvent({ "Type": 'User', "Action": 'Transactions buy/sell page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Transactions', "Remarks": 'Transactions buy/sell grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Transactions' });
+    } else if (this.state.activeTab == '2') {
+      apiCalls.trackEvent({ "Type": 'User', "Action": 'Transactions swap page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Transactions', "Remarks": 'Transactions swap grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Transactions' });
+    } else if (this.state.activeTab == '3') {
+      apiCalls.trackEvent({ "Type": 'User', "Action": 'Transactions deposit fiat page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Transactions', "Remarks": 'Transactions deposit fiat grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Transactions' });
+    } else if (this.state.activeTab == '4') {
+      apiCalls.trackEvent({ "Type": 'User', "Action": 'Transactions deposit crypto page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Transactions', "Remarks": 'Transactions deposit crypto grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Transactions' });
+    } else if (this.state.activeTab == '5') {
+      apiCalls.trackEvent({ "Type": 'User', "Action": 'Transactions withdraw fiat page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Transactions', "Remarks": 'Transactions withdraw fiat grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Transactions' });
+    } else if (this.state.activeTab == '6') {
+      apiCalls.trackEvent({ "Type": 'User', "Action": 'Transactions withdraw crypto page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Transactions', "Remarks": 'Transactions withdraw crypto grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Transactions' });
+    }
+  }
   withdrawcolumns = [
     { field: "accountType", title: apiCalls.convertLocalLang('accountType'), filter: true, width: 200 },
     { field: "walletCode", title: apiCalls.convertLocalLang('Wallet'), filter: true, width: 200 },

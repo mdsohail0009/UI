@@ -7,9 +7,11 @@ import { fetchMarketCaps } from './api';
 import { useFullScreenHandle } from 'react-full-screen'
 import { detailInfoColumns, infoColumns } from './marketcap.columns';
 import apiCalls from '../../api/apiCalls';
+import { connect } from 'react-redux';
+
 const { Title, Paragraph } = Typography;
 
-const MarketCap = () => {
+const MarketCap = ({ member }) => {
     const marketsFullScreen = useFullScreenHandle();
     const { Search } = Input;
     const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +19,10 @@ const MarketCap = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [searchVal, setSearchVal] = useState([])
     const [originalMarketCaps, setOriginalMarketCaps] = useState([])
-    useEffect(() => { fetchMarketCapsInfo() }, [])
+    useEffect(() => {
+        fetchMarketCapsInfo()
+        marketsTack()
+    }, [])
     const fetchMarketCapsInfo = async () => {
         setIsLoading(true);
         setSearchVal("");
@@ -28,7 +33,9 @@ const MarketCap = () => {
             setIsLoading(false);
         }
     }
-
+    const marketsTack = () => {
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Markets page view', "Username": member?.userName, "MemeberId": member?.id, "Feature": 'Markets', "Remarks": 'Markets page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Markets' });
+    }
     const onSearch = ({ currentTarget: { value } }) => {
         let matches = originalMarketCaps.filter(item => item.symbol.toLowerCase().includes(value.toLowerCase()));
         setSearchVal(value)
@@ -86,4 +93,7 @@ const MarketCap = () => {
     </>
 
 }
-export default MarketCap;
+const connectStateToProps = ({ userConfig }) => {
+    return { member: userConfig.userProfileInfo }
+}
+export default connect(connectStateToProps, null)(MarketCap);

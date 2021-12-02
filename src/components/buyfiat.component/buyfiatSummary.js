@@ -6,7 +6,7 @@ import { setStep } from '../../reducers/buyFiatReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import { setdepositCurrency } from '../../reducers/depositReducer'
-
+import apiCalls from "../../api/apiCalls";
 const LinkValue = (props) => {
     return (
         <Translate className="textpure-yellow text-underline c-pointer"
@@ -28,6 +28,9 @@ class FiatSummary extends Component {
 
     componentDidMount() {
         this.setState({ ...this.state, depositFiatData: this.props.depositInfo?.depFiatSaveObj })
+        apiCalls.trackEvent({
+            "Type": 'User', "Action": 'Deposit Fiat Summary page view', "Username": this.props.userConfig.userName, "MemeberId": this.props.userConfig.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit Fiat Summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' 
+         });
     }
 
     showSendReceiveDrawer = (value) => {

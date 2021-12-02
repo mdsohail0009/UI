@@ -178,11 +178,11 @@ const FaitWithdrawal = ({
     }
     apicalls.trackEvent({
       Type: "User",
-      Action: "Page view",
+      Action: "Withdraw Fiat page view",
       Username: userConfig.userName,
       MemeberId: userConfig.id,
       Feature: "Withdraw Fiat",
-      Remarks: "Withdraw Fiat",
+      Remarks: "Withdraw Fiat page view",
       Duration: 1,
       Url: window.location.href,
       FullFeatureName: "Withdraw Fiat"
