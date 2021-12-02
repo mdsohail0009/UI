@@ -58,8 +58,8 @@ class WithdrawSummary extends Component {
   }
   trackEvent = () => {
     apiCalls.trackEvent({
-                 "Type": 'User', "Action": 'save', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": 'withdraw Summary', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'withdraw Summary' 
-             });
+      "Type": 'User', "Action": 'save', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": 'withdraw Summary', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'withdraw Summary'
+    });
   }
   loadData = async () => {
     this.setState({ ...this.state, usdLoading: true });
@@ -186,7 +186,7 @@ class WithdrawSummary extends Component {
             closable={false}
           />
         )}
-        <div className="cryptosummary-container auto-scroll">
+        <div className="auto-scroll">
           <div
             className="fs-36 text-white-30 fw-200 text-center"
             style={{ lineHeight: "36px" }}
@@ -220,9 +220,8 @@ class WithdrawSummary extends Component {
               decimalPlaces={8}
               prefix={""}
               className="fw-400 text-white-30"
-              prefixText={`1 ${
-                this.props.sendReceive.withdrawCryptoObj?.walletCode
-              } = ${"USD"}`}
+              prefixText={`1 ${this.props.sendReceive.withdrawCryptoObj?.walletCode
+                } = ${"USD"}`}
             />
           </div>
           <div className="pay-list fs-14">

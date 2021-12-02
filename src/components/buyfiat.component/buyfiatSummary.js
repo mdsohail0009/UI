@@ -29,30 +29,42 @@ class FiatSummary extends Component {
     componentDidMount() {
         this.setState({ ...this.state, depositFiatData: this.props.depositInfo?.depFiatSaveObj })
         apiCalls.trackEvent({
-            "Type": 'User', "Action": 'Deposit Fiat Summary page view', "Username": this.props.userConfig.userName, "MemeberId": this.props.userConfig.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit Fiat Summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' 
-         });
+            "Type": 'User', "Action": 'Deposit Fiat Summary page view', "Username": this.props.userConfig.userName, "MemeberId": this.props.userConfig.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit Fiat Summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat'
+        });
     }
 
     showSendReceiveDrawer = (value) => {
         this.props.changeStep("step1");
-        this.props.dispatch(setdepositCurrency(value));
+        //this.props.dispatch(setdepositCurrency(value));
     }
 
     render() {
         const { depositFiatData } = this.state;
-        const {  Text } = Typography;
+        const { Text } = Typography;
         return (
             <>
-                {!this.state.loading ? <div className="mt-36"><Spin /></div> : <><Text className="fs-14 text-white-50 fw-200"> <Translate content="amount" component={Text} className="fs-14 text-white-50 fw-200" /></Text>
-                    <Currency className="fs-20 text-white-30 mb-36" prefix={""} defaultValue={depositFiatData?.Amount} suffixText={depositFiatData?.currencyCode} />
-                    <Text className="fs-14 text-white-50 fw-200"> <Translate content="Bank_account" component={Text} className="fs-14 text-white-50 fw-200" /></Text>
-                    <Text className="fs-20 text-white-30 d-block mb-36">{depositFiatData?.accountNumber}</Text>
-                    <Text className="fs-14 text-white-50 fw-200"><Translate content="BIC_SWIFT_routing_number" component={Text} className="fs-14 text-white-50 fw-200" /></Text>
-                    <Text className="fs-20 text-white-30 d-block mb-36">{depositFiatData?.routingNumber}</Text>
-                    <Text className="fs-14 text-white-50 fw-200"><Translate content="Bank_name" component={Text} className="fs-14 text-white-50 fw-200" /></Text>
-                    <Text className="fs-20 text-white-30 d-block mb-36">{depositFiatData?.BankName}</Text>
-                    <Text className="fs-14 text-white-50 fw-200"><Translate content="Recipient_full_name" component={Text} className="fs-14 text-white-50 fw-200" /></Text>
-                    <Text className="fs-20 text-white-30 d-block mb-36">{depositFiatData?.accountName}</Text>
+                {!this.state.loading ? <div className="mt-36"><Spin /></div> : <div className="cryptosummary-container">
+
+                    <div className="pay-list fs-14">
+                        <Translate content="amount" component={Text} className="fw-400 text-white" />
+                        <Currency className="fw-500 text-white-50" prefix={""} defaultValue={depositFiatData?.Amount} suffixText={depositFiatData?.currencyCode} />
+                    </div>
+                    <div className="pay-list fs-14">
+                        <Translate content="bank_account_number" component={Text} className="fw-400 text-white" />
+                        <Text className="fw-500 text-white-50">{depositFiatData?.accountNumber}</Text>
+                    </div>
+                    <div className="pay-list fs-14">
+                        <Translate content="Routing_number" component={Text} className="fw-400 text-white" />
+                        <Text className="fw-500 text-white-50">{depositFiatData?.routingNumber}</Text>
+                    </div>
+                    <div className="pay-list fs-14">
+                        <Translate content="Swift_BICcode" component={Text} className="fw-400 text-white" />
+                        <Text className="fw-500 text-white-50">{depositFiatData?.networkCode}</Text>
+                    </div>
+                    <div className="pay-list fs-14">
+                        <Translate content="Bank_name" component={Text} className="fw-400 text-white" />
+                        <Text className="fw-500 text-white-50">{depositFiatData?.BankName}</Text>
+                    </div>
                     <ul className="pl-0 ml-16 text-white-50 mt-36">
                         <li><Translate className="pl-0 ml-0 text-white-50" content="account_details" component={Text} /> </li>
                         <li><Translate className="pl-0 ml-0 text-white-50" content="Cancel_select" component={Text} /></li>
@@ -60,7 +72,7 @@ class FiatSummary extends Component {
                     <Translate size="large" block className="pop-btn mt-36" content="confirm" component={Button} onClick={() => this.props.changeStep('step3')} />
                     <div className="text-center mt-8">
                         <Translate content="back" component={Button} type="text" size="large" onClick={() => this.showSendReceiveDrawer(depositFiatData?.currencyCode)} className=" pop-cancel fw-400" />
-                    </div></>}
+                    </div></div>}
             </>
         )
     }

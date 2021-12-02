@@ -465,4 +465,5 @@ export default {
   resend_code: "重新發送驗證碼",
   digit_code: "輸入 6 位代碼發送至",
   selectcurrency: "选择货币",
+  bank_account_number: '银行帐号',
 }

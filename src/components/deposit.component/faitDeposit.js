@@ -43,7 +43,7 @@ class FaitDeposit extends Component {
     if (this.props.sendReceive.withdrawFiatEnable) {
       this.handleshowTab(2);
       apicalls.trackEvent({
-        "Type": 'User', "Action": 'Deposit Fiat page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit Fiat page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat' 
+        "Type": 'User', "Action": 'Deposit Fiat page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit Fiat page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat'
       });
     } else {
       this.handleshowTab(1);
@@ -301,8 +301,8 @@ class FaitDeposit extends Component {
                     <div className="d-flex">
                       <span className={`coin ${depObj.currency.toLowerCase()}`} style={{ marginRight: '8px', marginTop: '15px' }} />
                       <div style={{ flex: 1 }}>
-                        <Paragraph className="mb-0 fs-16 text-white-30 fw-500 mt-16 text-upper">{BankInfo.accountName}</Paragraph>
-                        <Paragraph className="mb-0 fs-14 text-white-30 fw-300">
+                        <Paragraph className="mb-0 fs-16 text-white-30 fw-500 mt-16 text-upper" style={{ wordBreak: 'break-all' }}>{BankInfo.accountName}</Paragraph>
+                        <Paragraph className="mb-0 fs-14 text-white-30 fw-300" style={{ wordBreak: 'break-all' }}>
                           {BankInfo.accountAddress}</Paragraph>
                       </div>
                     </div>

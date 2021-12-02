@@ -464,4 +464,5 @@ export default {
   resend_code: "RESEND CODE",
   digit_code: "Ilagay ang 6 na digit na code na ipinadala sa",
   selectcurrency: "Pilih Mata Wang",
+  bank_account_number: 'Nombor akaun bank',
 }

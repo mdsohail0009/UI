@@ -470,4 +470,5 @@ export default {
   resend_code: "RESEND CODE %(counter)s",
   digit_code: " Enter 6 digit code sent to",
   selectcurrency: "Select Currency",
+  bank_account_number: 'Bank Account Number',
 }
