@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Typography, Row, Col, Spin, Button, Alert, Form, DatePicker, Modal, Tooltip, Input,Radio } from "antd";
+import { Typography, Row, Col, Spin, Button, Alert, Form, DatePicker, Modal, Tooltip, Input, Radio } from "antd";
 import { Link, withRouter } from "react-router-dom";
 import { getcoinDetails, getCoinChatData } from './api'
 import ConnectStateProps from '../../utils/state.connect';
@@ -13,7 +13,7 @@ import { convertCurrency } from '../buy.component/buySellService';
 import apiCalls from '../../api/apiCalls';
 import Translate from 'react-translate-component';
 
-import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet,setSubTitle } from "../../reducers/sendreceiveReducer";
+import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle } from "../../reducers/sendreceiveReducer";
 import { setWithdrawfiatenaable, setWithdrawfiat } from '../../reducers/sendreceiveReducer'
 class CoinView extends React.Component {
     state = {
@@ -48,7 +48,7 @@ class CoinView extends React.Component {
         }
     }
     showBuyDrawer = (item, key) => {
-        let selectedObj={...item};
+        let selectedObj = { ...item };
         // selectedObj.impagePath=this.state.chatData.impagePath;
         // selectedObj.percentage=this.state.chatData.percentage;
         // selectedObj.sellMaxValue=this.state.chatData.sellMaxValue;
@@ -59,11 +59,11 @@ class CoinView extends React.Component {
         // selectedObj.withdrawMinValue=this.state.chatData.withdrawMinValue;
         // selectedObj.impageWhitePath=this.state.chatData.impageWhitePath;
         // selectedObj.coinValueinNativeCurrency=this.state.chatData.coinValueinNativeCurrency;
-        selectedObj.coin=selectedObj.symbol.toUpperCase();
-        selectedObj.coinBalance=selectedObj.avilableBalance
-        selectedObj.coinFullName=selectedObj.name
-        selectedObj.oneCoinValue=selectedObj.current_price;
-        selectedObj.id=selectedObj.memberWalletId;
+        selectedObj.coin = selectedObj.symbol.toUpperCase();
+        selectedObj.coinBalance = selectedObj.avilableBalance
+        selectedObj.coinFullName = selectedObj.name
+        selectedObj.oneCoinValue = selectedObj.current_price;
+        selectedObj.id = selectedObj.memberWalletId;
         console.log(selectedObj);
         if (this.props?.userProfile?.isDocsRequested) {
             this.props.history.push("/docnotices");
@@ -103,11 +103,11 @@ class CoinView extends React.Component {
     }
     showSendReceiveDrawer = (e, value) => {
         debugger
-        let selectedObj={...value};
-        selectedObj.coin=selectedObj.symbol.toUpperCase();
-        selectedObj.coinBalance=selectedObj.avilableBalance
-        selectedObj.coinFullName=selectedObj.name
-        selectedObj.oneCoinValue=selectedObj.current_price;
+        let selectedObj = { ...value };
+        selectedObj.coin = selectedObj.symbol.toUpperCase();
+        selectedObj.coinBalance = selectedObj.avilableBalance
+        selectedObj.coinFullName = selectedObj.name
+        selectedObj.oneCoinValue = selectedObj.current_price;
         console.log(selectedObj);
         this.props.dispatch(fetchWithDrawWallets({ memberId: this.props?.userProfile?.id }));
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
@@ -117,45 +117,45 @@ class CoinView extends React.Component {
         // imagePath: "https://suissebase.blob.core.windows.net/assets/usd.svg"
         // walletCode: "USD"
         // walletId: "fabc96b7-db27-4e36-a747-76701d76371d"
-        let coin=value.symbol.toUpperCase();
-    //     if (this.props?.userProfile?.isDocsRequested) {
-    //         this.props.history.push("/docnotices");
-    //         return;
-    //     }
-    //     if (!this.props?.userProfile?.isKYC) {
-    //         this.props.history.push("/notkyc");
-    //         return;
-    //     }
-    //     // const isDocsRequested = this.props.userProfile.isDocsRequested;
-    //     // if (isDocsRequested) {
-    //     //     this.showDocsError();
-    //     //     return;
-    //     // }
-    //    // if (e === 2) {
-    //         this.props.dispatch(setWithdrawfiatenaable(true))
-    //         this.props.dispatch(setWithdrawfiat({ walletCode: coin }))
-    //     ////} 
-    //     this.setState({
-    //         valNum: e
-    //     }, () => {
-    //         this.setState({
-    //             ...this.state,
-    //             buyFiatDrawer: true,
-    //             selctedVal: coin
-    //         })
+        let coin = value.symbol.toUpperCase();
+        //     if (this.props?.userProfile?.isDocsRequested) {
+        //         this.props.history.push("/docnotices");
+        //         return;
+        //     }
+        //     if (!this.props?.userProfile?.isKYC) {
+        //         this.props.history.push("/notkyc");
+        //         return;
+        //     }
+        //     // const isDocsRequested = this.props.userProfile.isDocsRequested;
+        //     // if (isDocsRequested) {
+        //     //     this.showDocsError();
+        //     //     return;
+        //     // }
+        //    // if (e === 2) {
+        //         this.props.dispatch(setWithdrawfiatenaable(true))
+        //         this.props.dispatch(setWithdrawfiat({ walletCode: coin }))
+        //     ////} 
+        //     this.setState({
+        //         valNum: e
+        //     }, () => {
+        //         this.setState({
+        //             ...this.state,
+        //             buyFiatDrawer: true,
+        //             selctedVal: coin
+        //         })
 
-    //     })
-   // this.props.dispatch(setWithdrawcrypto({...obj, toWalletAddress: item.code}))
-  
-    this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
-    this.props.changeStep('withdraw_crypto_selected');
-    this.setState({
-        ...this.state,
-        buyDrawer: true
-    })
-    //this.closeDrawer()
-    
-   // this.props.dispatch(setStep('withdraw_crypto_selected'));
+        //     })
+        // this.props.dispatch(setWithdrawcrypto({...obj, toWalletAddress: item.code}))
+
+        this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
+        this.props.changeStep('withdraw_crypto_selected');
+        this.setState({
+            ...this.state,
+            buyDrawer: true
+        })
+        //this.closeDrawer()
+
+        // this.props.dispatch(setStep('withdraw_crypto_selected'));
 
     }
     closeDrawer = () => {
@@ -172,30 +172,30 @@ class CoinView extends React.Component {
                 <Col lg={14} xl={14} xxl={14}>
                     <div className="box p-24 coin-bal">
                         <div className="d-flex align-center">
-                            <span className={`coin md ${coinData?.symbol.toUpperCase()}`}/>
+                            <span className={`coin md ${coinData?.symbol.toUpperCase()}`} />
                             <div className="summary-count ml-8">
                                 <Paragraph className="text-white-30 fs-36 mb-0 fw-500">{coinData?.avilableBalance}<Text className="fs-24 ml-8 text-white-30 fw-500">{coinData?.symbol.toUpperCase()}</Text></Paragraph>
                                 <Text className="text-white-30 fs-16 m-0" style={{ lineHeight: '18px' }}>1{coinData?.symbol.toUpperCase()} = {coinData?.current_price} USD
-                                {coinData?.market_cap_change_percentage_24h > 0 && <>
-                                    <Text className="text-green ml-16">{coinData?.market_cap_change_percentage_24h}%</Text>
-                                </>}
-                                {coinData?.market_cap_change_percentage_24h < 0 && <>
-                                    <Text className="text-red ml-16">{coinData?.market_cap_change_percentage_24h}%</Text>
-                                </>}
+                                    {coinData?.market_cap_change_percentage_24h > 0 && <>
+                                        <Text className="text-green ml-16">{coinData?.market_cap_change_percentage_24h}%</Text>
+                                    </>}
+                                    {coinData?.market_cap_change_percentage_24h < 0 && <>
+                                        <Text className="text-red ml-16">{coinData?.market_cap_change_percentage_24h}%</Text>
+                                    </>}
                                 </Text>
                             </div>
                         </div>
                         <div className="text-right">
-                        <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(coinData,"buy")} className="custom-btn prime" />
-                                <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer(coinData,"sell")} />
-                                {/* <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer("sell")} /> */}
-                                {  <Translate content="withdraw" className="ml-16" component={Radio.Button} onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} /> }
-                  </div>
-                            {/* <div className="crypto_btns">
+                            <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(coinData, "buy")} className="custom-btn prime" />
+                            <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer(coinData, "sell")} />
+                            {/* <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer("sell")} /> */}
+                            {/* <Translate content="withdraw" className="ml-16" component={Radio.Button} onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} /> */}
+                        </div>
+                        {/* <div className="crypto_btns">
                                 <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(item, "buy")} className="custom-btn prime" />
                                 <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer(item, "sell")} />
                             </div> */}
-                        
+
                         <ul className="m-0">
                             {/* <li onClick={() => this.showBuyDrawer(coinData, "buy")}><div><span className="icon md file" /></div>BUY</li> */}
                             {/* <li  onClick={() => this.showBuyDrawer(coinData, "sell")}><div><span className="icon md file" /></div>SELL</li> */}

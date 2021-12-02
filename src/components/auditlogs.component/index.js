@@ -64,9 +64,7 @@ class AuditLogs extends Component {
   ]
 
   showMoreAuditLogs = (e) => {
-    debugger
     this.fetchAuditLoginfo(e.dataItem.id, e);
-
   }
   componentDidMount = () => {
     this.TransactionFeatureSearch(this.props.userProfile?.userName);
@@ -76,7 +74,6 @@ class AuditLogs extends Component {
     this.setState({
       ...this.state, isLoading: false, moreAuditLogs: true, featureName: e.dataItem.feature
     })
-    console.log("data======", e)
     let res = await getAuditLogInfo(id);
     if (res.ok) {
       this.setState({
