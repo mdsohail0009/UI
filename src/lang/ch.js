@@ -466,4 +466,6 @@ export default {
   digit_code: "輸入 6 位代碼發送至",
   selectcurrency: "选择货币",
   bank_account_number: '银行帐号',
+  invalid_code:'無效的代碼',
+  resend_text:'重新發送按鈕將在 2 分鐘內啟用'
 }

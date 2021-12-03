@@ -23,6 +23,9 @@ const WithdrawalSummary = ({
   const [verificationText, setVerificationText] = useState("");
   const [isResend, setIsResend] = useState(false);
   const [seconds, setSeconds] = useState(0);
+  const [invalidcode,setInvalidCode]=useState("");
+  const[validationText,setValidationText]=useState("");
+  const [disable, setDisable] = useState(false);
 
   useEffect(() => {
     console.log(userConfig.id);
@@ -55,7 +58,8 @@ const WithdrawalSummary = ({
     } else {
       message.destroy();
       message.error({
-        content: response.data,
+        content: 
+        setInvalidCode(apiCalls.convertLocalLang("invalid_code")), 
         className: "custom-msg",
         duration: 0.5
       });
@@ -66,15 +70,17 @@ const WithdrawalSummary = ({
   const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
 
   const getOTP = async (val) => {
+    setDisable(true)
     let response = await apiCalls.getCode(userConfig.id, isResend);
     if (response.ok) {
-      setButtonText(
-        <Translate className="pl-0 ml-0 text-yellow-50" content="resend_code" />
-      );
+      setTimeout(() => {
+        setButtonText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_code"  /> );
+        setDisable(false)
+      }, 120000);
       setVerificationText(
         apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
       );
-
+      setValidationText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_text"  />);
      
     }
   };
@@ -171,7 +177,7 @@ const WithdrawalSummary = ({
           }
           rules={[{ required: true, message: "Is required" }]}
           label={
-            <Button type="text" onClick={getOTP}>
+            <Button type="text" onClick={getOTP} disabled={disable}>
               {buttonText}
               {/* {seconds} */}
             </Button>
@@ -186,7 +192,17 @@ const WithdrawalSummary = ({
             }}
             style={{ width: "445px" }}
           />
+     
         </Form.Item>
+        
+        <div>
+          <Text className="fs-12 text-white-30 fw-200">
+            {invalidcode}
+          </Text>
+          <Text className="fs-12 text-white-30 fw-200">
+            {validationText}
+          </Text>
+          </div>
 
         <Button
           disabled={isLoding}

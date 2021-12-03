@@ -8,6 +8,8 @@ import SuisseBtn from "../shared/butons";
 import Currency from "../shared/number.formate";
 import { convertCurrency } from "../buy.component/buySellService";
 import NumberFormat from "react-number-format";
+import { withDrawCrypto } from "../send.component/api";
+import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
 
 import {
   setStep,
@@ -45,7 +47,10 @@ class WithdrawSummary extends Component {
     verificationText: "",
     otp: "",
     code: "",
-    isResend: false
+    isResend: false,
+    invalidcode: "",
+    validationText: "",
+    disable: false
   };
   useDivRef = React.createRef();
   componentDidMount() {
@@ -58,9 +63,17 @@ class WithdrawSummary extends Component {
   }
   trackEvent = () => {
     apiCalls.trackEvent({
-      "Type": 'User', "Action": 'Withdraw crypto summary page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": 'Withdraw crypto summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'withdraw Summary'
+      Type: "User",
+      Action: "Withdraw crypto summary page view",
+      Username: this.props.userProfile.userName,
+      MemeberId: this.props.userProfile.id,
+      Feature: "Withdraw Crypto",
+      Remarks: "Withdraw crypto summary page view",
+      Duration: 1,
+      Url: window.location.href,
+      FullFeatureName: "withdraw Summary"
     });
-  }
+  };
   loadData = async () => {
     this.setState({ ...this.state, usdLoading: true });
     const value = await convertCurrency({
@@ -95,7 +108,10 @@ class WithdrawSummary extends Component {
   };
 
   getOTP = async (val) => {
-    let response = await apiCalls.getCode(this.props.userProfile.id, this.state.isResend);
+    let response = await apiCalls.getCode(
+      this.props.userProfile.id,
+      this.state.isResend
+    );
     if (response.ok) {
       console.log(response);
     }
@@ -127,14 +143,29 @@ class WithdrawSummary extends Component {
           duration: 0.5
         });
 
-        this.props.dispatch(
-          setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
-        );
-        this.props.changeStep("withdraw_crypto_liveness");
+        let saveObj = this.props.sendReceive.withdrawCryptoObj;
+        this.props.trackAuditLogData.Action = "Save";
+        this.props.trackAuditLogData.Remarks = "Withdraw crypto save";
+        saveObj.info = JSON.stringify(this.props.trackAuditLogData);
+        let withdrawal = await withDrawCrypto(saveObj);
+        if (withdrawal.ok) {
+          this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
+          //setIsWithdrawSuccess(true)
+          this.props.dispatch(setWithdrawcrypto(null));
+          this.props.dispatch(setSubTitle(""));
+          this.props.changeStep("withdraw_crpto_success");
+        }
+
+        // this.props.dispatch(
+        //   setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
+        // );
+        // this.props.changeStep("withdraw_crypto_liveness");
       } else {
         message.destroy();
         message.error({
-          content: response.data,
+          content: this.setState({
+            invalidcode: apiCalls.convertLocalLang("invalid_code")
+          }),
           className: "custom-msg",
           duration: 0.5
         });
@@ -220,8 +251,9 @@ class WithdrawSummary extends Component {
               decimalPlaces={8}
               prefix={""}
               className="fw-400 text-white-30"
-              prefixText={`1 ${this.props.sendReceive.withdrawCryptoObj?.walletCode
-                } = ${"USD"}`}
+              prefixText={`1 ${
+                this.props.sendReceive.withdrawCryptoObj?.walletCode
+              } = ${"USD"}`}
             />
           </div>
           <div className="pay-list fs-14">
@@ -315,7 +347,7 @@ class WithdrawSummary extends Component {
                 <Translate content="refund_cancellation" component="Text" />
               </Paragraph>
             </div>
-            <SuisseBtn
+            {/* <SuisseBtn
               className={"pop-btn"}
               htmlType="submit"
               onRefresh={() => this.onRefresh()}
@@ -323,10 +355,16 @@ class WithdrawSummary extends Component {
               loading={this.state.isButtonLoad}
               autoDisable={true}
               onClick={() => this.onClick()}
-            />
-            {/* <Button size="large" block className="pop-btn" htmlType="submit"  onClick={() => this.onClick()}>
+            /> */}
+            <Button
+              size="large"
+              block
+              className="pop-btn"
+              htmlType="submit"
+              onClick={() => this.onClick()}
+            >
               <Translate content="Confirm" component={Text} />
-            </Button> */}
+            </Button>
           </Form>
           <div className="text-center mt-16">
             <Translate
@@ -345,7 +383,11 @@ class WithdrawSummary extends Component {
 }
 
 const connectStateToProps = ({ sendReceive, userConfig }) => {
-  return { sendReceive, userProfile: userConfig.userProfileInfo };
+  return {
+    sendReceive,
+    userProfile: userConfig.userProfileInfo,
+    trackAuditLogData: userConfig.trackAuditLogData
+  };
 };
 const connectDispatchToProps = (dispatch) => {
   return {

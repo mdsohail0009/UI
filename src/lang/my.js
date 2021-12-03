@@ -465,4 +465,8 @@ export default {
   digit_code: "Ilagay ang 6 na digit na code na ipinadala sa",
   selectcurrency: "Pilih Mata Wang",
   bank_account_number: 'Nombor akaun bank',
+  invalid_code:'di-wastong code',
+  resend_text:'Mapapagana ang Pindutan ng Muling Ipadala sa loob ng 2min'
+
+
 }
