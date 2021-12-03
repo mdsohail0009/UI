@@ -20,13 +20,13 @@ class SelectCrypto extends Component {
     }
     useDivRef = React.createRef();
     componentDidMount() {
-        if (this.props.swapfrom) {
-            this.fromCoinList();
-            this.trackEvent('From');
-        } else {
-            this.toCoinList();
-            this.trackEvent('To');
-        }
+        // if (this.props.swapfrom) {
+        //     this.fromCoinList();
+        //     this.swapTrack('From');
+        // } else {
+        //     this.toCoinList();
+        //     this.swapTrack('To');
+        // }
 
     }
     fromCoinList = async () => {
@@ -46,9 +46,9 @@ class SelectCrypto extends Component {
         }
     }
 
-    trackEvent = (val) => {
+    swapTrack = (val) => {
         apicalls.trackEvent({
-            "Type": 'User', "Action": val + ' Swap page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.userId, "Feature": 'Swap', "Remarks": val + 'Swap coins', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap crypto'
+            "Type": 'User', "Action": val + ' Swap page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.userId, "Feature": 'Swap', "Remarks": val + ' Swap coins', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap crypto'
         });
     }
     onSearch = (e) => {

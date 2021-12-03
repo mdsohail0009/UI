@@ -33,8 +33,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
     trakEvet()
   }, [userProfile]);
   const trakEvet = () => {
-    apiCalls.trackEvent({ "Type": 'User', "Action": 'Change password page view', "Username": userConfig?.userName, "MemeberId": userConfig?.id, "Feature": 'Change password', "Remarks": 'Change password page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Change password' });
-    //apiCalls.trackEvent({ "Action": 'Change password page view', "Feature": 'Change password', "Remarks": "Change password page view", "FullFeatureName": 'Change password', "userName": userConfig.userName, id: userConfig.id });
+    apiCalls.trackEvent({ "Type": 'User', "Action": 'Change password page view', "Username": userConfig?.userName, "MemeberId": userConfig?.id, "Feature": 'Change Password', "Remarks": 'Change password page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Change Password' });
   }
   const saveUserPass = async (values) => {
     if (values.CurrentPassword === values.Password) {

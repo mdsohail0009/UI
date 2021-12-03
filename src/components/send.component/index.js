@@ -21,7 +21,7 @@ class SendReceive extends Component {
 
     }
     closeDrawer = () => {
-        this.props.dispatch(setStep("step1"));
+
         this.props.dispatch(setSubTitle(""))
         if (this.props.onClose) {
             this.props.onClose();
@@ -34,7 +34,7 @@ class SendReceive extends Component {
         this.props.dispatch(setStep("step1"));
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
     }
-    selectCrypto = () =>{
+    selectCrypto = () => {
         this.props.dispatch(setStep("step9"));
     }
     renderContent = () => {
@@ -47,10 +47,10 @@ class SendReceive extends Component {
             withdrawsummary: <WithdrawSummary />,
             withdrawscan: <WithdrawScan />,
             selectAddress: <SelectAddress />,
-            selectCrypto: <SelectCrypto/>,
-            withdraw_crypto_liveness: <WithdrawaCryptolLive/>,
-            withdraw_crpto_summary: <WithdrawSummary/>,
-            withdraw_crpto_success: <SuccessMsg onBackCLick={()=>this.props.dispatch(setStep("step1"))}/>
+            selectCrypto: <SelectCrypto />,
+            withdraw_crypto_liveness: <WithdrawaCryptolLive />,
+            withdraw_crpto_summary: <WithdrawSummary />,
+            withdraw_crpto_success: <SuccessMsg onBackCLick={() => this.props.dispatch(setStep("step1"))} />
 
         }
         return stepcodes[config[this.props.sendReceive.stepcode]]
@@ -58,13 +58,13 @@ class SendReceive extends Component {
     renderTitle = () => {
         const stepcodes = {
             depositecrypto: <span />,
-            withdraw: <span onClick={() => {this.props.dispatch(setStep("step1"));this.props.dispatch(setWithdrawcrypto(null));this.props.dispatch(setAddress(null))}} className="icon md lftarw-white c-pointer" />,
+            withdraw: <span onClick={() => { this.props.dispatch(setStep("step1")); this.props.dispatch(setWithdrawcrypto(null)); this.props.dispatch(setAddress(null)) }} className="icon md lftarw-white c-pointer" />,
             scanner: <span onClick={() => this.props.dispatch(setStep("step4"))} className="icon md lftarw-white c-pointer" />,
             withdrawscan: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             withdrawaddress: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             verifyidentity: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdrawsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
-            selectAddress:<span onClick={() => this.props.dispatch(setStep("withdraw_crypto_selected"))} className="icon md lftarw-white c-pointer" />,
+            selectAddress: <span onClick={() => this.props.dispatch(setStep("withdraw_crypto_selected"))} className="icon md lftarw-white c-pointer" />,
             selectCrypto: <span onClick={() => this.props.dispatch(setStep("step8"))} className="icon md lftarw-white c-pointer" />,
             withdraw_crypto_liveness: <span onClick={() => this.props.dispatch(setStep("withdraw_crpto_summary"))} className="icon md lftarw-white c-pointer" />,
             withdraw_crpto_summary: <span onClick={() => this.props.dispatch(setStep("withdraw_crypto_selected"))} className="icon md lftarw-white c-pointer" />,
@@ -81,7 +81,7 @@ class SendReceive extends Component {
             withdrawaddress: <span />,
             verifyidentity: <span />,
             withdrawsummary: <span />,
-            selectAddress:<span />,
+            selectAddress: <span />,
             selectCrypto: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdraw_crypto_liveness: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             withdraw_crpto_summary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,

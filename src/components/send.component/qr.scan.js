@@ -20,14 +20,15 @@ class QRScan extends Component {
     success = () => {
         message.success('Address was copied!');
     };
-
+    componentDidMount() {
+        this.trackevent();
+    }
     componentWillUnmount() {
         this.props.dispatch(setWalletAddress(null))
-        this.trackevent();
     }
     trackevent = () => {
         apicalls.trackEvent({
-             "Type": 'User', "Action": 'Deposit Crypto page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Deposit Crypto', "Remarks": "Deposit Crypto scan page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto' 
+            "Type": 'User', "Action": 'Deposit Crypto scan page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Deposit Crypto', "Remarks": "Deposit Crypto scan page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto'
         });
     }
     get walletAddress() {
@@ -63,7 +64,7 @@ class QRScan extends Component {
         </Menu>
     }
     render() {
-        const { Paragraph, Text} = Typography;
+        const { Paragraph, Text } = Typography;
         if (!this.props?.sendReceive?.depositWallet?.walletAddress) {
             return <Loader />
         }

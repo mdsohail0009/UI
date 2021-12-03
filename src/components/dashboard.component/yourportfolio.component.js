@@ -75,7 +75,8 @@ class YourPortfolio extends Component {
                                 <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer(item, "sell")} />
                             </div>
                         }>
-                            <Link className="c-pointer" to={"/coindetails/" + item.coinFullName.toLowerCase()} ><List.Item.Meta
+                            {/* to={"/coindetails/" + item.coinFullName.toLowerCase()} */}
+                            <Link className="c-pointer" onClick={() => this.props.history.push("/coindetails/" + item.coinFullName.toLowerCase())}><List.Item.Meta
                                 avatar={<span className={`coin ${item.coin}`} />}
                                 title={<div className="fs-18 fw-300 text-upper text-white mb-0 mt-12">{item.coin}</div>}
                             /></Link>

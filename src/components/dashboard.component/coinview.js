@@ -24,7 +24,7 @@ class CoinView extends React.Component {
     }
 
     componentDidMount() {
-        debugger
+        window.scrollTo(0, 0)
         this.loadCoinDetailData();
         this.coinViewTrack();
     }

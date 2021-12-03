@@ -10,7 +10,7 @@ import apiCalls from '../../api/apiCalls';
 class SuccessMessage extends Component {
     componentDidMount() {
         apiCalls.trackEvent({
-            "Type": 'User', "Action": ' Swap success page view', "Username": this.props.userProfile?.userName, "MemeberId": this.props.userProfile?.userId, "Feature": 'Swap', "Remarks": 'Swap success page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap crypto'
+            "Type": 'User', "Action": ' Swap success page view', "Username": this.props.userProfile?.userName, "MemeberId": this.props.userProfile?.userId, "Feature": 'Swap', "Remarks": 'Swap success page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap'
         });
     }
     render() {

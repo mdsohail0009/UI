@@ -30,7 +30,7 @@ class RouteConfig extends Component {
         <ReactRoute path='/userprofile' component={UserProfile} />
         <ReactRoute path='/documents' component={RequestedDocs} />
         <ReactRoute path='/docnotices' component={DocNotices} />
-        <ReactRoute path='/coindetails/:coinName' component={CoinDetails} />
+        <Route path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
         <ReactRoute path='/cockpitCharts' component={DashboardCharts} />
         <ReactRoute path="/" component={Dashboard} exact />

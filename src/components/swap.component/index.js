@@ -24,7 +24,7 @@ class SwapCrypto extends Component {
     }
     closeBuyDrawer = () => {
         this.props.dispatch(setHeaderTab(""))
-        this.props.dispatch(setStep("step1"))
+
         if (this.props.onClose) {
             this.props.onClose();
         }
