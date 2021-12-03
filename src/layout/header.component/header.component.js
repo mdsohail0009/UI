@@ -83,12 +83,12 @@ class Header extends Component {
             this.showNotification()
         }
     }
-    showNotification = () =>{
+    showNotification = () => {
         const isKyc = !this.props.userConfig.isKYC;
-        if(isKyc){
+        if (isKyc) {
             notification.error({ message: "", description: `Please complete Your ${this.props.userConfig.isBusiness ? 'KYB' : 'KYC'}` });
-        }else{
-           notification.error({ message: "", description: 'Please complete Your Document requests'});
+        } else {
+            notification.error({ message: "", description: 'Please complete Your Document requests' });
         }
     }
     closeDrawer = () => {
@@ -141,7 +141,7 @@ class Header extends Component {
                                 {/* <li className="pr-30 p-relative"><Link to="/dashboard"><img src={logoColor} alt="logo" className="tlv-logo" /></Link></li> */}
                                 <li className="pr-30 p-relative"><img src={logoColor} alt="logo" className="tlv-logo" /></li>
                                 <MegaMenu />
-                                <li className="mb-d-none" onClick={() => this.props.history.push("/dashboard")}>
+                                <li className="mb-d-none" onClick={() => this.props.history.push("/cockpit")}>
                                     <Translate content="header_title_business" component="p" className="text-white-30 mb-0 fs-24" />
                                 </li>
                             </ul>

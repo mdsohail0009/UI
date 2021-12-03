@@ -14,12 +14,12 @@ const UserProfile = React.lazy(() => import('../components/userProfile.component
 const RequestedDocs = React.lazy(() => import('../components/documents.component/requestedDocs'));
 const DocNotices = React.lazy(() => import("../components/shared/doc.notices"))
 const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"))
-const DashboardCharts = React.lazy(() => import("../components/dashboard.component/dashboardCharts"))
+const DashboardCharts = React.lazy(() => import("../components/dashboard.component/cockpitCharts"))
 class RouteConfig extends Component {
   render() {
     return <Switch>
       <React.Suspense fallback={<div className="loader">Loading...</div>}>
-        <Route path="/dashboard" component={Dashboard} />
+        <Route path="/cockpit" component={Dashboard} />
         <ReactRoute path="/callback" component={CallbackPage} />
         <ReactRoute path="/login" component={Login} />
         <ReactRoute path="/changepassword" component={ChangePassword} />
@@ -32,7 +32,7 @@ class RouteConfig extends Component {
         <ReactRoute path='/docnotices' component={DocNotices} />
         <ReactRoute path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
-        <ReactRoute path='/dashboardCharts' component={DashboardCharts} />
+        <ReactRoute path='/cockpitCharts' component={DashboardCharts} />
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>
     </Switch>

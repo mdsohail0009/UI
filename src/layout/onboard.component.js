@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { userInfo, getmemeberInfo,getIpRegisteryData } from '../reducers/configReduser';
+import { userInfo, getmemeberInfo, getIpRegisteryData } from '../reducers/configReduser';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 class OnBoarding extends Component {
@@ -13,19 +13,19 @@ class OnBoarding extends Component {
   getMemberDetails = async () => {
     if (this.props.user && this.props.user.profile) {
       this.props.getmemeberInfoa(this.props.user.profile.sub);
-    this.props.trackauditlogs()
+      this.props.trackauditlogs()
     }
   }
   render() {
     if (this.props.user && this.props.user.profile && this.props.userConfig) {
-     if(this.props.userConfig.isKYC ){
-      if(!window.location.pathname.includes('dashboard'))this.props.history.push("/dashboard")
-     }else{
-      if(!window.location.pathname.includes('sumsub'))this.props.history.push('/sumsub')
-     }
+      if (this.props.userConfig.isKYC) {
+        if (!window.location.pathname.includes('cockpit')) this.props.history.push("/cockpit")
+      } else {
+        if (!window.location.pathname.includes('sumsub')) this.props.history.push('/sumsub')
+      }
     }
     return <>
-    <div className="loader">Loading .....</div>
+      <div className="loader">Loading .....</div>
     </>
   }
 }
@@ -40,7 +40,7 @@ const connectDispatchToProps = dispatch => {
     getmemeberInfoa: (useremail) => {
       dispatch(getmemeberInfo(useremail));
     },
-    trackauditlogs:()=>{
+    trackauditlogs: () => {
       dispatch(getIpRegisteryData());
     }
   }

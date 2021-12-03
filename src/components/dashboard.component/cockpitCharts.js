@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 const { Title, Paragraph, Text } = Typography;
 
-class DashboardCharts extends Component {
+class CockpitCharts extends Component {
     state = {
         reports: [],
         c: null,
@@ -71,14 +71,14 @@ class DashboardCharts extends Component {
     }
 
     viewReport = (elem) => {
-        this.props.history.push('/dashboard/reportview/' + elem.name);
+        this.props.history.push('/cockpit/reportview/' + elem.name);
         apiCalls.trackEvent({ "Action": 'View Reports', "Feature": 'Dashboard', "Remarks": "View Reports", "FullFeatureName": 'Dashboard View Reports', "userName": this.props.userConfig.userName, id: this.props.userConfig.id });
     }
 
     render() {
         return (<>
             <div className="main-container db-container">
-                <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/dashboard" />Back</div>
+                <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cockpit" />Back</div>
                 {this.state.kpis && <Row gutter={16} className="mb-8">
                     <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                         <div className="db-kpi">
@@ -189,4 +189,4 @@ class DashboardCharts extends Component {
 const connectStateToProps = ({ breadCrumb, oidc, userConfig }) => {
     return { breadCrumb, oidc, userConfig: userConfig.userProfileInfo, }
 }
-export default connect(connectStateToProps, (dispatch) => { return { dispatch } })(DashboardCharts);
+export default connect(connectStateToProps, (dispatch) => { return { dispatch } })(CockpitCharts);

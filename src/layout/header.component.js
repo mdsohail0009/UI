@@ -390,7 +390,7 @@ class Header extends Component {
                                     {<img src={logoWhite} alt="logo" className="tlv-logo dark" alt={"image"} />}
                                     {<img src={logoColor} alt="logo" className="tlv-logo light" alt={"image"} />}
                                 </li>
-                                <li className="mb-d-none px-36"><Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? " Business" : " Personal" }} onClick={() => this.props.userConfig.isKYC ? this.props.history.push('/dashboard') : this.props.history.push("/notkyc")} component="p" className="text-white-30 mb-0 fs-24 c-pointer" /></li>
+                                <li className="mb-d-none px-36"><Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? " Business" : " Personal" }} onClick={() => this.props.userConfig.isKYC ? this.props.history.push('/cockpit') : this.props.history.push("/notkyc")} component="p" className="text-white-30 mb-0 fs-24 c-pointer" /></li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
                                 <Menu.Item key="6"><span className="icon md bell" onClick={this.showNotificationsDrawer} /></Menu.Item>
