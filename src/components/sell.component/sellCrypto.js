@@ -13,10 +13,6 @@ import apicalls from '../../api/apiCalls';
 class SellToggle extends Component {
     componentDidMount() {
         this.props.fetchMemberCoins(this.props.member?.id)
-        this.trackevent()
-    }
-    trackevent = () => {
-        apicalls.trackEvent({ "Type": 'User', "Action": 'Sell page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Sell', "Remarks": "Sell coin selection", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto' });
     }
     handleBuySellToggle = e => {
         this.setState({

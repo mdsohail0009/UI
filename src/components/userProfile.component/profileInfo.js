@@ -50,7 +50,7 @@ class ProfileInfo extends Component {
             if (fileType[file.type] && isFileName) {
                 return true
             } else {
-                message.error({content: isFileName ? `${file.type} is not accept` : "File don't allow double Extension",className: 'custom-msg' })
+                message.error({ content: isFileName ? `${file.type} is not accept` : "File don't allow double Extension", className: 'custom-msg' })
                 return Upload.LIST_IGNORE;
             }
 
@@ -65,6 +65,7 @@ class ProfileInfo extends Component {
     saveImage = async (Obj, res) => {
         debugger
         this.setState({ ...this.state, Loader: true })
+        Obj.info = JSON.stringify(this.props.trackAuditLogData);
         let res1 = await ProfileImageSave(Obj);
         if (res1.ok) {
             message.success({ content: 'Profile uploaded successfully', className: 'custom-msg' });
@@ -180,7 +181,7 @@ class ProfileInfo extends Component {
     }
 }
 const connectStateToProps = ({ userConfig }) => {
-    return { userConfig: userConfig.userProfileInfo }
+    return { userConfig: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {

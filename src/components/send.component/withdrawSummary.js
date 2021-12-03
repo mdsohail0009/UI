@@ -58,7 +58,7 @@ class WithdrawSummary extends Component {
   }
   trackEvent = () => {
     apiCalls.trackEvent({
-      "Type": 'User', "Action": 'save', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": 'withdraw Summary', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'withdraw Summary'
+      "Type": 'User', "Action": 'Withdraw crypto summary page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": 'Withdraw crypto summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'withdraw Summary'
     });
   }
   loadData = async () => {

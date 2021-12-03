@@ -18,6 +18,8 @@ import SellSummary from '../sell.component/sellSummary';
 import SelectSellCrypto from '../sell.component/selectCrypto'
 import SuccessMsg from '../shared/success';
 import SellSuccessMsg from '../sell.component/successMsg';
+import apicalls from '../../api/apiCalls';
+
 const { Paragraph } = Typography
 class BuySell extends Component {
     constructor(props) {
@@ -107,7 +109,6 @@ class BuySell extends Component {
             visible={this.props.showDrawer}
             closeIcon={null}
             className="side-drawer"
-
         >
             {this.renderContent()}
         </Drawer>);

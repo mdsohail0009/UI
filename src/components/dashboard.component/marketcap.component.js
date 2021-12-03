@@ -21,7 +21,7 @@ const MarketCap = ({ member }) => {
     const [originalMarketCaps, setOriginalMarketCaps] = useState([])
     useEffect(() => {
         fetchMarketCapsInfo()
-        marketsTack()
+
     }, [])
     const fetchMarketCapsInfo = async () => {
         setIsLoading(true);
@@ -33,17 +33,17 @@ const MarketCap = ({ member }) => {
             setIsLoading(false);
         }
     }
-    const marketsTack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Markets page view', "Username": member?.userName, "MemeberId": member?.id, "Feature": 'Markets', "Remarks": 'Markets page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Markets' });
-    }
     const onSearch = ({ currentTarget: { value } }) => {
         let matches = originalMarketCaps.filter(item => item.symbol.toLowerCase().includes(value.toLowerCase()));
         setSearchVal(value)
         setMarketCaps(matches)
     }
-
     const showDrawer = () => {
         setIsOpen(true);
+        marketsTack();
+    }
+    const marketsTack = () => {
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Markets page view', "Username": member?.userName, "MemeberId": member?.id, "Feature": 'Markets', "Remarks": 'Markets page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Markets' });
     }
     const onClose = () => {
         setIsOpen(false)

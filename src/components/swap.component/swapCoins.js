@@ -21,14 +21,15 @@ class SwapCoins extends Component {
         loadingFromValue: false
     }
     async componentDidMount() {
+        this.trackEvent()
         this.props.swapCoinsRef(this)
         this.loadamount()
         await this.setOneCoinValue();
-        this.trackEvent()
+
     }
     trackEvent = () => {
         apicalls.trackEvent({
-            "Type": 'User', "Action": 'Swap page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Swap', "Remarks": 'Swap coins page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap'
+            "Type": 'User', "Action": 'Swap page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Swap', "Remarks": 'Swap page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap'
         });
     }
     clearSwapCoinValues = () => {

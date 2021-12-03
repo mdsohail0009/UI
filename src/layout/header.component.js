@@ -44,7 +44,7 @@ class Header extends Component {
         this.loginTrack()
     }
     loginTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'page view', "Username":null, "MemeberId": null, "Feature": 'Login', "Remarks": 'User Logged in', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Login' });
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'User Logged in', "Username": null, "MemeberId": null, "Feature": 'Login', "Remarks": 'User Logged in', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Login' });
     }
     securityMenu = (
 
@@ -336,15 +336,16 @@ class Header extends Component {
         window.open(url);
 
     }
-    trackEvent(){
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'page view', "Username":null, "MemeberId": null, "Feature": 'Logout', "Remarks": 'User Logged out', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Logout' });
+    trackEvent() {
+
         window.$zoho?.salesiq?.chat.complete();
         window.$zoho?.salesiq?.reset();
         userManager.signoutRedirect()
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'User Logged out', "Username": null, "MemeberId": null, "Feature": 'Logout', "Remarks": 'User Logged out', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Logout' });
     }
-    clearEvents(){
+    clearEvents() {
         this.trackEvent();
-       
+
     }
     render() {
         const link = <LinkValue content="medium" />;
