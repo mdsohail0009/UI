@@ -206,6 +206,7 @@ class Header extends Component {
     }
     showBuyDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
+            this.props.dispatch(setStep("step1"));
             this.setState({
                 buyDrawer: true, Visibleprofilemenu: false
             })
