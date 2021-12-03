@@ -27,6 +27,12 @@ class CryptoComponent extends Component {
 
     componentDidMount() {
         this.props.dispatch(fetchCoins("All"));
+
+        if (this.props.buySell.tabKey == 1) {
+            apiClient.trackEvent({ "Type": 'User', "Action": 'Buy page view', "Feature": 'Buy', "Remarks": "Buy coin selection", "FullFeatureName": 'Buy Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
+        } else if (this.props.buySell.tabKey == 2) {
+            apiClient.trackEvent({ "Type": 'User', "Action": 'Sell page view', "Feature": 'Sell', "Remarks": "Sell coin selection", "FullFeatureName": 'Sell Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
+        }
     }
     buySellEventTracks = (e) => {
         if (e.target.value == 1) {

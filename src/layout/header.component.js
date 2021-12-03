@@ -21,11 +21,12 @@ import Notifications from '../notifications'
 import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata, clearSwapData } from '../reducers/swapReducer';
 import { connect } from 'react-redux';
 import DefaultUser from '../assets/images/defaultuser.jpg';
-import { setHeaderTab } from '../reducers/buysellReducer';
+import { setHeaderTab, setStep } from '../reducers/buysellReducer';
 import { setdepositCurrency } from '../reducers/depositReducer'
 import { deleteToken } from '../notifications/api';
 import Wallets from '../components/wallets.component.js';
 import apiCalls from '../api/apiCalls'
+
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
@@ -223,6 +224,7 @@ class Header extends Component {
     }
     showSendDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
+            this.props.dispatch(setStep("step1"))
             this.setState({
                 sendDrawer: true, Visibleprofilemenu: false
             })
@@ -272,6 +274,7 @@ class Header extends Component {
     }
     showBuyFiatDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
+            this.props.dispatch(setStep("step1"))
             this.setState({
                 buyFiatDrawer: true, Visibleprofilemenu: false
             })

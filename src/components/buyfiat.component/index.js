@@ -24,7 +24,7 @@ class MassPayment extends Component {
     closeDrawer = () => {
         this.props.dispatch(setWithdrawfiatenaable(false))
         this.props.dispatch(rejectWithdrawfiat())
-        this.props.dispatch(setStep("step1"))
+        //this.props.dispatch(setStep("step1"))
         if (this.props.onClose) {
             this.props.onClose();
         }
@@ -117,6 +117,7 @@ class MassPayment extends Component {
                 visible={this.props.showDrawer}
                 closeIcon={null}
                 className="side-drawer"
+                destroyOnClose={true}
             >
                 {this.renderContent()}
             </Drawer>

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import SellToggle from '../withDraw.component/faitWithdrawal';
 import config from '../../config/config';
 import NumberFormat from 'react-number-format';
-import { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject } from '../../reducers/depositReducer'
+import { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject, setsavefiatobject } from '../../reducers/depositReducer'
 import { rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import { setStep } from '../../reducers/buyFiatReducer';
 import { savedepositFiat, requestDepositFiat } from './api';
@@ -156,6 +156,7 @@ class FaitDeposit extends Component {
     this.formRef.current.setFieldsValue({ ...depObj })
   }
   ConfirmDeposit = async () => {
+    debugger
     let { BankInfo, depObj } = this.state;
     const dFObj = { ...BankInfo, ...depObj };
     this.props.dispatch(updatdepfiatobject(dFObj));
@@ -180,19 +181,22 @@ class FaitDeposit extends Component {
         let createObj = { "id": "00000000-0000-0000-0000-000000000000", "bankId": BankInfo.id, "currency": depObj.currency, "bankName": BankInfo.bankName, "bankAddress": BankInfo.bankAddress, "amount": parseFloat(depObj.Amount), "accountNumber": BankInfo.accountNumber, "routingNumber": BankInfo.routingNumber, "swiftorBICCode": BankInfo.networkCode, "benficiaryBankName": BankInfo.accountName, "reference": BankInfo.depReferenceNo, "benficiaryAccountAddrress": BankInfo.accountAddress }
         this.props.trackAuditLogData.Action = 'Save';
         this.props.trackAuditLogData.Remarks = (createObj.amount + ' ' + createObj.currency + ' deposited.')
-        createObj.info = JSON.stringify(this.props.trackAuditLogData);
-        let Obj = await savedepositFiat(createObj);
-        if (Obj.ok === true) {
-          this.props.changeStep('step2')
-          const { selectedDepFiatData } = this.props.depositInfo;
-          this.setState({
-            buyDrawer: false,
-            BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null },
-            faitdeposit: false,
-            tabValue: 1, Loader: false, isTermsAgreed: false, showSuccessMsg: true,
 
-          });
-        }
+        this.props.changeStep('step2');
+        this.props.dispatch(setsavefiatobject(createObj));
+
+        // 
+        // let Obj = await savedepositFiat(createObj);
+        // if (Obj.ok === true) {
+        //   //const { selectedDepFiatData } = this.props.depositInfo;
+        //   this.setState({
+        //     buyDrawer: false,
+        //     BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null },
+        //     faitdeposit: false,
+        //     tabValue: 1, Loader: false, isTermsAgreed: false, showSuccessMsg: true,
+
+        //   });
+        // }
       });
     }
   }

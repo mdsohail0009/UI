@@ -6,6 +6,7 @@ import { setStep } from '../../reducers/buyFiatReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import { setdepositCurrency } from '../../reducers/depositReducer'
+import { savedepositFiat, requestDepositFiat } from '../deposit.component/api';
 import apiCalls from "../../api/apiCalls";
 const LinkValue = (props) => {
     return (
@@ -21,13 +22,16 @@ class FiatSummary extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            depositFiatData: {},
+            depositFiatData: null,
+            getDepFiatSaveData: {},
             loading: true,
         }
     }
 
     componentDidMount() {
-        this.setState({ ...this.state, depositFiatData: this.props.depositInfo?.depFiatSaveObj })
+        this.setState({
+            ...this.state, depositFiatData: this.props.depositInfo?.depFiatSaveObj, getDepFiatSaveData: this.props.depositInfo?.setDepFiatSaveObj
+        })
         apiCalls.trackEvent({
             "Type": 'User', "Action": 'Deposit Fiat Summary page view', "Username": this.props.userConfig.userName, "MemeberId": this.props.userConfig.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit Fiat Summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat'
         });
@@ -35,16 +39,20 @@ class FiatSummary extends Component {
 
     showSendReceiveDrawer = (value) => {
         this.props.changeStep("step1");
-        //this.props.dispatch(setdepositCurrency(value));
     }
 
+    saveDepFiat = async () => {
+        let Obj = await savedepositFiat(this.props.depositInfo?.setDepFiatSaveObj);
+        if (Obj.ok === true) {
+            this.props.changeStep('step3')
+        }
+    }
     render() {
         const { depositFiatData } = this.state;
         const { Text } = Typography;
         return (
             <>
-                {!this.state.loading ? <div className="mt-36"><Spin /></div> : <div className="cryptosummary-container">
-
+                {(!this.state.loading && depositFiatData == null) ? <div className="mt-36"><Spin /></div> : <div className="cryptosummary-container">
                     <div className="pay-list fs-14">
                         <Translate content="amount" component={Text} className="fw-400 text-white" />
                         <Currency className="fw-500 text-white-50" prefix={""} defaultValue={depositFiatData?.Amount} suffixText={depositFiatData?.currencyCode} />
@@ -69,7 +77,7 @@ class FiatSummary extends Component {
                         <li><Translate className="pl-0 ml-0 text-white-50" content="account_details" component={Text} /> </li>
                         <li><Translate className="pl-0 ml-0 text-white-50" content="Cancel_select" component={Text} /></li>
                     </ul>
-                    <Translate size="large" block className="pop-btn mt-36" content="confirm" component={Button} onClick={() => this.props.changeStep('step3')} />
+                    <Translate size="large" block className="pop-btn mt-36" content="confirm" component={Button} onClick={this.saveDepFiat} />
                     <div className="text-center mt-8">
                         <Translate content="back" component={Button} type="text" size="large" onClick={() => this.showSendReceiveDrawer(depositFiatData?.currencyCode)} className=" pop-cancel fw-400" />
                     </div></div>}

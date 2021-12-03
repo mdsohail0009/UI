@@ -5,7 +5,8 @@ import { setStep } from '../../reducers/buyFiatReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import success from '../../assets/images/success.png';
-import { setdepositCurrency } from '../../reducers/depositReducer'
+import { setdepositCurrency } from '../../reducers/depositReducer';
+import apiCalls from "../../api/apiCalls";
 
 class FaitdepositSummary extends Component {
     constructor(props) {
@@ -13,6 +14,14 @@ class FaitdepositSummary extends Component {
         this.state = {
 
         }
+    }
+    componentDidMount() {
+        this.fiatSummaryTrack();
+    }
+    fiatSummaryTrack = () => {
+        apiCalls.trackEvent({
+            "Type": 'User', "Action": 'Deposit fiat success page view', "Username": this.props.userConfig?.userName, "MemeberId": this.props.userConfig?.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit fiat success page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat'
+        });
     }
     showPayCardDrawer = () => {
         console.log(this.state);
@@ -38,8 +47,8 @@ class FaitdepositSummary extends Component {
         )
     }
 }
-const connectStateToProps = ({ buySell, oidc }) => {
-    return { buySell }
+const connectStateToProps = ({ buySell, oidc, userConfig }) => {
+    return { buySell, userConfig: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {

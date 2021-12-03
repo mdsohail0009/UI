@@ -5,7 +5,8 @@ const FETCH_CURRENCIESWITHBANKDETAILS_SUCCESS = "fetchcurrencieswithbankdetailsS
 const SET_DEPOSITCURRENCY = 'setdepositCurrency';
 const HANDLE_FETCH = 'handleFetch';
 const UPDATE_DEPFIAT_OBJECT = 'updatdepfiatobject';
-const CLEAR_DEPFIAT_OBJECT = 'cleardepfiatobject'
+const CLEAR_DEPFIAT_OBJECT = 'cleardepfiatobject';
+const SET_SAVEFIAT_OBJECT = 'setsavefiatobject';
 
 const handleFetch = (payload) => {
     return { type: HANDLE_FETCH, payload }
@@ -39,6 +40,13 @@ const updatdepfiatobject = (payload) => {
         payload
     }
 }
+const setsavefiatobject = (payload) => {
+    return {
+        type: SET_SAVEFIAT_OBJECT,
+        payload
+    }
+}
+
 const cleardepfiatobject = (payload) => {
     return {
         type: CLEAR_DEPFIAT_OBJECT,
@@ -50,7 +58,8 @@ const initialState = {
     isLoading: true,
     error: null,
     currenciesWithBankInfo: [], depositCurrency: null,
-    depFiatSaveObj: {}
+    depFiatSaveObj: {},
+    setDepFiatSaveObj: {}
 }
 const getCurrencieswithBankDetails = () => {
     return async (dispatch) => {
@@ -85,6 +94,8 @@ const depositReducer = (state = initialState, action) => {
             return state;
         case UPDATE_DEPFIAT_OBJECT:
             return { ...state, depFiatSaveObj: action.payload }
+        case SET_SAVEFIAT_OBJECT:
+            return { ...state, setDepFiatSaveObj: action.payload }
         case CLEAR_DEPFIAT_OBJECT:
             return { ...state, depFiatSaveObj: null }
         default:
@@ -93,4 +104,4 @@ const depositReducer = (state = initialState, action) => {
 }
 
 export default depositReducer;
-export { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject, cleardepfiatobject }
+export { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject, cleardepfiatobject, setsavefiatobject }
