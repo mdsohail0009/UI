@@ -308,7 +308,7 @@ class WithdrawSummary extends Component {
                   placeholder={apiCalls.convertLocalLang("verification_code")}
                   maxLength={6}
                   onChange={(e) => this.handleOtp(e.target.value)}
-                  style={{ width: "445px" }}
+                  style={{ width: '100%' }}
                 />
               </Form.Item>
             </div>

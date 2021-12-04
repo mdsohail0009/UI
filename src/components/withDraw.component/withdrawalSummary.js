@@ -192,7 +192,7 @@ const WithdrawalSummary = ({
             onChange={(e) => {
               setOtp(e.target.value);
             }}
-            style={{ width: "445px" }}
+            style={{ width: "100%" }}
           />
 
         </Form.Item>
