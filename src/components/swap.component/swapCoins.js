@@ -23,7 +23,7 @@ class SwapCoins extends Component {
             loadingFromValue: false
         }
     }
-    componentDidMount = async () => {
+    async componentDidMount() {
         this.swapCoinsTrack();
         this.props.swapCoinsRef(this)
         this.loadamount();

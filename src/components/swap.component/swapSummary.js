@@ -26,6 +26,7 @@ class SwapSummary extends Component {
     componentDidMount() {
         this.setOneCoinValue();
         this.setReceiveAmount();
+        this.swapSummayTrack();
     }
     swapSummayTrack = () => {
         apiCalls.trackEvent({

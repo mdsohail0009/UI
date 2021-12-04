@@ -64,14 +64,14 @@ class WithdrawSummary extends Component {
   trackEvent = () => {
     apiCalls.trackEvent({
       Type: "User",
-      Action: "Withdraw crypto summary page view",
+      Action: "Withdraw Crypto summary page view",
       Username: this.props.userProfile.userName,
       MemeberId: this.props.userProfile.id,
       Feature: "Withdraw Crypto",
-      Remarks: "Withdraw crypto summary page view",
+      Remarks: "Withdraw Crypto summary page view",
       Duration: 1,
       Url: window.location.href,
-      FullFeatureName: "withdraw Summary"
+      FullFeatureName: "Withdraw Crypto"
     });
   };
   loadData = async () => {
@@ -251,9 +251,8 @@ class WithdrawSummary extends Component {
               decimalPlaces={8}
               prefix={""}
               className="fw-400 text-white-30"
-              prefixText={`1 ${
-                this.props.sendReceive.withdrawCryptoObj?.walletCode
-              } = ${"USD"}`}
+              prefixText={`1 ${this.props.sendReceive.withdrawCryptoObj?.walletCode
+                } = ${"USD"}`}
             />
           </div>
           <div className="pay-list fs-14">

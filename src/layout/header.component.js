@@ -260,7 +260,7 @@ class Header extends Component {
     }
     showSwapDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
-            this.props.dispatch(swapSetStep("step1"))
+
             this.setState({
                 swapDrawer: true, Visibleprofilemenu: false
             })

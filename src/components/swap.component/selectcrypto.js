@@ -22,10 +22,8 @@ class SelectCrypto extends Component {
     componentDidMount() {
         if (this.props.swapfrom) {
             this.fromCoinList();
-            //this.swapTrack('From');
         } else {
             this.toCoinList();
-            //this.swapTrack('To');
         }
         this.swapTrack();
     }

@@ -21,7 +21,7 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
     }
     const trackevent = () => {
         apicalls.trackEvent({
-            "Type": 'User', "Action": 'Withdraw crypto page view', "Username": userProfile?.userName, "MemeberId": userProfile?.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
+            "Type": 'User', "Action": 'Withdraw Crypto page view', "Username": userProfile?.userName, "MemeberId": userProfile?.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
         });
     }
     const { cryptoWithdraw: { wallets } } = sendReceive;
