@@ -108,6 +108,8 @@ class WithdrawSummary extends Component {
   };
 
   getOTP = async (val) => {
+    this.setState({ disable: true });
+
     let response = await apiCalls.getCode(
       this.props.userProfile.id,
       this.state.isResend
@@ -115,14 +117,17 @@ class WithdrawSummary extends Component {
     if (response.ok) {
       console.log(response);
     }
+
     setTimeout(() => {
-      this.setState({ buttonText: "RESEND CODE" });
+      this.setState({ buttonText: apiCalls.convertLocalLang("resend_code") });
       this.setState({ isResend: true });
+      this.setState({ disable: false });
     }, 120000);
     this.setState({
       verificationText:
         apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber
     });
+    this.setState({ validationText: apiCalls.convertLocalLang("resend_text") });
   };
   handleOtp = (val) => {
     this.setState({ ...this.state, otp: val });
@@ -197,7 +202,7 @@ class WithdrawSummary extends Component {
     }
   };
 
-  fullNumber = this.props.userProfile?.phoneNo;
+  fullNumber = this.props.userProfile?.phoneNumber;
   last4Digits = this.fullNumber.slice(-4);
   maskedNumber = this.last4Digits.padStart(this.fullNumber.length, "*");
   render() {
@@ -311,8 +316,19 @@ class WithdrawSummary extends Component {
                   onChange={(e) => this.handleOtp(e.target.value)}
                   style={{ width: "445px" }}
                 />
+               
               </Form.Item>
+              <div>
+                  <Text className="fs-12 text-white-30 fw-200">
+                    {this.state.invalidcode}
+                  </Text>
+                  <Text className="fs-12 text-white-30 fw-200">
+                    {this.state.validationText}
+                  </Text>
+                </div>
+              
             </div>
+           
 
             <Translate
               className="fs-14 text-center text-white-30 mt-24"
