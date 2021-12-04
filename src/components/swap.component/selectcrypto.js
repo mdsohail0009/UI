@@ -20,13 +20,13 @@ class SelectCrypto extends Component {
     }
     useDivRef = React.createRef();
     componentDidMount() {
-        // if (this.props.swapfrom) {
-        //     this.fromCoinList();
-        //     this.swapTrack('From');
-        // } else {
-        //     this.toCoinList();
-        //     this.swapTrack('To');
-        // }
+        if (this.props.swapfrom) {
+            this.fromCoinList();
+            //this.swapTrack('From');
+        } else {
+            this.toCoinList();
+            //this.swapTrack('To');
+        }
 
     }
     fromCoinList = async () => {
