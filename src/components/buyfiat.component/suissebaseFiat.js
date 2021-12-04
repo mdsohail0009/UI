@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Drawer, Typography} from 'antd';
+import { Drawer, Typography } from 'antd';
 import { buyFiatSteps as config } from './config';
 import Translate from 'react-translate-component';
 import { setStep } from '../../reducers/buysellReducer';
@@ -12,12 +12,13 @@ import WithdrawalSummary from '../withDraw.component/withdrawalSummary';
 class SuissebaseFiat extends Component {
     state = {}
     closeDrawer = () => {
-        this.props.dispatch(setStep("step1"))
+        //this.props.dispatch(setStep("step1"))
         if (this.props.onClose) {
             this.props.onClose();
         }
-        if(this.child){
-        this.child.clearfiatValues();}
+        if (this.child) {
+            this.child.clearfiatValues();
+        }
     }
     renderTitle = () => {
         const stepcodes = {
@@ -27,12 +28,12 @@ class SuissebaseFiat extends Component {
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }
-    renderContent = () => { 
+    renderContent = () => {
         const stepcodes = {
-            fiatdeposit: <FaitDeposit  fiatRef={(cd) => this.child = cd}/>,
+            fiatdeposit: <FaitDeposit fiatRef={(cd) => this.child = cd} />,
             faitsummary: < FaitdepositSummary />,
-            selectcurrency: < SelectCurrency/>,
-            withdrwalfiatsummary: < WithdrawalSummary/>,
+            selectcurrency: < SelectCurrency />,
+            withdrwalfiatsummary: < WithdrawalSummary />,
 
         }
         return stepcodes[config[this.props.buyFiat.stepcode]]
@@ -65,6 +66,7 @@ class SuissebaseFiat extends Component {
                 visible={this.props.showDrawer}
                 closeIcon={null}
                 className="side-drawer"
+                destroyOnClose={true}
             >
                 {this.renderContent()}
             </Drawer >

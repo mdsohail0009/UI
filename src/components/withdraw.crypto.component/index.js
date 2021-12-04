@@ -10,17 +10,18 @@ import apicalls from "../../api/apiCalls";
 const { Paragraph, Text, Title } = Typography;
 const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
     useEffect(() => {
-        loadData()
+        loadData();
+        trackevent();
     }, [])
     const loadData = () => {
         dispatch(fetchWithDrawWallets({ memberId: userProfile?.id }));
         dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
         dispatch(setSubTitle(apicalls.convertLocalLang("selectCurrencyinWallet")));
-        trackevent();
+
     }
     const trackevent = () => {
         apicalls.trackEvent({
-        "Type": 'User', "Action": 'Withdraw Crypto page view', "Username": userProfile.userName, "MemeberId": userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto' 
+            "Type": 'User', "Action": 'Withdraw Crypto page view', "Username": userProfile?.userName, "MemeberId": userProfile?.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
         });
     }
     const { cryptoWithdraw: { wallets } } = sendReceive;

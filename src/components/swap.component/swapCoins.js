@@ -10,22 +10,29 @@ import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
 
 class SwapCoins extends Component {
-    state = {
-        fromCoin: null,
-        receiveCoin: null,
-        price: null,
-        fromValue: null,
-        receiveValue: null,
-        errorMessage: null,
-        loadingToValue: false,
-        loadingFromValue: false
+    constructor(props) {
+        super(props)
+        this.state = {
+            fromCoin: null,
+            receiveCoin: null,
+            price: null,
+            fromValue: null,
+            receiveValue: null,
+            errorMessage: null,
+            loadingToValue: false,
+            loadingFromValue: false
+        }
     }
     async componentDidMount() {
-
+        this.swapCoinsTrack();
         this.props.swapCoinsRef(this)
         this.loadamount();
         await this.setOneCoinValue();
-
+    }
+    swapCoinsTrack = () => {
+        apicalls.trackEvent({
+            "Type": 'User', "Action": 'Swap page view', "Username": this.props.userProfile?.userName, "MemeberId": this.props.userProfile?.id, "Feature": 'Swap', "Remarks": 'Swap page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap'
+        });
     }
     clearSwapCoinValues = () => {
         this.setState({}, () => this.componentWillUnmount());

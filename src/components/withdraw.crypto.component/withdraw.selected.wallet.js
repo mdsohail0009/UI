@@ -37,7 +37,7 @@ class CryptoWithDrawWallet extends Component {
     }
     trackevent = () => {
         apicalls.trackEvent({
-            "Type": 'User', "Action": 'Withdraw crypto Selected page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw crypto Selected page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto' 
+            "Type": 'User', "Action": 'Withdraw Crypto Selected page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto Selected page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
         });
     }
     componentWillUnmount() {
@@ -58,11 +58,11 @@ class CryptoWithDrawWallet extends Component {
             "tag": ""
         }
         this.props.dispatch(setWithdrawcrypto(obj))
-        this.setState({ ...this.state, loading: true})
+        this.setState({ ...this.state, loading: true })
         this.props.changeStep('step8');
 
     }
-   
+
     clickMinamnt(type) {
         let usdamnt; let cryptoamnt;
         let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
@@ -85,21 +85,21 @@ class CryptoWithDrawWallet extends Component {
         const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
         if (!amt) {
-            this.setState({ ...this.state, error: " "+apicalls.convertLocalLang('enter_amount')});
+            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('enter_amount') });
             this.myRef.current.scrollIntoView();
         }
         else if (amt < withdrawMinValue) {
-            this.setState({ ...this.state, error: apicalls.convertLocalLang('amount_min')+ " "+ withdrawMinValue });
+            this.setState({ ...this.state, error: apicalls.convertLocalLang('amount_min') + " " + withdrawMinValue });
             this.myRef.current.scrollIntoView();
         } else if (amt > withdrawMaxValue) {
-            this.setState({ ...this.state, error:" "+ apicalls.convertLocalLang('amount_max') +" "+withdrawMaxValue});
+            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_max') + " " + withdrawMaxValue });
             this.myRef.current.scrollIntoView();
         } else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
-            this.setState({ ...this.state, error:" "+apicalls.convertLocalLang('amount_less') });
+            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_less') });
             this.myRef.current.scrollIntoView();
         }
         else if (this.state.walletAddress == null || this.state.walletAddress.trim() === "") {
-            this.setState({ ...this.state, error:" "+apicalls.convertLocalLang('enter_wallet_address')});
+            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('enter_wallet_address') });
             this.myRef.current.scrollIntoView();
         }
         else {
@@ -236,15 +236,15 @@ class CryptoWithDrawWallet extends Component {
                             className="custom-forminput custom-label  mb-16"
                             required
                             // label="Address"
-                            label= {apicalls.convertLocalLang('address')}
+                            label={apicalls.convertLocalLang('address')}
                         >
 
                             <div className="p-relative d-flex align-center">
                                 {/* <Input className="cust-input custom-add-select mb-0" placeholder="Enter address" value={this.state.walletAddress} */}
-                               <Input className="cust-input custom-add-select mb-0" placeholder={apicalls.convertLocalLang('enter_address')} value={this.state.walletAddress}
+                                <Input className="cust-input custom-add-select mb-0" placeholder={apicalls.convertLocalLang('enter_address')} value={this.state.walletAddress}
 
-                                    onChange={({ currentTarget: { value } }) => {this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null)}}
-                                    maxLength="30"/>
+                                    onChange={({ currentTarget: { value } }) => { this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null) }}
+                                    maxLength="30" />
                                 <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" onClick={() => this.selectCrypto()}>
                                         <span className="icon md address-book d-block c-pointer"></span>
@@ -264,7 +264,7 @@ class CryptoWithDrawWallet extends Component {
                     ]} visible={this.state.showModal}>
                         {this.renderModalContent()}
                     </Modal>
-                </div> 
+                </div>
             </div>
         )
     }

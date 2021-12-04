@@ -12,7 +12,7 @@ class SuccessMsg extends Component {
         this.EventTrack();
     }
     EventTrack = () => {
-        apicalls.trackEvent({ "Type": 'User', "Action": 'Sell crypto success', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Sell', "Remarks": 'Sell crypto success', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell crypto' });
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Sell Crypto success', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Sell', "Remarks": 'Sell Crypto success', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto' });
     }
     render() {
         const { Title, Paragraph } = Typography;

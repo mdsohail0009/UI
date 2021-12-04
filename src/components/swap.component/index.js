@@ -75,6 +75,7 @@ class SwapCrypto extends Component {
             visible={this.props.showDrawer}
             closeIcon={null}
             className="side-drawer"
+            destroyOnClose={true}
         >
             {this.renderContent()}
         </Drawer>);

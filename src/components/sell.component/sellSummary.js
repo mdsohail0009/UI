@@ -16,7 +16,7 @@ class SellSummary extends Component {
     }
     EventTrack = () => {
         apicalls.trackEvent({
-            "Type": 'User', "Action": 'Sell summary page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Sell', "Remarks": 'Sell crypto coin summary', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'sell Crypto'
+            "Type": 'User', "Action": 'Sell summary page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Sell', "Remarks": 'Sell Crypto coin summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto'
         });
     }
     async fetchPreviewData() {
@@ -59,7 +59,7 @@ class SellSummary extends Component {
                 this.setState({ ...this.state, loader: false, disableConfirm: false })
                 this.props.fetchDashboardData(this.props.member.id)
                 appInsights.trackEvent({
-                    name: 'Sell', properties: { "Type": 'User', "Action": 'Save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Sell', "Remarks": obj.fromValue + " " + this.state.sellpreviewData.coin + " selled", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'sell Crypto' }
+                    name: 'Sell', properties: { "Type": 'User', "Action": 'Save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Sell', "Remarks": obj.fromValue + " " + this.state.sellpreviewData.coin + " selled", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto' }
                 });
             } else {
                 message.destroy()

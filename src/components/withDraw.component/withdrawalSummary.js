@@ -23,29 +23,31 @@ const WithdrawalSummary = ({
   const [verificationText, setVerificationText] = useState("");
   const [isResend, setIsResend] = useState(false);
   const [seconds, setSeconds] = useState(0);
-  const [invalidcode,setInvalidCode]=useState("");
-  const[validationText,setValidationText]=useState("");
+  const [invalidcode, setInvalidCode] = useState("");
+  const [validationText, setValidationText] = useState("");
   const [disable, setDisable] = useState(false);
 
   useEffect(() => {
-    console.log(userConfig.id);
-    // trackevent();
+    debugger
+    withdrawSummayTrack();
+  }, []);
+
+  const withdrawSummayTrack = () => {
     apiCalls.trackEvent({
       Type: "User",
-      Action: "Page view",
-      Username: userConfig.userName,
-      MemeberId: userConfig.id,
+      Action: "Withdraw fiat summary page view",
+      Username: userConfig?.userName,
+      MemeberId: userConfig?.id,
       Feature: "Withdraw Fiat",
-      Remarks: "Withdraw Fiat Summary Page view",
+      Remarks: "Withdraw fiat summary page view",
       Duration: 1,
       Url: window.location.href,
       FullFeatureName: "Withdraw Fiat"
     });
-  });
-
+  }
   const saveWithdrwal = async () => {
-    let response = await apiCalls.getVerification(userConfig.id, otp);
-
+    debugger
+    let response = await apiCalls.getVerification(userConfig?.id, otp);
     if (response.ok) {
       message.destroy();
       message.success({
@@ -58,8 +60,8 @@ const WithdrawalSummary = ({
     } else {
       message.destroy();
       message.error({
-        content: 
-        setInvalidCode(apiCalls.convertLocalLang("invalid_code")), 
+        content:
+          setInvalidCode(apiCalls.convertLocalLang("invalid_code")),
         className: "custom-msg",
         duration: 0.5
       });
@@ -74,14 +76,14 @@ const WithdrawalSummary = ({
     let response = await apiCalls.getCode(userConfig.id, isResend);
     if (response.ok) {
       setTimeout(() => {
-        setButtonText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_code"  /> );
+        setButtonText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_code" />);
         setDisable(false)
       }, 120000);
       setVerificationText(
         apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
       );
-      setValidationText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_text"  />);
-     
+      setValidationText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_text" />);
+
     }
   };
 
@@ -192,9 +194,9 @@ const WithdrawalSummary = ({
             }}
             style={{ width: "445px" }}
           />
-     
+
         </Form.Item>
-        
+
         <div>
           <Text className="fs-12 text-white-30 fw-200">
             {invalidcode}
@@ -202,7 +204,7 @@ const WithdrawalSummary = ({
           <Text className="fs-12 text-white-30 fw-200">
             {validationText}
           </Text>
-          </div>
+        </div>
 
         <Button
           disabled={isLoding}

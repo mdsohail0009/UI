@@ -22,12 +22,10 @@ class SelectCrypto extends Component {
     componentDidMount() {
         if (this.props.swapfrom) {
             this.fromCoinList();
-            //this.swapTrack('From');
         } else {
             this.toCoinList();
-            //this.swapTrack('To');
         }
-
+        this.swapTrack();
     }
     fromCoinList = async () => {
         let fromlist = await getfromCoinList(this.props.userProfile?.id)
@@ -46,10 +44,18 @@ class SelectCrypto extends Component {
         }
     }
 
-    swapTrack = (val) => {
-        apicalls.trackEvent({
-            "Type": 'User', "Action": val + ' Swap page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.userId, "Feature": 'Swap', "Remarks": val + ' Swap coins', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap crypto'
-        });
+
+    swapTrack = () => {
+        if (this.props.swapfrom) {
+            apicalls.trackEvent({
+                "Type": 'User', "Action": 'From swap page view', "Username": this.props.userProfile?.userName, "MemeberId": this.props.userProfile?.id, "Feature": 'Swap', "Remarks": 'From swap coins', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap'
+            });
+        } else {
+            apicalls.trackEvent({
+                "Type": 'User', "Action": 'To Swap page view', "Username": this.props.userProfile?.userName, "MemeberId": this.props.userProfile?.id, "Feature": 'Swap', "Remarks": 'To swap coins', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap'
+            });
+        }
+
     }
     onSearch = (e) => {
         var searchValue = e.target.value;
