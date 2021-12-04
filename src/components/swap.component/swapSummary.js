@@ -9,20 +9,28 @@ import Loader from '../../Shared/loader';
 import apiCalls from '../../api/apiCalls';
 
 class SwapSummary extends Component {
-    state = {
-        isLoading: false,
-        loader: true,
-        price: null,
-        receiveValue: null,
-        disableConfirm: false,
-        errorMessage: null,
-        agreeValue: false,
-        swapSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }
+    constructor(props) {
+        super(props)
+        this.state = {
+            isLoading: false,
+            loader: true,
+            price: null,
+            receiveValue: null,
+            disableConfirm: false,
+            errorMessage: null,
+            agreeValue: false,
+            swapSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }
+        }
     }
     useDivRef = React.createRef();
     componentDidMount() {
         this.setOneCoinValue();
         this.setReceiveAmount();
+    }
+    swapSummayTrack = () => {
+        apiCalls.trackEvent({
+            "Type": 'User', "Action": 'Swap summary page view', "Username": this.props.userProfile?.userName, "MemeberId": this.props.userProfile?.id, "Feature": 'Swap', "Remarks": 'Swap summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap'
+        });
     }
     componentWillUnmount() {
         clearInterval(this.updateTimer);

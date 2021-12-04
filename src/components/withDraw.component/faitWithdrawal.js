@@ -92,8 +92,22 @@ const FaitWithdrawal = ({
   useEffect(() => {
     getCountryLu();
     setLoading(false);
+    fiatWithdrawTrack();
   }, []);
 
+  const fiatWithdrawTrack = () => {
+    apicalls.trackEvent({
+      Type: "User",
+      Action: "Withdraw Fiat page view",
+      Username: userConfig.userName,
+      MemeberId: userConfig.id,
+      Feature: "Withdraw Fiat",
+      Remarks: "Withdraw Fiat page view",
+      Duration: 1,
+      Url: window.location.href,
+      FullFeatureName: "Withdraw Fiat"
+    });
+  }
   const handleWalletSelection = (walletId, isClearObj) => {
     if (isClearObj) {
       let clearobj = {
@@ -176,17 +190,7 @@ const FaitWithdrawal = ({
     if (recName.ok) {
       setCountryLu(recName.data);
     }
-    apicalls.trackEvent({
-      Type: "User",
-      Action: "Withdraw Fiat page view",
-      Username: userConfig.userName,
-      MemeberId: userConfig.id,
-      Feature: "Withdraw Fiat",
-      Remarks: "Withdraw Fiat page view",
-      Duration: 1,
-      Url: window.location.href,
-      FullFeatureName: "Withdraw Fiat"
-    });
+
   };
 
   const getStateLu = async (countryname, isChange) => {
@@ -536,9 +540,9 @@ const FaitWithdrawal = ({
                   {
                     whitespace: true,
                     message: apicalls.convertLocalLang("is_required")
-                  },{
+                  }, {
                     validator: validateContentRule
-                }
+                  }
                 ]}
               >
                 <Input
@@ -559,9 +563,9 @@ const FaitWithdrawal = ({
                     required: true,
                     message: apicalls.convertLocalLang("is_required"),
                     whitespace: true
-                  },{
+                  }, {
                     validator: validateContentRule
-                }
+                  }
                 ]}
               >
                 <Input
@@ -580,7 +584,7 @@ const FaitWithdrawal = ({
                 rules={[
                   {
                     validator: validateContentRule
-                }
+                  }
                 ]}
               >
                 <Input
@@ -650,9 +654,9 @@ const FaitWithdrawal = ({
                         callback();
                       }
                     }
-                  },{
+                  }, {
                     validator: validateContentRule
-                }
+                  }
                 ]}
               >
                 <Input
@@ -697,9 +701,9 @@ const FaitWithdrawal = ({
                     required: true,
                     message: apicalls.convertLocalLang("is_required"),
                     whitespace: true
-                  },{
+                  }, {
                     validator: validateContentRule
-                }
+                  }
                 ]}
               >
                 <Input
@@ -720,7 +724,7 @@ const FaitWithdrawal = ({
                 rules={[
                   {
                     validator: validateContentRule
-                }
+                  }
                 ]}
               >
                 <Input
@@ -735,7 +739,7 @@ const FaitWithdrawal = ({
                 rules={[
                   {
                     validator: validateContentRule
-                }
+                  }
                 ]}
               >
                 <Input
@@ -753,10 +757,10 @@ const FaitWithdrawal = ({
                       value
                         ? Promise.resolve()
                         : Promise.reject(
-                            new Error(
-                              apicalls.convertLocalLang("agree_termsofservice")
-                            )
+                          new Error(
+                            apicalls.convertLocalLang("agree_termsofservice")
                           )
+                        )
                   }
 
                 ]}
@@ -852,7 +856,7 @@ const FaitWithdrawal = ({
       trackAuditLogData.Action = "Save";
       trackAuditLogData.Remarks =
         saveObj?.totalValue + " " + saveObj.walletCode + " withdraw.";
-     saveObj.info = JSON.stringify(trackAuditLogData);
+      saveObj.info = JSON.stringify(trackAuditLogData);
       let withdrawal = await withdrawSave(saveObj);
       if (withdrawal.ok) {
         dispatch(fetchDashboardcalls(userConfig.id));
