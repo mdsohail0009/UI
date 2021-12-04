@@ -18,10 +18,12 @@ import Changepassword from '../components/changepassword';
 import TransactionsHistory from '../components/transactions.history.component';
 import AuditLogs from '../components/auditlogs.component';
 import Notifications from '../notifications'
-import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata, clearSwapData } from '../reducers/swapReducer';
+import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata, clearSwapData, setStep as swapSetStep } from '../reducers/swapReducer';
 import { connect } from 'react-redux';
 import DefaultUser from '../assets/images/defaultuser.jpg';
 import { setHeaderTab, setStep } from '../reducers/buysellReducer';
+import { setStep as sendSetStep } from '../reducers/sendreceiveReducer';
+import { setStep as byFiatSetStep } from '../reducers/buyFiatReducer';
 import { setdepositCurrency } from '../reducers/depositReducer'
 import { deleteToken } from '../notifications/api';
 import Wallets from '../components/wallets.component.js';
@@ -45,7 +47,7 @@ class Header extends Component {
         this.loginTrack()
     }
     loginTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'User Logged in', "Username": null, "MemeberId": null, "Feature": 'Login', "Remarks": 'User Logged in', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Login' });
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'User Logged in', "Username": null, "MemeberId": null, "Feature": 'Login', "Remarks": 'User Logged in', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Login', "info": JSON.stringify(this.props.trackInfo) });
     }
     securityMenu = (
 
@@ -225,7 +227,7 @@ class Header extends Component {
     }
     showSendDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
-            this.props.dispatch(setStep("step1"))
+            this.props.dispatch(sendSetStep("step1"))
             this.setState({
                 sendDrawer: true, Visibleprofilemenu: false
             })
@@ -258,7 +260,7 @@ class Header extends Component {
     }
     showSwapDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
-            this.props.dispatch(setStep("step1"))
+            this.props.dispatch(swapSetStep("step1"))
             this.setState({
                 swapDrawer: true, Visibleprofilemenu: false
             })
@@ -276,7 +278,7 @@ class Header extends Component {
     }
     showBuyFiatDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
-            this.props.dispatch(setStep("step1"))
+            this.props.dispatch(byFiatSetStep("step1"))
             this.setState({
                 buyFiatDrawer: true, Visibleprofilemenu: false
             })
@@ -342,7 +344,6 @@ class Header extends Component {
 
     }
     trackEvent() {
-
         window.$zoho?.salesiq?.chat.complete();
         window.$zoho?.salesiq?.reset();
         userManager.signoutRedirect()
@@ -653,7 +654,7 @@ class Header extends Component {
 }
 
 const connectStateToProps = ({ swapStore, userConfig, oidc, dashboard, buySell }) => {
-    return { swapStore, userConfig: userConfig.userProfileInfo, dashboard, buySell, oidc }
+    return { swapStore, userConfig: userConfig.userProfileInfo, dashboard, buySell, oidc, trackInfo: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {
