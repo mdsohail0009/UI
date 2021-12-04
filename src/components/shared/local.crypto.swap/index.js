@@ -30,6 +30,10 @@ const LocalCryptoSwapper = (props, ref) => {
         },
         handleWalletChange() {
             setSwapped(false);
+        },
+        refreshAmount({ cryptoValue, locCurrency }) {
+            setSwapped(true);
+            fetchConvertionValue({ inputvalue:   cryptoValue, locCurrency });
         }
     }), []);
     const fetchConvertionValue = async ({ inputvalue, locCurrency }) => {
