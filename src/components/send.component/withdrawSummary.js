@@ -50,7 +50,8 @@ class WithdrawSummary extends Component {
     isResend: false,
     invalidcode: "",
     validationText: "",
-    disable: false
+    disable: false,
+    inputDisable:true,
   };
   useDivRef = React.createRef();
   componentDidMount() {
@@ -108,6 +109,7 @@ class WithdrawSummary extends Component {
   };
 
   getOTP = async (val) => {
+    this.setState({ inputDisable: false });
     this.setState({ disable: true });
 
     let response = await apiCalls.getCode(
@@ -147,7 +149,7 @@ class WithdrawSummary extends Component {
           className: "custom-msg",
           duration: 0.5
         });
-
+        if (this.props.userProfile.isBusiness) {
         let saveObj = this.props.sendReceive.withdrawCryptoObj;
         this.props.trackAuditLogData.Action = "Save";
         this.props.trackAuditLogData.Remarks = "Withdraw crypto save";
@@ -160,19 +162,23 @@ class WithdrawSummary extends Component {
           this.props.dispatch(setSubTitle(""));
           this.props.changeStep("withdraw_crpto_success");
         }
-
-        // this.props.dispatch(
-        //   setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
-        // );
-        // this.props.changeStep("withdraw_crypto_liveness");
+      }
+      else{
+        this.props.dispatch(
+          setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
+        );
+        this.props.changeStep("withdraw_crypto_liveness");
+      }
+        
       } else {
         message.destroy();
         message.error({
-          content: this.setState({
-            invalidcode: apiCalls.convertLocalLang("invalid_code")
-          }),
+          // content: this.setState({
+          //   invalidcode: apiCalls.convertLocalLang("invalid_code")
+          // }),
+          content:"Invalid Code",
           className: "custom-msg",
-          duration: 0.5
+          duration: 2.0
         });
       }
 
@@ -292,19 +298,22 @@ class WithdrawSummary extends Component {
             autoComplete="off"
             form={this.form}
           >
-            <div>
+            
               <Form.Item
                 name="code"
                 className="input-label otp-verify my-36"
-                extra={
+                extra={<div>
                   <Text className="fs-12 text-white-30 fw-200">
                     {this.state.verificationText}
                   </Text>
+                  <Text className="fs-12 text-red fw-200" style={{float: "right", color: 'var(--textRed)'}}>
+                    {this.state.invalidcode}
+                  </Text></div>
                 }
                 rules={[{ required: true, message: "Is required" }]}
                 label={
-                  <Button type="text" onClick={this.getOTP}>
-                    {this.state.buttonText}
+                  <Button type="text" onClick={this.getOTP} disabled={this.state.disable}>
+                    {this.state.buttonText} 
                   </Button>
                 }
               >
@@ -312,21 +321,20 @@ class WithdrawSummary extends Component {
                   className="cust-input text-left"
                   placeholder={apiCalls.convertLocalLang("verification_code")}
                   maxLength={6}
-                  onChange={(e) => this.handleOtp(e.target.value)}
+                 onChange={(e) => this.handleOtp(e.target.value)}
                   style={{ width: "445px" }}
+                  disabled={this.state.inputDisable}
                 />
                
               </Form.Item>
               <div>
-                  <Text className="fs-12 text-white-30 fw-200">
-                    {this.state.invalidcode}
-                  </Text>
+                 
                   <Text className="fs-12 text-white-30 fw-200">
                     {this.state.validationText}
                   </Text>
                 </div>
               
-            </div>
+            
            
 
             <Translate
