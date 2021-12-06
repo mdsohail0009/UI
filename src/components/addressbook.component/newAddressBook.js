@@ -39,7 +39,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
     }, [addressBookReducer?.cryptoValues])
 
     const newaddressbkTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Address book page view', "Username": userProfileInfo?.userName, "MemeberId": userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Address book crypto details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
+
     }
 
     const selectCrypto = () => {
