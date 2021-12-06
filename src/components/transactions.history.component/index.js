@@ -14,7 +14,7 @@ function collapseGrids(key) {
 class TransactionsHistory extends Component {
   componentDidMount() {
     this.props.thref(this)
-    apiCalls.trackEvent({ "Type": 'User', "Action": 'Transactions all page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Transactions', "Remarks": 'Transactions all page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Transactions' });
+    apiCalls.trackEvent({ "Type": 'User', "Action": 'Transactions All page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Transactions', "Remarks": 'Transactions All page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Transactions' });
   }
   state = {
     BuySellURL: process.env.REACT_APP_GRID_API + "BuySell/Accounts",
