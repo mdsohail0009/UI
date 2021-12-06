@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Button, Form, message,In } from "antd";
+import { Typography, Button, Form, message,In, Input } from "antd";
 import Currency from "../shared/number.formate";
 import { setStep } from "../../reducers/buysellReducer";
 import { connect } from "react-redux";
@@ -27,9 +27,10 @@ const WithdrawalSummary = ({
   const [validationText, setValidationText] = useState("");
   const [disable, setDisable] = useState(false);
   const[inputDisable,setInputDisable]=useState(true);
+  const[showtext,setShowText]=useState(true);
+  const[resendDisable,setResendDisable]=useState(false)
 
   useEffect(() => {
-    debugger
     withdrawSummayTrack();
   }, []);
 
@@ -86,7 +87,8 @@ const WithdrawalSummary = ({
         apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
       );
       setValidationText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_text" />);
-
+      setShowText(true);
+      setTimeout(()=>{setShowText(false)},120000)
     }
   };
 
@@ -191,7 +193,8 @@ const WithdrawalSummary = ({
             </Button>
           }
         >
-          <NumberFormat
+          <Input
+          type="text"
             className="cust-input text-left"
             placeholder={apiCalls.convertLocalLang("verification_code")}
             maxLength={6}
@@ -199,12 +202,13 @@ const WithdrawalSummary = ({
               setOtp(e.target.value);
             }}
             style={{ width: "100%" }}
+            disabled={inputDisable}
           />
         </Form.Item>
         <div>
-          <Text className="fs-12 text-white-30 text-center d-block mb-16 fw-200">
-            {validationText}
-          </Text>
+        {showtext &&<Text className="fs-12 text-white-30 text-center d-block mb-16 fw-200">
+          {validationText}
+        </Text>}
         </div>
         
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Typography, Button, Alert, message, Form } from "antd";
+import { Typography, Button, Alert, message, Form, Input } from "antd";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
@@ -52,6 +52,7 @@ class WithdrawSummary extends Component {
     validationText: "",
     disable: false,
     inputDisable:true,
+    showtext:true,
   };
   useDivRef = React.createRef();
   componentDidMount() {
@@ -130,6 +131,12 @@ class WithdrawSummary extends Component {
         apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber
     });
     this.setState({ validationText: apiCalls.convertLocalLang("resend_text") });
+    this.setState({showtext:true});
+
+    setTimeout(()=>{
+      this.setState({showtext:false})
+    },120000)
+   
   };
   handleOtp = (val) => {
     this.setState({ ...this.state, otp: val });
@@ -317,20 +324,21 @@ class WithdrawSummary extends Component {
                   </Button>
                 }
               >
-                <NumberFormat
+                <Input
+                type="text"
                   className="cust-input text-left"
                   placeholder={apiCalls.convertLocalLang("verification_code")}
                   maxLength={6}
                   onChange={(e) => this.handleOtp(e.target.value)}
                   style={{ width: '100%' }}
+                  disabled={this.state.inputDisable}
                 />
 
               </Form.Item>
               <div>
-                 
-                  <Text className="fs-12 text-white-30 fw-200">
+                  {this.state.showtext &&<Text className="fs-12 text-white-30 text-center d-block mb-16 fw-200">
                     {this.state.validationText}
-                  </Text>
+                  </Text>}
                 </div>
               
             
