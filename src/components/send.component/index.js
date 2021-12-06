@@ -21,7 +21,7 @@ class SendReceive extends Component {
 
     }
     closeDrawer = () => {
-
+        //this.props.dispatch(setStep("step1"));
         this.props.dispatch(setSubTitle(""))
         if (this.props.onClose) {
             this.props.onClose();

@@ -24,7 +24,7 @@ class Home extends Component {
     }
 
     dashboardTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Cockpit page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Cockpit page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit', "info": JSON.stringify(this.props.trackInfo) });
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Cockpit page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Cockpit page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
     }
     getNotices = async () => {
         this.props.dispatch(fetchNotices(this.props.userProfileInfo.id))
@@ -70,6 +70,6 @@ class Home extends Component {
     }
 }
 const mapStateToProps = ({ userConfig, dashboard }) => {
-    return { userProfileInfo: userConfig.userProfileInfo, dashboard, trackInfo: userConfig.trackAuditLogData }
+    return { userProfileInfo: userConfig.userProfileInfo, dashboard }
 }
 export default connect(mapStateToProps, (dispatch) => { return { dispatch } })(Home);

@@ -7,7 +7,7 @@ import ConnectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import MassPayment from '../buyfiat.component'
 import { withRouter } from 'react-router-dom';
-import { setWithdrawfiatenaable, setWithdrawfiat } from '../../reducers/sendreceiveReducer'
+import { setWithdrawfiatenaable, setWithdrawfiat, setStep } from '../../reducers/sendreceiveReducer'
 import { setdepositCurrency, getCurrencieswithBankDetails } from '../../reducers/depositReducer'
 const { Title, Paragraph } = Typography;
 
@@ -30,6 +30,7 @@ class Wallets extends Component {
         this.props.history.push("/docnotices");
     }
     showSendReceiveDrawer = (e, value) => {
+        this.props.dispatch(setStep("step1"));
         if (this.props?.userProfile?.isDocsRequested) {
             this.props.history.push("/docnotices");
             return;
