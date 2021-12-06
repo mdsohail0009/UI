@@ -3,7 +3,7 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import { getSellPreviewData, savesellData } from '../buy.component/api'
 import Summary from '../summary.component';
-import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
+import { fetchDashboardcalls,fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
 import { message } from 'antd';
 import apicalls from '../../api/apiCalls';
@@ -58,6 +58,7 @@ class SellSummary extends Component {
                 this.props.changeStep('sellsuccess')
                 this.setState({ ...this.state, loader: false, disableConfirm: false })
                 this.props.fetchDashboardData(this.props.member.id)
+                this.props.fetchMarketCoinDataValue();
                 appInsights.trackEvent({
                     name: 'Sell', properties: { "Type": 'User', "Action": 'Save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Sell', "Remarks": obj.fromValue + " " + this.state.sellpreviewData.coin + " selled", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto' }
                 });
@@ -100,6 +101,9 @@ const connectDispatchToProps = dispatch => {
         },
         fetchDashboardData: (member_id) => {
             dispatch(fetchDashboardcalls(member_id))
+        },
+        fetchMarketCoinDataValue:()=>{
+            dispatch(fetchMarketCoinData(true))
         }
     }
 }
