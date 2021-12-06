@@ -82,13 +82,13 @@ const WithdrawalSummary = ({
       setTimeout(() => {
         setButtonText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_code" />);
         setDisable(false)
-      }, 2000);
+      }, 120000);
       setVerificationText(
         apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
       );
       setValidationText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_text" />);
       setShowText(true);
-      setTimeout(()=>{setShowText(false)},2000)
+      setTimeout(()=>{setShowText(false)},120000)
     }
   };
 

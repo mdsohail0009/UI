@@ -125,7 +125,7 @@ class WithdrawSummary extends Component {
       this.setState({ buttonText: apiCalls.convertLocalLang("resend_code") });
       this.setState({ isResend: true });
       this.setState({ disable: false });
-    }, 2000);
+    }, 120000);
     this.setState({
       verificationText:
         apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber
@@ -135,7 +135,7 @@ class WithdrawSummary extends Component {
 
     setTimeout(()=>{
       this.setState({showtext:false})
-    },2000)
+    },120000)
    
   };
   handleOtp = (val) => {
