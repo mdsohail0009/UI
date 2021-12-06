@@ -47,7 +47,7 @@ class Header extends Component {
         this.loginTrack()
     }
     loginTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'User Logged in', "Username": null, "MemeberId": null, "Feature": 'Login', "Remarks": 'User Logged in', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Login', "info": JSON.stringify(this.props.trackInfo) });
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'User Logged in', "Username": null, "MemeberId": null, "Feature": 'Login', "Remarks": 'User Logged in', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Login' });
     }
     securityMenu = (
 
@@ -654,7 +654,7 @@ class Header extends Component {
 }
 
 const connectStateToProps = ({ swapStore, userConfig, oidc, dashboard, buySell }) => {
-    return { swapStore, userConfig: userConfig.userProfileInfo, dashboard, buySell, oidc, trackInfo: userConfig.trackAuditLogData }
+    return { swapStore, userConfig: userConfig.userProfileInfo, dashboard, buySell, oidc }
 }
 const connectDispatchToProps = dispatch => {
     return {

@@ -33,7 +33,7 @@ class FiatSummary extends Component {
             ...this.state, depositFiatData: this.props.depositInfo?.depFiatSaveObj, getDepFiatSaveData: this.props.depositInfo?.setDepFiatSaveObj
         })
         apiCalls.trackEvent({
-            "Type": 'User', "Action": 'Deposit fiat summary page view', "Username": this.props.userConfig.userName, "MemeberId": this.props.userConfig.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit fiat summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat'
+            "Type": 'User', "Action": 'Deposit Fiat summary page view', "Username": this.props.userConfig.userName, "MemeberId": this.props.userConfig.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit Fiat summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat'
         });
     }
 

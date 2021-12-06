@@ -42,11 +42,14 @@ class AddressBook extends Component {
         this.gridCryptoRef = React.createRef();
     }
     componentDidMount() {
-        this.addressbookTrack();
+        debugger
+        //this.addressbookTrack();
+        if (!this.state.cryptoFiat) {
+            apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto address book grid view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Crypto address book grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
+        }
+
     }
-    addressbookTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Address book page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Address book page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
-    }
+
     columnsFiat = [
         { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
         { field: "favouriteName", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 180 },
@@ -155,12 +158,17 @@ class AddressBook extends Component {
     addAddressBook = () => {
         if (this.state.cryptoFiat) {
             this.setState({ ...this.state, fiatDrawer: true })
+            if (!this.state.fiatDrawer) {
+                apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat address book page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Address book crypto details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
+            }
             this.props.clearFormValues();
         }
         else {
             this.setState({ ...this.state, visible: true })
+            apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto address book page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Address book crypto details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
             this.props.clearFormValues();
         }
+
     }
     editAddressBook = () => {
         if (!this.state.isCheck) {
@@ -171,9 +179,11 @@ class AddressBook extends Component {
             obj.walletCode = obj.coin;
             this.props.rowSelectedData(obj)
             if (this.state.cryptoFiat) {
-                this.setState({ ...this.state, fiatDrawer: true, selection: [], isCheck: false, })
+                this.setState({ ...this.state, fiatDrawer: true, selection: [], isCheck: false, });
+                apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fait address book page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Fiat address book page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
             }
             else {
+                apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto address book page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Crypto address book page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
                 this.setState({ ...this.state, visible: true, selection: [], isCheck: false, })
             }
         }
@@ -197,7 +207,13 @@ class AddressBook extends Component {
         this.setState({
             ...this.state, cryptoFiat: e.target.value === 2
         })
+        if (this.state.cryptoFiat) {
+            apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto address book grid view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Crypto address book grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
+        } else {
+            apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat address book grid view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Fiat address book grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
+        }
     }
+
     renderContent = () => {
         const stepcodes = {
             cryptoaddressbook: <NewAddressBook onCancel={() => this.closeBuyDrawer()} />,

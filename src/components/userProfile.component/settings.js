@@ -36,8 +36,8 @@ const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
     }
     const saveSettings = async () => {
         settingsObj.Theme = theme ? 'Light Theme' : 'Dark Theme';
-        settingsObj.MemberId = member?.id
-        settingsObj.info = JSON.stringify(trackAuditLogData)
+        settingsObj.MemberId = member?.id;
+        settingsObj.info = JSON.stringify(trackAuditLogData);
         let res = await saveSettingsData(settingsObj);
         if (res.ok) {
             message.destroy()
@@ -51,7 +51,8 @@ const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
         setTheme(!theme)
         switcher({ theme: theme ? themes.DRT : themes.LHT });
         settingsObj.Theme = !theme ? 'Light Theme' : 'Dark Theme';
-        settingsObj.MemberId = member?.id
+        settingsObj.MemberId = member?.id;
+        settingsObj.info = JSON.stringify(trackAuditLogData)
         let res = await saveSettingsData(settingsObj);
         if (res.ok) {
             message.destroy()

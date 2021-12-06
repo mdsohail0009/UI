@@ -32,7 +32,7 @@ const LocalCryptoSwapper = (props, ref) => {
             setSwapped(false);
         },
         refreshAmount({ cryptoValue, locCurrency }) {
-            setSwapped(true);
+           // setSwapped(true);
             fetchConvertionValue({ inputvalue:   cryptoValue, locCurrency });
         }
     }), []);
@@ -43,7 +43,7 @@ const LocalCryptoSwapper = (props, ref) => {
         if (response.ok) {
             const { data: value, config: { url } } = response;
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
-            let _val = document.getElementById("ABC")?.value;
+            let _val = document.getElementById("amtInput")?.value;
             _val = _val ? _val.replace(/,/g, "") : _val;
             _val = _val?.replace(symbols[locCurrency || localCurrency], "");
             if (_obj[4] == _val || _obj[4] == 0) {
@@ -62,7 +62,7 @@ const LocalCryptoSwapper = (props, ref) => {
     return <div className="p-relative">
         <div className="enter-val-container">
             <Text className="fs-30 fw-400 text-white-30 text-yellow mr-4">{!isSwaped ? localCurrency : cryptoCurrency}</Text>
-            <NumberFormat id="ABC" className="fw-400 text-white-30 text-center enter-val p-0" maxLength={25} customInput={Input} thousandSeparator={true} prefix={isSwaped ? "" : symbols[localCurrency]}
+            <NumberFormat id="amtInput" className="fw-400 text-white-30 text-center enter-val p-0" maxLength={25} customInput={Input} thousandSeparator={true} prefix={isSwaped ? "" : symbols[localCurrency]}
                 decimalScale={isSwaped ? 8 : 2}
                 autoComplete="off"
                 placeholder="0.00"

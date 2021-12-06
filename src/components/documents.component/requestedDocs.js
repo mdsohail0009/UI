@@ -207,7 +207,7 @@ class RequestedDocs extends Component {
         }
     }
     handleUpload = ({ file }, doc) => {
-        this.setState({ ...this.state, uploadLoader: true })
+        this.setState({ ...this.state, uploadLoader: true, isSubmitting: true })
         if (file.status === "done") {
             let replyObjs = [...this.state.docReplyObjs];
             let item = this.isDocExist(replyObjs, doc.id);
@@ -220,8 +220,8 @@ class RequestedDocs extends Component {
                     } else {
                         return obj.path ? obj.path : [];
                     }
-                }();
-                obj.path = obj.path && typeof ObjPath;
+                };
+                obj.path = ObjPath();
                 obj.repliedDate = new Date();
                 obj.path.push({ filename: file.name, path: file.response[0], size: file.size });
                 obj.repliedBy = this.props.userProfileInfo?.firstName;
@@ -233,7 +233,7 @@ class RequestedDocs extends Component {
                 obj.repliedBy = this.props.userProfileInfo?.firstName;
                 replyObjs.push(obj);
             }
-            this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false });
+            this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
         }
     }
     uopdateReplyObj = (item, list) => {

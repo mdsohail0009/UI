@@ -36,11 +36,11 @@ const WithdrawalSummary = ({
   const withdrawSummayTrack = () => {
     apiCalls.trackEvent({
       Type: "User",
-      Action: "Withdraw fiat summary page view",
+      Action: "Withdraw Fiat summary page view",
       Username: userConfig?.userName,
       MemeberId: userConfig?.id,
       Feature: "Withdraw Fiat",
-      Remarks: "Withdraw fiat summary page view",
+      Remarks: "Withdraw Fiat summary page view",
       Duration: 1,
       Url: window.location.href,
       FullFeatureName: "Withdraw Fiat"
@@ -198,8 +198,7 @@ const WithdrawalSummary = ({
             onChange={(e) => {
               setOtp(e.target.value);
             }}
-            style={{ width: "445px" }}
-            disabled={inputDisable}
+            style={{ width: "100%" }}
           />
         </Form.Item>
         <div>

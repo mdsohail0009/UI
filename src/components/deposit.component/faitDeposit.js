@@ -42,9 +42,9 @@ class FaitDeposit extends Component {
     this.props.fetchCurrencyWithBankDetails()
     if (this.props.sendReceive.withdrawFiatEnable) {
       this.handleshowTab(2);
-      apicalls.trackEvent({
-        "Type": 'User', "Action": 'Deposit fiat page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit fiat page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat'
-      });
+      // apicalls.trackEvent({
+      //   "Type": 'User', "Action": 'Deposit Fiat page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit Fiat page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat'
+      // });
     } else {
       this.handleshowTab(1);
 
@@ -90,7 +90,7 @@ class FaitDeposit extends Component {
     });
     if (tabKey === 1) {
       apicalls.trackEvent({
-        "Type": 'User', "Action": 'Deposit fiat page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit fiat page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat'
+        "Type": 'User', "Action": 'Deposit Fiat page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit Fiat page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat'
       });
       let currencyLu = this.props.depositInfo?.currenciesWithBankInfo;
       for (var k in currencyLu) {

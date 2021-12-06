@@ -27,9 +27,9 @@ class CryptoComponent extends Component {
 
     componentDidMount() {
         this.props.dispatch(fetchCoins("All"));
-
         if (this.props.buySell.tabKey == 1) {
             apiClient.trackEvent({ "Type": 'User', "Action": 'Buy page view', "Feature": 'Buy', "Remarks": "Buy coin selection", "FullFeatureName": 'Buy Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
+            apiClient.trackEvent({ "Type": 'User', "Action": `Buy All coins page view`, "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Buy', "Remarks": `Buy All coins page view`, "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy crypto' });
         } else if (this.props.buySell.tabKey == 2) {
             apiClient.trackEvent({ "Type": 'User', "Action": 'Sell page view', "Feature": 'Sell', "Remarks": "Sell coin selection", "FullFeatureName": 'Sell Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
         }
@@ -75,6 +75,7 @@ class CryptoComponent extends Component {
                         const types = {
                             1: "All", 2: "Gainers", 3: "Losers"
                         };
+                        apiClient.trackEvent({ "Type": 'User', "Action": `Buy ${types[key]} coins page view`, "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Buy', "Remarks": `Buy ${types[key]} coins page view`, "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy crypto' });
                         this.props.dispatch(fetchCoins(types[key]));
                         this.ref.current.clearSearch();
                     }}>

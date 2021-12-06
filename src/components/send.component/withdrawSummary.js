@@ -152,7 +152,7 @@ class WithdrawSummary extends Component {
         if (this.props.userProfile.isBusiness) {
         let saveObj = this.props.sendReceive.withdrawCryptoObj;
         this.props.trackAuditLogData.Action = "Save";
-        this.props.trackAuditLogData.Remarks = "Withdraw crypto save";
+        this.props.trackAuditLogData.Remarks = "Withdraw Crypto save";
         saveObj.info = JSON.stringify(this.props.trackAuditLogData);
         let withdrawal = await withDrawCrypto(saveObj);
         if (withdrawal.ok) {
@@ -321,11 +321,10 @@ class WithdrawSummary extends Component {
                   className="cust-input text-left"
                   placeholder={apiCalls.convertLocalLang("verification_code")}
                   maxLength={6}
-                 onChange={(e) => this.handleOtp(e.target.value)}
-                  style={{ width: "445px" }}
-                  disabled={this.state.inputDisable}
+                  onChange={(e) => this.handleOtp(e.target.value)}
+                  style={{ width: '100%' }}
                 />
-               
+
               </Form.Item>
               <div>
                  

@@ -6,6 +6,7 @@ const REJECT_DETAIL_DATA = "rejectDetailData";
 const HANDLE_NOTICES = "handleNotices";
 const SET_NOTIF_COUNT = "setNotificationCount";
 const SET_COIN_DETAIL = "setSelctedCoinDetail";
+const GET_COIN_MARKET_DATA ="fetchMarketCoinData";
 const fetchDetailData = (payload) => {
     return { type: FETCH_DETAIL_DATA, payload }
 }
@@ -30,6 +31,12 @@ const setNotificationCount = (payload) => {
 const setSelctedCoinDetail = (payload) => {
     return {
         type: SET_COIN_DETAIL,
+        payload
+    }
+}
+const fetchMarketCoinData =(payload) => {
+    return {
+        type: GET_COIN_MARKET_DATA,
         payload
     }
 }
@@ -102,7 +109,8 @@ let initialState = {
     cryptoPortFolios: { loading: false, data: [] },
     notices: { loading: false, data: [] },
     notificationCount: null,
-    marketSelectedCoin: null
+    marketSelectedCoin: null,
+    isCoinViewChange:false
 }
 let dashboardReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -116,7 +124,9 @@ let dashboardReducer = (state = initialState, action) => {
             return { ...state, notices: { data: action.payload.data, loading: action.payload.loading } }
         case SET_COIN_DETAIL:
             return { ...state, marketSelectedCoin: action.payload }
-        case SET_NOTIF_COUNT:
+        case GET_COIN_MARKET_DATA:
+            return { ...state, isCoinViewChange: action.payload }
+            case SET_NOTIF_COUNT:
             let _count = action.payload
             if (action?.payload < 0) {
                 _count = 0;
@@ -128,4 +138,4 @@ let dashboardReducer = (state = initialState, action) => {
     }
 }
 export default dashboardReducer;
-export { fetchMemberWalletsData, fetchPortfolioData, fetchYourPortfoliodata, fetchDashboardcalls, fetchGraphInfo, fetchNotices, setNotificationCount, setSelctedCoinDetail }
+export { fetchMemberWalletsData, fetchPortfolioData, fetchYourPortfoliodata, fetchDashboardcalls, fetchGraphInfo, fetchNotices, setNotificationCount, setSelctedCoinDetail,fetchMarketCoinData }
