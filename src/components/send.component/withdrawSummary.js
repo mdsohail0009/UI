@@ -150,7 +150,7 @@ class WithdrawSummary extends Component {
 
         let saveObj = this.props.sendReceive.withdrawCryptoObj;
         this.props.trackAuditLogData.Action = "Save";
-        this.props.trackAuditLogData.Remarks = "Withdraw crypto save";
+        this.props.trackAuditLogData.Remarks = "Withdraw Crypto save";
         saveObj.info = JSON.stringify(this.props.trackAuditLogData);
         let withdrawal = await withDrawCrypto(saveObj);
         if (withdrawal.ok) {
@@ -315,19 +315,19 @@ class WithdrawSummary extends Component {
                   onChange={(e) => this.handleOtp(e.target.value)}
                   style={{ width: '100%' }}
                 />
-               
+
               </Form.Item>
               <div>
-                  <Text className="fs-12 text-white-30 fw-200">
-                    {this.state.invalidcode}
-                  </Text>
-                  <Text className="fs-12 text-white-30 fw-200">
-                    {this.state.validationText}
-                  </Text>
-                </div>
-              
+                <Text className="fs-12 text-white-30 fw-200">
+                  {this.state.invalidcode}
+                </Text>
+                <Text className="fs-12 text-white-30 fw-200">
+                  {this.state.validationText}
+                </Text>
+              </div>
+
             </div>
-           
+
 
             <Translate
               className="fs-14 text-center text-white-30 mt-24"
