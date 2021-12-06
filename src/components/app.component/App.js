@@ -23,15 +23,18 @@ function App(props) {
     localStorage.setItem("__url", window.location.pathname);
     loadUser(store, userManager).then(user => {
       setLoading(false);
-      if(user){
         window.$zoho = window.$zoho || {};
         window.$zoho.salesiq?.reset();
         window.$zoho.salesiq = window.$zoho.salesiq || {
           widgetcode: "a167eaa0dc5b769d131a5fc00e42bf147028842aad73f7affa889acafc17d757084640d749c5a27dc8dc9bbec022e4d0",
           values: {},
           ready: function () {
-            window.$zoho.salesiq.visitor.email(user.profile.email);
+            
+            window.$zoho.salesiq.chatbutton.click(function(){
+              // insert your code 
+              window.$zoho.salesiq.visitor.email(user.profile.email);
             window.$zoho.salesiq.visitor.name(user.profile.preferred_username);
+           })
           },
         }
         const d = document;
@@ -44,7 +47,7 @@ function App(props) {
         let t;
         t = d.getElementsByTagName('script')[0];
         t.parentNode.insertBefore(s, t);
-      }
+      
     })
     
   }, [])
