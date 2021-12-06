@@ -14,18 +14,18 @@ class List extends React.Component {
         this.eleRef.current.refreshGrid();
     }
     renderDate = (props) => {
-        if(props.dataItem[props.field]){
+        if (props.dataItem[props.field]) {
             return <td><Moment format="DD/MM/YYYY">{this.convertUTCToLocalTime(props.dataItem[props.field])}</Moment></td>
-        }else{
+        } else {
             return <td>{props.dataItem[props.field]}</td>
         }
     }
     renderDateTime = (props) => {
-        if(props.dataItem[props.field]){
+        if (props.dataItem[props.field]) {
             return <td><Moment format="DD/MM/YYYY hh:mm:ss A" globalLocal={true}>{this.convertUTCToLocalTime(props.dataItem[props.field])}</Moment></td>
-        }else{
+        } else {
             return <td>{props.dataItem[props.field]}</td>
-        } 
+        }
     }
     renderNumber = (props) => {
         return <td>  <NumberFormat value={props?.dataItem[props.field]} decimalSeparator="." displayType={'text'} thousandSeparator={true} /></td>
@@ -45,15 +45,15 @@ class List extends React.Component {
     convertUTCToLocalTime = (dateString) => {
         let date = new Date(dateString);
         const milliseconds = Date.UTC(
-          date.getFullYear(),
-          date.getMonth(),
-          date.getDate(),
-          date.getHours(),
-          date.getMinutes(),
-          date.getSeconds(),
+            date.getFullYear(),
+            date.getMonth(),
+            date.getDate(),
+            date.getHours(),
+            date.getMinutes(),
+            date.getSeconds(),
         );
         return new Date(milliseconds).toISOString()
-      };
+    };
     render() {
         const { columns, url, additionalParams } = this.props
         return (
@@ -65,7 +65,7 @@ class List extends React.Component {
                         title={column.title} width={column.width}
                         cell={column.customCell || this.gridFilterData(column)}
                         filter={column.filterType || 'text'}
-                        format="{0:,0.##}"
+                        format="{0:#,0.##########}"
 
                     />
                     )}

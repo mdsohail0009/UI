@@ -221,8 +221,7 @@ class RequestedDocs extends Component {
                         return obj.path ? obj.path : [];
                     }
                 }();
-                //obj.path = obj.path && typeof ObjPath;
-                obj.path = obj.path && ObjPath;
+                obj.path = obj.path && typeof ObjPath;
                 obj.repliedDate = new Date();
                 obj.path.push({ filename: file.name, path: file.response[0], size: file.size });
                 obj.repliedBy = this.props.userProfileInfo?.firstName;

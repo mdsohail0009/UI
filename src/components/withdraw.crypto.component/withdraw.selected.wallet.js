@@ -244,7 +244,7 @@ class CryptoWithDrawWallet extends Component {
                                 <Input className="cust-input custom-add-select mb-0" placeholder={apicalls.convertLocalLang('enter_address')} value={this.state.walletAddress}
 
                                     onChange={({ currentTarget: { value } }) => { this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null) }}
-                                    maxLength="30" />
+                                    maxLength="250" />
                                 <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" onClick={() => this.selectCrypto()}>
                                         <span className="icon md address-book d-block c-pointer"></span>
