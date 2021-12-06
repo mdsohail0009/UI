@@ -466,7 +466,7 @@ export default {
   selectcurrency: "Pilih Mata Wang",
   bank_account_number: 'Nombor akaun bank',
   invalid_code:'di-wastong code',
-  resend_text:'Mapapagana ang Pindutan ng Muling Ipadala sa loob ng 2min'
+  resend_text:'i-click ang Resend Button pagkatapos ng 2min'
 
 
 }

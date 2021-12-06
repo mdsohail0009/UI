@@ -467,5 +467,5 @@ export default {
   selectcurrency: "选择货币",
   bank_account_number: '银行帐号',
   invalid_code:'無效的代碼',
-  resend_text:'重新發送按鈕將在 2 分鐘內啟用'
+  resend_text:'2 分鐘後單擊重新發送按鈕'
 }
