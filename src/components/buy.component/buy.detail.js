@@ -78,7 +78,7 @@ class SelectCrypto extends Component {
             this.myRef.current.scrollIntoView();
         } else {
             this.fetchConvertionValue();
-            this.swapRef.current.refreshAmount({ cryptoValue, localValue, locCurrency: this.state.selectedWallet?.currencyCode, isSwap: this.state.swapValues.isSwaped })
+            this.swapRef.current.changeInfo({ cryptoValue, localValue, locCurrency: this.state.selectedWallet?.currencyCode, isSwap: this.state.swapValues.isSwaped })
         }
     }
     render() {
