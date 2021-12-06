@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Button, Form, message } from "antd";
+import { Typography, Button, Form, message,In } from "antd";
 import Currency from "../shared/number.formate";
 import { setStep } from "../../reducers/buysellReducer";
 import { connect } from "react-redux";
@@ -26,6 +26,7 @@ const WithdrawalSummary = ({
   const [invalidcode, setInvalidCode] = useState("");
   const [validationText, setValidationText] = useState("");
   const [disable, setDisable] = useState(false);
+  const[inputDisable,setInputDisable]=useState(true);
 
   useEffect(() => {
     debugger
@@ -46,7 +47,6 @@ const WithdrawalSummary = ({
     });
   }
   const saveWithdrwal = async () => {
-    debugger
     let response = await apiCalls.getVerification(userConfig?.id, otp);
     if (response.ok) {
       message.destroy();
@@ -60,10 +60,12 @@ const WithdrawalSummary = ({
     } else {
       message.destroy();
       message.error({
-        content:
-          setInvalidCode(apiCalls.convertLocalLang("invalid_code")),
+        //content:setInvalidCode(apiCalls.convertLocalLang("invalid_code").toString()),  
+        content:"Invalid Code",
         className: "custom-msg",
-        duration: 0.5
+        duration: 2.0
+        //error: response.status === 401 ? response.data.message : response.data,
+        
       });
     }
   };
@@ -72,6 +74,7 @@ const WithdrawalSummary = ({
   const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
 
   const getOTP = async (val) => {
+    setInputDisable(false)
     setDisable(true)
     let response = await apiCalls.getCode(userConfig.id, isResend);
     if (response.ok) {
@@ -173,9 +176,12 @@ const WithdrawalSummary = ({
           name="code"
           className="input-label otp-verify my-36"
           extra={
-            <Text className="fs-12 text-white-30 fw-200">
+            <div><Text className="fs-12 text-white-30 fw-200">
               {verificationText}
             </Text>
+            <Text className="fs-12 text-red fw-200" style={{float: "right", color: 'var(--textRed)'}}>
+            {invalidcode}
+          </Text></div>
           }
           rules={[{ required: true, message: "Is required" }]}
           label={
@@ -194,17 +200,13 @@ const WithdrawalSummary = ({
             }}
             style={{ width: "100%" }}
           />
-
         </Form.Item>
-
         <div>
-          <Text className="fs-12 text-white-30 fw-200">
-            {invalidcode}
-          </Text>
-          <Text className="fs-12 text-white-30 fw-200">
+          <Text className="fs-12 text-white-30 text-center d-block mb-16 fw-200">
             {validationText}
           </Text>
         </div>
+        
 
         <Button
           disabled={isLoding}
