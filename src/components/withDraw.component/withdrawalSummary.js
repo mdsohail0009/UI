@@ -35,11 +35,11 @@ const WithdrawalSummary = ({
   const withdrawSummayTrack = () => {
     apiCalls.trackEvent({
       Type: "User",
-      Action: "Withdraw fiat summary page view",
+      Action: "Withdraw Fiat summary page view",
       Username: userConfig?.userName,
       MemeberId: userConfig?.id,
       Feature: "Withdraw Fiat",
-      Remarks: "Withdraw fiat summary page view",
+      Remarks: "Withdraw Fiat summary page view",
       Duration: 1,
       Url: window.location.href,
       FullFeatureName: "Withdraw Fiat"
