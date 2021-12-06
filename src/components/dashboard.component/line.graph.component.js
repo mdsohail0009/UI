@@ -3,7 +3,7 @@ import { useEffect } from "react";
 
 
 
-const LineChart = ({ data, type,id }) => {
+const LineChart = ({ data, type,id,coinType }) => {
     
     useEffect(() => {
         Highcharts.chart((id||'linecontainer'), {
@@ -64,11 +64,11 @@ const LineChart = ({ data, type,id }) => {
 
             series: [{
                 type: 'area',
-                name: 'USD to EUR',
+                name: coinType,
                 data: data[type]
             }]
         });
-    }, [data,type]);
+    }, [data,type,coinType]);
     return <div id={id||"linecontainer"}></div>
 }
 export default LineChart

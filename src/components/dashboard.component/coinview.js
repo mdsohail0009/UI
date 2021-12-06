@@ -12,7 +12,7 @@ import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import apiCalls from '../../api/apiCalls';
 import Translate from 'react-translate-component';
-
+import {fetchMarketCoinData} from '../../reducers/dashboardReducer'
 import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle } from "../../reducers/sendreceiveReducer";
 import { setWithdrawfiatenaable, setWithdrawfiat } from '../../reducers/sendreceiveReducer'
 class CoinView extends React.Component {
@@ -32,6 +32,7 @@ class CoinView extends React.Component {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Coin page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Coin page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
     }
     loadCoinDetailData = async () => {
+        this.props.dispatch(fetchMarketCoinData(false))
         const response = await getcoinDetails(this.props.userProfile.id, this.props.match.params.coinName);
         if (response.ok) {
             this.setState({ ...this.state, coinData: response.data }, () => {
@@ -43,7 +44,7 @@ class CoinView extends React.Component {
         if (this.state.coinData) {
             const response = await getCoinChatData(this.state.coinData.id, 'usd', days);
             if (response.ok) {
-                this.setState({ ...this.state, chatData: response.data })
+                this.setState({ ...this.state, chatData: {...response.data, coinType:`USD To ${this.state.coinData?.symbol.toUpperCase()}`} })
             }
         }
     }
@@ -166,6 +167,9 @@ class CoinView extends React.Component {
     render() {
         const { Paragraph, Text, Title } = Typography
         const { coinData } = this.state;
+        if(this.props.dashboard.isCoinViewChange){
+            this.loadCoinDetailData();
+        }
         return <div className="main-container">
             <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cockpit" />{coinData?.name} ({coinData?.symbol.toUpperCase()})</div>
             <Row gutter={[24, 24]}>
@@ -219,7 +223,7 @@ class CoinView extends React.Component {
                                 <Radio.Button value="90">90d</Radio.Button>
                             </Radio.Group>
                         </div>
-                        {this.state.chatData ? <LineChart data={this.state.chatData} type={this.state.type} /> : <div className="coin-details-spin"><Spin className="text-center" /></div>}
+                        {this.state.chatData ? <LineChart data={this.state.chatData} type={this.state.type} coinType={this.state.chatData.coinType}/> : <div className="coin-details-spin"><Spin className="text-center" /></div>}
                     </div>
                 </Col>
                 <Col lg={10} xl={10} xxl={10}>
@@ -276,8 +280,8 @@ class CoinView extends React.Component {
     }
 }
 
-const connectStateToProps = ({ sendReceive, userConfig }) => {
-    return { sendReceive, userProfile: userConfig.userProfileInfo }
+const connectStateToProps = ({ sendReceive, userConfig,dashboard }) => {
+    return { sendReceive, userProfile: userConfig.userProfileInfo,dashboard }
 }
 const connectDispatchToProps = dispatch => {
     return {
