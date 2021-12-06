@@ -26,7 +26,7 @@ function App(props) {
         window.$zoho = window.$zoho || {};
         window.$zoho.salesiq?.reset();
         window.$zoho.salesiq = window.$zoho.salesiq || {
-          widgetcode: "a167eaa0dc5b769d131a5fc00e42bf147028842aad73f7affa889acafc17d757084640d749c5a27dc8dc9bbec022e4d0",
+          widgetcode: "96756975ac1c2aab2d1534678a55b38fe0ca21ca94a31c4145a23ab14e64cb9aa81d6b547a35c109951d24f6be71d2d0",
           values: {},
           ready: function () {
             
