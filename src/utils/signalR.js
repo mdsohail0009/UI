@@ -20,6 +20,6 @@ connection.onclose(async () => {
 });
 
 // Start the connection.
-start();
+//start();
 
 export { connection }
