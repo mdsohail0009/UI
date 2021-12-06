@@ -5,7 +5,7 @@ import { fetchPreview } from '../../reducers/buyReducer';
 import { buyCrypto } from './api';
 import Summary from '../summary.component';
 import Loader from '../../Shared/loader';
-import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
+import { fetchDashboardcalls,fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
 import apicalls from '../../api/apiCalls';
 
@@ -58,6 +58,7 @@ class BuySummary extends Component {
             if (response.ok) {
                 this.props.setStep('success')
                 this.props.fetchDashboardData(this.props.member.id)
+                this.props.fetchMarketCoinDataValue();
                 appInsights.trackEvent({
                     name: 'Buy', properties: { "Type": 'User', "Action": 'Save ', "Username": this.props?.member.userName, "MemeberId": this.props?.member.id, "Feature": 'Buy', "Remarks": obj.toValue + ' ' + obj.toWalletName + ' buy success', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy crypto' }
                 });
@@ -105,6 +106,9 @@ const connectDispatchToProps = dispatch => {
         },
         fetchDashboardData: (member_id) => {
             dispatch(fetchDashboardcalls(member_id))
+        },
+        fetchMarketCoinDataValue:()=>{
+            dispatch(fetchMarketCoinData(true))
         },
         dispatch
     }
