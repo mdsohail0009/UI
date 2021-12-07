@@ -41,7 +41,13 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
     } else {
       passwordResponce(false, '', false);
       initialValues.info = JSON.stringify(trackAuditLogData)
-      const result = await changePassword(initialValues);
+      let obj = initialValues;
+      obj.ConfirmPassword = apiClient.encryptValue(obj.ConfirmPassword,userConfig.sk)
+      obj.CurrentPassword = apiClient.encryptValue(obj.CurrentPassword,userConfig.sk)
+      obj.Password = apiClient.encryptValue(obj.Password,userConfig.sk)
+      obj.Email = apiClient.encryptValue(obj.Email,userConfig.sk)
+      obj.info = apiClient.encryptValue(obj.info,userConfig.sk)
+      const result = await changePassword(obj);
       if (result.ok) {
         message.success({ content: 'Password changed successfully', className: 'custom-msg' });
         passwordResponce(false, '', false);
