@@ -8,10 +8,11 @@ import './assets/css/styles.css';
 import './assets/css/framework.css';
 
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
+import IdleCmp from './authentication/idle.component';
 ReactDOM.render(
   <React.StrictMode>
     <ThemeSwitcherProvider defaultTheme="DRT" themeMap={{ DRT: "./dark-theme.css", LHT: "./light-theme.css" }}>
-    <App />
+      <IdleCmp />
     </ThemeSwitcherProvider>
   </React.StrictMode>,
   document.getElementById('root')
