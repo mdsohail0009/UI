@@ -40,8 +40,9 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       passwordResponce(true, "Current password and New password should not be same", false);
     } else {
       passwordResponce(false, '', false);
+      debugger
       initialValues.info = JSON.stringify(trackAuditLogData)
-      let obj = initialValues;
+      let obj = Object.assign({},initialValues);
       obj.ConfirmPassword = apiClient.encryptValue(obj.ConfirmPassword,userConfig.sk)
       obj.CurrentPassword = apiClient.encryptValue(obj.CurrentPassword,userConfig.sk)
       obj.Password = apiClient.encryptValue(obj.Password,userConfig.sk)
