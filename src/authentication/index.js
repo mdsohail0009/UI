@@ -13,65 +13,37 @@ const config = {
 }
 const userManager = createUserManager(config);
 
-let iframe = userManager._iframeNavigator.prepare();
-let sessionIframe = document.createElement("iframe");
+var stat = "unchanged";
+var mes = process.env.REACT_APP_CLIENT_ID;
+var targetOrigin = process.env.REACT_APP_AUTHORITY; // Validates origin
+var opFrameId = "op";
+var timerID;
 
-let iframeWindow, iframeUrl;
-
-const pollSession = () => {
-
-    if (iframeWindow && iframeUrl) {
-
-        // send a message to trigger a session check
-        iframeWindow.postMessage('checkSession', iframeUrl);
-
-    }
-};
-
-iframe.then(frame => {
+function check_session() {
     debugger
-    // look up the check session URL
-    userManager._settings._metadataService.getCheckSessionIframe().then((url) => {
-
-        iframeUrl = url;
-        sessionIframe.src = url;
-        sessionIframe.style.display = "none";
-        // add load listener first
-        sessionIframe.onload = () => {
-
-            // save the iframe's window reference
-            iframeWindow = frame._frame.contentWindow;
-
-            // start polling
-            pollSession();
-
-            // remove listener
-            sessionIframe.onload = null;
-
-        };
-
-        // go to our check session page
-        frame.navigate({
-            url: iframeUrl
-        });
-
-    });
-
-});
-
-//
-//  ADD LISTENER FOR MESSAGE RESPONSES
-//
-
-window.onmessage = function (event) {
-    console.log(event?.originalEvent?.data);
-
-    // set up another poll
-    setTimeout(function () {
-        pollSession();
-    }, 5000);
-
+    var win = window.parent.frames[opFrameId]?.contentWindow
+    win.postMessage(mes, targetOrigin);
 }
 
+function setTimer() {
+    check_session();
+    timerID = setInterval(check_session, 5 * 1000);
+}
+
+window.addEventListener("message", receiveMessage, false);
+
+function receiveMessage(e) {
+    if (e.origin !== targetOrigin) {
+        return;
+    }
+    stat = e.data;
+
+    if (stat === "changed") {
+        clearInterval(timerID);
+        // then take the actions below...
+    }
+}
+
+//setTimer();
 
 export { userManager }

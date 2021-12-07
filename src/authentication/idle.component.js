@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useIdleTimer } from 'react-idle-timer'
 import App from '../components/app.component/App';
 import { Modal } from 'antd';
 import { userManager } from './index'
 export default function IdleCmp(props) {
     const [showIdleModal, setIdleModal] = useState(false);
+    useEffect(() => {
+
+
+    }, [])
     const handleOnIdle = event => {
         setIdleModal(true);
         userManager.signoutRedirect();
