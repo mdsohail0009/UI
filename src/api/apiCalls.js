@@ -84,7 +84,7 @@ const getVerification = (AccountId, code) => {
     return apiClient.get(ApiControllers.master + `OTPVerification/${AccountId}/${code}`)
 }
 const encryptValue = (msg, key) =>{
-    debugger
+    
     msg = typeof (msg) == 'object' ? JSON.stringify(msg) : msg;
     let salt = CryptoJS.lib.WordArray.random(128 / 8);
 
