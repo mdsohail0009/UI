@@ -45,21 +45,20 @@ class FiatSummary extends Component {
 
     saveDepFiat = async () => {
         //let setDepFiatSaveObj= apiClient.encryptValue("depositInfo",userConfig.sk)
-        let Obj = Object.assign({},this.props.depositInfo?.setDepFiatSaveObj);
-        debugger
+        let Obj = Object.assign({}, this.props.depositInfo?.setDepFiatSaveObj);
         Obj.currency = apiCalls.encryptValue(Obj.currency, this.props.userConfig.sk)
-        Obj.bankName=apiCalls.encryptValue(Obj.bankName,this.props.userConfig.sk)
-        Obj.amount=apiCalls.encryptValue(Obj.amount,this.props.userConfig.sk)
-        Obj.reference=apiCalls.encryptValue(Obj.reference,this.props.userConfig.sk)
-        Obj.routingNumber=apiCalls.encryptValue(Obj.routingNumber,this.props.userConfig.sk)
-        Obj.swiftorBICCode=apiCalls.encryptValue(Obj.swiftorBICCode,this.props.userConfig.sk)
-        Obj.benficiaryBankName=apiCalls.encryptValue(Obj.benficiaryBankName,this.props.userConfig.sk)
-        Obj.benficiaryAccountAddrress=apiCalls.encryptValue(Obj.benficiaryAccountAddrress,this.props.userConfig.sk)
+        Obj.bankName = apiCalls.encryptValue(Obj.bankName, this.props.userConfig.sk)
+        Obj.amount = apiCalls.encryptValue(Obj.amount, this.props.userConfig.sk)
+        Obj.reference = apiCalls.encryptValue(Obj.reference, this.props.userConfig.sk)
+        Obj.routingNumber = apiCalls.encryptValue(Obj.routingNumber, this.props.userConfig.sk)
+        Obj.swiftorBICCode = apiCalls.encryptValue(Obj.swiftorBICCode, this.props.userConfig.sk)
+        Obj.benficiaryBankName = apiCalls.encryptValue(Obj.benficiaryBankName, this.props.userConfig.sk)
+        Obj.benficiaryAccountAddrress = apiCalls.encryptValue(Obj.benficiaryAccountAddrress, this.props.userConfig.sk)
 
-       let  response = await savedepositFiat(Obj);
-        
+        let response = await savedepositFiat(Obj);
+
         //Obj.currency=apiClient.encryptValue(Obj.currency,UserProfile.sk);
-        
+
         if (response.ok === true) {
             this.props.changeStep('step3')
         }
