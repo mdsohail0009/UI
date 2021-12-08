@@ -654,8 +654,6 @@ const FaitWithdrawal = ({
                         callback();
                       }
                     }
-                  }, {
-                    validator: validateContentRule
                   }
                 ]}
               >

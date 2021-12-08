@@ -165,9 +165,6 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             {
                                 pattern: /^[A-Za-z0-9]+$/,
                                 message: 'Invalid account number'
-                            },
-                            {
-                                validator: validateContentRule
                             }
                         ]}
                     >
@@ -183,9 +180,6 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             {
                                 pattern: /^[A-Za-z0-9]+$/,
                                 message: 'Invalid BIC/SWIFT/Routing number'
-                            },
-                            {
-                                validator: validateContentRule
                             }
                         ]}
                     >
