@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
-import { Typography, Button, Tooltip, Checkbox } from 'antd';
+import { Typography, Space } from 'antd';
 import { Link } from 'react-router-dom';
-import { setStep } from '../../reducers/buysellReducer';
+import { setStep } from '../../reducers/buyFiatReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-
-const LinkValue = (props) => {
-    return (
-        <Translate className="text-yellow text-underline c-pointer"
-            content={props.content}
-            component={Link}
-            to="./#"
-        />
-    )
-}
+import success from '../../assets/images/success.png';
+import { setdepositCurrency } from '../../reducers/depositReducer';
+import apiCalls from "../../api/apiCalls";
 
 class FaitdepositSummary extends Component {
     constructor(props) {
@@ -22,47 +15,47 @@ class FaitdepositSummary extends Component {
 
         }
     }
+    componentDidMount() {
+        this.fiatSummaryTrack();
+    }
+    fiatSummaryTrack = () => {
+        apiCalls.trackEvent({
+            "Type": 'User', "Action": 'Deposit Fiat success page view', "Username": this.props.userConfig?.userName, "MemeberId": this.props.userConfig?.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit Fiat success page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat'
+        });
+    }
     showPayCardDrawer = () => {
         console.log(this.state);
     }
+    returnToFiatDep = () => {
+        this.props.changeStep("step1");
+        this.props.dispatch(setdepositCurrency(null));
+    }
 
     render() {
-        const { Title, Paragraph, Text } = Typography;
-        const link = <LinkValue content="terms_service" />;
+        const { Paragraph } = Typography;
         return (
             <>
-                <div className="pay-list fs-14 mt-36">
-                    <Translate className="fw-400 text-white" content="EUR_amount" component={Text} />
-                    <Text className="fw-300 text-white-30">0.00</Text>
+                <div className="success-pop text-center">
+                    <img src={success} className="confirm-icon" alt={'success'} />
+                    <div><Translate content="success_msg" component='Success' className="text-white-30 fs-36 fw-200 mb-4" /></div>
+                    <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" />
+                    <Space direction="vertical" size="large">
+                        <Translate content="return_to_depositfiat" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.returnToFiatDep()} />
+                    </Space>
                 </div>
-                <div className="pay-list fs-14">
-                    <Translate className="fw-400 text-white" content="Fee" component={Text} />
-                    <Text className="fw-300 text-white-30">0.00 EUR</Text>
-                </div>
-                <div className="pay-list fs-14">
-                    <Translate className="fw-400 text-white" content="Amount_to_pay" component={Text} />
-                    <Text className="fw-300 text-white-30">0.00 EUR</Text>
-                </div>
-                <div className="d-flex my-36 agree-check">
-                    <label>
-                        <input type="checkbox" id="agree-check" />
-                        <span for="agree-check" />
-                    </label>
-                    <Translate content="agree_to_suissebase" with={{ link }} component={Paragraph} className="fs-14 text-white-30 ml-16" style={{ flex: 1 }} />
-                </div>
-                <Translate content="place_an_order" component={Button} size="large" block className="pop-btn mt-36" onClick={() => this.props.changeStep('step1')} />
             </>
         )
     }
 }
-const connectStateToProps = ({ buySell, oidc }) => {
-    return { buySell }
+const connectStateToProps = ({ buySell, oidc, userConfig }) => {
+    return { buySell, userConfig: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
-        }
+        },
+        dispatch
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(FaitdepositSummary);

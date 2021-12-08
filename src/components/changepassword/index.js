@@ -1,51 +1,61 @@
-import React, { Component, useEffect, useState } from 'react';
-import { Button, Input, Form, Divider, Row, Col, notification, Typography, Alert } from 'antd';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react';
+import { Button, Input, Form, notification, Typography, Alert, message } from 'antd';
+import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
-//import connectStateProps from '../../shared/stateConnect';
-//import notify from '../../shared/components/notification';
 import { changePassword } from '../../api/apiServer';
+import { getmemeberInfo } from '../../reducers/configReduser';
+import apiClient from '../../api/apiCalls';
+import apiCalls from '../../api/apiCalls';
+import { validateContentRule } from '../../utils/custom.validator'
+
+
 notification.config({
   placement: "topRight",
   rtl: true
 });
-const ChangePassword = ({ userConfig }) => {
+const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, trackAuditLogData }) => {
   const [initialValues, setInitialValues] = useState({
     "Email": userConfig?.email,
     "CurrentPassword": "",
     "Password": "",
     "ConfirmPassword": ""
   })
-  const { Paragraph, Title, Text } = Typography;
+  const { Text } = Typography;
   const [form] = Form.useForm();
-  const [requiredMark, setRequiredMarkType] = useState('required');
   const [changePasswordResponse, setChangePasswordResponse] = useState({ error: false, messsage: "", isLoading: false });
-  const onFinishFailed = (error) => {
-
+  useEffect(() => {
+    if (userProfile && userProfile?.isNew) {
+      setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
+      form.resetFields();
+    }
+    trakEvet()
+  }, [userProfile]);
+  const trakEvet = () => {
+    apiCalls.trackEvent({ "Type": 'User', "Action": 'Change password page view', "Username": userConfig?.userName, "MemeberId": userConfig?.id, "Feature": 'Change Password', "Remarks": 'Change password page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Change Password' });
   }
   const saveUserPass = async (values) => {
-    debugger
     if (values.CurrentPassword === values.Password) {
-      //notify({ message: "Error", type: "error", description: "New password and re entered password must same" });
-      setChangePasswordResponse({ error: true, messsage: "Current & New passwords should not be same!", isLoading: false });
-
-    }
-    else {
+      passwordResponce(true, "Current password and New password should not be same", false);
+    } else {
+      passwordResponce(false, '', false);
+      initialValues.info = JSON.stringify(trackAuditLogData)
       const result = await changePassword(initialValues);
       if (result.ok) {
-        setChangePasswordResponse({ error: false, messsage: 'Password changed successfully', isLoading: false });
+        message.success({ content: 'Password changed successfully', className: 'custom-msg' });
+        passwordResponce(false, '', false);
         form.resetFields();
-      }
-      else {
-        setChangePasswordResponse({ error: true, messsage: result.data, isLoading: false });
+        onSubmit()
+        getmemeberInfoa(userConfig.userId)
+        apiClient.trackEvent({ "Action": 'Save', "Feature": 'Change password', "Remarks": "Password changed", "FullFeatureName": 'Change password', "userName": userConfig.userName, id: userConfig.id });
+      } else {
+        passwordResponce(true, result.data, false);
       }
     }
   }
-  const clearValues = () => {
-    form.resetFields();
-
+  const passwordResponce = (isError, msg, isloading) => {
+    setChangePasswordResponse({ error: isError, messsage: msg, isLoading: isloading });
   }
   const handleChange = (prop, val) => {
     let object = { ...initialValues };
@@ -53,94 +63,100 @@ const ChangePassword = ({ userConfig }) => {
     setInitialValues(object);
   }
   return (<>
-    <div className="custom-formcard mt-36">
+    <div className="mt-16">
       <Form form={form}
         initialValues={{
           "Email": userConfig?.email,
           "CurrentPassword": "",
           "Password": "",
           "ConfirmPassword": ""
-        }} onFinishFailed={onFinishFailed} onFinish={(values) => saveUserPass(values)} enableReinitialize>
+        }} onFinish={(values) => saveUserPass(values)} enableReinitialize>
         {changePasswordResponse.messsage !== "" && (
           <Typography>
             <Alert
               type={changePasswordResponse?.error ? "error" : "success"}
               showIcon
-              //message="Change Password"
               description={changePasswordResponse.messsage}
             />
           </Typography>
         )}
-        <Translate
-          content="Change_password"
-          component={Title}
-          className="mb-0 fs-24 text-white-30 fw-400"
-        />
-        <Translate
-          content="Choose_a_unique_password_to_protect_your_account"
-          component={Paragraph}
-          className="mt-36 mb-16 fs-14 text-white-30 fw-400"
-        />
+
         <div className="d-flex">
           <Translate
-            className="text-white input-label mb-0"
-            content="current_password"
+            className="text-white input-label"
+            content="current_pass_word"
             component={Text}
           />
-          <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+          <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
         </div>
         <Form.Item
-          className="custom-forminput mb-16"
+          className="custom-forminput mb-24"
           name="CurrentPassword"
           required
           rules={[
-            { required: true, message: "Please enter current password" },
+            {
+              required: true, message: apiClient.convertLocalLang('current_pass_word_msg')
+            },
+            {
+              validator: validateContentRule
+            }
+
           ]}
         >
 
-            <Input.Password placeholder="Current Password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeTwoTone />)} />
+          <Input.Password placeholder={apiClient.convertLocalLang('Type_your_current_pass_word')} value={initialValues.CurrentPassword} className="text-left cust-input mb-8 pr-0 change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeOutlined style={{ color: '#fff' }} /> : <EyeInvisibleOutlined />)} />
         </Form.Item>
-        <div className="d-flex"> 
-            <Translate
-              className="text-white input-label mb-0"
-              content="new_password"
-              component={Text}
-            />
-            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-          </div>
+        <div className="d-flex">
+          <Translate
+            className="text-white input-label"
+            content="new_pass_word"
+            component={Text}
+          />
+          <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
+        </div>
         <Form.Item
           name="Password"
-          className="custom-forminput mb-16"
+          className="custom-forminput mb-24"
           required
-          rules={[
-            { required: true, message: "Please enter new password" },
+          rules={[{
+            required: true, message: apiClient.convertLocalLang('new_pass_word_msg')
+          },
+          {
+            pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/,
+            message: 'Password must be at least 8 Characters long one uppercase with one lowercase, one numeric & special character'
+          },
+          {
+            validator: validateContentRule
+          }
           ]}
         >
 
           <Input.Password
-            placeholder="New Password"
+            placeholder={apiClient.convertLocalLang('Type_your_new_pass_word')}
             value={initialValues.Password}
             onChange={(e) => handleChange("Password", e)}
-            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeTwoTone />)}
+            className="text-left cust-input mb-8 pr-0 change-space pass-onhover" iconRender={visible => (visible ? <EyeOutlined style={{ color: '#fff' }} /> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
         <div className="d-flex">
-            <Translate
-              className="text-white input-label mb-0"
-              content="confirm_password"
-              component={Text}
-            />
-            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-          </div>
+          <Translate
+            className="text-white input-label"
+            content="confirm_pass_word"
+            component={Text}
+          />
+          <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
+        </div>
         <Form.Item
           required
+          className="custom-forminput mb-24"
           name="ConfirmPassword"
           dependencies={["password"]}
           //hasFeedback
           rules={[
             {
               required: true,
-              message: "Please enter confirm password!",
+              message: apiClient.convertLocalLang('confirm_pass_word_msg'),
+
             },
             ({ getFieldValue }) => ({
               validator(rule, value) {
@@ -148,22 +164,25 @@ const ChangePassword = ({ userConfig }) => {
                   return Promise.resolve();
                 }
                 return Promise.reject(
-                  "Password does not match!"
+                  "Password does not match"
                 );
               },
             }),
+            {
+              validator: validateContentRule
+            }
           ]}
         >
-          
+
           <Input.Password
-            placeholder="Confirm Password"
+            placeholder={apiClient.convertLocalLang('Re_type_your_new_pass_word')}
             value={initialValues.ConfirmPassword}
             onChange={(e) => handleChange("ConfirmPassword", e)}
-            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeTwoTone />)}
+            className="text-left cust-input mb-8 pr-0 change-space" iconRender={visible => (visible ? <EyeOutlined style={{ color: '#fff' }} /> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
 
-        <Form.Item className="mb-0 mt-16">
+        <div style={{ marginTop: '50px' }} className="">
           <Button
             loading={changePasswordResponse.isLoading}
             htmlType="submit"
@@ -171,22 +190,33 @@ const ChangePassword = ({ userConfig }) => {
             block
             className="pop-btn"
           >
-            Submit
+            <Translate content="Save_btn_text" />
           </Button>
-        </Form.Item>
+          <Button
+            htmlType="button"
+            size="medium"
+            block
+            className="pwd-popup pop-cancel fs-14"
+            onClick={() => onSubmit()}>
+            <Translate content="cancel" />
+          </Button>
+        </div>
       </Form>
     </div>
   </>)
 }
 
-const connectStateToProps = ({ buySell, oidc, userConfig }) => {
-  return { buySell, userConfig: userConfig.userProfileInfo }
+const connectStateToProps = ({ buySell, userConfig, userProfile }) => {
+  return { buySell, trackAuditLogData: userConfig.trackAuditLogData, userConfig: userConfig.userProfileInfo, userProfile }
 }
 const connectDispatchToProps = dispatch => {
   return {
     changeStep: (stepcode) => {
       dispatch(setStep(stepcode))
-    }
+    },
+    getmemeberInfoa: (useremail) => {
+      dispatch(getmemeberInfo(useremail));
+    },
   }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(ChangePassword);

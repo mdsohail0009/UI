@@ -61,12 +61,12 @@ const clearSwapData = (paylaod) => {
 
 const getMemberCoins = (member_id) => {
     return async (dispatch) => {
-        dispatch(fetchMemberCoins({ key: "MemberCoins", loading: true, data: [] }));
+        dispatch(fetchMemberCoins());
         const response = await getportfolio(member_id);
         if (response.ok) {
             dispatch(fetchMemberCoinsSuccess(response.data, 'MemberCoins'));
         } else {
-            dispatch(fetchMemberCoinsRejected(response.data, 'MemberCoins'));
+            dispatch(fetchMemberCoinsRejected(response.data));
         }
     }
 }
@@ -100,14 +100,12 @@ let initialState = {
     MemberCoins: [],
 }
 
-const SwapReducer = (state = initialState, action) => {
+const SwapReducer = (state = initialState,action) => {
     switch (action.type) {
         case SET_STEP:
-            state = { ...state, stepcode: action.payload };
-            return state;
+            return { ...state, stepcode: action.payload };
         case CLEAR_STEP:
-            state = { ...state, stepcode: action.payload };
-            return state;
+            return { ...state, stepcode: action.payload };
         case UPDATE_COINDETAILS:
             return { ...state, coinDetailData: action.payload };
         case UPDATE_RECEIVECOINDETAILS:

@@ -16,32 +16,34 @@ let initialState = {
     stepcode: "step1",
     stepTitles: {
         buyfiat: "suissebase_personal",
-        selectfiat: "suissebase_personal",
+        faitsummary: 'confirm_transaction',
+        FaitDepositSummary: null,
         addcard: 'link_newcard',
         selectwallet: 'withdraw',
-        faitsummary: 'confirm_transaction',
         billingaddress: 'change_billing_address',
         fiatdeposit: 'Fiat_deposit',
+        addAddress: 'fiatAddress',
+        withdrwalfiatsummary: 'withdraw_fiat_summary',
+        withdrwlive: 'withdraw_live'
     },
     stepSubTitles: {
         buyfiat: "avail_wallet_weprovide",
-        selectfiat: "wallet_in_usd",
+        faitsummary: null,
+        FaitDepositSummary: null,
         addcard: null,
         selectwallet: "select_wallet",
-        faitsummary: null,
         billingaddress: null,
         fiatdeposit: null,
+        addAddress: null
     }
 
 }
 const BuyFiatReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_STEP:
-            state = { ...state, stepcode: action.payload };
-            return state;
+            return { ...state, stepcode: action.payload };
         case CLEAR_STEP:
-            state = { ...state, stepcode: action.payload };
-            return state;
+            return { ...state, stepcode: action.payload };
         default:
             return state;
     }

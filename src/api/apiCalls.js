@@ -1,22 +1,89 @@
-import { apiClient } from './';
-const Portfolio = "Exchange/";
-const getportfolio = () => {
-    return apiClient.get(Portfolio +`MemberCrypto?memberId=2E8E3877-BC8E-466D-B62D-F3F8CCBBD019`);
+import { apiClient, ipRegistry } from './';
+import { ApiControllers } from './config';
+import counterpart from 'counterpart';
+import { store } from '../store';
+
+const getportfolio = (memID) => {
+    return apiClient.get(ApiControllers.wallets + `Crypto/${memID}`);
 }
-const getCryptos=()=>{
-    return apiClient.get(Portfolio +'Coins');
+const getCryptos = () => {
+    return apiClient.get(ApiControllers.buySell + 'Coins');
 }
-const getMember=(useremail)=>{
-    return apiClient.get(Portfolio +'/Member?email='+useremail);
+const getMember = (useremail) => {
+    return apiClient.get(ApiControllers.accounts + '/' + useremail);
 }
-const sumsubacesstoken=(userid)=>{
-    return apiClient.get('Sumsub/AccessToken?applicantId='+userid);
+const sumsubacesstoken = (userid) => {
+    return apiClient.get('Sumsub/AccessToken?applicantId=' + userid);
 }
-const sumsubacesstokennew=(userid)=>{
-    return apiClient.get('Sumsub/KYBAccessToken?applicantId='+userid);
+const sumsublivenessacesstoken = (userid, flow) => {
+    return apiClient.get('Sumsub/ExternalAccessToken?userId=' + userid);
 }
-const updateKyc=(userid)=>{
-    return apiClient.get(Portfolio+'UpdateKYC?isKyc=true&userId='+userid);
+const sumsubacesstokennew = (userid) => {
+    return apiClient.get('Sumsub/KYBAccessToken?applicantId=' + userid);
+}
+const updateKyc = (userid) => {
+    return apiClient.put(ApiControllers.accounts + `${userid}/KYC`);
+}
+const trackEvent = (obj) => {
+    const { userConfig: { userProfileInfo, trackAuditLogData } } = store.getState()
+    let trackObj = {
+        "id": "00000000-0000-0000-0000-000000000000",
+        "date": "",
+        "type": obj.Type,
+        "featurePath": obj.FullFeatureName,
+        "username": obj.userName,
+        "memberId": userProfileInfo?.id,
+        "feature": obj.Feature,
+        "action": obj.Action,
+        "remarks": obj.Remarks,
+        "ipAddress": trackAuditLogData?.Ip,
+        "countryName": trackAuditLogData?.Location?.countryName,
+        "info": JSON.stringify(trackAuditLogData)
+    }
+    return apiClient.post(ApiControllers.master + `Auditlogs`, trackObj);
 }
 
-export default {getportfolio,getCryptos,getMember,sumsubacesstoken, updateKyc,sumsubacesstokennew}
+const getIpRegistery = () => {
+    return ipRegistry.get("/?key=l4rtc0buncs5dej9");
+}
+const sellMemberCrypto = (memID) => {
+    return apiClient.get(ApiControllers.wallets + memID);
+}
+const convertLocalLang = (key) => {
+    return counterpart.translate(key)
+}
+const getIBANData = (ibannumber) => {
+    return apiClient.get(ApiControllers.master + `GetIBANAccountDetails?ibanNumber=` + ibannumber);
+}
+
+const getdshKpis = (userid) => {
+    return apiClient.get(ApiControllers.dashboard + `KPI/${userid}`);
+}
+const getdshcumulativePnl = (userid, days) => {
+    return apiClient.get(ApiControllers.dashboard + `CumulativePNL/${userid}/${days}`);
+}
+const getAssetNetwroth = (userid, days) => {
+    return apiClient.get(ApiControllers.dashboard + `AssetsNetWorth/${userid}/${days}`);
+}
+const getAssetAllowcation = (userid, days) => {
+    return apiClient.get(ApiControllers.dashboard + `AssetAllocation/${userid}/${days}`);
+}
+const getprofits = (userid, days) => {
+    return apiClient.get(ApiControllers.dashboard + `Profits/${userid}/${days}`);
+}
+const getdailypnl = (userid, days) => {
+    return apiClient.get(ApiControllers.dashboard + `DailyPNL/${userid}/${days}`);
+}
+
+const getCode = (AccountId,isResendOTP) => {
+    return apiClient.get(ApiControllers.master + `SendOTP/${AccountId}/${isResendOTP}`);
+
+}
+const getVerification = (AccountId, code) => {
+    return apiClient.get(ApiControllers.master + `OTPVerification/${AccountId}/${code}`)
+}
+let apicalls = {
+    getportfolio, getCryptos, getMember, sumsubacesstoken, updateKyc, sumsubacesstokennew, sumsublivenessacesstoken, trackEvent, sellMemberCrypto, convertLocalLang, getIBANData,
+    getdshKpis, getdshcumulativePnl, getAssetNetwroth, getAssetAllowcation, getprofits, getdailypnl, getCode, getVerification, getIpRegistery
+}
+export default apicalls

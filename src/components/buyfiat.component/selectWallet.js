@@ -45,9 +45,9 @@ class SelectWallet extends Component {
                     </span>
                 </div>
                 <Radio.Group defaultValue="min" buttonStyle="solid" className="round-pills">
-                    <Translate value="min" content="min" component={Radio.Button} />
-                    <Translate value="half" content="half" component={Radio.Button} />
-                    <Translate value="all" content="all" component={Radio.Button} />
+                    <Translate value="min" content="min" component={Radio.Button}value={1}  />
+                    <Translate value="half" content="half" component={Radio.Button}value={2}  />
+                    <Translate value="max" content="all" component={Radio.Button} value={3} />
                 </Radio.Group>
                 <Translate content="preview" component={Button} size="large" block className="pop-btn" style={{ marginTop: '100px' }} onClick={() => this.props.changeStep('step5')} />
             </>
@@ -55,7 +55,7 @@ class SelectWallet extends Component {
     }
 }
 
-const connectStateToProps = ({ buyFiat, oidc }) => {
+const connectStateToProps = ({ buyFiat }) => {
     return { buyFiat }
 }
 const connectDispatchToProps = dispatch => {
