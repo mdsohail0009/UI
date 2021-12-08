@@ -96,9 +96,9 @@ const Notifications = ({
           {notifications?.map((item, indx) => (
             <List.Item
               onClick={() => {
-          let isRead= apiClient.encryptValue("true",userProfile.sk)
+                let isRead = apiClient.encryptValue("true", userProfile.sk)
                 if (!item.isRead) {
-                  readNotification(item.id,isRead);
+                  readNotification(item.id);
                   dispatch(
                     setNotificationCount(dashboard.notificationCount - 1)
                   );
@@ -127,9 +127,8 @@ const Notifications = ({
                 }
                 description={
                   <Text
-                    className={`text-white-50 ${
-                      !item.isRead ? "fw-200" : "fw-500"
-                    } fs-12`}
+                    className={`text-white-50 ${!item.isRead ? "fw-200" : "fw-500"
+                      } fs-12`}
                   >
                     {item?.message}{" "}
                   </Text>
