@@ -33,10 +33,10 @@ class AuditLogs extends Component {
       message: "",
       searchObj: {
         timeSpan: "Last 1 Day",
-        userName: this.props.userProfile?.userName,
+        userName: this.props.userProfile?.id, 
         feature: "All Features",
-        admin: false,
-        user: true,
+        admin: "admin",
+        user: "user",
         fromdate: '',
         todate: '',
       },
@@ -175,7 +175,7 @@ class AuditLogs extends Component {
       searchObj.fromdate = moment(timeSpanfromdate).format('MM-DD-YYYY');
       searchObj.todate = moment(timeSpantodate).format('MM-DD-YYYY');
     }
-    this.setState({ ...this.state, searchObj }, () => { this.gridRef.current.refreshGrid(); });
+    this.setState({ ...this.state, searchObj}, () => { this.gridRef.current.refreshGrid(); });
   };
 
   render() {
