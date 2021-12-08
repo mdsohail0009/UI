@@ -8,6 +8,8 @@ import Translate from 'react-translate-component';
 import { setdepositCurrency } from '../../reducers/depositReducer'
 import { savedepositFiat, requestDepositFiat } from '../deposit.component/api';
 import apiCalls from "../../api/apiCalls";
+import { apiClient } from '../../api';
+import UserProfile from '../userProfile.component/userProfile';
 const LinkValue = (props) => {
     return (
         <Translate className="textpure-yellow text-underline c-pointer"
@@ -42,8 +44,23 @@ class FiatSummary extends Component {
     }
 
     saveDepFiat = async () => {
-        let Obj = await savedepositFiat(this.props.depositInfo?.setDepFiatSaveObj);
-        if (Obj.ok === true) {
+        //let setDepFiatSaveObj= apiClient.encryptValue("depositInfo",userConfig.sk)
+        let Obj = Object.assign({},this.props.depositInfo?.setDepFiatSaveObj);
+        debugger
+        Obj.currency = apiCalls.encryptValue(Obj.currency, this.props.userConfig.sk)
+        Obj.bankName=apiCalls.encryptValue(Obj.bankName,this.props.userConfig.sk)
+        Obj.amount=apiCalls.encryptValue(Obj.amount,this.props.userConfig.sk)
+        Obj.reference=apiCalls.encryptValue(Obj.reference,this.props.userConfig.sk)
+        Obj.routingNumber=apiCalls.encryptValue(Obj.routingNumber,this.props.userConfig.sk)
+        Obj.swiftorBICCode=apiCalls.encryptValue(Obj.swiftorBICCode,this.props.userConfig.sk)
+        Obj.benficiaryBankName=apiCalls.encryptValue(Obj.benficiaryBankName,this.props.userConfig.sk)
+        Obj.benficiaryAccountAddrress=apiCalls.encryptValue(Obj.benficiaryAccountAddrress,this.props.userConfig.sk)
+
+       let  response = await savedepositFiat(Obj);
+        
+        //Obj.currency=apiClient.encryptValue(Obj.currency,UserProfile.sk);
+        
+        if (response.ok === true) {
             this.props.changeStep('step3')
         }
     }

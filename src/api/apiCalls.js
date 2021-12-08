@@ -85,7 +85,7 @@ const getVerification = (AccountId, code) => {
 }
 const encryptValue = (msg, key) =>{
     
-    msg = typeof (msg) == 'object' ? JSON.stringify(msg) : msg;
+    msg = typeof (msg) == 'string' ? msg : JSON.stringify(msg);
     let salt = CryptoJS.lib.WordArray.random(128 / 8);
 
     let key1 = CryptoJS.PBKDF2(key, salt, {
