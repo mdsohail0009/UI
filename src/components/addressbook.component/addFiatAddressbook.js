@@ -62,7 +62,15 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
             useDivRef.current.scrollIntoView()
             return setErrorMsg('Address label already existed');
         } else {
-            let response = await saveAddress(values);
+            let saveObj = Object.assign({}, values);
+            saveObj.accountNumber = apiCalls.encryptValue(saveObj.accountNumber, userConfig.sk)
+            saveObj.bankAddress = apiCalls.encryptValue(saveObj.bankAddress, userConfig.sk)
+            saveObj.bankName = apiCalls.encryptValue(saveObj.bankName, userConfig.sk)
+            saveObj.beneficiaryAccountAddress = apiCalls.encryptValue(saveObj.beneficiaryAccountAddress, userConfig.sk)
+            saveObj.beneficiaryAccountName = apiCalls.encryptValue(saveObj.beneficiaryAccountName, userConfig.sk)
+            saveObj.routingNumber = apiCalls.encryptValue(saveObj.routingNumber, userConfig.sk)
+            saveObj.toWalletAddress = apiCalls.encryptValue(saveObj.toWalletAddress, userConfig.sk)
+            let response = await saveAddress(saveObj);
             if (response.ok) {
                 setErrorMsg('')
                 useDivRef.current.scrollIntoView();
