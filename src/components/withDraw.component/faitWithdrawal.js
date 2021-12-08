@@ -654,8 +654,6 @@ const FaitWithdrawal = ({
                         callback();
                       }
                     }
-                  }, {
-                    validator: validateContentRule
                   }
                 ]}
               >
@@ -851,13 +849,21 @@ const FaitWithdrawal = ({
     useDivRef.current.scrollIntoView();
   };
   const handleOk = async () => {
+    debugger
     let currentStep = parseInt(confirmationStep.split("step")[1]);
     if (confirmationStep === "step2") {
-      trackAuditLogData.Action = "Save";
-      trackAuditLogData.Remarks =
-        saveObj?.totalValue + " " + saveObj.walletCode + " withdraw.";
-      saveObj.info = JSON.stringify(trackAuditLogData);
-      let withdrawal = await withdrawSave(saveObj);
+      // trackAuditLogData.Action = "Save";
+      // trackAuditLogData.Remarks =
+      //   saveObj?.totalValue + " " + saveObj.walletCode + " withdraw.";
+      let Obj = Object.assign({}, saveObj);
+      Obj.accountNumber = apicalls.encryptValue(Obj.accountNumber, userConfig?.sk);
+      Obj.bankName = apicalls.encryptValue(Obj.bankName, userConfig?.sk);
+      Obj.routingNumber = apicalls.encryptValue(Obj.routingNumber, userConfig?.sk);
+      Obj.bankAddress = apicalls.encryptValue(Obj.bankAddress, userConfig?.sk);
+      Obj.beneficiaryAccountAddress = apicalls.encryptValue(Obj.beneficiaryAccountAddress, userConfig?.sk);
+      Obj.beneficiaryAccountName = apicalls.encryptValue(Obj.beneficiaryAccountName, userConfig?.sk);
+      Obj.info = JSON.stringify(trackAuditLogData);
+      let withdrawal = await withdrawSave(Obj);
       if (withdrawal.ok) {
         dispatch(fetchDashboardcalls(userConfig.id));
         dispatch(rejectWithdrawfiat());
