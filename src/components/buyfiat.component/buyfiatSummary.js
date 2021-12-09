@@ -75,10 +75,10 @@ class FiatSummary extends Component {
                         <Translate content="bank_account_number" component={Text} className="fw-400 text-white" />
                         <Text className="fw-500 text-white-50">{depositFiatData?.accountNumber}</Text>
                     </div>
-                    <div className="pay-list fs-14">
+                    {/* <div className="pay-list fs-14">
                         <Translate content="Routing_number" component={Text} className="fw-400 text-white" />
                         <Text className="fw-500 text-white-50">{depositFiatData?.routingNumber}</Text>
-                    </div>
+                    </div> */}
                     <div className="pay-list fs-14">
                         <Translate content="Swift_BICcode" component={Text} className="fw-400 text-white" />
                         <Text className="fw-500 text-white-50">{depositFiatData?.networkCode}</Text>

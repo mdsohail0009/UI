@@ -22,7 +22,6 @@ opFrameId.style.display = "none";
 var timerID;
 
 function check_session() {
-    debugger
     var win = opFrameId.contentWindow
     win.postMessage(mes, targetOrigin);
 }
@@ -32,8 +31,7 @@ function setTimer() {
     timerID = setInterval(check_session, 5 * 1000);
 }
 
-window.addEventListener("message", receiveMessage, false);
-
+opFrameId.addEventListener("message", receiveMessage, false);
 function receiveMessage(e) {
     if (e.origin !== targetOrigin) {
         return;

@@ -119,7 +119,7 @@ const FaitWithdrawal = ({
         bankAddress: "",
         bankAddress2: "",
         zipcode: "",
-        beneficiaryAccountName: "",
+        //beneficiaryAccountName: "",
         beneficiaryAccountAddress: "",
         beneficiaryAccountAddress1: "",
         description: "",

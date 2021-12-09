@@ -295,7 +295,7 @@ class WithdrawSummary extends Component {
               content="address"
               component={Text}
             />
-            <Text className="fw-400 text-white">
+            <Text className="fw-400 text-white" style={{ width:'250px', textOverflow:'ellipsis',overflow:'hidden',whiteSpace:'nowrap' }}>
               {this.props.sendReceive.withdrawCryptoObj?.toWalletAddress}
             </Text>
           </div>
