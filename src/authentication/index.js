@@ -6,7 +6,7 @@ const config = {
     redirect_uri: process.env.REACT_APP_REDIRECT_URI,
     response_type: "id_token token",
     scope: "openid profile",
-    silent_redirect_uri: `${window.location.protocol}//${window.location.hostname}${window.location.port || ""}/silent_renew.html`,
+    silent_redirect_uri: process.env.REACT_APP_SILENT_REDIRECT_URI,
     automaticSilentRenew: true,
     userStore: new WebStorageStateStore({ store: window.localStorage })
 }
@@ -15,12 +15,14 @@ const userManager = createUserManager(config);
 var stat = "unchanged";
 var mes = process.env.REACT_APP_CLIENT_ID;
 var targetOrigin = process.env.REACT_APP_AUTHORITY; // Validates origin
-var opFrameId = "op";
+var opFrameId = document.createElement("iframe");
+opFrameId.src = process.env.REACT_APP_AUTHORITY + `/connect/checksession`;
+opFrameId.style.display = "none";
 var timerID;
 
 function check_session() {
     debugger
-    var win = window.parent.frames[opFrameId]?.contentWindow
+    var win = opFrameId.contentWindow
     win.postMessage(mes, targetOrigin);
 }
 
@@ -43,6 +45,7 @@ function receiveMessage(e) {
     }
 }
 
-//setTimer();
-
+opFrameId.onload = function () {
+    setTimer();
+}
 export { userManager }
