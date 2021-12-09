@@ -8,6 +8,7 @@ import LocalCryptoSwap from '../shared/local.crypto.swap';
 import SuccessMsg from './success';
 import { appInsights } from "../../Shared/appinsights";
 import apicalls from '../../api/apiCalls';
+import { validateContentRule } from '../../utils/custom.validator';
 
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
@@ -235,6 +236,11 @@ class CryptoWithDrawWallet extends Component {
                             name="toWalletAddress"
                             className="custom-forminput custom-label  mb-16"
                             required
+                            rules={[
+                                {
+                                    validator: validateContentRule
+                                }
+                            ]}
                             // label="Address"
                             label={apicalls.convertLocalLang('address')}
                         >

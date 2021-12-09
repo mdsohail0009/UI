@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Row, Col, Button, Carousel, Spin } from 'antd';
 import Portfolio from './portfolio.component';
 import MarketCap from './marketcap.component';
-import Notices from './notices';
 import AlertConfirmation from '../shared/alertconfirmation';
 import { connect } from 'react-redux';
 import { fetchNotices } from '../../reducers/dashboardReducer';
@@ -59,7 +58,7 @@ class Home extends Component {
                             crypto_usd="0.00 BTC"
                             crypto_stock="0.0%" />
 
-                        <Notices />
+
                         <YourPortfolio />
                     </Col>
                 </Row>

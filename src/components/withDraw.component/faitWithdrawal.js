@@ -654,8 +654,6 @@ const FaitWithdrawal = ({
                         callback();
                       }
                     }
-                  }, {
-                    validator: validateContentRule
                   }
                 ]}
               >
@@ -862,6 +860,8 @@ const FaitWithdrawal = ({
       Obj.bankName = apicalls.encryptValue(Obj.bankName, userConfig?.sk);
       Obj.routingNumber = apicalls.encryptValue(Obj.routingNumber, userConfig?.sk);
       Obj.bankAddress = apicalls.encryptValue(Obj.bankAddress, userConfig?.sk);
+      Obj.beneficiaryAccountAddress = apicalls.encryptValue(Obj.beneficiaryAccountAddress, userConfig?.sk);
+      Obj.beneficiaryAccountName = apicalls.encryptValue(Obj.beneficiaryAccountName, userConfig?.sk);
       Obj.info = JSON.stringify(trackAuditLogData);
       let withdrawal = await withdrawSave(Obj);
       if (withdrawal.ok) {

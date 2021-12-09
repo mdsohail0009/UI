@@ -1,5 +1,6 @@
 import { WebStorageStateStore } from 'oidc-client';
 import { createUserManager } from 'redux-oidc';
+import ReactDOM from 'react-dom';
 const config = {
     authority: process.env.REACT_APP_AUTHORITY,
     client_id: process.env.REACT_APP_CLIENT_ID,
