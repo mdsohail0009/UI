@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Typography, Radio, Tooltip, Empty } from 'antd';
+import { Card, Row, Col, Typography, Radio, Tooltip, Empty, Spin } from 'antd';
 import apiCalls from "../../api/apiCalls";
 import { connect } from 'react-redux';
 import BarChart from '../trading.components/barchart';
 import PieChart from '../trading.components/piechart';
 import LineChart from '../trading.components/linechart';
 import { Link } from 'react-router-dom';
+import BChart from '../trading.components/bar.Chart';
+import LChart from '../trading.components/line.Chart';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -136,12 +138,12 @@ class CockpitCharts extends Component {
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Cumulative PNL(%)</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-red">-1.85%</Text>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.cumulativePNL ? <LineChart id="cumlitavePNL" data={this.state.cumulativePNL} width="600" height="400" /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
+                            {this.state.cumulativePNL ? <LChart data={this.state.cumulativePNL} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
                         </Card>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Daily PNL(%)</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-red">-$0.19</Text>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.dailyPnl ? <BarChart data={this.state.dailyPnl?.series} categories={this.state.dailyPnl?.categories} id={'dailypnl'} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
+                            {this.state.dailyPnl ? <BChart data={this.state.dailyPnl} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
                         </Card>
                     </Col>
                 </Row>
@@ -153,14 +155,14 @@ class CockpitCharts extends Component {
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={12} xl={14} xxl={14}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Assets Net Worth</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-green">$30.61</Text>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.assetnetWorth ? <LineChart id="cumlitavePNL" data={this.state.assetnetWorth} width="750" height="400" /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
+                            {this.state.assetnetWorth ? <LChart data={this.state.assetnetWorth} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
                         </Card>
                     </Col>
                 </Row>
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Profits</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-green">+1.85%</Text>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.profits ? <LineChart id="cumlitavePNL" data={this.state.profits} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
+                            {this.state.profits ? <LChart data={this.state.profits} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
                         </Card>
                     </Col>
                 </Row>
