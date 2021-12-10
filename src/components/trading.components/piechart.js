@@ -26,6 +26,12 @@ const PieChart = ({ data }) => {
                     valueSuffix: '%'
                 }
             },
+            tooltip: {
+                borderColor: 'transparent',
+                backgroundColor: '#F5FCFF',
+                borderRadius: 20,
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
             plotOptions: {
                 pie: {
                     allowPointSelect: true,

@@ -24,7 +24,7 @@ const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
     }
     const trackevent = () => {
         apicalls.trackEvent({
-            "Type": 'User', "Action": 'Deposit Crypto page view', "Username": userProfile.userName, "MemeberId": userProfile.id, "Feature": 'Deposit Crypto', "Remarks": "Deposit crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto'
+            "Type": 'User', "Action": 'Deposit Crypto page view', "Username": userProfile.userName, "MemeberId": userProfile.id, "Feature": 'Deposit Crypto', "Remarks": "Deposit Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto'
         });
     }
     return <> <Translate content="deposite_a_crypto" component={Title} className="text-white-30 fw-200 mb-8 custom-font mt-16" />

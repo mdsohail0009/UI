@@ -50,7 +50,7 @@ const LocalCryptoSwapper = (props, ref) => {
                 if (!isSwaped) {
                     setCryptoValue(value || 0);
                 } else { setLocalValue(value || 0) }
-                onChange({ cryptoValue: isSwaped ? inputvalue : value, localValue: isSwaped ? value : inputvalue, isSwaped });
+                onChange({ cryptoValue: isSwaped ? inputvalue : value, localValue: isSwaped ? value : inputvalue, isSwaped, isInputChange });
                 setConvertionLoad(false);
             }
         } else {

@@ -73,7 +73,10 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
             return setErrorMsg('Address label already existed');
         } else {
             setErrorMsg('')
-            let response = await saveAddress(values);
+            let saveObj = Object.assign({}, values);
+            saveObj.toWalletAddress = apiCalls.encryptValue(saveObj.toWalletAddress, userConfig.sk)
+            saveObj.beneficiaryAccountName = apiCalls.encryptValue(saveObj.beneficiaryAccountName, userConfig.sk)
+            let response = await saveAddress(saveObj);
             if (response.ok) {
                 message.success({ content: apiCalls.convertLocalLang('address_msg'), className: 'custom-msg' });
                 form.resetFields();
