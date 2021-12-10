@@ -7,6 +7,7 @@ import { setNotificationCount } from "../reducers/dashboardReducer";
 import Translate from "react-translate-component";
 import apiCalls from "../api/apiCalls";
 import apiClient from "../api/apiCalls";
+
 const { Text } = Typography;
 const Notifications = ({
   onClose,
@@ -48,6 +49,18 @@ const Notifications = ({
       }
       setLoading(false);
     }
+  };
+  const convertUTCToLocalTime = (dateString) => {
+    let date = new Date(dateString);
+    const milliseconds = Date.UTC(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes(),
+      date.getSeconds(),
+    );
+    return new Date(milliseconds).toISOString()
   };
   return (
     <>
@@ -120,7 +133,7 @@ const Notifications = ({
                     <Text className="text-white-30 fs-14">{item.action}</Text>
                     <Text className="text-secondary fs-12">
                       <Moment format={"DD MMM YY hh:mm A"}>
-                        {item.notifiedDate}
+                        {item.notifiedDate ? convertUTCToLocalTime(item.notifiedDate) : item.notifiedDate}
                       </Moment>
                     </Text>
                   </div>
