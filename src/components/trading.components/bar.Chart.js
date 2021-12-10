@@ -6,7 +6,7 @@ const BarChart = ({ data }) => {
     let btcData = [];
     let dateData = [];
     for (let d of data.categories) {
-        dateData.push(d.slice(0, 10)) //yyyy-mm-dd format
+        dateData.push(d.slice(0, 10))
     }
     for (let d of data.series[0].data) {
         pnlData.push(parseFloat((d).toFixed(2)))
@@ -28,25 +28,22 @@ const BarChart = ({ data }) => {
             align: 'left'
         },
         xAxis: {
-            categories: dateData, // data must be in array form
-            labels: { // rotates the labels
-                autoRotation: [0, -90], // rotates the label to either be horizontal or vertical (depending on how much space is given)
-                // step is the amount of intervals before the next date is shown ; i.e. step: 1 means all dates are shown ; step: 2 means show every 2 date labels...
+            categories: dateData,
+            labels: {
+                autoRotation: [0, -90],
                 step: 6,
                 formatter: function (data) {
-                    return this.value  // able to change the label format here if want to
+                    return this.value
                 }
-
             }
         },
         yAxis: {
             title: {
-                text: "" // removes the y-axis text
+                text: ""
             },
             labels: {
                 format: '{text}',
             },
-
         },
         credits: {
             enabled: false
@@ -59,35 +56,27 @@ const BarChart = ({ data }) => {
             gridLineColor: "#FFDB1A",
             gridLineWidth: 0
         }],
-        tooltip: { // tool tip is the 'pop up' box when hovering over a point
-            valueSuffix: '%', // format to ahve a % sign
+        tooltip: {
+            valueSuffix: '%',
             valueDecimals: 2,
             borderColor: 'transparent',
             backgroundColor: '#F5FCFF',
-            borderRadius: 20, // rounds the edges
-            // pointFormat: '<b>{point.y}</b>',
-
+            borderRadius: 20,
         },
-
-        // chart related data and formatting
         series: [{
-            // first series
             name: "Cumulative PNL(%)",
-            data: pnlData, // data must be in array form
+            data: pnlData,
             type: 'column',
             color: 'red'
         },
         {
-            // second series
             name: "Cumulative BTC Trend",
-            data: btcData, // data must be in array form
+            data: btcData,
             type: 'column',
             color: 'blue'
         }
-
-        ], // end of chart related data
+        ],
     }
-
 
     return (
         <div>

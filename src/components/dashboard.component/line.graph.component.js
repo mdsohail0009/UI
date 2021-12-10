@@ -1,32 +1,25 @@
 import Highcharts from 'highcharts';
 import { useEffect } from "react";
 
-
-
-const LineChart = ({ data, type,id,coinType }) => {
-    
+const LineChart = ({ data, type, id, coinType }) => {
     useEffect(() => {
-        Highcharts.chart((id||'linecontainer'), {
+        Highcharts.chart((id || 'linecontainer'), {
             chart: {
-                
-                backgroundColor:'var(--bgGloom)'
-            },
-            title: {
-                text: ''
-            },
-            subtitle: {
-                text: ''
+                height: 400,
+                style: {
+                    fontFamily: 'SF Pro Text, sans-serif !important',
+                },
+                backgroundColor: "transparent"
             },
             xAxis: {
                 type: 'datetime',
-                gridLineColor:'transparent',
+                gridLineColor: 'transparent',
             },
             yAxis: {
                 title: {
                     text: ''
                 },
-                gridLineColor:'transparent',
-
+                gridLineColor: 'transparent',
             },
             legend: {
                 enabled: false
@@ -34,41 +27,34 @@ const LineChart = ({ data, type,id,coinType }) => {
             credits: {
                 enabled: false
             },
-            plotOptions: {
-                area: {
-                    fillColor: {
-                        linearGradient: {
-                            x1: 0,
-                            y1: 0,
-                            x2: 0,
-                            y2: 1
-                        },
-                        stops: [
-                            [0, Highcharts.getOptions().colors[6]],
-                            [1, Highcharts.color(Highcharts.getOptions().colors[6]).setOpacity(6).get('rgba')]
-                        ],
-                        
-                    },
-                    marker: {
-                        radius: 2
-                    },
-                    lineWidth: 1,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
-                }
+            tooltip: {
+                borderColor: 'transparent',
+                backgroundColor: '#F5FCFF',
+                borderRadius: 20,
             },
-
             series: [{
                 type: 'area',
                 name: coinType,
-                data: data[type]
+                data: data[type],
+                lineColor: 'rgb(255,219,26)',
+                threshold: null,
+                fillColor: {
+                    linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+                    stops: [
+                        [0, 'rgba(255,219,26,0.5)'],
+                        [1, 'rgba(255,219,26,0.025)']
+                    ]
+                },
+                color: 'rgb(255,0,0)',
+                marker: {
+                    symbol: 'circle',
+                    fillColor: '#FFFFFF',
+                    lineColor: 'rgb(255,0,0)',
+                    lineWidth: 1,
+                },
             }]
         });
-    }, [data,type,coinType]);
-    return <div id={id||"linecontainer"}></div>
+    }, [data, type, coinType]);
+    return <div id={id || "linecontainer"}></div>
 }
 export default LineChart
