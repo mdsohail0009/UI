@@ -8,7 +8,7 @@ import LocalCryptoSwap from '../shared/local.crypto.swap';
 import SuccessMsg from './success';
 import { appInsights } from "../../Shared/appinsights";
 import apicalls from '../../api/apiCalls';
-import { validateContentRule } from '../../utils/custom.validator';
+import { validateContent } from '../../utils/custom.validator';
 
 class CryptoWithDrawWallet extends Component {
     eleRef = React.createRef();
@@ -24,12 +24,11 @@ class CryptoWithDrawWallet extends Component {
         confirmationStep: "step1",
         isWithdrawSuccess: false,
         amountPercentageType: "min"
-
     }
     componentDidMount() {
         if (this.props.sendReceive.withdrawCryptoObj) {
             this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.withdrawCryptoObj?.totalValue, localValue: 0 })
-            this.setState({ ...this.state, walletAddress: this.props.sendReceive.withdrawCryptoObj.toWalletAddress,amountPercentageType: this.props.sendReceive.withdrawCryptoObj.amounttype  });
+            this.setState({ ...this.state, walletAddress: this.props.sendReceive.withdrawCryptoObj.toWalletAddress, amountPercentageType: this.props.sendReceive.withdrawCryptoObj.amounttype });
         } else {
             this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
         }
@@ -100,6 +99,9 @@ class CryptoWithDrawWallet extends Component {
             this.myRef.current.scrollIntoView();
         } else if (amt > this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.coinBalance) {
             this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_less') });
+            this.myRef.current.scrollIntoView();
+        } else if (!validateContent(this.state.walletAddress)) {
+            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('please_enter_valid_content') });
             this.myRef.current.scrollIntoView();
         }
         else if (this.state.walletAddress == null || this.state.walletAddress.trim() === "") {
@@ -240,15 +242,8 @@ class CryptoWithDrawWallet extends Component {
                             name="toWalletAddress"
                             className="custom-forminput custom-label  mb-16"
                             required
-                            rules={[
-                                {
-                                    validator: validateContentRule
-                                }
-                            ]}
-                            // label="Address"
                             label={apicalls.convertLocalLang('address')}
                         >
-
                             <div className="p-relative d-flex align-center">
                                 {/* <Input className="cust-input custom-add-select mb-0" placeholder="Enter address" value={this.state.walletAddress} */}
                                 <Input className="cust-input custom-add-select mb-0" placeholder={apicalls.convertLocalLang('enter_address')} value={this.state.walletAddress}

@@ -43,7 +43,8 @@ const LineChart = ({ data, showPnl, showBtc }) => {
             labels: {
                 autoRotation: [0, -90],
                 step: 6
-            }
+            },
+            gridLineColor: 'transparent',
         },
         yAxis: {
             title: {
@@ -51,7 +52,8 @@ const LineChart = ({ data, showPnl, showBtc }) => {
             },
             labels: {
                 format: '{text}',
-            }
+            },
+            gridLineColor: 'transparent',
         },
         tooltip: {
             borderColor: 'transparent',

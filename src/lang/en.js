@@ -471,6 +471,7 @@ export default {
   digit_code: " Enter 6 digit code sent to",
   selectcurrency: "Select Currency",
   bank_account_number: 'Bank Account Number',
-  invalid_code:'Invalid Code',
-  resend_text:'Click on Resend Button after 2min'
+  invalid_code: 'Invalid Code',
+  resend_text: 'Click on Resend Button after 2min',
+  please_enter_valid_content: 'Please enter valid content'
 }

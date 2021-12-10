@@ -21,7 +21,7 @@ opFrameId.src = process.env.REACT_APP_AUTHORITY + `/connect/checksession`;
 window.document.body.appendChild(opFrameId);
 var timerID;
 opFrameId.onload = (even) => {
-   // setTimer();
+    setTimer();
 }
 function check_session() {
     opFrameId.contentWindow.postMessage(mes, targetOrigin);
@@ -40,7 +40,7 @@ function receiveMessage(e) {
 }
 function setTimer() {
     check_session();
-    timerID = setInterval(check_session, 5 * 1000);
+    timerID = setInterval(check_session, 15 * 60 * 1000);
 }
 
 

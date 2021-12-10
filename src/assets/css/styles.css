@@ -839,7 +839,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .mega-menu{max-width: 1140px;  padding: 29px 0px 24px 60px;}
     .side-drawer .ant-drawer-content-wrapper{width: 420px !important;}
     .side-drawer .ant-drawer-body{padding: 0 20px 20px 20px;}
-    .portfolio-list .mobile-list{height: 690px;max-height: 690px; overflow: auto;}
+    .portfolio-list .mobile-list{height: 816px;max-height: 816px; overflow: auto;}
     .markets-panel .custom-table .ant-table-body{height: 1065px !important;padding: 0 16px 0 24px;}
     .crypto-address .walletadrs{font-size: 12px;}
     .trade-legends{display: flex; justify-content: space-between;}
