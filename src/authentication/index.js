@@ -40,7 +40,7 @@ function receiveMessage(e) {
 }
 function setTimer() {
     check_session();
-    timerID = setInterval(check_session, 15*60 * 1000);
+    timerID = setInterval(check_session, 15 * 60 * 1000);
 }
 
 
