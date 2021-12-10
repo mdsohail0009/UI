@@ -39,7 +39,8 @@ class RequestedDocs extends Component {
         docReplyObjs: [],
         previewPath: null,
         isSubmitting: false, uploadLoader: false,
-        isMessageError: null
+        isMessageError: null,
+        isValidFile:true,
     }
     componentDidMount() {
         this.getDocument(QueryString.parse(this.props.location.search).id);
@@ -209,7 +210,7 @@ class RequestedDocs extends Component {
     }
     handleUpload = ({ file }, doc) => {
         this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
-        if (file.status === "done") {
+        if (file.status === "done" && this.state.isValidFile) {
             let replyObjs = [...this.state.docReplyObjs];
             let item = this.isDocExist(replyObjs, doc.id);
             let obj;
@@ -239,7 +240,25 @@ class RequestedDocs extends Component {
         else if (file.status === 'error') {
             this.setState({ ...this.state, uploadLoader: false, errorMessage: file.response })
         }
+        else if(!this.state.isValidFile){
+            this.setState({ ...this.state, uploadLoader: false });
+        }
     }
+    beforeUpload= (file) => {
+       
+        let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true}
+        let isFileName = (file.name.split('.')).length > 2 ? false : true;
+        if (fileType[file.type] && isFileName) {
+            this.setState({...this.state, isValidFile:true,})
+            return true
+        } else {
+         message.error({ content: isFileName ? `File is not allowed. You can upload jpg, png, jpeg and PDF  files` : "File don't allow double Extension", className: 'custom-msg' })
+        
+            this.setState({...this.state, isValidFile:false,})
+            return Upload.LIST_IGNORE;
+        }
+    }
+    
     uopdateReplyObj = (item, list) => {
         for (let obj of list) {
             if (obj.id === item.id) {
@@ -342,7 +361,7 @@ class RequestedDocs extends Component {
                                     closable={false}
                                     style={{ marginBottom: 0, marginTop: '16px' }}
                                 />}
-                                <Dragger accept=".pdf,.jpg,.jpeg,.png.gif" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} onChange={(props) => { this.handleUpload(props, doc) }}>
+                                <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) =>{this.beforeUpload(props)}} onChange={(props) => { this.handleUpload(props, doc) }}>
                                     <p className="ant-upload-drag-icon">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
