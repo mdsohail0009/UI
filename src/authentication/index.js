@@ -1,6 +1,5 @@
 import { WebStorageStateStore } from 'oidc-client';
 import { createUserManager } from 'redux-oidc';
-import ReactDOM from 'react-dom';
 const config = {
     authority: process.env.REACT_APP_AUTHORITY,
     client_id: process.env.REACT_APP_CLIENT_ID,
@@ -16,22 +15,18 @@ const userManager = createUserManager(config);
 var stat = "unchanged";
 var mes = process.env.REACT_APP_CLIENT_ID;
 var targetOrigin = process.env.REACT_APP_AUTHORITY; // Validates origin
-var opFrameId = document.createElement("iframe");
-opFrameId.src = process.env.REACT_APP_AUTHORITY + `/connect/checksession`;
+var opFrameId = window.document.createElement("iframe");
 opFrameId.style.display = "none";
+opFrameId.src = process.env.REACT_APP_AUTHORITY + `/connect/checksession`;
+window.document.body.appendChild(opFrameId);
 var timerID;
-
+opFrameId.onload = (even) => {
+   // setTimer();
+}
 function check_session() {
-    var win = opFrameId.contentWindow
-    win.postMessage(mes, targetOrigin);
+    opFrameId.contentWindow.postMessage(mes, targetOrigin);
 }
-
-function setTimer() {
-    check_session();
-    timerID = setInterval(check_session, 5 * 1000);
-}
-
-opFrameId.addEventListener("message", receiveMessage, false);
+window.addEventListener("message", receiveMessage, false);
 function receiveMessage(e) {
     if (e.origin !== targetOrigin) {
         return;
@@ -43,8 +38,10 @@ function receiveMessage(e) {
         // then take the actions below...
     }
 }
-
-opFrameId.onload = function () {
-    setTimer();
+function setTimer() {
+    check_session();
+    timerID = setInterval(check_session, 5 * 1000);
 }
+
+
 export { userManager }
