@@ -35,7 +35,7 @@ class AuditLogs extends Component {
         timeSpan: "Last 1 Day",
         userId: this.props.userProfile?.userId, 
         feature: "All Features",
-        admin: "admin",
+        admin: "user",
         user: "user",
         fromdate: '',
         todate: '',
@@ -74,7 +74,6 @@ class AuditLogs extends Component {
     this.setState({
       ...this.state, isLoading: false, moreAuditLogs: true, featureName: e.dataItem.feature
     })
-    debugger
     let res = await getAuditLogInfo(id);
     if (res.ok) {
       this.setState({
@@ -171,7 +170,6 @@ class AuditLogs extends Component {
   }
 
   handleSearch = () => {
-    debugger
     let { searchObj, timeSpanfromdate, timeSpantodate } = this.state;
     if (searchObj.timeSpan === "Custom") {
       searchObj.fromdate = moment(timeSpanfromdate).format('MM-DD-YYYY');
