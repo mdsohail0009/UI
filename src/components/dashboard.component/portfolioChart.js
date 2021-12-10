@@ -14,7 +14,7 @@ const PotfolioChart = ({ data }) => {
             align: 'left'
         },
         chart: {
-            //height: 400,
+            height: 400,
             style: {
                 fontFamily: 'SF Pro Text, sans-serif !important',
             },

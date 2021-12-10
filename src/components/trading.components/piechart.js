@@ -38,14 +38,14 @@ const PieChart = ({ data }) => {
                     cursor: 'pointer',
                     dataLabels: {
                         enabled: true,
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        format: '<span style="color: var(--textWhite50);stroke-width: 0px !important;">{point.name}:{point.percentage:.1f} %</span>'
                     }
                 }
             },
             series: [{
                 name: 'Brands',
                 colorByPoint: true,
-                data: data || []
+                data: data || [],
             }]
         });
     }, []);
