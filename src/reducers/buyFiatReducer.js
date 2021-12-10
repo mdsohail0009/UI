@@ -16,7 +16,7 @@ let initialState = {
     stepcode: "step1",
     stepTitles: {
         buyfiat: "suissebase_personal",
-        faitsummary: 'confirm_transaction',
+        faitsummary: 'withdraw',
         FaitDepositSummary: null,
         addcard: 'link_newcard',
         selectwallet: 'withdraw',
@@ -24,7 +24,8 @@ let initialState = {
         fiatdeposit: 'Fiat_deposit',
         addAddress: 'fiatAddress',
         withdrwalfiatsummary: 'withdraw_fiat_summary',
-        withdrwlive: 'withdraw_live'
+        withdrwlive: 'withdraw_live',
+        withdrawfaitsummary:'withdraw'
     },
     stepSubTitles: {
         buyfiat: "avail_wallet_weprovide",
@@ -34,7 +35,8 @@ let initialState = {
         selectwallet: "select_wallet",
         billingaddress: null,
         fiatdeposit: null,
-        addAddress: null
+        addAddress: null,
+        withdrawfaitsummary:'withdraw_fiat_summary'
     }
 
 }

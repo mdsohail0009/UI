@@ -16,6 +16,7 @@ import WithdrawalSummary from '../withDraw.component/withdrawalSummary';
 import WithdrawalLive from '../withDraw.component/withdrawLive';
 import WithdrawalSuccess from '../withDraw.component/withdrwSuccess';
 import ConfirmMsg from './confirmMsg';
+import WithdrawFaitSummary from '../withDraw.component/withdrawalSummary'
 
 class MassPayment extends Component {
     state = {
@@ -52,6 +53,7 @@ class MassPayment extends Component {
             withdrwalfiatsummary: < WithdrawalSummary />,
             withdrwlive: < WithdrawalLive />,
             withdrwsuccess: < WithdrawalSuccess />,
+            withdrawfaitsummary:<WithdrawFaitSummary/>
         }
         return stepcodes[config[this.props.buyFiat.stepcode]]
     }
@@ -68,6 +70,7 @@ class MassPayment extends Component {
             withdrwalfiatsummary: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             withdrwlive: <span onClick={() => this.props.dispatch(setStep("step5"))} className="icon md lftarw-white c-pointer" />,
             withdrwsuccess: null,
+            withdrawfaitsummary:<span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }
@@ -94,7 +97,8 @@ class MassPayment extends Component {
             addAddress: <span />,
             withdrwalfiatsummary: <span />,
             withdrwlive: <span />,
-            withdrwsuccess: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />
+            withdrwsuccess: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            withdrawfaitsummary:<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }
