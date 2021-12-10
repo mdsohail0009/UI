@@ -23,8 +23,8 @@ const filterOperators = {
         { text: 'grid.filterIsNotNullOperator', operator: 'isnotnull' }
     ],
     'date': [
-        { text: 'grid.filterEqOperator', operator: 'eq' },
-        { text: 'grid.filterNotEqOperator', operator: 'neq' },
+        // { text: 'grid.filterEqOperator', operator: 'eq' },
+        // { text: 'grid.filterNotEqOperator', operator: 'neq' },
         { text: 'grid.filterAfterOrEqualOperator', operator: 'gte' },
         { text: 'grid.filterAfterOperator', operator: 'gt' },
         { text: 'grid.filterBeforeOperator', operator: 'lt' },
