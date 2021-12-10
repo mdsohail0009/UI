@@ -21,14 +21,6 @@ const LineChart = ({ data, showPnl, showBtc }) => {
             btcData.push(parseFloat((d.value).toFixed(2)))
         })
     }
-
-    // for (let d of data.cpnl) {
-    //     pnlData.push(parseFloat((d.value).toFixed(2)))
-    //     dateData.push(dateConverter(d.time)) //yyyy-mm-dd format
-    // }
-    // for (let d of data.btcTrend) {
-    //     btcData.push(parseFloat((d.value).toFixed(2)))
-    // }
     const options = {
         title: {
             text: '',
@@ -36,7 +28,6 @@ const LineChart = ({ data, showPnl, showBtc }) => {
         },
         chart: {
             height: 400,
-            //width: 600,
             style: {
                 fontFamily: 'SF Pro Text, sans-serif !important',
             },
@@ -70,39 +61,37 @@ const LineChart = ({ data, showPnl, showBtc }) => {
         credits: {
             enabled: false
         },
-        // chart related data and formatting
         series: [{
-            // first series
             name: "Cumulative PNL",
-            data: pnlData, // data must be in array form
+            data: pnlData,
             type: 'areaspline',
             visible: showPnl,
-            lineColor: 'rgb(255,0,0)', // line chart color
-            threshold: null, // if values are negative, fill area will still be below the line
-            fillColor: { //area below chart color
+            lineColor: 'rgb(255,0,0)',
+            threshold: null,
+            fillColor: {
                 linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                 stops: [
                     [0, 'rgba(0,200,0,0.3)'],
                     [1, 'rgba(0,100,0,0.01)']
                 ]
             },
-            color: 'rgb(255,0,0)', // color for legend
-            marker: { // the dot on the plot
+            color: 'rgb(255,0,0)',
+            marker: {
                 symbol: 'circle',
                 fillColor: '#FFFFFF',
-                lineColor: 'rgb(255,0,0)', // 
+                lineColor: 'rgb(255,0,0)',
                 lineWidth: 2,
             },
-        }, // 2nd series
+        },
         {
             name: "Cumulative BTC Trend",
-            data: btcData, // data must be in array form
+            data: btcData,
             type: 'areaspline',
             visible: showBtc,
             lineColor: 'rgb(0,0,255)',
             color: 'rgb(0,0,255)',
             threshold: null,
-            fillColor: { //area below chart color
+            fillColor: {
                 linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
                 stops: [
                     [0, 'rgba(0,0,255,0.2)'],
@@ -111,11 +100,11 @@ const LineChart = ({ data, showPnl, showBtc }) => {
             },
             marker: {
                 symbol: 'circle',
-                fillColor: '#FFFFFF', // circle fill color
-                lineColor: 'rgb(0,0,255)', // circle line color
+                fillColor: '#FFFFFF',
+                lineColor: 'rgb(0,0,255)',
                 lineWidth: 2
             }
-        }], // end of chart related data
+        }],
     }
 
     return (
