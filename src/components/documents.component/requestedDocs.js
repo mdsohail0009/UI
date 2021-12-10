@@ -334,13 +334,13 @@ class RequestedDocs extends Component {
                                     placeholder="Write your message"
                                     maxLength={200}
                                 />
-                                {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter valid message<Tooltip title="Message should not contain HTML content, please enter valid content"><span className="icon md info" /></Tooltip></div>}
+                                {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message<Tooltip title="Message should not contain HTML content, please enter valid content"><span className="icon md info" /></Tooltip></div>}
                                 {this.state.errorMessage != null && <Alert
                                     description={this.state.errorMessage}
                                     type="error"
                                     showIcon
                                     closable={false}
-                                    style={{marginBottom:0, marginTop:'16px'}}
+                                    style={{ marginBottom: 0, marginTop: '16px' }}
                                 />}
                                 <Dragger accept=".pdf,.jpg,.jpeg,.png.gif" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} onChange={(props) => { this.handleUpload(props, doc) }}>
                                     <p className="ant-upload-drag-icon">

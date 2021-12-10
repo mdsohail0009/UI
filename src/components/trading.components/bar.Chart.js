@@ -35,7 +35,8 @@ const BarChart = ({ data }) => {
                 formatter: function (data) {
                     return this.value
                 }
-            }
+            },
+            gridLineColor: 'transparent',
         },
         yAxis: {
             title: {
@@ -44,6 +45,7 @@ const BarChart = ({ data }) => {
             labels: {
                 format: '{text}',
             },
+            gridLineColor: 'transparent',
         },
         credits: {
             enabled: false
