@@ -33,7 +33,12 @@ class List extends React.Component {
 
     gridFilterData = (column) => {
         if (column.filterType === "date") {
-            return this.renderDate;
+            if (column.isShowTime) {
+                return this.renderDateTime;
+            }
+            else {
+                return this.renderDate;
+            }
         } else if (column.filterType === "number") {
             return this.renderNumber;
         } else if (column.filterType === "datetime") {

@@ -249,7 +249,8 @@ const FaitWithdrawal = ({
       values.favouriteName || addressDetails.favouriteName;
     setSaveObj(values);
     dispatch(setWithdrawfiat(values));
-    setConfirmationStep("step2");
+   // setConfirmationStep("step2");
+    changeStep('withdrawfaitsummary');
     form.resetFields();
   };
   const getIbanData = async (val) => {

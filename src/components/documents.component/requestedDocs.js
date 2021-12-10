@@ -243,10 +243,10 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
         }
         else if (file.status === 'error') {
-            this.setState({ ...this.state, uploadLoader: false, errorMessage: file.response })
+            this.setState({ ...this.state, uploadLoader: false, errorMessage: file.response,  isSubmitting: false  })
         }
-        else if (!this.state.isValidFile) {
-            this.setState({ ...this.state, uploadLoader: false });
+        else if(!this.state.isValidFile){
+            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false  });
         }
     }
     beforeUpload = (file) => {
@@ -257,9 +257,8 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, isValidFile: true, })
             return true
         } else {
-            message.error({ content: isFileName ? `File is not allowed. You can upload jpg, png, jpeg and PDF  files` : "File don't allow double Extension", className: 'custom-msg' })
-
-            this.setState({ ...this.state, isValidFile: false, })
+         message.error({ content: isFileName ? `File is not allowed. You can upload jpg, png, jpeg and PDF  files` : "File don't allow double Extension", className: 'custom-msg' })
+            this.setState({...this.state, isValidFile:false,})
             return Upload.LIST_IGNORE;
         }
     }
