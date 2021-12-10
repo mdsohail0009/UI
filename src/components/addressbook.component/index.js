@@ -180,10 +180,10 @@ class AddressBook extends Component {
             this.props.rowSelectedData(obj)
             if (this.state.cryptoFiat) {
                 this.setState({ ...this.state, fiatDrawer: true, selection: [], isCheck: false, });
-                apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fait  Address Updated', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Fiat Address Updated', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
+                apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fait  Address edit view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Fiat Address edit view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
             }
             else {
-                apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto  Address Updated', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Crypto Address Updated', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
+                apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto  Address edit view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Crypto Address edit view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
                 this.setState({ ...this.state, visible: true, selection: [], isCheck: false, })
             }
         }
