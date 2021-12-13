@@ -154,14 +154,14 @@ class WithdrawSummary extends Component {
     }
   };
   handleOtp = (val) => {
-    this.setState({ ...this.state, otp: val });
+    this.setState({ ...this.state, otp: val.code});
   };
 
-  onClick = async () => {
-    if (this.state.onTermsChange) {
+  saveWithdrwal = async (values) => {
+       if (this.state.onTermsChange) {
       let response = await apiCalls.getVerification(
         this.props.userProfile.id,
-        this.state.otp
+        values.code
       );
 
       if (response.ok) {
@@ -302,6 +302,7 @@ class WithdrawSummary extends Component {
             name="advanced_search"
             autoComplete="off"
             form={this.form}
+            onFinish={this.saveWithdrwal}
           >
 
             <Form.Item
@@ -327,13 +328,20 @@ class WithdrawSummary extends Component {
                 className="cust-input text-left"
                 placeholder={apiCalls.convertLocalLang("verification_code")}
                 maxLength={6}
-                onKeyDown={(e) => {
-                  if (e.currentTarget.value.length > 5) {
-                    e.preventDefault();
-                  } else {
-                    this.handleOtp(e.currentTarget.value)
-                  }
-                }}
+                onKeyDown={(event) => 
+                  { 
+                     if(event.currentTarget.value.length > 5) {
+                      event.preventDefault();}
+                      else if(/^\d+$/.test(event.key)){
+                        this.handleOtp(event.currentTarget.value)
+                      }
+                      else if(event.key=="Backspace" || event.key =="Delete"){
+                       }
+                      else{
+                      event.preventDefault()
+                    }
+                   }}
+             
                 style={{ width: '100%' }}
                 disabled={this.state.inputDisable}
               />
@@ -375,15 +383,16 @@ class WithdrawSummary extends Component {
               </Paragraph>
             </div>
             <Button
-              size="large"
-              block
-              className="pop-btn"
-              htmlType="submit"
-              onClick={() => this.onClick()}
-            >
-              <Translate content="Confirm" component={Text} />
-            </Button>
-          </Form>
+          
+          size="large"
+          block
+          className="pop-btn"
+          htmlType="submit"
+        >
+          <Translate content="Confirm" component={Text} />
+        </Button>
+
+  </Form>
           <div className="text-center mt-16">
             <Translate
               content="cancel"
