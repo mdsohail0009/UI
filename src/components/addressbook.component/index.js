@@ -205,8 +205,7 @@ class AddressBook extends Component {
     }
     handleWithdrawToggle = e => {
         this.setState({
-            ...this.state, cryptoFiat: e.target.value === 2
-        })
+            ...this.state, cryptoFiat: e.target.value === 2,selection:[]})
         if (this.state.cryptoFiat) {
             apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto Address book grid view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Crypto Address book grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
         } else {

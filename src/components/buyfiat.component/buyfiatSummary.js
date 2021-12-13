@@ -91,7 +91,7 @@ class FiatSummary extends Component {
                         <li><Translate className="pl-0 ml-0 text-white-50" content="account_details" component={Text} /> </li>
                         <li><Translate className="pl-0 ml-0 text-white-50" content="Cancel_select" component={Text} /></li>
                     </ul>
-                    <Translate size="large" block className="pop-btn mt-36" content="confirm" component={Button} onClick={this.saveDepFiat} />
+                    <Translate size="large" block className="pop-btn mt-36" content="Confirm" component={Button} onClick={this.saveDepFiat} />
                     <div className="text-center mt-8">
                         <Translate content="back" component={Button} type="text" size="large" onClick={() => this.showSendReceiveDrawer(depositFiatData?.currencyCode)} className=" pop-cancel fw-400" />
                     </div></div>}
