@@ -99,11 +99,11 @@ const FaitWithdrawal = ({
   const fiatWithdrawTrack = () => {
     apicalls.trackEvent({
       Type: "User",
-      Action: "Withdraw Fiat page view",
+      Action: "Withdraw Fiat Address book page view",
       Username: userConfig.userName,
       MemeberId: userConfig.id,
       Feature: "Withdraw Fiat",
-      Remarks: "Withdraw Fiat page view",
+      Remarks: "	Withdraw Fiat Address book page view",
       Duration: 1,
       Url: window.location.href,
       FullFeatureName: "Withdraw Fiat"

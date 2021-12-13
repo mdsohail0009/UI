@@ -72,10 +72,8 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
   }, 1000);
 }
 
-  const saveWithdrwal = async () => {
-    debugger
-    console.log(otp);
-    let response = await apiCalls.getVerification(userConfig?.id, otp);
+  const saveWithdrwal = async (values) => {
+     let response = await apiCalls.getVerification(userConfig?.id, values.code);
     if (response.ok) {
       message.destroy();
       message.success({
@@ -84,10 +82,6 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
         duration: 0.5
       });
       setIsLoding(true);
-     
-    } else {
-    setMsg(true);
-    }
     let Obj = Object.assign({}, sendReceive.withdrawFiatObj);
     Obj.accountNumber = apiCalls.encryptValue(Obj.accountNumber, userConfig?.sk);
     Obj.bankName = apiCalls.encryptValue(Obj.bankName, userConfig?.sk);
@@ -101,6 +95,11 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
       dispatch(fetchDashboardcalls(userConfig.id));
       dispatch(rejectWithdrawfiat());
       changeStep("step7");
+    }
+       
+  } else {
+    useOtpRef.current.scrollIntoView();
+    setMsg(true);
     }
   };
   const onCancel = () =>{
@@ -128,7 +127,7 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
 
   return (
     
-    <div className="mt-16">
+    <div className="mt-16"> <div ref={useOtpRef}></div>
        {msg &&
                 <div className="custom-alert" ><Alert
                     message="Invalid code "
@@ -136,6 +135,7 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
                     showIcon
                     closable={false}
                 />
+                
                 </div>}
       <Text className="fs-14 text-white-50 fw-200">
         {" "}
@@ -208,7 +208,7 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
           />
         </li>
       </ul>
-      <div ref={useOtpRef}></div>
+      
 
       <Form
         className="mt-36"
@@ -239,12 +239,22 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
             className="cust-input text-left"
             placeholder={apiCalls.convertLocalLang("verification_code")}
             maxLength={6}
-            onKeyPress={(event) => 
-              { debugger
-               if(event.currentTarget.value.length > 5) {
-                 debugger
-            event.preventDefault();
-          setOtp(event.currentTarget.value)}}}
+            onKeyDown={(event) => 
+              { 
+                 if(event.currentTarget.value.length > 5) {
+                  event.preventDefault();}
+                  else if(/^\d+$/.test(event.key)){
+                    setOtp(event.currentTarget.value)
+                  }
+                  else if(event.key=="Backspace" || event.key =="Delete"){
+
+                  }
+                  else{
+                  
+                  event.preventDefault()
+                  
+     }
+       }}
                style={{ width: "100%" }}
             disabled={inputDisable}
           />
