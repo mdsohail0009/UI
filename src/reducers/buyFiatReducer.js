@@ -16,7 +16,7 @@ let initialState = {
     stepcode: "step1",
     stepTitles: {
         buyfiat: "suissebase_personal",
-        faitsummary: 'withdraw',
+        faitsummary: 'confirm_transaction',
         FaitDepositSummary: null,
         addcard: 'link_newcard',
         selectwallet: 'withdraw',

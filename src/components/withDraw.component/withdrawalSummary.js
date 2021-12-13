@@ -7,7 +7,7 @@ import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import {withdrawSave,} from "../../api/apiServer";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
-import {setWithdrawfiat,rejectWithdrawfiat} from "../../reducers/sendreceiveReducer";
+import {setWithdrawfiat,rejectWithdrawfiat,setWithdrawfiatenaable} from "../../reducers/sendreceiveReducer";
 
 const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trackAuditLogData}) => {
   const { Text } = Typography;
@@ -84,7 +84,7 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
   };
   const onCancel = () =>{
     changeStep("step1");
-    // form.setFieldsValue(saveObj);
+    dispatch(setWithdrawfiatenaable(true))
   }
   const fullNumber = userConfig.phoneNumber;
   const last4Digits = fullNumber.slice(-4);
