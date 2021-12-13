@@ -158,7 +158,8 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
                         name="accountNumber"
-                        label={<Translate content="Bank_account" component={Form.label} />}
+                        // label={<Translate content="Bank_account" component={Form.label} />}
+                        label={apiCalls.convertLocalLang('Bank_account')}
                         required
                         rules={[
                             { required: true, message: apiCalls.convertLocalLang('is_required') },

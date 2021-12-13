@@ -8,7 +8,8 @@ import {
   Alert,
   Tooltip,
   Select,
-  Checkbox
+  Checkbox,
+  Empty
 } from "antd";
 import { Link } from "react-router-dom";
 import { setStep } from "../../reducers/buysellReducer";
@@ -294,7 +295,9 @@ const FaitWithdrawal = ({
       step1: (
         <>
           <div className="suisfiat-height auto-scroll">
-            <div ref={useDivRef}></div>
+            <div ref={useDivRef}>
+          
+            </div>
             {errorMsg !== null && (
               <Alert
                 className="mb-12"
@@ -305,6 +308,7 @@ const FaitWithdrawal = ({
                 onClose={() => setErrorMsg(null)}
                 showIcon
               />
+             
             )}
             <Form
               form={form}
@@ -397,8 +401,10 @@ const FaitWithdrawal = ({
                     bordered={false}
                     showArrow={true}
                     onChange={(e) => handleAddressChange(e)}
-                    placeholder={apicalls.convertLocalLang("SelectAddress")}
+                    // placeholder={apicalls.convertLocalLang("SelectAddress")}
+                    placeholder={ <Translate content="SelectAddress" component={Form.label} />}
                   >
+                    
                     {addressLu?.map((item, idx) => (
                       <Option key={idx} value={item.name}>
                         {item.name}
@@ -423,8 +429,12 @@ const FaitWithdrawal = ({
                         : " defaulticon")
                     }
                     onClick={() => selectAddress()}
+              
                   >
-                    <span className="icon md address-book d-block c-pointer"></span>
+                    
+                    <span className="icon md address-book d-block c-pointer">
+                   
+                    </span>
                   </div>
                 </Tooltip>
               </div>
@@ -632,9 +642,9 @@ const FaitWithdrawal = ({
                 >
                   {stateLu?.map((item, idx) => (
                     <Option key={idx} value={item.code}>
-                      {item.code}
+                   {   item.code   } 
                     </Option>
-                  ))}
+                ))}
                 </Select>
               </Form.Item>
               <Form.Item

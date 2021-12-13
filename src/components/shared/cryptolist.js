@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { List, Empty, Input } from 'antd';
 import NumberFormat from 'react-number-format';
 import apiCalls from '../../api/apiCalls';
+import Translate from 'react-translate-component';
 
 const CryptoList = forwardRef(({ coinList, isLoading, onCoinSelected, coinType, loadMore, showSearch, selectedCoin, iconField, titleField, onReturnCoin }, ref) => {
     const [coinListData, setCoinListData] = useState([]);
@@ -47,7 +48,10 @@ const CryptoList = forwardRef(({ coinList, isLoading, onCoinSelected, coinType, 
             loadMore={loadMore ? loadMore : ''}
             className="crypto-list auto-scroll wallet-list c-pointer"
             loading={isLoading ? isLoading : false}
-            locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }}
+           locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
+            //    apiCalls.convertLocalLang('No_data')
+            <Translate content="No_data"  />
+            } /> }}
             renderItem={item => (
 
                 <List.Item className={(item[titleField || 'walletCode'] === selList[titleField || 'walletCode'] ? " select" : "")}>

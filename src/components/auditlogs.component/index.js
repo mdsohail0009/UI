@@ -67,8 +67,8 @@ class AuditLogs extends Component {
     this.fetchAuditLoginfo(e.dataItem.id, e);
   }
   componentDidMount = () => {
-    this.TransactionFeatureSearch(this.props.userProfile?.userName);
     this.auditlogsTrack();
+    this.TransactionFeatureSearch(this.props.userProfile?.userName);
   };
   fetchAuditLoginfo = async (id, e) => {
     this.setState({
