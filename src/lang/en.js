@@ -467,10 +467,11 @@ export default {
   crypto_wallets: "Crypto Wallets",
   verification_code: "Enter Verification Code",
   get_code: "GET OTP",
-  resend_code: "RESEND CODE",
+  resend_code: "RESEND CODE%(counter)s",
   digit_code: " Enter 6 digit code sent to",
   selectcurrency: "Select Currency",
   bank_account_number: 'Bank Account Number',
   invalid_code:'Invalid Code',
-  resend_text:'Click on Resend Button after 2min'
+  // resend_text:'Click on Resend Button after %(counter)s min',
+  
 }

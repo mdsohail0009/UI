@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Button, Form, message,In, Input } from "antd";
+import { Typography, Button, Form, message,In, Input,Alert } from "antd";
 import Currency from "../shared/number.formate";
 import { setStep } from "../../reducers/buysellReducer";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import NumberFormat from "react-number-format";
+
 const WithdrawalSummary = ({
   sendReceive,
   onConfirm,
@@ -17,18 +18,23 @@ const WithdrawalSummary = ({
   const [form] = Form.useForm();
   const [otp, setOtp] = useState(false);
   const useOtpRef = React.useRef(null);
-  const [buttonText, setButtonText] = useState(
-    <Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />
-  );
+  const [buttonText, setButtonText] = useState('get_otp');
   const [verificationText, setVerificationText] = useState("");
-  const [isResend, setIsResend] = useState(false);
-  const [seconds, setSeconds] = useState(0);
+  const [isResend, setIsResend] = useState(true);
+  const [seconds, setSeconds] = useState("02:00");
   const [invalidcode, setInvalidCode] = useState("");
   const [validationText, setValidationText] = useState("");
   const [disable, setDisable] = useState(false);
-  const[inputDisable,setInputDisable]=useState(true);
-  const[showtext,setShowText]=useState(true);
-  const[resendDisable,setResendDisable]=useState(false)
+  const [inputDisable,setInputDisable] = useState(true);
+  const [showtext,setShowTimer] = useState(true);
+  const [resendDisable,setResendDisable] = useState(false);
+  const [msg,setMsg] = useState(false);
+  const [refresh, setRefresh] = useState(false);
+  const[type,setType] = useState('Send');
+  const btnList = {get_otp:<Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />,
+ resendotp:<Translate className="pl-0 ml-0 text-yellow-50" content="resend_code"  with={{ counter: `${disable ? "(" + seconds + ")" : ""}` }} />}
+
+              
 
   useEffect(() => {
     withdrawSummayTrack();
@@ -47,7 +53,31 @@ const WithdrawalSummary = ({
       FullFeatureName: "Withdraw Fiat"
     });
   }
+
+  let timeInterval;
+  let count = 120;
+  const startTimer = () => {
+  let timer= count;
+  let minutes,seconds;
+    timeInterval =   setInterval(function () {
+      minutes = parseInt(timer / 60, 10)
+      seconds = parseInt(timer % 60, 10);
+       minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      setSeconds( minutes + ":" + seconds);
+       if (--timer < 0) {
+        timer= count;
+        clearInterval(timeInterval); 
+        setDisable(false);
+        setType("Resend");
+        }
+      
+  }, 1000);
+}
+
   const saveWithdrwal = async () => {
+    debugger
+    console.log(otp);
     let response = await apiCalls.getVerification(userConfig?.id, otp);
     if (response.ok) {
       message.destroy();
@@ -59,41 +89,40 @@ const WithdrawalSummary = ({
       setIsLoding(true);
       onConfirm();
     } else {
-      message.destroy();
-      message.error({
-        //content:setInvalidCode(apiCalls.convertLocalLang("invalid_code").toString()),  
-        content:"Invalid Code",
-        className: "custom-msg",
-        duration: 2.0
-        //error: response.status === 401 ? response.data.message : response.data,
-        
-      });
-    }
+       window.scrollTo(0, 0);
+        setMsg(true);
+     }
   };
   const fullNumber = userConfig.phoneNumber;
   const last4Digits = fullNumber.slice(-4);
   const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
 
   const getOTP = async (val) => {
-    setInputDisable(false)
-    setDisable(true)
-    let response = await apiCalls.getCode(userConfig.id, isResend);
+
+    setButtonText('resendotp');
+    setDisable(true);
+    setInputDisable(false);
+    setSeconds("02:00");
+    let response = await apiCalls.getCode(userConfig.id, type);
     if (response.ok) {
-      setTimeout(() => {
-        setButtonText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_code" />);
-        setDisable(false)
-      }, 120000);
-      setVerificationText(
+        startTimer ();
+       setVerificationText(
         apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
       );
-      setValidationText(<Translate className="pl-0 ml-0 text-yellow-50" content="resend_text" />);
-      setShowText(true);
-      setTimeout(()=>{setShowText(false)},120000)
-    }
-  };
+     };
+}
 
   return (
+    
     <div className="mt-16">
+       {msg &&
+                <div className="custom-alert" ><Alert
+                    message="Invalid code "
+                    type="warning"
+                    showIcon
+                    closable={false}
+                />
+                </div>}
       <Text className="fs-14 text-white-50 fw-200">
         {" "}
         <Translate
@@ -185,34 +214,28 @@ const WithdrawalSummary = ({
             {invalidcode}
           </Text></div>
           }
-          rules={[{ required: true, message: "Is required" }]}
-          label={
-            <Button type="text" onClick={getOTP} disabled={disable}>
-              {buttonText}
-              {/* {seconds} */}
-            </Button>
-          }
-        >
-          <Input
-          type="text"
+          rules={[{ required: true, message:"Is required" }]}
+         label={
+            <Button type="text" onClick={getOTP}  disabled={disable}>
+              {isResend && btnList[buttonText]}
+           </Button>
+          }>
+            <Input
+          type="number"
             className="cust-input text-left"
             placeholder={apiCalls.convertLocalLang("verification_code")}
             maxLength={6}
-            onChange={(e) => {
-              setOtp(e.target.value);
-            }}
-            style={{ width: "100%" }}
+            onKeyPress={(event) => 
+              { debugger
+               if(event.currentTarget.value.length > 5) {
+                 debugger
+            event.preventDefault();
+          setOtp(event.currentTarget.value)}}}
+               style={{ width: "100%" }}
             disabled={inputDisable}
           />
         </Form.Item>
-        <div>
-        {showtext &&<Text className="fs-12 text-white-30 text-center d-block mb-16 fw-200">
-          {validationText}
-        </Text>}
-        </div>
-        
-
-        <Button
+       <Button
           disabled={isLoding}
           size="large"
           block
