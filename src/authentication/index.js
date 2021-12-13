@@ -34,13 +34,14 @@ function receiveMessage(e) {
     stat = e.data;
 
     if (stat === "changed") {
+        userManager.clearStaleState();
         clearInterval(timerID);
         // then take the actions below...
     }
 }
 function setTimer() {
     check_session();
-    timerID = setInterval(check_session, 15 * 60 * 1000);
+    timerID = setInterval(check_session, 5* 1000);
 }
 
 
