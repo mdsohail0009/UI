@@ -467,6 +467,7 @@ export default {
   bank_account_number: 'Nombor akaun bank',
   invalid_code: 'di-wastong code',
   resend_text: 'i-click ang Resend Button pagkatapos ng 2min',
-  please_enter_valid_content: 'Sila masukkan kandungan yang sah'
+  please_enter_valid_content: 'Sila masukkan kandungan yang sah',
+  withdraw_fiat_summary:'withdraw ang buod ng fiat'
 
 }

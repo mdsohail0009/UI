@@ -468,5 +468,6 @@ export default {
   bank_account_number: '银行帐号',
   invalid_code: '無效的代碼',
   resend_text: '2 分鐘後單擊重新發送按鈕',
-  please_enter_valid_content: '请输入有效内容'
+  please_enter_valid_content: '请输入有效内容',
+  withdraw_fiat_summary:'提取法幣摘要'
 }
