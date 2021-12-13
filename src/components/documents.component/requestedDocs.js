@@ -243,7 +243,9 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
         }
         else if (file.status === 'error') {
-            this.setState({ ...this.state, uploadLoader: false, errorMessage: file.response,  isSubmitting: false  })
+            message.error({ content: `${file.response}` , className: 'custom-msg' })
+            // this.setState({ ...this.state, uploadLoader: false, errorMessage: file.response,  isSubmitting: false  })
+   this.setState({ ...this.state, uploadLoader: false,  isSubmitting: false  })
         }
         else if(!this.state.isValidFile){
             this.setState({ ...this.state, uploadLoader: false, isSubmitting: false  });
@@ -252,12 +254,12 @@ class RequestedDocs extends Component {
     beforeUpload = (file) => {
 
         let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
-        let isFileName = (file.name.split('.')).length > 2 ? false : true;
-        if (fileType[file.type] && isFileName) {
+      //  let isFileName = (file.name.split('.')).length > 2 ? false : true;
+        if (fileType[file.type]) {
             this.setState({ ...this.state, isValidFile: true, })
             return true
         } else {
-         message.error({ content: isFileName ? `File is not allowed. You can upload jpg, png, jpeg and PDF  files` : "File don't allow double Extension", className: 'custom-msg' })
+         message.error({ content: `File is not allowed. You can upload jpg, png, jpeg and PDF  files` , className: 'custom-msg' })
             this.setState({...this.state, isValidFile:false,})
             return Upload.LIST_IGNORE;
         }

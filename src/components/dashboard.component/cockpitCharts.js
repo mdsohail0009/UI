@@ -8,8 +8,7 @@ import LineChart from '../trading.components/linechart';
 import { Link } from 'react-router-dom';
 import BChart from '../trading.components/bar.Chart';
 import LChart from '../trading.components/line.Chart';
-
-const { Title, Paragraph, Text } = Typography;
+ const { Title, Paragraph, Text } = Typography;
 
 class CockpitCharts extends Component {
     state = {
@@ -138,31 +137,31 @@ class CockpitCharts extends Component {
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Cumulative PNL(%)</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-red">-1.85%</Text>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.cumulativePNL ? <LChart data={this.state.cumulativePNL} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
+                            {this.state.cumulativePNL ? <LChart data={this.state.cumulativePNL} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
                         </Card>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Daily PNL(%)</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-red">-$0.19</Text>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.dailyPnl ? <BChart data={this.state.dailyPnl} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
+                            {this.state.dailyPnl ? <BChart data={this.state.dailyPnl} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
                         </Card>
                     </Col>
                 </Row>
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={10} xxl={10}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Asset Allocation</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.assetAlloction ? <PieChart data={this.state.assetAlloction} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
+                            {this.state.assetAlloction ? <PieChart data={this.state.assetAlloction} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
                         </Card>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={12} xl={14} xxl={14}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Assets Net Worth</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-green">$30.61</Text>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.assetnetWorth ? <LChart data={this.state.assetnetWorth} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
+                            {this.state.assetnetWorth ? <LChart data={this.state.assetnetWorth} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
                         </Card>
                     </Col>
                 </Row>
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Profits</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-green">+1.85%</Text>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.profits ? <LChart data={this.state.profits} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
+                            {this.state.profits ? <LChart data={this.state.profits} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
                         </Card>
                     </Col>
                 </Row>

@@ -216,8 +216,9 @@ export default {
   the_dashboard: '仪表板',
   buy_crypto: '购买加密货币',
   Beneficiary_BankDetails: '收款银行详情',
-  Bank_account: '银行账号/IBAN',
-  BIC_SWIFT_routing_number: 'BIC/SWIFT/路由号码',
+  // Bank_account: '银行账号/IBAN',
+  Bank_account: '銀行賬戶',
+  BIC_SWIFT_routing_number: 'BIC/迅捷/路由号码',
   Bank_name: '银行的名字',
   Bank_address1: '银行地址1',
   Bank_address2: '银行地址2',
@@ -276,7 +277,7 @@ export default {
   manage_account: '加密存款/取款',
   withdrawCrypto: '提取加密',
   withdrawFiat: '提現法幣',
-  fiatAddress: 'Add Fiat Address',
+  fiatAddress: '法定地址',
   cryptoAddress: '添加加密地址',
   change_10Sec_amount: '您的金額可能會在 10 秒內更改',
   tabName_All: '全部',
@@ -468,5 +469,10 @@ export default {
   bank_account_number: '银行帐号',
   invalid_code: '無效的代碼',
   resend_text: '2 分鐘後單擊重新發送按鈕',
-  please_enter_valid_content: '请输入有效内容'
+  please_enter_valid_content: '请输入有效内容',
+  W:'宽',
+  M:'米',
+  Y:'是',
+  copied:'複製的',
+  withdraw_fiat_summary:'提取法幣摘要'
 }

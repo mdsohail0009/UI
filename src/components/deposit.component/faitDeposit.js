@@ -312,7 +312,9 @@ class FaitDeposit extends Component {
                           {BankInfo.accountAddress}</Paragraph>
                       </div>
                     </div>
-                    <Text className="text-white-30 fs-14">A/C </Text><Text copyable className="mb-0 fs-14 text-yellow fw-500">{BankInfo.accountNumber}</Text>
+                    <Text className="text-white-30 fs-14">A/C </Text>
+                    <Text copyable={{tooltips:[apicalls.convertLocalLang('copy'),apicalls.convertLocalLang('copied')]}} className="mb-0 fs-14 text-yellow fw-500" >{BankInfo.accountNumber}</Text>
+                    
                     {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
                       className="mt-36 fs-14 text-white fw-500 text-upper"
                       content="for_Domestic_wires"
@@ -323,7 +325,7 @@ class FaitDeposit extends Component {
                       content="Routing_number"
                       component={Text}
                     />}
-                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Text copyable className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text>}
+                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Text copyable={{tooltips:[apicalls.convertLocalLang('copy'),apicalls.convertLocalLang('copied')]}} className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text>}
                     <Translate
                       className="mt-24 fs-14 text-white fw-500 text-upper"
                       content="for_international_wires"
@@ -334,7 +336,7 @@ class FaitDeposit extends Component {
                       content="Swift_BICcode"
                       component={Text}
                     />
-                    <Translate copyable
+                    <Translate copyable={{tooltips:[apicalls.convertLocalLang('copy'),apicalls.convertLocalLang('copied')]}}
                       className="fs-20 text-white-30 l-height-normal d-block mb-24"
                       content="SIGNU"
                       component={Text}
@@ -368,7 +370,7 @@ class FaitDeposit extends Component {
                       <Paragraph className="mb-0 fw-700 text-white-30 walletadrs">
                         {BankInfo.depReferenceNo}
                         <CopyToClipboard text={BankInfo.depReferenceNo}>
-                          <Text copyable className="fs-20 text-white-30 custom-display"></Text>
+                          <Text copyable={{tooltips:[apicalls.convertLocalLang('copy'),apicalls.convertLocalLang('copied')]}} className="fs-20 text-white-30 custom-display"   ></Text>
                         </CopyToClipboard>
                       </Paragraph>
                     </div>}

@@ -473,5 +473,9 @@ export default {
   bank_account_number: 'Bank Account Number',
   invalid_code: 'Invalid Code',
   resend_text: 'Click on Resend Button after 2min',
-  please_enter_valid_content: 'Please enter valid content'
+  please_enter_valid_content: 'Please enter valid content',
+  W:'W',
+  M:'M',
+  Y:'Y',
+  copied:'copied'
 }

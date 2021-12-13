@@ -67,7 +67,7 @@ class CryptoWallets extends Component {
                     itemLayout="horizontal"
                     dataSource={cryptoPortFolios.data}
                     loading={cryptoPortFolios.loading}
-                    locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }}
+                 locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }}
                     renderItem={item => (
                         <List.Item extra={
                             <div className="text-right">
