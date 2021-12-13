@@ -55,8 +55,8 @@ class WithdrawSummary extends Component {
     seconds1: "02:00",
     timeInterval: "",
     count: 120,
-   
- };
+
+  };
 
   useDivRef = React.createRef();
   componentDidMount() {
@@ -94,14 +94,10 @@ class WithdrawSummary extends Component {
     this.setState({ ...this.state, usdAmount: value, usdLoading: false });
   };
 
-
-
   startTimer = () => {
-
     let timer = this.state.count;
     let minutes, seconds;
     let timeInterval = setInterval(() => {
-      debugger
       this.setState({ ...this.state, disable: true });
       minutes = parseInt(timer / 60, 10);
       seconds = parseInt(timer % 60, 10);
@@ -176,20 +172,20 @@ class WithdrawSummary extends Component {
           duration: 0.5
         });
         if (this.props.userProfile.isBusiness) {
-        let saveObj = this.props.sendReceive.withdrawCryptoObj;
-        let trackAuditLogData = this.props.trackAuditLogData;
-        trackAuditLogData.Action = 'Save';
-        trackAuditLogData.Remarks = 'Withdraw Crypto save';
-        saveObj.info = JSON.stringify(trackAuditLogData)
-        let withdrawal = await withDrawCrypto(saveObj);
-        if (withdrawal.ok) {
-          this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
-          //setIsWithdrawSuccess(true)
-          this.props.dispatch(setWithdrawcrypto(null));
-          this.props.dispatch(setSubTitle(""));
-          this.props.changeStep("withdraw_crpto_success");
+          let saveObj = this.props.sendReceive.withdrawCryptoObj;
+          let trackAuditLogData = this.props.trackAuditLogData;
+          trackAuditLogData.Action = 'Save';
+          trackAuditLogData.Remarks = 'Withdraw Crypto save';
+          saveObj.info = JSON.stringify(trackAuditLogData)
+          let withdrawal = await withDrawCrypto(saveObj);
+          if (withdrawal.ok) {
+            this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
+            //setIsWithdrawSuccess(true)
+            this.props.dispatch(setWithdrawcrypto(null));
+            this.props.dispatch(setSubTitle(""));
+            this.props.changeStep("withdraw_crpto_success");
+          }
         }
-      }
         else {
           this.props.dispatch(
             setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
@@ -202,7 +198,7 @@ class WithdrawSummary extends Component {
         this.setState({ ...this.state, errorMsg: apiCalls.convertLocalLang("invalid_code") });
       }
 
-      
+
     } else {
       this.setState({
         ...this.state,
@@ -297,7 +293,7 @@ class WithdrawSummary extends Component {
               content="address"
               component={Text}
             />
-            <Text className="fw-400 text-white" style={{ width:'250px', textOverflow:'ellipsis',overflow:'hidden',whiteSpace:'nowrap',textAlign:'end'}}>
+            <Text className="fw-400 text-white" style={{ width: '250px', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', textAlign: 'end' }}>
               {this.props.sendReceive.withdrawCryptoObj?.toWalletAddress}
             </Text>
           </div>
@@ -331,11 +327,10 @@ class WithdrawSummary extends Component {
                 className="cust-input text-left"
                 placeholder={apiCalls.convertLocalLang("verification_code")}
                 maxLength={6}
-                onKeyPress={(e) => {
-                  debugger
+                onKeyDown={(e) => {
                   if (e.currentTarget.value.length > 5) {
-                    debugger
                     e.preventDefault();
+                  } else {
                     this.handleOtp(e.currentTarget.value)
                   }
                 }}
