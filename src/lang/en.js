@@ -477,5 +477,6 @@ export default {
   W:'W',
   M:'M',
   Y:'Y',
-  copied:'copied'
+  copied:'copied',
+  request_fail:"Request Fail",
 }
