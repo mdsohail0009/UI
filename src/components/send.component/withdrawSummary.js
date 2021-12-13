@@ -137,7 +137,7 @@ class WithdrawSummary extends Component {
   };
 
   getOTP = async (val) => {
-    
+
     let response = await apiCalls.getCode(
       this.props.userProfile.id,
       this.state.type
@@ -328,7 +328,7 @@ class WithdrawSummary extends Component {
                 maxLength={6}
                 onKeyDown={(event) => 
                   { 
-                     if(event.currentTarget.value.length > 5) {
+                     if(event.currentTarget.value.length > 5 && !(event.key=="Backspace" || event.key =="Delete")) {
                       event.preventDefault();}
                       else if(/^\d+$/.test(event.key)){
                         this.handleOtp(event.currentTarget.value)

@@ -126,6 +126,7 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
       }
       else{
         useOtpRef.current.scrollIntoView();
+        // setInputDisable(false);
         setMsg(apiCalls.convertLocalLang("request_fail"));
       }
 }
@@ -246,7 +247,7 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
             maxLength={6}
             onKeyDown={(event) => 
               { 
-                 if(event.currentTarget.value.length > 5) {
+                 if(event.currentTarget.value.length > 5 && !(event.key=="Backspace" || event.key =="Delete")){
                   event.preventDefault();}
                   else if(/^\d+$/.test(event.key)){
                     setOtp(event.currentTarget.value)
