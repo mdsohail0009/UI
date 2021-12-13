@@ -7,7 +7,7 @@ import LiveNessSumsub from '../sumSub.component/liveness'
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { withDrawCrypto } from '../send.component/api';
 
-const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch }) => {
+const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, trackAuditLogData }) => {
   const [faceCapture, setFaceCapture] = useState(false);
   const [livefacerecognization, setLivefacerecognization] = useState({});
   const [isLoding, setIsLoding] = useState(false);
@@ -16,9 +16,10 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch })
     setIsLoding(true)
     let saveObj = sendReceive.withdrawCryptoObj;
     saveObj.livefacerecognization = livefacerecognization?.applicantActionid;
-    this.props.trackAuditLogData.Action = 'Save';
-    this.props.trackAuditLogData.Remarks = 'Withdraw Crypto save';
-    saveObj.info = JSON.stringify(this.props.trackAuditLogData)
+    let trackAuditData = trackAuditLogData;
+    trackAuditData.Action = 'Save';
+    trackAuditData.Remarks = 'Withdraw Crypto save';
+    saveObj.info = JSON.stringify(trackAuditData)
     let withdrawal = await withDrawCrypto(saveObj)
     if (withdrawal.ok) {
       dispatch(fetchDashboardcalls(userConfig.id))

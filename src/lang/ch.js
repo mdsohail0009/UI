@@ -473,5 +473,6 @@ export default {
   W:'宽',
   M:'米',
   Y:'是',
-  copied:'複製的'
+  copied:'複製的',
+  withdraw_fiat_summary:'提取法幣摘要'
 }
