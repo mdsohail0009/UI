@@ -474,6 +474,6 @@ export default {
   M:'M',
   Y:'Y',
   copied:'Kinopya',
-  withdraw_fiat_summary:'withdraw ang buod ng fiat'
-
+  withdraw_fiat_summary:'withdraw ang buod ng fiat',
+  request_fail:'Nabigo ang Kahilingan',
 }

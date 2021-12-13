@@ -137,20 +137,18 @@ class WithdrawSummary extends Component {
   };
 
   getOTP = async (val) => {
-    this.setState({ ...this.state, buttonText: 'resendotp', inputDisable: false, disable: true, seconds1: "02:00" })
+    
     let response = await apiCalls.getCode(
       this.props.userProfile.id,
       this.state.type
     );
     if (response.ok) {
-      this.startTimer();
-      this.setState({
-        verificationText:
-          apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber
-      });
+      this.setState({ ...this.state, buttonText: 'resendotp', inputDisable: false, disable: true, seconds1: "02:00",verificationText:
+      apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber },()=>{ this.startTimer();})
+     
     }
     else {
-      this.startTimer();
+     this.setState({...this.state,errorMsg:apiCalls.convertLocalLang("request_fail")});
     }
   };
   handleOtp = (val) => {
@@ -159,7 +157,7 @@ class WithdrawSummary extends Component {
 
   saveWithdrwal = async (values) => {
        if (this.state.onTermsChange) {
-      let response = await apiCalls.getVerification(
+      let response = await apiCalls.getVerification( 
         this.props.userProfile.id,
         values.code
       );
