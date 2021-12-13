@@ -53,7 +53,7 @@ class MassPayment extends Component {
             withdrwalfiatsummary: < WithdrawalSummary />,
             withdrwlive: < WithdrawalLive />,
             withdrwsuccess: < WithdrawalSuccess />,
-            withdrawfaitsummary:<WithdrawFaitSummary/>
+            withdrawfaitsummary:<WithdrawFaitSummary />
         }
         return stepcodes[config[this.props.buyFiat.stepcode]]
     }
@@ -70,7 +70,7 @@ class MassPayment extends Component {
             withdrwalfiatsummary: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             withdrwlive: <span onClick={() => this.props.dispatch(setStep("step5"))} className="icon md lftarw-white c-pointer" />,
             withdrwsuccess: null,
-            withdrawfaitsummary:<span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            withdrawfaitsummary:<span onClick={() => this.onAddressClick()} className="icon md lftarw-white c-pointer" />,
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }
