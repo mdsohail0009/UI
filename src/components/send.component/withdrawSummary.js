@@ -340,12 +340,6 @@ class WithdrawSummary extends Component {
 
 
             </Form.Item>
-
-            <Translate
-              className="fs-14 text-center text-white-30 mt-24"
-              content="summary_hint_text"
-              component={Paragraph}
-            />
             <div className="d-flex p-16 mb-36 agree-check">
               <label>
                 <input
