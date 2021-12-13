@@ -158,9 +158,10 @@ class WithdrawSummary extends Component {
         });
         if (this.props.userProfile.isBusiness) {
         let saveObj = this.props.sendReceive.withdrawCryptoObj;
-        this.props.trackAuditLogData.Action = "Save";
-        this.props.trackAuditLogData.Remarks = "Withdraw Crypto save";
-        saveObj.info = JSON.stringify(this.props.trackAuditLogData);
+        let trackAuditLogData = this.props.trackAuditLogData;
+        trackAuditLogData.Action = 'Save';
+        trackAuditLogData.Remarks = 'Withdraw Crypto save';
+        saveObj.info = JSON.stringify(trackAuditLogData)
         let withdrawal = await withDrawCrypto(saveObj);
         if (withdrawal.ok) {
           this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
@@ -344,11 +345,11 @@ class WithdrawSummary extends Component {
             
            
 
-            {/* <Translate
+            <Translate
               className="fs-14 text-center text-white-30 mt-24"
               content="summary_hint_text"
               component={Paragraph}
-            /> */}
+            />
             <div className="d-flex p-16 mb-36 agree-check">
               <label>
                 <input
