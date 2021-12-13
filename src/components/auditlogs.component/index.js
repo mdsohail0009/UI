@@ -33,7 +33,7 @@ class AuditLogs extends Component {
       message: "",
       searchObj: {
         timeSpan: "Last 1 Day",
-        userId: this.props.userProfile?.userId, 
+        userId: this.props.userProfile?.userId,
         feature: "All Features",
         admin: "user",
         user: "user",
@@ -175,7 +175,7 @@ class AuditLogs extends Component {
       searchObj.fromdate = moment(timeSpanfromdate).format('MM-DD-YYYY');
       searchObj.todate = moment(timeSpantodate).format('MM-DD-YYYY');
     }
-    this.setState({ ...this.state, searchObj}, () => { this.gridRef.current.refreshGrid(); });
+    this.setState({ ...this.state, searchObj }, () => { this.gridRef.current.refreshGrid(); });
   };
 
   render() {
@@ -357,6 +357,7 @@ class AuditLogs extends Component {
           closeIcon={null}
           onClose={this.hideMoreAuditLogs}
           className="side-drawer"
+          destoryOnClose={true}
         >
           {(isLoading && logRowData?.browser == null || logRowData?.location == null || logRowData?.ip == null || logRowData?.deviceType == null) ? <div className="text-center"><Spin /></div> : <><div className="coin-info">
             <Text>City</Text>
