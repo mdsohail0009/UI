@@ -187,9 +187,12 @@ class Portfolio extends Component {
                     <Radio.Group defaultValue="week" buttonStyle="solid" onChange={({ target: { value } }) => {
                         this.getGraph(value)
                     }}>
-                        <Radio.Button value="week">1W</Radio.Button>
-                        <Radio.Button value="month">1M</Radio.Button>
-                        <Radio.Button value="year">1Y</Radio.Button>
+                        <Radio.Button value="week">
+                            1<Translate content='W' /></Radio.Button>
+                        <Radio.Button value="month">1
+                        <Translate content='M' /></Radio.Button>
+                        <Radio.Button value="year">1
+                        <Translate content='Y' /></Radio.Button>
                     </Radio.Group>
                 </div>
                 {/* <div ref={this.portFolioGraphRef} /> */}
