@@ -12,7 +12,7 @@ import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import apiCalls from '../../api/apiCalls';
 import Translate from 'react-translate-component';
-import {fetchMarketCoinData} from '../../reducers/dashboardReducer'
+import { fetchMarketCoinData } from '../../reducers/dashboardReducer'
 import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle } from "../../reducers/sendreceiveReducer";
 import { setWithdrawfiatenaable, setWithdrawfiat } from '../../reducers/sendreceiveReducer'
 class CoinView extends React.Component {
@@ -44,7 +44,7 @@ class CoinView extends React.Component {
         if (this.state.coinData) {
             const response = await getCoinChatData(this.state.coinData.id, 'usd', days);
             if (response.ok) {
-                this.setState({ ...this.state, chatData: {...response.data, coinType:`USD To ${this.state.coinData?.symbol.toUpperCase()}`} })
+                this.setState({ ...this.state, chatData: { ...response.data, coinType: `USD To ${this.state.coinData?.symbol.toUpperCase()}` } })
             }
         }
     }
@@ -167,7 +167,7 @@ class CoinView extends React.Component {
     render() {
         const { Paragraph, Text, Title } = Typography
         const { coinData } = this.state;
-        if(this.props.dashboard.isCoinViewChange){
+        if (this.props.dashboard.isCoinViewChange) {
             this.loadCoinDetailData();
         }
         return <div className="main-container">
@@ -223,7 +223,7 @@ class CoinView extends React.Component {
                                 <Radio.Button value="90">90d</Radio.Button>
                             </Radio.Group>
                         </div>
-                        {this.state.chatData ? <LineChart data={this.state.chatData} type={this.state.type} coinType={this.state.chatData.coinType}/> : <div className="coin-details-spin"><Spin className="text-center" /></div>}
+                        {this.state.chatData ? <LineChart data={this.state.chatData} type={this.state.type} coinType={this.state.chatData.coinType} /> : <div className="coin-details-spin"><Spin className="text-center" /></div>}
                     </div>
                 </Col>
                 <Col lg={10} xl={10} xxl={10}>
@@ -280,8 +280,8 @@ class CoinView extends React.Component {
     }
 }
 
-const connectStateToProps = ({ sendReceive, userConfig,dashboard }) => {
-    return { sendReceive, userProfile: userConfig.userProfileInfo,dashboard }
+const connectStateToProps = ({ sendReceive, userConfig, dashboard }) => {
+    return { sendReceive, userProfile: userConfig.userProfileInfo, dashboard }
 }
 const connectDispatchToProps = dispatch => {
     return {

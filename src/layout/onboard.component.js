@@ -12,8 +12,9 @@ class OnBoarding extends Component {
   }
   getMemberDetails = async () => {
     if (this.props.user && this.props.user.profile) {
+     await this.props.trackauditlogs()
       this.props.getmemeberInfoa(this.props.user.profile.sub);
-      this.props.trackauditlogs()
+      
     }
   }
   render() {

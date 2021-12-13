@@ -119,7 +119,7 @@ const FaitWithdrawal = ({
         bankAddress: "",
         bankAddress2: "",
         zipcode: "",
-        beneficiaryAccountName: "",
+        //beneficiaryAccountName: "",
         beneficiaryAccountAddress: "",
         beneficiaryAccountAddress1: "",
         description: "",
@@ -215,7 +215,7 @@ const FaitWithdrawal = ({
       ) > parseFloat(selectedWallet.avilable)
     ) {
       useDivRef.current.scrollIntoView();
-      return setErrorMsg("Insufficient balance");
+      return setErrorMsg(apicalls.convertLocalLang('insufficient_balance'));
     }
     if (
       parseFloat(
@@ -249,7 +249,8 @@ const FaitWithdrawal = ({
       values.favouriteName || addressDetails.favouriteName;
     setSaveObj(values);
     dispatch(setWithdrawfiat(values));
-    setConfirmationStep("step2");
+   // setConfirmationStep("step2");
+    changeStep('withdrawfaitsummary');
     form.resetFields();
   };
   const getIbanData = async (val) => {

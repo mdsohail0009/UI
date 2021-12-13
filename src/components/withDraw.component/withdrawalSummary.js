@@ -5,14 +5,11 @@ import { setStep } from "../../reducers/buysellReducer";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
-import NumberFormat from "react-number-format";
+import {withdrawSave,} from "../../api/apiServer";
+import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
+import {setWithdrawfiat,rejectWithdrawfiat,setWithdrawfiatenaable} from "../../reducers/sendreceiveReducer";
 
-const WithdrawalSummary = ({
-  sendReceive,
-  onConfirm,
-  onCancel,
-  userConfig
-}) => {
+const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trackAuditLogData}) => {
   const { Text } = Typography;
   const [isLoding, setIsLoding] = useState(false);
   const [form] = Form.useForm();
@@ -87,12 +84,29 @@ const WithdrawalSummary = ({
         duration: 0.5
       });
       setIsLoding(true);
-      onConfirm();
+     
     } else {
-       window.scrollTo(0, 0);
-        setMsg(true);
-     }
+    setMsg(true);
+    }
+    let Obj = Object.assign({}, sendReceive.withdrawFiatObj);
+    Obj.accountNumber = apiCalls.encryptValue(Obj.accountNumber, userConfig?.sk);
+    Obj.bankName = apiCalls.encryptValue(Obj.bankName, userConfig?.sk);
+    Obj.routingNumber = apiCalls.encryptValue(Obj.routingNumber, userConfig?.sk);
+    Obj.bankAddress = apiCalls.encryptValue(Obj.bankAddress, userConfig?.sk);
+    Obj.beneficiaryAccountAddress = apiCalls.encryptValue(Obj.beneficiaryAccountAddress, userConfig?.sk);
+    Obj.beneficiaryAccountName = apiCalls.encryptValue(Obj.beneficiaryAccountName, userConfig?.sk);
+    Obj.info = JSON.stringify(trackAuditLogData);
+    let withdrawal = await withdrawSave(Obj);
+    if (withdrawal.ok) {
+      dispatch(fetchDashboardcalls(userConfig.id));
+      dispatch(rejectWithdrawfiat());
+      changeStep("step7");
+    }
   };
+  const onCancel = () =>{
+    changeStep("step1");
+    dispatch(setWithdrawfiatenaable(true))
+  }
   const fullNumber = userConfig.phoneNumber;
   const last4Digits = fullNumber.slice(-4);
   const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
@@ -260,7 +274,7 @@ const WithdrawalSummary = ({
 };
 
 const connectStateToProps = ({ userConfig, sendReceive }) => {
-  return { userConfig: userConfig.userProfileInfo, sendReceive };
+  return { userConfig: userConfig.userProfileInfo, sendReceive,  trackAuditLogData: userConfig.trackAuditLogData };
 };
 const connectDispatchToProps = (dispatch) => {
   return {
@@ -270,7 +284,4 @@ const connectDispatchToProps = (dispatch) => {
     dispatch
   };
 };
-export default connect(
-  connectStateToProps,
-  connectDispatchToProps
-)(WithdrawalSummary);
+export default connect(connectStateToProps,connectDispatchToProps)(WithdrawalFiatSummary);

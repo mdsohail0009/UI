@@ -21,11 +21,11 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
         if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && addressBookReducer?.selectedRowData?.id) {
             loadDataAddress();
         }
-        //addressbkTrack();
+        addressbkTrack();
     }, [])
-    // const addressbkTrack = () => {
-    //     apiCalls.trackEvent({ "Type": 'User', "Action": 'Address book page view', "Username": userProfileInfo?.userName, "MemeberId": userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Address book fiat details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
-    // }
+    const addressbkTrack = () => {
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Address book page view', "Username": userProfileInfo?.userName, "MemeberId": userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Address book fiat details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
+    }
     const loadDataAddress = async () => {
         setIsLoading(true)
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'fiat');

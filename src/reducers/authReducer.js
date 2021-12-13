@@ -45,7 +45,7 @@ const authReducer = (state = initialState, action) => {
             return state;
         case SILENT_RENEW_ERROR:
             console.log("Silent renew error : " + action.payload);
-            break;
+            return state;
         default:
             return state;
     }

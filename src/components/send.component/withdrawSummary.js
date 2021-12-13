@@ -176,19 +176,20 @@ class WithdrawSummary extends Component {
           duration: 0.5
         });
         if (this.props.userProfile.isBusiness) {
-          let saveObj = this.props.sendReceive.withdrawCryptoObj;
-          this.props.trackAuditLogData.Action = "Save";
-          this.props.trackAuditLogData.Remarks = "Withdraw Crypto save";
-          saveObj.info = JSON.stringify(this.props.trackAuditLogData);
-          let withdrawal = await withDrawCrypto(saveObj);
-          if (withdrawal.ok) {
-            this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
-            //setIsWithdrawSuccess(true)
-            this.props.dispatch(setWithdrawcrypto(null));
-            this.props.dispatch(setSubTitle(""));
-            this.props.changeStep("withdraw_crpto_success");
-          }
+        let saveObj = this.props.sendReceive.withdrawCryptoObj;
+        let trackAuditLogData = this.props.trackAuditLogData;
+        trackAuditLogData.Action = 'Save';
+        trackAuditLogData.Remarks = 'Withdraw Crypto save';
+        saveObj.info = JSON.stringify(trackAuditLogData)
+        let withdrawal = await withDrawCrypto(saveObj);
+        if (withdrawal.ok) {
+          this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
+          //setIsWithdrawSuccess(true)
+          this.props.dispatch(setWithdrawcrypto(null));
+          this.props.dispatch(setSubTitle(""));
+          this.props.changeStep("withdraw_crpto_success");
         }
+      }
         else {
           this.props.dispatch(
             setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
@@ -296,7 +297,7 @@ class WithdrawSummary extends Component {
               content="address"
               component={Text}
             />
-            <Text className="fw-400 text-white">
+            <Text className="fw-400 text-white" style={{ width:'250px', textOverflow:'ellipsis',overflow:'hidden',whiteSpace:'nowrap',textAlign:'end'}}>
               {this.props.sendReceive.withdrawCryptoObj?.toWalletAddress}
             </Text>
           </div>

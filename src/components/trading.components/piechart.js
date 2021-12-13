@@ -26,20 +26,26 @@ const PieChart = ({ data }) => {
                     valueSuffix: '%'
                 }
             },
+            tooltip: {
+                borderColor: 'transparent',
+                backgroundColor: '#F5FCFF',
+                borderRadius: 20,
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
             plotOptions: {
                 pie: {
                     allowPointSelect: true,
                     cursor: 'pointer',
                     dataLabels: {
                         enabled: true,
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        format: '<span style="color: var(--textWhite50);stroke-width: 0px !important;">{point.name}:{point.percentage:.1f} %</span>'
                     }
                 }
             },
             series: [{
                 name: 'Brands',
                 colorByPoint: true,
-                data: data || []
+                data: data || [],
             }]
         });
     }, []);

@@ -108,7 +108,7 @@ export default {
   menu_buy_sell: 'Jual beli',
   menu_transactions_history: 'Urus Niaga',
   menu_swap: 'Tukar',
-  menu_send_receive: 'Deposit / Pengeluaran',
+  menu_send_receive: 'Deposito / Pengeluaran',
   menu_mass_pay: 'Pembayaran Massa',
   security: 'Keselamatan',
   current_balance: 'Baki terkini',
@@ -295,7 +295,7 @@ export default {
   All: 'Lahat',
   BuyandSell: 'Bili benta',
   DepositandFiat: 'Pag-deposito Fiat',
-  DepositandCrypto: 'Deposit Crypto',
+  DepositandCrypto: 'Deposito Crypto',
   accountType: 'Uri ng Account',
   Wallet: 'Wallet',
   RequestDate: 'Petsa ng Kahilingan',
@@ -335,7 +335,7 @@ export default {
   FirstName: 'Pangalan',
   MiddleName: 'Gitnang pangalan',
   LastName: 'Huling pangalan',
-  Birthday: 'Birthday',
+  Birthday: 'kaarawan',
   ReferenceCode: 'Reference Code',
   ContactInfo: 'Impormasyon sa Pakikipag-ugnayan',
   EmailAddress: 'Email Address',
@@ -465,8 +465,8 @@ export default {
   digit_code: "Ilagay ang 6 na digit na code na ipinadala sa",
   selectcurrency: "Pilih Mata Wang",
   bank_account_number: 'Nombor akaun bank',
-  invalid_code:'di-wastong code',
-  resend_text:'i-click ang Resend Button pagkatapos ng 2min'
-
+  invalid_code: 'di-wastong code',
+  resend_text: 'i-click ang Resend Button pagkatapos ng 2min',
+  please_enter_valid_content: 'Sila masukkan kandungan yang sah'
 
 }

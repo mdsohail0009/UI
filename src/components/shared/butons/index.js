@@ -15,18 +15,23 @@ const SuisseBtn = ({ title, onClick, autoDisable = false, duration = 10000, clas
             if (sec === 0) { count = 10; setSeconds(10); clearInterval(timeInterval); setRefresh(true); }
         }, 1000);
     }
+
+    const stopTimer = () => { //for counter stoping perpose added this method
+        clearInterval(timeInterval)
+    }
+
     const refreshTimer = () => {
         if (onRefresh) {
             onRefresh();
         }
-        startTimer();
+        stopTimer();
         setRefresh(false);
     }
     useEffect(() => {
-        startTimer();
+        stopTimer();
     }, [autoDisable]);
     return refresh ? <Translate content={"suisse_btn_refresh"} component={Button} size="large" block className="pop-btn confirm-btn" onClick={() => refreshTimer()} htmlType={htmlType} /> :
-        <Translate with={{ counter: `(${seconds})` }} content={title} component={Button} disabled={disabled} size="large" block className={className} onClick={() => onClick()} loading={loading} htmlType={htmlType} />
+        <Translate content={title} component={Button} disabled={disabled} size="large" block className={className} onClick={() => onClick()} loading={loading} htmlType={htmlType} />
 }
 
 export default SuisseBtn;
