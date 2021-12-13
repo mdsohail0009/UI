@@ -215,7 +215,7 @@ const FaitWithdrawal = ({
       ) > parseFloat(selectedWallet.avilable)
     ) {
       useDivRef.current.scrollIntoView();
-      return setErrorMsg("Insufficient balance");
+      return setErrorMsg(apicalls.convertLocalLang('insufficient_balance'));
     }
     if (
       parseFloat(
