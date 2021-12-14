@@ -28,7 +28,7 @@ class BuySell extends Component {
         }
     }
     closeBuyDrawer = () => {
-        //this.props.dispatch(setTab(1));
+        this.props.dispatch(setTab(1));
         this.props.dispatch(setHeaderTab(""))
         if (this.props.onClose) {
             this.props.onClose();

@@ -8,7 +8,7 @@ import { changePassword } from '../../api/apiServer';
 import { getmemeberInfo } from '../../reducers/configReduser';
 import apiClient from '../../api/apiCalls';
 import apiCalls from '../../api/apiCalls';
-import { validateContentRule } from '../../utils/custom.validator'
+import { validateContentRule, validateContent } from '../../utils/custom.validator'
 
 
 notification.config({
@@ -40,14 +40,13 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       passwordResponce(true, "Current password and New password should not be same", false);
     } else {
       passwordResponce(false, '', false);
-      debugger
       initialValues.info = JSON.stringify(trackAuditLogData)
-      let obj = Object.assign({},initialValues);
-      obj.ConfirmPassword = apiClient.encryptValue(obj.ConfirmPassword,userConfig.sk)
-      obj.CurrentPassword = apiClient.encryptValue(obj.CurrentPassword,userConfig.sk)
-      obj.Password = apiClient.encryptValue(obj.Password,userConfig.sk)
-      obj.Email = apiClient.encryptValue(obj.Email,userConfig.sk)
-      obj.info = apiClient.encryptValue(obj.info,userConfig.sk)
+      let obj = Object.assign({}, initialValues);
+      obj.ConfirmPassword = apiClient.encryptValue(obj.ConfirmPassword, userConfig.sk)
+      obj.CurrentPassword = apiClient.encryptValue(obj.CurrentPassword, userConfig.sk)
+      obj.Password = apiClient.encryptValue(obj.Password, userConfig.sk)
+      obj.Email = apiClient.encryptValue(obj.Email, userConfig.sk)
+      obj.info = apiClient.encryptValue(obj.info, userConfig.sk)
       const result = await changePassword(obj);
       if (result.ok) {
         message.success({ content: 'Password changed successfully', className: 'custom-msg' });
@@ -125,16 +124,30 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
           name="Password"
           className="custom-forminput mb-24"
           required
-          rules={[{
-            required: true, message: apiClient.convertLocalLang('new_pass_word_msg')
-          },
-          {
-            pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/,
-            message: 'Password must be at least 8 Characters long one uppercase with one lowercase, one numeric & special character'
-          },
-          {
-            validator: validateContentRule
-          }
+          rules={[
+            {
+              validator(rule, value) {
+                if (!value) {
+                  return Promise.reject(
+                    apiClient.convertLocalLang('new_pass_word_msg')
+                  )
+                } else if (!value || !(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/.test(value))) {
+                  return Promise.reject(
+                    "Password must be at least 8 Characters long one uppercase with one lowercase, one numeric & special character"
+                  )
+                } else if (!validateContent(value)) {
+                  return Promise.reject(
+                    "Please enter valid content"
+                  )
+                } else {
+                  return Promise.resolve();
+
+                }
+              },
+            },
+            // {
+            //   validator: validateContentRule
+            // }
           ]}
         >
 
@@ -174,10 +187,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
                   "Password does not match"
                 );
               },
-            }),
-            {
-              validator: validateContentRule
-            }
+            })
           ]}
         >
 

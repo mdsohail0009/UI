@@ -1,26 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Typography, Row, Col, Spin, Button, Alert, Form, DatePicker, Modal, Tooltip, Input, Radio } from "antd";
+import { Typography, Row, Col, Spin, Radio, Button } from "antd";
 import { Link, withRouter } from "react-router-dom";
+import Translate from 'react-translate-component';
 import { getcoinDetails, getCoinChatData } from './api'
-import ConnectStateProps from '../../utils/state.connect';
 import LineChart from './line.graph.component';
 import BuySell from '../buy.component';
+import SendReceive from '../send.component'
 import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reducers/buyReducer';
 import { setStep } from '../../reducers/buysellReducer';
 import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import apiCalls from '../../api/apiCalls';
-import Translate from 'react-translate-component';
 import { fetchMarketCoinData } from '../../reducers/dashboardReducer'
-import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle } from "../../reducers/sendreceiveReducer";
-import { setWithdrawfiatenaable, setWithdrawfiat } from '../../reducers/sendreceiveReducer'
+import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat } from "../../reducers/sendreceiveReducer";
+
 class CoinView extends React.Component {
     state = {
         coinData: null,
         chatData: null,
         type: 'prices',
-        buyDrawer: false
+        buyDrawer: false,
+        sendDrawer: false,
     }
 
     componentDidMount() {
@@ -39,7 +40,9 @@ class CoinView extends React.Component {
                 this.coinChartData(1);
             })
         }
+
     }
+
     coinChartData = async (days) => {
         if (this.state.coinData) {
             const response = await getCoinChatData(this.state.coinData.id, 'usd', days);
@@ -49,23 +52,13 @@ class CoinView extends React.Component {
         }
     }
     showBuyDrawer = (item, key) => {
+        debugger
         let selectedObj = { ...item };
-        // selectedObj.impagePath=this.state.chatData.impagePath;
-        // selectedObj.percentage=this.state.chatData.percentage;
-        // selectedObj.sellMaxValue=this.state.chatData.sellMaxValue;
-        // selectedObj.sellMinValue=this.state.chatData.sellMinValue;
-        // selectedObj.swapMaxValue=this.state.chatData.swapMaxValue;
-        // selectedObj.swapMinValue=this.state.chatData.swapMinValue;
-        // selectedObj.withdrawMaxValue=this.state.chatData.withdrawMaxValue;
-        // selectedObj.withdrawMinValue=this.state.chatData.withdrawMinValue;
-        // selectedObj.impageWhitePath=this.state.chatData.impageWhitePath;
-        // selectedObj.coinValueinNativeCurrency=this.state.chatData.coinValueinNativeCurrency;
         selectedObj.coin = selectedObj.symbol.toUpperCase();
         selectedObj.coinBalance = selectedObj.avilableBalance
         selectedObj.coinFullName = selectedObj.name
         selectedObj.oneCoinValue = selectedObj.current_price;
         selectedObj.id = selectedObj.memberWalletId;
-        console.log(selectedObj);
         if (this.props?.userProfile?.isDocsRequested) {
             this.props.history.push("/docnotices");
             return;
@@ -91,77 +84,65 @@ class CoinView extends React.Component {
             ...this.state,
             buyDrawer: true
         })
-        // this.setState({
-        //     valNum: e
-        // }, () => {
-        //     this.setState({
-        //         ...this.state,
-        //         buyFiatDrawer: true,
-        //         selctedVal: value
-        //     })
-
-        // })
     }
     showSendReceiveDrawer = (e, value) => {
-        debugger
         let selectedObj = { ...value };
         selectedObj.coin = selectedObj.symbol.toUpperCase();
         selectedObj.coinBalance = selectedObj.avilableBalance
         selectedObj.coinFullName = selectedObj.name
         selectedObj.oneCoinValue = selectedObj.current_price;
-        console.log(selectedObj);
+        selectedObj.id = selectedObj.memberWalletId;
+        selectedObj.withdrawMinValue=selectedObj.swapMinValue
         this.props.dispatch(fetchWithDrawWallets({ memberId: this.props?.userProfile?.id }));
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
         this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
-        // amount: "4320.00"
-        // id: "c5707468-c667-4c32-84fe-700a2b5c42a5"
-        // imagePath: "https://suissebase.blob.core.windows.net/assets/usd.svg"
-        // walletCode: "USD"
-        // walletId: "fabc96b7-db27-4e36-a747-76701d76371d"
         let coin = value.symbol.toUpperCase();
-        //     if (this.props?.userProfile?.isDocsRequested) {
-        //         this.props.history.push("/docnotices");
-        //         return;
-        //     }
-        //     if (!this.props?.userProfile?.isKYC) {
-        //         this.props.history.push("/notkyc");
-        //         return;
-        //     }
-        //     // const isDocsRequested = this.props.userProfile.isDocsRequested;
-        //     // if (isDocsRequested) {
-        //     //     this.showDocsError();
-        //     //     return;
-        //     // }
-        //    // if (e === 2) {
-        //         this.props.dispatch(setWithdrawfiatenaable(true))
-        //         this.props.dispatch(setWithdrawfiat({ walletCode: coin }))
-        //     ////} 
-        //     this.setState({
-        //         valNum: e
-        //     }, () => {
-        //         this.setState({
-        //             ...this.state,
-        //             buyFiatDrawer: true,
-        //             selctedVal: coin
-        //         })
+        if (this.props?.userProfile?.isDocsRequested) {
+            this.props.history.push("/docnotices");
+            return;
+        }
+        if (!this.props?.userProfile?.isKYC) {
+            this.props.history.push("/notkyc");
+            return;
+        }
+        const isDocsRequested = this.props.userProfile.isDocsRequested;
+        if (isDocsRequested) {
+            this.showDocsError();
+            return;
+        }
+        if (e == 2) {
+            this.props.dispatch(setWithdrawfiatenaable(true))
+            this.props.dispatch(setWithdrawfiat({ walletCode: coin }))
+            this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
+            this.props.changeStep('withdraw_crypto_selected');
 
-        //     })
-        // this.props.dispatch(setWithdrawcrypto({...obj, toWalletAddress: item.code}))
+        } else {
+            debugger
+            this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
+            this.props.dispatch(setSubTitle(`${selectedObj.coinBalance ? selectedObj.coinBalance : '0'} ${selectedObj.coin}` + " " + apiCalls.convertLocalLang('available')));
+            this.props.dispatch(setStep("step7"));
 
-        this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
-        this.props.changeStep('withdraw_crypto_selected');
+            this.setState({
+                ...this.state,
+                sendDrawer: true
+            })
+        }
         this.setState({
-            ...this.state,
-            buyDrawer: true
+            valNum: e
+        }, () => {
+            this.setState({
+                ...this.state,
+                sendDrawer: true,
+                selctedVal: coin
+            })
+
         })
-        //this.closeDrawer()
-
-        // this.props.dispatch(setStep('withdraw_crypto_selected'));
-
     }
+
     closeDrawer = () => {
         this.setState({
             buyDrawer: false,
+            sendDrawer: false
         })
     }
     render() {
@@ -189,21 +170,16 @@ class CoinView extends React.Component {
                                 </Text>
                             </div>
                         </div>
-                            <div className="text-right">
+                            <div>
                                 <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(coinData, "buy")} className="custom-btn prime" />
                                 <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer(coinData, "sell")} />
-                                {/* <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer("sell")} /> */}
-                                {/* <Translate content="withdraw" className="ml-16" component={Radio.Button} onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} /> */}
                             </div>
-                            {/* <div className="crypto_btns">
-                                <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(item, "buy")} className="custom-btn prime" />
-                                <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer(item, "sell")} />
-                            </div> */}
 
                             {/* <ul className="m-0">
                                 <li onClick={() => this.showBuyDrawer(coinData, "buy")}><div><span className="icon md file" /></div>BUY</li>
-                                <li  onClick={() => this.showBuyDrawer(coinData, "sell")}><div><span className="icon md file" /></div>SELL</li>
-                                <li><div><span className="icon md file" /></div>WITHDRAW</li>
+                                <li onClick={() => this.showBuyDrawer(coinData, "sell")}><div><span className="icon md file" /></div>SELL</li>
+                                <li  onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1}><div><span className="icon md file" /></div>DEPOSIT</li> 
+                                <li onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2}><div><span className="icon md file" /></div>WITHDRAW</li>
                             </ul> */}
                         </> : <div className="text-center mt-24"><Spin /></div>}
                     </div>
@@ -276,7 +252,8 @@ class CoinView extends React.Component {
                 </Col>
             </Row>
             <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
-        </div>
+            <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
+        </div >
     }
 }
 

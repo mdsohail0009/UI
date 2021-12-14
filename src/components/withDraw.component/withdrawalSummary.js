@@ -25,7 +25,7 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
   const [inputDisable,setInputDisable] = useState(true);
   const [showtext,setShowTimer] = useState(true);
   const [resendDisable,setResendDisable] = useState(false);
-  const [msg,setMsg] = useState(false);
+  const [errorMsg,setMsg] = useState(false);
   const [refresh, setRefresh] = useState(false);
   const[type,setType] = useState('Send');
   const btnList = {get_otp:<Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />,
@@ -99,7 +99,7 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
        
   } else {
     useOtpRef.current.scrollIntoView();
-    setMsg(true);
+    setMsg(apiCalls.convertLocalLang("invalid_code"));
     }
   };
   const onCancel = () =>{
@@ -112,32 +112,37 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
 
   const getOTP = async (val) => {
 
-    setButtonText('resendotp');
-    setDisable(true);
-    setInputDisable(false);
-    setSeconds("02:00");
+   
     let response = await apiCalls.getCode(userConfig.id, type);
     if (response.ok) {
-        startTimer ();
-       setVerificationText(
+      setButtonText('resendotp');
+      setDisable(true);
+      setInputDisable(false);
+      setSeconds("02:00");
+      setVerificationText(
         apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
       );
-     };
+        startTimer ();
+      }
+      else{
+        useOtpRef.current.scrollIntoView();
+        setMsg(apiCalls.convertLocalLang("request_fail"));
+      }
 }
 
   return (
     
     <div className="mt-16"> <div ref={useOtpRef}></div>
-       {msg &&
-                <div className="custom-alert" ><Alert
-                    message="Invalid code "
-                    type="warning"
-                    showIcon
-                    closable={false}
-                />
-                
-                </div>}
-      <Text className="fs-14 text-white-50 fw-200">
+
+{errorMsg && (
+          <Alert
+            showIcon
+            type="info"
+            description={errorMsg}
+            closable={false}
+          />
+        )}
+     <Text className="fs-14 text-white-50 fw-200">
         {" "}
         <Translate
           content="amount"
@@ -241,7 +246,7 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
             maxLength={6}
             onKeyDown={(event) => 
               { 
-                 if(event.currentTarget.value.length > 5) {
+                 if(event.currentTarget.value.length > 5 && !(event.key=="Backspace" || event.key =="Delete")){
                   event.preventDefault();}
                   else if(/^\d+$/.test(event.key)){
                     setOtp(event.currentTarget.value)
