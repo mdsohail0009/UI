@@ -478,5 +478,5 @@ export default {
   M:'M',
   Y:'Y',
   copied:'copied',
-  request_fail:"Request Fail",
+  request_fail:"Max attempts reached",
 }
