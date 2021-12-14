@@ -459,7 +459,7 @@ export default {
   active_inactive: 'Aktibo/Hindi Aktibo',
   location: 'lokasyon',
   ipAddress: 'alamat IP',
-  menu_wallets: "Mga balanse",
+  menu_wallets: "Mga pitaka",
   crypto_wallets: "Dompet Kripto",
   verification_code: "Ipasok ang verification code",
   get_code: "KUMUHA NG OTP",
