@@ -26,7 +26,7 @@ const Notifications = ({
   const notificationsTrack = () => {
     apiCalls.trackEvent({
       Type: "User",
-      Action: "Notification page view",
+      Action: "Notifications page view",
       Username: userProfileInfo?.userName,
       MemeberId: userProfileInfo?.id,
       Feature: "Notifications",

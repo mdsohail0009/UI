@@ -67,6 +67,7 @@ class AuditLogs extends Component {
     this.fetchAuditLoginfo(e.dataItem.id, e);
   }
   componentDidMount = () => {
+    this.gridRef = React.createRef();
     this.auditlogsTrack();
     this.TransactionFeatureSearch(this.props.userProfile?.userName);
   };
