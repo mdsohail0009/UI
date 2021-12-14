@@ -126,7 +126,6 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
       }
       else{
         useOtpRef.current.scrollIntoView();
-        // setInputDisable(false);
         setMsg(apiCalls.convertLocalLang("request_fail"));
       }
 }

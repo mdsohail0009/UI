@@ -342,8 +342,8 @@ export default {
   BasicInfo: 'Basic Info',
   SelectAddress: 'Select Address',
   SelectCurrency: 'Select Currency',
-  account_details: 'Ensure that the account details is correct',
-  Cancel_select: 'Transaction cant be cancelled',
+  account_details: 'Ensure that the account details are correct',
+  Cancel_select: "Transaction can't be cancelled",
   Confirm: 'Confirm',
   totalbalance: 'Total balance',
   select_currency: 'Select a currency in your wallet',
@@ -478,5 +478,5 @@ export default {
   M:'M',
   Y:'Y',
   copied:'copied',
-  request_fail:"Request Fail",
+  request_fail:"Max attempts reached",
 }
