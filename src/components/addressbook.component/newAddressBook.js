@@ -154,8 +154,8 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                                 validator: validateContentRule
                             }
                         ]} >
-                        {/* <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('Enteraddress')} /> */}
-                        <Input className="cust-input" maxLength="30" placeholder={<Translate content='Enteraddress' />} />
+                        <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('Enteraddress')} />
+                        {/* <Input className="cust-input" maxLength="30" placeholder={<Translate content='Enteraddress' />} /> */}
                     </Form.Item>
                     <div style={{ marginTop: '50px' }} className="">
                         <Button disabled={isLoading}
