@@ -38,18 +38,9 @@ class CoinView extends React.Component {
             this.setState({ ...this.state, coinData: response.data }, () => {
                 this.coinChartData(1);
             })
-            //console.log('coin data', this.state.coinData)
         }
         
     }
-
-    // onCryptoCoinSelect = async (coin) => {
-    //     debugger
-    //     const response = await createCryptoDeposit({ memberId: this.props.userProfile?.id, walletCode: coin?.coin });
-    //     if (response.ok) {
-    //         this.props.dispatch(setWalletAddress(response.data));
-    //     }
-    // }
 
     coinChartData = async (days) => {
         if (this.state.coinData) {
@@ -99,6 +90,7 @@ class CoinView extends React.Component {
         selectedObj.coinFullName = selectedObj.name
         selectedObj.oneCoinValue = selectedObj.current_price;
         selectedObj.id = selectedObj.memberWalletId;
+        selectedObj.withdrawMinValue=selectedObj.swapMinValue
         this.props.dispatch(fetchWithDrawWallets({ memberId: this.props?.userProfile?.id }));
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
        this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
