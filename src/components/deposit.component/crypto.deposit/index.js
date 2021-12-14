@@ -27,8 +27,9 @@ const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
             "Type": 'User', "Action": 'Deposit Crypto page view', "Username": userProfile.userName, "MemeberId": userProfile.id, "Feature": 'Deposit Crypto', "Remarks": "Deposit Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto'
         });
     }
-    return <> <Translate content="deposite_a_crypto" component={Title} className="text-white-30 fw-200 mb-8 custom-font mt-16" />
-        <Translate content="deposite_a_cryto_txt" component={Paragraph} className="fs-16 text-secondary fw-200" />
+    return <> 
+    {/* <Translate content="deposite_a_crypto" component={Title} className="text-white-30 fw-200 mb-8 custom-font mt-16" /> */}
+        <Translate content="deposite_a_cryto_txt" component={Paragraph}  className="text-white-30 fw-300 fs-16 mt-16" />
         <div className="dep-withdraw auto-scroll">
             <CryptoList showSearch={true} titleField={'coin'} iconField={'coin'} showValues={true} coinList={swapStore.isLoading ? [] : swapStore.MemberCoins} isLoading={swapStore.isLoading} onCoinSelected={(coin) => onCryptoCoinSelect(coin)} coinType={"swap"} />
         </div></>

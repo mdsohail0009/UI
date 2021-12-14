@@ -8,7 +8,7 @@ import LineChart from '../trading.components/linechart';
 import { Link } from 'react-router-dom';
 import BChart from '../trading.components/bar.Chart';
 import LChart from '../trading.components/line.Chart';
- const { Title, Paragraph, Text } = Typography;
+const { Title, Paragraph, Text } = Typography;
 
 class CockpitCharts extends Component {
     state = {
@@ -23,6 +23,7 @@ class CockpitCharts extends Component {
 
     componentDidMount() {
         this.loadKpis();
+        this.loadDashboards(30);
         this.cokpitKpiTrack();
     }
     cokpitKpiTrack = () => {
@@ -97,16 +98,13 @@ class CockpitCharts extends Component {
                     {this.state.kpis?.yesterdayPNL != 0 && <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                         <div className="db-kpi vthicon">
                             <div className="icon-bg">
-                                <span className="icon md lose-arw" />
+                                <span className={`icon md ${this.state.kpis?.monthPNL > 0 ? "profit" : "lose"}-arw`} />
                             </div>
                             <div>
                                 <Text className="db-kpi-label">{"Yesterday's PNL"}<Tooltip title="See for more info"><span className="icon md info ml-4" /></Tooltip></Text>
                                 {this.state.kpis?.yesterdayPNL < 0 && <>
                                     <Text className="db-kpi-val text-red">{this.state.kpis.currency}{this.state.kpis.yesterdayPNL}</Text><Text className="badge ml-16"><span>-</span>{this.state.kpis.percentage}</Text></>}
                                 {this.state.kpis?.yesterdayPNL > 0 && <>
-                                    <div className="icon-bg">
-                                        <span className="icon md profit-arw" />
-                                    </div>
                                     <Text className="db-kpi-val text-red">{this.state.kpis.currency}{this.state.kpis.yesterdayPNL}</Text><Text className="badge"><span>-</span>{this.state.kpis.percentage}</Text></>}
                             </div>
                         </div>
@@ -114,15 +112,15 @@ class CockpitCharts extends Component {
                     {this.state.kpis?.monthPNL != 0 && <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                         <div className="db-kpi vthicon">
                             <div className="icon-bg">
-                                <span className="icon md profit-arw" />
+                                <span className={`icon md ${this.state.kpis?.monthPNL > 0 ? "profit" : "lose"}-arw`} />
                             </div>
                             <div>
                                 <Text className="db-kpi-label">{'30 Days PNL'}</Text>
                                 {this.state.kpis?.monthPNL > 0 && <>
-                                    <Text className="db-kpi-val text-green"><span>+</span>${this.state.kpis.monthPNL}</Text>
+                                    <Text className="db-kpi-val text-green">${this.state.kpis.monthPNL}</Text>
                                 </>}
                                 {this.state.kpis?.monthPNL < 0 && <>
-                                    <Text className="db-kpi-val text-red"><span>$</span>{this.state.kpis.monthPNL}</Text><Text className="badge"><span>+</span>${this.state.kpis.monthPNL}</Text>
+                                    <Text className="db-kpi-val text-red"><span>$</span>{this.state.kpis.monthPNL}</Text><Text className="badge">${this.state.kpis.monthPNL}</Text>
                                 </>}
                             </div>
                         </div>
@@ -159,7 +157,7 @@ class CockpitCharts extends Component {
                     </Col>
                 </Row>
                 <Row gutter={16}>
-                    <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Profits</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-green">+1.85%</Text>} headStyle={{ padding: "4px 16px" }}>
                             {this.state.profits ? <LChart data={this.state.profits} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
                         </Card>
