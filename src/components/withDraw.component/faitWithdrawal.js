@@ -99,11 +99,11 @@ const FaitWithdrawal = ({
   const fiatWithdrawTrack = () => {
     apicalls.trackEvent({
       Type: "User",
-      Action: "Withdraw Fiat Address book page view",
+      Action: "Withdraw Fiat page view",
       Username: userConfig.userName,
       MemeberId: userConfig.id,
       Feature: "Withdraw Fiat",
-      Remarks: "	Withdraw Fiat Address book page view",
+      Remarks: "	Withdraw Fiat page view",
       Duration: 1,
       Url: window.location.href,
       FullFeatureName: "Withdraw Fiat"
@@ -250,7 +250,7 @@ const FaitWithdrawal = ({
       values.favouriteName || addressDetails.favouriteName;
     setSaveObj(values);
     dispatch(setWithdrawfiat(values));
-   // setConfirmationStep("step2");
+    // setConfirmationStep("step2");
     changeStep('withdrawfaitsummary');
     form.resetFields();
   };
@@ -296,7 +296,7 @@ const FaitWithdrawal = ({
         <>
           <div className="suisfiat-height auto-scroll">
             <div ref={useDivRef}>
-          
+
             </div>
             {errorMsg !== null && (
               <Alert
@@ -308,7 +308,7 @@ const FaitWithdrawal = ({
                 onClose={() => setErrorMsg(null)}
                 showIcon
               />
-             
+
             )}
             <Form
               form={form}
@@ -402,9 +402,9 @@ const FaitWithdrawal = ({
                     showArrow={true}
                     onChange={(e) => handleAddressChange(e)}
                     // placeholder={apicalls.convertLocalLang("SelectAddress")}
-                    placeholder={ <Translate content="SelectAddress" component={Form.label} />}
+                    placeholder={<Translate content="SelectAddress" component={Form.label} />}
                   >
-                    
+
                     {addressLu?.map((item, idx) => (
                       <Option key={idx} value={item.name}>
                         {item.name}
@@ -429,11 +429,11 @@ const FaitWithdrawal = ({
                         : " defaulticon")
                     }
                     onClick={() => selectAddress()}
-              
+
                   >
-                    
+
                     <span className="icon md address-book d-block c-pointer">
-                   
+
                     </span>
                   </div>
                 </Tooltip>
@@ -642,9 +642,9 @@ const FaitWithdrawal = ({
                 >
                   {stateLu?.map((item, idx) => (
                     <Option key={idx} value={item.code}>
-                   {   item.code   } 
+                      {item.code}
                     </Option>
-                ))}
+                  ))}
                 </Select>
               </Form.Item>
               <Form.Item
