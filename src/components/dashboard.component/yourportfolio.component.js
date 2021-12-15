@@ -61,7 +61,7 @@ class YourPortfolio extends Component {
         const { Title } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
         return (
-            <div className="box portfolio-list">
+            <div className="portfolio-list">
                 <Translate content="your_portfolio" component={Title} className="fs-24 text-white mb-0 fw-600" />
                 <List className="mobile-list"
                     itemLayout="horizontal"
@@ -72,7 +72,7 @@ class YourPortfolio extends Component {
                         <List.Item className="" extra={
                             <div className="crypto_btns">
                                 <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(item, "buy")} className="custom-btn prime" />
-                                <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer(item, "sell")} />
+                                <Translate content="sell" component={Button} className="custom-btn sec ml-16" onClick={() => this.showBuyDrawer(item, "sell")} />
                             </div>
                         }>
                             {/* to={"/coindetails/" + item.coinFullName.toLowerCase()} */}

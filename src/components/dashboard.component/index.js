@@ -47,7 +47,7 @@ class Home extends Component {
                         <div className="markets-panel mb-36">
                             <Wallets />
                         </div>
-                        <div className="box markets-panel">
+                        <div className="markets-panel">
                             <MarketCap />
                         </div>
                     </Col>

@@ -29,9 +29,9 @@ class FiatWallets extends Component {
     async fetchWallets() {
         this.props.dispatch(fetchMemberWalletsData(this.props.userProfile.id))
     }
-    trackEvent = () =>{
+    trackEvent = () => {
         apicalls.trackEvent({
-            "Type": 'User',"Action": 'Wallets page view',"Username": this.props.userProfile.userName,"MemeberId": this.props.userProfile.id,"Feature": 'Wallets',"Remarks": 'Wallets page view',"Duration": 1,"Url": window.location.href,"FullFeatureName": 'Wallets'
+            "Type": 'User', "Action": 'Balances page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Balances', "Remarks": 'Balances page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Balances'
         });
     }
     showDocsError() {
@@ -77,7 +77,7 @@ class FiatWallets extends Component {
         const { wallets } = this.props.dashboard;
         return (
             <>
-                <Translate content="suissebase_subtitle" component={Title} className="fs-14 fw-500 text-upper text-white" />
+                <Translate content="suissebase_subtitle" component={Title} className="fs-18 fw-500 text-white" />
                 <List
                     itemLayout="horizontal"
                     dataSource={wallets.data}

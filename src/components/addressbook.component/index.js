@@ -121,6 +121,7 @@ class AddressBook extends Component {
         statusObj.modifiedBy = this.props.oidc.user.profile.unique_name;
         statusObj.status.push(this.state.selectedObj.status);
         statusObj.type = this.state.cryptoFiat ? "fiat" : 'crypto';
+        statusObj.info = JSON.stringify(this.props.trackLogs);
         let response = await activeInactive(statusObj)
         if (response.ok) {
             this.setState({
@@ -205,7 +206,8 @@ class AddressBook extends Component {
     }
     handleWithdrawToggle = e => {
         this.setState({
-            ...this.state, cryptoFiat: e.target.value === 2,selection:[],selectedObj: {},isCheck: false})
+            ...this.state, cryptoFiat: e.target.value === 2, selection: [], selectedObj: {}, isCheck: false
+        })
         if (this.state.cryptoFiat) {
             apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto Address book grid view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Crypto Address book grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
         } else {
@@ -344,7 +346,7 @@ class AddressBook extends Component {
     }
 }
 const connectStateToProps = ({ addressBookReducer, userConfig, oidc }) => {
-    return { addressBookReducer, userConfig: userConfig.userProfileInfo, oidc }
+    return { addressBookReducer, userConfig: userConfig.userProfileInfo, oidc, trackLogs: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {

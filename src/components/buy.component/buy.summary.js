@@ -5,7 +5,7 @@ import { fetchPreview } from '../../reducers/buyReducer';
 import { buyCrypto } from './api';
 import Summary from '../summary.component';
 import Loader from '../../Shared/loader';
-import { fetchDashboardcalls,fetchMarketCoinData } from '../../reducers/dashboardReducer';
+import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
 import apicalls from '../../api/apiCalls';
 
@@ -24,7 +24,7 @@ class BuySummary extends Component {
         this.EventTrack();
     }
     EventTrack = () => {
-        apicalls.trackEvent({ "Type": 'User', "Action": 'Buy summary page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Buy', "Remarks": 'Buy crypto coin summary', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy crypto' });
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Buy summary page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Buy', "Remarks": 'Buy Crypto coin summary', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy Crypto' });
     }
     pay = async () => {
         this.setState({ ...this.state, error: { valid: true, message: null } });
@@ -60,7 +60,7 @@ class BuySummary extends Component {
                 this.props.fetchDashboardData(this.props.member.id)
                 this.props.fetchMarketCoinDataValue();
                 appInsights.trackEvent({
-                    name: 'Buy', properties: { "Type": 'User', "Action": 'Save ', "Username": this.props?.member.userName, "MemeberId": this.props?.member.id, "Feature": 'Buy', "Remarks": obj.toValue + ' ' + obj.toWalletName + ' buy success', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy crypto' }
+                    name: 'Buy', properties: { "Type": 'User', "Action": 'Save ', "Username": this.props?.member.userName, "MemeberId": this.props?.member.id, "Feature": 'Buy', "Remarks": obj.toValue + ' ' + obj.toWalletName + ' buy success', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy Crypto' }
                 });
             } else {
                 this.setState({ ...this.state, error: { valid: false, message: response.data || response.originalError.message } })
@@ -107,7 +107,7 @@ const connectDispatchToProps = dispatch => {
         fetchDashboardData: (member_id) => {
             dispatch(fetchDashboardcalls(member_id))
         },
-        fetchMarketCoinDataValue:()=>{
+        fetchMarketCoinDataValue: () => {
             dispatch(fetchMarketCoinData(true))
         },
         dispatch

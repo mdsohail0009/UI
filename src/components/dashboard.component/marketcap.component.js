@@ -53,7 +53,7 @@ const MarketCap = ({ member }) => {
     return <>
         <div handle={marketsFullScreen}>
             <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey" }}>
-                <div className="d-flex justify-content" style={{ padding: '30px 24px 10px' }}>
+                <div className="d-flex justify-content mt-36">
                     <div>
                         <Translate content="markets_title" component={Title} className="fs-24 fw-600 mb-8 text-white-30" />
                         <Translate content="markets_subtitle" component={Paragraph} className="text-white-50 fs-16 mb-0 l-height-normal" />
@@ -63,8 +63,7 @@ const MarketCap = ({ member }) => {
                         <Tooltip title={apiCalls.convertLocalLang('reload')}><ReloadOutlined onClick={fetchMarketCapsInfo} className="fs-18 text-white ml-16 fw-500" /></Tooltip>
                     </div>
                 </div>
-                {/* <Search placeholder="Search Currency" value={searchVal} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="px-16 mt-8 mb-8" /> */}
-                <Search placeholder={apiCalls.convertLocalLang('searchCurrency')} value={searchVal} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="px-16 mt-8 mb-8" />
+                <Search placeholder={apiCalls.convertLocalLang('searchCurrency')} value={searchVal} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="mt-24 mb-8 grey-search" />
                 <Table locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]} style={{ background: "daryGrey" }} scroll={{ y: '' }} pagination={false} columns={infoColumns} dataSource={marketCaps} loading={isLoading} className="custom-table" />
             </div>
             <Drawer
@@ -82,9 +81,9 @@ const MarketCap = ({ member }) => {
             >
                 <div className="markets-panel mr-0 markets-popup">
                     <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey" }}>
-                        <div style={{ marginBottom: '8px', textAlign: 'right', padding: 16 }}>
-                            <Search value={searchVal} placeholder={apiCalls.convertLocalLang('search_currency')} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="px-16 mt-8 mb-8" />
-                            <Table locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]} style={{ background: "grey" }} pagination={false} columns={detailInfoColumns} scroll={{ y: '100vh' }} dataSource={marketCaps} loading={isLoading} className="custom-table" />
+                        <div style={{ marginBottom: '8px', textAlign: 'right' }}>
+                            <Search value={searchVal} placeholder={apiCalls.convertLocalLang('search_currency')} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="mt-8 mb-8 dark-search" />
+                            <Table locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]} pagination={false} columns={detailInfoColumns} style={{ backgroundColor: 'var(--bgGrey)' }} scroll={{ y: '100vh' }} dataSource={marketCaps} loading={isLoading} />
                         </div>
                     </div>
                 </div>

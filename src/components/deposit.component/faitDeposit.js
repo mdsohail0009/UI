@@ -7,7 +7,7 @@ import SellToggle from '../withDraw.component/faitWithdrawal';
 import config from '../../config/config';
 import NumberFormat from 'react-number-format';
 import { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject, setsavefiatobject } from '../../reducers/depositReducer'
-import { rejectWithdrawfiat,setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
+import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
 import { setStep } from '../../reducers/buyFiatReducer';
 import { savedepositFiat, requestDepositFiat } from './api';
 import Loader from '../../Shared/loader';
@@ -42,9 +42,6 @@ class FaitDeposit extends Component {
     this.props.fetchCurrencyWithBankDetails()
     if (this.props.sendReceive.withdrawFiatEnable) {
       this.handleshowTab(2);
-      // apicalls.trackEvent({
-      //   "Type": 'User', "Action": 'Deposit Fiat page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit Fiat page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat'
-      // });
     } else {
       this.handleshowTab(1);
 
@@ -77,7 +74,7 @@ class FaitDeposit extends Component {
       this.props.fetchCurrencyWithBankDetails()
       this.props.dispatch(rejectWithdrawfiat())
       this.props.dispatch(setWithdrawfiatenaable(false))
-      
+
     }
   }
   handleshowTab = async (tabKey) => {
@@ -313,8 +310,8 @@ class FaitDeposit extends Component {
                       </div>
                     </div>
                     <Text className="text-white-30 fs-14">A/C </Text>
-                    <Text copyable={{tooltips:[apicalls.convertLocalLang('copy'),apicalls.convertLocalLang('copied')]}} className="mb-0 fs-14 text-yellow fw-500" >{BankInfo.accountNumber}</Text>
-                    
+                    <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-14 text-yellow fw-500" >{BankInfo.accountNumber}</Text>
+
                     {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
                       className="mt-36 fs-14 text-white fw-500 text-upper"
                       content="for_Domestic_wires"
@@ -325,7 +322,7 @@ class FaitDeposit extends Component {
                       content="Routing_number"
                       component={Text}
                     />}
-                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Text copyable={{tooltips:[apicalls.convertLocalLang('copy'),apicalls.convertLocalLang('copied')]}} className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text>}
+                    {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 d-block">{BankInfo.routingNumber}</Text>}
                     <Translate
                       className="mt-24 fs-14 text-white fw-500 text-upper"
                       content="for_international_wires"
@@ -336,7 +333,7 @@ class FaitDeposit extends Component {
                       content="Swift_BICcode"
                       component={Text}
                     />
-                    <Translate copyable={{tooltips:[apicalls.convertLocalLang('copy'),apicalls.convertLocalLang('copied')]}}
+                    <Translate copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }}
                       className="fs-20 text-white-30 l-height-normal d-block mb-24"
                       content="SIGNU"
                       component={Text}
@@ -370,7 +367,7 @@ class FaitDeposit extends Component {
                       <Paragraph className="mb-0 fw-700 text-white-30 walletadrs">
                         {BankInfo.depReferenceNo}
                         <CopyToClipboard text={BankInfo.depReferenceNo}>
-                          <Text copyable={{tooltips:[apicalls.convertLocalLang('copy'),apicalls.convertLocalLang('copied')]}} className="fs-20 text-white-30 custom-display"   ></Text>
+                          <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"   ></Text>
                         </CopyToClipboard>
                       </Paragraph>
                     </div>}
