@@ -108,7 +108,7 @@ class SelectCrypto extends Component {
                     <LocalCryptoSwapper ref={this.swapRef} selectedCoin={coin} localAmt={localValue} cryptoAmt={cryptoValue} localCurrency={this.state.selectedWallet?.currencyCode || "USD"} cryptoCurrency={coin} onChange={(obj) => this.onValueChange(obj)} memberId={this.props.userProfileInfo?.id} screenName='buy' />
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
                     <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
-                    <div className="fs-12 text-white-30 text-center mt-24"><Translate content="change_10Sec_amount" component={Paragraph} className="fs-12 text-white-30 text-center mt-24" /></div>
+                    {/* <div className="fs-12 text-white-30 text-center mt-24"><Translate content="change_10Sec_amount" component={Paragraph} className="fs-12 text-white-30 text-center mt-24" /></div> */}
                     <div className="mt-24">
                         <SuisseBtn title="confirm_btn_text" onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
                     </div>

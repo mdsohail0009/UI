@@ -1,6 +1,7 @@
 import React from 'react';
 import { toDataSourceRequestString, translateDataSourceResultGroups } from '@progress/kendo-data-query';
 import { store } from '../../store'
+import moment from 'moment';
 const filterOperators = {
     'text': [
         { text: 'grid.filterContainsOperator', operator: 'contains' },
@@ -23,8 +24,6 @@ const filterOperators = {
         { text: 'grid.filterIsNotNullOperator', operator: 'isnotnull' }
     ],
     'date': [
-        { text: 'grid.filterEqOperator', operator: 'eq' },
-        { text: 'grid.filterNotEqOperator', operator: 'neq' },
         { text: 'grid.filterAfterOrEqualOperator', operator: 'gte' },
         { text: 'grid.filterAfterOperator', operator: 'gt' },
         { text: 'grid.filterBeforeOperator', operator: 'lt' },
@@ -95,6 +94,15 @@ export function withState(WrappedGrid) {
         }
 
         fetchData(dataState) {
+            if (dataState.filter) {
+                dataState.filter.filters?.map((item) => {
+                    item.filters?.map((value) => {
+                        if (value.operator === "gte" || value.operator === "gt" || value.operator === "lte" || value.operator === "lt") {
+                            value.value = value.value ? ((value.operator == 'lte' || value.operator == "gt") ? new Date(moment(value.value).format('YYYY-MM-DDT23:59:59')) : new Date(moment(value.value).format('YYYY-MM-DDT00:00:00'))) : null;
+                        }
+                    })
+                })
+            }
             this.setState({ ...this.state, isLoading: true })
             const { oidc: { user } } = store.getState();
             let queryStr = `${toDataSourceRequestString(dataState)}`; // Serialize the state.

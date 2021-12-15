@@ -2,6 +2,7 @@ import { apiClient, ipRegistry } from './';
 import { ApiControllers } from './config';
 import counterpart from 'counterpart';
 import { store } from '../store';
+import CryptoJS from 'crypto-js'
 
 const getportfolio = (memID) => {
     return apiClient.get(ApiControllers.wallets + `Crypto/${memID}`);
@@ -82,8 +83,28 @@ const getCode = (AccountId,isResendOTP) => {
 const getVerification = (AccountId, code) => {
     return apiClient.get(ApiControllers.master + `OTPVerification/${AccountId}/${code}`)
 }
+const encryptValue = (msg, key) =>{
+    
+    msg = typeof (msg) == 'string' ? msg : JSON.stringify(msg);
+    let salt = CryptoJS.lib.WordArray.random(128 / 8);
+
+    let key1 = CryptoJS.PBKDF2(key, salt, {
+        keySize: 256 / 32,
+        iterations: 10
+    });
+
+    let iv = CryptoJS.lib.WordArray.random(128 / 8);
+
+    let encrypted = CryptoJS.AES.encrypt(msg, key1, {
+        iv: iv,
+        padding: CryptoJS.pad.Pkcs7,
+        mode: CryptoJS.mode.CBC
+
+    });
+    return ((salt.toString()) + (iv.toString()) + (encrypted.toString()));
+}
 let apicalls = {
     getportfolio, getCryptos, getMember, sumsubacesstoken, updateKyc, sumsubacesstokennew, sumsublivenessacesstoken, trackEvent, sellMemberCrypto, convertLocalLang, getIBANData,
-    getdshKpis, getdshcumulativePnl, getAssetNetwroth, getAssetAllowcation, getprofits, getdailypnl, getCode, getVerification, getIpRegistery
+    getdshKpis, getdshcumulativePnl, getAssetNetwroth, getAssetAllowcation, getprofits, getdailypnl, getCode, getVerification, getIpRegistery, encryptValue
 }
 export default apicalls

@@ -73,7 +73,10 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
             return setErrorMsg('Address label already existed');
         } else {
             setErrorMsg('')
-            let response = await saveAddress(values);
+            let saveObj = Object.assign({}, values);
+            saveObj.toWalletAddress = apiCalls.encryptValue(saveObj.toWalletAddress, userConfig.sk)
+            saveObj.beneficiaryAccountName = apiCalls.encryptValue(saveObj.beneficiaryAccountName, userConfig.sk)
+            let response = await saveAddress(saveObj);
             if (response.ok) {
                 message.success({ content: apiCalls.convertLocalLang('address_msg'), className: 'custom-msg' });
                 form.resetFields();
@@ -152,6 +155,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                             }
                         ]} >
                         <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('Enteraddress')} />
+                        {/* <Input className="cust-input" maxLength="30" placeholder={<Translate content='Enteraddress' />} /> */}
                     </Form.Item>
                     <div style={{ marginTop: '50px' }} className="">
                         <Button disabled={isLoading}

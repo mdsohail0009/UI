@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Typography, Radio, Tooltip, Empty } from 'antd';
+import { Card, Row, Col, Typography, Radio, Tooltip, Empty, Spin } from 'antd';
 import apiCalls from "../../api/apiCalls";
 import { connect } from 'react-redux';
 import BarChart from '../trading.components/barchart';
 import PieChart from '../trading.components/piechart';
 import LineChart from '../trading.components/linechart';
 import { Link } from 'react-router-dom';
-
+import BChart from '../trading.components/bar.Chart';
+import LChart from '../trading.components/line.Chart';
 const { Title, Paragraph, Text } = Typography;
 
 class CockpitCharts extends Component {
@@ -22,6 +23,7 @@ class CockpitCharts extends Component {
 
     componentDidMount() {
         this.loadKpis();
+        this.loadDashboards(30);
         this.cokpitKpiTrack();
     }
     cokpitKpiTrack = () => {
@@ -96,16 +98,13 @@ class CockpitCharts extends Component {
                     {this.state.kpis?.yesterdayPNL != 0 && <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                         <div className="db-kpi vthicon">
                             <div className="icon-bg">
-                                <span className="icon md lose-arw" />
+                                <span className={`icon md ${this.state.kpis?.monthPNL > 0 ? "profit" : "lose"}-arw`} />
                             </div>
                             <div>
                                 <Text className="db-kpi-label">{"Yesterday's PNL"}<Tooltip title="See for more info"><span className="icon md info ml-4" /></Tooltip></Text>
                                 {this.state.kpis?.yesterdayPNL < 0 && <>
                                     <Text className="db-kpi-val text-red">{this.state.kpis.currency}{this.state.kpis.yesterdayPNL}</Text><Text className="badge ml-16"><span>-</span>{this.state.kpis.percentage}</Text></>}
                                 {this.state.kpis?.yesterdayPNL > 0 && <>
-                                    <div className="icon-bg">
-                                        <span className="icon md profit-arw" />
-                                    </div>
                                     <Text className="db-kpi-val text-red">{this.state.kpis.currency}{this.state.kpis.yesterdayPNL}</Text><Text className="badge"><span>-</span>{this.state.kpis.percentage}</Text></>}
                             </div>
                         </div>
@@ -113,15 +112,15 @@ class CockpitCharts extends Component {
                     {this.state.kpis?.monthPNL != 0 && <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                         <div className="db-kpi vthicon">
                             <div className="icon-bg">
-                                <span className="icon md profit-arw" />
+                                <span className={`icon md ${this.state.kpis?.monthPNL > 0 ? "profit" : "lose"}-arw`} />
                             </div>
                             <div>
                                 <Text className="db-kpi-label">{'30 Days PNL'}</Text>
                                 {this.state.kpis?.monthPNL > 0 && <>
-                                    <Text className="db-kpi-val text-green"><span>+</span>${this.state.kpis.monthPNL}</Text>
+                                    <Text className="db-kpi-val text-green">${this.state.kpis.monthPNL}</Text>
                                 </>}
                                 {this.state.kpis?.monthPNL < 0 && <>
-                                    <Text className="db-kpi-val text-red"><span>$</span>{this.state.kpis.monthPNL}</Text><Text className="badge"><span>+</span>${this.state.kpis.monthPNL}</Text>
+                                    <Text className="db-kpi-val text-red"><span>$</span>{this.state.kpis.monthPNL}</Text><Text className="badge">${this.state.kpis.monthPNL}</Text>
                                 </>}
                             </div>
                         </div>
@@ -136,31 +135,31 @@ class CockpitCharts extends Component {
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Cumulative PNL(%)</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-red">-1.85%</Text>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.cumulativePNL ? <LineChart id="cumlitavePNL" data={this.state.cumulativePNL} width="600" height="400" /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
+                            {this.state.cumulativePNL ? <LChart data={this.state.cumulativePNL} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
                         </Card>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Daily PNL(%)</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-red">-$0.19</Text>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.dailyPnl ? <BarChart data={this.state.dailyPnl?.series} categories={this.state.dailyPnl?.categories} id={'dailypnl'} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
+                            {this.state.dailyPnl ? <BChart data={this.state.dailyPnl} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
                         </Card>
                     </Col>
                 </Row>
                 <Row gutter={16}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={10} xxl={10}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Asset Allocation</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.assetAlloction ? <PieChart data={this.state.assetAlloction} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
+                            {this.state.assetAlloction ? <PieChart data={this.state.assetAlloction} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
                         </Card>
                     </Col>
                     <Col xs={24} sm={24} md={24} lg={12} xl={14} xxl={14}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Assets Net Worth</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-green">$30.61</Text>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.assetnetWorth ? <LineChart id="cumlitavePNL" data={this.state.assetnetWorth} width="750" height="400" /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
+                            {this.state.assetnetWorth ? <LChart data={this.state.assetnetWorth} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
                         </Card>
                     </Col>
                 </Row>
                 <Row gutter={16}>
-                    <Col xs={24} sm={24} md={24} lg={12} xl={12} xxl={12}>
+                    <Col xs={24} sm={24} md={24} lg={24} xl={24} xxl={24}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Profits</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-green">+1.85%</Text>} headStyle={{ padding: "4px 16px" }}>
-                            {this.state.profits ? <LineChart id="cumlitavePNL" data={this.state.profits} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No Data Found" />}
+                            {this.state.profits ? <LChart data={this.state.profits} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
                         </Card>
                     </Col>
                 </Row>

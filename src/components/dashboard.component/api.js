@@ -12,16 +12,13 @@ const fetchPortfolio = (member_id) => {
 const fetchYourPortfolio = (member_id) => {
     return apiClient.get(ApiControllers.wallets + `CryptoPortFolio/${member_id}`);
 }
-const getNotices = (member_id) => {
-    return apiClient.get(ApiControllers.accounts + `Dashboard/Notices/${member_id}`);
-}
-const getcoinDetails = (member_id,coinName) => {
+const getcoinDetails = (member_id, coinName) => {
     return apiClient.get(ApiControllers.markets + `Coins/PriceChart/${coinName}/${member_id}`);
 }
 const getPortfolioGraph = (memId, type) => {
     return apiClient.get(ApiControllers.accounts + `/${memId}/DashBoard/${type}`);
 }
-const getCoinChatData = (coinName,currency, days) => {
+const getCoinChatData = (coinName, currency, days) => {
     return coinGekoClient.get(`coins/${coinName}/market_chart?vs_currency=${currency}&days=${days}`);
 }
-export { fetchMarketCaps, fetchMemberWallets, fetchPortfolio, fetchYourPortfolio, getNotices, getPortfolioGraph, getcoinDetails, getCoinChatData}
+export { fetchMarketCaps, fetchMemberWallets, fetchPortfolio, fetchYourPortfolio, getPortfolioGraph, getcoinDetails, getCoinChatData }

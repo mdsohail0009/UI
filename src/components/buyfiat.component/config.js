@@ -5,5 +5,6 @@ export const buyFiatSteps = {
     step4: 'addAddress',
     step5: 'withdrwalfiatsummary',
     step6: 'withdrwlive',
-    step7: 'withdrwsuccess'
+    step7: 'withdrwsuccess',
+    withdrawfaitsummary:'withdrawfaitsummary'
 }

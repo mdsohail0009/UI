@@ -41,9 +41,8 @@ class WithdrawSummary extends Component {
     errorMsg: false,
     usdLoading: false,
     oneUsdLoading: false,
-    buttonText: (
-      <Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />
-    ),
+    buttonText: "get_otp",
+    type: "Send",
     verificationText: "",
     otp: "",
     code: "",
@@ -51,11 +50,17 @@ class WithdrawSummary extends Component {
     invalidcode: "",
     validationText: "",
     disable: false,
-    inputDisable:true,
-    showtext:true,
+    inputDisable: true,
+    showtext: true,
+    seconds1: "02:00",
+    timeInterval: "",
+    count: 120,
+
   };
+
   useDivRef = React.createRef();
   componentDidMount() {
+
     this.loadOneCoinData();
     this.loadData();
     this.trackEvent();
@@ -88,6 +93,28 @@ class WithdrawSummary extends Component {
     });
     this.setState({ ...this.state, usdAmount: value, usdLoading: false });
   };
+
+  startTimer = () => {
+    let timer = this.state.count;
+    let minutes, seconds;
+    let timeInterval = setInterval(() => {
+      this.setState({ ...this.state, disable: true });
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      let update = minutes + ":" + seconds;
+      this.setState({ ...this.state, seconds1: update });
+      if (--timer < 0) {
+        timer = this.state.count;
+        clearInterval(timeInterval);
+        this.setState({ ...this.state, disable: false, type: "Resend" });
+
+      }
+
+    }, 1000);
+
+  }
   loadOneCoinData = async () => {
     this.setState({ ...this.state, oneUsdLoading: true });
     const value = await convertCurrency({
@@ -110,43 +137,29 @@ class WithdrawSummary extends Component {
   };
 
   getOTP = async (val) => {
-    this.setState({ inputDisable: false });
-    this.setState({ disable: true });
 
     let response = await apiCalls.getCode(
       this.props.userProfile.id,
-      this.state.isResend
+      this.state.type
     );
     if (response.ok) {
-      console.log(response);
+      this.setState({ ...this.state, buttonText: 'resendotp', inputDisable: false, disable: true, seconds1: "02:00",verificationText:
+      apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber },()=>{ this.startTimer();})
+     
     }
-
-    setTimeout(() => {
-      this.setState({ buttonText: apiCalls.convertLocalLang("resend_code") });
-      this.setState({ isResend: true });
-      this.setState({ disable: false });
-    }, 120000);
-    this.setState({
-      verificationText:
-        apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber
-    });
-    this.setState({ validationText: apiCalls.convertLocalLang("resend_text") });
-    this.setState({showtext:true});
-
-    setTimeout(()=>{
-      this.setState({showtext:false})
-    },120000)
-   
+    else {
+     this.setState({...this.state,errorMsg:apiCalls.convertLocalLang("request_fail")});
+    }
   };
   handleOtp = (val) => {
-    this.setState({ ...this.state, otp: val });
+    this.setState({ ...this.state, otp: val.code});
   };
 
-  onClick = async () => {
-    if (this.state.onTermsChange) {
-      let response = await apiCalls.getVerification(
+  saveWithdrwal = async (values) => {
+       if (this.state.onTermsChange) {
+      let response = await apiCalls.getVerification( 
         this.props.userProfile.id,
-        this.state.otp
+        values.code
       );
 
       if (response.ok) {
@@ -157,55 +170,33 @@ class WithdrawSummary extends Component {
           duration: 0.5
         });
         if (this.props.userProfile.isBusiness) {
-        let saveObj = this.props.sendReceive.withdrawCryptoObj;
-        this.props.trackAuditLogData.Action = "Save";
-        this.props.trackAuditLogData.Remarks = "Withdraw Crypto save";
-        saveObj.info = JSON.stringify(this.props.trackAuditLogData);
-        let withdrawal = await withDrawCrypto(saveObj);
-        if (withdrawal.ok) {
-          this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
-          //setIsWithdrawSuccess(true)
-          this.props.dispatch(setWithdrawcrypto(null));
-          this.props.dispatch(setSubTitle(""));
-          this.props.changeStep("withdraw_crpto_success");
+          let saveObj = this.props.sendReceive.withdrawCryptoObj;
+          let trackAuditLogData = this.props.trackAuditLogData;
+          trackAuditLogData.Action = 'Save';
+          trackAuditLogData.Remarks = 'Withdraw Crypto save';
+          saveObj.info = JSON.stringify(trackAuditLogData)
+          let withdrawal = await withDrawCrypto(saveObj);
+          if (withdrawal.ok) {
+            this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
+            //setIsWithdrawSuccess(true)
+            this.props.dispatch(setWithdrawcrypto(null));
+            this.props.dispatch(setSubTitle(""));
+            this.props.changeStep("withdraw_crpto_success");
+          }
         }
-      }
-      else{
-        this.props.dispatch(
-          setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
-        );
-        this.props.changeStep("withdraw_crypto_liveness");
-      }
-        
+        else {
+          this.props.dispatch(
+            setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
+          );
+          this.props.changeStep("withdraw_crypto_liveness");
+        }
+        this.setState({ ...this.state, errorMsg: false });
       } else {
-        message.destroy();
-        message.error({
-          // content: this.setState({
-          //   invalidcode: apiCalls.convertLocalLang("invalid_code")
-          // }),
-          content:"Invalid Code",
-          className: "custom-msg",
-          duration: 2.0
-        });
+        this.useDivRef.current.scrollIntoView();
+        this.setState({ ...this.state, errorMsg: apiCalls.convertLocalLang("invalid_code") });
       }
 
-      this.setState({ ...this.state, errorMsg: false });
-      // if (this.props.userProfile.isBusiness) {
-      //     let saveObj = this.props.sendReceive.withdrawCryptoObj;
-      //     let withdrawal = await withDrawCrypto(saveObj)
-      //     if (withdrawal.ok) {
-      //         this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
-      //         //setIsWithdrawSuccess(true)
-      //         this.props.dispatch(setWithdrawcrypto(null))
-      //         this.props.dispatch(setSubTitle(""));
-      //         this.props.changeStep('withdraw_crpto_success');
-      //         appInsights.trackEvent({
-      //             name: 'Withdraw Crypto', properties: { "Type": 'User', "Action": 'save', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Withdraw Crypto', "Remarks": 'Withdraw crypto save', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto' }
-      //         });
-      //     }
-      // } else {
 
-      // }
     } else {
       this.setState({
         ...this.state,
@@ -220,6 +211,11 @@ class WithdrawSummary extends Component {
   maskedNumber = this.last4Digits.padStart(this.fullNumber.length, "*");
   render() {
     const { Paragraph, Text } = Typography;
+    const { seconds1, disable } = this.state;
+    const btnList = {
+      get_otp: <Translate className={`pl-0 ml-0 text-yellow-50 ${disable ? "c-notallowed" : ""}`} content="get_code" />,
+      resendotp: <Translate className={`pl-0 ml-0 text-yellow-50 ${disable ? "c-notallowed" : ""}`} content="resend_code" with={{ counter: `${disable ? "(" + seconds1 + ")" : ""}` }} />
+    }
     if (this.state.usdLoading || this.state.oneUsdLoading) {
       return <Loader />;
     }
@@ -295,7 +291,7 @@ class WithdrawSummary extends Component {
               content="address"
               component={Text}
             />
-            <Text className="fw-400 text-white">
+            <Text className="fw-400 text-white" style={{ width: '250px', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', textAlign: 'end' }}>
               {this.props.sendReceive.withdrawCryptoObj?.toWalletAddress}
             </Text>
           </div>
@@ -304,51 +300,52 @@ class WithdrawSummary extends Component {
             name="advanced_search"
             autoComplete="off"
             form={this.form}
+            onFinish={this.saveWithdrwal}
           >
-            
-              <Form.Item
-                name="code"
-                className="input-label otp-verify my-36"
-                extra={<div>
-                  <Text className="fs-12 text-white-30 fw-200">
-                    {this.state.verificationText}
-                  </Text>
-                  <Text className="fs-12 text-red fw-200" style={{float: "right", color: 'var(--textRed)'}}>
-                    {this.state.invalidcode}
-                  </Text></div>
-                }
-                rules={[{ required: true, message: "Is required" }]}
-                label={
-                  <Button type="text" onClick={this.getOTP} disabled={this.state.disable}>
-                    {this.state.buttonText} 
-                  </Button>
-                }
-              >
-                <Input
-                type="text"
-                  className="cust-input text-left"
-                  placeholder={apiCalls.convertLocalLang("verification_code")}
-                  maxLength={6}
-                  onChange={(e) => this.handleOtp(e.target.value)}
-                  style={{ width: '100%' }}
-                  disabled={this.state.inputDisable}
-                />
 
-              </Form.Item>
-              <div>
-                  {this.state.showtext &&<Text className="fs-12 text-white-30 text-center d-block mb-16 fw-200">
-                    {this.state.validationText}
-                  </Text>}
-                </div>
-              
-            
-           
+            <Form.Item
+              name="code"
+              className="input-label otp-verify my-36"
+              extra={<div>
+                <Text className="fs-12 text-white-30 fw-200">
+                  {this.state.verificationText}
+                </Text>
+                <Text className="fs-12 text-red fw-200" style={{ float: "right", color: 'var(--textRed)' }}>
+                  {this.state.invalidcode}
+                </Text></div>
+              }
+              rules={[{ required: true, message: "Is required" }]}
+              label={
+                <Button type="text" onClick={this.getOTP} disabled={this.state.disable}>
+                  {btnList[this.state.buttonText]}
+                </Button>
+              }
+            >
+              <Input
+                type="number"
+                className="cust-input text-left"
+                placeholder={apiCalls.convertLocalLang("verification_code")}
+                maxLength={6}
+                onKeyDown={(event) => 
+                  { 
+                     if(event.currentTarget.value.length > 5 && !(event.key=="Backspace" || event.key =="Delete")) {
+                      event.preventDefault();}
+                      else if(/^\d+$/.test(event.key)){
+                        this.handleOtp(event.currentTarget.value)
+                      }
+                      else if(event.key=="Backspace" || event.key =="Delete"){
+                       }
+                      else{
+                      event.preventDefault()
+                    }
+                   }}
+             
+                style={{ width: '100%' }}
+                disabled={this.state.inputDisable}
+              />
 
-            <Translate
-              className="fs-14 text-center text-white-30 mt-24"
-              content="summary_hint_text"
-              component={Paragraph}
-            />
+
+            </Form.Item>
             <div className="d-flex p-16 mb-36 agree-check">
               <label>
                 <input
@@ -377,25 +374,17 @@ class WithdrawSummary extends Component {
                 <Translate content="refund_cancellation" component="Text" />
               </Paragraph>
             </div>
-            {/* <SuisseBtn
-              className={"pop-btn"}
-              htmlType="submit"
-              onRefresh={() => this.onRefresh()}
-              title={"confirm_btn_text"}
-              loading={this.state.isButtonLoad}
-              autoDisable={true}
-              onClick={() => this.onClick()}
-            /> */}
             <Button
-              size="large"
-              block
-              className="pop-btn"
-              htmlType="submit"
-              onClick={() => this.onClick()}
-            >
-              <Translate content="Confirm" component={Text} />
-            </Button>
-          </Form>
+          
+          size="large"
+          block
+          className="pop-btn"
+          htmlType="submit"
+        >
+          <Translate content="Confirm" component={Text} />
+        </Button>
+
+  </Form>
           <div className="text-center mt-16">
             <Translate
               content="cancel"

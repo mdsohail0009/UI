@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { setStep, updateSwapdata } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
-import { fetchCurrConvertionValue, saveSwapData } from '../../components/swap.component/api';
+import { fetchCurrConvertionValue, saveSwapData,fetchCurrConvertionCommisionValue } from '../../components/swap.component/api';
 import Summary from '../summary.component';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
@@ -19,6 +19,7 @@ class SwapSummary extends Component {
             disableConfirm: false,
             errorMessage: null,
             agreeValue: false,
+            commision:null,
             swapSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }
         }
     }
@@ -55,9 +56,9 @@ class SwapSummary extends Component {
         }
     }
     async setReceiveAmount(e) {
-        let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.fromCoinInputValue, this.props.userProfile.id, 'swap');
+        let res = await fetchCurrConvertionCommisionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.fromCoinInputValue, this.props.userProfile.id, 'swap');
         if (res.ok) {
-            this.setState({ ...this.state, loader: false, receiveValue: res.data })
+            this.setState({ ...this.state, loader: false, receiveValue: res.data?.amount,commision:res.data?.comission })
         }
     }
     confirmswapvalidation() {
@@ -83,17 +84,18 @@ class SwapSummary extends Component {
 
             let obj = Object.assign({}, this.state.swapSaveData);
             obj.membershipId = this.props.userProfile.id;
-            obj.fromWalletId = this.props.swapStore.coinDetailData.id
-            obj.fromWalletCode = this.props.swapStore.coinDetailData.coin
-            obj.fromWalletName = this.props.swapStore.coinDetailData.coinFullName
-            obj.fromValue = this.props.swapStore.fromCoinInputValue
-            obj.executedPrice = this.state.price
+            obj.fromWalletId = this.props.swapStore.coinDetailData.id;
+            obj.fromWalletCode = this.props.swapStore.coinDetailData.coin;
+            obj.fromWalletName = this.props.swapStore.coinDetailData.coinFullName;
+            obj.fromValue = this.props.swapStore.fromCoinInputValue;
+            obj.executedPrice = this.state.price;
 
-            obj.toWalletId = this.props.swapStore.coinReceiveDetailData.id
-            obj.toWalletCode = this.props.swapStore.coinReceiveDetailData.coin
-            obj.toWalletName = this.props.swapStore.coinReceiveDetailData.coinFullName
-            obj.toValue = this.state.receiveValue
-            obj.totalAmount = this.state.receiveValue
+            obj.toWalletId = this.props.swapStore.coinReceiveDetailData.id;
+            obj.toWalletCode = this.props.swapStore.coinReceiveDetailData.coin;
+            obj.toWalletName = this.props.swapStore.coinReceiveDetailData.coinFullName;
+            obj.toValue = this.state.receiveValue;
+            obj.totalAmount = this.state.receiveValue;
+            obj.comission = this.state.commision;
             this.setState({ ...this.state, isLoading: true })
             this.props.trackAuditLogData.Action = 'Save';
             this.props.trackAuditLogData.Remarks = (obj.fromValue + " " + obj.fromWalletName + " to " + obj.toValue + " " + obj.toWalletName)

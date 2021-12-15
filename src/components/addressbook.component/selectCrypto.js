@@ -4,6 +4,7 @@ import { setAddressStep, setAddressCoin, fetchSelectedCoinDetails, setExchangeVa
 import { connect } from 'react-redux';
 import CryptoList from '../shared/cryptolist';
 import { getCoinList } from './api';
+import apiCalls from '../../api/apiCalls'
 
 class SelectCrypto extends Component {
     state = {
@@ -17,6 +18,7 @@ class SelectCrypto extends Component {
     useDivRef = React.createRef();
     componentDidMount() {
         this.coinList();
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Select the crypto coin view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Select the crypto coin view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
     }
     coinList = async () => {
         let fromlist = await getCoinList("All")      

@@ -30,7 +30,8 @@ class SellToggle extends Component {
         if (this.props.sellData?.memberCoins?.loading) { return <Loader /> }
         return (
             <>
-                {!this.props?.sellData?.memberCoins?.loading && (!this.props.sellData?.memberCoins?.data || this.props.sellData?.memberCoins?.data?.length == 0) && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />}
+                {!this.props?.sellData?.memberCoins?.loading && (!this.props.sellData?.memberCoins?.data || this.props.sellData?.memberCoins?.data?.length == 0) 
+                && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />}
                 <div className="sellcrypto-container auto-scroll">
                     {this.props.sellData?.memberCoins?.data?.map((coin, idx) => <Card key={idx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { this.setCoinDetailData(coin); this.props.setExchangeValue({ key: coin.coin, value: coin.oneCoinValue }) }} >
                         <span className="d-flex align-center">

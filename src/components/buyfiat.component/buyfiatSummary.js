@@ -8,6 +8,8 @@ import Translate from 'react-translate-component';
 import { setdepositCurrency } from '../../reducers/depositReducer'
 import { savedepositFiat, requestDepositFiat } from '../deposit.component/api';
 import apiCalls from "../../api/apiCalls";
+import { apiClient } from '../../api';
+import UserProfile from '../userProfile.component/userProfile';
 const LinkValue = (props) => {
     return (
         <Translate className="textpure-yellow text-underline c-pointer"
@@ -42,8 +44,21 @@ class FiatSummary extends Component {
     }
 
     saveDepFiat = async () => {
-        let Obj = await savedepositFiat(this.props.depositInfo?.setDepFiatSaveObj);
-        if (Obj.ok === true) {
+        debugger
+        console.log(this.props.depositInfo?.setDepFiatSaveObj)
+        let Obj = Object.assign({}, this.props.depositInfo?.setDepFiatSaveObj);
+        Obj.currency = apiCalls.encryptValue(Obj.currency, this.props.userConfig?.sk)
+        Obj.bankName = apiCalls.encryptValue(Obj.bankName, this.props.userConfig?.sk)
+        Obj.reference = apiCalls.encryptValue(Obj.reference, this.props.userConfig?.sk)
+        Obj.routingNumber = apiCalls.encryptValue(Obj.routingNumber, this.props.userConfig?.sk)
+        Obj.swiftorBICCode = apiCalls.encryptValue(Obj.swiftorBICCode, this.props.userConfig?.sk)
+        Obj.benficiaryBankName = apiCalls.encryptValue(Obj.benficiaryBankName, this.props.userConfig?.sk)
+        Obj.benficiaryAccountAddrress = apiCalls.encryptValue(Obj.benficiaryAccountAddrress, this.props.userConfig?.sk)
+        Obj.accountNumber = apiCalls.encryptValue(Obj.accountNumber, this.props.userConfig.sk)
+        Obj.bankAddress = apiCalls.encryptValue(Obj.bankAddress, this.props.userConfig.sk)
+        Obj.info = JSON.stringify(this.props.trackAuditLogData);
+        let response = await savedepositFiat(Obj);
+        if (response.ok === true) {
             this.props.changeStep('step3')
         }
     }
@@ -61,10 +76,10 @@ class FiatSummary extends Component {
                         <Translate content="bank_account_number" component={Text} className="fw-400 text-white" />
                         <Text className="fw-500 text-white-50">{depositFiatData?.accountNumber}</Text>
                     </div>
-                    <div className="pay-list fs-14">
+                    {/* <div className="pay-list fs-14">
                         <Translate content="Routing_number" component={Text} className="fw-400 text-white" />
                         <Text className="fw-500 text-white-50">{depositFiatData?.routingNumber}</Text>
-                    </div>
+                    </div> */}
                     <div className="pay-list fs-14">
                         <Translate content="Swift_BICcode" component={Text} className="fw-400 text-white" />
                         <Text className="fw-500 text-white-50">{depositFiatData?.networkCode}</Text>
@@ -77,7 +92,7 @@ class FiatSummary extends Component {
                         <li><Translate className="pl-0 ml-0 text-white-50" content="account_details" component={Text} /> </li>
                         <li><Translate className="pl-0 ml-0 text-white-50" content="Cancel_select" component={Text} /></li>
                     </ul>
-                    <Translate size="large" block className="pop-btn mt-36" content="confirm" component={Button} onClick={this.saveDepFiat} />
+                    <Translate size="large" block className="pop-btn mt-36" content="Confirm" component={Button} onClick={this.saveDepFiat} />
                     <div className="text-center mt-8">
                         <Translate content="back" component={Button} type="text" size="large" onClick={() => this.showSendReceiveDrawer(depositFiatData?.currencyCode)} className=" pop-cancel fw-400" />
                     </div></div>}
@@ -86,7 +101,7 @@ class FiatSummary extends Component {
     }
 }
 const connectStateToProps = ({ userConfig, depositInfo }) => {
-    return { userConfig: userConfig.userProfileInfo, depositInfo }
+    return { userConfig: userConfig.userProfileInfo, depositInfo ,trackAuditLogData: userConfig.trackAuditLogData}
 }
 const connectDispatchToProps = dispatch => {
     return {

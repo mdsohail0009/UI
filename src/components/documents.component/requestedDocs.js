@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import QueryString from 'query-string';
 import apiCalls from '../../api/apiCalls';
 import { validateContent } from "../../utils/custom.validator";
+import Translate from 'react-translate-component';
 import Mome from 'moment'
 const { Panel } = Collapse;
 const { Text } = Typography;
@@ -39,7 +40,9 @@ class RequestedDocs extends Component {
         docReplyObjs: [],
         previewPath: null,
         isSubmitting: false, uploadLoader: false,
-        isMessageError: null
+        isMessageError: null,
+        isValidFile: true,
+        validHtmlError: false,
     }
     componentDidMount() {
         this.getDocument(QueryString.parse(this.props.location.search).id);
@@ -124,8 +127,11 @@ class RequestedDocs extends Component {
     docReject = async (doc) => {
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
         this.setState({ ...this.state, isMessageError: null });
-        if (!item || !item.reply || !validateContent(item?.reply)) {
-            this.setState({ ...this.state, isMessageError: doc.id.replace(/-/g, "") });
+        if (!validateContent(item?.reply)) {
+            this.setState({ ...this.state, validHtmlError: true, isMessageError: false });
+            return;
+        } else if (!item || !item.reply) {
+            this.setState({ ...this.state, isMessageError: doc.id.replace(/-/g, ""), validHtmlError: false });
             return;
         }
         const itemPath = function () {
@@ -134,8 +140,8 @@ class RequestedDocs extends Component {
             } else {
                 return item.path;
             }
-        }();
-        item.path = itemPath;
+        };
+        item.path = itemPath();
         item.status = "Submitted";
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         item.info = JSON.stringify(this.props.trackAuditLogData);
@@ -209,7 +215,7 @@ class RequestedDocs extends Component {
     }
     handleUpload = ({ file }, doc) => {
         this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
-        if (file.status === "done") {
+        if (file.status === "done" && this.state.isValidFile) {
             let replyObjs = [...this.state.docReplyObjs];
             let item = this.isDocExist(replyObjs, doc.id);
             let obj;
@@ -237,9 +243,28 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
         }
         else if (file.status === 'error') {
-            this.setState({ ...this.state, uploadLoader: false, errorMessage: file.response })
+            message.error({ content: `${file.response}` , className: 'custom-msg' })
+            // this.setState({ ...this.state, uploadLoader: false, errorMessage: file.response,  isSubmitting: false  })
+   this.setState({ ...this.state, uploadLoader: false,  isSubmitting: false  })
+        }
+        else if(!this.state.isValidFile){
+            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false  });
         }
     }
+    beforeUpload = (file) => {
+
+        let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+      //  let isFileName = (file.name.split('.')).length > 2 ? false : true;
+        if (fileType[file.type]) {
+            this.setState({ ...this.state, isValidFile: true, })
+            return true
+        } else {
+         message.error({ content: `File is not allowed. You can upload jpg, png, jpeg and PDF  files` , className: 'custom-msg' })
+            this.setState({...this.state, isValidFile:false,})
+            return Upload.LIST_IGNORE;
+        }
+    }
+
     uopdateReplyObj = (item, list) => {
         for (let obj of list) {
             if (obj.id === item.id) {
@@ -334,15 +359,16 @@ class RequestedDocs extends Component {
                                     placeholder="Write your message"
                                     maxLength={200}
                                 />
-                                {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter valid message<Tooltip title="Message should not contain HTML content, please enter valid content"><span className="icon md info" /></Tooltip></div>}
+                                {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
+                                {this.state.validHtmlError && <Translate Component={Text} content="please_enter_valid_content" className="fs-14 text-red" />}
                                 {this.state.errorMessage != null && <Alert
                                     description={this.state.errorMessage}
                                     type="error"
                                     showIcon
                                     closable={false}
-                                    style={{marginBottom:0, marginTop:'16px'}}
+                                    style={{ marginBottom: 0, marginTop: '16px' }}
                                 />}
-                                <Dragger accept=".pdf,.jpg,.jpeg,.png.gif" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} onChange={(props) => { this.handleUpload(props, doc) }}>
+                                <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}>
                                     <p className="ant-upload-drag-icon">
                                         <span className="icon xxxl doc-upload" />
                                     </p>

@@ -8,7 +8,8 @@ import {
   Alert,
   Tooltip,
   Select,
-  Checkbox
+  Checkbox,
+  Empty
 } from "antd";
 import { Link } from "react-router-dom";
 import { setStep } from "../../reducers/buysellReducer";
@@ -102,7 +103,7 @@ const FaitWithdrawal = ({
       Username: userConfig.userName,
       MemeberId: userConfig.id,
       Feature: "Withdraw Fiat",
-      Remarks: "Withdraw Fiat page view",
+      Remarks: "	Withdraw Fiat page view",
       Duration: 1,
       Url: window.location.href,
       FullFeatureName: "Withdraw Fiat"
@@ -119,7 +120,7 @@ const FaitWithdrawal = ({
         bankAddress: "",
         bankAddress2: "",
         zipcode: "",
-        beneficiaryAccountName: "",
+        //beneficiaryAccountName: "",
         beneficiaryAccountAddress: "",
         beneficiaryAccountAddress1: "",
         description: "",
@@ -215,7 +216,7 @@ const FaitWithdrawal = ({
       ) > parseFloat(selectedWallet.avilable)
     ) {
       useDivRef.current.scrollIntoView();
-      return setErrorMsg("Insufficient balance");
+      return setErrorMsg(apicalls.convertLocalLang('insufficient_balance'));
     }
     if (
       parseFloat(
@@ -249,7 +250,8 @@ const FaitWithdrawal = ({
       values.favouriteName || addressDetails.favouriteName;
     setSaveObj(values);
     dispatch(setWithdrawfiat(values));
-    setConfirmationStep("step2");
+    // setConfirmationStep("step2");
+    changeStep('withdrawfaitsummary');
     form.resetFields();
   };
   const getIbanData = async (val) => {
@@ -293,7 +295,9 @@ const FaitWithdrawal = ({
       step1: (
         <>
           <div className="suisfiat-height auto-scroll">
-            <div ref={useDivRef}></div>
+            <div ref={useDivRef}>
+
+            </div>
             {errorMsg !== null && (
               <Alert
                 className="mb-12"
@@ -304,6 +308,7 @@ const FaitWithdrawal = ({
                 onClose={() => setErrorMsg(null)}
                 showIcon
               />
+
             )}
             <Form
               form={form}
@@ -396,8 +401,10 @@ const FaitWithdrawal = ({
                     bordered={false}
                     showArrow={true}
                     onChange={(e) => handleAddressChange(e)}
-                    placeholder={apicalls.convertLocalLang("SelectAddress")}
+                    // placeholder={apicalls.convertLocalLang("SelectAddress")}
+                    placeholder={<Translate content="SelectAddress" component={Form.label} />}
                   >
+
                     {addressLu?.map((item, idx) => (
                       <Option key={idx} value={item.name}>
                         {item.name}
@@ -422,8 +429,12 @@ const FaitWithdrawal = ({
                         : " defaulticon")
                     }
                     onClick={() => selectAddress()}
+
                   >
-                    <span className="icon md address-book d-block c-pointer"></span>
+
+                    <span className="icon md address-book d-block c-pointer">
+
+                    </span>
                   </div>
                 </Tooltip>
               </div>
@@ -654,8 +665,6 @@ const FaitWithdrawal = ({
                         callback();
                       }
                     }
-                  }, {
-                    validator: validateContentRule
                   }
                 ]}
               >
@@ -851,13 +860,21 @@ const FaitWithdrawal = ({
     useDivRef.current.scrollIntoView();
   };
   const handleOk = async () => {
+    debugger
     let currentStep = parseInt(confirmationStep.split("step")[1]);
     if (confirmationStep === "step2") {
-      trackAuditLogData.Action = "Save";
-      trackAuditLogData.Remarks =
-        saveObj?.totalValue + " " + saveObj.walletCode + " withdraw.";
-      saveObj.info = JSON.stringify(trackAuditLogData);
-      let withdrawal = await withdrawSave(saveObj);
+      // trackAuditLogData.Action = "Save";
+      // trackAuditLogData.Remarks =
+      //   saveObj?.totalValue + " " + saveObj.walletCode + " withdraw.";
+      let Obj = Object.assign({}, saveObj);
+      Obj.accountNumber = apicalls.encryptValue(Obj.accountNumber, userConfig?.sk);
+      Obj.bankName = apicalls.encryptValue(Obj.bankName, userConfig?.sk);
+      Obj.routingNumber = apicalls.encryptValue(Obj.routingNumber, userConfig?.sk);
+      Obj.bankAddress = apicalls.encryptValue(Obj.bankAddress, userConfig?.sk);
+      Obj.beneficiaryAccountAddress = apicalls.encryptValue(Obj.beneficiaryAccountAddress, userConfig?.sk);
+      Obj.beneficiaryAccountName = apicalls.encryptValue(Obj.beneficiaryAccountName, userConfig?.sk);
+      Obj.info = JSON.stringify(trackAuditLogData);
+      let withdrawal = await withdrawSave(Obj);
       if (withdrawal.ok) {
         dispatch(fetchDashboardcalls(userConfig.id));
         dispatch(rejectWithdrawfiat());

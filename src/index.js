@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import '@progress/kendo-theme-default/dist/all.css';
-import App from './components/app.component/App';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.css'
 import './assets/css/styles.css';
 import './assets/css/framework.css';
-
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
 import IdleCmp from './authentication/idle.component';
 ReactDOM.render(

@@ -21,11 +21,11 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
         if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && addressBookReducer?.selectedRowData?.id) {
             loadDataAddress();
         }
-        //addressbkTrack();
+        addressbkTrack();
     }, [])
-    // const addressbkTrack = () => {
-    //     apiCalls.trackEvent({ "Type": 'User', "Action": 'Address book page view', "Username": userProfileInfo?.userName, "MemeberId": userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Address book fiat details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
-    // }
+    const addressbkTrack = () => {
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat Address Book Details page view ', "Username": userProfileInfo?.userName, "MemeberId": userProfileInfo?.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Address book details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' });
+    }
     const loadDataAddress = async () => {
         setIsLoading(true)
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'fiat');
@@ -62,7 +62,15 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
             useDivRef.current.scrollIntoView()
             return setErrorMsg('Address label already existed');
         } else {
-            let response = await saveAddress(values);
+            let saveObj = Object.assign({}, values);
+            saveObj.accountNumber = apiCalls.encryptValue(saveObj.accountNumber, userConfig.sk)
+            saveObj.bankAddress = apiCalls.encryptValue(saveObj.bankAddress, userConfig.sk)
+            saveObj.bankName = apiCalls.encryptValue(saveObj.bankName, userConfig.sk)
+            saveObj.beneficiaryAccountAddress = apiCalls.encryptValue(saveObj.beneficiaryAccountAddress, userConfig.sk)
+            saveObj.beneficiaryAccountName = apiCalls.encryptValue(saveObj.beneficiaryAccountName, userConfig.sk)
+            saveObj.routingNumber = apiCalls.encryptValue(saveObj.routingNumber, userConfig.sk)
+            saveObj.toWalletAddress = apiCalls.encryptValue(saveObj.toWalletAddress, userConfig.sk)
+            let response = await saveAddress(saveObj);
             if (response.ok) {
                 setErrorMsg('')
                 useDivRef.current.scrollIntoView();
@@ -150,16 +158,14 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
                         name="accountNumber"
-                        label={<Translate content="Bank_account" component={Form.label} />}
+                        // label={<Translate content="Bank_account" component={Form.label} />}
+                        label={apiCalls.convertLocalLang('Bank_account')}
                         required
                         rules={[
                             { required: true, message: apiCalls.convertLocalLang('is_required') },
                             {
                                 pattern: /^[A-Za-z0-9]+$/,
                                 message: 'Invalid account number'
-                            },
-                            {
-                                validator: validateContentRule
                             }
                         ]}
                     >
@@ -175,9 +181,6 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             {
                                 pattern: /^[A-Za-z0-9]+$/,
                                 message: 'Invalid BIC/SWIFT/Routing number'
-                            },
-                            {
-                                validator: validateContentRule
                             }
                         ]}
                     >

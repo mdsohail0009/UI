@@ -33,10 +33,10 @@ class AuditLogs extends Component {
       message: "",
       searchObj: {
         timeSpan: "Last 1 Day",
-        userName: this.props.userProfile?.userName,
+        userId: this.props.userProfile?.userId,
         feature: "All Features",
-        admin: false,
-        user: true,
+        admin: "user",
+        user: "user",
         fromdate: '',
         todate: '',
       },
@@ -53,7 +53,7 @@ class AuditLogs extends Component {
   }
 
   gridColumns = [
-    { field: "date", title: apicalls.convertLocalLang('Date'), filter: true, filterType: "datetime", width: 250 },
+    { field: "date", title: apicalls.convertLocalLang('Date'), filter: true, isShowTime: true, filterType: "date", width: 250 },
     { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 250 },
     { field: "featurePath", title: apicalls.convertLocalLang('Feature_Path'), filter: true, width: 250 },
     { field: "action", title: apicalls.convertLocalLang('Action'), width: 250, filter: true },
@@ -67,8 +67,9 @@ class AuditLogs extends Component {
     this.fetchAuditLoginfo(e.dataItem.id, e);
   }
   componentDidMount = () => {
-    this.TransactionFeatureSearch(this.props.userProfile?.userName);
+    this.gridRef = React.createRef();
     this.auditlogsTrack();
+    this.TransactionFeatureSearch(this.props.userProfile?.userName);
   };
   fetchAuditLoginfo = async (id, e) => {
     this.setState({
@@ -357,6 +358,7 @@ class AuditLogs extends Component {
           closeIcon={null}
           onClose={this.hideMoreAuditLogs}
           className="side-drawer"
+          destoryOnClose={true}
         >
           {(isLoading && logRowData?.browser == null || logRowData?.location == null || logRowData?.ip == null || logRowData?.deviceType == null) ? <div className="text-center"><Spin /></div> : <><div className="coin-info">
             <Text>City</Text>
