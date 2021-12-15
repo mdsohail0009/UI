@@ -459,7 +459,7 @@ export default {
   active_inactive: '活動/非活動',
   location: '地點',
   ipAddress: 'IP地址',
-  menu_wallets: "錢包",
+  menu_wallets: "餘額",
   crypto_wallets: "加密钱包",
   verification_code: "輸入驗證碼",
   get_code: "獲取一次性密碼",

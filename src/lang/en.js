@@ -463,7 +463,7 @@ export default {
   active_inactive: 'Active/Inactive',
   location: 'Location',
   ipAddress: 'IP Address',
-  menu_wallets: "Wallets",
+  menu_wallets: "Balances",
   crypto_wallets: "Crypto Wallets",
   verification_code: "Enter Verification Code",
   get_code: "GET OTP",
