@@ -92,7 +92,7 @@ class CoinView extends React.Component {
         selectedObj.coinFullName = selectedObj.name
         selectedObj.oneCoinValue = selectedObj.current_price;
         selectedObj.id = selectedObj.memberWalletId;
-        selectedObj.withdrawMinValue=selectedObj.swapMinValue
+        selectedObj.withdrawMinValue = selectedObj.swapMinValue
         this.props.dispatch(fetchWithDrawWallets({ memberId: this.props?.userProfile?.id }));
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
         this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
@@ -170,17 +170,12 @@ class CoinView extends React.Component {
                                 </Text>
                             </div>
                         </div>
-                            <div>
-                                <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(coinData, "buy")} className="custom-btn prime" />
-                                <Translate content="sell" component={Button} className="custom-btn sec outline ml-16" onClick={() => this.showBuyDrawer(coinData, "sell")} />
-                            </div>
-
-                            {/* <ul className="m-0">
+                            <ul className="m-0">
                                 <li onClick={() => this.showBuyDrawer(coinData, "buy")}><div><span className="icon md file" /></div>BUY</li>
                                 <li onClick={() => this.showBuyDrawer(coinData, "sell")}><div><span className="icon md file" /></div>SELL</li>
-                                <li  onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1}><div><span className="icon md file" /></div>DEPOSIT</li> 
+                                {/*<li  onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1}><div><span className="icon md file" /></div>DEPOSIT</li>*/}
                                 <li onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2}><div><span className="icon md file" /></div>WITHDRAW</li>
-                            </ul> */}
+                            </ul>
                         </> : <div className="text-center mt-24"><Spin /></div>}
                     </div>
                     <div className="box p-24 coin-details">
