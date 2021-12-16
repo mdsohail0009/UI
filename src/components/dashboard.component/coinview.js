@@ -171,10 +171,10 @@ class CoinView extends React.Component {
                             </div>
                         </div>
                             <ul className="m-0">
-                                <li onClick={() => this.showBuyDrawer(coinData, "buy")}><div><span className="icon md file" /></div>BUY</li>
-                                <li onClick={() => this.showBuyDrawer(coinData, "sell")}><div><span className="icon md file" /></div>SELL</li>
+                                <li onClick={() => this.showBuyDrawer(coinData, "buy")} className="c-pointer"><div><span className="icon md buy" /></div>BUY</li>
+                                <li onClick={() => this.showBuyDrawer(coinData, "sell")} className="c-pointer"><div><span className="icon md sell" /></div>SELL</li>
                                 {/*<li  onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1}><div><span className="icon md file" /></div>DEPOSIT</li>*/}
-                                <li onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2}><div><span className="icon md file" /></div>WITHDRAW</li>
+                                <li onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} className="c-pointer"><div><span className="icon md withdraw" /></div>WITHDRAW</li>
                             </ul>
                         </> : <div className="text-center mt-24"><Spin /></div>}
                     </div>
