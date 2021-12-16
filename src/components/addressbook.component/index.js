@@ -42,12 +42,9 @@ class AddressBook extends Component {
         this.gridCryptoRef = React.createRef();
     }
     componentDidMount() {
-        debugger
-        //this.addressbookTrack();
         if (!this.state.cryptoFiat) {
             apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto Address book grid view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Crypto Address book grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
         }
-
     }
 
     columnsFiat = [
