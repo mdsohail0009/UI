@@ -55,7 +55,7 @@ class Summary extends Component {
                         <Translate className="fw-400 text-white" content="convert" component={Text} />
                         <Currency defaultValue={convertValue} prefix={""} decimalPlaces={decimalPlaces} className="fw-400 text-white-30" suffixText={convertCoin} />
                     </div>}
-                    {/* <div className="fs-12 text-white-30 text-center my-16"><Translate className="fw-400 text-white" content="final_Amount" component={Text} /></div> */}
+                    <div className="text-center my-16"><Translate className="fs-12 fw-200 text-white" content="final_Amount" component={Text} /></div>
                     <div className="d-flex p-16 mb-36 agree-check">
                         <label>
                             <input type="checkbox" id="agree-check" checked={onCheked} onChange={({ currentTarget: { checked } }) => { this.props.onTermsChange(checked) }} />

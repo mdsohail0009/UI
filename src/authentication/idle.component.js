@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import App from '../App';
+import { Button } from 'antd';
+import App from '../components/app.component/App';
 import { Modal } from 'antd';
 import { userManager } from './index';
 import IdleTimer from 'react-idle-timer'
@@ -47,8 +48,21 @@ class IdleCmp extends Component {
                     debounce={250}
                 />
                 <App />
-                <Modal title="Session timedout alert" visible={showIdleModal} closable={false} closeIcon={false} onOk={() => { userManager.signoutRedirect(); }} onCancel={() => this.handleCancel()} >
-                    <h4>You're session will be logged out in {counter}</h4>
+                <Modal
+                    title="Session timedout alert" visible={showIdleModal}
+                    closable={false}
+                    closeIcon={false}
+                    footer={[
+                        <>
+                            <Button style={{ width: 100 }}
+                                className=" pop-cancel"
+                                onClick={() => this.handleCancel()}>Cancel</Button>
+                            <Button className="primary-btn pop-btn"
+                                style={{ width: 100, height: 50 }}
+                                onClick={() => { userManager.signoutRedirect() }}>Ok</Button>
+                        </>
+                    ]} >
+                    <h4 className="text-white fs-16 fw-400">You're session will be logged out in {counter}</h4>
                 </Modal>
             </div >
         )

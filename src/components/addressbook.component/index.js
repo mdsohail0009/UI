@@ -334,7 +334,7 @@ class AddressBook extends Component {
                         >
                             Cancel
                         </Button>
-                        <Button className="primary-btn pop-btn" onClick={this.handleSatatuSave} style={{ width: '100px' }}>
+                        <Button className="primary-btn pop-btn" onClick={this.handleSatatuSave} style={{ width: 120, height: 50 }}>
                             Save
                         </Button>
                     </>}

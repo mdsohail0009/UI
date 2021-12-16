@@ -282,7 +282,7 @@ export default {
   Ethereum_Text: 'Ethereum',
   searchCurrency: 'Pera sa Paghahanap',
   selectWallet: 'Piliin ang Wallet',
-  final_Amount: 'Ang iyong huling halaga ay maaaring mapalitan ng in 10 segundo.',
+  final_Amount: 'Output dianggarkan. Jumlah anda akan berubah sementara transaksi atau transaksi akan kembali.',
   agree_sell: 'Sumasang-ayon ako sa Suissebase',
   terms: 'Mga palatuntunan',
   refund_cancellation: 'at ang patakaran sa pagbabalik, refund at pagkansela nito.',
