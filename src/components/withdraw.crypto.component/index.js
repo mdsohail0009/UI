@@ -11,18 +11,11 @@ const { Paragraph, Text, Title } = Typography;
 const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
     useEffect(() => {
         loadData();
-        trackevent();
     }, [])
     const loadData = () => {
         dispatch(fetchWithDrawWallets({ memberId: userProfile?.id }));
         dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
         dispatch(setSubTitle(apicalls.convertLocalLang("selectCurrencyinWallet")));
-
-    }
-    const trackevent = () => {
-        apicalls.trackEvent({
-            "Type": 'User', "Action": 'Withdraw Crypto page view', "Username": userProfile?.userName, "MemeberId": userProfile?.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
-        });
     }
     const { cryptoWithdraw: { wallets } } = sendReceive;
 
@@ -31,7 +24,7 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
     }
     return <>
         {/* <Translate content="withdraw_a_crypto" component={Title} className="text-white-30 fw-200 mb-8 mt-16 custom-font" /> */}
-        <Translate content="withdraw_a_crypto_text" component={Paragraph}  className="text-white-30 fw-300 fs-16 mt-16" />
+        <Translate content="withdraw_a_crypto_text" component={Paragraph} className="text-white-30 fw-300 fs-16 mt-16" />
         <div className="dep-withdraw auto-scroll">
             {wallets?.data?.map((wallet, indx) => <Card key={indx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { dispatch(setSelectedWithDrawWallet(wallet)); dispatch(setStep('withdraw_crypto_selected')) }} >
                 <span className="d-flex align-center">

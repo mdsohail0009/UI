@@ -44,14 +44,17 @@ class AuditLogs extends Component {
       timeListSpan: ["Last 1 Day", "Last One Week", "Custom"],
       gridUrl: process.env.REACT_APP_GRID_API + "AuditLogs/Accounts",
       featureName: ''
-
-
     };
-
     this.gridRef = React.createRef();
-
   }
-
+  componentDidMount = () => {
+    this.gridRef.current.refreshGrid();
+    this.auditlogsTrack();
+    this.TransactionFeatureSearch(this.props.userProfile?.userName);
+  };
+  auditlogsTrack = () => {
+    apicalls.trackEvent({ "Type": 'User', "Action": 'Audit logs page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Audit Logs', "Remarks": 'Audit logs page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Audit Logs' });
+  }
   gridColumns = [
     { field: "date", title: apicalls.convertLocalLang('Date'), filter: true, isShowTime: true, filterType: "date", width: 250 },
     { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 250 },
@@ -62,15 +65,9 @@ class AuditLogs extends Component {
     { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true, width: 500 },
     { field: "", title: "", width: 60, customCell: (props) => (<td><Tooltip title="View More"><div className="icon md info c-pointer" onClick={() => this.showMoreAuditLogs(props)}></div></Tooltip></td>) },
   ]
-
   showMoreAuditLogs = (e) => {
     this.fetchAuditLoginfo(e.dataItem.id, e);
   }
-  componentDidMount = () => {
-    this.gridRef = React.createRef();
-    this.auditlogsTrack();
-    this.TransactionFeatureSearch(this.props.userProfile?.userName);
-  };
   fetchAuditLoginfo = async (id, e) => {
     this.setState({
       ...this.state, isLoading: false, moreAuditLogs: true, featureName: e.dataItem.feature
@@ -87,9 +84,7 @@ class AuditLogs extends Component {
       moreAuditLogs: false, logRowData: {}
     })
   }
-  auditlogsTrack = () => {
-    apicalls.trackEvent({ "Type": 'User', "Action": 'Audit logs page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Audit Logs', "Remarks": 'Audit logs page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Audit Logs' });
-  }
+
   TransactionUserSearch = async (userVal) => {
     let response = await userNameLuSearch(userVal);
     if (response.ok) {
