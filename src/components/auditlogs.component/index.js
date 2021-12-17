@@ -47,9 +47,11 @@ class AuditLogs extends Component {
     };
     this.gridRef = React.createRef();
   }
-  componentDidMount = () => {
-    this.gridRef.current.refreshGrid();
+  componentDidMount = async () => {
     this.auditlogsTrack();
+    setTimeout(() => this.gridRef.current.refreshGrid(), 200);
+
+
     this.TransactionFeatureSearch(this.props.userProfile?.userName);
   };
   auditlogsTrack = () => {
@@ -195,6 +197,7 @@ class AuditLogs extends Component {
           onClose={this.props.onClose}
           visible={this.props.showDrawer}
           className="side-drawer-full custom-gridresponsive"
+          destoryOnClose={true}
         >
           <div>
             <Form
