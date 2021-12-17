@@ -310,7 +310,7 @@ class Header extends Component {
             fromValue: null,
             receiveValue: null,
             errorMessage: null
-        })
+        });
         this.props.clearSwapfullData()
         this.setState({
             walletsDrawer: false,
@@ -327,7 +327,7 @@ class Header extends Component {
             transactionDrawer: false,
             notificationsDrawer: false,
             auditlogsDrawer: false, Visibleprofilemenu: false
-        })
+        });
     }
     enableDisable2fa = (status) => {
         var url = '';

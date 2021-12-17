@@ -50,6 +50,7 @@ class SellSummary extends Component {
             obj.toValue = this.state.sellpreviewData.amountNativeCurrency
             obj.exicutedPrice = this.state.sellpreviewData.oneCoinValue
             obj.totalAmount = this.state.sellpreviewData.amountNativeCurrency + this.props.sellData.sellsaveObject.comission;
+            obj.comission =this.props.sellData.sellsaveObject.comission;
             this.props.trackAuditLogData.Action = 'Save';
             this.props.trackAuditLogData.Remarks = obj.fromValue + " " + this.state.sellpreviewData.coin + " selled"
             obj.info = JSON.stringify(this.props.trackAuditLogData)
