@@ -1,7 +1,7 @@
 import * as SignalR from '@microsoft/signalr';
 
 const connection = new SignalR.HubConnectionBuilder()
-    .withUrl("/chathub")
+    .withUrl(process.env.REACT_APP_NOTIFICATION_HUB + "/NotificationHub?userid=123456789")
     .configureLogging(SignalR.LogLevel.Information)
     .build();
 
@@ -20,6 +20,6 @@ connection.onclose(async () => {
 });
 
 // Start the connection.
-//start();
+start();
 
 export { connection }
