@@ -13,7 +13,10 @@ function openNotification(message, title) {
 }
 async function start(id) {
   const  connection = new SignalR.HubConnectionBuilder()
-        .withUrl(process.env.REACT_APP_NOTIFICATION_HUB + "/NotificationHub?userid=" + id)
+        .withUrl(process.env.REACT_APP_NOTIFICATION_HUB + "/NotificationHub?userid=" + id,{
+            skipNegotiation:true,
+            transport:SignalR.HttpTransportType.WebSockets
+        })
         .configureLogging(SignalR.LogLevel.Information)
         .build();
     try {
