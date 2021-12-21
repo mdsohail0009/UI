@@ -11,10 +11,21 @@ import { AppInsightsContext } from "@microsoft/applicationinsights-react-js";
 import { reactPlugin } from "../../Shared/appinsights";
 import Notifications from "../../notifications";
 import { setNotificationCount } from '../../reducers/dashboardReducer';
-import { connection } from "../../utils/signalR";
+import {startConnection } from "../../utils/signalR";
 function App(props) {
   const [loading, setLoading] = useState(true);
   const [showNotifications, setNotifications] = useState(false);
+  const connectToHub = () => {
+    setTimeout(() => {
+      const { userConfig: { userProfileInfo } } = store.getState();
+      if (userProfileInfo?.id) {
+        startConnection(userProfileInfo?.id);
+      } else {
+        connectToHub();
+      }
+    }, 2000)
+
+  }
   useEffect(() => {
     onMessageListener().then(payload => {
       const { dashboard: { notificationCount } } = store.getState();
@@ -49,9 +60,7 @@ function App(props) {
       t.parentNode.insertBefore(s, t);
 
     })
-    connection.on("sendToUser", (user, message) => {
-      debugger;
-    });
+    connectToHub();
   }, [])
   return (
     <Provider store={store}>
