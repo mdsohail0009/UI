@@ -18,12 +18,9 @@ async function start(id) {
         .build();
     try {
         await connection.start();
-        console.log("SignalR Connected.");
     } catch (err) {
         const { userConfig: { userProfileInfo } } = store.getState();
-
         openNotification("Connection failed to hub",err.message||err.data);
-        console.log(err);
         setTimeout(()=>{start(userProfileInfo?.id)}, 5000);
     }
     connection.onclose(async () => {
