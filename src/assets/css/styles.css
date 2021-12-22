@@ -868,7 +868,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .suisfiat-height{max-height: calc(100vh - 215px);}
     .addCryptoList{max-height: calc(100vh - 218px); overflow-y: auto; }
     .round-pills .ant-radio-button-wrapper,.default-radio .ant-radio-button-wrapper{min-width: 120px;}
-    .dep-withdraw{max-height: calc(100vh - 300px);}
+    .dep-withdraw{max-height: calc(100vh - 260px);}
     .crypto-card .ant-card-body{padding: 33px;height: 231px;}
     .crypto-percent{font-size: 60px;line-height: normal;}
     .coin{transform: scale(1);}
