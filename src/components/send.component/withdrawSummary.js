@@ -143,21 +143,23 @@ class WithdrawSummary extends Component {
       this.state.type
     );
     if (response.ok) {
-      this.setState({ ...this.state, buttonText: 'resendotp', inputDisable: false, disable: true, seconds1: "02:00",verificationText:
-      apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber },()=>{ this.startTimer();})
-     
+      this.setState({
+        ...this.state, buttonText: 'resendotp', inputDisable: false, disable: true, seconds1: "02:00", verificationText:
+          apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber
+      }, () => { this.startTimer(); })
+
     }
     else {
-     this.setState({...this.state,errorMsg:apiCalls.convertLocalLang("request_fail")});
+      this.setState({ ...this.state, errorMsg: apiCalls.convertLocalLang("request_fail") });
     }
   };
   handleOtp = (val) => {
-    this.setState({ ...this.state, otp: val.code});
+    this.setState({ ...this.state, otp: val.code });
   };
 
   saveWithdrwal = async (values) => {
-       if (this.state.onTermsChange) {
-      let response = await apiCalls.getVerification( 
+    if (this.state.onTermsChange) {
+      let response = await apiCalls.getVerification(
         this.props.userProfile.id,
         values.code
       );
@@ -165,7 +167,7 @@ class WithdrawSummary extends Component {
       if (response.ok) {
         message.destroy();
         message.success({
-          content: "OTP Verified Successfully",
+          content: "OTP verified successfully",
           className: "custom-msg",
           duration: 0.5
         });
@@ -326,20 +328,20 @@ class WithdrawSummary extends Component {
                 className="cust-input text-left"
                 placeholder={apiCalls.convertLocalLang("verification_code")}
                 maxLength={6}
-                onKeyDown={(event) => 
-                  { 
-                     if(event.currentTarget.value.length > 5 && !(event.key=="Backspace" || event.key =="Delete")) {
-                      event.preventDefault();}
-                      else if(/^\d+$/.test(event.key)){
-                        this.handleOtp(event.currentTarget.value)
-                      }
-                      else if(event.key=="Backspace" || event.key =="Delete"){
-                       }
-                      else{
-                      event.preventDefault()
-                    }
-                   }}
-             
+                onKeyDown={(event) => {
+                  if (event.currentTarget.value.length > 5 && !(event.key == "Backspace" || event.key == "Delete")) {
+                    event.preventDefault();
+                  }
+                  else if (/^\d+$/.test(event.key)) {
+                    this.handleOtp(event.currentTarget.value)
+                  }
+                  else if (event.key == "Backspace" || event.key == "Delete") {
+                  }
+                  else {
+                    event.preventDefault()
+                  }
+                }}
+
                 style={{ width: '100%' }}
                 disabled={this.state.inputDisable}
               />
@@ -375,16 +377,16 @@ class WithdrawSummary extends Component {
               </Paragraph>
             </div>
             <Button
-          
-          size="large"
-          block
-          className="pop-btn"
-          htmlType="submit"
-        >
-          <Translate content="Confirm" component={Text} />
-        </Button>
 
-  </Form>
+              size="large"
+              block
+              className="pop-btn"
+              htmlType="submit"
+            >
+              <Translate content="Confirm" component={Text} />
+            </Button>
+
+          </Form>
           <div className="text-center mt-16">
             <Translate
               content="cancel"

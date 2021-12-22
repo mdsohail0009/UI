@@ -79,7 +79,7 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
     if (response.ok) {
       message.destroy();
       message.success({
-        content: "OTP Verified Successfully",
+        content: "OTP verified successfully",
         className: "custom-msg",
         duration: 0.5
       });
