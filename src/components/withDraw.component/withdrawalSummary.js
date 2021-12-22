@@ -243,7 +243,7 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
             </Button>
           }>
           <Input
-            type="number"
+            type="text"
             className="cust-input text-left"
             placeholder={apiCalls.convertLocalLang("verification_code")}
             maxLength={6}
