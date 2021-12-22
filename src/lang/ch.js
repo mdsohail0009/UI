@@ -451,7 +451,7 @@ export default {
   reload: '重新加載',
   cockpit: '座艙',
   settings_msg: '設置保存成功',
-  notification_msg: '沒有可用的通知',
+  notification_msg: '没有可用的通知',
   bank_msg: '銀行信息不可用',
   address_msg: '地址保存成功',
   add: '添加',

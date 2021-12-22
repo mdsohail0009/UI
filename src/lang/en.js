@@ -455,7 +455,7 @@ export default {
   reload: 'Reload',
   cockpit: 'Cockpit',
   settings_msg: 'Settings saved successfully',
-  notification_msg: 'No Notifications Available',
+  notification_msg: 'No notifications available',
   bank_msg: 'Bank details not available',
   address_msg: 'Address saved successfully',
   add: 'Add',
