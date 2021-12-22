@@ -3,7 +3,7 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import { getSellPreviewData, savesellData } from '../buy.component/api'
 import Summary from '../summary.component';
-import { fetchDashboardcalls,fetchMarketCoinData } from '../../reducers/dashboardReducer';
+import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
 import { message } from 'antd';
 import apicalls from '../../api/apiCalls';
@@ -50,7 +50,7 @@ class SellSummary extends Component {
             obj.toValue = this.state.sellpreviewData.amountNativeCurrency
             obj.exicutedPrice = this.state.sellpreviewData.oneCoinValue
             obj.totalAmount = this.state.sellpreviewData.amountNativeCurrency + this.props.sellData.sellsaveObject.comission;
-            obj.comission =this.props.sellData.sellsaveObject.comission;
+            obj.comission = this.props.sellData.sellsaveObject.comission;
             this.props.trackAuditLogData.Action = 'Save';
             this.props.trackAuditLogData.Remarks = obj.fromValue + " " + this.state.sellpreviewData.coin + " selled"
             obj.info = JSON.stringify(this.props.trackAuditLogData)
@@ -85,7 +85,7 @@ class SellSummary extends Component {
             onRefresh={() => { this.refreshPage() }}
             onCancel={() => this.props.changeStep('step1')}
             onClick={() => this.saveSellData()}
-            okBtnTitle={"confirm_now"}
+            okBtnTitle={"sell"}
             onTermsChange={(checked) => { this.setState({ ...this.state, isTermsAgree: checked }) }}
             onCheked={this.state.isTermsAgree}
             onErrorClose={() => this.setState({ ...this.state, error: { valid: true, message: null } })} />
@@ -103,7 +103,7 @@ const connectDispatchToProps = dispatch => {
         fetchDashboardData: (member_id) => {
             dispatch(fetchDashboardcalls(member_id))
         },
-        fetchMarketCoinDataValue:()=>{
+        fetchMarketCoinDataValue: () => {
             dispatch(fetchMarketCoinData(true))
         }
     }

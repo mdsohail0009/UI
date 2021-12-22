@@ -254,7 +254,7 @@ class SwapCoins extends Component {
                         <Translate content="ExchangeRate" component={Text} className="custom-font fw-300 fs-14 text-white" /><Currency className={'currencyContains fw-300 text-white-30'} defaultValue={this.state.price} decimalPlaces={"8"} prefix={""} suffixText={coinReceiveDetailData.coin} prefixText={`1 ${coinDetailData.coin} =  `} />
                     </Paragraph>}
                 </div>
-                <Translate size="large" block className="pop-btn mt-36" content="preview_swap" component={Button} onClick={() => { this.previewClick() }} />
+                <Translate size="large" block className="pop-btn mt-36" content="confirm" component={Button} onClick={() => { this.previewClick() }} />
             </div>
         )
     }
