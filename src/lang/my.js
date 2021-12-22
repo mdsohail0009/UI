@@ -467,7 +467,7 @@ export default {
   digit_code: "Ilagay ang 6 na digit na code na ipinadala sa",
   selectcurrency: "Pilih Mata Wang",
   bank_account_number: 'Nombor akaun bank',
-  invalid_code: 'di-wastong code',
+  invalid_code: 'Kod tidak sah',
   resend_text: 'i-click ang Resend Button pagkatapos ng 2min',
   please_enter_valid_content: 'Sila masukkan kandungan yang sah',
   W: 'W',

@@ -86,7 +86,7 @@ class FiatSummary extends Component {
                     </div>
                     <div className="pay-list fs-14">
                         <Translate content="Bank_name" component={Text} className="fw-400 text-white" />
-                        <Text className="fw-500 text-white-50">{depositFiatData?.BankName}</Text>
+                        <Text className="fw-500 text-white-50">{depositFiatData?.bankName}</Text>
                     </div>
                     <ul className="pl-0 ml-16 text-white-50 mt-36">
                         <li><Translate className="pl-0 ml-0 text-white-50" content="account_details" component={Text} /> </li>
@@ -101,7 +101,7 @@ class FiatSummary extends Component {
     }
 }
 const connectStateToProps = ({ userConfig, depositInfo }) => {
-    return { userConfig: userConfig.userProfileInfo, depositInfo ,trackAuditLogData: userConfig.trackAuditLogData}
+    return { userConfig: userConfig.userProfileInfo, depositInfo, trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Button, Form, message,In, Input,Alert } from "antd";
+import { Typography, Button, Form, message, In, Input, Alert } from "antd";
 import Currency from "../shared/number.formate";
 import { setStep } from "../../reducers/buysellReducer";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
-import {withdrawSave,} from "../../api/apiServer";
+import { withdrawSave, } from "../../api/apiServer";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
-import {setWithdrawfiat,rejectWithdrawfiat,setWithdrawfiatenaable} from "../../reducers/sendreceiveReducer";
+import { setWithdrawfiat, rejectWithdrawfiat, setWithdrawfiatenaable } from "../../reducers/sendreceiveReducer";
 
-const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trackAuditLogData}) => {
+const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, trackAuditLogData }) => {
   const { Text } = Typography;
   const [isLoding, setIsLoding] = useState(false);
   const [form] = Form.useForm();
@@ -22,16 +22,18 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
   const [invalidcode, setInvalidCode] = useState("");
   const [validationText, setValidationText] = useState("");
   const [disable, setDisable] = useState(false);
-  const [inputDisable,setInputDisable] = useState(true);
-  const [showtext,setShowTimer] = useState(true);
-  const [resendDisable,setResendDisable] = useState(false);
-  const [errorMsg,setMsg] = useState(false);
+  const [inputDisable, setInputDisable] = useState(true);
+  const [showtext, setShowTimer] = useState(true);
+  const [resendDisable, setResendDisable] = useState(false);
+  const [errorMsg, setMsg] = useState(false);
   const [refresh, setRefresh] = useState(false);
-  const[type,setType] = useState('Send');
-  const btnList = {get_otp:<Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />,
- resendotp:<Translate className="pl-0 ml-0 text-yellow-50" content="resend_code"  with={{ counter: `${disable ? "(" + seconds + ")" : ""}` }} />}
+  const [type, setType] = useState('Send');
+  const btnList = {
+    get_otp: <Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />,
+    resendotp: <Translate className="pl-0 ml-0 text-yellow-50" content="resend_code" with={{ counter: `${disable ? "(" + seconds + ")" : ""}` }} />
+  }
 
-              
+
 
   useEffect(() => {
     withdrawSummayTrack();
@@ -54,26 +56,26 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
   let timeInterval;
   let count = 120;
   const startTimer = () => {
-  let timer= count;
-  let minutes,seconds;
-    timeInterval =   setInterval(function () {
+    let timer = count;
+    let minutes, seconds;
+    timeInterval = setInterval(function () {
       minutes = parseInt(timer / 60, 10)
       seconds = parseInt(timer % 60, 10);
-       minutes = minutes < 10 ? "0" + minutes : minutes;
+      minutes = minutes < 10 ? "0" + minutes : minutes;
       seconds = seconds < 10 ? "0" + seconds : seconds;
-      setSeconds( minutes + ":" + seconds);
-       if (--timer < 0) {
-        timer= count;
-        clearInterval(timeInterval); 
+      setSeconds(minutes + ":" + seconds);
+      if (--timer < 0) {
+        timer = count;
+        clearInterval(timeInterval);
         setDisable(false);
         setType("Resend");
-        }
-      
-  }, 1000);
-}
+      }
+
+    }, 1000);
+  }
 
   const saveWithdrwal = async (values) => {
-     let response = await apiCalls.getVerification(userConfig?.id, values.code);
+    let response = await apiCalls.getVerification(userConfig?.id, values.code);
     if (response.ok) {
       message.destroy();
       message.success({
@@ -82,27 +84,27 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
         duration: 0.5
       });
       setIsLoding(true);
-    let Obj = Object.assign({}, sendReceive.withdrawFiatObj);
-    Obj.accountNumber = apiCalls.encryptValue(Obj.accountNumber, userConfig?.sk);
-    Obj.bankName = apiCalls.encryptValue(Obj.bankName, userConfig?.sk);
-    Obj.routingNumber = apiCalls.encryptValue(Obj.routingNumber, userConfig?.sk);
-    Obj.bankAddress = apiCalls.encryptValue(Obj.bankAddress, userConfig?.sk);
-    Obj.beneficiaryAccountAddress = apiCalls.encryptValue(Obj.beneficiaryAccountAddress, userConfig?.sk);
-    Obj.beneficiaryAccountName = apiCalls.encryptValue(Obj.beneficiaryAccountName, userConfig?.sk);
-    Obj.info = JSON.stringify(trackAuditLogData);
-    let withdrawal = await withdrawSave(Obj);
-    if (withdrawal.ok) {
-      dispatch(fetchDashboardcalls(userConfig.id));
-      dispatch(rejectWithdrawfiat());
-      changeStep("step7");
-    }
-       
-  } else {
-    useOtpRef.current.scrollIntoView();
-    setMsg(apiCalls.convertLocalLang("invalid_code"));
+      let Obj = Object.assign({}, sendReceive.withdrawFiatObj);
+      Obj.accountNumber = apiCalls.encryptValue(Obj.accountNumber, userConfig?.sk);
+      Obj.bankName = apiCalls.encryptValue(Obj.bankName, userConfig?.sk);
+      Obj.routingNumber = apiCalls.encryptValue(Obj.routingNumber, userConfig?.sk);
+      Obj.bankAddress = apiCalls.encryptValue(Obj.bankAddress, userConfig?.sk);
+      Obj.beneficiaryAccountAddress = apiCalls.encryptValue(Obj.beneficiaryAccountAddress, userConfig?.sk);
+      Obj.beneficiaryAccountName = apiCalls.encryptValue(Obj.beneficiaryAccountName, userConfig?.sk);
+      Obj.info = JSON.stringify(trackAuditLogData);
+      let withdrawal = await withdrawSave(Obj);
+      if (withdrawal.ok) {
+        dispatch(fetchDashboardcalls(userConfig.id));
+        dispatch(rejectWithdrawfiat());
+        changeStep("step7");
+      }
+
+    } else {
+      useOtpRef.current.scrollIntoView();
+      setMsg(apiCalls.convertLocalLang("invalid_code"));
     }
   };
-  const onCancel = () =>{
+  const onCancel = () => {
     changeStep("step1");
     dispatch(setWithdrawfiatenaable(true))
   }
@@ -112,7 +114,7 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
 
   const getOTP = async (val) => {
 
-   
+
     let response = await apiCalls.getCode(userConfig.id, type);
     if (response.ok) {
       setButtonText('resendotp');
@@ -122,27 +124,28 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
       setVerificationText(
         apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
       );
-        startTimer ();
-      }
-      else{
-        useOtpRef.current.scrollIntoView();
-        setMsg(apiCalls.convertLocalLang("request_fail"));
-      }
-}
+      startTimer();
+    }
+    else {
+      useOtpRef.current.scrollIntoView();
+      setMsg(apiCalls.convertLocalLang("request_fail"));
+    }
+  }
 
   return (
-    
+
     <div className="mt-16"> <div ref={useOtpRef}></div>
 
-{errorMsg && (
-          <Alert
-            showIcon
-            type="info"
-            description={errorMsg}
-            closable={false}
-          />
-        )}
-     <Text className="fs-14 text-white-50 fw-200">
+      {errorMsg && (
+        <Alert
+          showIcon
+          type="info"
+          message={apiCalls.convertLocalLang("withdrawFiat")}
+          description={errorMsg}
+          closable={false}
+        />
+      )}
+      <Text className="fs-14 text-white-50 fw-200">
         {" "}
         <Translate
           content="amount"
@@ -213,7 +216,7 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
           />
         </li>
       </ul>
-      
+
 
       <Form
         className="mt-36"
@@ -229,42 +232,42 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
             <div><Text className="fs-12 text-white-30 fw-200">
               {verificationText}
             </Text>
-            <Text className="fs-12 text-red fw-200" style={{float: "right", color: 'var(--textRed)'}}>
-            {invalidcode}
-          </Text></div>
+              <Text className="fs-12 text-red fw-200" style={{ float: "right", color: 'var(--textRed)' }}>
+                {invalidcode}
+              </Text></div>
           }
-          rules={[{ required: true, message:"Is required" }]}
-         label={
-            <Button type="text" onClick={getOTP}  disabled={disable}>
+          rules={[{ required: true, message: "Is required" }]}
+          label={
+            <Button type="text" onClick={getOTP} disabled={disable}>
               {isResend && btnList[buttonText]}
-           </Button>
+            </Button>
           }>
-            <Input
-          type="number"
+          <Input
+            type="number"
             className="cust-input text-left"
             placeholder={apiCalls.convertLocalLang("verification_code")}
             maxLength={6}
-            onKeyDown={(event) => 
-              { 
-                 if(event.currentTarget.value.length > 5 && !(event.key=="Backspace" || event.key =="Delete")){
-                  event.preventDefault();}
-                  else if(/^\d+$/.test(event.key)){
-                    setOtp(event.currentTarget.value)
-                  }
-                  else if(event.key=="Backspace" || event.key =="Delete"){
+            onKeyDown={(event) => {
+              if (event.currentTarget.value.length > 5 && !(event.key == "Backspace" || event.key == "Delete")) {
+                event.preventDefault();
+              }
+              else if (/^\d+$/.test(event.key)) {
+                setOtp(event.currentTarget.value)
+              }
+              else if (event.key == "Backspace" || event.key == "Delete") {
 
-                  }
-                  else{
-                  
-                  event.preventDefault()
-                  
-     }
-       }}
-               style={{ width: "100%" }}
+              }
+              else {
+
+                event.preventDefault()
+
+              }
+            }}
+            style={{ width: "100%" }}
             disabled={inputDisable}
           />
         </Form.Item>
-       <Button
+        <Button
           disabled={isLoding}
           size="large"
           block
@@ -289,7 +292,7 @@ const WithdrawalFiatSummary = ({sendReceive,userConfig, changeStep,dispatch,trac
 };
 
 const connectStateToProps = ({ userConfig, sendReceive }) => {
-  return { userConfig: userConfig.userProfileInfo, sendReceive,  trackAuditLogData: userConfig.trackAuditLogData };
+  return { userConfig: userConfig.userProfileInfo, sendReceive, trackAuditLogData: userConfig.trackAuditLogData };
 };
 const connectDispatchToProps = (dispatch) => {
   return {
@@ -299,4 +302,4 @@ const connectDispatchToProps = (dispatch) => {
     dispatch
   };
 };
-export default connect(connectStateToProps,connectDispatchToProps)(WithdrawalFiatSummary);
+export default connect(connectStateToProps, connectDispatchToProps)(WithdrawalFiatSummary);

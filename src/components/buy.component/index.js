@@ -79,7 +79,7 @@ class BuySell extends Component {
             addcard: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             depositcrypto: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             selectcrypto: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
-            summary: <span />,
+            summary: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             billingaddress: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             addressscanner: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             depositfiat: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,

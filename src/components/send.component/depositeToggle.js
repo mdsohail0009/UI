@@ -22,11 +22,10 @@ class DepositeCrypto extends Component {
         this.setState({ ...this.state, activeKey: this.props.sendReceive?.cryptoWithdraw?.activeKey || 1, sendReceive: true });
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
         this.props.dispatch(setSubTitle(`USD ${this.props.dashboard?.totalFiatValue}` + " " + apicalls.convertLocalLang('total_balance')));
-        if (this.props.sendReceive?.cryptoWithdraw?.activeKey == 1) {
-            apicalls.trackEvent({
-                "Type": 'User', "Action": 'Deposit Crypto page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Deposit Crypto', "Remarks": "Deposit Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto'
-            });
-        } else if (this.props.sendReceive?.cryptoWithdraw?.activeKey == 2) {
+        apicalls.trackEvent({
+            "Type": 'User', "Action": 'Deposit Crypto page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Deposit Crypto', "Remarks": "Deposit Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto'
+        })
+        if (this.props.sendReceive?.cryptoWithdraw?.activeKey == 2) {
             apicalls.trackEvent({
                 "Type": 'User', "Action": 'Withdraw Crypto page view', "Username": this.props.userProfile?.userName, "MemeberId": this.props.userProfile?.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
             });
