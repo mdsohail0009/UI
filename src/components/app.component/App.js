@@ -37,7 +37,7 @@ function App(props) {
       window.$zoho = window.$zoho || {};
       window.$zoho.salesiq?.reset();
       window.$zoho.salesiq = window.$zoho.salesiq || {
-        widgetcode: "96756975ac1c2aab2d1534678a55b38fe0ca21ca94a31c4145a23ab14e64cb9aa81d6b547a35c109951d24f6be71d2d0",
+        widgetcode:  process.env.REACT_APP_ZOHO_WIDGET_CODE,
         values: {},
         ready: function () {
 
@@ -54,7 +54,7 @@ function App(props) {
       s.type = 'text/javascript';
       s.id = 'zsiqscript';
       s.defer = true;
-      s.src = 'https://salesiq.zoho.in/widget';
+      s.src = process.env.REACT_APP_ZOHO_WIDGET_URL;
       let t;
       t = d.getElementsByTagName('script')[0];
       t.parentNode.insertBefore(s, t);
