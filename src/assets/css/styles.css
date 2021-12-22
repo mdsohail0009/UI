@@ -683,6 +683,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 }
 .coin-bal ul li div{width: 40px;height: 40px;border-radius: 50%;background-color: var(--bgGloom);margin: 0 auto 6px;line-height: 38px;box-shadow: 0 3px 16px rgba(0, 0, 0, 0.15);}
 .walletsdrawer .mobile-list{margin: 0;}
+.wallet-head{padding: 8px 16px; background-color: var(--bgDarkGrey);border-radius: 10px;margin-bottom: 6px;}
 .crypto-wallets .ant-list-item-meta-content{width: auto;}
 .minmax{position: absolute;top: 4px; right:10px;}
 .min-btn{background-color: var(--bgYellow) !important;margin-left: 8px;border-radius: 10px;
@@ -858,8 +859,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .side-drawer .side-drawer-header{padding: 15px 0px 15px 0px;}
     .crypto-list-tabs .crypto-list{max-height: calc(100vh - 395px); overflow-y: auto; padding-right: 10px;}
     .sellcrypto-container{max-height: calc(100vh - 280px);}
-    .suisfiat-container{max-height: calc(100vh - 210px);}
-    .suisfiat-height{max-height: calc(100vh - 215px);}
+    .suisfiat-container, .suisfiat-height{max-height: calc(100vh - 195px);}
     .addCryptoList{max-height: calc(100vh - 218px); overflow-y: auto; }
     .round-pills .ant-radio-button-wrapper,.default-radio .ant-radio-button-wrapper{min-width: 120px;}
     .dep-withdraw{max-height: calc(100vh - 260px);}

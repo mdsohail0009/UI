@@ -377,7 +377,7 @@ export default {
   amount_min: 'Please enter min value of ',
   tag: 'Tag',
   button: 'Share',
-  select_address: 'Select Address Book',
+  select_address: 'Select address book',
   searchAddress: 'Search address label',
   oops: 'OOPS',
   address_available: 'No address available',

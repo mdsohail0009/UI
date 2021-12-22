@@ -253,7 +253,7 @@ class WithdrawSummary extends Component {
               prefix={""}
               decimalPlaces={8}
               type={"text"}
-              prefixText={"USD"}
+              suffixText={"USD"}
             />
           </div>
           <div className="pay-list fs-14">
@@ -267,8 +267,7 @@ class WithdrawSummary extends Component {
               decimalPlaces={8}
               prefix={""}
               className="fw-400 text-white-30"
-              prefixText={`1 ${this.props.sendReceive.withdrawCryptoObj?.walletCode
-                } = ${"USD"}`}
+              prefixText={`1 ${this.props.sendReceive.withdrawCryptoObj?.walletCode} = ${"USD"}`}
             />
           </div>
           <div className="pay-list fs-14">
@@ -383,7 +382,7 @@ class WithdrawSummary extends Component {
               className="pop-btn"
               htmlType="submit"
             >
-              <Translate content="Confirm" component={Text} />
+              <Translate content="with_draw" component={Text} />
             </Button>
 
           </Form>

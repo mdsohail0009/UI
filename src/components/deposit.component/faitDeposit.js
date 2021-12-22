@@ -416,7 +416,7 @@ class FaitDeposit extends Component {
                   block
                   className="pop-btn mt-36"
                 >
-                  <Translate content="proceed" component='Text' />
+                  <Translate content="confirm" component='Text' />
                 </Button></>}
             </div>
             </Form>}

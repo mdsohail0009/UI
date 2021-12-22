@@ -77,7 +77,9 @@ class FiatWallets extends Component {
         const { wallets } = this.props.dashboard;
         return (
             <>
-                <Translate content="suissebase_subtitle" component={Title} className="fs-18 fw-500 text-white" />
+                <div className="wallet-head">
+                    <Translate content="tab_fiat" component={Title} className="fs-20 m-0 fw-500 text-white" />
+                </div>
                 <List
                     itemLayout="horizontal"
                     dataSource={wallets.data}

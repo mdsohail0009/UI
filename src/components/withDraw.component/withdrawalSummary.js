@@ -227,7 +227,7 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
       >
         <Form.Item
           name="code"
-          className="input-label otp-verify my-36"
+          className="input-label otp-verify mt-36"
           extra={
             <div><Text className="fs-12 text-white-30 fw-200">
               {verificationText}
@@ -274,7 +274,7 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
           className="pop-btn"
           htmlType="submit"
         >
-          <Translate content="Confirm" component={Text} />
+          <Translate content="with_draw" component={Text} />
         </Button>
       </Form>
       <div className="text-center">
@@ -284,7 +284,7 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
           onClick={() => onCancel()}
           type="text"
           size="large"
-          className="text-center text-white-30 pop-cancel fw-400 fs-14 text-upper text-center"
+          className="text-center text-white-30 pop-cancel fw-400 fs-16 text-center"
         />
       </div>
     </div>

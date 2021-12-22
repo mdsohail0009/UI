@@ -792,7 +792,7 @@ const FaitWithdrawal = ({
                   block
                   className="pop-btn"
                 >
-                  <Translate content="proceed" component={Form.label} />
+                  <Translate content="confirm" component={Form.label} />
                 </Button>
               </Form.Item>
             </Form>

@@ -62,7 +62,9 @@ class CryptoWallets extends Component {
         const { cryptoPortFolios } = this.props.dashboard
         return (
             <div className="crypto-wallets">
-                <Translate content="crypto_wallets" component={Title} className="fs-18 fw-500 text-white" />
+                <div className="wallet-head">
+                    <Translate content="crypto" component={Title} className="fs-20 m-0 fw-500 text-white" />
+                </div>
                 <List className="mobile-list"
                     itemLayout="horizontal"
                     dataSource={cryptoPortFolios.data}
