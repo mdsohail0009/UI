@@ -324,7 +324,7 @@ class WithdrawSummary extends Component {
               }
             >
               <Input
-                type="number"
+                type="text"
                 className="cust-input text-left"
                 placeholder={apiCalls.convertLocalLang("verification_code")}
                 maxLength={6}
