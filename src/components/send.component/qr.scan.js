@@ -75,9 +75,9 @@ class QRScan extends Component {
                 </div>
                 <div className="crypto-address">
                     <Translate className="mb-0 fw-400 text-secondary" content="address" component={Text} />
-                    <div className="mb-0 fw-700 text-white-30 walletadrs">{this.props?.sendReceive?.depositWallet?.walletAddress}
+                    <div className="mb-0 fw-600 text-white-30 walletadrs">{this.props?.sendReceive?.depositWallet?.walletAddress}
                         <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.walletAddress}>
-                            <Text copyable={{tooltips:[apicalls.convertLocalLang('copy'),apicalls.convertLocalLang('copied')]}} className="fs-20 text-white-30 custom-display"></Text>
+                            <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"></Text>
                         </CopyToClipboard>
                     </div>
                 </div>
@@ -86,13 +86,15 @@ class QRScan extends Component {
                     <Translate className="mb-0 fw-400 text-secondary" content="tag" component={Text} />
                     <div className="mb-0 fs-14 fw-500 text-white-30">{this.props?.sendReceive?.depositWallet?.tag}
                         <CopyToClipboard text={this.props?.sendReceive?.depositWallet?.tag}>
-                            <Text copyable={{tooltips:[apicalls.convertLocalLang('copy'),apicalls.convertLocalLang('copied')]}} className="fs-20 text-white-30 custom-display"></Text>
+                            <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"></Text>
                         </CopyToClipboard></div>
                 </div>}
                 <Translate className="text-center f-12 text-white fw-200 mt-16" content="address_hint_text" component={Paragraph} />
                 <Dropdown overlay={this.shareMenu}>
                     {/* <Button className="pop-btn mt-36" block>Share</Button> */}
-                    <Button className="pop-btn mt-36" block>{apicalls.convertLocalLang('button')}</Button>
+                    <Button
+                        style={{ borderRadius: 25, height: 50 }}
+                        className="mt-36 text-upper share-btn fw-600 fs-14" block>{apicalls.convertLocalLang('button')}</Button>
                 </Dropdown>
             </div>
         )

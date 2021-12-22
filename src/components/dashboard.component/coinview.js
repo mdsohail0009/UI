@@ -14,6 +14,7 @@ import { convertCurrency } from '../buy.component/buySellService';
 import apiCalls from '../../api/apiCalls';
 import { fetchMarketCoinData } from '../../reducers/dashboardReducer'
 import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat } from "../../reducers/sendreceiveReducer";
+import NumberFormat from "react-number-format";
 
 class CoinView extends React.Component {
     state = {
@@ -159,8 +160,10 @@ class CoinView extends React.Component {
                         {this.state.coinData ? <><div className="d-flex align-center">
                             <span className={`coin md ${coinData?.symbol.toUpperCase()}`} />
                             <div className="summary-count ml-16">
-                                <Paragraph className="text-white-30 fs-36 mb-0 fw-500">{coinData?.avilableBalance}<Text className="fs-24 ml-8 text-white-30 fw-500">{coinData?.symbol.toUpperCase()}</Text></Paragraph>
-                                <Text className="text-white-30 fs-16 m-0" style={{ lineHeight: '18px' }}>1{coinData?.symbol.toUpperCase()} = {coinData?.current_price} USD
+                                <Paragraph className="text-white-30 fs-36 mb-0 fw-500">
+                                    <NumberFormat value={coinData?.avilableBalance} displayType="text" thousandSeparator={true} prefix="" />
+                                    <Text className="fs-24 ml-8 text-white-30 fw-500">{coinData?.symbol.toUpperCase()}</Text></Paragraph>
+                                <Text className="text-white-30 fs-16 m-0" style={{ lineHeight: '18px' }}>1{coinData?.symbol.toUpperCase()} = <NumberFormat value={coinData?.current_price} displayType="text" thousandSeparator={true} /> USD
                                     {coinData?.market_cap_change_percentage_24h > 0 && <>
                                         <Text className="text-green ml-16">{coinData?.market_cap_change_percentage_24h}%</Text>
                                     </>}
@@ -203,44 +206,68 @@ class CoinView extends React.Component {
                         {this.state.coinData ? <><Title component={Title} className="fs-24 fw-600 mb-36 text-white-30">{coinData?.symbol.toUpperCase()} Price and Market Stats</Title>
                             <div className="coin-info">
                                 <Text>{coinData?.symbol.toUpperCase()} Price</Text>
-                                <Text>${coinData?.current_price}</Text>
+                                <Text>
+                                    <NumberFormat value={coinData?.current_price} displayType="text" thousandSeparator={true} prefix="$" />
+                                </Text>
                             </div>
                             <div className="coin-info">
                                 <Text>Market Cap</Text>
-                                <Text>${coinData?.market_cap}</Text>
+                                <Text>
+                                    <NumberFormat value={coinData?.market_cap} displayType="text" thousandSeparator={true} prefix="$" />
+                                </Text>
                             </div>
                             <div className="coin-info">
                                 <Text>24 Hour Trading Vol</Text>
-                                <Text>${coinData?.market_cap_change_24h}</Text>
+                                <Text>
+                                    <NumberFormat value={coinData?.market_cap_change_24h} displayType="text" thousandSeparator={true} prefix="$" />
+                                </Text>
                             </div>
                             <div className="coin-info">
                                 <Text>Fully Diluted Valuation</Text>
-                                <Text>${coinData?.fully_diluted_valuation}</Text>
+                                <Text>
+                                    <NumberFormat value={coinData?.fully_diluted_valuation} displayType="text" thousandSeparator={true} prefix="$" />
+                                </Text>
                             </div>
                             <div className="coin-info">
                                 <Text>Circulating Supply</Text>
-                                <Text>{coinData?.circulating_supply}</Text>
+                                <Text>
+                                    <NumberFormat value={coinData?.circulating_supply} displayType="text" thousandSeparator={true} prefix="" />
+                                </Text>
                             </div>
                             <div className="coin-info">
                                 <Text>Total Supply</Text>
-                                <Text>{coinData?.total_supply}</Text>
+                                <Text>
+                                    <NumberFormat value={coinData?.total_supply} displayType="text" thousandSeparator={true} prefix="" />
+                                </Text>
                             </div>
                             <div className="coin-info">
                                 <Text>Max Supply</Text>
-                                <Text>{coinData?.max_supply}</Text>
+                                <Text>
+                                    <NumberFormat value={coinData?.max_supply} displayType="text" thousandSeparator={true} prefix="" />
+                                </Text>
                             </div>
                             <div className="coin-info">
                                 <Text>All-Time High</Text>
                                 <div>
-                                    <Text>${coinData?.ath}</Text><Text className="fs-14 fw-200 text-green ml-8">{coinData?.ath_change_percentage}%</Text>
-                                    <Text className="fs-10 fw-200 text-secondary d-block text-right">{coinData?.ath_date}</Text>
+                                    <Text>
+                                        <NumberFormat value={coinData?.ath} displayType="text" thousandSeparator={true} prefix="$" />
+                                    </Text>
+                                    <Text>
+                                        <NumberFormat className="fs-14 fw-200 text-green ml-8" value={coinData?.ath_change_percentage} displayType="text" thousandSeparator={true} prefix="" suffix="%" />
+                                    </Text>
+                                    <Text className="fs-10 fw-200 text-secondary d-block text-right">{new Date(coinData?.ath_date).toLocaleDateString()}</Text>
                                 </div>
                             </div>
                             <div className="coin-info">
                                 <Text>All-Time Low</Text>
                                 <div>
-                                    <Text>${coinData?.atl}</Text><Text className="fs-14 fw-200 text-green ml-8">{coinData?.atl_change_percentage}%</Text>
-                                    <Text className="fs-10 fw-200 text-secondary d-block text-right">{coinData?.atl_date}</Text>
+                                    <Text>
+                                        <NumberFormat value={coinData?.atl} displayType="text" thousandSeparator={true} prefix="$" />
+                                    </Text>
+                                    <Text>
+                                        <NumberFormat className="fs-14 fw-200 text-green ml-8" value={coinData?.atl_change_percentage} displayType="text" thousandSeparator={true} prefix="" suffix="%" />
+                                    </Text>
+                                    <Text className="fs-10 fw-200 text-secondary d-block text-right">{new Date(coinData?.atl_date).toLocaleDateString()}</Text>
                                 </div>
                             </div></> : <div className="coin-details-spin"><Spin className="text-center" /></div>}
                     </div>

@@ -251,7 +251,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .enter-val input::placeholder{color: var(--textWhite30);}
 .billing-address{border: 1px solid var(--borderLight);border-radius: 30px; padding: 28px 40px;}
 .scanner-img{width: 170px; height: 170px; margin: 30px auto 50px; padding: 10px;background-color: var(--bgWhite);border-radius: 6px;}
-.crypto-address{padding: 8px;border: 1px solid var(--borderLight);border-radius: 12px;}
+.crypto-address{padding: 8px;border: 1px solid var(--borderLight);border-radius: 12px;position: relative;}
 .recomnd-tag{background-color: var(--bgBlue);border-radius: 3px; padding: 1px 5px;}
 /* Sell */
 .default-radio{display: flex !important; justify-content: flex-start !important;margin-bottom: 16px;}
@@ -664,8 +664,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .trade-graph .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{background: none;}
 .trade-graph .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){background: none;color: var(--textDark) !important;}
 .coin-bal{display: flex;justify-content: space-between;align-items: center;}
-.coin-bal ul li{display: inline-block;list-style: none;font-size: 10px;text-align: center;color: var(--textWhite30);font-weight: 500;margin: 0 10px;visibility: hidden;}
-.coin-bal:hover ul li{visibility: visible; animation: zoom linear 0.25s;}
+.coin-bal ul li{display: inline-block;list-style: none;font-size: 10px;text-align: center;color: var(--textWhite30);font-weight: 500;margin: 0 10px;}
 .otp-verify{position: relative;margin-left: 0 !important;}
 .otp-verify button{
     color: var(--textYellow) !important;
@@ -681,11 +680,6 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 }
 .otp-verify .ant-form-item-label > label::after{
     content: none !important;
-}
-@keyframes zoom {
-    0%{transform: scale(0);}
-    50%{transform: scale(0.5);}
-    100%{transform: scale(1);}
 }
 .coin-bal ul li div{width: 40px;height: 40px;border-radius: 50%;background-color: var(--bgGloom);margin: 0 auto 6px;line-height: 38px;box-shadow: 0 3px 16px rgba(0, 0, 0, 0.15);}
 .walletsdrawer .mobile-list{margin: 0;}
@@ -884,7 +878,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .pay-list{padding: 16px 0;}
     .crypto-container {max-height: calc(100vh - 325px);}
     .custom-crypto-address .fs-12{font-size: 14px !important;}
-    .crypto-address .walletadrs{font-size: 14px;}
+    .crypto-address .walletadrs{font-size: 14px; margin-top: 6px;}
     .addbook-height{max-height: calc(100vh - 112px);}
 }
 .currencyContains {display: inline;color: var(--textWhite30);}
@@ -904,11 +898,12 @@ main.ant-layout-content{min-height: calc(100vh - 220px);}
 .notkyc{top: 0; right: 0; bottom: 0; left: 0;display: flex; align-items: center;font-size: 36px;color: var(--textWhite);background-color: var(--bgDarkGrey);justify-content: center;margin-top: 150px;text-align: center;}
 .crypto-address.custom-crypto-address{padding: 8px 10px;}
 .crypto-address .ant-typography-copy svg{color: var(--textYellow);}
-.crypto-address .custom-display{float: right;margin-top: -3px;}
+.crypto-address .custom-display{position: absolute;top: 6px;right: 8px;}
 .crypto-address.custom-crypto-address .ant-typography-expand, .crypto-address .ant-typography-edit, .crypto-address .ant-typography-copy{font-size:18px;margin-left:0px;}
 .share-adrs{display: flex;justify-content: center;padding: 0;border-radius: 10px;background-color: var(--bgDarkGrey);}
 .share-adrs li{padding: 16px 20px 10px;}
 .share-adrs li:hover{background-color: var(--bgGrey);}
+.share-btn{background-color: transparent !important;color: var(--textWhite30) !important;border-color: var(--borderLight);}
 .notice-nodata{display: flex; align-items: center;justify-content: center; height: 192px;}
 .transaction-tabs .ant-tabs-nav::before{border-bottom: none;}
 .transaction-tabs .ant-tabs-nav{margin-bottom: 15px;}
