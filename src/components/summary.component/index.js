@@ -27,7 +27,7 @@ class Summary extends Component {
             <>
                 {!error?.valid && <Alert showIcon type="info" message={error?.title || apicalls.convertLocalLang('buy_crypto')} description={error?.message} closable onClose={() => onErrorClose ? onErrorClose() : ""} />}
 
-                <div className="cryptosummary-container auto-scroll">
+                <div className="cryptosummary-container">
                     <div className="fs-36 text-white-30 fw-200 text-center" style={{ lineHeight: '36px' }}><Currency prefix={""} decimalPlaces={decimalPlaces} defaultValue={amount} suffixText={coin} /> </div>
                     {showEstimated && <div className="text-white-50 fw-400 text-center fs-14 mb-16"><Currency defaultValue={amountNativeCurrency} prefix={""} decimalPlaces={decimalPlaces} type={'text'} suffixText={nativeCurrency} /></div>}
                     <div className="pay-list fs-14">
