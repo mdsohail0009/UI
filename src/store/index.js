@@ -19,7 +19,7 @@ import AddressBookReducer from '../reducers/addressBookReducer';
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["oidc"]
+    whitelist: ["oidc", "userConfig"]
 }
 const rootReducer = combineReducers({
     oidc: authReducer,
@@ -27,13 +27,13 @@ const rootReducer = combineReducers({
     sendReceive: SendReceive,
     swapStore: SwapReducer,
     buyFiat: BuyFiat,
-    userConfig:UserConfig,
-    buyInfo:buyReducer,
-    sellInfo:sellReducer,
-    depositInfo:depositReducer,
-    dashboard:dashboardReducer,
-    userProfile:UserprofileReducer,
-    addressBookReducer:AddressBookReducer
+    userConfig: UserConfig,
+    buyInfo: buyReducer,
+    sellInfo: sellReducer,
+    depositInfo: depositReducer,
+    dashboard: dashboardReducer,
+    userProfile: UserprofileReducer,
+    addressBookReducer: AddressBookReducer
 
 })
 const reducer = persistReducer(persistConfig, rootReducer)
