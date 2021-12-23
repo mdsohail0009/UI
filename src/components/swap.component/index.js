@@ -49,7 +49,7 @@ class SwapCrypto extends Component {
             toreceive: <span onClick={() => this.props.dispatch(setStep("swapcoins"))} className="icon md lftarw-white c-pointer" />,
             confirmation: <span />,
         }
-        return stepcodes[config[this.props.buySell.stepcode]]
+        return stepcodes[config[this.props.swapStore.stepcode]]
     }
     renderIcon = () => {
         const stepcodes = {
@@ -60,7 +60,7 @@ class SwapCrypto extends Component {
             confirmation: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
 
         }
-        return stepcodes[config[this.props.buySell.stepcode]]
+        return stepcodes[config[this.props.swapStore.stepcode]]
     }
     render() {
         return (<Drawer
