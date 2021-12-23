@@ -3,6 +3,8 @@ const HANDLE_FETCH = "handleFetch";
 const SET_COIN = "setCoin";
 const SET_EXCHANGE_VALUE = "setExchangeValue";
 const SET_WALLET = "setWallet";
+const SET_BUY_FINAL_RES = "setBuyFinalRes";
+
 const handleFetch = (payload) => {
     return { type: HANDLE_FETCH, payload }
 }
@@ -12,6 +14,12 @@ const setCoin = (payload) => {
 const setWallet = (payload) => {
     return {
         type: SET_WALLET,
+        payload
+    }
+}
+const setBuyFinalRes = (payload) => {
+    return {
+        type: SET_BUY_FINAL_RES,
         payload
     }
 }
@@ -50,7 +58,7 @@ const fetchPreview = ({ coin, wallet, amount, isCrypto = false, memberId }) => {
         const response = await getPreview({ coin, currency: wallet.currencyCode, amount, isCrypto, memberId });
         if (response.ok) {
             dispatch(handleFetch({ key: "previewDetails", loading: false, data: response.data }));
-            dispatch(setExchangeValue({key:coin,value:response.data?.oneCoinValue}));
+            dispatch(setExchangeValue({ key: coin, value: response.data?.oneCoinValue }));
         } else {
             dispatch(handleFetch({ key: "previewDetails", loading: false, data: null, error: response.originalError.message }));
         }
@@ -76,6 +84,7 @@ const initialState = {
     previewDetails: { loading: false, data: null },
     selectedWallet: null,
     memberFiat: { loading: false, data: [] },
+    buyFinalRes: {}
 }
 
 const buyReducer = (state = initialState, action) => {
@@ -92,10 +101,16 @@ const buyReducer = (state = initialState, action) => {
         case SET_WALLET:
             state = { ...state, selectedWallet: action.payload };
             return state;
+        case SET_BUY_FINAL_RES:
+            state = { ...state, buyFinalRes: action.payload };
+            return state;
         default:
             return state
     }
 }
 
 export default buyReducer;
-export { fetchCoins, fetchSelectedCoinDetails, setCoin, setExchangeValue, fetchPreview, setWallet, fetchMemberFiat }
+export {
+    fetchCoins, fetchSelectedCoinDetails, setCoin, setExchangeValue, fetchPreview, setWallet, fetchMemberFiat,
+    setBuyFinalRes
+}
