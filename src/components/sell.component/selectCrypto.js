@@ -156,10 +156,12 @@ class SelectSellCrypto extends Component {
                         localCurrency={this.state.sellSaveData.toWalletCode ? this.state.sellSaveData.toWalletCode : "USD"}
                         selectedCoin={coinDetailData?.coin}
                         onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }} memberId={this.props.member?.id} screenName='sell' />
-                    <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills">
-                        <Translate value="min" content="min" component={Radio.Button} onClick={() => this.clickMinamnt('min')} />
-                        <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt('half')} />
-                        <Translate value="max" content="all" component={Radio.Button} onClick={() => this.clickMinamnt('all')} />
+                    <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target:{value} }) => {
+                        this.clickMinamnt(value)
+                    }}>
+                        <Translate value="min" content="min" component={Radio.Button} />
+                        <Translate value="half" content="half" component={Radio.Button} />
+                        <Translate value="all" content="all" component={Radio.Button} />
                     </Radio.Group>
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50" />
                     <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
