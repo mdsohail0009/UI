@@ -15,8 +15,9 @@ import apiCalls from '../../api/apiCalls';
 import { fetchMarketCoinData } from '../../reducers/dashboardReducer'
 import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat } from "../../reducers/sendreceiveReducer";
 import NumberFormat from "react-number-format";
-
+import {coinSubject} from '../../utils/pubsub'
 class CoinView extends React.Component {
+    refreshSubscribe;
     state = {
         coinData: null,
         chatData: null,
@@ -29,6 +30,9 @@ class CoinView extends React.Component {
         window.scrollTo(0, 0)
         this.loadCoinDetailData();
         this.coinViewTrack();
+        this.refreshSubscribe = coinSubject.subscribe((val)=>{
+            this.loadCoinDetailData();
+        });
     }
     coinViewTrack = () => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Coin page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Coin page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
@@ -53,7 +57,6 @@ class CoinView extends React.Component {
         }
     }
     showBuyDrawer = (item, key) => {
-        debugger
         let selectedObj = { ...item };
         selectedObj.coin = selectedObj.symbol.toUpperCase();
         selectedObj.coinBalance = selectedObj.avilableBalance
@@ -118,7 +121,6 @@ class CoinView extends React.Component {
             this.props.changeStep('withdraw_crypto_selected');
 
         } else {
-            debugger
             this.props.dispatch(setSelectedWithDrawWallet(selectedObj));
             this.props.dispatch(setSubTitle(`${selectedObj.coinBalance ? selectedObj.coinBalance : '0'} ${selectedObj.coin}` + " " + apiCalls.convertLocalLang('available')));
             this.props.dispatch(setStep("step7"));
@@ -145,6 +147,9 @@ class CoinView extends React.Component {
             buyDrawer: false,
             sendDrawer: false
         })
+    }
+    componentWillUnmount(){
+        this.refreshSubscribe.unsubscribe();
     }
     render() {
         const { Paragraph, Text, Title } = Typography
