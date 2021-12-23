@@ -366,7 +366,7 @@ export default {
   select_address: '選擇地址簿',
   searchAddress: '搜索地址標籤',
   oops: '面向對象',
-  address_available: '沒有地址',
+  address_available: '没有可用地址',
   withdrawSummary: '提取加密貨幣摘要',
   selectCurrencyinWallet: '在您的錢包中選擇一種貨幣',
   agree_termsofservice: '請同意服務條款',
@@ -476,4 +476,5 @@ export default {
   copied: '複製的',
   withdraw_fiat_summary: '提現法幣摘要',
   request_fail: '已達到最大嘗試次數，請稍後再試',
+  received: "已收到"
 }
