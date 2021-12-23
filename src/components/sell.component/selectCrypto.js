@@ -113,7 +113,7 @@ class SelectSellCrypto extends Component {
             }
         }
         this.setState({ ...this.state, sellSaveData: obj }, () => {
-            this.swapRef.current.handleWalletChange({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt, locCurrency: obj.toWalletCode });
+            this.swapRef.current.handleConvertion({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt, locCurrency: obj.toWalletCode });
         })
     }
     refreshAmnts = async () => {

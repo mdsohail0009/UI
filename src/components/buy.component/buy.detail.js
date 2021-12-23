@@ -53,7 +53,7 @@ class SelectCrypto extends Component {
     handleWalletSelection = (walletId) => {
         const selectedWallet = this.props.buyInfo?.memberFiat?.data?.filter(item => item.id === walletId)[0];
         this.setState({ ...this.state, selectedWallet }, () => {
-            this.swapRef.current.changeInfo({ cryptoValue: this.state.swapValues.cryptoValue, localValue: this.state.swapValues.localValue, locCurrency: selectedWallet.currencyCode })
+            this.swapRef.current.handleConvertion({ cryptoValue: this.state.swapValues.cryptoValue, localValue: this.state.swapValues.localValue, locCurrency: selectedWallet.currencyCode })
         });
         this.props.setWallet(selectedWallet);
     }
