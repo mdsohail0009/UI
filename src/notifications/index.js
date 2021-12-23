@@ -88,7 +88,7 @@ const Notifications = ({
           itemLayout="vertical"
           size="large"
           className="notifications-list"
-          loading={loading}
+          loading={loading} 
           locale={{
             emptyText: (
               <Empty

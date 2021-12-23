@@ -37,7 +37,6 @@ const LocalCryptoSwapper = (props, ref) => {
         }
     }), []);
     const fetchConvertionValue = async ({ inputvalue, locCurrency }) => {
-        debugger
         const coin = selectedCoin || sellData?.selectedCoin?.data?.coin;
         setConvertionLoad(true);
         const response = await convertCurrencyDuplicate({ from: coin, to: locCurrency || localCurrency || "USD", value: (inputvalue || 0), isCrypto: !isSwaped, memId: props.memberId, screenName: props.screenName });

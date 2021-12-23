@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import Translate from 'react-translate-component';
 import Loader from '../../Shared/loader';
 import { fetchMarketCaps } from './api';
-import { useFullScreenHandle } from 'react-full-screen'
 import { detailInfoColumns, infoColumns } from './marketcap.columns';
 import apiCalls from '../../api/apiCalls';
 import { connect } from 'react-redux';
@@ -12,7 +11,6 @@ import { connect } from 'react-redux';
 const { Title, Paragraph } = Typography;
 
 const MarketCap = ({ member }) => {
-    const marketsFullScreen = useFullScreenHandle();
     const { Search } = Input;
     const [isLoading, setIsLoading] = useState(false);
     const [marketCaps, setMarketCaps] = useState([]);
@@ -20,7 +18,7 @@ const MarketCap = ({ member }) => {
     const [searchVal, setSearchVal] = useState([])
     const [originalMarketCaps, setOriginalMarketCaps] = useState([])
     useEffect(() => {
-        fetchMarketCapsInfo()
+        fetchMarketCapsInfo();
 
     }, [])
     const fetchMarketCapsInfo = async () => {
@@ -51,7 +49,7 @@ const MarketCap = ({ member }) => {
 
     if (isLoading) { return <Loader /> }
     return <>
-        <div handle={marketsFullScreen}>
+        <div>
             <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey" }}>
                 <div className="d-flex justify-content mt-36">
                     <div>
