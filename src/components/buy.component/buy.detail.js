@@ -53,7 +53,7 @@ class SelectCrypto extends Component {
     handleWalletSelection = (walletId) => {
         const selectedWallet = this.props.buyInfo?.memberFiat?.data?.filter(item => item.id === walletId)[0];
         this.setState({ ...this.state, selectedWallet }, () => {
-            this.swapRef.current.handleConvertion({ cryptoValue: this.state.swapValues.cryptoValue, localValue: this.state.swapValues.localValue, locCurrency: selectedWallet.currencyCode })
+            this.swapRef.current.handleConvertion({ cryptoValue: this.state.swapValues.cryptoValue, localValue: this.state.swapValues.localValue, locCurrency: selectedWallet.currencyCode, isSwap: this.state.swapValues.isSwaped })
         });
         this.props.setWallet(selectedWallet);
     }
@@ -105,7 +105,9 @@ class SelectCrypto extends Component {
                             </div>
                         </div>
                     </Card>
-                    <LocalCryptoSwapper ref={this.swapRef} selectedCoin={coin} localAmt={localValue} cryptoAmt={cryptoValue} localCurrency={this.state.selectedWallet?.currencyCode || "USD"} cryptoCurrency={coin} onChange={(obj) => this.onValueChange(obj)} memberId={this.props.userProfileInfo?.id} screenName='buy' />
+                    <LocalCryptoSwapper ref={this.swapRef} selectedCoin={coin} localAmt={localValue} cryptoAmt={cryptoValue} localCurrency={this.state.selectedWallet?.currencyCode || "USD"} cryptoCurrency={coin} onChange={(obj) => this.onValueChange(obj)} memberId={this.props.userProfileInfo?.id} screenName='buy' onCurrencySwap={(val) => {
+                        this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: val } })
+                    }} />
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
                     <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     {/* <div className="fs-12 text-white-30 text-center mt-24"><Translate content="change_10Sec_amount" component={Paragraph} className="fs-12 text-white-30 text-center mt-24" /></div> */}

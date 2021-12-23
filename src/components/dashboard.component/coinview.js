@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Typography, Row, Col, Spin, Radio, Button } from "antd";
 import { Link, withRouter } from "react-router-dom";
-import Translate from 'react-translate-component';
 import { getcoinDetails, getCoinChatData } from './api'
 import LineChart from './line.graph.component';
 import BuySell from '../buy.component';
