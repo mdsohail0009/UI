@@ -8,11 +8,12 @@ function openNotification(message, title) {
         description:
             message,
         duration: 10,
+        closeIcon: <span className="icon md close c-pointer" />
     };
     notification.open(args);
 }
 async function start(id) {
-  const  connection = new SignalR.HubConnectionBuilder()
+    const connection = new SignalR.HubConnectionBuilder()
         .withUrl(process.env.REACT_APP_NOTIFICATION_HUB + "NotificationHub?userid=" + id)
         .configureLogging(SignalR.LogLevel.Information)
         .build();
@@ -20,8 +21,8 @@ async function start(id) {
         await connection.start();
     } catch (err) {
         const { userConfig: { userProfileInfo } } = store.getState();
-        openNotification("Connection failed to hub",err.message||err.data);
-        setTimeout(()=>{start(userProfileInfo?.id)}, 5000);
+        openNotification("Connection failed to hub", err.message || err.data);
+        setTimeout(() => { start(userProfileInfo?.id) }, 5000);
     }
     connection.onclose(async () => {
         const { userConfig: { userProfileInfo } } = store.getState();
@@ -30,7 +31,7 @@ async function start(id) {
     connection.on("sendToUser", (user, message, title) => {
         openNotification(message, title);
         const { dashboard: { notificationCount } } = store.getState();
-       store.dispatch( setNotificationCount(notificationCount ? notificationCount + 1 : 1));
+        store.dispatch(setNotificationCount(notificationCount ? notificationCount + 1 : 1));
     });
 }
 
@@ -41,4 +42,4 @@ function startConnection(id) {
     start(id);
 }
 
-export {startConnection }
+export { startConnection }

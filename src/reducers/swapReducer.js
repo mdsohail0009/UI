@@ -72,7 +72,7 @@ const getMemberCoins = (member_id) => {
 }
 
 let initialState = {
-    stepcode: 'step1',
+    stepcode: 'swapcoins',
     stepTitles: {
         swapcoins: "swap_title",
         selectcrypto: 'swap_title',
@@ -85,7 +85,7 @@ let initialState = {
         swapsummary: 'swap_desc',
         toreceive: 'swap_desc'
     },
-    swapdata:{
+    swapdata: {
         fromCoin: null,
         receiveCoin: null,
         price: null,
@@ -95,12 +95,12 @@ let initialState = {
     },
     coinDetailData: {},
     coinReceiveDetailData: {},
-    fromCoinInputValue:null,
+    fromCoinInputValue: null,
     isLoading: true,
     MemberCoins: [],
 }
 
-const SwapReducer = (state = initialState,action) => {
+const SwapReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_STEP:
             return { ...state, stepcode: action.payload };
@@ -132,4 +132,4 @@ const SwapReducer = (state = initialState,action) => {
 }
 
 export default SwapReducer;
-export { setStep, clearStep , updateCoinDetails , updateReceiveCoinDetails , updateFromCoinInputValue , getMemberCoins, updateSwapdata, clearSwapData }
+export { setStep, clearStep, updateCoinDetails, updateReceiveCoinDetails, updateFromCoinInputValue, getMemberCoins, updateSwapdata, clearSwapData }

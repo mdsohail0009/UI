@@ -41,7 +41,7 @@ class Summary extends Component {
                         <Currency defaultValue={convertValue} prefix={""} decimalPlaces={decimalPlaces} className="fw-400 text-white-30" suffixText={convertCoin} />
                     </div>}
                     <div className="pay-list fs-14">
-                        <Translate className="fw-400 text-white" content="received" component={Text} />
+                        <Translate className="fw-400 text-white" content="amount" component={Text} />
                         <Currency defaultValue={amount} decimalPlaces={decimalPlaces} prefix={""} type={'text'} className="fw-400 text-white-30"
                             suffixText={coin} />
 

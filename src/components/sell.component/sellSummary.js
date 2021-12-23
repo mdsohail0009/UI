@@ -6,6 +6,7 @@ import Summary from '../summary.component';
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
 import { message } from 'antd';
+import { setSellFinalRes } from '../../reducers/sellReducer'
 import apicalls from '../../api/apiCalls';
 class SellSummary extends Component {
     state = { sellpreviewData: {}, loader: true, disableConfirm: false, isTermsAgree: false, error: { valid: true, message: null } }
@@ -57,6 +58,7 @@ class SellSummary extends Component {
             obj.info = JSON.stringify(this.props.trackAuditLogData)
             let res = await savesellData(obj);
             if (res.ok) {
+                this.props.sellResData(res.data);
                 this.props.changeStep('sellsuccess')
                 this.setState({ ...this.state, loader: false, disableConfirm: false })
                 this.props.fetchDashboardData(this.props.member.id)
@@ -106,7 +108,11 @@ const connectDispatchToProps = dispatch => {
         },
         fetchMarketCoinDataValue: () => {
             dispatch(fetchMarketCoinData(true))
-        }
+        },
+        sellResData: (data) => {
+            dispatch(setSellFinalRes(data))
+        },
+
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(SellSummary);
