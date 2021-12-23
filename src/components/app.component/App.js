@@ -12,7 +12,9 @@ import { reactPlugin } from "../../Shared/appinsights";
 import Notifications from "../../notifications";
 import { setNotificationCount } from '../../reducers/dashboardReducer';
 import {startConnection } from "../../utils/signalR";
+import { useThemeSwitcher } from "react-css-theme-switcher";
 function App(props) {
+  const { switcher, themes } = useThemeSwitcher()
   const [loading, setLoading] = useState(true);
   const [showNotifications, setNotifications] = useState(false);
   const connectToHub = () => {
@@ -20,12 +22,14 @@ function App(props) {
       const { userConfig: { userProfileInfo } } = store.getState();
       if (userProfileInfo?.id) {
         startConnection(userProfileInfo?.id);
+        switcher({ theme: userProfileInfo?.theme == 'Light Theme' ? themes.LHT : themes.DRT });
       } else {
         connectToHub();
       }
     }, 2000)
 
   }
+  
   useEffect(() => {
     onMessageListener().then(payload => {
       const { dashboard: { notificationCount } } = store.getState();

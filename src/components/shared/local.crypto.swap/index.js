@@ -24,9 +24,6 @@ const LocalCryptoSwapper = (props, ref) => {
         },
         handleConvertion({ cryptoValue, localValue, locCurrency, isSwap }) {
             fetchConvertionValue({ cryptoValue, localValue, inputvalue: (isSwap || isSwaped) ? cryptoValue : localValue, locCurrency });
-            if (isSwaped) {
-                setCryptoValue(cryptoValue);
-            }
         },
         handleWalletChange() {
             //setSwapped(false);
