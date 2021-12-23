@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { setStep, updateSwapdata } from '../../reducers/swapReducer';
+import { setStep, updateSwapdata, setSwapFinalRes } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
 import { fetchCurrConvertionValue, saveSwapData, fetchCurrConvertionCommisionValue } from '../../components/swap.component/api';
 import Summary from '../summary.component';
@@ -102,6 +102,7 @@ class SwapSummary extends Component {
             obj.info = JSON.stringify(this.props.trackAuditLogData)
             let res = await saveSwapData(obj);
             if (res.ok) {
+                this.props.dispatch(setSwapFinalRes(res.data));
                 this.props.changeStep('confirm');
                 this.setState({ ...this.state, loader: false, isLoading: false })
                 this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
