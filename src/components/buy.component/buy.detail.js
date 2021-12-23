@@ -105,7 +105,7 @@ class SelectCrypto extends Component {
                             </div>
                         </div>
                     </Card>
-                    <LocalCryptoSwapper ref={this.swapRef} selectedCoin={coin} localAmt={localValue} cryptoAmt={cryptoValue} localCurrency={this.state.selectedWallet?.currencyCode || "USD"} cryptoCurrency={coin} onChange={(obj) => this.onValueChange(obj)} memberId={this.props.userProfileInfo?.id} screenName='buy' onCurrencySwap={(val) => {
+                    <LocalCryptoSwapper ref={this.swapRef} selectedCoin={coin} localAmt={localValue}  showSwap={false} cryptoAmt={cryptoValue} localCurrency={this.state.selectedWallet?.currencyCode || "USD"} cryptoCurrency={coin} onChange={(obj) => this.onValueChange(obj)} memberId={this.props.userProfileInfo?.id} screenName='buy' onCurrencySwap={(val) => {
                         this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: val } })
                     }} />
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />

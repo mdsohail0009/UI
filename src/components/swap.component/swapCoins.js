@@ -30,7 +30,6 @@ class SwapCoins extends Component {
         await this.setOneCoinValue();
     }
     swapCoinsTrack = () => {
-        debugger
         apicalls.trackEvent({
             "Type": 'User', "Action": 'Swap page view', "Username": this.props.userProfile?.userName, "MemeberId": this.props.userProfile?.id, "Feature": 'Swap', "Remarks": 'Swap page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap'
         });
