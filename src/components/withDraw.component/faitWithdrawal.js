@@ -31,7 +31,8 @@ import {
 } from "../addressbook.component/api";
 import {
   setWithdrawfiat,
-  rejectWithdrawfiat
+  rejectWithdrawfiat,
+  setWithdrawFinalRes
 } from "../../reducers/sendreceiveReducer";
 import WithdrawalSummary from "./withdrawalSummary";
 import WithdrawalLive from "./withdrawLive";
@@ -876,6 +877,7 @@ const FaitWithdrawal = ({
       Obj.info = JSON.stringify(trackAuditLogData);
       let withdrawal = await withdrawSave(Obj);
       if (withdrawal.ok) {
+        this.props.dispatch(setWithdrawFinalRes(withdrawal.data))
         dispatch(fetchDashboardcalls(userConfig.id));
         dispatch(rejectWithdrawfiat());
         changeStep("step7");

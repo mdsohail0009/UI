@@ -8,9 +8,9 @@ import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendr
 import success from '../../assets/images/success.png';
 import apiCalls from '../../api/apiCalls';
 
-const WithdrawalSuccess = ({ changeStep, dispatch, userProfileInfo, depositInfo }) => {
+const WithdrawalSuccess = ({ changeStep, dispatch, userProfileInfo, sendReceive }) => {
     const { Title, Paragraph } = Typography;
-    const { fiatFinalRes: fd } = depositInfo;
+    const { withdrawFinalRes: fd } = sendReceive;
     useEffect(() => {
         successTrack();
     });
@@ -36,8 +36,8 @@ const WithdrawalSuccess = ({ changeStep, dispatch, userProfileInfo, depositInfo 
     )
 }
 
-const connectStateToProps = ({ userConfig, sendReceive, depositInfo }) => {
-    return { userConfig: userConfig.userProfileInfo, sendReceive, depositInfo }
+const connectStateToProps = ({ userConfig, sendReceive }) => {
+    return { userConfig: userConfig.userProfileInfo, sendReceive }
 }
 const connectDispatchToProps = dispatch => {
     return {
