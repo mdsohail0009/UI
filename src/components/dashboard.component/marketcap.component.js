@@ -16,10 +16,11 @@ const MarketCap = ({ member }) => {
     const [marketCaps, setMarketCaps] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [searchVal, setSearchVal] = useState([])
-    const [originalMarketCaps, setOriginalMarketCaps] = useState([])
+    const [originalMarketCaps, setOriginalMarketCaps] = useState([]);
+    const [fullViewData, setFullViewData] = useState([]);
+    const [fullViewLoading, setFullViewLoading] = useState(false);
     useEffect(() => {
         fetchMarketCapsInfo();
-
     }, [])
     const fetchMarketCapsInfo = async () => {
         setIsLoading(true);
@@ -31,19 +32,29 @@ const MarketCap = ({ member }) => {
             setIsLoading(false);
         }
     }
-    const onSearch = ({ currentTarget: { value } }) => {
+    const onSearch = ({ currentTarget: { value } }, isFullScreen) => {
         let matches = originalMarketCaps.filter(item => item.symbol.toLowerCase().includes(value.toLowerCase()));
         setSearchVal(value)
-        setMarketCaps(matches)
+        if (!isFullScreen) { setMarketCaps(matches) } else {
+            setFullViewData(matches);
+        }
+
     }
     const showDrawer = () => {
         setIsOpen(true);
+        let _data = [...marketCaps]
+        setFullViewLoading(true);
+        setTimeout(() => {
+            setFullViewData(_data);
+            setFullViewLoading(false);
+        }, 1000)
         marketsTack();
     }
     const marketsTack = () => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Markets page view', "Username": member?.userName, "MemeberId": member?.id, "Feature": 'Markets', "Remarks": 'Markets page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Markets' });
     }
     const onClose = () => {
+        setFullViewData([]);
         setIsOpen(false)
     }
 
@@ -76,12 +87,13 @@ const MarketCap = ({ member }) => {
                 closeIcon={null}
                 onClose={() => setIsOpen(false)}
                 className="side-drawer-full"
+                destroyOnClose={true}
             >
                 <div className="markets-panel mr-0 markets-popup">
                     <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey" }}>
                         <div style={{ marginBottom: '8px', textAlign: 'right' }}>
-                            <Search value={searchVal} placeholder={apiCalls.convertLocalLang('search_currency')} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value)} size="middle" bordered={false} className="mt-8 mb-8 dark-search" />
-                            <Table locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]} pagination={false} columns={detailInfoColumns} style={{ backgroundColor: 'var(--bgGrey)' }} scroll={{ y: '100vh' }} dataSource={marketCaps} loading={isLoading} />
+                            <Search value={searchVal} placeholder={apiCalls.convertLocalLang('search_currency')} addonAfter={<span className="icon md search-white" />} onChange={(value) => onSearch(value, true)} size="middle" bordered={false} className="mt-8 mb-8 dark-search" />
+                            <Table locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }} sortDirections={["ascend", "descend"]} pagination={false} columns={detailInfoColumns} style={{ backgroundColor: 'var(--bgGrey)' }} scroll={{ y: '100vh' }} dataSource={fullViewData} loading={fullViewLoading} />
                         </div>
                     </div>
                 </div>
