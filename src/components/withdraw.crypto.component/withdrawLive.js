@@ -6,6 +6,7 @@ import Translate from 'react-translate-component';
 import LiveNessSumsub from '../sumSub.component/liveness'
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { withDrawCrypto } from '../send.component/api';
+import { publishBalanceRfresh } from '../../utils/pubsub';
 
 const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, trackAuditLogData }) => {
   const [faceCapture, setFaceCapture] = useState(false);
@@ -26,6 +27,7 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, t
       dispatch(setWithdrawcrypto(null))
       dispatch(setSubTitle(""));
       changeStep('withdraw_crpto_success');
+      publishBalanceRfresh("success");
     }
 
   }
