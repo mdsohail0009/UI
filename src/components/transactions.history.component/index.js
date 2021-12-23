@@ -97,6 +97,7 @@ class TransactionsHistory extends Component {
     { field: "fromWalletAddress", title: apiCalls.convertLocalLang('walletAddress'), filter: true, width: 400 },
     { field: "createdDate", title: apiCalls.convertLocalLang('RequestDate'), width: 150, filterType: "date", filter: true, },
     { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 200 },
+    { field: "statusRemarks", title: apiCalls.convertLocalLang('remarks'), filter: true, width: 250 },
   ];
   withdrwCryptoColomns = [
     { field: "walletCode", title: apiCalls.convertLocalLang('Wallet'), filter: true },

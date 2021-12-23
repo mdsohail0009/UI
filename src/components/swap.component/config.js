@@ -1,8 +1,8 @@
 export const swapobj = {
-    step1: 'swapcoins',
-    step2: 'swapsummary',
-    step3: 'selectcrypto',
-    step4: 'toreceive',
+    swapcoins: 'swapcoins',
+    swapsummary: 'swapsummary',
+    selectcrypto: 'selectcrypto',
+    toreceive: 'toreceive',
     confirm: 'confirmation',
     success: 'success'
 }

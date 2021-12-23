@@ -75,7 +75,7 @@ class SelectCrypto extends Component {
             } else {
                 this.props.dispatch(updateReceiveCoinDetails(this.state.coinDetails));
             }
-            this.props.changeStep('step1')
+            this.props.changeStep('swapcoins')
         }
     }
     render() {

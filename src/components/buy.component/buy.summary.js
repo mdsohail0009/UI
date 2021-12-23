@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { changeStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
-import { fetchPreview } from '../../reducers/buyReducer';
+import { fetchPreview, setBuyFinalRes } from '../../reducers/buyReducer';
 import { buyCrypto } from './api';
 import Summary from '../summary.component';
 import Loader from '../../Shared/loader';
@@ -58,6 +58,7 @@ class BuySummary extends Component {
             this.setState({ isLoading: true });
             const response = await buyCrypto(obj);
             if (response.ok) {
+                this.props.dispatch(setBuyFinalRes(response.data));
                 this.props.setStep('success')
                 this.props.fetchDashboardData(this.props.member.id)
                 this.props.fetchMarketCoinDataValue();

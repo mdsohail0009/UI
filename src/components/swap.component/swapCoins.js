@@ -115,7 +115,7 @@ class SwapCoins extends Component {
                 loadingToValue: false,
                 loadingFromValue: false
             })
-            this.props.changeStep('step2');
+            this.props.changeStep('swapsummary');
         }
     }
     swapingCurr() {
@@ -205,9 +205,9 @@ class SwapCoins extends Component {
                             }}
                             value={this.state.fromValue}
                         />}
-                        {(coinDetailData.coinBalance || coinReceiveDetailData.coinBalance === 0) && <Text className="text-purewhite mt-4 fs-12 fw-100"><Translate content="balance" component={Text} className="custom-font fw-300 fs-14 text-purewhite" /> <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} /></Text>}
+                        {(coinDetailData.coinBalance === 0 || coinDetailData.coinBalance) && <><Translate content="balance" component={Text} className="custom-font fw-300 fs-14 text-purewhite" /> <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} /></>}
                     </div>
-                    <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('step3')} >
+                    <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('selectcrypto')} >
                         <div className="crypto-coin">
 
                             {coinDetailData.coin ? <><span className={`coin md  ${coinDetailData.coin}`}></span>
@@ -248,7 +248,7 @@ class SwapCoins extends Component {
                         />}
                         {(coinReceiveDetailData.coinBalance || coinReceiveDetailData.coinBalance === 0) && <Text className="text-purewhite mt-4 fs-12 fw-100"><Translate content="balance" component={Text} className="custom-font fw-300 fs-14 text-purewhite" /> <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinReceiveDetailData.coinBalance} suffixText={coinReceiveDetailData.coin} /></Text>}
                     </div>
-                    <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => { if (coinDetailData.coinFullName) { this.props.changeStep('step4'); this.setState({ ...this.state, errorMessage: '' }) } else { this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('select_coin') }) } }} >
+                    <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => { if (coinDetailData.coinFullName) { this.props.changeStep('toreceive'); this.setState({ ...this.state, errorMessage: '' }) } else { this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('select_coin') }) } }} >
                         <div className="crypto-coin">
                             {coinReceiveDetailData.coin ? <> <span className={`coin md ${coinReceiveDetailData.coin}`}></span>
                                 <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinReceiveDetailData.coinFullName}</Paragraph></>
