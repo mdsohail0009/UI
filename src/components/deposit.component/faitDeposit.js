@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import SellToggle from '../withDraw.component/faitWithdrawal';
 import config from '../../config/config';
 import NumberFormat from 'react-number-format';
-import { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject, setsavefiatobject } from '../../reducers/depositReducer'
+import { getCurrencieswithBankDetails, setdepositCurrency, updatdepfiatobject, setsavefiatobject, setFiatFinalRes } from '../../reducers/depositReducer'
 import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
 import { setStep } from '../../reducers/buyFiatReducer';
 import { savedepositFiat, requestDepositFiat } from './api';
@@ -215,7 +215,7 @@ class FaitDeposit extends Component {
 
 
   render() {
-    const { Paragraph, Text } = Typography;
+    const { Paragraph, Text, Title } = Typography;
     const link = <LinkValue content="terms_service" />;
     const { faitdeposit, BankInfo, depObj } = this.state;
     const { currenciesWithBankInfo } = this.props.depositInfo;
@@ -422,8 +422,10 @@ class FaitDeposit extends Component {
             </Form>}
             {this.state.showSuccessMsg && <div className="success-pop text-center">
               <img src={success} className="confirm-icon" alt={'success'} />
-              <div><Translate content="success_msg" component='Success' className="text-white-30 fs-36 fw-200 mb-4" /></div>
-              <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" />
+              <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
+              <Paragraph className="fs-14 text-white-30 fw-200">0.2258 BTC and 212545 USD amount has been added to your wallets, Your order has been placed successfully</Paragraph>
+              {/* <div><Translate content="success_msg" component='Success' className="text-white-30 fs-36 fw-200 mb-4" /></div>
+              <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" /> */}
               <Space direction="vertical" size="large">
                 <Translate content="return_to_depositfiat" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.setState({ ...this.state, showSuccessMsg: false })} />
               </Space>
