@@ -8,8 +8,9 @@ import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendr
 import success from '../../assets/images/success.png';
 import apiCalls from '../../api/apiCalls';
 
-const WithdrawalSuccess = ({ changeStep, dispatch, userProfileInfo }) => {
+const WithdrawalSuccess = ({ changeStep, dispatch, userProfileInfo, depositInfo }) => {
     const { Title, Paragraph } = Typography;
+    const { fiatFinalRes: fd } = depositInfo;
     useEffect(() => {
         successTrack();
     });
@@ -27,7 +28,7 @@ const WithdrawalSuccess = ({ changeStep, dispatch, userProfileInfo }) => {
             <div className="success-pop text-center mb-24">
                 <img src={success} className="confirm-icon" alt={"success"} />
                 <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
-                <Paragraph className="fs-14 text-white-30 fw-200">0.2258 BTC and 212545 USD amount has been added to your wallets, Your order has been placed successfully</Paragraph>
+                <Paragraph className="fs-14 text-white-30 fw-200">{fd.accountNumber} amount has been added to your wallets, Your order has been placed successfully</Paragraph>
                 {/* <Translate className="fs-30 mb-4 d-block text-white-30" content="withdrawal_success" component={Title} /> */}
                 <Link onClick={() => goBack()} className="f-16 mt-16 text-underline text-white-30">{apiCalls.convertLocalLang('Back_to_Withdraw')}</Link>
             </div>
@@ -35,8 +36,8 @@ const WithdrawalSuccess = ({ changeStep, dispatch, userProfileInfo }) => {
     )
 }
 
-const connectStateToProps = ({ userConfig, sendReceive }) => {
-    return { userConfig: userConfig.userProfileInfo, sendReceive }
+const connectStateToProps = ({ userConfig, sendReceive, depositInfo }) => {
+    return { userConfig: userConfig.userProfileInfo, sendReceive, depositInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {

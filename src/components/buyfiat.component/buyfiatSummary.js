@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Typography, Button, Spin } from 'antd';
 import { Link } from 'react-router-dom';
 import Currency from '../shared/number.formate';
-import { setStep } from '../../reducers/buyFiatReducer';
+import { setStep, } from '../../reducers/buyFiatReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-import { setdepositCurrency } from '../../reducers/depositReducer'
+import { setdepositCurrency, setFiatFinalRes } from '../../reducers/depositReducer'
 import { savedepositFiat, requestDepositFiat } from '../deposit.component/api';
 import apiCalls from "../../api/apiCalls";
 import { apiClient } from '../../api';
@@ -59,7 +59,9 @@ class FiatSummary extends Component {
         Obj.info = JSON.stringify(this.props.trackAuditLogData);
         let response = await savedepositFiat(Obj);
         if (response.ok === true) {
+            this.props.dispatch(setFiatFinalRes(response.data));
             this.props.changeStep('step3')
+
         }
     }
     render() {

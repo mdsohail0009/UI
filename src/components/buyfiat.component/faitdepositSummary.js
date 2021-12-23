@@ -33,12 +33,13 @@ class FaitdepositSummary extends Component {
 
     render() {
         const { Paragraph, Title } = Typography;
+        const { fiatFinalRes: fd } = this.props.depositInfo;
         return (
             <>
                 <div className="success-pop text-center">
                     <img src={success} className="confirm-icon" alt={'success'} />
                     <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
-                    <Paragraph className="fs-14 text-white-30 fw-200">0.2258 BTC and 212545 USD amount has been added to your wallets, Your order has been placed successfully</Paragraph>
+                    <Paragraph className="fs-14 text-white-30 fw-200">{fd.accountNumber} amount has been added to your wallets, Your order has been placed successfully</Paragraph>
                     {/* <div>
                         <Translate content="success_msg" component='Success' className="text-white-30 fs-36 fw-200 mb-4" />
                         </div>
@@ -51,8 +52,8 @@ class FaitdepositSummary extends Component {
         )
     }
 }
-const connectStateToProps = ({ buySell, oidc, userConfig }) => {
-    return { buySell, userConfig: userConfig.userProfileInfo }
+const connectStateToProps = ({ buySell, oidc, userConfig, depositInfo }) => {
+    return { buySell, userConfig: userConfig.userProfileInfo, depositInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
