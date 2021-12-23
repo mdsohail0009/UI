@@ -3,8 +3,9 @@ import success from '../../assets/images/success.png';
 import { Typography, Space } from 'antd';
 import { Link } from 'react-router-dom';
 import Translate from 'react-translate-component';
-import ConnectStateProps from '../../utils/state.connect';
-import { handleSendFetch } from '../../reducers/sendreceiveReducer';
+//import ConnectStateProps from '../../utils/state.connect';
+import { connect } from "react-redux";
+import { handleSendFetch, } from '../../reducers/sendreceiveReducer';
 import apiCalls from '../../api/apiCalls';
 class SuccessMsg extends Component {
     componentDidMount() {
@@ -15,13 +16,14 @@ class SuccessMsg extends Component {
     }
     render() {
         const { Title, Paragraph } = Typography;
+        const { cryptoFinalRes: cd } = this.props.sendReceive;
 
         return (
             <>
                 <div className="success-pop text-center">
                     <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
-                    <Paragraph className="fs-14 text-white-30 fw-200">0.2258 BTC and 212545 USD amount has been added to your wallets, Your order has been placed successfully</Paragraph>
+                    <Paragraph className="fs-14 text-white-30 fw-200">{cd.afterValue} amount has been added to your wallets, Your order has been placed successfully</Paragraph>
                     {/* <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
                     <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" /> */}
                     <Space direction="vertical" size="large">
@@ -32,4 +34,11 @@ class SuccessMsg extends Component {
         );
     }
 }
-export default ConnectStateProps(SuccessMsg);
+const connectStateToProps = ({ sendReceive, userConfig }) => {
+    return {
+        sendReceive,
+        userProfile: userConfig.userProfileInfo,
+        trackAuditLogData: userConfig.trackAuditLogData
+    };
+};
+export default connect(connectStateToProps, null)(SuccessMsg);

@@ -8,6 +8,7 @@ import Currency from "../shared/number.formate";
 import { convertCurrency } from "../buy.component/buySellService";
 import { withDrawCrypto } from "../send.component/api";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
+import { setCryptoFinalRes } from "../../reducers/sendreceiveReducer";
 
 import {
   setStep,
@@ -178,6 +179,7 @@ class WithdrawSummary extends Component {
           saveObj.info = JSON.stringify(trackAuditLogData)
           let withdrawal = await withDrawCrypto(saveObj);
           if (withdrawal.ok) {
+            this.props.dispatch(setCryptoFinalRes(withdrawal.data));
             this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
             //setIsWithdrawSuccess(true)
             this.props.dispatch(setWithdrawcrypto(null));

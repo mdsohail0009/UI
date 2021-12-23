@@ -7,7 +7,7 @@ import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import { withdrawSave, } from "../../api/apiServer";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
-import { setWithdrawfiat, rejectWithdrawfiat, setWithdrawfiatenaable } from "../../reducers/sendreceiveReducer";
+import { setWithdrawfiat, rejectWithdrawfiat, setWithdrawfiatenaable, setWithdrawFinalRes } from "../../reducers/sendreceiveReducer";
 
 const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, trackAuditLogData }) => {
   const { Text } = Typography;
@@ -94,6 +94,7 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
       Obj.info = JSON.stringify(trackAuditLogData);
       let withdrawal = await withdrawSave(Obj);
       if (withdrawal.ok) {
+        dispatch(setWithdrawFinalRes(withdrawal.data));
         dispatch(fetchDashboardcalls(userConfig.id));
         dispatch(rejectWithdrawfiat());
         changeStep("step7");
