@@ -206,7 +206,7 @@ class SwapCoins extends Component {
                             }}
                             value={this.state.fromValue}
                         />}
-                        {coinDetailData.coinBalance && <Text className="text-purewhite mt-4 fs-12 fw-100"><Translate content="balance" component={Text} className="custom-font fw-300 fs-14 text-purewhite" /> <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} /></Text>}
+                        {(coinDetailData.coinBalance === 0 || coinDetailData.coinBalance) && <><Translate content="balance" component={Text} className="custom-font fw-300 fs-14 text-purewhite" /> <Currency prefix={""} className="currencyContains text-purewhite" decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} /></>}
                     </div>
                     <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('selectcrypto')} >
                         <div className="crypto-coin">
