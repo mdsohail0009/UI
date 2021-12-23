@@ -58,7 +58,11 @@ class SelectSellCrypto extends Component {
             this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt });
             this.swapRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
         } else {
-            this.fetchdefaultMinAmntValues()
+            debugger
+            //this.fetchdefaultMinAmntValues()
+            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: "0", isSwap: true,disableButtons:false }, () => {
+                this.swapRef.current.changeInfo({ localValue: 0, cryptoValue: this.props.sellData.coinDetailData?.sellMinValue });
+            })
         }
         this.setState({ ...this.state, minmaxTab: type })
     }
