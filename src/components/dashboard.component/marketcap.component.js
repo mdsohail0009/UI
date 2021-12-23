@@ -42,7 +42,8 @@ const MarketCap = ({ member }) => {
     }
     const showDrawer = () => {
         setIsOpen(true);
-        let _data = [...marketCaps]
+        setSearchVal("");
+        let _data = [...originalMarketCaps]
         setFullViewLoading(true);
         setTimeout(() => {
             setFullViewData(_data);
@@ -54,6 +55,8 @@ const MarketCap = ({ member }) => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Markets page view', "Username": member?.userName, "MemeberId": member?.id, "Feature": 'Markets', "Remarks": 'Markets page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Markets' });
     }
     const onClose = () => {
+        setSearchVal("");
+        setMarketCaps([...originalMarketCaps]);
         setFullViewData([]);
         setIsOpen(false)
     }
