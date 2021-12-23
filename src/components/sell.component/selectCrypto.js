@@ -17,7 +17,7 @@ class SelectSellCrypto extends Component {
         this.swapRef = React.createRef();
     }
     state = {
-        USDAmnt: "", CryptoAmnt: "", sellSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": null, "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }, isSwap: false
+        USDAmnt: "", CryptoAmnt: "", sellSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": null, "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }, isSwap: true
         , errorMessage: null, minmaxTab: 'min'
     }
     componentDidMount() {
@@ -29,10 +29,10 @@ class SelectSellCrypto extends Component {
         apicalls.trackEvent({ "Type": 'User', "Action": 'Sell coin page View', "Feature": 'Sell', "Remarks": "Sell Crypto coin selection view", "FullFeatureName": 'Sell Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
     }
     fetchdefaultMinAmntValues = async () => {
-        this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue })
-        let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true, this.props.sellData?.coinDetailData?.coin, false, this.props.member?.id, null, this.state.sellSaveData.toWalletCode ? this.state.sellSaveData.toWalletCode : "USD");
+        this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue,disableButtons:true })
+        let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true, this.props.sellData?.coinDetailData?.coin, true, this.props.member?.id, null, this.state.sellSaveData.toWalletCode ? this.state.sellSaveData.toWalletCode : "USD");
         if (res.ok) {
-            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: false }, () => {
+            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: true,disableButtons:false }, () => {
                 this.swapRef.current.changeInfo({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt });
             })
         }
@@ -113,7 +113,7 @@ class SelectSellCrypto extends Component {
             }
         }
         this.setState({ ...this.state, sellSaveData: obj }, () => {
-            this.swapRef.current.handleConvertion({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt, locCurrency: obj.toWalletCode });
+            this.swapRef.current.handleConvertion({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt, locCurrency: obj.toWalletCode,isSwap:this.state.isSwap });
         })
     }
     refreshAmnts = async () => {
@@ -155,13 +155,14 @@ class SelectSellCrypto extends Component {
                         cryptoCurrency={coinDetailData?.coin}
                         localCurrency={this.state.sellSaveData.toWalletCode ? this.state.sellSaveData.toWalletCode : "USD"}
                         selectedCoin={coinDetailData?.coin}
+                        showSwap={false}
                         onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }} memberId={this.props.member?.id} screenName='sell' />
-                    <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target:{value} }) => {
+                    <Radio.Group disabled={this.state?.disableButtons} defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target:{value} }) => {
                         this.clickMinamnt(value)
                     }}>
-                        <Translate value="min" content="min" component={Radio.Button} />
-                        <Translate value="half" content="half" component={Radio.Button} />
-                        <Translate value="all" content="all" component={Radio.Button} />
+                        <Translate value="min" content="min" disabled={this.state?.disableButtons} component={Radio.Button} />
+                        <Translate value="half" content="half" disabled={this.state?.disableButtons} component={Radio.Button} />
+                        <Translate value="all" content="all" disabled={this.state?.disableButtons} component={Radio.Button} />
                     </Radio.Group>
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50" />
                     <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
