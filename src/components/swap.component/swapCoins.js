@@ -160,6 +160,9 @@ class SwapCoins extends Component {
             this.setState({ ...this.state, errorMessage: 'Please select from and receive coins to swap' })
         }
     }
+    swapMax = () => {
+        this.setState({ fromValue: this.props.swapStore?.coinDetailData?.coinBalance })
+    }
     render() {
         const { Paragraph, Text } = Typography;
         const { coinDetailData } = this.props.swapStore;
@@ -177,7 +180,18 @@ class SwapCoins extends Component {
                 />}
                 {coinDetailData && <div className="swap swapfrom-card p-relative">
                     <div>
-                        <Translate className="text-purewhite fs-14 fw-100" content="swap_from" component={Text} />
+
+                        <div className="d-flex">
+                            <Translate className="text-purewhite fs-14 fw-100" content="swap_from" component={Text} />
+                            <Translate
+                                type="text"
+                                size="small"
+                                className="min-btn"
+                                content="all"
+                                component={Button}
+                                onClick={() => this.swapMax()}
+                            />
+                        </div>
                         {this.state.loadingFromValue ? <Spin className={'inputSpinner'} /> : <NumberFormat className="card-input d-block " customInput={Input} thousandSeparator={true} prefix={""}
                             placeholder="0.00"
                             decimalScale={8}
@@ -213,6 +227,7 @@ class SwapCoins extends Component {
                 {coinReceiveDetailData && <div className="swap swapreceive-card p-relative">
                     <div>
                         <Translate className="text-purewhite fs-14 fw-100" content="swap_to" component={Text} />
+
                         {this.state.loadingToValue ? <Spin className={'inputSpinner'} /> : <NumberFormat className="card-input d-block colr-comn" customInput={Input} thousandSeparator={true} prefix={""}
                             placeholder="0.00"
                             decimalScale={8}
