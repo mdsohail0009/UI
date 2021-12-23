@@ -380,7 +380,7 @@ export default {
   select_address: 'Select address book',
   searchAddress: 'Search address label',
   oops: 'OOPS',
-  address_available: 'No address available',
+  address_available: 'No addresses available',
   withdrawSummary: 'Withdraw Crypto Summary',
   selectCurrencyinWallet: 'Select a currency in your wallet',
   agree_termsofservice: 'Please agree terms of service',
@@ -477,6 +477,7 @@ export default {
   W: 'W',
   M: 'M',
   Y: 'Y',
-  copied: 'copied',
+  copied: 'Copied',
   request_fail: "Max attempts reached, Please try after some time",
+  received: "Received"
 }
