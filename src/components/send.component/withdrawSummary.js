@@ -65,7 +65,7 @@ class WithdrawSummary extends Component {
     this.loadData();
     this.trackEvent();
     this.props.dispatch(
-      setSubTitle(apiCalls.convertLocalLang("withdrawSummary"))
+      setSubTitle('')
     );
   }
   trackEvent = () => {

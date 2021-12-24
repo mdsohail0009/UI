@@ -126,7 +126,7 @@ class CryptoWithDrawWallet extends Component {
             "tag": "",
             "amounttype": this.state.amountPercentageType
         }
-        this.props.dispatch(setSubTitle(apicalls.convertLocalLang('withdrawSummary')));
+        //this.props.dispatch(setSubTitle(apicalls.convertLocalLang('withdrawSummary')));
         this.props.dispatch(setWithdrawcrypto(obj))
         this.props.changeStep('withdraw_crpto_summary');
     }

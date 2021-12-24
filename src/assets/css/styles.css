@@ -579,7 +579,8 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .ant-notification{direction: ltr;}
 .ant-notification-notice-closable .ant-notification-notice-message{padding-left: 0 !important;}
 .ant-notification-rtl .ant-notification-notice-close{left: auto;right: 15px;}
-.ant-notification-notice-message, .ant-notification-notice-description{color: var(--textWhite30)!important;}
+.ant-notification-notice-message{color: var(--textWhite30)!important;}
+.ant-notification-notice-description{color: var(--textSecondary)!important;}
 .ant-notification-notice{background-color: var(--bgDarkGrey);border-radius: 10px;font-size: 14px;}
 .bankview-right{padding: 34px 34px 0 !important;background-color: var(--bgDarkGrey);border-radius: 30px;}
 .bankview-right .kpi-val{padding-bottom: 34px;}

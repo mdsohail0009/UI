@@ -118,7 +118,7 @@ let initialState = {
         selectAddress: 'withdraw',
         selectCrypto: null,
         withdraw_crypto_liveness: 'liveVarification',
-        withdraw_crpto_summary: 'withdraw',
+        withdraw_crpto_summary: 'withdrawSummary',
         //withdraw_crpto_success:'withdraw_summary',
 
     },
@@ -128,10 +128,12 @@ let initialState = {
         scanner: 'center_qr',
         withdrawaddress: 'send_wallet_fiat',
         withdrawsummary: 'withdraw_summary_sub',
+        verifyidentity: "",
         withdrawscan: 'withdraw_summary_sub',
         selectAddress: 'null',
         selectCrypto: null,
-        withdraw_crypto_liveness: 'Withdraw_liveness'
+        withdraw_crypto_liveness: 'Withdraw_liveness',
+        withdraw_crpto_summary: null
     },
     depositWallet: "",
     cryptoWithdraw: {},

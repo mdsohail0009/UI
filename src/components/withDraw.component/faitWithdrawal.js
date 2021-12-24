@@ -845,7 +845,7 @@ const FaitWithdrawal = ({
             >
               <Translate
                 className="f-16 mt-16 text-underline text-green"
-                content="Back_to_Withdraw"
+                content="withdraw"
                 component={Link}
               />
               <span className="icon md diag-arrow ml-4" />

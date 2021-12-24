@@ -16,7 +16,8 @@ class SwapCrypto extends Component {
 
     }
     componentDidMount() {
-        this.props.swapRef(this)
+        this.props.dispatch(setStep("swapcoins"));
+        this.props.swapRef(this);
     }
     clearValues() {
         if (this.child)

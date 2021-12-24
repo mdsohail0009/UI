@@ -25,7 +25,7 @@ class SuccessMsg extends Component {
                     <Paragraph className="fs-14 text-white-30 fw-200">{sd.fromValue} {sd.fromWalletCode} and {sd.totalAmount} {sd.toWalletCode} amount has been sold, Your order has been placed successfully</Paragraph>
                     {/* <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" /> */}
                     <Space direction="vertical" size="large">
-                        <Translate content="return_to_buy_sell" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.props.changeStep("step1")} />
+                        <Translate content="return_to_sell" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.props.changeStep("step1")} />
                     </Space>
                 </div>
             </>
