@@ -41,7 +41,7 @@ class Home extends Component {
                                 </Button>
                             } />
                     </div>)}
-                </Carousel> : <div className="text-center"><Spin size="default" /></div>}
+                </Carousel> : ""}
                 <Row justify="center mt-36">
                     <Col xs={24} md={12} xl={10}>
                         <div className="markets-panel mb-36">
