@@ -5,11 +5,12 @@ import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import { getSellamnt } from '../buy.component/api'
 import WalletList from '../shared/walletList';
-import LocalCryptoSwap from '../shared/local.crypto.swap';
+import LocalCryptoSwapperCmp from '../shared/local.crypto.swap/swap';
 import SuisseBtn from '../shared/butons';
 import { updatesellsaveObject } from '../../reducers/sellReducer'
 import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
+import { convertCurrencyDuplicate } from '../buy.component/buySellService';
 class SelectSellCrypto extends Component {
     myRef = React.createRef();
     constructor(props) {
@@ -17,8 +18,12 @@ class SelectSellCrypto extends Component {
         this.swapRef = React.createRef();
     }
     state = {
-        USDAmnt: "", CryptoAmnt: "", sellSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": null, "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }, isSwap: true
-        , errorMessage: null, minmaxTab: 'min'
+        USDAmnt: "", CryptoAmnt: "",
+        sellSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": null, "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 },
+        isSwap: true,
+        errorMessage: null,
+        minmaxTab: 'min',
+        isConvertionLoading: false
     }
     componentDidMount() {
         this.fetchdefaultMinAmntValues();
@@ -29,12 +34,10 @@ class SelectSellCrypto extends Component {
         apicalls.trackEvent({ "Type": 'User', "Action": 'Sell coin page View', "Feature": 'Sell', "Remarks": "Sell Crypto coin selection view", "FullFeatureName": 'Sell Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
     }
     fetchdefaultMinAmntValues = async () => {
-        this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue,disableButtons:true })
+        this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, disableButtons: true })
         let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true, this.props.sellData?.coinDetailData?.coin, true, this.props.member?.id, null, this.state.sellSaveData.toWalletCode ? this.state.sellSaveData.toWalletCode : "USD");
         if (res.ok) {
-            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: true,disableButtons:false }, () => {
-                this.swapRef.current.changeInfo({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt });
-            })
+            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: true });
         }
     }
     setAmount = async ({ currentTarget }, fn, fnRes) => {
@@ -50,21 +53,14 @@ class SelectSellCrypto extends Component {
         if (type === 'half') {
             usdamnt = (obj.coinValueinNativeCurrency / 2).toString();
             cryptoamnt = (obj.coinBalance / 2)
-            this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt });
-            this.swapRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
+            this.setState({...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt,minmaxTab: type });
         } else if (type === 'all') {
             usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
             cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
-            this.setState({ USDAmnt: usdamnt, CryptoAmnt: cryptoamnt });
-            this.swapRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
+            this.setState({...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt,minmaxTab: type });
         } else {
-            debugger
-            //this.fetchdefaultMinAmntValues()
-            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: "0", isSwap: true,disableButtons:false }, () => {
-                this.swapRef.current.changeInfo({ localValue: 0, cryptoValue: this.props.sellData.coinDetailData?.sellMinValue });
-            })
+            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: "0", isSwap: true, disableButtons: false,minmaxTab: type });
         }
-        this.setState({ ...this.state, minmaxTab: type })
     }
     previewSellData() {
         this.setState({ ...this.state, errorMessage: '' })
@@ -117,21 +113,45 @@ class SelectSellCrypto extends Component {
             }
         }
         this.setState({ ...this.state, sellSaveData: obj }, () => {
-            this.swapRef.current.handleConvertion({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt, locCurrency: obj.toWalletCode,isSwap:this.state.isSwap });
-        })
+            this.handleConvertion();
+        });
     }
-    refreshAmnts = async () => {
-        if ((!this.state.USDAmnt && !this.state.CryptoAmnt) || (parseFloat(this.state.USDAmnt) === 0 || parseFloat(this.state.CryptoAmnt) === 0)) {
-            this.setState({ ...this.state, errorMessage: 'Please enter amount' })
-            this.myRef.current.scrollIntoView();
-        } else {
-            this.setState({ ...this.state, CryptoAmnt: this.state.CryptoAmnt, errorMessage: '' })
-            let res = await getSellamnt(this.state.CryptoAmnt, true, this.props.sellData?.coinDetailData?.coin, false, this.props.member?.id, null, this.state.sellSaveData.toWalletCode ? this.state.sellSaveData.toWalletCode : "USD");
-            if (res.ok) {
-                this.setState({ CryptoAmnt: this.state.CryptoAmnt, USDAmnt: res.data, isSwap: false }, () => {
-                    this.swapRef.current.changeInfo({ localValue: this.state.USDAmnt, cryptoValue: this.state.CryptoAmnt });
-                })
+    onValueChange = (value) => {
+        const { isSwap: isSwaped, USDAmnt: localValue, CryptoAmnt: cryptoValue } = this.state;
+        let _nativeValue = localValue, _cryptoValue = cryptoValue;
+        if (isSwaped) {
+            _cryptoValue = value;
+        } else { _nativeValue = value; }
+        this.setState({ ...this.state, USDAmnt: _nativeValue, CryptoAmnt: _cryptoValue }, () => {
+            this.handleConvertion();
+        });
+    }
+    handleConvertion = async () => {
+        const { coin } = this.props.sellData.coinDetailData;
+        const { isSwap: isSwaped, USDAmnt: localValue, CryptoAmnt: cryptoValue } = this.state;
+        this.setState({ ...this.state, isConvertionLoading: true });
+        const response = await convertCurrencyDuplicate({
+            from: coin,
+            to: this.state.sellSaveData.toWalletCode||"USD",
+            value: isSwaped ? cryptoValue : localValue,
+            isCrypto: !isSwaped,
+            memId: this.props.member?.id,
+            screenName: "sell"
+        });
+        if (response.ok) {
+            const { isSwap: isSwaped, USDAmnt: localValue, CryptoAmnt: cryptoValue } = this.state;
+            let _nativeValue = localValue, _cryptoValue = cryptoValue;
+            const { data: value, config: { url } } = response;
+            const _obj = url.split("CryptoFiatConverter")[1].split("/");
+            const _val = isSwaped ? cryptoValue : localValue;
+            if (_obj[4] == _val || _obj[4] == 0) {
+                if (!isSwaped) {
+                    _cryptoValue = value;
+                } else { _nativeValue = value; }
+                this.setState({ ...this.state, USDAmnt: _nativeValue, CryptoAmnt: _cryptoValue, isConvertionLoading: false });
             }
+        } else {
+            this.setState({ ...this.state, isConvertionLoading: false });
         }
     }
     render() {
@@ -153,25 +173,29 @@ class SelectSellCrypto extends Component {
                             </div>
                         </div>
                     </Card>}
-                    <LocalCryptoSwap ref={this.swapRef}
+                    <LocalCryptoSwapperCmp
                         cryptoAmt={this.state.CryptoAmnt}
                         localAmt={this.state.USDAmnt}
                         cryptoCurrency={coinDetailData?.coin}
                         localCurrency={this.state.sellSaveData.toWalletCode ? this.state.sellSaveData.toWalletCode : "USD"}
-                        selectedCoin={coinDetailData?.coin}
-                        showSwap={false}
-                        onChange={({ localValue, cryptoValue, isSwaped }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped }) }} memberId={this.props.member?.id} screenName='sell' />
-                    <Radio.Group disabled={this.state?.disableButtons} defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target:{value} }) => {
+                        onChange={(value) => { this.onValueChange(value) }}
+                        onCurrencySwap={() => {
+                            this.setState({ ...this.state, isSwap: !this.state.isSwap });
+                        }}
+                        isConvertionLoad={this.state.isConvertionLoading}
+                        isSwaped={this.state.isSwap}
+                    />
+                    <Radio.Group  defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target: { value } }) => {
                         this.clickMinamnt(value)
                     }}>
-                        <Translate value="min" content="min" disabled={this.state?.disableButtons} component={Radio.Button} />
-                        <Translate value="half" content="half" disabled={this.state?.disableButtons} component={Radio.Button} />
-                        <Translate value="all" content="all" disabled={this.state?.disableButtons} component={Radio.Button} />
+                        <Translate value="min" content="min"  component={Radio.Button} />
+                        <Translate value="half" content="half"  component={Radio.Button} />
+                        <Translate value="all" content="all" component={Radio.Button} />
                     </Radio.Group>
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50" />
                     <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     <div className="mt-24">
-                        <SuisseBtn autoDisable={true} title="confirm" className="pop-btn" onClick={() => { this.previewSellData() }} onRefresh={() => { this.refreshAmnts(); }} />
+                        <SuisseBtn autoDisable={true} title="confirm" className="pop-btn" onClick={() => { this.previewSellData() }} />
                     </div></div>
             </>
 
