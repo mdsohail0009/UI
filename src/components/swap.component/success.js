@@ -21,7 +21,7 @@ class SuccessMessage extends Component {
                 <div className="success-pop text-center">
                     <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
-                    <Paragraph className="fs-14 text-white-30 fw-200">{sd.tovalue} {sd.toWalletCode} and {sd.totalAmount} amount has been added to your wallets, Your order has been placed successfully</Paragraph>
+                    <Paragraph className="fs-14 text-white-30 fw-200">Your order has been placed successfully, {sd.tovalue} {sd.toWalletCode} has been added into your wallet.</Paragraph>
                     {/* <Translate className="text-white-30 fs-36 fw-200 mb-4" content="transaction_submitted" component={Title} /> */}
                     <Space direction="vertical" size="large">
                         <Link onClick={() => {

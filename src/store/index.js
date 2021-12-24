@@ -19,7 +19,7 @@ import AddressBookReducer from '../reducers/addressBookReducer';
 const persistConfig = {
     key: "root",
     storage,
-    whitelist: ["oidc", "userConfig"]
+    whitelist: ["oidc", "userConfig", "dashboard"]
 }
 const rootReducer = combineReducers({
     oidc: authReducer,
