@@ -23,7 +23,7 @@ class SuccessMsg extends Component {
                 <div className="success-pop text-center">
                     <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
-                    <Paragraph className="fs-14 text-white-30 fw-200">{cd.afterValue} amount has been added to your wallets, Your order has been placed successfully</Paragraph>
+                    <Paragraph className="fs-14 text-white-30 fw-200">Your order has been placed successfully, {cd.amount} {cd.walletCode} amount will be added into your wallet.</Paragraph>
                     {/* <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
                     <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" /> */}
                     <Space direction="vertical" size="large">
