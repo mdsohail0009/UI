@@ -21,15 +21,14 @@ async function start(id) {
         await connection.start();
     } catch (err) {
         const { userConfig: { userProfileInfo } } = store.getState();
-        openNotification("Connection failed to hub", err.message || err.data);
-        setTimeout(() => { start(userProfileInfo?.id) }, 5000);
+        //openNotification("Connection failed to hub", err.message || err.data);
+        setTimeout(() => { start(userProfileInfo?.id) }, 10000);
     }
     connection.onclose(async () => {
         const { userConfig: { userProfileInfo } } = store.getState();
         await start(userProfileInfo?.id);
     });
     connection.on("sendToUser", (user, message, title, text) => {
-        debugger
         openNotification(message, user);
         const { dashboard: { notificationCount } } = store.getState();
         store.dispatch(setNotificationCount(notificationCount ? notificationCount + 1 : 1));
