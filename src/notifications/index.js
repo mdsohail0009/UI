@@ -88,7 +88,7 @@ const Notifications = ({
           itemLayout="vertical"
           size="large"
           className="notifications-list"
-          loading={loading} 
+          loading={loading}
           locale={{
             emptyText: (
               <Empty
@@ -108,16 +108,6 @@ const Notifications = ({
           )}
           {notifications?.map((item, indx) => (
             <List.Item
-              onClick={() => {
-                let isRead = apiClient.encryptValue("true", userProfile.sk)
-                if (!item.isRead) {
-                  readNotification(item.id);
-                  dispatch(
-                    setNotificationCount(dashboard.notificationCount - 1)
-                  );
-                }
-
-              }}
               key={indx}
               style={{ borderWidth: "0px" }}
             >

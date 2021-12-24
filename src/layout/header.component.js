@@ -25,9 +25,10 @@ import { setHeaderTab, setStep } from '../reducers/buysellReducer';
 import { setStep as sendSetStep } from '../reducers/sendreceiveReducer';
 import { setStep as byFiatSetStep } from '../reducers/buyFiatReducer';
 import { setdepositCurrency } from '../reducers/depositReducer'
-import { deleteToken } from '../notifications/api';
+import { deleteToken, readNotification as readNotifications } from '../notifications/api';
 import Wallets from '../components/wallets.component.js';
-import apiCalls from '../api/apiCalls'
+import apiCalls from '../api/apiCalls';
+import { setNotificationCount } from '../reducers/dashboardReducer';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -349,6 +350,13 @@ class Header extends Component {
         this.trackEvent();
 
     }
+    readNotification() {
+        let isRead = apiCalls.encryptValue("true", this.props.userConfig?.sk);
+        readNotifications(this.props.userConfig.id).then(() => {
+            this.props.dispatch(setNotificationCount(0));
+        }
+        );
+    }
     render() {
         const link = <LinkValue content="medium" />;
         const depostWithdrawMenu = (
@@ -411,7 +419,7 @@ class Header extends Component {
                             </Dropdown>
 
                             <Translate content="menu_transactions_history" component={Menu.Item} key="5" onClick={this.showTransactionHistoryDrawer} className="list-item" />
-                            <Menu.Item key="6" className="notification-conunt" onClick={this.showNotificationsDrawer}><span className="icon md bell ml-4 p-relative"><span>{this.props.dashboard?.notificationCount}</span></span></Menu.Item>
+                            <Menu.Item key="6" className="notification-conunt" onClick={this.showNotificationsDrawer}><span className="icon md bell ml-4 p-relative" onClick={() => this.readNotification()}>{(this.props.dashboard?.notificationCount != null && this.props.dashboard?.notificationCount != 0) && <span>{this.props.dashboard?.notificationCount}</span>}</span></Menu.Item>
                             <Dropdown onVisibleChange={() => this.setState({ ...this.state, Visibleprofilemenu: !this.state.Visibleprofilemenu })} visible={this.state.Visibleprofilemenu} onClick={() => this.setState({ ...this.state, Visibleprofilemenu: true })} overlay={userProfileMenu} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Menu.Item key="7" className="ml-16" >{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"} />}
                                     {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"} />}</Menu.Item>
