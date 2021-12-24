@@ -138,6 +138,7 @@ class SwapSummary extends Component {
                     onTermsChange={(checked) => { this.setState({ ...this.state, agreeValue: checked }) }}
                     onCheked={this.state.agreeValue}
                     okBtnTitle={"menu_swap"}
+                    amountTitle={"received"}
                     onErrorClose={() => this.setState({ ...this.state, errorMessage: null })}
                     isButtonLoad={this.state.isLoading}
                 /> : <Loader />}

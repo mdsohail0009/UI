@@ -21,7 +21,7 @@ class Summary extends Component {
             return <Loader />
         }
         const { Paragraph, Text } = Typography;
-        const { coin, oneCoinValue, amount, amountNativeCurrency, nativeCurrency, error, isButtonLoad, showFee, feeAmount, feeCurrency, okBtnTitle, showEstimatedTotal = true, showConvert = false, convertValue, convertCoin, showEstimated = true, exchangeCoin, decimalPlaces, onErrorClose, onCheked } = this.props;
+        const { coin, oneCoinValue, amount, amountTitle, amountNativeCurrency, nativeCurrency, error, isButtonLoad, showFee, feeAmount, feeCurrency, okBtnTitle, showEstimatedTotal = true, showConvert = false, convertValue, convertCoin, showEstimated = true, exchangeCoin, decimalPlaces, onErrorClose, onCheked } = this.props;
 
         return (
             <>
@@ -41,7 +41,7 @@ class Summary extends Component {
                         <Currency defaultValue={convertValue} prefix={""} decimalPlaces={decimalPlaces} className="fw-400 text-white-30" suffixText={convertCoin} />
                     </div>}
                     <div className="pay-list fs-14">
-                        <Translate className="fw-400 text-white" content="amount" component={Text} />
+                        <Translate className="fw-400 text-white" content={amountTitle || "amount"} component={Text} />
                         <Currency defaultValue={amount} decimalPlaces={decimalPlaces} prefix={""} type={'text'} className="fw-400 text-white-30"
                             suffixText={coin} />
 
