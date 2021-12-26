@@ -45,7 +45,6 @@ class SellSummary extends Component {
             })
 
         } else {
-            debugger
             this.setState({ ...this.state, loader: true, error: { valid: true, message: '' } })
             let obj = Object.assign({}, this.props.sellData.sellsaveObject)
             obj.fromValue = this.state.sellpreviewData.amount
