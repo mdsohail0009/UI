@@ -45,6 +45,7 @@ class SellSummary extends Component {
             })
 
         } else {
+            debugger
             this.setState({ ...this.state, loader: true, error: { valid: true, message: '' } })
             let obj = Object.assign({}, this.props.sellData.sellsaveObject)
             obj.fromValue = this.state.sellpreviewData.amount
@@ -52,7 +53,7 @@ class SellSummary extends Component {
             obj.exicutedPrice = this.state.sellpreviewData.oneCoinValue
             obj.totalAmount = this.state.sellpreviewData.amountNativeCurrency + this.props.sellData.sellsaveObject.comission;
             obj.comission = this.props.sellData.sellsaveObject.comission;
-            obj.isCrypto = this.props.sellData.sellsaveObject?.isCrypto;
+            obj.isCrypto = this.state.sellpreviewData?.isCrypto;
             this.props.trackAuditLogData.Action = 'Save';
             this.props.trackAuditLogData.Remarks = obj.fromValue + " " + this.state.sellpreviewData.coin + " selled"
             obj.info = JSON.stringify(this.props.trackAuditLogData)
