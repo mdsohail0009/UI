@@ -67,10 +67,11 @@ class CryptoWithDrawWallet extends Component {
     }
 
     clickMinamnt(type) {
+        debugger
         let usdamnt; let cryptoamnt;
         let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
         if (type === 'half') {
-            usdamnt = (obj.coinValueinNativeCurrency / 2).toString();
+            usdamnt = (obj.coinValueinNativeCurrency / 2);
             cryptoamnt = (obj.coinBalance / 2)
             this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'half' });
             this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
@@ -80,8 +81,8 @@ class CryptoWithDrawWallet extends Component {
             this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'all' });
             this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
         } else {
-            this.setState({ ...this.state, amountPercentageType: 'min' });
-            this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 });
+            this.setState({ ...this.state, CryptoAmnt: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, amountPercentageType: 'min' });
+            this.eleRef.current.changeInfo({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 });
         }
     }
     handlePreview = () => {
