@@ -90,6 +90,7 @@ class QRScan extends Component {
                         </CopyToClipboard></div>
                 </div>}
                 <Translate className="text-center f-12 text-white fw-200 mt-16" content="address_hint_text" component={Paragraph} />
+                <Paragraph className="text-center f-16 text-yellow fw-400 mt-16 mb-0">Note: The minimum amount for <span className="fw-600">[ASSET NAME]</span> is <span className="fw-600">[00.00]</span>.</Paragraph>
                 <Dropdown overlay={this.shareMenu}>
                     {/* <Button className="pop-btn mt-36" block>Share</Button> */}
                     <Button
