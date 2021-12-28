@@ -53,13 +53,13 @@ class SelectSellCrypto extends Component {
         if (type === 'half') {
             usdamnt = (obj.coinValueinNativeCurrency / 2).toString();
             cryptoamnt = (obj.coinBalance / 2)
-            this.setState({...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt,minmaxTab: type });
+            this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, minmaxTab: type });
         } else if (type === 'all') {
             usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
             cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
-            this.setState({...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt,minmaxTab: type });
+            this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, minmaxTab: type });
         } else {
-            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: "0", isSwap: true, disableButtons: false,minmaxTab: type });
+            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: "0", isSwap: true, disableButtons: false, minmaxTab: type });
         }
     }
     previewSellData() {
@@ -132,7 +132,7 @@ class SelectSellCrypto extends Component {
         this.setState({ ...this.state, isConvertionLoading: true });
         const response = await convertCurrencyDuplicate({
             from: coin,
-            to: this.state.sellSaveData.toWalletCode||"USD",
+            to: this.state.sellSaveData.toWalletCode || "USD",
             value: isSwaped ? cryptoValue : localValue,
             isCrypto: !isSwaped,
             memId: this.props.member?.id,
@@ -185,11 +185,12 @@ class SelectSellCrypto extends Component {
                         isConvertionLoad={this.state.isConvertionLoading}
                         isSwaped={this.state.isSwap}
                     />
-                    <Radio.Group  defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target: { value } }) => {
+                    <Paragraph className="text-center f-16 text-yellow fw-400">The maximum amount is $100K.</Paragraph>
+                    <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target: { value } }) => {
                         this.clickMinamnt(value)
                     }}>
-                        <Translate value="min" content="min"  component={Radio.Button} />
-                        <Translate value="half" content="half"  component={Radio.Button} />
+                        <Translate value="min" content="min" component={Radio.Button} />
+                        <Translate value="half" content="half" component={Radio.Button} />
                         <Translate value="all" content="all" component={Radio.Button} />
                     </Radio.Group>
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50" />
