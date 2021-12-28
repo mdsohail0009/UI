@@ -35,7 +35,7 @@ class SelectSellCrypto extends Component {
     }
     fetchdefaultMinAmntValues = async () => {
         this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, disableButtons: true })
-        let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true, this.props.sellData?.coinDetailData?.coin, true, this.props.member?.id, null, this.state.sellSaveData.toWalletCode ? this.state.sellSaveData.toWalletCode : "USD");
+        let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true, this.props.sellData?.coinDetailData?.coin, true, this.props.member?.id, "sell", this.state.sellSaveData.toWalletCode ? this.state.sellSaveData.toWalletCode : "USD");
         if (res.ok) {
             this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: true });
         }
