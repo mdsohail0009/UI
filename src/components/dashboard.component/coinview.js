@@ -14,7 +14,7 @@ import apiCalls from '../../api/apiCalls';
 import { fetchMarketCoinData } from '../../reducers/dashboardReducer'
 import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat } from "../../reducers/sendreceiveReducer";
 import NumberFormat from "react-number-format";
-import {coinSubject} from '../../utils/pubsub'
+import { coinSubject } from '../../utils/pubsub'
 class CoinView extends React.Component {
     refreshSubscribe;
     state = {
@@ -29,7 +29,7 @@ class CoinView extends React.Component {
         window.scrollTo(0, 0)
         this.loadCoinDetailData();
         this.coinViewTrack();
-        this.refreshSubscribe = coinSubject.subscribe((val)=>{
+        this.refreshSubscribe = coinSubject.subscribe((val) => {
             this.loadCoinDetailData();
         });
     }
@@ -147,7 +147,7 @@ class CoinView extends React.Component {
             sendDrawer: false
         })
     }
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.refreshSubscribe.unsubscribe();
     }
     render() {
@@ -162,7 +162,7 @@ class CoinView extends React.Component {
                 <Col lg={14} xl={14} xxl={14}>
                     <div className="box p-24 coin-bal">
                         {this.state.coinData ? <><div className="d-flex align-center">
-                            <span className={`coin md ${coinData?.symbol.toUpperCase()}`} />
+                            <span className={`coin ${coinData?.symbol.toUpperCase()}`} />
                             <div className="summary-count ml-16">
                                 <Paragraph className="text-white-30 fs-36 mb-0 fw-500">
                                     <NumberFormat value={coinData?.avilableBalance} displayType="text" thousandSeparator={true} prefix="" />
