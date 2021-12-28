@@ -29,6 +29,7 @@ import { deleteToken, readNotification as readNotifications } from '../notificat
 import Wallets from '../components/wallets.component.js';
 import apiCalls from '../api/apiCalls';
 import { setNotificationCount } from '../reducers/dashboardReducer';
+import { clearUserInfo } from '../reducers/configReduser';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -143,7 +144,7 @@ class Header extends Component {
                     </div>
                 </li>
 
-                <li className="d-flex justify-content align-center c-pointer" onClick={() => { userManager.clearStaleState(); userManager.signoutRedirect(); deleteToken({ UserId: this.props?.userConfig?.id, Token: this.props?.oidc?.deviceToken }) }}>
+                <li className="d-flex justify-content align-center c-pointer" onClick={() => {userManager.signoutRedirect(); deleteToken({ UserId: this.props?.userConfig?.id, Token: this.props?.oidc?.deviceToken }) }}>
                     <Translate content="logout" component={Link} />
                     <span className="icon md rarrow-white" />
                 </li>
@@ -343,7 +344,8 @@ class Header extends Component {
     trackEvent() {
         window.$zoho?.salesiq?.chat.complete();
         window.$zoho?.salesiq?.reset();
-        userManager.signoutRedirect()
+        this.props.dispatch(clearUserInfo());
+        userManager.signoutRedirect();
         apiCalls.trackEvent({ "Type": 'User', "Action": 'User Logged out', "Username": null, "MemeberId": null, "Feature": 'Logout', "Remarks": 'User Logged out', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Logout' });
     }
     clearEvents() {
