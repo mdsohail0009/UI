@@ -6,7 +6,6 @@ import Translate from 'react-translate-component';
 import Currency from '../shared/number.formate';
 import LocalCryptoSwap from '../shared/local.crypto.swap';
 import SuccessMsg from './success';
-import { appInsights } from "../../Shared/appinsights";
 import apicalls from '../../api/apiCalls';
 import { validateContent } from '../../utils/custom.validator';
 
@@ -67,7 +66,6 @@ class CryptoWithDrawWallet extends Component {
     }
 
     clickMinamnt(type) {
-        debugger
         let usdamnt; let cryptoamnt;
         let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
         if (type === 'half') {
