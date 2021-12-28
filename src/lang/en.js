@@ -480,5 +480,6 @@ export default {
   Y: 'Y',
   copied: 'Copied',
   request_fail: "Max attempts reached, Please try after some time",
-  received: "Received"
+  received: "Received",
+  comssion:"Comission"
 }

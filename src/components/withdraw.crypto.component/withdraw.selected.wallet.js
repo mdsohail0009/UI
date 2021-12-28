@@ -6,7 +6,6 @@ import Translate from 'react-translate-component';
 import Currency from '../shared/number.formate';
 import LocalCryptoSwap from '../shared/local.crypto.swap';
 import SuccessMsg from './success';
-import { appInsights } from "../../Shared/appinsights";
 import apicalls from '../../api/apiCalls';
 import { validateContent } from '../../utils/custom.validator';
 
@@ -26,7 +25,6 @@ class CryptoWithDrawWallet extends Component {
         amountPercentageType: "min"
     }
     componentDidMount() {
-        debugger
         if (this.props.sendReceive.withdrawCryptoObj) {
             this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.withdrawCryptoObj?.totalValue, localValue: 0 })
             this.setState({ ...this.state, walletAddress: this.props.sendReceive.withdrawCryptoObj.toWalletAddress, amountPercentageType: this.props.sendReceive.withdrawCryptoObj.amounttype });
@@ -67,7 +65,6 @@ class CryptoWithDrawWallet extends Component {
     }
 
     clickMinamnt(type) {
-        debugger
         let usdamnt; let cryptoamnt;
         let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
         if (type === 'half') {
