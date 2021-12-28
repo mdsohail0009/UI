@@ -142,6 +142,7 @@ class SelectCrypto extends Component {
                             this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: !this.state.swapValues.isSwaped } })
                         }}
                         isConvertionLoad={isConvertionLoading} />
+                    <Paragraph className="text-center f-16 text-yellow fw-400">The maximum amount is $100K.</Paragraph>
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
                     <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     {/* <div className="fs-12 text-white-30 text-center mt-24"><Translate content="change_10Sec_amount" component={Paragraph} className="fs-12 text-white-30 text-center mt-24" /></div> */}
