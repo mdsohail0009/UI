@@ -874,7 +874,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .crypto-card .ant-card-body{padding: 33px;height: 231px;}
     .crypto-percent{font-size: 60px;line-height: normal;}
     .coin{transform: scale(1);}
-    .round-pills{ margin-bottom: 30px;}
+    .round-pills{ margin-bottom: 30px; margin-top: 6px;}
     .drawer-title{font-size: 34px !important;}
     .crypto-search.ant-input-search .ant-input-group input{height: 58px !important;}
     .cancel-btn{height: 57px !important;}

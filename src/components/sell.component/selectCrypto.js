@@ -185,7 +185,7 @@ class SelectSellCrypto extends Component {
                         isConvertionLoad={this.state.isConvertionLoading}
                         isSwaped={this.state.isSwap}
                     />
-                    <Paragraph className="text-center f-16 text-yellow fw-400">The maximum amount is $100K.</Paragraph>
+                    <Paragraph className="text-center f-16 text-yellow fw-400 mb-36">The maximum amount is $100K.</Paragraph>
                     <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target: { value } }) => {
                         this.clickMinamnt(value)
                     }}>
