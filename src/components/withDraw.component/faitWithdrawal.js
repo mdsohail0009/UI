@@ -38,6 +38,7 @@ import WithdrawalSummary from "./withdrawalSummary";
 import WithdrawalLive from "./withdrawLive";
 import apicalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
+import { handleFiatConfirm } from "../send.component/api";
 
 const LinkValue = (props) => {
   return (
@@ -249,11 +250,19 @@ const FaitWithdrawal = ({
       userConfig.firstName + " " + userConfig.lastName;
     values["favouriteName"] =
       values.favouriteName || addressDetails.favouriteName;
-    setSaveObj(values);
-    dispatch(setWithdrawfiat(values));
+    values["comission"] = "0.0";
+    setLoading(true);
+    const response = await handleFiatConfirm(values);
+    if (response.ok) {
+      setSaveObj(response.data);
+      dispatch(setWithdrawfiat(response.data));
+      changeStep('withdrawfaitsummary');
+      form.resetFields();
+    }
+    setLoading(false);
+
     // setConfirmationStep("step2");
-    changeStep('withdrawfaitsummary');
-    form.resetFields();
+
   };
   const getIbanData = async (val) => {
     if (val && val.length > 14) {

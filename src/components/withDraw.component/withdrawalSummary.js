@@ -154,10 +154,25 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
           className="fs-14 text-white-50 fw-200"
         />
       </Text>
+
       <Currency
         className="fs-20 text-white-30 mb-36"
         prefix={""}
         defaultValue={sendReceive.withdrawFiatObj?.totalValue}
+        suffixText={sendReceive.withdrawFiatObj?.walletCode}
+      />
+      <Text className="fs-14 text-white-50 fw-200">
+        {" "}
+        <Translate
+          content="comssion"
+          component={Text}
+          className="fs-14 text-white-50 fw-200"
+        />
+      </Text>
+      <Currency
+        className="fs-20 text-white-30 mb-36"
+        prefix={""}
+        defaultValue={sendReceive.withdrawFiatObj?.comission}
         suffixText={sendReceive.withdrawFiatObj?.walletCode}
       />
       <Text className="fs-14 text-white-50 fw-200">

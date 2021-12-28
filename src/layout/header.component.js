@@ -143,7 +143,7 @@ class Header extends Component {
                     </div>
                 </li>
 
-                <li className="d-flex justify-content align-center c-pointer" onClick={() => { userManager.signoutRedirect(); deleteToken({ UserId: this.props?.userConfig?.id, Token: this.props?.oidc?.deviceToken }) }}>
+                <li className="d-flex justify-content align-center c-pointer" onClick={() => { userManager.clearStaleState(); userManager.signoutRedirect(); deleteToken({ UserId: this.props?.userConfig?.id, Token: this.props?.oidc?.deviceToken }) }}>
                     <Translate content="logout" component={Link} />
                     <span className="icon md rarrow-white" />
                 </li>
