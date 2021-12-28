@@ -71,7 +71,7 @@ class CryptoWithDrawWallet extends Component {
         let usdamnt; let cryptoamnt;
         let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
         if (type === 'half') {
-            usdamnt = (obj.coinValueinNativeCurrency / 2);
+            usdamnt = (obj.coinValueinNativeCurrency / 2).toString();;
             cryptoamnt = (obj.coinBalance / 2)
             this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'half' });
             this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
@@ -233,10 +233,12 @@ class CryptoWithDrawWallet extends Component {
                         localCurrency={"USD"}
                         selectedCoin={selectedWallet?.coin}
                         onChange={({ localValue, cryptoValue, isSwaped, isInputChange }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped, amountPercentageType: isInputChange ? this.state.amountPercentageType : "" }) }} memberId={this.props.userProfile.id} screenName='withdrawcrypto' />
-                    <Radio.Group value={this.state.amountPercentageType} buttonStyle="solid" className="round-pills">
-                        <Translate value="min" content="min" component={Radio.Button} onClick={() => this.clickMinamnt("min")} />
-                        <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt("half")} />
-                        <Translate value="all" content="all" component={Radio.Button} onClick={() => this.clickMinamnt("all")} />
+                    <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target: { value } }) => {
+                        this.clickMinamnt(value)
+                    }}>
+                        <Translate value="min" content="min" component={Radio.Button} />
+                        <Translate value="half" content="half" component={Radio.Button} />
+                        <Translate value="all" content="all" component={Radio.Button} />
                     </Radio.Group>
 
                     <Form>
