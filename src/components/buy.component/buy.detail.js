@@ -65,11 +65,12 @@ class SelectCrypto extends Component {
         const response = await convertCurrencyDuplicate({
             from: coin,
             to: this.state.selectedWallet?.currencyCode || "USD",
-            value: isSwaped ? cryptoValue : localValue,
+            value: (isSwaped ? cryptoValue : localValue)||0,
             isCrypto: !isSwaped,
             memId: this.props.userProfileInfo?.id,
             screenName: "buy"
         });
+        debugger
         if (response.ok) {
             const { isSwaped, localValue, cryptoValue } = this.state.swapValues;
             let _nativeValue = localValue, _cryptoValue = cryptoValue;
@@ -78,8 +79,8 @@ class SelectCrypto extends Component {
             const _val = isSwaped ? cryptoValue : localValue;
             if (_obj[4] == _val || _obj[4] == 0) {
                 if (!isSwaped) {
-                    _cryptoValue = value;
-                } else { _nativeValue = value; }
+                    _cryptoValue = value||0;
+                } else { _nativeValue = value||0; }
                 this.setState({ ...this.state, swapValues: { localValue: _nativeValue, cryptoValue: _cryptoValue, isSwaped, isConvertionLoading: false } });
             }
         } else {
@@ -115,7 +116,7 @@ class SelectCrypto extends Component {
         const { coin, coinValueinNativeCurrency, coinBalance, percentage } = this.props.buyInfo?.selectedCoin?.data;
         return (
             <div id="divScroll" ref={this.myRef}>
-                {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="info" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} closable />}
+                {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} closable />}
                 <div className="selectcrypto-container">
                     <Card className="crypto-card select mb-36" bordered={false}>
                         <span className="d-flex align-center">

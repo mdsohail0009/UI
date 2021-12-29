@@ -23,6 +23,7 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
         valid: true
     };
     const maxPurchaseAmt = 100000;
+    const maxAmtMessage = "$100,000"
     const currencyMaxPurchase = {
         GBP: gbpInUsd * localValue,
         EUR: localValue * eurInUsd
@@ -48,7 +49,7 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
         }
         else if (currencyMaxPurchase[wallet?.currencyCode] > maxPurchaseAmt) {
             validate.valid = false;
-            validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxPurchaseAmt + " USD"
+            validate.message = apicalls.convertLocalLang('purchase_max') + " " + maxAmtMessage
         }
     }
     return validate;
