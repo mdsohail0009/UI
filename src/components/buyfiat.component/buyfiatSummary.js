@@ -27,6 +27,7 @@ class FiatSummary extends Component {
             depositFiatData: null,
             getDepFiatSaveData: {},
             loading: true,
+            btnDisabled: false
         }
     }
 
@@ -44,8 +45,7 @@ class FiatSummary extends Component {
     }
 
     saveDepFiat = async () => {
-        debugger
-        console.log(this.props.depositInfo?.setDepFiatSaveObj)
+        this.setState({ btnDisabled: true });
         let Obj = Object.assign({}, this.props.depositInfo?.setDepFiatSaveObj);
         Obj.currency = apiCalls.encryptValue(Obj.currency, this.props.userConfig?.sk)
         Obj.bankName = apiCalls.encryptValue(Obj.bankName, this.props.userConfig?.sk)
@@ -59,13 +59,13 @@ class FiatSummary extends Component {
         Obj.info = JSON.stringify(this.props.trackAuditLogData);
         let response = await savedepositFiat(Obj);
         if (response.ok === true) {
+            this.setState({ btnDisabled: false });
             this.props.dispatch(setFiatFinalRes(response.data));
             this.props.changeStep('step3')
-
         }
     }
     render() {
-        const { depositFiatData } = this.state;
+        const { depositFiatData, btnDisabled } = this.state;
         const { Text } = Typography;
         return (
             <>
@@ -94,7 +94,7 @@ class FiatSummary extends Component {
                         <li><Translate className="pl-0 ml-0 text-white-50" content="account_details" component={Text} /> </li>
                         <li><Translate className="pl-0 ml-0 text-white-50" content="Cancel_select" component={Text} /></li>
                     </ul>
-                    <Translate size="large" block className="pop-btn mt-36" content="deposit" component={Button} onClick={this.saveDepFiat} />
+                    <Translate size="large" block className="pop-btn mt-36" content="deposit" component={Button} onClick={this.saveDepFiat} disabled={btnDisabled} />
                     <div className="text-center mt-8">
                         <Translate content="back" component={Button} type="text" size="large" onClick={() => this.showSendReceiveDrawer(depositFiatData?.currencyCode)} className=" pop-cancel fw-400" />
                     </div></div>}
