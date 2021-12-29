@@ -283,7 +283,7 @@ export default {
   Ethereum_Text: 'Ethereum',
   searchCurrency: 'Pera sa Paghahanap',
   selectWallet: 'Piliin ang Wallet',
-  final_Amount: 'Output dianggarkan. Jumlah anda akan berubah sementara transaksi atau transaksi akan kembali.',
+  final_Amount: 'Output hanya dianggarkan, jumlah akan berubah.',
   agree_sell: 'Sumasang-ayon ako sa Suissebase',
   terms: 'Mga palatuntunan',
   refund_cancellation: 'at ang patakaran sa pagbabalik, refund at pagkansela nito.',
