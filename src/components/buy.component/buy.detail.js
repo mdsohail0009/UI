@@ -70,7 +70,6 @@ class SelectCrypto extends Component {
             memId: this.props.userProfileInfo?.id,
             screenName: "buy"
         });
-        debugger
         if (response.ok) {
             const { isSwaped, localValue, cryptoValue } = this.state.swapValues;
             let _nativeValue = localValue, _cryptoValue = cryptoValue;

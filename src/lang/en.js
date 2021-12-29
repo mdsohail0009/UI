@@ -437,6 +437,7 @@ export default {
   available_amount_less: 'Entered amount should be less than available amount',
   available_balance_less: 'Entered amount should be less than balance',
   enter_minvalue: 'You have to sell minimum of ',
+  enter_maxvalue: 'You have to sell maximum of ',
   enter_coinvalue: 'Please enter from coin Value',
   receive_coin: 'Please select receive coin to swap',
   insufficient_balance: 'Insufficient balance',

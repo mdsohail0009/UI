@@ -65,7 +65,12 @@ class SelectSellCrypto extends Component {
     previewSellData() {
         this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
-        let { sellMinValue } = this.props.sellData.coinDetailData;
+        let { sellMinValue, gbpInUsd, eurInUsd } = this.props.sellData.coinDetailData;
+        const purchaseCurrencyMaxAmt = {
+            GBP: this.state.USDAmnt * gbpInUsd,
+            EUR: this.state.USDAmnt * eurInUsd
+        }
+        const maxAmtMesage = "$100,000";
         if ((!this.state.USDAmnt && !this.state.CryptoAmnt) || (parseFloat(this.state.USDAmnt) === 0 || parseFloat(this.state.CryptoAmnt) === 0)) {
             this.setState({
                 ...this.state, errorMessage: apicalls.convertLocalLang('enter_amount')
@@ -86,6 +91,11 @@ class SelectSellCrypto extends Component {
         } else if (parseFloat(this.state.CryptoAmnt) < sellMinValue) {
             this.myRef.current.scrollIntoView();
             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue })
+            return;
+        }
+        else if(this.state.USDAmnt>purchaseCurrencyMaxAmt[obj.toWalletCode]){
+            this.myRef.current.scrollIntoView();
+            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_maxvalue') + sellMinValue })
             return;
         }
         else {
@@ -133,7 +143,7 @@ class SelectSellCrypto extends Component {
         const response = await convertCurrencyDuplicate({
             from: coin,
             to: this.state.sellSaveData.toWalletCode || "USD",
-            value: isSwaped ? cryptoValue : localValue,
+            value: (isSwaped ? cryptoValue : localValue)||0,
             isCrypto: !isSwaped,
             memId: this.props.member?.id,
             screenName: "sell"
@@ -146,8 +156,8 @@ class SelectSellCrypto extends Component {
             const _val = isSwaped ? cryptoValue : localValue;
             if (_obj[4] == _val || _obj[4] == 0) {
                 if (!isSwaped) {
-                    _cryptoValue = value;
-                } else { _nativeValue = value; }
+                    _cryptoValue = value||0;
+                } else { _nativeValue = value||0; }
                 this.setState({ ...this.state, USDAmnt: _nativeValue, CryptoAmnt: _cryptoValue, isConvertionLoading: false });
             }
         } else {
@@ -159,7 +169,7 @@ class SelectSellCrypto extends Component {
         const { coinDetailData } = this.props.sellData;
         return (
             <>
-                <div ref={this.myRef}>  {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="info" message={apicalls.convertLocalLang('sellCrypto')} description={this.state?.errorMessage} closable />}
+                <div ref={this.myRef}>  {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message={apicalls.convertLocalLang('sellCrypto')} description={this.state?.errorMessage} closable />}
                     {coinDetailData && <Card className="crypto-card select mb-36" bordered={false}>
                         <span className="d-flex align-center">
                             <span className={`coin lg ${coinDetailData.coin}`} />
