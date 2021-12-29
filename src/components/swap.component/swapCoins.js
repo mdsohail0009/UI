@@ -65,25 +65,31 @@ class SwapCoins extends Component {
         }
     }
     async setReceiveAmount(e) {
-        this.state.fromValue = e;
-        this.props.insertFromCoinInputValue(e);
-        if (this.state.fromValue) {
-            this.setState({ ...this.state, errorMessage: null })
-        }
-        if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
-            if (e) {
-                this.setState({ ...this.state, loadingToValue: true })
-                let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, e, this.props.userProfile.id, 'swap');
-                if (res.ok) {
-                    this.setState({ ...this.state, receiveValue: res.data, errorMessage: null, loadingToValue: false })
-                    this.props.updateSwapdataobj({ ...this.state, receiveValue: res.data })
+        this.setState({ ...this.state, fromValue: e }, async () => {
+            this.props.insertFromCoinInputValue(e);
+            if (this.state.fromValue) {
+                this.setState({ ...this.state, errorMessage: null })
+            }
+            if (this.props.swapStore.coinDetailData.coin && this.props.swapStore.coinReceiveDetailData.coin) {
+                if (e) {
+                    this.setState({ ...this.state, loadingToValue: true })
+                    let res = await fetchCurrConvertionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, e, this.props.userProfile.id, 'swap');
+                    if (res.ok) {
+                        let { config: { url } } = res;
+                        const _val = url.split("/");
+                        if (_val[5] == this.state.fromValue) { // this need to changed when parametrs change happen
+                            this.setState({ ...this.state, receiveValue: res.data, errorMessage: null, loadingToValue: false })
+                            this.props.updateSwapdataobj({ ...this.state, receiveValue: res.data })
+                        }
+                    } else {
+                        this.setState({ ...this.state, receiveValue: "", loadingToValue: false })
+                    }
                 } else {
                     this.setState({ ...this.state, receiveValue: "", loadingToValue: false })
                 }
-            } else {
-                this.setState({ ...this.state, receiveValue: "", loadingToValue: false })
             }
-        }
+        })
+
     }
     previewClick() {
         if (!this.props.swapStore.coinDetailData.coin) {
