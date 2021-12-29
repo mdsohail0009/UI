@@ -7,6 +7,7 @@ import ConnectStateProps from "../../../utils/state.connect";
 import CryptoList from "../../shared/cryptolist"
 import { createCryptoDeposit } from "../api";
 import apicalls from "../../../api/apiCalls";
+import { fetchDashboardcalls } from "../../../reducers/dashboardReducer";
 const { Title, Paragraph } = Typography;
 const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
     useEffect(() => { fetchMemberCoins(); }, []);
@@ -20,6 +21,7 @@ const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
         const response = await createCryptoDeposit({ memberId: userProfile?.id, walletCode: coin?.coin });
         if (response.ok) {
             dispatch(setWalletAddress(response.data));
+            dispatch(fetchDashboardcalls(userProfile?.id));
         }
     }
     return <>

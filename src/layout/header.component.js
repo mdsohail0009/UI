@@ -344,7 +344,7 @@ class Header extends Component {
     trackEvent() {
         window.$zoho?.salesiq?.chat.complete();
         window.$zoho?.salesiq?.reset();
-        this.props.dispatch(clearUserInfo());
+       // this.props.dispatch(clearUserInfo());
         userManager.signoutRedirect();
         apiCalls.trackEvent({ "Type": 'User', "Action": 'User Logged out', "Username": null, "MemeberId": null, "Feature": 'Logout', "Remarks": 'User Logged out', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Logout' });
     }

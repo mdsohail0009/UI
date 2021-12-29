@@ -70,7 +70,7 @@ class SettingsMenu extends Component {
                     <span className="icon md rarrow-white" />
                 </div>
             </li>
-            <li className="d-flex justify-content align-center c-pointer" onClick={() => { store.dispatch(clearUserInfo()); userManager.signoutRedirect() }}>
+            <li className="d-flex justify-content align-center c-pointer" onClick={() => { userManager.signoutRedirect() }}>
                 <Translate content="logout" component={Link} />
                 <span className="icon md rarrow-white" />
             </li>

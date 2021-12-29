@@ -4,8 +4,6 @@ import App from '../components/app.component/App';
 import { Modal } from 'antd';
 import { userManager } from './index';
 import IdleTimer from 'react-idle-timer'
-import { store } from '../store';
-import { clearUserInfo } from '../reducers/configReduser';
 class IdleCmp extends Component {
     _count = 15;
     timeInterval;
@@ -61,7 +59,7 @@ class IdleCmp extends Component {
                                 onClick={() => this.handleCancel()}>Cancel</Button>
                             <Button className="primary-btn pop-btn"
                                 style={{ width: 100, height: 50 }}
-                                onClick={() => {store.dispatch(clearUserInfo()); userManager.signoutRedirect() }}>Ok</Button>
+                                onClick={() => {userManager.signoutRedirect() }}>Ok</Button>
                         </>
                     ]} >
                     <h4 className="text-white fs-16 fw-400">You're session will be logged out in {counter}</h4>

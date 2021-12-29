@@ -34,11 +34,7 @@ class SelectSellCrypto extends Component {
         apicalls.trackEvent({ "Type": 'User', "Action": 'Sell coin page View', "Feature": 'Sell', "Remarks": "Sell Crypto coin selection view", "FullFeatureName": 'Sell Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
     }
     fetchdefaultMinAmntValues = async () => {
-        this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, disableButtons: true })
-        let res = await getSellamnt(this.props.sellData.coinDetailData?.sellMinValue, true, this.props.sellData?.coinDetailData?.coin, true, this.props.member?.id, "sell", this.state.sellSaveData.toWalletCode ? this.state.sellSaveData.toWalletCode : "USD");
-        if (res.ok) {
-            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: res.data, isSwap: true });
-        }
+        this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue });
     }
     setAmount = async ({ currentTarget }, fn, fnRes) => {
         this.setState({ ...this.state, [fn]: currentTarget.value })
@@ -53,13 +49,13 @@ class SelectSellCrypto extends Component {
         if (type === 'half') {
             usdamnt = (obj.coinValueinNativeCurrency / 2).toString();
             cryptoamnt = (obj.coinBalance / 2)
-            this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, minmaxTab: type });
+            this.setState({ ...this.state, USDAmnt: "0", CryptoAmnt: cryptoamnt, minmaxTab: type,isSwap: true, });
         } else if (type === 'all') {
             usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
             cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
-            this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, minmaxTab: type });
+            this.setState({ ...this.state, USDAmnt: "0", CryptoAmnt: cryptoamnt, minmaxTab: type,isSwap: true, });
         } else {
-            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: "0", isSwap: true, disableButtons: false, minmaxTab: type });
+            this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: "0", isSwap: true, minmaxTab: type });
         }
     }
     previewSellData() {
@@ -95,7 +91,7 @@ class SelectSellCrypto extends Component {
         }
         else if(this.state.USDAmnt>purchaseCurrencyMaxAmt[obj.toWalletCode]){
             this.myRef.current.scrollIntoView();
-            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_maxvalue') + sellMinValue })
+            this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_maxvalue') + maxAmtMesage })
             return;
         }
         else {
