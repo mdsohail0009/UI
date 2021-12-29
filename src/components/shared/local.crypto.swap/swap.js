@@ -26,6 +26,7 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
                     onChange(value);
                 }}
                 autoFocus
+                allowNegative={false}
             />
         </div>
         <><NumberFormat value={isSwaped ? localAmt : cryptoAmt} displayType={'text'} thousandSeparator={true} prefix={isSwaped ? symbols[localCurrency] : ""} renderText={(value, props) => <div {...props} className="fs-14 text-white-30 text-center d-block">{value} {isSwaped ? localCurrency : cryptoCurrency} {isConvertionLoad && <Spin size="small" />}</div>
