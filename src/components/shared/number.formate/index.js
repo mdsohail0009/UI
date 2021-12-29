@@ -19,6 +19,7 @@ class Currency extends Component {
                 if (onChange) { onchange(value) }
             }}
             autoFocus={autoFocus}
+            allowNegative={false}
         /> : <NumberFormat
             value={defaultValue}
             className={className}
