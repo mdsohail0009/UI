@@ -285,7 +285,7 @@ export default {
   Ethereum_Text: '以太坊',
   searchCurrency: '搜索貨幣',
   selectWallet: '選擇錢包',
-  final_Amount: '估计输出。 您的金额将发生变化，而交易或交易将恢复。',
+  final_Amount: '产量只是估计，数量会改变。',
   agree_sell: '我同意 Suissebase 的',
   terms: '服務條款',
   refund_cancellation: '及其退貨、退款和取消政策。',

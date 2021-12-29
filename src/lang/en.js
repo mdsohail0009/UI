@@ -300,7 +300,7 @@ export default {
   tabName_All: 'All',
   searchCurrency: 'Search Currency',
   selectWallet: 'Select Wallet',
-  final_Amount: 'Output is estimated. Your amount will change while the transaction or transaction will revert.',
+  final_Amount: 'Output is estimated only, amount will change.',
   agree_sell: 'I agree to Suissebase’s',
   terms: 'Terms of Service',
   refund_cancellation: ' and its return, refund and cancellation policy.',
@@ -481,5 +481,5 @@ export default {
   copied: 'Copied',
   request_fail: "Max attempts reached, Please try after some time",
   received: "Received",
-  comssion:"Comission"
+  comssion: "Comission"
 }
