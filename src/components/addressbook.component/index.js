@@ -26,6 +26,7 @@ class AddressBook extends Component {
             modal: false,
             alert: false,
             successMsg: false,
+            btnDisabled: false,
             obj: {
                 "id": [],
                 "tableName": "Member.FavouriteAddress",
@@ -112,7 +113,7 @@ class AddressBook extends Component {
         }
     }
     handleSatatuSave = async () => {
-        this.setState({ ...this.state, isLoading: true })
+        this.setState({ ...this.state, isLoading: true, btnDisabled: true })
         let statusObj = this.state.obj;
         statusObj.id.push(this.state.selectedObj.id);
         statusObj.modifiedBy = this.props.oidc.user.profile.unique_name;
@@ -122,7 +123,7 @@ class AddressBook extends Component {
         let response = await activeInactive(statusObj)
         if (response.ok) {
             this.setState({
-                ...this.state, modal: false, selection: [], isCheck: false, isLoading: false,
+                ...this.state, modal: false, selection: [], isCheck: false, isLoading: false, btnDisabled: false,
                 obj: {
                     "id": [],
                     "tableName": "Member.FavouriteAddress",
@@ -140,7 +141,7 @@ class AddressBook extends Component {
         }
         else {
             this.setState({
-                ...this.state, modal: false, selection: [], isCheck: false,
+                ...this.state, modal: false, selection: [], isCheck: false, btnDisabled: false,
                 obj: {
                     "id": [],
                     "tableName": "Member.FavouriteAddress",
@@ -234,7 +235,7 @@ class AddressBook extends Component {
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
     }
     render() {
-        const { cryptoFiat, gridUrlCrypto, gridUrlFiat, memberId } = this.state;
+        const { cryptoFiat, gridUrlCrypto, gridUrlFiat, memberId, btnDisabled } = this.state;
         const { Title, Paragraph, Text } = Typography;
 
         return (
@@ -331,7 +332,10 @@ class AddressBook extends Component {
                         >
                             Cancel
                         </Button>
-                        <Button className="primary-btn pop-btn" onClick={this.handleSatatuSave} style={{ width: 120, height: 50 }}>
+                        <Button className="primary-btn pop-btn"
+                            onClick={this.handleSatatuSave} style={{ width: 120, height: 50 }}
+                            disabled={btnDisabled}
+                        >
                             Save
                         </Button>
                     </>}

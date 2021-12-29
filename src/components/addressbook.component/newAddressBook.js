@@ -15,6 +15,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
     const [errorMsg, setErrorMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [cryptoAddress, setCryptoAddress] = useState({});
+    const [btnDisabled, setBtnDisabled] = useState(false);
     useEffect(() => {
         if (addressBookReducer?.cryptoValues) {
             form.setFieldsValue({
@@ -57,7 +58,8 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         }
     }
     const saveAddressBook = async (values) => {
-        setIsLoading(false)
+        setIsLoading(false);
+        setBtnDisabled(true);
         const type = 'crypto';
         let Id = '00000000-0000-0000-0000-000000000000';
         values['id'] = addressBookReducer?.selectedRowData?.id;
@@ -69,15 +71,18 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         let favaddrId = addressBookReducer?.selectedRowData ? addressBookReducer?.selectedRowData?.id : Id;
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'crypto', favaddrId);
         if (responsecheck.data != null) {
+            setBtnDisabled(false);
             setIsLoading(false)
             return setErrorMsg('Address label already existed');
         } else {
+            setBtnDisabled(true);
             setErrorMsg('')
             let saveObj = Object.assign({}, values);
             saveObj.toWalletAddress = apiCalls.encryptValue(saveObj.toWalletAddress, userConfig.sk)
             saveObj.beneficiaryAccountName = apiCalls.encryptValue(saveObj.beneficiaryAccountName, userConfig.sk)
             let response = await saveAddress(saveObj);
             if (response.ok) {
+                setBtnDisabled(false);
                 message.success({ content: apiCalls.convertLocalLang('address_msg'), className: 'custom-msg' });
                 form.resetFields();
                 rejectCoinWallet();
@@ -163,6 +168,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                             size="large"
                             block
                             className="pop-btn"
+                            disabled={btnDisabled}
                         >
                             {isLoading && <Spin indicator={antIcon} />} <Translate content="Save_btn_text" component={Text} />
                         </Button>

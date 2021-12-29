@@ -16,6 +16,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
     const [isLoading, setIsLoading] = useState(false);
     const [fiatAddress, setFiatAddress] = useState({});
     const useDivRef = React.useRef(null);
+    const [btnDisabled, setBtnDisabled] = useState(false);
 
     useEffect(() => {
         if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && addressBookReducer?.selectedRowData?.id) {
@@ -44,9 +45,9 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
     }
 
     const savewithdrawal = async (values) => {
-        debugger
         setIsLoading(false)
         setErrorMsg(null)
+        setBtnDisabled(true);
         const type = 'fiat';
         values['id'] = addressBookReducer?.selectedRowData?.id;
         values['membershipId'] = userConfig.id;
@@ -58,10 +59,12 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
         let namecheck = values.favouriteName.trim();
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'fiat', favaddrId);
         if (responsecheck.data != null) {
-            setIsLoading(false)
+            setIsLoading(false);
+            setBtnDisabled(false);
             useDivRef.current.scrollIntoView()
             return setErrorMsg('Address label already existed');
         } else {
+            setBtnDisabled(true);
             let saveObj = Object.assign({}, values);
             saveObj.accountNumber = apiCalls.encryptValue(saveObj.accountNumber, userConfig.sk)
             saveObj.bankAddress = apiCalls.encryptValue(saveObj.bankAddress, userConfig.sk)
@@ -72,6 +75,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
             saveObj.toWalletAddress = apiCalls.encryptValue(saveObj.toWalletAddress, userConfig.sk)
             let response = await saveAddress(saveObj);
             if (response.ok) {
+                setBtnDisabled(false);
                 setErrorMsg('')
                 useDivRef.current.scrollIntoView();
                 message.success({ content: apiCalls.convertLocalLang('address_msg'), className: 'custom-msg' });
@@ -79,7 +83,10 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                 onCancel()
                 setIsLoading(false)
             }
-            else { setIsLoading(false) }
+            else {
+                setIsLoading(false);
+                setBtnDisabled(false);
+            }
         }
     }
     const getIbanData = async (val) => {
@@ -269,6 +276,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             size="large"
                             block
                             className="pop-btn"
+                            disabled={btnDisabled}
                         >
                             {isLoading && <Spin indicator={antIcon} />}  <Translate content="Save_btn_text" />
                         </Button>

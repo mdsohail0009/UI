@@ -16,6 +16,7 @@ counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
 const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
     const { switcher, themes } = useThemeSwitcher();
+    const [btnDisabled, setBtnDisabled] = useState(false);
     const [form] = Form.useForm();
     const [SettingsLu, setSettingsLu] = useState('')
     const [theme, setTheme] = useState(member?.theme == 'Light Theme' ? true : false);
@@ -35,11 +36,13 @@ const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
         }
     }
     const saveSettings = async () => {
+        setBtnDisabled(true);
         settingsObj.Theme = theme ? 'Light Theme' : 'Dark Theme';
         settingsObj.MemberId = member?.id;
         settingsObj.info = JSON.stringify(trackAuditLogData);
         let res = await saveSettingsData(settingsObj);
         if (res.ok) {
+            setTimeout(() => setBtnDisabled(false), 2000);
             message.destroy()
             message.success({ content: <Translate content="settings_msg" />, className: 'custom-msg' });
             getmemeberInfoa(member.userId)
@@ -130,6 +133,7 @@ const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
                     size="medium"
                     className="pop-btn mt-36"
                     style={{ width: 300 }}
+                    disabled={btnDisabled}
                 >
                     <Translate content="Save_btn_text" />
                 </Button>
