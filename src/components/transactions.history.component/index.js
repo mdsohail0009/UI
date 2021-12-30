@@ -100,12 +100,12 @@ class TransactionsHistory extends Component {
     { field: "statusRemarks", title: apiCalls.convertLocalLang('remarks'), filter: true, width: 250 },
   ];
   withdrwCryptoColomns = [
-    { field: "walletCode", title: apiCalls.convertLocalLang('Wallet'), filter: true },
+    { field: "walletCode", title: apiCalls.convertLocalLang('Wallet'), filter: true, width: 150 },
     { field: "amount", title: apiCalls.convertLocalLang('amount'), filter: true, width: 200, filterType: "numeric", dataType: 'number', },
-    { field: "walletAddress", title: apiCalls.convertLocalLang('walletAddress'), filter: true, width: 200 },
+    { field: "walletAddress", title: apiCalls.convertLocalLang('walletAddress'), filter: true, with: 300 },
     { field: "createdDate", title: apiCalls.convertLocalLang('RequestDate'), filter: true, width: 200, filterType: "date" },
     { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 200 },
-    { field: "statusRemarks", title: apiCalls.convertLocalLang('remarks'), filter: true, width: 200, }
+    { field: "statusRemarks", title: apiCalls.convertLocalLang('remarks'), filter: true, width: 350, }
   ];
   render() {
     const { BuySellURL, SwapURL, WithdrawURL, DepositURL, DepositCryptoURL, WithdrawCryptoURL } = this.state
