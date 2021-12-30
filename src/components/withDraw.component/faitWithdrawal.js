@@ -92,9 +92,9 @@ const FaitWithdrawal = ({
       let selectObj = sendReceive.withdrawFiatObj;
       form.setFieldsValue(selectObj);
     }
-    if (sendReceive) {
-      form.setFieldsValue({ totalValue: sendReceive.wFTotalValue });
-    }
+    // if (buyInfo.memberFiat?.data && sendReceive?.wFTotalValue) {
+    //   form.setFieldsValue({ totalValue: sendReceive?.wFTotalValue });
+    // }
   }, [buyInfo.memberFiat?.data]);
 
   useEffect(() => {
