@@ -151,7 +151,7 @@ let initialState = {
     addressObj: null,
     withdrawFinalRes: {},
     cryptoFinalRes: {},
-    wFTotalValue: {},
+    wFTotalValue: null,
 
 }
 const sendReceiveReducer = (state = initialState, action) => {
