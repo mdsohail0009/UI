@@ -477,5 +477,6 @@ export default {
   copied: '複製的',
   withdraw_fiat_summary: '提現法幣摘要',
   request_fail: '已達到最大嘗試次數，請稍後再試',
-  received: "已收到"
+  received: "已收到",
+  comssion: "委员会"
 }
