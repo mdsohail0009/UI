@@ -32,7 +32,7 @@ class SuccessMessage extends Component {
                                 fromValue: null,
                                 receiveValue: null,
                                 errorMessage: null
-                            })); this.props.dispatch(setStep("swapcoins")); this.props.clearSwapfullData()
+                            }));this.props.clearSwapfullData(); this.props.dispatch(setStep("swapcoins")); 
                         }}><Translate content="Back_to_Swap" component={Link} className="f-16 text-white-30 mt-16 text-underline" /></Link>
                     </Space>
                 </div>
