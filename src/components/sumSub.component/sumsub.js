@@ -9,7 +9,7 @@ class SumSub extends Component {
     state = {loading:true}
     componentDidMount() {
         if (this.props.userConfig.isKYC) {
-            this.props.history.push("/dashboard")
+            this.props.history.push("/cockpit")
         }
         this.launchWebSdk();
         
@@ -30,7 +30,7 @@ class SumSub extends Component {
                     if (type === 'idCheck.applicantStatus' && payload.reviewStatus === "completed")
                         apicalls.updateKyc(this.props.userConfig.userId).then((res) => {
                             this.props.getmemeberInfoa(this.props.user.profile.sub)
-                            this.props.history.push("/dashboard")
+                            this.props.history.push("/cockpit")
                         })
                 },
                 onError: (error) => {

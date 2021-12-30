@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from 'antd';
-import { setStep, setSubTitle, setWithdrawcrypto } from '../../reducers/sendreceiveReducer';
+import { setStep, setSubTitle, setWithdrawcrypto, setCryptoFinalRes } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
 import LiveNessSumsub from '../sumSub.component/liveness'
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { withDrawCrypto } from '../send.component/api';
+import { publishBalanceRfresh } from '../../utils/pubsub';
 
 const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, trackAuditLogData }) => {
   const [faceCapture, setFaceCapture] = useState(false);
@@ -22,10 +23,12 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, t
     saveObj.info = JSON.stringify(trackAuditData)
     let withdrawal = await withDrawCrypto(saveObj)
     if (withdrawal.ok) {
+      dispatch(setCryptoFinalRes(withdrawal.data));
       dispatch(fetchDashboardcalls(userConfig.id))
       dispatch(setWithdrawcrypto(null))
       dispatch(setSubTitle(""));
       changeStep('withdraw_crpto_success');
+      publishBalanceRfresh("success");
     }
 
   }

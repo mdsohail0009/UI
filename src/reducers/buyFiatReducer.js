@@ -25,7 +25,7 @@ let initialState = {
         addAddress: 'fiatAddress',
         withdrwalfiatsummary: 'withdraw_fiat_summary',
         withdrwlive: 'withdraw_live',
-        withdrawfaitsummary:'withdraw'
+        withdrawfaitsummary: 'withdraw_fiat_summary'
     },
     stepSubTitles: {
         buyfiat: "avail_wallet_weprovide",
@@ -36,7 +36,7 @@ let initialState = {
         billingaddress: null,
         fiatdeposit: null,
         addAddress: null,
-        withdrawfaitsummary:'withdraw_fiat_summary'
+        withdrawfaitsummary: null
     }
 
 }

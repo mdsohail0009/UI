@@ -11,9 +11,25 @@ import { AppInsightsContext } from "@microsoft/applicationinsights-react-js";
 import { reactPlugin } from "../../Shared/appinsights";
 import Notifications from "../../notifications";
 import { setNotificationCount } from '../../reducers/dashboardReducer';
+import {startConnection } from "../../utils/signalR";
+import { useThemeSwitcher } from "react-css-theme-switcher";
 function App(props) {
+  const { switcher, themes } = useThemeSwitcher()
   const [loading, setLoading] = useState(true);
   const [showNotifications, setNotifications] = useState(false);
+  const connectToHub = () => {
+    setTimeout(() => {
+      const { userConfig: { userProfileInfo } } = store.getState();
+      if (userProfileInfo?.id) {
+        startConnection(userProfileInfo?.id);
+        switcher({ theme: userProfileInfo?.theme == 'Light Theme' ? themes.LHT : themes.DRT });
+      } else {
+        connectToHub();
+      }
+    }, 2000)
+
+  }
+  
   useEffect(() => {
     onMessageListener().then(payload => {
       const { dashboard: { notificationCount } } = store.getState();
@@ -25,7 +41,7 @@ function App(props) {
       window.$zoho = window.$zoho || {};
       window.$zoho.salesiq?.reset();
       window.$zoho.salesiq = window.$zoho.salesiq || {
-        widgetcode: "96756975ac1c2aab2d1534678a55b38fe0ca21ca94a31c4145a23ab14e64cb9aa81d6b547a35c109951d24f6be71d2d0",
+        widgetcode:  process.env.REACT_APP_ZOHO_WIDGET_CODE,
         values: {},
         ready: function () {
 
@@ -42,13 +58,13 @@ function App(props) {
       s.type = 'text/javascript';
       s.id = 'zsiqscript';
       s.defer = true;
-      s.src = 'https://salesiq.zoho.in/widget';
+      s.src = process.env.REACT_APP_ZOHO_WIDGET_URL;
       let t;
       t = d.getElementsByTagName('script')[0];
       t.parentNode.insertBefore(s, t);
 
     })
-
+    connectToHub();
   }, [])
   return (
     <Provider store={store}>

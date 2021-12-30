@@ -6,7 +6,6 @@ import Translate from 'react-translate-component';
 import Currency from '../shared/number.formate';
 import LocalCryptoSwap from '../shared/local.crypto.swap';
 import SuccessMsg from './success';
-import { appInsights } from "../../Shared/appinsights";
 import apicalls from '../../api/apiCalls';
 import { validateContent } from '../../utils/custom.validator';
 
@@ -69,7 +68,7 @@ class CryptoWithDrawWallet extends Component {
         let usdamnt; let cryptoamnt;
         let obj = Object.assign({}, this.props.sendReceive?.cryptoWithdraw?.selectedWallet)
         if (type === 'half') {
-            usdamnt = (obj.coinValueinNativeCurrency / 2).toString();
+            usdamnt = (obj.coinValueinNativeCurrency / 2).toString();;
             cryptoamnt = (obj.coinBalance / 2)
             this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'half' });
             this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
@@ -79,8 +78,8 @@ class CryptoWithDrawWallet extends Component {
             this.setState({ ...this.state, USDAmnt: usdamnt, CryptoAmnt: cryptoamnt, amountPercentageType: 'all' });
             this.eleRef.current.changeInfo({ localValue: usdamnt, cryptoValue: cryptoamnt });
         } else {
-            this.setState({ ...this.state, amountPercentageType: 'min' });
-            this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 });
+            this.setState({ ...this.state, CryptoAmnt: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, amountPercentageType: 'min' });
+            this.eleRef.current.changeInfo({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 });
         }
     }
     handlePreview = () => {
@@ -126,7 +125,7 @@ class CryptoWithDrawWallet extends Component {
             "tag": "",
             "amounttype": this.state.amountPercentageType
         }
-        this.props.dispatch(setSubTitle(apicalls.convertLocalLang('withdrawSummary')));
+        //this.props.dispatch(setSubTitle(apicalls.convertLocalLang('withdrawSummary')));
         this.props.dispatch(setWithdrawcrypto(obj))
         this.props.changeStep('withdraw_crpto_summary');
     }
@@ -231,10 +230,12 @@ class CryptoWithDrawWallet extends Component {
                         localCurrency={"USD"}
                         selectedCoin={selectedWallet?.coin}
                         onChange={({ localValue, cryptoValue, isSwaped, isInputChange }) => { this.setState({ ...this.state, CryptoAmnt: cryptoValue, USDAmnt: localValue, isSwap: isSwaped, amountPercentageType: isInputChange ? this.state.amountPercentageType : "" }) }} memberId={this.props.userProfile.id} screenName='withdrawcrypto' />
-                    <Radio.Group value={this.state.amountPercentageType} buttonStyle="solid" className="round-pills">
-                        <Translate value="min" content="min" component={Radio.Button} onClick={() => this.clickMinamnt("min")} />
-                        <Translate value="half" content="half" component={Radio.Button} onClick={() => this.clickMinamnt("half")} />
-                        <Translate value="all" content="all" component={Radio.Button} onClick={() => this.clickMinamnt("all")} />
+                    <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target: { value } }) => {
+                        this.clickMinamnt(value)
+                    }}>
+                        <Translate value="min" content="min" component={Radio.Button} />
+                        <Translate value="half" content="half" component={Radio.Button} />
+                        <Translate value="all" content="all" component={Radio.Button} />
                     </Radio.Group>
 
                     <Form>
@@ -258,7 +259,7 @@ class CryptoWithDrawWallet extends Component {
                             </div>
                         </Form.Item>
                     </Form>
-                    <Translate content="with_draw" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
+                    <Translate content="confirm" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
                     <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[
                         <Button key="back" onClick={this.handleCancel} disabled={this.state.loading}>
                             Return

@@ -4,12 +4,12 @@ import WalletList from '../shared/walletList';
 import { changeStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-import { convertCurrency, validatePreview } from './buySellService';
+import { convertCurrency, convertCurrencyDuplicate, validatePreview } from './buySellService';
 import { fetchPreview, setWallet, fetchMemberFiat } from '../../reducers/buyReducer';
 import Loader from '../../Shared/loader';
 import SuisseBtn from '../shared/butons';
 import NumberFormat from 'react-number-format';
-import LocalCryptoSwapper from '../shared/local.crypto.swap';
+import LocalCryptoSwapperCmp from '../shared/local.crypto.swap/swap';
 import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
 class SelectCrypto extends Component {
@@ -23,6 +23,7 @@ class SelectCrypto extends Component {
                 localValue: '',
                 cryptoValue: '',
                 isSwaped: false,
+                isConvertionLoading: false
             },
             selectedWallet: null,
             disableConfirm: false,
@@ -38,7 +39,7 @@ class SelectCrypto extends Component {
         this.EventTrack()
     }
     EventTrack = () => {
-        apicalls.trackEvent({ "Type": 'User', "Action": 'Buy coin page view', "Username": this.props.userProfileInfo.userName, "MemeberId": this.props.userProfileInfo.id, "Feature": 'Buy', "Remarks": 'Buy crypto coin selection view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy crypto' });
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Buy coin page view', "Username": this.props.userProfileInfo.userName, "MemeberId": this.props.userProfileInfo.id, "Feature": 'Buy', "Remarks": 'Buy Crypto coin selection view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy Crypto' });
     }
     fetchConvertionValue = async () => {
         const { coin } = this.props.buyInfo?.selectedCoin?.data;
@@ -47,20 +48,56 @@ class SelectCrypto extends Component {
 
         this.setState({ ...this.state, disableConfirm: false, swapValues: { ...this.state.swapValues, [isSwaped ? "localValue" : "cryptoValue"]: value } })
     }
-    onValueChange = ({ cryptoValue, localValue, isSwaped }) => {
-        this.setState({ ...this.state, swapValues: { localValue, cryptoValue, isSwaped } });
+    onValueChange = (value) => {
+        const { isSwaped, localValue, cryptoValue } = this.state.swapValues;
+        let _nativeValue = localValue, _cryptoValue = cryptoValue;
+        if (isSwaped) {
+            _cryptoValue = value;
+        } else { _nativeValue = value; }
+        this.setState({ ...this.state, swapValues: { localValue: _nativeValue, cryptoValue: _cryptoValue, isSwaped } }, () => {
+            this.handleConvertion();
+        });
+    }
+    handleConvertion = async () => {
+        const { coin } = this.props.buyInfo?.selectedCoin?.data;
+        const { isSwaped, localValue, cryptoValue } = this.state.swapValues;
+        this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isConvertionLoading: true } });
+        const response = await convertCurrencyDuplicate({
+            from: coin,
+            to: this.state.selectedWallet?.currencyCode || "USD",
+            value: (isSwaped ? cryptoValue : localValue)||0,
+            isCrypto: !isSwaped,
+            memId: this.props.userProfileInfo?.id,
+            screenName: "buy"
+        });
+        if (response.ok) {
+            const { isSwaped, localValue, cryptoValue } = this.state.swapValues;
+            let _nativeValue = localValue, _cryptoValue = cryptoValue;
+            const { data: value, config: { url } } = response;
+            const _obj = url.split("CryptoFiatConverter")[1].split("/");
+            const _val = isSwaped ? cryptoValue : localValue;
+            if (_obj[4] == _val || _obj[4] == 0) {
+                if (!isSwaped) {
+                    _cryptoValue = value||0;
+                } else { _nativeValue = value||0; }
+                this.setState({ ...this.state, swapValues: { localValue: _nativeValue, cryptoValue: _cryptoValue, isSwaped, isConvertionLoading: false } });
+            }
+        } else {
+            this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isConvertionLoading: false } });
+        }
     }
     handleWalletSelection = (walletId) => {
         const selectedWallet = this.props.buyInfo?.memberFiat?.data?.filter(item => item.id === walletId)[0];
         this.setState({ ...this.state, selectedWallet }, () => {
-            this.swapRef.current.changeInfo({ cryptoValue: this.state.swapValues.cryptoValue, localValue: this.state.swapValues.localValue, locCurrency: selectedWallet.currencyCode })
+            this.handleConvertion();
         });
         this.props.setWallet(selectedWallet);
     }
+
     handlePreview = () => {
         const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
-        const { buyMin, buyMax, coin } = this.props.buyInfo?.selectedCoin?.data;
-        const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin })
+        const { buyMin, buyMax, coin,gbpInUsd,eurInUsd } = this.props.buyInfo?.selectedCoin?.data;
+        const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin,gbpInUsd,eurInUsd })
         if (!_vaidator.valid) {
             this.setState({ ...this.state, error: { ..._vaidator } });
             this.myRef.current.scrollIntoView();
@@ -69,28 +106,16 @@ class SelectCrypto extends Component {
         this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue), !isSwaped, this.props?.userProfileInfo.id);
         this.props.setStep('step3');
     }
-    refresh = () => {
-        const { localValue, cryptoValue } = this.state.swapValues;
-        const { buyMin, buyMax } = this.props.buyInfo?.selectedCoin?.data;
-        const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin })
-        if (!_vaidator.valid) {
-            this.setState({ ...this.state, error: { ..._vaidator } });
-            this.myRef.current.scrollIntoView();
-        } else {
-            this.fetchConvertionValue();
-            this.swapRef.current.changeInfo({ cryptoValue, localValue, locCurrency: this.state.selectedWallet?.currencyCode, isSwap: this.state.swapValues.isSwaped })
-        }
-    }
     render() {
         if (this.props.buyInfo?.selectedCoin?.loading || !this.props.buyInfo?.selectedCoin?.data) {
             return <Loader />
         }
         const { Paragraph, Text } = Typography;
-        const { localValue, cryptoValue } = this.state.swapValues;
+        const { localValue, cryptoValue, isSwaped, isConvertionLoading } = this.state.swapValues;
         const { coin, coinValueinNativeCurrency, coinBalance, percentage } = this.props.buyInfo?.selectedCoin?.data;
         return (
             <div id="divScroll" ref={this.myRef}>
-                {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="info" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} closable />}
+                {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} closable />}
                 <div className="selectcrypto-container">
                     <Card className="crypto-card select mb-36" bordered={false}>
                         <span className="d-flex align-center">
@@ -105,7 +130,19 @@ class SelectCrypto extends Component {
                             </div>
                         </div>
                     </Card>
-                    <LocalCryptoSwapper ref={this.swapRef} selectedCoin={coin} localAmt={localValue} cryptoAmt={cryptoValue} localCurrency={this.state.selectedWallet?.currencyCode || "USD"} cryptoCurrency={coin} onChange={(obj) => this.onValueChange(obj)} memberId={this.props.userProfileInfo?.id} screenName='buy' />
+                    <LocalCryptoSwapperCmp
+                        localAmt={localValue}
+                        cryptoAmt={cryptoValue}
+                        localCurrency={this.state.selectedWallet?.currencyCode || "USD"}
+                        cryptoCurrency={coin}
+                        onChange={(obj) => this.onValueChange(obj)} memberId={this.props.userProfileInfo?.id}
+                        screenName='buy'
+                        isSwaped={isSwaped}
+                        onCurrencySwap={() => {
+                            this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: !this.state.swapValues.isSwaped } })
+                        }}
+                        isConvertionLoad={isConvertionLoading} />
+                    <Paragraph className="text-center f-16 text-yellow fw-400">The maximum amount is $100K.</Paragraph>
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
                     <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     {/* <div className="fs-12 text-white-30 text-center mt-24"><Translate content="change_10Sec_amount" component={Paragraph} className="fs-12 text-white-30 text-center mt-24" /></div> */}

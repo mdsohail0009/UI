@@ -243,24 +243,24 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
         }
         else if (file.status === 'error') {
-            message.error({ content: `${file.response}` , className: 'custom-msg' })
+            message.error({ content: `${file.response}`, className: 'custom-msg' })
             // this.setState({ ...this.state, uploadLoader: false, errorMessage: file.response,  isSubmitting: false  })
-   this.setState({ ...this.state, uploadLoader: false,  isSubmitting: false  })
+            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false })
         }
-        else if(!this.state.isValidFile){
-            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false  });
+        else if (!this.state.isValidFile) {
+            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false });
         }
     }
     beforeUpload = (file) => {
 
         let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
-      //  let isFileName = (file.name.split('.')).length > 2 ? false : true;
+        //  let isFileName = (file.name.split('.')).length > 2 ? false : true;
         if (fileType[file.type]) {
             this.setState({ ...this.state, isValidFile: true, })
             return true
         } else {
-         message.error({ content: `File is not allowed. You can upload jpg, png, jpeg and PDF  files` , className: 'custom-msg' })
-            this.setState({...this.state, isValidFile:false,})
+            message.error({ content: `File is not allowed. You can upload jpg, png, jpeg and PDF  files`, className: 'custom-msg' })
+            this.setState({ ...this.state, isValidFile: false, })
             return Upload.LIST_IGNORE;
         }
     }
@@ -333,7 +333,7 @@ class RequestedDocs extends Component {
                 {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
                 <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=4" />{this.state?.docDetails?.note}</div>
                 <div className="bank-view">
-                    {this.state.docDetails?.details?.map((doc, idx) => <Collapse collapsible="header" onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
+                    {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
                         <Panel header={doc.documentName} key={idx + 1} extra={doc.status ? (<span className={`${doc.status ? doc.status.toLowerCase() + " staus-lbl" : ""}`}>{doc.status}</span>) : ""}>
                             {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
                             {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">

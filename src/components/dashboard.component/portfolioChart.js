@@ -50,7 +50,8 @@ const PotfolioChart = ({ data }) => {
         },
         series: [{
             data: pData,
-            type: 'area',
+            type: 'areaspline',
+            name: "",
             lineColor: 'rgb(255,219,26)',
             threshold: null,
             fillColor: {

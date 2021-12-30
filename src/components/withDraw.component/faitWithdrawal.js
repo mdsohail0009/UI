@@ -31,12 +31,14 @@ import {
 } from "../addressbook.component/api";
 import {
   setWithdrawfiat,
-  rejectWithdrawfiat
+  rejectWithdrawfiat,
+  setWithdrawFinalRes
 } from "../../reducers/sendreceiveReducer";
 import WithdrawalSummary from "./withdrawalSummary";
 import WithdrawalLive from "./withdrawLive";
 import apicalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
+import { handleFiatConfirm } from "../send.component/api";
 
 const LinkValue = (props) => {
   return (
@@ -75,6 +77,7 @@ const FaitWithdrawal = ({
   const [stateLu, setStateLu] = useState([]);
   const [addressLu, setAddressLu] = useState([]);
   const [addressDetails, setAddressDetails] = useState({});
+  const [btnDisabled, setBtnDisabled] = useState(false);
   const useDivRef = React.useRef(null);
   useEffect(() => {
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
@@ -241,6 +244,7 @@ const FaitWithdrawal = ({
       useDivRef.current.scrollIntoView();
       return setErrorMsg(apicalls.convertLocalLang("exceeded_amount"));
     }
+    setBtnDisabled(true);
     setErrorMsg(null);
     values["membershipId"] = userConfig.id;
     values["memberWalletId"] = selectedWallet.id;
@@ -248,11 +252,22 @@ const FaitWithdrawal = ({
       userConfig.firstName + " " + userConfig.lastName;
     values["favouriteName"] =
       values.favouriteName || addressDetails.favouriteName;
-    setSaveObj(values);
-    dispatch(setWithdrawfiat(values));
+    values["comission"] = "0.0";
+    setLoading(true);
+    const response = await handleFiatConfirm(values);
+    if (response.ok) {
+      setBtnDisabled(false);
+      setSaveObj(response.data);
+      dispatch(setWithdrawfiat(response.data));
+      changeStep('withdrawfaitsummary');
+      form.resetFields();
+    } else {
+      setBtnDisabled(false);
+    }
+    setLoading(false);
+
     // setConfirmationStep("step2");
-    changeStep('withdrawfaitsummary');
-    form.resetFields();
+
   };
   const getIbanData = async (val) => {
     if (val && val.length > 14) {
@@ -791,8 +806,9 @@ const FaitWithdrawal = ({
                   size="large"
                   block
                   className="pop-btn"
+                  disabled={btnDisabled}
                 >
-                  <Translate content="proceed" component={Form.label} />
+                  <Translate content="confirm" component={Form.label} />
                 </Button>
               </Form.Item>
             </Form>
@@ -844,7 +860,7 @@ const FaitWithdrawal = ({
             >
               <Translate
                 className="f-16 mt-16 text-underline text-green"
-                content="Back_to_Withdraw"
+                content="withdraw"
                 component={Link}
               />
               <span className="icon md diag-arrow ml-4" />
@@ -860,7 +876,6 @@ const FaitWithdrawal = ({
     useDivRef.current.scrollIntoView();
   };
   const handleOk = async () => {
-    debugger
     let currentStep = parseInt(confirmationStep.split("step")[1]);
     if (confirmationStep === "step2") {
       // trackAuditLogData.Action = "Save";
@@ -876,6 +891,7 @@ const FaitWithdrawal = ({
       Obj.info = JSON.stringify(trackAuditLogData);
       let withdrawal = await withdrawSave(Obj);
       if (withdrawal.ok) {
+        this.props.dispatch(setWithdrawFinalRes(withdrawal.data))
         dispatch(fetchDashboardcalls(userConfig.id));
         dispatch(rejectWithdrawfiat());
         changeStep("step7");

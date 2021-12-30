@@ -3,9 +3,10 @@ import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import { getSellPreviewData, savesellData } from '../buy.component/api'
 import Summary from '../summary.component';
-import { fetchDashboardcalls,fetchMarketCoinData } from '../../reducers/dashboardReducer';
+import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
 import { message } from 'antd';
+import { setSellFinalRes } from '../../reducers/sellReducer'
 import apicalls from '../../api/apiCalls';
 class SellSummary extends Component {
     state = { sellpreviewData: {}, loader: true, disableConfirm: false, isTermsAgree: false, error: { valid: true, message: null } }
@@ -50,11 +51,14 @@ class SellSummary extends Component {
             obj.toValue = this.state.sellpreviewData.amountNativeCurrency
             obj.exicutedPrice = this.state.sellpreviewData.oneCoinValue
             obj.totalAmount = this.state.sellpreviewData.amountNativeCurrency + this.props.sellData.sellsaveObject.comission;
+            obj.comission = this.props.sellData.sellsaveObject.comission;
+            obj.isCrypto = this.state.sellpreviewData?.isCrypto;
             this.props.trackAuditLogData.Action = 'Save';
             this.props.trackAuditLogData.Remarks = obj.fromValue + " " + this.state.sellpreviewData.coin + " selled"
             obj.info = JSON.stringify(this.props.trackAuditLogData)
             let res = await savesellData(obj);
             if (res.ok) {
+                this.props.sellResData(res.data);
                 this.props.changeStep('sellsuccess')
                 this.setState({ ...this.state, loader: false, disableConfirm: false })
                 this.props.fetchDashboardData(this.props.member.id)
@@ -84,7 +88,7 @@ class SellSummary extends Component {
             onRefresh={() => { this.refreshPage() }}
             onCancel={() => this.props.changeStep('step1')}
             onClick={() => this.saveSellData()}
-            okBtnTitle={"confirm_now"}
+            okBtnTitle={"sell"}
             onTermsChange={(checked) => { this.setState({ ...this.state, isTermsAgree: checked }) }}
             onCheked={this.state.isTermsAgree}
             onErrorClose={() => this.setState({ ...this.state, error: { valid: true, message: null } })} />
@@ -102,9 +106,13 @@ const connectDispatchToProps = dispatch => {
         fetchDashboardData: (member_id) => {
             dispatch(fetchDashboardcalls(member_id))
         },
-        fetchMarketCoinDataValue:()=>{
+        fetchMarketCoinDataValue: () => {
             dispatch(fetchMarketCoinData(true))
-        }
+        },
+        sellResData: (data) => {
+            dispatch(setSellFinalRes(data))
+        },
+
     }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(SellSummary);

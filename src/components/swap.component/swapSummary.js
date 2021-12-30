@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { setStep, updateSwapdata } from '../../reducers/swapReducer';
+import { setStep, updateSwapdata, setSwapFinalRes } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
-import { fetchCurrConvertionValue, saveSwapData,fetchCurrConvertionCommisionValue } from '../../components/swap.component/api';
+import { fetchCurrConvertionValue, saveSwapData, fetchCurrConvertionCommisionValue } from '../../components/swap.component/api';
 import Summary from '../summary.component';
 import { fetchDashboardcalls } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
@@ -19,7 +19,7 @@ class SwapSummary extends Component {
             disableConfirm: false,
             errorMessage: null,
             agreeValue: false,
-            commision:null,
+            commision: null,
             swapSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }
         }
     }
@@ -58,7 +58,7 @@ class SwapSummary extends Component {
     async setReceiveAmount(e) {
         let res = await fetchCurrConvertionCommisionValue(this.props.swapStore.coinDetailData.coin, this.props.swapStore.coinReceiveDetailData.coin, this.props.swapStore.fromCoinInputValue, this.props.userProfile.id, 'swap');
         if (res.ok) {
-            this.setState({ ...this.state, loader: false, receiveValue: res.data?.amount,commision:res.data?.comission })
+            this.setState({ ...this.state, loader: false, receiveValue: res.data?.amount, commision: res.data?.comission })
         }
     }
     confirmswapvalidation() {
@@ -102,6 +102,7 @@ class SwapSummary extends Component {
             obj.info = JSON.stringify(this.props.trackAuditLogData)
             let res = await saveSwapData(obj);
             if (res.ok) {
+                this.props.dispatch(setSwapFinalRes(res.data));
                 this.props.changeStep('confirm');
                 this.setState({ ...this.state, loader: false, isLoading: false })
                 this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
@@ -132,10 +133,12 @@ class SwapSummary extends Component {
                     convertCoin={this.props.swapStore?.coinDetailData?.coin}
                     error={{ valid: this.state.errorMessage ? false : true, title: 'Swap', message: this.state.errorMessage }} iButtonLoad={this.state.isLoading}
                     onRefresh={() => { this.setOneCoinValue(); this.setReceiveAmount(); }}
-                    onCancel={() => this.props.changeStep('step1')}
+                    onCancel={() => this.props.changeStep('swapcoins')}
                     onClick={() => this.confirmSwap()}
                     onTermsChange={(checked) => { this.setState({ ...this.state, agreeValue: checked }) }}
                     onCheked={this.state.agreeValue}
+                    okBtnTitle={"menu_swap"}
+                    amountTitle={"received"}
                     onErrorClose={() => this.setState({ ...this.state, errorMessage: null })}
                     isButtonLoad={this.state.isLoading}
                 /> : <Loader />}

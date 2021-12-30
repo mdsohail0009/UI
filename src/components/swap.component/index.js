@@ -16,7 +16,8 @@ class SwapCrypto extends Component {
 
     }
     componentDidMount() {
-        this.props.swapRef(this)
+        this.props.dispatch(setStep("swapcoins"));
+        this.props.swapRef(this);
     }
     clearValues() {
         if (this.child)
@@ -24,7 +25,6 @@ class SwapCrypto extends Component {
     }
     closeBuyDrawer = () => {
         this.props.dispatch(setHeaderTab(""))
-
         if (this.props.onClose) {
             this.props.onClose();
         }
@@ -44,12 +44,12 @@ class SwapCrypto extends Component {
     renderTitle = () => {
         const stepcodes = {
             swapcoins: <span />,
-            swapsummary: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
-            selectcrypto: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
-            toreceive: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            swapsummary: <span onClick={() => this.props.dispatch(setStep("swapcoins"))} className="icon md lftarw-white c-pointer" />,
+            selectcrypto: <span onClick={() => this.props.dispatch(setStep("swapcoins"))} className="icon md lftarw-white c-pointer" />,
+            toreceive: <span onClick={() => this.props.dispatch(setStep("swapcoins"))} className="icon md lftarw-white c-pointer" />,
             confirmation: <span />,
         }
-        return stepcodes[config[this.props.buySell.stepcode]]
+        return stepcodes[config[this.props.swapStore.stepcode]]
     }
     renderIcon = () => {
         const stepcodes = {
@@ -60,7 +60,7 @@ class SwapCrypto extends Component {
             confirmation: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
 
         }
-        return stepcodes[config[this.props.buySell.stepcode]]
+        return stepcodes[config[this.props.swapStore.stepcode]]
     }
     render() {
         return (<Drawer

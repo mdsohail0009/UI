@@ -4,7 +4,7 @@ import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import { convertCurrencyDuplicate } from '../../buy.component/buySellService';
 import NumberFormat from 'react-number-format';
 const LocalCryptoSwapper = (props, ref) => {
-    const { localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, sellData, selectedCoin = null, showConvertion = true } = props;
+    const { localAmt = 0, cryptoAmt = 0, localCurrency = "USD", cryptoCurrency, onChange, sellData, showSwap = true, selectedCoin = null, showConvertion = true } = props;
     const [isSwaped, setSwapped] = useState(props.isSwap || false);
     const [localvalue, setLocalValue] = useState(localAmt);
     const [cryptovalue, setCryptoValue] = useState(cryptoAmt);
@@ -23,23 +23,21 @@ const LocalCryptoSwapper = (props, ref) => {
             setSwapped(true);
         },
         handleConvertion({ cryptoValue, localValue, locCurrency, isSwap }) {
-            fetchConvertionValue({ cryptoValue, localValue, inputvalue: (isSwap || isSwaped) ? cryptoValue : localValue, locCurrency });
-            if (isSwaped) {
-                setCryptoValue(cryptoValue);
-            }
+            fetchConvertionValue({ cryptoValue, localValue, inputvalue: (isSwap || isSwaped) ? cryptoValue : localValue, locCurrency, isSwap });
         },
         handleWalletChange() {
-            setSwapped(false);
+            //setSwapped(false);
         },
         refreshAmount({ cryptoValue, locCurrency }) {
-           // setSwapped(true);
-            fetchConvertionValue({ inputvalue:   cryptoValue, locCurrency });
+            // setSwapped(true);
+            fetchConvertionValue({ inputvalue: cryptoValue, locCurrency });
         }
     }), []);
-    const fetchConvertionValue = async ({ inputvalue, locCurrency }) => {
+    const fetchConvertionValue = async ({ inputvalue, locCurrency, isSwap }) => {
         const coin = selectedCoin || sellData?.selectedCoin?.data?.coin;
         setConvertionLoad(true);
-        const response = await convertCurrencyDuplicate({ from: coin, to: locCurrency || localCurrency || "USD", value: (inputvalue || 0), isCrypto: !isSwaped, memId: props.memberId, screenName: props.screenName });
+        const _isSwap = (isSwap||isSwaped)
+        const response = await convertCurrencyDuplicate({ from: coin, to: locCurrency || localCurrency || "USD", value: (inputvalue || 0), isCrypto: !_isSwap, memId: props.memberId, screenName: props.screenName });
         if (response.ok) {
             const { data: value, config: { url } } = response;
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
@@ -47,10 +45,10 @@ const LocalCryptoSwapper = (props, ref) => {
             _val = _val ? _val.replace(/,/g, "") : _val;
             _val = _val?.replace(symbols[locCurrency || localCurrency], "");
             if (_obj[4] == _val || _obj[4] == 0) {
-                if (!isSwaped) {
+                if (!_isSwap) {
                     setCryptoValue(value || 0);
                 } else { setLocalValue(value || 0) }
-                onChange({ cryptoValue: isSwaped ? inputvalue : value, localValue: isSwaped ? value : inputvalue, isSwaped, isInputChange });
+                onChange({ cryptoValue: _isSwap ? inputvalue : value, localValue: _isSwap ? value : inputvalue, isSwaped:_isSwap, isInputChange });
                 setConvertionLoad(false);
             }
         } else {
@@ -87,16 +85,17 @@ const LocalCryptoSwapper = (props, ref) => {
                     }
                 }}
                 autoFocus
+                allowNegative={false}
             />
         </div>
         {showConvertion && <><NumberFormat value={isSwaped ? localvalue : cryptovalue} displayType={'text'} thousandSeparator={true} prefix={isSwaped ? symbols[localCurrency] : ""} renderText={(value, props) => <div {...props} className="fs-14 text-white-30 text-center d-block mb-36">{value} {isSwaped ? localCurrency : cryptoCurrency} {isConvertionLoad && <Spin size="small" />}</div>
         } />
-            <span className="val-updown c-pointer" onClick={() => {
+            {showSwap && <span className="val-updown c-pointer" onClick={() => {
                 setInputChange(false);
                 setSwapped(!isSwaped);
             }}>
                 <span className="icon md swaparrow" />
-            </span></>}
+            </span>}</>}
     </div>
 
 }

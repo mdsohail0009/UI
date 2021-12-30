@@ -11,6 +11,9 @@ import { getSelectedCoinDetails } from '../buy.component/api'
 import apicalls from '../../api/apiCalls';
 
 class SellToggle extends Component {
+    state = {
+        loading: false,
+    }
     componentDidMount() {
         this.props.fetchMemberCoins(this.props.member?.id)
     }
@@ -20,20 +23,24 @@ class SellToggle extends Component {
         });
     };
     setCoinDetailData = async (coin) => {
+        this.setState({ ...this.state, loading: true });
         let res = await getSelectedCoinDetails(coin.coin, this.props.member?.id);
         if (res.ok) {
             this.props.setSelectedCoin(res.data); this.props.changeStep('step10');
         }
+        this.setState({ ...this.state, loading: false })
     }
     render() {
         const { Text } = Typography;
-        if (this.props.sellData?.memberCoins?.loading) { return <Loader /> }
+        if (this.props.sellData?.memberCoins?.loading||this.state.loading) { return <Loader /> }
         return (
             <>
-                {!this.props?.sellData?.memberCoins?.loading && (!this.props.sellData?.memberCoins?.data || this.props.sellData?.memberCoins?.data?.length == 0) 
-                && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />}
+                {!this.props?.sellData?.memberCoins?.loading && (!this.props.sellData?.memberCoins?.data || this.props.sellData?.memberCoins?.data?.length == 0)
+                    && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />}
+
                 <div className="sellcrypto-container auto-scroll">
-                    {this.props.sellData?.memberCoins?.data?.map((coin, idx) => <Card key={idx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { this.setCoinDetailData(coin); this.props.setExchangeValue({ key: coin.coin, value: coin.oneCoinValue }) }} >
+
+                    {this.props.sellData?.memberCoins?.data?.map((coin, idx) => <Card key={idx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { this.setCoinDetailData(coin); this.props.setExchangeValue({ key: coin.coin, value: coin.oneCoinValue }); }} >
                         <span className="d-flex align-center">
                             <span className={`coin lg ${coin.coin}`} />
                             <Text className="fs-24 textc-white crypto-name ml-12">{coin.coinFullName}</Text>

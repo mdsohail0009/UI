@@ -26,6 +26,7 @@ class AddressBook extends Component {
             modal: false,
             alert: false,
             successMsg: false,
+            btnDisabled: false,
             obj: {
                 "id": [],
                 "tableName": "Member.FavouriteAddress",
@@ -42,12 +43,9 @@ class AddressBook extends Component {
         this.gridCryptoRef = React.createRef();
     }
     componentDidMount() {
-        debugger
-        //this.addressbookTrack();
         if (!this.state.cryptoFiat) {
             apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto Address book grid view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Crypto Address book grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
         }
-
     }
 
     columnsFiat = [
@@ -115,16 +113,17 @@ class AddressBook extends Component {
         }
     }
     handleSatatuSave = async () => {
-        this.setState({ ...this.state, isLoading: true })
+        this.setState({ ...this.state, isLoading: true, btnDisabled: true })
         let statusObj = this.state.obj;
         statusObj.id.push(this.state.selectedObj.id);
         statusObj.modifiedBy = this.props.oidc.user.profile.unique_name;
         statusObj.status.push(this.state.selectedObj.status);
         statusObj.type = this.state.cryptoFiat ? "fiat" : 'crypto';
+        statusObj.info = JSON.stringify(this.props.trackLogs);
         let response = await activeInactive(statusObj)
         if (response.ok) {
             this.setState({
-                ...this.state, modal: false, selection: [], isCheck: false, isLoading: false,
+                ...this.state, modal: false, selection: [], isCheck: false, isLoading: false, btnDisabled: false,
                 obj: {
                     "id": [],
                     "tableName": "Member.FavouriteAddress",
@@ -142,7 +141,7 @@ class AddressBook extends Component {
         }
         else {
             this.setState({
-                ...this.state, modal: false, selection: [], isCheck: false,
+                ...this.state, modal: false, selection: [], isCheck: false, btnDisabled: false,
                 obj: {
                     "id": [],
                     "tableName": "Member.FavouriteAddress",
@@ -205,7 +204,8 @@ class AddressBook extends Component {
     }
     handleWithdrawToggle = e => {
         this.setState({
-            ...this.state, cryptoFiat: e.target.value === 2,selection:[],selectedObj: {},isCheck: false})
+            ...this.state, cryptoFiat: e.target.value === 2, selection: [], selectedObj: {}, isCheck: false
+        })
         if (this.state.cryptoFiat) {
             apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto Address book grid view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Crypto Address book grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
         } else {
@@ -235,7 +235,7 @@ class AddressBook extends Component {
         return stepcodes[config[this.props.addressBookReducer.stepcode]]
     }
     render() {
-        const { cryptoFiat, gridUrlCrypto, gridUrlFiat, memberId } = this.state;
+        const { cryptoFiat, gridUrlCrypto, gridUrlFiat, memberId, btnDisabled } = this.state;
         const { Title, Paragraph, Text } = Typography;
 
         return (
@@ -332,7 +332,10 @@ class AddressBook extends Component {
                         >
                             Cancel
                         </Button>
-                        <Button className="primary-btn pop-btn" onClick={this.handleSatatuSave} style={{ width: '100px' }}>
+                        <Button className="primary-btn pop-btn"
+                            onClick={this.handleSatatuSave} style={{ width: 120, height: 50 }}
+                            disabled={btnDisabled}
+                        >
                             Save
                         </Button>
                     </>}
@@ -344,7 +347,7 @@ class AddressBook extends Component {
     }
 }
 const connectStateToProps = ({ addressBookReducer, userConfig, oidc }) => {
-    return { addressBookReducer, userConfig: userConfig.userProfileInfo, oidc }
+    return { addressBookReducer, userConfig: userConfig.userProfileInfo, oidc, trackLogs: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {

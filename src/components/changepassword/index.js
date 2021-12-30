@@ -16,6 +16,7 @@ notification.config({
   rtl: true
 });
 const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, trackAuditLogData }) => {
+  const [btnDisabled, setBtnDisabled] = useState(false);
   const [initialValues, setInitialValues] = useState({
     "Email": userConfig?.email,
     "CurrentPassword": "",
@@ -39,6 +40,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
     if (values.CurrentPassword === values.Password) {
       passwordResponce(true, "Current password and New password should not be same", false);
     } else {
+      setBtnDisabled(true);
       passwordResponce(false, '', false);
       initialValues.info = JSON.stringify(trackAuditLogData)
       let obj = Object.assign({}, initialValues);
@@ -49,6 +51,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       obj.info = apiClient.encryptValue(obj.info, userConfig.sk)
       const result = await changePassword(obj);
       if (result.ok) {
+        setBtnDisabled(false);
         message.success({ content: 'Password changed successfully', className: 'custom-msg' });
         passwordResponce(false, '', false);
         form.resetFields();
@@ -56,6 +59,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
         getmemeberInfoa(userConfig.userId)
         apiClient.trackEvent({ "Action": 'Save', "Feature": 'Change password', "Remarks": "Password changed", "FullFeatureName": 'Change password', "userName": userConfig.userName, id: userConfig.id });
       } else {
+        setBtnDisabled(false);
         passwordResponce(true, result.data, false);
       }
     }
@@ -133,7 +137,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
                   )
                 } else if (!value || !(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/.test(value))) {
                   return Promise.reject(
-                    "Password must be at least 8 Characters long one uppercase with one lowercase, one numeric & special character"
+                    "Password must be at least 8 characters long one uppercase with one lowercase, one numeric & special character"
                   )
                 } else if (!validateContent(value)) {
                   return Promise.reject(
@@ -206,6 +210,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
             size="large"
             block
             className="pop-btn"
+            disabled={btnDisabled}
           >
             <Translate content="Save_btn_text" />
           </Button>

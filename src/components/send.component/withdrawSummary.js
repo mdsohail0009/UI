@@ -1,15 +1,13 @@
 import React, { Component } from "react";
 import { Typography, Button, Alert, message, Form, Input } from "antd";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
-import SuisseBtn from "../shared/butons";
 import Currency from "../shared/number.formate";
 import { convertCurrency } from "../buy.component/buySellService";
-import NumberFormat from "react-number-format";
-import { withDrawCrypto } from "../send.component/api";
+import { handleNewExchangeAPI, withDrawCrypto } from "../send.component/api";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
+import { setCryptoFinalRes } from "../../reducers/sendreceiveReducer";
 
 import {
   setStep,
@@ -17,21 +15,7 @@ import {
   setWithdrawcrypto
 } from "../../reducers/sendreceiveReducer";
 import apiCalls from "../../api/apiCalls";
-const LinkValue = (props) => {
-  return (
-    <Translate
-      className="text-defaultylw textpure-yellow text-underline c-pointer"
-      content={props.content}
-      component={Link}
-      onClick={() =>
-        window.open(
-          "https://www.iubenda.com/terms-and-conditions/42856099",
-          "_blank"
-        )
-      }
-    />
-  );
-};
+import { publishBalanceRfresh } from "../../utils/pubsub";
 class WithdrawSummary extends Component {
   state = {
     onTermsChange: false,
@@ -39,8 +23,6 @@ class WithdrawSummary extends Component {
     usdAmount: 0,
     OneusdAmount: 0,
     errorMsg: false,
-    usdLoading: false,
-    oneUsdLoading: false,
     buttonText: "get_otp",
     type: "Send",
     verificationText: "",
@@ -55,18 +37,18 @@ class WithdrawSummary extends Component {
     seconds1: "02:00",
     timeInterval: "",
     count: 120,
+    loading: false,
+    comission: null
 
   };
 
   useDivRef = React.createRef();
   componentDidMount() {
-
-    this.loadOneCoinData();
-    this.loadData();
     this.trackEvent();
     this.props.dispatch(
-      setSubTitle(apiCalls.convertLocalLang("withdrawSummary"))
+      setSubTitle('')
     );
+    this.handleNewExchangeRate()
   }
   trackEvent = () => {
     apiCalls.trackEvent({
@@ -81,19 +63,6 @@ class WithdrawSummary extends Component {
       FullFeatureName: "Withdraw Crypto"
     });
   };
-  loadData = async () => {
-    this.setState({ ...this.state, usdLoading: true });
-    const value = await convertCurrency({
-      from: this.props.sendReceive.withdrawCryptoObj?.walletCode,
-      to: "USD",
-      value: this.props.sendReceive.withdrawCryptoObj?.totalValue,
-      isCrypto: false,
-      memId: this.props.userProfile.id,
-      screenName: "withdrawcrypto"
-    });
-    this.setState({ ...this.state, usdAmount: value, usdLoading: false });
-  };
-
   startTimer = () => {
     let timer = this.state.count;
     let minutes, seconds;
@@ -115,18 +84,6 @@ class WithdrawSummary extends Component {
     }, 1000);
 
   }
-  loadOneCoinData = async () => {
-    this.setState({ ...this.state, oneUsdLoading: true });
-    const value = await convertCurrency({
-      from: this.props.sendReceive.withdrawCryptoObj?.walletCode,
-      to: "USD",
-      value: 1,
-      isCrypto: false,
-      memId: this.props.userProfile.id,
-      screenName: ""
-    });
-    this.setState({ ...this.state, OneusdAmount: value, oneUsdLoading: false });
-  };
   onRefresh = () => {
     this.loadOneCoinData();
     this.loadData();
@@ -135,7 +92,20 @@ class WithdrawSummary extends Component {
     this.props.dispatch(setWithdrawcrypto(null));
     this.props.changeStep("step1");
   };
-
+  handleNewExchangeRate = async () => {
+    this.setState({ ...this.state, loading: true });
+    const { totalValue, walletCode, toWalletAddress } = this.props.sendReceive.withdrawCryptoObj;
+    let _obj = { ...this.props.sendReceive.withdrawCryptoObj };
+    const response = await handleNewExchangeAPI({ memberId: this.props?.userProfile?.id, amount: totalValue, address: toWalletAddress, coin: walletCode });
+    if (response.ok) {
+      _obj["comission"] = response.data?.comission;
+      _obj.totalValue = response?.data?.amount;
+      this.props?.dispatch(setWithdrawcrypto(_obj));
+      this.setState({ ...this.state, usdAmount: response.data?.amountInUsd, OneusdAmount: response?.data?.exchangeRate, loading: false, comission: response?.data?.comission })
+    } else {
+      this.setState({ ...this.state, loading: false });
+    }
+  }
   getOTP = async (val) => {
 
     let response = await apiCalls.getCode(
@@ -143,21 +113,23 @@ class WithdrawSummary extends Component {
       this.state.type
     );
     if (response.ok) {
-      this.setState({ ...this.state, buttonText: 'resendotp', inputDisable: false, disable: true, seconds1: "02:00",verificationText:
-      apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber },()=>{ this.startTimer();})
-     
+      this.setState({
+        ...this.state, buttonText: 'resendotp', inputDisable: false, disable: true, seconds1: "02:00", verificationText:
+          apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber
+      }, () => { this.startTimer(); })
+
     }
     else {
-     this.setState({...this.state,errorMsg:apiCalls.convertLocalLang("request_fail")});
+      this.setState({ ...this.state, errorMsg: apiCalls.convertLocalLang("request_fail") });
     }
   };
   handleOtp = (val) => {
-    this.setState({ ...this.state, otp: val.code});
+    this.setState({ ...this.state, otp: val.code });
   };
 
   saveWithdrwal = async (values) => {
-       if (this.state.onTermsChange) {
-      let response = await apiCalls.getVerification( 
+    if (this.state.onTermsChange) {
+      let response = await apiCalls.getVerification(
         this.props.userProfile.id,
         values.code
       );
@@ -165,7 +137,7 @@ class WithdrawSummary extends Component {
       if (response.ok) {
         message.destroy();
         message.success({
-          content: "OTP Verified Successfully",
+          content: "OTP verified successfully",
           className: "custom-msg",
           duration: 0.5
         });
@@ -177,11 +149,13 @@ class WithdrawSummary extends Component {
           saveObj.info = JSON.stringify(trackAuditLogData)
           let withdrawal = await withDrawCrypto(saveObj);
           if (withdrawal.ok) {
+            this.props.dispatch(setCryptoFinalRes(withdrawal.data));
             this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
             //setIsWithdrawSuccess(true)
             this.props.dispatch(setWithdrawcrypto(null));
             this.props.dispatch(setSubTitle(""));
             this.props.changeStep("withdraw_crpto_success");
+            publishBalanceRfresh("success");
           }
         }
         else {
@@ -216,7 +190,7 @@ class WithdrawSummary extends Component {
       get_otp: <Translate className={`pl-0 ml-0 text-yellow-50 ${disable ? "c-notallowed" : ""}`} content="get_code" />,
       resendotp: <Translate className={`pl-0 ml-0 text-yellow-50 ${disable ? "c-notallowed" : ""}`} content="resend_code" with={{ counter: `${disable ? "(" + seconds1 + ")" : ""}` }} />
     }
-    if (this.state.usdLoading || this.state.oneUsdLoading) {
+    if (this.state.loading) {
       return <Loader />;
     }
     return (
@@ -251,7 +225,7 @@ class WithdrawSummary extends Component {
               prefix={""}
               decimalPlaces={8}
               type={"text"}
-              prefixText={"USD"}
+              suffixText={"USD"}
             />
           </div>
           <div className="pay-list fs-14">
@@ -265,8 +239,7 @@ class WithdrawSummary extends Component {
               decimalPlaces={8}
               prefix={""}
               className="fw-400 text-white-30"
-              prefixText={`1 ${this.props.sendReceive.withdrawCryptoObj?.walletCode
-                } = ${"USD"}`}
+              prefixText={`1 ${this.props.sendReceive.withdrawCryptoObj?.walletCode} = ${"USD"}`}
             />
           </div>
           <div className="pay-list fs-14">
@@ -284,6 +257,16 @@ class WithdrawSummary extends Component {
               }
               suffixText={this.props.sendReceive.withdrawCryptoObj?.walletCode}
             />
+          </div>
+          <div className="pay-list fs-14">
+            <Translate
+              className="fw-400 text-white"
+              content="comssion"
+              component={Text}
+            />
+            <Text className="fw-400 text-white" style={{ width: '250px', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', textAlign: 'end' }}>
+              {this.state?.comission}
+            </Text>
           </div>
           <div className="pay-list fs-14">
             <Translate
@@ -322,24 +305,24 @@ class WithdrawSummary extends Component {
               }
             >
               <Input
-                type="number"
+                type="text"
                 className="cust-input text-left"
                 placeholder={apiCalls.convertLocalLang("verification_code")}
                 maxLength={6}
-                onKeyDown={(event) => 
-                  { 
-                     if(event.currentTarget.value.length > 5 && !(event.key=="Backspace" || event.key =="Delete")) {
-                      event.preventDefault();}
-                      else if(/^\d+$/.test(event.key)){
-                        this.handleOtp(event.currentTarget.value)
-                      }
-                      else if(event.key=="Backspace" || event.key =="Delete"){
-                       }
-                      else{
-                      event.preventDefault()
-                    }
-                   }}
-             
+                onKeyDown={(event) => {
+                  if (event.currentTarget.value.length > 5 && !(event.key == "Backspace" || event.key == "Delete")) {
+                    event.preventDefault();
+                  }
+                  else if (/^\d+$/.test(event.key)) {
+                    this.handleOtp(event.currentTarget.value)
+                  }
+                  else if (event.key == "Backspace" || event.key == "Delete") {
+                  }
+                  else {
+                    event.preventDefault()
+                  }
+                }}
+
                 style={{ width: '100%' }}
                 disabled={this.state.inputDisable}
               />
@@ -375,16 +358,16 @@ class WithdrawSummary extends Component {
               </Paragraph>
             </div>
             <Button
-          
-          size="large"
-          block
-          className="pop-btn"
-          htmlType="submit"
-        >
-          <Translate content="Confirm" component={Text} />
-        </Button>
 
-  </Form>
+              size="large"
+              block
+              className="pop-btn"
+              htmlType="submit"
+            >
+              <Translate content="with_draw" component={Text} />
+            </Button>
+
+          </Form>
           <div className="text-center mt-16">
             <Translate
               content="cancel"

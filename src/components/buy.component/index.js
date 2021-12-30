@@ -79,7 +79,7 @@ class BuySell extends Component {
             addcard: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             depositcrypto: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             selectcrypto: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
-            summary: <span />,
+            summary: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             billingaddress: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             addressscanner: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
             depositfiat: <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />,
@@ -95,7 +95,7 @@ class BuySell extends Component {
         return x ? x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0;
     }
     render() {
-        return (<Drawer destroyOnClose={true}
+        return (<Drawer
             title={[<div className="side-drawer-header">
                 {this.renderTitle()}
                 <div className="text-center fs-16">
@@ -108,6 +108,7 @@ class BuySell extends Component {
             visible={this.props.showDrawer}
             closeIcon={null}
             className="side-drawer"
+            destroyOnClose={true}
         >
             {this.renderContent()}
         </Drawer>);

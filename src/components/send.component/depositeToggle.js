@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Radio } from 'antd';
 import config from '../../config/config';
 import Translate from 'react-translate-component';
-import { handleSendFetch, setStep, setSubTitle , setAddress,rejectWithdrawfiat} from '../../reducers/sendreceiveReducer';
+import { handleSendFetch, setStep, setSubTitle, setAddress, rejectWithdrawfiat } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import CryptoDeposit from '../deposit.component/crypto.deposit';
 import WithdrawCrypto from '../withdraw.crypto.component';
@@ -18,26 +18,44 @@ class DepositeCrypto extends Component {
         buyToggle: 'Buy',
         activeKey: 1
     }
-
+    componentDidMount() {
+        this.setState({ ...this.state, activeKey: this.props.sendReceive?.cryptoWithdraw?.activeKey || 1, sendReceive: true });
+        this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
+        this.props.dispatch(setSubTitle(`USD ${this.props.dashboard?.totalFiatValue}` + " " + apicalls.convertLocalLang('total_balance')));
+        apicalls.trackEvent({
+            "Type": 'User', "Action": 'Deposit Crypto page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Deposit Crypto', "Remarks": "Deposit Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto'
+        })
+        if (this.props.sendReceive?.cryptoWithdraw?.activeKey == 2) {
+            apicalls.trackEvent({
+                "Type": 'User', "Action": 'Withdraw Crypto page view', "Username": this.props.userProfile?.userName, "MemeberId": this.props.userProfile?.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
+            });
+        }
+    }
     handleBuySellToggle = e => {
         this.setState({
             ...this.state,
             activeKey: e.target.value
         });
-        if(e.target.value === 1 ){
+        if (e.target.value === 1) {
             this.props.dispatch(setSubTitle(`USD ${this.props.dashboard?.totalFiatValue} Total balance`));
             this.props.dispatch(setAddress(null))
             this.props.dispatch(rejectWithdrawfiat(null))
-        }  else{
+        } else {
             this.props.dispatch(setSubTitle(`Select a currency in your wallet`));
         }
-    
+        this.trackEventLogs(e);
     }
-    componentDidMount() {
-        this.setState({ ...this.state, activeKey: this.props.sendReceive?.cryptoWithdraw?.activeKey || 1, sendReceive: true });
-        this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
-        this.props.dispatch(setSubTitle(`USD ${this.props.dashboard?.totalFiatValue}`+" "+apicalls.convertLocalLang('total_balance')));
+    trackEventLogs = (e) => {
+        if (e.target.value == 1) {
+            apicalls.trackEvent({
+                "Type": 'User', "Action": 'Deposit Crypto page view', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Deposit Crypto', "Remarks": "Deposit Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Crypto'
+            });
 
+        } else if (e.target.value == 2) {
+            apicalls.trackEvent({
+                "Type": 'User', "Action": 'Withdraw Crypto page view', "Username": this.props.userProfile?.userName, "MemeberId": this.props.userProfile?.id, "Feature": 'Withdraw Crypto', "Remarks": "Withdraw Crypto page view", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto'
+            });
+        }
     }
     componentWillUnmount() {
         this.setState({ ...this.state, activeKey: 1 });
@@ -54,14 +72,14 @@ class DepositeCrypto extends Component {
                 </Radio.Group>
                 </div>
                 {activeKey === 2 && <WithdrawCrypto />}
-                {activeKey === 1 &&<CryptoDeposit />}
+                {activeKey === 1 && <CryptoDeposit />}
             </>
         )
     }
 }
 
-const connectStateToProps = ({ sendReceive, dashboard }) => {
-    return { sendReceive, dashboard: dashboard?.portFolio?.data }
+const connectStateToProps = ({ sendReceive, dashboard, userConfig }) => {
+    return { sendReceive, dashboard: dashboard?.portFolio?.data, userProfile: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {

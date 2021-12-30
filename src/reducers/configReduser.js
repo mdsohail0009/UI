@@ -4,6 +4,7 @@ import { setNotificationCount } from "./dashboardReducer";
 const USEER_INFO = "userInfo";
 const UPDATE_DOC_REQUEST = "updateDocRequest";
 const FETCH_TRACK_AUDITLOGS = "fetchtrackauditlogs";
+const CLEAR_USER_INFO = "clearUserInfo";
 const userInfo = (payload) => {
     return {
         type: USEER_INFO,
@@ -22,7 +23,9 @@ const updateDocRequest = (payload) => {
         payload
     }
 };
-
+const clearUserInfo = ()=>{
+    return {type:CLEAR_USER_INFO,payload:null}
+}
 const getmemeberInfo = (useremail) => {
     return async (dispatch) => {
         apiCalls.getMember(useremail).then((res) => {
@@ -76,10 +79,13 @@ const UserConfig = (state = initialState, action) => {
         case FETCH_TRACK_AUDITLOGS:
             state = { ...state, trackAuditLogData: action.payload }
             return state;
+        case CLEAR_USER_INFO:
+            state = { userProfileInfo: null, trackAuditLogData: {} };
+            return state;
         default:
             return state;
     }
 }
 
 export default UserConfig;
-export { userInfo, getmemeberInfo, updateDocRequest, getIpRegisteryData, fetchtrackauditlogs };
+export { userInfo, getmemeberInfo, updateDocRequest, getIpRegisteryData, fetchtrackauditlogs,clearUserInfo };

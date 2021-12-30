@@ -25,9 +25,11 @@ import { setHeaderTab, setStep } from '../reducers/buysellReducer';
 import { setStep as sendSetStep } from '../reducers/sendreceiveReducer';
 import { setStep as byFiatSetStep } from '../reducers/buyFiatReducer';
 import { setdepositCurrency } from '../reducers/depositReducer'
-import { deleteToken } from '../notifications/api';
+import { deleteToken, readNotification as readNotifications } from '../notifications/api';
 import Wallets from '../components/wallets.component.js';
-import apiCalls from '../api/apiCalls'
+import apiCalls from '../api/apiCalls';
+import { setNotificationCount } from '../reducers/dashboardReducer';
+import { clearUserInfo } from '../reducers/configReduser';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -44,10 +46,6 @@ const { Title, Paragraph } = Typography;
 class Header extends Component {
     componentDidMount() {
         counterpart.setLocale(this.props.userConfig ? this.props.userConfig.language : 'en');
-        this.loginTrack()
-    }
-    loginTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'User Logged in', "Username": null, "MemeberId": null, "Feature": 'Login', "Remarks": 'User Logged in', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Login' });
     }
     securityMenu = (
 
@@ -146,7 +144,7 @@ class Header extends Component {
                     </div>
                 </li>
 
-                <li className="d-flex justify-content align-center c-pointer" onClick={() => { userManager.signoutRedirect(); deleteToken({ UserId: this.props?.userConfig?.id, Token: this.props?.oidc?.deviceToken }) }}>
+                <li className="d-flex justify-content align-center c-pointer" onClick={() => {userManager.signoutRedirect(); deleteToken({ UserId: this.props?.userConfig?.id, Token: this.props?.oidc?.deviceToken }) }}>
                     <Translate content="logout" component={Link} />
                     <span className="icon md rarrow-white" />
                 </li>
@@ -260,7 +258,7 @@ class Header extends Component {
     }
     showSwapDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
-
+            this.props.dispatch(swapSetStep("swapcoins"));
             this.setState({
                 swapDrawer: true, Visibleprofilemenu: false
             })
@@ -314,7 +312,7 @@ class Header extends Component {
             fromValue: null,
             receiveValue: null,
             errorMessage: null
-        })
+        });
         this.props.clearSwapfullData()
         this.setState({
             walletsDrawer: false,
@@ -331,7 +329,7 @@ class Header extends Component {
             transactionDrawer: false,
             notificationsDrawer: false,
             auditlogsDrawer: false, Visibleprofilemenu: false
-        })
+        });
     }
     enableDisable2fa = (status) => {
         var url = '';
@@ -346,12 +344,20 @@ class Header extends Component {
     trackEvent() {
         window.$zoho?.salesiq?.chat.complete();
         window.$zoho?.salesiq?.reset();
-        userManager.signoutRedirect()
+       // this.props.dispatch(clearUserInfo());
+        userManager.signoutRedirect();
         apiCalls.trackEvent({ "Type": 'User', "Action": 'User Logged out', "Username": null, "MemeberId": null, "Feature": 'Logout', "Remarks": 'User Logged out', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Logout' });
     }
     clearEvents() {
         this.trackEvent();
 
+    }
+    readNotification() {
+        let isRead = apiCalls.encryptValue("true", this.props.userConfig?.sk);
+        readNotifications(this.props.userConfig.id).then(() => {
+            this.props.dispatch(setNotificationCount(0));
+        }
+        );
     }
     render() {
         const link = <LinkValue content="medium" />;
@@ -415,7 +421,7 @@ class Header extends Component {
                             </Dropdown>
 
                             <Translate content="menu_transactions_history" component={Menu.Item} key="5" onClick={this.showTransactionHistoryDrawer} className="list-item" />
-                            <Menu.Item key="6" className="notification-conunt" onClick={this.showNotificationsDrawer}><span className="icon md bell ml-4 p-relative"><span>{this.props.dashboard?.notificationCount}</span></span></Menu.Item>
+                            <Menu.Item key="6" className="notification-conunt" onClick={this.showNotificationsDrawer}><span className="icon md bell ml-4 p-relative" onClick={() => this.readNotification()}>{(this.props.dashboard?.notificationCount != null && this.props.dashboard?.notificationCount != 0) && <span>{this.props.dashboard?.notificationCount}</span>}</span></Menu.Item>
                             <Dropdown onVisibleChange={() => this.setState({ ...this.state, Visibleprofilemenu: !this.state.Visibleprofilemenu })} visible={this.state.Visibleprofilemenu} onClick={() => this.setState({ ...this.state, Visibleprofilemenu: true })} overlay={userProfileMenu} placement="topRight" arrow overlayClassName="secureDropdown" getPopupContainer={() => document.getElementById('area')}>
                                 <Menu.Item key="7" className="ml-16" >{this.props.userConfig?.imageURL != null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"} />}
                                     {this.props.userConfig?.imageURL === null && <img src={this.props.userConfig?.imageURL ? this.props.userConfig?.imageURL : DefaultUser} className="user-profile" alt={"image"} />}</Menu.Item>

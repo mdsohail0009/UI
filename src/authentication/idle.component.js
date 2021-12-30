@@ -1,42 +1,72 @@
-import React, { useState, useEffect } from 'react'
-import { useIdleTimer } from 'react-idle-timer'
+import React, { Component } from 'react'
+import { Button } from 'antd';
 import App from '../components/app.component/App';
 import { Modal } from 'antd';
-import { userManager } from './index'
-export default function IdleCmp(props) {
-    const [showIdleModal, setIdleModal] = useState(false);
-    useEffect(() => {
-
-
-    }, [])
-    const handleOnIdle = event => {
-        setIdleModal(true);
-        userManager.signoutRedirect();
+import { userManager } from './index';
+import IdleTimer from 'react-idle-timer'
+class IdleCmp extends Component {
+    _count = 15;
+    timeInterval;
+    state = {
+        counter: 15,
+        showIdleModal: false
+    }
+    handleOnIdle = () => {
+        this.setState({ ...this.state, showIdleModal: true });
+        this.timeInterval = setInterval(() => {
+            if (this._count === 0) { clearInterval(this.timeInterval); userManager.signoutRedirect(); } else {
+                this._count = this._count - 1;
+                this.setState({ ...this.state, counter: this._count });
+            }
+        }, 1000);
     }
 
-    const handleOnActive = event => {
+
+    handleCancel = () => {
+        clearInterval(this.timeInterval); this._count = 15;
+        this.setState({ ...this.state, counter: this._count, showIdleModal: false });
+    }
+    handleOnActive = event => {
 
 
     }
 
-    const handleOnAction = event => {
+    handleOnAction = event => {
 
     }
 
-    const { getRemainingTime, getLastActiveTime } = useIdleTimer({
-        timeout: 1000 * 60 * 15,
-        onIdle: handleOnIdle,
-        onActive: handleOnActive,
-        onAction: handleOnAction,
-        debounce: 100
-    })
-
-    return (
-        <div>
-            <App />
-            <Modal title="Session timedout" visible={showIdleModal} closable={false} closeIcon={false} footer={<></>}>
-                <h4>Please wait...</h4>
-            </Modal>
-        </div>
-    )
+    render() {
+        const { showIdleModal, counter } = this.state;
+        return (
+            <div>
+                <IdleTimer
+                    ref={ref => { this.idleTimer = ref }}
+                    timeout={1000 * 60 * 15}
+                    onActive={this.handleOnActive}
+                    onIdle={this.handleOnIdle}
+                    onAction={this.handleOnAction}
+                    debounce={250}
+                />
+                <App />
+                <Modal
+                    title="Session timedout alert" visible={showIdleModal}
+                    closable={false}
+                    closeIcon={false}
+                    footer={[
+                        <>
+                            <Button style={{ width: 100 }}
+                                className=" pop-cancel"
+                                onClick={() => this.handleCancel()}>Cancel</Button>
+                            <Button className="primary-btn pop-btn"
+                                style={{ width: 100, height: 50 }}
+                                onClick={() => {userManager.signoutRedirect() }}>Ok</Button>
+                        </>
+                    ]} >
+                    <h4 className="text-white fs-16 fw-400">You're session will be logged out in {counter}</h4>
+                </Modal>
+            </div >
+        )
+    }
 }
+
+export default IdleCmp

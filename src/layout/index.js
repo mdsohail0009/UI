@@ -8,12 +8,16 @@ import ConnectStateProps from '../utils/state.connect';
 import { userManager } from '../authentication';
 import OnBoarding from './onboard.component';
 import CallbackPage from '../authentication/callback.component';
+import { clearUserInfo } from '../reducers/configReduser';
 class Layout extends Component {
     state = {
     }
     componentDidMount() {
         if ((!this.props.user || this.props.user.expired) && !window.location.pathname.includes('callback')) {
-            userManager.signinRedirect();
+            userManager.clearStaleState().then(()=>{
+                this.props.dispatch(clearUserInfo());
+                userManager.signinRedirect();
+            });
         }
     }
     redirect = () =>{

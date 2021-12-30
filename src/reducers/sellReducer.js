@@ -2,10 +2,17 @@ import api from '../api/apiCalls';
 const HANDLE_API_FETCH = "handleFetch";
 const UPDATE_COINDETAIL = "updateCoinDetail";
 const UPDATE_SELLSAVEOBJECT = 'updatesellsaveObject';
+const SET_SELL_FINAL_RES = "setSellFinalRes"
 
 const handleApiFetch = (payload) => {
     return {
         type: HANDLE_API_FETCH,
+        payload
+    }
+}
+const setSellFinalRes = (payload) => {
+    return {
+        type: SET_SELL_FINAL_RES,
         payload
     }
 }
@@ -40,7 +47,8 @@ const initialState = {
     coinDetailData: {},
     coinWallet: {},
     exchangeValues: {},
-    sellsaveObject:{}
+    sellsaveObject: {},
+    sellFinalRes: {}
 }
 
 const sellReducer = (state = initialState, action) => {
@@ -51,8 +59,10 @@ const sellReducer = (state = initialState, action) => {
         case UPDATE_COINDETAIL:
             state = { ...state, coinDetailData: action.payload };
             return state;
-            case UPDATE_SELLSAVEOBJECT:
-                return { ...state, sellsaveObject: action.payload }
+        case UPDATE_SELLSAVEOBJECT:
+            return { ...state, sellsaveObject: action.payload }
+        case SET_SELL_FINAL_RES:
+            return { ...state, sellFinalRes: action.payload }
         default:
             return state;
     }
@@ -60,4 +70,4 @@ const sellReducer = (state = initialState, action) => {
 }
 
 export default sellReducer;
-export { getMemberCoins, updateCoinDetail,updatesellsaveObject }
+export { getMemberCoins, updateCoinDetail, updatesellsaveObject, setSellFinalRes }

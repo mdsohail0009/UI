@@ -62,12 +62,14 @@ class CryptoWallets extends Component {
         const { cryptoPortFolios } = this.props.dashboard
         return (
             <div className="crypto-wallets">
-                <Translate content="crypto_wallets" component={Title} className="fs-14 fw-500 text-upper text-white" />
+                <div className="wallet-head">
+                    <Translate content="crypto" component={Title} className="fs-20 m-0 fw-500 text-white" />
+                </div>
                 <List className="mobile-list"
                     itemLayout="horizontal"
                     dataSource={cryptoPortFolios.data}
                     loading={cryptoPortFolios.loading}
-                 locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }}
+                    locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }}
                     renderItem={item => (
                         <List.Item extra={
                             <div className="text-right">

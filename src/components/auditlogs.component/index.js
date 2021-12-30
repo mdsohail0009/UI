@@ -44,14 +44,19 @@ class AuditLogs extends Component {
       timeListSpan: ["Last 1 Day", "Last One Week", "Custom"],
       gridUrl: process.env.REACT_APP_GRID_API + "AuditLogs/Accounts",
       featureName: ''
-
-
     };
-
     this.gridRef = React.createRef();
-
   }
+  componentDidMount = async () => {
+    this.auditlogsTrack();
+    setTimeout(() => this.gridRef.current.refreshGrid(), 200);
 
+
+    this.TransactionFeatureSearch(this.props.userProfile?.userName);
+  };
+  auditlogsTrack = () => {
+    apicalls.trackEvent({ "Type": 'User', "Action": 'Audit logs page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Audit Logs', "Remarks": 'Audit logs page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Audit Logs' });
+  }
   gridColumns = [
     { field: "date", title: apicalls.convertLocalLang('Date'), filter: true, isShowTime: true, filterType: "date", width: 250 },
     { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 250 },
@@ -62,15 +67,9 @@ class AuditLogs extends Component {
     { field: "remarks", title: apicalls.convertLocalLang('remarks'), filter: true, width: 500 },
     { field: "", title: "", width: 60, customCell: (props) => (<td><Tooltip title="View More"><div className="icon md info c-pointer" onClick={() => this.showMoreAuditLogs(props)}></div></Tooltip></td>) },
   ]
-
   showMoreAuditLogs = (e) => {
     this.fetchAuditLoginfo(e.dataItem.id, e);
   }
-  componentDidMount = () => {
-    this.gridRef = React.createRef();
-    this.auditlogsTrack();
-    this.TransactionFeatureSearch(this.props.userProfile?.userName);
-  };
   fetchAuditLoginfo = async (id, e) => {
     this.setState({
       ...this.state, isLoading: false, moreAuditLogs: true, featureName: e.dataItem.feature
@@ -87,9 +86,7 @@ class AuditLogs extends Component {
       moreAuditLogs: false, logRowData: {}
     })
   }
-  auditlogsTrack = () => {
-    apicalls.trackEvent({ "Type": 'User', "Action": 'Audit logs page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Audit Logs', "Remarks": 'Audit logs page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Audit Logs' });
-  }
+
   TransactionUserSearch = async (userVal) => {
     let response = await userNameLuSearch(userVal);
     if (response.ok) {
@@ -113,6 +110,7 @@ class AuditLogs extends Component {
     searchObj[id] = val;
     if (val === "Custom") {
       this.setState({ ...this.state, modal: true, isCustomDate: true, searchObj: searchObj })
+      this.formRef.current.setFieldsValue({ ...this.state, selectedTimespan: null });
     } else {
       this.setState({ ...this.state, searchObj: { ...searchObj, fromdate: '', todate: '' }, isCustomDate: false, customFromdata: "", customTodate: "" });
 
@@ -129,6 +127,7 @@ class AuditLogs extends Component {
     let { searchObj, customFromdata, customTodate } = this.state;
     searchObj[val] = new Date(prop);
     this.setState({ ...this.state, searchObj, fromdate: customFromdata, todate: customTodate });
+
   };
 
   datePopup = () => {
@@ -155,8 +154,9 @@ class AuditLogs extends Component {
     timeSpanfromdate = values.fromdate;
     timeSpantodate = values.todate;
     selectedTimespan = moment(timeSpanfromdate).format('DD/MM/YYYY') + " - " + moment(timeSpantodate).format('DD/MM/YYYY');
-    this.formRef.current.setFieldsValue({ ...this.state, selectedTimespan })
+    this.formRef.current.setFieldsValue({ ...this.state, selectedTimespan });
     this.setState({ ...this.state, selectedTimespan, timeSpanfromdate, timeSpantodate, customFromdata, customTodate, modal: false, message: '' });
+    this.formDateRef.current.resetFields();
   };
 
   handleCancel = e => {
@@ -200,6 +200,7 @@ class AuditLogs extends Component {
           onClose={this.props.onClose}
           visible={this.props.showDrawer}
           className="side-drawer-full custom-gridresponsive"
+          destoryOnClose={true}
         >
           <div>
             <Form
@@ -233,7 +234,7 @@ class AuditLogs extends Component {
                     className="input-label selectcustom-input mb-0"
                     label="Selected timespan"
                   >
-                    <Input disabled className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
+                    <Input disabled placeholder="DD/MM/YYYY" className="cust-input cust-adon mb-0" addonAfter={<i className="icon md date-white c-pointer" onClick={(e) => { this.datePopup(e, 'searchObj') }} />} />
                   </Form.Item>
                 </Col> : ""}
                 <Col xs={24} sm={24} md={7} className="px-8">
@@ -283,7 +284,7 @@ class AuditLogs extends Component {
             closeIcon={<Tooltip title="Close"><span className="icon md close c-pointer" onClick={this.handleCancel} /></Tooltip>}
             footer={null}
           >
-            <div style={{ marginLeft: -16 }}>
+            <div>
               {this.state.stateLoading && <Loader />}
               <Form
                 autoComplete="off"
@@ -294,7 +295,8 @@ class AuditLogs extends Component {
                 <div className="mb-24">
                   <Form.Item
                     name="fromdate"
-                    className="input-label ml-0"
+                    className="input-label"
+                    style={{ marginLeft: 0 }}
                     label={<Translate content="Start_Date" component={Form.label} className="ml-8" />}
                     rules={[
                       { required: true, message: "Is required" }
@@ -309,7 +311,8 @@ class AuditLogs extends Component {
 
                   <Form.Item
                     name="todate"
-                    className="input-label ml-0"
+                    className="input-label"
+                    style={{ marginLeft: 0 }}
                     label={<Translate content="End_Date" component={Form.label} className=" ml-8" />}
                     rules={[
                       { required: true, message: apicalls.convertLocalLang('is_required') }, {

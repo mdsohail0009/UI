@@ -12,26 +12,28 @@ class SuccessMsg extends Component {
         this.EventTrack();
     }
     EventTrack = () => {
-        apicalls.trackEvent({ "Type": 'User', "Action": 'Buy crypto success', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Buy', "Remarks": 'Buy crypto success', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy crypto' });
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Buy Crypto success', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Buy', "Remarks": 'Buy Crypto success', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy Crypto' });
     }
     render() {
-        const { Title, Paragraph } = Typography;
+        const { Title, Paragraph, Text } = Typography;
+        const { buyFinalRes: bd } = this.props.buyInfo;
         return (
             <>
                 <div className="success-pop text-center">
                     <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
-                    <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" />
+                    <Paragraph className="fs-14 text-white-30 fw-200">Your order has been placed successfully, {bd.tovalue} {bd.toWalletCode} has been added into your wallet.</Paragraph>
+                    {/* <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" /> */}
                     <Space direction="vertical" size="large">
-                        <Translate content="return_to_buy_sell" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.props.changeStep("step1")} />
+                        <Translate content="return_to_buy" className="f-16 text-white-30 mt-16 text-underline" component={Link} onClick={() => this.props.changeStep("step1")} />
                     </Space>
                 </div>
             </>
         );
     }
 }
-const connectStateToProps = ({ buySell, userConfig }) => {
-    return { buySell, member: userConfig.userProfileInfo }
+const connectStateToProps = ({ buySell, userConfig, buyInfo }) => {
+    return { buySell, member: userConfig.userProfileInfo, buyInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
