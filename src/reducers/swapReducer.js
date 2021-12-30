@@ -61,7 +61,7 @@ const fetchMemberCoinsRejected = (paylaod) => {
 const clearSwapData = (paylaod) => {
     return {
         type: CLEAR_SWAPDATA,
-        payload: initialState
+        payload: {...initialState,stepcode:null}
     }
 }
 
@@ -78,7 +78,7 @@ const getMemberCoins = (member_id) => {
 }
 
 let initialState = {
-    stepcode: 'swapcoins',
+    stepcode: null,
     stepTitles: {
         swapcoins: "swap_title",
         selectcrypto: 'swap_title',
