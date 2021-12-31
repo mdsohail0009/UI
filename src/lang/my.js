@@ -481,5 +481,6 @@ export default {
   comssion: "Suruhanjaya",
   thousandKText: "Jumlah maksimum ialah $100K.",
   sucessText1: "Pesanan anda telah berjaya dibuat,",
-  sucessText2: "telah ditambahkan ke dalam dompet anda."
+  sucessText2: "telah ditambahkan ke dalam dompet anda.",
+  sucessText3: "jumlah telah didebitkan daripada dompet anda."
 }

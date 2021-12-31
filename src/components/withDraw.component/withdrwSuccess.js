@@ -9,7 +9,7 @@ import success from '../../assets/images/success.png';
 import apiCalls from '../../api/apiCalls';
 
 const WithdrawalSuccess = ({ changeStep, dispatch, userProfileInfo, sendReceive }) => {
-    const { Title, Paragraph } = Typography;
+    const { Title, Paragraph, Text } = Typography;
     const { withdrawFinalRes: fd } = sendReceive;
     useEffect(() => {
         successTrack();
