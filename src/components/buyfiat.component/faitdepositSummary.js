@@ -32,14 +32,14 @@ class FaitdepositSummary extends Component {
     }
 
     render() {
-        const { Paragraph, Title } = Typography;
+        const { Paragraph, Title, Text } = Typography;
         const { fiatFinalRes: fd } = this.props.depositInfo;
         return (
             <>
                 <div className="success-pop text-center">
                     <img src={success} className="confirm-icon" alt={'success'} />
                     <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
-                    <Paragraph className="fs-14 text-white-30 fw-200">Your order has been placed successfully, {fd.filledevalue} {fd.walletCode} amount will be added into your wallet.</Paragraph>
+                    <Paragraph className="fs-14 text-white-30 fw-200"><Translate content="sucessText1" component={Text} className="fs-14 text-white-30 fw-200" /> {fd.filledevalue} {fd.walletCode} <Translate content="sucessText2" component={Text} className="fs-14 text-white-30 fw-200" /></Paragraph>
                     {/* <div>
                         <Translate content="success_msg" component='Success' className="text-white-30 fs-36 fw-200 mb-4" />
                         </div>
