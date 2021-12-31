@@ -13,10 +13,17 @@ const SET_SUB_TITLE = "setSubTitle";
 const SET_ADDRESS = "setAddress";
 const SET_WITHDRAW_FINAL_RES = "setWithdrawFinalRes"
 const SET_CRYPTO_FINAL_RES = "setCryptoFinalRes"
+const SET_WFTOTALVALUE = "setWFTotalValue"
 
 const setStep = (payload) => {
     return {
         type: SET_STEP,
+        payload
+    }
+}
+const setWFTotalValue = (payload) => {
+    return {
+        type: SET_WFTOTALVALUE,
         payload
     }
 }
@@ -143,7 +150,8 @@ let initialState = {
     withdrawCryptoObj: null,
     addressObj: null,
     withdrawFinalRes: {},
-    cryptoFinalRes: {}
+    cryptoFinalRes: {},
+    wFTotalValue: null,
 
 }
 const sendReceiveReducer = (state = initialState, action) => {
@@ -186,6 +194,9 @@ const sendReceiveReducer = (state = initialState, action) => {
         case SET_CRYPTO_FINAL_RES:
             state = { ...state, cryptoFinalRes: action.payload };
             return state;
+        case SET_WFTOTALVALUE:
+            state = { ...state, wFTotalValue: action.payload };
+            return state;
         default:
             return state;
     }
@@ -194,5 +205,6 @@ const sendReceiveReducer = (state = initialState, action) => {
 export default sendReceiveReducer;
 export {
     setStep, clearStep, setWalletAddress, fetchWithDrawWallets, setSelectedWithDrawWallet,
-    setWithdrawFinalRes, setCryptoFinalRes, handleSendFetch, setSubTitle, setWithdrawfiat, rejectWithdrawfiat, setWithdrawfiatenaable, rejectWithdrawfiatenaable, setWithdrawcrypto, setAddress
+    setWithdrawFinalRes, setCryptoFinalRes, handleSendFetch, setSubTitle, setWithdrawfiat, rejectWithdrawfiat, setWithdrawfiatenaable, rejectWithdrawfiatenaable, setWithdrawcrypto, setAddress,
+    setWFTotalValue
 }

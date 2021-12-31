@@ -32,7 +32,8 @@ import {
 import {
   setWithdrawfiat,
   rejectWithdrawfiat,
-  setWithdrawFinalRes
+  setWithdrawFinalRes,
+  setWFTotalValue
 } from "../../reducers/sendreceiveReducer";
 import WithdrawalSummary from "./withdrawalSummary";
 import WithdrawalLive from "./withdrawLive";
@@ -90,6 +91,9 @@ const FaitWithdrawal = ({
       }
       let selectObj = sendReceive.withdrawFiatObj;
       form.setFieldsValue(selectObj);
+    }
+    if (sendReceive?.wFTotalValue) {
+      form.setFieldsValue({ totalValue: sendReceive?.wFTotalValue });
     }
   }, [buyInfo.memberFiat?.data]);
 
@@ -211,6 +215,7 @@ const FaitWithdrawal = ({
     changeStep("step4");
   };
   const savewithdrawal = async (values) => {
+    dispatch(setWFTotalValue(values.totalValue));
     if (
       parseFloat(
         typeof values.totalValue === "string"

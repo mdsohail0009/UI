@@ -477,5 +477,6 @@ export default {
   copied: 'Kinopya',
   withdraw_fiat_summary: 'withdraw ang Buod ng Fiat',
   request_fail: 'Naabot na ang pinakamaraming pagsubok, Pakisubukan pagkaraan ng ilang oras',
-  received: "Menerima"
+  received: "Menerima",
+  comssion: "Suruhanjaya"
 }
