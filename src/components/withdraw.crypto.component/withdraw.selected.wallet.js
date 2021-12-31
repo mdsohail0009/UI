@@ -259,7 +259,7 @@ class CryptoWithDrawWallet extends Component {
                             </div>
                         </Form.Item>
                     </Form>
-                    <Translate content="confirm" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
+                    <Translate content="Confirm" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
                     <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[
                         <Button key="back" onClick={this.handleCancel} disabled={this.state.loading}>
                             Return

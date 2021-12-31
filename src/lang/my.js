@@ -478,5 +478,6 @@ export default {
   withdraw_fiat_summary: 'withdraw ang Buod ng Fiat',
   request_fail: 'Naabot na ang pinakamaraming pagsubok, Pakisubukan pagkaraan ng ilang oras',
   received: "Menerima",
-  comssion: "Suruhanjaya"
+  comssion: "Suruhanjaya",
+  thousandKText: "Jumlah maksimum ialah $100K."
 }

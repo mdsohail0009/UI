@@ -65,7 +65,7 @@ class SelectCrypto extends Component {
         const response = await convertCurrencyDuplicate({
             from: coin,
             to: this.state.selectedWallet?.currencyCode || "USD",
-            value: (isSwaped ? cryptoValue : localValue)||0,
+            value: (isSwaped ? cryptoValue : localValue) || 0,
             isCrypto: !isSwaped,
             memId: this.props.userProfileInfo?.id,
             screenName: "buy"
@@ -78,8 +78,8 @@ class SelectCrypto extends Component {
             const _val = isSwaped ? cryptoValue : localValue;
             if (_obj[4] == _val || _obj[4] == 0) {
                 if (!isSwaped) {
-                    _cryptoValue = value||0;
-                } else { _nativeValue = value||0; }
+                    _cryptoValue = value || 0;
+                } else { _nativeValue = value || 0; }
                 this.setState({ ...this.state, swapValues: { localValue: _nativeValue, cryptoValue: _cryptoValue, isSwaped, isConvertionLoading: false } });
             }
         } else {
@@ -96,8 +96,8 @@ class SelectCrypto extends Component {
 
     handlePreview = () => {
         const { localValue, cryptoValue, isSwaped } = this.state.swapValues;
-        const { buyMin, buyMax, coin,gbpInUsd,eurInUsd } = this.props.buyInfo?.selectedCoin?.data;
-        const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin,gbpInUsd,eurInUsd })
+        const { buyMin, buyMax, coin, gbpInUsd, eurInUsd } = this.props.buyInfo?.selectedCoin?.data;
+        const _vaidator = validatePreview({ localValue, cryptValue: cryptoValue, wallet: this.state.selectedWallet, maxPurchase: buyMax, minPurchase: buyMin, gbpInUsd, eurInUsd })
         if (!_vaidator.valid) {
             this.setState({ ...this.state, error: { ..._vaidator } });
             this.myRef.current.scrollIntoView();
@@ -142,12 +142,13 @@ class SelectCrypto extends Component {
                             this.setState({ ...this.state, swapValues: { ...this.state.swapValues, isSwaped: !this.state.swapValues.isSwaped } })
                         }}
                         isConvertionLoad={isConvertionLoading} />
-                    <Paragraph className="text-center f-16 text-yellow fw-400">The maximum amount is $100K.</Paragraph>
+
+                    <Translate content="thousandKText" component={Paragraph} className="text-center f-16 text-yellow fw-400" />
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50 pt-16" />
                     <WalletList onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     {/* <div className="fs-12 text-white-30 text-center mt-24"><Translate content="change_10Sec_amount" component={Paragraph} className="fs-12 text-white-30 text-center mt-24" /></div> */}
                     <div className="mt-24">
-                        <SuisseBtn title="confirm_btn_text" onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
+                        <SuisseBtn title="Confirm" onRefresh={() => this.refresh()} className="pop-btn" onClick={() => this.handlePreview()} icon={<span className="icon md load" />} />
                     </div>
                 </div>
 

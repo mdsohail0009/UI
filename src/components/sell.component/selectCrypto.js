@@ -49,11 +49,11 @@ class SelectSellCrypto extends Component {
         if (type === 'half') {
             usdamnt = (obj.coinValueinNativeCurrency / 2).toString();
             cryptoamnt = (obj.coinBalance / 2)
-            this.setState({ ...this.state, USDAmnt: "0", CryptoAmnt: cryptoamnt, minmaxTab: type,isSwap: true, });
+            this.setState({ ...this.state, USDAmnt: "0", CryptoAmnt: cryptoamnt, minmaxTab: type, isSwap: true, });
         } else if (type === 'all') {
             usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
             cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
-            this.setState({ ...this.state, USDAmnt: "0", CryptoAmnt: cryptoamnt, minmaxTab: type,isSwap: true, });
+            this.setState({ ...this.state, USDAmnt: "0", CryptoAmnt: cryptoamnt, minmaxTab: type, isSwap: true, });
         } else {
             this.setState({ CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue, USDAmnt: "0", isSwap: true, minmaxTab: type });
         }
@@ -89,7 +89,7 @@ class SelectSellCrypto extends Component {
             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_minvalue') + sellMinValue })
             return;
         }
-        else if(this.state.USDAmnt>purchaseCurrencyMaxAmt[obj.toWalletCode]){
+        else if (this.state.USDAmnt > purchaseCurrencyMaxAmt[obj.toWalletCode]) {
             this.myRef.current.scrollIntoView();
             this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('enter_maxvalue') + maxAmtMesage })
             return;
@@ -139,7 +139,7 @@ class SelectSellCrypto extends Component {
         const response = await convertCurrencyDuplicate({
             from: coin,
             to: this.state.sellSaveData.toWalletCode || "USD",
-            value: (isSwaped ? cryptoValue : localValue)||0,
+            value: (isSwaped ? cryptoValue : localValue) || 0,
             isCrypto: !isSwaped,
             memId: this.props.member?.id,
             screenName: "sell"
@@ -152,8 +152,8 @@ class SelectSellCrypto extends Component {
             const _val = isSwaped ? cryptoValue : localValue;
             if (_obj[4] == _val || _obj[4] == 0) {
                 if (!isSwaped) {
-                    _cryptoValue = value||0;
-                } else { _nativeValue = value||0; }
+                    _cryptoValue = value || 0;
+                } else { _nativeValue = value || 0; }
                 this.setState({ ...this.state, USDAmnt: _nativeValue, CryptoAmnt: _cryptoValue, isConvertionLoading: false });
             }
         } else {
@@ -191,7 +191,7 @@ class SelectSellCrypto extends Component {
                         isConvertionLoad={this.state.isConvertionLoading}
                         isSwaped={this.state.isSwap}
                     />
-                    <Paragraph className="text-center f-16 text-yellow fw-400 mb-36">The maximum amount is $100K.</Paragraph>
+                    <Translate content="thousandKText" component={Paragraph} className="text-center f-16 text-yellow fw-400" />
                     <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target: { value } }) => {
                         this.clickMinamnt(value)
                     }}>
@@ -202,7 +202,7 @@ class SelectSellCrypto extends Component {
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50" />
                     <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     <div className="mt-24">
-                        <SuisseBtn autoDisable={true} title="confirm" className="pop-btn" onClick={() => { this.previewSellData() }} />
+                        <SuisseBtn autoDisable={true} title="Confirm" className="pop-btn" onClick={() => { this.previewSellData() }} />
                     </div></div>
             </>
 

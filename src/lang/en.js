@@ -482,5 +482,6 @@ export default {
   copied: 'Copied',
   request_fail: "Max attempts reached, Please try after some time",
   received: "Received",
-  comssion: "Commission"
+  comssion: "Commission",
+  thousandKText: "The maximum amount is $100K."
 }
