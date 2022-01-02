@@ -14,14 +14,14 @@ class SuccessMessage extends Component {
         });
     }
     render() {
-        const { Title, Paragraph } = Typography;
+        const { Title, Paragraph, Text } = Typography;
         const { swapFinalRes: sd } = this.props.swapStore;
         return (
             <>
                 <div className="success-pop text-center">
                     <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
-                    <Paragraph className="fs-14 text-white-30 fw-200">Your order has been placed successfully, {sd.tovalue} {sd.toWalletCode} has been added into your wallet.</Paragraph>
+                    <Paragraph className="fs-14 text-white-30 fw-200"><Translate content="sucessText1" component={Text} className="fs-14 text-white-30 fw-200" /> {sd.tovalue} {sd.toWalletCode} <Translate content="sucessText2" component={Text} className="fs-14 text-white-30 fw-200" /></Paragraph>
                     {/* <Translate className="text-white-30 fs-36 fw-200 mb-4" content="transaction_submitted" component={Title} /> */}
                     <Space direction="vertical" size="large">
                         <Link onClick={() => {
@@ -32,7 +32,7 @@ class SuccessMessage extends Component {
                                 fromValue: null,
                                 receiveValue: null,
                                 errorMessage: null
-                            }));this.props.clearSwapfullData(); this.props.dispatch(setStep("swapcoins")); 
+                            })); this.props.clearSwapfullData(); this.props.dispatch(setStep("swapcoins"));
                         }}><Translate content="Back_to_Swap" component={Link} className="f-16 text-white-30 mt-16 text-underline" /></Link>
                     </Space>
                 </div>

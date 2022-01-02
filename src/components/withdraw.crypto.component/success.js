@@ -15,7 +15,7 @@ class SuccessMsg extends Component {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto success page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Withdraw Crypto', "Remarks": 'Withdraw Crypto success page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Crypto' });
     }
     render() {
-        const { Title, Paragraph } = Typography;
+        const { Title, Paragraph, Text } = Typography;
         const { cryptoFinalRes: cd } = this.props.sendReceive;
 
         return (
@@ -23,7 +23,7 @@ class SuccessMsg extends Component {
                 <div className="success-pop text-center">
                     <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
-                    <Paragraph className="fs-14 text-white-30 fw-200">Your order has been placed successfully, {cd.totalValue} {cd.walletCode} amount has been debited from your wallet.</Paragraph>
+                    <Paragraph className="fs-14 text-white-30 fw-200"><Translate content="sucessText1" component={Text} className="fs-14 text-white-30 fw-200" /> {cd.totalValue} {cd.walletCode} <Translate content="sucessText3" component={Text} className="fs-14 text-white-30 fw-200" /></Paragraph>
                     {/* <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
                     <Translate content="success_decr" component={Paragraph} className="fs-16 text-white-30 fw-200" /> */}
                     <Space direction="vertical" size="large">

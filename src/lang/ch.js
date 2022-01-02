@@ -478,5 +478,9 @@ export default {
   withdraw_fiat_summary: '提現法幣摘要',
   request_fail: '已達到最大嘗試次數，請稍後再試',
   received: "已收到",
-  comssion: "委员会"
+  comssion: "委员会",
+  thousandKText: "最高金额为 10 万美元。",
+  sucessText1: "您的订单已成功下单，",
+  sucessText2: "已添加到您的钱包中。",
+  sucessText3: "金额已从您的钱包中扣除"
 }

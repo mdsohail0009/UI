@@ -29,7 +29,7 @@ import { deleteToken, readNotification as readNotifications } from '../notificat
 import Wallets from '../components/wallets.component.js';
 import apiCalls from '../api/apiCalls';
 import { setNotificationCount } from '../reducers/dashboardReducer';
-import { clearUserInfo } from '../reducers/configReduser';
+import { getmemeberInfo } from '../reducers/configReduser';
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -181,6 +181,9 @@ class Header extends Component {
     userProfile() {
         this.props.history.push("/userprofile");
         this.setState({ ...this.state, Visibleprofilemenu: false })
+        if(this.props.oidc.user.profile?.sub){
+        this.props.getmemeberInfoa(this.props.oidc.user.profile.sub);
+        }
     }
     next() {
         this.carousel.next();
@@ -676,6 +679,9 @@ const connectDispatchToProps = dispatch => {
         clearSwapfullData: (member_id) => {
             dispatch(clearSwapData(member_id))
         },
+        getmemeberInfoa: (useremail) => {
+            dispatch(getmemeberInfo(useremail));
+          },
         dispatch
     }
 }
