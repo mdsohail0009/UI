@@ -2,6 +2,7 @@ import { Switch, Route as ReactRoute } from 'react-router-dom';
 import React, { Component } from 'react';
 import Route from '../authentication/protected.route';
 import SignInSilent from '../authentication/signinSilent';
+import CardsModule from '../components/dashboard.component/cardsmodule';
 const Dashboard = React.lazy(() => import('../components/dashboard.component'));
 const CallbackPage = React.lazy(() => import('../authentication/callback.component'));
 const Login = React.lazy(() => import('../authentication/login.component'));
@@ -12,9 +13,9 @@ const NotKyc = React.lazy(() => import('../components/sumSub.component/notKyc'))
 const OnBoarding = React.lazy(() => import('../layout/onboard.component'));
 const UserProfile = React.lazy(() => import('../components/userProfile.component/userProfile'));
 const RequestedDocs = React.lazy(() => import('../components/documents.component/requestedDocs'));
-const DocNotices = React.lazy(() => import("../components/shared/doc.notices"))
-const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"))
-const DashboardCharts = React.lazy(() => import("../components/dashboard.component/cockpitCharts"))
+const DocNotices = React.lazy(() => import("../components/shared/doc.notices"));
+const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"));
+const DashboardCharts = React.lazy(() => import("../components/dashboard.component/cockpitCharts"));
 class RouteConfig extends Component {
   render() {
     return <Switch>
@@ -33,6 +34,7 @@ class RouteConfig extends Component {
         <Route path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
         <ReactRoute path='/cockpitCharts' component={DashboardCharts} />
+        <Route path='/cardsmodule' component={CardsModule} />
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>
     </Switch>

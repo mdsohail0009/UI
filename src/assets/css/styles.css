@@ -1034,3 +1034,9 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 .c-notallowed{cursor:not-allowed}
+.tab-block span{display: block;}
+.card-list .ant-tabs-nav::before{border-bottom: 0 !important;}
+.card-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{color: #ffffff !important;font-size: 16px !important;font-weight: 500;}
+.wallet-total{background:#515A64;border-radius: 30px;height: 132px;}
+.wallet-total .ant-list-item-meta-content{text-align: left;}
+.wallet-total .ant-list-item-meta-title{line-height: 27.4px;}
