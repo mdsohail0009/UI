@@ -1040,3 +1040,11 @@ input[type=number]::-webkit-outer-spin-button {
 .wallet-total{background:#515A64;border-radius: 30px;height: 132px;}
 .wallet-total .ant-list-item-meta-content{text-align: left;}
 .wallet-total .ant-list-item-meta-title{line-height: 27.4px;}
+.card-module.crypto-card{background: linear-gradient(152.27deg, #B30F1E 18.18%, #0038FF 119.22%) !important;
+    border: 0.5px solid #1B4156;box-sizing: border-box;box-shadow: 0px 15px 20px 10px rgba(0, 0, 0, 0.1); backdrop-filter: blur(20px); border-radius: 12px;}
+.virtual-card.crypto-card{background: linear-gradient(152.27deg, #0A2979 18.18%, #0B1A41 121.72%) !important;
+        border: 0.5px solid #1B4156;box-sizing: border-box;box-shadow: 0px 15px 20px 10px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(20px);border-radius: 12px;}
+.card-module.crypto-card .ant-card-body, .crypto-card.crypto-card .ant-card-body{height: 230px !important;padding: 20px;}
+.cardholder-name{font-size: 24px;line-height: 25px;}
+.valid-time{margin-right: 76px;}
