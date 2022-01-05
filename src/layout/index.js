@@ -3,6 +3,7 @@ import { Layout as AntLayout } from 'antd';
 import './layout.css'
 import Content from './content.component';
 import Header from '../layout/header.component';
+import InitialHeader from '../components/home.component/header';
 import Footer from './footer.component';
 import ConnectStateProps from '../utils/state.connect';
 import { userManager } from '../authentication';
@@ -14,35 +15,35 @@ class Layout extends Component {
     }
     componentDidMount() {
         if ((!this.props.user || this.props.user.expired) && !window.location.pathname.includes('callback')) {
-            userManager.clearStaleState().then(()=>{
+            userManager.clearStaleState().then(() => {
                 this.props.dispatch(clearUserInfo());
                 userManager.signinRedirect();
             });
         }
     }
-    redirect = () =>{
+    redirect = () => {
         userManager.removeUser()
-        window.open(process.env.REACT_APP_ADMIN_URL,"_self")
+        window.open(process.env.REACT_APP_ADMIN_URL, "_self")
     }
     render() {
         if ((!this.props.user || this.props.user.expired) && !window.location.pathname.includes('callback')) {
             return <div className="loader">Loading .....</div>
-        }else if((!this.props.user || this.props.user.expired) && window.location.pathname.includes('callback')){
+        } else if ((!this.props.user || this.props.user.expired) && window.location.pathname.includes('callback')) {
             return <CallbackPage />
-        }else if(this.props.user && !this.props.userProfile){
+        } else if (this.props.user && !this.props.userProfile) {
             return <OnBoarding />
-        }else if( this.props.userProfile && this.props.userProfile?.membership==='Admin'){
+        } else if (this.props.userProfile && this.props.userProfile?.membership === 'Admin') {
             return <>{this.redirect()}</>
-        }else{
-        return <>
-            <AntLayout>
-            <Header />
-            <Content />
-            <Footer />
-          </AntLayout>
-        </>
+        } else {
+            return <>
+                <AntLayout>
+                    {window.location.pathname === "/home" ? <InitialHeader /> : <Header />}
+                    <Content />
+                    <Footer />
+                </AntLayout>
+            </>
         }
-        
+
     }
 }
 
