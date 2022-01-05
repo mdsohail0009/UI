@@ -16,6 +16,7 @@ const RequestedDocs = React.lazy(() => import('../components/documents.component
 const DocNotices = React.lazy(() => import("../components/shared/doc.notices"));
 const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"));
 const DashboardCharts = React.lazy(() => import("../components/dashboard.component/cockpitCharts"));
+const VirtualDetailView = React.lazy(() => import("../components/card.component/virtualDetailView"))
 class RouteConfig extends Component {
   render() {
     return <Switch>
@@ -35,6 +36,7 @@ class RouteConfig extends Component {
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
         <ReactRoute path='/cockpitCharts' component={DashboardCharts} />
         <Route path='/cardsmodule' component={CardsModule} />
+        <Route path="/virtualDetailView" component={VirtualDetailView}/>
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>
     </Switch>

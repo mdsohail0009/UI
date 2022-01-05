@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Typography,Tabs } from 'antd';
-const { Title, Paragraph, Text } = Typography;
-const { TabPane } = Tabs;
-const data = [
-    {
-      title: 'Ant Design Title 1',
-    },
-]
+import { Card, Row, Col, Typography, Badge } from 'antd';
+import VirtualDetailView from './virtualDetailView';
+import { Link } from "react-router-dom";
+const {Paragraph, Text } = Typography;
+
 class VirtualCard extends Component {
 state={
+    VirtualCards: true,
+    VirtualDetailView:false,
 
     virtualCardData: [
         
@@ -68,37 +67,48 @@ state={
        },
 ]
 }
+handelVirtualDetailView=()=>{
+    this.setState({VirtualCards:false, VirtualDetailView: true})
+}
+handelvirtualCardBack=()=>{
+    this.setState({VirtualCards:true, VirtualDetailView: false})
+}
+
 render() {
     return (<>
 
-                <Row gutter={24} className='my-16'> 
-                {this.state.virtualCardData.map((item, idx) =>
-                    <Col span={8} key={idx}>
-                        <Card  className="card-module crypto-card mb-16 c-pointer" bordered={false} >
-                    <Row gutter={24} >
-                        <Col span={12}>
-                            <div className="align-center">
-                                <Paragraph className="fs-22 fw-600 text-purewhite ml-8 mb-0">{item.avilableBal}{item.avilableCode}</Paragraph>
-                                <Paragraph className="fs-18 fw-500 text-purewhite ml-8 mb-0">Avilable</Paragraph>
-                            </div>
-                        </Col>
-                        <Col span={12}>
-                            <div className="align-center">
-                                <Paragraph className="fs-22 fw-600 text-purewhite ml-8 mb-0">{item.spentBal}{item.spentCode}</Paragraph>
-                                <Paragraph className="fs-18 fw-500 text-purewhite ml-8 mb-0">Spent</Paragraph>
-                            </div>
-                        </Col>
-                        <Col span={24}>
-                            <div className="text-white mt-24 mb-16">
-                                <div className="fs-28 fw-400">{item.accountNo}</div>
-                                <div className='text-right valid-time'>Valid Upto {item.validDate}</div>
-                            </div>
-                            <div className="text-white cardholder-name fw-600">Suisse - {item.UserName}</div>
-                        </Col>
-                    </Row>
+       { this.state.VirtualCards && <Row gutter={24} className='my-16' onClick={() => this.handelVirtualDetailView()}>
+            {this.state.virtualCardData.map((item, idx) =>
+                <Col span={8} key={idx}>
+                    <Card  className="card-module crypto-card mb-16 c-pointer" bordered={false} >
+                        <Row gutter={24} >
+                            <Col span={12}>
+                                <div className="align-center">
+                                    <Paragraph className="fs-22 fw-600 text-purewhite ml-8 mb-0">{item.avilableBal}{item.avilableCode}</Paragraph>
+                                    <Paragraph className="fs-18 fw-500 text-purewhite ml-8 mb-0">Avilable</Paragraph>
+                                </div>
+                            </Col>
+                            <Col span={12}>
+                                <div className="align-center">
+                                    <Paragraph className="fs-22 fw-600 text-purewhite ml-8 mb-0">{item.spentBal}{item.spentCode}</Paragraph>
+                                    <Paragraph className="fs-18 fw-500 text-purewhite ml-8 mb-0">Spent</Paragraph>
+                                </div>
+                            </Col>
+                            <Col span={24}>
+                                <div className="text-white mt-24 mb-16">
+                                    <div className="fs-28 fw-400">{item.accountNo}</div>
+                                    <div className='text-right valid-time'>Valid Upto {item.validDate}</div>
+                                </div>
+                                <div className="text-white cardholder-name fw-600">Suisse - {item.UserName}</div>
+                            </Col>
+                        </Row>
                     </Card>
-                    </Col>)}
-                </Row>
+                </Col>)}
+        </Row>}
+        {this.state.VirtualDetailView && <>
+            <div className="mb-36 text-white-50 fs-24 d-flex justify-start mt-4"><Link className="icon md leftarrow mr-16 c-pointer" onClick={() => this.handelvirtualCardBack()}/><div><div className='l-height-normal fs-26'>Suisse -  Jhon Doe</div><Badge className="ant-badge badge radius16 bggreen text-white-30 fs-10 px-16 py-4 l-height-normal fw-300">Active</Badge></div></div>
+            <VirtualDetailView />
+        </>}
     </>)
 }
 }
