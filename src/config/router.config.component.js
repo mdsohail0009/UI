@@ -4,6 +4,7 @@ import Route from '../authentication/protected.route';
 import SignInSilent from '../authentication/signinSilent';
 import CardsModule from '../components/card.component/index';
 const Dashboard = React.lazy(() => import('../components/dashboard.component'));
+const Home = React.lazy(() => import('../components/home.component'));
 const CallbackPage = React.lazy(() => import('../authentication/callback.component'));
 const Login = React.lazy(() => import('../authentication/login.component'));
 const ChangePassword = React.lazy(() => import('../components/changepassword'));
@@ -21,7 +22,8 @@ class RouteConfig extends Component {
   render() {
     return <Switch>
       <React.Suspense fallback={<div className="loader">Loading...</div>}>
-        <Route path="/cockpit" component={Dashboard} />
+
+        <Route path="/home" component={Home} />
         <ReactRoute path="/callback" component={CallbackPage} />
         <ReactRoute path="/login" component={Login} />
         <ReactRoute path="/changepassword" component={ChangePassword} />
