@@ -840,7 +840,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .crypto_btns{margin-left: 16px !important;}
     .crypto_btns .custom-btn.prime{margin-left: 36px  !important;}
     .coin-typo{font-size: 16px !important;}
-    .custom-table .ant-table-tbody > tr > td {padding:20px 0 !important;}
+    .custom-table .ant-table-tbody > tr > td {padding:16px 0 !important;}
     .portfolio-list .ant-list-split ul li .crypto_btns, 
     .portfolio-list .ant-list-split ul li .custom-btn.prime{margin-left: 0 !important}
     .portfolio-list .ant-list-split ul li .crypto_btns{margin-top: 10px;}
@@ -856,8 +856,8 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .mega-menu{max-width: 1140px;  padding: 29px 0px 24px 60px;}
     .side-drawer .ant-drawer-content-wrapper{width: 420px !important;}
     .side-drawer .ant-drawer-body{padding: 0 20px 20px 20px;}
-    .portfolio-list .mobile-list{height: 816px;max-height: 816px; overflow: auto;padding-right: 10px;}
-    .markets-panel .custom-table .ant-table-body{height: 1065px !important;}
+    .portfolio-list .mobile-list{height: 900px;max-height: 900px; overflow: auto;padding-right: 10px;}
+    .markets-panel .custom-table .ant-table-body{height: 600px !important;}
     .crypto-address .walletadrs{font-size: 12px;}
     .trade-legends{display: flex; justify-content: space-between;}
     .portfolio-list .ant-list-split .ant-list-item a + div{min-width: 200px;}
