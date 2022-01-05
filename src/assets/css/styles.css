@@ -864,11 +864,11 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .mega-menu{max-width: 1140px;  padding: 29px 0px 24px 60px;}
     .side-drawer .ant-drawer-content-wrapper{width: 420px !important;}
     .side-drawer .ant-drawer-body{padding: 0 20px 20px 20px;}
-    .portfolio-list .mobile-list{height: 900px;max-height: 900px; overflow: auto;padding-right: 10px;}
+    .portfolio-list .mobile-list{height: 900px;max-height: 900px; overflow: auto;}
     .markets-panel .custom-table .ant-table-body{height: 600px !important;}
     .crypto-address .walletadrs{font-size: 12px;}
     .trade-legends{display: flex; justify-content: space-between;}
-    .portfolio-list .ant-list-split .ant-list-item a + div{min-width: 200px;}
+    .portfolio-list .ant-list-split .ant-list-item a + div{min-width: 170px;}
     .portfolio-list .ant-list-split .ant-list-item{display: flex;}
     .portfolio-list .ant-list-split ul li .custom-btn{min-width: 90px;}
     .coin-details.right{min-height: 705px;}
