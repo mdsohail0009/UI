@@ -23,7 +23,7 @@ render() {
     <Paragraph className='fs-14 text-center text-white'>Select card to check spends and avilable limit</Paragraph>
 
     <div>
-    <Tabs defaultActiveKey="1" centered className='text-white card-list'>
+    <Tabs defaultActiveKey="1" centered className='text-white card-list mt-24'>
         <TabPane tab={<span className='tab-block'> <span className="coin lg ETH mb-16 mx-auto"></span> Overview</span>} key="1" > 
             <div className='wallet-total mx-auto p-24 my-30'>
                 <List 
