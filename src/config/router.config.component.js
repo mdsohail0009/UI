@@ -2,7 +2,7 @@ import { Switch, Route as ReactRoute } from 'react-router-dom';
 import React, { Component } from 'react';
 import Route from '../authentication/protected.route';
 import SignInSilent from '../authentication/signinSilent';
-import CardsModule from '../components/dashboard.component/cardsmodule';
+import CardsModule from '../components/card.component/index';
 const Dashboard = React.lazy(() => import('../components/dashboard.component'));
 const CallbackPage = React.lazy(() => import('../authentication/callback.component'));
 const Login = React.lazy(() => import('../authentication/login.component'));
