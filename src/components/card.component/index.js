@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Typography,Tabs,List,Image } from 'antd';
+import { Card, Row, Col, Typography,Tabs,List,Image,Carousel  } from 'antd';
 import VirtualCard from './virtualCard';
 const { Title, Paragraph, Text } = Typography;
 const { TabPane } = Tabs;
@@ -8,9 +8,19 @@ const data = [
       title: 'Ant Design Title 1',
     },
 ]
+function onChange(a, b, c) {
+    console.log(a, b, c);
+  }
+  
+  const contentStyle = {
+    height: '160px',
+    color: '#fff',
+    lineHeight: '160px',
+    textAlign: 'center',
+    background: '#364d79',
+  };
 class CardsModule extends Component {
 state={
-
 }
 render() {
     return (<>
@@ -20,7 +30,7 @@ render() {
 
     <div>
     <Tabs defaultActiveKey="1" centered className='text-white card-list mt-24'>
-        <TabPane tab={<span className='tab-block'> <span className="coin lg ETH mb-16 mx-auto"></span> Overview</span>} key="1" > 
+        <TabPane tab={<span className='tab-block fs-16'> <span className="icon xl overview mb-16 mx-auto"></span> Overview</span>} key="1" > 
             <div className='wallet-total mx-auto p-24 my-30'>
                 <List 
                 itemLayout="horizontal"
@@ -28,7 +38,7 @@ render() {
                 renderItem={item => (
                 <List.Item className='p-0'>
                     <List.Item.Meta 
-                    avatar={<span className="coin lg ETH mb-16 mx-auto"></span>}
+                    avatar={<span className="icon xxl wallet-icon"></span>}
                     title={<div className="fs-26 fw-400 text-white-30">Total Blance</div>}
                     description={<div className="fs-32 fw-600 text-white">1,200 USD</div>}
                     />
@@ -41,8 +51,10 @@ render() {
                     <Title className='fs-22 fw-600 mb-8 text-white-30'>Know Your Card</Title>
                     <Paragraph className='text-white-50 fs-16 mb-0 l-height-normal'>Select card to check spends and avilable limit</Paragraph>
                 </div>
+                
                 <div className="site-card-wrapper">
                     <Row gutter={24}>
+                    {/* <Carousel autoplay> */}
                     <Col span={8}>
                         <Card  className="card-module crypto-card mb-16 c-pointer" bordered={false} >
                             <Row gutter={24}>
@@ -113,12 +125,12 @@ render() {
                         </div>
                         </Card>
                     </Col>
-                     
+                     {/* </Carousel> */}
                     </Row>
                 </div>
             </div>
         </TabPane>
-        <TabPane tab={<span className='tab-block'> <span className="coin lg ETH mb-16 mx-auto"></span> Physical Cards</span>}key="2"> 
+        <TabPane tab={<span className='tab-block fs-16'> <span className="icon xl physical-card mb-16 mx-auto"></span> Physical Cards</span>}key="2"> 
             <div className="site-card-wrapper text-left my-30">
                 <Row gutter={24} className='my-16'>
                     <Col span={8}>
@@ -164,12 +176,14 @@ render() {
                 </Row>
             </div>
         </TabPane>
-        <TabPane tab={<span className='tab-block'> <span className="coin lg ETH mb-16 mx-auto"></span> Virtual Cards</span>} key="3" > 
+        <TabPane tab={<span className='tab-block fs-16'> <span className="icon xl virtual-card mb-16 mx-auto"></span> Virtual Cards</span>} key="3" > 
             <div className="site-card-wrapper text-left my-30">
                <VirtualCard/>
             </div>
         </TabPane>
-        <TabPane tab={<span className='tab-block'> <span className="coin lg ETH mb-16 mx-auto"></span> Settings</span>}key="4"> Tab 2</TabPane>
+        <TabPane tab={<span className='tab-block fs-16'> <span className="icon xl settings mb-16 mx-auto"></span> Settings</span>}key="4"> 
+                    
+        </TabPane>
     </Tabs>
     </div>
     </div>
