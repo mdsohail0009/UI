@@ -26,7 +26,8 @@ export const validatePreview = ({ localValue, cryptValue, wallet, minPurchase, m
     const maxAmtMessage = "$100,000"
     const currencyMaxPurchase = {
         GBP: gbpInUsd * localValue,
-        EUR: localValue * eurInUsd
+        EUR: localValue * eurInUsd,
+        USD:100000
     }
     if (!localValue || !cryptValue) {
         validate.message = apicalls.convertLocalLang('enter_wallet')
