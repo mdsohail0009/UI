@@ -338,6 +338,7 @@ export default {
   Ethereum: "Ethereum",
   balance: 'Balance -',
   available: 'available',
+  Available: 'Available',
   ExchangeRate: 'Exchange Rate',
   ProfileInfo: 'Profile Info',
   BasicInfo: 'Basic Info',

@@ -415,7 +415,7 @@ class Header extends Component {
                                 </Dropdown>
                             </Menu>
                         </div>
-                        <Menu theme="light" mode="horizontal" className="header-right" selectedKeys={[this.props.buySell?.headerTab]} onSelect={(key) => { this.props.dispatch(setHeaderTab(key.key)) }}>
+                        <Menu theme="light" mode="horizontal" className="header-right mobile-headerview" selectedKeys={[this.props.buySell?.headerTab]} onSelect={(key) => { this.props.dispatch(setHeaderTab(key.key)) }}>
                             <Translate content="menu_wallets" component={Menu.Item} key="1" onClick={this.showWalletsDrawer} className="list-item" />
                             <Translate content="menu_buy_sell" component={Menu.Item} key="2" onClick={this.showBuyDrawer} className="list-item" />
                             <Translate content="menu_swap" component={Menu.Item} key="3" onClick={this.showSwapDrawer} className="list-item" />

@@ -64,7 +64,8 @@ class SelectSellCrypto extends Component {
         let { sellMinValue, gbpInUsd, eurInUsd } = this.props.sellData.coinDetailData;
         const purchaseCurrencyMaxAmt = {
             GBP: this.state.USDAmnt * gbpInUsd,
-            EUR: this.state.USDAmnt * eurInUsd
+            EUR: this.state.USDAmnt * eurInUsd,
+            USD:100000
         }
         const maxAmtMesage = "$100,000";
         if ((!this.state.USDAmnt && !this.state.CryptoAmnt) || (parseFloat(this.state.USDAmnt) === 0 || parseFloat(this.state.CryptoAmnt) === 0)) {
