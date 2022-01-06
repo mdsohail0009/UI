@@ -183,6 +183,11 @@ class WithdrawSummary extends Component {
   fullNumber = this.props.userProfile?.phoneNumber;
   last4Digits = this.fullNumber.slice(-4);
   maskedNumber = this.last4Digits.padStart(this.fullNumber.length, "*");
+
+  address = this.props.sendReceive.withdrawCryptoObj?.toWalletAddress;
+  firstAddress = this.address.slice(0, 4);
+  lastAddress = this.address.slice(-4);
+
   render() {
     const { Paragraph, Text } = Typography;
     const { seconds1, disable } = this.state;
@@ -274,8 +279,8 @@ class WithdrawSummary extends Component {
               content="address"
               component={Text}
             />
-            <Text className="fw-400 text-white" style={{ width: '250px', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', textAlign: 'end' }}>
-              {this.props.sendReceive.withdrawCryptoObj?.toWalletAddress}
+            <Text className="fw-400 text-white">
+              {this.firstAddress + '................' + this.lastAddress}
             </Text>
           </div>
           <Form

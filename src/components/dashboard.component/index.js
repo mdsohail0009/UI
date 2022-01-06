@@ -48,7 +48,7 @@ class Home extends Component {
                             <Wallets />
                         </div>
                         <div className="markets-panel">
-                            <MarketCap />
+                            <YourPortfolio />
                         </div>
                     </Col>
                     <Col xs={24} md={12} xl={14}>
@@ -57,12 +57,12 @@ class Home extends Component {
                             crypto_value='0.00'
                             crypto_usd="0.00 BTC"
                             crypto_stock="0.0%" />
-
-
-                        <YourPortfolio />
+                        <div className="markets-panel">
+                            <MarketCap />
+                        </div>
                     </Col>
                 </Row>
-            </div>
+            </div >
         );
 
 

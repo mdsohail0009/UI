@@ -43,6 +43,7 @@ class RequestedDocs extends Component {
         isMessageError: null,
         isValidFile: true,
         validHtmlError: false,
+        PreviewFilePath:null
     }
     componentDidMount() {
         this.getDocument(QueryString.parse(this.props.location.search).id);
@@ -63,7 +64,7 @@ class RequestedDocs extends Component {
     }
     loadDocReplies = async (id) => {
         let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId != id);
-        this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: docReObj });
+        this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: docReObj,isMessageError: null });
         const response = await getDocumentReplies(id);
         if (response.ok) {
             this.setState({
@@ -82,13 +83,22 @@ class RequestedDocs extends Component {
     docPreview = async (file) => {
         let res = await getFileURL({ url: file.path });
         if (res.ok) {
-            this.setState({ ...this.state, previewModal: true, previewPath: file.path });
+            this.state.PreviewFilePath = file.path;
+            this.setState({ ...this.state, previewModal: true, previewPath: res.data });
+        }
+    }
+    
+    DownloadUpdatedFile = async () => {
+        let res = await getFileURL({ url: this.state.PreviewFilePath });
+        if (res.ok) {
+            this.setState({ ...this.state, previewModal: true, previewPath: res.data });
+            window.open(res.data, "_blank")
         }
     }
     fileDownload = async () => {
         let res = await getFileURL({ url: this.state.previewPath });
         if (res.ok) {
-            window.open(this.state.previewPath, "_blank")
+            this.DownloadUpdatedFile()
         }
     }
     docPreviewClose = () => {
@@ -314,9 +324,9 @@ class RequestedDocs extends Component {
     }
 
     filePreviewPath() {
-
         if (this.state.previewPath.includes(".pdf")) {
-            return "https://suissebasecors.herokuapp.com/" + this.state.previewPath;
+            //return "https://suissebasecors.herokuapp.com/" + this.state.previewPath;
+            return this.state.previewPath;
         } else {
             return this.state.previewPath;
         }
@@ -410,7 +420,7 @@ class RequestedDocs extends Component {
                         <Button className="pop-btn px-36" onClick={() => this.fileDownload()}>Download</Button>
                     </>}
                 >
-                    <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null }} />
+                    <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null ,mimeType: this.state?.previewPath?.includes(".pdf")?'application/pdf':''}} />
                 </Modal>
             </div></>;
     }
