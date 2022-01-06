@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Drawer, Typography, Menu, Dropdown } from 'antd';
 import { buyFiatSteps as config } from './config';
 import { setStep } from '../../reducers/buysellReducer';
-import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
+import { rejectWithdrawfiat, setWithdrawfiatenaable,setClearAmount } from '../../reducers/sendreceiveReducer';
 import ConnectStateProps from '../../utils/state.connect';
 import Translate from 'react-translate-component';
 import AddBuyFiatCard from './addCard';
@@ -17,6 +17,7 @@ import WithdrawalLive from '../withDraw.component/withdrawLive';
 import WithdrawalSuccess from '../withDraw.component/withdrwSuccess';
 import ConfirmMsg from './confirmMsg';
 import WithdrawFaitSummary from '../withDraw.component/withdrawalSummary'
+import { connect } from "react-redux";
 
 class MassPayment extends Component {
     state = {
@@ -31,6 +32,9 @@ class MassPayment extends Component {
         }
         if (this.child)
             this.child.clearfiatValues();
+            //this.props.amountReset();
+            this.props.dispatch(setClearAmount())
+
     }
     onHhandleClick = () => {
         this.props.changeStep("step3");
@@ -129,4 +133,19 @@ class MassPayment extends Component {
     }
 }
 
-export default ConnectStateProps(MassPayment);
+ export default ConnectStateProps(MassPayment);
+// const connectStateToProps = ({ userConfig, sendReceive }) => {
+//     return { userConfig: userConfig.userProfileInfo, sendReceive }
+// }
+// const connectDispatchToProps = dispatch => {
+//     return {
+        
+//         amountReset: () => {
+//             dispatch(setClearAmount())
+//         },
+
+//         dispatch
+//     }
+
+// }
+// export default connect(connectStateToProps, connectDispatchToProps)(MassPayment);

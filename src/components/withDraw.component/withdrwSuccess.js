@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-import { rejectWithdrawfiat, setWithdrawfiatenaable } from '../../reducers/sendreceiveReducer';
+import { rejectWithdrawfiat, setWithdrawfiatenaable ,setClearAmount} from '../../reducers/sendreceiveReducer';
 import success from '../../assets/images/success.png';
 import apiCalls from '../../api/apiCalls';
 
-const WithdrawalSuccess = ({ changeStep, dispatch, userProfileInfo, sendReceive }) => {
+const WithdrawalSuccess = ({ changeStep, dispatch, userProfileInfo, sendReceive,amountReset }) => {
     const { Title, Paragraph, Text } = Typography;
     const { withdrawFinalRes: fd } = sendReceive;
     useEffect(() => {
@@ -18,8 +18,9 @@ const WithdrawalSuccess = ({ changeStep, dispatch, userProfileInfo, sendReceive 
         dispatch(rejectWithdrawfiat())
         dispatch(setWithdrawfiatenaable(true))
         changeStep('step1');
-
+        amountReset();
     }
+   
     const successTrack = () => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat success page view', "Username": userProfileInfo?.userName, "MemeberId": userProfileInfo?.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat success page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' });
     }
@@ -44,6 +45,10 @@ const connectDispatchToProps = dispatch => {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
+        amountReset: () => {
+            dispatch(setClearAmount())
+        },
+
         dispatch
     }
 
