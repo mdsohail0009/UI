@@ -1,13 +1,7 @@
 import { create } from 'apisauce';
 import { store } from '../store';
 import CryptoJS from 'crypto-js'
-const firebaseServer = create({
-    baseURL: "https://fcm.googleapis.com/",
 
-    // headers: {
-    //     "AUthorization": "key=" + REACT_APP_FIREBASE_AUTH
-    // }
-});
 const ipRegistry = create({
     baseURL: 'https://api4.ipregistry.co'
 })
@@ -49,4 +43,4 @@ apiClient.axiosInstance.interceptors.request.use((config) => {
     if (userProfileInfo?.id) config.headers.AuthInformation = userProfileInfo?.id ? _encrypt(`{MemberId:"${userProfileInfo?.id}"}`, userProfileInfo.sk) : ''
     return config;
 })
-export { firebaseServer, apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry }
+export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry }
