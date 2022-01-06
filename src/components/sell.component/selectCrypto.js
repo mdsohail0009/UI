@@ -65,7 +65,7 @@ class SelectSellCrypto extends Component {
         const purchaseCurrencyMaxAmt = {
             GBP: this.state.USDAmnt * gbpInUsd,
             EUR: this.state.USDAmnt * eurInUsd,
-            USD:100000
+            USD:this.state.USDAmnt
         }
         const maxAmtMesage = "$100,000";
         if ((!this.state.USDAmnt && !this.state.CryptoAmnt) || (parseFloat(this.state.USDAmnt) === 0 || parseFloat(this.state.CryptoAmnt) === 0)) {
