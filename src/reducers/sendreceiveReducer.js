@@ -11,200 +11,250 @@ const REJECT_WITHDRAWFIAT_ENABLE = "rejectWithdrawfiatenaable";
 const SET_WITHDRAWCRYPTO = "setWithdrawcrypto";
 const SET_SUB_TITLE = "setSubTitle";
 const SET_ADDRESS = "setAddress";
-const SET_WITHDRAW_FINAL_RES = "setWithdrawFinalRes"
-const SET_CRYPTO_FINAL_RES = "setCryptoFinalRes"
-const SET_WFTOTALVALUE = "setWFTotalValue"
+const SET_WITHDRAW_FINAL_RES = "setWithdrawFinalRes";
+const SET_CRYPTO_FINAL_RES = "setCryptoFinalRes";
+const SET_WFTOTALVALUE = "setWFTotalValue";
+const CLEAR_AMOUNT = "setClearAmount";
 
 const setStep = (payload) => {
-    return {
-        type: SET_STEP,
-        payload
-    }
-}
+  return {
+    type: SET_STEP,
+    payload
+  };
+};
 const setWFTotalValue = (payload) => {
-    return {
-        type: SET_WFTOTALVALUE,
-        payload
-    }
-}
+  return {
+    type: SET_WFTOTALVALUE,
+    payload
+  };
+};
 const setWithdrawFinalRes = (payload) => {
-    return {
-        type: SET_WITHDRAW_FINAL_RES,
-        payload
-    }
-}
+  return {
+    type: SET_WITHDRAW_FINAL_RES,
+    payload
+  };
+};
 const setCryptoFinalRes = (payload) => {
-    return {
-        type: SET_CRYPTO_FINAL_RES,
-        payload
-    }
-}
+  return {
+    type: SET_CRYPTO_FINAL_RES,
+    payload
+  };
+};
 const setSubTitle = (payload) => {
-    return {
-        type: SET_SUB_TITLE,
-        payload
-    }
-}
+  return {
+    type: SET_SUB_TITLE,
+    payload
+  };
+};
 const setWithdrawfiat = (payload) => {
-    return {
-        type: SET_WITHDRAWFIAT,
-        payload
-    }
-}
+  return {
+    type: SET_WITHDRAWFIAT,
+    payload
+  };
+};
 const setWithdrawcrypto = (payload) => {
-    return {
-        type: SET_WITHDRAWCRYPTO,
-        payload
-    }
-}
+  return {
+    type: SET_WITHDRAWCRYPTO,
+    payload
+  };
+};
 const rejectWithdrawfiat = (payload) => {
-    return {
-        type: REJECT_WITHDRAWFIAT,
-        payload
-    }
-}
+  return {
+    type: REJECT_WITHDRAWFIAT,
+    payload
+  };
+};
 const setWithdrawfiatenaable = (payload) => {
-    return {
-        type: SET_WITHDRAWFIAT_ENABLE,
-        payload
-    }
-}
+  return {
+    type: SET_WITHDRAWFIAT_ENABLE,
+    payload
+  };
+};
 const rejectWithdrawfiatenaable = (payload) => {
-    return {
-        type: REJECT_WITHDRAWFIAT_ENABLE,
-        payload
-    }
-}
+  return {
+    type: REJECT_WITHDRAWFIAT_ENABLE,
+    payload
+  };
+};
 const clearStep = (payload) => {
-    return {
-        type: CLEAR_STEP,
-        payload
-    }
-}
+  return {
+    type: CLEAR_STEP,
+    payload
+  };
+};
 const handleSendFetch = (payload) => {
-    return {
-        type: HANDLE_SEND_FETCH,
-        payload
-    }
-}
+  return {
+    type: HANDLE_SEND_FETCH,
+    payload
+  };
+};
 const setWalletAddress = (payload) => {
-    return { type: SET_WALLET_ADDRESS, payload }
-}
+  return { type: SET_WALLET_ADDRESS, payload };
+};
 const setAddress = (payload) => {
-    return {
-        type: SET_ADDRESS,
-        payload
-    }
-}
+  return {
+    type: SET_ADDRESS,
+    payload
+  };
+};
 const fetchWithDrawWallets = ({ memberId }) => {
-    return async dispatch => {
-        dispatch(handleSendFetch({ key: "cryptoWithdraw", wallets: { loading: true, data: [], error: null } }));
-        const response = await getWithdrawmemberCrypto({ memberId });
-        if (response.ok) {
-            dispatch(handleSendFetch({ key: "cryptoWithdraw", wallets: { loading: false, data: response.data } }));
-        } else {
-            dispatch(handleSendFetch({ key: "cryptoWithdraw", wallets: { loading: false, error: response.data, data: [] } }));
-        }
+  return async (dispatch) => {
+    dispatch(
+      handleSendFetch({
+        key: "cryptoWithdraw",
+        wallets: { loading: true, data: [], error: null }
+      })
+    );
+    const response = await getWithdrawmemberCrypto({ memberId });
+    if (response.ok) {
+      dispatch(
+        handleSendFetch({
+          key: "cryptoWithdraw",
+          wallets: { loading: false, data: response.data }
+        })
+      );
+    } else {
+      dispatch(
+        handleSendFetch({
+          key: "cryptoWithdraw",
+          wallets: { loading: false, error: response.data, data: [] }
+        })
+      );
     }
-}
+  };
+};
 const setSelectedWithDrawWallet = (wallet) => {
-    return dispatch => {
-        dispatch(handleSendFetch({ key: "cryptoWithdraw", selectedWallet: wallet }));
-    }
-}
+  return (dispatch) => {
+    dispatch(
+      handleSendFetch({ key: "cryptoWithdraw", selectedWallet: wallet })
+    );
+  };
+};
+
+const setClearAmount = (payload) => {
+  return {
+    type: CLEAR_AMOUNT,
+
+    payload
+  };
+};
 let initialState = {
-    stepcode: "step1",
-    stepTitles: {
-        depositecrypto: "dep_with_assets",
-        withdraw: 'withdraw',
-        scanner: 'scan_your_crypto',
-        withdrawaddress: 'withdraw',
-        withdrawsummary: 'withdraw_Btc',
-        verifyidentity: 'verify_identity',
-        withdrawscan: 'deposit',
-        selectAddress: 'withdraw',
-        selectCrypto: null,
-        withdraw_crypto_liveness: 'liveVarification',
-        withdraw_crpto_summary: 'withdrawSummary',
-        //withdraw_crpto_success:'withdraw_summary',
-
-    },
-    stepSubTitles: {
-        depositecrypto: null,
-        withdraw: null,
-        scanner: 'center_qr',
-        withdrawaddress: 'send_wallet_fiat',
-        withdrawsummary: 'withdraw_summary_sub',
-        verifyidentity: "",
-        withdrawscan: 'withdraw_summary_sub',
-        selectAddress: 'null',
-        selectCrypto: null,
-        withdraw_crypto_liveness: 'Withdraw_liveness',
-        withdraw_crpto_summary: null
-    },
-    depositWallet: "",
-    cryptoWithdraw: {},
-    withdrawFiatObj: null,
-    withdrawFiatEnable: false,
-    subTitle: null,
-    withdrawCryptoObj: null,
-    addressObj: null,
-    withdrawFinalRes: {},
-    cryptoFinalRes: {},
-    wFTotalValue: null,
-
-}
+  stepcode: "step1",
+  stepTitles: {
+    depositecrypto: "dep_with_assets",
+    withdraw: "withdraw",
+    scanner: "scan_your_crypto",
+    withdrawaddress: "withdraw",
+    withdrawsummary: "withdraw_Btc",
+    verifyidentity: "verify_identity",
+    withdrawscan: "deposit",
+    selectAddress: "withdraw",
+    selectCrypto: null,
+    withdraw_crypto_liveness: "liveVarification",
+    withdraw_crpto_summary: "withdrawSummary"
+    //withdraw_crpto_success:'withdraw_summary',
+  },
+  stepSubTitles: {
+    depositecrypto: null,
+    withdraw: null,
+    scanner: "center_qr",
+    withdrawaddress: "send_wallet_fiat",
+    withdrawsummary: "withdraw_summary_sub",
+    verifyidentity: "",
+    withdrawscan: "withdraw_summary_sub",
+    selectAddress: "null",
+    selectCrypto: null,
+    withdraw_crypto_liveness: "Withdraw_liveness",
+    withdraw_crpto_summary: null
+  },
+  depositWallet: "",
+  cryptoWithdraw: {},
+  withdrawFiatObj: null,
+  withdrawFiatEnable: false,
+  subTitle: null,
+  withdrawCryptoObj: null,
+  addressObj: null,
+  withdrawFinalRes: {},
+  cryptoFinalRes: {},
+  wFTotalValue: null
+};
 const sendReceiveReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case SET_STEP:
-            state = { ...state, stepcode: action.payload };
-            return state;
-        case CLEAR_STEP:
-            return { ...state, stepcode: action.payload };
-        case SET_WALLET_ADDRESS:
-            state = { ...state, depositWallet: action.payload };
-            return state;
-        case SET_WITHDRAWFIAT:
-            state = { ...state, withdrawFiatObj: action.payload };
-            return state;
-        case SET_WITHDRAWCRYPTO:
-            state = { ...state, withdrawCryptoObj: action.payload };
-            return state;
-        case REJECT_WITHDRAWFIAT:
-            state = { ...state, withdrawFiatObj: null };
-            return state;
-        case SET_WITHDRAWFIAT_ENABLE:
-            state = { ...state, withdrawFiatEnable: action.payload };
-            return state;
-        case REJECT_WITHDRAWFIAT_ENABLE:
-            state = { ...state, withdrawFiatEnable: false };
-            return state;
-        case HANDLE_SEND_FETCH:
-            state = { ...state, [action.payload.key]: { ...state[action.payload.key], ...action.payload } };
-            return state;
-        case SET_SUB_TITLE:
-            state = { ...state, subTitle: action.payload };
-            return state;
-        case SET_ADDRESS:
-            state = { ...state, addressObj: action.payload };
-            return state;
-        case SET_WITHDRAW_FINAL_RES:
-            state = { ...state, withdrawFinalRes: action.payload };
-            return state;
-        case SET_CRYPTO_FINAL_RES:
-            state = { ...state, cryptoFinalRes: action.payload };
-            return state;
-        case SET_WFTOTALVALUE:
-            state = { ...state, wFTotalValue: action.payload };
-            return state;
-        default:
-            return state;
-    }
+  switch (action.type) {
+    case SET_STEP:
+      state = { ...state, stepcode: action.payload };
+      return state;
+    case CLEAR_STEP:
+      return { ...state, stepcode: action.payload };
+    case SET_WALLET_ADDRESS:
+      state = { ...state, depositWallet: action.payload };
+      return state;
+    case SET_WITHDRAWFIAT:
+      state = { ...state, withdrawFiatObj: action.payload };
+      return state;
+    case SET_WITHDRAWCRYPTO:
+      state = { ...state, withdrawCryptoObj: action.payload };
+      return state;
+    case REJECT_WITHDRAWFIAT:
+      state = { ...state, withdrawFiatObj: null };
+      return state;
+    case SET_WITHDRAWFIAT_ENABLE:
+      state = { ...state, withdrawFiatEnable: action.payload };
+      return state;
+    case REJECT_WITHDRAWFIAT_ENABLE:
+      state = { ...state, withdrawFiatEnable: false };
+      return state;
+    case HANDLE_SEND_FETCH:
+      state = {
+        ...state,
+        [action.payload.key]: {
+          ...state[action.payload.key],
+          ...action.payload
+        }
+      };
+      return state;
+    case SET_SUB_TITLE:
+      state = { ...state, subTitle: action.payload };
+      return state;
+    case SET_ADDRESS:
+      state = { ...state, addressObj: action.payload };
+      return state;
+    case SET_WITHDRAW_FINAL_RES:
+      state = { ...state, withdrawFinalRes: action.payload };
+      return state;
+    case SET_CRYPTO_FINAL_RES:
+      state = { ...state, cryptoFinalRes: action.payload };
+      return state;
+    case SET_WFTOTALVALUE:
+      state = { ...state, wFTotalValue: action.payload };
+      return state;
 
-}
+    case CLEAR_AMOUNT:
+      state={...state, wFTotalValue: null}
+      return state;
+
+    default:
+    return state;
+
+        
+  }
+};
 export default sendReceiveReducer;
 export {
-    setStep, clearStep, setWalletAddress, fetchWithDrawWallets, setSelectedWithDrawWallet,
-    setWithdrawFinalRes, setCryptoFinalRes, handleSendFetch, setSubTitle, setWithdrawfiat, rejectWithdrawfiat, setWithdrawfiatenaable, rejectWithdrawfiatenaable, setWithdrawcrypto, setAddress,
-    setWFTotalValue
-}
+  setStep,
+  clearStep,
+  setWalletAddress,
+  fetchWithDrawWallets,
+  setSelectedWithDrawWallet,
+  setWithdrawFinalRes,
+  setCryptoFinalRes,
+  handleSendFetch,
+  setSubTitle,
+  setWithdrawfiat,
+  rejectWithdrawfiat,
+  setWithdrawfiatenaable,
+  rejectWithdrawfiatenaable,
+  setWithdrawcrypto,
+  setAddress,
+  setWFTotalValue,
+  setClearAmount
+};
