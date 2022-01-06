@@ -92,13 +92,13 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .icon.xxxl{width: 70px; height: 70px;}
 .icon.xl.closewhite{background-position: -2px -243px;}
 .icon.xl.overview{background-position: -14px -476px;}
-.icon.xl.overview:active{background-position: -11px -509px;background-color: #e5c204;width: 40px;height: 40px;border-radius: 50px;}
+.card-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tab-block .overview{background-position: -11px -509px;background-color: #e5c204;width: 40px;height: 40px;border-radius: 50px;}
 .icon.xl.physical-card{background-position: -54px -476px;}
-.icon.xl.physical-card:active{background-position: -50px -509px;background-color: #e5c204;width: 40px;height: 40px;border-radius: 50px;}
+.card-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tab-block .physical-card{background-position: -50px -509px;background-color: #e5c204;width: 40px;height: 40px;border-radius: 50px;}
 .icon.xl.virtual-card{background-position: -100px -476px;}
-.icon.xl.virtual-card:active{background-position: -95px -507px;background-color: #e5c204;width: 40px;height: 40px;border-radius: 50px;}
-.icon.xl.settings{background-position: -137px -478px;}
-.icon.xl.settings:active{background-position: -134px -510px;background-color: #e5c204;width: 40px;height: 40px;border-radius: 50px;}
+.card-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tab-block .virtual-card{background-position: -95px -507px;background-color: #e5c204;width: 40px;height: 40px;border-radius: 50px;}
+.icon.xl.settings{background-position: -138px -477px;}
+.card-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tab-block .settings{background-position: -134px -511px;background-color: #e5c204;width: 40px;height: 40px;border-radius: 50px;}
 .icon.md.close{background-position: -42px -70px;}
 .icon.lg{width: 26px; height: 26px;}
 .icon.lg.drawer-close{background-position: -1px -112px;}
