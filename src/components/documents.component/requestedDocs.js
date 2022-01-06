@@ -43,7 +43,7 @@ class RequestedDocs extends Component {
         isMessageError: null,
         isValidFile: true,
         validHtmlError: false,
-        PreviewFilePath:null
+        PreviewFilePath: null
     }
     componentDidMount() {
         this.getDocument(QueryString.parse(this.props.location.search).id);
@@ -64,7 +64,7 @@ class RequestedDocs extends Component {
     }
     loadDocReplies = async (id) => {
         let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId != id);
-        this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: docReObj,isMessageError: null });
+        this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: docReObj, isMessageError: null });
         const response = await getDocumentReplies(id);
         if (response.ok) {
             this.setState({
@@ -87,7 +87,7 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, previewModal: true, previewPath: res.data });
         }
     }
-    
+
     DownloadUpdatedFile = async () => {
         let res = await getFileURL({ url: this.state.PreviewFilePath });
         if (res.ok) {
@@ -347,7 +347,7 @@ class RequestedDocs extends Component {
                         <Panel header={doc.documentName} key={idx + 1} extra={doc.status ? (<span className={`${doc.status ? doc.status.toLowerCase() + " staus-lbl" : ""}`}>{doc.status}</span>) : ""}>
                             {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
                             {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
-                                <div className="user-shortname">{reply.repliedBy.slice(0, 2)}</div>
+                                <div className="user-shortname">{reply?.repliedBy?.slice(0, 2)}</div>
                                 <div className="reply-body">
                                     <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment format="DD MMM YY hh:mm A">{reply.repliedDate}</Moment> </Text>
                                     <p className="reply-txt">{reply.reply}</p>
@@ -420,7 +420,7 @@ class RequestedDocs extends Component {
                         <Button className="pop-btn px-36" onClick={() => this.fileDownload()}>Download</Button>
                     </>}
                 >
-                    <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null ,mimeType: this.state?.previewPath?.includes(".pdf")?'application/pdf':''}} />
+                    <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />
                 </Modal>
             </div></>;
     }
