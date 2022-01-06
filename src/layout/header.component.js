@@ -22,7 +22,7 @@ import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata, clearSwapD
 import { connect } from 'react-redux';
 import DefaultUser from '../assets/images/defaultuser.jpg';
 import { setHeaderTab, setStep } from '../reducers/buysellReducer';
-import { setStep as sendSetStep } from '../reducers/sendreceiveReducer';
+import { setStep as sendSetStep, setWithdrawfiatenaable } from '../reducers/sendreceiveReducer';
 import { setStep as byFiatSetStep } from '../reducers/buyFiatReducer';
 import { setdepositCurrency } from '../reducers/depositReducer'
 import { readNotification as readNotifications } from '../notifications/api';
@@ -279,7 +279,8 @@ class Header extends Component {
     }
     showBuyFiatDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
-            this.props.dispatch(byFiatSetStep("step1"))
+            this.props.dispatch(byFiatSetStep("step1"));
+            this.props.dispatch(setWithdrawfiatenaable(false));
             this.setState({
                 buyFiatDrawer: true, Visibleprofilemenu: false
             })
