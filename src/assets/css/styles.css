@@ -2,6 +2,8 @@
 * { scrollbar-width: thin; scrollbar-color: var(--bgGrey) var(--bgDarkGrey);}
 *::-webkit-scrollbar { width: 12px;height: 10px;  }
 *::-webkit-scrollbar-thumb {background-color: var( --bgDark1);border-radius: 20px;}
+html, .auto-scroll, .ant-table-body, .ant-drawer-body, .mobile-list{scrollbar-color: var( --bgDark1) transparent;}
+    
 body, h1, h2, h3, h4, h5, h6, a, p div{font-family: 'SF Pro Text', sans-serif !important;}
 .ant-layout, body{background-color: var(--bgDarkGrey);}
 .ant-btn{font-weight: var(--fw500);}
@@ -867,7 +869,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .mega-menu{max-width: 1140px;  padding: 29px 0px 24px 60px;}
     .side-drawer .ant-drawer-content-wrapper{width: 420px !important;}
     .side-drawer .ant-drawer-body{padding: 0 20px 20px 20px;}
-    .portfolio-list .mobile-list{height: 900px;max-height: 900px; overflow: auto;}
+    .portfolio-list .mobile-list{height: 900px;max-height: 900px; overflow: auto;padding-right: 10px}
     .markets-panel .custom-table .ant-table-body{height: 600px !important;}
     .crypto-address .walletadrs{font-size: 12px;}
     .trade-legends{display: flex; justify-content: space-between;}
