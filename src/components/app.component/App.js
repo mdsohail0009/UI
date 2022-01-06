@@ -5,13 +5,12 @@ import { store } from "../../store";
 import { loadUser, OidcProvider } from 'redux-oidc';
 import { useEffect, useRef, useState } from "react";
 import { userManager } from "../../authentication";
-import { onMessageListener } from "../../utils/firebase";
 import ErrorBoundary from "antd/lib/alert/ErrorBoundary";
 import { AppInsightsContext } from "@microsoft/applicationinsights-react-js";
 import { reactPlugin } from "../../Shared/appinsights";
 import Notifications from "../../notifications";
 import { setNotificationCount } from '../../reducers/dashboardReducer';
-import {startConnection } from "../../utils/signalR";
+import { startConnection } from "../../utils/signalR";
 import { useThemeSwitcher } from "react-css-theme-switcher";
 function App(props) {
   const { switcher, themes } = useThemeSwitcher()
@@ -29,19 +28,15 @@ function App(props) {
     }, 2000)
 
   }
-  
+
   useEffect(() => {
-    onMessageListener().then(payload => {
-      const { dashboard: { notificationCount } } = store.getState();
-      setNotificationCount(notificationCount ? notificationCount + 1 : 1);
-    })
     localStorage.setItem("__url", window.location.pathname);
     loadUser(store, userManager).then(user => {
       setLoading(false);
       window.$zoho = window.$zoho || {};
       window.$zoho.salesiq?.reset();
       window.$zoho.salesiq = window.$zoho.salesiq || {
-        widgetcode:  process.env.REACT_APP_ZOHO_WIDGET_CODE,
+        widgetcode: process.env.REACT_APP_ZOHO_WIDGET_CODE,
         values: {},
         ready: function () {
 

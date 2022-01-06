@@ -25,7 +25,7 @@ import { setHeaderTab, setStep } from '../reducers/buysellReducer';
 import { setStep as sendSetStep } from '../reducers/sendreceiveReducer';
 import { setStep as byFiatSetStep } from '../reducers/buyFiatReducer';
 import { setdepositCurrency } from '../reducers/depositReducer'
-import { deleteToken, readNotification as readNotifications } from '../notifications/api';
+import { readNotification as readNotifications } from '../notifications/api';
 import Wallets from '../components/wallets.component.js';
 import apiCalls from '../api/apiCalls';
 import { setNotificationCount } from '../reducers/dashboardReducer';
@@ -144,7 +144,7 @@ class Header extends Component {
                     </div>
                 </li>
 
-                <li className="d-flex justify-content align-center c-pointer" onClick={() => {userManager.signoutRedirect(); deleteToken({ UserId: this.props?.userConfig?.id, Token: this.props?.oidc?.deviceToken }) }}>
+                <li className="d-flex justify-content align-center c-pointer" onClick={() => { userManager.signoutRedirect(); }}>
                     <Translate content="logout" component={Link} />
                     <span className="icon md rarrow-white" />
                 </li>
@@ -181,8 +181,8 @@ class Header extends Component {
     userProfile() {
         this.props.history.push("/userprofile");
         this.setState({ ...this.state, Visibleprofilemenu: false })
-        if(this.props.oidc.user.profile?.sub){
-        this.props.getmemeberInfoa(this.props.oidc.user.profile.sub);
+        if (this.props.oidc.user.profile?.sub) {
+            this.props.getmemeberInfoa(this.props.oidc.user.profile.sub);
         }
     }
     next() {
@@ -347,7 +347,7 @@ class Header extends Component {
     trackEvent() {
         window.$zoho?.salesiq?.chat.complete();
         window.$zoho?.salesiq?.reset();
-       // this.props.dispatch(clearUserInfo());
+        // this.props.dispatch(clearUserInfo());
         userManager.signoutRedirect();
         apiCalls.trackEvent({ "Type": 'User', "Action": 'User Logged out', "Username": null, "MemeberId": null, "Feature": 'Logout', "Remarks": 'User Logged out', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Logout' });
     }
@@ -681,7 +681,7 @@ const connectDispatchToProps = dispatch => {
         },
         getmemeberInfoa: (useremail) => {
             dispatch(getmemeberInfo(useremail));
-          },
+        },
         dispatch
     }
 }
