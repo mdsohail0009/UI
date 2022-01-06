@@ -1,13 +1,13 @@
 import { create } from 'apisauce';
 import { store } from '../store';
 import CryptoJS from 'crypto-js'
-// const firebaseServer = create({
-//     baseURL: "https://fcm.googleapis.com/",
+const firebaseServer = create({
+    baseURL: "https://fcm.googleapis.com/",
 
-//     // headers: {
-//     //     "AUthorization": "key=" + REACT_APP_FIREBASE_AUTH
-//     // }
-// });
+    // headers: {
+    //     "AUthorization": "key=" + REACT_APP_FIREBASE_AUTH
+    // }
+});
 const ipRegistry = create({
     baseURL: 'https://api4.ipregistry.co'
 })
