@@ -16,12 +16,12 @@ const filterOperators = {
     'numeric': [
         { text: 'grid.filterEqOperator', operator: 'eq' },
         { text: 'grid.filterNotEqOperator', operator: 'neq' },
-        { text: 'grid.filterGteOperator', operator: 'gte' },
-        { text: 'grid.filterGtOperator', operator: 'gt' },
-        { text: 'grid.filterLteOperator', operator: 'lte' },
-        { text: 'grid.filterLtOperator', operator: 'lt' },
-        { text: 'grid.filterIsNullOperator', operator: 'isnull' },
-        { text: 'grid.filterIsNotNullOperator', operator: 'isnotnull' }
+        // { text: 'grid.filterGteOperator', operator: 'gte' },
+        // { text: 'grid.filterGtOperator', operator: 'gt' },
+        // { text: 'grid.filterLteOperator', operator: 'lte' },
+        // { text: 'grid.filterLtOperator', operator: 'lt' },
+        // { text: 'grid.filterIsNullOperator', operator: 'isnull' },
+        // { text: 'grid.filterIsNotNullOperator', operator: 'isnotnull' }
     ],
     'date': [
         { text: 'grid.filterAfterOrEqualOperator', operator: 'gte' },
@@ -112,9 +112,9 @@ export function withState(WrappedGrid) {
                 for (let key in this.props.additionalParams) {
                     _additionalParams = _additionalParams + `/${this.props.additionalParams[key]}`
                 }
-                queryStr = _additionalParams+'?'+queryStr ;
-            }else{
-                queryStr ='?'+queryStr
+                queryStr = _additionalParams + '?' + queryStr;
+            } else {
+                queryStr = '?' + queryStr
             }
             const base_url = this.props.url;
             const init = { method: 'GET', accept: 'application/json', headers: { "Authorization": `Bearer ${user.access_token}` } };

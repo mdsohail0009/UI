@@ -269,7 +269,7 @@ class SwapCoins extends Component {
                 </div>}
                 <div className="p-16 mt-24 text-center fw-200">
                     {(coinDetailData.coinBalance || coinReceiveDetailData.coinBalance === 0) && <Paragraph className="fs-16 text-white-30 mb-0 l-height-normal">
-                        <Translate content="available" component={Text} className="custom-font fw-300 fs-14 text-white" /> <Currency className={'currencyContains'} prefix={""} decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} />
+                        <Translate content="Available" component={Text} className="custom-font fw-300 fs-14 text-white" /> <Currency className={'currencyContains'} prefix={""} decimalPlaces={8} defaultValue={coinDetailData.coinBalance} suffixText={coinDetailData.coin} />
                     </Paragraph>}
                     {(this.state.price && coinReceiveDetailData.coin) && <Paragraph className="fs-16 text-white-30 l-height-normal">
                         <Translate content="ExchangeRate" component={Text} className="custom-font fw-300 fs-14 text-white" /><Currency className={'currencyContains fw-300 text-white-30'} defaultValue={this.state.price} decimalPlaces={"8"} prefix={""} suffixText={coinReceiveDetailData.coin} prefixText={`1 ${coinDetailData.coin} =  `} />
