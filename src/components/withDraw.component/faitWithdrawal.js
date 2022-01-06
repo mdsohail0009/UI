@@ -82,7 +82,7 @@ const FaitWithdrawal = ({
   const useDivRef = React.useRef(null);
   useEffect(() => {
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
-      console.log(selectedWalletCode, buyInfo.memberFiat?.data);
+      // console.log(selectedWalletCode, buyInfo.memberFiat?.data);
       handleWalletSelection(selectedWalletCode);
     } else if (buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj) {
       handleWalletSelection(sendReceive.withdrawFiatObj.walletCode);
@@ -221,7 +221,7 @@ const FaitWithdrawal = ({
         typeof values.totalValue === "string"
           ? values.totalValue.replace(/,/g, "")
           : values.totalValue
-      ) > parseFloat(selectedWallet.avilable)
+      ) > parseFloat(selectedWallet?.avilable)
     ) {
       useDivRef.current.scrollIntoView();
       return setErrorMsg(apicalls.convertLocalLang('insufficient_balance'));
@@ -298,8 +298,8 @@ const FaitWithdrawal = ({
     let wallet = buyInfo.memberFiat.data.filter((item) => {
       return values.walletCode === item.currencyCode;
     });
-    console.log(wallet[0]);
-    let avilableamt = wallet[0].avilable;
+    // console.log(wallet[0]);
+    let avilableamt = wallet[0]?.avilable;
     if (type === "min") {
       values.totalValue = 100;
       setSaveObj(values);
@@ -403,7 +403,7 @@ const FaitWithdrawal = ({
                   prefix={""}
                   placeholder="0.00"
                   allowNegative={false}
-                  maxlength={13}
+                  maxLength={13}
                 />
               </Form.Item>
               <div style={{ position: "relative" }}>

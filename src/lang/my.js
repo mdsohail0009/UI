@@ -352,7 +352,8 @@ export default {
   documents: 'Mga dokumento',
   tab_crypto: 'crypto',
   tab_fiat: 'Fiat',
-  available: 'magagamit',
+  available: 'Tersedia',
+  Available: 'Tersedia',
   total_balance: 'Kabuuang balanse',
   wallet_address: 'Pumili ng pitaka tirahan',
 

@@ -48,6 +48,7 @@ class Wallets extends Component {
             this.props.dispatch(setWithdrawfiatenaable(true))
             this.props.dispatch(setWithdrawfiat({ walletCode: value }))
         } else {
+            this.props.dispatch(setWithdrawfiatenaable(false))
             this.props.dispatch(setdepositCurrency(value))
         }
         this.setState({

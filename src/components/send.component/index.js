@@ -29,6 +29,8 @@ class SendReceive extends Component {
         this.props.dispatch(setWithdrawcrypto(null))
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeKey: 1 }));
         this.props.dispatch(setAddress(null))
+        
+
     }
     componentWillUnmount() {
         this.props.dispatch(setStep("step1"));

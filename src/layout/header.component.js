@@ -22,7 +22,7 @@ import { updateCoinDetails, updateReceiveCoinDetails, updateSwapdata, clearSwapD
 import { connect } from 'react-redux';
 import DefaultUser from '../assets/images/defaultuser.jpg';
 import { setHeaderTab, setStep } from '../reducers/buysellReducer';
-import { setStep as sendSetStep } from '../reducers/sendreceiveReducer';
+import { setStep as sendSetStep, setWithdrawfiatenaable } from '../reducers/sendreceiveReducer';
 import { setStep as byFiatSetStep } from '../reducers/buyFiatReducer';
 import { setdepositCurrency } from '../reducers/depositReducer'
 import { readNotification as readNotifications } from '../notifications/api';
@@ -279,7 +279,8 @@ class Header extends Component {
     }
     showBuyFiatDrawer = () => {
         if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
-            this.props.dispatch(byFiatSetStep("step1"))
+            this.props.dispatch(byFiatSetStep("step1"));
+            this.props.dispatch(setWithdrawfiatenaable(false));
             this.setState({
                 buyFiatDrawer: true, Visibleprofilemenu: false
             })
@@ -415,7 +416,7 @@ class Header extends Component {
                                 </Dropdown>
                             </Menu>
                         </div>
-                        <Menu theme="light" mode="horizontal" className="header-right" selectedKeys={[this.props.buySell?.headerTab]} onSelect={(key) => { this.props.dispatch(setHeaderTab(key.key)) }}>
+                        <Menu theme="light" mode="horizontal" className="header-right mobile-headerview" selectedKeys={[this.props.buySell?.headerTab]} onSelect={(key) => { this.props.dispatch(setHeaderTab(key.key)) }}>
                             <Translate content="menu_wallets" component={Menu.Item} key="1" onClick={this.showWalletsDrawer} className="list-item" />
                             <Translate content="menu_buy_sell" component={Menu.Item} key="2" onClick={this.showBuyDrawer} className="list-item" />
                             <Translate content="menu_swap" component={Menu.Item} key="3" onClick={this.showSwapDrawer} className="list-item" />

@@ -354,6 +354,7 @@ export default {
   tab_crypto: '加密',
   tab_fiat: '菲亞特',
   available: '可用的',
+  Available: '可用的',
   total_balance: '總餘額',
   wallet_address: '選擇錢包地址',
   enter_address: '輸入地址',
