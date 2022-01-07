@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { Card, Row, Col, Typography,Tabs,List,Image,Carousel  } from 'antd';
+import { Card, Row, Col, Typography,Tabs,List,Image,Carousel,Badge  } from 'antd';
 import VirtualCard from './virtualCard';
+import logoWhite from '../../assets/images/logo-white.png';
+import PhysicalCard from './physicalCard';
 const { Title, Paragraph, Text } = Typography;
 const { TabPane } = Tabs;
 const data = [
@@ -30,7 +32,7 @@ render() {
 
     <div>
     <Tabs defaultActiveKey="1" centered className='text-white card-list mt-24'>
-        <TabPane tab={<span className='tab-block fs-16'> <span className="icon xl overview mb-16 mx-auto"></span> Overview</span>} key="1" > 
+        <TabPane tab={<span className='tab-block fs-16'> <span className="icon xl overview mb-16 mx-auto"></span> <span>Overview</span></span>} key="1" > 
             <div className='wallet-total mx-auto p-24 my-30'>
                 <List 
                 itemLayout="horizontal"
@@ -110,12 +112,13 @@ render() {
                             <Row gutter={24}>
                                 <Col span={12}>
                                     <div className="align-center">
-                                        <Paragraph className="fs-18 fw-500 text-purewhite ml-8 mb-0">Avilable</Paragraph>
+                                        {/* <Paragraph className="fs-18 fw-500 text-purewhite ml-8 mb-0">Avilable</Paragraph> */}
+                                        <Badge className="ant-badge badge radius16 bggreen text-white-30 fs-10 px-16 py-4 l-height-normal fw-300">Active</Badge>
                                     </div>
                                     </Col>
                                 <Col span={12}>
                                     <div className="text-right">
-                                    <Image width={75} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
+                                        <img src={logoWhite} alt="logo" className="tlv-logo dark" alt={"image"} />
                                     </div>
                                 </Col>
                             </Row>
@@ -130,20 +133,21 @@ render() {
                 </div>
             </div>
         </TabPane>
-        <TabPane tab={<span className='tab-block fs-16'> <span className="icon xl physical-card mb-16 mx-auto"></span> Physical Cards</span>}key="2"> 
+        <TabPane tab={<span className='tab-block fs-16'> <span className="icon xl physical-card mb-16 mx-auto"></span> <span>Physical Cards</span></span>}key="2"> 
             <div className="site-card-wrapper text-left my-30">
-                <Row gutter={24} className='my-16'>
+                <PhysicalCard />
+                {/* <Row gutter={24} className='my-16'>
                     <Col span={8}>
                         <Card  className="virtual-card crypto-card mb-16 c-pointer" bordered={false} >
                                 <Row gutter={24}>
                                     <Col span={12}>
                                         <div className="align-center">
-                                            <Paragraph className="fs-18 fw-500 text-purewhite ml-8 mb-0">Avilable</Paragraph>
+                                        <Badge className="ant-badge badge radius16 bggreen text-white-30 fs-10 px-16 py-4 l-height-normal fw-300">Active</Badge>
                                         </div>
                                         </Col>
                                     <Col span={12}>
                                         <div className="text-right">
-                                        <Image width={75} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
+                                        <img src={logoWhite} alt="logo" className="tlv-logo dark" alt={"image"} />
                                         </div>
                                     </Col>
                                 </Row>
@@ -158,12 +162,12 @@ render() {
                                 <Row gutter={24}>
                                     <Col span={12}>
                                         <div className="align-center">
-                                            <Paragraph className="fs-18 fw-500 text-purewhite ml-8 mb-0">Avilable</Paragraph>
+                                        <Badge className="ant-badge badge radius16 bgred text-white-30 fs-10 px-16 py-4 l-height-normal fw-300">Inactive</Badge>
                                         </div>
                                         </Col>
                                     <Col span={12}>
                                         <div className="text-right">
-                                        <Image width={75} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
+                                        <img src={logoWhite} alt="logo" className="tlv-logo dark" alt={"image"} />
                                         </div>
                                     </Col>
                                 </Row>
@@ -173,15 +177,15 @@ render() {
                             </div>
                         </Card>
                     </Col>
-                </Row>
+                </Row> */}
             </div>
         </TabPane>
-        <TabPane tab={<span className='tab-block fs-16'> <span className="icon xl virtual-card mb-16 mx-auto"></span> Virtual Cards</span>} key="3" > 
+        <TabPane tab={<span className='tab-block fs-16'> <span className="icon xl virtual-card mb-16 mx-auto"></span> <span>Virtual Cards</span></span>} key="3" > 
             <div className="site-card-wrapper text-left my-30">
                <VirtualCard/>
             </div>
         </TabPane>
-        <TabPane tab={<span className='tab-block fs-16'> <span className="icon xl settings mb-16 mx-auto"></span> Settings</span>}key="4"> 
+        <TabPane tab={<span className='tab-block fs-16'> <span className="icon xl settings mb-16 mx-auto"></span> <span>Settings</span></span>}key="4"> 
                     
         </TabPane>
     </Tabs>

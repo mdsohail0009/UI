@@ -4,7 +4,7 @@ import logoWhite from '../../assets/images/logo-white.png';
 import NumberFormat from "react-number-format";
 const {Paragraph, Text, Title } = Typography;
 
-class VirtualDetailView extends Component {
+class PhysicalDetailView extends Component {
     state= {
 
     }
@@ -13,41 +13,27 @@ render() {
     return (<>
             <Row gutter={24} className='mt-16 card-progress'>
                 <Col lg={8} xl={8} xxl={8}>
-                    <Card className="card-module crypto-card mb-16 c-pointer" bordered={false} >
-                        <Row gutter={24} style={{rowGap: "10px"}}>
-                            <Col span={12}></Col>
+                    <Card  className="virtual-card crypto-card mb-16 c-pointer" bordered={false} >
+                        <Row gutter={24}>
+                            <Col span={12}>
+                                <div className="align-center">
+                                    <Paragraph className="fs-18 fw-500 text-purewhite ml-8 mb-0">Avilable</Paragraph>
+                                </div>
+                            </Col>
                             <Col span={12}>
                                 <div className="text-right">
-                                   <img src={logoWhite} alt="logo" className="tlv-logo dark" alt={"image"} />
+                                    <img src={logoWhite} alt="logo" className="tlv-logo dark" alt={"image"} />
                                 </div>
-                            </Col>
-                            <Col span={24}>
-                                <div className="text-white mt-24 mb-16">
-                                    <div className="fns-28 fw-500">XXXX  XXXX  XXXX  4578</div>
-                                </div>
-                            </Col>
-                            <Col span={12}>
-                                <div className='d-flex justify-start'>
-                                <div className="align-center mr-16">
-                                    <Paragraph className="fs-12 fw-400 text-purewhite ml-8 mb-0">cvv</Paragraph>
-                                    <Paragraph className="fs-14 fw-600 text-purewhite ml-8 mb-0">154</Paragraph>
-                                </div>
-                                <div className="align-center">
-                                    <Paragraph className="fs-12 fw-300 text-purewhite ml-8 mb-0">Valid Upto</Paragraph>
-                                    <Paragraph className="fs-14 fw-600 text-purewhite ml-8 mb-0">09/23</Paragraph>
-                                </div>
-                                </div>
-                            </Col>
-                            <Col span={12}>
-                            <div className="text-right">
-                                <Image width={40} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
-                            </div>
                             </Col>
                         </Row>
+                        <div className="text-white">
+                            <span className="coin lg ETH"></span>
+                            <div className="fs-28 fw-400">XXXX  XXXX  XXXX  4578</div>
+                        </div>
                     </Card>
                 </Col>
                 <Col lg={16} xl={16} xxl={16} className='pl-30'>
-                    <Row gutter={24} className='mb-16'>
+                <Row gutter={24} className='mb-16'>
                         <Col span={8}>
                                 <div className="d-flex align-start">
                                     <div style={{width:'12px',height:'12px',borderRadius:'50%',backgroundColor:'#B0F07D',marginTop:'5px'}}></div>
@@ -145,4 +131,4 @@ render() {
 }
 
 }
-export default VirtualDetailView;
+export default PhysicalDetailView;

@@ -92,13 +92,13 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .icon.xxxl{width: 70px; height: 70px;}
 .icon.xl.closewhite{background-position: -2px -243px;}
 .icon.xl.overview{background-position: -14px -476px;}
-.card-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tab-block .overview{background-position: -11px -509px;background-color: #e5c204;width: 40px;height: 40px;border-radius: 50px;}
+.card-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tab-block .overview{background-position: -11px -509px;background-color: #e5c204;width: 40px;height: 40px;border-radius: 50px;margin-bottom: 6px !important;}
 .icon.xl.physical-card{background-position: -54px -476px;}
-.card-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tab-block .physical-card{background-position: -50px -509px;background-color: #e5c204;width: 40px;height: 40px;border-radius: 50px;}
+.card-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tab-block .physical-card{background-position: -50px -509px;background-color: #e5c204;width: 40px;height: 40px;border-radius: 50px;margin-bottom: 6px !important;}
 .icon.xl.virtual-card{background-position: -100px -476px;}
-.card-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tab-block .virtual-card{background-position: -95px -507px;background-color: #e5c204;width: 40px;height: 40px;border-radius: 50px;}
+.card-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tab-block .virtual-card{background-position: -95px -507px;background-color: #e5c204;width: 40px;height: 40px;border-radius: 50px;margin-bottom: 6px !important;}
 .icon.xl.settings{background-position: -138px -477px;}
-.card-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tab-block .settings{background-position: -134px -511px;background-color: #e5c204;width: 40px;height: 40px;border-radius: 50px;}
+.card-list .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn .tab-block .settings{background-position: -134px -511px;background-color: #e5c204;width: 40px;height: 40px;border-radius: 50px;margin-bottom: 6px !important;}
 .icon.md.close{background-position: -42px -70px;}
 .icon.lg{width: 26px; height: 26px;}
 .icon.lg.drawer-close{background-position: -1px -112px;}
@@ -141,6 +141,9 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .icon.lg.logout-icon{background-position:-73px -330px}
 .icon.lg.documents-icon{background-position:-176px -329px;}
 .icon.lg.addressbook-icon{background-position: -140px -329px}
+.icon.lg.card-view{background-position: -170px -31px;}
+.icon.lg.card-block{background-position: -651px -33px;}
+.icon.lg.card-settings{background-position: -626px -32px;}
 .icon.md.notifyIcon.deposit{background-position: -375px 0px;transform: rotateZ(235deg);}
 .icon.md.notifyIcon.deposits, .icon.md.notifyIcon.withdraw{background-position: -376px -1px;transform: rotateZ( 45deg);}
 .icon.md.notifyIcon.documents, .icon.md.notifyIcon.cutomers{background-position: -156px -71px;}
@@ -725,8 +728,9 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .radius16{border-radius: 16px;}
 .virtival-icons{background: var(--bgGrey);padding: 6px 15px;border-radius: 8px;margin-right: 14px;text-align: center;}
 .virtual-box{background-color: transparent; border-radius: 30px;overflow: hidden; margin-bottom: 28px;}
-.virtual-box .card-info{border-top: 1px solid #515a64;font-size: 14px !important;display: flex;justify-content: space-between;padding: 16px 0;}
+.virtual-box .card-info{border-top: 1px solid #515a64;font-size: 14px !important;display: flex;justify-content: space-between;padding: 20px 0;font-weight: 400;}
 .virtual-box .card-info .ant-typography{color:#fff;}
+.icon.md.cardleftarrow{background-position: -372px 5px;background-color: #465563;width: 30px;height: 30px;border-radius: 50px;}
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}
@@ -1061,15 +1065,14 @@ input[type=number]::-webkit-outer-spin-button {
 .wallet-total{background:#515A64;border-radius: 30px;height: 132px;}
 .wallet-total .ant-list-item-meta-content{text-align: left;}
 .wallet-total .ant-list-item-meta-title{line-height: 27.4px;}
+.card-progress .ant-progress-success-bg{background-color: #F81506;width: 35% !important;}
+.card-progress .ant-progress-bg{background-color: #B0F07D;}
 .card-module.crypto-card{background: linear-gradient(152.27deg, #B30F1E 18.18%, #0038FF 119.22%) !important;
     border: 0.5px solid #1B4156;box-sizing: border-box;box-shadow: 0px 15px 20px 10px rgba(0, 0, 0, 0.1); backdrop-filter: blur(20px); border-radius: 12px;}
 .virtual-card.crypto-card{background: linear-gradient(152.27deg, #0A2979 18.18%, #0B1A41 121.72%) !important;
-        border: 0.5px solid #1B4156;box-sizing: border-box;box-shadow: 0px 15px 20px 10px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(20px);border-radius: 12px;}
+    border: 0.5px solid #1B4156;box-sizing: border-box;box-shadow: 0px 15px 20px 10px rgba(0, 0, 0, 0.1);backdrop-filter: blur(20px);border-radius: 12px;}
 .card-module.crypto-card .ant-card-body, .crypto-card.crypto-card .ant-card-body{height: 230px !important;padding: 20px;}
 .cardholder-name{font-size: 24px;line-height: 25px;}
 .valid-time{margin-right: 72px;}
 .ant-tabs-tab-btn:focus, .card-list .ant-tabs-tab-remove:focus, .ant-tabs-tab-btn:active,.ant-tabs-tab-remove:active, .ant-tabs-tab:hover{color: #ffffff !important;}
-.ant-tabs-ink-bar {
-    background-color: transparent;
-  }
+.ant-tabs-ink-bar {background-color: transparent;}

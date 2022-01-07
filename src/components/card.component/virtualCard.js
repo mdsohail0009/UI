@@ -106,7 +106,7 @@ render() {
                 </Col>)}
         </Row>}
         {this.state.VirtualDetailView && <>
-            <div className="mb-36 text-white-50 fs-24 d-flex justify-start mt-4"><Link className="icon md leftarrow mr-16 c-pointer" onClick={() => this.handelvirtualCardBack()}/><div><div className='l-height-normal fs-26'>Suisse -  Jhon Doe</div><Badge className="ant-badge badge radius16 bggreen text-white-30 fs-10 px-16 py-4 l-height-normal fw-300">Active</Badge></div></div>
+            <div className="mb-36 text-white-50 fs-24 d-flex justify-start mt-4"><Link className="icon md cardleftarrow mr-16 c-pointer" onClick={() => this.handelvirtualCardBack()}/><div><div className='l-height-normal fs-26'>Suisse -  Jhon Doe</div><Badge className="ant-badge badge radius16 bggreen text-white-30 fs-10 px-16 py-4 l-height-normal fw-300">Active</Badge></div></div>
             <VirtualDetailView />
         </>}
     </>)
