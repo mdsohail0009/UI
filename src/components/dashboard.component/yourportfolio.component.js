@@ -70,7 +70,7 @@ class YourPortfolio extends Component {
                     locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }}
                     renderItem={item => (
                         <List.Item className="" extra={
-                            <div className="crypto_btns">
+                            <div>
                                 <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(item, "buy")} className="custom-btn prime" />
                                 <Translate content="sell" component={Button} className="custom-btn sec ml-16" onClick={() => this.showBuyDrawer(item, "sell")} />
                             </div>
@@ -78,12 +78,16 @@ class YourPortfolio extends Component {
                             {/* to={"/coindetails/" + item.coinFullName.toLowerCase()} */}
                             <Link className="c-pointer" onClick={() => this.props.history.push("/coindetails/" + item.coinFullName.toLowerCase())}><List.Item.Meta
                                 avatar={<span className={`coin ${item.coin}`} />}
-                                title={<div className="fs-18 fw-300 text-upper text-white mb-0 mt-12">{item.coin}</div>}
+                                title={<>
+                                    <div className="fs-18 fw-400 text-upper text-white mb-0">{item.coin}</div>
+                                    <Currency defaultValue={item.coinBalance} className="text-white fs-20" type={"text"} prefix={""} />
+                                    <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
+                                </>}
                             /></Link>
-                            <div className='text-right fs-20 text-white'>
+                            {/* <div className='text-right fs-20 text-white'>
                                 <Currency defaultValue={item.coinBalance} type={"text"} prefix={""} />
                                 <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
-                            </div>
+                            </div> */}
                         </List.Item>
                     )}
                 />
