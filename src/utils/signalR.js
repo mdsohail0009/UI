@@ -34,11 +34,11 @@ async function start(id) {
         const { dashboard: { notificationCount } } = store.getState();
         store.dispatch(setNotificationCount(notificationCount ? notificationCount + 1 : 1));
     });
-    connection.on("SendDocRequested ",(g)=>{
+    connection.on("SendDocRequestedMessage ",(g)=>{
         store.dispatch(updateDocRequest(true));
     });
-    connection.on("SendDocApproved",()=>{
-        store.dispatch(updateDocRequest(false));
+    connection.on("SendDocApproved",(a,b,c)=>{
+        store.dispatch(updateDocRequest(b==="Requested"));
     });
 }
 
