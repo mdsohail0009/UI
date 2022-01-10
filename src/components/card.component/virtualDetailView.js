@@ -40,7 +40,7 @@ render() {
                             </Col>
                             <Col span={12}>
                             <div className="text-right">
-                                <Image width={40} src="https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg" />
+                                <span width={40} className="coin-circle coin md visa-white" />
                             </div>
                             </Col>
                         </Row>
