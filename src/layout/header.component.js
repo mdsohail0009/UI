@@ -410,7 +410,7 @@ class Header extends Component {
                                     {<img src={logoColor} alt="logo" className="tlv-logo light c-pointer" alt={"image"} onClick={this.routeToHome} />}
                                 </li>
                                 <li className="mb-d-none px-36">
-                                    <Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? "Business" : "Personal" }} onClick={() => this.props.userConfig.isKYC ? this.props.history.push('/cockpit') : this.props.history.push("/notkyc")} component={Text} className="text-white-30 fs-24 c-pointer cp-link" />
+                                    <Translate content="header_title" onClick={() => this.props.userConfig.isKYC ? this.props.history.push('/cockpit') : this.props.history.push("/notkyc")} component={Text} className="text-white-30 fs-24 c-pointer cp-link" />
                                     <Text className="text-white-30 fs-24">|</Text>
                                     <Translate content="user_type" with={{ lable: this.props.userConfig?.isBusiness ? "Business" : "Personal" }} component={Text} className="text-white-30 fs-24 ml-16" />
                                 </li>
