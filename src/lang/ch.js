@@ -1,5 +1,6 @@
 export default {
-  header_title: '座艙 |个人的',
+  header_title: '座艙',
+  user_type: '%(lable)s',
   Portfolio_title: '加密投资组合',
   your_portfolio: '您的投資組合',
   suissebase_title: '瑞士基地',

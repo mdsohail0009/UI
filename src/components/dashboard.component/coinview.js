@@ -164,7 +164,7 @@ class CoinView extends React.Component {
                         {this.state.coinData ? <><div className="d-flex align-center">
                             <span className={`coin ${coinData?.symbol.toUpperCase()}`} />
                             <div className="summary-count ml-16">
-                                <Paragraph className="text-white-30 fs-36 mb-0 fw-500">
+                                <Paragraph className="text-white-30 fs-30 mb-0 fw-500">
                                     <NumberFormat value={coinData?.avilableBalance} displayType="text" thousandSeparator={true} prefix="" />
                                     <Text className="fs-24 ml-8 text-white-30 fw-500">{coinData?.symbol.toUpperCase()}</Text></Paragraph>
                                 <Text className="text-white-30 fs-16 m-0" style={{ lineHeight: '18px' }}>1{coinData?.symbol.toUpperCase()} = <NumberFormat value={coinData?.current_price} displayType="text" thousandSeparator={true} /> USD
@@ -177,13 +177,13 @@ class CoinView extends React.Component {
                                 </Text>
                             </div>
                         </div>
-                            <ul className="m-0">
+                            <ul className="m-0 pl-0">
                                 <li onClick={() => this.showBuyDrawer(coinData, "buy")} className="c-pointer"><div><span className="icon md buy" /></div>BUY</li>
                                 <li onClick={() => this.showBuyDrawer(coinData, "sell")} className="c-pointer"><div><span className="icon md sell" /></div>SELL</li>
                                 {/*<li  onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1}><div><span className="icon md file" /></div>DEPOSIT</li>*/}
                                 <li onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} className="c-pointer"><div><span className="icon md withdraw" /></div>WITHDRAW</li>
                             </ul>
-                        </> : <div className="text-center mt-24"><Spin /></div>}
+                        </> : <div className="text-center"><Spin /></div>}
                     </div>
                     <div className="box p-24 coin-details">
                         <Title component={Title} className="fs-24 fw-600 mb-36 text-white-30">{coinData?.name} ({coinData?.symbol.toUpperCase()}) Price Chart</Title>

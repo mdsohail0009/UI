@@ -1,5 +1,6 @@
 export default {
-  header_title: 'Sabungan| Peribadi',
+  header_title: 'Sabungan',
+  user_type: '%(lable)s',
   Portfolio_title: 'Portfolio Crypto',
   your_portfolio: 'Portfolio anda',
   suissebase_title: 'Pangkalan Suissebase',

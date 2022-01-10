@@ -42,7 +42,7 @@ const LinkValue = (props) => {
         />
     )
 }
-const { Title, Paragraph } = Typography;
+const { Title, Paragraph, Text } = Typography;
 class Header extends Component {
     componentDidMount() {
         counterpart.setLocale(this.props.userConfig ? this.props.userConfig.language : 'en');
@@ -363,6 +363,9 @@ class Header extends Component {
         }
         );
     }
+    routeToHome = () => {
+        this.props.history.push('cockpit');
+    }
     render() {
         const link = <LinkValue content="medium" />;
         const depostWithdrawMenu = (
@@ -403,10 +406,14 @@ class Header extends Component {
                         <div className="login-user">
                             <ul className="header-logo pl-0">
                                 <li className="pr-30 p-relative">
-                                    {<img src={logoWhite} alt="logo" className="tlv-logo dark" alt={"image"} />}
-                                    {<img src={logoColor} alt="logo" className="tlv-logo light" alt={"image"} />}
+                                    {<img src={logoWhite} alt="logo" className="tlv-logo dark c-pointer" alt={"image"} onClick={this.routeToHome} />}
+                                    {<img src={logoColor} alt="logo" className="tlv-logo light c-pointer" alt={"image"} onClick={this.routeToHome} />}
                                 </li>
-                                <li className="mb-d-none px-36"><Translate content="header_title" with={{ lable: this.props.userConfig?.isBusiness ? " Business" : " Personal" }} onClick={() => this.props.userConfig.isKYC ? this.props.history.push('/cockpit') : this.props.history.push("/notkyc")} component="p" className="text-white-30 mb-0 fs-24 c-pointer" /></li>
+                                <li className="mb-d-none px-36">
+                                    <Translate content="header_title" onClick={() => this.props.userConfig.isKYC ? this.props.history.push('/cockpit') : this.props.history.push("/notkyc")} component={Text} className="text-white-30 fs-24 c-pointer cp-link" />
+                                    <Text className="text-white-30 fs-24">|</Text>
+                                    <Translate content="user_type" with={{ lable: this.props.userConfig?.isBusiness ? "Business" : "Personal" }} component={Text} className="text-white-30 fs-24 ml-16" />
+                                </li>
                             </ul>
                             <Menu theme="light" mode="horizontal" className="header-right mobile-header-right">
                                 <Menu.Item key="6"><span className="icon md bell" onClick={this.showNotificationsDrawer} /></Menu.Item>
