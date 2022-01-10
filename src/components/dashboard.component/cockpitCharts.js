@@ -145,12 +145,12 @@ class CockpitCharts extends Component {
                     </Col>
                 </Row>
                 <Row gutter={16}>
-                    <Col xs={24} sm={24} md={24} lg={12} xl={10} xxl={10}>
+                    <Col xs={24} sm={24} md={24} lg={12} xl={11} xxl={11}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Asset Allocation</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} headStyle={{ padding: "4px 16px" }}>
                             {this.state.assetAlloction ? <PieChart data={this.state.assetAlloction} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
                         </Card>
                     </Col>
-                    <Col xs={24} sm={24} md={24} lg={12} xl={14} xxl={14}>
+                    <Col xs={24} sm={24} md={24} lg={12} xl={13} xxl={13}>
                         <Card size="small" className="graph" title={<><Text className="text-white-30 fs-14">Assets Net Worth</Text><Tooltip title="Search for more info"><span className="icon md info ml-4" /></Tooltip></>} extra={<Text className="fs-18 l-height-normal fw-500 text-green"></Text>} headStyle={{ padding: "4px 16px" }}>
                             {this.state.assetnetWorth ? <LChart data={this.state.assetnetWorth} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
                         </Card>

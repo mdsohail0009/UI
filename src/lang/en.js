@@ -1,5 +1,6 @@
 export default {
-  header_title: 'Cockpit |%(lable)s',
+  header_title: 'Cockpit',
+  user_type: '%(lable)s',
   Portfolio_title: 'Crypto Portfolio',
   your_portfolio: 'Your Portfolio',
   suissebase_title: 'Suissebase',
