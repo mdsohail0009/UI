@@ -1,13 +1,29 @@
 import React,{Component} from 'react';
-import { Card, Row, Col, Typography, Image, Progress  } from 'antd';
+import { Card, Row, Col, Typography, Image, Progress,Drawer,Button,Input,Form  } from 'antd';
 import logoWhite from '../../assets/images/logo-white.png';
 import NumberFormat from "react-number-format";
 const {Paragraph, Text, Title } = Typography;
 
-class PhysicalDetailView extends Component {
-    state= {
 
-    }
+class PhysicalDetailView extends Component {
+  
+    state = { 
+        visible:'false',
+        placement: 'right'
+     };
+
+  showDrawer = () => {
+      debugger
+    this.setState({
+      visible: true,
+    });
+  };
+
+  onClose = () => {
+    this.setState({
+      visible: false,
+    });
+  };
 
 render() {
     return (<>
@@ -87,9 +103,9 @@ render() {
                         <span className="icon lg card-block" />
                         <div className="fw-300 fs-12">Block</div>
                     </div>
-                    <div className='virtival-icons'>
+                    <div className='virtival-icons' onClick={() => this.showDrawer()} >
                         <span className="icon lg card-settings" />
-                        <div className="fw-300 fs-12">Settings</div>
+                        <div className="fw-300 fs-12" >Settings</div>
                     </div>
                 </div>
                 </Col>
@@ -127,6 +143,34 @@ render() {
                     </div>
                 </Col>
             </Row>
+            <div>
+            <Drawer
+          title={[<div className="side-drawer-header text-white d-flex justify-content align-center">
+              <span className="icon md lftarw-white c-pointer"></span>
+              <Title className="fs-18 fw-600 text-white-30">Settings</Title>
+              <span className="icon md close-white c-pointer" />
+              </div>]}
+          className="side-drawer"
+          onClose={this.onClose}
+          visible={this.state.visible}
+          destoryOnClose={true}
+        >
+          <Paragraph className='fs-16 text-white'>You can change Basic info, like your Limit and Recurring funds, Card Details</Paragraph>
+            <Form>
+                <Form.Item
+                    name="toWalletAddress"
+                    className="custom-forminput custom-label mb-16"
+                    required
+                    label="Card Blance">
+                        <div className="p-relative ">
+                            <Input suffix="SGD" className="text-left cust-input mb-0" placeholder="450" value={450} maxLength="250" />
+                            <Paragraph className='text-white-50 fs-12 mt-4 ml-4'>This is the balance of the card till the time it expires. Blanace never resets</Paragraph>
+                        </div>
+                    </Form.Item>
+                </Form>
+          <Paragraph className='text-white-50 fs-18 fe-500'>Recurring Funds</Paragraph>
+        </Drawer>
+            </div>
     </>)
 }
 
