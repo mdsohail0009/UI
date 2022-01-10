@@ -137,7 +137,7 @@ class CockpitCharts extends Component {
                         <div className='graph'>
                             <h4 className="text-white-30 fs-14 graph-title">Cumulative PNL(%)</h4>
                             <div className='graph-body'>
-                                {this.state.cumulativePNL ? <LChart data={this.state.cumulativePNL} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
+                                {this.state.cumulativePNL ? <LChart data={this.state.cumulativePNL} showPnl={true} showBtc={true} /> : <div className="chart-loader"><Spin /></div>}
                             </div>
                         </div>
                     </Col>
@@ -145,7 +145,7 @@ class CockpitCharts extends Component {
                         <div className='graph'>
                             <h4 className="text-white-30 fs-14 graph-title">Daily PNL(%)</h4>
                             <div className='graph-body'>
-                                {this.state.dailyPnl ? <BChart data={this.state.dailyPnl} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
+                                {this.state.dailyPnl ? <BChart data={this.state.dailyPnl} /> : <div className="chart-loader"><Spin /></div>}
                             </div>
                         </div>
                     </Col>
@@ -155,7 +155,7 @@ class CockpitCharts extends Component {
                         <div className='graph'>
                             <h4 className="text-white-30 fs-14 graph-title">Asset Allocation</h4>
                             <div className='graph-body'>
-                                {this.state.assetAlloction ? <PieChart data={this.state.assetAlloction} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
+                                {this.state.assetAlloction ? <PieChart data={this.state.assetAlloction} /> : <div className="chart-loader"><Spin /></div>}
                             </div>
                         </div>
                     </Col>
@@ -163,7 +163,7 @@ class CockpitCharts extends Component {
                         <div className='graph'>
                             <h4 className="text-white-30 fs-14 graph-title">Assets Net Worth</h4>
                             <div className='graph-body'>
-                                {this.state.assetnetWorth ? <LChart data={this.state.assetnetWorth} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
+                                {this.state.assetnetWorth ? <LChart data={this.state.assetnetWorth} showPnl={true} showBtc={true} /> : <div className="chart-loader"><Spin /></div>}
                             </div>
                         </div>
                     </Col>
@@ -173,7 +173,7 @@ class CockpitCharts extends Component {
                         <div className='graph'>
                             <h4 className="text-white-30 fs-14 graph-title">Profits</h4>
                             <div className='graph-body'>
-                                {this.state.profits ? <LChart data={this.state.profits} showPnl={true} showBtc={true} /> : <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} />}
+                                {this.state.profits ? <LChart data={this.state.profits} showPnl={true} showBtc={true} /> : <div className="chart-loader"><Spin /></div>}
                             </div>
                         </div>
                     </Col>
