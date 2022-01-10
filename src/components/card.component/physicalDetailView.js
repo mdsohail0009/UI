@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import { Card, Row, Col, Typography, Image, Progress,Drawer,Button,Input,Form  } from 'antd';
 import logoWhite from '../../assets/images/logo-white.png';
+import creditCard  from '../../assets/images/credit-card.png';
 import NumberFormat from "react-number-format";
 const {Paragraph, Text, Title } = Typography;
 
@@ -43,7 +44,8 @@ render() {
                             </Col>
                         </Row>
                         <div className="text-white">
-                            <span className="coin lg ETH"></span>
+                            <img src={creditCard} width={35} height={30} alt="logo" className="mb-8" alt={"image"} />
+                            {/* <span className="coin lg ETH"></span> */}
                             <div className="fs-28 fw-400">XXXX  XXXX  XXXX  4578</div>
                         </div>
                     </Card>
