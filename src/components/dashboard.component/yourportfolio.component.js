@@ -77,10 +77,10 @@ class YourPortfolio extends Component {
                         }>
                             {/* to={"/coindetails/" + item.coinFullName.toLowerCase()} */}
                             <List.Item.Meta
-                                className='c-pointer'
-                                onClick={() => this.props.history.push("/coindetails/" + item.coinFullName.toLowerCase())}
-                                avatar={<span className={`coin ${item.coin}`} />}
+                                avatar={<span className={`coin c-pointer ${item.coin}`} onClick={() => this.props.history.push("/coindetails/" + item.coinFullName.toLowerCase())}
+                                />}
                                 title={<div className='mr-16'>
+
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
                                         <Text className="fs-18 fw-400 text-upper text-white">{item.coin}</Text>
                                         <Text className="fs-14 px-16 text-secondary">|</Text>
