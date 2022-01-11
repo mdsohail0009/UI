@@ -104,7 +104,7 @@ class HomeComponent extends Component {
                     <li class="ant-list-item py-10 px-0">
                       <div class="ant-list-item-meta">
                         <div class="ant-list-item-meta-avatar">
-                          <span class=", mr-4"></span>
+                          <span class="coin gbp-round mr-4"></span>
                         </div>
                         <div class="ant-list-item-meta-content">
                           <h4 class="ant-list-item-meta-title">
