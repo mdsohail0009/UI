@@ -292,7 +292,7 @@ line-height: 16px;min-width:90px;color:var(--textPureWhite);}
 .coin.EUR{background-position: -378px -1px;}
 .coin.usd{background-position: -216px -1px;}
 .coin.eur{background-position: -378px -1px;}
-.coin.gbp{background-position: -432px -1px;}
+.coin.gbp{background-position: -433px -1px;}
 .coin.md{width: 40px; height: 40px; box-shadow: none;}
 .coin.lg{width: 52px; height: 52px;box-shadow: none;}
 .coin-circle{width: 52px !important;height: 52px !important;}
@@ -720,11 +720,28 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .min-max-btn label{width: 100%;}
 .side-drawer .coin-info:last-child{margin-bottom: 60px;}
 /*----Landing Page----*/
-.wlecome-text{font-size: 74px;font-weight: 600;color: var(--textWhite30) !important;
-    background: -webkit-linear-gradient(180deg,#FF4D76 10%, #A076CF 20%, #6385FF 20%, #23B9FF 10%, #9CFACC);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
+.wlecome-text{font-size: 74px;font-weight: 600;color: var(--textWhite30) !important;background: -webkit-linear-gradient(180deg,#FF4D76 10%, #A076CF 20%, #6385FF 20%, #23B9FF 10%, #9CFACC);background-clip: text;-webkit-text-fill-color: transparent;}
+.suissebgText{background-image: url(../images/Group\ 97.png); background-repeat: no-repeat; background-size: contain;height: 400px;position: absolute; left: 50%; transform: translateX(-50%);}
+.header-block{display: flex;align-items: center;justify-content: space-between;}
+.landing_page .ftwallets .coin{border-radius: 50%;}
+.ftwallets .ant-list-item{padding: 16px 0;border-color: #636363;}
+.cards-block{background-color: var(--bgYellow);border-radius: 24px;padding: 24px 30px;}
+.cards-block .ant-list-item{border-color: #636363;align-items: flex-end;}
+.cards-block .ant-list-item:last-child{padding-bottom: 0;}
+.fx-block, .crypto-block{padding: 24px 30px;}
+.fx-block .ant-list-item, .fx-block .ant-list-header{border-color: var(--borderDark);padding: 15px 0;}
+.fx-block .ant-list-item .ant-list-item-meta-title{margin-bottom: 0;}
+.fx-list-header{display: flex;justify-content: space-between;}
+.fx-block .ant-list-item span, .fx-list-header span{flex: 1 ;text-align: right;}
+.crypto-block .crypto-benfits{font-size: 20px;}
+.text-position{z-index: 1;}
+.crypto-block h2{font-size: 52px;background: linear-gradient(180deg, #9CFACC, #6385FF 50%, #23B9FF 10%, #6385FF 10%);background-clip: text;-webkit-text-fill-color: transparent;}
+.gradient-btn, .gradient-btn:hover, .gradient-btn:focus{background: linear-gradient(130deg, #FF4D76, #A076CF, #6385FF);border-radius: 6px;border: none;width: 220px;height: 62px;}
+.name-text{font-weight: 700;background: linear-gradient(89.96deg, #A168FF -3.13%, #23B9FF 49.78%, #9CFACC 97.45%);}
+.wlecome-text{font-weight: 600;background: linear-gradient(93.77deg, #FF4D76 16.24%, #A076CF 48.07%, #6385FF 90.49%);}
+.goodmorning-text{font-weight: 600;font-size: 64px;color: var(--textWhite30) !important;}
+.wlecome-text, .name-text{font-size: 74px;background-clip: text;-webkit-text-fill-color: transparent;color: var(--textWhite30) !important}
+/*----Landing Page end----*/
 .radius16{border-radius: 16px;}
 .virtival-icons{background: var(--bgGrey);padding: 6px 15px;border-radius: 8px;margin-right: 14px;text-align: center;}
 .virtual-box{background-color: transparent; border-radius: 30px;overflow: hidden; margin-bottom: 28px;}
@@ -745,6 +762,10 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .drawer-title{font-size: 28px !important;font-weight: 200 !important;color: var(--textWhite30) !important; margin: 16px 0 4px !important;}
     .buysell-toggle + .fs-36{font-size: 28px !important;}
     .round-pills{ margin-bottom: 16px;}
+    .suissebgText{width: 100%;top: 80px;}
+    .wlecome-text, .name-text{font-size: 24px;}
+    .goodmorning-text{font-size: 36px;}
+    .text-position{margin-top: 50px;}
 }
 @media (min-width: 576px){
     .fiat-total{display: flex;justify-content: space-between;text-align: center;}
@@ -792,6 +813,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     }
     .custom-gridresponsive .k-pager-wrap .k-link {font: small-caption;font-size: 10px;}
     .custom-gridresponsive .k-pager-nav{min-width: calc(1.4285714286em + 3px);height: calc(1.4285714286em + 3px) }
+    
 	}
 @media (max-width: 991px){
     .user-profile{width:42px;height: 42px;}
@@ -850,6 +872,9 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .display-flex {display:flex; align-items: center;justify-content: space-between;}
     .address-icons{list-style: none; padding-left: 0; margin-bottom: 0; display: flex;}
     .add-custom.ant-row{flex-flow: initial !important;}
+    .wlecome-text, .name-text{font-size: 72px;}
+    .goodmorning-text{font-size: 64px;}
+    .text-position{margin-top: 0;}
 }
 @media (min-width: 992px){
     .user-profile{width:52px;height: 52px;}
@@ -874,6 +899,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .profileinfo{padding: 32px 0;}
     .custom-toggle{margin-left: 12px !important;}
     .mobile-ml-8{margin-left: 8px;}
+    .crypto-block{padding: 135px 30px;}
 }
 @media (min-width: 1200px){
     .custom-font{font-size:28px !important;}
@@ -889,6 +915,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .portfolio-list .ant-list-split .ant-list-item{display: flex;}
     .portfolio-list .ant-list-split ul li .custom-btn{min-width: 90px;}
     .coin-details.right{min-height: 705px;}
+    .suissebgText{width: 1100px;top: 10px;}
 }
 @media (min-width: 1400px){
     .custom-font{font-size:30px !important;}
@@ -1076,50 +1103,3 @@ input[type=number]::-webkit-outer-spin-button {
 .valid-time{margin-right: 72px;}
 .ant-tabs-tab-btn:focus, .card-list .ant-tabs-tab-remove:focus, .ant-tabs-tab-btn:active,.ant-tabs-tab-remove:active, .ant-tabs-tab:hover{color: #ffffff !important;}
 .ant-tabs-ink-bar {background-color: transparent;}
-.wlecome-text{font-size: 74px;font-weight: 600;color: var(--textWhite30) !important;
-    -webkit-text-fill-color: transparent;
-    background: linear-gradient(
-93.77deg, #FF4D76 16.24%, #A076CF 48.07%, #6385FF 90.49%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.name-text{font-size: 74px;font-weight: 700;color: var(--textWhite30) !important;
-    -webkit-text-fill-color: transparent;
-    background: linear-gradient(89.96deg, #A168FF -3.13%, #23B9FF 49.78%, #9CFACC 97.45%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;}
-
-.goodmorning-text{
-    font-weight: 600;
-font-size: 64px;
-color: #ffffff;
-}
-.bg-img{
-    background-image: url(../images/Group\ 97.png);
-    background-repeat: no-repeat;
-  background-size: cover;
-  background-position: top;
-  height: 400px;
-  position: absolute;
-    width: 1200px;
-    left: 49px;
-    top: 40px;
-}
-.text-position{
-    z-index: 1;
-    position: relative;
-}
-.dashboard-color{
-    color: #FF9800;
-}
-.coin.usd-round{
-    background-position:-7px -995px ;
-}
-
-.coin.eur-round{
-    background-position:-63px -995px;
-}
-
-.coin.gbp-round{
-    background-position:-120px -995px;
-}
