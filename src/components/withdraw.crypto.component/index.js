@@ -1,4 +1,4 @@
-import { Card, Typography, Empty } from "antd";
+import { Card, Typography, Empty,Image } from "antd";
 import { useEffect } from "react";
 import Translate from "react-translate-component";
 import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setStep, setSubTitle } from "../../reducers/sendreceiveReducer";
@@ -28,7 +28,7 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
         <div className="dep-withdraw auto-scroll">
             {wallets?.data.length ? <>{wallets?.data?.map((wallet, indx) => <Card key={indx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { dispatch(setSelectedWithDrawWallet(wallet)); dispatch(setStep('withdraw_crypto_selected')) }} >
                 <span className="d-flex align-center">
-                    <span className={`coin lg ${wallet.coin}`} />
+                    <Image preview={false} src={wallet.impageWhitePath}/>
                     <Text className="fs-24 text-purewhite ml-8">{wallet.coinFullName}</Text>
                 </span>
                 <div className="crypto-details">

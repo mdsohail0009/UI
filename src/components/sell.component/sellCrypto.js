@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Card, Empty } from 'antd';
+import { Typography, Card, Empty,Image } from 'antd';
 import { setStep } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import { setCoinWallet, updateCoinDetails } from '../../reducers/buy.reducer';   // do not remove this line time being i will check // subbareddy
@@ -42,9 +42,9 @@ class SellToggle extends Component {
 
                     {this.props.sellData?.memberCoins?.data?.map((coin, idx) => <Card key={idx} className="crypto-card mb-16 c-pointer" bordered={false} onClick={() => { this.setCoinDetailData(coin); this.props.setExchangeValue({ key: coin.coin, value: coin.oneCoinValue }); }} >
                         <span className="d-flex align-center">
-                            <span className={`coin lg ${coin.coin}`} />
+                            <Image preview={false} src={coin.impageWhitePath}/>
                             <Text className="fs-24 textc-white crypto-name ml-12">{coin.coinFullName}</Text>
-                        </span>
+                        </span> 
                         <div className="crypto-details">
                             <Text className="crypto-percent textc-white fw-700">{coin.percentage}<sup className="percent textc-white fw-700">%</sup></Text>
                             <div className="fs-16 textc-white fw-200 crypto-amount">

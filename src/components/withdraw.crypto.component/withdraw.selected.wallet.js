@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Card, Input, Radio, Alert, Row, Col, Form, Modal, Tooltip } from 'antd';
+import { Typography, Button, Card, Input, Radio, Alert, Row, Col, Form, Modal, Tooltip,Image } from 'antd';
 import { handleSendFetch, setStep, setSubTitle, setWithdrawcrypto, setAddress } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -211,7 +211,7 @@ class CryptoWithDrawWallet extends Component {
 
                     <Card className="crypto-card select mb-36" bordered={false}>
                         <span className="d-flex align-center">
-                            <span className={`coin lg ${selectedWallet?.coin}`} />
+                            <Image preview={false} src={selectedWallet.impageWhitePath}/>
                             <Text className="fs-24 text-purewhite ml-8">{selectedWallet?.coinFullName}</Text>
                         </span>
                         <div className="crypto-details">

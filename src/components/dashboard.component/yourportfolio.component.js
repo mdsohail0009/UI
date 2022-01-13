@@ -72,7 +72,7 @@ class YourPortfolio extends Component {
                         <List.Item className="" extra={
                             <div>
                                 <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(item, "buy")} className="custom-btn prime" />
-                                <Translate content="sell" component={Button} className="custom-btn sec ml-16" onClick={() => this.showBuyDrawer(item, "sell")} />
+                                <Translate content="sell" component={Button} className="custom-btn sec ml-16" onClick={() => this.showBuyDrawer(item, "sell")} disabled={item.coinValueinNativeCurrency > 0 ? false : true} />
                             </div>
                         }>
                             {/* to={"/coindetails/" + item.coinFullName.toLowerCase()} */}
