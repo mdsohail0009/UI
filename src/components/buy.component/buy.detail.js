@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Card, Alert, message } from 'antd';
+import { Typography, Card, Alert, message,Image } from 'antd';
 import WalletList from '../shared/walletList';
 import { changeStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
@@ -112,14 +112,14 @@ class SelectCrypto extends Component {
         }
         const { Paragraph, Text } = Typography;
         const { localValue, cryptoValue, isSwaped, isConvertionLoading } = this.state.swapValues;
-        const { coin, coinValueinNativeCurrency, coinBalance, percentage } = this.props.buyInfo?.selectedCoin?.data;
+        const { coin, coinValueinNativeCurrency, coinBalance, percentage,impageWhitePath } = this.props.buyInfo?.selectedCoin?.data;
         return (
             <div id="divScroll" ref={this.myRef}>
                 {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} closable />}
                 <div className="selectcrypto-container">
                     <Card className="crypto-card select mb-36" bordered={false}>
                         <span className="d-flex align-center">
-                            <span className={`coin lg ${coin}`} />
+                            <Image preview={false} src={impageWhitePath}/>
                             <Text className="fs-24 text-purewhite crypto-name ml-8">{coin}</Text>
                         </span>
                         <div className="crypto-details">

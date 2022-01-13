@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Card, Radio, Alert } from 'antd';
+import { Typography, Card, Radio, Alert,Image } from 'antd';
 import { setStep, setTab } from '../../reducers/buysellReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -11,6 +11,7 @@ import { updatesellsaveObject } from '../../reducers/sellReducer'
 import Currency from '../shared/number.formate';
 import apicalls from '../../api/apiCalls';
 import { convertCurrencyDuplicate } from '../buy.component/buySellService';
+
 class SelectSellCrypto extends Component {
     myRef = React.createRef();
     constructor(props) {
@@ -170,7 +171,7 @@ class SelectSellCrypto extends Component {
                 <div ref={this.myRef}>  {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message={apicalls.convertLocalLang('sellCrypto')} description={this.state?.errorMessage} closable />}
                     {coinDetailData && <Card className="crypto-card select mb-36" bordered={false}>
                         <span className="d-flex align-center">
-                            <span className={`coin lg ${coinDetailData.coin}`} />
+                            <Image preview={false} src={coinDetailData.impageWhitePath}/>
                             <Text className="fs-24 textc-white crypto-name ml-8">{coinDetailData.coinFullName}</Text>
                         </span>
                         <div className="crypto-details">

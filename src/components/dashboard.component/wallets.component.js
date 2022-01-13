@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, List, Button } from 'antd';
+import { Typography, List, Button,Image } from 'antd';
 import Translate from 'react-translate-component';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import { fetchMemberWalletsData } from '../../reducers/dashboardReducer';
@@ -82,7 +82,7 @@ class Wallets extends Component {
                     renderItem={item =>
                         <List.Item className="py-10 px-0">
                             <List.Item.Meta
-                                avatar={<span className={`coin ${item?.walletCode.toLowerCase()} mr-4`} />}
+                                avatar={<Image preview={false} src={item.imagePath}/>}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 l-height-normal">{item.walletCode}</div>}
                                 description={<Currency className="fs-16 text-white-30 m-0" defaultValue={item.amount} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
                             />

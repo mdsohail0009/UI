@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, List } from 'antd';
+import { Typography, List,Image } from 'antd';
 import Translate from 'react-translate-component';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import { fetchMemberWalletsData } from '../../reducers/dashboardReducer';
@@ -89,7 +89,7 @@ class FiatWallets extends Component {
                     renderItem={item =>
                         <List.Item className="py-10 px-0">
                             <List.Item.Meta
-                                avatar={<span className={`coin ${item?.walletCode.toLowerCase()} mr-4`} />}
+                                avatar={<Image preview={false} src={item.imagePath} />}
                                 title={<div className="fs-16 mt-12 fw-600 text-upper text-white-30 l-height-normal">{item.walletCode}</div>}
                             />
                             <div className="text-right">

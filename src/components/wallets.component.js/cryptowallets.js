@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Typography, Empty } from 'antd';
+import { List, Typography, Empty,Image} from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import ConnectStateProps from '../../utils/state.connect';
@@ -78,7 +78,7 @@ class CryptoWallets extends Component {
                             </div>
                         }>
                             <List.Item.Meta
-                                avatar={<span className={`coin ${item.coin}`} />}
+                                avatar={<Image preview={false} src={item.impagePath} />}
                                 title={<div className="fs-18 fw-500 text-upper text-white-30 mt-12 mb-0">{item.coin}</div>}
                             />
                         </List.Item>

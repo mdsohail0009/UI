@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Button, Typography, Empty } from 'antd';
+import { List, Button, Typography, Empty,Image } from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import ConnectStateProps from '../../utils/state.connect';
@@ -79,7 +79,7 @@ class YourPortfolio extends Component {
                             <List.Item.Meta
                                 className='c-pointer'
                                 onClick={() => this.props.history.push("/coindetails/" + item.coinFullName.toLowerCase())}
-                                avatar={<span className={`coin ${item.coin}`} />}
+                                avatar={<Image preview={false} src={item.impagePath}/>}
                                 title={<div className='mr-16'>
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
                                         <Text className="fs-18 fw-400 text-upper text-white">{item.coin}</Text>
