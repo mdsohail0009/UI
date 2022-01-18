@@ -43,7 +43,7 @@
     --borderLight: #9797AA;
     --borderDark: #2d2d2d;
     --bgCircle: #19B06C;
-    --lightThemeIcons: url(https://scmcdn.blob.core.windows.net/scmcdn/suissebase/images/dark-theme-icons.svg);
-    --cryptoIcons:url(https://scmcdn.blob.core.windows.net/scmcdn/suissebase/images/dark-crypto-icons.svg);
+    --lightThemeIcons: url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/dark-theme-icons.svg);
+    --cryptoIcons:url(https://prduximagestorage.blob.core.windows.net/suissebaseimages/dark-crypto-icons.svg);
     --logo: url(../../assets/images/logo-white.png);
 }
