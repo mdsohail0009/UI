@@ -49,6 +49,7 @@
 .text-white-50{color: var(--textWhite50) !important;}
 .text-textDark{color: var(--textBlack) !important;}
 .text-green{color: var(--textGreen) !important;}
+.text-orange{color: var(--textOrange) !important;}
 .text-darkgreen{color: var(--textDarkGreen) !important;}
 .text-red{color: var(--textRed) !important;}
 .text-secondary{color: var(--textSecondary) !important;}

@@ -68,10 +68,11 @@ class Wallets extends Component {
     }
     render() {
         const { wallets } = this.props.dashboard;
+        const { walletstitle = true } = this.props;
         return (
             <>
-                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 mb-0 text-white" />
-                <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16" />
+                {walletstitle && <><Translate content="suissebase_title" component={Title} className="fs-24 fw-600 mb-0 text-white" />
+                    <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16" /></>}
                 <List
                     itemLayout="horizontal"
                     dataSource={wallets.data}
@@ -79,11 +80,11 @@ class Wallets extends Component {
                     className="mobile-list"
                     loading={wallets.loading}
                     renderItem={item =>
-                        <List.Item className="py-10 px-0">
+                        <List.Item className="px-0">
                             <List.Item.Meta
                                 avatar={<span className={`coin ${item?.walletCode.toLowerCase()} mr-4`} />}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 l-height-normal">{item.walletCode}</div>}
-                                description={<Currency className="fs-16 text-white-30 m-0" defaultValue={item.amount} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
+                                description={<Currency className="fs-16 text-white-30 m-0 fw-200 l-height-normal" defaultValue={item.amount} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
                             />
                             <div className="crypto-btns">
                                 <Translate content="deposit" onClick={() => this.showSendReceiveDrawer(1, item.walletCode)} component={Button} type="primary" className="custom-btn prime" />
