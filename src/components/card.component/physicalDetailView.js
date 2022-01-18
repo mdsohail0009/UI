@@ -9,45 +9,58 @@ const {Paragraph, Text, Title } = Typography;
 class PhysicalDetailView extends Component {
   
     state = { 
-        visible:'false',
-        placement: 'right'
+        // visible:'false',
+        // placement: 'right'
      };
 
-  showDrawer = () => {
-      debugger
-    this.setState({
-      visible: true,
-    });
-  };
+//   showDrawer = () => {
+//       debugger
+//     this.setState({
+//       visible: true,
+//     });
+//   };
 
-  onClose = () => {
-    this.setState({
-      visible: false,
-    });
-  };
+//   onClose = () => {
+//     this.setState({
+//       visible: false,
+//     });
+//   };
 
 render() {
     return (<>
             <Row gutter={24} className='mt-16 card-progress'>
                 <Col lg={8} xl={8} xxl={8}>
                     <Card  className="virtual-card crypto-card mb-16 c-pointer" bordered={false} >
-                        <Row gutter={24}>
-                            <Col span={12}>
-                                <div className="align-center">
-                                    <Paragraph className="fs-18 fw-500 text-purewhite ml-8 mb-0">Avilable</Paragraph>
-                                </div>
-                            </Col>
+                    <Row gutter={24} style={{rowGap: "10px"}}>
+                            <Col span={12}></Col>
                             <Col span={12}>
                                 <div className="text-right">
-                                    <img src={logoWhite} alt="logo" className="tlv-logo dark" alt={"image"} />
+                                   <img src={logoWhite} alt="logo" className="tlv-logo dark" alt={"image"} />
                                 </div>
                             </Col>
+                            <Col span={24}>
+                                <div className="text-white mt-24 mb-16">
+                                    <div className="fns-28 fw-500">XXXX  XXXX  XXXX  4578</div>
+                                </div>
+                            </Col>
+                            <Col span={12}>
+                                <div className='d-flex justify-start'>
+                                <div className="align-center mr-16">
+                                    <Paragraph className="fs-12 fw-400 text-purewhite ml-8 mb-0">cvv</Paragraph>
+                                    <Paragraph className="fs-14 fw-600 text-purewhite ml-8 mb-0">154</Paragraph>
+                                </div>
+                                <div className="align-center">
+                                    <Paragraph className="fs-12 fw-300 text-purewhite ml-8 mb-0">Valid Upto</Paragraph>
+                                    <Paragraph className="fs-14 fw-600 text-purewhite ml-8 mb-0">09/23</Paragraph>
+                                </div>
+                                </div>
+                            </Col>
+                            <Col span={12}>
+                            <div className="text-right">
+                                <span width={40} className="coin-circle coin md visa-white" />
+                            </div>
+                            </Col>
                         </Row>
-                        <div className="text-white">
-                            <img src={creditCard} width={35} height={30} alt="logo" className="mb-8" alt={"image"} />
-                            {/* <span className="coin lg ETH"></span> */}
-                            <div className="fs-28 fw-400">XXXX  XXXX  XXXX  4578</div>
-                        </div>
                     </Card>
                 </Col>
                 <Col lg={16} xl={16} xxl={16} className='pl-30'>
@@ -105,9 +118,13 @@ render() {
                         <span className="icon lg card-block" />
                         <div className="fw-300 fs-12">Block</div>
                     </div>
-                    <div className='virtival-icons' onClick={() => this.showDrawer()} >
+                    {/* <div className='virtival-icons' onClick={() => this.showDrawer()} >
                         <span className="icon lg card-settings" />
                         <div className="fw-300 fs-12" >Settings</div>
+                    </div> */}
+                    <div className='virtival-icons' onClick={() => this.showDrawer()} >
+                        <span className="icon lg card-settings" />
+                        <div className="fw-300 fs-12" >Transactions</div>
                     </div>
                 </div>
                 </Col>
@@ -146,7 +163,7 @@ render() {
                 </Col>
             </Row>
             <div>
-            <Drawer
+            {/* <Drawer
           title={[<div className="side-drawer-header text-white d-flex justify-content align-center">
               <span className="icon md lftarw-white c-pointer"></span>
               <Title className="fs-18 fw-600 text-white-30">Settings</Title>
@@ -171,7 +188,7 @@ render() {
                     </Form.Item>
                 </Form>
           <Paragraph className='text-white-50 fs-18 fe-500'>Recurring Funds</Paragraph>
-        </Drawer>
+        </Drawer> */}
             </div>
     </>)
 }

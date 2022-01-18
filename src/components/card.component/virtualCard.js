@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Card, Row, Col, Typography, Badge } from 'antd';
 import VirtualDetailView from './virtualDetailView';
+import logoWhite from '../../assets/images/logo-white.png';
+import creditCard  from '../../assets/images/credit-card.png';
 import { Link } from "react-router-dom";
 const {Paragraph, Text } = Typography;
 
@@ -83,23 +85,27 @@ render() {
                     <Card  className="card-module crypto-card mb-16 c-pointer" bordered={false} >
                         <Row gutter={24} >
                             <Col span={12}>
-                                <div className="align-center">
+                                {/* <div className="align-center">
                                     <Paragraph className="fs-22 fw-600 text-purewhite ml-8 mb-0">{item.avilableBal}{item.avilableCode}</Paragraph>
                                     <Paragraph className="fs-18 fw-500 text-purewhite ml-8 mb-0">Avilable</Paragraph>
-                                </div>
-                            </Col>
-                            <Col span={12}>
+                                </div> */}
                                 <div className="align-center">
                                     <Paragraph className="fs-22 fw-600 text-purewhite ml-8 mb-0">{item.spentBal}{item.spentCode}</Paragraph>
                                     <Paragraph className="fs-18 fw-500 text-purewhite ml-8 mb-0">Spent</Paragraph>
                                 </div>
                             </Col>
+                            <Col span={12}>
+                                <div className="text-right">
+                                    <img src={logoWhite} alt="logo" className="tlv-logo dark" alt={"image"} />
+                                </div>
+                            </Col>
                             <Col span={24}>
                                 <div className="text-white mt-24 mb-16">
+                                <img src={creditCard} width={35} height={30} alt="logo" className="mb-8" alt={"image"} />
                                     <div className="fs-28 fw-400">{item.accountNo}</div>
                                     <div className='text-right valid-time'>Valid Upto {item.validDate}</div>
                                 </div>
-                                <div className="text-white cardholder-name fw-600">Suisse - {item.UserName}</div>
+                                {/* <div className="text-white cardholder-name fw-600">Suisse - {item.UserName}</div> */}
                             </Col>
                         </Row>
                     </Card>

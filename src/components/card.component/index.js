@@ -52,7 +52,7 @@ render() {
             <div className='text-left'>
                 <div className='pt-16 mt-36 mb-28'>
                     <Title className='fs-22 fw-600 mb-8 text-white-30'>Know Your Card</Title>
-                    <Paragraph className='text-white-50 fs-16 mb-0 l-height-normal'>Select card to check spends and avilable limit</Paragraph>
+                    {/* <Paragraph className='text-white-50 fs-16 mb-0 l-height-normal'>Select card to check spends and avilable limit</Paragraph> */}
                 </div>
                 
                 <div className="site-card-wrapper">
@@ -63,23 +63,20 @@ render() {
                             <Row gutter={24}>
                                 <Col span={12}>
                                     <div className="align-center">
-                                        <Paragraph className="fs-22 fw-600 text-purewhite ml-8 mb-0">272.48 USD</Paragraph>
-                                        <Paragraph className="fs-18 fw-500 text-purewhite ml-8 mb-0">Avilable</Paragraph>
-                                    </div>
-                                    </Col>
-                                <Col span={12}>
-                                    <div className="align-center">
                                         <Paragraph className="fs-22 fw-600 text-purewhite ml-8 mb-0">177.52 USD</Paragraph>
                                         <Paragraph className="fs-18 fw-500 text-purewhite ml-8 mb-0">Spent</Paragraph>
                                     </div>
                                 </Col>
+                                <Col span={12}>
+                                    <div className="text-right">
+                                        <img src={logoWhite} alt="logo" className="tlv-logo dark" alt={"image"} />
+                                    </div>
+                                </Col>
                             </Row>
                         <div className="text-white">
+                        <img src={creditCard} width={35} height={30} alt="logo" className="mb-8" alt={"image"} />
                             <div className="fs-28 fw-400">XXXX  XXXX  XXXX  4578</div>
                             <div className='text-right valid-time'>Valid Upto 02/23</div>
-                        </div>
-                        <div className="text-white cardholder-name fw-600">
-                            Suisse - Jhon Doe
                         </div>
                     </Card>
                     </Col>
@@ -88,23 +85,20 @@ render() {
                             <Row gutter={24}>
                                 <Col span={12}>
                                     <div className="align-center">
-                                        <Paragraph className="fs-22 fw-600 text-purewhite ml-8 mb-0">400.18 USD</Paragraph>
-                                        <Paragraph className="fs-18 fw-500 text-purewhite ml-8 mb-0">Avilable</Paragraph>
-                                    </div>
-                                    </Col>
-                                <Col span={12}>
-                                    <div className="align-center">
                                         <Paragraph className="fs-22 fw-600 text-purewhite ml-8 mb-0">100.82 USD</Paragraph>
                                         <Paragraph className="fs-18 fw-500 text-purewhite ml-8 mb-0">Spent</Paragraph>
                                     </div>
                                 </Col>
+                                <Col span={12}>
+                                    <div className="text-right">
+                                        <img src={logoWhite} alt="logo" className="tlv-logo dark" alt={"image"} />
+                                    </div>
+                                </Col>
                             </Row>
                         <div className="text-white">
+                        <img src={creditCard} width={35} height={30} alt="logo" className="mb-8" alt={"image"} />
                             <div className="fs-28 fw-400">XXXX  XXXX  XXXX  2693</div>
                             <div className='text-right valid-time'>Valid Upto 06/23</div>
-                        </div>
-                        <div className="text-white cardholder-name fw-600">
-                            Suisse - User Name
                         </div>
                     </Card>
                     </Col>
@@ -127,6 +121,7 @@ render() {
                             <img src={creditCard} width={35} height={30} alt="logo" className="mb-8" alt={"image"} />
                             {/* <span className="coin lg ETH"></span> */}
                             <div className="fs-28 fw-400">XXXX  XXXX  XXXX  2693</div>
+                            <div className='text-right valid-time'>Valid Upto 06/23</div>
                         </div>
                         </Card>
                     </Col>
@@ -187,7 +182,8 @@ render() {
                <VirtualCard/>
             </div>
         </TabPane>
-        <TabPane tab={<span className='tab-block fs-16'> <span className="icon xl settings mb-16 mx-auto"></span> <span>Settings</span></span>}key="4"> 
+        <TabPane tab={<span className='tab-block fs-16'> <span className="icon xl settings mb-16 mx-auto"></span> <span>Transactions</span></span>}key="4"> 
+             
                     
         </TabPane>
     </Tabs>

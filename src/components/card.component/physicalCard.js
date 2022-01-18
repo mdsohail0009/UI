@@ -61,11 +61,13 @@ render() {
                             <img src={logoWhite} alt="logo" className="tlv-logo dark" alt={"image"} />
                         </div>
                     </Col>
+                    
                 </Row>
                     <div className="text-white">
                         <img src={creditCard} width={35} height={30} alt="logo" className="mb-8" alt={"image"} />
                         {/* <span className="coin lg ETH"></span> */}
                         <div className="fs-28 fw-400">{item.accountNo}</div>
+                        <div className='text-right valid-time'>Valid Upto {item.validDate}</div>
                     </div>
             </Card>
             </Col>)}

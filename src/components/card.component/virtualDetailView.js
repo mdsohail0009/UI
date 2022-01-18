@@ -103,7 +103,7 @@ render() {
                     </div>
                     <div className='virtival-icons'>
                         <span className="icon lg card-settings" />
-                        <div className="fw-300 fs-12">Settings</div>
+                        <div className="fw-300 fs-12">Transactions</div>
                     </div>
                 </div>
                 </Col>
