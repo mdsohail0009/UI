@@ -243,6 +243,7 @@ export default {
   beneficiaryBank: 'Bank Penerima',
   signature_bank: 'Bank Tandatangan',
   beneficiary_Bank_address: 'Alamat Bank Penerima',
+  bank_Reference_No:'No. Rujukan Bank',
   Fifth_Avenue: '565 Fifth Avenue, NEW YORK NY 10017',
   reference: 'Rujukan',
   reference_hint_text: 'Penting: kod ini mengenal pasti deposit anda termasuk kod ini semasa menyerahkan kiriman wang dalam keterangan atau tujuan transaksi',
