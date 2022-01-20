@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Typography, Row, Col, Spin, Radio, Button } from "antd";
+import { Typography, Row, Col, Spin, Radio, Button,Image } from "antd";
 import { Link, withRouter } from "react-router-dom";
 import { getcoinDetails, getCoinChatData } from './api'
 import LineChart from './line.graph.component';
@@ -162,7 +162,7 @@ class CoinView extends React.Component {
                 <Col lg={14} xl={14} xxl={14}>
                     <div className="box p-24 coin-bal">
                         {this.state.coinData ? <><div className="d-flex align-center">
-                            <span className={`coin ${coinData?.symbol.toUpperCase()}`} />
+                            <Image preview={false} src={coinData.imagePath}/>
                             <div className="summary-count ml-16">
                                 <Paragraph className="text-white-30 fs-30 mb-0 fw-500">
                                     <NumberFormat value={coinData?.avilableBalance} displayType="text" thousandSeparator={true} prefix="" />

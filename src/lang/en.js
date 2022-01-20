@@ -244,6 +244,7 @@ export default {
   beneficiaryBank: 'Beneficiary Bank Name',
   signature_bank: '%(value)s',
   beneficiary_Bank_address: 'Beneficiary Bank Address',
+  bank_Reference_No:'Bank Reference No',
   Fifth_Avenue: '%(value)s',
   reference: 'Reference',
   reference_hint_text: 'Important: this code identifies your deposit include this code when submitting the wire transfer in the transaction description or purpose',

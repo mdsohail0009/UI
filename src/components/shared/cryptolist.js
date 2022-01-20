@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { List, Empty, Input } from 'antd';
+import { List, Empty, Input,Image } from 'antd';
 import NumberFormat from 'react-number-format';
 import apiCalls from '../../api/apiCalls';
 import Translate from 'react-translate-component';
@@ -57,7 +57,8 @@ const CryptoList = forwardRef(({ coinList, isLoading, onCoinSelected, coinType, 
                 <List.Item className={(item[titleField || 'walletCode'] === selList[titleField || 'walletCode'] ? " select" : "")}>
                     <Link onClick={() => selectList(item)}>
                         <List.Item.Meta
-                            avatar={<span className={`coin ${item[iconField || 'walletCode']} mr-4`} />}
+                          avatar={ <Image preview={false} src={item.impagePath}/>}
+
                             title={<div className="wallet-title">{item[titleField || 'walletCode']}</div>}
                         />
                         <><div className="text-right coin-typo">

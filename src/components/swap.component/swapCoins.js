@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Button, Input, Alert, Spin } from 'antd';
+import { Typography, Button, Input, Alert, Spin,Image } from 'antd';
 import { setStep, updateFromCoinInputValue, updateCoinDetails, updateReceiveCoinDetails, updateSwapdata } from '../../reducers/swapReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -216,7 +216,8 @@ class SwapCoins extends Component {
                     <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => this.props.changeStep('selectcrypto')} >
                         <div className="crypto-coin">
 
-                            {coinDetailData.coin ? <><span className={`coin md  ${coinDetailData.coin}`}></span>
+                            {coinDetailData.coin ? <>
+                            <Image preview={false} src={coinDetailData.impageWhitePath} width={40}/>
                                 <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinDetailData.coinFullName}</Paragraph></>
                                 :
                                 <div className="text-center mt-4"><span className="default-circle swap-from"><span className="icon lg usd-default"></span></span>
@@ -256,7 +257,8 @@ class SwapCoins extends Component {
                     </div>
                     <div className="mr-20 text-center d-flex justify-content align-center c-pointer" onClick={() => { if (coinDetailData.coinFullName) { this.props.changeStep('toreceive'); this.setState({ ...this.state, errorMessage: '' }) } else { this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('select_coin') }) } }} >
                         <div className="crypto-coin">
-                            {coinReceiveDetailData.coin ? <> <span className={`coin md ${coinReceiveDetailData.coin}`}></span>
+                            {coinReceiveDetailData.coin ? <> 
+                            <Image preview={false} src={coinReceiveDetailData.impageWhitePath} width={40}/>
                                 <Paragraph className="mb-0 text-purewhite fs-14 fw-100 mt-4" style={{ lineHeight: 'normal' }}>{coinReceiveDetailData.coinFullName}</Paragraph></>
                                 :
                                 <div className="text-center mt-4"><span className="default-circle swap-to"><span className="icon lg usd-default"></span></span>
