@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Button, Typography, Empty } from 'antd';
+import { List, Button, Typography, Empty, Image } from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import ConnectStateProps from '../../utils/state.connect';
@@ -58,7 +58,7 @@ class YourPortfolio extends Component {
         })
     }
     render() {
-        const { Title, Text } = Typography;
+        const { Title } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
         return (
             <div className="portfolio-list">
@@ -70,30 +70,20 @@ class YourPortfolio extends Component {
                     locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }}
                     renderItem={item => (
                         <List.Item className="" extra={
-                            <div>
+                            <div className="crypto_btns">
                                 <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(item, "buy")} className="custom-btn prime" />
                                 <Translate content="sell" component={Button} className="custom-btn sec ml-16" onClick={() => this.showBuyDrawer(item, "sell")} />
                             </div>
                         }>
                             {/* to={"/coindetails/" + item.coinFullName.toLowerCase()} */}
-                            <List.Item.Meta
-                                className='c-pointer'
-                                onClick={() => this.props.history.push("/coindetails/" + item.coinFullName.toLowerCase())}
+                            <Link className="c-pointer" onClick={() => this.props.history.push("/coindetails/" + item.coinFullName.toLowerCase())}><List.Item.Meta
                                 avatar={<span className={`coin ${item.coin}`} />}
-                                title={<div className='mr-16'>
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <Text className="fs-18 fw-400 text-upper text-white">{item.coin}</Text>
-                                        <Text className="fs-14 px-16 text-secondary">|</Text>
-                                        <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-14 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
-                                    </div>
-                                    <Currency defaultValue={item.coinBalance} className="text-white fs-20 text-left" type={"text"} prefix={""} />
-
-                                </div>}
-                            />
-                            {/* <div className='text-right fs-20 text-white'>
+                                title={<div className="fs-18 fw-300 text-upper text-white mb-0 mt-12">{item.coin}</div>}
+                            /></Link>
+                            <div className='text-right fs-20 text-white'>
                                 <Currency defaultValue={item.coinBalance} type={"text"} prefix={""} />
                                 <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
-                            </div> */}
+                            </div>
                         </List.Item>
                     )}
                 />
