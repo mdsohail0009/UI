@@ -245,6 +245,7 @@ export default {
   beneficiaryBank: '收款银行',
   signature_bank: '签名银行',
   beneficiary_Bank_address: '收款银行地址',
+  bank_Reference_No:'银行参考编号',
   Fifth_Avenue: '第五大道 565 号，纽约 NY 10017',
   reference: '参考',
   reference_hint_text: '重要提示：此代码可识别您的存款，请在交易说明或目的中提交电汇时包含此代码',
