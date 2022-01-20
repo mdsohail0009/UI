@@ -484,5 +484,6 @@ export default {
   thousandKText: "Jumlah maksimum ialah $100K.",
   sucessText1: "Pesanan anda telah berjaya dibuat,",
   sucessText2: "telah ditambahkan ke dalam dompet anda.",
-  sucessText3: "jumlah telah didebitkan daripada dompet anda."
+  sucessText3: "jumlah telah didebitkan daripada dompet anda.",
+  value_should_greater:"Ang halaga ng mula sa barya ay dapat na mas malaki kaysa sa zero"
 }
