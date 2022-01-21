@@ -76,15 +76,20 @@ const getdailypnl = (userid, days) => {
     return apiClient.get(ApiControllers.dashboard + `DailyPNL/${userid}/${days}`);
 }
 
-const getCode = (AccountId,isResendOTP) => {
+const getCode = (AccountId, isResendOTP) => {
     return apiClient.get(ApiControllers.master + `SendOTP/${AccountId}/${isResendOTP}`);
 
 }
 const getVerification = (AccountId, code) => {
     return apiClient.get(ApiControllers.master + `OTPVerification/${AccountId}/${code}`)
 }
-const encryptValue = (msg, key) =>{
-    
+
+const downloadKyc = () => {
+    return apiClient.get(ApiControllers.accounts + `DownloadFile`)
+}
+
+const encryptValue = (msg, key) => {
+
     msg = typeof (msg) == 'string' ? msg : JSON.stringify(msg);
     let salt = CryptoJS.lib.WordArray.random(128 / 8);
 
@@ -105,6 +110,6 @@ const encryptValue = (msg, key) =>{
 }
 let apicalls = {
     getportfolio, getCryptos, getMember, sumsubacesstoken, updateKyc, sumsubacesstokennew, sumsublivenessacesstoken, trackEvent, sellMemberCrypto, convertLocalLang, getIBANData,
-    getdshKpis, getdshcumulativePnl, getAssetNetwroth, getAssetAllowcation, getprofits, getdailypnl, getCode, getVerification, getIpRegistery, encryptValue
+    getdshKpis, getdshcumulativePnl, getAssetNetwroth, getAssetAllowcation, getprofits, getdailypnl, getCode, getVerification, getIpRegistery, encryptValue, downloadKyc
 }
 export default apicalls
