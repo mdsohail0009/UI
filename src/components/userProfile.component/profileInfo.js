@@ -153,7 +153,7 @@ class ProfileInfo extends Component {
           <Text className="basicinfo mb-0">User KYC Document</Text>
           <ul class="m-0 pl-0">
             <li class="c-pointer" onClick={this.fileDownload}>
-              <Tooltip title="Download KYC"><div><span class="icon md withdraw" /></div></Tooltip>
+              <Tooltip title="Download KYC"><div><span class="icon md download" /></div></Tooltip>
             </li>
           </ul>
         </div>
