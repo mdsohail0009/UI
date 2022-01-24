@@ -4,6 +4,7 @@ import VirtualCard from './virtualCard';
 import logoWhite from '../../assets/images/logo-white.png';
 import creditCard  from '../../assets/images/credit-card.png';
 import PhysicalCard from './physicalCard';
+import Transactions from './transactions';
 const { Title, Paragraph, Text } = Typography;
 const { TabPane } = Tabs;
 const data = [
@@ -183,7 +184,7 @@ render() {
             </div>
         </TabPane>
         <TabPane tab={<span className='tab-block fs-16'> <span className="icon xl settings mb-16 mx-auto"></span> <span>Transactions</span></span>}key="4"> 
-             
+             <Transactions />
                     
         </TabPane>
     </Tabs>

@@ -1,0 +1,87 @@
+import React,{Component} from 'react';
+import { Card, Row, Col, Typography, Image, Progress,Drawer,Button,Input,Table  } from 'antd';
+const {Paragraph, Text, Title } = Typography;
+const columns = [
+    {
+        title: '',
+        dataIndex: 'icon',
+    },
+      {
+        title: 'Tx Date',
+        dataIndex: 'txdate',
+        onFilter: (value, record) => record.txdate.indexOf(value) === 0,
+        sorter: (a, b) => a.txdate.length - b.txdate.length,
+        sortDirections: ['descend'],
+      },
+      {
+        title: 'Member Id',
+        dataIndex: 'memberid',
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => a.memberid - b.memberid,
+      },
+      {
+        title: 'Credit',
+        dataIndex: 'credit',
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => a.credit - b.credit,
+      },
+      {
+        title: 'Debit',
+        dataIndex: 'debit',
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => a.debit - b.debit,
+      },
+      {
+        title: 'Status',
+        dataIndex: 'status',
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => a.age - b.age,
+      },
+      {
+        title: 'Description',
+        dataIndex: 'description',
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => a.status - b.status,
+      },
+      {
+        title: 'Transaction Id',
+        dataIndex: 'transactionid',
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => a.transactionid - b.transactionid,
+      },
+    ];
+    const data = [
+        {
+          key: '1',
+          icon: (<span className="bg-color"><i className="icon md sentarrow c-pointer"></i></span>),
+          txdate: (<div><p className="mb-0 fs-16 fw-600">Sent</p><p className="mb-0 fs-12">Aug 10, 2021</p></div>),
+          memberid: 'Madhubaabu',
+          credit: (<div><p className="mb-0 fs-12">(USD)</p><p className="mb-0 fs-16 fw-600">189,744.94099586</p></div>),
+          debit: (<div><p className="mb-0 fs-12">(USD)</p><p className="mb-0 fs-16 fw-600">0</p></div>),
+          status: 'Transferred',
+          description:'Topup 189781.86-USD to USDT-189,744.94',
+          transactionid: 'f4388d0c-c326-48f8-8f85-6202e8ba746a'
+        },
+        {
+          key: '2',
+          icon: (<span className="bg-color"><i className="icon md sentarrow c-pointer"></i></span>),
+          txdate: (<div><p className="mb-0 fs-16 fw-600">Sent</p><p className="mb-0 fs-12">Aug 10, 2021</p></div>),
+          memberid: 'Madhubaabu',
+          credit: (<div><p className="mb-0 fs-12">(USD)</p><p className="mb-0 fs-16 fw-600">0</p></div>),
+          debit: (<div><p className="mb-0 fs-12">(USD)</p><p className="mb-0 fs-16 fw-600">1.1111</p></div>),
+          status: 'Transferred',
+          description:'Topup 189781.86-USD to USDT-189,744.94',
+          transactionid: 'f4388d0c-c326-48f8-8f85-6202e8ba746a'
+        },
+        
+      ];
+
+class Transactions extends Component {
+    
+render() {
+    return (<>
+    <Table className='mx-24' columns={columns} dataSource={data} />
+    </>)
+}
+}
+export default Transactions;
