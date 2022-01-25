@@ -84,8 +84,8 @@ const getVerification = (AccountId, code) => {
     return apiClient.get(ApiControllers.master + `OTPVerification/${AccountId}/${code}`)
 }
 
-const downloadKyc = () => {
-    return apiClient.get(ApiControllers.accounts + `DownloadFile`)
+const downloadKyc = (memberId) => {
+    return apiClient.get(ApiControllers.accounts + `DownloadFile/${memberId}`)
 }
 
 const encryptValue = (msg, key) => {
