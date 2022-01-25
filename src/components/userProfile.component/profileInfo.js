@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Typography, Button, Upload, notification, message, Tooltip } from "antd";
+import { Typography, Button, Upload, notification, message, Tooltip, Spin } from "antd";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 import { uploadClient } from "../../api";
@@ -12,7 +12,7 @@ import apiCalls from "../../api/apiCalls";
 import Loader from "../../Shared/loader";
 
 class ProfileInfo extends Component {
-  state = { Image: null, Loader: false };
+  state = { Image: null, Loader: false, fileLoader: false };
   uploadProps = {
     name: "file",
     multiple: false,
@@ -97,10 +97,16 @@ class ProfileInfo extends Component {
   };
 
   fileDownload = async () => {
-    debugger
+    this.setState({ ...this.state, fileLoader: true });
     let res = await apiCalls.downloadKyc();
     if (res.ok) {
-      window.open(res.data)
+      window.open(res.data);
+      message.destroy();
+      message.success({
+        content: "Document downloaded successfully",
+        className: "custom-msg"
+      });
+      this.setState({ ...this.state, fileLoader: false });
     }
   }
 
@@ -150,11 +156,13 @@ class ProfileInfo extends Component {
           )}
         </div>
         <div className="box contact-info coin-bal">
-          <Text className="basicinfo mb-0">User KYC Document</Text>
+          <Text className="basicinfo mb-0">Onboarding Document</Text>
           <ul class="m-0 pl-0">
-            <li class="c-pointer" onClick={this.fileDownload}>
-              <Tooltip title="Download KYC"><div><span class="icon md download" /></div></Tooltip>
-            </li>
+            {this.state.fileLoader ? <Spin size="Large" style={{ padding: 10 }} /> : <li>
+              <Tooltip title="Download">
+                <div onClick={this.fileDownload} className="c-pointer"><span className="icon md download" /></div>
+              </Tooltip>
+            </li>}
           </ul>
         </div>
         <div className="box basic-info">
