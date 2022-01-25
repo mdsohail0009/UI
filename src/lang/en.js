@@ -489,5 +489,6 @@ export default {
   thousandKText: "The maximum amount is $100K.",
   sucessText1: "Your order has been placed successfully,",
   sucessText2: "has been added into your wallet.",
-  sucessText3: "amount has been debited from your wallet."
+  sucessText3: "amount has been debited from your wallet.",
+  value_should_greater:" From coin value must be greater than zero"
 }

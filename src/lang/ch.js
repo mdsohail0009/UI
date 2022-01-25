@@ -485,5 +485,6 @@ export default {
   thousandKText: "最高金额为 10 万美元。",
   sucessText1: "您的订单已成功下单，",
   sucessText2: "已添加到您的钱包中。",
-  sucessText3: "金额已从您的钱包中扣除"
+  sucessText3: "金额已从您的钱包中扣除",
+  value_should_greater:"從硬幣價值必須大於零"
 }
