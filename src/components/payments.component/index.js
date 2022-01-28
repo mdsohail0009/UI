@@ -12,6 +12,9 @@ class Payments extends Component {
     }
     this.gridRef = React.createRef();
 }
+addPayment = () => {
+    this.props.history.push('payments/add')
+}
 gridColumns = [
     { field: "firstName", title:'First name', filter: true, isShowTime: true, filterType: "date", width: 150 },
     { field: "lastName", title: 'Last name', filter: true, width: 150 },
@@ -35,8 +38,8 @@ gridColumns = [
                         <Title className="basicinfo mb-0"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
                         <ul className="address-icons" style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0, display: 'flex' }}>
                             <li className="mr-16">
-                                <Tooltip placement="top" title={<Translate content="add" />}>
-                                    <span className="icon md add-icon mr-0" />
+                            <Tooltip placement="top" title={<Translate content="add" />}>
+                                    <span className="icon md add-icon mr-0" onClick={this.addPayment} />
                                 </Tooltip>
                             </li>
                             <li className="mr-16">
