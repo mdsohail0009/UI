@@ -12,9 +12,11 @@ const NotKyc = React.lazy(() => import('../components/sumSub.component/notKyc'))
 const OnBoarding = React.lazy(() => import('../layout/onboard.component'));
 const UserProfile = React.lazy(() => import('../components/userProfile.component/userProfile'));
 const RequestedDocs = React.lazy(() => import('../components/documents.component/requestedDocs'));
-const DocNotices = React.lazy(() => import("../components/shared/doc.notices"))
-const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"))
-const DashboardCharts = React.lazy(() => import("../components/dashboard.component/cockpitCharts"))
+const DocNotices = React.lazy(() => import("../components/shared/doc.notices"));
+const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"));
+const DashboardCharts = React.lazy(() => import("../components/dashboard.component/cockpitCharts"));
+const Payments = React.lazy(() => import("../components/payments.component"));
+
 class RouteConfig extends Component {
   render() {
     return <Switch>
@@ -33,6 +35,7 @@ class RouteConfig extends Component {
         <Route path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
         <ReactRoute path='/cockpitCharts' component={DashboardCharts} />
+        <ReactRoute path='/payments' component={Payments} />
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>
     </Switch>
