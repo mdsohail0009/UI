@@ -23,7 +23,6 @@ class Payments extends Component {
         { field: "modifiedDate", title: 'Modified Date', filter: true, width: 150 },
         { field: "modifiedBy", title: 'Modified By', filter: true, width: 150 },
         { field: "state", title: 'State', filter: true, width: 150 },
-
     ];
 
     addPayment = () => {
