@@ -16,6 +16,7 @@ const DocNotices = React.lazy(() => import("../components/shared/doc.notices"));
 const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"));
 const DashboardCharts = React.lazy(() => import("../components/dashboard.component/cockpitCharts"));
 const Payments = React.lazy(() => import("../components/payments.component"));
+const PaymentDetails = React.lazy(() => import("../components/payments.component/paymentDetails"));
 
 class RouteConfig extends Component {
   render() {
@@ -35,7 +36,15 @@ class RouteConfig extends Component {
         <Route path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
         <ReactRoute path='/cockpitCharts' component={DashboardCharts} />
-        <ReactRoute path='/payments' component={Payments} />
+        <ReactRoute
+          path="/payments"
+          render={({ match: { url } }) => (
+            <>
+              <ReactRoute path={`${url}`} component={Payments} exact />
+              <ReactRoute path={`${url}/add`} component={PaymentDetails} />
+            </>
+          )}
+        />
         <ReactRoute path="/" component={Dashboard} exact />
       </React.Suspense>
     </Switch>

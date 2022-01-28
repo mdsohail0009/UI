@@ -3,6 +3,9 @@ import { Typography, Button, Tooltip, Modal, Alert } from 'antd';
 import Translate from 'react-translate-component';
 
 class Payments extends Component {
+    addPayment = () => {
+        this.props.history.push('payments/add')
+    }
     render() {
         const { Title, Paragraph, Text } = Typography;
         return (
@@ -13,7 +16,7 @@ class Payments extends Component {
                         <ul className="address-icons" style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0, display: 'flex' }}>
                             <li className="mr-16">
                                 <Tooltip placement="top" title={<Translate content="add" />}>
-                                    <span className="icon md add-icon mr-0" />
+                                    <span className="icon md add-icon mr-0" onClick={this.addPayment} />
                                 </Tooltip>
                             </li>
                             <li className="mr-16">
