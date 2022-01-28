@@ -3,30 +3,34 @@ import List from "../grid.component";
 import apiCalls from '../../api/apiCalls';
 import { Typography, Button, Tooltip, Modal, Alert } from 'antd';
 import Translate from 'react-translate-component';
-import counterpart from 'counterpart';
+import { connect } from "react-redux";
+
 class Payments extends Component {
     constructor(props) {
         super(props);
-   this.state = {
-      // SwapGridURL: process.env.REACT_APP_GRID_API + "Swap/Accounts"
+        this.state = {
+        }
+        this.gridRef = React.createRef();
     }
-    this.gridRef = React.createRef();
-}
-gridColumns = [
-    { field: "firstName", title:'First name', filter: true, isShowTime: true, filterType: "date", width: 150 },
-    { field: "lastName", title: 'Last name', filter: true, width: 150 },
-    { field: "Currency", title: 'Currency', filter: true, width: 150 },
-    { field: "totalAmount", title: 'Total Amount', width: 150, filter: true },
-    { field: "count", title: 'Count', width: 150, filter: true },
-    { field: "createdDate", title:'Created date', width: 150, filter: true },
-    { field: " createdBy", title:'created by', filter: true, width: 150 },
-    { field: " modifiedDate", title:'modified date', filter: true, width: 150 },
-    { field: " modifiedBy", title:'modified by', filter: true, width: 150 },
-    { field: " state", title:'State', filter: true, width: 150 },
-    
-  ];
+    gridColumns = [
+        { field: "firstName", title: 'First Name', filter: true, isShowTime: true, filterType: "date", width: 150 },
+        { field: "lastName", title: 'Last Name', filter: true, width: 150 },
+        { field: "Currency", title: 'Currency', filter: true, width: 150 },
+        { field: "totalAmount", title: 'Total Amount', width: 150, filter: true },
+        { field: "count", title: 'Count', width: 150, filter: true },
+        { field: "createdDate", title: 'Created Date', width: 150, filter: true },
+        { field: "createdBy", title: 'Created By', filter: true, width: 150 },
+        { field: "modifiedDate", title: 'Modified Date', filter: true, width: 150 },
+        { field: "modifiedBy", title: 'Modified By', filter: true, width: 150 },
+        { field: "state", title: 'State', filter: true, width: 150 },
+
+    ];
+
+    addPayment = () => {
+        this.props.history.push('payments/add')
+    }
+
     render() {
-        
         const { Title, Paragraph, Text } = Typography;
         return (
             <>
@@ -36,26 +40,18 @@ gridColumns = [
                         <ul className="address-icons" style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0, display: 'flex' }}>
                             <li className="mr-16">
                                 <Tooltip placement="top" title={<Translate content="add" />}>
-                                    <span className="icon md add-icon mr-0" />
-                                </Tooltip>
-                            </li>
-                            <li className="mr-16">
-                                <Tooltip placement="top" title={<Translate content="edit" />}>
-                                    <span className="icon md eye-icon mr-0" />
+                                    <span className="icon md add-icon mr-0" onClick={this.addPayment} />
                                 </Tooltip>
                             </li>
                         </ul>
                     </div>
                     <div className="box basic-info text-white">
-                        Payments Master grid
                         <List
-                            showActionBar={true}
-                            //onActionClick={(key) => this.onActionClick(key)}
-                            // pKey={"payments"}
+                            showActionBar={false}
                             ref={this.gridRef}
-                            url={process.env.REACT_APP_GRID_API + "MassPayments/UserPayments/85c6f93c-bcdf-4609-817f-1218f5ac32d0"}
+                            url={process.env.REACT_APP_GRID_API + `MassPayments/UserPayments/${this.props.userConfig?.id}`}
                             columns={this.gridColumns}
-/>
+                        />
                     </div>
                 </div>
             </>
@@ -63,4 +59,8 @@ gridColumns = [
     }
 }
 
-export default Payments;
+const connectStateToProps = ({ userConfig }) => {
+    return { userConfig: userConfig.userProfileInfo };
+};
+
+export default connect(connectStateToProps, null)(Payments);
