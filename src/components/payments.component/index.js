@@ -1,12 +1,32 @@
 import React, { Component } from 'react';
+import List from "../grid.component";
+import apiCalls from '../../api/apiCalls';
 import { Typography, Button, Tooltip, Modal, Alert } from 'antd';
 import Translate from 'react-translate-component';
-
+import counterpart from 'counterpart';
 class Payments extends Component {
-    addPayment = () => {
-        this.props.history.push('payments/add')
+    constructor(props) {
+        super(props);
+   this.state = {
+      // SwapGridURL: process.env.REACT_APP_GRID_API + "Swap/Accounts"
     }
+    this.gridRef = React.createRef();
+}
+gridColumns = [
+    { field: "firstName", title:'First name', filter: true, isShowTime: true, filterType: "date", width: 150 },
+    { field: "lastName", title: 'Last name', filter: true, width: 150 },
+    { field: "Currency", title: 'Currency', filter: true, width: 150 },
+    { field: "totalAmount", title: 'Total Amount', width: 150, filter: true },
+    { field: "count", title: 'Count', width: 150, filter: true },
+    { field: "createdDate", title:'Created date', width: 150, filter: true },
+    { field: " createdBy", title:'created by', filter: true, width: 150 },
+    { field: " modifiedDate", title:'modified date', filter: true, width: 150 },
+    { field: " modifiedBy", title:'modified by', filter: true, width: 150 },
+    { field: " state", title:'State', filter: true, width: 150 },
+    
+  ];
     render() {
+        
         const { Title, Paragraph, Text } = Typography;
         return (
             <>
@@ -16,7 +36,7 @@ class Payments extends Component {
                         <ul className="address-icons" style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0, display: 'flex' }}>
                             <li className="mr-16">
                                 <Tooltip placement="top" title={<Translate content="add" />}>
-                                    <span className="icon md add-icon mr-0" onClick={this.addPayment} />
+                                    <span className="icon md add-icon mr-0" />
                                 </Tooltip>
                             </li>
                             <li className="mr-16">
@@ -28,6 +48,14 @@ class Payments extends Component {
                     </div>
                     <div className="box basic-info text-white">
                         Payments Master grid
+                        <List
+                            showActionBar={true}
+                            //onActionClick={(key) => this.onActionClick(key)}
+                            // pKey={"payments"}
+                            ref={this.gridRef}
+                            url={process.env.REACT_APP_GRID_API + "MassPayments/UserPayments/85c6f93c-bcdf-4609-817f-1218f5ac32d0"}
+                            columns={this.gridColumns}
+/>
                     </div>
                 </div>
             </>
