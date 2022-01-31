@@ -1,29 +1,101 @@
 import React, { Component } from 'react';
-import { Typography, Button, Tooltip, Modal, Alert,Form,Select,Col } from 'antd';
+import { Typography, Button, Tooltip, Modal, Alert,Form,Select,Col,Input} from 'antd';
 import Translate from 'react-translate-component';
 import List from "../grid.component";
-import FormItem from 'antd/lib/form/FormItem';
+import {getCurrencyLu,getPaymentsData} from './api'
+import NumberFormat from 'react-number-format';
+import { connect } from "react-redux";
 class PaymentDetails extends Component {
     constructor(props) {
         super(props);
-   this.state = {     
+   this.state = {  
+       currency:[],  
+       selectedObj: {}, 
+       currencyValue:""
     }
     this.gridRef = React.createRef();
 }
     backToPayments = () => {
         this.props.history.push('/payments')
     }
-    gridColumns = [
-        { field: "firstName", title:' Bank name', filter: true, isShowTime: true, filterType: "date", width: 380 },
-        { field: "lastName", title: 'Account Number', filter: true, width: 370 },
-        {field: "amount", title: "Amount",width: 400,
-            customCell: (props) => (<td className="text-center">
-            <input />  </td> )},
+        componentDidMount() {
+            this.getCurrencyLookup()
+            this.getPayments()
+        }
+
+    handleChange=()=>{
+
+        }
+
+    getCurrencyLookup=async()=>{
+        let response=await getCurrencyLu("f8be2fd6-9778-4408-ba57-7502046e13a5")
+        if(response.ok){
+            console.log(response.data)
+            this.setState({...this.state,currency:response.data });
+          } 
+    }
+    getPayments=async()=>{
+        debugger
+        let response=await getPaymentsData("f8be2fd6-9778-4408-ba57-7502046e13a5","00000000-0000-0000-0000-000000000000") 
+        if(response.ok){
+            console.log("ddddddd",response.data)
+        }
+    }
+    handleInputChange = (prop, e) => {
+        const rowChecked = prop.dataItem;
+        const target = e.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        let { selection } = this.state;
+        let idx = selection.indexOf(rowChecked.id);
+        if (selection) {
+            selection = [];
+        }
+        if (idx > -1) {
+            selection.splice(idx, 1)
+        }
+        else {
+            selection.push(rowChecked.id)
+        }
+        this.setState({ ...this.state, [name]: value, selectedObj: rowChecked, selection });
+        console.log(this.state.selectedObj)
+    }
+    // gridColumns = [
+    //     {
+    //         field: "", title: "", width: 50,
+    //         customCell: (props) => (
+    //             <td className="text-center">
+                    // <label className="text-center custom-checkbox">
+                    //     <input
+                    //         id={props.dataItem.id}
+                    //         name="check"
+                    //         type="checkbox"
+                    //         // checked={this.state.selection.indexOf(props.dataItem.id) > -1}
+                    //         onChange={(e) => this.handleInputChange(props, e)}
+                    //         className="grid_check_box"
+                    //     />
+                    //     <span></span>
+                    // </label>
+    //             </td>
+    //         )
+    //     },
+    //     { field: "bankname", title: 'Bank Name',width: 370 },
+    //     { field: "accountnumber", title: 'Account Number',width: 370 },
+    //     {field: "amount", title: "Amount",width: 360,
+    //         customCell: (props) => (<td className="text-center" style={{color:"black"}}>
+    //         <NumberFormat value=""
+    //         style={{backgroundColor:"gray",border:"none",borderRadius:"5px"}}
+    //         thousandSeparator={true}
+    //         type="text"
+    //         prefix={'$'} 
+    //          renderText={(value, props) =>
+    //              <div {...props}>{value}</div>} /> </td> )},
         
-      ];
+    //   ];
       
     render() {
         const Option = Select;
+        const {currency}=this.state;
         const { Title, Paragraph, Text } = Typography;
         return (
             <>
@@ -33,10 +105,9 @@ class PaymentDetails extends Component {
                     </div>
                     <div className="box basic-info text-white">
                         <Form>
+                        <div className="d-flex " style={{ justifyContent: "flex-end" }}>
                         <Col xs={18} sm={18} md={9} lg={6} xxl={4}>
                         <Form.Item
-                            label="Add payments grid"
-                            // className="input-label"
                             rules={[
                             {
                             required: true,
@@ -45,22 +116,49 @@ class PaymentDetails extends Component {
                             <Select
                             className="cust-input"
                             placeholder="Select Currency"
+                            onChange={() => this.handleChange()}
                             >
-                           <Option value="1">USD</Option>
-                           <Option value="2">GBP</Option>
-                           <Option value="3">EUR</Option>
+                            {currency?.map((item ) => (
+                                <Option
+                                   
+                                    className="btns-primarys ants-btns "
+                                    value={item.currencyCode}
+                                > {item.currencyCode}</Option>))}
                             </Select>
                             </Form.Item>
                             </Col>
+                            </div>
                         </Form>
-                        <List
+                        {/* <List
                             showActionBar={true}
                             //onActionClick={(key) => this.onActionClick(key)}
                             // pKey={"payments"}
                             ref={this.gridRef}
-                            url={process.env.REACT_APP_GRID_API + "MassPayments/UserPayments/85c6f93c-bcdf-4609-817f-1218f5ac32d0"}
+                            url={process.env.REACT_APP_GRID_API + `MassPayments/CreatPayment/f8be2fd6-9778-4408-ba57-7502046e13a5/00000000-0000-0000-0000-000000000000`}
                             columns={this.gridColumns}
-/>
+/> */}
+
+                        <div className="d-flex">
+                            <label className="text-center custom-checkbox">
+                                <input
+                                    // id={props.dataItem.id}
+                                    name="check"
+                                    type="checkbox"
+                                    // checked={this.state.selection.indexOf(props.dataItem.id) > -1}
+                                    // onChange={(e) => this.handleInputChange(props, e)}
+                                    className="grid_check_box"
+                                />
+                                <span></span>
+                            </label>
+                            <Text>
+                                HDFC
+                            </Text>
+                            <Text>
+                                4569875432134
+                            </Text>
+                            <Input className="cust-input" style={{width:200}} placeholder="Amount" type="text" />
+                        </div>
+
                             <div className="text-right mt-24">
                                         <Button  className="pop-btn mt-36" htmlType="submit">
                                             Pay Now
@@ -81,5 +179,7 @@ class PaymentDetails extends Component {
         )
     }
 }
-
-export default PaymentDetails;
+const connectStateToProps = ({ userConfig }) => {
+    return { userConfig: userConfig.userProfileInfo };
+};
+export default connect(connectStateToProps, null) (PaymentDetails);

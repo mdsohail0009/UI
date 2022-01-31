@@ -13,6 +13,24 @@ class Payments extends Component {
         this.gridRef = React.createRef();
     }
     gridColumns = [
+        {
+            field: "", title: "", width: 50,
+            customCell: (props) => (
+                <td className="text-center">
+                    <label className="text-center custom-checkbox">
+                        <input
+                            id={props.dataItem.id}
+                            name="check"
+                            type="checkbox"
+                            // checked={this.state.selection.indexOf(props.dataItem.id) > -1}
+                            onChange={(e) => this.handleInputChange(props, e)}
+                            className="grid_check_box"
+                        />
+                        <span></span>
+                    </label>
+                </td>
+            )
+        },
         { field: "firstName", title: 'First Name', filter: true, isShowTime: true, filterType: "date", width: 150 },
         { field: "lastName", title: 'Last Name', filter: true, width: 150 },
         { field: "Currency", title: 'Currency', filter: true, width: 150 },
