@@ -723,15 +723,12 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .side-drawer .coin-info:last-child{margin-bottom: 60px;}
 
 /* --Payments --*/
-.pay-grid{width: 100%;}
+.pay-grid{width: 100%;border: 1px solid rgba(0,0,0,.08);;}
 .pay-grid thead th{background-color: var(--bgGloom);padding: 8px; color: var(--textWhite30);font-weight: 400;text-align: left;}
-.pay-grid thead th:first-child{width: 50px;}
 .pay-grid thead th:last-child{width: 350px;}
-.pay-grid tbody td{padding: 8px; color: var(--textWhite30);font-weight: 400;border-bottom: 1px solid var(--borderGrey);}
-.pay-header span, .pay-item span{flex: 1;display: inline-block;}
-.pay-header span:first-child, .pay-item span:first-child{flex: 0 50px;}
-.pay-item, .pay-header{display: flex; align-items: center;}
-.pay-item{padding: 8px;border-bottom: 1px solid var(--borderGrey);}
+.pay-grid tbody td{padding: 8px; color: var(--textWhite30);font-weight: 400;border-bottom: 1px solid rgba(0,0,0,.08);}
+.pay-grid tbody tr:nth-child(even){background-color: rgba(0,0,0,.04);}
+.pay-grid tbody tr:hover{background-color: var(--bgDarkGrey);}
 
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}

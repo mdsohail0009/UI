@@ -17,6 +17,7 @@ const CoinDetails = React.lazy(() => import("../components/dashboard.component/c
 const DashboardCharts = React.lazy(() => import("../components/dashboard.component/cockpitCharts"));
 const Payments = React.lazy(() => import("../components/payments.component"));
 const PaymentDetails = React.lazy(() => import("../components/payments.component/paymentDetails"));
+const paymentsView = React.lazy(() => import("../components/payments.component/paymentsView"));
 
 class RouteConfig extends Component {
   render() {
@@ -41,7 +42,8 @@ class RouteConfig extends Component {
           render={({ match: { url } }) => (
             <>
               <ReactRoute path={`${url}`} component={Payments} exact />
-              <ReactRoute path={`${url}/add`} component={PaymentDetails} />
+              <ReactRoute path={`${url}/:id/add`} component={PaymentDetails} />
+              <ReactRoute path={`${url}/:id/view`} component={paymentsView} />
             </>
           )}
         />

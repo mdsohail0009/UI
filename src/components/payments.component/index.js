@@ -12,6 +12,9 @@ class Payments extends Component {
         }
         this.gridRef = React.createRef();
     }
+    paymentsView = async (props) => {
+        this.props.history.push(`payments/${props.dataItem.id}/view`);
+    }
     gridColumns = [
         {
             field: "", title: "", width: 50,
@@ -31,7 +34,10 @@ class Payments extends Component {
                 </td>
             )
         },
-        { field: "firstName", title: 'First Name', filter: true, width: 150 },
+        {
+            field: "", title: 'First Name', filter: true, width: 150, customCell: (props) => (
+                <td><div className="gridLink" onClick={() => this.paymentsView(props)}>{props.dataItem.firstName}</div></td>)
+        },
         { field: "lastName", title: 'Last Name', filter: true, width: 150 },
         { field: "Currency", title: 'Currency', filter: true, width: 150 },
         { field: "totalAmount", title: 'Total Amount', width: 150, filter: true },
@@ -44,7 +50,7 @@ class Payments extends Component {
     ];
 
     addPayment = () => {
-        this.props.history.push('payments/add')
+        this.props.history.push(`payments/00000000-0000-0000-0000-000000000000/add`)
     }
 
     render() {
