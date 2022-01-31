@@ -13,7 +13,8 @@ class PaymentDetails extends Component {
             selectedObj: {},
             currencyValue: "",
             paymentsData: [],
-            paymentSavedata: []
+            paymentSavedata: [],
+            loading: false
         }
         this.gridRef = React.createRef();
     }

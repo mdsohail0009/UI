@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getPaymentsData } from './api';
-import { Typography, Button, Input } from 'antd';
+import { Typography, Button, Spin } from 'antd';
 import Translate from 'react-translate-component';
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
@@ -9,24 +9,25 @@ class PaymentsView extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            paymentsData: []
+            paymentsData: [],
+            loading: false
         }
     }
     componentDidMount() {
-        this.getPaymentsViewDate();
+        this.getPaymentsViewData();
     }
-    getPaymentsViewDate = async () => {
-        debugger
+    getPaymentsViewData = async () => {
+        this.setState({ ...this.state, loading: true });
         let response = await getPaymentsData(this.props.match.params.id, this.props.userConfig?.userId);
         if (response.ok) {
-            this.setState({ paymentsData: response.data.paymentsDetails });
+            this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
         }
     }
     backToPayments = () => {
         this.props.history.push('/payments')
     }
     render() {
-        const { paymentsData } = this.state;
+        const { paymentsData, loading } = this.state;
         const { Title, Text } = Typography;
         return (
             <>
@@ -60,6 +61,8 @@ class PaymentsView extends Component {
                                         </>
                                     )
                                 })}
+                                {paymentsData.length === 0 && loading && <tr>
+                                    <td colSpan='3' className='text-center p-16'><Spin size='default' /></td></tr>}
                             </tbody>
                         </table>
                         <div className="text-right mt-36">
