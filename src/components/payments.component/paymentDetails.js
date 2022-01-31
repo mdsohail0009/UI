@@ -1,47 +1,46 @@
 import React, { Component } from 'react';
-import { Typography, Button, Tooltip, Modal, Alert,Form,Select,Col,Input} from 'antd';
+import { Typography, Button, Tooltip, Modal, Alert, Form, Select, Col, Input } from 'antd';
 import Translate from 'react-translate-component';
 import List from "../grid.component";
-import {getCurrencyLu,getPaymentsData} from './api'
+import { getCurrencyLu, getPaymentsData } from './api'
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 class PaymentDetails extends Component {
     constructor(props) {
         super(props);
-   this.state = {  
-       currency:[],  
-       selectedObj: {}, 
-       currencyValue:"",
-       paymentsData:[],
-       paymentSavedata:[]
+        this.state = {
+            currency: [],
+            selectedObj: {},
+            currencyValue: "",
+            paymentsData: [],
+            paymentSavedata: []
+        }
+        this.gridRef = React.createRef();
     }
-    this.gridRef = React.createRef();
-}
     backToPayments = () => {
         this.props.history.push('/payments')
     }
-        componentDidMount() {
-            this.getCurrencyLookup()
-            this.getPayments()
-        }
-
-    handleChange=()=>{
-
-        }
-
-    getCurrencyLookup=async()=>{
-        let response=await getCurrencyLu(this.props.userConfig?.id)
-        if(response.ok){
-            console.log(response.data)
-            this.setState({...this.state,currency:response.data });
-          } 
+    componentDidMount() {
+        this.getCurrencyLookup()
+        this.getPayments()
     }
-    getPayments=async()=>{
-        debugger
-        let response=await getPaymentsData("00000000-0000-0000-0000-000000000000",this.props.userConfig?.id) 
-        if(response.ok){
-            console.log("ddddddd",response.data)
-            this.setState({...this.state,paymentsData:response.data.paymentsDetails});
+
+    handleChange = () => {
+
+    }
+
+    getCurrencyLookup = async () => {
+        let response = await getCurrencyLu(this.props.userConfig?.id)
+        if (response.ok) {
+            console.log(response.data)
+            this.setState({ ...this.state, currency: response.data });
+        }
+    }
+    getPayments = async () => {
+        let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id)
+        if (response.ok) {
+            console.log("ddddddd", response.data)
+            this.setState({ ...this.state, paymentsData: response.data.paymentsDetails });
             console.log(this.state.paymentsData)
         }
     }
@@ -69,17 +68,17 @@ class PaymentDetails extends Component {
     //         field: "", title: "", width: 50,
     //         customCell: (props) => (
     //             <td className="text-center">
-                    // <label className="text-center custom-checkbox">
-                    //     <input
-                    //         id={props.dataItem.id}
-                    //         name="check"
-                    //         type="checkbox"
-                    //         // checked={this.state.selection.indexOf(props.dataItem.id) > -1}
-                    //         onChange={(e) => this.handleInputChange(props, e)}
-                    //         className="grid_check_box"
-                    //     />
-                    //     <span></span>
-                    // </label>
+    // <label className="text-center custom-checkbox">
+    //     <input
+    //         id={props.dataItem.id}
+    //         name="check"
+    //         type="checkbox"
+    //         // checked={this.state.selection.indexOf(props.dataItem.id) > -1}
+    //         onChange={(e) => this.handleInputChange(props, e)}
+    //         className="grid_check_box"
+    //     />
+    //     <span></span>
+    // </label>
     //             </td>
     //         )
     //     },
@@ -94,12 +93,12 @@ class PaymentDetails extends Component {
     //         prefix={'$'} 
     //          renderText={(value, props) =>
     //              <div {...props}>{value}</div>} /> </td> )},
-        
+
     //   ];
-      
+
     render() {
         const Option = Select;
-        const {currency,paymentsData}=this.state;
+        const { currency, paymentsData } = this.state;
         const { Title, Paragraph, Text } = Typography;
         return (
             <>
@@ -109,34 +108,35 @@ class PaymentDetails extends Component {
                     </div>
                     <div className="box basic-info text-white">
                         <Form
-                          
-                         onFinish={this.saveRolesDetails}
-                         autoComplete="off">
-                        <div className="d-flex " style={{ justifyContent: "flex-end" }}>
-                        <Col xs={18} sm={18} md={9} lg={4} xxl={4}>
-                        <Form.Item
-                            rules={[
-                            {
-                            required: true,
-                            message: 'Is required',
-                            },]}>
-                            <Select
-                            className="cust-input"
-                            placeholder="Select Currency"
-                            onChange={() => this.handleChange()}
-                            >
-                            {currency?.map((item ) => (
-                                <Option
-                                   
-                                    className="btns-primarys ants-btns "
-                                    value={item.currencyCode}
-                                > {item.currencyCode}</Option>))}
-                            </Select>
-                            </Form.Item>
-                            </Col>
+
+                            onFinish={this.saveRolesDetails}
+                            autoComplete="off">
+                            <div className="d-flex " style={{ justifyContent: "flex-end" }}>
+                                <Col xs={18} sm={18} md={9} lg={4} xxl={4} className='mb-0'>
+                                    <Form.Item
+                                        className='mb-16'
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'Is required',
+                                            },]}>
+                                        <Select
+                                            className="cust-input"
+                                            placeholder="Select Currency"
+                                            onChange={() => this.handleChange()}
+                                        >
+                                            {currency?.map((item) => (
+                                                <Option
+
+                                                    className="btns-primarys ants-btns "
+                                                    value={item.currencyCode}
+                                                > {item.currencyCode}</Option>))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
                             </div>
-                       
-                        {/* <List
+
+                            {/* <List
                             showActionBar={true}
                             //onActionClick={(key) => this.onActionClick(key)}
                             // pKey={"payments"}
@@ -145,7 +145,7 @@ class PaymentDetails extends Component {
                             columns={this.gridColumns}
 /> */}
 
-                        {/* <div className="d-flex">
+                            {/* <div className="d-flex">
                             <label className="text-center custom-checkbox">
                                 <input
                                     // id={props.dataItem.id}
@@ -168,52 +168,59 @@ class PaymentDetails extends Component {
                             </div>})}
                             <Input className="cust-input" style={{width:200}} placeholder="Amount" type="text" />
                         </div> */}
-
-                        <div style={{alignItems:"center"}}>
-                            <table>
-                                <thead>
-                                    <tr>
-                                    <th></th>
-                                    <th>Bank Name</th>
-                                    <th>Account Number</th>
-                                    <th>Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                {paymentsData?.map((item,i)=>{
-                                    return(
-                                        <>
-                                        <tr key={i} >
-                                            <td><input 
-                                             name="check"
-                                             type="checkbox" /> 
-                                             </td>
-                                          <td>{item.bankname}</td>
-                                          <td>{item.accountnumber}</td>
-                                          <td>
-                                              <Input type="number" />
-                                          </td>
+                            <div style={{ alignItems: "center" }}>
+                                <table className='pay-grid'>
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Bank Name</th>
+                                            <th>Account Number</th>
+                                            <th>Amount</th>
                                         </tr>
-                                      </>
-                                    )})}
-                                </tbody>
-                            </table>
-                        </div>
+                                    </thead>
+                                    <tbody>
+                                        {paymentsData?.map((item, i) => {
+                                            return (
+                                                <>
+                                                    <tr key={i} >
+                                                        <td>
+                                                            <label className="text-center custom-checkbox">
+                                                                <input
+                                                                    // id={props.dataItem.id}
+                                                                    name="check"
+                                                                    type="checkbox"
+                                                                    // checked={this.state.selection.indexOf(props.dataItem.id) > -1}
+                                                                    // onChange={(e) => this.handleInputChange(props, e)}
+                                                                    className="grid_check_box"
+                                                                />
+                                                                <span></span>
+                                                            </label>
+                                                        </td>
+                                                        <td>{item.bankname}</td>
+                                                        <td>{item.accountnumber}</td>
+                                                        <td>
+                                                            <Input className="cust-input" style={{ height: 44 }} placeholder="Amount" type="text" />
+                                                        </td>
+                                                    </tr>
+                                                </>
+                                            )
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
                         </Form>
-                            <div className="text-right mt-24">
-                                        <Button  className="pop-btn mt-36" htmlType="submit">
-                                            Pay Now
-                                        </Button>
-                                        <Button
-                                           
-                                            className="pop-btn mt-36"
-                                            style={{ margin: "0 8px" }}
-                                            onClick={this.backToPayments}
-                                        >
-                                            Cancel
-                                        </Button>
-                                        </div>
-                           
+                        <div className="text-right mt-36">
+                            <Button
+                                className="pop-cancel mr-36"
+                                style={{ margin: "0 8px" }}
+                                onClick={this.backToPayments}
+                            >
+                                Cancel
+                            </Button>
+                            <Button className="pop-btn px-36" htmlType="submit">
+                                Pay Now
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </>
@@ -223,4 +230,4 @@ class PaymentDetails extends Component {
 const connectStateToProps = ({ userConfig }) => {
     return { userConfig: userConfig.userProfileInfo };
 };
-export default connect(connectStateToProps, null) (PaymentDetails);
+export default connect(connectStateToProps, null)(PaymentDetails);

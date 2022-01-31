@@ -31,15 +31,15 @@ class Payments extends Component {
                 </td>
             )
         },
-        { field: "firstName", title: 'First Name', filter: true, isShowTime: true, filterType: "date", width: 150 },
+        { field: "firstName", title: 'First Name', filter: true, width: 150 },
         { field: "lastName", title: 'Last Name', filter: true, width: 150 },
         { field: "Currency", title: 'Currency', filter: true, width: 150 },
         { field: "totalAmount", title: 'Total Amount', width: 150, filter: true },
-        { field: "count", title: 'Count', width: 150, filter: true },
-        { field: "createdDate", title: 'Created Date', width: 150, filter: true },
-        { field: "createdBy", title: 'Created By', filter: true, width: 150 },
+        { field: "count", title: 'Count', width: 130, filter: true },
+        { field: "createdDate", title: 'Created Date', width: 150, filter: true, filterType: "date" },
+        //{ field: "createdBy", title: 'Created By', filter: true, width: 150 },
         { field: "modifiedDate", title: 'Modified Date', filter: true, width: 150 },
-        { field: "modifiedBy", title: 'Modified By', filter: true, width: 150 },
+        // { field: "modifiedBy", title: 'Modified By', filter: true, width: 150 },
         { field: "state", title: 'State', filter: true, width: 150 },
     ];
 
