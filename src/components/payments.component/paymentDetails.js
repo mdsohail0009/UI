@@ -11,7 +11,9 @@ class PaymentDetails extends Component {
    this.state = {  
        currency:[],  
        selectedObj: {}, 
-       currencyValue:""
+       currencyValue:"",
+       paymentsData:[],
+       paymentSavedata:[]
     }
     this.gridRef = React.createRef();
 }
@@ -28,7 +30,7 @@ class PaymentDetails extends Component {
         }
 
     getCurrencyLookup=async()=>{
-        let response=await getCurrencyLu("f8be2fd6-9778-4408-ba57-7502046e13a5")
+        let response=await getCurrencyLu(this.props.userConfig?.id)
         if(response.ok){
             console.log(response.data)
             this.setState({...this.state,currency:response.data });
@@ -36,9 +38,11 @@ class PaymentDetails extends Component {
     }
     getPayments=async()=>{
         debugger
-        let response=await getPaymentsData("f8be2fd6-9778-4408-ba57-7502046e13a5","00000000-0000-0000-0000-000000000000") 
+        let response=await getPaymentsData("00000000-0000-0000-0000-000000000000",this.props.userConfig?.id) 
         if(response.ok){
             console.log("ddddddd",response.data)
+            this.setState({...this.state,paymentsData:response.data.paymentsDetails});
+            console.log(this.state.paymentsData)
         }
     }
     handleInputChange = (prop, e) => {
@@ -95,7 +99,7 @@ class PaymentDetails extends Component {
       
     render() {
         const Option = Select;
-        const {currency}=this.state;
+        const {currency,paymentsData}=this.state;
         const { Title, Paragraph, Text } = Typography;
         return (
             <>
@@ -104,9 +108,12 @@ class PaymentDetails extends Component {
                         <Title className="basicinfo mb-0"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
                     </div>
                     <div className="box basic-info text-white">
-                        <Form>
+                        <Form
+                          
+                         onFinish={this.saveRolesDetails}
+                         autoComplete="off">
                         <div className="d-flex " style={{ justifyContent: "flex-end" }}>
-                        <Col xs={18} sm={18} md={9} lg={6} xxl={4}>
+                        <Col xs={18} sm={18} md={9} lg={4} xxl={4}>
                         <Form.Item
                             rules={[
                             {
@@ -128,7 +135,7 @@ class PaymentDetails extends Component {
                             </Form.Item>
                             </Col>
                             </div>
-                        </Form>
+                       
                         {/* <List
                             showActionBar={true}
                             //onActionClick={(key) => this.onActionClick(key)}
@@ -138,7 +145,7 @@ class PaymentDetails extends Component {
                             columns={this.gridColumns}
 /> */}
 
-                        <div className="d-flex">
+                        {/* <div className="d-flex">
                             <label className="text-center custom-checkbox">
                                 <input
                                     // id={props.dataItem.id}
@@ -150,15 +157,49 @@ class PaymentDetails extends Component {
                                 />
                                 <span></span>
                             </label>
+                            {paymentsData?.map((item,idx)=>{
+                                <div key={idx}>
                             <Text>
-                                HDFC
+                                {item.bankname}HDFC
                             </Text>
-                            <Text>
-                                4569875432134
+                           <Text>
+                                {item.accountnumber}HDFC
                             </Text>
+                            </div>})}
                             <Input className="cust-input" style={{width:200}} placeholder="Amount" type="text" />
-                        </div>
+                        </div> */}
 
+                        <div style={{alignItems:"center"}}>
+                            <table>
+                                <thead>
+                                    <tr>
+                                    <th></th>
+                                    <th>Bank Name</th>
+                                    <th>Account Number</th>
+                                    <th>Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {paymentsData?.map((item,i)=>{
+                                    return(
+                                        <>
+                                        <tr key={i} >
+                                            <td><input 
+                                             name="check"
+                                             type="checkbox" /> 
+                                             </td>
+                                          <td>{item.bankname}</td>
+                                          <td>{item.accountnumber}</td>
+                                          <td>
+                                              <Input type="number" />
+                                          </td>
+                                        </tr>
+                                      </>
+                                    )})}
+                                </tbody>
+                            </table>
+                        </div>
+                        </Form>
                             <div className="text-right mt-24">
                                         <Button  className="pop-btn mt-36" htmlType="submit">
                                             Pay Now
