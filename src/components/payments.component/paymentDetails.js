@@ -124,6 +124,7 @@ class PaymentDetails extends Component {
                                             className="cust-input"
                                             placeholder="Select Currency"
                                             onChange={() => this.handleChange()}
+                                            dropdownClassName='select-drpdwn'
                                         >
                                             {currency?.map((item) => (
                                                 <Option

@@ -57,7 +57,7 @@ class Payments extends Component {
                         <ul className="address-icons" style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0, display: 'flex' }}>
                             <li className="mr-16">
                                 <Tooltip placement="top" title={<Translate content="add" />}>
-                                    <span className="icon md add-icon mr-0" onClick={this.addPayment} />
+                                    <span className="icon md add-icon mr-0 c-pointer" onClick={this.addPayment} />
                                 </Tooltip>
                             </li>
                         </ul>
