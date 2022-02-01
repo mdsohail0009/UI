@@ -56,6 +56,7 @@ class PaymentDetails extends Component {
         }
     }
     handleCheckChange = (e, val) => {
+        debugger
         const { paymentsData, paymentSavedata, selectedObj } = this.state;
         if (e.target.checked) {
             const payrecord = paymentsData.find(item => item.id === val.id);
@@ -64,14 +65,17 @@ class PaymentDetails extends Component {
             if (payrecord.amount != null) {
                 paymentSavedata.push(payrecord);
             } else {
-                this.setState({ ...this.state, errorMessage: "Please enter amount" })
+                 e.target.checked=false
+                this.setState({ ...this.state, errorMessage: "Please enter amount" });
             }
 
         }
         else {
+            selectedObj.amount=""
             const payrecord = paymentSavedata.filter(item => item.id !== val.id);
-            const finalPays = paymentSavedata.splice(1, paymentSavedata.length, payrecord);
-            this.setState({ paymentSavedata: finalPays })
+            // const finalPays = paymentSavedata.splice(1, paymentSavedata.length, payrecord);
+            this.setState({ paymentSavedata: payrecord })
+            
         }
     }
 
@@ -212,7 +216,6 @@ class PaymentDetails extends Component {
                                                         <td>
                                                             <NumberFormat className="cust-input text-right mb-0"
                                                                 customInput={Input} thousandSeparator={true} prefix={""}
-
                                                                 placeholder="0.00"
                                                                 decimalScale={2}
                                                                 allowNegative={false}
