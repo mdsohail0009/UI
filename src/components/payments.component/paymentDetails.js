@@ -1,5 +1,5 @@
 import React, { Component,createRef } from 'react';
-import { Typography, Button,  Form, Select, Col,message, Input } from 'antd';
+import { Typography, Button,  Form, Select, Col,message, Input,Alert } from 'antd';
 import Translate from 'react-translate-component';
 import { getCurrencyLu, getPaymentsData,savePayments } from './api'
 import NumberFormat from 'react-number-format';
@@ -15,7 +15,9 @@ class PaymentDetails extends Component {
             paymentObj:{},
             currencyValue: "",
             paymentsData: [],
-            paymentSavedata: [], errorbtnDisabled: true
+            paymentSavedata: [],
+             btnDisabled: true,
+             errorMessage: null
         }
         this.gridRef = React.createRef();
     }
@@ -53,23 +55,26 @@ class PaymentDetails extends Component {
             console.log(this.state.paymentsData)
         }
     }
-    handleInputChange = (e, val) => {
+    handleCheckChange = (e, val) => {
         debugger
-        const { paymentsData, paymentSavedata } = this.state;
-        if (e.target.checked) {
-        const payrecord = paymentsData.find(item => item.id === val.id);
-        console.log(payrecord);
-        payrecord.currency=this.state.selectedObj.currency;
-        payrecord.amount=this.state.selectedObj.amount;
-        paymentSavedata.push(payrecord);
-        } else {
-        //const existRecords = [...paymentSavedata];
-        const payrecord = paymentSavedata.filter(item => item.id !== val.id);
-        const finalPays = paymentSavedata.splice(0, paymentSavedata.length, payrecord);
-        console.log(paymentSavedata)
-        this.setState({ paymentSavedata: finalPays })
-        }
-        console.log("Payments data==========", paymentSavedata)
+        const { paymentsData, paymentSavedata,selectedObj } = this.state;
+      
+            if (e.target.checked) {
+                const payrecord = paymentsData.find(item => item.id === val.id);
+                console.log(payrecord);
+                payrecord.currency=this.state.selectedObj.currency;
+                payrecord.amount=this.state.selectedObj.amount;
+                paymentSavedata.push(payrecord);
+                } 
+                else {
+                //const existRecords = [...paymentSavedata];
+                const payrecord = paymentSavedata.filter(item => item.id !== val.id);
+                const finalPays = paymentSavedata.splice(0, paymentSavedata.length, payrecord);
+                console.log(paymentSavedata)
+                this.setState({ paymentSavedata: finalPays })
+                }
+                console.log("Payments data==========", paymentSavedata)
+      
         }
     // checkAllChange=(event,item)=>{
     //     console.log(item);
@@ -124,6 +129,14 @@ class PaymentDetails extends Component {
                     <div className='mb-16'>
                         <Title className="basicinfo mb-0"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
                     </div>
+                    {this.state.errorMessage != null && (
+                        <Alert
+                            description={this.state.errorMessage}
+                            type="error"
+                            closable
+                            onClose={() => this.setState({ errorMessage: null })}
+                        />
+                    )}
                     <div className="box basic-info text-white">
                         <Form
                          initialValues={{ ...selectedObj }}
@@ -175,11 +188,9 @@ class PaymentDetails extends Component {
                           
                            <label className="text-center custom-checkbox">
                                <Input
-                                   // id={props.dataItem.id}
                                   name="check"
                                     type="checkbox"
-                                //    isChecked={this.state.isChecked}
-                              onChange={(e) => this.handleInputChange(e,item)}
+                              onChange={(e) => this.handleCheckChange(e,item)}
                                   className="grid_check_box"
                                  />
                                <span></span>
@@ -199,6 +210,7 @@ class PaymentDetails extends Component {
                                           onValueChange={({ e,value }) => {
                                               selectedObj.amount = value
                                           }}
+                                          
                                         //   value={selectedObj.amount}
                                       />
                                   </td>
