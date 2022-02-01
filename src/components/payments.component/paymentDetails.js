@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Button, Form, Select, Col, message, Input, Alert } from 'antd';
+import { Typography, Button, Form, Select, Col, message, Input, Alert, Popover } from 'antd';
 import Translate from 'react-translate-component';
-import { getCurrencyLu, getPaymentsData, savePayments } from './api'
+import { getCurrencyLu, getPaymentsData, savePayments, getBankData } from './api'
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 class PaymentDetails extends Component {
@@ -16,7 +16,9 @@ class PaymentDetails extends Component {
             paymentsData: [],
             paymentSavedata: [],
             btnDisabled: true,
-            errorMessage: null
+            errorMessage: null,
+            infoPopover: false,
+            moreBankInfo: {}
         }
         this.gridRef = React.createRef();
     }
@@ -107,10 +109,19 @@ class PaymentDetails extends Component {
             }
         }
     }
+    moreInfoPopover = async (id) => {
+        debugger
+        let response = await getBankData(id);
+        if (response.ok) {
+            this.setState({ ...this.state, infoPopover: false })
+        } else {
+            this.setState({ ...this.state, infoPopover: false })
+        }
+    }
 
     render() {
         const Option = Select;
-        const { currency, paymentsData, selectedObj } = this.state;
+        const { currency, paymentsData, selectedObj, infoPopover } = this.state;
         const { Title, Text } = Typography;
         return (
             <>
@@ -181,10 +192,23 @@ class PaymentDetails extends Component {
                                                             </label>
 
                                                         </td>
-                                                        <td>{item.bankname}</td>
+                                                        <td>
+                                                            <div className='d-flex align-center justify-content'>
+                                                                <span>{item.bankname}</span>
+                                                                <Popover
+                                                                    content={<a>Close</a>}
+                                                                    title="More Info"
+                                                                    trigger="click"
+                                                                    visible={infoPopover}
+                                                                    onVisibleChange={() => this.moreInfoPopover(item.id)}
+                                                                >
+                                                                    <span className='icon md info c-pointer' />
+                                                                </Popover>
+                                                            </div>
+                                                        </td>
                                                         <td>{item.accountnumber}</td>
                                                         <td>
-                                                            <NumberFormat className="cust-input text-right"
+                                                            <NumberFormat className="cust-input text-right mb-0"
                                                                 customInput={Input} thousandSeparator={true} prefix={""}
                                                                 placeholder="0.00"
                                                                 decimalScale={2}
