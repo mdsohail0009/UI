@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
-import { Typography, Button, Tooltip, Modal, Alert, Form, Select, Col, Input } from 'antd';
+import React, { Component,createRef } from 'react';
+import { Typography, Button,  Form, Select, Col,message, Input } from 'antd';
 import Translate from 'react-translate-component';
-import List from "../grid.component";
-import { getCurrencyLu, getPaymentsData } from './api'
+import { getCurrencyLu, getPaymentsData,savePayments } from './api'
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 class PaymentDetails extends Component {
+    formRef = createRef();
     constructor(props) {
         super(props);
         this.state = {
+            // isChecked: false,
             currency: [],
-            selectedObj: {},
+            selectedObj: {data:null,amount:null,currency:null},
+            paymentObj:{},
             currencyValue: "",
             paymentsData: [],
-            paymentSavedata: [],
-            loading: false
+            paymentSavedata: [], errorbtnDisabled: true
         }
         this.gridRef = React.createRef();
     }
@@ -26,10 +27,17 @@ class PaymentDetails extends Component {
         this.getPayments()
     }
 
-    handleChange = () => {
-
+    handleCurrencyChange = (e) => {
+     
+        let { selectedObj } = this.state;
+        selectedObj.currencyCode = e
+        if(selectedObj.currencyCode==e){
+            this.state.selectedObj.currency=selectedObj.currencyCode;  
+        }
+        console.log(selectedObj)
     }
 
+   
     getCurrencyLookup = async () => {
         let response = await getCurrencyLu(this.props.userConfig?.id)
         if (response.ok) {
@@ -45,62 +53,71 @@ class PaymentDetails extends Component {
             console.log(this.state.paymentsData)
         }
     }
-    handleInputChange = (prop, e) => {
-        const rowChecked = prop.dataItem;
-        const target = e.target;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-        let { selection } = this.state;
-        let idx = selection.indexOf(rowChecked.id);
-        if (selection) {
-            selection = [];
+    handleInputChange = (e, val) => {
+        debugger
+        const { paymentsData, paymentSavedata } = this.state;
+        if (e.target.checked) {
+        const payrecord = paymentsData.find(item => item.id === val.id);
+        console.log(payrecord);
+        payrecord.currency=this.state.selectedObj.currency;
+        payrecord.amount=this.state.selectedObj.amount;
+        paymentSavedata.push(payrecord);
+        } else {
+        //const existRecords = [...paymentSavedata];
+        const payrecord = paymentSavedata.filter(item => item.id !== val.id);
+        const finalPays = paymentSavedata.splice(0, paymentSavedata.length, payrecord);
+        console.log(paymentSavedata)
+        this.setState({ paymentSavedata: finalPays })
         }
-        if (idx > -1) {
-            selection.splice(idx, 1)
+        console.log("Payments data==========", paymentSavedata)
         }
-        else {
-            selection.push(rowChecked.id)
-        }
-        this.setState({ ...this.state, [name]: value, selectedObj: rowChecked, selection });
-        console.log(this.state.selectedObj)
+    // checkAllChange=(event,item)=>{
+    //     console.log(item);
+    //     this.setState({...this.state,isChecked:!this.state.isChecked})
+    //     this.state.paymentObj=item;
+    //     this.state.paymentObj.currency=this.state.selectedObj.currency
+    //     this.state.paymentObj.amount=this.state.selectedObj.amount
+    //     if( this.state.paymentObj.amount==item.amount){
+    //         if(this.state.isChecked===false){  
+    //             this.state.paymentSavedata.push(this.state.paymentObj);}
+    //         else 
+    //             this.state.paymentSavedata.pop(this.state.paymentObj);
+            
+    //     }
+    //     console.log(this.state.isChecked)
+    //     console.log(this.state.paymentSavedata)
+    // }
+ 
+    saveRolesDetails=async()=>{
+        debugger
+        let obj = Object.assign({})
+        obj.id=this.props.userConfig.id
+        obj.currency=this.state.selectedObj.currency
+        obj.memberId=this.props.userConfig.id
+        obj.createdBy=new Date()
+        obj.modifiedBy=new Date()
+        obj.paymentsDetails=this.state.paymentSavedata
+        console.log(obj)
+        let response = await savePayments(obj);
+        if(response.ok){
+            console.log(response.data)
+            alert("data saved scuessfully")
+            this.props.history.push('/payments')
+        }else {
+            this.setState({ btnDisabled: false });
+            message.destroy();
+            message.error({
+              content: response.data,
+              className: "custom-msg",
+              duration: 0.5
+            });
+          }
     }
-    // gridColumns = [
-    //     {
-    //         field: "", title: "", width: 50,
-    //         customCell: (props) => (
-    //             <td className="text-center">
-    // <label className="text-center custom-checkbox">
-    //     <input
-    //         id={props.dataItem.id}
-    //         name="check"
-    //         type="checkbox"
-    //         // checked={this.state.selection.indexOf(props.dataItem.id) > -1}
-    //         onChange={(e) => this.handleInputChange(props, e)}
-    //         className="grid_check_box"
-    //     />
-    //     <span></span>
-    // </label>
-    //             </td>
-    //         )
-    //     },
-    //     { field: "bankname", title: 'Bank Name',width: 370 },
-    //     { field: "accountnumber", title: 'Account Number',width: 370 },
-    //     {field: "amount", title: "Amount",width: 360,
-    //         customCell: (props) => (<td className="text-center" style={{color:"black"}}>
-    //         <NumberFormat value=""
-    //         style={{backgroundColor:"gray",border:"none",borderRadius:"5px"}}
-    //         thousandSeparator={true}
-    //         type="text"
-    //         prefix={'$'} 
-    //          renderText={(value, props) =>
-    //              <div {...props}>{value}</div>} /> </td> )},
-
-    //   ];
 
     render() {
         const Option = Select;
-        const { currency, paymentsData } = this.state;
-        const { Title, Paragraph, Text } = Typography;
+        const { currency, paymentsData,selectedObj } = this.state;
+        const { Title, Text } = Typography;
         return (
             <>
                 <div className="main-container hidden-mobile">
@@ -109,8 +126,8 @@ class PaymentDetails extends Component {
                     </div>
                     <div className="box basic-info text-white">
                         <Form
-
-                            onFinish={this.saveRolesDetails}
+                         initialValues={{ ...selectedObj }}
+                            // onFinish={this.saveRolesDetails}
                             autoComplete="off">
                             <div className="d-flex " style={{ justifyContent: "flex-end" }}>
                                 <Col xs={18} sm={18} md={9} lg={4} xxl={4} className='mb-0'>
@@ -124,13 +141,13 @@ class PaymentDetails extends Component {
                                         <Select
                                             className="cust-input"
                                             placeholder="Select Currency"
-                                            onChange={() => this.handleChange()}
-                                            dropdownClassName='select-drpdwn'
+                                            onChange={(e) => this.handleCurrencyChange(e)}
+                                            value={selectedObj.currencyCode}
                                         >
-                                            {currency?.map((item) => (
+                                            {currency?.map((item,idx) => (
                                                 <Option
-
-                                                    className="btns-primarys ants-btns "
+                                                key={idx}
+                                                     className="btns-primarys ants-btns "
                                                     value={item.currencyCode}
                                                 > {item.currencyCode}</Option>))}
                                         </Select>
@@ -138,75 +155,57 @@ class PaymentDetails extends Component {
                                 </Col>
                             </div>
 
-                            {/* <List
-                            showActionBar={true}
-                            //onActionClick={(key) => this.onActionClick(key)}
-                            // pKey={"payments"}
-                            ref={this.gridRef}
-                            url={process.env.REACT_APP_GRID_API + `MassPayments/CreatPayment/f8be2fd6-9778-4408-ba57-7502046e13a5/00000000-0000-0000-0000-000000000000`}
-                            columns={this.gridColumns}
-/> */}
-
-                            {/* <div className="d-flex">
-                            <label className="text-center custom-checkbox">
-                                <input
-                                    // id={props.dataItem.id}
-                                    name="check"
+                           
+       <div >
+        <table className='pay-grid'>
+        <thead>
+         <tr>
+           <th></th>
+             <th>Bank Name</th>
+             <th>Account Number</th>
+               <th>Amount</th>
+               </tr>
+               </thead>
+                 <tbody className="mb-0">
+                  {paymentsData?.map((item, i) => {
+                    return (
+                       <>
+                         <tr key={i} >
+                           <td>
+                          
+                           <label className="text-center custom-checkbox">
+                               <Input
+                                   // id={props.dataItem.id}
+                                  name="check"
                                     type="checkbox"
-                                    // checked={this.state.selection.indexOf(props.dataItem.id) > -1}
-                                    // onChange={(e) => this.handleInputChange(props, e)}
-                                    className="grid_check_box"
-                                />
-                                <span></span>
-                            </label>
-                            {paymentsData?.map((item,idx)=>{
-                                <div key={idx}>
-                            <Text>
-                                {item.bankname}HDFC
-                            </Text>
-                           <Text>
-                                {item.accountnumber}HDFC
-                            </Text>
-                            </div>})}
-                            <Input className="cust-input" style={{width:200}} placeholder="Amount" type="text" />
-                        </div> */}
-                            <div style={{ alignItems: "center" }}>
-                                <table className='pay-grid'>
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Bank Name</th>
-                                            <th>Account Number</th>
-                                            <th>Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {paymentsData?.map((item, i) => {
-                                            return (
-                                                <>
-                                                    <tr key={i} >
-                                                        <td>
-                                                            <label className="text-center custom-checkbox">
-                                                                <input
-                                                                    // id={props.dataItem.id}
-                                                                    name="check"
-                                                                    type="checkbox"
-                                                                    // checked={this.state.selection.indexOf(props.dataItem.id) > -1}
-                                                                    // onChange={(e) => this.handleInputChange(props, e)}
-                                                                    className="grid_check_box"
-                                                                />
-                                                                <span></span>
-                                                            </label>
-                                                        </td>
-                                                        <td>{item.bankname}</td>
-                                                        <td>{item.accountnumber}</td>
-                                                        <td>
-                                                            <Input className="cust-input" style={{ height: 44 }} placeholder="Amount" type="text" />
-                                                        </td>
-                                                    </tr>
-                                                </>
-                                            )
-                                        })}
+                                //    isChecked={this.state.isChecked}
+                              onChange={(e) => this.handleInputChange(e,item)}
+                                  className="grid_check_box"
+                                 />
+                               <span></span>
+                                </label>
+                                
+                                 </td>
+                                 <td>{item.bankname}</td>
+                                   <td>{item.accountnumber}</td>
+                                  <td>
+                                      <NumberFormat className="cust-input "
+                                          customInput={Input} thousandSeparator={true} prefix={""}
+                                          required
+                                          placeholder="0.00"
+                                          decimalScale={2}
+                                          allowNegative={false}
+                                          maxLength={10}
+                                          onValueChange={({ e,value }) => {
+                                              selectedObj.amount = value
+                                          }}
+                                        //   value={selectedObj.amount}
+                                      />
+                                  </td>
+                              </tr>
+                          </>
+                      )
+                  })}
                                     </tbody>
                                 </table>
                             </div>
@@ -219,7 +218,7 @@ class PaymentDetails extends Component {
                             >
                                 Cancel
                             </Button>
-                            <Button className="pop-btn px-36" htmlType="submit">
+                            <Button className="pop-btn px-36" onClick={() =>{ this.saveRolesDetails()}} >
                                 Pay Now
                             </Button>
                         </div>
