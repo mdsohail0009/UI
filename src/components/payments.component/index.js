@@ -44,7 +44,7 @@ class Payments extends Component {
         { field: "totalAmount", title: 'Total Amount', width: 200, filter: true },
         { field: "count", title: 'Count', width: 130, filter: true },
         //{ field: "createdBy", title: 'Created By', filter: true, width: 150 },
-        { field: "modifiedDate", title: 'Modified Date', filter: true, width: 180 },
+        { field: "modifiedDate", title: 'Modified Date',filterType: "date", filter: true, width: 180 },
         { field: "modifiedBy", title: 'Modified By', filter: true, width: 200 },
         { field: "state", title: 'State', filter: true, width: 160 },
     ];
