@@ -723,12 +723,16 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .side-drawer .coin-info:last-child{margin-bottom: 60px;}
 
 /* --Payments --*/
-.pay-grid{width: 100%;border: 1px solid rgba(0,0,0,.08);;}
-.pay-grid thead th{background-color: var(--bgGloom);padding: 8px; color: var(--textWhite30);font-weight: 400;text-align: left;}
+.pay-grid{width: 100%;border: 1px solid rgba(0,0,0,.08);}
+.pay-grid thead th{background-color: var(--bgDarkGrey);padding: 8px; color: var(--textWhite30);font-weight: 400;text-align: left;}
 .pay-grid thead th:last-child{width: 350px;}
 .pay-grid tbody td{padding: 8px; color: var(--textWhite30);font-weight: 400;border: 1px solid rgba(0,0,0,.08);}
 .pay-grid tbody tr:nth-child(even){background-color: rgba(0,0,0,.04);}
 .pay-grid tbody tr:hover{background-color: var(--bgDarkGrey);}
+.ant-popover-inner{background-color: var(--bgGloom); border-radius: 10px;}
+.more-popover .lbl{font-size: 12px; color: var(--textWhite50);font-weight: 100;}
+.more-popover .val{font-size: 14px; color: var(--textWhite30);display: block;margin-bottom: 16px; line-height: normal;}
+.ant-popover-arrow{border-color: var(--bgGloom) !important;}
 
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}

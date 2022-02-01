@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Button, Form, Select, message, Input, Alert } from 'antd';
+import { Typography, Button, Form, Select, message, Input, Alert, Popover, Spin } from 'antd';
 import Translate from 'react-translate-component';
-import { getCurrencyLu, getPaymentsData, savePayments } from './api'
+import { getCurrencyLu, getPaymentsData, savePayments, getBankData } from './api'
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 class PaymentDetails extends Component {
@@ -18,7 +18,8 @@ class PaymentDetails extends Component {
             btnDisabled: true,
             errorMessage: null,
             visible: false,
-            moreBankInfo: {}
+            moreBankInfo: {},
+            loading: false,
         }
         this.gridRef = React.createRef();
         this.useDivRef = React.createRef();
@@ -71,7 +72,13 @@ class PaymentDetails extends Component {
         if (obj.currency !== null && objAmount) {
             let response = await savePayments(obj);
             if (response.ok) {
-                message.success('Data Saved successfully')
+                this.setState({ btnDisabled: false });
+                message.destroy();
+                message.success({
+                    content: 'Data saved successfully',
+                    className: "custom-msg",
+                    duration: 0.5
+                })
                 this.props.history.push('/payments')
             } else {
                 this.setState({ btnDisabled: false });
@@ -88,16 +95,41 @@ class PaymentDetails extends Component {
         }
     }
     moreInfoPopover = async (id, index) => {
-        debugger
+        this.setState({ ...this.state, loading: true });
         let response = await getBankData(id);
         if (response.ok) {
-            this.setState({ ...this.state, moreBankInfo: response.data, visible: this.state.paymentsData[index].visible = true })
+            this.setState({
+                ...this.state, moreBankInfo: response.data, visible: this.state.paymentsData[index].visible = true,
+                loading: false
+            });
         } else {
-            this.setState({ ...this.state, visible: false })
+            this.setState({ ...this.state, visible: this.state.paymentsData[index].visible = false, loading: false });
         }
     }
-    handleVisibleChange = () => {
-        this.setState({ visible: false })
+    handleVisibleChange = (index) => {
+        this.setState({ visible: this.state.paymentsData[index].visible = false });
+    }
+    popOverContent = () => {
+        const { moreBankInfo, loading } = this.state;
+        const { Text } = Typography;
+        return (
+            <>
+                {(loading && moreBankInfo) ? <Spin /> : <div className='more-popover'>
+                    <Text className='lbl'>Favourite Name</Text>
+                    <Text className='val'>{moreBankInfo?.favouriteName}</Text>
+                    <Text className='lbl'>Beneficiary Account Name</Text>
+                    <Text className='val'>{moreBankInfo?.beneficiaryAccountName}</Text>
+                    <Text className='lbl'>Beneficiary Account Address</Text>
+                    <Text className='val'>{moreBankInfo?.beneficiaryAccountAddress}</Text>
+                    <Text className='lbl'>Routing Number</Text>
+                    <Text className='val'>{moreBankInfo?.routingNumber}</Text>
+                    <Text className='lbl'>Swift Code</Text>
+                    <Text className='val'>{moreBankInfo.swiftCode ? moreBankInfo.swiftCode : '--'}</Text>
+                    <Text className='lbl'>Bank Address</Text>
+                    <Text className='val'>{moreBankInfo?.bankAddress}</Text>
+                </div>}
+            </>
+        )
     }
     render() {
         const Option = Select;
@@ -158,11 +190,10 @@ class PaymentDetails extends Component {
                                     </thead>
                                     <tbody className="mb-0">
                                         {paymentsData?.map((item, i) => {
-
                                             return (
                                                 <>
                                                     <tr key={i} >
-                                                        <td style={{ width: 50 }}>
+                                                        <td style={{ width: 50 }} className='text-center'>
                                                             <label className="text-center custom-checkbox p-relative">
                                                                 <Input
                                                                     name="check"
@@ -172,20 +203,19 @@ class PaymentDetails extends Component {
                                                                 />
                                                                 <span></span>
                                                             </label>
-
                                                         </td>
                                                         <td>
-                                                            <div className='d-flex '>
+                                                            <div className='d-flex align-center justify-content'>
                                                                 <span>{item.bankname}</span>
                                                                 <Popover
                                                                     className='more-popover'
                                                                     content={this.popOverContent}
-                                                                    title="More Info"
                                                                     trigger="click"
                                                                     visible={item.visible}
-                                                                    onVisibleChange={this.handleVisibleChange}
+                                                                    placement='top'
+                                                                    onVisibleChange={() => this.handleVisibleChange(i)}
                                                                 >
-                                                                    <span className='icon md info c-pointer' onVisibleChange={() => this.moreInfoPopover(item.addressId, i)} />
+                                                                    <span className='icon md info c-pointer' onClick={() => this.moreInfoPopover(item.addressId, i)} />
                                                                 </Popover>
                                                             </div>
                                                         </td>
@@ -198,14 +228,11 @@ class PaymentDetails extends Component {
                                                                 allowNegative={false}
                                                                 style={{ height: 44 }}
                                                                 onValueChange={({ e, value }) => {
-
                                                                     let paymentData = this.state.paymentsData;
                                                                     paymentData[i].amount = value;
-
                                                                     paymentData[i].checked = (value && value > 0) ? true : false;
                                                                     this.setState({ ...this.state, paymentData })
                                                                 }}
-
                                                                 onBlur={() => console.log(item)}
                                                             />
                                                         </td>
