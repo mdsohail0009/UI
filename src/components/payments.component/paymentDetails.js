@@ -89,7 +89,13 @@ class PaymentDetails extends Component {
             if (obj.currency !== null) {
                 let response = await savePayments(obj);
                 if (response.ok) {
-                    message.success('Data Saved successfully')
+                    message.destroy();
+                    message.success(
+                        {
+                            content: 'Data saved successfully',
+                            className: "custom-msg",
+                            duration: 0.5
+                        })
                     this.props.history.push('/payments')
                 } else {
                     this.setState({ btnDisabled: false });
@@ -125,15 +131,15 @@ class PaymentDetails extends Component {
                     <div className='mb-16'>
                         <Title className="basicinfo mb-0"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
                     </div>
-                    {this.state.errorMessage != null && (
-                        <Alert
-                            description={this.state.errorMessage}
-                            type="error"
-                            closable
-                            onClose={() => this.handleAlert()}
-                        />
-                    )}
                     <div className="box basic-info text-white">
+                        {this.state.errorMessage != null && (
+                            <Alert
+                                description={this.state.errorMessage}
+                                type="error"
+                                closable
+                                onClose={() => this.handleAlert()}
+                            />
+                        )}
                         <Form
                             initialValues={{ ...selectedObj }}
                             autoComplete="off">
