@@ -39,7 +39,7 @@ class Payments extends Component {
                 <td><div className="gridLink" onClick={() => this.paymentsView(props)}>{props.dataItem.firstName}</div></td>)
         },
         { field: "lastName", title: 'Last Name', filter: true, width: 150 },
-        { field: "Currency", title: 'Currency', filter: true, width: 150 },
+        { field: "currency", title: 'Currency', filter: true, width: 150 },
         { field: "totalAmount", title: 'Total Amount', width: 150, filter: true },
         { field: "count", title: 'Count', width: 130, filter: true },
         { field: "createdDate", title: 'Created Date', width: 150, filter: true, filterType: "date" },
