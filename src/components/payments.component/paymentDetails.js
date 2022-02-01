@@ -97,7 +97,6 @@ class PaymentDetails extends Component {
                     <div className='mb-16'>
                         <Title className="basicinfo mb-0"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
                     </div>
-
                     <div className="box basic-info text-white">
                         {this.state.errorMessage != null && (
                             <Alert
