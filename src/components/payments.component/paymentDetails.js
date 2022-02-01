@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Button, Form, Select, Col, message, Input, Alert, Popover } from 'antd';
+import { Typography, Button, Form, Select, message, Input, Alert } from 'antd';
 import Translate from 'react-translate-component';
-import { getCurrencyLu, getPaymentsData, savePayments, getBankData } from './api'
+import { getCurrencyLu, getPaymentsData, savePayments } from './api'
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 class PaymentDetails extends Component {
@@ -16,11 +16,10 @@ class PaymentDetails extends Component {
             paymentsData: [],
             paymentSavedata: [],
             btnDisabled: true,
-            errorMessage: null,
-            infoPopover: false,
-            moreBankInfo: {}
+            errorMessage: null
         }
         this.gridRef = React.createRef();
+        this.useDivRef = React.createRef();
     }
     backToPayments = () => {
         this.props.history.push('/payments')
@@ -28,12 +27,11 @@ class PaymentDetails extends Component {
     componentDidMount() {
         this.getCurrencyLookup()
         this.getPayments()
+        this.useDivRef.current.scrollIntoView()
     }
-
     handleAlert = () => {
         this.setState({ ...this.state, errorMessage: null })
     }
-
     handleCurrencyChange = (e) => {
         let { selectedObj } = this.state;
         selectedObj.currencyCode = e
@@ -41,8 +39,6 @@ class PaymentDetails extends Component {
             this.state.selectedObj.currency = selectedObj.currencyCode;
         }
     }
-
-
     getCurrencyLookup = async () => {
         let response = await getCurrencyLu(this.props.userConfig?.id)
         if (response.ok) {
@@ -55,89 +51,62 @@ class PaymentDetails extends Component {
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails });
         }
     }
-    handleCheckChange = (e, val) => {
-        debugger
-        const { paymentsData, paymentSavedata, selectedObj } = this.state;
-        if (e.target.checked) {
-            const payrecord = paymentsData.find(item => item.id === val.id);
-            payrecord.currency = selectedObj.currency;
-            payrecord.amount = selectedObj.amount;
-            if (payrecord.amount != null) {
-                paymentSavedata.push(payrecord);
-            } else {
-                 e.target.checked=false
-                this.setState({ ...this.state, errorMessage: "Please enter amount" });
-            }
 
-        }
-        else {
-            selectedObj.amount=""
-            const payrecord = paymentSavedata.filter(item => item.id !== val.id);
-            // const finalPays = paymentSavedata.splice(1, paymentSavedata.length, payrecord);
-            this.setState({ paymentSavedata: payrecord })
-            
-        }
-    }
 
     saveRolesDetails = async () => {
-        if (this.state.selectedObj.amount == null) {
-            this.setState({ ...this.state, errorMessage: "Please enter amount" })
-        } else {
-            let obj = Object.assign({});
-            obj.id = this.props.userConfig.id;
-            obj.currency = this.state.selectedObj.currency;
-            obj.memberId = this.props.userConfig.id;
-            obj.createdBy = new Date();
-            obj.modifiedBy = new Date();
-            obj.paymentsDetails = this.state.paymentSavedata;
-            if (obj.currency !== null) {
-                let response = await savePayments(obj);
-                if (response.ok) {
-                    message.success('Data Saved successfully')
-                    this.props.history.push('/payments')
-                } else {
-                    this.setState({ btnDisabled: false });
-                    message.destroy();
-                    message.error({
-                        content: response.data,
-                        className: "custom-msg",
-                        duration: 0.5
-                    });
-                }
+        let objData = this.state.paymentsData.filter((item) => {
+            return item.checked
+        })
+        let objAmount = this.state.paymentsData.some((item) => {
+            return item.amount != null
+        })
+        let obj = Object.assign({});
+        obj.id = this.props.userConfig.id;
+        obj.currency = this.state.selectedObj.currency;
+        obj.memberId = this.props.userConfig.id;
+        obj.createdBy = new Date();
+        obj.modifiedBy = new Date();
+        obj.paymentsDetails = objData;
+        if (obj.currency !== null && objAmount) {
+            let response = await savePayments(obj);
+            if (response.ok) {
+                message.success('Data Saved successfully')
+                this.props.history.push('/payments')
             } else {
-                this.setState({ ...this.state, errorMessage: "Please fill the details" })
+                this.setState({ btnDisabled: false });
+                message.destroy();
+                message.error({
+                    content: response.data,
+                    className: "custom-msg",
+                    duration: 0.5
+                });
             }
-        }
-    }
-    moreInfoPopover = async (id) => {
-        debugger
-        let response = await getBankData(id);
-        if (response.ok) {
-            this.setState({ ...this.state, infoPopover: false })
         } else {
-            this.setState({ ...this.state, infoPopover: false })
+            this.setState({ ...this.state, errorMessage: "Please fill the details" })
+            this.useDivRef.current.scrollIntoView()
         }
     }
-
     render() {
         const Option = Select;
-        const { currency, paymentsData, selectedObj, infoPopover } = this.state;
+        const { currency, paymentsData, selectedObj } = this.state;
         const { Title, Text } = Typography;
         return (
             <>
+            <div ref={this.useDivRef}></div>
                 <div className="main-container">
                     <div className='mb-16'>
                         <Title className="basicinfo mb-0"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
                     </div>
-                    {this.state.errorMessage != null && (
-                        <Alert
-                            description={this.state.errorMessage}
-                            type="error"
-                            closable
-                            onClose={() => this.handleAlert()}
-                        />
-                    )}
+
                     <div className="box basic-info text-white">
+                        {this.state.errorMessage != null && (
+                            <Alert
+                                description={this.state.errorMessage}
+                                type="error"
+                                closable
+                                onClose={() => this.handleAlert()}
+                            />
+                        )}
                         <Form
                             initialValues={{ ...selectedObj }}
                             autoComplete="off">
@@ -185,39 +154,35 @@ class PaymentDetails extends Component {
                                                                 <Input
                                                                     name="check"
                                                                     type="checkbox"
-                                                                    onChange={(e) => this.handleCheckChange(e, item)}
+                                                                    checked={item.checked}
                                                                     className="grid_check_box"
                                                                 />
                                                                 <span></span>
                                                             </label>
 
                                                         </td>
-                                                        <td>
-                                                            <div className='d-flex align-center justify-content'>
-                                                                <span>{item.bankname}</span>
-                                                                <Popover
-                                                                    content={<a>Close</a>}
-                                                                    title="More Info"
-                                                                    trigger="click"
-                                                                    visible={infoPopover}
-                                                                    onVisibleChange={() => this.moreInfoPopover(item.id)}
-                                                                >
-                                                                    <span className='icon md info c-pointer' />
-                                                                </Popover>
-                                                            </div>
-                                                        </td>
+
+                                                        <td>{item.bankname}</td>
                                                         <td>{item.accountnumber}</td>
                                                         <td>
-                                                            <NumberFormat className="cust-input text-right mb-0"
+                                                            <NumberFormat className="cust-input text-right"
                                                                 customInput={Input} thousandSeparator={true} prefix={""}
                                                                 placeholder="0.00"
                                                                 decimalScale={2}
                                                                 allowNegative={false}
                                                                 style={{ height: 44 }}
                                                                 onValueChange={({ e, value }) => {
-                                                                    selectedObj.amount = value
+
+                                                                    let paymentData = this.state.paymentsData;
+                                                                    paymentData[i].amount = value;
+
+                                                                    paymentData[i].checked = (value && value > 0) ? true : false;
+                                                                    this.setState({ ...this.state, paymentData })
                                                                 }}
+
+                                                                onBlur={() => console.log(item)}
                                                             />
+
                                                         </td>
                                                     </tr>
                                                 </>
