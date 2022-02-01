@@ -9,7 +9,6 @@ class PaymentDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // isChecked: false,
             currency: [],
             selectedObj: { data: null, amount: null, currency: null },
             paymentObj: {},
@@ -31,91 +30,79 @@ class PaymentDetails extends Component {
         this.getPayments()
     }
 
-    handleCurrencyChange = (e) => {
+    handleAlert = () => {
+        this.setState({ ...this.state, errorMessage: null })
+    }
 
+    handleCurrencyChange = (e) => {
         let { selectedObj } = this.state;
         selectedObj.currencyCode = e
         if (selectedObj.currencyCode == e) {
             this.state.selectedObj.currency = selectedObj.currencyCode;
         }
-        console.log(selectedObj)
     }
 
 
     getCurrencyLookup = async () => {
         let response = await getCurrencyLu(this.props.userConfig?.id)
         if (response.ok) {
-            console.log(response.data)
             this.setState({ ...this.state, currency: response.data });
         }
     }
     getPayments = async () => {
         let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id)
         if (response.ok) {
-            console.log("ddddddd", response.data)
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails });
-            console.log(this.state.paymentsData)
         }
     }
     handleCheckChange = (e, val) => {
-        debugger
         const { paymentsData, paymentSavedata, selectedObj } = this.state;
         if (e.target.checked) {
             const payrecord = paymentsData.find(item => item.id === val.id);
-            console.log(payrecord);
-            payrecord.currency = this.state.selectedObj.currency;
-            payrecord.amount = this.state.selectedObj.amount;
-            paymentSavedata.push(payrecord);
+            payrecord.currency = selectedObj.currency;
+            payrecord.amount = selectedObj.amount;
+            if (payrecord.amount != null) {
+                paymentSavedata.push(payrecord);
+            } else {
+                this.setState({ ...this.state, errorMessage: "Please enter amount" })
+            }
+
         }
         else {
             const payrecord = paymentSavedata.filter(item => item.id !== val.id);
-            const finalPays = paymentSavedata.splice(0, paymentSavedata.length, payrecord);
-            console.log(paymentSavedata)
+            const finalPays = paymentSavedata.splice(1, paymentSavedata.length, payrecord);
             this.setState({ paymentSavedata: finalPays })
         }
-        console.log("Payments data==========", paymentSavedata)
-
     }
-    // checkAllChange=(event,item)=>{
-    //     console.log(item);
-    //     this.setState({...this.state,isChecked:!this.state.isChecked})
-    //     this.state.paymentObj=item;
-    //     this.state.paymentObj.currency=this.state.selectedObj.currency
-    //     this.state.paymentObj.amount=this.state.selectedObj.amount
-    //     if( this.state.paymentObj.amount==item.amount){
-    //         if(this.state.isChecked===false){  
-    //             this.state.paymentSavedata.push(this.state.paymentObj);}
-    //         else 
-    //             this.state.paymentSavedata.pop(this.state.paymentObj);
-
-    //     }
-    //     console.log(this.state.isChecked)
-    //     console.log(this.state.paymentSavedata)
-    // }
 
     saveRolesDetails = async () => {
-        debugger
-        let obj = Object.assign({})
-        obj.id = this.props.userConfig.id
-        obj.currency = this.state.selectedObj.currency
-        obj.memberId = this.props.userConfig.id
-        obj.createdBy = new Date()
-        obj.modifiedBy = new Date()
-        obj.paymentsDetails = this.state.paymentSavedata
-        console.log(obj)
-        let response = await savePayments(obj);
-        if (response.ok) {
-            console.log(response.data)
-            alert("data saved scuessfully")
-            this.props.history.push('/payments')
+        if (this.state.selectedObj.amount == null) {
+            this.setState({ ...this.state, errorMessage: "Please enter amount" })
         } else {
-            this.setState({ btnDisabled: false });
-            message.destroy();
-            message.error({
-                content: response.data,
-                className: "custom-msg",
-                duration: 0.5
-            });
+            let obj = Object.assign({});
+            obj.id = this.props.userConfig.id;
+            obj.currency = this.state.selectedObj.currency;
+            obj.memberId = this.props.userConfig.id;
+            obj.createdBy = new Date();
+            obj.modifiedBy = new Date();
+            obj.paymentsDetails = this.state.paymentSavedata;
+            if (obj.currency !== null) {
+                let response = await savePayments(obj);
+                if (response.ok) {
+                    message.success('Data Saved successfully')
+                    this.props.history.push('/payments')
+                } else {
+                    this.setState({ btnDisabled: false });
+                    message.destroy();
+                    message.error({
+                        content: response.data,
+                        className: "custom-msg",
+                        duration: 0.5
+                    });
+                }
+            } else {
+                this.setState({ ...this.state, errorMessage: "Please fill the details" })
+            }
         }
     }
     moreInfoPopover = async (id) => {
@@ -143,13 +130,12 @@ class PaymentDetails extends Component {
                             description={this.state.errorMessage}
                             type="error"
                             closable
-                            onClose={() => this.setState({ errorMessage: null })}
+                            onClose={() => this.handleAlert()}
                         />
                     )}
                     <div className="box basic-info text-white">
                         <Form
                             initialValues={{ ...selectedObj }}
-                            // onFinish={this.saveRolesDetails}
                             autoComplete="off">
                             <Form.Item
                                 label="Select Wallet"
@@ -220,7 +206,7 @@ class PaymentDetails extends Component {
                                                         <td>
                                                             <NumberFormat className="cust-input text-right mb-0"
                                                                 customInput={Input} thousandSeparator={true} prefix={""}
-                                                                required
+
                                                                 placeholder="0.00"
                                                                 decimalScale={2}
                                                                 allowNegative={false}
@@ -228,8 +214,6 @@ class PaymentDetails extends Component {
                                                                 onValueChange={({ e, value }) => {
                                                                     selectedObj.amount = value
                                                                 }}
-
-                                                            //   value={selectedObj.amount}
                                                             />
                                                         </td>
                                                     </tr>
