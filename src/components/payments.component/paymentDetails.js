@@ -17,7 +17,7 @@ class PaymentDetails extends Component {
             paymentSavedata: [],
             btnDisabled: true,
             errorMessage: null,
-            infoPopover: false,
+            visible: false,
             moreBankInfo: {}
         }
         this.gridRef = React.createRef();
@@ -65,17 +65,17 @@ class PaymentDetails extends Component {
             if (payrecord.amount != null) {
                 paymentSavedata.push(payrecord);
             } else {
-                 e.target.checked=false
+                e.target.checked = false
                 this.setState({ ...this.state, errorMessage: "Please enter amount" });
             }
 
         }
         else {
-            selectedObj.amount=""
+            selectedObj.amount = ""
             const payrecord = paymentSavedata.filter(item => item.id !== val.id);
             // const finalPays = paymentSavedata.splice(1, paymentSavedata.length, payrecord);
             this.setState({ paymentSavedata: payrecord })
-            
+
         }
     }
 
@@ -115,16 +115,19 @@ class PaymentDetails extends Component {
             }
         }
     }
-    moreInfoPopover = async (id) => {
+    moreInfoPopover = async (id, index) => {
         debugger
         let response = await getBankData(id);
         if (response.ok) {
-            this.setState({ ...this.state, infoPopover: false })
+            this.setState({ ...this.state, moreBankInfo: response.data, visible: this.state.paymentsData[index].visible = true })
         } else {
-            this.setState({ ...this.state, infoPopover: false })
+            this.setState({ ...this.state, visible: false })
         }
     }
 
+    handleVisibleChange = () => {
+        this.setState({ visible: false })
+    }
     render() {
         const Option = Select;
         const { currency, paymentsData, selectedObj, infoPopover } = this.state;
@@ -183,6 +186,7 @@ class PaymentDetails extends Component {
                                     </thead>
                                     <tbody className="mb-0">
                                         {paymentsData?.map((item, i) => {
+
                                             return (
                                                 <>
                                                     <tr key={i} >
@@ -202,13 +206,14 @@ class PaymentDetails extends Component {
                                                             <div className='d-flex align-center justify-content'>
                                                                 <span>{item.bankname}</span>
                                                                 <Popover
-                                                                    content={<a>Close</a>}
+                                                                    className='more-popover'
+                                                                    content={this.popOverContent}
                                                                     title="More Info"
                                                                     trigger="click"
-                                                                    visible={infoPopover}
-                                                                    onVisibleChange={() => this.moreInfoPopover(item.id)}
+                                                                    visible={item.visible}
+                                                                    onVisibleChange={this.handleVisibleChange}
                                                                 >
-                                                                    <span className='icon md info c-pointer' />
+                                                                    <span className='icon md info c-pointer' onVisibleChange={() => this.moreInfoPopover(item.addressId, i)} />
                                                                 </Popover>
                                                             </div>
                                                         </td>
