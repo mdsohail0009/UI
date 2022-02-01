@@ -16,37 +16,37 @@ class Payments extends Component {
         this.props.history.push(`payments/${props.dataItem.id}/view`);
     }
     gridColumns = [
+        // {
+        //     field: "", title: "", width: 50,
+        //     customCell: (props) => (
+        //         <td className="text-center">
+        //             <label className="text-center custom-checkbox">
+        //                 <input
+        //                     id={props.dataItem.id}
+        //                     name="check"
+        //                     type="checkbox"
+        //                     // checked={this.state.selection.indexOf(props.dataItem.id) > -1}
+        //                     onChange={(e) => this.handleInputChange(props, e)}
+        //                     className="grid_check_box"
+        //                 />
+        //                 <span></span>
+        //             </label>
+        //         </td>
+        //     )
+        // },
+        // { field: "createdDate", title: 'Date', width: 180, filter: true, filterType: "date" },
         {
-            field: "", title: "", width: 50,
-            customCell: (props) => (
-                <td className="text-center">
-                    <label className="text-center custom-checkbox">
-                        <input
-                            id={props.dataItem.id}
-                            name="check"
-                            type="checkbox"
-                            // checked={this.state.selection.indexOf(props.dataItem.id) > -1}
-                            onChange={(e) => this.handleInputChange(props, e)}
-                            className="grid_check_box"
-                        />
-                        <span></span>
-                    </label>
-                </td>
-            )
+            field: "", title: 'Date', filter: true, width: 180, filterType: "date", customCell: (props) => (
+                <td><div className="gridLink" onClick={() => this.paymentsView(props)}>{new Date(props.dataItem.createdDate).toLocaleDateString()}</div></td>)
         },
-        {
-            field: "", title: 'First Name', filter: true, width: 150, customCell: (props) => (
-                <td><div className="gridLink" onClick={() => this.paymentsView(props)}>{props.dataItem.firstName}</div></td>)
-        },
-        { field: "lastName", title: 'Last Name', filter: true, width: 150 },
-        { field: "currency", title: 'Currency', filter: true, width: 150 },
-        { field: "totalAmount", title: 'Total Amount', width: 150, filter: true },
+        // { field: "lastName", title: 'Last Name', filter: true, width: 150 },
+        { field: "currency", title: 'Currency', filter: true, width: 180 },
+        { field: "totalAmount", title: 'Total Amount', width: 200, filter: true },
         { field: "count", title: 'Count', width: 130, filter: true },
-        { field: "createdDate", title: 'Created Date', width: 150, filter: true, filterType: "date" },
         //{ field: "createdBy", title: 'Created By', filter: true, width: 150 },
-        { field: "modifiedDate", title: 'Modified Date', filter: true, width: 150 },
-        // { field: "modifiedBy", title: 'Modified By', filter: true, width: 150 },
-        { field: "state", title: 'State', filter: true, width: 150 },
+        { field: "modifiedDate", title: 'Modified Date', filter: true, width: 180 },
+        { field: "modifiedBy", title: 'Modified By', filter: true, width: 200 },
+        { field: "state", title: 'State', filter: true, width: 160 },
     ];
 
     addPayment = () => {
@@ -57,7 +57,7 @@ class Payments extends Component {
         const { Title, Paragraph, Text } = Typography;
         return (
             <>
-                <div className="main-container hidden-mobile">
+                <div className="main-container">
                     <div className='d-flex align-center justify-content mb-16'>
                         <Title className="basicinfo mb-0"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
                         <ul className="address-icons" style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0, display: 'flex' }}>

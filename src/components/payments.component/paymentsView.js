@@ -31,7 +31,7 @@ class PaymentsView extends Component {
         const { Title, Text } = Typography;
         return (
             <>
-                <div className="main-container hidden-mobile">
+                <div className="main-container">
                     <Title className="basicinfo mb-16"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
                     <div className="box basic-info">
                         <table className='pay-grid view'>
