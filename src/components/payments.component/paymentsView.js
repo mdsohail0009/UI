@@ -59,7 +59,7 @@ class PaymentsView extends Component {
                                 {paymentsData?.map((item, idx) => {
                                     return (
                                         <>
-                                            <tr key={idx}>
+                                          {paymentsData.length > 0?  <tr key={idx}>
                                                 <td>{item.bankname}</td>
                                                 <td>{item.accountnumber}</td>
                                                 <td>
@@ -71,7 +71,7 @@ class PaymentsView extends Component {
                                                     />
                                                 </td>
                                             </tr>
-                                        </>
+                                        :"No bank details available."}</>
                                     )
                                 })}
                                 {loading && <tr>

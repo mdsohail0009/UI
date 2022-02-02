@@ -88,6 +88,10 @@ class PaymentDetails extends Component {
                 this.setState({ ...this.state, errorMessage: "Amount must be greater than zero." })
                 this.useDivRef.current.scrollIntoView()
             } 
+            // else if(obj==null){
+            //     this.setState({ ...this.state, errorMessage: "No bank details available." })
+            //     this.useDivRef.current.scrollIntoView()
+            // } 
             else {
                 this.setState({ btnDisabled: true });
                 let response = await savePayments(obj);
@@ -200,7 +204,7 @@ class PaymentDetails extends Component {
                                         {paymentsData?.map((item, i) => {
                                             return (
                                                 <>
-                                                    <tr key={i} >
+                                                   {paymentsData.length > 0? <tr key={i} >
                                                         <td style={{ width: 50 }} className='text-center'>
                                                             <label className="text-center custom-checkbox p-relative">
                                                                 <Input
@@ -247,7 +251,7 @@ class PaymentDetails extends Component {
                                                             />
                                                         </td>
                                                     </tr>
-                                                </>
+                                        :"No bank details available." } </>
                                             )
                                         })}
                                     </tbody>
