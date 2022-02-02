@@ -68,7 +68,8 @@ class PaymentDetails extends Component {
             return item.checked
         })
         let objAmount = this.state.paymentsData.some((item) => {
-            return item.amount != null
+             return item.amount != null
+              //return item.amount>0
         })
         let obj = Object.assign({});
         obj.id = this.props.userConfig.id;
@@ -79,9 +80,15 @@ class PaymentDetails extends Component {
         obj.paymentsDetails = objData;
         if (obj.currency != null) {
             if (!objAmount) {
-                this.setState({ ...this.state, errorMessage: "Please enter amount" })
+                this.setState({ ...this.state, errorMessage: "Please enter amount ." })
                 this.useDivRef.current.scrollIntoView()
-            } else {
+              
+            }
+             else if(!objAmount>0){
+                this.setState({ ...this.state, errorMessage: "Amount must be greater than zero." })
+                this.useDivRef.current.scrollIntoView()
+            } 
+            else {
                 this.setState({ btnDisabled: true });
                 let response = await savePayments(obj);
                 if (response.ok) {
@@ -125,16 +132,14 @@ class PaymentDetails extends Component {
             return <Spin />
         } else {
             return (<div className='more-popover'>
-                <Text className='lbl'>Favourite Name</Text>
+                <Text className='lbl'>Address Label</Text>
                 <Text className='val'>{moreBankInfo?.favouriteName}</Text>
-                <Text className='lbl'>Beneficiary Account Name</Text>
+                <Text className='lbl'>Recipient Full Name</Text>
                 <Text className='val'>{moreBankInfo?.beneficiaryAccountName}</Text>
-                <Text className='lbl'>Beneficiary Account Address</Text>
+                <Text className='lbl'>Recipient Address</Text>
                 <Text className='val'>{moreBankInfo?.beneficiaryAccountAddress}</Text>
-                <Text className='lbl'>Routing Number</Text>
+                <Text className='lbl'>BIC/SWIFT/Routing Number</Text>
                 <Text className='val'>{moreBankInfo?.routingNumber}</Text>
-                <Text className='lbl'>Swift Code</Text>
-                <Text className='val'>{moreBankInfo.swiftCode ? moreBankInfo.swiftCode : '--'}</Text>
                 <Text className='lbl'>Bank Address</Text>
                 <Text className='val'>{moreBankInfo?.bankAddress}</Text>
             </div>)
@@ -231,7 +236,7 @@ class PaymentDetails extends Component {
                                                                 placeholder="0.00"
                                                                 decimalScale={2}
                                                                 allowNegative={false}
-                                                                maxLength={8}
+                                                                maxLength={15}
                                                                 style={{ height: 44 }}
                                                                 onValueChange={({ e, value }) => {
                                                                     let paymentData = this.state.paymentsData;
