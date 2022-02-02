@@ -3,7 +3,8 @@ import List from "../grid.component";
 import { Typography, Button, Tooltip } from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from "react-redux";
-
+import Moment from 'react-moment';
+import moment from 'moment';    
 const { Title, Text } = Typography;
 class Payments extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class Payments extends Component {
     gridColumns = [
         {
             field: "createdDate", title: 'Date', filter: true, width: 180, filterType: "date", customCell: (props) => (
-                <td><div className="gridLink" onClick={() => this.paymentsView(props)}>{new Date(props.dataItem.createdDate).toLocaleDateString()}</div></td>)
+                <td><div className="gridLink" onClick={() => this.paymentsView(props)}><Moment format="DD/MM/YYYY">{new Date(props.dataItem.createdDate).toLocaleDateString()}</Moment></div></td>)
         },
         { field: "currency", title: 'Currency', filter: true, width: 180 },
         { field: "totalAmount", title: 'Total Amount', width: 200, filter: true },
