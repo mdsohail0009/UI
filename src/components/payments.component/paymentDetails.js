@@ -16,11 +16,13 @@ class PaymentDetails extends Component {
             Currency: null,
             paymentsData: [],
             paymentSavedata: [],
-            btnDisabled: true,
+            btnDisabled: false,
+            disabled: false,
             errorMessage: null,
             visible: false,
             moreBankInfo: {},
             loading: false,
+            tooltipLoad: false,
         }
         this.gridRef = React.createRef();
         this.useDivRef = React.createRef();
@@ -67,6 +69,7 @@ class PaymentDetails extends Component {
         })
         let objAmount = this.state.paymentsData.some((item) => {
             return item.amount != null
+            //return item.amount>0
         })
         let obj = Object.assign({});
         obj.id = this.props.userConfig.id;
@@ -77,22 +80,30 @@ class PaymentDetails extends Component {
         obj.paymentsDetails = objData;
         if (obj.currency != null) {
             if (!objAmount) {
-                this.setState({ ...this.state, errorMessage: "Please enter amount" })
+                this.setState({ ...this.state, errorMessage: "Please enter amount ." })
                 this.useDivRef.current.scrollIntoView()
-            } else {
+
+            }
+            else if (!objAmount > 0) {
+                this.setState({ ...this.state, errorMessage: "Amount must be greater than zero." })
+                this.useDivRef.current.scrollIntoView()
+            }
+            else {
+                this.setState({ btnDisabled: true });
                 let response = await savePayments(obj);
                 if (response.ok) {
                     this.setState({ btnDisabled: false });
                     message.destroy();
                     message.success({
-                        content: 'Data saved successfully',
+                        content: 'Payment details saved successfully',
                         className: "custom-msg",
                         duration: 0.5
                     })
                     this.props.history.push('/payments')
                 } else {
+                    this.setState({ btnDisabled: false });
                     message.destroy();
-                    this.setState({ ...this.state, errorMessage: response.data, btnDisabled: false })
+                    this.setState({ ...this.state, errorMessage: response.data })
                     this.useDivRef.current.scrollIntoView()
                 }
             }
@@ -102,37 +113,39 @@ class PaymentDetails extends Component {
         }
     }
     moreInfoPopover = async (id, index) => {
-        debugger
+        this.setState({ ...this.state, tooltipLoad: true });
         let response = await getBankData(id);
         if (response.ok) {
-            debugger
             this.setState({
-                ...this.state, moreBankInfo: response.data, visible: true
+                ...this.state, moreBankInfo: response.data, visible: true, tooltipLoad: false
             });
         } else {
-            this.setState({ ...this.state, visible: false });
+            this.setState({ ...this.state, visible: false, tooltipLoad: false });
         }
     }
     handleVisibleChange = (index) => {
-        debugger
         this.setState({ ...this.state, visible: false });
     }
     popOverContent = () => {
-        const { moreBankInfo } = this.state;
-        return (<div className='more-popover'>
-            <Text className='lbl'>Favourite Name</Text>
-            <Text className='val'>{moreBankInfo?.favouriteName}</Text>
-            <Text className='lbl'>Beneficiary Account Name</Text>
-            <Text className='val'>{moreBankInfo?.beneficiaryAccountName}</Text>
-            <Text className='lbl'>Beneficiary Account Address</Text>
-            <Text className='val'>{moreBankInfo?.beneficiaryAccountAddress}</Text>
-            <Text className='lbl'>Routing Number</Text>
-            <Text className='val'>{moreBankInfo?.routingNumber}</Text>
-            <Text className='lbl'>Swift Code</Text>
-            <Text className='val'>{moreBankInfo.swiftCode ? moreBankInfo.swiftCode : '--'}</Text>
-            <Text className='lbl'>Bank Address</Text>
-            <Text className='val'>{moreBankInfo?.bankAddress}</Text>
-        </div>)
+        const { moreBankInfo, tooltipLoad } = this.state;
+        if (tooltipLoad) {
+            return <Spin />
+        } else {
+            return (<div className='more-popover'>
+                <Text className='lbl'>Address Label</Text>
+                <Text className='val'>{moreBankInfo?.favouriteName}</Text>
+                <Text className='lbl'>Recipient Full Name</Text>
+                <Text className='val'>{moreBankInfo?.beneficiaryAccountName}</Text>
+                <Text className='lbl'>Recipient Address</Text>
+                <Text className='val'>{moreBankInfo?.beneficiaryAccountAddress}</Text>
+                <Text className='lbl'>BIC/SWIFT/Routing Number</Text>
+                <Text className='val'>{moreBankInfo?.routingNumber}</Text>
+                {/* <Text className='lbl'>Swift Code</Text>
+                <Text className='val'>{moreBankInfo.swiftCode ? moreBankInfo.swiftCode : '--'}</Text> */}
+                <Text className='lbl'>Bank Address</Text>
+                <Text className='val'>{moreBankInfo?.bankAddress}</Text>
+            </div>)
+        }
     }
     render() {
         const { currency, paymentsData, loading } = this.state;
@@ -155,24 +168,23 @@ class PaymentDetails extends Component {
                         <Form
                             autoComplete="off">
                             <Form.Item
-                                label="Select Wallet"
+                                label="Select Currency"
                                 className='mb-16 input-label'
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Is required',
-                                    },]}>
+                                id='selectCurrency'
+                            >
                                 <Select
                                     className="cust-input"
                                     placeholder="Select Currency"
                                     onChange={(e) => this.handleCurrencyChange(e)}
                                     style={{ width: 250 }}
                                     dropdownClassName='select-drpdwn'
+                                    bordered={false}
+                                    showArrow={true}
                                 >
                                     {currency?.map((item, idx) => (
                                         <Option
                                             key={idx}
-                                            className="btns-primarys ants-btns "
+                                            className="fw-400"
                                             value={item.currencyCode}
                                         > {item.currencyCode} Balance: {item.avilable} </Option>))}
                                 </Select>
@@ -183,7 +195,7 @@ class PaymentDetails extends Component {
                                         <tr>
                                             <th style={{ width: 50 }}></th>
                                             <th>Bank Name</th>
-                                            <th>Account Number</th>
+                                            <th>Bank Account Number</th>
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
@@ -229,11 +241,12 @@ class PaymentDetails extends Component {
                                                                 placeholder="0.00"
                                                                 decimalScale={2}
                                                                 allowNegative={false}
+                                                                maxLength={15}
                                                                 style={{ height: 44 }}
                                                                 onValueChange={({ e, value }) => {
                                                                     let paymentData = this.state.paymentsData;
                                                                     paymentData[i].amount = value;
-                                                                    paymentData[i].checked = (value && value > 0) ? true : false;
+                                                                    paymentData[i].checked = value > 0 ? true : false;
                                                                     this.setState({ ...this.state, paymentsData: paymentData })
                                                                 }}
                                                             />
@@ -250,11 +263,12 @@ class PaymentDetails extends Component {
                             <Button
                                 className="pop-cancel mr-36"
                                 style={{ margin: "0 8px" }}
+
                                 onClick={this.backToPayments}
                             >
                                 Cancel
                             </Button>
-                            <Button className="pop-btn px-36" onClick={() => { this.saveRolesDetails() }} >
+                            <Button className="pop-btn px-36" disabled={this.state.btnDisabled} onClick={() => { this.saveRolesDetails() }} >
                                 Pay Now
                             </Button>
                         </div>
