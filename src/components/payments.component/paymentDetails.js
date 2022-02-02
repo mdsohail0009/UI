@@ -68,8 +68,8 @@ class PaymentDetails extends Component {
             return item.checked
         })
         let objAmount = this.state.paymentsData.some((item) => {
-             return item.amount != null
-              //return item.amount>0
+            return item.amount != null
+            //return item.amount>0
         })
         let obj = Object.assign({});
         obj.id = this.props.userConfig.id;
@@ -82,12 +82,12 @@ class PaymentDetails extends Component {
             if (!objAmount) {
                 this.setState({ ...this.state, errorMessage: "Please enter amount ." })
                 this.useDivRef.current.scrollIntoView()
-              
+
             }
-             else if(!objAmount>0){
+            else if (!objAmount > 0) {
                 this.setState({ ...this.state, errorMessage: "Amount must be greater than zero." })
                 this.useDivRef.current.scrollIntoView()
-            } 
+            }
             else {
                 this.setState({ btnDisabled: true });
                 let response = await savePayments(obj);
@@ -140,11 +140,8 @@ class PaymentDetails extends Component {
                 <Text className='val'>{moreBankInfo?.beneficiaryAccountAddress}</Text>
                 <Text className='lbl'>BIC/SWIFT/Routing Number</Text>
                 <Text className='val'>{moreBankInfo?.routingNumber}</Text>
-<<<<<<< HEAD
                 {/* <Text className='lbl'>Swift Code</Text>
                 <Text className='val'>{moreBankInfo.swiftCode ? moreBankInfo.swiftCode : '--'}</Text> */}
-=======
->>>>>>> ac5786ce17491640678042ef85915f7e96591890
                 <Text className='lbl'>Bank Address</Text>
                 <Text className='val'>{moreBankInfo?.bankAddress}</Text>
             </div>)
