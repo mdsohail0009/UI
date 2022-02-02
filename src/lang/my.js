@@ -111,6 +111,7 @@ export default {
   menu_swap: 'Tukar',
   menu_send_receive: 'Deposito / Pengeluaran',
   menu_mass_pay: 'Pembayaran Massa',
+  menu_payments: 'Pembayaran',
   security: 'Keselamatan',
   current_balance: 'Baki terkini',
   min: 'Min',
@@ -243,7 +244,7 @@ export default {
   beneficiaryBank: 'Bank Penerima',
   signature_bank: 'Bank Tandatangan',
   beneficiary_Bank_address: 'Alamat Bank Penerima',
-  bank_Reference_No:'No. Rujukan Bank',
+  bank_Reference_No: 'No. Rujukan Bank',
   Fifth_Avenue: '565 Fifth Avenue, NEW YORK NY 10017',
   reference: 'Rujukan',
   reference_hint_text: 'Penting: kod ini mengenal pasti deposit anda termasuk kod ini semasa menyerahkan kiriman wang dalam keterangan atau tujuan transaksi',
@@ -486,5 +487,5 @@ export default {
   sucessText1: "Pesanan anda telah berjaya dibuat,",
   sucessText2: "telah ditambahkan ke dalam dompet anda.",
   sucessText3: "jumlah telah didebitkan daripada dompet anda.",
-  value_should_greater:"Ang halaga ng mula sa barya ay dapat na mas malaki kaysa sa zero"
+  value_should_greater: "Ang halaga ng mula sa barya ay dapat na mas malaki kaysa sa zero"
 }

@@ -1,7 +1,7 @@
 import * as SignalR from '@microsoft/signalr';
 import { notification } from 'antd';
 import { updateDocRequest } from '../reducers/configReduser';
-import { setNotificationCount } from '../reducers/dashboardReducer';
+import { fetchDashboardcalls, setNotificationCount } from '../reducers/dashboardReducer';
 import { store } from '../store';
 function openNotification(message, title) {
     const args = {
@@ -34,11 +34,16 @@ async function start(id) {
         const { dashboard: { notificationCount } } = store.getState();
         store.dispatch(setNotificationCount(notificationCount ? notificationCount + 1 : 1));
     });
-    connection.on("SendDocRequestedMessage ",(g)=>{
+    connection.on("SendDocRequestedMessage ", (g) => {
         store.dispatch(updateDocRequest(true));
     });
-    connection.on("SendDocApproved",(a,b,c)=>{
-        store.dispatch(updateDocRequest(b==="Requested"));
+    connection.on("SendDocApproved", (a, b, c) => {
+        store.dispatch(updateDocRequest(b === "Requested"));
+    });
+
+    connection.on("UpdateWallet", (e) => {
+        const { userConfig: { userProfileInfo } } = store.getState();
+        store.dispatch(fetchDashboardcalls(userProfileInfo?.id));
     });
 }
 

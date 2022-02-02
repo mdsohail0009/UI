@@ -90,13 +90,13 @@ class Header extends Component {
               if (status === true) {
                 window.open(
                   process.env.REACT_APP_AUTHORITY +
-                    "/account/login?returnUrl=/manage/EnableAuthenticator",
+                  "/account/login?returnUrl=/manage/EnableAuthenticator",
                   "_self"
                 );
               } else {
                 window.open(
                   process.env.REACT_APP_AUTHORITY +
-                    "/account/login?returnUrl=/manage/Disable2faWarning",
+                  "/account/login?returnUrl=/manage/Disable2faWarning",
                   "_self"
                 );
               }
@@ -466,8 +466,17 @@ class Header extends Component {
     });
   }
   routeToHome = () => {
+    this.props.dispatch(setHeaderTab(''));
     this.props.history.push("/cockpit");
   };
+
+  showPayments = () => {
+    this.props.history.push('/payments')
+  }
+  routeToCockpit = () => {
+    this.props.dispatch(setHeaderTab(''));
+    this.props.userConfig.isKYC ? this.props.history.push("/cockpit") : this.props.history.push("/notkyc")
+  }
   render() {
     const link = <LinkValue content="medium" />;
     const depostWithdrawMenu = (
@@ -575,11 +584,7 @@ class Header extends Component {
                 <li className="mb-d-none px-36">
                   <Translate
                     content="header_title"
-                    onClick={() =>
-                      this.props.userConfig.isKYC
-                        ? this.props.history.push("/cockpit")
-                        : this.props.history.push("/notkyc")
-                    }
+                    onClick={this.routeToCockpit}
                     component={Text}
                     className="text-white-30 fs-24 c-pointer cp-link"
                   />
@@ -652,23 +657,30 @@ class Header extends Component {
               }}
             >
               <Translate
-                content="menu_wallets"
+                content="menu_payments"
                 component={Menu.Item}
                 key="1"
+                onClick={this.showPayments}
+                className="list-item"
+              />
+              <Translate
+                content="menu_wallets"
+                component={Menu.Item}
+                key="2"
                 onClick={this.showWalletsDrawer}
                 className="list-item"
               />
               <Translate
                 content="menu_buy_sell"
                 component={Menu.Item}
-                key="2"
+                key="3"
                 onClick={this.showBuyDrawer}
                 className="list-item"
               />
               <Translate
                 content="menu_swap"
                 component={Menu.Item}
-                key="3"
+                key="4"
                 onClick={this.showSwapDrawer}
                 className="list-item"
               />
@@ -686,7 +698,7 @@ class Header extends Component {
                 <Translate
                   content="menu_send_receive"
                   component={Menu.Item}
-                  key="4"
+                  key="5"
                   className="mr-16"
                 />
               </Dropdown>
@@ -694,12 +706,12 @@ class Header extends Component {
               <Translate
                 content="menu_transactions_history"
                 component={Menu.Item}
-                key="5"
+                key="6"
                 onClick={this.showTransactionHistoryDrawer}
                 className="list-item"
               />
               <Menu.Item
-                key="6"
+                key="7"
                 className="notification-conunt"
                 onClick={this.showNotificationsDrawer}
               >
@@ -730,7 +742,7 @@ class Header extends Component {
                 overlayClassName="secureDropdown"
                 getPopupContainer={() => document.getElementById("area")}
               >
-                <Menu.Item key="7" className="ml-16">
+                <Menu.Item key="8" className="ml-16">
                   {this.props.userConfig?.imageURL != null && (
                     <img
                       src={

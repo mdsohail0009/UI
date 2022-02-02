@@ -14,5 +14,6 @@ export const ApiControllers = {
     wallets:"Wallets/",
     notifications:"Notifications/",
     documents:"Documents/",
-    dashboard:"Dashboard/" 
+    dashboard:"Dashboard/" ,
+    massPayment:"MassPayment/"
 }

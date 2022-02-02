@@ -57,7 +57,7 @@ class List extends React.Component {
             date.getMinutes(),
             date.getSeconds(),
         );
-        return new Date(milliseconds).toISOString()
+        return new Date(milliseconds)
     };
     render() {
         const { columns, url, additionalParams } = this.props
