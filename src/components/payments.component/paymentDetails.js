@@ -49,9 +49,10 @@ class PaymentDetails extends Component {
         }
     }
     getPayments = async () => {
+        this.setState({ ...this.state, loading: true })
         let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id)
         if (response.ok) {
-            this.setState({ ...this.state, paymentsData: response.data.paymentsDetails });
+            this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
         }
     }
 
@@ -66,31 +67,33 @@ class PaymentDetails extends Component {
         obj.id = this.props.userConfig.id;
         obj.currency = this.state.selectedObj.currency;
         obj.memberId = this.props.userConfig.id;
-        obj.createdBy = new Date();
-        obj.modifiedBy = new Date();
+        obj.createdBy = this.props.userConfig.userName;
+        obj.modifiedBy = "";
         obj.paymentsDetails = objData;
-        if (obj.currency !== null && objAmount) {
-            let response = await savePayments(obj);
-            if (response.ok) {
-                this.setState({ btnDisabled: false });
-                message.destroy();
-                message.success({
-                    content: 'Data saved successfully',
-                    className: "custom-msg",
-                    duration: 0.5
-                })
-                this.props.history.push('/payments')
+        if (obj.currency != null) {
+            if (!objAmount) {
+                this.setState({ ...this.state, errorMessage: "Please enter Amount" })
+                this.useDivRef.current.scrollIntoView()
             } else {
-                this.setState({ btnDisabled: false });
-                message.destroy();
-                message.error({
-                    content: response.data,
-                    className: "custom-msg",
-                    duration: 0.5
-                });
+                let response = await savePayments(obj);
+                if (response.ok) {
+                    this.setState({ btnDisabled: false });
+                    message.destroy();
+                    message.success({
+                        content: 'Data saved successfully',
+                        className: "custom-msg",
+                        duration: 0.5
+                    })
+                    this.props.history.push('/payments')
+                } else {
+                    this.setState({ btnDisabled: false });
+                    message.destroy();
+                    this.setState({ ...this.state, errorMessage: response.data })
+                    this.useDivRef.current.scrollIntoView()
+                }
             }
         } else {
-            this.setState({ ...this.state, errorMessage: "Please fill the details" })
+            this.setState({ ...this.state, errorMessage: "Please select currency" })
             this.useDivRef.current.scrollIntoView()
         }
     }
@@ -133,7 +136,7 @@ class PaymentDetails extends Component {
     }
     render() {
         const Option = Select;
-        const { currency, paymentsData, selectedObj } = this.state;
+        const { currency, paymentsData, selectedObj, loading } = this.state;
         const { Title, Text } = Typography;
         return (
             <>
@@ -189,6 +192,8 @@ class PaymentDetails extends Component {
                                         </tr>
                                     </thead>
                                     <tbody className="mb-0">
+                                        {paymentsData.length === 0 && loading && <tr>
+                                            <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>}
                                         {paymentsData?.map((item, i) => {
                                             return (
                                                 <>
@@ -196,8 +201,10 @@ class PaymentDetails extends Component {
                                                         <td style={{ width: 50 }} className='text-center'>
                                                             <label className="text-center custom-checkbox p-relative">
                                                                 <Input
+                                                                    style={{ cursor: "not-allowed" }}
                                                                     name="check"
                                                                     type="checkbox"
+                                                                    disabled
                                                                     checked={item.checked}
                                                                     className="grid_check_box"
                                                                 />
