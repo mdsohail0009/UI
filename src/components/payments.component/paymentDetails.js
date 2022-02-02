@@ -21,6 +21,7 @@ class PaymentDetails extends Component {
             visible: false,
             moreBankInfo: {},
             loading: false,
+            tooltipLoad: false,
         }
         this.gridRef = React.createRef();
         this.useDivRef = React.createRef();
@@ -102,37 +103,39 @@ class PaymentDetails extends Component {
         }
     }
     moreInfoPopover = async (id, index) => {
-        debugger
+        this.setState({ ...this.state, tooltipLoad: true });
         let response = await getBankData(id);
         if (response.ok) {
-            debugger
             this.setState({
-                ...this.state, moreBankInfo: response.data, visible: true
+                ...this.state, moreBankInfo: response.data, visible: true, tooltipLoad: false
             });
         } else {
-            this.setState({ ...this.state, visible: false });
+            this.setState({ ...this.state, visible: false, tooltipLoad: false });
         }
     }
     handleVisibleChange = (index) => {
-        debugger
         this.setState({ ...this.state, visible: false });
     }
     popOverContent = () => {
-        const { moreBankInfo } = this.state;
-        return (<div className='more-popover'>
-            <Text className='lbl'>Favourite Name</Text>
-            <Text className='val'>{moreBankInfo?.favouriteName}</Text>
-            <Text className='lbl'>Beneficiary Account Name</Text>
-            <Text className='val'>{moreBankInfo?.beneficiaryAccountName}</Text>
-            <Text className='lbl'>Beneficiary Account Address</Text>
-            <Text className='val'>{moreBankInfo?.beneficiaryAccountAddress}</Text>
-            <Text className='lbl'>Routing Number</Text>
-            <Text className='val'>{moreBankInfo?.routingNumber}</Text>
-            <Text className='lbl'>Swift Code</Text>
-            <Text className='val'>{moreBankInfo.swiftCode ? moreBankInfo.swiftCode : '--'}</Text>
-            <Text className='lbl'>Bank Address</Text>
-            <Text className='val'>{moreBankInfo?.bankAddress}</Text>
-        </div>)
+        const { moreBankInfo, tooltipLoad } = this.state;
+        if (tooltipLoad) {
+            return <Spin />
+        } else {
+            return (<div className='more-popover'>
+                <Text className='lbl'>Favourite Name</Text>
+                <Text className='val'>{moreBankInfo?.favouriteName}</Text>
+                <Text className='lbl'>Beneficiary Account Name</Text>
+                <Text className='val'>{moreBankInfo?.beneficiaryAccountName}</Text>
+                <Text className='lbl'>Beneficiary Account Address</Text>
+                <Text className='val'>{moreBankInfo?.beneficiaryAccountAddress}</Text>
+                <Text className='lbl'>Routing Number</Text>
+                <Text className='val'>{moreBankInfo?.routingNumber}</Text>
+                <Text className='lbl'>Swift Code</Text>
+                <Text className='val'>{moreBankInfo.swiftCode ? moreBankInfo.swiftCode : '--'}</Text>
+                <Text className='lbl'>Bank Address</Text>
+                <Text className='val'>{moreBankInfo?.bankAddress}</Text>
+            </div>)
+        }
     }
     render() {
         const { currency, paymentsData, loading } = this.state;
