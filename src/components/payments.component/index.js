@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import List from "../grid.component";
-import apiCalls from '../../api/apiCalls';
-import { Typography, Button, Tooltip, Modal, Alert } from 'antd';
+import { Typography, Button, Tooltip } from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from "react-redux";
 
@@ -16,35 +15,14 @@ class Payments extends Component {
         this.props.history.push(`payments/${props.dataItem.id}/view`);
     }
     gridColumns = [
-        // {
-        //     field: "", title: "", width: 50,
-        //     customCell: (props) => (
-        //         <td className="text-center">
-        //             <label className="text-center custom-checkbox">
-        //                 <input
-        //                     id={props.dataItem.id}
-        //                     name="check"
-        //                     type="checkbox"
-        //                     // checked={this.state.selection.indexOf(props.dataItem.id) > -1}
-        //                     onChange={(e) => this.handleInputChange(props, e)}
-        //                     className="grid_check_box"
-        //                 />
-        //                 <span></span>
-        //             </label>
-        //         </td>
-        //     )
-        // },
-        // { field: "createdDate", title: 'Date', width: 180, filter: true, filterType: "date" },
         {
             field: "", title: 'Date', filter: true, width: 180, filterType: "date", customCell: (props) => (
                 <td><div className="gridLink" onClick={() => this.paymentsView(props)}>{new Date(props.dataItem.createdDate).toLocaleDateString()}</div></td>)
         },
-        // { field: "lastName", title: 'Last Name', filter: true, width: 150 },
         { field: "currency", title: 'Currency', filter: true, width: 180 },
         { field: "totalAmount", title: 'Total Amount', width: 200, filter: true },
         { field: "count", title: 'Count', width: 130, filter: true },
-        //{ field: "createdBy", title: 'Created By', filter: true, width: 150 },
-        { field: "modifiedDate", title: 'Modified Date',filterType: "date", filter: true, width: 180 },
+        { field: "modifiedDate", title: 'Modified Date', filterType: "date", filter: true, width: 180 },
         { field: "modifiedBy", title: 'Modified By', filter: true, width: 200 },
         { field: "state", title: 'State', filter: true, width: 160 },
     ];
