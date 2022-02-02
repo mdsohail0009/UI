@@ -4,6 +4,8 @@ import Translate from 'react-translate-component';
 import { getCurrencyLu, getPaymentsData, savePayments, getBankData } from './api'
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
+const Option = Select;
+const { Title, Text } = Typography;
 class PaymentDetails extends Component {
     formRef = createRef();
     constructor(props) {
@@ -72,7 +74,7 @@ class PaymentDetails extends Component {
         obj.paymentsDetails = objData;
         if (obj.currency != null) {
             if (!objAmount) {
-                this.setState({ ...this.state, errorMessage: "Please enter Amount" })
+                this.setState({ ...this.state, errorMessage: "Please enter amount" })
                 this.useDivRef.current.scrollIntoView()
             } else {
                 let response = await savePayments(obj);
@@ -86,9 +88,8 @@ class PaymentDetails extends Component {
                     })
                     this.props.history.push('/payments')
                 } else {
-                    this.setState({ btnDisabled: false });
                     message.destroy();
-                    this.setState({ ...this.state, errorMessage: response.data })
+                    this.setState({ ...this.state, errorMessage: response.data, btnDisabled: false })
                     this.useDivRef.current.scrollIntoView()
                 }
             }
@@ -135,9 +136,9 @@ class PaymentDetails extends Component {
         )
     }
     render() {
-        const Option = Select;
+
         const { currency, paymentsData, selectedObj, loading } = this.state;
-        const { Title, Text } = Typography;
+
         return (
             <>
                 <div ref={this.useDivRef}></div>
@@ -192,7 +193,7 @@ class PaymentDetails extends Component {
                                         </tr>
                                     </thead>
                                     <tbody className="mb-0">
-                                        {paymentsData.length === 0 && loading && <tr>
+                                        {loading && <tr>
                                             <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>}
                                         {paymentsData?.map((item, i) => {
                                             return (
@@ -240,7 +241,6 @@ class PaymentDetails extends Component {
                                                                     paymentData[i].checked = (value && value > 0) ? true : false;
                                                                     this.setState({ ...this.state, paymentData })
                                                                 }}
-                                                                onBlur={() => console.log(item)}
                                                             />
                                                         </td>
                                                     </tr>

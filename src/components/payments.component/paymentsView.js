@@ -61,7 +61,7 @@ class PaymentsView extends Component {
                                         </>
                                     )
                                 })}
-                                {paymentsData.length === 0 && loading && <tr>
+                                {loading && <tr>
                                     <td colSpan='3' className='text-center p-16'><Spin size='default' /></td></tr>}
                             </tbody>
                         </table>

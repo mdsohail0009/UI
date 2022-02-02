@@ -4,6 +4,7 @@ import { Typography, Button, Tooltip } from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from "react-redux";
 
+const { Title, Text } = Typography;
 class Payments extends Component {
     constructor(props) {
         super(props);
@@ -32,7 +33,6 @@ class Payments extends Component {
     }
 
     render() {
-        const { Title, Paragraph, Text } = Typography;
         return (
             <>
                 <div className="main-container">
