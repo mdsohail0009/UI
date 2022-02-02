@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { getPaymentsData } from './api';
-import { Typography, Button, Spin } from 'antd';
+import { Typography, Button, Spin,message,Alert } from 'antd';
 import Translate from 'react-translate-component';
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
-
+const { Title, Text } = Typography;
 class PaymentsView extends Component {
     constructor(props) {
         super(props);
@@ -12,6 +12,7 @@ class PaymentsView extends Component {
             paymentsData: [],
             loading: false
         }
+        this.useDivRef = React.createRef();
     }
     componentDidMount() {
         this.getPaymentsViewData();
@@ -21,6 +22,10 @@ class PaymentsView extends Component {
         let response = await getPaymentsData(this.props.match.params.id, this.props.userConfig?.userId);
         if (response.ok) {
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
+        }else {
+            message.destroy();
+            this.setState({ ...this.state, errorMessage: response.data})
+            this.useDivRef.current.scrollIntoView()
         }
     }
     backToPayments = () => {
@@ -28,10 +33,18 @@ class PaymentsView extends Component {
     }
     render() {
         const { paymentsData, loading } = this.state;
-        const { Title, Text } = Typography;
         return (
             <>
+             <div ref={this.useDivRef}></div>
                 <div className="main-container">
+                {this.state.errorMessage != null && (
+                            <Alert
+                                description={this.state.errorMessage}
+                                type="error"
+                                closable
+                                onClose={() => this.handleAlert()}
+                            />
+                        )}
                     <Title className="basicinfo mb-16"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
                     <div className="box basic-info">
                         <table className='pay-grid view'>
