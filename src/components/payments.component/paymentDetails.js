@@ -4,7 +4,8 @@ import Translate from 'react-translate-component';
 import { getCurrencyLu, getPaymentsData, savePayments, getBankData } from './api'
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
-const Option = Select;
+
+const { Option } = Select;
 const { Title, Text } = Typography;
 class PaymentDetails extends Component {
     formRef = createRef();
@@ -12,7 +13,7 @@ class PaymentDetails extends Component {
         super(props);
         this.state = {
             currency: [],
-            Currency: null ,
+            Currency: null,
             paymentsData: [],
             paymentSavedata: [],
             btnDisabled: true,
@@ -36,15 +37,15 @@ class PaymentDetails extends Component {
         this.setState({ ...this.state, errorMessage: null })
     }
     handleCurrencyChange = (val) => {
-        this.setState({...this.state,Currency:val})
+        this.setState({ ...this.state, Currency: val })
     }
     getCurrencyLookup = async () => {
         let response = await getCurrencyLu(this.props.userConfig?.id)
         if (response.ok) {
             this.setState({ ...this.state, currency: response.data });
-        }else {
+        } else {
             message.destroy();
-            this.setState({ ...this.state, errorMessage: response.data})
+            this.setState({ ...this.state, errorMessage: response.data })
             this.useDivRef.current.scrollIntoView()
         }
     }
@@ -53,9 +54,9 @@ class PaymentDetails extends Component {
         let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id)
         if (response.ok) {
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
-        }else {
+        } else {
             message.destroy();
-            this.setState({ ...this.state, errorMessage: response.data})
+            this.setState({ ...this.state, errorMessage: response.data })
             this.useDivRef.current.scrollIntoView()
         }
     }
@@ -101,27 +102,24 @@ class PaymentDetails extends Component {
         }
     }
     moreInfoPopover = async (id, index) => {
-        this.setState({ ...this.state, loading: true });
+        debugger
         let response = await getBankData(id);
         if (response.ok) {
             debugger
             this.setState({
-                ...this.state, moreBankInfo: response.data, visible: this.state.paymentsData[index].visible = true,
-                loading: false
+                ...this.state, moreBankInfo: response.data, visible: true
             });
         } else {
-            this.setState({ ...this.state, visible: this.state.paymentsData[index].visible = false, loading: false });
+            this.setState({ ...this.state, visible: false });
         }
     }
     handleVisibleChange = (index) => {
-        this.setState({ visible: this.state.paymentsData[index].visible = false });
+        debugger
+        this.setState({ ...this.state, visible: false });
     }
     popOverContent = () => {
-        const { moreBankInfo, loading } = this.state;
-        if(loading && moreBankInfo){
-            return(<Spin />) 
-        }else{
-           return(<div className='more-popover'>
+        const { moreBankInfo } = this.state;
+        return (<div className='more-popover'>
             <Text className='lbl'>Favourite Name</Text>
             <Text className='val'>{moreBankInfo?.favouriteName}</Text>
             <Text className='lbl'>Beneficiary Account Name</Text>
@@ -134,11 +132,10 @@ class PaymentDetails extends Component {
             <Text className='val'>{moreBankInfo.swiftCode ? moreBankInfo.swiftCode : '--'}</Text>
             <Text className='lbl'>Bank Address</Text>
             <Text className='val'>{moreBankInfo?.bankAddress}</Text>
-        </div>) 
-        }
+        </div>)
     }
     render() {
-        const { currency, paymentsData,  loading } = this.state;
+        const { currency, paymentsData, loading } = this.state;
         return (
             <>
                 <div ref={this.useDivRef}></div>
@@ -176,7 +173,7 @@ class PaymentDetails extends Component {
                                         <Option
                                             key={idx}
                                             className="btns-primarys ants-btns "
-                                            value={item.currencyCode} 
+                                            value={item.currencyCode}
                                         > {item.currencyCode} Balance: {item.avilable} </Option>))}
                                 </Select>
                             </Form.Item>
@@ -237,7 +234,7 @@ class PaymentDetails extends Component {
                                                                     let paymentData = this.state.paymentsData;
                                                                     paymentData[i].amount = value;
                                                                     paymentData[i].checked = (value && value > 0) ? true : false;
-                                                                    this.setState({ ...this.state, paymentsData:paymentData })
+                                                                    this.setState({ ...this.state, paymentsData: paymentData })
                                                                 }}
                                                             />
                                                         </td>
