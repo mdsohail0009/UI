@@ -168,9 +168,9 @@ class PaymentDetails extends Component {
                         <Form
                             autoComplete="off">
                             <Form.Item
-                                label="Select Currency"
-                                className='mb-16 input-label'
-                                id='selectCurrency'
+                                // label="Select Currency"
+                                // className='mb-16 input-label'
+                                // id='selectCurrency'
                             >
                                 <Select
                                     className="cust-input"
@@ -241,7 +241,7 @@ class PaymentDetails extends Component {
                                                                 placeholder="0.00"
                                                                 decimalScale={2}
                                                                 allowNegative={false}
-                                                                maxLength={15}
+                                                                maxlength={13}
                                                                 style={{ height: 44 }}
                                                                 onValueChange={({ e, value }) => {
                                                                     let paymentData = this.state.paymentsData;
