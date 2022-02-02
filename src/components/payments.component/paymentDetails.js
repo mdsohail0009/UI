@@ -106,11 +106,11 @@ class PaymentDetails extends Component {
         if (response.ok) {
             debugger
             this.setState({
-                ...this.state, moreBankInfo: response.data, visible: this.state.paymentsData[id].visible = true,
+                ...this.state, moreBankInfo: response.data, visible: this.state.paymentsData[index].visible = true,
                 loading: false
             });
         } else {
-            this.setState({ ...this.state, visible: this.state.paymentsData[id].visible = false, loading: false });
+            this.setState({ ...this.state, visible: this.state.paymentsData[index].visible = false, loading: false });
         }
     }
     handleVisibleChange = (index) => {
