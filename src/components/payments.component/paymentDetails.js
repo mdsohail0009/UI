@@ -16,7 +16,8 @@ class PaymentDetails extends Component {
             Currency: null,
             paymentsData: [],
             paymentSavedata: [],
-            btnDisabled: true,
+            btnDisabled: false,
+            disabled: false,
             errorMessage: null,
             visible: false,
             moreBankInfo: {},
@@ -81,19 +82,21 @@ class PaymentDetails extends Component {
                 this.setState({ ...this.state, errorMessage: "Please enter amount" })
                 this.useDivRef.current.scrollIntoView()
             } else {
+                this.setState({ btnDisabled: true });
                 let response = await savePayments(obj);
                 if (response.ok) {
                     this.setState({ btnDisabled: false });
                     message.destroy();
                     message.success({
-                        content: 'Data saved successfully',
+                        content: 'Payment details saved successfully',
                         className: "custom-msg",
                         duration: 0.5
                     })
                     this.props.history.push('/payments')
                 } else {
+                    this.setState({ btnDisabled: false });
                     message.destroy();
-                    this.setState({ ...this.state, errorMessage: response.data, btnDisabled: false })
+                    this.setState({ ...this.state, errorMessage: response.data })
                     this.useDivRef.current.scrollIntoView()
                 }
             }
@@ -158,13 +161,9 @@ class PaymentDetails extends Component {
                         <Form
                             autoComplete="off">
                             <Form.Item
-                                label="Select Wallet"
+                                label="Select Currency"
                                 className='mb-16 input-label'
-                                rules={[
-                                    {
-                                        required: true,
-                                        message: 'Is required',
-                                    },]}>
+                               >
                                 <Select
                                     className="cust-input"
                                     placeholder="Select Currency"
@@ -232,11 +231,12 @@ class PaymentDetails extends Component {
                                                                 placeholder="0.00"
                                                                 decimalScale={2}
                                                                 allowNegative={false}
+                                                                maxLength={8}
                                                                 style={{ height: 44 }}
                                                                 onValueChange={({ e, value }) => {
                                                                     let paymentData = this.state.paymentsData;
                                                                     paymentData[i].amount = value;
-                                                                    paymentData[i].checked = (value && value > 0) ? true : false;
+                                                                    paymentData[i].checked =  value > 0 ? true : false;
                                                                     this.setState({ ...this.state, paymentsData: paymentData })
                                                                 }}
                                                             />
@@ -253,11 +253,12 @@ class PaymentDetails extends Component {
                             <Button
                                 className="pop-cancel mr-36"
                                 style={{ margin: "0 8px" }}
+                                
                                 onClick={this.backToPayments}
                             >
                                 Cancel
                             </Button>
-                            <Button className="pop-btn px-36" onClick={() => { this.saveRolesDetails() }} >
+                            <Button className="pop-btn px-36" disabled={this.state.btnDisabled} onClick={() => { this.saveRolesDetails() }} >
                                 Pay Now
                             </Button>
                         </div>

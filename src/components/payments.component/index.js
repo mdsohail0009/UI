@@ -17,7 +17,7 @@ class Payments extends Component {
     }
     gridColumns = [
         {
-            field: "", title: 'Date', filter: true, width: 180, filterType: "date", customCell: (props) => (
+            field: "createdDate", title: 'Date', filter: true, width: 180, filterType: "date", customCell: (props) => (
                 <td><div className="gridLink" onClick={() => this.paymentsView(props)}>{new Date(props.dataItem.createdDate).toLocaleDateString()}</div></td>)
         },
         { field: "currency", title: 'Currency', filter: true, width: 180 },
@@ -25,7 +25,7 @@ class Payments extends Component {
         { field: "count", title: 'Count', width: 130, filter: true },
         { field: "modifiedDate", title: 'Modified Date', filterType: "date", filter: true, width: 180 },
         { field: "modifiedBy", title: 'Modified By', filter: true, width: 200 },
-        { field: "state", title: 'State', filter: true, width: 160 },
+        { field: "state", title: 'Status', filter: true, width: 160 },
     ];
 
     addPayment = () => {
