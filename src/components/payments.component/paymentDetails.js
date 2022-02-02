@@ -169,15 +169,15 @@ class PaymentDetails extends Component {
                                     className="cust-input"
                                     placeholder="Select Currency"
                                     onChange={(e) => this.handleCurrencyChange(e)}
-                                    style={{ width: 200 }}
+                                    style={{ width: 250 }}
                                     dropdownClassName='select-drpdwn'
                                 >
                                     {currency?.map((item, idx) => (
                                         <Option
                                             key={idx}
                                             className="btns-primarys ants-btns "
-                                            value={item.currencyCode}
-                                        > {item.currencyCode}</Option>))}
+                                            value={item.currencyCode} 
+                                        > {item.currencyCode} Balance: {item.avilable} </Option>))}
                                 </Select>
                             </Form.Item>
                             <div>
