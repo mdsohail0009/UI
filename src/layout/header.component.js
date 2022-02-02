@@ -471,7 +471,7 @@ class Header extends Component {
   };
 
   showPayments = () => {
-    this.props.history.push('payments')
+    this.props.history.push('/payments')
   }
   routeToCockpit = () => {
     this.props.dispatch(setHeaderTab(''));

@@ -13,7 +13,7 @@ class Payments extends Component {
         this.gridRef = React.createRef();
     }
     paymentsView = async (props) => {
-        this.props.history.push(`payments/${props.dataItem.id}/view`);
+        this.props.history.push(`/payments/${props.dataItem.id}/view`);
     }
     gridColumns = [
         {
@@ -29,7 +29,7 @@ class Payments extends Component {
     ];
 
     addPayment = () => {
-        this.props.history.push(`payments/00000000-0000-0000-0000-000000000000/add`)
+        this.props.history.push(`/payments/00000000-0000-0000-0000-000000000000/add`)
     }
 
     render() {
