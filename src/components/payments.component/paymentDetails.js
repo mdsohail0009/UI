@@ -68,8 +68,8 @@ class PaymentDetails extends Component {
             return item.checked
         })
         let objAmount = this.state.paymentsData.some((item) => {
-             return item.amount != null
-              //return item.amount>0
+            return item.amount != null
+            //return item.amount>0
         })
         let obj = Object.assign({});
         obj.id = this.props.userConfig.id;
@@ -82,9 +82,9 @@ class PaymentDetails extends Component {
             if (!objAmount) {
                 this.setState({ ...this.state, errorMessage: "Please enter amount ." })
                 this.useDivRef.current.scrollIntoView()
-              
+
             }
-             else if(!objAmount>0){
+            else if (!objAmount > 0) {
                 this.setState({ ...this.state, errorMessage: "Amount must be greater than zero." })
                 this.useDivRef.current.scrollIntoView()
             } 
@@ -144,6 +144,8 @@ class PaymentDetails extends Component {
                 <Text className='val'>{moreBankInfo?.beneficiaryAccountAddress}</Text>
                 <Text className='lbl'>BIC/SWIFT/Routing Number</Text>
                 <Text className='val'>{moreBankInfo?.routingNumber}</Text>
+                {/* <Text className='lbl'>Swift Code</Text>
+                <Text className='val'>{moreBankInfo.swiftCode ? moreBankInfo.swiftCode : '--'}</Text> */}
                 <Text className='lbl'>Bank Address</Text>
                 <Text className='val'>{moreBankInfo?.bankAddress}</Text>
             </div>)
@@ -172,18 +174,21 @@ class PaymentDetails extends Component {
                             <Form.Item
                                 label="Select Currency"
                                 className='mb-16 input-label'
-                               >
+                                id='selectCurrency'
+                            >
                                 <Select
                                     className="cust-input"
                                     placeholder="Select Currency"
                                     onChange={(e) => this.handleCurrencyChange(e)}
                                     style={{ width: 250 }}
                                     dropdownClassName='select-drpdwn'
+                                    bordered={false}
+                                    showArrow={true}
                                 >
                                     {currency?.map((item, idx) => (
                                         <Option
                                             key={idx}
-                                            className="btns-primarys ants-btns "
+                                            className="fw-400"
                                             value={item.currencyCode}
                                         > {item.currencyCode} Balance: {item.avilable} </Option>))}
                                 </Select>
@@ -194,7 +199,7 @@ class PaymentDetails extends Component {
                                         <tr>
                                             <th style={{ width: 50 }}></th>
                                             <th>Bank Name</th>
-                                            <th>Account Number</th>
+                                            <th>Bank Account Number</th>
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
@@ -245,7 +250,7 @@ class PaymentDetails extends Component {
                                                                 onValueChange={({ e, value }) => {
                                                                     let paymentData = this.state.paymentsData;
                                                                     paymentData[i].amount = value;
-                                                                    paymentData[i].checked =  value > 0 ? true : false;
+                                                                    paymentData[i].checked = value > 0 ? true : false;
                                                                     this.setState({ ...this.state, paymentsData: paymentData })
                                                                 }}
                                                             />
@@ -262,7 +267,7 @@ class PaymentDetails extends Component {
                             <Button
                                 className="pop-cancel mr-36"
                                 style={{ margin: "0 8px" }}
-                                
+
                                 onClick={this.backToPayments}
                             >
                                 Cancel
