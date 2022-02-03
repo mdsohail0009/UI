@@ -13,7 +13,7 @@ class PaymentDetails extends Component {
         super(props);
         this.state = {
             currency: [],
-            Currency: null,
+            Currency: "USD",
             paymentsData: [],
             paymentSavedata: [],
             btnDisabled: false,
@@ -38,8 +38,18 @@ class PaymentDetails extends Component {
     handleAlert = () => {
         this.setState({ ...this.state, errorMessage: null })
     }
-    handleCurrencyChange = (val) => {
+    handleCurrencyChange = async(val) => {
         this.setState({ ...this.state, Currency: val })
+        if(this.state.Currency=val){
+            let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id,this.state.Currency)
+            if (response.ok) {
+                this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
+            } else {
+                message.destroy();
+                this.setState({ ...this.state, errorMessage: response.data })
+                this.useDivRef.current.scrollIntoView()
+            }
+        }
     }
     getCurrencyLookup = async () => {
         let response = await getCurrencyLu(this.props.userConfig?.id)
@@ -51,9 +61,9 @@ class PaymentDetails extends Component {
             this.useDivRef.current.scrollIntoView()
         }
     }
-    getPayments = async () => {
+    getPayments = async (item) => {
         this.setState({ ...this.state, loading: true })
-        let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id)
+        let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id,this.state.Currency)
         if (response.ok) {
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
         } else {
@@ -80,7 +90,7 @@ class PaymentDetails extends Component {
         obj.paymentsDetails = objData;
         if (obj.currency != null) {
             if (!objAmount) {
-                this.setState({ ...this.state, errorMessage: "Please enter amount ." })
+                this.setState({ ...this.state, errorMessage: "Please enter amount" })
                 this.useDivRef.current.scrollIntoView()
 
             }
@@ -88,10 +98,6 @@ class PaymentDetails extends Component {
                 this.setState({ ...this.state, errorMessage: "Amount must be greater than zero." })
                 this.useDivRef.current.scrollIntoView()
             } 
-            // else if(obj==null){
-            //     this.setState({ ...this.state, errorMessage: "No bank details available." })
-            //     this.useDivRef.current.scrollIntoView()
-            // } 
             else {
                 this.setState({ btnDisabled: true });
                 let response = await savePayments(obj);
@@ -144,8 +150,6 @@ class PaymentDetails extends Component {
                 <Text className='val'>{moreBankInfo?.beneficiaryAccountAddress}</Text>
                 <Text className='lbl'>BIC/SWIFT/Routing Number</Text>
                 <Text className='val'>{moreBankInfo?.routingNumber}</Text>
-                {/* <Text className='lbl'>Swift Code</Text>
-                <Text className='val'>{moreBankInfo.swiftCode ? moreBankInfo.swiftCode : '--'}</Text> */}
                 <Text className='lbl'>Bank Address</Text>
                 <Text className='val'>{moreBankInfo?.bankAddress}</Text>
             </div>)
@@ -172,9 +176,7 @@ class PaymentDetails extends Component {
                         <Form
                             autoComplete="off">
                             <Form.Item
-                                // label="Select Currency"
-                                // className='mb-16 input-label'
-                                // id='selectCurrency'
+                               
                             >
                                 <Select
                                     className="cust-input"
@@ -184,6 +186,7 @@ class PaymentDetails extends Component {
                                     dropdownClassName='select-drpdwn'
                                     bordered={false}
                                     showArrow={true}
+                                    defaultValue="USD"
                                 >
                                     {currency?.map((item, idx) => (
                                         <Option
@@ -203,13 +206,13 @@ class PaymentDetails extends Component {
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="mb-0">
+                                  {paymentsData.length > 0?<tbody className="mb-0">
                                         {loading && <tr>
                                             <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>}
                                         {paymentsData?.map((item, i) => {
                                             return (
                                                 <>
-                                                   {paymentsData.length > 0? <tr key={i} >
+                                                <tr key={i} >
                                                         <td style={{ width: 50 }} className='text-center'>
                                                             <label className="text-center custom-checkbox p-relative">
                                                                 <Input
@@ -256,15 +259,16 @@ class PaymentDetails extends Component {
                                                             />
                                                         </td>
                                                     </tr>
-                                        :"No bank details available." } </>
-                                            )
-                                        })}
-                                    </tbody>
+                                         </>) })}
+                                    </tbody>:<tbody><tr><td colSpan='8' className="p-16 text-center" style={{color:"white",width:300}} >No bank details available</td></tr> </tbody>}
                                 </table>
                             </div>
                         </Form>
                         <div className="text-right mt-36">
-                            <Button
+                        
+                        {paymentsData.length > 0? 
+                        <div>
+                        <Button
                                 className="pop-cancel mr-36"
                                 style={{ margin: "0 8px" }}
 
@@ -275,7 +279,9 @@ class PaymentDetails extends Component {
                             <Button className="pop-btn px-36" disabled={this.state.btnDisabled} onClick={() => { this.saveRolesDetails() }} >
                                 Pay Now
                             </Button>
+                            </div>:""}
                         </div>
+                        
                     </div>
                 </div>
             </>

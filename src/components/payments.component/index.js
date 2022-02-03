@@ -18,15 +18,14 @@ class Payments extends Component {
     }
     gridColumns = [
         {
-            field: "createdDate", title: 'Date', filter: true, width: 180, filterType: "date", customCell: (props) => (
-                <td><div className="gridLink" onClick={() => this.paymentsView(props)}><Moment format="DD/MM/YYYY">{new Date(props.dataItem.createdDate).toLocaleDateString()}</Moment></div></td>)
+        field: "createdDate", title: 'Date', filter: true, width: 250, filterType: "date", customCell: (props) => (
+        <td><div className="gridLink" onClick={() => this.paymentsView(props)}>
+        <Moment format="DD/MM/YYYY">{new Date(props.dataItem.createdDate).toLocaleDateString()}</Moment></div></td>)
         },
-        { field: "currency", title: 'Currency', filter: true, width: 180 },
-        { field: "totalAmount", title: 'Total Amount', width: 200, filter: true },
-        { field: "count", title: 'Count', width: 130, filter: true },
-        { field: "modifiedDate", title: 'Modified Date', filterType: "date", filter: true, width: 180 },
-        { field: "modifiedBy", title: 'Modified By', filter: true, width: 200 },
-        { field: "state", title: 'Status', filter: true, width: 160 },
+        { field: "currency", title: 'Currency', filter: true, width: 250 },
+        { field: "totalAmount", title: 'Total Amount', width: 250, filter: true },
+        { field: "count", title: 'Count', width: 150, filter: true },
+        { field: "state", title: 'Status', filter: true, width: 250 },
     ];
 
     addPayment = () => {
