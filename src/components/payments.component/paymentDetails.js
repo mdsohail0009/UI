@@ -6,6 +6,7 @@ import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 
 const { Option } = Select;
+const FormItem = Form.Item
 const { Title, Text } = Typography;
 class PaymentDetails extends Component {
     formRef = createRef();
@@ -38,18 +39,20 @@ class PaymentDetails extends Component {
     handleAlert = () => {
         this.setState({ ...this.state, errorMessage: null })
     }
-    handleCurrencyChange = async(val) => {
-        this.setState({ ...this.state, Currency: val })
+    handleCurrencyChange = async(val,props) => {
+        this.setState({ ...this.state, Currency: val,paymentsData:[] })
         if(this.state.Currency=val){
             let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id,this.state.Currency)
             if (response.ok) {
-                this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
+                console.log(response.data.paymentsDetails)
+                this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false }) 
             } else {
                 message.destroy();
                 this.setState({ ...this.state, errorMessage: response.data })
                 this.useDivRef.current.scrollIntoView()
             }
         }
+       
     }
     getCurrencyLookup = async () => {
         let response = await getCurrencyLu(this.props.userConfig?.id)
@@ -157,6 +160,7 @@ class PaymentDetails extends Component {
     }
     render() {
         const { currency, paymentsData, loading } = this.state;
+        const { form } = this.props
         return (
             <>
                 <div ref={this.useDivRef}></div>
@@ -256,6 +260,7 @@ class PaymentDetails extends Component {
                                                                     paymentData[i].checked = value > 0 ? true : false;
                                                                     this.setState({ ...this.state, paymentsData: paymentData })
                                                                 }}
+                                                                value={item.amount}
                                                             />
                                                         </td>
                                                     </tr>
