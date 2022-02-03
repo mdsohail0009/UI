@@ -4,7 +4,7 @@ import { Typography, Button, Tooltip } from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from "react-redux";
 import Moment from 'react-moment';
-import moment from 'moment';    
+import moment from 'moment';
 const { Title, Text } = Typography;
 class Payments extends Component {
     constructor(props) {
@@ -18,14 +18,14 @@ class Payments extends Component {
     }
     gridColumns = [
         {
-        field: "createdDate", title: 'Date', filter: true, width: 250, filterType: "date", customCell: (props) => (
-        <td><div className="gridLink" onClick={() => this.paymentsView(props)}>
-        <Moment format="DD/MM/YYYY">{new Date(props.dataItem.createdDate).toLocaleDateString()}</Moment></div></td>)
+            field: "createdDate", title: 'Date', filter: true, filterType: "date", customCell: (props) => (
+                <td><div className="gridLink" onClick={() => this.paymentsView(props)}>
+                    <Moment format="DD/MM/YYYY">{new Date(props.dataItem.createdDate).toLocaleDateString()}</Moment></div></td>)
         },
-        { field: "currency", title: 'Currency', filter: true, width: 250 },
-        { field: "totalAmount", title: 'Total Amount', width: 250, filter: true },
-        { field: "count", title: 'Count', width: 150, filter: true },
-        { field: "state", title: 'Status', filter: true, width: 250 },
+        { field: "currency", title: 'Currency', filter: true },
+        { field: "totalAmount", title: 'Total Amount', filter: true },
+        { field: "count", title: 'Count', filter: true },
+        { field: "state", title: 'Status', filter: true },
     ];
 
     addPayment = () => {
