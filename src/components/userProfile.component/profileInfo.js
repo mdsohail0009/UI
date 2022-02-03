@@ -98,7 +98,7 @@ class ProfileInfo extends Component {
 
   fileDownload = async () => {
     this.setState({ ...this.state, fileLoader: true });
-    let res = await apiCalls.downloadKyc(this.props.userConfig.userId);
+    let res = await apiCalls.downloadKyc(this.props.userConfig?.id);
     if (res.ok) {
       window.open(res.data);
       message.destroy();
