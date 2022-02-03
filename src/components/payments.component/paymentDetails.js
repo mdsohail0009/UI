@@ -186,18 +186,26 @@ class PaymentDetails extends Component {
                                     className="cust-input"
                                     placeholder="Select Currency"
                                     onChange={(e) => this.handleCurrencyChange(e)}
-                                    style={{ width: 250 }}
+                                    style={{ width: 280 }}
                                     dropdownClassName='select-drpdwn'
                                     bordered={false}
                                     showArrow={true}
                                     defaultValue="USD"
+                                   
                                 >
                                     {currency?.map((item, idx) => (
                                         <Option
                                             key={idx}
                                             className="fw-400"
+                                           
                                             value={item.currencyCode}
-                                        > {item.currencyCode} Balance: {item.avilable} </Option>))}
+                                        > {item.currencyCode}
+                                        { <NumberFormat
+                                         value={item.avilable} 
+                                         displayType={'text'}
+                                          thousandSeparator={true}
+                                         renderText={(value) => <span > Balance: {value}</span>} />}
+                                         </Option>))}
                                 </Select>
                             </Form.Item>
                             <div>
