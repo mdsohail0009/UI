@@ -112,6 +112,7 @@ export default {
   menu_swap: '交换',
   menu_send_receive: '存款/取款',
   menu_mass_pay: '批量付款',
+  menu_payments: '付款',
   security: '安全',
   current_balance: '当前余额',
   min: '最小',
@@ -245,7 +246,7 @@ export default {
   beneficiaryBank: '收款银行',
   signature_bank: '签名银行',
   beneficiary_Bank_address: '收款银行地址',
-  bank_Reference_No:'银行参考编号',
+  bank_Reference_No: '银行参考编号',
   Fifth_Avenue: '第五大道 565 号，纽约 NY 10017',
   reference: '参考',
   reference_hint_text: '重要提示：此代码可识别您的存款，请在交易说明或目的中提交电汇时包含此代码',
@@ -485,5 +486,6 @@ export default {
   thousandKText: "最高金额为 10 万美元。",
   sucessText1: "您的订单已成功下单，",
   sucessText2: "已添加到您的钱包中。",
-  sucessText3: "金额已从您的钱包中扣除"
+  sucessText3: "金额已从您的钱包中扣除",
+  value_should_greater: "從硬幣價值必須大於零"
 }

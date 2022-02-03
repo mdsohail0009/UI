@@ -357,7 +357,7 @@ class FaitDeposit extends Component {
                       className="fs-20 text-white-30 l-height-normal d-block mb-24"
                       content="signature_bank"
                       component={Text}
-                      with={{ value: BankInfo.bankName }} />
+                      with={{ value: BankInfo.bankAddress }} />
                       {BankInfo.referenceNo != null && BankInfo.referenceNo != '' && 
                     <Translate
                       className="fw-200 text-white-50 fs-14"

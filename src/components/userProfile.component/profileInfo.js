@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Typography, Button, Upload, notification, message } from "antd";
+import { Typography, Button, Upload, notification, message, Tooltip, Spin } from "antd";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 import { uploadClient } from "../../api";
@@ -12,7 +12,7 @@ import apiCalls from "../../api/apiCalls";
 import Loader from "../../Shared/loader";
 
 class ProfileInfo extends Component {
-  state = { Image: null, Loader: false };
+  state = { Image: null, Loader: false, fileLoader: false };
   uploadProps = {
     name: "file",
     multiple: false,
@@ -96,6 +96,20 @@ class ProfileInfo extends Component {
     }
   };
 
+  fileDownload = async () => {
+    this.setState({ ...this.state, fileLoader: true });
+    let res = await apiCalls.downloadKyc(this.props.userConfig.userId);
+    if (res.ok) {
+      window.open(res.data);
+      message.destroy();
+      message.success({
+        content: "Document downloaded successfully",
+        className: "custom-msg"
+      });
+      this.setState({ ...this.state, fileLoader: false });
+    }
+  }
+
   render() {
     const { Title, Paragraph, Text } = Typography;
     return (
@@ -141,7 +155,16 @@ class ProfileInfo extends Component {
             </>
           )}
         </div>
-
+        <div className="box contact-info coin-bal">
+          <Text className="basicinfo mb-0">Onboarding Document</Text>
+          <ul class="m-0 pl-0">
+            {this.state.fileLoader ? <Spin size="Large" style={{ padding: 10 }} /> : <li>
+              <Tooltip title="Download">
+                <div onClick={this.fileDownload} className="c-pointer"><span className="icon md download" /></div>
+              </Tooltip>
+            </li>}
+          </ul>
+        </div>
         <div className="box basic-info">
           <Title className="basicinfo mb-0">
             {" "}
@@ -229,11 +252,11 @@ class ProfileInfo extends Component {
                   />
                 </label>
                 {/* {this.props.userConfig.dob != null  && ( */}
-                  <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
-                  {this.props.userConfig.dob != null ?<Moment format="DD/MM/YYYY">{this.props.userConfig.dob}
-                       </Moment>: "--"}
-                  </p>
-                 {/* )}  */}
+                <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
+                  {this.props.userConfig.dob != null ? <Moment format="DD/MM/YYYY">{this.props.userConfig.dob}
+                  </Moment> : "--"}
+                </p>
+                {/* )}  */}
                 <div></div>
               </div>
             </li>

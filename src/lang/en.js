@@ -110,6 +110,7 @@ export default {
   menu_swap: 'Swap',
   menu_send_receive: 'Deposit / Withdraw',
   menu_mass_pay: 'Mass Payments',
+  menu_payments: 'Payments',
   security: 'Security',
   current_balance: 'Current Balance',
   min: 'Min',
@@ -244,7 +245,7 @@ export default {
   beneficiaryBank: 'Beneficiary Bank Name',
   signature_bank: '%(value)s',
   beneficiary_Bank_address: 'Beneficiary Bank Address',
-  bank_Reference_No:'Bank Reference No',
+  bank_Reference_No: 'Bank Reference No',
   Fifth_Avenue: '%(value)s',
   reference: 'Reference',
   reference_hint_text: 'Important: this code identifies your deposit include this code when submitting the wire transfer in the transaction description or purpose',
@@ -489,5 +490,6 @@ export default {
   thousandKText: "The maximum amount is $100K.",
   sucessText1: "Your order has been placed successfully,",
   sucessText2: "has been added into your wallet.",
-  sucessText3: "amount has been debited from your wallet."
+  sucessText3: "amount has been debited from your wallet.",
+  value_should_greater: " From coin value must be greater than zero"
 }
