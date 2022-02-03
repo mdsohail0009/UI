@@ -330,13 +330,13 @@ class AddressBook extends Component {
                             className=" pop-cancel"
                             onClick={this.handleCancel}
                         >
-                            Cancel
+                            No
                         </Button>
                         <Button className="primary-btn pop-btn"
                             onClick={this.handleSatatuSave} style={{ width: 120, height: 50 }}
                             disabled={btnDisabled}
                         >
-                            Save
+                            Yes
                         </Button>
                     </>}
                 >

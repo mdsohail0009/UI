@@ -80,7 +80,7 @@ class PaymentDetails extends Component {
         obj.paymentsDetails = objData;
         if (obj.currency != null) {
             if (!objAmount) {
-                this.setState({ ...this.state, errorMessage: "Please enter amount ." })
+                this.setState({ ...this.state, errorMessage: "Please enter amount" })
                 this.useDivRef.current.scrollIntoView()
 
             }
