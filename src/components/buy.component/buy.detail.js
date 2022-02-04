@@ -112,7 +112,7 @@ class SelectCrypto extends Component {
         }
         const { Paragraph, Text } = Typography;
         const { localValue, cryptoValue, isSwaped, isConvertionLoading } = this.state.swapValues;
-        const { coin, coinValueinNativeCurrency, coinBalance, percentage,impageWhitePath } = this.props.buyInfo?.selectedCoin?.data;
+        const { coin, coinFullName, coinBalance, percentage,impageWhitePath } = this.props.buyInfo?.selectedCoin?.data;
         return (
             <div id="divScroll" ref={this.myRef}>
                 {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} closable />}
@@ -120,13 +120,13 @@ class SelectCrypto extends Component {
                     <Card className="crypto-card select mb-36" bordered={false}>
                         <span className="d-flex align-center">
                             <Image preview={false} src={impageWhitePath}/>
-                            <Text className="fs-24 text-purewhite crypto-name ml-8">{coin}</Text>
+                            <Text className="fs-24 text-purewhite crypto-name ml-8">{coinFullName}</Text>
                         </span>
                         <div className="crypto-details">
                             <Text className="crypto-percent text-purewhite fw-700">{percentage}<sup className="percent text-purewhite fw-700">%</sup></Text>
                             <div className="fs-16 text-purewhite fw-200 crypto-amount">
                                 <Currency prefix={""} defaultValue={coinBalance} suffixText={coin} />
-                                <NumberFormat value={coinValueinNativeCurrency} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} />
+                                <NumberFormat value={coinFullName} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={(value, props) => <div {...props}>{value}</div>} />
                             </div>
                         </div>
                     </Card>
