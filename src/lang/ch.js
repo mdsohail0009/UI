@@ -487,5 +487,6 @@ export default {
   sucessText1: "您的订单已成功下单，",
   sucessText2: "已添加到您的钱包中。",
   sucessText3: "金额已从您的钱包中扣除",
-  value_should_greater: "從硬幣價值必須大於零"
+  value_should_greater: "從硬幣價值必須大於零",
+  asset_directory: '资产目录'
 }
