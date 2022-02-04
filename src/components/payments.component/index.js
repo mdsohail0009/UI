@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import List from "../grid.component";
-import apiCalls from '../../api/apiCalls';
-import { Typography, Button, Tooltip, Modal, Alert } from 'antd';
+import { Typography, Button, Tooltip } from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from "react-redux";
-
+import Moment from 'react-moment';
+import moment from 'moment';
+const { Title, Text } = Typography;
 class Payments extends Component {
     constructor(props) {
         super(props);
@@ -12,34 +13,35 @@ class Payments extends Component {
         }
         this.gridRef = React.createRef();
     }
+    paymentsView = async (props) => {
+        this.props.history.push(`/payments/${props.dataItem.id}/view`);
+    }
     gridColumns = [
-        { field: "firstName", title: 'First Name', filter: true, isShowTime: true, filterType: "date", width: 150 },
-        { field: "lastName", title: 'Last Name', filter: true, width: 150 },
-        { field: "Currency", title: 'Currency', filter: true, width: 150 },
-        { field: "totalAmount", title: 'Total Amount', width: 150, filter: true },
-        { field: "count", title: 'Count', width: 150, filter: true },
-        { field: "createdDate", title: 'Created Date', width: 150, filter: true },
-        { field: "createdBy", title: 'Created By', filter: true, width: 150 },
-        { field: "modifiedDate", title: 'Modified Date', filter: true, width: 150 },
-        { field: "modifiedBy", title: 'Modified By', filter: true, width: 150 },
-        { field: "state", title: 'State', filter: true, width: 150 },
+        {
+            field: "createdDate", title: 'Date', filter: true, filterType: "date", customCell: (props) => (
+                <td><div className="gridLink" onClick={() => this.paymentsView(props)}>
+                    <Moment format="DD/MM/YYYY">{new Date(props.dataItem.createdDate).toLocaleDateString()}</Moment></div></td>)
+        },
+        { field: "currency", title: 'Currency', filter: true },
+        { field: "totalAmount", title: 'Total Amount', filter: true },
+        { field: "count", title: 'Count', filter: true },
+        { field: "state", title: 'Status', filter: true },
     ];
 
     addPayment = () => {
-        this.props.history.push('payments/add')
+        this.props.history.push(`/payments/00000000-0000-0000-0000-000000000000/add`)
     }
 
     render() {
-        const { Title, Paragraph, Text } = Typography;
         return (
             <>
-                <div className="main-container hidden-mobile">
+                <div className="main-container">
                     <div className='d-flex align-center justify-content mb-16'>
                         <Title className="basicinfo mb-0"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
                         <ul className="address-icons" style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0, display: 'flex' }}>
                             <li className="mr-16">
                                 <Tooltip placement="top" title={<Translate content="add" />}>
-                                    <span className="icon md add-icon mr-0" onClick={this.addPayment} />
+                                    <span className="icon md add-icon mr-0 c-pointer" onClick={this.addPayment} />
                                 </Tooltip>
                             </li>
                         </ul>

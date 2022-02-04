@@ -466,11 +466,16 @@ class Header extends Component {
     });
   }
   routeToHome = () => {
+    this.props.dispatch(setHeaderTab(''));
     this.props.history.push("/cockpit");
   };
 
   showPayments = () => {
-    this.props.history.push('payments')
+    this.props.history.push('/payments')
+  }
+  routeToCockpit = () => {
+    this.props.dispatch(setHeaderTab(''));
+    this.props.userConfig.isKYC ? this.props.history.push("/cockpit") : this.props.history.push("/notkyc")
   }
   render() {
     const link = <LinkValue content="medium" />;
@@ -579,11 +584,7 @@ class Header extends Component {
                 <li className="mb-d-none px-36">
                   <Translate
                     content="header_title"
-                    onClick={() =>
-                      this.props.userConfig.isKYC
-                        ? this.props.history.push("/cockpit")
-                        : this.props.history.push("/notkyc")
-                    }
+                    onClick={this.routeToCockpit}
                     component={Text}
                     className="text-white-30 fs-24 c-pointer cp-link"
                   />
