@@ -36,9 +36,11 @@ function Footer({ member }) {
                 <a href="https://suissebase.ch/" target="_blank"><Translate content="home" /></a>
                 {/* <a href="https://suissebase.ch/" target="_blank">Careers</a> */}
                 <a href="https://suissebase.ch/" target="_blank"><Translate content="careers" /></a>
+                <a href="https://www.suissebase.ch/asset-directory/" target="_blank"><Translate content="asset_directory" /></a>
                 {/* <a href="https://www.iubenda.com/privacy-policy/42856099" target="_blank">Legal & Policy</a> */}
                 {/* <a href="https://www.iubenda.com/privacy-policy/42856099" target="_blank"><Translate content="legal_policy" /></a> */}
                 <Text className="text-white-30">Suissebase<sup className="fs-10">TM</sup> {new Date().getFullYear()}</Text>
+
             </div>
         </div>
     </AntFooter>)
