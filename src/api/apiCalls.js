@@ -13,11 +13,12 @@ const getCryptos = () => {
 const getMember = (useremail) => {
     return apiClient.get(ApiControllers.accounts + '/' + useremail);
 }
-const sumsubacesstoken = (userid) => {
-    return apiClient.get('Sumsub/AccessToken?applicantId=' + userid);
+const sumsubacesstoken = (userid,flow) => {
+    https://api.sumsub.com/resources/accessTokens?userId=JamesBond007&levelName=basic-kyc-level
+    return apiClient.get('Sumsub/AccessToken?applicantId=' + userid+'&levelName='+flow);
 }
 const sumsublivenessacesstoken = (userid, flow) => {
-    return apiClient.get('Sumsub/ExternalAccessToken?userId=' + userid);
+    return apiClient.get('Sumsub/ExternalAccessToken?userId=' + userid+'&levelName='+flow);
 }
 const sumsubacesstokennew = (userid) => {
     return apiClient.get('Sumsub/KYBAccessToken?applicantId=' + userid);

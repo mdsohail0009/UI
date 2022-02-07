@@ -12,7 +12,7 @@ class LiveNessSumsub extends Component {
         this.launchWebSdk();  
     }
     launchWebSdk = async () => {
-        apicalls.sumsublivenessacesstoken(this.props.userConfig.userId,"Liveness Check - Withdrawals",this.state.applicantActionid).then((res) => {
+        apicalls.sumsublivenessacesstoken('6ae37544-3d99-4f1e-8789-f7358e08d80f',"Liveness Check - Withdrawals",this.state.applicantActionid).then((res) => {
         let snsWebSdkInstance = snsWebSdk.Builder(process.env.REACT_APP_SUMSUB_URI, "Liveness Check - Withdrawals")
             .withAccessToken(res.data.token, (newAccessTokenCallback) => {
                     newAccessTokenCallback(res.data.token)
