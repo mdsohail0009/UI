@@ -47,6 +47,7 @@ function App(props) {
           })
         },
       }
+      window.$zoho.salesiq.floatbutton.coin.hidetooltip();
       const d = document;
       let s;
       s = d.createElement('script');
