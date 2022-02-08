@@ -39,15 +39,14 @@ function App(props) {
         widgetcode: process.env.REACT_APP_ZOHO_WIDGET_CODE,
         values: {},
         ready: function () {
-
           window.$zoho.salesiq.chatbutton.click(function () {
             // insert your code 
             window.$zoho.salesiq.visitor.email(user.profile.email);
             window.$zoho.salesiq.visitor.name(user.profile.preferred_username);
           })
+          window.$zoho.salesiq.floatbutton.coin.hidetooltip();
         },
       }
-      window.$zoho.salesiq.floatbutton.coin.hidetooltip();
       const d = document;
       let s;
       s = d.createElement('script');
