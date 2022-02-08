@@ -60,6 +60,9 @@ function App(props) {
 
     })
     connectToHub();
+    window.onunload = (ev) => {
+      userManager.removeUser();   
+    };
   }, [])
   return (
     <Provider store={store}>
