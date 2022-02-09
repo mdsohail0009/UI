@@ -12,6 +12,7 @@ import Notifications from "../../notifications";
 import { setNotificationCount } from '../../reducers/dashboardReducer';
 import { startConnection } from "../../utils/signalR";
 import { useThemeSwitcher } from "react-css-theme-switcher";
+import { userLogout } from "../../reducers/authReducer";
 function App(props) {
   const { switcher, themes } = useThemeSwitcher()
   const [loading, setLoading] = useState(true);
@@ -61,7 +62,7 @@ function App(props) {
     })
     connectToHub();
     window.onunload = (ev) => {
-      userManager.removeUser();   
+      userManager.removeUser();
     };
   }, [])
   return (
