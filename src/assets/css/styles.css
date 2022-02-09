@@ -735,6 +735,10 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .more-popover .val{font-size: 14px; color: var(--textWhite30);display: block;margin-bottom: 16px; line-height: normal;}
 .ant-popover-arrow{border-color: var(--bgGloom) !important;}
 
+/*--Zoho--*/
+.zsiq_flt_rel{width: 50px !important; height: 50px !important;bottom: 8px;right: -10px;}
+.zsiq_theme1 .siqico-chat:before{font-size: 20px !important; line-height: 50px !important;}
+
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
     .header-dropdown{margin-right: 24px;}
