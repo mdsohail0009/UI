@@ -45,6 +45,7 @@ function App(props) {
             window.$zoho.salesiq.visitor.email(user.profile.email);
             window.$zoho.salesiq.visitor.name(user.profile.preferred_username);
           })
+          window.$zoho.salesiq.floatbutton.coin.hidetooltip();
         },
       }
       const d = document;
