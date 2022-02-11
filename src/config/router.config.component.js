@@ -13,6 +13,7 @@ const OnBoarding = React.lazy(() => import('../layout/onboard.component'));
 const UserProfile = React.lazy(() => import('../components/userProfile.component/userProfile'));
 const RequestedDocs = React.lazy(() => import('../components/documents.component/requestedDocs'));
 const DocNotices = React.lazy(() => import("../components/shared/doc.notices"));
+const CaseDocs = React.lazy(() => import('../components/case.component/requestCaseDoc'));
 const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"));
 const DashboardCharts = React.lazy(() => import("../components/dashboard.component/cockpitCharts"));
 const Payments = React.lazy(() => import("../components/payments.component"));
@@ -33,6 +34,7 @@ class RouteConfig extends Component {
         <ReactRoute path="/onboading" component={OnBoarding} />
         <ReactRoute path='/userprofile' component={UserProfile} />
         <ReactRoute path='/documents' component={RequestedDocs} />
+        <ReactRoute path='/cases' component={CaseDocs} />
         <ReactRoute path='/docnotices' component={DocNotices} />
         <Route path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
