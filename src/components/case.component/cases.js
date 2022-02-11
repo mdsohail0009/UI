@@ -17,15 +17,18 @@ class Cases extends Component {
         }
         this.gridRef = React.createRef();
     }
+    // details = ({ dataItem }) => {
+    //     // this.props.dispath(setBreadcrumb({ key: "/cases/" + dataItem.id, val: dataItem.caseNumber }))
+    //     this.props.history.push({
+    //         pathname: "/cases/" + dataItem.id,
+    //         state: {
+    //             pKey: "cases",
+    //             action: 'edit'
+    //         }
+    //     })
+    // }
     details = ({ dataItem }) => {
-        // this.props.dispath(setBreadcrumb({ key: "/cases/" + dataItem.id, val: dataItem.caseNumber }))
-        this.props.history.push({
-            pathname: "/cases/" + dataItem.id,
-            state: {
-                pKey: "cases",
-                action: 'edit'
-            }
-        })
+        this.props.history.push("/cases?id=" + dataItem.id)
     }
     columnGrid = [
         {field: "createdDate", title: 'Date', filter: true, filterType: "date", customCell: (props) => (
@@ -33,7 +36,8 @@ class Cases extends Component {
                     <Moment format="DD/MM/YYYY">{new Date(props.dataItem.createdDate).toLocaleDateString()}</Moment></td>)
         },
         {field: "caseNumber",title: "Case Number",filter: true,
-        customCell: (props) => <td><div className="gridLink" onClick={() => this.details(props)}>{props.dataItem?.caseNumber }</div></td> },
+        customCell: (props) => <td><div className="gridLink"
+         onClick={() => this.details(props)}>{props.dataItem?.caseNumber }</div></td> },
 		{field: "caseTitle",title: "Case Title",filter: true,},
         {field: "remindDate",title: "Remind Date",filter: true,},
         {field: "closedDate",title: "Closed Date",filter: true,},
