@@ -15,7 +15,7 @@ class SumSub extends Component {
 
     }
     launchWebSdk = async () => {
-        apicalls.sumsubacesstoken('a7e97fae-ed33-4207-8a9c-8e8bb5fd90442',"SuisseBase KYB Flow").then((res) => {
+        apicalls.sumsubacesstoken('a7e97fae-ed33-4207-8a9c-8e8bb5fd90442',"SuisseBase_KYC_Flow").then((res) => {
             let snsWebSdkInstance = snsWebSdk.init(
                 res.data.token,
                 () => res.data.token

@@ -15,7 +15,7 @@ const getMember = (useremail) => {
 }
 const sumsubacesstoken = (userid,flow) => {
     https://api.sumsub.com/resources/accessTokens?userId=JamesBond007&levelName=basic-kyc-level
-    return apiClient.get('Sumsub/AccessToken?applicantId=' + userid+'&levelName='+flow);
+    return apiClient.get('Sumsub/AccessToken1?applicantId=' + userid+'&levelName='+flow);
 }
 const sumsublivenessacesstoken = (userid, flow) => {
     return apiClient.get('Sumsub/ExternalAccessToken?userId=' + userid+'&levelName='+flow);
