@@ -53,7 +53,7 @@ class RequestedDocs extends Component {
         if (response.ok) {
 			console.log(response)
             this.setState({ ...this.state, docDetails: response.data, loading: false });
-             this.loadDocReplies(response.data?.details?.id)
+             this.loadDocReplies(response.data?.details[0].id)
             this.setState({ ...this.state, docDetails: response.data, loading: false });
 			console.log(this.state.docDetails)
         } else {
@@ -344,7 +344,7 @@ class RequestedDocs extends Component {
                 <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile" />{this.state?.docDetails?.note}</div>
                 <div className="bank-view">
                     {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
-                        <Panel header={doc.documentName} key={idx + 1} extra={doc.status ? (<span className={`${doc.status ? doc.status.toLowerCase() + " staus-lbl" : ""}`}>{doc.status}</span>) : ""}>
+                        <Panel header={doc.documentName} key={idx + 1} extra={doc.status ? (<span className={`${doc.status ? doc.status + " staus-lbl" : ""}`}>{doc.status}</span>) : ""}>
                             {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
                             {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
                                 <div className="user-shortname">{reply?.repliedBy?.slice(0, 2)}</div>
