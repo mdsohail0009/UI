@@ -198,6 +198,7 @@ export default {
   michael_quiapos: 'Michael Quiapos',
   great: 'Great. i will have a look...',
   address_book: 'Address Book',
+  case:'Cases',
   invite_friends: 'Invite Friends',
   light_theme: 'Light Theme',
   localization: 'Localization',
