@@ -5,6 +5,9 @@ import CryptoJS from 'crypto-js'
 const ipRegistry = create({
     baseURL: 'https://api4.ipregistry.co'
 })
+const sumsub = create({
+    baseURL: 'https://api.sumsub.com/'
+})
 const apiClient = create({
     baseURL: process.env.REACT_APP_API_END_POINT
 })
@@ -43,4 +46,4 @@ apiClient.axiosInstance.interceptors.request.use((config) => {
     if (userProfileInfo?.id) config.headers.AuthInformation = userProfileInfo?.id ? _encrypt(`{MemberId:"${userProfileInfo?.id}"}`, userProfileInfo.sk) : ''
     return config;
 })
-export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry }
+export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub }
