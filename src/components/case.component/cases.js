@@ -41,8 +41,8 @@ class Cases extends Component {
             </td>
           )},
 		{field: "caseTitle",title: "Case Title",filter: true,},
-        {field: "remindDate",title: "Remind Date",filter: true,},
-        {field: "closedDate",title: "Closed Date",filter: true,},
+        // {field: "remindDate",title: "Remind Date", filterType: "date",filter: true,},
+        // {field: "closedDate",title: "Closed Date", filterType: "date",filter: true,},
 		{field: "state",title: "State",filter: true,},
 	];
      viewCase = ({dataItem}) => {

@@ -55,12 +55,12 @@ class UserProfile extends Component {
                     </span>} key="3">
                         {this.state.activeTab == 3 && <Settings />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg documents-icon mr-16" />
+                    {/* <TabPane tab={<span><span className="icon lg documents-icon mr-16" />
                         <Translate content="documents" className="f-16  mt-16" />
                     </span>} key="4" destroyInactiveTabPane={true}>
 
                         {this.state.activeTab == 4 && <Documents />}
-                    </TabPane>
+                    </TabPane> */}
                     <TabPane tab={<span><span className="icon lg addressbook-icon mr-16" /><Translate content="address_book" component={Tabs.TabPane.tab} /></span>} key="5">
                         {this.state.activeTab == 5 && <AddressBook />}
                     </TabPane>
