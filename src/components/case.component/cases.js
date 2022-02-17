@@ -33,13 +33,7 @@ class Cases extends Component {
               </td>
             )
           },
-        {field: "caseNumber",title: "Case Number",filter: true, customCell: (props) => (
-            <td>
-              <div className="gridLink" onClick={() => this.viewCase(props)}>
-              {props.dataItem?.caseNumber}
-              </div>
-            </td>
-          )},
+        {field: "caseNumber",title: "Case Number",filter: true,},
 		{field: "caseTitle",title: "Case Title",filter: true,},
         // {field: "remindDate",title: "Remind Date", filterType: "date",filter: true,},
         // {field: "closedDate",title: "Closed Date", filterType: "date",filter: true,},
