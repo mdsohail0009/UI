@@ -7,7 +7,7 @@ class Documents extends Component {
         super(props);
         this.state = {
             isLoading: false,
-            gridUrl: process.env.REACT_APP_GRID_API + "Transaction/TransactionHistoryk"
+            // gridUrl: process.env.REACT_APP_GRID_API + "Transaction/TransactionHistoryk"
         }
         this.gridRef = React.createRef();
     }
@@ -25,7 +25,15 @@ class Documents extends Component {
             <div className="box basic-info">
             <Translate content="Documents" className="f-16 text-white-30 mt-16 "  />
                 <Link to="/requesteddocs/">Documents View</Link>
-                <List url={gridUrl} ref={this.gridRef} columns={this.gridColumns} />
+                {/* <List url={gridUrl} ref={this.gridRef} columns={this.gridColumns} /> */}
+                <List
+                    showActionBar={true}
+                    onActionClick={(key) => this.onActionClick(key)}
+                    pKey={"alerts"}
+                    ref={this.gridRef}
+                    url={process.env.REACT_APP_GRID_API + "Alert/GetAlertK"}
+                    columns={this.gridColumns}
+                />
             </div>
         </>;
     }
