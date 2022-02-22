@@ -60,10 +60,10 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, loading: false, error: response.data });
         }
     }
+
     loadDocReplies = async (id) => {
-		debugger
         let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId != id);
-        this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } } });
+        this.setState({ ...this.state, isMessageError:null, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } } });
         const response = await getDocumentReplies(id);
         if (response.ok) {
 			console.log(response,"getDocumentReplies")
@@ -284,6 +284,7 @@ class RequestedDocs extends Component {
         return list;
     }
     handleReplymessage = (msg, doc) => {
+        debugger
         let replyObjs = [...this.state.docReplyObjs];
         let item = this.isDocExist(replyObjs, doc.id);
         let obj;
@@ -341,10 +342,10 @@ class RequestedDocs extends Component {
         return <>
             <div className="main-container">
                 {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
-                <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile" />{this.state?.docDetails?.note}</div>
+                <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=6" />{this.state?.docDetails?.caseTitle}</div>
                 <div className="bank-view">
                     {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
-                        <Panel header={doc.documentName} key={idx + 1} extra={doc.status ? (<span className={`${doc.status ? doc.status + " staus-lbl" : ""}`}>{doc.status}</span>) : ""}>
+                        <Panel header={doc.documentName} key={idx + 1} extra={doc.state ? (<span className={`${doc.state ? doc.state.toLowerCase() + " staus-lbl" : ""}`}>{doc.state}</span>) : ""}>
                             {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
                             {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
                                 <div className="user-shortname">{reply?.repliedBy?.slice(0, 2)}</div>
@@ -362,7 +363,7 @@ class RequestedDocs extends Component {
                                     </div>
                                 </div>
                             </div>)}
-                            {!this.state.documentReplies[doc.id]?.loading && doc.status !== "Approved" && <><div>
+                            {!this.state.documentReplies[doc.id]?.loading && doc.state !== "Approved" && <><div>
                                 <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
                                 <Input onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
                                     className="cust-input"
