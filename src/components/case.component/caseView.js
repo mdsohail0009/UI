@@ -60,8 +60,8 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, loading: false, error: response.data });
         }
     }
+
     loadDocReplies = async (id) => {
-		debugger
         let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId != id);
         this.setState({ ...this.state, isMessageError:null, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } } });
         const response = await getDocumentReplies(id);
@@ -284,6 +284,7 @@ class RequestedDocs extends Component {
         return list;
     }
     handleReplymessage = (msg, doc) => {
+        debugger
         let replyObjs = [...this.state.docReplyObjs];
         let item = this.isDocExist(replyObjs, doc.id);
         let obj;
