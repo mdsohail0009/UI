@@ -63,7 +63,7 @@ class RequestedDocs extends Component {
     loadDocReplies = async (id) => {
 		debugger
         let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId != id);
-        this.setState({ ...this.state, errorMessage:null, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } } });
+        this.setState({ ...this.state, isMessageError:null, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } } });
         const response = await getDocumentReplies(id);
         if (response.ok) {
 			console.log(response,"getDocumentReplies")
@@ -77,7 +77,7 @@ class RequestedDocs extends Component {
                 }
             });
         } else {
-            this.setState({ ...this.state, errorMessage:null, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: response.data } } });
+            this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: response.data } } });
         }
     }
     docPreview = async (file) => {
