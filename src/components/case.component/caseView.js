@@ -55,7 +55,7 @@ class RequestedDocs extends Component {
         if (response.ok) {
 			console.log(response)
             this.setState({ ...this.state, docDetails: response.data, loading: false });
-             this.loadDocReplies(response.data?.details[0].id)
+             this.loadDocReplies(response.data?.details[0]?.id)
             this.setState({ ...this.state, docDetails: response.data, loading: false });
 			console.log(this.state.docDetails)
         } else {
@@ -317,14 +317,11 @@ class RequestedDocs extends Component {
     }
     formatBytes(bytes, decimals = 2) {
         if (bytes === 0) return '0 Bytes';
-
         const k = 1024;
         const dm = decimals < 0 ? 0 : decimals;
         const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
         const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        return parseFloat((bytes / Math.pow(k, i)).toFixed()) + ' ' + sizes[i];
     }
 
     filePreviewPath() {
@@ -344,15 +341,13 @@ class RequestedDocs extends Component {
         }
         return <>
             <div className="main-container">
-                {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
+              
                 <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=6" />{this.state?.docDetails?.caseTitle}</div>
+                {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
                 <div className="bank-view">
                     {this.state.docDetails?.details?.map((doc, idx) => 
                     <Collapse onChange={(key) => {
-                        // this.setState({
-                        //     ...this.state,
-                        //     ddocReplyObjs: [],
-                        // });
+                       
                         this.setState({
                             ...this.state,
                             collapse: !this.state.collapse,
@@ -382,7 +377,7 @@ class RequestedDocs extends Component {
                                     </div>
                                 </div>
                             </div>)}
-                            {!this.state.documentReplies[doc.id]?.loading && doc.state !== "Approved" &&this.state.docDetails.caseState!='Approved'&&this.state.docDetails.caseState!='Cancelled'&& <><div>
+                            {!this.state.documentReplies[doc.id]?.loading && doc.state != "Approved" &&this.state.docDetails.caseState!='Approved'&&this.state.docDetails.caseState!='Cancelled'&& <><div>
                                 <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
                                 <Input 
                                 // onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
