@@ -382,8 +382,7 @@ class RequestedDocs extends Component {
                                     </div>
                                 </div>
                             </div>)}
-                            
-                            {!this.state.documentReplies[doc.id]?.loading && doc.state !== "Approved" && <><div>
+                            {!this.state.documentReplies[doc.id]?.loading && doc.state !== "Approved" &&this.state.docDetails.caseState!='Approved'&&this.state.docDetails.caseState!='Cancelled'&& <><div>
                                 <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
                                 <Input 
                                 // onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
