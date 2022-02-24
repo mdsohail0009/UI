@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 import FilePreviewer from 'react-file-previewer';
 import { Link } from 'react-router-dom';
 import QueryString from 'query-string';
-import apiCalls from '../../api/apiCalls';
 import { validateContent } from "../../utils/custom.validator";
 import Translate from 'react-translate-component';
 import Mome from 'moment'
@@ -20,7 +19,8 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docname c-pointer d-block" style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
+        <Text className="mb-0 fs-14 docname c-pointer d-block"
+         style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
             {start}
         </Text>
     );
@@ -34,12 +34,11 @@ class RequestedDocs extends Component {
         loading: true,
         error: null,
         errorMessage: null,
-        documentReplies: {
-
-        },
+        documentReplies: {},
         docReplyObjs: [],
         previewPath: null,
-        isSubmitting: false, uploadLoader: false,
+        isSubmitting: false,
+         uploadLoader: false,
         isMessageError: null,
         isValidFile: true,
         validHtmlError: false,
@@ -47,27 +46,30 @@ class RequestedDocs extends Component {
     }
     componentDidMount() {
         this.getDocument(QueryString.parse(this.props.location.search).id);
-        this.docrequestTrack();
     }
-    docrequestTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Documents request view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Documents', "Remarks": 'Documents request view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Documents' });
-    }
+    
     getDocument = async (id) => {
-        debugger
+		debugger
         this.setState({ ...this.state, loading: true, error: null });
         const response = await getDocDetails(id);
         if (response.ok) {
+			console.log(response)
             this.setState({ ...this.state, docDetails: response.data, loading: false });
-            this.loadDocReplies(response.data?.details[0]?.id)
+             this.loadDocReplies(response.data?.details[0]?.id)
+            this.setState({ ...this.state, docDetails: response.data, loading: false });
+			console.log(this.state.docDetails)
         } else {
             this.setState({ ...this.state, loading: false, error: response.data });
         }
     }
+
     loadDocReplies = async (id) => {
+        debugger
         let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId != id);
-        this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: docReObj, isMessageError: null });
+        this.setState({ ...this.state, isMessageError:null, validHtmlError:null, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } },docReplyObjs: docReObj,docErrorMessage: null });
         const response = await getDocumentReplies(id);
         if (response.ok) {
+			console.log(response,"getDocumentReplies")
             this.setState({
                 ...this.state, documentReplies: {
                     ...this.state.documentReplies, [id]: {
@@ -136,6 +138,7 @@ class RequestedDocs extends Component {
         this.setState({ ...this.state, docDetails: { ...this.state.docDetails, details: docDetails } });
     }
     docReject = async (doc) => {
+        debugger
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
         this.setState({ ...this.state, isMessageError: null });
         if (!validateContent(item?.reply)) {
@@ -285,6 +288,7 @@ class RequestedDocs extends Component {
         return list;
     }
     handleReplymessage = (msg, doc) => {
+        debugger
         let replyObjs = [...this.state.docReplyObjs];
         let item = this.isDocExist(replyObjs, doc.id);
         let obj;
@@ -293,7 +297,6 @@ class RequestedDocs extends Component {
             obj.reply = msg;
             obj.repliedBy = this.props.userProfileInfo?.firstName;
             replyObjs = this.uopdateReplyObj(obj, replyObjs);
-
         } else {
             obj = this.messageObject(doc.id);
             obj.reply = msg;
@@ -314,14 +317,11 @@ class RequestedDocs extends Component {
     }
     formatBytes(bytes, decimals = 2) {
         if (bytes === 0) return '0 Bytes';
-
         const k = 1024;
         const dm = decimals < 0 ? 0 : decimals;
         const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
         const i = Math.floor(Math.log(bytes) / Math.log(k));
-
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        return parseFloat((bytes / Math.pow(k, i)).toFixed()) + ' ' + sizes[i];
     }
 
     filePreviewPath() {
@@ -341,12 +341,26 @@ class RequestedDocs extends Component {
         }
         return <>
             <div className="main-container">
+              
+                <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=6" />{this.state?.docDetails?.caseTitle}</div>
                 {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
-                <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=4" />{this.state?.docDetails?.note}</div>
                 <div className="bank-view">
-                    {this.state.docDetails?.details?.map((doc, idx) => <Collapse onChange={(key) => { if (key) { this.loadDocReplies(doc.id) } }} accordion className="accordian mb-24" defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
-                        <Panel header={doc.documentName} key={idx + 1} extra={doc.status ? (<span className={`${doc.status ? doc.status.toLowerCase() + " staus-lbl" : ""}`}>{doc.status}</span>) : ""}>
-                            {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
+                    {this.state.docDetails?.details?.map((doc, idx) => 
+                    <Collapse onChange={(key) => {
+                       
+                        this.setState({
+                            ...this.state,
+                            collapse: !this.state.collapse,
+                        });
+                        if (key) {
+                            this.loadDocReplies(doc.id);
+                        }
+                    }}
+                    collapsible
+                     accordion className="accordian mb-24" 
+                    defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
+                        <Panel header={doc.documentName} key={idx + 1} extra={doc.state ? (<span className={`${doc.state ? doc.state.toLowerCase() + " staus-lbl" : ""}`}>{doc.state}</span>) : ""}>
+                        {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
                             {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
                                 <div className="user-shortname">{reply?.repliedBy?.slice(0, 2)}</div>
                                 <div className="reply-body">
@@ -363,13 +377,17 @@ class RequestedDocs extends Component {
                                     </div>
                                 </div>
                             </div>)}
-                            {!this.state.documentReplies[doc.id]?.loading && doc.status !== "Approved" && <><div>
+                            {!this.state.documentReplies[doc.id]?.loading && doc.state != "Approved" &&this.state.docDetails.caseState!='Approved'&&this.state.docDetails.caseState!='Cancelled'&& <><div>
                                 <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
-                                <Input onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
+                                <Input 
+                                // onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
+                                onChange={({ currentTarget: { value } }) => this.handleReplymessage(value, doc)}
                                     className="cust-input"
                                     placeholder="Write your message"
                                     maxLength={200}
                                 />
+                           
+
                                 {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
                                 {this.state.validHtmlError && <Translate Component={Text} content="please_enter_valid_content" className="fs-14 text-red" />}
                                 {this.state.errorMessage != null && <Alert
