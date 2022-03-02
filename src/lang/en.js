@@ -110,7 +110,7 @@ export default {
   menu_swap: 'Swap',
   menu_send_receive: 'Deposit / Withdraw',
   menu_mass_pay: 'Mass Payments',
-  menu_payments: 'Payments',
+  menu_payments: 'Bill Payments',
   security: 'Security',
   current_balance: 'Current Balance',
   min: 'Min',
@@ -493,5 +493,9 @@ export default {
   sucessText2: "has been added into your wallet.",
   sucessText3: "amount has been debited from your wallet.",
   value_should_greater: " From coin value must be greater than zero",
-  asset_directory: 'Asset Directory'
+  asset_directory: 'Asset Directory',
+  add_new_beneficiary: 'Add New Beneficiary',
+  kyc_documents: 'KYC Documents',
+  confirm_beneficiary: 'Confirm Beneficiary',
+  return_to_beneficairy: 'Back to Add New Beneficiary'
 }

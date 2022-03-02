@@ -488,5 +488,9 @@ export default {
   sucessText2: "telah ditambahkan ke dalam dompet anda.",
   sucessText3: "jumlah telah didebitkan daripada dompet anda.",
   value_should_greater: "Ang halaga ng mula sa barya ay dapat na mas malaki kaysa sa zero",
-  asset_directory: 'Direktori Aset'
+  asset_directory: 'Direktori Aset',
+  add_new_beneficiary: 'Add New Beneficiary',
+  kyc_documents: 'KYC Documents',
+  confirm_beneficiary: 'Confirm Beneficiary',
+  return_to_beneficairy: 'Back to Add New Beneficiary'
 }

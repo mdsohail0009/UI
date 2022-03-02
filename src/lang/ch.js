@@ -488,5 +488,9 @@ export default {
   sucessText2: "已添加到您的钱包中。",
   sucessText3: "金额已从您的钱包中扣除",
   value_should_greater: "從硬幣價值必須大於零",
-  asset_directory: '资产目录'
+  asset_directory: '资产目录',
+  add_new_beneficiary: 'Add New Beneficiary',
+  kyc_documents: 'KYC Documents',
+  confirm_beneficiary: 'Confirm Beneficiary',
+  return_to_beneficairy: 'Back to Add New Beneficiary'
 }
