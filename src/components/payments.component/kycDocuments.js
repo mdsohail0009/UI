@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Spin, Upload, Typography } from 'antd';
+import { Button, Spin, Upload, Typography, Form, Input } from 'antd';
 import { connect } from 'react-redux';
 import { LoadingOutlined } from '@ant-design/icons';
 import { setStep } from '../../reducers/paymentsReducer';
@@ -7,6 +7,8 @@ import Translate from 'react-translate-component';
 
 const { Dragger } = Upload;
 const { Paragraph, Text } = Typography;
+const { TextArea } = Input;
+
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
@@ -82,6 +84,15 @@ const KycDocuments = (props) => {
                     <span className="icon md close c-pointer" />
                 </div>
             </div>
+            <Form className='mt-16'>
+                <Form.Item
+                    label="Remarks"
+                    className="input-label"
+                >
+                    <TextArea className='cust-input' rows={4} placeholder="Remarks">
+                    </TextArea>
+                </Form.Item>
+            </Form>
             <Button disabled={isLoading}
                 htmlType="submit"
                 size="large"
