@@ -52,8 +52,7 @@ const Payments = (props, { userConfig }) => {
         setBeneficiaryDrawer(false);
     }
     const showNewBenificiary = () => {
-        setBeneficiaryDrawer(true);
-        props.dispatch(setStep("step1"));
+        props.history.push(`/payments/newbeneficiary/00000000-0000-0000-0000-000000000000`)
     }
     const savewithdrawal = () => {
         setBeneficiaryDrawer(false);

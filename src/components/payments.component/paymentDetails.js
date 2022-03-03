@@ -226,7 +226,6 @@ class PaymentDetails extends Component {
                                             <th style={{ width: 50 }}></th>
                                             <th>Bank Name</th>
                                             <th>Bank Account Number</th>
-                                            <th>Type</th>
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
@@ -252,7 +251,7 @@ class PaymentDetails extends Component {
                                                         </td>
                                                         <td>
                                                             <div className='d-flex align-center justify-content'>
-                                                                <span>{item.bankname}</span>
+                                                                <span>{item.bankname}<Badge size="small" className='ml-8' count={'3rd Party'} style={{border: 'none'}} /></span>
                                                                 <Popover
                                                                     className='more-popover'
                                                                     content={this.popOverContent}
@@ -266,7 +265,6 @@ class PaymentDetails extends Component {
                                                             </div>
                                                         </td>
                                                         <td>{item.accountnumber}</td>
-                                                        <td><Badge size="default" count={'3rd Party'} style={{border: 'none'}} /></td>
                                                         <td>
                                                             <NumberFormat className="cust-input text-right"
                                                                 customInput={Input} thousandSeparator={true} prefix={""}
