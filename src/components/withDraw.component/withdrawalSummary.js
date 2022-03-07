@@ -75,6 +75,7 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
   }
 
   const saveWithdrwal = async (values) => {
+    debugger
     let response = await apiCalls.getVerification(userConfig?.id, values.code);
     if (response.ok) {
       message.destroy();
@@ -100,6 +101,7 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
         changeStep("step7");
       } else {
         setMsg(withdrawal.data);
+        useOtpRef.current.scrollIntoView();
       }
     }
     else {
