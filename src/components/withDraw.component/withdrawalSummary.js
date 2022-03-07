@@ -75,6 +75,7 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
   }
 
   const saveWithdrwal = async (values) => {
+    debugger
     let response = await apiCalls.getVerification(userConfig?.id, values.code);
     if (response.ok) {
       message.destroy();
@@ -98,9 +99,12 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
         dispatch(fetchDashboardcalls(userConfig.id));
         dispatch(rejectWithdrawfiat());
         changeStep("step7");
+      } else {
+        setMsg(withdrawal.data);
+        useOtpRef.current.scrollIntoView();
       }
-
-    } else {
+    }
+    else {
       useOtpRef.current.scrollIntoView();
       setMsg(apiCalls.convertLocalLang("invalid_code"));
     }
@@ -284,7 +288,7 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
           />
         </Form.Item>
         <Button
-          disabled={isLoding}
+          //disabled={isLoding}
           size="large"
           block
           className="pop-btn"

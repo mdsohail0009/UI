@@ -62,7 +62,7 @@ class FaitDeposit extends Component {
       crypto: config.tlvCoinsList,
       buyToggle: 'Buy',
       fiatDepEur: false,
-      BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null },
+      BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null, referenceNo: null },
       faitdeposit: false,
       tabValue: 1, Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false
     });
@@ -177,7 +177,7 @@ class FaitDeposit extends Component {
     else {
       this.formRef.current.validateFields().then(async () => {
         this.setState({ ...this.state, Loader: true, errorMessage: null })
-        let createObj = { "id": "00000000-0000-0000-0000-000000000000", "bankId": BankInfo.id, "currency": depObj.currency, "bankName": BankInfo.bankName, "bankAddress": BankInfo.bankAddress, "amount": parseFloat(depObj.Amount), "accountNumber": BankInfo.accountNumber, "routingNumber": BankInfo.routingNumber, "swiftorBICCode": BankInfo.networkCode, "benficiaryBankName": BankInfo.accountName, "reference": BankInfo.depReferenceNo, "benficiaryAccountAddrress": BankInfo.accountAddress }
+        let createObj = { "id": "00000000-0000-0000-0000-000000000000", "bankId": BankInfo.id, "currency": depObj.currency, "bankName": BankInfo.bankName, "bankAddress": BankInfo.bankAddress, "amount": parseFloat(depObj.Amount), "accountNumber": BankInfo.accountNumber, "routingNumber": BankInfo.routingNumber, "swiftorBICCode": BankInfo.networkCode, "benficiaryBankName": BankInfo.accountName, "reference": BankInfo.depReferenceNo, "benficiaryAccountAddrress": BankInfo.accountAddress, 'referenceNo': BankInfo.referenceNo }
         this.props.trackAuditLogData.Action = 'Save';
         this.props.trackAuditLogData.Remarks = (createObj.amount + ' ' + createObj.currency + ' deposited.')
 
