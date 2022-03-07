@@ -628,6 +628,12 @@ const FaitWithdrawal = ({
                 className="custom-forminput custom-label  mb-24"
                 name="country"
                 label={<Translate content="Country" component={Form.label} />}
+                rules={[
+                  {
+                    required: true,
+                    message: apicalls.convertLocalLang('is_required')
+                  },
+                ]}
               >
                 <Select
                   dropdownClassName="select-drpdwn"
