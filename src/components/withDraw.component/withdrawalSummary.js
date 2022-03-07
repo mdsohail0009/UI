@@ -98,9 +98,11 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
         dispatch(fetchDashboardcalls(userConfig.id));
         dispatch(rejectWithdrawfiat());
         changeStep("step7");
+      } else {
+        setMsg(withdrawal.data);
       }
-
-    } else {
+    }
+    else {
       useOtpRef.current.scrollIntoView();
       setMsg(apiCalls.convertLocalLang("invalid_code"));
     }
@@ -284,7 +286,7 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
           />
         </Form.Item>
         <Button
-          disabled={isLoding}
+          //disabled={isLoding}
           size="large"
           block
           className="pop-btn"
