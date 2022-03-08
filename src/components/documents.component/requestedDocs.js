@@ -58,6 +58,7 @@ class RequestedDocs extends Component {
         const response = await getDocDetails(id);
         if (response.ok) {
             this.setState({ ...this.state, docDetails: response.data, loading: false });
+           
             this.loadDocReplies(response.data?.details[0]?.id)
         } else {
             this.setState({ ...this.state, loading: false, error: response.data });

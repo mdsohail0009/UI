@@ -25,9 +25,12 @@ class WalletList extends Component {
             {this.props.buyInfo.memberFiat &&
                 <form className="form" id="withdrawCurrency">
                     <Select getPopupContainer={() => document.getElementById('withdrawCurrency')} dropdownClassName="select-drpdwn" loading={this.props?.buyInfo?.memberFiat?.loading} placeholder={this.props.placeholder || apicalls.convertLocalLang("selectWallet")} className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
-                        value={this.props.selectedvalue ? this.props.selectedvalue : this.state.selectedvalue} onChange={(e) => {
+                        value={this.props.selectedvalue ? this.props.selectedvalue : this.state.selectedvalue} 
+                        onChange={(e) => {
+                            
                             if (this.props.onWalletSelect) { this.props.onWalletSelect(e) }
                             this.setState({ ...this.state, selectedvalue: e });
+                            this.props.sendCurrency(e)      
                         }}>
                         {this.props.buyInfo.memberFiat?.data?.map((item, idx) =>
                             <Option key={idx} className="fw-400" value={item[this.props.valueFeild || 'id']}>{item.currencyCode}
