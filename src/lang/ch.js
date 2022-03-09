@@ -489,5 +489,7 @@ export default {
   sucessText3: "金额已从您的钱包中扣除",
   value_should_greater: "從硬幣價值必須大於零",
   asset_directory: '资产目录',
-  requested_amount: '要求的金额',
+  you_are_sending: '您正在发送',
+  fees: '费用',
+  you_receive: '您将收到'
 }

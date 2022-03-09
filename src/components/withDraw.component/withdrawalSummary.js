@@ -152,7 +152,7 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
       )}
       <Text className="fs-14 text-white-50 fw-200">
         <Translate
-          content="requested_amount"
+          content="you_are_sending"
           component={Text}
           className="fs-14 text-white-50 fw-200"
         />
@@ -165,7 +165,7 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
       />
        <Text className="fs-14 text-white-50 fw-200">
         <Translate
-          content="comssion"
+          content="fees"
           component={Text}
           className="fs-14 text-white-50 fw-200"
         />
@@ -178,7 +178,7 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
       />
       <Text className="fs-14 text-white-50 fw-200">
         <Translate
-          content="amount"
+          content="you_receive"
           component={Text}
           className="fs-14 text-white-50 fw-200"
         />

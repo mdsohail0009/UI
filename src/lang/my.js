@@ -489,5 +489,7 @@ export default {
   sucessText3: "jumlah telah didebitkan daripada dompet anda.",
   value_should_greater: "Ang halaga ng mula sa barya ay dapat na mas malaki kaysa sa zero",
   asset_directory: 'Direktori Aset',
-  requested_amount: 'Jumlah yang Diminta',
+  you_are_sending: 'Anda menghantar',
+  fees: 'Yuran',
+  you_receive: 'Anda akan menerima'
 }
