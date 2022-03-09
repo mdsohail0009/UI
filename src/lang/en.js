@@ -493,5 +493,8 @@ export default {
   sucessText2: "has been added into your wallet.",
   sucessText3: "amount has been debited from your wallet.",
   value_should_greater: " From coin value must be greater than zero",
-  asset_directory: 'Asset Directory'
+  asset_directory: 'Asset Directory',
+  you_are_sending: 'You are sending',
+  fees: 'Fees',
+  you_receive: 'You will receive'
 }
