@@ -4,9 +4,10 @@ import apicalls from '../../api/apiCalls';
 import { connect } from 'react-redux';
 import { userInfo, getmemeberInfo } from '../../reducers/configReduser';
 import { withRouter } from 'react-router-dom';
+import success from '../../assets/images/success.png';
 
 class SumSub extends Component {
-    state = { loading: true }
+    state = { loading: true,sumSubConfirm:false }
     componentDidMount() {
         if (this.props.userConfig.isKYC) {
             this.props.history.push("/cockpit")
@@ -32,23 +33,28 @@ class SumSub extends Component {
                     }
                 }).onMessage((type, payload) => {
                     // console.log('onMessage', type, payload)
-                    if (type === 'idCheck.applicantStatus' && payload.reviewStatus === "completed")
-                    apicalls.updateKyc(this.props.userConfig.userId).then((res) => {
-                        this.props.getmemeberInfoa(this.props.user.profile.sub)
-                        this.props.history.push("/cockpit")
-                    })
+                    if (type === 'idCheck.applicantStatus' && payload.reviewStatus === "completed"){
+                        this.setState({sumSubConfirm:true})
+                    }
+                    // apicalls.updateKyc(this.props.userConfig.userId).then((res) => {
+                    //     this.props.getmemeberInfoa(this.props.user.profile.sub)
+                    //     this.props.history.push("/cockpit")
+                    // })
                 }).build()
-
             snsWebSdkInstance.launch('#sumsub-websdk-container')
             this.setState({ loading: false })
         })
     }
 
     render() {
+        const sumSubConfirms=<div className='sumSub-confirm text-white text-center'><img src={success} className="confirm-icon" alt={"success"} /><br/>
+        <span className='sumSub-review'>Verification Complete</span>
+        <p className='p-0'>After sumSub completed,Please refresh the page or re login</p></div>
         return (
             <>
                 {this.state.loading && <div className="loader">Loading .....</div>}
-                <div id="sumsub-websdk-container"></div>
+                {(this.state.sumSubConfirm===true)?<>({sumSubConfirms})</>:(<div id="sumsub-websdk-container"></div>)}
+                {/* <div id="sumsub-websdk-container"></div> */}
             </>
         );
     }
