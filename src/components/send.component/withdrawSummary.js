@@ -159,6 +159,7 @@ class WithdrawSummary extends Component {
           }
         }
         else {
+          this.setState({ ...this.state, errorMsg: response.data })
           this.props.dispatch(
             setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
           );

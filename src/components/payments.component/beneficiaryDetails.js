@@ -1,22 +1,12 @@
 import React, { Component } from 'react';
 import { getPaymentsData,saveBeneficiary,getCurrencyLu,getFavourite } from './api';
-import { Typography, Button,  message,Collapse, Tooltip,Empty,Alert,Spin, Row,Select, Col,Modal, Form, Input, Upload } from 'antd';
+import { Typography, Button,  message, Tooltip, Row,Select, Col,Modal, Form, Input, Upload } from 'antd';
 import Translate from 'react-translate-component';
 import FilePreviewer from 'react-file-previewer';
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom';
-import {  getFileURL,getDocumentReplies,getDocDetails,approveDoc,uuidv4 } from '../case.component/api'
-import beneficiaryDetails from './beneficiaryDetails';
-import requestedDocs from '../documents.component/requestedDocs'
-import Loader from '../../Shared/loader';
-import apiCalls from '../../api/apiCalls';
+import {  getFileURL,uuidv4 } from '../case.component/api'
+import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from '../../utils/custom.validator'
-import Moment from 'react-moment';
-import moment from 'moment';
-import { LoadingOutlined } from '@ant-design/icons';
-import { setStep } from '../../reducers/paymentsReducer';
-import WalletList from '../shared/walletList';
-import QueryString from 'query-string';
 
 
 const EllipsisMiddle = ({ suffixCount, children }) => {
@@ -32,7 +22,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 const { Title, Text, Paragraph } = Typography;
 const { Dragger } = Upload;
 const { Option } = Select;
-const { Panel } = Collapse;
+
 class PaymentsView extends Component {
     constructor(props) {
         super(props);
@@ -45,14 +35,16 @@ class PaymentsView extends Component {
         docDetails: {},
         error: null,
         errorMessage: null,
-        documentReplies: {},
-        docReplyObjs: [],
+        docIdentityProofObjs: [],
+        docAddressProofObjs: [],
+        docBankProofObjs: [],
+        docIdentityProof: {},
+        docAddressProof:{},
+        docBankProof:{},
         previewPath: null,
         isSubmitting: false,
          uploadLoader: false,
-        isMessageError: null,
         isValidFile: true,
-        validHtmlError: false,
         PreviewFilePath: null,
         currency:null,
          Currency:[]
@@ -63,8 +55,10 @@ class PaymentsView extends Component {
     }
 
     componentDidMount() {
-        this.getDocument()
         this.getCurrency()
+        if (this.props.match.params.id !== "00000000-0000-0000-0000-000000000000") {
+            this.getDocument()
+          }
     }
     
     selectedCurrency=(code)=>{
@@ -81,9 +75,9 @@ class PaymentsView extends Component {
         } 
     }
    
-    handleChange=()=>{
+    // handleChange=()=>{
 
-    }
+    // }
 
     getPaymentsViewData = async (code) => {
         debugger
@@ -102,104 +96,41 @@ class PaymentsView extends Component {
     backToPayments = () => {
         this.props.history.push('/payments')
     }
-    getDocument = async (id) => {
+    
+    getDocument = async () => {
 		debugger
         this.setState({ ...this.state, loading: true, error: null });
-        const response = await getFavourite(id);
+        const response = await getFavourite(this.props.match.params.id);
         if (response.ok) {
 			console.log(response)
-            this.setState({ ...this.state, docDetails: response.data, loading: false });
-             this.loadDocReplies(response.data?.details[0]?.id)
-            this.setState({ ...this.state, docDetails: response.data, loading: false });
-			console.log(this.state.docDetails)
+            this.setState({ ...this.state, docDetails: response.data , loading: false });
+             this.setState({ ...this.state, docIdentityProof: response.data.documents.details[0],
+                docAddressProof: response.data.documents.details[1],
+                docBankProof: response.data.documents.details[2], loading: false });
+            console.log(this.state.docDetails)
+            this.formRef.current.setFieldsValue(this.state.docDetails)
         } else {
             this.setState({ ...this.state, loading: false, error: response.data });
         }
     }
-
-    loadDocReplies = async (id) => {
-        debugger
-        let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId != id);
-        this.setState({ ...this.state, isMessageError:null, validHtmlError:null, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } },docReplyObjs: docReObj,docErrorMessage: null });
-        const response = await getDocumentReplies(id);
-        if (response.ok) {
-			console.log(response,"getDocumentReplies")
-            this.setState({
-                ...this.state, documentReplies: {
-                    ...this.state.documentReplies, [id]: {
-                        loading: false, data: response.data.map(item => {
-                            return { ...item, path: item.path && item?.path !== "string" ? JSON.parse(item.path) : [] }
-                        }), error: null
-                    }
-                }
-            });
-        } else {
-            this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: response.data } } });
+    docPreview = async (file) => {
+        let obj=file.path;
+        this.setState({ ...this.state, previewModal: true, });
+        let res = await getFileURL({ url: `${obj}` });
+        if (res.ok) {
+            console.log(res.data)
+            this.state.PreviewFilePath = obj;
+            this.setState({...this.state,PreviewFilePath:`${obj}`})
+            this.setState({ ...this.state, previewModal: true, previewPath: res.data });
         }
     }
-    saveRolesDetails=async(values)=>{ 
-        debugger
-       let Obj= {
-             "favouriteName": values.favouriteName,
-            "toWalletAddress": values.toWalletAddress,
-            "toCoin": values.toCoin,
-            "IsPrimary":false,
-            "accountNumber":values.accountNumber ,
-            "routingNumber":values.routingNumber ,
-            "bankName":values.bankName ,
-            "bankAddress":values.bankAddress ,
-            "beneficiaryAccountAddress":values.beneficiaryAccountAddress ,
-            "id": this.props.match.params.id,
-            "membershipId":this.props.userConfig?.userId,
-            "beneficiaryAccountName":values.beneficiaryAccountName ,
-            "type": "fiat",
-            "documents": {
-                    "id": "9d13fe22-f005-4867-8954-0feed71005f5",
-                    "transactionId": null,
-                    "adminId": "00000000-0000-0000-0000-000000000000",
-                    "date": null,
-                    "type": null,
-                    "memberId": "00000000-0000-0000-0000-000000000000",
-                    "caseTitle": null,
-                    "caseState": null,
-                    "remarks": null,
-                    "status": null,
-                    "state": null,
-                    "details": [
-                                  {
-                                    "documentId": "00000000-0000-0000-0000-000000000000",
-                                    "documentName": "1",
-                                    "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
-                                    "isChecked": true,
-                                    "remarks": null,
-                                    "state": null,
-                                    "status": false,
-                                    "Path":"file1"
-                                   }
-                               ]
-                },
-            "info": "{\"Ip\":\"183.82.126.210\",\"Location\":{\"countryName\":\"India\",\"state\":\"Telangana\",\"city\":\"Hyderabad\",\"postal\":\"500034\",\"latitude\":17.41364,\"longitude\":78.44675},\"Browser\":\"Chrome\",\"DeviceType\":{\"name\":\"Desktop\",\"type\":\"desktop\",\"version\":\"Windows NT 10.0\"}}"
-        
-        }
-        console.log(Obj)
-        
-            let response = await saveBeneficiary(Obj);
-            if (response.ok) {
-              message.destroy();
-              message.success({
-                content: "Case details saved successfully",
-                className: "custom-msg",
-                duration: 0.75
-              });
-              this.props.history.push('/payments')
-            
-          } 
-    }
+   
     DownloadUpdatedFile = async () => {
         let res = await getFileURL({ url: this.state.PreviewFilePath });
         if (res.ok) {
             this.setState({ ...this.state, previewModal: true, previewPath: res.data });
             window.open(res.data, "_blank")
+            this.docPreviewClose ()
         }
     }
     fileDownload = async () => {
@@ -208,26 +139,20 @@ class PaymentsView extends Component {
             this.DownloadUpdatedFile()
         }
     }
-    docPreview = async (file) => {
-        let res = await getFileURL({ url: file.path });
-        if (res.ok) {
-            this.state.PreviewFilePath = file.path;
-            this.setState({ ...this.state, previewModal: true, previewPath: res.data });
-        }
-    }
+   
     docPreviewClose = () => {
         this.setState({ ...this.state, previewModal: false, previewPath: null })
     }
-    isDocExist(lstObj, id) {
-        const lst = lstObj.filter(obj => {
-            return obj.docunetDetailId === id
-        });
-        return lst[0]
-    }
+    // isDocExist(lstObj, id) {
+    //     const lst = lstObj.filter(obj => {
+    //         return obj.documentId === id
+    //     });
+    //     return lst[0]
+    // }
     messageObject = (id) => {
         return {
             "id": uuidv4(),
-            "docunetDetailId": id,
+            "documentId": id,
             "path": [],
             "reply": "",
             "repliedBy": "",
@@ -235,61 +160,85 @@ class PaymentsView extends Component {
             "isCustomer": true
         }
     }
-    getUploadedFiles = (id) => {
-        let data = this.state.docReplyObjs.filter(item => item.docunetDetailId === id)[0];
-        console.log(data)
-        if (data && data.path) {
-            data.path = (typeof (data.path) === "string" ? JSON.parse(data.path) : data.path) || [];
-            return data
-        } else {
-            return { path: [] }
-        }
-    }
-    handleUpload = ({ file }, doc) => {
+  
+    handleUpload = ({ file },type) => {
         debugger
         this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
-        if (file.status === "done" && this.state.isValidFile) {
-            let replyObjs = [...this.state.docReplyObjs];
-            let item = this.isDocExist(replyObjs, doc.id);
-            let obj;
-            if (item) {
-                obj = item;
-                const ObjPath = function () {
-                    if (obj.path === "string") {
-                        return JSON.parse(obj.path);
-                    } else {
-                        return obj.path ? obj.path : [];
-                    }
-                };
-                obj.path = ObjPath();
-                obj.path.push({ filename: file.name, path: file.response[0], size: file.size });
-                replyObjs = this.uopdateReplyObj(obj, replyObjs);
-            } else {
-                obj = this.messageObject(doc.id);
-                obj.repliedDate = new Date();
-                obj.path.push({ filename: file.name, path: file.response[0], size: file.size });
-                obj.repliedBy = this.props.userProfileInfo?.firstName;
-                replyObjs.push(obj);
-            }
-            this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
-        }
-        else if (file.status === 'error') {
-            message.error({ content: `${file.response}`, className: 'custom-msg' })
-            
-            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false })
-        }
-        else if (!this.state.isValidFile) {
-            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false });
-        }
-    }
-    filePreviewPath() {
-        if (this.state.previewPath.includes(".pdf")) {
+        if(type=="IDENTITYPROOF"){
+            this.state.docIdentityProofObjs.shift()
+        let docDetails=[...this.state.docIdentityProofObjs]
+        let obj;
+        if(docDetails){
+            obj = docDetails;
+             obj.push({ filename: file.name, path: file.response, size: file.size });
            
-            return this.state.previewPath;
-        } else {
-            return this.state.previewPath;
         }
+        // let docDetail=docDetails;
+        // docDetails= this.state.docIdentityProofObjs.map(doc=>doc.file.name!==obj.file.name?doc:docDetail)
+          if(file.response !== undefined){
+            this.setState({ ...this.state, docIdentityProofObjs: docDetails });
+          }
+        
     }
+    else if(type=="ADDRESSPROOF"){
+        let docDetails=[...this.state.docAddressProofObjs]
+        let obj;
+        if(docDetails){
+            obj = docDetails;
+            obj.push({ filename: file.name, path: file.response, size: file.size });
+           
+        }
+          if(file.response !== undefined){
+            this.setState({ ...this.state, docAddressProofObjs: docDetails });
+          }
+        
+    }
+    else if(type=="BANKPROOF"){
+        let docDetails=[...this.state.docBankProofObjs]
+        let obj;
+        if(docDetails){
+            obj = docDetails;
+            obj.push({ filename: file.name, path: file.response, size: file.size });
+            
+        }
+          if(file.response !== undefined){
+            this.setState({ ...this.state, docBankProofObjs: docDetails });
+          }
+       
+    }
+    }
+      deleteIdentityDocument(file){
+         
+          if(this.state.docIdentityProofObjs){
+       let deleteIdentityList=this.state.docIdentityProofObjs.filter((file)=>file.filename!=file.filename )
+       this.setState({ ...this.state, docIdentityProofObjs: deleteIdentityList });
+                console.log("item deleted sucessfully")
+       }
+    }
+    deleteAddressDocument(){
+        if(this.state.docAddressProofObjs){
+            let deleteAddressProofList=this.state.docAddressProofObjs.filter((file)=>file.filename!=file.filename )
+            this.setState({ ...this.state, docAddressProofObjs: deleteAddressProofList });
+                     console.log("item deleted sucessfully")
+           }
+    }
+    deleteBankProofDocument(){
+        if(this.state.docBankProofObjs){
+            let deleteBankProofList=this.state.docBankProofObjs.filter((file)=>file.filename!=file.filename )
+            this.setState({ ...this.state, docBankProofObjs: deleteBankProofList });
+                     console.log("item deleted sucessfully")
+           }
+    }
+
+ filePreviewPath() {
+     debugger
+    if (this.state.previewPath.includes(".pdf")) {
+        //return "https://suissebasecors.herokuapp.com/" + this.state.previewPath;
+        return this.state.previewPath;
+    } else {
+        return this.state.previewPath;
+    }
+}
     formatBytes(bytes, decimals = 2) {
         if (bytes === 0) return '0 Bytes';
         const k = 1024;
@@ -311,9 +260,100 @@ class PaymentsView extends Component {
             return Upload.LIST_IGNORE;
         }
     }
-  
+   saveRolesDetails=async(values)=>{ 
+        debugger
+        const {docIdentityProofObjs,docAddressProofObjs,docBankProofObjs}=this.state;
+         const path = docIdentityProofObjs.map((a) => a.path);
+         const path1 = docAddressProofObjs.map((a) => a.path);
+         const path2 = docBankProofObjs.map((a) => a.path);
+
+         const fileName = docIdentityProofObjs.map((a) => a.filename);
+         let name=fileName;
+         const fileName1 = docAddressProofObjs.map((a) => a.filename);
+         let name1=fileName1;
+         const fileName2 = docBankProofObjs.map((a) => a.filename);
+         let name2=fileName2;
+
+       let Obj= {
+             "favouriteName": values.favouriteName,
+            "toWalletAddress": apiCalls.encryptValue(values.toWalletAddress, this.props.userConfig?.sk),
+            "toCoin": values.toCoin,
+            "IsPrimary":false,
+            "accountNumber":apiCalls.encryptValue(values.accountNumber, this.props.userConfig?.sk) ,
+            "routingNumber":apiCalls.encryptValue(values.routingNumber, this.props.userConfig?.sk) ,
+            "bankName":apiCalls.encryptValue(values.bankName, this.props.userConfig?.sk) ,
+            "bankAddress":apiCalls.encryptValue(values.bankAddress, this.props.userConfig?.sk) ,
+            "beneficiaryAccountAddress":apiCalls.encryptValue(values.beneficiaryAccountAddress, this.props.userConfig?.sk) ,
+            "id": this.props.match.params.id,
+            "membershipId":this.props.userConfig?.id,
+            "beneficiaryAccountName":apiCalls.encryptValue(values.beneficiaryAccountName, this.props.userConfig?.sk) ,
+            "type": "fiat",
+            "documents": {
+                    "id": "9d13fe22-f005-4867-8954-0feed71005f5",
+                    "transactionId": null,
+                    "adminId": "00000000-0000-0000-0000-000000000000",
+                    "date": null,
+                    "type": null,
+                    "memberId": "00000000-0000-0000-0000-000000000000",
+                    "caseTitle": null,
+                    "caseState": null,
+                    "remarks": null,
+                    "status": null,
+                    "state": null,
+                    "details": [
+                                  {
+                                    "documentId": "00000000-0000-0000-0000-000000000000",
+                                    "documentName":`${name || this.state.docIdentityProof.documentName }`,
+                                    "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
+                                    "isChecked": true,
+                                    "remarks": null,
+                                    "state": null,
+                                    "status": false,
+                                     "Path":`${path || this.state.docIdentityProof.path}`,
+                                    
+                                   },
+                                   {
+                                    "documentId": "00000000-0000-0000-0000-000000000000",
+                                    "documentName": `${name1 || this.state.docAddressProof.documentName }`,
+                                    "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
+                                    "isChecked": true,
+                                    "remarks": null,
+                                    "state": null,
+                                    "status": false,
+                                    "Path":`${path1 || this.state.docAddressProof.path}`
+                                   },
+                                   {
+                                    "documentId": "00000000-0000-0000-0000-000000000000",
+                                    "documentName": `${name2 || this.state.docAddressProof.documentName}`,
+                                    "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
+                                    "isChecked": true,
+                                    "remarks": null,
+                                    "state": null,
+                                    "status": false,
+                                    "Path":`${path2 || this.state.docAddressProof.path}`
+                                   }
+                               ]
+                },
+            "info": "{\"Ip\":\"183.82.126.210\",\"Location\":{\"countryName\":\"India\",\"state\":\"Telangana\",\"city\":\"Hyderabad\",\"postal\":\"500034\",\"latitude\":17.41364,\"longitude\":78.44675},\"Browser\":\"Chrome\",\"DeviceType\":{\"name\":\"Desktop\",\"type\":\"desktop\",\"version\":\"Windows NT 10.0\"}}"
+        
+        }
+        console.log(Obj)
+        
+            let response = await saveBeneficiary(Obj);
+            if (response.ok) {
+              message.destroy();
+              message.success({
+                content: "Case details saved successfully",
+                className: "custom-msg",
+                duration: 0.75
+              });
+              this.props.history.push('/payments')
+            
+          } 
+    }
     render() {
-        const { paymentsData, loading,beneficiaryObject,Currency } = this.state;
+        const {docAddressProofObjs, docBankProofObjs, loading,beneficiaryObject,Currency,docIdentityProofObjs } = this.state;
+        
         return (
             <>
                 <div className="main-container">
@@ -331,7 +371,6 @@ class PaymentsView extends Component {
                          className="ant-advanced-search-form"
                          onFinish={this.saveRolesDetails}
                          ref={this.formRef}
-             
                          autoComplete="off"
                     >
                             <Row gutter={16} className="mb-24">
@@ -356,6 +395,10 @@ class PaymentsView extends Component {
                                         required
                                         rules={[
                                             {
+                                                required: true,
+                                                message: "Is required"
+                                              },
+                                            {
                                                 whitespace: true,
                                                 message: apiCalls.convertLocalLang('is_required')
                                             },
@@ -373,6 +416,10 @@ class PaymentsView extends Component {
                                         label={<Translate content="Recipient_address1" component={Form.label} />}
                                         required
                                         rules={[
+                                            {
+                                                required: true,
+                                                message: "Is required"
+                                              },
                                             {
                                                 whitespace: true,
                                                 message: apiCalls.convertLocalLang('is_required')
@@ -398,6 +445,10 @@ class PaymentsView extends Component {
                                         label={<Translate content="AddressLabel" component={Form.label} />}
                                         rules={[
                                             {
+                                                required: true,
+                                                message: "Is required"
+                                              },
+                                            {
                                                 whitespace: true,
                                                 message: apiCalls.convertLocalLang('is_required')
                                             },
@@ -414,6 +465,10 @@ class PaymentsView extends Component {
                                         label={<Translate content="address" component={Form.label} />}
                                         name="toWalletAddress" required
                                         rules={[
+                                            {
+                                                required: true,
+                                                message: "Is required"
+                                              },
                                             {
                                                 whitespace: true,
                                                 message: apiCalls.convertLocalLang('is_required')
@@ -460,6 +515,10 @@ class PaymentsView extends Component {
                                         required
                                         rules={[
                                             {
+                                                required: true,
+                                                message: "Is required"
+                                              },
+                                            {
                                                 pattern: /^[A-Za-z0-9]+$/,
                                                 message: 'Invalid account number'
                                             }
@@ -476,6 +535,10 @@ class PaymentsView extends Component {
                                         required
                                         rules={[
                                             {
+                                                required: true,
+                                                message: "Is required"
+                                              },
+                                            {
                                                 pattern: /^[A-Za-z0-9]+$/,
                                                 message: 'Invalid BIC/SWIFT/Routing number'
                                             }
@@ -491,6 +554,10 @@ class PaymentsView extends Component {
                                         label={<Translate content="Bank_name" component={Form.label} />}
                                         required
                                         rules={[
+                                            {
+                                                required: true,
+                                                message: "Is required"
+                                              },
                                             {
                                                 whitespace: true,
                                                 message: apiCalls.convertLocalLang('is_required')
@@ -511,6 +578,10 @@ class PaymentsView extends Component {
                                         required
                                         rules={[
                                             {
+                                                required: true,
+                                                message: "Is required"
+                                              },
+                                            {
                                                 whitespace: true,
                                                 message: apiCalls.convertLocalLang('is_required')
                                             },
@@ -526,60 +597,114 @@ class PaymentsView extends Component {
                                 className="mb-16 fs-20 mt-24 text-white fw-500"
                             >KYC Documents</Paragraph>
                              <>
-            <div className="main-container">
-              
-                <div className="mb-16 text-white-50 fs-24">{this.state?.docDetails?.caseTitle}</div>
-                
-                <div className="bank-view">
-                        
-                            
-                            <><div>
-                                
-                                {this.state.errorMessage != null && <Alert
-                                    description={this.state.errorMessage}
-                                    type="error"
-                                    showIcon
-                                    closable={false}
-                                    style={{ marginBottom: 0, marginTop: '16px' }}
-                                />}
-                                <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" 
-                                className="upload mt-16" multiple={false}
-                                 action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
-                                  showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }}
-                                   //onChange={(props) => { this.handleUpload(props, doc) }}
-                                   >
-                                    <p className="ant-upload-drag-icon">
-                                        <span className="icon xxxl doc-upload" />
-                                    </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                                    <p className="ant-upload-hint text-secondary fs-12">
-                                        PNG, JPG,JPEG and PDF files are allowed
-                                    </p>
-                                </Dragger>
-                                {this.state.uploadLoader && <Loader />}
-                            </div>
-                                <div className="docfile-container">
-                                    {this.getUploadedFiles()?.path?.map((file, idx1) =>
-                                     <div key={idx1} className="docfile">
-                                        <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
-                                        <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
-                                            <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
-                                            <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
+                             
+                             <Row gutter={16}>
+                                <Col xl={8}>
+                                    <div className='mb-24'>
+                                        <Paragraph
+                                            //content="Beneficiary_Details"
+                                            //component={Paragraph}
+                                            className="mb-16 fs-14 text-white fw-500 text-upper"
+                                        >Please provide your identity proof</Paragraph>
+                                        <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
+                                            className="upload mt-16"
+                                            multiple={false}
+                                             action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                                            showUploadList={false}
+                                            beforeUpload={(props) => { this.beforeUpload(props) }}
+                                        onChange={(props) => { this.handleUpload(props,"IDENTITYPROOF") }}
+                                        >
+                                            <p className="ant-upload-drag-icon">
+                                                <span className="icon xxxl doc-upload" />
+                                            </p>
+                                            <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
+                                            <p className="ant-upload-hint text-secondary fs-12">
+                                                PNG, JPG,JPEG and PDF files are allowed
+                                            </p>
+                                        </Dragger>
+                                        {docIdentityProofObjs.map((file) =>
+                                        <div className="docfile">
+                                            <span className={`icon xl file mr-16`} /> 
+                                            <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
+                                                <EllipsisMiddle suffixCount={6}>{file.filename || this.state.docIdentityProof.documentName}</EllipsisMiddle>
+                                                <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
+                                            </div> 
+                                            <span className="icon md close c-pointer" onClick={() => this.deleteIdentityDocument(file)} />
                                         </div>
-                                        {/* <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx1, true)} /> */}
-                                    </div>)}
-
-                                </div>
-                                <div className="text-center my-36">
-
-                                    {/* <Button disabled={this.state.isSubmitting} className="pop-btn px-36" onClick={() => this.docReject(doc)}>Submit</Button> */}
-                                </div>
-                            </>
-                        
-                    
-
-                </div>
-                <Modal
+                                        )}
+                                    </div>
+                                </Col>
+                                <Col xl={8}>
+                                    <div>
+                                        <Paragraph
+                                            //content="Beneficiary_Details"
+                                            //component={Paragraph}
+                                            className="mb-16 fs-14 text-white fw-500 text-upper"
+                                        >Please provide your address proof</Paragraph>
+                                        <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
+                                            className="upload mt-16"
+                                            multiple={false} 
+                                            action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                                             showUploadList={false}
+                                            beforeUpload={(props) => {this.beforeUpload(props)}}
+                                        onChange={(props) => { this.handleUpload(props,"ADDRESSPROOF") }}
+                                        >
+                                            <p className="ant-upload-drag-icon">
+                                                <span className="icon xxxl doc-upload" />
+                                            </p>
+                                            <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
+                                            <p className="ant-upload-hint text-secondary fs-12">
+                                                PNG, JPG,JPEG and PDF files are allowed
+                                            </p>
+                                        </Dragger>
+                                        {docAddressProofObjs.map((file) =>
+                                        <div className="docfile">
+                                            <span className={`icon xl file mr-16`} /> 
+                                            <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
+                                                <EllipsisMiddle suffixCount={6}>{file.filename || this.state.docAddressProof.documentName}</EllipsisMiddle>
+                                                <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
+                                            </div> 
+                                            <span className="icon md close c-pointer" onClick={() => this.deleteAddressDocument(file)} />
+                                        </div>
+                                        )}
+                                    </div>
+                                </Col>
+                                <Col xl={8}>
+                                    <div>
+                                        <Paragraph
+                                            //content="Beneficiary_Details"
+                                            //component={Paragraph}
+                                            className="mb-16 fs-14 text-white fw-500 text-upper"
+                                        >Please provide your address proof</Paragraph>
+                                        <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
+                                            className="upload mt-16"
+                                            multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                                            showUploadList={false}
+                                            beforeUpload={(props) => { this.beforeUpload(props) }}
+                                        onChange={(props) => { this.handleUpload(props,"BANKPROOF") }}
+                                        >
+                                            <p className="ant-upload-drag-icon">
+                                                <span className="icon xxxl doc-upload" />
+                                            </p>
+                                            <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
+                                            <p className="ant-upload-hint text-secondary fs-12">
+                                                PNG, JPG,JPEG and PDF files are allowed
+                                            </p>
+                                        </Dragger>
+                                        {docBankProofObjs.map((file) =>
+                                        <div className="docfile">
+                                            <span className={`icon xl file mr-16`} /> 
+                                            <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
+                                                <EllipsisMiddle suffixCount={6}>{file.filename || this.state.docAddressProof.documentName}</EllipsisMiddle>
+                                                <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
+                                            </div> 
+                                            <span className="icon md close c-pointer" onClick={() => this.deleteBankProofDocument(file)} />
+                                        </div>
+                                        )}
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Modal
                     className="documentmodal-width"
                     title="Preview"
                     width={1000}
@@ -593,7 +718,8 @@ class PaymentsView extends Component {
                 >
                     <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />
                 </Modal>
-            </div></>
+                            </>
+            
                               
                             <div className='text-center mt-36'>
                                 <Button

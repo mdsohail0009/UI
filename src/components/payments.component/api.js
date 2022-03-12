@@ -23,11 +23,12 @@ const saveBeneficiary = (obj) => {
 const getFavourite = (id) => {
     return apiClient.get(ApiControllers.depositWithdraw + `Withdraw/Favourite/${id}`);
 }
-// const getFileURL = (obj) => {
-//     return clientApi.post(ApiControllers.accounts + `FetchFile`, obj);
-//   };
-
-export { getCurrencyLu,saveBeneficiary, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData }
+//https://routechanges.azurewebsites.net/api/v1/DepositeWithdraw/Withdraw/Favourite/dcc19ccd-3b8a-495d-8cf6-331af651bbcb
+const getFileURL = (obj) => {
+    return apiClient.post(ApiControllers.accounts + `FetchFile`, obj);
+};
+ 
+export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData }
 
 //https://routechanges.azurewebsites.net/api/v1/DepositeWithdraw/Favourite
 //https://routechanges.azurewebsites.net/api/v1/Wallets/Fiat/f8be2fd6-9778-4408-ba57-7502046e13a5
