@@ -35,11 +35,12 @@ class SumSub extends Component {
                     // console.log('onMessage', type, payload)
                     if (type === 'idCheck.applicantStatus' && payload.reviewStatus === "completed"){
                         this.setState({sumSubConfirm:true})
+                         apicalls.updateKyc(this.props.userConfig.userId).then((res) => {
+                        this.props.getmemeberInfoa(this.props.user.profile.sub)
+                        this.props.history.push("/cockpit")
+                    })
                     }
-                    // apicalls.updateKyc(this.props.userConfig.userId).then((res) => {
-                    //     this.props.getmemeberInfoa(this.props.user.profile.sub)
-                    //     this.props.history.push("/cockpit")
-                    // })
+                   
                 }).build()
             snsWebSdkInstance.launch('#sumsub-websdk-container')
             this.setState({ loading: false })
