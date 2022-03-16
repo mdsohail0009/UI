@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 import success from '../../assets/images/success.png';
 
 class SumSub extends Component {
+    useDivRef = React.createRef();
     state = { loading: true,sumSubConfirm:false }
     componentDidMount() {
         if (this.props.userConfig.isKYC) {
@@ -33,6 +34,9 @@ class SumSub extends Component {
                     }
                 }).onMessage((type, payload) => {
                     // console.log('onMessage', type, payload)
+                    if(type==='idCheck.onResize'){
+                        this.useDivRef.current.scrollIntoView();
+                    }
                     if (type === 'idCheck.applicantStatus' && payload.reviewStatus === "completed"){
                         this.setState({sumSubConfirm:true})
                          apicalls.updateKyc(this.props.userConfig.userId).then((res) => {
@@ -54,7 +58,7 @@ class SumSub extends Component {
         return (
             <>
                 {this.state.loading && <div className="loader">Loading .....</div>}
-                {(this.state.sumSubConfirm===true)?<>({sumSubConfirms})</>:(<div id="sumsub-websdk-container"></div>)}
+                {(this.state.sumSubConfirm===true)?<>({sumSubConfirms})</>:(<div ref={this.useDivRef}id="sumsub-websdk-container"></div>)}
                 {/* <div id="sumsub-websdk-container"></div> */}
             </>
         );
