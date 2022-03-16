@@ -593,7 +593,8 @@ const FaitWithdrawal = ({
                 className="fs-20 text-white-30 l-height-normal d-block mb-24"
                 content="SIGNU"
                 component={Text}
-                //with={{ value: addressDetails.country }}
+                with={{ value: addressDetails.country || "--" }}
+
               />
 
               <Translate
@@ -605,7 +606,7 @@ const FaitWithdrawal = ({
                 className="fs-20 text-white-30 l-height-normal d-block mb-24"
                 content="SIGNU"
                 component={Text}
-                //with={{ value: addressDetails.country }}
+                with={{ value: addressDetails.state || "--" }}
               />
 
               <Translate
@@ -617,7 +618,7 @@ const FaitWithdrawal = ({
                 className="fs-20 text-white-30 l-height-normal d-block mb-24"
                 content="SIGNU"
                 component={Text}
-                //with={{ value: addressDetails.country }}
+                with={{ value: addressDetails.zipCode || "--" }}
               />
               <Translate
                 content="Beneficiary_Details"
