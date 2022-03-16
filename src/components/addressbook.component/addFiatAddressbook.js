@@ -270,13 +270,77 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                         ]}>
                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
                     </Form.Item>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-24"
+                        name="country"
+                        label={<Translate content="Country" component={Form.label} />}
+                        //required
+                        // rules={[
+                        //     {
+                        //         required: true,
+                        //         message: apiCalls.convertLocalLang('is_required')
+                        //     },
+                        //     {
+                        //         whitespace: true,
+                        //         message: apiCalls.convertLocalLang('is_required')
+                        //     },
+                        //     {
+                        //         validator: validateContentRule
+                        //     }
+                        // ]}
+                        >
+                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Country')} />
+                    </Form.Item>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-24"
+                        name="state"
+                        label={<Translate content="state" component={Form.label} />}
+                        //required
+                        // rules={[
+                        //     {
+                        //         required: true,
+                        //         message: apiCalls.convertLocalLang('is_required')
+                        //     },
+                        //     {
+                        //         whitespace: true,
+                        //         message: apiCalls.convertLocalLang('is_required')
+                        //     },
+                        //     {
+                        //         validator: validateContentRule
+                        //     }
+                        // ]}
+                        >
+                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('state')} />
+                    </Form.Item>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-24"
+                        name="zipcode"
+                        label={<Translate content="zipcode" component={Form.label} />}
+                        //required
+                        // rules={[
+                        //     {
+                        //         required: true,
+                        //         message: apiCalls.convertLocalLang('is_required')
+                        //     },
+                        //     {
+                        //         whitespace: true,
+                        //         message: apiCalls.convertLocalLang('is_required')
+                        //     },
+                        //     {
+                        //         validator: validateContentRule
+                        //     }
+                        // ]}
+                        >
+                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('zipcode')} />
+                    </Form.Item>
+                    
                     <Form.Item className="mb-0 mt-16">
                         <Button disabled={isLoading}
                             htmlType="submit"
                             size="large"
                             block
                             className="pop-btn"
-                            disabled={btnDisabled}
+                            //disabled={btnDisabled}
                         >
                             {isLoading && <Spin indicator={antIcon} />}  <Translate content="Save_btn_text" />
                         </Button>

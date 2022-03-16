@@ -80,6 +80,8 @@ const FaitWithdrawal = ({
   const [addressDetails, setAddressDetails] = useState({});
   const [btnDisabled, setBtnDisabled] = useState(false);
   const useDivRef = React.useRef(null);
+  const [addressVisible,setAddressVisible]=useState(false);
+  const [walletVisible,setWalletVisible]=useState(false);
   useEffect(() => {
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       // console.log(selectedWalletCode, buyInfo.memberFiat?.data);
@@ -115,7 +117,7 @@ const FaitWithdrawal = ({
       Url: window.location.href,
       FullFeatureName: "Withdraw Fiat"
     });
-  }
+  };
   const handleWalletSelection = (walletId, isClearObj) => {
     if (isClearObj) {
       let clearobj = {
@@ -151,6 +153,7 @@ const FaitWithdrawal = ({
         getAddressLu(wallet[0]);
       }
     }
+    setWalletVisible(true)
   };
 
   const getAddressLu = async (obj) => {
@@ -174,6 +177,7 @@ const FaitWithdrawal = ({
     if (recAddressDetails.ok) {
       bindEditableData(recAddressDetails.data);
     }
+    setAddressVisible(true)
   };
   const bindEditableData = (obj) => {
     setAddressDetails({ ...obj });
@@ -198,7 +202,6 @@ const FaitWithdrawal = ({
     if (recName.ok) {
       setCountryLu(recName.data);
     }
-
   };
 
   const getStateLu = async (countryname, isChange) => {
@@ -224,7 +227,7 @@ const FaitWithdrawal = ({
       ) > parseFloat(selectedWallet?.avilable)
     ) {
       useDivRef.current.scrollIntoView();
-      return setErrorMsg(apicalls.convertLocalLang('insufficient_balance'));
+      return setErrorMsg(apicalls.convertLocalLang("insufficient_balance"));
     }
     if (
       parseFloat(
@@ -264,7 +267,7 @@ const FaitWithdrawal = ({
       setBtnDisabled(false);
       setSaveObj(response.data);
       dispatch(setWithdrawfiat(response.data));
-      changeStep('withdrawfaitsummary');
+      changeStep("withdrawfaitsummary");
       form.resetFields();
     } else {
       setBtnDisabled(false);
@@ -272,7 +275,6 @@ const FaitWithdrawal = ({
     setLoading(false);
 
     // setConfirmationStep("step2");
-
   };
   const getIbanData = async (val) => {
     if (val && val.length > 14) {
@@ -315,9 +317,7 @@ const FaitWithdrawal = ({
       step1: (
         <>
           <div className="suisfiat-height auto-scroll">
-            <div ref={useDivRef}>
-
-            </div>
+            <div ref={useDivRef}></div>
             {errorMsg !== null && (
               <Alert
                 className="mb-12"
@@ -328,7 +328,6 @@ const FaitWithdrawal = ({
                 onClose={() => setErrorMsg(null)}
                 showIcon
               />
-
             )}
             <Form
               form={form}
@@ -362,6 +361,69 @@ const FaitWithdrawal = ({
                   onWalletSelect={(e) => handleWalletSelection(e, true)}
                 />
               </Form.Item>
+              {/* {addressLu?.length > 1 && saveObj?.walletCode !== null &&  */}
+              {walletVisible &&
+              <div style={{ position: "relative" }}>
+                <Form.Item
+                  className="custom-forminput custom-label mb-24"
+                  name="favouriteName"
+                  label={
+                    <Translate content="address_book" component={Form.label} />
+                  }
+                >
+                  <Select
+                    dropdownClassName="select-drpdwn"
+                    className="cust-input"
+                    style={{ width: "100%" }}
+                    bordered={false}
+                    showArrow={true}
+                    onChange={(e) => handleAddressChange(e)}
+                    // placeholder={apicalls.convertLocalLang("SelectAddress")}
+                    placeholder={
+                      <Translate
+                        content="SelectAddress"
+                        component={Form.label}
+                      />
+                    }
+                  >
+                    {addressLu?.map((item, idx) => (
+                      <Option key={idx} value={item.name}>
+                        {item.name}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+                {/* <Tooltip
+                  placement="top"
+                  title={
+                    <span>
+                      {" "}
+                      <Translate content="New_Address" />
+                    </span>
+                  }
+                >
+                  <div
+                    className={
+                      "c-pointer" +
+                      (userConfig.language == "ch"
+                        ? " customicon"
+                        : " defaulticon")
+                    }
+                    onClick={() => selectAddress()}
+
+                  >
+
+                    <span className="icon md address-book d-block c-pointer">
+
+                    </span>
+                  </div>
+                </Tooltip> */}
+              </div>}
+               {/* } */}
+              
+              
+              {addressVisible && 
+              <div className="fiatdep-info">
               <Form.Item
                 className="custom-forminput custom-label  mb-24 min-max-btn"
                 name="totalValue"
@@ -406,132 +468,66 @@ const FaitWithdrawal = ({
                   maxLength={13}
                 />
               </Form.Item>
-              <div style={{ position: "relative" }}>
-                <Form.Item
-                  className="custom-forminput custom-label mb-24"
-                  name="favouriteName"
-                  label={
-                    <Translate content="address_book" component={Form.label} />
-                  }
-                >
-                  <Select
-                    dropdownClassName="select-drpdwn"
-                    className="cust-input"
-                    style={{ width: "100%" }}
-                    bordered={false}
-                    showArrow={true}
-                    onChange={(e) => handleAddressChange(e)}
-                    // placeholder={apicalls.convertLocalLang("SelectAddress")}
-                    placeholder={<Translate content="SelectAddress" component={Form.label} />}
-                  >
 
-                    {addressLu?.map((item, idx) => (
-                      <Option key={idx} value={item.name}>
-                        {item.name}
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-                <Tooltip
-                  placement="top"
-                  title={
-                    <span>
-                      {" "}
-                      <Translate content="New_Address" />
-                    </span>
-                  }
-                >
-                  <div
-                    className={
-                      "c-pointer" +
-                      (userConfig.language == "ch"
-                        ? " customicon"
-                        : " defaulticon")
-                    }
-                    onClick={() => selectAddress()}
-
-                  >
-
-                    <span className="icon md address-book d-block c-pointer">
-
-                    </span>
-                  </div>
-                </Tooltip>
-              </div>
-              <Form.Item
-                className="custom-forminput custom-label mb-24"
-                name="accountNumber"
-                label={
-                  <Translate content="Bank_account" component={Form.label} />
-                }
-                required
-                rules={[
-                  {
-                    required: true,
-                    message: apicalls.convertLocalLang("is_required")
-                  },
-
-                  {
-                    validator: (rule, value, callback) => {
-                      var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                      if (value) {
-                        if (!regx.test(value)) {
-                          callback("Invalid account number");
-                        } else if (regx.test(value)) {
-                          callback();
-                        }
-                      } else {
-                        callback();
-                      }
-                    }
-                  }
-                ]}
+              {/* <Text className="text-white-30 fs-14">A/C </Text>
+              <Text
+                copyable={{
+                  tooltips: [
+                    apicalls.convertLocalLang("copy"),
+                    apicalls.convertLocalLang("copied")
+                  ]
+                }}
+                className="mb-0 fs-14 text-yellow fw-500"
               >
-                <Input
-                  className="cust-input"
-                  placeholder={apicalls.convertLocalLang("Bank_account")}
-                  onBlur={(val) => getIbanData(val.currentTarget.value)}
-                />
-              </Form.Item>
-              <Form.Item
-                className="custom-forminput custom-label mb-24"
-                name="routingNumber"
-                label={
-                  <Translate
-                    content="BIC_SWIFT_routing_number"
-                    component={Form.label}
-                  />
-                }
-                required
-                rules={[
-                  {
-                    required: true,
-                    message: apicalls.convertLocalLang("is_required")
-                  },
-                  {
-                    validator: (rule, value, callback) => {
-                      var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                      if (value) {
-                        if (!regx.test(value)) {
-                          callback("Invalid BIC/SWIFT/Routing number");
-                        } else if (regx.test(value)) {
-                          callback();
-                        }
-                      } else {
-                        callback();
-                      }
-                    }
-                  }
-                ]}
-              >
-                <Input
-                  value={addressDetails.routingNumber}
-                  className="cust-input"
-                  placeholder={apicalls.convertLocalLang(
-                    "BIC_SWIFT_routing_number"
-                  )}
-                />
-              </Form.Item>
+                {addressDetails.accountNumber}
+              </Text> */}
+              
+              <Translate
+                className="fw-200 text-white-50 fs-14"
+                content="Bank_name"
+                component={Text}
+              />
+              <Translate
+                className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                content="SIGNU"
+                component={Text}
+                with={{ value: addressDetails.bankName }}
+              />
+              <Translate
+                className="fw-200 text-white-50 fs-14"
+                content="Bank_account"
+                component={Text}
+              />
+              <Translate
+                copyable={{
+                  tooltips: [
+                    apicalls.convertLocalLang("copy"),
+                    apicalls.convertLocalLang("copied")
+                  ]
+                }}
+                className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                content="SIGNU"
+                component={Text}
+                with={{ value: addressDetails.accountNumber }}
+              />
+              <Translate
+                className="fw-200 text-white-50 fs-14"
+                content="BIC_SWIFT_routing_number"
+                component={Text}
+              />
+              <Translate
+                copyable={{
+                  tooltips: [
+                    apicalls.convertLocalLang("copy"),
+                    apicalls.convertLocalLang("copied")
+                  ]
+                }}
+                className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                content="SIGNU"
+                component={Text}
+                with={{ value: addressDetails.routingNumber }}
+              />
+
               {/* <Form.Item
               className="custom-forminput custom-label mb-24"
               name="bankName"
@@ -558,55 +554,19 @@ const FaitWithdrawal = ({
               <Input value={addressDetails.bankName} className="cust-input" placeholder={apicalls.convertLocalLang('Bank_name')} ></Input>
 
             </Form.Item> */}
-              <Form.Item
-                className="custom-forminput custom-label mb-24"
-                name="bankName"
-                label={<Translate content="Bank_name" component={Form.label} />}
-                required
-                rules={[
-                  {
-                    required: true,
-                    message: apicalls.convertLocalLang("is_required")
-                  },
-                  {
-                    whitespace: true,
-                    message: apicalls.convertLocalLang("is_required")
-                  }, {
-                    validator: validateContentRule
-                  }
-                ]}
-              >
-                <Input
-                  value={addressDetails.bankName}
-                  className="cust-input"
-                  placeholder={apicalls.convertLocalLang("Bank_name")}
-                ></Input>
-              </Form.Item>
-              <Form.Item
-                className="custom-forminput custom-label mb-24"
-                name="bankAddress"
-                label={
-                  <Translate content="Bank_address1" component={Form.label} />
-                }
-                required
-                rules={[
-                  {
-                    required: true,
-                    message: apicalls.convertLocalLang("is_required"),
-                    whitespace: true
-                  }, {
-                    validator: validateContentRule
-                  }
-                ]}
-              >
-                <Input
-                  value={addressDetails.bankAddress}
-                  className="cust-input"
-                  placeholder={apicalls.convertLocalLang("Bank_address1")}
-                />
-              </Form.Item>
 
-              <Form.Item
+              <Translate
+                className="fw-200 text-white-50 fs-14"
+                content="Bank_address1"
+                component={Text}
+              />
+              <Translate
+                className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                content="SIGNU"
+                component={Text}
+                with={{ value: addressDetails.bankAddress }}
+              />
+              {/* <Form.Item
                 className="custom-forminput custom-label mb-24"
                 name="bankAddress2"
                 label={
@@ -622,132 +582,75 @@ const FaitWithdrawal = ({
                   className="cust-input"
                   placeholder={apicalls.convertLocalLang("Bank_address2")}
                 />
-              </Form.Item>
+              </Form.Item> */}
 
-              <Form.Item
-                className="custom-forminput custom-label  mb-24"
-                name="country"
-                label={<Translate content="Country" component={Form.label} />}
-                rules={[
-                  {
-                    required: true,
-                    message: apicalls.convertLocalLang('is_required')
-                  },
-                ]}
-              >
-                <Select
-                  dropdownClassName="select-drpdwn"
-                  placeholder={apicalls.convertLocalLang("Country")}
-                  className="cust-input"
-                  style={{ width: "100%" }}
-                  bordered={false}
-                  showArrow={true}
-                  onChange={(e) => getStateLu(e, true)}
-                >
-                  {countryLu?.map((item, idx) => (
-                    <Option key={idx} value={item.code}>
-                      {item.name}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
+              <Translate
+                className="fw-200 text-white-50 fs-14"
+                content="Country"
+                component={Text}
+              />
+              <Translate
+                className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                content="SIGNU"
+                component={Text}
+                //with={{ value: addressDetails.country }}
+              />
 
-              <Form.Item
-                className="custom-forminput custom-label mb-24"
-                name="state"
-                label={<Translate content="state" component={Form.label} />}
-              >
-                <Select
-                  dropdownClassName="select-drpdwn"
-                  placeholder={apicalls.convertLocalLang("state")}
-                  className="cust-input"
-                  style={{ width: "100%" }}
-                  bordered={false}
-                  showArrow={true}
-                  onChange={(e) => ""}
-                >
-                  {stateLu?.map((item, idx) => (
-                    <Option key={idx} value={item.code}>
-                      {item.code}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
-              <Form.Item
-                className="custom-forminput custom-label mb-24"
-                name="zipcode"
-                label={<Translate content="zipcode" component={Form.label} />}
-                rules={[
-                  {
-                    validator: (rule, value, callback) => {
-                      var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                      if (value) {
-                        if (!regx.test(value)) {
-                          callback("Invalid zip code");
-                        } else if (regx.test(value)) {
-                          callback();
-                        }
-                      } else {
-                        callback();
-                      }
-                    }
-                  }
-                ]}
-              >
-                <Input
-                  className="cust-input"
-                  maxLength={8}
-                  placeholder={apicalls.convertLocalLang("zipcode")}
-                />
-              </Form.Item>
+              <Translate
+                className="fw-200 text-white-50 fs-14"
+                content="state"
+                component={Text}
+              />
+              <Translate
+                className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                content="SIGNU"
+                component={Text}
+                //with={{ value: addressDetails.country }}
+              />
+
+              <Translate
+                className="fw-200 text-white-50 fs-14"
+                content="zipcode"
+                component={Text}
+              />
+              <Translate
+                className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                content="SIGNU"
+                component={Text}
+                //with={{ value: addressDetails.country }}
+              />
               <Translate
                 content="Beneficiary_Details"
                 component={Paragraph}
                 className="mb-16 fs-14 text-aqua fw-500 text-upper"
               />
-              <Form.Item
-                className="custom-forminput custom-label mb-24"
-                name="beneficiaryAccountName"
-                label={
-                  <Translate
-                    content="Recipient_full_name"
-                    component={Form.label}
-                  />
-                }
-              >
-                <Input
-                  className="cust-input"
-                  value={userConfig.firstName + " " + userConfig.lastName}
-                  placeholder="Recipient full name"
-                  disabled={true}
-                />
-              </Form.Item>
-              <Form.Item
-                className="custom-forminput custom-label mb-24"
-                name="beneficiaryAccountAddress"
-                label={
-                  <Translate
-                    content="Recipient_address1"
-                    component={Form.label}
-                  />
-                }
-                rules={[
-                  {
-                    required: true,
-                    message: apicalls.convertLocalLang("is_required"),
-                    whitespace: true
-                  }, {
-                    validator: validateContentRule
-                  }
-                ]}
-              >
-                <Input
-                  value={addressDetails.beneficiaryAccountAddress}
-                  className="cust-input"
-                  placeholder={apicalls.convertLocalLang("Recipient_address1")}
-                />
-              </Form.Item>
-              <Form.Item
+
+              <Translate
+                className="fw-200 text-white-50 fs-14"
+                content="Recipient_full_name"
+                component={Text}
+              />
+              <Translate
+                className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                content="SIGNU"
+                component={Text}
+                with={{
+                  value: userConfig.firstName + " " + userConfig.lastName
+                }}
+              />
+
+              <Translate
+                className="fw-200 text-white-50 fs-14"
+                content="Recipient_address1"
+                component={Text}
+              />
+              <Translate
+                className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                content="SIGNU"
+                component={Text}
+                with={{ value: addressDetails.beneficiaryAccountAddress }}
+              />
+              {/* <Form.Item
                 className="custom-forminput custom-label  mb-24"
                 name="beneficiaryAccountAddress1"
                 label={
@@ -766,7 +669,7 @@ const FaitWithdrawal = ({
                   className="cust-input"
                   placeholder={apicalls.convertLocalLang("Recipient_address2")}
                 />
-              </Form.Item>
+              </Form.Item> */}
               <Form.Item
                 className="custom-forminput custom-label mb-24"
                 name="description"
@@ -792,12 +695,11 @@ const FaitWithdrawal = ({
                       value
                         ? Promise.resolve()
                         : Promise.reject(
-                          new Error(
-                            apicalls.convertLocalLang("agree_termsofservice")
+                            new Error(
+                              apicalls.convertLocalLang("agree_termsofservice")
+                            )
                           )
-                        )
                   }
-
                 ]}
               >
                 <Checkbox className="ant-custumcheck">
@@ -822,6 +724,7 @@ const FaitWithdrawal = ({
                   <Translate content="Confirm" component={Form.label} />
                 </Button>
               </Form.Item>
+              </div>}
             </Form>
           </div>
         </>
@@ -893,16 +796,28 @@ const FaitWithdrawal = ({
       // trackAuditLogData.Remarks =
       //   saveObj?.totalValue + " " + saveObj.walletCode + " withdraw.";
       let Obj = Object.assign({}, saveObj);
-      Obj.accountNumber = apicalls.encryptValue(Obj.accountNumber, userConfig?.sk);
+      Obj.accountNumber = apicalls.encryptValue(
+        Obj.accountNumber,
+        userConfig?.sk
+      );
       Obj.bankName = apicalls.encryptValue(Obj.bankName, userConfig?.sk);
-      Obj.routingNumber = apicalls.encryptValue(Obj.routingNumber, userConfig?.sk);
+      Obj.routingNumber = apicalls.encryptValue(
+        Obj.routingNumber,
+        userConfig?.sk
+      );
       Obj.bankAddress = apicalls.encryptValue(Obj.bankAddress, userConfig?.sk);
-      Obj.beneficiaryAccountAddress = apicalls.encryptValue(Obj.beneficiaryAccountAddress, userConfig?.sk);
-      Obj.beneficiaryAccountName = apicalls.encryptValue(Obj.beneficiaryAccountName, userConfig?.sk);
+      Obj.beneficiaryAccountAddress = apicalls.encryptValue(
+        Obj.beneficiaryAccountAddress,
+        userConfig?.sk
+      );
+      Obj.beneficiaryAccountName = apicalls.encryptValue(
+        Obj.beneficiaryAccountName,
+        userConfig?.sk
+      );
       Obj.info = JSON.stringify(trackAuditLogData);
       let withdrawal = await withdrawSave(Obj);
       if (withdrawal.ok) {
-        this.props.dispatch(setWithdrawFinalRes(withdrawal.data))
+        this.props.dispatch(setWithdrawFinalRes(withdrawal.data));
         dispatch(fetchDashboardcalls(userConfig.id));
         dispatch(rejectWithdrawfiat());
         changeStep("step7");
@@ -912,7 +827,7 @@ const FaitWithdrawal = ({
     }
   };
 
-  const { Paragraph, Title } = Typography;
+  const { Paragraph, Title, Text } = Typography;
   const link = <LinkValue content="terms_service" />;
   return (
     <>
