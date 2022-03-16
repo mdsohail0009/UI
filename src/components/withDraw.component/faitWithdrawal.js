@@ -627,15 +627,20 @@ const FaitWithdrawal = ({
 
               <Translate
                 className="fw-200 text-white-50 fs-14"
-                content="Recipient_full_name"
+               
+               
+                content={(userConfig?.isBusiness)?"company_name":"Recipient_full_name"}
                 component={Text}
               />
               <Translate
                 className="fs-20 text-white-30 l-height-normal d-block mb-24"
                 content="SIGNU"
                 component={Text}
+               
                 with={{
-                  value: userConfig.firstName + " " + userConfig.lastName
+                  value: userConfig?.isBusiness
+                    ? (userConfig?.businessName)
+                    : (userConfig.firstName + " " + userConfig.lastName)
                 }}
               />
 

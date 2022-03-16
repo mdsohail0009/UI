@@ -491,5 +491,6 @@ export default {
   asset_directory: 'Direktori Aset',
   you_are_sending: 'Anda menghantar',
   fees: 'Yuran',
-  you_receive: 'Anda akan menerima'
+  you_receive: 'Anda akan menerima',
+  company_name:'pangalan ng Kumpanya'
 }

@@ -496,5 +496,6 @@ export default {
   asset_directory: 'Asset Directory',
   you_are_sending: 'You are sending',
   fees: 'Fees',
-  you_receive: 'You will receive'
+  you_receive: 'You will receive',
+  company_name:'Company Name'
 }
