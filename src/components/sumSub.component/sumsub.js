@@ -58,7 +58,7 @@ class SumSub extends Component {
         return (
             <>
                 {this.state.loading && <div className="loader">Loading .....</div>}
-                {(this.state.sumSubConfirm===true)?<>({sumSubConfirms})</>:(<div ref={this.useDivRef}id="sumsub-websdk-container"></div>)}
+                {(this.state.sumSubConfirm===true)?<>({sumSubConfirms})</>:(<div  ref={this.useDivRef}id="sumsub-websdk-container"></div>)}
                 {/* <div id="sumsub-websdk-container"></div> */}
             </>
         );
