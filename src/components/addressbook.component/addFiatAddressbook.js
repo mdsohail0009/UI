@@ -61,6 +61,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
         let namecheck = values.favouriteName.trim();
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'fiat', favaddrId);
         if (responsecheck.data != null) {
+            debugger
             setIsLoading(false);
             setBtnDisabled(false);
             useDivRef.current.scrollIntoView()
@@ -75,11 +76,12 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
             saveObj.beneficiaryAccountName = apiCalls.encryptValue(saveObj.beneficiaryAccountName, userConfig.sk)
             saveObj.routingNumber = apiCalls.encryptValue(saveObj.routingNumber, userConfig.sk)
             saveObj.toWalletAddress = apiCalls.encryptValue(saveObj.toWalletAddress, userConfig.sk)
-            saveObj.country = values.country
-            saveObj.state=values.state
-            saveObj.zipCode=values.zipCode
+            saveObj.country =apiCalls.encryptValue(saveObj.country, userConfig.sk)
+            saveObj.state=apiCalls.encryptValue(saveObj.state, userConfig.sk)
+            saveObj.zipCode=apiCalls.encryptValue(saveObj.zipCode, userConfig.sk)
             let response = await saveAddress(saveObj);
             if (response.ok) {
+                debugger
                 setBtnDisabled(false);
                 setErrorMsg('')
                 useDivRef.current.scrollIntoView();
