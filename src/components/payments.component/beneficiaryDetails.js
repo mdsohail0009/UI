@@ -75,9 +75,9 @@ class PaymentsView extends Component {
         } 
     }
    
-    // handleChange=()=>{
+    handleChange=()=>{
 
-    // }
+    }
 
     getPaymentsViewData = async (code) => {
         debugger
@@ -102,13 +102,15 @@ class PaymentsView extends Component {
         this.setState({ ...this.state, loading: true, error: null });
         const response = await getFavourite(this.props.match.params.id);
         if (response.ok) {
+            let obj=response.data
 			console.log(response)
             this.setState({ ...this.state, docDetails: response.data , loading: false });
              this.setState({ ...this.state, docIdentityProof: response.data.documents.details[0],
                 docAddressProof: response.data.documents.details[1],
                 docBankProof: response.data.documents.details[2], loading: false });
             console.log(this.state.docDetails)
-            this.formRef.current.setFieldsValue(this.state.docDetails)
+            obj.filename=response.data.documents.details[2].documentName;
+            this.formRef.current.setFieldsValue(obj)
         } else {
             this.setState({ ...this.state, loading: false, error: response.data });
         }
@@ -143,12 +145,6 @@ class PaymentsView extends Component {
     docPreviewClose = () => {
         this.setState({ ...this.state, previewModal: false, previewPath: null })
     }
-    // isDocExist(lstObj, id) {
-    //     const lst = lstObj.filter(obj => {
-    //         return obj.documentId === id
-    //     });
-    //     return lst[0]
-    // }
     messageObject = (id) => {
         return {
             "id": uuidv4(),
@@ -173,8 +169,7 @@ class PaymentsView extends Component {
              obj.push({ filename: file.name, path: file.response, size: file.size });
            
         }
-        // let docDetail=docDetails;
-        // docDetails= this.state.docIdentityProofObjs.map(doc=>doc.file.name!==obj.file.name?doc:docDetail)
+       
           if(file.response !== undefined){
             this.setState({ ...this.state, docIdentityProofObjs: docDetails });
           }
@@ -207,7 +202,7 @@ class PaymentsView extends Component {
        
     }
     }
-      deleteIdentityDocument(file){
+      deleteIdentityDocument(){
          
           if(this.state.docIdentityProofObjs){
        let deleteIdentityList=this.state.docIdentityProofObjs.filter((file)=>file.filename!=file.filename )
@@ -233,7 +228,6 @@ class PaymentsView extends Component {
  filePreviewPath() {
      debugger
     if (this.state.previewPath.includes(".pdf")) {
-        //return "https://suissebasecors.herokuapp.com/" + this.state.previewPath;
         return this.state.previewPath;
     } else {
         return this.state.previewPath;
@@ -300,38 +294,7 @@ class PaymentsView extends Component {
                     "remarks": null,
                     "status": null,
                     "state": null,
-                    "details": [
-                                  {
-                                    "documentId": "00000000-0000-0000-0000-000000000000",
-                                    "documentName":`${name || this.state.docIdentityProof.documentName }`,
-                                    "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
-                                    "isChecked": true,
-                                    "remarks": null,
-                                    "state": null,
-                                    "status": false,
-                                     "Path":`${path || this.state.docIdentityProof.path}`,
-                                    
-                                   },
-                                   {
-                                    "documentId": "00000000-0000-0000-0000-000000000000",
-                                    "documentName": `${name1 || this.state.docAddressProof.documentName }`,
-                                    "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
-                                    "isChecked": true,
-                                    "remarks": null,
-                                    "state": null,
-                                    "status": false,
-                                    "Path":`${path1 || this.state.docAddressProof.path}`
-                                   },
-                                   {
-                                    "documentId": "00000000-0000-0000-0000-000000000000",
-                                    "documentName": `${name2 || this.state.docAddressProof.documentName}`,
-                                    "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
-                                    "isChecked": true,
-                                    "remarks": null,
-                                    "state": null,
-                                    "status": false,
-                                    "Path":`${path2 || this.state.docAddressProof.path}`
-                                   }
+                    "details": [  
                                ]
                 },
             "info": "{\"Ip\":\"183.82.126.210\",\"Location\":{\"countryName\":\"India\",\"state\":\"Telangana\",\"city\":\"Hyderabad\",\"postal\":\"500034\",\"latitude\":17.41364,\"longitude\":78.44675},\"Browser\":\"Chrome\",\"DeviceType\":{\"name\":\"Desktop\",\"type\":\"desktop\",\"version\":\"Windows NT 10.0\"}}"
@@ -626,7 +589,7 @@ class PaymentsView extends Component {
                                         <div className="docfile">
                                             <span className={`icon xl file mr-16`} /> 
                                             <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
-                                                <EllipsisMiddle suffixCount={6}>{file.filename || this.state.docIdentityProof.documentName}</EllipsisMiddle>
+                                                <EllipsisMiddle suffixCount={6}>{file.filename }</EllipsisMiddle>
                                                 <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
                                             </div> 
                                             <span className="icon md close c-pointer" onClick={() => this.deleteIdentityDocument(file)} />
@@ -661,7 +624,7 @@ class PaymentsView extends Component {
                                         <div className="docfile">
                                             <span className={`icon xl file mr-16`} /> 
                                             <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
-                                                <EllipsisMiddle suffixCount={6}>{file.filename || this.state.docAddressProof.documentName}</EllipsisMiddle>
+                                                <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
                                                 <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
                                             </div> 
                                             <span className="icon md close c-pointer" onClick={() => this.deleteAddressDocument(file)} />
@@ -695,7 +658,7 @@ class PaymentsView extends Component {
                                         <div className="docfile">
                                             <span className={`icon xl file mr-16`} /> 
                                             <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
-                                                <EllipsisMiddle suffixCount={6}>{file.filename || this.state.docAddressProof.documentName}</EllipsisMiddle>
+                                                <EllipsisMiddle suffixCount={6}>{file.filename }</EllipsisMiddle>
                                                 <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
                                             </div> 
                                             <span className="icon md close c-pointer" onClick={() => this.deleteBankProofDocument(file)} />
