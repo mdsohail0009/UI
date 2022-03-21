@@ -170,6 +170,7 @@ class AddressBook extends Component {
 
     }
     editAddressBook = () => {
+        debugger
         if (!this.state.isCheck) {
             this.setState({ alert: true })
             setTimeout(() => this.setState({ alert: false }), 2000)

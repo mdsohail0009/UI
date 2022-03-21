@@ -174,6 +174,7 @@ const FaitWithdrawal = ({
     });
     let recAddressDetails = await detailsAddress(val[0].id);
     if (recAddressDetails.ok) {
+      debugger
       bindEditableData(recAddressDetails.data);
     }
     setAddressVisible(true);
