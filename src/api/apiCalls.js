@@ -87,6 +87,12 @@ const getVerification = (AccountId, code) => {
 const downloadKyc = (memberId) => {
     return apiClient.get(ApiControllers.accounts + `DownloadFile/${memberId}`)
 }
+//https://routechanges.azurewebsites.net/api/v1/Master/UpdateSecurity
+
+
+const updateSecurity = (obj) => {
+    return apiClient.put(ApiControllers.master +`UpdateSecurity`,obj)
+}
 
 const encryptValue = (msg, key) => {
 
@@ -110,9 +116,7 @@ const encryptValue = (msg, key) => {
 }
 
 //https://routechanges.azurewebsites.net/api/v1/Master/UpdateSecurity
-const updateSecurity = (obj) => {
-    return apiClient.put(ApiControllers.master + "UpdateSecurity", obj)
-}
+
 let apicalls = {
     getportfolio, getCryptos, getMember, sumsubacesstoken, updateKyc, sumsubacesstokennew, sumsublivenessacesstoken, trackEvent, sellMemberCrypto, convertLocalLang, getIBANData,
     getdshKpis, getdshcumulativePnl, getAssetNetwroth, getAssetAllowcation, getprofits, getdailypnl, getCode, getVerification, getIpRegistery, encryptValue, downloadKyc,updateSecurity

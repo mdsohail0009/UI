@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Switch, Drawer } from "antd";
+import { Typography, Switch, Drawer,message,Button } from "antd";
 import Translate from "react-translate-component";
 import Changepassword from "../../components/changepassword";
 import { connect } from "react-redux";
@@ -11,12 +11,13 @@ import updateSecurity from "../../api/apiCalls"
 
 const Security = ({ userConfig, userProfileInfo }) => {
   const [isChangepassword, setisChangepassword] = useState(false);
-
+const [state,setState]=useState(false)
   const showDrawer = () => {
     setisChangepassword(true);
     store.dispatch(updatechange());
   };
   useEffect(() => {
+    debugger
     securityTrack();
   }, []);
   const securityTrack = () => {
@@ -36,8 +37,10 @@ const Security = ({ userConfig, userProfileInfo }) => {
     setisChangepassword(false);
   };
   const enableDisable2fa = (status) => {
+    debugger
     var url = "";
     if (status) {
+      setState({status:true})
       url =
         process.env.REACT_APP_AUTHORITY +
         "/account/login?returnUrl=/manage/EnableAuthenticator";
@@ -48,6 +51,42 @@ const Security = ({ userConfig, userProfileInfo }) => {
     }
     window.open(url, "_self");
   };
+
+const handleInputChange=(e,type)=>{
+  const target = e.target.value;
+if(type=="2FA"){
+  debugger
+  console.log(state)
+  if(state){
+   
+    console.log("helo",target)
+    updateSecurity()
+  }else{
+    message.destroy();
+    message.warning({
+      content: "Please enable 2FA",
+      className: "custom-msg"
+    });
+    // value
+  }
+}
+}
+
+const saveDetails=async()=>{
+  debugger
+  let obj={
+    "MemberId":"d3219877-fcbe-4d74-8109-34a304bea85f",
+    "Withdrawverification": "true",
+    "IsPhoneVerified": "false",
+    "TwoFactorEnabled":"false"
+}
+let response = await updateSecurity(obj);
+if(response.ok){
+  console.log("submited")
+}else{
+  console.log("please select 2 boxes")
+}
+}
 
   const withdrawVerification=(values)=>{
       
@@ -191,11 +230,22 @@ const Security = ({ userConfig, userProfileInfo }) => {
           component={Title}
           className="basicinfo mb-0"
         />
+        <Translate
+         content="withdraw_verification_options"
+          component={Paragraph}
+          className="basic-decs"
+        />
         <ul className="user-list pl-0">
           <li className="profileinfo">
             <div className="profile-block" >
               <label className="text-center custom-checkbox" >
-                <input name="isCheck" type="checkbox" />
+              <input
+              name="isCheck"
+              type="checkbox"
+              checked="isChecked"
+              onChange={(e) => handleInputChange(e,"2FA")}
+              className="grid_check_box"
+            />
                 <span>{" "}</span>
               </label>
               <br></br>
@@ -208,7 +258,13 @@ const Security = ({ userConfig, userProfileInfo }) => {
                 />
               </label>
               <label className="text-center custom-checkbox">
-                <input name="isCheck" type="checkbox" />
+                <input
+              name="isCheck"
+              type="checkbox"
+              checked="isChecked"
+              onChange={(e) => handleInputChange(e,"Phone verification")}
+              className="grid_check_box"
+            />
                 <span></span>{" "}
               </label>
               <label className="mb-0 ml-8 fs-14 text-white fw-200 " >
@@ -220,7 +276,13 @@ const Security = ({ userConfig, userProfileInfo }) => {
               </label>
               
               <label className="text-center custom-checkbox" style={{paddingLeft:60}}>
-                <input name="isCheck" type="checkbox" />
+              <input
+              name="isCheck"
+              type="checkbox"
+              checked="isChecked"
+              onChange={(e) => handleInputChange(e,"Email verification")}
+              className="grid_check_box"
+            />
                 <span></span>{" "}
               </label>
               <label className="mb-0 ml-8 fs-14 text-white fw-200">
@@ -232,7 +294,13 @@ const Security = ({ userConfig, userProfileInfo }) => {
               </label>
             </div>
           </li>
+         
         </ul>
+        <Button className="pop-btn px-36" onClick={() => saveDetails()} >
+          save
+        </Button>
+
+      
       </div>
     </>
   );
