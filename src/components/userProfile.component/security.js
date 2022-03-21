@@ -8,7 +8,6 @@ import { store } from "../../store";
 import {success,warning,error} from "../../utils/messages";
 import Moment from "react-moment";
 import apiCalls from "../../api/apiCalls";
-// import updateSecurity from "../../api/apiCalls"
 
 const Security = ({ userConfig, userProfileInfo,userProfile,fetchWithdrawVerifyObj },props) => {
   const [isChangepassword, setisChangepassword] = useState(false);
@@ -86,35 +85,17 @@ const saveDetails=async()=>{
     "IsPhoneVerified": phone,
     "TwoFactorEnabled":factor
 }
-// props.fetchWithdrawVerfyObj(obj);
+
 const response = await apiCalls.updateSecurity(obj);
 if(email&&phone&&factor){
-    warning("Please select only two checkboxes")
-    // message.destroy();
-    // message.warning({
-    //   content: "Please select any two checkboxes",
-    //   className: "custom-msg"
-    // });  
+    warning("Please select only two checkboxes") 
 }
 else if(email&&phone||email&&factor||phone&&factor){
 if(response.ok){
   fetchWithdrawVerifyObj(obj);
-  success("Data saved successfully")
-//   message.destroy();
-//     message.success({
-//         content: "Data saved successfully",
-//         className: "custom-msg",
-//         duration: 1
-//     });
-    
+  success("Data saved successfully") 
 }else{
     error(response.data)
-//   message.destroy();
-//   message.error({
-//       content: response.data,
-//       className: 'custom-msg',
-//       duration: 0.5
-//     });
 }
 }
 else{
@@ -126,9 +107,6 @@ else{
 }
 }
 
-  // const withdrawVerification=(values)=>{
-      
-  // }
   const { Title, Paragraph } = Typography;
   return (
     <>
