@@ -1,7 +1,7 @@
 
 const UPDATE_CHANGE = "updatechange";
 const CLEARVALUES="clearvalues";
-const WITHDRAWVERIFYOBJ="withdrawverifyobj"
+const WITHDRAWVERIFYOBJ="withdrawVerifyObj"
 const updatechange = (payload) => {
     return {
         type: UPDATE_CHANGE,
@@ -14,7 +14,7 @@ const clearvalues=(payload)=>{
         payload
     }
 }
-const withdrawverifyobj=(payload)=>{
+const withdrawVerifyObj=(payload)=>{
     return{
         type:WITHDRAWVERIFYOBJ,
         payload
@@ -43,4 +43,4 @@ const UserprofileReducer = (state = initialState, action) => {
 }
 
 export default UserprofileReducer;
-export { updatechange,withdrawverifyobj }
+export { updatechange,withdrawVerifyObj }

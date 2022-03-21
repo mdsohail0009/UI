@@ -3,8 +3,9 @@ import { Typography, Switch, Drawer,message,Button,Checkbox } from "antd";
 import Translate from "react-translate-component";
 import Changepassword from "../../components/changepassword";
 import { connect } from "react-redux";
-import { updatechange,withdrawverifyobj } from "../../reducers/UserprofileReducer";
+import { updatechange,withdrawVerifyObj } from "../../reducers/UserprofileReducer";
 import { store } from "../../store";
+import {success,warning,error} from "../../utils/messages";
 import Moment from "react-moment";
 import apiCalls from "../../api/apiCalls";
 // import updateSecurity from "../../api/apiCalls"
@@ -23,10 +24,10 @@ const [email,setEmail]=useState(false)
   useEffect(() => {
     debugger
     securityTrack();
-    setFactor(userProfile.withdrawverifyobj?.TwoFactorEnabled)
-    setPhone(userProfile.withdrawverifyobj?.IsPhoneVerified)
-    setEmail(userProfile.withdrawverifyobj?.Withdrawverification)
-    // console.log(userProfile?.withdrawverifyobj)
+    setFactor(userProfile.withdrawVerifyObj?.TwoFactorEnabled)
+    setPhone(userProfile.withdrawVerifyObj?.IsPhoneVerified)
+    setEmail(userProfile.withdrawVerifyObj?.Withdrawverification)
+     console.log(userProfile.withdrawVerifyObj)
   }, []);
   const securityTrack = () => {
     apiCalls.trackEvent({
@@ -60,7 +61,7 @@ const [email,setEmail]=useState(false)
     window.open(url, "_self");
   };
 
-// const handleInputChange=(e,type)=>{
+ const handleInputChange=(e,type)=>{
 //   debugger
 //   if(type=="2FA"){
 //       setFactor(e.target.checked);
@@ -74,38 +75,49 @@ const [email,setEmail]=useState(false)
 //     }
 //   console.log(checked)
 // }
-// }
+}
 const saveDetails=async()=>{
   debugger
 
   let obj={
-    "MemberId":"d3219877-fcbe-4d74-8109-34a304bea85f",
+   // "MemberId":"d3219877-fcbe-4d74-8109-34a304bea85f",
+    "MemberId": userConfig.id,
     "Withdrawverification": email,
     "IsPhoneVerified": phone,
     "TwoFactorEnabled":factor
 }
 // props.fetchWithdrawVerfyObj(obj);
 const response = await apiCalls.updateSecurity(obj);
-
-if(email&&phone||email&&factor||phone&&factor){
+if(email&&phone&&factor){
+    warning("Please select only two checkboxes")
+    // message.destroy();
+    // message.warning({
+    //   content: "Please select any two checkboxes",
+    //   className: "custom-msg"
+    // });  
+}
+else if(email&&phone||email&&factor||phone&&factor){
 if(response.ok){
   fetchWithdrawVerifyObj(obj);
-  message.destroy();
-    message.success({
-        content: "Data saved successfully",
-        className: "custom-msg",
-        duration: 1
-    });
+  success("Data saved successfully")
+//   message.destroy();
+//     message.success({
+//         content: "Data saved successfully",
+//         className: "custom-msg",
+//         duration: 1
+//     });
     
 }else{
-  message.destroy();
-  message.error({
-      content: response.data,
-      className: 'custom-msg',
-      duration: 0.5
-    });
+    error(response.data)
+//   message.destroy();
+//   message.error({
+//       content: response.data,
+//       className: 'custom-msg',
+//       duration: 0.5
+//     });
 }
-}else{
+}
+else{
   message.destroy();
   message.warning({
     content: "Please select any two checkboxes",
@@ -277,13 +289,14 @@ if(response.ok){
                     className="ant-custumcheck c-pointer"
                       type="checkbox"
                       handleChange={
-                        (checked) => this.handleInputChange(checked)
+                        (checked) => handleInputChange(checked)
                         // console.log("PLease select enable")
                         }
                       onCheked={factor}
                       onChange={({ currentTarget: { checked } }) => {
                         setFactor(checked ? true : false );
                       }}
+                      defaultChecked={(userProfile.withdrawVerifyObj?.TwoFactorEnabled) || false}
                     />
                 <span>{" "}</span>
               </label>
@@ -301,11 +314,13 @@ if(response.ok){
              <input
                     className="ant-custumcheck c-pointer"
                       type="checkbox"
-                      handleChange={(checked) => this.handleInputChange(checked)}
+                      handleChange={(checked) => handleInputChange(checked)}
                       onCheked={phone}
                       onChange={({ currentTarget: { checked } }) => {
                         setPhone(checked ? true : false );
                       }}
+                      defaultChecked={(userProfile.withdrawVerifyObj?.IsPhoneVerified) || false}
+
                     />
                 <span></span>{" "}
               </label>
@@ -322,11 +337,13 @@ if(response.ok){
               <input
                     className="ant-custumcheck c-pointer"
                       type="checkbox"
-                      handleChange={(checked) => this.handleInputChange(checked)}
+                      handleChange={(checked) => handleInputChange(checked)}
                       onCheked={email}
                       onChange={({ currentTarget: { checked } }) => {
                         setEmail(checked ? true : false );
                       }}
+                      defaultChecked={(userProfile.withdrawVerifyObj?.Withdrawverification) || false}
+
                     />
                 <span></span>{" "}
               </label>
@@ -359,7 +376,7 @@ const connectStateToProps = ({ userConfig, userProfile }) => {
 const connectDispatchToProps = (dispatch) => {
   return {
     fetchWithdrawVerifyObj:(obj)=>{
-      dispatch(withdrawverifyobj(obj))
+      dispatch(withdrawVerifyObj(obj))
     },
     dispatch
   };
