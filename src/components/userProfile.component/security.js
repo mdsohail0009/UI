@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Switch, Drawer,message,Button } from "antd";
+import { Typography, Switch, Drawer,message,Button,Checkbox } from "antd";
 import Translate from "react-translate-component";
 import Changepassword from "../../components/changepassword";
 import { connect } from "react-redux";
-import { updatechange } from "../../reducers/UserprofileReducer";
+import { updatechange,withdrawverifyobj } from "../../reducers/UserprofileReducer";
 import { store } from "../../store";
 import Moment from "react-moment";
 import apiCalls from "../../api/apiCalls";
-import updateSecurity from "../../api/apiCalls"
+// import updateSecurity from "../../api/apiCalls"
 
-const Security = ({ userConfig, userProfileInfo }) => {
+const Security = ({ userConfig, userProfileInfo,userProfile,fetchWithdrawVerifyObj },props) => {
   const [isChangepassword, setisChangepassword] = useState(false);
-const [state,setState]=useState(false)
+// const [state,setState]=useState({status:false});
+// const [checked,setChecked]=useState(false)
+const [factor,setFactor]=useState(false)
+const [phone,setPhone]=useState(false)
+const [email,setEmail]=useState(false)
   const showDrawer = () => {
     setisChangepassword(true);
     store.dispatch(updatechange());
@@ -19,6 +23,10 @@ const [state,setState]=useState(false)
   useEffect(() => {
     debugger
     securityTrack();
+    setFactor(userProfile.withdrawverifyobj?.TwoFactorEnabled)
+    setPhone(userProfile.withdrawverifyobj?.IsPhoneVerified)
+    setEmail(userProfile.withdrawverifyobj?.Withdrawverification)
+    // console.log(userProfile?.withdrawverifyobj)
   }, []);
   const securityTrack = () => {
     apiCalls.trackEvent({
@@ -40,7 +48,7 @@ const [state,setState]=useState(false)
     debugger
     var url = "";
     if (status) {
-      setState({status:true})
+      // setState({status:true})
       url =
         process.env.REACT_APP_AUTHORITY +
         "/account/login?returnUrl=/manage/EnableAuthenticator";
@@ -52,45 +60,63 @@ const [state,setState]=useState(false)
     window.open(url, "_self");
   };
 
-const handleInputChange=(e,type)=>{
-  const target = e.target.value;
-if(type=="2FA"){
-  debugger
-  console.log(state)
-  if(state){
-   
-    console.log("helo",target)
-    updateSecurity()
-  }else{
-    message.destroy();
-    message.warning({
-      content: "Please enable 2FA",
-      className: "custom-msg"
-    });
-    // value
-  }
-}
-}
-
+// const handleInputChange=(e,type)=>{
+//   debugger
+//   if(type=="2FA"){
+//       setFactor(e.target.checked);
+//     }{
+      // message.destroy();
+      // message.warning({
+      //   content: "Please enable 2fa",
+      //   className: "custom-msg"
+      // });
+//       setFactor(e.target.checked=false);
+//     }
+//   console.log(checked)
+// }
+// }
 const saveDetails=async()=>{
   debugger
+
   let obj={
     "MemberId":"d3219877-fcbe-4d74-8109-34a304bea85f",
-    "Withdrawverification": "true",
-    "IsPhoneVerified": "false",
-    "TwoFactorEnabled":"false"
+    "Withdrawverification": email,
+    "IsPhoneVerified": phone,
+    "TwoFactorEnabled":factor
 }
-let response = await updateSecurity(obj);
+// props.fetchWithdrawVerfyObj(obj);
+const response = await apiCalls.updateSecurity(obj);
+
+if(email&&phone||email&&factor||phone&&factor){
 if(response.ok){
-  console.log("submited")
+  fetchWithdrawVerifyObj(obj);
+  message.destroy();
+    message.success({
+        content: "Data saved successfully",
+        className: "custom-msg",
+        duration: 1
+    });
+    
 }else{
-  console.log("please select 2 boxes")
+  message.destroy();
+  message.error({
+      content: response.data,
+      className: 'custom-msg',
+      duration: 0.5
+    });
+}
+}else{
+  message.destroy();
+  message.warning({
+    content: "Please select any two checkboxes",
+    className: "custom-msg"
+  });
 }
 }
 
-  const withdrawVerification=(values)=>{
+  // const withdrawVerification=(values)=>{
       
-  }
+  // }
   const { Title, Paragraph } = Typography;
   return (
     <>
@@ -239,13 +265,26 @@ if(response.ok){
           <li className="profileinfo">
             <div className="profile-block" >
               <label className="text-center custom-checkbox" >
-              <input
+              {/* <input
               name="isCheck"
               type="checkbox"
-              checked="isChecked"
-              onChange={(e) => handleInputChange(e,"2FA")}
+              onCheked={factor}
+               onChange={(e) => handleInputChange(e,"2FA")}
+             
               className="grid_check_box"
-            />
+            /> */}
+            <input
+                    className="ant-custumcheck c-pointer"
+                      type="checkbox"
+                      handleChange={
+                        (checked) => this.handleInputChange(checked)
+                        // console.log("PLease select enable")
+                        }
+                      onCheked={factor}
+                      onChange={({ currentTarget: { checked } }) => {
+                        setFactor(checked ? true : false );
+                      }}
+                    />
                 <span>{" "}</span>
               </label>
               <br></br>
@@ -258,13 +297,16 @@ if(response.ok){
                 />
               </label>
               <label className="text-center custom-checkbox">
-                <input
-              name="isCheck"
-              type="checkbox"
-              checked="isChecked"
-              onChange={(e) => handleInputChange(e,"Phone verification")}
-              className="grid_check_box"
-            />
+            
+             <input
+                    className="ant-custumcheck c-pointer"
+                      type="checkbox"
+                      handleChange={(checked) => this.handleInputChange(checked)}
+                      onCheked={phone}
+                      onChange={({ currentTarget: { checked } }) => {
+                        setPhone(checked ? true : false );
+                      }}
+                    />
                 <span></span>{" "}
               </label>
               <label className="mb-0 ml-8 fs-14 text-white fw-200 " >
@@ -276,13 +318,16 @@ if(response.ok){
               </label>
               
               <label className="text-center custom-checkbox" style={{paddingLeft:60}}>
+             
               <input
-              name="isCheck"
-              type="checkbox"
-              checked="isChecked"
-              onChange={(e) => handleInputChange(e,"Email verification")}
-              className="grid_check_box"
-            />
+                    className="ant-custumcheck c-pointer"
+                      type="checkbox"
+                      handleChange={(checked) => this.handleInputChange(checked)}
+                      onCheked={email}
+                      onChange={({ currentTarget: { checked } }) => {
+                        setEmail(checked ? true : false );
+                      }}
+                    />
                 <span></span>{" "}
               </label>
               <label className="mb-0 ml-8 fs-14 text-white fw-200">
@@ -292,20 +337,31 @@ if(response.ok){
                   className="mb-0 profile-label"
                 />
               </label>
+              <div className="text-center" style={{ flexGrow: 2,marginTop:"-20px",marginLeft:"6cm" }}>
+                <Button className="pop-btn px-36" onClick={() => saveDetails()} >
+                  save
+                </Button>
+              </div>
             </div>
           </li>
          
         </ul>
-        <Button className="pop-btn px-36" onClick={() => saveDetails()} >
-          save
-        </Button>
-
-      
+       
       </div>
     </>
   );
 };
-const connectStateToProps = ({ userConfig }) => {
-  return { userConfig: userConfig.userProfileInfo };
+const connectStateToProps = ({ userConfig, userProfile }) => {
+  return { userConfig: userConfig.userProfileInfo, userProfile
+    
+   };
 };
-export default connect(connectStateToProps)(Security);
+const connectDispatchToProps = (dispatch) => {
+  return {
+    fetchWithdrawVerifyObj:(obj)=>{
+      dispatch(withdrawverifyobj(obj))
+    },
+    dispatch
+  };
+};
+export default connect(connectStateToProps,connectDispatchToProps)(Security);

@@ -91,7 +91,7 @@ const downloadKyc = (memberId) => {
 
 
 const updateSecurity = (obj) => {
-    return apiClient.put(ApiControllers.master +`UpdateSecurity`,obj)
+    return apiClient.put(ApiControllers.master +"UpdateSecurity",obj)
 }
 
 const encryptValue = (msg, key) => {
