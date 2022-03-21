@@ -497,5 +497,8 @@ export default {
   you_are_sending: 'You are sending',
   fees: 'Fees',
   you_receive: 'You will receive',
-  company_name:'Company Name'
+  company_name:'Company Name',
+  withdraw_verification:'Withdraw Verification',
+  Phone_verification:'Phone Verification',
+  Email_verification:'Email Verification',
 }

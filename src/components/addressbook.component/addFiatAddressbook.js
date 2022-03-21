@@ -9,6 +9,7 @@ import { saveAddress, favouriteNameCheck, getAddress } from './api';
 import Loader from '../../Shared/loader';
 import apiCalls from '../../api/apiCalls';
 import { validateContentRule } from '../../utils/custom.validator'
+import apicalls from '../../api/apiCalls';
 
 const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, userProfileInfo, trackAuditLogData }) => {
     const [form] = Form.useForm();
@@ -54,6 +55,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
         values['info'] = JSON.stringify(trackAuditLogData);
+        //values['country']=userConfig.country;
         let Id = '00000000-0000-0000-0000-000000000000';
         let favaddrId = addressBookReducer?.selectedRowData ? addressBookReducer?.selectedRowData?.id : Id;
         let namecheck = values.favouriteName.trim();
@@ -73,6 +75,9 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
             saveObj.beneficiaryAccountName = apiCalls.encryptValue(saveObj.beneficiaryAccountName, userConfig.sk)
             saveObj.routingNumber = apiCalls.encryptValue(saveObj.routingNumber, userConfig.sk)
             saveObj.toWalletAddress = apiCalls.encryptValue(saveObj.toWalletAddress, userConfig.sk)
+            saveObj.country = values.country
+            saveObj.state=values.state
+            saveObj.zipCode=values.zipCode
             let response = await saveAddress(saveObj);
             if (response.ok) {
                 setBtnDisabled(false);
@@ -314,7 +319,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
-                        name="zipcode"
+                        name="zipCode"
                         label={<Translate content="zipcode" component={Form.label} />}
                         //required
                         // rules={[
