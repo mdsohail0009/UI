@@ -20,6 +20,7 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
   const [isResend, setIsResend] = useState(true);
   const [seconds, setSeconds] = useState("02:00");
   const [invalidcode, setInvalidCode] = useState("");
+  const[verifyData,setVerifyData]=useState({})
   const [validationText, setValidationText] = useState("");
   const [disable, setDisable] = useState(false);
   const [inputDisable, setInputDisable] = useState(true);
@@ -37,6 +38,7 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
 
   useEffect(() => {
     withdrawSummayTrack();
+    getVerifyData()
   }, []);
 
   const withdrawSummayTrack = () => {
@@ -117,9 +119,18 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
   const last4Digits = fullNumber.slice(-4);
   const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
 
+const getVerifyData=async()=>{
+  debugger
+  let response= await apiCalls.getVerificationFields(userConfig.id)
+  if(response.ok){
+    console.log(response.data)
+    setVerifyData(response.data)
+    console.log(verifyData)
+  }
+  
+}
+setTimeout(() =>console.log(verifyData),5000)
   const getOTP = async (val) => {
-
-
     let response = await apiCalls.getCode(userConfig.id, type);
     if (response.ok) {
       setButtonText('resendotp');
@@ -297,6 +308,11 @@ const WithdrawalFiatSummary = ({ sendReceive, userConfig, changeStep, dispatch, 
             disabled={inputDisable}
           />
         </Form.Item>
+
+     
+
+
+          
         <Button
           //disabled={isLoding}
           size="large"

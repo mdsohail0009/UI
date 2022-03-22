@@ -80,6 +80,20 @@ const getCode = (AccountId, isResendOTP) => {
     return apiClient.get(ApiControllers.master + `SendOTP/${AccountId}/${isResendOTP}`);
 
 }
+
+//https://routechanges.azurewebsites.net/api/v1/DepositeWithdraw/Withdraw/Fiat/Confirm
+
+const getConfirmData=()=>{
+    return apiClient.get(ApiControllers.depositWithdraw + `Withdraw/Fiat/Confirm`);
+}
+
+
+
+//https://routechanges.azurewebsites.net/api/v1/Master/SendEmailOTP/{AccountId}/{type}--parameters same like Phone sendotp code
+
+const emailOTP=(AccountId, isResendOTP)=>{
+    return apiClient.get(ApiControllers.master + `SendEmailOTP/${AccountId}/${isResendOTP}`);
+}
 const getVerification = (AccountId, code) => {
     return apiClient.get(ApiControllers.master + `OTPVerification/${AccountId}/${code}`)
 }
@@ -92,6 +106,11 @@ const downloadKyc = (memberId) => {
 
 const updateSecurity = (obj) => {
     return apiClient.put(ApiControllers.master +"UpdateSecurity",obj)
+}
+//https://routechanges.azurewebsites.net/api/v1/Master/Verificationfields/{memberId}
+
+const getVerificationFields=(memberId)=>{
+    return apiClient.get(ApiControllers.master +`Verificationfields/${memberId}`)
 }
 
 const encryptValue = (msg, key) => {
@@ -119,6 +138,6 @@ const encryptValue = (msg, key) => {
 
 let apicalls = {
     getportfolio, getCryptos, getMember, sumsubacesstoken, updateKyc, sumsubacesstokennew, sumsublivenessacesstoken, trackEvent, sellMemberCrypto, convertLocalLang, getIBANData,
-    getdshKpis, getdshcumulativePnl, getAssetNetwroth, getAssetAllowcation, getprofits, getdailypnl, getCode, getVerification, getIpRegistery, encryptValue, downloadKyc,updateSecurity
+    getdshKpis, getdshcumulativePnl,getConfirmData, getAssetNetwroth, getAssetAllowcation, getprofits, getdailypnl, getCode,emailOTP, getVerification,getVerificationFields, getIpRegistery, encryptValue, downloadKyc,updateSecurity
 }
 export default apicalls
