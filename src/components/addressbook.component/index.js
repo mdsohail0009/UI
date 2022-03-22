@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, Badge } from 'antd'
+import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert } from 'antd'
 import { setAddressStep, rejectCoin, fetchUsersIdUpdate, clearValues, clearCryptoValues } from '../../reducers/addressBookReducer';
 import Translate from 'react-translate-component';
 import { processSteps as config } from './config';
@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import apiCalls from '../../api/apiCalls';
 
+const { Title, Paragraph, Text } = Typography;
 
 class AddressBook extends Component {
     constructor(props) {
@@ -73,7 +74,7 @@ class AddressBook extends Component {
         },
         {
             field: "", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 250,
-            customCell: (props) => (<td >{props.dataItem.addressLable}<Badge size='small' className='ml-8' count="1st Party" /></td>)
+            customCell: (props) => (<td >{props.dataItem.addressLable}<Text className='file-label ml-8 fs-12'>1st Party</Text></td>)
         },
         { field: "coin", title: apiCalls.convertLocalLang('Coin'), filter: true, width: 120 },
         { field: "address", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
@@ -239,7 +240,6 @@ class AddressBook extends Component {
     }
     render() {
         const { cryptoFiat, gridUrlCrypto, gridUrlFiat, memberId, btnDisabled } = this.state;
-        const { Title, Paragraph, Text } = Typography;
 
         return (
             <>
