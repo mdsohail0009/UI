@@ -491,5 +491,6 @@ export default {
   asset_directory: '资产目录',
   you_are_sending: '您正在发送',
   fees: '费用',
-  you_receive: '您将收到'
+  you_receive: '您将收到',
+  address_type: 'Address Type'
 }
