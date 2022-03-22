@@ -566,7 +566,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .user-list .ant-tabs-ink-bar {background: transparent !important;}
 .addressbook_tabs .ant-tabs-nav{width:auto !important}
 .addressbook_tabs .ant-tabs-tab.ant-tabs-tab-active,.addressbook_tabs .ant-tabs-tab:hover {background: transparent !important;font-weight: 600;  padding: 12px !important; color: var(--textDark);}
-.file-label{border: 1px solid var(--borderLight);border-radius: 6px;padding: 6px 8px;color: var(--textYellow);cursor: pointer;background-color: var(--bgDarkGrey-95);}
+.file-label{border: 1px solid var(--borderLight);border-radius: 6px;padding: 2px 8px;color: var(--textYellow);cursor: pointer;background-color: var(--bgDarkGrey-95);}
 .wdr-summary{display: flex; justify-content: space-around; align-items: center;}
 .selectcustom-input .ant-select:not(.ant-select-customize-input) .ant-select-selector{background-color: transparent;border: transparent;cursor: pointer;}
 .customicon{position: absolute; left: 0px;top: 4px; margin-left: 67px;}
@@ -629,7 +629,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .accordian .ant-collapse-item.ant-collapse-item-active .downangle{background-position: -329px 0;}
 .accordian .ant-collapse-content-box{padding: 20px;background-color: var(--bgDarkGrey);border-radius: 0 0 24px 24px;border-bottom: 1px solid var(--bgOrion);}
 .upload{border-radius: 30px !important;background-color: var(--bgGloom) !important;border-color: var(--borderGrey) !important;}
-.upload .ant-upload{padding: 36px 0 !important;}
+.upload .ant-upload{padding: 30px 0 !important;}
 .upload .ant-upload-text{font-weight: 600;color: var(--textWhite30) !important;}
 .docfile{background-color:var(--bgGloom);border-radius: 20px;padding: 16px;display: flex;align-items: center;margin: 12px 16px 0 0;flex: 1 0 240px;width: 200px;}
 .docdetails{flex: 1; margin-right: 16px;}

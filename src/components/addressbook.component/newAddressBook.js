@@ -217,18 +217,20 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                         rules={[
                             { required: true, message: apiCalls.convertLocalLang('is_required') }
                         ]} >
-                        <TextArea className='cust-input' rows={4} maxLength={250}></TextArea>
+                        <TextArea className='cust-input' rows={3} maxLength={250}></TextArea>
                     </Form.Item>
-                    <p className='fs-18 fw-500 text-white-30'>Declaration Form</p>
+                    <div className='d-flex justify-content align-center'>
+                    <Text className='fs-18 fw-500 text-white-30'>Declaration Form</Text>
                     <Tooltip title="Click here to download file"><Text className='file-label'>Signed Document.pdf</Text></Tooltip>
+                    </div>
                     <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props) }}>
-                        <p className="ant-upload-drag-icon">
+                        <p className="ant-upload-drag-icon mb-16">
                             <span className="icon xxxl doc-upload" />
                         </p>
                         <p className="ant-upload-text fs-18 mb-0">Upload your signed document here</p>
-                        <p className="ant-upload-hint text-secondary fs-12">
+                        {/* <p className="ant-upload-hint text-secondary fs-12">
                             PDF files are allowed
-                        </p>
+                        </p> */}
                     </Dragger>
                     <div className="docfile mr-0">
                         <span className={`icon xl file mr-16`} />
