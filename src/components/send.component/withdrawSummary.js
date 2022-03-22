@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Typography, Button, Alert, message, Form, Input } from "antd";
+import { Typography, Button, Alert, message, Form, Input, Tooltip } from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
@@ -330,6 +330,47 @@ class WithdrawSummary extends Component {
 
                 style={{ width: '100%' }}
                 disabled={this.state.inputDisable}
+              />
+
+
+            </Form.Item>
+            <Text className="fs-14 mb-4 text-white d-block fw-200">Phone verification code *</Text>
+            <Form.Item
+              name="code"
+              label={<>
+                <Button type="text" onClick={this.getOTP} disabled={this.state.disable}>
+                  {btnList[this.state.buttonText]}
+                </Button>
+                <Tooltip placement="topRight" title="Haven't receive code?Request new code in 44 seconds. The code will expire after 30mins."><span className="icon md info mr-8" /></Tooltip>
+                </>
+              }
+              className="input-label otp-verify"
+              rules={[{ required: true, message: "Is required" }]}
+              help={<Text className="fs-12 text-white-30 fw-200">
+              Enter the 6 digit sent to 905***9290
+            </Text>}
+            >
+              <Input
+                type="text"
+                className="cust-input text-left"
+                placeholder="Phone verification code"
+                maxLength={6}
+                onKeyDown={(event) => {
+                  if (event.currentTarget.value.length > 5 && !(event.key == "Backspace" || event.key == "Delete")) {
+                    event.preventDefault();
+                  }
+                  else if (/^\d+$/.test(event.key)) {
+                    this.handleOtp(event.currentTarget.value)
+                  }
+                  else if (event.key == "Backspace" || event.key == "Delete") {
+                  }
+                  else {
+                    event.preventDefault()
+                  }
+                }}
+
+                style={{ width: '100%' }}
+                //disabled={this.state.inputDisable}
               />
 
 
