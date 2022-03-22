@@ -9,6 +9,7 @@ import { saveAddress, favouriteNameCheck, getAddress } from './api';
 import Loader from '../../Shared/loader';
 import apiCalls from '../../api/apiCalls';
 import { validateContentRule } from '../../utils/custom.validator'
+import apicalls from '../../api/apiCalls';
 
 const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, userProfileInfo, trackAuditLogData }) => {
     const [form] = Form.useForm();
@@ -54,11 +55,13 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
         values['info'] = JSON.stringify(trackAuditLogData);
+        //values['country']=userConfig.country;
         let Id = '00000000-0000-0000-0000-000000000000';
         let favaddrId = addressBookReducer?.selectedRowData ? addressBookReducer?.selectedRowData?.id : Id;
         let namecheck = values.favouriteName.trim();
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'fiat', favaddrId);
         if (responsecheck.data != null) {
+            debugger
             setIsLoading(false);
             setBtnDisabled(false);
             useDivRef.current.scrollIntoView()
@@ -73,8 +76,12 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
             saveObj.beneficiaryAccountName = apiCalls.encryptValue(saveObj.beneficiaryAccountName, userConfig.sk)
             saveObj.routingNumber = apiCalls.encryptValue(saveObj.routingNumber, userConfig.sk)
             saveObj.toWalletAddress = apiCalls.encryptValue(saveObj.toWalletAddress, userConfig.sk)
+            saveObj.country =apiCalls.encryptValue(saveObj.country, userConfig.sk)
+            saveObj.state=apiCalls.encryptValue(saveObj.state, userConfig.sk)
+            saveObj.zipCode=apiCalls.encryptValue(saveObj.zipCode, userConfig.sk)
             let response = await saveAddress(saveObj);
             if (response.ok) {
+                debugger
                 setBtnDisabled(false);
                 setErrorMsg('')
                 useDivRef.current.scrollIntoView();
@@ -270,13 +277,77 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                         ]}>
                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
                     </Form.Item>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-24"
+                        name="country"
+                        label={<Translate content="Country" component={Form.label} />}
+                        //required
+                        // rules={[
+                        //     {
+                        //         required: true,
+                        //         message: apiCalls.convertLocalLang('is_required')
+                        //     },
+                        //     {
+                        //         whitespace: true,
+                        //         message: apiCalls.convertLocalLang('is_required')
+                        //     },
+                        //     {
+                        //         validator: validateContentRule
+                        //     }
+                        // ]}
+                        >
+                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Country')} />
+                    </Form.Item>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-24"
+                        name="state"
+                        label={<Translate content="state" component={Form.label} />}
+                        //required
+                        // rules={[
+                        //     {
+                        //         required: true,
+                        //         message: apiCalls.convertLocalLang('is_required')
+                        //     },
+                        //     {
+                        //         whitespace: true,
+                        //         message: apiCalls.convertLocalLang('is_required')
+                        //     },
+                        //     {
+                        //         validator: validateContentRule
+                        //     }
+                        // ]}
+                        >
+                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('state')} />
+                    </Form.Item>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-24"
+                        name="zipCode"
+                        label={<Translate content="zipcode" component={Form.label} />}
+                        //required
+                        // rules={[
+                        //     {
+                        //         required: true,
+                        //         message: apiCalls.convertLocalLang('is_required')
+                        //     },
+                        //     {
+                        //         whitespace: true,
+                        //         message: apiCalls.convertLocalLang('is_required')
+                        //     },
+                        //     {
+                        //         validator: validateContentRule
+                        //     }
+                        // ]}
+                        >
+                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('zipcode')} />
+                    </Form.Item>
+                    
                     <Form.Item className="mb-0 mt-16">
                         <Button disabled={isLoading}
                             htmlType="submit"
                             size="large"
                             block
                             className="pop-btn"
-                            disabled={btnDisabled}
+                            //disabled={btnDisabled}
                         >
                             {isLoading && <Spin indicator={antIcon} />}  <Translate content="Save_btn_text" />
                         </Button>
