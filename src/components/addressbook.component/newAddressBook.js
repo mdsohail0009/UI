@@ -28,19 +28,19 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 
 const LinkValue = (props) => {
     return (
-      <Translate
-        className="textpure-yellow text-underline c-pointer"
-        content={props.content}
-        component={Link}
-        onClick={() =>
-          window.open(
-            "https://www.iubenda.com/terms-and-conditions/42856099",
-            "_blank"
-          )
-        }
-      />
+        <Translate
+            className="textpure-yellow text-underline c-pointer"
+            content={props.content}
+            component={Link}
+            onClick={() =>
+                window.open(
+                    "https://www.iubenda.com/terms-and-conditions/42856099",
+                    "_blank"
+                )
+            }
+        />
     );
-  };
+};
 const link = <LinkValue content="terms_service" />;
 const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, rejectCoinWallet, InputFormValues, userProfileInfo, trackAuditLogData }) => {
     const [form] = Form.useForm();
@@ -220,8 +220,8 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                         <TextArea className='cust-input' rows={3} maxLength={250}></TextArea>
                     </Form.Item>
                     <div className='d-flex justify-content align-center'>
-                    <Text className='fs-18 fw-500 text-white-30'>Declaration Form</Text>
-                    <Tooltip title="Click here to download file"><Text className='file-label'>Signed Document.pdf</Text></Tooltip>
+                        <Text className='fs-18 fw-500 text-white-30'>Declaration Form</Text>
+                        <Tooltip title="Click here to download file"><Text className='file-label'>Signed Document.pdf</Text></Tooltip>
                     </div>
                     <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props) }}>
                         <p className="ant-upload-drag-icon mb-16">

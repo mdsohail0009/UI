@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert } from 'antd'
+import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, Badge } from 'antd'
 import { setAddressStep, rejectCoin, fetchUsersIdUpdate, clearValues, clearCryptoValues } from '../../reducers/addressBookReducer';
 import Translate from 'react-translate-component';
 import { processSteps as config } from './config';
@@ -71,7 +71,10 @@ class AddressBook extends Component {
                     onChange={(e) => this.handleInputChange(props, e)} />
                 <span></span> </label></td>)
         },
-        { field: "addressLable", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 250 },
+        {
+            field: "", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 250,
+            customCell: (props) => (<td >{props.dataItem.addressLable}<Badge size='small' className='ml-8' count="1st Party" /></td>)
+        },
         { field: "coin", title: apiCalls.convertLocalLang('Coin'), filter: true, width: 120 },
         { field: "address", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
         { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 100 }
@@ -242,18 +245,21 @@ class AddressBook extends Component {
             <>
 
                 <div className="box basic-info">
-                    <Title className="basicinfo mb-0"><Translate content="address_book" component={Text} className="basicinfo" /></Title>
-                    <Paragraph className="basic-decs mb-16"><Translate content="address_book_tag" component={Paragraph} className="basic-decs mb-16" /></Paragraph>
-
+                    <div className="d-flex mb-16 justify-content">
+                        <div>
+                            <Translate content="address_book" component={Text} className="basicinfo" />
+                            <Translate content="address_book_tag" component={Paragraph} className="basic-decs mb-16" />
+                        </div>
+                        <Text className='fs-18 text-white-50 fw-300'>How the document sign process?</Text>
+                    </div>
                     <div className="display-flex mb-16">
-                        <div className="">
-                            <Radio.Group
-                                defaultValue={1}
-                                onChange={this.handleWithdrawToggle}
-                                className="buysell-toggle mx-0" style={{ display: "inline-block" }}>
-                                <Translate content="withdrawCrypto" component={Radio.Button} value={1} className="buysell-toggle mx-0" />
-                                <Translate content="withdrawFiat" component={Radio.Button} value={2} className="buysell-toggle mx-0" />
-                            </Radio.Group></div>
+                        <Radio.Group
+                            defaultValue={1}
+                            onChange={this.handleWithdrawToggle}
+                            className="buysell-toggle mx-0" style={{ display: "inline-block" }}>
+                            <Translate content="withdrawCrypto" component={Radio.Button} value={1} className="buysell-toggle mx-0" />
+                            <Translate content="withdrawFiat" component={Radio.Button} value={2} className="buysell-toggle mx-0" />
+                        </Radio.Group>
                         <ul className="address-icons" style={{ listStyle: 'none', paddingLeft: 0, marginBottom: 0, display: 'flex' }}>
                             <li onClick={this.addAddressBook} className="mr-16">
                                 <Tooltip placement="topRight" title={<Translate content="add" />}>
