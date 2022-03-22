@@ -42,6 +42,14 @@ class Home extends Component {
                             } />
                     </div>)}
                 </Carousel> : ""}
+                {!this.props?.userConfig?.twofactorVerified && <div>
+                    <AlertConfirmation type="error" title={"Please enable 2FA"} showIcon description="Please enable 2Fa in Userprofile/Security"
+                        action={
+                            <Button size="small" type="text" onClick={() => this.props.history.push(`/userprofile`)}>
+                                Enable 2FA
+                            </Button>
+                        } />
+                </div>}
                 <Row justify="center mt-36">
                     <Col xs={24} md={12} xl={10}>
                         <div className="markets-panel mb-36">

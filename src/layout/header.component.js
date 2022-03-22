@@ -284,10 +284,14 @@ class Header extends Component {
     });
   };
   showDocRequestError() {
-    this.props.history.push("/docnotices");
+    if (this.props?.userConfig?.isDocsRequested)
+      this.props.history.push("/docnotices");
+    else if (!this.props.userConfig?.twofactorVerified) {
+      this.props.history.push("/enabletwofactor");
+    }
   }
   showBuyDrawer = () => {
-    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
+    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.userConfig?.twofactorVerified) {
       this.props.dispatch(setStep("step1"));
       this.setState({
         buyDrawer: true,
@@ -307,7 +311,7 @@ class Header extends Component {
     }
   };
   showSendDrawer = () => {
-    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
+    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.userConfig?.twofactorVerified) {
       this.props.dispatch(sendSetStep("step1"));
       this.setState({
         sendDrawer: true,
@@ -345,7 +349,7 @@ class Header extends Component {
     });
   };
   showSwapDrawer = () => {
-    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
+    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.userConfig?.twofactorVerified) {
       this.props.dispatch(swapSetStep("swapcoins"));
       this.setState({
         swapDrawer: true,
@@ -365,7 +369,7 @@ class Header extends Component {
     }
   };
   showBuyFiatDrawer = () => {
-    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
+    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.userConfig?.twofactorVerified) {
       this.props.dispatch(byFiatSetStep("step1"));
       this.props.dispatch(setWithdrawfiatenaable(false));
       this.setState({
