@@ -234,7 +234,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                     </Form.Item>
 
                     <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, please download the form. Be sure the information is accurate, complete and signed.</Text>
-                    <Tooltip title="Click here to download file"><Text className='file-label'>Declaration_From.pdf</Text></Tooltip>
+                    <Tooltip title="Click here to download file"><Text className='file-label' onClick={()=>window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
 
                     <Form.Item name={"file"} rules={[{
                         validator: (_, value) => {
