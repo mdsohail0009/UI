@@ -88,7 +88,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
             form.setFieldsValue({ ...response.data, toCoin: addressBookReducer?.selectedRowData?.coin });
             const fileInfo = response?.data?.documents?.details[0];
             if (fileInfo.path) {
-                setFile({ name: fileInfo?.documentName, size: fileInfo.remarks,response:[fileInfo.path] })
+                setFile({ name: fileInfo?.documentName, size: fileInfo.remarks, response: [fileInfo.path] })
             }
             setIsLoading(false)
         }
@@ -232,15 +232,15 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                         ]} >
                         <TextArea className='cust-input' rows={3} maxLength={250}></TextArea>
                     </Form.Item>
-                    <div className='d-flex justify-content align-center'>
-                        <Text className='fs-18 fw-500 text-white-30'>Declaration Form</Text>
-                        <Tooltip title="Click here to download file"><Text className='file-label'>Signed Document.pdf</Text></Tooltip>
-                    </div>
+
+                    <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, please download the form. Be sure the information is accurate, complete and signed.</Text>
+                    <Tooltip title="Click here to download file"><Text className='file-label'>Declaration_From.pdf</Text></Tooltip>
+
                     <Form.Item name={"file"} rules={[{
                         validator: (_, value) => {
                             if (file) {
                                 return Promise.resolve();
-                            }else{
+                            } else {
                                 return Promise.reject("Please upload file")
                             }
                         }

@@ -253,10 +253,10 @@ class AddressBook extends Component {
                 <div className="box basic-info">
                     <div className="d-flex mb-16 justify-content">
                         <div>
-                            <Translate content="address_book" component={Text} className="basicinfo" />
+                            <div><Translate content="address_book" component={Text} className="basicinfo" /><Text className='fs-14 text-yellow fw-400 ml-16'>(NOTE: Whitelisting of Crypto Address and Bank Account is required, please add below.)</Text></div>
                             <Translate content="address_book_tag" component={Paragraph} className="basic-decs mb-16" />
                         </div>
-                        <Text className='fs-18 text-white-50 fw-300'>How the document sign process?</Text>
+                        
                     </div>
                     <div className="display-flex mb-16">
                         <Radio.Group
