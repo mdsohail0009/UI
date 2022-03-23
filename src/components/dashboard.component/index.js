@@ -42,7 +42,7 @@ class Home extends Component {
                             } />
                     </div>)}
                 </Carousel> : ""}
-                {!this.props?.userConfig?.twofactorVerified && <div>
+                {!this.props?.userProfileInfo?.twofactorVerified && <div>
                     <AlertConfirmation type="error" title={"Please enable 2FA"} showIcon description="Please enable 2Fa in Userprofile/Security"
                         action={
                             <Button size="small" type="text" onClick={() => this.props.history.push(`/userprofile`)}>
