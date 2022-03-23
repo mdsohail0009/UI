@@ -47,7 +47,7 @@ class PaymentsView extends Component {
         isValidFile: true,
         PreviewFilePath: null,
         currency:null,
-         Currency:[]
+         Currency:[],
         }
         this.formRef = React.createRef();
         this.useDivRef = React.createRef();
@@ -294,7 +294,37 @@ class PaymentsView extends Component {
                     "remarks": null,
                     "status": null,
                     "state": null,
-                    "details": [  
+                    "details": [ {
+                        "documentId": "00000000-0000-0000-0000-000000000000",
+                        "documentName":`${name || this.state.docIdentityProof.documentName }`,
+                        "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
+                        "isChecked": true,
+                        "remarks": null,
+                        "state": null,
+                        "status": false,
+                         "Path":`${path || this.state.docIdentityProof.path}`,
+                        
+                       },
+                       {
+                        "documentId": "00000000-0000-0000-0000-000000000000",
+                        "documentName": `${name1 || this.state.docAddressProof.documentName }`,
+                        "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
+                        "isChecked": true,
+                        "remarks": null,
+                        "state": null,
+                        "status": false,
+                        "Path":`${path1 || this.state.docAddressProof.path}`
+                       },
+                       {
+                        "documentId": "00000000-0000-0000-0000-000000000000",
+                        "documentName": `${name2 || this.state.docAddressProof.documentName}`,
+                        "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
+                        "isChecked": true,
+                        "remarks": null,
+                        "state": null,
+                        "status": false,
+                        "Path":`${path2 || this.state.docAddressProof.path}`
+                       }
                                ]
                 },
             "info": "{\"Ip\":\"183.82.126.210\",\"Location\":{\"countryName\":\"India\",\"state\":\"Telangana\",\"city\":\"Hyderabad\",\"postal\":\"500034\",\"latitude\":17.41364,\"longitude\":78.44675},\"Browser\":\"Chrome\",\"DeviceType\":{\"name\":\"Desktop\",\"type\":\"desktop\",\"version\":\"Windows NT 10.0\"}}"
