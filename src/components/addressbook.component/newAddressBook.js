@@ -17,17 +17,6 @@ const { Option } = Select;
 const { TextArea } = Input;
 const { Dragger } = Upload;
 const { confirm } = Modal;
-const EllipsisMiddle = ({ suffixCount, children }) => {
-    const start = children.slice(0, children.length - suffixCount).trim();
-    const suffix = children.slice(-suffixCount).trim();
-    return (
-        <Text className="mb-0 fs-14 docname c-pointer d-block"
-            style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
-            {start}
-        </Text>
-    );
-};
-
 const LinkValue = (props) => {
     return (
         <Translate
@@ -266,7 +255,9 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                     {file != null && <div className="docfile mr-0">
                         <span className={`icon xl file mr-16`} />
                         <div className="docdetails c-pointer" onClick={() => docPreview()}>
-                            <EllipsisMiddle suffixCount={6}>{file.name}</EllipsisMiddle>
+                            <Text className="mb-0 fs-14 docname c-pointer d-block" style={{maxWidth: '100%'}}>
+                            {file.name}
+                            </Text>
                             <span className="fs-12 text-secondary">{bytesToSize(file.size)}</span>
                         </div>
                         <span className="icon md close c-pointer" onClick={() => confirm({
