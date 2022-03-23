@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Alert, Spin, message, Typography, Select, Upload, Tooltip, Checkbox } from 'antd';
+import { Form, Input, Button, Alert, Spin, message, Typography, Select, Upload, Tooltip, Checkbox, Modal } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { rejectCoin, setAddressStep, fetchAddressCrypto } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
@@ -10,11 +10,13 @@ import apiCalls from '../../api/apiCalls';
 import { validateContentRule } from '../../utils/custom.validator';
 import apicalls from "../../api/apiCalls";
 import { Link } from "react-router-dom";
+import { bytesToSize, getDocObj } from '../../utils/service';
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
 const { Dragger } = Upload;
+const { confirm } = Modal;
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
@@ -48,6 +50,9 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
     const [isLoading, setIsLoading] = useState(false);
     const [cryptoAddress, setCryptoAddress] = useState({});
     const [btnDisabled, setBtnDisabled] = useState(false);
+    const [file, setFile] = useState(null);
+    const [uploadPercentage, setUploadPercentage] = useState(0);
+    const [isUploading, setUploading] = useState(false);
     useEffect(() => {
         if (addressBookReducer?.cryptoValues) {
             form.setFieldsValue({
@@ -81,6 +86,10 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         if (response.ok) {
             setCryptoAddress(response.data)
             form.setFieldsValue({ ...response.data, toCoin: addressBookReducer?.selectedRowData?.coin });
+            const fileInfo = response?.data?.documents?.details[0];
+            if (fileInfo.path) {
+                setFile({ name: fileInfo?.documentName, size: fileInfo.remarks,response:[fileInfo.path] })
+            }
             setIsLoading(false)
         }
     }
@@ -107,6 +116,10 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
             let saveObj = Object.assign({}, values);
             saveObj.toWalletAddress = apiCalls.encryptValue(saveObj.toWalletAddress, userConfig.sk)
             saveObj.beneficiaryAccountName = apiCalls.encryptValue(saveObj.beneficiaryAccountName, userConfig.sk)
+            if (file) {
+                const obj = getDocObj(userConfig?.id, file.response[0], file.name, file.size, cryptoAddress?.documents?.id, cryptoAddress?.documents?.details[0].id)
+                saveObj["documents"] = obj;
+            }
             let response = await saveAddress(saveObj);
             if (response.ok) {
                 setBtnDisabled(false);
@@ -223,23 +236,45 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                         <Text className='fs-18 fw-500 text-white-30'>Declaration Form</Text>
                         <Tooltip title="Click here to download file"><Text className='file-label'>Signed Document.pdf</Text></Tooltip>
                     </div>
-                    <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props) }}>
-                        <p className="ant-upload-drag-icon mb-16">
-                            <span className="icon xxxl doc-upload" />
-                        </p>
-                        <p className="ant-upload-text fs-18 mb-0">Upload your signed document here</p>
-                        {/* <p className="ant-upload-hint text-secondary fs-12">
-                            PDF files are allowed
-                        </p> */}
-                    </Dragger>
-                    <div className="docfile mr-0">
+                    <Form.Item name={"file"} rules={[{
+                        validator: (_, value) => {
+                            if (file) {
+                                return Promise.resolve();
+                            }else{
+                                return Promise.reject("Please upload file")
+                            }
+                        }
+                    }]}>
+                        {<Dragger progress={{ percent: uploadPercentage }} accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { debugger }} onChange={({ file: res }) => {
+                            setUploading(true);
+                            if (res.status === "uploading") { setUploadPercentage(res.percent) }
+                            else if (res.status === "done") {
+                                setFile(res);
+                                setUploading(false);
+                            }
+
+                        }}>
+                            <p className="ant-upload-drag-icon mb-16">
+                                <span className="icon xxxl doc-upload" />
+                            </p>
+                            <p className="ant-upload-text fs-18 mb-0">Upload your signed document here</p>
+                        </Dragger>}
+                    </Form.Item>
+                    {isUploading && <div className="docfile mr-0">
+                        <Spin size='small' tip={uploadPercentage.toFixed(2) + " % completed"} />
+                    </div>}
+                    {file != null && <div className="docfile mr-0">
                         <span className={`icon xl file mr-16`} />
-                        <div className="docdetails c-pointer" onClick={() => this.docPreview()}>
-                            <EllipsisMiddle suffixCount={6}>Signed Document</EllipsisMiddle>
-                            <span className="fs-12 text-secondary">25 KB</span>
+                        <div className="docdetails c-pointer" onClick={() => docPreview()}>
+                            <EllipsisMiddle suffixCount={6}>{file.name}</EllipsisMiddle>
+                            <span className="fs-12 text-secondary">{bytesToSize(file.size)}</span>
                         </div>
-                        <span className="icon md close c-pointer" />
-                    </div>
+                        <span className="icon md close c-pointer" onClick={() => confirm({
+                            content: "Are you sure do you want to delete file?",
+                            title: "Delete File ?",
+                            onOk: () => { setFile(null); }
+                        })} />
+                    </div>}
                     <Form.Item
                         className="custom-forminput mt-36 agree"
                         name="isAgree"
