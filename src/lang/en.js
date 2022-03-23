@@ -497,5 +497,6 @@ export default {
   you_are_sending: 'You are sending',
   fees: 'Fees',
   you_receive: 'You will receive',
-  address_type: 'Address Type'
+  address_type: 'Address Type',
+  addressState:"Address State"
 }

@@ -176,8 +176,8 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                             bordered={false}
                             showArrow={true}
                         >
-                            <Option value="1st Party">1st Party</Option>
-                            <Option value="3rd Party">3rd Party</Option>
+                            <Option value="first_party">1st Party</Option>
+                            <Option value="third_party">3rd Party</Option>
                         </Select>
                     </Form.Item>
                     <Form.Item
@@ -212,7 +212,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                     </Form.Item>
                     <Form.Item
                         className="custom-label"
-                        name="toCoin"
+                        name="remarks"
                         label={<Translate content="remarks" component={Form.label} />}
                         rules={[
                             { required: true, message: apiCalls.convertLocalLang('is_required') }
@@ -242,7 +242,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                     </div>
                     <Form.Item
                         className="custom-forminput mt-36 agree"
-                        name="isAccept"
+                        name="isAgree"
                         valuePropName="checked"
                         rules={[
                             {

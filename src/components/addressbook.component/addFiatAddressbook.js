@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Typography, Input, Button, Alert, Spin, message } from 'antd';
+import { Form, Typography, Input, Button, Alert, Spin, message, Select,Checkbox,Tooltip,Upload } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -8,8 +8,39 @@ import WalletList from '../shared/walletList';
 import { saveAddress, favouriteNameCheck, getAddress } from './api';
 import Loader from '../../Shared/loader';
 import apiCalls from '../../api/apiCalls';
-import { validateContentRule } from '../../utils/custom.validator'
+import { validateContentRule } from '../../utils/custom.validator';
+import { Link } from "react-router-dom";
 
+const { Text, Paragraph } = Typography;
+const { Option } = Select;
+const { TextArea } = Input;
+const { Dragger } = Upload;
+const EllipsisMiddle = ({ suffixCount, children }) => {
+    const start = children.slice(0, children.length - suffixCount).trim();
+    const suffix = children.slice(-suffixCount).trim();
+    return (
+        <Text className="mb-0 fs-14 docname c-pointer d-block"
+            style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
+            {start}
+        </Text>
+    );
+};
+const LinkValue = (props) => {
+    return (
+        <Translate
+            className="textpure-yellow text-underline c-pointer"
+            content={props.content}
+            component={Link}
+            onClick={() =>
+                window.open(
+                    "https://www.iubenda.com/terms-and-conditions/42856099",
+                    "_blank"
+                )
+            }
+        />
+    );
+};
+const link = <LinkValue content="terms_service" />;
 const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, userProfileInfo, trackAuditLogData }) => {
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
@@ -153,6 +184,25 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                         <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('Enteraddress')} />
                     </Form.Item>
                     <Form.Item
+                        className="custom-label"
+                        name="addressType"
+                        label={<Translate content="address_type" component={Form.label} />}
+                        rules={[
+                            { required: true, message: apiCalls.convertLocalLang('is_required') }
+                        ]} >
+                        <Select
+                            className="cust-input mb-0"
+                            placeholder="Select Address Type"
+                            //onChange={(e) => this.handleCurrencyChange(e)}
+                            dropdownClassName='select-drpdwn'
+                            bordered={false}
+                            showArrow={true}
+                        >
+                            <Option value="first_party">1st Party</Option>
+                            <Option value="third_party">3rd Party</Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
                         className="custom-forminput custom-label mb-24"
                         name="toCoin"
                         label={<Translate content="currency" component={Form.label} />}
@@ -269,6 +319,65 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             }
                         ]}>
                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
+                    </Form.Item>
+                    <Form.Item
+                        className="custom-label"
+                        name="remarks"
+                        label={<Translate content="remarks" component={Form.label} />}
+                        rules={[
+                            { required: true, message: apiCalls.convertLocalLang('is_required') }
+                        ]} >
+                        <TextArea className='cust-input' rows={3} maxLength={250}></TextArea>
+                    </Form.Item>
+                    <div className='d-flex justify-content align-center'>
+                        <Text className='fs-18 fw-500 text-white-30'>Declaration Form</Text>
+                        <Tooltip title="Click here to download file"><Text className='file-label'>Signed Document.pdf</Text></Tooltip>
+                    </div>
+                    <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props) }}>
+                        <p className="ant-upload-drag-icon mb-16">
+                            <span className="icon xxxl doc-upload" />
+                        </p>
+                        <p className="ant-upload-text fs-18 mb-0">Upload your signed document here</p>
+                        {/* <p className="ant-upload-hint text-secondary fs-12">
+                            PDF files are allowed
+                        </p> */}
+                    </Dragger>
+                    <div className="docfile mr-0">
+                        <span className={`icon xl file mr-16`} />
+                        <div className="docdetails c-pointer" onClick={() => this.docPreview()}>
+                            <EllipsisMiddle suffixCount={6}>Signed Document</EllipsisMiddle>
+                            <span className="fs-12 text-secondary">25 KB</span>
+                        </div>
+                        <span className="icon md close c-pointer" />
+                    </div>
+                    <Form.Item
+                        className="custom-forminput mt-36 agree"
+                        name="isAgree"
+                        valuePropName="checked"
+                        rules={[
+                            {
+                                validator: (_, value) =>
+                                    value
+                                        ? Promise.resolve()
+                                        : Promise.reject(
+                                            new Error(
+                                                apiCalls.convertLocalLang("agree_termsofservice")
+                                            )
+                                        )
+                            }
+
+                        ]}
+                    >
+                        <Checkbox className="ant-custumcheck">
+                            <span className="withdraw-check"></span>
+                            <Translate
+                                content="agree_to_suissebase"
+                                with={{ link }}
+                                component={Paragraph}
+                                className="fs-14 text-white-30 ml-16 mb-4"
+                                style={{ flex: 1 }}
+                            />
+                        </Checkbox>
                     </Form.Item>
                     <Form.Item className="mb-0 mt-16">
                         <Button disabled={isLoading}

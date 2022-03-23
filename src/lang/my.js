@@ -492,5 +492,6 @@ export default {
   you_are_sending: 'Anda menghantar',
   fees: 'Yuran',
   you_receive: 'Anda akan menerima',
-  address_type: 'Address Type'
+  address_type: 'Address Type',
+  addressState:"Alamat Sate"
 }
