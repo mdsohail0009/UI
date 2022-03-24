@@ -184,7 +184,7 @@ class PaymentsView extends Component {
          let obj={
             "documentId": "00000000-0000-0000-0000-000000000000",
             "documentName":`${file.name}`,
-            "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
+            "id": "00000000-0000-0000-0000-000000000000",
             "isChecked": file.name==""?false:true,
             "remarks": `${file.size}`,
             "state": null,
@@ -206,7 +206,7 @@ class PaymentsView extends Component {
         let obj={
             "documentId": "00000000-0000-0000-0000-000000000000",
             "documentName":`${file.name}`,
-            "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
+            "id": "00000000-0000-0000-0000-000000000000",
             "isChecked": file.name==""?false:true,
             "remarks": `${file.size}`,
             "state": null,
@@ -229,7 +229,7 @@ class PaymentsView extends Component {
         let obj={
             "documentId": "00000000-0000-0000-0000-000000000000",
             "documentName":`${file.name}`,
-            "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
+            "id": "00000000-0000-0000-0000-000000000000",
             "isChecked": file.name==""?false:true,
             "remarks": `${file.size}`,
             "state": null,
@@ -249,25 +249,63 @@ class PaymentsView extends Component {
       deleteIdentityDocument(){
          debugger
           if(this.state.docIdentityProofObjs){
-       let deleteIdentityList=this.state.docIdentityProofObjs.filter((file)=>file.documentName!=file.documentName )
-       this.state.fileDetails.splice(0,1)
-        this.state.docIdentityProofObjs.push(deleteIdentityList)
+       let deleteIdentityList=this.state.docIdentityProofObjs.filter((file)=>file.documentName!=file.documentName );
+       this.state.fileDetails.splice(0,1);
+       deleteIdentityList["isChecked"] =false;
+       let  obj={
+        "documentId": `${this.state.docIdentityProofObjs[0].documentId}`,
+        "documentName":`${this.state.docIdentityProofObjs[0].documentName}`,
+        "id": `${this.state.docIdentityProofObjs[0].id}`,
+        "isChecked": false,
+        "remarks": `${this.state.docIdentityProofObjs[0].remarks}`,
+        "state": `${this.state.docIdentityProofObjs[0].state}`,
+        "status": `${this.state.docIdentityProofObjs[0].status}`,
+         "Path":`${this.state.docIdentityProofObjs[0].path}`,
+       }
+           this.state.fileDetails.push(obj)
        this.setState({ ...this.state, docIdentityProofObjs: deleteIdentityList });
                 console.log("item deleted sucessfully")
        }
+      
     }
     deleteAddressDocument(){
+        debugger
         if(this.state.docAddressProofObjs){
             let deleteAddressProofList=this.state.docAddressProofObjs.filter((file)=>file.documentName!=file.documentName )
             this.state.fileDetails.splice(0,1)
+            // this.state.fileDetails.push(deleteAddressProofList);
+            let  obj={
+                "documentId": `${this.state.docAddressProofObjs[0].documentId}`,
+                "documentName":`${this.state.docAddressProofObjs[0].documentName}`,
+                "id": `${this.state.docAddressProofObjs[0].id}`,
+                "isChecked": false,
+                "remarks": `${this.state.docAddressProofObjs[0].remarks}`,
+                "state": `${this.state.docAddressProofObjs[0].state}`,
+                "status": `${this.state.docAddressProofObjs[0].status}`,
+                 "Path":`${this.state.docAddressProofObjs[0].path}`,
+               }
+                   this.state.fileDetails.push(obj)
             this.setState({ ...this.state, docAddressProofObjs: deleteAddressProofList });
                      console.log("item deleted sucessfully")
            }
+           
     }
     deleteBankProofDocument(){
         if(this.state.docBankProofObjs){
             let deleteBankProofList=this.state.docBankProofObjs.filter((file)=>file.documentName!=file.documentName )
             this.state.fileDetails.splice(0,1)
+            // this.state.fileDetails.push(deleteBankProofList);
+            let  obj={
+                "documentId": `${this.state.docBankProofObjs[0].documentId}`,
+                "documentName":`${this.state.docBankProofObjs[0].documentName}`,
+                "id": `${this.state.docBankProofObjs[0].id}`,
+                "isChecked": false,
+                "remarks": `${this.state.docBankProofObjs[0].remarks}`,
+                "state": `${this.state.docBankProofObjs[0].state}`,
+                "status": `${this.state.docBankProofObjs[0].status}`,
+                 "Path":`${this.state.docBankProofObjs[0].path}`,
+               }
+                   this.state.fileDetails.push(obj)
             this.setState({ ...this.state, docBankProofObjs: deleteBankProofList });
                      console.log("item deleted sucessfully")
            }
@@ -304,18 +342,7 @@ class PaymentsView extends Component {
     }
    saveRolesDetails=async(values)=>{ 
         debugger
-        console.log(this.state.docIdentityProofObjs)
-       const {docIdentityProofObjs,docAddressProofObjs,docBankProofObjs}=this.state;
-        //  const path = docIdentityProofObjs.map((a) => a.Path);
-        //  const path1 = docAddressProofObjs.map((a) => a.Path);
-        //  const path2 = docBankProofObjs.map((a) => a.Path);
-
-        //  const fileName = docIdentityProofObjs.map((a) => a.documentName);
-        //  let name=fileName;
-        //  const fileName1 = docAddressProofObjs.map((a) => a.documentName);
-        //  let name1=fileName1;
-        //  const fileName2 = docBankProofObjs.map((a) => a.documentName);
-        //  let name2=fileName2;
+      
        let Obj= {
              "favouriteName": values.favouriteName,
             "toWalletAddress": apiCalls.encryptValue(values.toWalletAddress, this.props.userConfig?.sk),
@@ -331,7 +358,7 @@ class PaymentsView extends Component {
             "beneficiaryAccountName":apiCalls.encryptValue(values.beneficiaryAccountName, this.props.userConfig?.sk) ,
             "type": "fiat",
             "documents": {
-                    "id": "9d13fe22-f005-4867-8954-0feed71005f5",
+                    "id": "00000000-0000-0000-0000-000000000000",
                     "transactionId": null,
                     "adminId": "00000000-0000-0000-0000-000000000000",
                     "date": null,
@@ -343,43 +370,14 @@ class PaymentsView extends Component {
                     "status": null,
                     "state": null,
                     "details":this.state.fileDetails
-                    // [ {
-                    //     "documentId": "00000000-0000-0000-0000-000000000000",
-                    //     "documentName":docIdentityProofObjs.documentName,
-                    //     "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
-                    //     "isChecked": docIdentityProofObjs.documentName==""?false:true,
-                    //     "remarks": docIdentityProofObjs.remarks,
-                    //     "state": null,
-                    //     "status": false,
-                    //      "Path":docIdentityProofObjs.Path,
-                        
-                    //    },
-                    //    {
-                    //     "documentId": "00000000-0000-0000-0000-000000000000",
-                    //     "documentName": docAddressProofObjs.documentName,
-                    //     "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
-                    //     "isChecked": docAddressProofObjs.documentName==""?false:true,
-                    //     "remarks": docAddressProofObjs.remarks,
-                    //     "state": null,
-                    //     "status": false,
-                    //     "Path":docAddressProofObjs.Path
-                    //    },
-                    //    {
-                    //     "documentId": "00000000-0000-0000-0000-000000000000",
-                    //     "documentName": docBankProofObjs.documentName,
-                    //     "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
-                    //     "isChecked": docBankProofObjs.documentName==""?false:true,
-                    //     "remarks":docBankProofObjs.remarks,
-                    //     "state": null,
-                    //     "status": false,
-                    //     "Path":docBankProofObjs.Path
-                    //    }
-                    //            ],
+                    
                     
                 },
             "info": "{\"Ip\":\"183.82.126.210\",\"Location\":{\"countryName\":\"India\",\"state\":\"Telangana\",\"city\":\"Hyderabad\",\"postal\":\"500034\",\"latitude\":17.41364,\"longitude\":78.44675},\"Browser\":\"Chrome\",\"DeviceType\":{\"name\":\"Desktop\",\"type\":\"desktop\",\"version\":\"Windows NT 10.0\"}}"
         
         }
+       // Obj.documents.id=this.state.docDetails.documents.id;
+       if(Obj.id == "00000000-0000-0000-0000-000000000000"){
             let response = await saveBeneficiary(Obj);
             if (response.ok) {
               message.destroy();
@@ -391,6 +389,21 @@ class PaymentsView extends Component {
               this.props.history.push('/payments')
             
           } 
+        }
+          else{
+              Obj.documents.id= this.state.docDetails.documents.id
+            let response = await saveBeneficiary(Obj);
+            if (response.ok) {
+              message.destroy();
+              message.success({
+                content: "Case details saved successfully",
+                className: "custom-msg",
+                duration: 0.75
+              });
+              this.props.history.push('/payments')
+            
+          } 
+          }
     }
 
 
