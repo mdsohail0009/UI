@@ -7,7 +7,8 @@ import { connect } from "react-redux";
 import {  getFileURL,uuidv4 } from '../case.component/api'
 import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from '../../utils/custom.validator'
-
+import {success,warning,error} from "../../utils/message";
+import Loader from '../../Shared/loader'
 
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
@@ -34,7 +35,6 @@ class PaymentsView extends Component {
         previewModal: false,
         docDetails: {},
         error: null,
-        errorMessage: null,
          docIdentityProofObjs: [],
         docAddressProofObjs: [],
        docBankProofObjs: [],
@@ -69,11 +69,13 @@ class PaymentsView extends Component {
     }
    
     getCurrency=async()=>{
+        this.setState({loading: true})
         let response =await getCurrencyLu(this.props.userConfig?.id)
         if(response.ok){
          console.log(response.data)
          this.setState({...this.state,Currency:response.data,loading: false})
-        } 
+        } else{error(response.data)}
+        this.setState({loading: false})
     }
    
     handleChange=()=>{
@@ -87,10 +89,12 @@ class PaymentsView extends Component {
         if (response.ok) {
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
         } else {
-            message.destroy();
-            this.setState({ ...this.state, errorMessage: response.data })
+            // message.destroy();
+            // this.setState({ ...this.state, error: response.data })
+            error(response.data)
             this.useDivRef.current.scrollIntoView()
         }
+        this.setState({loading: false})
     }
     backToPayments = () => {
         this.props.history.push('/payments')
@@ -98,6 +102,7 @@ class PaymentsView extends Component {
     
     getDocument = async () => {
 		debugger
+        this.setState({ ...this.state, loading: true });
         const response = await getFavourite(this.props.match.params.id);
         if (response.ok) {
             let obj=response.data
@@ -115,25 +120,13 @@ class PaymentsView extends Component {
         } else {
             this.setState({ ...this.state, loading: false, error: response.data });
         }
-        console.log(  this.state.docIdentityProofObjs,this.state.docAddressProofObjs,this.state.docBankProofObjs)
-        //this.getFileData()
     }
 
-    //getFileData=()=>{
-    // if(this.state.fileDetails){
-    //     let docIdentityProofObjs=[];
-    //     docIdentityProofObjs.push(this.state.fileDetails[0])
-    //     let docAddressProofObjs=[];
-    //     docAddressProofObjs.push(this.state.fileDetails[1])
-    //     let docBankProofObjs=[];
-    //    docBankProofObjs.push(this.state.fileDetails[2])
-    //    this.setState({...this.state,docIdentityProofObjs,docAddressProofObjs,docBankProofObjs})
-    //     console.log(  this.state.docIdentityProofObjs,this.state.docAddressProofObjs,this.state.docBankProofObjs)
-    // }
-    //}
+ 
 
     docPreview = async (file) => {
         debugger
+        this.setState({ ...this.state, loading: true });
         let obj=file.path?file.path:file.Path;
         this.setState({ ...this.state, previewModal: true, });
         let res = await getFileURL({ url: `${obj}` });
@@ -143,6 +136,8 @@ class PaymentsView extends Component {
             this.setState({...this.state,PreviewFilePath:`${obj}`})
             this.setState({ ...this.state, previewModal: true, previewPath: res.data });
         }
+        this.setState({ ...this.state, loading: false });
+        // warning(res.data)
     }
    
     DownloadUpdatedFile = async () => {
@@ -161,6 +156,7 @@ class PaymentsView extends Component {
     }
    
     docPreviewClose = () => {
+        
         this.setState({ ...this.state, previewModal: false, previewPath: null })
     }
     messageObject = (id) => {
@@ -177,10 +173,9 @@ class PaymentsView extends Component {
   
     handleUpload = ({ file },type) => {
         debugger
-         this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
+         this.setState({ ...this.state, uploadLoader: true, isSubmitting: true,error:null  })
         if(type=="IDENTITYPROOF"){
              this.state.docIdentityProofObjs.shift()
-            
          let obj={
             "documentId": "00000000-0000-0000-0000-000000000000",
             "documentName":`${file.name}`,
@@ -192,10 +187,19 @@ class PaymentsView extends Component {
              "Path":`${file.response}`,
            }
            if(file.response !== undefined){
-            this.state.fileDetails.splice(0,1)
-            this.state.docIdentityProofObjs.push(obj)
-            this.state.fileDetails.push(obj)
-            this.setState({...this.state,docIdentityProof:obj})
+              let preList= this.state.fileDetails[0]
+            //  this.state.fileDetails.splice(0,1)
+             if(preList!== undefined){
+                preList.isChecked=false
+                console.log(preList)
+                this.state.fileDetails.push(obj,preList);
+             }else{
+                this.state.fileDetails.push(obj);
+             }
+            // console.log(this.state.fileDetails) 
+             
+             this.state.docIdentityProofObjs.push(obj);
+            this.setState({...this.state,docIdentityProof:obj});
            
           }
         
@@ -214,9 +218,19 @@ class PaymentsView extends Component {
              "Path":`${file.response}`,
            }
            if(file.response !== undefined){
-            this.state.fileDetails.splice(1,1)
+            // this.state.fileDetails.splice(1,1)
+            // console.log(this.state.fileDetails)
+            let preList= this.state.fileDetails[1]
+            //  this.state.fileDetails.splice(0,1)
+             if(preList!== undefined){
+                preList.isChecked=false
+                console.log(preList)
+                this.state.fileDetails.push(obj,preList);
+             }else{
+                this.state.fileDetails.push(obj);
+             }
             this.state.docAddressProofObjs.push(obj)
-            this.state.fileDetails.push(obj)
+            // this.state.fileDetails.push(obj)
             this.setState({...this.state,docAddressProof:obj})
             
           }
@@ -237,8 +251,13 @@ class PaymentsView extends Component {
              "Path":`${file.response}`,
            }
            if(file.response !== undefined){
-            this.state.fileDetails.splice(2,1)
-            this.state.fileDetails.push(obj)
+            let preList= this.state.fileDetails[2]
+             if(preList!== undefined){
+                preList.isChecked=false
+                this.state.fileDetails.push(obj,preList);
+             }else{
+                this.state.fileDetails.push(obj);
+             }
             this.state.docBankProofObjs.push(obj)
             this.setState({...this.state,docBankProof:obj})
           
@@ -251,7 +270,6 @@ class PaymentsView extends Component {
           if(this.state.docIdentityProofObjs){
        let deleteIdentityList=this.state.docIdentityProofObjs.filter((file)=>file.documentName!=file.documentName );
        this.state.fileDetails.splice(0,1);
-       deleteIdentityList["isChecked"] =false;
        let  obj={
         "documentId": `${this.state.docIdentityProofObjs[0].documentId}`,
         "documentName":`${this.state.docIdentityProofObjs[0].documentName}`,
@@ -264,7 +282,7 @@ class PaymentsView extends Component {
        }
            this.state.fileDetails.push(obj)
        this.setState({ ...this.state, docIdentityProofObjs: deleteIdentityList });
-                console.log("item deleted sucessfully")
+                success("Document deleted sucessfully")
        }
       
     }
@@ -273,7 +291,6 @@ class PaymentsView extends Component {
         if(this.state.docAddressProofObjs){
             let deleteAddressProofList=this.state.docAddressProofObjs.filter((file)=>file.documentName!=file.documentName )
             this.state.fileDetails.splice(0,1)
-            // this.state.fileDetails.push(deleteAddressProofList);
             let  obj={
                 "documentId": `${this.state.docAddressProofObjs[0].documentId}`,
                 "documentName":`${this.state.docAddressProofObjs[0].documentName}`,
@@ -286,7 +303,7 @@ class PaymentsView extends Component {
                }
                    this.state.fileDetails.push(obj)
             this.setState({ ...this.state, docAddressProofObjs: deleteAddressProofList });
-                     console.log("item deleted sucessfully")
+            success("Document deleted sucessfully")
            }
            
     }
@@ -294,7 +311,6 @@ class PaymentsView extends Component {
         if(this.state.docBankProofObjs){
             let deleteBankProofList=this.state.docBankProofObjs.filter((file)=>file.documentName!=file.documentName )
             this.state.fileDetails.splice(0,1)
-            // this.state.fileDetails.push(deleteBankProofList);
             let  obj={
                 "documentId": `${this.state.docBankProofObjs[0].documentId}`,
                 "documentName":`${this.state.docBankProofObjs[0].documentName}`,
@@ -307,7 +323,7 @@ class PaymentsView extends Component {
                }
                    this.state.fileDetails.push(obj)
             this.setState({ ...this.state, docBankProofObjs: deleteBankProofList });
-                     console.log("item deleted sucessfully")
+            success("Document deleted sucessfully")
            }
     }
 
@@ -335,7 +351,9 @@ class PaymentsView extends Component {
             this.setState({ ...this.state, isValidFile: true, })
             return true
         } else {
-            message.error({ content: `File is not allowed. You can upload jpg, png, jpeg and PDF  files`, className: 'custom-msg' })
+            error("File is not allowed. You can upload jpg, png, jpeg and PDF  files")
+            // message.error({ content: `File is not allowed. You can upload jpg, png, jpeg and PDF  files`,
+            //  className: 'custom-msg' })
             this.setState({ ...this.state, isValidFile: false, })
             return Upload.LIST_IGNORE;
         }
@@ -376,16 +394,16 @@ class PaymentsView extends Component {
             "info": "{\"Ip\":\"183.82.126.210\",\"Location\":{\"countryName\":\"India\",\"state\":\"Telangana\",\"city\":\"Hyderabad\",\"postal\":\"500034\",\"latitude\":17.41364,\"longitude\":78.44675},\"Browser\":\"Chrome\",\"DeviceType\":{\"name\":\"Desktop\",\"type\":\"desktop\",\"version\":\"Windows NT 10.0\"}}"
         
         }
-       // Obj.documents.id=this.state.docDetails.documents.id;
        if(Obj.id == "00000000-0000-0000-0000-000000000000"){
             let response = await saveBeneficiary(Obj);
             if (response.ok) {
-              message.destroy();
-              message.success({
-                content: "Case details saved successfully",
-                className: "custom-msg",
-                duration: 0.75
-              });
+                success("Case details saved successfully")
+            //   message.destroy();
+            //   message.success({
+            //     content: "Case details saved successfully",
+            //     className: "custom-msg",
+            //     duration: 0.75
+            //   });
               this.props.history.push('/payments')
             
           } 
@@ -394,12 +412,13 @@ class PaymentsView extends Component {
               Obj.documents.id= this.state.docDetails.documents.id
             let response = await saveBeneficiary(Obj);
             if (response.ok) {
-              message.destroy();
-              message.success({
-                content: "Case details saved successfully",
-                className: "custom-msg",
-                duration: 0.75
-              });
+            //   message.destroy();
+              success("Case details saved successfully")
+            //   message.success({
+            //     content: "Case details saved successfully",
+            //     className: "custom-msg",
+            //     duration: 0.75
+            //   });
               this.props.history.push('/payments')
             
           } 
@@ -411,6 +430,7 @@ class PaymentsView extends Component {
         const { loading,beneficiaryObject,Currency,} = this.state;  
         return (
             <>
+            {this.state.loading && <Loader />}
                 <div className="main-container">
                     <Title className="basicinfo mb-16">Add Beneficiary Details</Title>
                     <div className="box basic-info">
@@ -429,20 +449,7 @@ class PaymentsView extends Component {
                          autoComplete="off"
                     >
                             <Row gutter={16} className="mb-24">
-                                <Col xl={8}>
-                                    <Form.Item>
-                                        <div className="d-flex">
-                                            <Translate
-                                                className="input-label"
-                                                content="Recipient_full_name"
-                                                component={Form.label}
-                                            />{" "}
-                                            <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
-                                        <Input className="cust-input"  placeholder="Recipient full name" />
-                                    </Form.Item>
-
-                                </Col>
-                                <Col xl={16}>
+                                 <Col xl={8}>
                                     <Form.Item
                                         className="custom-forminput custom-label mb-24"
                                         name="beneficiaryAccountName"
@@ -469,6 +476,28 @@ class PaymentsView extends Component {
                                         className="custom-forminput custom-label mb-24"
                                         name="beneficiaryAccountAddress"
                                         label={<Translate content="Recipient_address1" component={Form.label} />}
+                                        required
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Is required"
+                                              },
+                                            {
+                                                whitespace: true,
+                                                message: apiCalls.convertLocalLang('is_required')
+                                            },
+                                            {
+                                                validator: validateContentRule
+                                            }
+                                        ]}   >
+                                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
+                                    </Form.Item>
+                                </Col>
+                                <Col xl={16}>
+                                    <Form.Item
+                                        className="custom-forminput custom-label mb-24"
+                                        name="beneficiaryAccountAddress"
+                                        label={<Translate content="Recipient_address2" component={Form.label} />}
                                         required
                                         rules={[
                                             {
