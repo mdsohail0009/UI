@@ -71,7 +71,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                 handleWalletSelection(addressBookReducer?.selectedRowData?.currency)
             }
             const fileInfo = response?.data?.documents?.details[0];
-            if (fileInfo.path) {
+            if (fileInfo?.path) {
                 setFile({ name: fileInfo?.documentName, size: fileInfo.remarks,response:[fileInfo?.path] })
             }
             form.setFieldsValue({ ...response.data, });

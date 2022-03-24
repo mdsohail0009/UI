@@ -76,7 +76,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
             setCryptoAddress(response.data)
             form.setFieldsValue({ ...response.data, toCoin: addressBookReducer?.selectedRowData?.coin });
             const fileInfo = response?.data?.documents?.details[0];
-            if (fileInfo.path) {
+            if (fileInfo?.path) {
                 setFile({ name: fileInfo?.documentName, size: fileInfo.remarks, response: [fileInfo.path] })
             }
             setIsLoading(false)
