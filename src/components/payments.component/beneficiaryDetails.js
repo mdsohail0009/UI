@@ -177,9 +177,10 @@ class PaymentsView extends Component {
   
     handleUpload = ({ file },type) => {
         debugger
-        this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
+         this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
         if(type=="IDENTITYPROOF"){
-            this.state.docIdentityProofObjs.shift()
+             this.state.docIdentityProofObjs.shift()
+            
          let obj={
             "documentId": "00000000-0000-0000-0000-000000000000",
             "documentName":`${file.name}`,
@@ -191,7 +192,7 @@ class PaymentsView extends Component {
              "Path":`${file.response}`,
            }
            if(file.response !== undefined){
-           
+            this.state.fileDetails.splice(0,1)
             this.state.docIdentityProofObjs.push(obj)
             this.state.fileDetails.push(obj)
             this.setState({...this.state,docIdentityProof:obj})
@@ -201,6 +202,7 @@ class PaymentsView extends Component {
     }
     else if(type=="ADDRESSPROOF"){
         this.state.docAddressProofObjs.shift()
+       
         let obj={
             "documentId": "00000000-0000-0000-0000-000000000000",
             "documentName":`${file.name}`,
@@ -212,6 +214,7 @@ class PaymentsView extends Component {
              "Path":`${file.response}`,
            }
            if(file.response !== undefined){
+            this.state.fileDetails.splice(1,1)
             this.state.docAddressProofObjs.push(obj)
             this.state.fileDetails.push(obj)
             this.setState({...this.state,docAddressProof:obj})
@@ -221,7 +224,8 @@ class PaymentsView extends Component {
         
     }
     else if(type=="BANKPROOF"){
-        this.state.docBankProofObjs.shift()
+         this.state.docBankProofObjs.shift()
+      
         let obj={
             "documentId": "00000000-0000-0000-0000-000000000000",
             "documentName":`${file.name}`,
@@ -233,6 +237,7 @@ class PaymentsView extends Component {
              "Path":`${file.response}`,
            }
            if(file.response !== undefined){
+            this.state.fileDetails.splice(2,1)
             this.state.fileDetails.push(obj)
             this.state.docBankProofObjs.push(obj)
             this.setState({...this.state,docBankProof:obj})
@@ -300,7 +305,7 @@ class PaymentsView extends Component {
    saveRolesDetails=async(values)=>{ 
         debugger
         console.log(this.state.docIdentityProofObjs)
-        //const {docIdentityProofObjs,docAddressProofObjs,docBankProofObjs}=this.state;
+       const {docIdentityProofObjs,docAddressProofObjs,docBankProofObjs}=this.state;
         //  const path = docIdentityProofObjs.map((a) => a.Path);
         //  const path1 = docAddressProofObjs.map((a) => a.Path);
         //  const path2 = docBankProofObjs.map((a) => a.Path);
@@ -337,7 +342,7 @@ class PaymentsView extends Component {
                     "remarks": null,
                     "status": null,
                     "state": null,
-                    "details": this.state.fileDetails
+                    "details":this.state.fileDetails
                     // [ {
                     //     "documentId": "00000000-0000-0000-0000-000000000000",
                     //     "documentName":docIdentityProofObjs.documentName,
