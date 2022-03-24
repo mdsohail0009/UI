@@ -438,7 +438,7 @@ class PaymentsView extends Component {
                                                 component={Form.label}
                                             />{" "}
                                             <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
-                                        <Input className="cust-input" value={this.props.userConfig?.firstName + " " + this.props.userConfig?.lastName} placeholder="Recipient full name" />
+                                        <Input className="cust-input"  placeholder="Recipient full name" />
                                     </Form.Item>
 
                                 </Col>
