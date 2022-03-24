@@ -35,9 +35,9 @@ class PaymentsView extends Component {
         docDetails: {},
         error: null,
         errorMessage: null,
-        docIdentityProofObjs: [],
+         docIdentityProofObjs: [],
         docAddressProofObjs: [],
-        docBankProofObjs: [],
+       docBankProofObjs: [],
         docIdentityProof: {},
         docAddressProof:{},
         docBankProof:{},
@@ -48,6 +48,7 @@ class PaymentsView extends Component {
         PreviewFilePath: null,
         currency:null,
          Currency:[],
+         fileDetails:[],
         }
         this.formRef = React.createRef();
         this.useDivRef = React.createRef();
@@ -82,10 +83,8 @@ class PaymentsView extends Component {
     getPaymentsViewData = async (code) => {
         debugger
         this.setState({ ...this.state, loading: true });
-
         let response = await getPaymentsData(this.props.match.params.id, this.props.userConfig?.userId,code);
         if (response.ok) {
-
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
         } else {
             message.destroy();
@@ -99,24 +98,43 @@ class PaymentsView extends Component {
     
     getDocument = async () => {
 		debugger
-        this.setState({ ...this.state, loading: true, error: null });
         const response = await getFavourite(this.props.match.params.id);
         if (response.ok) {
             let obj=response.data
-			console.log(response)
-            this.setState({ ...this.state, docDetails: response.data , loading: false });
-             this.setState({ ...this.state, docIdentityProof: response.data.documents.details[0],
-                docAddressProof: response.data.documents.details[1],
-                docBankProof: response.data.documents.details[2], loading: false });
-            console.log(this.state.docDetails)
-            obj.filename=response.data.documents.details[2].documentName;
-            this.formRef.current.setFieldsValue(obj)
+            let docIdentityProofObjs=[];
+            let docAddressProofObjs=[];
+            let docBankProofObjs=[];
+            if(response.data.documents.details){
+                docIdentityProofObjs.push(response.data.documents.details[0])
+                docAddressProofObjs.push(response.data.documents.details[1])
+               docBankProofObjs.push(response.data.documents.details[2])
+            }
+            this.setState({ ...this.state, docDetails: response.data ,docIdentityProofObjs,docAddressProofObjs,docBankProofObjs,
+                fileDetails:response.data.documents.details, loading: false });
+             this.formRef.current.setFieldsValue(obj)
         } else {
             this.setState({ ...this.state, loading: false, error: response.data });
         }
+        console.log(  this.state.docIdentityProofObjs,this.state.docAddressProofObjs,this.state.docBankProofObjs)
+        //this.getFileData()
     }
+
+    //getFileData=()=>{
+    // if(this.state.fileDetails){
+    //     let docIdentityProofObjs=[];
+    //     docIdentityProofObjs.push(this.state.fileDetails[0])
+    //     let docAddressProofObjs=[];
+    //     docAddressProofObjs.push(this.state.fileDetails[1])
+    //     let docBankProofObjs=[];
+    //    docBankProofObjs.push(this.state.fileDetails[2])
+    //    this.setState({...this.state,docIdentityProofObjs,docAddressProofObjs,docBankProofObjs})
+    //     console.log(  this.state.docIdentityProofObjs,this.state.docAddressProofObjs,this.state.docBankProofObjs)
+    // }
+    //}
+
     docPreview = async (file) => {
-        let obj=file.path;
+        debugger
+        let obj=file.path?file.path:file.Path;
         this.setState({ ...this.state, previewModal: true, });
         let res = await getFileURL({ url: `${obj}` });
         if (res.ok) {
@@ -162,64 +180,89 @@ class PaymentsView extends Component {
         this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
         if(type=="IDENTITYPROOF"){
             this.state.docIdentityProofObjs.shift()
-        let docDetails=[...this.state.docIdentityProofObjs]
-        let obj;
-        if(docDetails){
-            obj = docDetails;
-             obj.push({ filename: file.name, path: file.response, size: file.size });
+         let obj={
+            "documentId": "00000000-0000-0000-0000-000000000000",
+            "documentName":`${file.name}`,
+            "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
+            "isChecked": file.name==""?false:true,
+            "remarks": `${file.size}`,
+            "state": null,
+            "status": false,
+             "Path":`${file.response}`,
+           }
+           if(file.response !== undefined){
            
-        }
-       
-          if(file.response !== undefined){
-            this.setState({ ...this.state, docIdentityProofObjs: docDetails });
+            this.state.docIdentityProofObjs.push(obj)
+            this.state.fileDetails.push(obj)
+            this.setState({...this.state,docIdentityProof:obj})
+           
           }
         
     }
     else if(type=="ADDRESSPROOF"){
-        let docDetails=[...this.state.docAddressProofObjs]
-        let obj;
-        if(docDetails){
-            obj = docDetails;
-            obj.push({ filename: file.name, path: file.response, size: file.size });
-           
-        }
-          if(file.response !== undefined){
-            this.setState({ ...this.state, docAddressProofObjs: docDetails });
+        this.state.docAddressProofObjs.shift()
+        let obj={
+            "documentId": "00000000-0000-0000-0000-000000000000",
+            "documentName":`${file.name}`,
+            "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
+            "isChecked": file.name==""?false:true,
+            "remarks": `${file.size}`,
+            "state": null,
+            "status": false,
+             "Path":`${file.response}`,
+           }
+           if(file.response !== undefined){
+            this.state.docAddressProofObjs.push(obj)
+            this.state.fileDetails.push(obj)
+            this.setState({...this.state,docAddressProof:obj})
+            
           }
+    
         
     }
     else if(type=="BANKPROOF"){
-        let docDetails=[...this.state.docBankProofObjs]
-        let obj;
-        if(docDetails){
-            obj = docDetails;
-            obj.push({ filename: file.name, path: file.response, size: file.size });
-            
-        }
-          if(file.response !== undefined){
-            this.setState({ ...this.state, docBankProofObjs: docDetails });
+        this.state.docBankProofObjs.shift()
+        let obj={
+            "documentId": "00000000-0000-0000-0000-000000000000",
+            "documentName":`${file.name}`,
+            "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
+            "isChecked": file.name==""?false:true,
+            "remarks": `${file.size}`,
+            "state": null,
+            "status": false,
+             "Path":`${file.response}`,
+           }
+           if(file.response !== undefined){
+            this.state.fileDetails.push(obj)
+            this.state.docBankProofObjs.push(obj)
+            this.setState({...this.state,docBankProof:obj})
+          
           }
-       
     }
+    console.log(this.state.fileDetails)
     }
       deleteIdentityDocument(){
-         
+         debugger
           if(this.state.docIdentityProofObjs){
-       let deleteIdentityList=this.state.docIdentityProofObjs.filter((file)=>file.filename!=file.filename )
+       let deleteIdentityList=this.state.docIdentityProofObjs.filter((file)=>file.documentName!=file.documentName )
+       this.state.fileDetails.splice(0,1)
+        this.state.docIdentityProofObjs.push(deleteIdentityList)
        this.setState({ ...this.state, docIdentityProofObjs: deleteIdentityList });
                 console.log("item deleted sucessfully")
        }
     }
     deleteAddressDocument(){
         if(this.state.docAddressProofObjs){
-            let deleteAddressProofList=this.state.docAddressProofObjs.filter((file)=>file.filename!=file.filename )
+            let deleteAddressProofList=this.state.docAddressProofObjs.filter((file)=>file.documentName!=file.documentName )
+            this.state.fileDetails.splice(0,1)
             this.setState({ ...this.state, docAddressProofObjs: deleteAddressProofList });
                      console.log("item deleted sucessfully")
            }
     }
     deleteBankProofDocument(){
         if(this.state.docBankProofObjs){
-            let deleteBankProofList=this.state.docBankProofObjs.filter((file)=>file.filename!=file.filename )
+            let deleteBankProofList=this.state.docBankProofObjs.filter((file)=>file.documentName!=file.documentName )
+            this.state.fileDetails.splice(0,1)
             this.setState({ ...this.state, docBankProofObjs: deleteBankProofList });
                      console.log("item deleted sucessfully")
            }
@@ -256,18 +299,18 @@ class PaymentsView extends Component {
     }
    saveRolesDetails=async(values)=>{ 
         debugger
-        const {docIdentityProofObjs,docAddressProofObjs,docBankProofObjs}=this.state;
-         const path = docIdentityProofObjs.map((a) => a.path);
-         const path1 = docAddressProofObjs.map((a) => a.path);
-         const path2 = docBankProofObjs.map((a) => a.path);
+        console.log(this.state.docIdentityProofObjs)
+        //const {docIdentityProofObjs,docAddressProofObjs,docBankProofObjs}=this.state;
+        //  const path = docIdentityProofObjs.map((a) => a.Path);
+        //  const path1 = docAddressProofObjs.map((a) => a.Path);
+        //  const path2 = docBankProofObjs.map((a) => a.Path);
 
-         const fileName = docIdentityProofObjs.map((a) => a.filename);
-         let name=fileName;
-         const fileName1 = docAddressProofObjs.map((a) => a.filename);
-         let name1=fileName1;
-         const fileName2 = docBankProofObjs.map((a) => a.filename);
-         let name2=fileName2;
-
+        //  const fileName = docIdentityProofObjs.map((a) => a.documentName);
+        //  let name=fileName;
+        //  const fileName1 = docAddressProofObjs.map((a) => a.documentName);
+        //  let name1=fileName1;
+        //  const fileName2 = docBankProofObjs.map((a) => a.documentName);
+        //  let name2=fileName2;
        let Obj= {
              "favouriteName": values.favouriteName,
             "toWalletAddress": apiCalls.encryptValue(values.toWalletAddress, this.props.userConfig?.sk),
@@ -294,44 +337,44 @@ class PaymentsView extends Component {
                     "remarks": null,
                     "status": null,
                     "state": null,
-                    "details": [ {
-                        "documentId": "00000000-0000-0000-0000-000000000000",
-                        "documentName":`${name || this.state.docIdentityProof.documentName }`,
-                        "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
-                        "isChecked": true,
-                        "remarks": null,
-                        "state": null,
-                        "status": false,
-                         "Path":`${path || this.state.docIdentityProof.path}`,
+                    "details": this.state.fileDetails
+                    // [ {
+                    //     "documentId": "00000000-0000-0000-0000-000000000000",
+                    //     "documentName":docIdentityProofObjs.documentName,
+                    //     "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
+                    //     "isChecked": docIdentityProofObjs.documentName==""?false:true,
+                    //     "remarks": docIdentityProofObjs.remarks,
+                    //     "state": null,
+                    //     "status": false,
+                    //      "Path":docIdentityProofObjs.Path,
                         
-                       },
-                       {
-                        "documentId": "00000000-0000-0000-0000-000000000000",
-                        "documentName": `${name1 || this.state.docAddressProof.documentName }`,
-                        "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
-                        "isChecked": true,
-                        "remarks": null,
-                        "state": null,
-                        "status": false,
-                        "Path":`${path1 || this.state.docAddressProof.path}`
-                       },
-                       {
-                        "documentId": "00000000-0000-0000-0000-000000000000",
-                        "documentName": `${name2 || this.state.docAddressProof.documentName}`,
-                        "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
-                        "isChecked": true,
-                        "remarks": null,
-                        "state": null,
-                        "status": false,
-                        "Path":`${path2 || this.state.docAddressProof.path}`
-                       }
-                               ]
+                    //    },
+                    //    {
+                    //     "documentId": "00000000-0000-0000-0000-000000000000",
+                    //     "documentName": docAddressProofObjs.documentName,
+                    //     "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
+                    //     "isChecked": docAddressProofObjs.documentName==""?false:true,
+                    //     "remarks": docAddressProofObjs.remarks,
+                    //     "state": null,
+                    //     "status": false,
+                    //     "Path":docAddressProofObjs.Path
+                    //    },
+                    //    {
+                    //     "documentId": "00000000-0000-0000-0000-000000000000",
+                    //     "documentName": docBankProofObjs.documentName,
+                    //     "id": "5b0e6a10-e6c9-4771-ab73-08579688571f",
+                    //     "isChecked": docBankProofObjs.documentName==""?false:true,
+                    //     "remarks":docBankProofObjs.remarks,
+                    //     "state": null,
+                    //     "status": false,
+                    //     "Path":docBankProofObjs.Path
+                    //    }
+                    //            ],
+                    
                 },
             "info": "{\"Ip\":\"183.82.126.210\",\"Location\":{\"countryName\":\"India\",\"state\":\"Telangana\",\"city\":\"Hyderabad\",\"postal\":\"500034\",\"latitude\":17.41364,\"longitude\":78.44675},\"Browser\":\"Chrome\",\"DeviceType\":{\"name\":\"Desktop\",\"type\":\"desktop\",\"version\":\"Windows NT 10.0\"}}"
         
         }
-        console.log(Obj)
-        
             let response = await saveBeneficiary(Obj);
             if (response.ok) {
               message.destroy();
@@ -344,9 +387,10 @@ class PaymentsView extends Component {
             
           } 
     }
+
+
     render() {
-        const {docAddressProofObjs, docBankProofObjs, loading,beneficiaryObject,Currency,docIdentityProofObjs } = this.state;
-        
+        const { loading,beneficiaryObject,Currency,} = this.state;  
         return (
             <>
                 <div className="main-container">
@@ -615,16 +659,17 @@ class PaymentsView extends Component {
                                                 PNG, JPG,JPEG and PDF files are allowed
                                             </p>
                                         </Dragger>
-                                        {docIdentityProofObjs.map((file) =>
-                                        <div className="docfile">
+                                        {this.state.docIdentityProofObjs.map((file) =>
+                                         <>{ file? <div className="docfile">
                                             <span className={`icon xl file mr-16`} /> 
-                                            <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
-                                                <EllipsisMiddle suffixCount={6}>{file.filename }</EllipsisMiddle>
-                                                <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
+                                          <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
+                                                <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
+                                                <span className="fs-12 text-secondary">{this.formatBytes(file?file.remarks:"")}</span>
                                             </div> 
                                             <span className="icon md close c-pointer" onClick={() => this.deleteIdentityDocument(file)} />
-                                        </div>
+                                        </div>:""}</>
                                         )}
+                                        
                                     </div>
                                 </Col>
                                 <Col xl={8}>
@@ -650,15 +695,15 @@ class PaymentsView extends Component {
                                                 PNG, JPG,JPEG and PDF files are allowed
                                             </p>
                                         </Dragger>
-                                        {docAddressProofObjs.map((file) =>
-                                        <div className="docfile">
+                                        { this.state.docAddressProofObjs.map((file) =>
+                                        <>{ file?  <div className="docfile">
                                             <span className={`icon xl file mr-16`} /> 
                                             <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
-                                                <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
-                                                <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
-                                            </div> 
+                                                <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
+                                                <span className="fs-12 text-secondary">{this.formatBytes(file?file.remarks:"")}</span>
+                                            </div>
                                             <span className="icon md close c-pointer" onClick={() => this.deleteAddressDocument(file)} />
-                                        </div>
+                                        </div> :""}</>
                                         )}
                                     </div>
                                 </Col>
@@ -684,15 +729,15 @@ class PaymentsView extends Component {
                                                 PNG, JPG,JPEG and PDF files are allowed
                                             </p>
                                         </Dragger>
-                                        {docBankProofObjs.map((file) =>
-                                        <div className="docfile">
+                                        {this.state.docBankProofObjs.map((file) =>
+                                         <>{ file? <div className="docfile">
                                             <span className={`icon xl file mr-16`} /> 
-                                            <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
-                                                <EllipsisMiddle suffixCount={6}>{file.filename }</EllipsisMiddle>
-                                                <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
-                                            </div> 
+                                          <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
+                                                <EllipsisMiddle suffixCount={6}>{file.documentName }</EllipsisMiddle>
+                                                <span className="fs-12 text-secondary">{this.formatBytes(file?file.remarks:"")}</span>
+                                            </div>
                                             <span className="icon md close c-pointer" onClick={() => this.deleteBankProofDocument(file)} />
-                                        </div>
+                                        </div>:""}</>
                                         )}
                                     </div>
                                 </Col>
