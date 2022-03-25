@@ -245,7 +245,7 @@ class PaymentsView extends Component {
     }
     }
       deleteIdentityDocument(){
-          debugger
+         
           if(this.state.docIdentityProofObjs){
        let deleteIdentityList=this.state.docIdentityProofObjs.filter((file)=>file.documentName!==file.documentName );
        this.state.fileDetails.splice(0,1);
@@ -321,7 +321,7 @@ class PaymentsView extends Component {
         return parseFloat((bytes / Math.pow(k, i)).toFixed()) + ' ' + sizes[i];
     }
     beforeUpload = (file) => {
-       debugger
+    
         let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
         
         if (fileType[file.type]) {
