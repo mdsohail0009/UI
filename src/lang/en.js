@@ -502,4 +502,10 @@ export default {
   withdraw_verification:'Withdraw Verification',
   Phone_verification:'Phone Verification',
   Email_verification:'Email Verification',
+  get_email:"GET EMAIL",
+  resend_email: "RESEND EMAIL%(counter)s",
+  sent_verification:'Verification code sent',
+  verify_btn:'VERIFY',
+  verify_button:'VERIFY'
+
 }

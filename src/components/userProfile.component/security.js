@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Switch, Drawer,message,Button,Checkbox,Form,Input } from "antd";
+import { Typography, Switch, Drawer,message,Button,Checkbox,Form,Input,Alert } from "antd";
 import Translate from "react-translate-component";
 import Changepassword from "../../components/changepassword";
 import { connect } from "react-redux";
@@ -16,6 +16,8 @@ const Security = ({ userConfig, userProfileInfo,userProfile,fetchWithdrawVerifyO
 const [factor,setFactor]=useState(false)
 const [phone,setPhone]=useState(false)
 const [email,setEmail]=useState(false)
+const [errorMsg, setErrorMsg] = useState(null);
+
   const showDrawer = () => {
     setisChangepassword(true);
     store.dispatch(updatechange());
@@ -28,12 +30,10 @@ const [email,setEmail]=useState(false)
   const getVerifyData=async()=>{
     debugger
     let response= await apiCalls.getVerificationFields(userConfig.id);
-    if(response.ok){
-     
+    if(response.ok){ 
      console.log(response.data.isPhoneVerified)
-      fetchWithdrawVerifyObj(response.data)
+      //fetchWithdrawVerifyObj(response.data)
       setVerifyData(response.data)
-      // setFactor(response.data?.twoFactorEnabled)
        setPhone(response.data?.isPhoneVerified )
        setEmail(response.data?.isEmailVerification)
        form.setFieldsValue(response.data);
@@ -98,7 +98,8 @@ const saveDetails=async()=>{
 // obj.TwoFactorEnabled=verifyData.twoFactorEnabled;
 const response = await apiCalls.updateSecurity(obj);
 if(email&&phone&&factor){
-    warning("Please select only two checkboxes") 
+    // warning("Please select only two checkboxes") 
+    return setErrorMsg("Please select only two checkboxes");
 }
 else
  if(email&&phone||email&&factor||phone&&factor){
@@ -110,17 +111,29 @@ if(response.ok){
 }
 }
 else{
-  message.destroy();
-  message.warning({
-    content: "Please select any two checkboxes",
-    className: "custom-msg"
-  });
+//   message.destroy();
+//   message.warning({
+//     content: "Please select any two checkboxes",
+//     className: "custom-msg"
+//   });
+return setErrorMsg("Please select any two checkboxes");
 }
 }
 
   const { Title, Paragraph } = Typography;
   return (
     <>
+     {errorMsg !== null && (
+              <Alert
+                className="mb-12"
+                closable
+                type="error"
+                message={"Error"}
+                description={errorMsg}
+                onClose={() => setErrorMsg(null)}
+                showIcon
+              />
+            )}
       <div className="box basic-info">
         <Translate
           content="TwoFactorAuthentication"
