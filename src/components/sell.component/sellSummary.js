@@ -40,7 +40,7 @@ class SellSummary extends Component {
         if (!this.state.isTermsAgree) {
             this.setState({
                 ...this.state, error: {
-                    valid: false, message: apicalls.convertLocalLang('accept_terms')
+                    valid: false, message: apicalls.convertLocalLang('accept_terms'), title: apicalls.convertLocalLang('sellCrypto')
                 }
             })
 
@@ -67,9 +67,7 @@ class SellSummary extends Component {
                     name: 'Sell', properties: { "Type": 'User', "Action": 'Save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Sell', "Remarks": obj.fromValue + " " + this.state.sellpreviewData.coin + " selled", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto' }
                 });
             } else {
-                message.destroy()
-                message.error({ content: res.data, className: 'custom-msg' });
-                this.setState({ ...this.state, loader: false, disableConfirm: false })
+                this.setState({ ...this.state, loader: false, disableConfirm: false, error: { valid: false, message: res.data, title: apicalls.convertLocalLang('sellCrypto') } })
             }
         }
     }
