@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getPaymentsData,saveBeneficiary,getCurrencyLu,getFavourite } from './api';
-import { Typography, Button,  message, Tooltip, Row,Select, Col,Modal, Form, Input, Upload } from 'antd';
+import { Typography, Button, Tooltip, Row,Select, Col,Modal, Form, Input, Upload } from 'antd';
 import Translate from 'react-translate-component';
 import FilePreviewer from 'react-file-previewer';
 import { connect } from "react-redux";
@@ -76,9 +76,7 @@ class PaymentsView extends Component {
         this.setState({loading: false})
     }
    
-    handleChange=()=>{
-
-    }
+    handleChange=()=>{}
 
     getPaymentsViewData = async (code) => {
         this.setState({ ...this.state, loading: true });
@@ -247,8 +245,9 @@ class PaymentsView extends Component {
     }
     }
       deleteIdentityDocument(){
+          debugger
           if(this.state.docIdentityProofObjs){
-       let deleteIdentityList=this.state.docIdentityProofObjs.filter((file)=>file.documentName!=file.documentName );
+       let deleteIdentityList=this.state.docIdentityProofObjs.filter((file)=>file.documentName!==file.documentName );
        this.state.fileDetails.splice(0,1);
        let  obj={
         "documentId": `${this.state.docIdentityProofObjs[0].documentId}`,
@@ -268,7 +267,7 @@ class PaymentsView extends Component {
     }
     deleteAddressDocument(){
         if(this.state.docAddressProofObjs){
-            let deleteAddressProofList=this.state.docAddressProofObjs.filter((file)=>file.documentName!=file.documentName )
+            let deleteAddressProofList=this.state.docAddressProofObjs.filter((file)=>file.documentName!==file.documentName )
             this.state.fileDetails.splice(0,1)
             let  obj={
                 "documentId": `${this.state.docAddressProofObjs[0].documentId}`,
@@ -288,7 +287,7 @@ class PaymentsView extends Component {
     }
     deleteBankProofDocument(){
         if(this.state.docBankProofObjs){
-            let deleteBankProofList=this.state.docBankProofObjs.filter((file)=>file.documentName!=file.documentName )
+            let deleteBankProofList=this.state.docBankProofObjs.filter((file)=>file.documentName!==file.documentName )
             this.state.fileDetails.splice(0,1)
             let  obj={
                 "documentId": `${this.state.docBankProofObjs[0].documentId}`,
@@ -316,7 +315,7 @@ class PaymentsView extends Component {
     formatBytes(bytes, decimals = 2) {
         if (bytes === 0) return '0 Bytes';
         const k = 1024;
-        const dm = decimals < 0 ? 0 : decimals;
+        // const dm = decimals < 0 ? 0 : decimals;
         const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed()) + ' ' + sizes[i];
