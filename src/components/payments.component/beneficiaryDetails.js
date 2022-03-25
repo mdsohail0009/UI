@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import {  getFileURL,uuidv4 } from '../case.component/api'
 import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from '../../utils/custom.validator'
-import {success,warning,error} from "../../utils/message";
+import {success,error} from "../../utils/message";
 import Loader from '../../Shared/loader'
 
 const EllipsisMiddle = ({ suffixCount, children }) => {
@@ -63,7 +63,6 @@ class PaymentsView extends Component {
     }
     
     selectedCurrency=(code)=>{
-        debugger
        this.setState({...this.state,currency: code}) 
        this.getPaymentsViewData(code);
     }
@@ -72,7 +71,6 @@ class PaymentsView extends Component {
         this.setState({loading: true})
         let response =await getCurrencyLu(this.props.userConfig?.id)
         if(response.ok){
-         console.log(response.data)
          this.setState({...this.state,Currency:response.data,loading: false})
         } else{error(response.data)}
         this.setState({loading: false})
@@ -83,14 +81,11 @@ class PaymentsView extends Component {
     }
 
     getPaymentsViewData = async (code) => {
-        debugger
         this.setState({ ...this.state, loading: true });
         let response = await getPaymentsData(this.props.match.params.id, this.props.userConfig?.userId,code);
         if (response.ok) {
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
         } else {
-            // message.destroy();
-            // this.setState({ ...this.state, error: response.data })
             error(response.data)
             this.useDivRef.current.scrollIntoView()
         }
@@ -101,7 +96,6 @@ class PaymentsView extends Component {
     }
     
     getDocument = async () => {
-		debugger
         this.setState({ ...this.state, loading: true });
         const response = await getFavourite(this.props.match.params.id);
         if (response.ok) {
@@ -125,13 +119,11 @@ class PaymentsView extends Component {
  
 
     docPreview = async (file) => {
-        debugger
         this.setState({ ...this.state, loading: true });
         let obj=file.path?file.path:file.Path;
         this.setState({ ...this.state, previewModal: true, });
         let res = await getFileURL({ url: `${obj}` });
         if (res.ok) {
-            console.log(res.data)
             this.state.PreviewFilePath = obj;
             this.setState({...this.state,PreviewFilePath:`${obj}`})
             this.setState({ ...this.state, previewModal: true, previewPath: res.data });
@@ -156,9 +148,9 @@ class PaymentsView extends Component {
     }
    
     docPreviewClose = () => {
-        
         this.setState({ ...this.state, previewModal: false, previewPath: null })
     }
+
     messageObject = (id) => {
         return {
             "id": uuidv4(),
@@ -172,7 +164,6 @@ class PaymentsView extends Component {
     }
   
     handleUpload = ({ file },type) => {
-        debugger
          this.setState({ ...this.state, uploadLoader: true, isSubmitting: true,error:null  })
         if(type=="IDENTITYPROOF"){
              this.state.docIdentityProofObjs.shift()
@@ -188,16 +179,12 @@ class PaymentsView extends Component {
            }
            if(file.response !== undefined){
               let preList= this.state.fileDetails[0]
-            //  this.state.fileDetails.splice(0,1)
              if(preList!== undefined){
                 preList.isChecked=false
-                console.log(preList)
                 this.state.fileDetails.push(obj,preList);
              }else{
                 this.state.fileDetails.push(obj);
              }
-            // console.log(this.state.fileDetails) 
-             
              this.state.docIdentityProofObjs.push(obj);
             this.setState({...this.state,docIdentityProof:obj});
            
@@ -218,19 +205,14 @@ class PaymentsView extends Component {
              "Path":`${file.response}`,
            }
            if(file.response !== undefined){
-            // this.state.fileDetails.splice(1,1)
-            // console.log(this.state.fileDetails)
             let preList= this.state.fileDetails[1]
-            //  this.state.fileDetails.splice(0,1)
              if(preList!== undefined){
                 preList.isChecked=false
-                console.log(preList)
                 this.state.fileDetails.push(obj,preList);
              }else{
                 this.state.fileDetails.push(obj);
              }
             this.state.docAddressProofObjs.push(obj)
-            // this.state.fileDetails.push(obj)
             this.setState({...this.state,docAddressProof:obj})
             
           }
@@ -263,10 +245,8 @@ class PaymentsView extends Component {
           
           }
     }
-    console.log(this.state.fileDetails)
     }
       deleteIdentityDocument(){
-         debugger
           if(this.state.docIdentityProofObjs){
        let deleteIdentityList=this.state.docIdentityProofObjs.filter((file)=>file.documentName!=file.documentName );
        this.state.fileDetails.splice(0,1);
@@ -287,7 +267,6 @@ class PaymentsView extends Component {
       
     }
     deleteAddressDocument(){
-        debugger
         if(this.state.docAddressProofObjs){
             let deleteAddressProofList=this.state.docAddressProofObjs.filter((file)=>file.documentName!=file.documentName )
             this.state.fileDetails.splice(0,1)
@@ -327,14 +306,13 @@ class PaymentsView extends Component {
            }
     }
 
- filePreviewPath() {
-     debugger
-    if (this.state.previewPath.includes(".pdf")) {
-        return this.state.previewPath;
-    } else {
-        return this.state.previewPath;
+    filePreviewPath() {
+        if (this.state.previewPath.includes(".pdf")) {
+            return this.state.previewPath;
+        } else {
+            return this.state.previewPath;
+        }
     }
-}
     formatBytes(bytes, decimals = 2) {
         if (bytes === 0) return '0 Bytes';
         const k = 1024;
@@ -352,15 +330,11 @@ class PaymentsView extends Component {
             return true
         } else {
             error("File is not allowed. You can upload jpg, png, jpeg and PDF  files")
-            // message.error({ content: `File is not allowed. You can upload jpg, png, jpeg and PDF  files`,
-            //  className: 'custom-msg' })
             this.setState({ ...this.state, isValidFile: false, })
             return Upload.LIST_IGNORE;
         }
     }
    saveRolesDetails=async(values)=>{ 
-        debugger
-      
        let Obj= {
              "favouriteName": values.favouriteName,
             "toWalletAddress": apiCalls.encryptValue(values.toWalletAddress, this.props.userConfig?.sk),
@@ -398,12 +372,6 @@ class PaymentsView extends Component {
             let response = await saveBeneficiary(Obj);
             if (response.ok) {
                 success("Case details saved successfully")
-            //   message.destroy();
-            //   message.success({
-            //     content: "Case details saved successfully",
-            //     className: "custom-msg",
-            //     duration: 0.75
-            //   });
               this.props.history.push('/payments')
             
           } 
@@ -412,13 +380,7 @@ class PaymentsView extends Component {
               Obj.documents.id= this.state.docDetails.documents.id
             let response = await saveBeneficiary(Obj);
             if (response.ok) {
-            //   message.destroy();
               success("Case details saved successfully")
-            //   message.success({
-            //     content: "Case details saved successfully",
-            //     className: "custom-msg",
-            //     duration: 0.75
-            //   });
               this.props.history.push('/payments')
             
           } 
@@ -579,7 +541,6 @@ class PaymentsView extends Component {
                   placeholder={apiCalls.convertLocalLang('selectcurrency')}
                   optionFilterProp="children"
                   loading={loading}
-                //   disabled={props.match.params.type === "disabled" ? true : false}
                 >
                   {Currency?.map((item, idx) => (
                     <Option key={idx} value={item.currencyCode}>
@@ -686,8 +647,7 @@ class PaymentsView extends Component {
                                 <Col xl={8}>
                                     <div className='mb-24'>
                                         <Paragraph
-                                            //content="Beneficiary_Details"
-                                            //component={Paragraph}
+                                       
                                             className="mb-16 fs-14 text-white fw-500 text-upper"
                                         >Please provide your identity proof</Paragraph>
                                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
@@ -722,8 +682,7 @@ class PaymentsView extends Component {
                                 <Col xl={8}>
                                     <div>
                                         <Paragraph
-                                            //content="Beneficiary_Details"
-                                            //component={Paragraph}
+                                           
                                             className="mb-16 fs-14 text-white fw-500 text-upper"
                                         >Please provide your address proof</Paragraph>
                                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
@@ -757,8 +716,7 @@ class PaymentsView extends Component {
                                 <Col xl={8}>
                                     <div>
                                         <Paragraph
-                                            //content="Beneficiary_Details"
-                                            //component={Paragraph}
+                                           
                                             className="mb-16 fs-14 text-white fw-500 text-upper"
                                         >Please provide your address proof</Paragraph>
                                         <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
