@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { getPaymentsData } from './api';
-import { Typography, Button, Spin,message,Alert } from 'antd';
+import { getPaymentsData,getBankData } from './api';
+import { Typography, Button, Spin,message,Alert,Popover } from 'antd';
 import Translate from 'react-translate-component';
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
@@ -26,6 +26,39 @@ class PaymentsView extends Component {
             message.destroy();
             this.setState({ ...this.state, errorMessage: response.data})
             this.useDivRef.current.scrollIntoView()
+        }
+    }
+    moreInfoPopover = async (id, index) => {
+        this.setState({ ...this.state, tooltipLoad: true });
+        let response = await getBankData(id);
+        if (response.ok) {
+            this.setState({
+                ...this.state, moreBankInfo: response.data, visible: true, tooltipLoad: false
+            });
+        } else {
+            this.setState({ ...this.state, visible: false, tooltipLoad: false });
+        }
+    }
+    handleVisibleChange = (index) => {
+        this.setState({ ...this.state, visible: false });
+    }
+    popOverContent = () => {
+        const { moreBankInfo, tooltipLoad } = this.state;
+        if (tooltipLoad) {
+            return <Spin />
+        } else {
+            return (<div className='more-popover'>
+                <Text className='lbl'>Address Label</Text>
+                <Text className='val'>{moreBankInfo?.favouriteName}</Text>
+                <Text className='lbl'>Recipient Full Name</Text>
+                <Text className='val'>{moreBankInfo?.beneficiaryAccountName}</Text>
+                <Text className='lbl'>Recipient Address</Text>
+                <Text className='val'>{moreBankInfo?.beneficiaryAccountAddress}</Text>
+                <Text className='lbl'>BIC/SWIFT/Routing Number</Text>
+                <Text className='val'>{moreBankInfo?.routingNumber}</Text>
+                <Text className='lbl'>Bank Address</Text>
+                <Text className='val'>{moreBankInfo?.bankAddress}</Text>
+            </div>)
         }
     }
     backToPayments = () => {
@@ -60,7 +93,18 @@ class PaymentsView extends Component {
                                     return (
                                         <>
                                           {paymentsData.length > 0?  <tr key={idx}>
-                                                <td>{item.bankname}</td>
+                                                <td className='d-flex align-center justify-content'>{item.bankname}
+                                                <Popover
+                                                                    className='more-popover'
+                                                                    content={this.popOverContent}
+                                                                    trigger="click"
+                                                                    visible={item.visible}
+                                                                    placement='top'
+                                                                    onVisibleChange={() => this.handleVisibleChange(idx)}
+                                                                >
+                                                                    <span className='icon md info c-pointer' onClick={() => this.moreInfoPopover(item.addressId, idx)} />
+                                                                </Popover>
+                                                </td>
                                                 <td>{item.accountnumber}</td>
                                                 <td>
                                                     <NumberFormat
