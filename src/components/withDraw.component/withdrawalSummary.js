@@ -4,7 +4,6 @@ import {
   Button,
   Form,
   message,
-  In,
   Input,
   Alert,
   Tooltip
@@ -22,6 +21,7 @@ import {
   setWithdrawfiatenaable,
   setWithdrawFinalRes
 } from "../../reducers/sendreceiveReducer";
+import {success,warning,error} from "../../utils/messages";
 
 const WithdrawalFiatSummary = ({
   sendReceive,
@@ -38,7 +38,6 @@ const WithdrawalFiatSummary = ({
   const [buttonText, setButtonText] = useState("get_otp");
   const [verificationText, setVerificationText] = useState("");
   const [isResend, setIsResend] = useState(true);
-  //const [seconds, setSeconds] = useState("02:00");
   const [invalidcode, setInvalidCode] = useState("");
   const [verifyData, setVerifyData] = useState({});
   const [validationText, setValidationText] = useState("");
@@ -53,11 +52,12 @@ const WithdrawalFiatSummary = ({
   const [emailText, setEmailText] = useState("get_email");
   const [emailDisable, setEmailDisable] = useState(true);
   const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [tooltipEmail,setTooltipEmail]=useState(false)
   const [emailVerificationText, setEmailVerificationText] = useState("");
   const [authCode, setAuthCode] = useState("");
   const [otpCode, setOtpCode] = useState("");
   const [verifyOtpText, setVerifyOtpText] = useState("");
-  const [seconds, setSeconds] = useState(0);
+  const [seconds, setSeconds] = useState(120);
   const [minutes, setMinutes] = useState(2);
   const btnList = {
     get_otp: (
@@ -116,28 +116,8 @@ const WithdrawalFiatSummary = ({
     withdrawSummayTrack();
     getVerifyData();
 
-    let myInterval
-    myInterval = setInterval(() => {
-      debugger
-      //const { seconds, minutes }=useState
-
-      if (seconds > 0) {
-        setSeconds(seconds-1)
-      }
-      if (seconds === 0) {
-        if (minutes === 0) {
-          clearInterval(myInterval);
-        } 
-        else {
-          setMinutes(minutes-1)
-          setSeconds(119)
-        }
-        console.log(seconds)
-      }
-    }, 1000);
-   
-
-  }, []);
+    seconds > 0 && setInterval(() => setSeconds(seconds - 1), 1000);
+  }, [seconds]);
 
   const withdrawSummayTrack = () => {
     apiCalls.trackEvent({
@@ -153,37 +133,8 @@ const WithdrawalFiatSummary = ({
     });
   };
 
-  // let timeInterval;
-  // let count = 120;
-  // const startTimer = () => {
-  //   debugger;
-  //   let timer = count;
-  //   let minutes, seconds;
-  //   timeInterval = setInterval(function () {
-  //     minutes = parseInt(timer / 60, 10);
-  //     seconds = parseInt(timer % 60, 10);
-  //     minutes = minutes < 10 ? "0" + minutes : minutes;
-  //     seconds = seconds < 10 ? "0" + seconds : seconds;
-  //     setSeconds(minutes + ":" + seconds);
-  //     if (--timer < 0) {
-  //       timer = count;
-  //       clearInterval(timeInterval);
-  //       setDisable(false);
-  //       setType("Resend");
-  //     }
-  //   }, 1000);
-  // };
-
+ 
   const saveWithdrwal = async (values) => {
-    debugger;
-    // let response = await apiCalls.getVerification(userConfig?.id, values.code);
-    //if (response.ok) {
-    // message.destroy();
-    // message.success({
-    //   content: "OTP verified successfully",
-    //   className: "custom-msg",
-    //   duration: 0.5
-    // });
     setIsLoding(true);
     let Obj = Object.assign({}, sendReceive.withdrawFiatObj);
     Obj.accountNumber = apiCalls.encryptValue(
@@ -215,11 +166,7 @@ const WithdrawalFiatSummary = ({
       setMsg(withdrawal.data);
       useOtpRef.current.scrollIntoView();
     }
-    // }
-    //  else {
-    //   useOtpRef.current.scrollIntoView();
-    //   setMsg(apiCalls.convertLocalLang("invalid_code"));
-    // }
+   
   };
   const onCancel = () => {
     changeStep("step1");
@@ -230,20 +177,15 @@ const WithdrawalFiatSummary = ({
   const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
 
   const getVerifyData = async () => {
-    debugger;
     let response = await apiCalls.getVerificationFields(userConfig.id);
     if (response.ok) {
-      console.log(response.data);
       setVerifyData(response.data);
-      console.log(verifyData);
     }
   };
 
   const getEmail = async (val) => {
-    debugger;
     let response = await apiCalls.sendEmail(userConfig.id, type);
     if (response.ok) {
-      console.log(response);
       setEmailText("sentVerification");
       setEmailDisable(false);
       setTextDisable(true);
@@ -253,49 +195,25 @@ const WithdrawalFiatSummary = ({
       );
       setTimeout(() => {
         setEmailText("resendEmail");
-      }, 8000);
+      }, 20000);
       setTimeout(() => {
         setTooltipVisible(false);
-      }, 8000);
+      }, 20000);
     } else {
       setMsg(apiCalls.convertLocalLang("request_fail"));
     }
   };
   const getEmailVerification = async (values) => {
-    debugger;
     let response = await apiCalls.verifyEmail(userConfig.id, values.code);
     if (response.ok) {
-      message.destroy();
-      message.success({
-        content: "Email verified successfully",
-        className: "custom-msg",
-        duration: 0.5
-      });
+      success("Email  verified successfully") 
     }
+    else{error(response.data)}
   };
-  setTimeout(() => console.log(verifyData), 5000);
-  // const getOTP = async (val) => {
-  //   debugger
-  //   let response = await apiCalls.getCode(userConfig.id, type);
-  //   if (response.ok) {
-  //     setButtonText("resendotp");
-  //     setDisable(true);
-  //     setInputDisable(false);
-  //     setSeconds("02:00");
-  //     setVerificationText(
-  //       apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
-  //     );
-  //     startTimer();
-  //   } else {
-  //     useOtpRef.current.scrollIntoView();
-  //     setMsg(apiCalls.convertLocalLang("request_fail"));
-  //   }
-  // };
-
+  
   const getOTP = async (val) => {
     let response = await apiCalls.getCode(userConfig.id, type);
     if (response.ok) {
-      console.log(response);
 
       setTooltipVisible(true);
       setButtonText("sentVerify");
@@ -307,10 +225,10 @@ const WithdrawalFiatSummary = ({
 
       setTimeout(() => {
         setButtonText("resendotp");
-      }, 8000);
+      }, 20000);
       setTimeout(() => {
         setTooltipVisible(false);
-      }, 8000);
+      }, 20000);
     } else {
       setMsg(apiCalls.convertLocalLang("request_fail"));
     }
@@ -319,12 +237,7 @@ const WithdrawalFiatSummary = ({
   const getOtpVerification = async () => {
     let response = await apiCalls.getVerification(userConfig.id, otpCode);
     if (response.ok) {
-      message.destroy();
-      message.success({
-        content: "OTP verified successfully",
-        className: "custom-msg",
-        duration: 0.5
-      });
+      success("OTP verified successfully") 
     } else {
       useOtpRef.current.scrollIntoView();
 
@@ -343,28 +256,15 @@ const WithdrawalFiatSummary = ({
   const getAuthenticator = async () => {
     let response = await apiCalls.getAuthenticator(authCode, userConfig.userId);
     if (response.ok) {
-      message.destroy();
-      message.success({
-        content: "Authenticator verified successfully",
-        className: "custom-msg",
-        duration: 0.5
-      });
+      success("Authenticator verified successfully") 
     } else {
       useOtpRef.current.scrollIntoView();
-
       setMsg(apiCalls.convertLocalLang("invalid_code"));
     }
   };
   const handleAuthenticator = (e) => {
     setAuthCode(e.target.value);
   };
-
-  const tooltipTimer = seconds < 10 ? `0${seconds}` : seconds;
-  console.log(tooltipTimer);
-  const tooltipValue =
-    "Haven't receive code?Request new code in " +
-    tooltipTimer +
-    " seconds. The code will expire after 30mins.";
 
   return (
     <div className="mt-16">
@@ -482,57 +382,13 @@ const WithdrawalFiatSummary = ({
         onFinish={saveWithdrwal}
         autoComplete="off"
       >
-        {/* <Form.Item
-          name="code"
-          className="input-label otp-verify mt-36"
-          extra={
-            <div>
-              <Text className="fs-12 text-white-30 fw-200">
-                {verificationText}
-              </Text>
-              <Text
-                className="fs-12 text-red fw-200"
-                style={{ float: "right", color: "var(--textRed)" }}
-              >
-                {invalidcode}
-              </Text>
-            </div>
-          }
-          rules={[{ required: true, message: "Is required" }]}
-          label={
-            <Button type="text" onClick={getOTP} disabled={disable}>
-              {isResend && btnList[buttonText]}
-            </Button>
-          }
-        >
-          <Input
-            type="text"
-            className="cust-input text-left"
-            placeholder={apiCalls.convertLocalLang("verification_code")}
-            maxLength={6}
-            onKeyDown={(event) => {
-              if (
-                event.currentTarget.value.length > 5 &&
-                !(event.key == "Backspace" || event.key == "Delete")
-              ) {
-                event.preventDefault();
-              } else if (/^\d+$/.test(event.key)) {
-                setOtp(event.currentTarget.value);
-              } else if (event.key == "Backspace" || event.key == "Delete") {
-              } else {
-                event.preventDefault();
-              }
-            }}
-            style={{ width: "100%" }}
-            disabled={inputDisable}
-          />
-        </Form.Item> */}
-        {verifyData.isPhoneVerified == true && (
+        
+        {/* {verifyData.isPhoneVerified == true && ( */}
           <Text className="fs-14 mb-4 text-white d-block fw-200">
             Phone verification code *
           </Text>
-        )}
-        {verifyData.isPhoneVerified == true && (
+        {/* )} */}
+        {/* {verifyData.isPhoneVerified == true && ( */}
           <Form.Item
             name="code"
             className="input-label otp-verify my-36"
@@ -558,8 +414,7 @@ const WithdrawalFiatSummary = ({
                 {tooltipVisible == true && (
                   <Tooltip
                     placement="topRight"
-                    // title="Haven't receive code?Request new code in 44 seconds. The code will expire after 30mins."
-                    title={tooltipValue}
+                    title={`Haven\'t receive code?Request new code in ${seconds}. The code will expire after 30mins.`}
                   >
                     <span className="icon md info mr-8" />
                   </Tooltip>
@@ -593,12 +448,12 @@ const WithdrawalFiatSummary = ({
               // disabled={this.state.inputDisable}
             />
           </Form.Item>
-        )}
-        {verifyData.isEmailVerification == true && (
+        {/* )} */}
+        {/* {verifyData.isEmailVerification == true && ( */}
           <Text className="fs-14 mb-4 text-white d-block fw-200">
             Email verification code *
           </Text>
-        )}
+        {/* )} */}
         {/* {verifyData.isEmailVerification == true && ( */}
         <Form.Item
           name="emailCode"
@@ -621,13 +476,11 @@ const WithdrawalFiatSummary = ({
             <>
               <Button type="text" onClick={getEmail}>
                 {isResend && emailBtn[emailText]}
-                {/* {isResend && btnList[buttonText]} */}
               </Button>
               {tooltipVisible == true && (
                 <Tooltip
                   placement="topRight"
-                  // title={`Haven\'t receive code?Request new code in 120 seconds. The code will expire after 30mins.`}
-                  title={tooltipValue}
+                  title={`Haven\'t receive code?Request new code in ${seconds}. The code will expire after 30mins.`}
                 >
                   <span className="icon md info mr-8" />
                 </Tooltip>
@@ -640,11 +493,6 @@ const WithdrawalFiatSummary = ({
             </>
           }
 
-          //   className="input-label otp-verify"
-          //   rules={[{ required: true, message: "Is required" }]}
-          //   help={<Text className="fs-12 text-white-30 fw-200">
-          //   Enter the 6 digit sent to 905***9290
-          // </Text>}
         >
           <Input
             type="text"
@@ -680,9 +528,6 @@ const WithdrawalFiatSummary = ({
             className="input-label otp-verify my-36"
             extra={
               <div>
-                {/* <Text className="fs-12 text-white-30 fw-200">
-                    {this.state.emailVerificationText}
-                  </Text> */}
                 <Text
                   className="fs-12 text-red fw-200"
                   style={{ float: "right", color: "var(--textRed)" }}
@@ -695,7 +540,7 @@ const WithdrawalFiatSummary = ({
             label={
               <>
                 <Button type="text" onClick={getAuthenticator}>
-                  Verify
+                  VERIFY
                 </Button>
               </>
             }
@@ -710,10 +555,8 @@ const WithdrawalFiatSummary = ({
             />
           </Form.Item>
         )}
-        <h1>Time Remaining: {seconds < 10 ? `0${seconds}` : seconds}</h1>
 
         <Button
-          //disabled={isLoding}
           size="large"
           block
           className="pop-btn"

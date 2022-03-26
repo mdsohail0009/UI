@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
 import Currency from "../shared/number.formate";
-import { convertCurrency } from "../buy.component/buySellService";
 import { handleNewExchangeAPI, withDrawCrypto } from "../send.component/api";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
 import { setCryptoFinalRes } from "../../reducers/sendreceiveReducer";
@@ -17,10 +16,7 @@ import {
 } from "../../reducers/sendreceiveReducer";
 import apiCalls from "../../api/apiCalls";
 import { publishBalanceRfresh } from "../../utils/pubsub";
-import { async } from "rxjs";
-import { toHaveDisplayValue } from "@testing-library/jest-dom/dist/matchers";
-import { withdrawVerifyObj } from "../../reducers/UserprofileReducer";
-import { updateSecurity } from "../send.component/api";
+import {success,warning,error} from "../../utils/messages";
 
 class WithdrawSummary extends Component {
   state = {
@@ -108,26 +104,6 @@ class WithdrawSummary extends Component {
     });
   };
 
-  // startTimer = () => {
-  //   debugger;
-  //   let timer = this.state.count;
-  //   let minutes, seconds;
-  //   let timeInterval = setInterval(() => {
-  //     this.setState({ ...this.state, textDisable: true });
-  //     minutes = parseInt(timer / 60, 10);
-  //     seconds = parseInt(timer % 60, 10);
-  //     minutes = minutes < 10 ? "0" + minutes : minutes;
-  //     seconds = seconds < 10 ? "0" + seconds : seconds;
-  //     let update = minutes + ":" + seconds;
-  //     this.setState({ ...this.state, seconds: update });
-  //     if (--timer < 0) {
-  //       timer = this.state.count;
-  //       clearInterval(timeInterval);
-  //       this.setState({ ...this.state, textDisable: false, type: "Resend" });
-  //     }
-  //   }, 1000);
-  // };
-
   onRefresh = () => {
     this.loadOneCoinData();
     this.loadData();
@@ -162,42 +138,13 @@ class WithdrawSummary extends Component {
       this.setState({ ...this.state, loading: false });
     }
   };
-  // getOTP = async (val) => {
-  //   debugger;
-  //   let response = await apiCalls.getCode(
-  //     this.props.userProfile.id,
-  //     this.state.type
-  //   );
-  //   if (response.ok) {
-  //     this.setState(
-  //       {
-  //         ...this.state,
-  //         buttonText: "resendotp",
-  //         inputDisable: false,
-  //         disable: true,
-  //         seconds1: "02:00",
-  //         verificationText:
-  //           apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber
-  //       },
-  //       () => {
-  //         this.startTimer();
-  //       }
-  //     );
-  //   } else {
-  //     this.setState({
-  //       ...this.state,
-  //       errorMsg: apiCalls.convertLocalLang("request_fail")
-  //     });
-  //   }
-  // };
+
   getVerifyData = async () => {
     let response = await apiCalls.getVerificationFields(
       this.props.userProfile.id
     );
     if (response.ok) {
-      console.log(response.data);
       this.setState({ ...this.state, verifyData: response.data });
-      console.log(this.state.verifyData);
     }
   };
   getOTP = async (val) => {
@@ -206,7 +153,6 @@ class WithdrawSummary extends Component {
       this.state.type
     );
     if (response.ok) {
-      console.log(response);
       this.setState({
         ...this.state,
         tooltipVisible: true,
@@ -219,7 +165,7 @@ class WithdrawSummary extends Component {
 
       setTimeout(() => {
         this.setState({ buttonText: "resendotp", tooltipVisible: false });
-      }, 8000);
+      }, 20000);
     } else {
       this.setState({
         ...this.state,
@@ -229,49 +175,23 @@ class WithdrawSummary extends Component {
   };
 
   getEmail = async (val) => {
-    debugger;
     let response = await apiCalls.sendEmail(
       this.props.userProfile.id,
       this.state.type
     );
     if (response.ok) {
-      console.log(response);
-      this.setState(
-        {
-          ...this.state,
-          emailText: "sentVerification",
-          emailDisable: false,
-          textDisable: true,
-          tooltipEmail: true,
-          //seconds: "02:00",
-          emailVerificationText:
-            apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
-        }
-        // () => {
-        //   this.startTimer();
-        // }
-      );
-
-      // setTimeout(() => {
-      //   this.setState({ emailText: "resendEmail", tooltipEmail: false });
-      // }, 20000);
-
-      // if (response.data.length == null) {
-      //   debugger;
-      //   this.setState({
-      //     ...this.state,
-      //     emailText: "resendEmail",
-      //     tooltipEmail: false
-      //   });
-      // } else {
-      //   this.setState({
-      //     ...this.state,
-
-      //     tooltipEmail: false,
-      //     verifyVisible:true
-      //   });
-      // }
-      // console.log(this.state.emailText);
+      this.setState({
+        ...this.state,
+        emailText: "sentVerification",
+        emailDisable: false,
+        textDisable: true,
+        tooltipEmail: true,
+        emailVerificationText:
+          apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
+      });
+      setTimeout(() => {
+        this.setState({ emailText: "resendEmail", tooltipEmail: false });
+      }, 20000);
     } else {
       this.setState({
         ...this.state,
@@ -286,13 +206,10 @@ class WithdrawSummary extends Component {
       values.code
     );
     if (response.ok) {
-      message.destroy();
-      message.success({
-        content: "Email verified successfully",
-        className: "custom-msg",
-        duration: 0.5
-      });
+      success("Email Verified successfully") 
     }
+    else{error(response.data)}
+    
   };
 
   getOtpVerification = async () => {
@@ -301,12 +218,7 @@ class WithdrawSummary extends Component {
       this.state.otpCode
     );
     if (response.ok) {
-      message.destroy();
-      message.success({
-        content: "OTP verified successfully",
-        className: "custom-msg",
-        duration: 0.5
-      });
+      success("OTP Verified successfully") 
     } else {
       this.useDivRef.current.scrollIntoView();
       this.setState({
@@ -341,12 +253,7 @@ class WithdrawSummary extends Component {
       this.props.userProfile.userId
     );
     if (response.ok) {
-      message.destroy();
-      message.success({
-        content: "Authenticator verified successfully",
-        className: "custom-msg",
-        duration: 0.5
-      });
+      success("Authenticator Verified successfully") 
     } else {
       this.useDivRef.current.scrollIntoView();
       this.setState({
@@ -363,18 +270,6 @@ class WithdrawSummary extends Component {
   };
   saveWithdrwal = async (values) => {
     if (this.state.onTermsChange) {
-      // let response = await apiCalls.getVerification(
-      //   this.props.userProfile.id,
-      //   values.code
-      // );
-
-      // if (response.ok) {
-      // message.destroy();
-      // message.success({
-      //   content: "OTP verified successfully",
-      //   className: "custom-msg",
-      //   duration: 0.5
-      // });
       if (this.props.userProfile.isBusiness) {
         let saveObj = this.props.sendReceive.withdrawCryptoObj;
         let trackAuditLogData = this.props.trackAuditLogData;
@@ -398,14 +293,6 @@ class WithdrawSummary extends Component {
         this.props.changeStep("withdraw_crypto_liveness");
       }
       this.setState({ ...this.state, errorMsg: false });
-      // }
-      // else {
-      //   this.useDivRef.current.scrollIntoView();
-      //   this.setState({
-      //     ...this.state,
-      //     errorMsg: apiCalls.convertLocalLang("invalid_code")
-      //   });
-      // }
     } else {
       this.setState({
         ...this.state,
@@ -423,7 +310,8 @@ class WithdrawSummary extends Component {
   firstAddress = this.address.slice(0, 4);
   lastAddress = this.address.slice(-4);
 
-   timer=this.state.seconds < 10 ? `0${this.state.seconds}` : this.state.seconds
+  timer =
+    this.state.seconds < 10 ? `0${this.state.seconds}` : this.state.seconds;
 
   render() {
     const { Paragraph, Text } = Typography;
@@ -438,15 +326,6 @@ class WithdrawSummary extends Component {
         />
       ),
       resendotp: (
-        // <Translate
-        //   className={`pl-0 ml-0 text-yellow-50
-        //   ${
-        //     disable ? "c-notallowed" : ""
-        //   }
-        //   `}
-        //   content="resend_code"
-        //   with={{ counter: `${disable ? "(" + seconds1 + ")" : ""}` }}
-        // />
         <Translate
           className={`pl-0 ml-0 text-yellow-50 `}
           content="resend_code"
@@ -500,10 +379,12 @@ class WithdrawSummary extends Component {
       )
     };
 
-    const tooltipTimer= seconds < 10 ? `0${seconds}` : seconds
-    const tooltipValue="Haven\'t receive code?Request new code in " + tooltipTimer +" seconds. The code will expire after 30mins."
-    
-   
+    const tooltipTimer = seconds < 10 ? `0${seconds}` : seconds;
+    const tooltipValue =
+      "Haven't receive code?Request new code in " +
+      tooltipTimer +
+      " seconds. The code will expire after 30mins.";
+
     if (this.state.loading) {
       return <Loader />;
     }
@@ -643,12 +524,7 @@ class WithdrawSummary extends Component {
                       {btnList[this.state.buttonText]}
                     </Button>
                     {this.state.tooltipVisible == true && (
-                      <Tooltip
-                        placement="topRight"
-                        // title="Haven't receive code?Request new code in 44 seconds. The code will expire after 30mins."
-                        title={tooltipValue}
-
-                      >
+                      <Tooltip placement="topRight" title={tooltipValue}>
                         <span className="icon md info mr-8" />
                       </Tooltip>
                     )}
@@ -657,11 +533,6 @@ class WithdrawSummary extends Component {
                     </Button>
                   </>
                 }
-                //   className="input-label otp-verify"
-                //   rules={[{ required: true, message: "Is required" }]}
-                //   help={<Text className="fs-12 text-white-30 fw-200">
-                //   Enter the 6 digit sent to 905***9290
-                // </Text>}
               >
                 <Input
                   type="text"
@@ -675,10 +546,7 @@ class WithdrawSummary extends Component {
                     ) {
                       event.preventDefault();
                     } else if (/^\d+$/.test(event.key)) {
-                      //this.setState({...this.state,otpCode:event.currentTarget.value})
                       this.handleOtp(event.currentTarget.value);
-                      // console.log(event.currentTarget.value)
-                      // console.log(this.state.otpCode)
                     } else if (
                       event.key == "Backspace" ||
                       event.key == "Delete"
@@ -689,7 +557,6 @@ class WithdrawSummary extends Component {
                   }}
                   style={{ width: "100%" }}
                   onChange={(e) => this.handleChange(e, "code")}
-                  // disabled={this.state.inputDisable}
                 />
               </Form.Item>
             )}
@@ -722,10 +589,7 @@ class WithdrawSummary extends Component {
                       {emailBtn[this.state.emailText]}
                     </Button>
                     {this.state.tooltipEmail == true && (
-                      <Tooltip
-                        placement="topRight"
-                        title={tooltipValue}
-                      >
+                      <Tooltip placement="topRight" title={tooltipValue}>
                         <span className="icon md info mr-8" />
                       </Tooltip>
                     )}
@@ -744,12 +608,6 @@ class WithdrawSummary extends Component {
                     {/* )}  */}
                   </>
                 }
-
-                //   className="input-label otp-verify"
-                //   rules={[{ required: true, message: "Is required" }]}
-                //   help={<Text className="fs-12 text-white-30 fw-200">
-                //   Enter the 6 digit sent to 905***9290
-                // </Text>}
               >
                 <Input
                   type="text"
@@ -788,9 +646,6 @@ class WithdrawSummary extends Component {
                 className="input-label otp-verify my-36"
                 extra={
                   <div>
-                    {/* <Text className="fs-12 text-white-30 fw-200">
-                    {this.state.emailVerificationText}
-                  </Text> */}
                     <Text
                       className="fs-12 text-red fw-200"
                       style={{ float: "right", color: "var(--textRed)" }}
@@ -803,7 +658,7 @@ class WithdrawSummary extends Component {
                 label={
                   <>
                     <Button type="text" onClick={this.getAuthenticator}>
-                      Verify
+                      VERIFY
                     </Button>
                   </>
                 }
@@ -848,11 +703,9 @@ class WithdrawSummary extends Component {
               </Paragraph>
             </div>
 
-
             <Button size="large" block className="pop-btn" htmlType="submit">
               <Translate content="with_draw" component={Text} />
             </Button>
-           
           </Form>
           <div className="text-center mt-16">
             <Translate
