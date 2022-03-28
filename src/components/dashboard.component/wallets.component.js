@@ -40,9 +40,13 @@ class Wallets extends Component {
             return;
         }
         const isDocsRequested = this.props.userProfile.isDocsRequested;
+        const is2faEnabled = this.props.userProfile.twofactorVerified;
         if (isDocsRequested) {
             this.showDocsError();
             return;
+        }
+        if(!is2faEnabled){
+            this.props.history.push("/enabletwofactor");
         }
         if (e === 2) {
             this.props.dispatch(setWithdrawfiatenaable(true))

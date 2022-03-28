@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Switch, Drawer,message,Button,Checkbox } from "antd";
+import { Typography, Switch, Drawer,message,Button,Checkbox,Form,Input,Alert } from "antd";
 import Translate from "react-translate-component";
 import Changepassword from "../../components/changepassword";
 import { connect } from "react-redux";
@@ -10,24 +10,36 @@ import Moment from "react-moment";
 import apiCalls from "../../api/apiCalls";
 
 const Security = ({ userConfig, userProfileInfo,userProfile,fetchWithdrawVerifyObj },props) => {
+  const [form] = Form.useForm();
   const [isChangepassword, setisChangepassword] = useState(false);
-// const [state,setState]=useState({status:false});
-// const [checked,setChecked]=useState(false)
+  const[verifyData,setVerifyData]=useState({})
 const [factor,setFactor]=useState(false)
 const [phone,setPhone]=useState(false)
 const [email,setEmail]=useState(false)
+const [errorMsg, setErrorMsg] = useState(null);
+
   const showDrawer = () => {
     setisChangepassword(true);
     store.dispatch(updatechange());
   };
   useEffect(() => {
     debugger
-    securityTrack();
-    setFactor(userProfile.withdrawVerifyObj?.TwoFactorEnabled)
-    setPhone(userProfile.withdrawVerifyObj?.IsPhoneVerified)
-    setEmail(userProfile.withdrawVerifyObj?.Withdrawverification)
-     console.log(userProfile.withdrawVerifyObj)
+    securityTrack()
+       getVerifyData()
   }, []);
+  const getVerifyData=async()=>{
+    debugger
+    let response= await apiCalls.getVerificationFields(userConfig.id);
+    if(response.ok){ 
+     console.log(response.data.isPhoneVerified)
+      //fetchWithdrawVerifyObj(response.data)
+      setVerifyData(response.data)
+       setPhone(response.data?.isPhoneVerified )
+       setEmail(response.data?.isEmailVerification)
+       form.setFieldsValue(response.data);
+    }
+     }
+  setTimeout(() =>console.log(factor,email,phone),5000)
   const securityTrack = () => {
     apiCalls.trackEvent({
       Type: "User",
@@ -44,11 +56,12 @@ const [email,setEmail]=useState(false)
   const onClose = () => {
     setisChangepassword(false);
   };
+
+  
   const enableDisable2fa = (status) => {
     debugger
     var url = "";
     if (status) {
-      // setState({status:true})
       url =
         process.env.REACT_APP_AUTHORITY +
         "/account/login?returnUrl=/manage/EnableAuthenticator";
@@ -61,36 +74,35 @@ const [email,setEmail]=useState(false)
   };
 
  const handleInputChange=(e,type)=>{
-//   debugger
-//   if(type=="2FA"){
-//       setFactor(e.target.checked);
-//     }{
-      // message.destroy();
-      // message.warning({
-      //   content: "Please enable 2fa",
-      //   className: "custom-msg"
-      // });
-//       setFactor(e.target.checked=false);
-//     }
-//   console.log(checked)
-// }
+  debugger
+   if(type=="phone"){
+     setPhone(e.target.checked?true:false)
+   }else if(type=="email"){
+    setEmail(e.target.checked?true:false)
+   }else if(type=="factor"){
+    setFactor(e.target.checked?true:false)
+   }
+ 
 }
 const saveDetails=async()=>{
   debugger
 
   let obj={
-   // "MemberId":"d3219877-fcbe-4d74-8109-34a304bea85f",
     "MemberId": userConfig.id,
-    "Withdrawverification": email,
+    "isEmailVerification": email,
     "IsPhoneVerified": phone,
     "TwoFactorEnabled":factor
 }
-
+// obj.isEmailVerification=verifyData.isEmailVerification;
+// obj.IsPhoneVerified=verifyData.isPhoneVerified;
+// obj.TwoFactorEnabled=verifyData.twoFactorEnabled;
 const response = await apiCalls.updateSecurity(obj);
 if(email&&phone&&factor){
-    warning("Please select only two checkboxes") 
+    // warning("Please select only two checkboxes") 
+    return setErrorMsg("Please select only two checkboxes");
 }
-else if(email&&phone||email&&factor||phone&&factor){
+else
+ if(email&&phone||email&&factor||phone&&factor){
 if(response.ok){
   fetchWithdrawVerifyObj(obj);
   success("Data saved successfully") 
@@ -99,17 +111,29 @@ if(response.ok){
 }
 }
 else{
-  message.destroy();
-  message.warning({
-    content: "Please select any two checkboxes",
-    className: "custom-msg"
-  });
+//   message.destroy();
+//   message.warning({
+//     content: "Please select any two checkboxes",
+//     className: "custom-msg"
+//   });
+return setErrorMsg("Please select any two checkboxes");
 }
 }
 
   const { Title, Paragraph } = Typography;
   return (
     <>
+     {errorMsg !== null && (
+              <Alert
+                className="mb-12"
+                closable
+                type="error"
+                message={"Error"}
+                description={errorMsg}
+                onClose={() => setErrorMsg(null)}
+                showIcon
+              />
+            )}
       <div className="box basic-info">
         <Translate
           content="TwoFactorAuthentication"
@@ -251,32 +275,41 @@ else{
           component={Paragraph}
           className="basic-decs"
         />
+        <Form>
         <ul className="user-list pl-0">
           <li className="profileinfo">
             <div className="profile-block" >
+           
               <label className="text-center custom-checkbox" >
-              {/* <input
-              name="isCheck"
-              type="checkbox"
-              onCheked={factor}
-               onChange={(e) => handleInputChange(e,"2FA")}
-             
-              className="grid_check_box"
-            /> */}
-            <input
+              <Input
+              name="check"
+                    className="ant-custumcheck c-pointer"
+                      type="checkbox"
+                      checked={factor}
+                      onChange={(e) => handleInputChange(e,"factor")}
+                      // handleChange={(checked) => handleInputChange(checked)}
+                      // onChange={({ currentTarget: { checked } }) => {
+                      //   setPhone(checked ? true : false );
+                      // }}
+                      // defaultChecked={(userProfile.withdrawVerifyObj?.isPhoneVerified) }
+
+                    />
+            {/* <Input
+              name="check"
                     className="ant-custumcheck c-pointer"
                       type="checkbox"
                       handleChange={
                         (checked) => handleInputChange(checked)
-                        // console.log("PLease select enable")
                         }
-                      onCheked={factor}
+                     
                       onChange={({ currentTarget: { checked } }) => {
                         setFactor(checked ? true : false );
                       }}
-                      defaultChecked={(userProfile.withdrawVerifyObj?.TwoFactorEnabled) || false}
-                    />
+                      defaultChecked={(userProfile.withdrawVerifyObj?.twoFactorEnabled) }
+                    /> */}
                 <span>{" "}</span>
+               
+              
               </label>
               <br></br>
               <label className="mb-0 profile-label ml-8 fs-14 text-white fw-200" >
@@ -286,43 +319,66 @@ else{
                   className="mb-0 profile-label"
                   
                 />
+                
               </label>
+             
+              
               <label className="text-center custom-checkbox">
-            
-             <input
+             
+             <Input
+              name="check"
                     className="ant-custumcheck c-pointer"
                       type="checkbox"
-                      handleChange={(checked) => handleInputChange(checked)}
-                      onCheked={phone}
-                      onChange={({ currentTarget: { checked } }) => {
-                        setPhone(checked ? true : false );
-                      }}
-                      defaultChecked={(userProfile.withdrawVerifyObj?.IsPhoneVerified) || false}
+                      checked={phone}
+                      onChange={(e) => handleInputChange(e,"phone")}
+                      // handleChange={(checked) => handleInputChange(checked)}
+                      // onChange={({ currentTarget: { checked } }) => {
+                      //   setPhone(checked ? true : false );
+                      // }}
+                      // defaultChecked={(userProfile.withdrawVerifyObj?.isPhoneVerified) }
 
                     />
+                    
                 <span></span>{" "}
+             
               </label>
+              
               <label className="mb-0 ml-8 fs-14 text-white fw-200 " >
                 <Translate
                   content="Phone_verification"
                   component={Paragraph.label}
                   className="mb-0 profile-label"
                 />
+           
               </label>
+             
               
               <label className="text-center custom-checkbox" style={{paddingLeft:60}}>
-             
-              <input
+              
+              <Input
+              name="check"
+                    className="ant-custumcheck c-pointer"
+                      type="checkbox"
+                      checked={email}
+                      onChange={(e) => handleInputChange(e,"email")}
+                      // handleChange={(checked) => handleInputChange(checked)}
+                      // onChange={({ currentTarget: { checked } }) => {
+                      //   setPhone(checked ? true : false );
+                      // }}
+                      // defaultChecked={(userProfile.withdrawVerifyObj?.isPhoneVerified) }
+
+                    />
+              {/* <Input
+               name="check"
                     className="ant-custumcheck c-pointer"
                       type="checkbox"
                       handleChange={(checked) => handleInputChange(checked)}
-                      onCheked={email}
                       onChange={({ currentTarget: { checked } }) => {
-                        setEmail(checked ? true : false );
+                        checked?setEmail(checked ? true : false ):setEmail(checked ? false : true );
                       }}
-                      defaultChecked={(userProfile.withdrawVerifyObj?.Withdrawverification) || false}
+                      defaultChecked={(userProfile.withdrawVerifyObj?.isEmailVerification)}
 
-                    />
+                    /> */}
                 <span></span>{" "}
               </label>
               <label className="mb-0 ml-8 fs-14 text-white fw-200">
@@ -332,6 +388,7 @@ else{
                   className="mb-0 profile-label"
                 />
               </label>
+              
               <div className="text-center" style={{ flexGrow: 2,marginTop:"-20px",marginLeft:"6cm" }}>
                 <Button className="pop-btn px-36" onClick={() => saveDetails()} >
                   save
@@ -341,7 +398,7 @@ else{
           </li>
          
         </ul>
-       
+        </Form>
       </div>
     </>
   );
