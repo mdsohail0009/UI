@@ -280,43 +280,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                         ]}>
                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_address1')} />
                     </Form.Item>
-
-                    <Translate
-                        content="Beneficiary_Details"
-                        component={Paragraph}
-                        className="mb-16 fs-14 text-aqua fw-500 text-upper"
-                    />
-                    <Form.Item>
-                        <div className="d-flex">
-                            <Translate
-                                className="input-label"
-                                content="Recipient_full_name"
-                                component={Form.label}
-                            />{" "}
-                            <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
-                        <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
-                    </Form.Item>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-24"
-                        name="beneficiaryAccountAddress"
-                        label={<Translate content="Recipient_address1" component={Form.label} />}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                            },
-                            {
-                                whitespace: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                            },
-                            {
-                                validator: validateContentRule
-                            }
-                        ]}>
-                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
-                    </Form.Item>
-                  
+ 
                     <Form.Item
                 className="custom-forminput custom-label  mb-24"
                 name="country"
@@ -391,11 +355,54 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                                   callback();
                                 }
                               }
+                              
+                            },
+                            {
+                                required: true,
+                                message: apiCalls.convertLocalLang('is_required')
                             }
+                           
                           ]}
                         >
                         <Input className="cust-input" maxLength="6" placeholder={apiCalls.convertLocalLang('zipcode')} />
                     </Form.Item>
+                    <Translate
+                        content="Beneficiary_Details"
+                        component={Paragraph}
+                        className="mb-16 fs-14 text-aqua fw-500 text-upper"
+                    />
+                    <Form.Item>
+                        <div className="d-flex">
+                            <Translate
+                                className="input-label"
+                                content="Recipient_full_name"
+                                component={Form.label}
+                            />{" "}
+                            <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
+                        <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
+                    </Form.Item>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-24"
+                        name="beneficiaryAccountAddress"
+                        label={<Translate content="Recipient_address1" component={Form.label} />}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                whitespace: true,
+                                message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                validator: validateContentRule
+                            }
+                        ]}>
+                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
+                    </Form.Item>
+                  
+                   
                     
                     <Form.Item className="mb-0 mt-16">
                         <Button disabled={isLoading}
