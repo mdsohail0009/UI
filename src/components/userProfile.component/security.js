@@ -116,7 +116,8 @@ else{
 //     content: "Please select any two checkboxes",
 //     className: "custom-msg"
 //   });
-return setErrorMsg("Please select any two checkboxes");
+//return setErrorMsg("Please select any two checkboxes");
+return setErrorMsg("Please select any two withdraw verification options");
 }
 }
 
