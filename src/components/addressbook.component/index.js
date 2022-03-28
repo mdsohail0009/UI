@@ -56,6 +56,7 @@ class AddressBook extends Component {
         { field: "accountNumber", title: apiCalls.convertLocalLang('Bank_account'), filter: true, width: 220 },
         { field: "routingNumber", title: apiCalls.convertLocalLang('BIC_SWIFT_routing_number'), filter: true, width: 180 },
         { field: "bankName", title: apiCalls.convertLocalLang('Bank_name'), filter: true, width: 200 },
+        { field: "isPrimary", title: "3rd Party", filter: true, width: 200 },
         { field: "bankAddress", title: apiCalls.convertLocalLang('Bank_address1'), filter: true, width: 250 },
         { field: "beneficiaryAccountName", title: apiCalls.convertLocalLang('Recipient_full_name'), filter: true, width: 200 },
         { field: "beneficiaryAccountAddress", title: apiCalls.convertLocalLang('Recipient_address1'), filter: true, width: 250 },

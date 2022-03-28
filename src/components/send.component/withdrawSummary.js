@@ -128,6 +128,7 @@ class WithdrawSummary extends Component {
   };
 
   saveWithdrwal = async (values) => {
+    debugger
     if (this.state.onTermsChange) {
       let response = await apiCalls.getVerification(
         this.props.userProfile.id,
@@ -147,9 +148,11 @@ class WithdrawSummary extends Component {
           trackAuditLogData.Action = 'Save';
           trackAuditLogData.Remarks = 'Withdraw Crypto save';
           saveObj.info = JSON.stringify(trackAuditLogData)
-          let withdrawal = await withDrawCrypto(saveObj);
-          if (withdrawal.ok) {
-            this.props.dispatch(setCryptoFinalRes(withdrawal.data));
+          let resp = await withDrawCrypto(saveObj);
+          if (resp.ok) {
+            console.log(resp.data)
+           // this.setState({ ...this.state, errorMsg: resp.data })
+            this.props.dispatch(setCryptoFinalRes(resp.data));
             this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
             //setIsWithdrawSuccess(true)
             this.props.dispatch(setWithdrawcrypto(null));
@@ -157,15 +160,19 @@ class WithdrawSummary extends Component {
             this.props.changeStep("withdraw_crpto_success");
             publishBalanceRfresh("success");
           }
+          else{
+             console.log(resp.data)
+            this.setState({ ...this.state, errorMsg: resp.data });
+          }
         }
         else {
-          this.setState({ ...this.state, errorMsg: response.data })
+          //  this.setState({ ...this.state, errorMsg: resp.data })
           this.props.dispatch(
             setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
           );
           this.props.changeStep("withdraw_crypto_liveness");
         }
-        this.setState({ ...this.state, errorMsg: false });
+        //this.setState({ ...this.state, errorMsg: false });
       } else {
         this.useDivRef.current.scrollIntoView();
         this.setState({ ...this.state, errorMsg: apiCalls.convertLocalLang("invalid_code") });

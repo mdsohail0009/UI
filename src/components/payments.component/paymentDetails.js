@@ -251,7 +251,14 @@ class PaymentDetails extends Component {
                                                         </td>
                                                         <td>
                                                             <div className='d-flex align-center justify-content'>
-                                                                <span>{item.bankname}<Badge size="small" className='ml-8' count={'3rd Party'} style={{border: 'none'}} /></span>
+                                                                <span>{item.bankname}
+                                                                {/* <Badge size="small" className='ml-8'
+                                                                count={'3rd Party'} 
+                                                                 style={{border: 'none'}} /> */}
+                                                                {item.isPrimary!==null? <Badge size="small" className='ml-8'
+                                                                count={'3rd Party'} 
+                                                                 style={{border: 'none'}} />:""}
+                                                                 </span>
                                                                 <Popover
                                                                     className='more-popover'
                                                                     content={this.popOverContent}
