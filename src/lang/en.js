@@ -473,6 +473,7 @@ export default {
   menu_wallets: "Balances",
   crypto_wallets: "Crypto Balances",
   verification_code: "Enter verification code",
+  withdraw_verification_options:"Please select two withdraw verification options from below.",
   get_code: "GET OTP",
   resend_code: "RESEND CODE%(counter)s",
   digit_code: " Enter 6 digit code sent to",
@@ -496,5 +497,15 @@ export default {
   asset_directory: 'Asset Directory',
   you_are_sending: 'You are sending',
   fees: 'Fees',
-  you_receive: 'You will receive'
+  you_receive: 'You will receive',
+  company_name:'Company Name',
+  withdraw_verification:'Withdraw Verification',
+  Phone_verification:'Phone Verification',
+  Email_verification:'Email Verification',
+  get_email:"GET EMAIL",
+  resend_email: "RESEND EMAIL%(counter)s",
+  sent_verification:'Verification code sent',
+  verify_btn:'VERIFY',
+  verify_button:'VERIFY'
+
 }
