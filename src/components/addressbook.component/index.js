@@ -96,7 +96,7 @@ class AddressBook extends Component {
     statusUpdate = () => {
         if (!this.state.isCheck) {
             this.setState({ alert: true })
-            setTimeout(() => this.setState({ alert: false }), 2500)
+            setTimeout(() => this.setState({ alert: false }), 500)
         }
         else {
             this.setState({ modal: true, })
