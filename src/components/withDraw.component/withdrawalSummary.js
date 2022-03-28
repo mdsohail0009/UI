@@ -115,9 +115,11 @@ const WithdrawalFiatSummary = ({
   useEffect(() => {
     withdrawSummayTrack();
     getVerifyData();
+  }, []);
 
+  useEffect(()=>{
     seconds > 0 && setInterval(() => setSeconds(seconds - 1), 1000);
-  }, [seconds]);
+  },[seconds])
 
   const withdrawSummayTrack = () => {
     apiCalls.trackEvent({
@@ -349,16 +351,16 @@ const WithdrawalFiatSummary = ({
       <Text className="fs-20 text-white-30 d-block mb-36">
         {sendReceive.withdrawFiatObj?.bankName}
       </Text>
-      <Text className="fs-14 text-white-50 fw-200">
+      {/* <Text className="fs-14 text-white-50 fw-200">
         <Translate
           content="Recipient_full_name"
           component={Text}
           className="fs-14 text-white-50 fw-200"
         />
-      </Text>
-      <Text className="fs-20 text-white-30 d-block mb-36">
+      </Text> */}
+      {/* <Text className="fs-20 text-white-30 d-block mb-36">
         {sendReceive.withdrawFiatObj?.beneficiaryAccountName}
-      </Text>
+      </Text> */}
       <ul className="pl-0 ml-16 text-white-50 my-36">
         <li>
           <Translate
@@ -383,12 +385,12 @@ const WithdrawalFiatSummary = ({
         autoComplete="off"
       >
         
-        {/* {verifyData.isPhoneVerified == true && ( */}
+        {verifyData.isPhoneVerified == true && (
           <Text className="fs-14 mb-4 text-white d-block fw-200">
             Phone verification code *
           </Text>
-        {/* )} */}
-        {/* {verifyData.isPhoneVerified == true && ( */}
+        )}
+        {verifyData.isPhoneVerified == true && (
           <Form.Item
             name="code"
             className="input-label otp-verify my-36"
@@ -448,13 +450,13 @@ const WithdrawalFiatSummary = ({
               // disabled={this.state.inputDisable}
             />
           </Form.Item>
-        {/* )} */}
-        {/* {verifyData.isEmailVerification == true && ( */}
+         )} 
+        {verifyData.isEmailVerification == true && (
           <Text className="fs-14 mb-4 text-white d-block fw-200">
             Email verification code *
           </Text>
-        {/* )} */}
-        {/* {verifyData.isEmailVerification == true && ( */}
+         )}
+        {verifyData.isEmailVerification == true && (
         <Form.Item
           name="emailCode"
           className="input-label otp-verify my-36"
@@ -516,7 +518,7 @@ const WithdrawalFiatSummary = ({
             // disabled={this.state.emailDisable}
           />
         </Form.Item>
-        {/* )} */}
+        )} 
         {verifyData.twoFactorEnabled == true && (
           <Text className="fs-14 mb-4 text-white d-block fw-200">
             Email verification code *

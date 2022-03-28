@@ -288,7 +288,11 @@ class FaitDeposit extends Component {
                         component={Text}
 
                       /><span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
-                        <NumberFormat className="cust-input mb-0" customInput={Input} thousandSeparator={true} prefix={""}
+                        <NumberFormat
+                         className="cust-input mb-0" 
+                         customInput={Input} 
+                         thousandSeparator={true}
+                          prefix={""}
                           placeholder="0.00"
                           decimalScale={2}
                           allowNegative={false}
