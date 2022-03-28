@@ -59,6 +59,7 @@ const WithdrawalFiatSummary = ({
   const [verifyOtpText, setVerifyOtpText] = useState("");
   const [seconds, setSeconds] = useState(120);
   const [minutes, setMinutes] = useState(2);
+  const [emailOtp,setEmailOtp]=useState("");
   const btnList = {
     get_otp: (
       <Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />
@@ -211,7 +212,7 @@ const WithdrawalFiatSummary = ({
       success("Email  verified successfully") 
     }
     else{error(response.data)}
-  };
+  }
   
   const getOTP = async (val) => {
     let response = await apiCalls.getCode(userConfig.id, type);
@@ -266,6 +267,13 @@ const WithdrawalFiatSummary = ({
   };
   const handleAuthenticator = (e) => {
     setAuthCode(e.target.value);
+  };
+
+  const handleSendOtp = (val) => {
+    setEmailOtp(val.emailCode)
+    setVerifyOtpText("verifyBtn")
+    setTooltipEmail(false)
+    setEmailText("")
   };
 
   return (
@@ -407,7 +415,15 @@ const WithdrawalFiatSummary = ({
                 </Text>
               </div>
             }
-            rules={[{ required: true, message: "Is required" }]}
+            //rules={[{ required: true, message: "Is required" }]}
+            rules={[
+             
+              {
+                  required: true,
+                  message: apiCalls.convertLocalLang('is_required')
+              }
+             
+            ]}
             label={
               <>
                 <Button type="text" onClick={getOTP} disabled={disable}>
@@ -473,7 +489,15 @@ const WithdrawalFiatSummary = ({
               </Text>
             </div>
           }
-          rules={[{ required: true, message: "Is required" }]}
+          //rules={[{ required: true, message: "Is required" }]}
+          rules={[
+           
+            {
+                required: true,
+                message: apiCalls.convertLocalLang('is_required')
+            }
+           
+          ]}
           label={
             <>
               <Button type="text" onClick={getEmail}>
@@ -508,7 +532,7 @@ const WithdrawalFiatSummary = ({
               ) {
                 event.preventDefault();
               } else if (/^\d+$/.test(event.key)) {
-                this.handleSendOtp(event.currentTarget.value);
+                handleSendOtp(event.currentTarget.value);
               } else if (event.key == "Backspace" || event.key == "Delete") {
               } else {
                 event.preventDefault();
@@ -538,8 +562,28 @@ const WithdrawalFiatSummary = ({
                 </Text>
               </div>
             }
-            rules={[{ required: true, message: "Is required" }]}
-            label={
+            rules={[
+              {
+                validator: (rule, value, callback) => {
+                  var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                  if (value) {
+                    if (!regx.test(value)) {
+                      callback("Invalid zip code");
+                    } else if (regx.test(value)) {
+                      callback();
+                    }
+                  } else {
+                    callback();
+                  }
+                }
+                
+              },
+              {
+                  required: true,
+                  message: apiCalls.convertLocalLang('is_required')
+              }
+             
+            ]}            label={
               <>
                 <Button type="text" onClick={getAuthenticator}>
                   VERIFY

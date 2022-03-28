@@ -85,27 +85,23 @@ const [errorMsg, setErrorMsg] = useState(null);
  
 }
 const saveDetails=async()=>{
-  debugger
-
   let obj={
     "MemberId": userConfig.id,
     "isEmailVerification": email,
     "IsPhoneVerified": phone,
     "TwoFactorEnabled":factor
 }
-// obj.isEmailVerification=verifyData.isEmailVerification;
-// obj.IsPhoneVerified=verifyData.isPhoneVerified;
-// obj.TwoFactorEnabled=verifyData.twoFactorEnabled;
+
 const response = await apiCalls.updateSecurity(obj);
 if(email&&phone&&factor){
-    // warning("Please select only two checkboxes") 
     return setErrorMsg("Please select only two checkboxes");
 }
 else
  if(email&&phone||email&&factor||phone&&factor){
 if(response.ok){
+  setErrorMsg(false)
   fetchWithdrawVerifyObj(obj);
-  success("Data saved successfully") 
+  success("Withdraw Verification details saved successfully") 
 }else{
     error(response.data)
 }
@@ -129,7 +125,7 @@ return setErrorMsg("Please select any two withdraw verification options");
                 className="mb-12"
                 closable
                 type="error"
-                message={"Error"}
+                message={"Withdraw Verification"}
                 description={errorMsg}
                 onClose={() => setErrorMsg(null)}
                 showIcon
