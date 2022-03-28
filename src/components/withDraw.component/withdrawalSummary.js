@@ -115,9 +115,11 @@ const WithdrawalFiatSummary = ({
   useEffect(() => {
     withdrawSummayTrack();
     getVerifyData();
+  }, []);
 
+  useEffect(()=>{
     seconds > 0 && setInterval(() => setSeconds(seconds - 1), 1000);
-  }, [seconds]);
+  },[seconds])
 
   const withdrawSummayTrack = () => {
     apiCalls.trackEvent({
@@ -349,16 +351,16 @@ const WithdrawalFiatSummary = ({
       <Text className="fs-20 text-white-30 d-block mb-36">
         {sendReceive.withdrawFiatObj?.bankName}
       </Text>
-      <Text className="fs-14 text-white-50 fw-200">
+      {/* <Text className="fs-14 text-white-50 fw-200">
         <Translate
           content="Recipient_full_name"
           component={Text}
           className="fs-14 text-white-50 fw-200"
         />
-      </Text>
-      <Text className="fs-20 text-white-30 d-block mb-36">
+      </Text> */}
+      {/* <Text className="fs-20 text-white-30 d-block mb-36">
         {sendReceive.withdrawFiatObj?.beneficiaryAccountName}
-      </Text>
+      </Text> */}
       <ul className="pl-0 ml-16 text-white-50 my-36">
         <li>
           <Translate
