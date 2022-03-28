@@ -52,6 +52,7 @@ class PaymentsView extends Component {
         }
         this.formRef = React.createRef();
         this.useDivRef = React.createRef();
+
     }
 
     componentDidMount() {
@@ -115,6 +116,8 @@ class PaymentsView extends Component {
         }
     }
 
+
+
     docPreview = async (file) => {
         this.setState({ ...this.state, loading: true });
         let obj = file.path ? file.path : file.Path;
@@ -143,9 +146,11 @@ class PaymentsView extends Component {
             this.DownloadUpdatedFile()
         }
     }
+
     docPreviewClose = () => {
         this.setState({ ...this.state, previewModal: false, previewPath: null })
     }
+
     messageObject = (id) => {
         return {
             "id": uuidv4(),
@@ -157,17 +162,8 @@ class PaymentsView extends Component {
             "isCustomer": true
         }
     }
-    preList = (i,obj) => {
-        let preList = this.state.fileDetails[i]
-        if (preList !== undefined) {
-            preList.isChecked = false
-            this.state.fileDetails.push(obj, preList);
-        } else {
-            this.state.fileDetails.push(obj);
-        }
-    }
+
     handleUpload = ({ file }, type) => {
-        debugger
         this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, error: null })
         let obj = {
             "documentId": "00000000-0000-0000-0000-000000000000",
@@ -179,55 +175,142 @@ class PaymentsView extends Component {
             "status": false,
             "Path": `${file.response}`,
         }
-        
-        if (file.response !== undefined) {
-            if(type == "IDENTITYPROOF"){
-               this.state.docIdentityProofObjs.shift()
-            this.preList([0],obj)
+        if (type == "IDENTITYPROOF") {
+            this.state.docIdentityProofObjs.shift()
+            // let obj = {
+            //     "documentId": "00000000-0000-0000-0000-000000000000",
+            //     "documentName": `${file.name}`,
+            //     "id": "00000000-0000-0000-0000-000000000000",
+            //     "isChecked": file.name == "" ? false : true,
+            //     "remarks": `${file.size}`,
+            //     "state": null,
+            //     "status": false,
+            //     "Path": `${file.response}`,
+            // }
+            if (file.response !== undefined) {
+                let preList = this.state.fileDetails[0]
+                if (preList !== undefined) {
+                    preList.isChecked = false
+                    this.state.fileDetails.push(obj, preList);
+                } else {
+                    this.state.fileDetails.push(obj);
+                }
                 this.state.docIdentityProofObjs.push(obj);
                 this.setState({ ...this.state, docIdentityProof: obj });
-            }
-            else if (type == "ADDRESSPROOF") {
-                 this.state.docAddressProofObjs.shift()
-                this.preList([1],obj)
-                 this.state.docAddressProofObjs.push(obj)
-                this.setState({ ...this.state, docAddressProof: obj })}
-            else if (type == "BANKPROOF") {
-                this.state.docBankProofObjs.shift()
-                this.preList([2],obj)
-                this.state.docBankProofObjs.push(obj)
-                this.setState({ ...this.state, docBankProof: obj })}
-            }
-       
-    }
 
-    deleteDocument=(file,type)=>{
-        debugger
-        if(this.state.docIdentityProofObjs && type == "IDENTITYPROOF"){
+            }
+
+        }
+        else if (type == "ADDRESSPROOF") {
+            this.state.docAddressProofObjs.shift()
+
+            // let obj = {
+            //     "documentId": "00000000-0000-0000-0000-000000000000",
+            //     "documentName": `${file.name}`,
+            //     "id": "00000000-0000-0000-0000-000000000000",
+            //     "isChecked": file.name == "" ? false : true,
+            //     "remarks": `${file.size}`,
+            //     "state": null,
+            //     "status": false,
+            //     "Path": `${file.response}`,
+            // }
+            if (file.response !== undefined) {
+                let preList = this.state.fileDetails[1]
+                if (preList !== undefined) {
+                    preList.isChecked = false
+                    this.state.fileDetails.push(obj, preList);
+                } else {
+                    this.state.fileDetails.push(obj);
+                }
+                this.state.docAddressProofObjs.push(obj)
+                this.setState({ ...this.state, docAddressProof: obj })
+
+            }
+
+
+        }
+        else if (type == "BANKPROOF") {
+            this.state.docBankProofObjs.shift()
+
+            // let obj = {
+            //     "documentId": "00000000-0000-0000-0000-000000000000",
+            //     "documentName": `${file.name}`,
+            //     "id": "00000000-0000-0000-0000-000000000000",
+            //     "isChecked": file.name == "" ? false : true,
+            //     "remarks": `${file.size}`,
+            //     "state": null,
+            //     "status": false,
+            //     "Path": `${file.response}`,
+            // }
+            if (file.response !== undefined) {
+                let preList = this.state.fileDetails[2]
+                if (preList !== undefined) {
+                    preList.isChecked = false
+                    this.state.fileDetails.push(obj, preList);
+                } else {
+                    this.state.fileDetails.push(obj);
+                }
+                this.state.docBankProofObjs.push(obj)
+                this.setState({ ...this.state, docBankProof: obj })
+
+            }
+        }
+    }
+    deleteIdentityDocument() {
+
+        if (this.state.docIdentityProofObjs) {
             let deleteIdentityList = this.state.docIdentityProofObjs.filter((file) => file.documentName !== file.documentName);
             this.state.fileDetails.splice(0, 1);
-            let obj=this.state.docIdentityProofObjs[0];
-            obj.isChecked=false
+            let obj = {
+                "documentId": `${this.state.docIdentityProofObjs[0].documentId}`,
+                "documentName": `${this.state.docIdentityProofObjs[0].documentName}`,
+                "id": `${this.state.docIdentityProofObjs[0].id}`,
+                "isChecked": false,
+                "remarks": `${this.state.docIdentityProofObjs[0].remarks}`,
+                "state": `${this.state.docIdentityProofObjs[0].state}`,
+                "status": `${this.state.docIdentityProofObjs[0].status}`,
+                "Path": `${this.state.docIdentityProofObjs[0].path}`,
+            }
             this.state.fileDetails.push(obj)
             this.setState({ ...this.state, docIdentityProofObjs: deleteIdentityList });
             success("Document deleted sucessfully")
         }
-        
-        else if (this.state.docAddressProofObjs && type == "ADDRESSPROOF") {
+
+    }
+    deleteAddressDocument() {
+        if (this.state.docAddressProofObjs) {
             let deleteAddressProofList = this.state.docAddressProofObjs.filter((file) => file.documentName !== file.documentName)
             this.state.fileDetails.splice(0, 1)
-            let obj=this.state.docAddressProofObjs[0];
-            obj.isChecked=false
+            let obj = {
+                "documentId": `${this.state.docAddressProofObjs[0].documentId}`,
+                "documentName": `${this.state.docAddressProofObjs[0].documentName}`,
+                "id": `${this.state.docAddressProofObjs[0].id}`,
+                "isChecked": false,
+                "remarks": `${this.state.docAddressProofObjs[0].remarks}`,
+                "state": `${this.state.docAddressProofObjs[0].state}`,
+                "status": `${this.state.docAddressProofObjs[0].status}`,
+                "Path": `${this.state.docAddressProofObjs[0].path}`,
+            }
             this.state.fileDetails.push(obj)
             this.setState({ ...this.state, docAddressProofObjs: deleteAddressProofList });
             success("Document deleted sucessfully")
         }
 
-        else if (this.state.docBankProofObjs && type == "BANKPROOF") {
+    }
+    deleteBankProofDocument() {
+        if (this.state.docBankProofObjs) {
             let deleteBankProofList = this.state.docBankProofObjs.filter((file) => file.documentName !== file.documentName)
             this.state.fileDetails.splice(0, 1)
-            let obj=this.state.docBankProofObjs[0];
-            obj.isChecked=false
+            let obj = {
+                "documentId": `${this.state.docBankProofObjs[0].documentId}`,
+                "documentName": `${this.state.docBankProofObjs[0].documentName}`,
+                "id": `${this.state.docBankProofObjs[0].id}`,
+                "isChecked": false,
+                "remarks": `${this.state.docBankProofObjs[0].remarks}`,
+                "state": `${this.state.docBankProofObjs[0].state}`,
+                "status": `${this.state.docBankProofObjs[0].status}`,
+                "Path": `${this.state.docBankProofObjs[0].path}`,
+            }
             this.state.fileDetails.push(obj)
             this.setState({ ...this.state, docBankProofObjs: deleteBankProofList });
             success("Document deleted sucessfully")
@@ -263,7 +346,6 @@ class PaymentsView extends Component {
         }
     }
     saveRolesDetails = async (values) => {
-        debugger
         let Obj = {
             "favouriteName": values.favouriteName,
             "toWalletAddress": apiCalls.encryptValue(values.toWalletAddress, this.props.userConfig?.sk),
@@ -602,7 +684,7 @@ class PaymentsView extends Component {
                                                         <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
                                                         <span className="fs-12 text-secondary">{this.formatBytes(file ? file.remarks : "")}</span>
                                                     </div>
-                                                    <span className="icon md close c-pointer" onClick={() => this.deleteDocument(file,"IDENTITYPROOF")} />
+                                                    <span className="icon md close c-pointer" onClick={() => this.deleteIdentityDocument(file)} />
                                                 </div> : ""}</>
                                             )}
 
@@ -611,6 +693,7 @@ class PaymentsView extends Component {
                                     <Col xl={8}>
                                         <div>
                                             <Paragraph
+
                                                 className="mb-16 fs-14 text-white fw-500 text-upper"
                                             >Please provide your address proof</Paragraph>
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
@@ -636,7 +719,7 @@ class PaymentsView extends Component {
                                                         <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
                                                         <span className="fs-12 text-secondary">{this.formatBytes(file ? file.remarks : "")}</span>
                                                     </div>
-                                                    <span className="icon md close c-pointer" onClick={() => this.deleteDocument(file,"ADDRESSPROOF")} />
+                                                    <span className="icon md close c-pointer" onClick={() => this.deleteAddressDocument(file)} />
                                                 </div> : ""}</>
                                             )}
                                         </div>
@@ -644,6 +727,7 @@ class PaymentsView extends Component {
                                     <Col xl={8}>
                                         <div>
                                             <Paragraph
+
                                                 className="mb-16 fs-14 text-white fw-500 text-upper"
                                             >Please provide your address proof</Paragraph>
                                             <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
@@ -668,7 +752,7 @@ class PaymentsView extends Component {
                                                         <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
                                                         <span className="fs-12 text-secondary">{this.formatBytes(file ? file.remarks : "")}</span>
                                                     </div>
-                                                    <span className="icon md close c-pointer" onClick={() => this.deleteDocument(file,"BANKPROOF")} />
+                                                    <span className="icon md close c-pointer" onClick={() => this.deleteBankProofDocument(file)} />
                                                 </div> : ""}</>
                                             )}
                                         </div>
