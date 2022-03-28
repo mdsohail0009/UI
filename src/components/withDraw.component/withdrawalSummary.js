@@ -385,12 +385,12 @@ const WithdrawalFiatSummary = ({
         autoComplete="off"
       >
         
-        {/* {verifyData.isPhoneVerified == true && ( */}
+        {verifyData.isPhoneVerified == true && (
           <Text className="fs-14 mb-4 text-white d-block fw-200">
             Phone verification code *
           </Text>
-        {/* )} */}
-        {/* {verifyData.isPhoneVerified == true && ( */}
+        )}
+        {verifyData.isPhoneVerified == true && (
           <Form.Item
             name="code"
             className="input-label otp-verify my-36"
@@ -450,13 +450,13 @@ const WithdrawalFiatSummary = ({
               // disabled={this.state.inputDisable}
             />
           </Form.Item>
-        {/* )} */}
-        {/* {verifyData.isEmailVerification == true && ( */}
+         )} 
+        {verifyData.isEmailVerification == true && (
           <Text className="fs-14 mb-4 text-white d-block fw-200">
             Email verification code *
           </Text>
-        {/* )} */}
-        {/* {verifyData.isEmailVerification == true && ( */}
+         )}
+        {verifyData.isEmailVerification == true && (
         <Form.Item
           name="emailCode"
           className="input-label otp-verify my-36"
@@ -518,7 +518,7 @@ const WithdrawalFiatSummary = ({
             // disabled={this.state.emailDisable}
           />
         </Form.Item>
-        {/* )} */}
+        )} 
         {verifyData.twoFactorEnabled == true && (
           <Text className="fs-14 mb-4 text-white d-block fw-200">
             Email verification code *

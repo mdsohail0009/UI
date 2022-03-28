@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Typography, Input, Button, Alert, Spin, message } from 'antd';
+import { Form, Typography, Input, Button, Alert, Spin, message,Select } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -10,20 +10,32 @@ import Loader from '../../Shared/loader';
 import apiCalls from '../../api/apiCalls';
 import { validateContentRule } from '../../utils/custom.validator'
 import apicalls from '../../api/apiCalls';
+import {
+    getCountryStateLu,
+    getStateLookup
+  } from "../../api/apiServer";
+ 
+  const { Option } = Select;
 
-const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, userProfileInfo, trackAuditLogData }) => {
+const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, userProfileInfo, trackAuditLogData,  sendReceive
+}) => {
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [fiatAddress, setFiatAddress] = useState({});
     const useDivRef = React.useRef(null);
     const [btnDisabled, setBtnDisabled] = useState(false);
+    const [countryLu, setCountryLu] = useState([]);
+    const [stateLu, setStateLu] = useState([]);
+    const [saveObj, setSaveObj] = useState(null);
 
     useEffect(() => {
         if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && addressBookReducer?.selectedRowData?.id) {
             loadDataAddress();
         }
         addressbkTrack();
+        getCountryLu();
+
     }, [])
     const addressbkTrack = () => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat Address Book Details page view ', "Username": userProfileInfo?.userName, "MemeberId": userProfileInfo?.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Address book details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' });
@@ -105,6 +117,33 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
             }
         }
     }
+    const getCountryLu = async () => {
+        let objj = sendReceive.withdrawFiatObj;
+        setSaveObj(objj);
+        if (objj) {
+          form.setFieldsValue({
+            ...objj,
+            walletCode: objj.walletCode,
+            beneficiaryAccountName: userConfig.firstName + " " + userConfig.lastName
+          });
+        } else {
+          form.setFieldsValue({
+            beneficiaryAccountName: userConfig.firstName + " " + userConfig.lastName
+          });
+        }
+        let recName = await getCountryStateLu();
+        if (recName.ok) {
+          setCountryLu(recName.data);
+        }
+      };
+    
+    const getStateLu = async (countryname, isChange) => {
+        let recName = await getStateLookup(countryname);
+        if (recName.ok) {
+          setStateLu(recName.data);
+        }
+        if (isChange) form.setFieldsValue({ state: null });
+      };
     const { Paragraph } = Typography;
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     return (
@@ -137,7 +176,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                                 validator: validateContentRule
                             }
                         ]} >
-                        <Input className="cust-input" maxLength="20" placeholder={apiCalls.convertLocalLang('Enteraddresslabel')} />
+                        <Input className="cust-input" maxLength="20" placeholder={apiCalls.convertLocalLang('addresslabel')} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24 pr-0"
@@ -157,7 +196,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             }
                         ]}
                     >
-                        <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('Enteraddress')} />
+                        <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('address')} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
@@ -277,68 +316,85 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                         ]}>
                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
                     </Form.Item>
+                  
                     <Form.Item
-                        className="custom-forminput custom-label mb-24"
-                        name="country"
-                        label={<Translate content="Country" component={Form.label} />}
-                        //required
-                        // rules={[
-                        //     {
-                        //         required: true,
-                        //         message: apiCalls.convertLocalLang('is_required')
-                        //     },
-                        //     {
-                        //         whitespace: true,
-                        //         message: apiCalls.convertLocalLang('is_required')
-                        //     },
-                        //     {
-                        //         validator: validateContentRule
-                        //     }
-                        // ]}
-                        >
-                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Country')} />
-                    </Form.Item>
+                className="custom-forminput custom-label  mb-24"
+                name="country"
+                label={<Translate content="Country" component={Form.label} />}
+                rules={[
+                  {
+                    required: true,
+                    message: apicalls.convertLocalLang('is_required')
+                  },
+                ]}
+              >
+                <Select
+                  dropdownClassName="select-drpdwn"
+                  placeholder={apicalls.convertLocalLang("Country")}
+                  className="cust-input"
+                  style={{ width: "100%" }}
+                  bordered={false}
+                  showArrow={true}
+                  onChange={(e) => getStateLu(e, true)}
+                >
+                  {countryLu?.map((item, idx) => (
+                    <Option key={idx} value={item.code}>
+                      {item.name}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+                   
                     <Form.Item
-                        className="custom-forminput custom-label mb-24"
-                        name="state"
-                        label={<Translate content="state" component={Form.label} />}
-                        //required
-                        // rules={[
-                        //     {
-                        //         required: true,
-                        //         message: apiCalls.convertLocalLang('is_required')
-                        //     },
-                        //     {
-                        //         whitespace: true,
-                        //         message: apiCalls.convertLocalLang('is_required')
-                        //     },
-                        //     {
-                        //         validator: validateContentRule
-                        //     }
-                        // ]}
-                        >
-                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('state')} />
-                    </Form.Item>
+                className="custom-forminput custom-label mb-24"
+                name="state"
+                label={<Translate content="state" component={Form.label} />}
+                rules={[
+                    {
+                      required: true,
+                      message: apicalls.convertLocalLang('is_required')
+                    },
+                  ]}
+              >
+                <Select
+                  dropdownClassName="select-drpdwn"
+                  placeholder={apicalls.convertLocalLang("state")}
+                  className="cust-input"
+                  style={{ width: "100%" }}
+                  bordered={false}
+                  showArrow={true}
+                  onChange={(e) => ""}
+                >
+                  {stateLu?.map((item, idx) => (
+                    <Option key={idx} value={item.code}>
+                      {item.code}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
                         name="zipCode"
                         label={<Translate content="zipcode" component={Form.label} />}
-                        //required
-                        // rules={[
-                        //     {
-                        //         required: true,
-                        //         message: apiCalls.convertLocalLang('is_required')
-                        //     },
-                        //     {
-                        //         whitespace: true,
-                        //         message: apiCalls.convertLocalLang('is_required')
-                        //     },
-                        //     {
-                        //         validator: validateContentRule
-                        //     }
-                        // ]}
+                        required
+                        rules={[
+                            {
+                              validator: (rule, value, callback) => {
+                                var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                                if (value) {
+                                  if (!regx.test(value)) {
+                                    callback("Invalid zip code");
+                                  } else if (regx.test(value)) {
+                                    callback();
+                                  }
+                                } else {
+                                  callback();
+                                }
+                              }
+                            }
+                          ]}
                         >
-                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('zipcode')} />
+                        <Input className="cust-input" maxLength="6" placeholder={apiCalls.convertLocalLang('zipcode')} />
                     </Form.Item>
                     
                     <Form.Item className="mb-0 mt-16">
@@ -348,6 +404,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             block
                             className="pop-btn"
                             //disabled={btnDisabled}
+                            
                         >
                             {isLoading && <Spin indicator={antIcon} />}  <Translate content="Save_btn_text" />
                         </Button>
@@ -359,8 +416,10 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
     );
 }
 
-const connectStateToProps = ({ buyInfo, userConfig, addressBookReducer }) => {
-    return { buyInfo, userConfig: userConfig.userProfileInfo, addressBookReducer, trackAuditLogData: userConfig.trackAuditLogData }
+const connectStateToProps = ({ buyInfo, userConfig, addressBookReducer, sendReceive
+}) => {
+    return { buyInfo, userConfig: userConfig.userProfileInfo,    sendReceive,
+        addressBookReducer, trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {
