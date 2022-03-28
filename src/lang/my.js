@@ -496,4 +496,5 @@ export default {
   withdraw_verification:'Bawiin ang Pagpapatunay',
   Phone_verification:'Pag-verify ng Telepono',
   Email_verification:'Pagpapatunay ng Email',
+  addresslabel:'Label ng Address',
 }

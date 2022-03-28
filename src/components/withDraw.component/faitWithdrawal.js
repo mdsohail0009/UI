@@ -348,12 +348,12 @@ const FaitWithdrawal = ({
                 className="custom-forminput custom-label mb-24"
                 name="walletCode"
                 label={<Translate content="currency" component={Form.label} />}
-                rules={[
-                  {
-                    required: true,
-                    message: apicalls.convertLocalLang("is_required")
-                  }
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: apicalls.convertLocalLang("is_required")
+                //   }
+                // ]}
               >
                 <WalletList
                   valueFeild={"currencyCode"}
