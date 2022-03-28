@@ -173,6 +173,8 @@ const FaitWithdrawal = ({
         return item;
       }
     });
+    form.setFieldsValue({totalValue:""});
+    form.setFieldsValue({isAccept: false});
     let recAddressDetails = await detailsAddress(val[0].id);
     if (recAddressDetails.ok) {
       debugger
@@ -262,6 +264,9 @@ const FaitWithdrawal = ({
     values["favouriteName"] =
       values.favouriteName || addressDetails.favouriteName;
     values["comission"] = "0.0";
+    values["accountNumber"] = addressDetails.accountNumber;
+    values["routingNumber"] = addressDetails.routingNumber;
+    values["bankName"] =addressDetails.bankName;
     //values["country"] =
     setLoading(true);
     const response = await handleFiatConfirm(values);
@@ -573,7 +578,7 @@ const FaitWithdrawal = ({
                     component={Text}
                     with={{ value: addressDetails.beneficiaryAccountAddress }}
                   />
-                  <Form.Item
+                  {/* <Form.Item
                     className="custom-forminput custom-label mb-24"
                     name="description"
                     label={
@@ -589,7 +594,7 @@ const FaitWithdrawal = ({
                       className="cust-input"
                       placeholder={apicalls.convertLocalLang("remarks")}
                     />
-                  </Form.Item>
+                  </Form.Item> */}
                   <Form.Item
                     className="custom-forminput mb-36 agree"
                     name="isAccept"
