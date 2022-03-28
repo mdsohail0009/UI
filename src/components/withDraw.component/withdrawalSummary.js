@@ -521,7 +521,7 @@ const WithdrawalFiatSummary = ({
         )} 
         {verifyData.twoFactorEnabled == true && (
           <Text className="fs-14 mb-4 text-white d-block fw-200">
-            Email verification code *
+            Authenticator verification code *
           </Text>
         )}
         {verifyData.twoFactorEnabled == true && (
