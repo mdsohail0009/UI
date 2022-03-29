@@ -56,7 +56,8 @@ class WithdrawSummary extends Component {
     authCode: "",
     verifyData: "",
     minutes: 2,
-    seconds: 0
+    seconds: 0,
+    inValidData:false,
   };
 
   useDivRef = React.createRef();
@@ -208,7 +209,13 @@ class WithdrawSummary extends Component {
     if (response.ok) {
       success("Email Verified successfully") 
     }
-    else{error(response.data)}
+    else{error(response.data)
+      setTimeout(() => {
+        this.setState({ errorMsg: null });
+      }, 5000);
+     this.setState({...this.state,inValidData:true})
+    }
+
     
   };
 
@@ -224,7 +231,12 @@ class WithdrawSummary extends Component {
       this.setState({
         ...this.state,
         errorMsg: apiCalls.convertLocalLang("invalid_code")
+        
       });
+      setTimeout(() => {
+        this.setState({ errorMsg: null });
+      }, 5000);
+     this.setState({...this.state,inValidData:true})
     }
   };
   handleOtp = (val) => {
@@ -260,6 +272,10 @@ class WithdrawSummary extends Component {
         ...this.state,
         errorMsg: apiCalls.convertLocalLang("invalid_code")
       });
+      setTimeout(() => {
+        this.setState({ errorMsg: null });
+      }, 5000);
+     this.setState({...this.state,inValidData:true})
     }
   };
   handleChange = (e) => {

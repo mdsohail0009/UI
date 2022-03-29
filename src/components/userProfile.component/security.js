@@ -17,6 +17,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
   const [phone, setPhone] = useState(false)
   const [email, setEmail] = useState(false)
   const [errorMsg, setErrorMsg] = useState(null);
+  const useDivRef = React.useRef(null);
 
   const showDrawer = () => {
     setisChangepassword(true);
@@ -83,15 +84,6 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
       setFactor(e.target.checked ? true : false)
     }
 
-  }
-  const saveDetails = async () => {
-    let obj = {
-      "MemberId": userConfig.id,
-      "isEmailVerification": email,
-      "IsPhoneVerified": phone,
-      "TwoFactorEnabled": factor
-    }
-
     const response = await apiCalls.updateSecurity(obj);
     if (email && phone && factor) {
       return setErrorMsg("Please select only two checkboxes");
@@ -99,20 +91,19 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
     else
       if (email && phone || email && factor || phone && factor) {
         if (response.ok) {
+          debugger
           setErrorMsg(false)
           fetchWithdrawVerifyObj(obj);
           success("Withdraw Verification details saved successfully")
+          setErrorMsg(null)
+          useDivRef.current.scrollIntoView();
+
         } else {
           error(response.data)
         }
       }
       else {
-        //   message.destroy();
-        //   message.warning({
-        //     content: "Please select any two checkboxes",
-        //     className: "custom-msg"
-        //   });
-        //return setErrorMsg("Please select any two checkboxes");
+        useDivRef.current.scrollIntoView();
         return setErrorMsg("Please select any two withdraw verification options");
       }
   }
@@ -120,6 +111,8 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
   const { Title, Paragraph } = Typography;
   return (
     <>
+      <div ref={useDivRef}></div>
+
       {errorMsg !== null && (
         <Alert
           className="mb-12"
@@ -131,6 +124,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
           showIcon
         />
       )}
+
       <div className="box basic-info">
         <Translate
           content="TwoFactorAuthentication"
@@ -330,7 +324,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
             </Col>
             <Col md={6} xl={6} xxl={6}>
               <div className="text-right">
-                <Button className="pop-btn px-36" style={{height: 44}} onClick={() => saveDetails()} >
+                <Button className="pop-btn px-36" style={{ height: 44 }} onClick={() => saveDetails()} >
                   save
                 </Button>
               </div>
