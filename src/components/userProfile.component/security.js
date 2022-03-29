@@ -17,6 +17,7 @@ const [factor,setFactor]=useState(false)
 const [phone,setPhone]=useState(false)
 const [email,setEmail]=useState(false)
 const [errorMsg, setErrorMsg] = useState(null);
+const useDivRef = React.useRef(null);
 
   const showDrawer = () => {
     setisChangepassword(true);
@@ -99,20 +100,19 @@ if(email&&phone&&factor){
 else
  if(email&&phone||email&&factor||phone&&factor){
 if(response.ok){
+  debugger
   setErrorMsg(false)
   fetchWithdrawVerifyObj(obj);
   success("Withdraw Verification details saved successfully") 
+  setErrorMsg(null)
+  useDivRef.current.scrollIntoView();
+
 }else{
     error(response.data)
 }
 }
 else{
-//   message.destroy();
-//   message.warning({
-//     content: "Please select any two checkboxes",
-//     className: "custom-msg"
-//   });
-//return setErrorMsg("Please select any two checkboxes");
+  useDivRef.current.scrollIntoView();
 return setErrorMsg("Please select any two withdraw verification options");
 }
 }
@@ -120,6 +120,8 @@ return setErrorMsg("Please select any two withdraw verification options");
   const { Title, Paragraph } = Typography;
   return (
     <>
+     <div ref={useDivRef}></div>
+
      {errorMsg !== null && (
               <Alert
                 className="mb-12"
@@ -131,6 +133,7 @@ return setErrorMsg("Please select any two withdraw verification options");
                 showIcon
               />
             )}
+            
       <div className="box basic-info">
         <Translate
           content="TwoFactorAuthentication"
