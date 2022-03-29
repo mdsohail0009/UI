@@ -66,6 +66,10 @@ class CoinView extends React.Component {
         selectedObj.coinFullName = selectedObj.name
         selectedObj.oneCoinValue = selectedObj.current_price;
         selectedObj.id = selectedObj.memberWalletId;
+        if (!this.props?.userProfile?.isKYC) {
+            this.props.history.push("/notkyc");
+            return;
+        }
         if(!this.props?.userProfile?.twofactorVerified){
             this.props.history.push("/enabletwofactor");
             return;
@@ -75,10 +79,7 @@ class CoinView extends React.Component {
             this.props.history.push("/docnotices");
             return;
         }
-        if (!this.props?.userProfile?.isKYC) {
-            this.props.history.push("/notkyc");
-            return;
-        }
+       
         if (key === "buy") {
             this.props.dispatch(fetchSelectedCoinDetails(selectedObj.coin, this.props.userProfile?.id));
             this.props.dispatch(setCoin({ ...selectedObj, toWalletCode: selectedObj.coin, toWalletId: selectedObj.id, toWalletName: selectedObj.coinFullName }));
@@ -109,6 +110,10 @@ class CoinView extends React.Component {
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
         this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
         let coin = value.symbol.toUpperCase();
+        if (!this.props?.userProfile?.isKYC) {
+            this.props.history.push("/notkyc");
+            return;
+        }
         if(!this.props?.userProfile?.twofactorVerified){
             this.props.history.push("/enabletwofactor");
             return;
@@ -118,10 +123,6 @@ class CoinView extends React.Component {
             return;
         }
         if (!this.props?.userProfile?.isKYC) {
-            this.props.history.push("/notkyc");
-            return;
-        }
-        if (!this.props?.userProfile?.twofactorVerified) {
             this.props.history.push("/notkyc");
             return;
         }
