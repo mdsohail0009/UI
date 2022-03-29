@@ -328,8 +328,8 @@ const FaitWithdrawal = ({
               <Alert
                 className="mb-12"
                 closable
-                type="error"
-                message={"Error"}
+                // type="error"
+                // message={"Error"}
                 description={errorMsg}
                 onClose={() => setErrorMsg(null)}
                 showIcon
