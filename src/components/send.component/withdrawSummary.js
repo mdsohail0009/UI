@@ -56,7 +56,8 @@ class WithdrawSummary extends Component {
     authCode: "",
     verifyData: "",
     minutes: 2,
-    seconds: 0
+    seconds: 0,
+    inValidData:false,
   };
 
   useDivRef = React.createRef();
@@ -80,7 +81,7 @@ class WithdrawSummary extends Component {
         } else {
           this.setState(({ minutes }) => ({
             minutes: minutes - 1,
-            seconds: 119
+            seconds: 120
           }));
         }
       }
@@ -208,7 +209,13 @@ class WithdrawSummary extends Component {
     if (response.ok) {
       success("Email Verified successfully") 
     }
-    else{error(response.data)}
+    else{error(response.data)
+      setTimeout(() => {
+        this.setState({ errorMsg: null });
+      }, 5000);
+     this.setState({...this.state,inValidData:true})
+    }
+
     
   };
 
@@ -224,7 +231,12 @@ class WithdrawSummary extends Component {
       this.setState({
         ...this.state,
         errorMsg: apiCalls.convertLocalLang("invalid_code")
+        
       });
+      setTimeout(() => {
+        this.setState({ errorMsg: null });
+      }, 5000);
+     this.setState({...this.state,inValidData:true})
     }
   };
   handleOtp = (val) => {
@@ -260,6 +272,10 @@ class WithdrawSummary extends Component {
         ...this.state,
         errorMsg: apiCalls.convertLocalLang("invalid_code")
       });
+      setTimeout(() => {
+        this.setState({ errorMsg: null });
+      }, 5000);
+     this.setState({...this.state,inValidData:true})
     }
   };
   handleChange = (e) => {
@@ -310,8 +326,8 @@ class WithdrawSummary extends Component {
   firstAddress = this.address.slice(0, 4);
   lastAddress = this.address.slice(-4);
 
-  timer =
-    this.state.seconds < 10 ? `0${this.state.seconds}` : this.state.seconds;
+  // timer =
+  //   this.state.seconds < 10 ? `0${this.state.seconds}` : this.state.seconds;
 
   render() {
     const { Paragraph, Text } = Typography;
@@ -381,7 +397,7 @@ class WithdrawSummary extends Component {
 
     const tooltipTimer = seconds < 10 ? `0${seconds}` : seconds;
     const tooltipValue =
-      "Haven't receive code?Request new code in " +
+      "Haven't receive code? Request new code in " +
       tooltipTimer +
       " seconds. The code will expire after 30mins.";
 
@@ -654,7 +670,28 @@ class WithdrawSummary extends Component {
                     </Text>
                   </div>
                 }
-                rules={[{ required: true, message: "Is required" }]}
+                rules={[
+                  {
+                    validator: (rule, value, callback) => {
+                      var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                      if (value) {
+                        if (!regx.test(value)) {
+                          callback("Invalid zip code");
+                        } else if (regx.test(value)) {
+                          callback();
+                        }
+                      } else {
+                        callback();
+                      }
+                    }
+                    
+                  },
+                  {
+                      required: true,
+                      message: apiCalls.convertLocalLang('is_required')
+                  }
+                 
+                ]}                
                 label={
                   <>
                     <Button type="text" onClick={this.getAuthenticator}>
