@@ -73,6 +73,7 @@ const NewFiatAddress = ({
       "fiat"
     );
     if (response.ok) {
+        
       setFiatAddress(response.data);
       if (addressBookReducer?.selectedRowData && buyInfo.memberFiat?.data) {
         handleWalletSelection(addressBookReducer?.selectedRowData?.currency);
@@ -80,6 +81,8 @@ const NewFiatAddress = ({
       form.setFieldsValue({ ...response.data });
       setIsLoading(false);
     }
+
+    
   };
   const handleWalletSelection = (walletId) => {
     setFiatAddress({ toCoin: walletId });
