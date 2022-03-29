@@ -8,7 +8,7 @@ import { store } from "../../store";
 import { success, warning, error } from "../../utils/messages";
 import Moment from "react-moment";
 import apiCalls from "../../api/apiCalls";
-
+const { Title, Paragraph } = Typography;
 const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerifyObj }, props) => {
   const [form] = Form.useForm();
   const [isChangepassword, setisChangepassword] = useState(false);
@@ -24,23 +24,18 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
     store.dispatch(updatechange());
   };
   useEffect(() => {
-    debugger
     securityTrack()
     getVerifyData()
   }, []);
   const getVerifyData = async () => {
-    debugger
     let response = await apiCalls.getVerificationFields(userConfig.id);
     if (response.ok) {
-      console.log(response.data.isPhoneVerified)
-      //fetchWithdrawVerifyObj(response.data)
-      setVerifyData(response.data)
-      setPhone(response.data?.isPhoneVerified)
-      setEmail(response.data?.isEmailVerification)
+      setVerifyData(response.data);
+      setPhone(response.data?.isPhoneVerified);
+      setEmail(response.data?.isEmailVerification);
       form.setFieldsValue(response.data);
     }
   }
-  setTimeout(() => console.log(factor, email, phone), 5000)
   const securityTrack = () => {
     apiCalls.trackEvent({
       Type: "User",
@@ -58,9 +53,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
     setisChangepassword(false);
   };
 
-
   const enableDisable2fa = (status) => {
-    debugger
     var url = "";
     if (status) {
       url =
@@ -74,8 +67,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
     window.open(url, "_self");
   };
 
-  const handleInputChange = async (e, type) => {
-    debugger
+  const handleInputChange = (e, type) => {
     if (type == "phone") {
       setPhone(e.target.checked ? true : false)
     } else if (type == "email") {
@@ -83,7 +75,14 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
     } else if (type == "factor") {
       setFactor(e.target.checked ? true : false)
     }
-
+  }
+  const saveDetails=async()=>{
+    let obj={
+      "MemberId": userConfig.id,
+      "isEmailVerification": email,
+      "IsPhoneVerified": phone,
+      "TwoFactorEnabled":factor
+  }
     const response = await apiCalls.updateSecurity(obj);
     if (email && phone && factor) {
       return setErrorMsg("Please select only two checkboxes");
@@ -108,7 +107,6 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
       }
   }
 
-  const { Title, Paragraph } = Typography;
   return (
     <>
       <div ref={useDivRef}></div>
