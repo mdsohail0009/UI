@@ -147,15 +147,18 @@ const FaitWithdrawal = ({
       let wallet = buyInfo.memberFiat.data.filter((item) => {
         return walletId === item.currencyCode;
       });
+      // setWalletVisible(false)
       setSelectedWallet(wallet[0]);
       if (wallet[0]) {
         getAddressLu(wallet[0]);
       }
     }
     setWalletVisible(true);
+    setAddressVisible(false);
   };
 
   const getAddressLu = async (obj) => {
+    debugger
     let selectedFiat = obj.currencyCode;
     let recAddress = await favouriteFiatAddress(
       userConfig.id,
@@ -165,19 +168,22 @@ const FaitWithdrawal = ({
     if (recAddress.ok) {
       setAddressLu(recAddress.data);
     }
+    console.log(addressLu)
   };
   const handleAddressChange = async (e) => {
     debugger
+    console.log(addressLu)
     let val = addressLu.filter((item) => {
       if (item.name == e) {
         return item;
       }
     });
-    form.setFieldsValue({totalValue:""});
-    form.setFieldsValue({isAccept: false});
+    form.setFieldsValue({totalValue:""})
+    form.setFieldsValue({isAccept: false})
     let recAddressDetails = await detailsAddress(val[0].id);
     if (recAddressDetails.ok) {
       debugger
+      // setAddressVisible(false);
       bindEditableData(recAddressDetails.data);
     }
     setAddressVisible(true);
@@ -221,6 +227,7 @@ const FaitWithdrawal = ({
     changeStep("step4");
   };
   const savewithdrawal = async (values) => {
+    debugger
     dispatch(setWFTotalValue(values.totalValue));
     if (
       parseFloat(
@@ -242,10 +249,11 @@ const FaitWithdrawal = ({
       useDivRef.current.scrollIntoView();
       return setErrorMsg(apicalls.convertLocalLang("amount_greater_zero"));
     }
-    if (values.totalValue === ".") {
-      useDivRef.current.scrollIntoView();
-      return setErrorMsg(apicalls.convertLocalLang("amount_greater_zero"));
-    }
+   if (values.totalValue === ".") {
+       useDivRef.current.scrollIntoView();
+    form.resetFields();
+       return setErrorMsg(apicalls.convertLocalLang("amount_greater_zero"));
+     }
     let _totalamount = values.totalValue.toString();
     if (
       (_totalamount.indexOf(".") > -1 &&
@@ -264,9 +272,9 @@ const FaitWithdrawal = ({
     values["favouriteName"] =
       values.favouriteName || addressDetails.favouriteName;
     values["comission"] = "0.0";
-    values["accountNumber"] = addressDetails.accountNumber;
-    values["routingNumber"] = addressDetails.routingNumber;
-    values["bankName"] =addressDetails.bankName;
+    values["bankName"]=addressDetails.bankName;
+    values["accountNumber"]=addressDetails.accountNumber;
+    values["routingNumber"]=addressDetails.routingNumber;
     //values["country"] =
     setLoading(true);
     const response = await handleFiatConfirm(values);
@@ -333,6 +341,7 @@ const FaitWithdrawal = ({
                 description={errorMsg}
                 onClose={() => setErrorMsg(null)}
                 showIcon
+                type="info"
               />
             )}
             <Form
@@ -353,12 +362,12 @@ const FaitWithdrawal = ({
                 className="custom-forminput custom-label mb-24"
                 name="walletCode"
                 label={<Translate content="currency" component={Form.label} />}
-                rules={[
-                  {
-                    required: true,
-                    message: apicalls.convertLocalLang("is_required")
-                  }
-                ]}
+                // rules={[
+                //   {
+                //     required: true,
+                //     message: apicalls.convertLocalLang("is_required")
+                //   }
+                // ]}
               >
                 <WalletList
                   valueFeild={"currencyCode"}
@@ -408,6 +417,10 @@ const FaitWithdrawal = ({
                   <Form.Item
                     className="custom-forminput custom-label  mb-24 min-max-btn"
                     name="totalValue"
+                    required
+                      rules={[
+                        { required: true, message: apicalls.convertLocalLang('is_required') },
+                      ]}
                     label={
                       <>
                         <Translate content="amount" component={Form.label} />
@@ -431,12 +444,12 @@ const FaitWithdrawal = ({
                         </div>
                       </>
                     }
-                    rules={[
-                      {
-                        required: true,
-                        message: apicalls.convertLocalLang("is_required")
-                      }
-                    ]}
+                    // rules={[
+                    //   {
+                    //     required: true,
+                    //     message: apicalls.convertLocalLang("is_required")
+                    //   }
+                    // ]}
                   >
                     <NumberFormat
                       decimalScale={2}
@@ -447,6 +460,7 @@ const FaitWithdrawal = ({
                       placeholder="0.00"
                       allowNegative={false}
                       maxLength={13}
+                      
                     />
                   </Form.Item>
                   <Translate
