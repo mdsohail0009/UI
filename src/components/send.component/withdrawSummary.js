@@ -302,13 +302,16 @@ class WithdrawSummary extends Component {
           this.props.changeStep("withdraw_crpto_success");
           publishBalanceRfresh("success");
         }
+        else{
+            this.setState({ ...this.state, errorMsg: withdrawal.data });
+          }
       } else {
         this.props.dispatch(
           setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
         );
         this.props.changeStep("withdraw_crypto_liveness");
       }
-      this.setState({ ...this.state, errorMsg: false });
+      //this.setState({ ...this.state, errorMsg: false });
     } else {
       this.setState({
         ...this.state,
@@ -508,14 +511,14 @@ class WithdrawSummary extends Component {
             onFinish={this.saveWithdrwal}
           >
             {this.state.verifyData.isPhoneVerified == true && (
-              <Text className="fs-14 mb-4 text-white d-block fw-200">
+              <Text className="fs-14 mb-8 text-white d-block fw-200">
                 Phone verification code *
               </Text>
             )}
             {this.state.verifyData.isPhoneVerified == true && (
               <Form.Item
                 name="code"
-                className="input-label otp-verify my-36"
+                className="input-label otp-verify"
                 extra={
                   <div>
                     <Text className="fs-12 text-white-30 fw-200">
@@ -553,7 +556,7 @@ class WithdrawSummary extends Component {
                 <Input
                   type="text"
                   className="cust-input text-left"
-                  placeholder={apiCalls.convertLocalLang("verification_code")}
+                  //placeholder={apiCalls.convertLocalLang("verification_code")}
                   maxLength={6}
                   onKeyDown={(event) => {
                     if (
@@ -577,14 +580,14 @@ class WithdrawSummary extends Component {
               </Form.Item>
             )}
             {this.state.verifyData.isEmailVerification == true && (
-              <Text className="fs-14 mb-4 text-white d-block fw-200">
+              <Text className="fs-14 mb-8 text-white d-block fw-200">
                 Email verification code *
               </Text>
             )}
             {this.state.verifyData.isEmailVerification == true && (
               <Form.Item
                 name="emailCode"
-                className="input-label otp-verify my-36"
+                className="input-label otp-verify"
                 extra={
                   <div>
                     <Text className="fs-12 text-white-30 fw-200">
@@ -628,7 +631,7 @@ class WithdrawSummary extends Component {
                 <Input
                   type="text"
                   className="cust-input text-left"
-                  placeholder={apiCalls.convertLocalLang("verification_code")}
+                  //placeholder={apiCalls.convertLocalLang("verification_code")}
                   maxLength={6}
                   onKeyDown={(event) => {
                     if (
@@ -652,14 +655,14 @@ class WithdrawSummary extends Component {
               </Form.Item>
             )}
             {this.state.verifyData.twoFactorEnabled == true && (
-              <Text className="fs-14 mb-4 text-white d-block fw-200">
+              <Text className="fs-14 mb-8 text-white d-block fw-200">
                 Authenticator verification code *
               </Text>
             )}
             {this.state.verifyData.twoFactorEnabled == true && (
               <Form.Item
                 name="authenticator"
-                className="input-label otp-verify my-36"
+                className="input-label otp-verify"
                 extra={
                   <div>
                     <Text
@@ -703,7 +706,7 @@ class WithdrawSummary extends Component {
                 <Input
                   type="text"
                   className="cust-input text-left"
-                  placeholder={apiCalls.convertLocalLang("verification_code")}
+                  //placeholder={apiCalls.convertLocalLang("verification_code")}
                   maxLength={6}
                   onChange={(e) => this.handleAuthenticator(e, "authenticator")}
                   style={{ width: "100%" }}
