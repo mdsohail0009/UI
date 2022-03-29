@@ -74,7 +74,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
     window.open(url, "_self");
   };
 
-  const handleInputChange = (e, type) => {
+  const handleInputChange = async (e, type) => {
     debugger
     if (type == "phone") {
       setPhone(e.target.checked ? true : false)
