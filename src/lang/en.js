@@ -437,7 +437,7 @@ export default {
   careers: 'Careers',
   legal_policy: '',
   select_bank: 'Select Bank Name',
-  sellCrypto: 'Sell crypto',
+  sellCrypto: 'Sell Crypto',
   pleaseSelectWallet: 'Please select wallet',
   available_amount_less: 'Entered amount should be less than available amount',
   available_balance_less: 'Entered amount should be less than balance',
