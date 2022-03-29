@@ -302,13 +302,16 @@ class WithdrawSummary extends Component {
           this.props.changeStep("withdraw_crpto_success");
           publishBalanceRfresh("success");
         }
+        else{
+            this.setState({ ...this.state, errorMsg: withdrawal.data });
+          }
       } else {
         this.props.dispatch(
           setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
         );
         this.props.changeStep("withdraw_crypto_liveness");
       }
-      this.setState({ ...this.state, errorMsg: false });
+      //this.setState({ ...this.state, errorMsg: false });
     } else {
       this.setState({
         ...this.state,
