@@ -27,14 +27,19 @@ class YourPortfolio extends Component {
         }
     }
     showBuyDrawer = (item, key) => {
-        if (this.props?.userProfile?.isDocsRequested) {
-            this.props.history.push("/docnotices");
-            return;
-        }
         if (!this.props?.userProfile?.isKYC) {
             this.props.history.push("/notkyc");
             return;
         }
+        else if (!this.props.userProfile?.twofactorVerified) {
+            this.props.history.push("/enabletwofactor");
+            return;
+        }
+        else if (this.props?.userProfile?.isDocsRequested) {
+            this.props.history.push("/docnotices");
+            return;
+        }
+
         if (key === "buy") {
             this.props.dispatch(fetchSelectedCoinDetails(item.coin, this.props.userProfile?.id));
             this.props.dispatch(setCoin({ ...item, toWalletCode: item.coin, toWalletId: item.id, toWalletName: item.coinFullName }));

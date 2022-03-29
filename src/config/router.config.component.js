@@ -13,6 +13,7 @@ const OnBoarding = React.lazy(() => import('../layout/onboard.component'));
 const UserProfile = React.lazy(() => import('../components/userProfile.component/userProfile'));
 const RequestedDocs = React.lazy(() => import('../components/documents.component/requestedDocs'));
 const DocNotices = React.lazy(() => import("../components/shared/doc.notices"));
+const TwoFactor = React.lazy(() => import("../components/shared/two.factor"));
 const CaseDocs = React.lazy(() => import('../components/case.component/caseView'));
 const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"));
 const DashboardCharts = React.lazy(() => import("../components/dashboard.component/cockpitCharts"));
@@ -36,6 +37,8 @@ class RouteConfig extends Component {
         <ReactRoute path='/documents' component={RequestedDocs} />
         <ReactRoute path='/cases' component={CaseDocs} />
         <ReactRoute path='/docnotices' component={DocNotices} />
+        <ReactRoute path='/enabletwofactor' component={TwoFactor} />
+
         <Route path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
         <ReactRoute path='/cockpitCharts' component={DashboardCharts} />
