@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Typography,
-  Button,
-  Form,
-  message,
-  Input,
-  Alert,
-  Tooltip
-} from "antd";
+import { Typography, Button, Form, message, Input, Alert, Tooltip } from "antd";
 import Currency from "../shared/number.formate";
 import { setStep } from "../../reducers/buysellReducer";
 import { connect } from "react-redux";
@@ -21,7 +13,7 @@ import {
   setWithdrawfiatenaable,
   setWithdrawFinalRes
 } from "../../reducers/sendreceiveReducer";
-import {success,warning,error} from "../../utils/messages";
+import { success, warning, error } from "../../utils/messages";
 
 const WithdrawalFiatSummary = ({
   sendReceive,
@@ -52,13 +44,17 @@ const WithdrawalFiatSummary = ({
   const [emailText, setEmailText] = useState("get_email");
   const [emailDisable, setEmailDisable] = useState(true);
   const [tooltipVisible, setTooltipVisible] = useState(false);
-  const [tooltipEmail,setTooltipEmail]=useState(false)
+  const [tooltipEmail, setTooltipEmail] = useState(false);
   const [emailVerificationText, setEmailVerificationText] = useState("");
   const [authCode, setAuthCode] = useState("");
   const [otpCode, setOtpCode] = useState("");
   const [verifyOtpText, setVerifyOtpText] = useState("");
+  const [verifyEmailText,setVerifyEmailText]=useState("");
   const [seconds, setSeconds] = useState(120);
   const [minutes, setMinutes] = useState(2);
+  const [emailOtp, setEmailOtp] = useState("");
+  const [invalidData,setInvalidData]=useState(false);
+  const[verify,setVerify]=useState(false);
   const btnList = {
     get_otp: (
       <Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />
@@ -95,6 +91,7 @@ const WithdrawalFiatSummary = ({
       <Translate
         className={`pl-0 ml-0 text-yellow-50 `}
         content="resend_email"
+        with={{ counter: `${disable ? "(" + seconds + ")" : ""}` }}
       />
     ),
     sentVerification: (
@@ -106,20 +103,22 @@ const WithdrawalFiatSummary = ({
       />
     )
   };
-  const verifyText = {
-    verifyBtn: (
-      <Translate className={`pl-0 ml-0 text-yellow-50 `} content="verify_btn" />
-    )
-  };
+  // const verifyText = {
+  //   verifyTextBtn: (
+  //     <Translate className={`pl-0 ml-0 text-yellow-50 `} content="verify_btn" />
+  //   )
+  // };
 
   useEffect(() => {
     withdrawSummayTrack();
     getVerifyData();
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
+    const timer =
     seconds > 0 && setInterval(() => setSeconds(seconds - 1), 1000);
-  },[seconds])
+    return () => clearInterval(timer);
+  }, [seconds]);
 
   const withdrawSummayTrack = () => {
     apiCalls.trackEvent({
@@ -134,8 +133,8 @@ const WithdrawalFiatSummary = ({
       FullFeatureName: "Withdraw Fiat"
     });
   };
-
  
+
   const saveWithdrwal = async (values) => {
     setIsLoding(true);
     let Obj = Object.assign({}, sendReceive.withdrawFiatObj);
@@ -159,16 +158,18 @@ const WithdrawalFiatSummary = ({
     );
     Obj.info = JSON.stringify(trackAuditLogData);
     let withdrawal = await withdrawSave(Obj);
-    if (withdrawal.ok) {
-      dispatch(setWithdrawFinalRes(withdrawal.data));
-      dispatch(fetchDashboardcalls(userConfig.id));
-      dispatch(rejectWithdrawfiat());
-      changeStep("step7");
-    } else {
-      setMsg(withdrawal.data);
-      useOtpRef.current.scrollIntoView();
+    if(invalidData==false){
+      if (withdrawal.ok) {
+        dispatch(setWithdrawFinalRes(withdrawal.data));
+        dispatch(fetchDashboardcalls(userConfig.id));
+        dispatch(rejectWithdrawfiat());
+        changeStep("step7");
+      } else {
+        setMsg(withdrawal.data);
+        useOtpRef.current.scrollIntoView();
+      }
     }
-   
+    
   };
   const onCancel = () => {
     changeStep("step1");
@@ -186,37 +187,47 @@ const WithdrawalFiatSummary = ({
   };
 
   const getEmail = async (val) => {
+    debugger
     let response = await apiCalls.sendEmail(userConfig.id, type);
     if (response.ok) {
       setEmailText("sentVerification");
       setEmailDisable(false);
       setTextDisable(true);
-      setTooltipVisible(true);
+      setTooltipEmail(true);
       setEmailVerificationText(
         apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
       );
       setTimeout(() => {
-        setEmailText("resendEmail");
-      }, 20000);
+        setEmailText("resendEmail")
+      }, 120000);
       setTimeout(() => {
-        setTooltipVisible(false);
-      }, 20000);
-    } else {
+        setTooltipEmail(false);
+      }, 120000)
+      if(emailText=="resendEmail"){
+        setVerify(false);
+      }
+      //timer();
+      } else {
       setMsg(apiCalls.convertLocalLang("request_fail"));
     }
   };
   const getEmailVerification = async (values) => {
     let response = await apiCalls.verifyEmail(userConfig.id, values.code);
     if (response.ok) {
-      success("Email  verified successfully") 
+      success("Email  verified successfully");
+    } else {
+      error(response.data);
+      setTimeout(() => {
+        setMsg(null)
+      }, 5000);
+      setInvalidData(true)
+
     }
-    else{error(response.data)}
   };
-  
+
   const getOTP = async (val) => {
     let response = await apiCalls.getCode(userConfig.id, type);
     if (response.ok) {
-
       setTooltipVisible(true);
       setButtonText("sentVerify");
       setInputDisable(false);
@@ -239,11 +250,16 @@ const WithdrawalFiatSummary = ({
   const getOtpVerification = async () => {
     let response = await apiCalls.getVerification(userConfig.id, otpCode);
     if (response.ok) {
-      success("OTP verified successfully") 
+      success("OTP verified successfully");
     } else {
       useOtpRef.current.scrollIntoView();
 
       setMsg(apiCalls.convertLocalLang("invalid_code"));
+      setTimeout(() => {
+        setMsg(null)
+      }, 5000);
+      setInvalidData(true)
+
     }
   };
   const handleChange = (e) => {
@@ -253,19 +269,33 @@ const WithdrawalFiatSummary = ({
     setOtp(val.code);
     setVerifyOtpText("verifyOtpBtn");
     setTooltipVisible(false);
-    setButtonText("");
+    setButtonText(null);
   };
   const getAuthenticator = async () => {
     let response = await apiCalls.getAuthenticator(authCode, userConfig.userId);
     if (response.ok) {
-      success("Authenticator verified successfully") 
+      success("Authenticator verified successfully");
     } else {
       useOtpRef.current.scrollIntoView();
       setMsg(apiCalls.convertLocalLang("invalid_code"));
+      setTimeout(() => {
+        setMsg(null)
+      }, 5000);
+      setInvalidData(true)
+
     }
   };
   const handleAuthenticator = (e) => {
     setAuthCode(e.target.value);
+  };
+
+  const handleSendOtp = (val) => {
+    setEmailOtp(val.emailCode);
+    //setVerifyEmailText("verifyTextBtn");
+    setTooltipEmail(false);
+    setEmailText(false);
+    setVerify(true)
+    
   };
 
   return (
@@ -384,7 +414,6 @@ const WithdrawalFiatSummary = ({
         onFinish={saveWithdrwal}
         autoComplete="off"
       >
-        
         {verifyData.isPhoneVerified == true && (
           <Text className="fs-14 mb-4 text-white d-block fw-200">
             Phone verification code *
@@ -407,7 +436,13 @@ const WithdrawalFiatSummary = ({
                 </Text>
               </div>
             }
-            rules={[{ required: true, message: "Is required" }]}
+            //rules={[{ required: true, message: "Is required" }]}
+            rules={[
+              {
+                required: true,
+                message: apiCalls.convertLocalLang("is_required")
+              }
+            ]}
             label={
               <>
                 <Button type="text" onClick={getOTP} disabled={disable}>
@@ -447,78 +482,84 @@ const WithdrawalFiatSummary = ({
               }}
               style={{ width: "100%" }}
               onChange={(e) => handleChange(e, "code")}
-              // disabled={this.state.inputDisable}
+               disabled={inputDisable}
             />
           </Form.Item>
-         )} 
+        )}
         {verifyData.isEmailVerification == true && (
           <Text className="fs-14 mb-4 text-white d-block fw-200">
             Email verification code *
           </Text>
-         )}
+        )}
         {verifyData.isEmailVerification == true && (
-        <Form.Item
-          name="emailCode"
-          className="input-label otp-verify my-36"
-          extra={
-            <div>
-              <Text className="fs-12 text-white-30 fw-200">
-                {emailVerificationText}
-              </Text>
-              <Text
-                className="fs-12 text-red fw-200"
-                style={{ float: "right", color: "var(--textRed)" }}
-              >
-                {invalidcode}
-              </Text>
-            </div>
-          }
-          rules={[{ required: true, message: "Is required" }]}
-          label={
-            <>
-              <Button type="text" onClick={getEmail}>
-                {isResend && emailBtn[emailText]}
-              </Button>
-              {tooltipVisible == true && (
-                <Tooltip
-                  placement="topRight"
-                  title={`Haven\'t receive code?Request new code in ${seconds}. The code will expire after 30mins.`}
+          <Form.Item
+            name="emailCode"
+            className="input-label otp-verify my-36"
+            extra={
+              <div>
+                <Text className="fs-12 text-white-30 fw-200">
+                  {emailVerificationText}
+                </Text>
+                <Text
+                  className="fs-12 text-red fw-200"
+                  style={{ float: "right", color: "var(--textRed)" }}
                 >
-                  <span className="icon md info mr-8" />
-                </Tooltip>
-              )}
-              {/* {this.state.verifyVisible == true && ( */}
-              <Button type="text" onClick={(e) => getEmailVerification(e)}>
-                {verifyText[verifyText]}
-              </Button>
-              {/* )}  */}
-            </>
-          }
-
-        >
-          <Input
-            type="text"
-            className="cust-input text-left"
-            placeholder={apiCalls.convertLocalLang("verification_code")}
-            maxLength={6}
-            onKeyDown={(event) => {
-              if (
-                event.currentTarget.value.length > 5 &&
-                !(event.key == "Backspace" || event.key == "Delete")
-              ) {
-                event.preventDefault();
-              } else if (/^\d+$/.test(event.key)) {
-                this.handleSendOtp(event.currentTarget.value);
-              } else if (event.key == "Backspace" || event.key == "Delete") {
-              } else {
-                event.preventDefault();
+                  {invalidcode}
+                </Text>
+              </div>
+            }
+            rules={[
+              {
+                required: true,
+                message: apiCalls.convertLocalLang("is_required")
               }
-            }}
-            style={{ width: "100%" }}
-            // disabled={this.state.emailDisable}
-          />
-        </Form.Item>
-        )} 
+            ]}
+            label={
+              <>
+                <Button type="text" onClick={getEmail}>
+                  {isResend && emailBtn[emailText]}
+                </Button>
+                {tooltipEmail == true && (
+                  <Tooltip
+                    placement="topRight"
+                    title={`Haven\'t receive code?Request new code in ${seconds}. The code will expire after 30mins.`}
+                  >
+                    <span className="icon md info mr-8" />
+                  </Tooltip>
+                 
+                )}
+                {verify == true &&
+                <Button type="text" onClick={(e) => getEmailVerification(e)}>
+                  {/* {verifyText[verifyEmailText]} */}
+                  VERITY
+                </Button>}
+              </>
+            }
+            
+          >
+            <Input
+              type="text"
+              className="cust-input text-left"
+              placeholder={apiCalls.convertLocalLang("verification_code")}
+              maxLength={6}
+              onKeyDown={(event) => {
+                if (
+                  event.currentTarget.value.length > 5 &&
+                  !(event.key == "Backspace" || event.key == "Delete")
+                ) {
+                  event.preventDefault();
+                } else if (/^\d+$/.test(event.key)) {
+                  handleSendOtp(event.currentTarget.value);
+                } else if (event.key == "Backspace" || event.key == "Delete") {
+                } else {
+                  event.preventDefault();
+                }
+              }}
+              style={{ width: "100%" }}
+              disabled={emailDisable}
+            />
+          </Form.Item>
+        )}
         {verifyData.twoFactorEnabled == true && (
           <Text className="fs-14 mb-4 text-white d-block fw-200">
             Authenticator verification code *
@@ -538,7 +579,26 @@ const WithdrawalFiatSummary = ({
                 </Text>
               </div>
             }
-            rules={[{ required: true, message: "Is required" }]}
+            rules={[
+              {
+                validator: (rule, value, callback) => {
+                  var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                  if (value) {
+                    if (!regx.test(value)) {
+                      callback("Invalid zip code");
+                    } else if (regx.test(value)) {
+                      callback();
+                    }
+                  } else {
+                    callback();
+                  }
+                }
+              },
+              {
+                required: true,
+                message: apiCalls.convertLocalLang("is_required")
+              }
+            ]}
             label={
               <>
                 <Button type="text" onClick={getAuthenticator}>
@@ -558,12 +618,7 @@ const WithdrawalFiatSummary = ({
           </Form.Item>
         )}
 
-        <Button
-          size="large"
-          block
-          className="pop-btn"
-          htmlType="submit"
-        >
+        <Button size="large" block className="pop-btn" htmlType="submit">
           <Translate content="with_draw" component={Text} />
         </Button>
       </Form>
