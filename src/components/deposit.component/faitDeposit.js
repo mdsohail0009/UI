@@ -281,7 +281,8 @@ class FaitDeposit extends Component {
                       rules={[
                         { required: true, message: apicalls.convertLocalLang('is_required') },
                       ]}
-                    > <div ><div className="d-flex">
+                    > 
+                    <div ><div className="d-flex">
                       <Translate
                         className="input-label"
                         content="amount"
