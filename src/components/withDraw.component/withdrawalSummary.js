@@ -54,6 +54,7 @@ const WithdrawalFiatSummary = ({
   const [minutes, setMinutes] = useState(2);
   const [emailOtp, setEmailOtp] = useState("");
   const [invalidData,setInvalidData]=useState(false);
+  const [validData,setValidData]=useState(false)
   const[verify,setVerify]=useState(false);
   const btnList = {
     get_otp: (
@@ -212,6 +213,7 @@ const WithdrawalFiatSummary = ({
     }
   };
   const getEmailVerification = async (values) => {
+    setValidData(true)
     let response = await apiCalls.verifyEmail(userConfig.id, values.code);
     if (response.ok) {
       success("Email  verified successfully");
@@ -248,6 +250,7 @@ const WithdrawalFiatSummary = ({
   };
 
   const getOtpVerification = async () => {
+    setValidData(true)
     let response = await apiCalls.getVerification(userConfig.id, otpCode);
     if (response.ok) {
       success("OTP verified successfully");
@@ -272,10 +275,16 @@ const WithdrawalFiatSummary = ({
     setButtonText(null);
   };
   const getAuthenticator = async () => {
+    debugger
+    setValidData(true)
     let response = await apiCalls.getAuthenticator(authCode, userConfig.userId);
-    if (response.ok) {
+    if (response.ok) {  
+      console.log(response.data)
       success("Authenticator verified successfully");
-    } else {
+    } else if(response.data==null){
+        setMsg("please enter verification code")      
+    }
+    else {
       useOtpRef.current.scrollIntoView();
       setMsg(apiCalls.convertLocalLang("invalid_code"));
       setTimeout(() => {
@@ -411,9 +420,68 @@ const WithdrawalFiatSummary = ({
         className="mt-36"
         name="advanced_search"
         form={form}
-        onFinish={saveWithdrwal}
+        //onFinish={saveWithdrwal}
+        onFinish={validData==true && saveWithdrwal}
         autoComplete="off"
       >
+
+{verifyData.twoFactorEnabled == true && (
+          <Text className="fs-14 mb-8 text-white d-block fw-200">
+            2FA verification code *
+          </Text>
+        )}
+        {verifyData.twoFactorEnabled == true && (
+          <Form.Item
+            name="authenticator"
+            className="input-label otp-verify"
+            extra={
+              <div>
+                <Text
+                  className="fs-12 text-red fw-200"
+                  style={{ float: "right", color: "var(--textRed)" }}
+                >
+                  {invalidcode}
+                </Text>
+              </div>
+            }
+            rules={[
+              {
+                validator: (rule, value, callback) => {
+                  var regx = new RegExp(/^[0-9]+$/);
+                  if (value) {
+                    if (!regx.test(value)) {
+                      callback("Invalid 2fa code");
+                    } else if (regx.test(value)) {
+                      callback();
+                    }
+                  } else {
+                    callback();
+                  }
+                }
+              },
+              {
+                required: true,
+                message: apiCalls.convertLocalLang("is_required")
+              }
+            ]}
+            label={
+              <>
+                <Button type="text" onClick={getAuthenticator}>
+                  VERIFY
+                </Button>
+              </>
+            }
+          >
+            <Input
+              type="text"
+              className="cust-input text-left"
+              //placeholder={apiCalls.convertLocalLang("verification_code")}
+              maxLength={6}
+              onChange={(e) => handleAuthenticator(e, "authenticator")}
+              style={{ width: "100%" }}
+            />
+          </Form.Item>
+        )}
         {verifyData.isPhoneVerified == true && (
           <Text className="fs-14 mb-8 text-white d-block fw-200">
             Phone verification code *
@@ -451,7 +519,7 @@ const WithdrawalFiatSummary = ({
                 {tooltipVisible == true && (
                   <Tooltip
                     placement="topRight"
-                    title={`Haven\'t receive code?Request new code in ${seconds}. The code will expire after 30mins.`}
+                    title={`Haven\'t receive code? Request new code in ${seconds}. The code will expire after 30mins.`}
                   >
                     <span className="icon md info mr-8" />
                   </Tooltip>
@@ -522,7 +590,7 @@ const WithdrawalFiatSummary = ({
                 {tooltipEmail == true && (
                   <Tooltip
                     placement="topRight"
-                    title={`Haven\'t receive code?Request new code in ${seconds}. The code will expire after 30mins.`}
+                    title={`Haven\'t receive code? Request new code in ${seconds}. The code will expire after 30mins.`}
                   >
                     <span className="icon md info mr-8" />
                   </Tooltip>
@@ -560,63 +628,7 @@ const WithdrawalFiatSummary = ({
             />
           </Form.Item>
         )}
-        {verifyData.twoFactorEnabled == true && (
-          <Text className="fs-14 mb-8 text-white d-block fw-200">
-            Authenticator verification code *
-          </Text>
-        )}
-        {verifyData.twoFactorEnabled == true && (
-          <Form.Item
-            name="authenticator"
-            className="input-label otp-verify"
-            extra={
-              <div>
-                <Text
-                  className="fs-12 text-red fw-200"
-                  style={{ float: "right", color: "var(--textRed)" }}
-                >
-                  {invalidcode}
-                </Text>
-              </div>
-            }
-            rules={[
-              {
-                validator: (rule, value, callback) => {
-                  var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                  if (value) {
-                    if (!regx.test(value)) {
-                      callback("Invalid zip code");
-                    } else if (regx.test(value)) {
-                      callback();
-                    }
-                  } else {
-                    callback();
-                  }
-                }
-              },
-              {
-                required: true,
-                message: apiCalls.convertLocalLang("is_required")
-              }
-            ]}
-            label={
-              <>
-                <Button type="text" onClick={getAuthenticator}>
-                  VERIFY
-                </Button>
-              </>
-            }
-          >
-            <Input
-              type="text"
-              className="cust-input text-left"
-              //placeholder={apiCalls.convertLocalLang("verification_code")}
-              maxLength={6}
-              onChange={(e) => handleAuthenticator(e, "authenticator")}
-              style={{ width: "100%" }}
-            />
-          </Form.Item>
-        )}
+      
 
         <Button size="large" block className="pop-btn" htmlType="submit">
           <Translate content="with_draw" component={Text} />
