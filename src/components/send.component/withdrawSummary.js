@@ -166,7 +166,7 @@ class WithdrawSummary extends Component {
 
       setTimeout(() => {
         this.setState({ buttonText: "resendotp", tooltipVisible: false });
-      }, 20000);
+      }, 120000);
     } else {
       this.setState({
         ...this.state,
@@ -192,7 +192,7 @@ class WithdrawSummary extends Component {
       });
       setTimeout(() => {
         this.setState({ emailText: "resendEmail", tooltipEmail: false });
-      }, 20000);
+      }, 120000);
     } else {
       this.setState({
         ...this.state,
@@ -260,6 +260,7 @@ class WithdrawSummary extends Component {
   };
 
   getAuthenticator = async () => {
+    debugger
     let response = await apiCalls.getAuthenticator(
       this.state.authCode,
       this.props.userProfile.userId
@@ -302,7 +303,9 @@ class WithdrawSummary extends Component {
           this.props.changeStep("withdraw_crpto_success");
           publishBalanceRfresh("success");
         }
-        else{
+        else if (this.props.userProfile.isBusiness===true){
+            this.setState({ ...this.state, errorMsg: withdrawal.data });
+          }else if (this.props.userProfile.isBusiness===false){
             this.setState({ ...this.state, errorMsg: withdrawal.data });
           }
       } else {
@@ -510,6 +513,67 @@ class WithdrawSummary extends Component {
             form={this.form}
             onFinish={this.saveWithdrwal}
           >
+
+{this.state.verifyData.twoFactorEnabled == true && (
+              <Text className="fs-14 mb-8 text-white d-block fw-200">
+               2FA verification code *
+              </Text>
+            )}
+            {this.state.verifyData.twoFactorEnabled == true && (
+              <Form.Item
+                name="authenticator"
+                className="input-label otp-verify"
+                extra={
+                  <div>
+                    <Text
+                      className="fs-12 text-red fw-200"
+                      style={{ float: "right", color: "var(--textRed)" }}
+                    >
+                      {this.state.invalidcode}
+                    </Text>
+                  </div>
+                }
+                rules={[
+                  {
+                    validator: (rule, value, callback) => {
+                      var regx = new RegExp(/^[0-9]+$/);
+                      if (value) {
+                        if (!regx.test(value)) {
+                          callback("Invalid 2fa code");
+                        } else if (regx.test(value)) {
+                          callback();
+                        }
+                      } else {
+                        callback();
+                      }
+                    }
+                    
+                  },
+                  {
+                      required: true,
+                      message: apiCalls.convertLocalLang('is_required')
+                  }
+                 
+                ]}                
+                label={
+                  <>
+                    <Button type="text" onClick={this.getAuthenticator}>
+                      VERIFY
+                    </Button>
+                  </>
+                }
+              >
+                <Input
+                  type="text"
+                  className="cust-input text-left"
+                  //placeholder={apiCalls.convertLocalLang("verification_code")}
+                  maxLength={6}
+                  onChange={(e) => this.handleAuthenticator(e, "authenticator")}
+                  style={{ width: "100%" }}
+                />
+              </Form.Item>
+            )}
+
             {this.state.verifyData.isPhoneVerified == true && (
               <Text className="fs-14 mb-8 text-white d-block fw-200">
                 Phone verification code *
@@ -654,66 +718,7 @@ class WithdrawSummary extends Component {
                 />
               </Form.Item>
             )}
-            {this.state.verifyData.twoFactorEnabled == true && (
-              <Text className="fs-14 mb-8 text-white d-block fw-200">
-                Authenticator verification code *
-              </Text>
-            )}
-            {this.state.verifyData.twoFactorEnabled == true && (
-              <Form.Item
-                name="authenticator"
-                className="input-label otp-verify"
-                extra={
-                  <div>
-                    <Text
-                      className="fs-12 text-red fw-200"
-                      style={{ float: "right", color: "var(--textRed)" }}
-                    >
-                      {this.state.invalidcode}
-                    </Text>
-                  </div>
-                }
-                rules={[
-                  {
-                    validator: (rule, value, callback) => {
-                      var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                      if (value) {
-                        if (!regx.test(value)) {
-                          callback("Invalid zip code");
-                        } else if (regx.test(value)) {
-                          callback();
-                        }
-                      } else {
-                        callback();
-                      }
-                    }
-                    
-                  },
-                  {
-                      required: true,
-                      message: apiCalls.convertLocalLang('is_required')
-                  }
-                 
-                ]}                
-                label={
-                  <>
-                    <Button type="text" onClick={this.getAuthenticator}>
-                      VERIFY
-                    </Button>
-                  </>
-                }
-              >
-                <Input
-                  type="text"
-                  className="cust-input text-left"
-                  //placeholder={apiCalls.convertLocalLang("verification_code")}
-                  maxLength={6}
-                  onChange={(e) => this.handleAuthenticator(e, "authenticator")}
-                  style={{ width: "100%" }}
-                />
-              </Form.Item>
-            )}
-
+        
             <div className="d-flex p-16 mb-36 agree-check">
               <label>
                 <input
