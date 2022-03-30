@@ -33,6 +33,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
       setVerifyData(response.data);
       setPhone(response.data?.isPhoneVerified);
       setEmail(response.data?.isEmailVerification);
+      setFactor(response.data?.twoFactorEnabled)
       form.setFieldsValue(response.data);
     }
   }
@@ -85,6 +86,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
   }
     const response = await apiCalls.updateSecurity(obj);
     if (email && phone && factor) {
+      useDivRef.current.scrollIntoView(0,0);
       return setErrorMsg("Please select only two checkboxes");
     }
     else
@@ -93,7 +95,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
           debugger
           setErrorMsg(false)
           fetchWithdrawVerifyObj(obj);
-          success("Withdraw Verification details saved successfully")
+          success("Withdraw verification details saved successfully")
           setErrorMsg(null)
           useDivRef.current.scrollIntoView();
 
@@ -102,7 +104,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
         }
       }
       else {
-        useDivRef.current.scrollIntoView();
+        useDivRef.current.scrollIntoView(0,0);
         return setErrorMsg("Please select any two withdraw verification options");
       }
   }
