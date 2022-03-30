@@ -303,7 +303,9 @@ class WithdrawSummary extends Component {
           this.props.changeStep("withdraw_crpto_success");
           publishBalanceRfresh("success");
         }
-        else{
+        else if (this.props.userProfile.isBusiness===true){
+            this.setState({ ...this.state, errorMsg: withdrawal.data });
+          }else if (this.props.userProfile.isBusiness===false){
             this.setState({ ...this.state, errorMsg: withdrawal.data });
           }
       } else {
