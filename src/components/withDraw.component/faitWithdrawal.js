@@ -166,10 +166,6 @@ const FaitWithdrawal = ({
       selectedFiat
     );
     if (recAddress.ok) {
-      if(recAddress.data.length ===1){
-        form.setFieldsValue({favouriteName:recAddress.data[0].name });
-        setAddressVisible(true)
-      }
       setAddressLu(recAddress.data);
     }
     console.log(addressLu)
@@ -253,11 +249,11 @@ const FaitWithdrawal = ({
       useDivRef.current.scrollIntoView();
       return setErrorMsg(apicalls.convertLocalLang("amount_greater_zero"));
     }
-  //  if (values.totalValue === ".") {
-  //      useDivRef.current.scrollIntoView();
-  //   form.resetFields();
-  //      return setErrorMsg(apicalls.convertLocalLang("amount_greater_zero"));
-  //    }
+   if (values.totalValue === ".") {
+       useDivRef.current.scrollIntoView();
+    form.resetFields();
+       return setErrorMsg(apicalls.convertLocalLang("amount_greater_zero"));
+     }
     let _totalamount = values.totalValue.toString();
     if (
       (_totalamount.indexOf(".") > -1 &&
@@ -416,7 +412,7 @@ const FaitWithdrawal = ({
                 </div>
               )}
 
-              {addressVisible == true && (
+              {addressVisible && (
                 <div className="fiatdep-info">
                   <Form.Item
                     className="custom-forminput custom-label  mb-24 min-max-btn"
