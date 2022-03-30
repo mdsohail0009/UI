@@ -82,7 +82,6 @@ const FaitWithdrawal = ({
   const useDivRef = React.useRef(null);
   const [addressVisible, setAddressVisible] = useState(false);
   const [walletVisible, setWalletVisible] = useState(false);
-  const [addressShow,setAddressShow]=useState(true);
   useEffect(() => {
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       handleWalletSelection(selectedWalletCode);
@@ -167,19 +166,9 @@ const FaitWithdrawal = ({
       selectedFiat
     );
     if (recAddress.ok) {
-      if(recAddress.data.length ===1){
-        form.setFieldsValue({favouriteName:recAddress.data[0].name });
-        setAddressVisible(true)
-      }else if(recAddress.data.length ===0){
-        setAddressShow(false);
-        setErrorMsg("Address details not available")
-      }
       setAddressLu(recAddress.data);
     }
-    else{
-       setAddressShow(false);
-       <p>Address Book details not available</p>
-    }
+    console.log(addressLu)
   };
   const handleAddressChange = async (e) => {
     debugger
@@ -389,7 +378,6 @@ const FaitWithdrawal = ({
               </Form.Item>
               {walletVisible && (
                 <div style={{ position: "relative" }}>
-                  {addressShow && (
                   <Form.Item
                     className="custom-forminput custom-label mb-24"
                     name="favouriteName"
@@ -420,7 +408,7 @@ const FaitWithdrawal = ({
                         </Option>
                       ))}
                     </Select>
-                  </Form.Item>)}
+                  </Form.Item>
                 </div>
               )}
 
