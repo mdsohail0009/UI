@@ -498,7 +498,7 @@ export default {
   you_are_sending: 'You are sending',
   fees: 'Fees',
   you_receive: 'You will receive',
-  company_name:'Company Name',
+  company_name:'Business Name',
   withdraw_verification:'Withdraw Verification',
   Phone_verification:'Phone Verification',
   Email_verification:'Email Verification',
@@ -507,6 +507,7 @@ export default {
   sent_verification:'Verification code sent',
   verify_btn:'VERIFY',
   verify_button:'VERIFY',
-  addresslabel: 'Address Label'
+  addresslabel: 'Address Label',
+  noaddress_msg:'Address Book details not available.'
 
 }
