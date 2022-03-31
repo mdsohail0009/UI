@@ -78,6 +78,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
     }
   }
   const saveDetails=async()=>{
+    debugger
     let obj={
       "MemberId": userConfig.id,
       "isEmailVerification": email,

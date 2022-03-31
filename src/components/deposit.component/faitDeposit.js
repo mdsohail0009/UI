@@ -34,7 +34,9 @@ class FaitDeposit extends Component {
     buyToggle: 'Buy',
     fiatDepEur: false,
     faitdeposit: false,
-    BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null },
+    BankDetails: [],
+     BankInfo: null, 
+     depObj: { currency: null, BankName: null, Amount: null },
     tabValue: 1, Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false
   }
   componentDidMount() {
@@ -114,6 +116,7 @@ class FaitDeposit extends Component {
     }
   }
   handlFiatDep = async (e, currencyLu) => {
+    debugger
     let { depObj } = this.state;
     depObj.currency = e;
     depObj.BankName = null;
