@@ -497,5 +497,6 @@ export default {
   you_are_sending: 'You are sending',
   fees: 'Fees',
   you_receive: 'You will receive',
-  upload_file: 'Upload File'
+  upload_documents: 'Upload Documents',
+  compliance: '(Compliance)'
 }

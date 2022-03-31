@@ -492,5 +492,6 @@ export default {
   you_are_sending: 'Anda menghantar',
   fees: 'Yuran',
   you_receive: 'Anda akan menerima',
-  upload_file: 'Muat Naik Fail'
+  upload_documents: 'Muat Naik Dokumen',
+  compliance: '(Pematuhan)'
 }

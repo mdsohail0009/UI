@@ -549,9 +549,14 @@ class Header extends Component {
               onClick={() => window.open('https://suissebase.egnyte.com/ul/jnDqGI4Nxj')}
             >
               <Translate
-                content="upload_file"
+                content="upload_documents"
                 component={Link}
-                className="c-pointer px-0"
+                className="c-pointer px-0 pb-0 l-height-normal"
+              />
+              <Translate
+                content='compliance'
+                component={Link}
+                className="c-pointer pt-0 px-0"
               />
             </li>
             <li className="c-pointer" onClick={() => this.clearEvents()}>
