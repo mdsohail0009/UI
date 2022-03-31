@@ -651,46 +651,41 @@ class PaymentsView extends Component {
                             </Row>
                             <Paragraph
                                 className="mb-16 fs-20 mt-24 text-white fw-500"
-                            >KYC Documents</Paragraph>
+                            >Attach Documents</Paragraph>
                             <>
-
+                                    <Paragraph className='text-white-30 fs-14'>If this address is a third party please provide payment receipts and if this address is personal account please provide your address proof.</Paragraph>
+                                <div className='mb-24'>
+                                    <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
+                                        className="upload mt-16"
+                                        multiple={false}
+                                        action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                                        showUploadList={false}
+                                        beforeUpload={(props) => { this.beforeUpload(props) }}
+                                        onChange={(props) => { this.handleUpload(props, "IDENTITYPROOF") }}
+                                    >
+                                        <p className="ant-upload-drag-icon mb-0">
+                                            <span className="icon xxxl doc-upload" />
+                                        </p>
+                                        {/* <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
+                                        <p className="ant-upload-hint text-secondary fs-12">
+                                            PNG, JPG,JPEG and PDF files are allowed
+                                        </p> */}
+                                    </Dragger>
+                                    <Row>
+                                    {this.state.docIdentityProofObjs.map((file) =>
+                                        <Col xl={8}>{file ? <div className="docfile">
+                                            <span className={`icon xl file mr-16`} />
+                                            <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
+                                                <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
+                                                <span className="fs-12 text-secondary">{this.formatBytes(file ? file.remarks : "")}</span>
+                                            </div>
+                                            <span className="icon md close c-pointer" onClick={() => this.deleteIdentityDocument(file)} />
+                                        </div> : ""}</Col>
+                                    )}
+                                    </Row>
+                                </div>
                                 <Row gutter={16}>
-                                    <Col xl={8}>
-                                        <div className='mb-24'>
-                                            <Paragraph
-
-                                                className="mb-16 fs-14 text-white fw-500 text-upper"
-                                            >Please provide your identity proof</Paragraph>
-                                            <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-                                                className="upload mt-16"
-                                                multiple={false}
-                                                action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
-                                                showUploadList={false}
-                                                beforeUpload={(props) => { this.beforeUpload(props) }}
-                                                onChange={(props) => { this.handleUpload(props, "IDENTITYPROOF") }}
-                                            >
-                                                <p className="ant-upload-drag-icon">
-                                                    <span className="icon xxxl doc-upload" />
-                                                </p>
-                                                <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                                                <p className="ant-upload-hint text-secondary fs-12">
-                                                    PNG, JPG,JPEG and PDF files are allowed
-                                                </p>
-                                            </Dragger>
-                                            {this.state.docIdentityProofObjs.map((file) =>
-                                                <>{file ? <div className="docfile">
-                                                    <span className={`icon xl file mr-16`} />
-                                                    <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
-                                                        <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
-                                                        <span className="fs-12 text-secondary">{this.formatBytes(file ? file.remarks : "")}</span>
-                                                    </div>
-                                                    <span className="icon md close c-pointer" onClick={() => this.deleteIdentityDocument(file)} />
-                                                </div> : ""}</>
-                                            )}
-
-                                        </div>
-                                    </Col>
-                                    <Col xl={8}>
+                                    {/* <Col xl={8}>
                                         <div>
                                             <Paragraph
 
@@ -756,7 +751,7 @@ class PaymentsView extends Component {
                                                 </div> : ""}</>
                                             )}
                                         </div>
-                                    </Col>
+                                    </Col> */}
                                 </Row>
                                 <Modal
                                     className="documentmodal-width"
@@ -788,7 +783,7 @@ class PaymentsView extends Component {
                                     size="large"
                                     disabled={this.state.btnDisabled}
                                     tyle={{ width: 250 }}
-                                    className="pop-btn" htmlType="submit">
+                                    className="pop-btn px-36" htmlType="submit">
                                     <Translate content="confirm_beneficiary" />
                                 </Button>
 

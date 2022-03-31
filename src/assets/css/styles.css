@@ -730,7 +730,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 /* --Payments --*/
 .pay-grid{width: 100%;border: 1px solid rgba(0,0,0,.08);}
 .pay-grid thead th{background-color: var(--bgDarkGrey);padding: 8px; color: var(--textWhite30);font-weight: 400;text-align: left;}
-.pay-grid thead th:last-child{width: 350px;}
+.pay-grid thead th:last-child{width: 300px;}
 .pay-grid tbody td{padding: 8px; color: var(--textWhite30);font-weight: 400;border: 1px solid rgba(0,0,0,.08);}
 .pay-grid tbody tr:nth-child(even){background-color: rgba(0,0,0,.04);}
 .pay-grid tbody tr:hover{background-color: var(--bgDarkGrey);}
@@ -740,6 +740,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .ant-popover-arrow{border-color: var(--bgGloom) !important;}
 .payment-docs .accordian .ant-collapse-content-box, .payment-docs .accordian .ant-collapse-item{background-color: var(--bgGrey);border-radius: 24px;}
 .payment-docs .accordian .ant-collapse-item:last-child > .ant-collapse-content{background-color: var(--bgGrey);border-radius: 30px;}
+.file-label{border: 1px solid var(--borderLight);border-radius: 6px;padding: 2px 8px;color: var(--textYellow);cursor: pointer;background-color: var(--bgDarkGrey);}
 
 /*--Zoho--*/
 .zsiq_flt_rel{width: 50px !important; height: 50px !important;bottom: 8px;right: -10px;}
