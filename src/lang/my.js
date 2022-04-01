@@ -497,4 +497,6 @@ export default {
   Phone_verification:'Pag-verify ng Telepono',
   Email_verification:'Pagpapatunay ng Email',
   addresslabel:'Label ng Address',
+  address_type: 'Address Type',
+  addressState:"Alamat Sate"
 }
