@@ -23,8 +23,6 @@ const sendRequest = (obj) => {
 const getDocDetails = (docId) => {
   return clientApi.get(ApiControllers.documents + `Accouts/${docId}`);
 };
-//https://routechanges.azurewebsites.net/api/v1/Documents/Accouts/{Id}--Id means DocumentId
-//https://apiuat.suissebase.ch/api/v1/Documents/Accounts/{id}/Messages
 const getDocumentReplies = (docDetailId) => {
   return clientApi.get(
     ApiControllers.documents + `Accounts/${docDetailId}/Messages`
@@ -44,6 +42,9 @@ const getDashboardNotices = (id) => {
 const getFileURL = (obj) => {
   return clientApi.post(ApiControllers.accounts + `FetchFile`, obj);
 };
+const getCase = (id) => {
+  return clientApi.post(ApiControllers.accounts + `Cases/${id}`);
+};
 export {
   sendRequest,
   uuidv4,
@@ -53,4 +54,5 @@ export {
   approveDoc,
   getDashboardNotices,
   getFileURL,
+  getCase
 };

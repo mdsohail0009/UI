@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Spin, Empty, Alert, Row, Col,
     Divider } from 'antd';
-import { approveDoc, getDocDetails, getDocumentReplies, saveDocReply, uuidv4, getFileURL } from './api';
+import { approveDoc, getDocDetails, getDocumentReplies, saveDocReply, uuidv4, getFileURL, getCase } from './api';
 import Loader from '../../Shared/loader';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
@@ -11,10 +11,10 @@ import QueryString from 'query-string';
 import { validateContent } from "../../utils/custom.validator";
 import Translate from 'react-translate-component';
 import Mome from 'moment'
+import { error, success, warning } from '../../utils/messages';
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
-const { TextArea } = Input;
 
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
@@ -28,6 +28,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 };
 
 class RequestedDocs extends Component {
+    paramId = this.props.match.params.id;
     state = {
         modal: false,
         previewModal: false,
@@ -43,29 +44,23 @@ class RequestedDocs extends Component {
         isMessageError: null,
         isValidFile: true,
         validHtmlError: false,
-        PreviewFilePath: null
+        PreviewFilePath: null,
+        caseData: null
     }
     componentDidMount() {
         this.getDocument(QueryString.parse(this.props.location.search).id);
     }
-    
     getDocument = async (id) => {
-		debugger
         this.setState({ ...this.state, loading: true, error: null });
         const response = await getDocDetails(id);
         if (response.ok) {
-			console.log(response)
-            this.setState({ ...this.state, docDetails: response.data, loading: false });
              this.loadDocReplies(response.data?.details[0]?.id)
             this.setState({ ...this.state, docDetails: response.data, loading: false });
-			console.log(this.state.docDetails)
         } else {
             this.setState({ ...this.state, loading: false, error: response.data });
         }
     }
-
     loadDocReplies = async (id) => {
-        debugger
         let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId != id);
         this.setState({ ...this.state, isMessageError:null, validHtmlError:null, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } },docReplyObjs: docReObj,docErrorMessage: null });
         const response = await getDocumentReplies(id);
@@ -91,7 +86,6 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, previewModal: true, previewPath: res.data });
         }
     }
-
     DownloadUpdatedFile = async () => {
         let res = await getFileURL({ url: this.state.PreviewFilePath });
         if (res.ok) {
@@ -115,18 +109,11 @@ class RequestedDocs extends Component {
             "status": "Approved"
         });
         this.setState({ ...this.state, isMessageError: null });
-        message.destroy()
         if (response.ok) {
-            message.success({
-                content: 'Document has been approved',
-                className: 'custom-msg',
-            });
+            success('Document has been approved');
             this.loadDocReplies(doc.id);
         } else {
-            message.warning({
-                content: response.data,
-                className: 'custom-msg',
-            });
+            warning(response.data);
         }
     }
     updateDocRepliesStatus = (doc, Status) => {
@@ -139,7 +126,6 @@ class RequestedDocs extends Component {
         this.setState({ ...this.state, docDetails: { ...this.state.docDetails, details: docDetails } });
     }
     docReject = async (doc) => {
-        debugger
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
         this.setState({ ...this.state, isMessageError: null });
         if (!validateContent(item?.reply)) {
@@ -162,19 +148,12 @@ class RequestedDocs extends Component {
         item.info = JSON.stringify(this.props.trackAuditLogData);
         this.setState({ ...this.state, isSubmitting: true });
         const response = await saveDocReply(item);
-        message.destroy()
         if (response.ok) {
-            message.warning({
-                content: 'Document has been submitted',
-                className: 'custom-msg',
-            });
+            success('Document has been submitted');
             this.updateDocRepliesStatus(doc, "Submitted");
             this.loadDocReplies(doc.id)
         } else {
-            message.warning({
-                content: response.data,
-                className: 'custom-msg',
-            });
+            warning(response.data);
         }
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
@@ -182,7 +161,6 @@ class RequestedDocs extends Component {
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
     deleteDocument = async (doc, idx, isAdd) => {
-
         let item = { ...doc };
         item.path = item.path.splice(idx, 1);
         item.path = JSON.stringify(item.path);
@@ -194,21 +172,14 @@ class RequestedDocs extends Component {
             return;
         }
         const response = await saveDocReply(item);
-        message.destroy()
         if (response.ok) {
-            message.warning({
-                content: 'Document has been deleted',
-                className: 'custom-msg',
-            });
+            success('Document has been deleted');
             this.loadDocReplies(doc.id);
             let objs = [...this.state.docReplyObjs];
             objs = objs.filter(item1 => item1.docunetDetailId !== doc.id);
             this.setState({ ...this.state, docReplyObjs: objs });
         } else {
-            message.warning({
-                content: response.data,
-                className: 'custom-msg',
-            });
+            warning(response.data);
         }
     }
     isDocExist(lstObj, id) {
@@ -258,8 +229,7 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
         }
         else if (file.status === 'error') {
-            message.error({ content: `${file.response}`, className: 'custom-msg' })
-            // this.setState({ ...this.state, uploadLoader: false, errorMessage: file.response,  isSubmitting: false  })
+            error(file.response);
             this.setState({ ...this.state, uploadLoader: false, isSubmitting: false })
         }
         else if (!this.state.isValidFile) {
@@ -267,19 +237,16 @@ class RequestedDocs extends Component {
         }
     }
     beforeUpload = (file) => {
-
         let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
-        //  let isFileName = (file.name.split('.')).length > 2 ? false : true;
         if (fileType[file.type]) {
             this.setState({ ...this.state, isValidFile: true, })
             return true
         } else {
-            message.error({ content: `File is not allowed. You can upload jpg, png, jpeg and PDF  files`, className: 'custom-msg' })
+            error('File is not allowed. You can upload jpg, png, jpeg and PDF  files');
             this.setState({ ...this.state, isValidFile: false, })
             return Upload.LIST_IGNORE;
         }
     }
-
     uopdateReplyObj = (item, list) => {
         for (let obj of list) {
             if (obj.id === item.id) {
@@ -324,16 +291,22 @@ class RequestedDocs extends Component {
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed()) + ' ' + sizes[i];
     }
-
     filePreviewPath() {
         if (this.state.previewPath.includes(".pdf")) {
-            //return "https://suissebasecors.herokuapp.com/" + this.state.previewPath;
             return this.state.previewPath;
         } else {
             return this.state.previewPath;
         }
     }
-
+    getCaseData = async () => {
+        debugger
+        let caseRes = getCase(this.paramId);
+        if(caseRes){
+            this.setState({...this.state, caseData: caseRes.data});
+        } else {
+            warning('Data not getting from the server!');            
+        }
+    }
     render() {
         if (this.state.loading) {
             return <Loader />
