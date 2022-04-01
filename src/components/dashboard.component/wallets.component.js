@@ -46,7 +46,7 @@ class Wallets extends Component {
         }
 
         if (e === 2) {
-            this.props.dispatch(setWithdrawfiatenaable(true))
+            this.props.dispatch((true))
             this.props.dispatch(setWithdrawfiat({ walletCode: value }))
         } else {
             this.props.dispatch(setWithdrawfiatenaable(false))

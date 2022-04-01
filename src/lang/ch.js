@@ -497,4 +497,12 @@ export default {
   Phone_verification:'電話驗證',
   Email_verification:'電子郵件驗證',
   addresslabel:'地址標籤',
+  address_type: 'Address Type',
+  addressState:"地址状态",
+  add_new_beneficiary: 'Add New Beneficiary',
+  kyc_documents: 'KYC Documents',
+  confirm_beneficiary: 'Confirm Beneficiary',
+  return_to_beneficairy: 'Back to Add New Beneficiary',
+  compliance: '(Compliance)',
+  upload_documents: 'Upload Documents'
 }

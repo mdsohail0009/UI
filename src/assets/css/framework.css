@@ -3,6 +3,7 @@
 .c-pointer{cursor: pointer !important;}
 .d-block{display: block !important;}
 .l-height-normal{line-height: normal !important;}
+.italic{font-style: italic !important;}
 
 /*----Font Sizes----*/
  .fs-10{font-size: 10px !important;}

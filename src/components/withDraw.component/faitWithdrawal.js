@@ -271,8 +271,8 @@ const FaitWithdrawal = ({
     }
     if (values.totalValue === ".") {
       useDivRef.current.scrollIntoView();
-      form.resetFields();
-      return setErrorMsg(apicalls.convertLocalLang("amount_greater_zero"));
+      //form.resetFields();
+      return setErrorMsg(apicalls.convertLocalLang("is_required"));
     }
     let _totalamount = values.totalValue.toString();
     if (

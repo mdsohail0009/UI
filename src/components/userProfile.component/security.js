@@ -78,7 +78,6 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
     }
   }
   const saveDetails=async()=>{
-    debugger
     let obj={
       "MemberId": userConfig.id,
       "isEmailVerification": email,
@@ -86,12 +85,12 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
       "TwoFactorEnabled":factor
   }
     const response = await apiCalls.updateSecurity(obj);
-    if (email && phone && factor) {
-      useDivRef.current.scrollIntoView(0,0);
-      return setErrorMsg("Please select only two checkboxes");
-    }
-    else
-      if (email && phone || email && factor || phone && factor) {
+    // if (email && phone && factor) {
+    //   useDivRef.current.scrollIntoView(0,0);
+    //   return setErrorMsg("Please select  two or morethan two checkboxes");
+    // }
+    //else
+      if (email && phone || email && factor || phone && factor || email&&phone&&factor) {
         if (response.ok) {
           debugger
           setErrorMsg(false)
@@ -100,15 +99,20 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
           setErrorMsg(null)
           useDivRef.current.scrollIntoView();
 
-        } else {
+        } else if((email||phone||factor)==false){
+          useDivRef.current.scrollIntoView(0,0);
+          return setErrorMsg("Please select any two withdraw verification options");
+        }
+        else {
           error(response.data)
         }
       }
+      
       else {
         useDivRef.current.scrollIntoView(0,0);
         return setErrorMsg("Please select any two withdraw verification options");
       }
-  }
+ } 
 
   return (
     <>

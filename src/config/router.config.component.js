@@ -20,6 +20,7 @@ const DashboardCharts = React.lazy(() => import("../components/dashboard.compone
 const Payments = React.lazy(() => import("../components/payments.component"));
 const PaymentDetails = React.lazy(() => import("../components/payments.component/paymentDetails"));
 const paymentsView = React.lazy(() => import("../components/payments.component/paymentsView"));
+const BeneficiaryDetails = React.lazy(() => import("../components/payments.component/beneficiaryDetails"));
 
 class RouteConfig extends Component {
   render() {
@@ -49,6 +50,7 @@ class RouteConfig extends Component {
               <Route path={`${url}`} component={Payments} exact />
               <Route path={`${url}/:id/add`} component={PaymentDetails} />
               <Route path={`${url}/:id/view`} component={paymentsView} />
+              <Route path={`${url}/newbeneficiary/:id`} component={BeneficiaryDetails} />
             </>
           )}
         />

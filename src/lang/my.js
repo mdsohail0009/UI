@@ -497,4 +497,12 @@ export default {
   Phone_verification:'Pag-verify ng Telepono',
   Email_verification:'Pagpapatunay ng Email',
   addresslabel:'Label ng Address',
+  address_type: 'Address Type',
+  addressState:"Alamat Sate",
+  add_new_beneficiary: 'Add New Beneficiary',
+  kyc_documents: 'KYC Documents',
+  confirm_beneficiary: 'Confirm Beneficiary',
+  return_to_beneficairy: 'Back to Add New Beneficiary',
+  compliance: '(Compliance)',
+  upload_documents: 'Upload Documents'
 }

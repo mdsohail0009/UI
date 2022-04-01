@@ -110,7 +110,7 @@ export default {
   menu_swap: 'Swap',
   menu_send_receive: 'Deposit / Withdraw',
   menu_mass_pay: 'Mass Payments',
-  menu_payments: 'Payments',
+  menu_payments: 'Bill Payments',
   security: 'Security',
   current_balance: 'Current Balance',
   min: 'Min',
@@ -508,6 +508,13 @@ export default {
   verify_btn:'VERIFY',
   verify_button:'VERIFY',
   addresslabel: 'Address Label',
-  noaddress_msg:'Address Book details not available.'
-
+  noaddress_msg:'Address Book details not available.',
+  address_type: 'Address Type',
+  addressState:"Address State",
+  add_new_beneficiary: 'Add New Beneficiary',
+  kyc_documents: 'KYC Documents',
+  confirm_beneficiary: 'Confirm Beneficiary',
+  return_to_beneficairy: 'Back to Add New Beneficiary',
+  compliance: '(Compliance)',
+  upload_documents: 'Upload Documents'
 }
