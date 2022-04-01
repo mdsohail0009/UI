@@ -1,13 +1,24 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Button, Form, Select, message, Input, Alert, Popover, Spin } from 'antd';
+import { Typography, Button, Form, Select, message, Input, Alert, Popover, Spin, Collapse, Badge } from 'antd';
 import Translate from 'react-translate-component';
 import { getCurrencyLu, getPaymentsData, savePayments, getBankData } from './api'
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
+import { validateContent } from "../../utils/custom.validator";
 
 const { Option } = Select;
 const FormItem = Form.Item
 const { Title, Text } = Typography;
+const { Panel } = Collapse;
+const EllipsisMiddle = ({ suffixCount, children }) => {
+    const start = children?.slice(0, children.length - suffixCount).trim();
+    const suffix = children?.slice(-suffixCount).trim();
+    return (
+        <Text className="mb-0 fs-14 docname c-pointer d-block" style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
+            {start}
+        </Text>
+    );
+};
 class PaymentDetails extends Component {
     formRef = createRef();
     constructor(props) {
@@ -39,20 +50,20 @@ class PaymentDetails extends Component {
     handleAlert = () => {
         this.setState({ ...this.state, errorMessage: null })
     }
-    handleCurrencyChange = async(val,props) => {
-        this.setState({ ...this.state, Currency: val,paymentsData:[] })
-        if(this.state.Currency=val){
-            let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id,this.state.Currency)
+    handleCurrencyChange = async (val, props) => {
+        this.setState({ ...this.state, Currency: val, paymentsData: [] })
+        if (this.state.Currency = val) {
+            let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id, this.state.Currency)
             if (response.ok) {
                 console.log(response.data.paymentsDetails)
-                this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false }) 
+                this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false })
             } else {
                 message.destroy();
                 this.setState({ ...this.state, errorMessage: response.data })
                 this.useDivRef.current.scrollIntoView()
             }
         }
-       
+
     }
     getCurrencyLookup = async () => {
         let response = await getCurrencyLu(this.props.userConfig?.id)
@@ -66,7 +77,7 @@ class PaymentDetails extends Component {
     }
     getPayments = async (item) => {
         this.setState({ ...this.state, loading: true })
-        let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id,this.state.Currency)
+        let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id, this.state.Currency)
         if (response.ok) {
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
         } else {
@@ -100,7 +111,7 @@ class PaymentDetails extends Component {
             else if (!objAmount > 0) {
                 this.setState({ ...this.state, errorMessage: "Amount must be greater than zero." })
                 this.useDivRef.current.scrollIntoView()
-            } 
+            }
             else {
                 this.setState({ btnDisabled: true });
                 let response = await savePayments(obj);
@@ -180,7 +191,7 @@ class PaymentDetails extends Component {
                         <Form
                             autoComplete="off">
                             <Form.Item
-                               
+                                className='mb-16'
                             >
                                 <Select
                                     className="cust-input"
@@ -191,21 +202,21 @@ class PaymentDetails extends Component {
                                     bordered={false}
                                     showArrow={true}
                                     defaultValue="USD"
-                                   
+
                                 >
                                     {currency?.map((item, idx) => (
                                         <Option
                                             key={idx}
                                             className="fw-400"
-                                           
+
                                             value={item.currencyCode}
                                         > {item.currencyCode}
-                                        { <NumberFormat
-                                         value={item.avilable} 
-                                         displayType={'text'}
-                                          thousandSeparator={true}
-                                         renderText={(value) => <span > Balance: {value}</span>} />}
-                                         </Option>))}
+                                            {<NumberFormat
+                                                value={item.avilable}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                renderText={(value) => <span > Balance: {value}</span>} />}
+                                        </Option>))}
                                 </Select>
                             </Form.Item>
                             <div>
@@ -218,13 +229,13 @@ class PaymentDetails extends Component {
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
-                                  {paymentsData.length > 0?<tbody className="mb-0">
+                                    {paymentsData.length > 0 ? <tbody className="mb-0">
                                         {loading && <tr>
                                             <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>}
                                         {paymentsData?.map((item, i) => {
                                             return (
                                                 <>
-                                                <tr key={i} >
+                                                    <tr key={i} >
                                                         <td style={{ width: 50 }} className='text-center'>
                                                             <label className="text-center custom-checkbox p-relative">
                                                                 <Input
@@ -240,7 +251,14 @@ class PaymentDetails extends Component {
                                                         </td>
                                                         <td>
                                                             <div className='d-flex align-center justify-content'>
-                                                                <span>{item.bankname}</span>
+                                                                <span>{item.bankname}
+                                                                {/* <Badge size="small" className='ml-8'
+                                                                count={'3rd Party'} 
+                                                                 style={{border: 'none'}} /> */}
+                                                                {item.isPrimary!==null? <Badge size="small" className='ml-8'
+                                                                count={'3rd Party'} 
+                                                                 style={{border: 'none'}} />:""}
+                                                                 </span>
                                                                 <Popover
                                                                     className='more-popover'
                                                                     content={this.popOverContent}
@@ -272,29 +290,102 @@ class PaymentDetails extends Component {
                                                             />
                                                         </td>
                                                     </tr>
-                                         </>) })}
-                                    </tbody>:<tbody><tr><td colSpan='8' className="p-16 text-center" style={{color:"white",width:300}} >No bank details available</td></tr> </tbody>}
+                                                    {/* <tr>
+                                                        <td colSpan={4}>
+                                                            <div className='payment-docs'>
+                                                                <Collapse
+                                                                    accordion className="accordian" defaultActiveKey={['1']}
+                                                                    expandIcon={() => <span className="icon md downangle" />}>
+                                                                    <Panel header="Documents" extra={<span className={`submitted-lbl staus-lbl`}>Approved</span>}>
+                                                                        {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
+                                                                        <div className="reply-container">
+                                                                            <div className="user-shortname">JH</div>
+                                                                            <div className="reply-body">
+                                                                                <Text className="reply-username">John Doe</Text><Text className="reply-date">
+                                                                                   <Moment format="DD MMM YY hh:mm A">{reply.repliedDate}</Moment>
+                                                                                </Text>
+                                                                                <p className="reply-txt">Lore text</p>
+                                                                                <div className="docfile-container">
+                                                                                    <div className="docfile">
+                                                                                        <span className={`icon xl file mr-16`} />
+                                                                                        <div className="docdetails c-pointer" onClick={() => this.docPreview()}>
+                                                                                            <EllipsisMiddle suffixCount={6}>HTML Documents</EllipsisMiddle>
+                                                                                            <span className="fs-12 text-secondary">25 KB</span>
+                                                                                        </div>
+                                                                                        {doc.status != "Approved" && <Popconfirm title="Are you sure to delete this document?"
+                                                onConfirm={() => this.deleteDocument(reply, idx)}
+                                                okText="Yes"
+                                                cancelText="No">
+                                                <span className="icon md close c-pointer" />
+                                            </Popconfirm>}
+                                                                                    </div>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div className="reply-container">
+                                                                            <div className="user-shortname">{this.props?.userProfileInfo?.firstName?.slice(0, 2)}</div>
+                                                                            <div className="reply-body">
+                                                                                <div className="chat-send mb-0">
+                                                                                    <Input maxLength={200} autoFocus type="text" onChange={({ currentTarget: { value } }) => this.handleReplymessage(value)} placeholder="Write your message..." size="large" bordered={false} multiple={true} validator={validateContent} />
+
+                                                                                    <div className="d-flex align-center">
+                                                                                        <Tooltip title="Attachments">
+                                                                                            <Upload accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" onChange={(props) => this.handleUpload(props)} beforeUpload={(props) => { this.beforeUpload(props) }} showUploadList={false} action={process.env.REACT_APP_API_END_POINT + "/UploadFile"}>
+                                                                                                <span className="icon md attach mr-16 c-pointer" />
+                                                                                            </Upload> </Tooltip>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                                {this.state.errorMessage != null && <div className="text-red">{this.state.errorMessage}</div>}
+                                        {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>{docErrorMessage}</div>}
+                                                                                <div className="docfile-container">
+                                                                                    <div className="docfile">
+                                                                                        <span className={`icon xl file mr-16`} />
+                                                                                        <div className="docdetails c-pointer" onClick={() => this.docPreview()}>
+                                                                                            <EllipsisMiddle suffixCount={6}>User Documents</EllipsisMiddle>
+                                                                                            <span className="fs-12 text-secondary">5 KB</span>
+                                                                                        </div>
+                                                                                        <span onClick={() => this.deleteDocument(this.getUploadedFiles(), true)} className="icon md close c-pointer" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div className="text-center my-36">
+
+                                                                            <Button disabled={this.state.isSubmitting} className="pop-btn px-36">Submit</Button>
+                                                                        </div>
+                                                                        {(!this.state?.documentReplies[doc.id]?.data || this.state?.documentReplies[doc.id]?.data?.length == 0) && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No documents submitted" />}
+                                                                    </Panel>
+                                                                </Collapse>
+                                                            </div>
+                                                        </td>
+                                                    </tr> */}
+                                                </>)
+                                        })}
+                                    </tbody> : <tbody><tr><td colSpan='8' className="p-16 text-center" style={{ color: "white", width: 300 }} >No bank details available</td></tr> </tbody>}
                                 </table>
                             </div>
                         </Form>
                         <div className="text-right mt-36">
-                        
-                        {paymentsData.length > 0? 
-                        <div>
-                        <Button
-                                className="pop-cancel mr-36"
-                                style={{ margin: "0 8px" }}
 
-                                onClick={this.backToPayments}
-                            >
-                                Cancel
-                            </Button>
-                            <Button className="pop-btn px-36" disabled={this.state.btnDisabled} onClick={() => { this.saveRolesDetails() }} >
-                                Pay Now
-                            </Button>
-                            </div>:""}
+                            {paymentsData.length > 0 ?
+                                <div>
+                                    <Button
+                                        className="pop-cancel mr-36"
+                                        style={{ margin: "0 8px" }}
+
+                                        onClick={this.backToPayments}
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button className="pop-btn px-36" disabled={this.state.btnDisabled} onClick={() => { this.saveRolesDetails() }} >
+                                        Pay Now
+                                    </Button>
+                                </div> : ""}
                         </div>
-                        
+
                     </div>
                 </div>
             </>

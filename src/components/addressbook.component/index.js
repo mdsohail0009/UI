@@ -8,7 +8,7 @@ import List from '../grid.component';
 import NewFiatAddress from './addFiatAddressbook';
 import { activeInactive } from './api';
 import SelectCrypto from './selectCrypto';
-import { Link } from 'react-router-dom';
+import { withRouter,Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import apiCalls from '../../api/apiCalls';
 
@@ -63,6 +63,7 @@ class AddressBook extends Component {
         { field: "accountNumber", title: apiCalls.convertLocalLang('Bank_account'), filter: true, width: 220 },
         { field: "routingNumber", title: apiCalls.convertLocalLang('BIC_SWIFT_routing_number'), filter: true, width: 180 },
         { field: "bankName", title: apiCalls.convertLocalLang('Bank_name'), filter: true, width: 200 },
+        { field: "isPrimary", title: "3rd Party", filter: true, width: 200 },
         { field: "bankAddress", title: apiCalls.convertLocalLang('Bank_address1'), filter: true, width: 250 },
         { field: "beneficiaryAccountName", title: apiCalls.convertLocalLang('Recipient_full_name'), filter: true, width: 200 },
         { field: "beneficiaryAccountAddress", title: apiCalls.convertLocalLang('Recipient_address1'), filter: true, width: 250 },
@@ -181,6 +182,7 @@ class AddressBook extends Component {
 
     }
     editAddressBook = () => {
+        debugger
         if (!this.state.isCheck) {
             this.setState({ alert: true })
             setTimeout(() => this.setState({ alert: false }), 2000)
@@ -188,13 +190,18 @@ class AddressBook extends Component {
             let obj = this.state.selectedObj;
             obj.walletCode = obj.coin;
             this.props.rowSelectedData(obj)
-            if (this.state.cryptoFiat) {
-                this.setState({ ...this.state, fiatDrawer: true, selection: [], isCheck: false, });
-                apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fait  Address edit view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Fiat Address edit view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
+            if(obj.isPrimary==false){
+                this.props.history.push(`/payments/newbeneficiary/${obj.id}`)
             }
-            else {
-                apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto  Address edit view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Crypto Address edit view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
-                this.setState({ ...this.state, visible: true, selection: [], isCheck: false, })
+            else{
+                if (this.state.cryptoFiat) {
+                    this.setState({ ...this.state, fiatDrawer: true, selection: [], isCheck: false, });
+                    apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fait  Address edit view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Fiat Address edit view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
+                }
+                else {
+                    apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto  Address edit view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Crypto Address edit view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
+                    this.setState({ ...this.state, visible: true, selection: [], isCheck: false, })
+                }
             }
         }
     }
@@ -382,4 +389,4 @@ const connectDispatchToProps = dispatch => {
 
     }
 }
-export default connect(connectStateToProps, connectDispatchToProps)(AddressBook);
+export default connect(connectStateToProps, connectDispatchToProps)(withRouter(AddressBook));
