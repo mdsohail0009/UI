@@ -175,6 +175,8 @@ const WithdrawalFiatSummary = ({
   const onCancel = () => {
     changeStep("step1");
     dispatch(setWithdrawfiatenaable(true));
+    dispatch(rejectWithdrawfiat());
+
   };
   const fullNumber = userConfig.phoneNumber;
   const last4Digits = fullNumber.slice(-4);

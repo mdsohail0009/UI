@@ -131,7 +131,7 @@ class AddressBook extends Component {
     },
     {
       field: "beneficiaryAccountName",
-      title: apiCalls.convertLocalLang("company_name"),
+      title: apiCalls.convertLocalLang("Beneficiary_Accountname"),
       filter: true,
       width: 200
     },
@@ -266,7 +266,7 @@ class AddressBook extends Component {
         },
         successMsg: true
       });
-      setTimeout(() => this.setState({ successMsg: false }), 2500);
+      setTimeout(() => this.setState({ successMsg: false }), 1000);
       if (this.state.cryptoFiat) {
         this.gridFiatRef.current.refreshGrid();
       } else {
@@ -292,6 +292,7 @@ class AddressBook extends Component {
 //     this.setState({ ...this.state, successMsg: false });
 //   };
   addAddressBook = () => {
+    debugger
     if (this.state.cryptoFiat) {
       this.setState({ ...this.state, fiatDrawer: true });
       if (!this.state.fiatDrawer) {

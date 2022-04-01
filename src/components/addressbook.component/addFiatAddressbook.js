@@ -52,6 +52,7 @@ const NewFiatAddress = ({
     }
     addressbkTrack();
     getCountryLu();
+    getStateLu();
   }, []);
   const addressbkTrack = () => {
     apiCalls.trackEvent({
@@ -113,7 +114,6 @@ const NewFiatAddress = ({
       favaddrId
     );
     if (responsecheck.data != null) {
-      debugger;
       setIsLoading(false);
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
@@ -151,7 +151,6 @@ const NewFiatAddress = ({
       saveObj.zipCode = apiCalls.encryptValue(saveObj.zipCode, userConfig.sk);
       let response = await saveAddress(saveObj);
       if (response.ok) {
-        debugger;
         setBtnDisabled(false);
         setErrorMsg("");
         useDivRef.current.scrollIntoView();
