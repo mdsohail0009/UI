@@ -492,6 +492,11 @@ export default {
   you_are_sending: 'Anda menghantar',
   fees: 'Yuran',
   you_receive: 'Anda akan menerima',
+  company_name:'pangalan ng Kumpanya',
+  withdraw_verification:'Bawiin ang Pagpapatunay',
+  Phone_verification:'Pag-verify ng Telepono',
+  Email_verification:'Pagpapatunay ng Email',
+  addresslabel:'Label ng Address',
   address_type: 'Address Type',
   addressState:"Alamat Sate"
 }
