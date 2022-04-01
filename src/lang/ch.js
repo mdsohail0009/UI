@@ -492,6 +492,9 @@ export default {
   you_are_sending: '您正在发送',
   fees: '费用',
   you_receive: '您将收到',
-  upload_documents: '上传文件',
-  compliance: '(遵守)'
+  company_name:'公司名',
+  withdraw_verification:'撤銷驗證',
+  Phone_verification:'電話驗證',
+  Email_verification:'電子郵件驗證',
+  addresslabel:'地址標籤',
 }
