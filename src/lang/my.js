@@ -498,5 +498,9 @@ export default {
   Email_verification:'Pagpapatunay ng Email',
   addresslabel:'Label ng Address',
   address_type: 'Address Type',
-  addressState:"Alamat Sate"
+  addressState:"Alamat Sate",
+  add_new_beneficiary: 'Add New Beneficiary',
+  kyc_documents: 'KYC Documents',
+  confirm_beneficiary: 'Confirm Beneficiary',
+  return_to_beneficairy: 'Back to Add New Beneficiary'
 }
