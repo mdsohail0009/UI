@@ -498,5 +498,9 @@ export default {
   Email_verification:'電子郵件驗證',
   addresslabel:'地址標籤',
   address_type: 'Address Type',
-  addressState:"地址状态"
+  addressState:"地址状态",
+  add_new_beneficiary: 'Add New Beneficiary',
+  kyc_documents: 'KYC Documents',
+  confirm_beneficiary: 'Confirm Beneficiary',
+  return_to_beneficairy: 'Back to Add New Beneficiary'
 }
