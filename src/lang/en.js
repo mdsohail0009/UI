@@ -508,6 +508,8 @@ export default {
   verify_btn:'VERIFY',
   verify_button:'VERIFY',
   addresslabel: 'Address Label',
-  noaddress_msg:'Address Book details not available.'
+  noaddress_msg:'Address Book details not available.',
+  address_type: 'Address Type',
+  addressState:"Address State"
 
 }
