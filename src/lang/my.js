@@ -502,5 +502,7 @@ export default {
   add_new_beneficiary: 'Add New Beneficiary',
   kyc_documents: 'KYC Documents',
   confirm_beneficiary: 'Confirm Beneficiary',
-  return_to_beneficairy: 'Back to Add New Beneficiary'
+  return_to_beneficairy: 'Back to Add New Beneficiary',
+  compliance: '(Compliance)',
+  upload_documents: 'Upload Documents'
 }
