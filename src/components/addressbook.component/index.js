@@ -65,7 +65,7 @@ class AddressBook extends Component {
         { field: "bankName", title: apiCalls.convertLocalLang('Bank_name'), filter: true, width: 200 },
         { field: "isPrimary", title: "3rd Party", filter: true, width: 200 },
         { field: "bankAddress", title: apiCalls.convertLocalLang('Bank_address1'), filter: true, width: 250 },
-        { field: "beneficiaryAccountName", title: apiCalls.convertLocalLang('Recipient_full_name'), filter: true, width: 200 },
+        { field: "beneficiaryAccountName", title: apiCalls.convertLocalLang('Beneficiary_Accountname'), filter: true, width: 200 },
         { field: "beneficiaryAccountAddress", title: apiCalls.convertLocalLang('Recipient_address1'), filter: true, width: 250 },
         { field: "addressState", title: apiCalls.convertLocalLang('addressState'), filter: true, width: 380 },
         { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 100 }
@@ -143,7 +143,7 @@ class AddressBook extends Component {
                     "status": []
                 }, successMsg: true
             })
-            setTimeout(() => this.setState({ successMsg: false }), 2500)
+            setTimeout(() => this.setState({ successMsg: false }), 1000)
             if (this.state.cryptoFiat) {
                 this.gridFiatRef.current.refreshGrid();
             }
