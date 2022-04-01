@@ -224,9 +224,8 @@ class PaymentDetails extends Component {
                                     <thead>
                                         <tr>
                                             <th style={{ width: 50 }}></th>
-                                            <th>Name</th>
                                             <th>Bank Name</th>
-                                            <th>BIC/SWIFT/Routing Number</th>
+                                            <th>Bank Account Number</th>
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
@@ -250,18 +249,16 @@ class PaymentDetails extends Component {
                                                                 <span></span>
                                                             </label>
                                                         </td>
-                                                        <td>John Doe<div className='text-white-30 italic'>(Business)</div></td>
                                                         <td>
                                                             <div className='d-flex align-center justify-content'>
-                                                                <span>{item.bankname}<Text className='file-label fs-12 ml-8'>3rd Party</Text><div className='text-white-30 italic'>({item.accountnumber})</div>
-                                                                    {/* <Badge size="small" className='ml-8'
+                                                                <span>{item.bankname}
+                                                                {/* <Badge size="small" className='ml-8'
                                                                 count={'3rd Party'} 
                                                                  style={{border: 'none'}} /> */}
-
-                                                                    {item.isPrimary !== null ? <Badge size="small" className='ml-8'
-                                                                        count={'3rd Party'}
-                                                                        style={{ border: 'none' }} /> : ""}
-                                                                </span>
+                                                                {item.isPrimary!==null? <Badge size="small" className='ml-8'
+                                                                count={'3rd Party'} 
+                                                                 style={{border: 'none'}} />:""}
+                                                                 </span>
                                                                 <Popover
                                                                     className='more-popover'
                                                                     content={this.popOverContent}
@@ -274,29 +271,23 @@ class PaymentDetails extends Component {
                                                                 </Popover>
                                                             </div>
                                                         </td>
-                                                        <td>RT84680568105</td>
+                                                        <td>{item.accountnumber}</td>
                                                         <td>
-                                                            <div className='d-flex'>
-                                                                <NumberFormat className="cust-input text-right"
-                                                                    customInput={Input} thousandSeparator={true} prefix={""}
-                                                                    placeholder="0.00"
-                                                                    decimalScale={2}
-                                                                    allowNegative={false}
-                                                                    maxlength={13}
-                                                                    style={{ height: 44 }}
-                                                                    onValueChange={({ e, value }) => {
-                                                                        let paymentData = this.state.paymentsData;
-                                                                        paymentData[i].amount = value;
-                                                                        paymentData[i].checked = value > 0 ? true : false;
-                                                                        this.setState({ ...this.state, paymentsData: paymentData })
-                                                                    }}
-                                                                    value={item.amount}
-                                                                />
-                                                                <Button type='dashed' size='large' className='ml-8' shape='circle' style={{backgroundColor: 'transparent'}}>
-                                                                <span className='icon md attach c-pointer' />
-                                                                </Button>
-                                                            </div>
-                                                            <Text className='file-label fs-12'>Payment_Inovice.pdf</Text>
+                                                            <NumberFormat className="cust-input text-right"
+                                                                customInput={Input} thousandSeparator={true} prefix={""}
+                                                                placeholder="0.00"
+                                                                decimalScale={2}
+                                                                allowNegative={false}
+                                                                maxlength={13}
+                                                                style={{ height: 44 }}
+                                                                onValueChange={({ e, value }) => {
+                                                                    let paymentData = this.state.paymentsData;
+                                                                    paymentData[i].amount = value;
+                                                                    paymentData[i].checked = value > 0 ? true : false;
+                                                                    this.setState({ ...this.state, paymentsData: paymentData })
+                                                                }}
+                                                                value={item.amount}
+                                                            />
                                                         </td>
                                                     </tr>
                                                     {/* <tr>
