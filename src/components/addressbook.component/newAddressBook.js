@@ -159,7 +159,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                                 validator: validateContentRule
                             }
                         ]} >
-                        <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('Enteraddress')} />
+                        <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('address')} />
                         {/* <Input className="cust-input" maxLength="30" placeholder={<Translate content='Enteraddress' />} /> */}
                     </Form.Item>
                     <div style={{ marginTop: '50px' }} className="">
@@ -168,7 +168,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                             size="large"
                             block
                             className="pop-btn"
-                            disabled={btnDisabled}
+                           // disabled={btnDisabled}
                         >
                             {isLoading && <Spin indicator={antIcon} />} <Translate content="Save_btn_text" component={Text} />
                         </Button>

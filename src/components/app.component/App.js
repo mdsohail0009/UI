@@ -62,7 +62,6 @@ function App(props) {
     connectToHub();
   }, [])
   return (
-    <Provider store={store}>
       <OidcProvider userManager={userManager} store={store}>
         <Router basename={process.env.PUBLIC_URL}>
           <AppInsightsContext.Provider value={reactPlugin}>
@@ -73,7 +72,6 @@ function App(props) {
           <Notifications showDrawer={showNotifications} onClose={() => setNotifications(false)} />
         </Router>
       </OidcProvider>
-    </Provider>
   );
 }
 
