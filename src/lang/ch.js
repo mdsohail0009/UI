@@ -497,4 +497,6 @@ export default {
   Phone_verification:'電話驗證',
   Email_verification:'電子郵件驗證',
   addresslabel:'地址標籤',
+  address_type: 'Address Type',
+  addressState:"地址状态"
 }
