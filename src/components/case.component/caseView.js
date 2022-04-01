@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Spin, Empty, Alert } from 'antd';
+import { Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Spin, Empty, Alert, Row, Col,
+    Divider } from 'antd';
 import { approveDoc, getDocDetails, getDocumentReplies, saveDocReply, uuidv4, getFileURL } from './api';
 import Loader from '../../Shared/loader';
 import Moment from 'react-moment';
@@ -11,7 +12,7 @@ import { validateContent } from "../../utils/custom.validator";
 import Translate from 'react-translate-component';
 import Mome from 'moment'
 const { Panel } = Collapse;
-const { Text } = Typography;
+const { Text, Title } = Typography;
 const { Dragger } = Upload;
 const { TextArea } = Input;
 
@@ -333,8 +334,6 @@ class RequestedDocs extends Component {
         }
     }
 
-
-
     render() {
         if (this.state.loading) {
             return <Loader />
@@ -343,6 +342,130 @@ class RequestedDocs extends Component {
             <div className="main-container">
               
                 <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=6" />{this.state?.docDetails?.caseTitle}</div>
+                <div className='case-stripe'>
+                        <Row gutter={[16, 16]}>
+                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                                <Text className='case-lbl'>Case Number</Text>
+                                <div className='case-val'>C-20220329-025</div>
+                            </Col>
+                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                                <Text className='case-lbl'>Case Title</Text>
+                                <div className='case-val'>Trade new one</div>
+                            </Col>
+                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                                <Text className='case-lbl'>Case State</Text>
+                                <div className='case-val'>Approved</div>
+                            </Col>
+                        </Row>
+                    </div>
+                    <div className='case-ribbon mb-16'>
+                        <Row gutter={[16, 16]}>
+                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                                <div className="ribbon-item">
+                                    <span className='icon md feature' />
+                                    <div className='ml-16'>
+                                        <Text className='case-lbl'>Type</Text>
+                                        <div className='case-val'>Deposit</div>
+                                    </div>
+                                </div>
+                            </Col>
+                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                                <div className="ribbon-item">
+                                    <span className='icon md acnum' />
+                                    <div className='ml-16'>
+                                        <Text className='case-lbl'>Reference Id</Text>
+                                        <div className='case-val'>DTIGLEPQFW</div>
+                                    </div>
+                                </div>
+                            </Col>
+                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                                <div className="ribbon-item">
+                                    <span className='icon md user' />
+                                    <div className='ml-16'>
+                                        <Text className='case-lbl'>Name</Text>
+                                        <div className='case-val'>John Doe</div>
+                                    </div>
+                                </div>
+                            </Col>
+                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                                <div className="ribbon-item">
+                                    <span className='icon md cash' />
+                                    <div className='ml-16'>
+                                        <Text className='case-lbl'>Currency</Text>
+                                        <div className='case-val'>EUR</div>
+                                    </div>
+                                </div>
+                            </Col>
+                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                                <div className="ribbon-item">
+                                    <span className='icon md feature' />
+                                    <div className='ml-16'>
+                                        <Text className='case-lbl'>Bank Name</Text>
+                                        <div className='case-val'>UBS Bank</div>
+                                    </div>
+                                </div>
+                            </Col>
+                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                                <div className="ribbon-item">
+                                    <span className='icon md card' />
+                                    <div className='ml-16'>
+                                        <Text className='case-lbl'>Amount</Text>
+                                        <div className='case-val'>10,000</div>
+                                    </div>
+                                </div>
+                            </Col>
+                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                                <div className="ribbon-item">
+                                    <span className='icon md date' />
+                                    <div className='ml-16'>
+                                        <Text className='case-lbl'>Date</Text>
+                                        <div className='case-val'>29/03/2022</div>
+                                    </div>
+                                </div>
+                            </Col>
+                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                                <div className="ribbon-item">
+                                    <span className='icon md status' />
+                                    <div className='ml-16'>
+                                        <Text className='case-lbl'>Deposit State</Text>
+                                        <div className='case-val'>Submitted</div>
+                                    </div>
+                                </div>
+                            </Col>
+                            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                                <div className="ribbon-item">
+                                    <span className='icon md text' />
+                                    <div className='ml-16' style={{ flex: 1 }}>
+                                        <Text className='case-lbl'>Deposit Description</Text>
+                                        <div className='case-val'>
+                                            In the process of internal desktop applications development
+                                        </div>
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
+                    </div>
+                    <div className='case-stripe'>
+                        <Row gutter={[16, 16]}>
+                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                                <Text className='case-lbl'>Assigned To</Text>
+                                <div className='case-val'>Kishore</div>
+                            </Col>
+                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                                <Text className='case-lbl'>Assigned Remarks</Text>
+                                <div className='case-val'>Kishore</div>
+                            </Col>
+                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                                <Text className='case-lbl'>Case Sub State</Text>
+                                <div className='case-val'>Re-assigned</div>
+                            </Col>
+                        </Row>
+                    </div>
+                    <div className="px-16">
+                        <Text className='case-lbl'>Remarks</Text>
+                        <div className='case-val'>Remarks</div>
+                    </div>
+                    <Divider />
                 {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
                 <div className="bank-view">
                     {this.state.docDetails?.details?.map((doc, idx) => 
