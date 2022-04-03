@@ -429,8 +429,6 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                         <div className="d-flex">
                             <Translate
                                 className="input-label"
-                                // content="Recipient_full_name"
-                                // content={userConfig.isBusiness?"Business":"Personal"}
                                 content={userConfig?.isBusiness ? "company_name" : "Recipient_full_name" }
                                 component={Form.label}
                             />{" "}
