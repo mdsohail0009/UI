@@ -119,8 +119,9 @@ class PaymentsView extends Component {
 
 
     docPreview = async (file) => {
+        debugger
         this.setState({ ...this.state, loading: true });
-        let obj = file.path ? file.path : file.Path;
+        let obj=file.path;
         this.setState({ ...this.state, previewModal: true, });
         let res = await getFileURL({ url: `${obj}` });
         if (res.ok) {
@@ -164,6 +165,7 @@ class PaymentsView extends Component {
     }
 
     handleUpload = ({ file }, type) => {
+        debugger
         this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, error: null })
         let obj = {
             "documentId": "00000000-0000-0000-0000-000000000000",
