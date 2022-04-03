@@ -208,10 +208,12 @@ class WithdrawSummary extends Component {
     if (response.ok) {
       success("Email Verified successfully") 
     }
-    else{error(response.data)
-      setTimeout(() => {
-        this.setState({ errorMsg: null });
-      }, 5000);
+    else
+    {
+      // error(response.data)
+      // setTimeout(() => {
+      //   this.setState({ errorMsg: null });
+      // }, 1000);
      this.setState({...this.state,inValidData:true})
     }
 
@@ -234,7 +236,7 @@ class WithdrawSummary extends Component {
       });
       setTimeout(() => {
         this.setState({ errorMsg: null });
-      }, 5000);
+      }, 1000);
      this.setState({...this.state,inValidData:true})
     }
   };
@@ -285,50 +287,30 @@ class WithdrawSummary extends Component {
     this.setState({ ...this.state, authCode: e.target.value });
   };
   saveWithdrwal = async (values) => {
-    debugger
     if (this.state.onTermsChange) {
-      let response = await apiCalls.getVerification(
-        this.props.userProfile.id,
-        values.code
-      );
-
-      if (response.ok) {
-        message.destroy();
-        message.success({
-          content: "OTP verified successfully",
-          className: "custom-msg",
-          duration: 0.5
-        });
-        if (this.props.userProfile.isBusiness) {
-          let saveObj = this.props.sendReceive.withdrawCryptoObj;
-          let trackAuditLogData = this.props.trackAuditLogData;
-          trackAuditLogData.Action = 'Save';
-          trackAuditLogData.Remarks = 'Withdraw Crypto save';
-          saveObj.info = JSON.stringify(trackAuditLogData)
-          let resp = await withDrawCrypto(saveObj);
-          if (resp.ok) {
-            this.props.dispatch(setCryptoFinalRes(resp.data));
-            this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
-            this.props.dispatch(setWithdrawcrypto(null));
-            this.props.dispatch(setSubTitle(""));
-            this.props.changeStep("withdraw_crpto_success");
-            publishBalanceRfresh("success");
-          }
-          else{
-             console.log(resp.data)
-            this.setState({ ...this.state, errorMsg: resp.data });
-          }
-        }
-        else {
-          this.props.dispatch(
-            setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
-          );
-          this.props.changeStep("withdraw_crypto_liveness");
+      if (this.props.userProfile.isBusiness) {
+        let saveObj = this.props.sendReceive.withdrawCryptoObj;
+        let trackAuditLogData = this.props.trackAuditLogData;
+        trackAuditLogData.Action = "Save";
+        trackAuditLogData.Remarks = "Withdraw Crypto save";
+        saveObj.info = JSON.stringify(trackAuditLogData);
+        let withdrawal = await withDrawCrypto(saveObj);
+        if (withdrawal.ok) {
+          this.props.dispatch(setCryptoFinalRes(withdrawal.data));
+          this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
+          //setIsWithdrawSuccess(true)
+          this.props.dispatch(setWithdrawcrypto(null));
+          this.props.dispatch(setSubTitle(""));
+          this.props.changeStep("withdraw_crpto_success");
+          publishBalanceRfresh("success");
         }
       } else {
-        this.useDivRef.current.scrollIntoView();
-        this.setState({ ...this.state, errorMsg: apiCalls.convertLocalLang("invalid_code") });
+        this.props.dispatch(
+          setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
+        );
+        this.props.changeStep("withdraw_crypto_liveness");
       }
+      this.setState({ ...this.state, errorMsg: false });
     } else {
       this.setState({
         ...this.state,
