@@ -274,11 +274,11 @@ const FaitWithdrawal = ({
       useDivRef.current.scrollIntoView();
       return setErrorMsg(apicalls.convertLocalLang("amount_greater_zero"));
     }
-    if (values.totalValue === ".") {
-      useDivRef.current.scrollIntoView();
-      //form.resetFields();
-      return setErrorMsg(apicalls.convertLocalLang("is_required"));
-    }
+    // if (values.totalValue === ".") {
+    //   useDivRef.current.scrollIntoView();
+    //   //form.resetFields();
+    //   return setErrorMsg(apicalls.convertLocalLang("is_required"));
+    // }
     let _totalamount = values.totalValue.toString();
     if (
       (_totalamount.indexOf(".") > -1 &&

@@ -516,5 +516,6 @@ export default {
   confirm_beneficiary: 'Confirm Beneficiary',
   return_to_beneficairy: 'Back to Add New Beneficiary',
   compliance: '(Compliance)',
-  upload_documents: 'Upload Documents'
+  upload_documents: 'Upload Documents',
+  business_recipient : "Business Name/Recipient Full Name",
 }
