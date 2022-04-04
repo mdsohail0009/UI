@@ -456,7 +456,7 @@ class PaymentsView extends Component {
                                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
                                     </Form.Item>
                                 </Col>
-                                <Col xl={16}>
+                                {/* <Col xl={16}>
                                     <Form.Item
                                         className="custom-forminput custom-label mb-24"
                                         name="beneficiaryAccountAddress"
@@ -477,7 +477,7 @@ class PaymentsView extends Component {
                                         ]}   >
                                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
                                     </Form.Item>
-                                </Col>
+                                </Col> */}
                             </Row>
                             <Translate
                                 content="Beneficiary_BankDetails"

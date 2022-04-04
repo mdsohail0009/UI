@@ -78,19 +78,22 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
     }
   }
   const saveDetails=async()=>{
-    let obj={
-      "MemberId": userConfig.id,
-      "isEmailVerification": email,
-      "IsPhoneVerified": phone,
-      "TwoFactorEnabled":factor
-  }
-    const response = await apiCalls.updateSecurity(obj);
+    debugger
+    
+   
     // if (email && phone && factor) {
     //   useDivRef.current.scrollIntoView(0,0);
     //   return setErrorMsg("Please select  two or morethan two checkboxes");
     // }
     //else
       if (email && phone || email && factor || phone && factor || email&&phone&&factor) {
+        let obj={
+          "MemberId": userConfig.id,
+          "isEmailVerification": email,
+          "IsPhoneVerified": phone,
+          "TwoFactorEnabled":factor
+      }
+        const response = await apiCalls.updateSecurity(obj);
         if (response.ok) {
           debugger
           setErrorMsg(false)
@@ -99,7 +102,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
           setErrorMsg(null)
           useDivRef.current.scrollIntoView();
 
-        } else if((email||phone||factor)==false){
+        } else if(email||phone||factor===false){
           useDivRef.current.scrollIntoView(0,0);
           return setErrorMsg("Please select any two withdraw verification options");
         }
@@ -107,7 +110,10 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
           error(response.data)
         }
       }
-      
+      else if(email||phone||factor===false){
+        useDivRef.current.scrollIntoView(0,0);
+        return setErrorMsg("Please select any two withdraw verification options");
+      }
       else {
         useDivRef.current.scrollIntoView(0,0);
         return setErrorMsg("Please select any two withdraw verification options");
