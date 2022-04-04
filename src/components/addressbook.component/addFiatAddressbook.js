@@ -232,7 +232,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             }
                         ]}
                     >
-                        <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('Enteraddress')} />
+                        <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('address')} />
                     </Form.Item>
                     <Form.Item
                         className="custom-label"
