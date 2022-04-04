@@ -489,6 +489,12 @@ class Header extends Component {
       }
     }
   }
+  showCards = () =>{
+    window.open(
+      process.env.REACT_APP_CARDS_URL,
+      "_blank"
+    )
+  }
   routeToCockpit = () => {
     this.props.dispatch(setHeaderTab(''));
     this.props.userConfig.isKYC ? this.props.history.push("/cockpit") : this.props.history.push("/notkyc")
@@ -687,6 +693,7 @@ class Header extends Component {
                 this.props.dispatch(setHeaderTab(key.key));
               }}
             >
+              
               <Translate
                 content="menu_payments"
                 component={Menu.Item}
@@ -741,6 +748,13 @@ class Header extends Component {
                 onClick={this.showTransactionHistoryDrawer}
                 className="list-item"
               />
+              {this.props.userConfig.isBusiness &&<Translate
+                content="cards"
+                component={Menu.Item}
+                key="8"
+                onClick={this.showCards}
+                className="list-item"
+              />}
               <Menu.Item
                 key="7"
                 className="notification-conunt"
@@ -756,6 +770,7 @@ class Header extends Component {
                     )}
                 </span>
               </Menu.Item>
+              
               <Dropdown
                 onVisibleChange={() =>
                   this.setState({
