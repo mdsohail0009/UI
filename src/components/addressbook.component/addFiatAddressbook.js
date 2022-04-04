@@ -24,7 +24,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const suffix = children.slice(-suffixCount).trim();
     return (
         <Text className="mb-0 fs-14 docname c-pointer d-block"
-            style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
+            style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
             {start}
         </Text>
     );
@@ -58,6 +58,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
     const [isUploading, setUploading] = useState(false);
     const [countryLu, setCountryLu] = useState([]);
     const [stateLu, setStateLu] = useState([]);
+    const [addressState, setAddressState]=useState(null);
     const [saveObj, setSaveObj] = useState(null);
 
     useEffect(() => {
@@ -75,7 +76,8 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
         setIsLoading(true)
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'fiat');
         if (response.ok) {
-            setFiatAddress(response.data)
+            setFiatAddress(response.data);
+            setAddressState(response.data.addressState);
             if (addressBookReducer?.selectedRowData && buyInfo.memberFiat?.data) {
                 handleWalletSelection(addressBookReducer?.selectedRowData?.currency)
             }
@@ -120,6 +122,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
       if (isChange) form.setFieldsValue({ state: null });
     };
     const savewithdrawal = async (values) => {
+        debugger
         setIsLoading(false)
         setErrorMsg(null)
         setBtnDisabled(true);
@@ -129,6 +132,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
         values['info'] = JSON.stringify(trackAuditLogData);
+        values['addressState'] = addressState;
         let Id = '00000000-0000-0000-0000-000000000000';
         let favaddrId = addressBookReducer?.selectedRowData ? addressBookReducer?.selectedRowData?.id : Id;
         let namecheck = values.favouriteName.trim();
@@ -249,8 +253,8 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             bordered={false}
                             showArrow={true}
                         >
-                            <Option value="first_party">1st Party</Option>
-                            <Option value="third_party">3rd Party</Option>
+                            <Option value="1st Party">1st Party</Option>
+                            <Option value="3rd Party">3rd Party</Option>
                         </Select>
                     </Form.Item>
                     <Form.Item
@@ -465,9 +469,9 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                         rules={[
                             { required: true, message: apiCalls.convertLocalLang('is_required') }
                         ]} >
-                        <TextArea className='cust-input' rows={3} maxLength={250}></TextArea>
+                        <TextArea placeholder='Remarks' className='cust-input pt-16' autoSize={{ minRows: 2, maxRows: 5 }} maxLength={250}></TextArea>
                     </Form.Item>
-                    <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, please download the form. Be sure the information is accurate, complete and signed.</Text>
+                    <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
                     <Tooltip title="Click here to download file"><Text className='file-label' onClick={()=>window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
                     <Form.Item name={"file"} rules={[{
                         validator: (_, value) => {
@@ -493,18 +497,18 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             <p className="ant-upload-text fs-18 mb-0">Upload your signed document here</p>
                         </Dragger>}
                     </Form.Item>
-                    {isUploading && <div className="docfile mr-0">
-                        <Spin size='small' tip={uploadPercentage.toFixed(2) + " % completed"} />
+                    {isUploading && <div className="text-center">
+                        <Spin />
                     </div>}
                     {file != null && <div className="docfile mr-0">
                         <span className={`icon xl file mr-16`} />
                         <div className="docdetails c-pointer" onClick={() => this.docPreview()}>
-                            <EllipsisMiddle suffixCount={6}>{file.name}</EllipsisMiddle>
+                            <EllipsisMiddle suffixCount={10}>{file.name}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(file.size)}</span>
                         </div>
                         <span className="icon md close c-pointer" onClick={() => confirm({
-                            content: "Are you sure do you want to delete file?",
-                            title: "Delete File ?",
+                           content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
+                           title: <div className='fs-18 text-white-30'>Delete File ?</div>,
                             onOk: () => { setFile(null); }
                         })} />
                     </div>}

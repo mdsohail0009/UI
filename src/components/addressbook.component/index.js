@@ -8,7 +8,7 @@ import List from '../grid.component';
 import NewFiatAddress from './addFiatAddressbook';
 import { activeInactive } from './api';
 import SelectCrypto from './selectCrypto';
-import { withRouter,Link } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import apiCalls from '../../api/apiCalls';
 
@@ -189,10 +189,10 @@ class AddressBook extends Component {
             let obj = this.state.selectedObj;
             obj.walletCode = obj.coin;
             this.props.rowSelectedData(obj)
-            if(obj.isPrimary==false){
+            if (obj.isPrimary == false) {
                 this.props.history.push(`/payments/newbeneficiary/${obj.id}`)
             }
-            else{
+            else {
                 if (this.state.cryptoFiat) {
                     this.setState({ ...this.state, fiatDrawer: true, selection: [], isCheck: false, });
                     apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fait  Address edit view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Fiat Address edit view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
@@ -256,15 +256,9 @@ class AddressBook extends Component {
 
         return (
             <>
-
                 <div className="box basic-info">
-                    <div className="d-flex mb-16 justify-content">
-                        <div>
-                            <div><Translate content="address_book" component={Text} className="basicinfo" /><Text className='fs-14 text-yellow fw-400 ml-16'>(NOTE: Whitelisting of Crypto Address and Bank Account is required, please add below.)</Text></div>
-                            <Translate content="address_book_tag" component={Paragraph} className="basic-decs mb-16" />
-                        </div>
-                        
-                    </div>
+                    <Translate content="address_book" component={Text} className="basicinfo" />
+                    <Text className='fs-14 text-yellow fw-400 mb-36 d-block'>(NOTE: Whitelisting of Crypto Address and Bank Account is required, please add below.)</Text>
                     <div className="display-flex mb-16">
                         <Radio.Group
                             defaultValue={1}

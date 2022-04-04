@@ -17,6 +17,16 @@ const { Option } = Select;
 const { TextArea } = Input;
 const { Dragger } = Upload;
 const { confirm } = Modal;
+const EllipsisMiddle = ({ suffixCount, children }) => {
+    const start = children.slice(0, children.length - suffixCount).trim();
+    const suffix = children.slice(-suffixCount).trim();
+    return (
+        <Text className="mb-0 fs-14 docname c-pointer d-block"
+            style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
+            {start}
+        </Text>
+    );
+};
 const LinkValue = (props) => {
     return (
         <Translate
@@ -70,6 +80,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         changeStep("step2");
     }
     const loadDataAddress = async () => {
+        debugger
         setIsLoading(true)
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'crypto');
         if (response.ok) {
@@ -83,6 +94,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         }
     }
     const saveAddressBook = async (values) => {
+        debugger
         setIsLoading(false);
         setBtnDisabled(true);
         const type = 'crypto';
@@ -92,6 +104,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
         values['info'] = JSON.stringify(trackAuditLogData);
+        values['addressState'] = cryptoAddress.addressState;
         let namecheck = values.favouriteName.trim();
         let favaddrId = addressBookReducer?.selectedRowData ? addressBookReducer?.selectedRowData?.id : Id;
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'crypto', favaddrId);
@@ -178,8 +191,8 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                             bordered={false}
                             showArrow={true}
                         >
-                            <Option value="first_party">1st Party</Option>
-                            <Option value="third_party">3rd Party</Option>
+                            <Option value="1st Party">1st Party</Option>
+                            <Option value="3rd Party">3rd Party</Option>
                         </Select>
                     </Form.Item>
                     <Form.Item
@@ -219,10 +232,10 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                         rules={[
                             { required: true, message: apiCalls.convertLocalLang('is_required') }
                         ]} >
-                        <TextArea className='cust-input' rows={3} maxLength={250}></TextArea>
+                        <TextArea placeholder='Remarks' className='cust-input pt-16' autoSize={{ minRows: 2, maxRows: 5 }} maxLength={250}></TextArea>
                     </Form.Item>
 
-                    <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, please download the form. Be sure the information is accurate, complete and signed.</Text>
+                    <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
                     <Tooltip title="Click here to download file"><Text className='file-label' onClick={()=>window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
 
                     <Form.Item name={"file"} rules={[{
@@ -249,21 +262,20 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                             <p className="ant-upload-text fs-18 mb-0">Upload your signed document here</p>
                         </Dragger>}
                     </Form.Item>
-                    {isUploading && <div className="docfile mr-0">
-                        <Spin size='small' tip={uploadPercentage.toFixed(2) + " % completed"} />
+                    {isUploading && <div className="text-center">
+                        <Spin />
                     </div>}
-                    {file != null && <div className="docfile mr-0">
+                    {file != null && <div className="docfile mr-0 c-pointer">
                         <span className={`icon xl file mr-16`} />
-                        <div className="docdetails c-pointer" onClick={() => docPreview()}>
-                            <Text className="mb-0 fs-14 docname c-pointer d-block" style={{maxWidth: '100%'}}>
-                            {file.name}
-                            </Text>
+                        <div className="docdetails" onClick={() => docPreview()}>
+                            <EllipsisMiddle suffixCount={10}>{file.name}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(file.size)}</span>
                         </div>
                         <span className="icon md close c-pointer" onClick={() => confirm({
-                            content: "Are you sure do you want to delete file?",
-                            title: "Delete File ?",
+                            content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
+                            title: <div className='fs-18 text-white-30'>Delete File ?</div>,
                             onOk: () => { setFile(null); }
+                            
                         })} />
                     </div>}
                     <Form.Item
@@ -304,15 +316,6 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                             disabled={btnDisabled}
                         >
                             {isLoading && <Spin indicator={antIcon} />} <Translate content="Save_btn_text" component={Text} />
-                        </Button>
-                        <Button
-                            htmlType="cancel"
-                            size="large"
-                            block
-                            onClick={() => onCancel()}
-                            className="pop-cancel"
-                        >
-                            Cancel
                         </Button>
                     </div>
                 </Form>
