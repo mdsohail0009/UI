@@ -210,7 +210,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                                 validator: validateContentRule
                             }
                         ]} >
-                        <Input className="cust-input mb-0" maxLength="30" placeholder={apiCalls.convertLocalLang('Enteraddress')} />
+                        <Input className="cust-input mb-0" maxLength="30" placeholder={apiCalls.convertLocalLang('address')} />
                     </Form.Item>
                     <Form.Item
                         className="custom-label"

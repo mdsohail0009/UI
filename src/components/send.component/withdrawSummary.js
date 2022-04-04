@@ -16,7 +16,7 @@ import {
 } from "../../reducers/sendreceiveReducer";
 import apiCalls from "../../api/apiCalls";
 import { publishBalanceRfresh } from "../../utils/pubsub";
-import {success,warning,error} from "../../utils/messages";
+import {success,warning,error} from "../../utils/message";
 
 class WithdrawSummary extends Component {
   state = {

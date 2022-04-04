@@ -149,6 +149,7 @@ const FaitWithdrawal = ({
         favouriteName: null
       };
       setSaveObj({ ...clearobj, walletCode: walletId });
+      console.log(saveObj)
       setAddressDetails({});
       setStateLu([]);
       form.setFieldsValue({ ...clearobj, walletCode: walletId });
@@ -159,6 +160,7 @@ const FaitWithdrawal = ({
         return walletId === item.currencyCode;
       });
       setSelectedWallet(wallet[0]);
+      console.log(buyInfo.memberFiat?.data[1].currencyCode)
       if (wallet[0]) {
         getAddressLu(wallet[0]);
       }
@@ -181,22 +183,25 @@ const FaitWithdrawal = ({
           setAddressInfo(recAddressDetails.data);
           setAddressDetails({});
           setAddressObj(addressObj);
+          setAddressShow(null)
         }
       } 
       else if (recAddress.data.length === 0) {
         setAddressShow(false);
+        setAddressInfo(null)
+        setAddressLu(null)
       }
       else{
         setAddressLu(recAddress.data)
         setAddressInfo(addressInfo)
-        setAddressObj(addressObj);      
+        setAddressObj(addressObj); 
+        setAddressShow(null)     
 
         form.setFieldsValue(addressInfo)
       }
     }
   };
   const handleAddressChange = async (e) => {
-    debugger;
     let val = addressLu.filter((item) => {
       if (item.name == e) {
         return item;
@@ -269,11 +274,11 @@ const FaitWithdrawal = ({
       useDivRef.current.scrollIntoView();
       return setErrorMsg(apicalls.convertLocalLang("amount_greater_zero"));
     }
-    if (values.totalValue === ".") {
-      useDivRef.current.scrollIntoView();
-      //form.resetFields();
-      return setErrorMsg(apicalls.convertLocalLang("is_required"));
-    }
+    // if (values.totalValue === ".") {
+    //   useDivRef.current.scrollIntoView();
+    //   //form.resetFields();
+    //   return setErrorMsg(apicalls.convertLocalLang("is_required"));
+    // }
     let _totalamount = values.totalValue.toString();
     if (
       (_totalamount.indexOf(".") > -1 &&
@@ -292,7 +297,7 @@ const FaitWithdrawal = ({
     values["favouriteName"] =
       values.favouriteName || addressDetails.favouriteName;
     values["comission"] = "0.0";
-    values["bankName"] = addressDetails.bankName;
+    values["bankName"] = addressInfo.bankName;
     values["accountNumber"] = addressDetails.accountNumber;
     values["routingNumber"] = addressDetails.routingNumber;
     //values["country"] =
@@ -391,8 +396,8 @@ const FaitWithdrawal = ({
               </Form.Item>
               
               {addressShow == false && 
-             <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="noaddress_msg" /></Text>
-              }
+               <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="noaddress_msg" /></Text> 
+               } 
              {addressLu?.length > 1 && 
                 <div style={{ position: "relative" }}>
                  

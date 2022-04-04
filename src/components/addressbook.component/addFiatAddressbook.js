@@ -62,11 +62,11 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
 
     useEffect(() => {
         if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && addressBookReducer?.selectedRowData?.id) {
-            loadDataAddress();
+            loadDataAddress();  
         }
         addressbkTrack();
-        // getCountryLu();
-        // getStateLu();
+        getCountryLu();
+        getStateLu();
     }, [])
     const addressbkTrack = () => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat Address Book Details page view ', "Username": userProfileInfo?.userName, "MemeberId": userProfileInfo?.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Address book details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' });
@@ -83,6 +83,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
             if (fileInfo?.path) {
                 setFile({ name: fileInfo?.documentName, size: fileInfo.remarks,response:[fileInfo?.path] })
             }
+            getStateLu(response.data.country)
             form.setFieldsValue({ ...response.data, });
             setIsLoading(false)
         }
@@ -228,7 +229,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             }
                         ]}
                     >
-                        <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('Enteraddress')} />
+                        <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('address')} />
                     </Form.Item>
                     <Form.Item
                         className="custom-label"
@@ -428,7 +429,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                         <div className="d-flex">
                             <Translate
                                 className="input-label"
-                                content="Recipient_full_name"
+                                content={userConfig?.isBusiness ? "company_name" : "Recipient_full_name" }
                                 component={Form.label}
                             />{" "}
                             <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
