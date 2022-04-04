@@ -473,7 +473,7 @@ export default {
   menu_wallets: "Balances",
   crypto_wallets: "Crypto Balances",
   verification_code: "Enter verification code",
-  withdraw_verification_options:"Please select two withdraw verification options from below.",
+  withdraw_verification_options:"Please select withdraw verification options from below.",
   get_code: "GET CODE",
   resend_code: "RESEND CODE%(counter)s",
   digit_code: " Enter 6 digit code sent to",

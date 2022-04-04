@@ -57,6 +57,9 @@ class WithdrawSummary extends Component {
     minutes: 2,
     seconds: 0,
     inValidData:false,
+    authenticator:"",
+    EmailCode:"",
+    OtpVerification:""
   };
 
   useDivRef = React.createRef();
@@ -188,13 +191,17 @@ class WithdrawSummary extends Component {
         emailText: "sentVerification",
         emailDisable: false,
         textDisable: true,
+        inputDisable: false,
         tooltipEmail: true,
         emailVerificationText:
           apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
       });
-      setTimeout(() => {
-        this.setState({ emailText: "resendEmail", tooltipEmail: false });
-      }, 120000);
+      if(!this.state.verifyText){
+        setTimeout(() => {
+          this.setState({ emailText: "resendEmail", tooltipEmail: false });
+        }, 120000);
+      }
+      
     } else {
       this.setState({
         ...this.state,
@@ -210,8 +217,14 @@ class WithdrawSummary extends Component {
       // values.code
     );
     if (response.ok) {
-      success("Email Verified successfully") 
-    }
+      this.setState({...this.state,EmailCode:response.data})
+      success("Email verification code verified successfully") 
+    }else if(response.data==null){
+      this.setState({
+        ...this.state,
+        errorMsg: "Please enter verification code"
+      });      
+  }
     else
     {
       // error(response.data)
@@ -231,8 +244,15 @@ class WithdrawSummary extends Component {
       this.state.otpCode
     );
     if (response.ok) {
-      success("OTP Verified successfully") 
-    } else {
+      this.setState({...this.state,OtpVerification:response.data})
+      success("Phone verification code verified successfully") 
+    }else if(response.data==null){
+      this.setState({
+        ...this.state,
+        errorMsg: "Please enter verification code"
+      });      
+  } 
+    else {
       this.useDivRef.current.scrollIntoView();
       this.setState({
         ...this.state,
@@ -246,6 +266,7 @@ class WithdrawSummary extends Component {
     }
   };
   handleOtp = (val) => {
+    debugger
     this.setState({
       ...this.state,
       otp: val.code,
@@ -256,14 +277,15 @@ class WithdrawSummary extends Component {
   };
 
   handleSendOtp = (val) => {
-    debugger
+    
     debugger
     this.setState({
       ...this.state,
       emailOtp: val.emailCode,
       verifyText: "verifyBtn",
+
       tooltipEmail: false,
-      emailText: ""
+      // emailText: ""
     });
   };
 
@@ -274,8 +296,15 @@ class WithdrawSummary extends Component {
       this.props.userProfile.userId
     );
     if (response.ok) {
-      success("Authenticator Verified successfully") 
-    } else {
+      this.setState({...this.state,authenticator:response.data})
+      success("2FA verification code verified successfully") 
+    } else if(response.data==null){
+      this.setState({
+        ...this.state,
+        errorMsg: "Please enter verification code"
+      });      
+  }
+    else {
       this.useDivRef.current.scrollIntoView();
       this.setState({
         ...this.state,
@@ -288,12 +317,16 @@ class WithdrawSummary extends Component {
     }
   };
   handleChange = (e) => {
+    debugger
     this.setState({ ...this.state, otpCode: e.target.value });
   };
   handleAuthenticator = (e) => {
+    debugger
     this.setState({ ...this.state, authCode: e.target.value });
   };
   saveWithdrwal = async (values) => {
+    debugger
+    const{authenticator,OtpVerification,EmailCode}=this.state;
     if (this.state.onTermsChange) {
       if (this.props.userProfile.isBusiness) {
         let saveObj = this.props.sendReceive.withdrawCryptoObj;
@@ -301,7 +334,12 @@ class WithdrawSummary extends Component {
         trackAuditLogData.Action = "Save";
         trackAuditLogData.Remarks = "Withdraw Crypto save";
         saveObj.info = JSON.stringify(trackAuditLogData);
-        let withdrawal = await withDrawCrypto(saveObj);
+
+        if( authenticator&&OtpVerification||EmailCode&&OtpVerification||
+          EmailCode&&authenticator||EmailCode&&OtpVerification&&authenticator)
+{
+console.log("Okay")
+let withdrawal = await withDrawCrypto(saveObj);
         if (withdrawal.ok) {
           this.props.dispatch(setCryptoFinalRes(withdrawal.data));
           this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
@@ -311,6 +349,8 @@ class WithdrawSummary extends Component {
           this.props.changeStep("withdraw_crpto_success");
           publishBalanceRfresh("success");
         }
+}
+        
       } else {
         this.props.dispatch(
           setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
@@ -566,10 +606,11 @@ class WithdrawSummary extends Component {
                 <Input
                   type="text"
                   className="cust-input text-left"
-                  //placeholder={apiCalls.convertLocalLang("verification_code")}
+                  placeholder={"Enter Code"}
                   maxLength={6}
                   onChange={(e) => this.handleAuthenticator(e, "authenticator")}
                   style={{ width: "100%" }}
+                  // disabled={this.state.inputDisable}
                 />
               </Form.Item>
             )}
@@ -620,8 +661,9 @@ class WithdrawSummary extends Component {
                 <Input
                   type="text"
                   className="cust-input text-left"
-                  //placeholder={apiCalls.convertLocalLang("verification_code")}
+                  placeholder={"Enter Code"}
                   maxLength={6}
+                  disabled={this.state.inputDisable}
                   onKeyDown={(event) => {
                     if (
                       event.currentTarget.value.length >= 6 &&
@@ -695,8 +737,9 @@ class WithdrawSummary extends Component {
                 <Input
                   type="text"
                   className="cust-input text-left"
-                  //placeholder={apiCalls.convertLocalLang("verification_code")}
+                  placeholder={"Enter Code"}
                   maxLength={6}
+                  disabled={this.state.inputDisable}
                   onKeyDown={(event) => {
                     if (
                       event.currentTarget.value.length > 5 &&
