@@ -148,6 +148,9 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
             saveObj.beneficiaryAccountName = apiCalls.encryptValue(saveObj.beneficiaryAccountName, userConfig.sk)
             saveObj.routingNumber = apiCalls.encryptValue(saveObj.routingNumber, userConfig.sk)
             saveObj.toWalletAddress = apiCalls.encryptValue(saveObj.toWalletAddress, userConfig.sk)
+            saveObj.country = apiCalls.encryptValue(saveObj.country, userConfig.sk)
+            saveObj.state = apiCalls.encryptValue(saveObj.state, userConfig.sk)
+            saveObj.zipCode = apiCalls.encryptValue(saveObj.zipCode, userConfig.sk)
             if (file) {
                 const obj = getDocObj(userConfig?.id, file.response[0], file.name, file.size, fiatAddress?.documents?.id, fiatAddress?.documents?.details[0].id);
                 saveObj["documents"] = obj;
