@@ -55,18 +55,17 @@ class AddressBook extends Component {
             field: "",
             customCell: (props) => (<td >{props.dataItem.favouriteName}<Text className='file-label ml-8 fs-12'>{props?.dataItem?.addressType}</Text></td>),
             title: apiCalls.convertLocalLang('AddressLabel'),
-            filter: true, width: 180
+            filter: true, width: 300
         },
         { field: "toWalletAddress", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
         { field: "currency", title: apiCalls.convertLocalLang('currency'), width: 150, filter: true, with: 150 },
-        { field: "accountNumber", title: apiCalls.convertLocalLang('Bank_account'), filter: true, width: 220 },
-        { field: "routingNumber", title: apiCalls.convertLocalLang('BIC_SWIFT_routing_number'), filter: true, width: 180 },
+        { field: "accountNumber", title: apiCalls.convertLocalLang('Bank_account'), filter: true, width: 250 },
+        { field: "routingNumber", title: apiCalls.convertLocalLang('BIC_SWIFT_routing_number'), filter: true, width: 250 },
         { field: "bankName", title: apiCalls.convertLocalLang('Bank_name'), filter: true, width: 200 },
-        { field: "isPrimary", title: "3rd Party", filter: true, width: 200 },
         { field: "bankAddress", title: apiCalls.convertLocalLang('Bank_address1'), filter: true, width: 250 },
-        { field: "beneficiaryAccountName", title: apiCalls.convertLocalLang('business_recipient'), filter: true, width: 280 },
+        { field: "beneficiaryAccountName", title: apiCalls.convertLocalLang('business_recipient'), filter: true, width: 300 },
         { field: "beneficiaryAccountAddress", title: apiCalls.convertLocalLang('Recipient_address1'), filter: true, width: 250 },
-        { field: "addressState", title: apiCalls.convertLocalLang('addressState'), filter: true, width: 380 },
+        { field: "addressState", title: apiCalls.convertLocalLang('addressState'), filter: true, width: 180 },
         { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 100 }
     ];
     columnsCrypto = [
@@ -79,12 +78,12 @@ class AddressBook extends Component {
                 <span></span> </label></td>)
         },
         {
-            field: "", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 250,
+            field: "", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 300,
             customCell: (props) => (<td >{props.dataItem.addressLable}<Text className='file-label ml-8 fs-12'>{props?.dataItem?.addressType}</Text></td>)
         },
         { field: "coin", title: apiCalls.convertLocalLang('Coin'), filter: true, width: 120 },
         { field: "address", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
-        { field: "addressState", title: apiCalls.convertLocalLang('addressState'), filter: true, width: 380 },
+        { field: "addressState", title: apiCalls.convertLocalLang('addressState'), filter: true, width: 180 },
         { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 100 }
     ];
     handleInputChange = (prop, e) => {

@@ -178,6 +178,26 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                     </Form.Item>
                     <Form.Item
                         className="custom-label"
+                        name="toWalletAddress"
+                        label={<Translate content="address" component={Form.label} />}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                whitespace: true,
+                                message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                validator: validateContentRule
+                            }
+                        ]} >
+                        <Input className="cust-input mb-0" maxLength="30" placeholder={apiCalls.convertLocalLang('address')} />
+                    </Form.Item>
+                    <Form.Item
+                        className="custom-label"
                         name="addressType"
                         label={<Translate content="address_type" component={Form.label} />}
                         rules={[
@@ -207,46 +227,20 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                     </Form.Item>
                     <Form.Item
                         className="custom-label"
-                        name="toWalletAddress"
-                        label={<Translate content="address" component={Form.label} />}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                            },
-                            {
-                                whitespace: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                            },
-                            {
-                                validator: validateContentRule
-                            }
-                        ]} >
-                        <Input className="cust-input mb-0" maxLength="30" placeholder={apiCalls.convertLocalLang('address')} />
-                    </Form.Item>
-                    <Form.Item
-                        className="custom-label"
                         name="remarks"
                         label={<Translate content="remarks" component={Form.label} />}
                         rules={[
                             { required: true, message: apiCalls.convertLocalLang('is_required') }
                         ]} >
-                        <TextArea placeholder='Remarks' className='cust-input pt-16' autoSize={{ minRows: 2, maxRows: 5 }} maxLength={250}></TextArea>
+                        <TextArea placeholder='Remarks' className='cust-input pt-16' autoSize={{ minRows: 2, maxRows: 5 }} maxLength={300}></TextArea>
                     </Form.Item>
 
                     <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
                     <Tooltip title="Click here to download file"><Text className='file-label' onClick={()=>window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
 
-                    <Form.Item name={"file"} rules={[{
-                        validator: (_, value) => {
-                            if (file) {
-                                return Promise.resolve();
-                            } else {
-                                return Promise.reject("Please upload file")
-                            }
-                        }
-                    }]}>
+                    <Form.Item name={"file"}  rules={[
+                            { required: true, message: 'Please upload file'}
+                        ]}>
                         {<Dragger progress={{ percent: uploadPercentage }} accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { debugger }} onChange={({ file: res }) => {
                             setUploading(true);
                             if (res.status === "uploading") { setUploadPercentage(res.percent) }
@@ -259,7 +253,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                             <p className="ant-upload-drag-icon mb-16">
                                 <span className="icon xxxl doc-upload" />
                             </p>
-                            <p className="ant-upload-text fs-18 mb-0">Upload your signed document here</p>
+                            <p className="ant-upload-text fs-18 mb-0">Upload your signed PDF document here</p>
                         </Dragger>}
                     </Form.Item>
                     {isUploading && <div className="text-center">
