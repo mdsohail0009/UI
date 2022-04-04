@@ -518,4 +518,5 @@ export default {
   compliance: '(Compliance)',
   upload_documents: 'Upload Documents',
   business_recipient : "Business Name/Recipient Full Name",
+  cards : "Cards"
 }

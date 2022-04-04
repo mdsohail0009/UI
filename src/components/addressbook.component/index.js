@@ -8,7 +8,7 @@ import List from '../grid.component';
 import NewFiatAddress from './addFiatAddressbook';
 import { activeInactive } from './api';
 import SelectCrypto from './selectCrypto';
-import { withRouter,Link } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import apiCalls from '../../api/apiCalls';
 
@@ -55,18 +55,17 @@ class AddressBook extends Component {
             field: "",
             customCell: (props) => (<td >{props.dataItem.favouriteName}<Text className='file-label ml-8 fs-12'>{props?.dataItem?.addressType}</Text></td>),
             title: apiCalls.convertLocalLang('AddressLabel'),
-            filter: true, width: 180
+            filter: true, width: 300
         },
         { field: "toWalletAddress", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
         { field: "currency", title: apiCalls.convertLocalLang('currency'), width: 150, filter: true, with: 150 },
-        { field: "accountNumber", title: apiCalls.convertLocalLang('Bank_account'), filter: true, width: 220 },
-        { field: "routingNumber", title: apiCalls.convertLocalLang('BIC_SWIFT_routing_number'), filter: true, width: 180 },
+        { field: "accountNumber", title: apiCalls.convertLocalLang('Bank_account'), filter: true, width: 250 },
+        { field: "routingNumber", title: apiCalls.convertLocalLang('BIC_SWIFT_routing_number'), filter: true, width: 250 },
         { field: "bankName", title: apiCalls.convertLocalLang('Bank_name'), filter: true, width: 200 },
-        { field: "isPrimary", title: "3rd Party", filter: true, width: 200 },
         { field: "bankAddress", title: apiCalls.convertLocalLang('Bank_address1'), filter: true, width: 250 },
-        { field: "beneficiaryAccountName", title: apiCalls.convertLocalLang('business_recipient'), filter: true, width: 280 },
+        { field: "beneficiaryAccountName", title: apiCalls.convertLocalLang('business_recipient'), filter: true, width: 300 },
         { field: "beneficiaryAccountAddress", title: apiCalls.convertLocalLang('Recipient_address1'), filter: true, width: 250 },
-        { field: "addressState", title: apiCalls.convertLocalLang('addressState'), filter: true, width: 380 },
+        { field: "addressState", title: apiCalls.convertLocalLang('addressState'), filter: true, width: 180 },
         { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 100 }
     ];
     columnsCrypto = [
@@ -79,12 +78,12 @@ class AddressBook extends Component {
                 <span></span> </label></td>)
         },
         {
-            field: "", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 250,
+            field: "", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 300,
             customCell: (props) => (<td >{props.dataItem.addressLable}<Text className='file-label ml-8 fs-12'>{props?.dataItem?.addressType}</Text></td>)
         },
         { field: "coin", title: apiCalls.convertLocalLang('Coin'), filter: true, width: 120 },
         { field: "address", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
-        { field: "addressState", title: apiCalls.convertLocalLang('addressState'), filter: true, width: 380 },
+        { field: "addressState", title: apiCalls.convertLocalLang('addressState'), filter: true, width: 180 },
         { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 100 }
     ];
     handleInputChange = (prop, e) => {
@@ -189,10 +188,10 @@ class AddressBook extends Component {
             let obj = this.state.selectedObj;
             obj.walletCode = obj.coin;
             this.props.rowSelectedData(obj)
-            if(obj.isPrimary==false){
+            if (obj.isPrimary == false) {
                 this.props.history.push(`/payments/newbeneficiary/${obj.id}`)
             }
-            else{
+            else {
                 if (this.state.cryptoFiat) {
                     this.setState({ ...this.state, fiatDrawer: true, selection: [], isCheck: false, });
                     apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fait  Address edit view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Fiat Address edit view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
@@ -256,15 +255,9 @@ class AddressBook extends Component {
 
         return (
             <>
-
                 <div className="box basic-info">
-                    <div className="d-flex mb-16 justify-content">
-                        <div>
-                            <div><Translate content="address_book" component={Text} className="basicinfo" /><Text className='fs-14 text-yellow fw-400 ml-16'>(NOTE: Whitelisting of Crypto Address and Bank Account is required, please add below.)</Text></div>
-                            <Translate content="address_book_tag" component={Paragraph} className="basic-decs mb-16" />
-                        </div>
-                        
-                    </div>
+                    <Translate content="address_book" component={Text} className="basicinfo" />
+                    <Text className='fs-14 text-yellow fw-400 mb-36 d-block'>(NOTE: Whitelisting of Crypto Address and Bank Account is required, please add below.)</Text>
                     <div className="display-flex mb-16">
                         <Radio.Group
                             defaultValue={1}
