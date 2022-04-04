@@ -416,7 +416,7 @@ class PaymentsView extends Component {
                                     <Form.Item
                                         className="custom-forminput custom-label mb-24"
                                         name="beneficiaryAccountName"
-                                        label={<Translate content="Recipient_address1" component={Form.label} />}
+                                        label={<Translate content="Recipient_full_name" component={Form.label} />}
                                         required
                                         rules={[
                                             {
@@ -431,7 +431,7 @@ class PaymentsView extends Component {
                                                 validator: validateContentRule
                                             }
                                         ]}   >
-                                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
+                                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_full_name')} />
                                     </Form.Item>
                                 </Col>
                                 <Col xl={16}>

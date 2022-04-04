@@ -140,6 +140,7 @@ class WithdrawSummary extends Component {
   };
 
   getVerifyData = async () => {
+    debugger
     let response = await apiCalls.getVerificationFields(
       this.props.userProfile.id
     );
@@ -148,6 +149,7 @@ class WithdrawSummary extends Component {
     }
   };
   getOTP = async (val) => {
+    debugger
     let response = await apiCalls.getCode(
       this.props.userProfile.id,
       this.state.type
@@ -175,6 +177,7 @@ class WithdrawSummary extends Component {
   };
 
   getEmail = async (val) => {
+    debugger
     let response = await apiCalls.sendEmail(
       this.props.userProfile.id,
       this.state.type
@@ -200,10 +203,11 @@ class WithdrawSummary extends Component {
     }
   };
 
-  getEmailVerification = async (values) => {
+  getEmailVerification = async () => {
+    debugger
     let response = await apiCalls.verifyEmail(
       this.props.userProfile.id,
-      values.code
+      // values.code
     );
     if (response.ok) {
       success("Email Verified successfully") 
@@ -221,6 +225,7 @@ class WithdrawSummary extends Component {
   };
 
   getOtpVerification = async () => {
+    debugger
     let response = await apiCalls.getVerification(
       this.props.userProfile.id,
       this.state.otpCode
@@ -251,6 +256,8 @@ class WithdrawSummary extends Component {
   };
 
   handleSendOtp = (val) => {
+    debugger
+    debugger
     this.setState({
       ...this.state,
       emailOtp: val.emailCode,
