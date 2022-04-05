@@ -249,7 +249,13 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                     <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={()=>window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
 
                     <Form.Item name={"file"}  rules={[
-                            { required: true, message: 'Please upload file'}
+                            {  validator: (_, value) => {
+                                if (file) {
+                                    return Promise.resolve();
+                                } else {
+                                    return Promise.reject("Please upload file")
+                                }
+                            }}
                         ]}>
                         {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => {
                             setUploading(true);

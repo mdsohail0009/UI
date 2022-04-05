@@ -11,6 +11,7 @@ import SelectCrypto from './selectCrypto';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import apiCalls from '../../api/apiCalls';
+import { warning } from '../../utils/message';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -181,11 +182,14 @@ class AddressBook extends Component {
     }
     editAddressBook = () => {
         debugger
+        let obj = this.state.selectedObj;
         if (!this.state.isCheck) {
             this.setState({ alert: true })
             setTimeout(() => this.setState({ alert: false }), 2000)
-        } else {
-            let obj = this.state.selectedObj;
+        } else if(obj.addressState === 'Approved' || obj.addressState === "Rejected") {
+            warning(`Record is already ${obj.addressState} you can't modify`);
+        }
+        else {
             obj.walletCode = obj.coin;
             this.props.rowSelectedData(obj)
             if (obj.isPrimary == false) {
