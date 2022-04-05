@@ -201,11 +201,11 @@ const WithdrawalFiatSummary = ({
         apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
       );
       setTimeout(() => {
-        setEmailText("resendEmail")
+        setEmailText("resendEmail"); setTooltipEmail(false)
       }, 120000);
-      setTimeout(() => {
-        setTooltipEmail(false);
-      }, 120000)
+      // setTimeout(() => {
+      //   setTooltipEmail(false);
+      // }, 120000)
       if(emailText=="resendEmail"){
         setVerify(false);
       }
@@ -284,7 +284,7 @@ const WithdrawalFiatSummary = ({
       console.log(response.data)
       success("Authenticator verified successfully");
     } else if(response.data==null){
-        setMsg("please enter verification code")      
+        setMsg("Please enter verification code")      
     }
     else {
       useOtpRef.current.scrollIntoView();
@@ -477,10 +477,11 @@ const WithdrawalFiatSummary = ({
             <Input
               type="text"
               className="cust-input text-left"
-              //placeholder={apiCalls.convertLocalLang("verification_code")}
+              placeholder={"Enter Code"}
               maxLength={6}
               onChange={(e) => handleAuthenticator(e, "authenticator")}
               style={{ width: "100%" }}
+              // disabled={inputDisable}
             />
           </Form.Item>
         )}
@@ -535,7 +536,7 @@ const WithdrawalFiatSummary = ({
             <Input
               type="text"
               className="cust-input text-left"
-              //placeholder={apiCalls.convertLocalLang("verification_code")}
+              placeholder={"Enter Code"}
               maxLength={6}
               onKeyDown={(event) => {
                 if (
@@ -610,7 +611,7 @@ const WithdrawalFiatSummary = ({
             <Input
               type="text"
               className="cust-input text-left"
-              //placeholder={apiCalls.convertLocalLang("verification_code")}
+              placeholder={"Enter Code"}
               maxLength={6}
               onKeyDown={(event) => {
                 if (

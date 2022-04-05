@@ -207,9 +207,9 @@ class PaymentsView extends Component {
        
     // }
     handleUpload = ({ file }, type) => {
-       
+        debugger
         this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, error: null })
-       
+        
         if (type == "IDENTITYPROOF") {
             this.state.docIdentityProofObjs.shift()
             let obj = {
@@ -227,6 +227,7 @@ class PaymentsView extends Component {
                 if (preList !== undefined) {
                     preList.isChecked = false
                     this.state.fileDetails.push(obj, preList);
+                 
                 } else {
                     this.state.fileDetails.push(obj);
                 }
@@ -292,18 +293,10 @@ class PaymentsView extends Component {
         }
     }
     deleteDocument=(file,type)=>{
-       
-        
+        debugger
         if(this.state.docIdentityProofObjs && type == "IDENTITYPROOF"){
             let deleteIdentityList = this.state.docIdentityProofObjs.filter((file) => file.documentName !== file.documentName);
-            if( this.state.fileDetails.length>2){
-                this.state.fileDetails.splice(0, 2);
-            }else{
                 this.state.fileDetails.splice(0, 1);
-            }
-           
-           
-            
             let obj=this.state.docIdentityProofObjs[0];
             obj.isChecked=false
             this.state.fileDetails.push(obj)
@@ -314,7 +307,6 @@ class PaymentsView extends Component {
         }else if (this.state.docAddressProofObjs && type == "ADDRESSPROOF") {
             let deleteAddressProofList = this.state.docAddressProofObjs.filter((file) => file.documentName !== file.documentName)
             this.state.fileDetails.splice(0, 1)
-           
             let obj=this.state.docAddressProofObjs[0];
             obj.isChecked=false
             this.state.fileDetails.push(obj)
@@ -324,7 +316,6 @@ class PaymentsView extends Component {
         else if (this.state.docBankProofObjs && type == "BANKPROOF") {
             let deleteBankProofList = this.state.docBankProofObjs.filter((file) => file.documentName !== file.documentName)
             this.state.fileDetails.splice(0, 1)
-           
             let obj=this.state.docBankProofObjs[0];
             obj.isChecked=false
             this.state.fileDetails.push(obj)
