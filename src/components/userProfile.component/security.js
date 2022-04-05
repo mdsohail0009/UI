@@ -104,7 +104,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
 
         } else if(email||phone||factor===false){
           useDivRef.current.scrollIntoView(0,0);
-          return setErrorMsg("Please select any two withdraw verification options");
+          return setErrorMsg(response.data);
         }
         else {
           error(response.data)
@@ -112,11 +112,11 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
       }
       else if(email||phone||factor===false){
         useDivRef.current.scrollIntoView(0,0);
-        return setErrorMsg("Please select any two withdraw verification options");
+        return setErrorMsg("Please select  withdraw verification options");
       }
       else {
         useDivRef.current.scrollIntoView(0,0);
-        return setErrorMsg("Please select any two withdraw verification options");
+        return setErrorMsg("Please select  withdraw verification options");
       }
  } 
 

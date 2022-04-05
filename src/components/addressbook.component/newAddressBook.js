@@ -11,12 +11,23 @@ import { validateContentRule } from '../../utils/custom.validator';
 import apicalls from "../../api/apiCalls";
 import { Link } from "react-router-dom";
 import { bytesToSize, getDocObj } from '../../utils/service';
+import { warning } from '../../utils/message';
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
 const { Dragger } = Upload;
 const { confirm } = Modal;
+const EllipsisMiddle = ({ suffixCount, children }) => {
+    const start = children.slice(0, children.length - suffixCount).trim();
+    const suffix = children.slice(-suffixCount).trim();
+    return (
+        <Text className="mb-0 fs-14 docname c-pointer d-block"
+            style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
+            {start}
+        </Text>
+    );
+};
 const LinkValue = (props) => {
     return (
         <Translate
@@ -42,6 +53,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
     const [file, setFile] = useState(null);
     const [uploadPercentage, setUploadPercentage] = useState(0);
     const [isUploading, setUploading] = useState(false);
+    const [isValidFile, setIsValidFile]=useState(true);
     useEffect(() => {
         if (addressBookReducer?.cryptoValues) {
             form.setFieldsValue({
@@ -70,6 +82,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         changeStep("step2");
     }
     const loadDataAddress = async () => {
+        debugger
         setIsLoading(true)
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'crypto');
         if (response.ok) {
@@ -83,6 +96,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         }
     }
     const saveAddressBook = async (values) => {
+        debugger
         setIsLoading(false);
         setBtnDisabled(true);
         const type = 'crypto';
@@ -92,6 +106,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
         values['info'] = JSON.stringify(trackAuditLogData);
+        values['addressState'] = cryptoAddress.addressState;
         let namecheck = values.favouriteName.trim();
         let favaddrId = addressBookReducer?.selectedRowData ? addressBookReducer?.selectedRowData?.id : Id;
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'crypto', favaddrId);
@@ -130,9 +145,17 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         }
     }
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
-
-    const docPreview = () => {
-
+    const beforeUpload = (file) => {
+        debugger
+        let fileType = { "image/png": false, 'image/jpg': false, 'image/jpeg': false, 'image/PNG': false, 'image/JPG': false, 'image/JPEG': false, 'application/pdf': true, 'application/PDF': true }
+        if (fileType[file.type]) {
+            setIsValidFile(true);
+            return true;
+        } else {
+            warning('File is not allowed. You can upload PDF  files')
+            setIsValidFile(false);
+            return Upload.LIST_IGNORE;
+        }
     }
     return (
         <>
@@ -165,35 +188,6 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                     </Form.Item>
                     <Form.Item
                         className="custom-label"
-                        name="addressType"
-                        label={<Translate content="address_type" component={Form.label} />}
-                        rules={[
-                            { required: true, message: apiCalls.convertLocalLang('is_required') }
-                        ]} >
-                        <Select
-                            className="cust-input mb-0"
-                            placeholder="Select Address Type"
-                            //onChange={(e) => this.handleCurrencyChange(e)}
-                            dropdownClassName='select-drpdwn'
-                            bordered={false}
-                            showArrow={true}
-                        >
-                            <Option value="first_party">1st Party</Option>
-                            <Option value="third_party">3rd Party</Option>
-                        </Select>
-                    </Form.Item>
-                    <Form.Item
-                        className="custom-label"
-                        name="toCoin"
-                        label={<Translate content="Coin" component={Form.label} />}
-                        rules={[
-                            { required: true, message: apiCalls.convertLocalLang('is_required') }
-                        ]} >
-                        <Input disabled placeholder={apiCalls.convertLocalLang('Selectcoin')} className="cust-input cust-adon mb-0 c-pointer"
-                            addonAfter={<i className="icon md rarrow-white c-pointer" onClick={selectCrypto} />} />
-                    </Form.Item>
-                    <Form.Item
-                        className="custom-label"
                         name="toWalletAddress"
                         label={<Translate content="address" component={Form.label} />}
                         required
@@ -214,27 +208,56 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                     </Form.Item>
                     <Form.Item
                         className="custom-label"
+                        name="addressType"
+                        label={<Translate content="address_type" component={Form.label} />}
+                        rules={[
+                            { required: true, message: apiCalls.convertLocalLang('is_required') }
+                        ]} >
+                        <Select
+                            className="cust-input mb-0"
+                            placeholder="Select Address Type"
+                            //onChange={(e) => this.handleCurrencyChange(e)}
+                            dropdownClassName='select-drpdwn'
+                            bordered={false}
+                            showArrow={true}
+                        >
+                            <Option value="1st Party">1st Party</Option>
+                            <Option value="3rd Party">3rd Party</Option>
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        className="custom-label"
+                        name="toCoin"
+                        label={<Translate content="Coin" component={Form.label} />}
+                        rules={[
+                            { required: true, message: apiCalls.convertLocalLang('is_required') }
+                        ]} >
+                        <Input disabled placeholder={apiCalls.convertLocalLang('Selectcoin')} className="cust-input cust-adon mb-0 c-pointer"
+                            addonAfter={<i className="icon md rarrow-white c-pointer" onClick={selectCrypto} />} />
+                    </Form.Item>
+                    <Form.Item
+                        className="custom-label"
                         name="remarks"
                         label={<Translate content="remarks" component={Form.label} />}
                         rules={[
                             { required: true, message: apiCalls.convertLocalLang('is_required') }
                         ]} >
-                        <TextArea className='cust-input' rows={3} maxLength={250}></TextArea>
+                        <TextArea placeholder='Remarks' className='cust-input pt-16' autoSize={{ minRows: 2, maxRows: 5 }} maxLength={300}></TextArea>
                     </Form.Item>
 
-                    <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, please download the form. Be sure the information is accurate, complete and signed.</Text>
-                    <Tooltip title="Click here to download file"><Text className='file-label' onClick={()=>window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
+                    <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
+                    <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={()=>window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
 
-                    <Form.Item name={"file"} rules={[{
-                        validator: (_, value) => {
-                            if (file) {
-                                return Promise.resolve();
-                            } else {
-                                return Promise.reject("Please upload file")
-                            }
-                        }
-                    }]}>
-                        {<Dragger progress={{ percent: uploadPercentage }} accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { debugger }} onChange={({ file: res }) => {
+                    <Form.Item name={"file"}  rules={[
+                            {  validator: (_, value) => {
+                                if (file) {
+                                    return Promise.resolve();
+                                } else {
+                                    return Promise.reject("Please upload file")
+                                }
+                            }}
+                        ]}>
+                        {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => {
                             setUploading(true);
                             if (res.status === "uploading") { setUploadPercentage(res.percent) }
                             else if (res.status === "done") {
@@ -246,24 +269,23 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                             <p className="ant-upload-drag-icon mb-16">
                                 <span className="icon xxxl doc-upload" />
                             </p>
-                            <p className="ant-upload-text fs-18 mb-0">Upload your signed document here</p>
+                            <p className="ant-upload-text fs-18 mb-0">Upload your signed PDF document here</p>
                         </Dragger>}
                     </Form.Item>
-                    {isUploading && <div className="docfile mr-0">
-                        <Spin size='small' tip={uploadPercentage.toFixed(2) + " % completed"} />
+                    {isUploading && <div className="text-center">
+                        <Spin />
                     </div>}
-                    {file != null && <div className="docfile mr-0">
+                    {file != null && <div className="docfile mr-0 c-pointer">
                         <span className={`icon xl file mr-16`} />
-                        <div className="docdetails c-pointer" onClick={() => docPreview()}>
-                            <Text className="mb-0 fs-14 docname c-pointer d-block" style={{maxWidth: '100%'}}>
-                            {file.name}
-                            </Text>
+                        <div className="docdetails">
+                            <EllipsisMiddle suffixCount={10}>{file.name}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(file.size)}</span>
                         </div>
                         <span className="icon md close c-pointer" onClick={() => confirm({
-                            content: "Are you sure do you want to delete file?",
-                            title: "Delete File ?",
+                            content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
+                            title: <div className='fs-18 text-white-30'>Delete File ?</div>,
                             onOk: () => { setFile(null); }
+                            
                         })} />
                     </div>}
                     <Form.Item
@@ -304,15 +326,6 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                             disabled={btnDisabled}
                         >
                             {isLoading && <Spin indicator={antIcon} />} <Translate content="Save_btn_text" component={Text} />
-                        </Button>
-                        <Button
-                            htmlType="cancel"
-                            size="large"
-                            block
-                            onClick={() => onCancel()}
-                            className="pop-cancel"
-                        >
-                            Cancel
                         </Button>
                     </div>
                 </Form>
