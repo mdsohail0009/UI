@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Typography, Input, Button, Alert, Spin, message, Drawer, Select } from 'antd';
+import React, { useState } from 'react';
+import { Form, Typography , Button,  Drawer, Select } from 'antd';
+
 import { LoadingOutlined } from '@ant-design/icons';
-import { setStep } from '../../reducers/paymentsReducer';
+
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
-import WalletList from '../shared/walletList';
-import { saveAddress, favouriteNameCheck, getAddress } from './api';
-import Loader from '../../Shared/loader';
-import apiCalls from '../../api/apiCalls';
-import { validateContentRule } from '../../utils/custom.validator'
+
+
 import Moment from 'react-moment';
-import moment from 'moment';
+
 import List from "../grid.component";
 import BeneficiaryDrawer from './beneficiaryDrawer';
+import NewFiatAddress from '../addressbook.component/addFiatAddressbook'
 
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -27,11 +26,20 @@ const Payments = (props, { userConfig }) => {
     const useDivRef = React.useRef(null);
     const [btnDisabled, setBtnDisabled] = useState(false);
     const [beneficiaryDrawer, setBeneficiaryDrawer] = useState(false);
-
+    const [beneficiaryDetails, setBeneficiaryDetails] = useState(false);
+    const [visible, setVisible] = useState(false);
+    const[checkRadio,setCheckRadio] = useState(false);
     const paymentsView = (prop) => {
         props.history.push(`/payments/${prop.dataItem.id}/view`)
     };
 
+    
+  const showDrawer = () => {
+    setVisible(true);
+  };
+  const onClose = () => {
+    setVisible(false);
+  };
     const gridColumns = [
         {
             field: "createdDate", title: 'Date', filter: true, filterType: "date", customCell: (props) => (
@@ -51,11 +59,13 @@ const Payments = (props, { userConfig }) => {
     const closeDrawer = () => {
         setBeneficiaryDrawer(false);
     }
-    const showNewBenificiary = () => {
-        props.history.push(`/payments/newbeneficiary/00000000-0000-0000-0000-000000000000`)
-    }
-    const savewithdrawal = () => {
-        setBeneficiaryDrawer(false);
+
+     const showNewBenificiary = () => {
+        setCheckRadio(true);
+        setBeneficiaryDetails(true);
+        }
+    const closeBuyDrawer = () => {
+        setBeneficiaryDetails(false);
     }
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     return (
@@ -92,7 +102,24 @@ const Payments = (props, { userConfig }) => {
                     showDrawer={beneficiaryDrawer}
                     onClose={() => closeDrawer()}
                 />
-            </div>
+
+                <Drawer destroyOnClose={true}
+                    title={[<div className="side-drawer-header">
+                        <span />
+                        <div className="text-center fs-16">
+                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">AddFiatAddress</Paragraph>
+                        </div>
+                        <span onClick={closeBuyDrawer} className="icon md close-white c-pointer" />
+                    </div>]}
+                    placement="right"
+                    closable={true}
+                    visible={beneficiaryDetails}
+                    closeIcon={null}
+                    className="side-drawer"
+                >
+                    <NewFiatAddress checkThirdParty = {checkRadio} onCancel={() => closeBuyDrawer()} />
+                </Drawer>
+             </div>
         </>
     )
 }
