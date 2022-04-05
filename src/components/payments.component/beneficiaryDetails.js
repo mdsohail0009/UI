@@ -495,7 +495,7 @@ class PaymentsView extends Component {
                                     <Form.Item
                                         className="custom-forminput custom-label mb-24"
                                         name="beneficiaryAccountName"
-                                        label={<Translate content="Recipient_address1" component={Form.label} />}
+                                        label={<Translate content="beneficiaryAccountName" component={Form.label} />}
                                         required
                                         rules={[
                                             {
@@ -510,7 +510,7 @@ class PaymentsView extends Component {
                                                 validator: validateContentRule
                                             }
                                         ]}   >
-                                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
+                                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('beneficiaryAccountName')} />
                                     </Form.Item>
                                 </Col>
                                 <Col xl={16}>
@@ -535,7 +535,7 @@ class PaymentsView extends Component {
                                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
                                     </Form.Item>
                                 </Col>
-                                <Col xl={16}>
+                                {/* <Col xl={16}>
                                     <Form.Item
                                         className="custom-forminput custom-label mb-24"
                                         name="beneficiaryAccountAddress"
@@ -556,7 +556,7 @@ class PaymentsView extends Component {
                                         ]}   >
                                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
                                     </Form.Item>
-                                </Col>
+                                </Col> */}
                             </Row>
                             <Translate
                                 content="Beneficiary_BankDetails"
