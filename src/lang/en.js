@@ -432,6 +432,7 @@ export default {
   New_Address: 'New Address',
   coin: 'Coin',
   price: 'Price',
+  beneficiaryAccountName:"Beneficiary Account Name",
   last_24hrs: 'Last 24hrs',
   home: 'Home',
   careers: 'Careers',
