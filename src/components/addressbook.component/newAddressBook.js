@@ -11,6 +11,7 @@ import { validateContentRule } from '../../utils/custom.validator';
 import apicalls from "../../api/apiCalls";
 import { Link } from "react-router-dom";
 import { bytesToSize, getDocObj } from '../../utils/service';
+import { warning } from '../../utils/message';
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -52,6 +53,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
     const [file, setFile] = useState(null);
     const [uploadPercentage, setUploadPercentage] = useState(0);
     const [isUploading, setUploading] = useState(false);
+    const [isValidFile, setIsValidFile]=useState(true);
     useEffect(() => {
         if (addressBookReducer?.cryptoValues) {
             form.setFieldsValue({
@@ -143,9 +145,17 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         }
     }
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
-
-    const docPreview = () => {
-
+    const beforeUpload = (file) => {
+        debugger
+        let fileType = { "image/png": false, 'image/jpg': false, 'image/jpeg': false, 'image/PNG': false, 'image/JPG': false, 'image/JPEG': false, 'application/pdf': true, 'application/PDF': true }
+        if (fileType[file.type]) {
+            setIsValidFile(true);
+            return true;
+        } else {
+            warning('File is not allowed. You can upload PDF  files')
+            setIsValidFile(false);
+            return Upload.LIST_IGNORE;
+        }
     }
     return (
         <>
@@ -236,12 +246,12 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                     </Form.Item>
 
                     <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
-                    <Tooltip title="Click here to download file"><Text className='file-label' onClick={()=>window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
+                    <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={()=>window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
 
                     <Form.Item name={"file"}  rules={[
                             { required: true, message: 'Please upload file'}
                         ]}>
-                        {<Dragger progress={{ percent: uploadPercentage }} accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { debugger }} onChange={({ file: res }) => {
+                        {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => {
                             setUploading(true);
                             if (res.status === "uploading") { setUploadPercentage(res.percent) }
                             else if (res.status === "done") {
@@ -261,7 +271,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                     </div>}
                     {file != null && <div className="docfile mr-0 c-pointer">
                         <span className={`icon xl file mr-16`} />
-                        <div className="docdetails" onClick={() => docPreview()}>
+                        <div className="docdetails">
                             <EllipsisMiddle suffixCount={10}>{file.name}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(file.size)}</span>
                         </div>

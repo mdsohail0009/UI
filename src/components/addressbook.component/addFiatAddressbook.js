@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { bytesToSize, getDocObj } from '../../utils/service';
 import { getCountryStateLu, getStateLookup } from "../../api/apiServer";
 import apicalls from "../../api/apiCalls";
+import { warning } from '../../utils/message';
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -45,7 +46,7 @@ const LinkValue = (props) => {
     );
 };
 const link = <LinkValue content="terms_service" />;
-const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, userProfileInfo, trackAuditLogData,sendReceive
+const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, userProfileInfo, trackAuditLogData, sendReceive
 }) => {
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
@@ -58,12 +59,13 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
     const [isUploading, setUploading] = useState(false);
     const [countryLu, setCountryLu] = useState([]);
     const [stateLu, setStateLu] = useState([]);
-    const [addressState, setAddressState]=useState(null);
+    const [addressState, setAddressState] = useState(null);
     const [saveObj, setSaveObj] = useState(null);
+    const [isValidFile, setIsValidFile]=useState(true);
 
     useEffect(() => {
         if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && addressBookReducer?.selectedRowData?.id) {
-            loadDataAddress();  
+            loadDataAddress();
         }
         addressbkTrack();
         getCountryLu();
@@ -83,7 +85,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
             }
             const fileInfo = response?.data?.documents?.details[0];
             if (fileInfo?.path) {
-                setFile({ name: fileInfo?.documentName, size: fileInfo.remarks,response:[fileInfo?.path] })
+                setFile({ name: fileInfo?.documentName, size: fileInfo.remarks, response: [fileInfo?.path] })
             }
             getStateLu(response.data.country)
             form.setFieldsValue({ ...response.data, });
@@ -95,31 +97,31 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
         form.setFieldsValue({ toCoin: walletId })
     }
     const getCountryLu = async () => {
-      let objj = sendReceive.withdrawFiatObj;
-      setSaveObj(objj);
-      if (objj) {
-        form.setFieldsValue({
-          ...objj,
-          walletCode: objj.walletCode,
-          beneficiaryAccountName: userConfig.firstName + " " + userConfig.lastName
-        });
-      } else {
-        form.setFieldsValue({
-          beneficiaryAccountName: userConfig.firstName + " " + userConfig.lastName
-        });
-      }
-      let recName = await getCountryStateLu();
-      if (recName.ok) {
-        setCountryLu(recName.data);
-      }
+        let objj = sendReceive.withdrawFiatObj;
+        setSaveObj(objj);
+        if (objj) {
+            form.setFieldsValue({
+                ...objj,
+                walletCode: objj.walletCode,
+                beneficiaryAccountName: userConfig.firstName + " " + userConfig.lastName
+            });
+        } else {
+            form.setFieldsValue({
+                beneficiaryAccountName: userConfig.firstName + " " + userConfig.lastName
+            });
+        }
+        let recName = await getCountryStateLu();
+        if (recName.ok) {
+            setCountryLu(recName.data);
+        }
     };
-  
+
     const getStateLu = async (countryname, isChange) => {
-      let recName = await getStateLookup(countryname);
-      if (recName.ok) {
-        setStateLu(recName.data);
-      }
-      if (isChange) form.setFieldsValue({ state: null });
+        let recName = await getStateLookup(countryname);
+        if (recName.ok) {
+            setStateLu(recName.data);
+        }
+        if (isChange) form.setFieldsValue({ state: null });
     };
     const savewithdrawal = async (values) => {
         debugger
@@ -184,13 +186,24 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
             }
         }
     }
-    const { Paragraph } = Typography;
+    const beforeUpload = (file) => {
+        let fileType = { "image/png": false, 'image/jpg': false, 'image/jpeg': false, 'image/PNG': false, 'image/JPG': false, 'image/JPEG': false, 'application/pdf': true, 'application/PDF': true }
+        if (fileType[file.type]) {
+            setIsValidFile(true);
+            return true;
+        } else {
+            warning('File is not allowed. You can upload PDF  files')
+            setIsValidFile(false);
+            return Upload.LIST_IGNORE;
+        }
+    }
+
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     return (
         <>
 
             {isLoading && <Loader />}
-            <div className="addbook-height auto-scroll">
+            <div className="addbook-height">
                 <div ref={useDivRef}></div>
                 {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
                 <Form form={form} onFinish={savewithdrawal} autoComplete="off" initialValues={fiatAddress}>
@@ -340,92 +353,92 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_address1')} />
                     </Form.Item>
                     <Form.Item
-            className="custom-forminput custom-label  mb-24"
-            name="country"
-            label={<Translate content="Country" component={Form.label} />}
-            rules={[
-              {
-                required: true,
-                message: apicalls.convertLocalLang("is_required")
-              }
-            ]}
-          >
-            <Select
-              dropdownClassName="select-drpdwn"
-              placeholder={apicalls.convertLocalLang("Country")}
-              className="cust-input"
-              style={{ width: "100%" }}
-              bordered={false}
-              showArrow={true}
-              onChange={(e) => getStateLu(e, true)}
-            >
-              {countryLu?.map((item, idx) => (
-                <Option key={idx} value={item.code}>
-                  {item.name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
+                        className="custom-forminput custom-label  mb-24"
+                        name="country"
+                        label={<Translate content="Country" component={Form.label} />}
+                        rules={[
+                            {
+                                required: true,
+                                message: apicalls.convertLocalLang("is_required")
+                            }
+                        ]}
+                    >
+                        <Select
+                            dropdownClassName="select-drpdwn"
+                            placeholder={apicalls.convertLocalLang("Country")}
+                            className="cust-input"
+                            style={{ width: "100%" }}
+                            bordered={false}
+                            showArrow={true}
+                            onChange={(e) => getStateLu(e, true)}
+                        >
+                            {countryLu?.map((item, idx) => (
+                                <Option key={idx} value={item.code}>
+                                    {item.name}
+                                </Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
 
-          <Form.Item
-            className="custom-forminput custom-label mb-24"
-            name="state"
-            label={<Translate content="state" component={Form.label} />}
-            rules={[
-              {
-                required: true,
-                message: apicalls.convertLocalLang("is_required")
-              }
-            ]}
-          >
-            <Select
-              dropdownClassName="select-drpdwn"
-              placeholder={apicalls.convertLocalLang("state")}
-              className="cust-input"
-              style={{ width: "100%" }}
-              bordered={false}
-              showArrow={true}
-              onChange={(e) => ""}
-            >
-              {stateLu?.map((item, idx) => (
-                <Option key={idx} value={item.code}>
-                  {item.code}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item
-            className="custom-forminput custom-label mb-24"
-            name="zipCode"
-            label={<Translate content="zipcode" component={Form.label} />}
-            required
-            rules={[
-              {
-                validator: (rule, value, callback) => {
-                  var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                  if (value) {
-                    if (!regx.test(value)) {
-                      callback("Invalid zip code");
-                    } else if (regx.test(value)) {
-                      callback();
-                    }
-                  } else {
-                    callback();
-                  }
-                }
-              },
-              {
-                required: true,
-                message: apiCalls.convertLocalLang("is_required")
-              }
-            ]}
-          >
-            <Input
-              className="cust-input"
-              maxLength="6"
-              placeholder={apiCalls.convertLocalLang("zipcode")}
-            />
-          </Form.Item>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-24"
+                        name="state"
+                        label={<Translate content="state" component={Form.label} />}
+                        rules={[
+                            {
+                                required: true,
+                                message: apicalls.convertLocalLang("is_required")
+                            }
+                        ]}
+                    >
+                        <Select
+                            dropdownClassName="select-drpdwn"
+                            placeholder={apicalls.convertLocalLang("state")}
+                            className="cust-input"
+                            style={{ width: "100%" }}
+                            bordered={false}
+                            showArrow={true}
+                            onChange={(e) => ""}
+                        >
+                            {stateLu?.map((item, idx) => (
+                                <Option key={idx} value={item.code}>
+                                    {item.code}
+                                </Option>
+                            ))}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        className="custom-forminput custom-label mb-24"
+                        name="zipCode"
+                        label={<Translate content="zipcode" component={Form.label} />}
+                        required
+                        rules={[
+                            {
+                                validator: (rule, value, callback) => {
+                                    var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                                    if (value) {
+                                        if (!regx.test(value)) {
+                                            callback("Invalid zip code");
+                                        } else if (regx.test(value)) {
+                                            callback();
+                                        }
+                                    } else {
+                                        callback();
+                                    }
+                                }
+                            },
+                            {
+                                required: true,
+                                message: apiCalls.convertLocalLang("is_required")
+                            }
+                        ]}
+                    >
+                        <Input
+                            className="cust-input"
+                            maxLength="6"
+                            placeholder={apiCalls.convertLocalLang("zipcode")}
+                        />
+                    </Form.Item>
 
                     <Translate
                         content="Beneficiary_Details"
@@ -436,7 +449,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                         <div className="d-flex">
                             <Translate
                                 className="input-label"
-                                content={userConfig?.isBusiness ? "company_name" : "Recipient_full_name" }
+                                content={userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
                                 component={Form.label}
                             />{" "}
                             <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
@@ -472,17 +485,11 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                         <TextArea placeholder='Remarks' className='cust-input pt-16' autoSize={{ minRows: 2, maxRows: 5 }} maxLength={300}></TextArea>
                     </Form.Item>
                     <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
-                    <Tooltip title="Click here to download file"><Text className='file-label' onClick={()=>window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
+                    <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={() => window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
                     <Form.Item name={"file"} rules={[{
-                        validator: (_, value) => {
-                            if (file) {
-                                return Promise.resolve();
-                            } else {
-                                return Promise.reject("Please upload file")
-                            }
-                        }
+                         required: true, message: 'Please upload file'
                     }]}>
-                        {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { debugger }} onChange={({ file: res }) => {
+                        {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => {
                             setUploading(true);
                             if (res.status === "uploading") { setUploadPercentage(res.percent) }
                             else if (res.status === "done") {
@@ -507,8 +514,8 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             <span className="fs-12 text-secondary">{bytesToSize(file.size)}</span>
                         </div>
                         <span className="icon md close c-pointer" onClick={() => confirm({
-                           content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
-                           title: <div className='fs-18 text-white-30'>Delete File ?</div>,
+                            content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
+                            title: <div className='fs-18 text-white-30'>Delete File ?</div>,
                             onOk: () => { setFile(null); }
                         })} />
                     </div>}
@@ -541,13 +548,12 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             />
                         </Checkbox>
                     </Form.Item>
-                    <Form.Item className="mb-0 mt-16">
-                        <Button 
-                           //disabled={isLoading}
+                    <Form.Item>
+                        <Button
                             htmlType="submit"
                             size="large"
                             block
-                            className="pop-btn"
+                            className="pop-btn mb-36"
                             disabled={btnDisabled}
                         >
                             {isLoading && <Spin indicator={antIcon} />}  <Translate content="Save_btn_text" />
@@ -561,28 +567,28 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
 }
 
 const connectStateToProps = ({
-  buyInfo,
-  userConfig,
-  addressBookReducer,
-  sendReceive
-}) => {
-  return {
     buyInfo,
-    userConfig: userConfig.userProfileInfo,
-    sendReceive,
+    userConfig,
     addressBookReducer,
-    trackAuditLogData: userConfig.trackAuditLogData
-  };
+    sendReceive
+}) => {
+    return {
+        buyInfo,
+        userConfig: userConfig.userProfileInfo,
+        sendReceive,
+        addressBookReducer,
+        trackAuditLogData: userConfig.trackAuditLogData
+    };
 };
 const connectDispatchToProps = (dispatch) => {
-  return {
-    changeStep: (stepcode) => {
-      dispatch(setStep(stepcode));
-    },
-    dispatch
-  };
+    return {
+        changeStep: (stepcode) => {
+            dispatch(setStep(stepcode));
+        },
+        dispatch
+    };
 };
 export default connect(
-  connectStateToProps,
-  connectDispatchToProps
+    connectStateToProps,
+    connectDispatchToProps
 )(NewFiatAddress);
