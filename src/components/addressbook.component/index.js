@@ -82,8 +82,8 @@ class AddressBook extends Component {
             field: "", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 300,
             customCell: (props) => (<td >{props.dataItem.addressLable}<Text className='file-label ml-8 fs-12'>{props?.dataItem?.addressType}</Text></td>)
         },
-        { field: "coin", title: apiCalls.convertLocalLang('Coin'), filter: true, width: 120 },
         { field: "address", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
+        { field: "coin", title: apiCalls.convertLocalLang('Coin'), filter: true, width: 120 },
         { field: "addressState", title: apiCalls.convertLocalLang('addressState'), filter: true, width: 180 },
         { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 100 }
     ];
