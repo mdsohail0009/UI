@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Upload, Modal } from 'antd';
+import { Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Upload, Modal,Radio} from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -46,8 +46,9 @@ const LinkValue = (props) => {
     );
 };
 const link = <LinkValue content="terms_service" />;
-const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, userProfileInfo, trackAuditLogData, sendReceive
+const NewFiatAddress = (props,{ buyInfo, userConfig, onCancel, addressBookReducer, userProfileInfo, trackAuditLogData, sendReceive
 }) => {
+  
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -64,6 +65,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
     const [isValidFile, setIsValidFile]=useState(true);
 
     useEffect(() => {
+      
         if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && addressBookReducer?.selectedRowData?.id) {
             loadDataAddress();
         }
@@ -97,17 +99,17 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
         form.setFieldsValue({ toCoin: walletId })
     }
     const getCountryLu = async () => {
-        let objj = sendReceive.withdrawFiatObj;
+        let objj = sendReceive?.withdrawFiatObj;
         setSaveObj(objj);
         if (objj) {
             form.setFieldsValue({
                 ...objj,
                 walletCode: objj.walletCode,
-                beneficiaryAccountName: userConfig.firstName + " " + userConfig.lastName
+                beneficiaryAccountName: userConfig?.firstName + " " + userConfig?.lastName
             });
         } else {
             form.setFieldsValue({
-                beneficiaryAccountName: userConfig.firstName + " " + userConfig.lastName
+                beneficiaryAccountName: userConfig?.firstName + " " + userConfig?.lastName
             });
         }
         let recName = await getCountryStateLu();
@@ -197,6 +199,9 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
             return Upload.LIST_IGNORE;
         }
     }
+    const radioChangeHandler = () =>{
+
+    }
 
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     return (
@@ -212,6 +217,14 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                         component={Paragraph}
                         className="mb-16 fs-14 text-aqua fw-500 text-upper"
                     />
+                    <Form.Item>
+                    <Radio.Group  onChange={radioChangeHandler}
+            defaultValue={props?.checkThirdParty === true? "3rdparty":"1stparty"} value={props?.checkThirdParty === true? "3rdparty":"1stparty" } >
+           <Radio value={"1stparty"}>1st Party</Radio>
+            <Radio value={"3rdparty"}>3rd Party</Radio>
+                  </Radio.Group>
+                   
+                        </Form.Item>
                     <Form.Item
                         className="custom-forminput  custom-label mb-24 pr-0"
                         name="favouriteName" required
@@ -251,7 +264,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                     >
                         <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('address')} />
                     </Form.Item>
-                    <Form.Item
+                    {/* <Form.Item
                         className="custom-label"
                         name="addressType"
                         label={<Translate content="address_type" component={Form.label} />}
@@ -269,7 +282,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             <Option value="1st Party">1st Party</Option>
                             <Option value="3rd Party">3rd Party</Option>
                         </Select>
-                    </Form.Item>
+                    </Form.Item> */}
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
                         name="toCoin"
@@ -453,7 +466,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                                 component={Form.label}
                             />{" "}
                             <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
-                        <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
+                        <Input className="cust-input" value={userConfig?.firstName + " " + userConfig?.lastName} placeholder="Recipient full name" disabled={true} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
