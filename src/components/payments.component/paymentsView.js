@@ -10,7 +10,9 @@ class PaymentsView extends Component {
         super(props);
         this.state = {
             paymentsData: [],
-            loading: false
+            currency:'USD',
+            loading: false,
+            amount:0
         }
         this.useDivRef = React.createRef();
     }
@@ -18,8 +20,9 @@ class PaymentsView extends Component {
         this.getPaymentsViewData();
     }
     getPaymentsViewData = async () => {
+        debugger
         this.setState({ ...this.state, loading: true });
-        let response = await getPaymentsData(this.props.match.params.id, this.props.userConfig?.userId);
+        let response = await getPaymentsData(this.props.match.params.id, this.props.userConfig?.userId,this.state.currency);
         if (response.ok) {
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
         }else {
@@ -65,6 +68,7 @@ class PaymentsView extends Component {
         this.props.history.push('/payments')
     }
     render() {
+        const total=(this.state.paymentsData.reduce((total,currentItem) =>  total = total + currentItem.amount , 0 ));
         const { paymentsData, loading } = this.state;
         return (
             <>
@@ -92,7 +96,7 @@ class PaymentsView extends Component {
                                 {paymentsData?.map((item, idx) => {
                                     return (
                                         <>
-                                          {paymentsData.length > 0?  <tr key={idx}>
+                                          {paymentsData.length > 0? <> <tr key={idx}>
                                                 <td className='d-flex align-center justify-content'>{item.bankname}
                                                 <Popover
                                                                     className='more-popover'
@@ -115,12 +119,30 @@ class PaymentsView extends Component {
                                                     />
                                                 </td>
                                             </tr>
+                                            </>
                                         :"No bank details available."}</>
                                     )
                                 })}
+                                {/* <>
+                                
+                                <h2 className='text-white ml-36'>Total amount</h2>
+                                {paymentsData.map(item => {
+                                this.state.amount +=Number(item.amount) ;
+                            return <Text name={item.amount} />
+              })
+            }
+            <p>{this.state.amount}</p>
+                                </> */}
                                 {loading && <tr>
                                     <td colSpan='3' className='text-center p-16'><Spin size='default' /></td></tr>}
                             </tbody>
+                            <tfoot><tr>
+                                <div >
+                                <span className='text-white fs-24'> Total:</span>
+                                <span className='text-white fs-24'> {total}</span>
+                                </div>
+                                    </tr>  
+                            </tfoot>
                         </table>
                         <div className="text-right mt-36">
                             <Button

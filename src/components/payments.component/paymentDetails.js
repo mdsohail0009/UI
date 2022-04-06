@@ -1,10 +1,10 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Button, Form, Select, message, Input, Alert, Popover, Spin, Collapse, Badge } from 'antd';
+import { Typography, Button, Form, Select, message, Input, Alert, Popover, Spin, Collapse, Badge,Upload } from 'antd';
 import Translate from 'react-translate-component';
-import { getCurrencyLu, getPaymentsData, savePayments, getBankData } from './api'
+import { getCurrencyLu, getPaymentsData, savePayments, getBankData,creatPayment } from './api'
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
-import { validateContent } from "../../utils/custom.validator";
+import { UploadOutlined } from '@ant-design/icons';
 
 const { Option } = Select;
 const FormItem = Form.Item
@@ -35,6 +35,7 @@ class PaymentDetails extends Component {
             moreBankInfo: {},
             loading: false,
             tooltipLoad: false,
+            amount:0,
         }
         this.gridRef = React.createRef();
         this.useDivRef = React.createRef();
@@ -46,6 +47,7 @@ class PaymentDetails extends Component {
         this.getCurrencyLookup()
         this.getPayments()
         this.useDivRef.current.scrollIntoView()
+        this.creatPayment()
     }
     handleAlert = () => {
         this.setState({ ...this.state, errorMessage: null })
@@ -86,7 +88,12 @@ class PaymentDetails extends Component {
             this.useDivRef.current.scrollIntoView()
         }
     }
-
+    creatPayment=async()=>{
+      let response=await creatPayment(this.props.userConfig?.id)  
+      if(response.ok){
+          console.log(response);
+      }
+    }
     saveRolesDetails = async () => {
         let objData = this.state.paymentsData.filter((item) => {
             return item.checked
@@ -170,7 +177,11 @@ class PaymentDetails extends Component {
         }
     }
     render() {
-        const { currency, paymentsData, loading } = this.state;
+        let total=0;
+         for (let i=0; i<this.state.paymentsData.length; i++) {
+            total += Number(this.state.paymentsData[i].amount);
+        }
+        const { currency, paymentsData, loading,moreBankInfo } = this.state;
         const { form } = this.props
         return (
             <>
@@ -202,13 +213,13 @@ class PaymentDetails extends Component {
                                     bordered={false}
                                     showArrow={true}
                                     defaultValue="USD"
+                                    disabled={this.props.match.params.id !== "00000000-0000-0000-0000-000000000000" ? true:false}
 
                                 >
                                     {currency?.map((item, idx) => (
                                         <Option
                                             key={idx}
                                             className="fw-400"
-
                                             value={item.currencyCode}
                                         > {item.currencyCode}
                                             {<NumberFormat
@@ -225,6 +236,7 @@ class PaymentDetails extends Component {
                                         <tr>
                                             <th style={{ width: 50 }}></th>
                                             <th>Bank Name</th>
+                                            <th>Recipient Full Name</th>
                                             <th>Bank Account Number</th>
                                             <th>Amount</th>
                                         </tr>
@@ -271,6 +283,7 @@ class PaymentDetails extends Component {
                                                                 </Popover>
                                                             </div>
                                                         </td>
+                                                        <td>{moreBankInfo?.beneficiaryAccountName}</td>
                                                         <td>{item.accountnumber}</td>
                                                         <td>
                                                             <NumberFormat className="cust-input text-right"
@@ -288,7 +301,13 @@ class PaymentDetails extends Component {
                                                                 }}
                                                                 value={item.amount}
                                                             />
-                                                        </td>
+                                                             <Upload 
+                                                            //  {...props}
+                                                             >
+                                                            <Button 
+                                                            icon={<UploadOutlined />}
+                                                            />
+                                                        </Upload>                                                        </td>
                                                     </tr>
                                                     {/* <tr>
                                                         <td colSpan={4}>
@@ -365,8 +384,16 @@ class PaymentDetails extends Component {
                                                 </>)
                                         })}
                                     </tbody> : <tbody><tr><td colSpan='8' className="p-16 text-center" style={{ color: "white", width: 300 }} >No bank details available</td></tr> </tbody>}
+                                    <tfoot><tr>
+                                <div >
+                                <span className='text-white fs-24'> Total:</span>
+                                <span className='text-white fs-24'> {total}</span>
+                                </div>
+                                    </tr>  
+                            </tfoot>
                                 </table>
                             </div>
+                            
                         </Form>
                         <div className="text-right mt-36">
 

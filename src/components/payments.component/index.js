@@ -1,38 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import { Form, Typography, Input, Button, Alert, Spin, message, Drawer, Select } from 'antd';
+import React, { useState } from 'react';
+import { Form, Typography , Button, message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import { setStep } from '../../reducers/paymentsReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
-import WalletList from '../shared/walletList';
-import { saveAddress, favouriteNameCheck, getAddress } from './api';
-import Loader from '../../Shared/loader';
-import apiCalls from '../../api/apiCalls';
-import { validateContentRule } from '../../utils/custom.validator'
 import Moment from 'react-moment';
-import moment from 'moment';
 import List from "../grid.component";
 import BeneficiaryDrawer from './beneficiaryDrawer';
 
-const { Title, Text, Paragraph } = Typography;
-const { Option } = Select;
+const { Title, Text } = Typography;
 
-const Payments = (props, { userConfig }) => {
+const Payments = (props) => {
     const gridRef = React.createRef();
-    const [addBenifeciary, setaddBenifeciary] = useState(false);
     const [form] = Form.useForm();
-    const [errorMsg, setErrorMsg] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [fiatAddress, setFiatAddress] = useState({});
-    const useDivRef = React.useRef(null);
-    const [btnDisabled, setBtnDisabled] = useState(false);
     const [beneficiaryDrawer, setBeneficiaryDrawer] = useState(false);
+    const[selection,setSelection]=useState([]);
+    const [selectedObj,setSelectedObj]=useState({})
 
     const paymentsView = (prop) => {
         props.history.push(`/payments/${prop.dataItem.id}/view`)
     };
-
+    const paymentsEdit = () => {
+        if (selection.length == 0) {
+            message.warning("Please select the one record");
+          }else{
+            // state 
+            if (selection.state === "Business")  {
+            props.history.push(`/payments/${selectedObj}/edit`)
+            }
+          }
+       
+    };
     const gridColumns = [
+        {
+            field: "",
+            title: "",
+            width: 50,
+            customCell: (props) => (
+              <td className="text-center">
+                <label className="text-center custom-checkbox">
+                  <input
+                    id={props.dataItem.id}
+                    name="check"
+                    type="checkbox"
+                    checked={selection.indexOf(props.dataItem.id) > -1}
+                    onChange={(e) => handleInputChange(props, e)}
+                    className="grid_check_box"
+                  />
+                  <span></span>
+                </label>
+              </td>
+            )
+          },
         {
             field: "createdDate", title: 'Date', filter: true, filterType: "date", customCell: (props) => (
                 <td><div className="gridLink" onClick={() => paymentsView(props)}>
@@ -40,10 +58,25 @@ const Payments = (props, { userConfig }) => {
         },
         { field: "currency", title: 'Currency', filter: true },
         { field: "totalAmount", title: 'Total Amount', filter: true },
+        { field: "transferAmount" , title: 'Transfer Amount', filter: true },
         { field: "count", title: 'Count', filter: true },
-        { field: "state", title: 'Status', filter: true },
+        { field: "state", title: 'State', filter: true },
     ];
-
+      const handleInputChange = (prop, e) => {
+        const rowChecked = prop.dataItem;
+        let _selection = [...selection];
+        let idx = _selection.indexOf(rowChecked.id);
+        if (selection) {
+          _selection = [];
+        }
+        if (idx > -1) {
+          _selection.splice(idx, 1);
+        } else {
+          _selection.push(rowChecked.id);
+        }
+        setSelection(_selection);
+        setSelectedObj(rowChecked.id)
+      };
     const addPayment = () => {
         props.history.push(`/payments/00000000-0000-0000-0000-000000000000/add`)
     }
@@ -78,6 +111,13 @@ const Payments = (props, { userConfig }) => {
                         >
                             New Bill Payment
                         </Button>
+                        <Button
+                            className="pop-btn px-24"
+                            style={{ margin: "0 8px", height: 40 }}
+                            onClick={paymentsEdit}
+                        >
+                            Edit Bill Payment
+                        </Button> 
                     </div>
                 </div>
                 <div className="box basic-info text-white">
