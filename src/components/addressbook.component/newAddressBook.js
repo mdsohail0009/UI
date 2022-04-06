@@ -253,7 +253,10 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                                 if (file) {
                                     return Promise.resolve();
                                 } else {
-                                    return Promise.reject("Please upload file")
+                                    if(!isUploading){
+                                        return Promise.reject("Please upload file");
+                                    }
+                                    return Promise.resolve();
                                 }
                             }}
                         ]}>

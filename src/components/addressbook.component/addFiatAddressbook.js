@@ -491,18 +491,20 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                             if (file) {
                                 return Promise.resolve();
                             } else {
-                                return Promise.reject("Please upload file")
+                                if(!isUploading){
+                                    return Promise.reject("Please upload file");
+                                }
+                                return Promise.resolve();
                             }
                         }
                     }]}>
-                        {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => {
+                        {<Dragger accept=".pdf,.PDF" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => {
                             setUploading(true);
                             if (res.status === "uploading") { setUploadPercentage(res.percent) }
                             else if (res.status === "done") {
                                 setFile(res);
                                 setUploading(false);
                             }
-
                         }}>
                             <p className="ant-upload-drag-icon mb-16">
                                 <span className="icon xxxl doc-upload" />
