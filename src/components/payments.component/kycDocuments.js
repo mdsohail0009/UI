@@ -93,7 +93,7 @@ const KycDocuments = (props) => {
                     </TextArea>
                 </Form.Item>
             </Form>
-            <Button disabled={isLoading}
+            <Button 
                 htmlType="submit"
                 size="large"
                 block

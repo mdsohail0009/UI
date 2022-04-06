@@ -14,6 +14,7 @@ import { bytesToSize, getDocObj } from '../../utils/service';
 import { getCountryStateLu, getStateLookup } from "../../api/apiServer";
 import apicalls from "../../api/apiCalls";
 import { warning } from '../../utils/message';
+import KycDocuments from '../payments.component/kycDocuments'
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -497,8 +498,15 @@ const NewFiatAddress = (props,{ buyInfo, userConfig, onCancel, addressBookReduce
                         ]} >
                         <TextArea placeholder='Remarks' className='cust-input pt-16' autoSize={{ minRows: 2, maxRows: 5 }} maxLength={300}></TextArea>
                     </Form.Item>
-                    <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
-                    <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={() => window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
+                   
+                   { props?.checkThirdParty === true ? " "
+                  
+            //   < KycDocuments /> 
+       
+                   :
+                   <>
+                   <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
+                   <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={() => window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
                     <Form.Item name={"file"} rules={[{
                            validator: (_, value) => {
                             if (file) {
@@ -522,7 +530,7 @@ const NewFiatAddress = (props,{ buyInfo, userConfig, onCancel, addressBookReduce
                             </p>
                             <p className="ant-upload-text fs-18 mb-0">Upload your signed document here</p>
                         </Dragger>}
-                    </Form.Item>
+                    </Form.Item> </>}
                     {isUploading && <div className="text-center">
                         <Spin />
                     </div>}

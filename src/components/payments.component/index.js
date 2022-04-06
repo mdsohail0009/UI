@@ -103,7 +103,8 @@ const Payments = (props, { userConfig }) => {
                     onClose={() => closeDrawer()}
                 />
 
-                <Drawer destroyOnClose={true}
+                <Drawer
+                destroyOnClose={true}
                     title={[<div className="side-drawer-header">
                         <span />
                         <div className="text-center fs-16">
@@ -116,6 +117,7 @@ const Payments = (props, { userConfig }) => {
                     visible={beneficiaryDetails}
                     closeIcon={null}
                     className="side-drawer"
+                    size="large"
                 >
                     <NewFiatAddress checkThirdParty = {checkRadio} onCancel={() => closeBuyDrawer()} />
                 </Drawer>
