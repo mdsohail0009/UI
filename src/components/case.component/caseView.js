@@ -349,7 +349,7 @@ class RequestedDocs extends Component {
                             <Text className='case-lbl'>Case Number</Text>
                             <div className='case-val'>{caseData.caseNumber}</div>
                         </Col>
-                        <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                        <Col xs={24} md={8} lg={8} xl={8} xxl={8}>
                             <Text className='case-lbl'>Case Title</Text>
                             <div className='case-val'>{caseData.caseTitle}</div>
                         </Col>
@@ -361,7 +361,7 @@ class RequestedDocs extends Component {
                 </div>
                 <div className='case-ribbon mb-16'>
                     <Row gutter={[16, 16]}>
-                        {commonModel && Object.entries(commonModel).map(([key, value], idx) => <Col key={idx} xs={24} md={8} lg={8} xl={5} xxl={6}>
+                        {commonModel && Object.entries(commonModel).map(([key, value], idx) => <Col key={idx} xs={key=='Decription'?24:24} md={key=='Decription'?24:8} lg={key=='Decription'?24:8} xl={key=='Decription'?24:5} xxl={key=='Decription'?24:6}>
                             <div className="ribbon-item">
                                 <span className={`icon md ${key}`} />
                                 <div className='ml-16'>
