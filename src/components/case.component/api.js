@@ -43,16 +43,12 @@ const getFileURL = (obj) => {
   return clientApi.post(ApiControllers.accounts + `FetchFile`, obj);
 };
 const getCase = (id) => {
-  return clientApi.post(ApiControllers.accounts + `Cases/${id}`);
+  return clientApi.get(ApiControllers.accounts + `Cases/${id}`);
 };
+const getCaseLu = (name) => {
+  return clientApi.get(ApiControllers.accounts + `AdminUsers/${name}`)
+}
 export {
-  sendRequest,
-  uuidv4,
-  getDocDetails,
-  getDocumentReplies,
-  saveDocReply,
-  approveDoc,
-  getDashboardNotices,
-  getFileURL,
-  getCase
+  sendRequest, uuidv4, getDocDetails, getDocumentReplies, saveDocReply, approveDoc, getDashboardNotices,
+  getFileURL, getCase, getCaseLu
 };

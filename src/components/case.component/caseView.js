@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Spin, Empty, Alert, Row, Col,
-    Divider } from 'antd';
-import { approveDoc, getDocDetails, getDocumentReplies, saveDocReply, uuidv4, getFileURL, getCase } from './api';
+import {
+    Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Spin, Empty, Alert, Row, Col,
+    Divider
+} from 'antd';
+import {
+    approveDoc, getDocDetails, getDocumentReplies, saveDocReply, uuidv4, getFileURL, getCase, getCaseLu
+} from './api';
 import Loader from '../../Shared/loader';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
@@ -15,20 +19,17 @@ import { error, success, warning } from '../../utils/messages';
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
-
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
     return (
         <Text className="mb-0 fs-14 docname c-pointer d-block"
-         style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
+            style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
             {start}
         </Text>
     );
 };
-
 class RequestedDocs extends Component {
-    paramId = this.props.match.params.id;
     state = {
         modal: false,
         previewModal: false,
@@ -40,21 +41,25 @@ class RequestedDocs extends Component {
         docReplyObjs: [],
         previewPath: null,
         isSubmitting: false,
-         uploadLoader: false,
+        uploadLoader: false,
         isMessageError: null,
         isValidFile: true,
         validHtmlError: false,
         PreviewFilePath: null,
-        caseData: null
+        caseData: {},
+        commonModel: {},
+        assignedTo: []
     }
     componentDidMount() {
-        this.getDocument(QueryString.parse(this.props.location.search).id);
+        this.getCaseData(QueryString.parse(this.props.location.search).id);
+        this.fetchAssignedToLu();
     }
     getDocument = async (id) => {
+        debugger
         this.setState({ ...this.state, loading: true, error: null });
         const response = await getDocDetails(id);
         if (response.ok) {
-             this.loadDocReplies(response.data?.details[0]?.id)
+            this.loadDocReplies(response.data?.details[0]?.id)
             this.setState({ ...this.state, docDetails: response.data, loading: false });
         } else {
             this.setState({ ...this.state, loading: false, error: response.data });
@@ -62,10 +67,10 @@ class RequestedDocs extends Component {
     }
     loadDocReplies = async (id) => {
         let docReObj = this.state.docReplyObjs.filter(item => item.docunetDetailId != id);
-        this.setState({ ...this.state, isMessageError:null, validHtmlError:null, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } },docReplyObjs: docReObj,docErrorMessage: null });
+        this.setState({ ...this.state, isMessageError: null, validHtmlError: null, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: docReObj, docErrorMessage: null });
         const response = await getDocumentReplies(id);
         if (response.ok) {
-			console.log(response,"getDocumentReplies")
+            console.log(response, "getDocumentReplies")
             this.setState({
                 ...this.state, documentReplies: {
                     ...this.state.documentReplies, [id]: {
@@ -298,230 +303,174 @@ class RequestedDocs extends Component {
             return this.state.previewPath;
         }
     }
-    getCaseData = async () => {
-        debugger
-        let caseRes = getCase(this.paramId);
-        if(caseRes){
-            this.setState({...this.state, caseData: caseRes.data});
+    fetchAssignedToLu = async () => {
+        const { caseData } = this.state;
+        let assignedIdList = caseData?.assignedTo;
+        let assignedNames = [];
+        let response = await getCaseLu(null);
+        if (response.ok) {
+            for (let x in assignedIdList) {
+                let data = assignedIdList[x].assignedToIds.split(',');
+                let namelist = [];
+                for (let i in data) {
+                    let nameObj = response.data.find(item => item.id === data[i]);
+                    namelist.push(nameObj.assignedTo);
+                }
+                assignedNames.push(assignedIdList[x].assignedNames = namelist.join(', '));
+                this.setState({ ...this.state.caseData.assignedTo, assignedTo: { ...this.state.caseData.assignedTo, assignedNames } });
+            }
         } else {
-            warning('Data not getting from the server!');            
+            warning('Data not getting from the server!');
         }
     }
+    getCaseData = async (id) => {
+        this.setState({ ...this.state, loading: true });
+        let caseRes = await getCase(id);
+        if (caseRes) {
+            this.setState({ ...this.state, caseData: caseRes.data, commonModel: caseRes.data.commonModel, loading: false });
+            this.getDocument(caseRes.data?.documents?.id);
+            this.fetchAssignedToLu();
+        } else {
+            warning('Data not getting from the server!');
+        }
+    }
+    
     render() {
+        const { caseData, commonModel } = this.state;
         if (this.state.loading) {
             return <Loader />
         }
         return <>
             <div className="main-container">
-              
-                <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=6" />{this.state?.docDetails?.caseTitle}</div>
+                <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=6" />{caseData?.documents?.customerCaseTitle}</div>
                 <div className='case-stripe'>
-                        <Row gutter={[16, 16]}>
-                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
-                                <Text className='case-lbl'>Case Number</Text>
-                                <div className='case-val'>C-20220329-025</div>
-                            </Col>
-                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
-                                <Text className='case-lbl'>Case Title</Text>
-                                <div className='case-val'>Trade new one</div>
-                            </Col>
-                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
-                                <Text className='case-lbl'>Case State</Text>
-                                <div className='case-val'>Approved</div>
-                            </Col>
-                        </Row>
-                    </div>
-                    <div className='case-ribbon mb-16'>
-                        <Row gutter={[16, 16]}>
-                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
-                                <div className="ribbon-item">
-                                    <span className='icon md feature' />
-                                    <div className='ml-16'>
-                                        <Text className='case-lbl'>Type</Text>
-                                        <div className='case-val'>Deposit</div>
-                                    </div>
+                    <Row gutter={[16, 16]}>
+                        <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                            <Text className='case-lbl'>Case Number</Text>
+                            <div className='case-val'>{caseData.caseNumber}</div>
+                        </Col>
+                        <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                            <Text className='case-lbl'>Case Title</Text>
+                            <div className='case-val'>{caseData.caseTitle}</div>
+                        </Col>
+                        <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                            <Text className='case-lbl'>Case State</Text>
+                            <div className='case-val'>{caseData.state}</div>
+                        </Col>
+                    </Row>
+                </div>
+                <div className='case-ribbon mb-16'>
+                    <Row gutter={[16, 16]}>
+                        {commonModel && Object.entries(commonModel).map(([key, value], idx) => <Col key={idx} xs={24} md={8} lg={8} xl={5} xxl={6}>
+                            <div className="ribbon-item">
+                                <span className={`icon md ${key}`} />
+                                <div className='ml-16'>
+                                    <Text className='case-lbl'>{key}</Text>
+                                    <div className='case-val'>{value == null ? '-' : value}</div>
                                 </div>
-                            </Col>
-                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
-                                <div className="ribbon-item">
-                                    <span className='icon md acnum' />
-                                    <div className='ml-16'>
-                                        <Text className='case-lbl'>Reference Id</Text>
-                                        <div className='case-val'>DTIGLEPQFW</div>
-                                    </div>
-                                </div>
-                            </Col>
-                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
-                                <div className="ribbon-item">
-                                    <span className='icon md user' />
-                                    <div className='ml-16'>
-                                        <Text className='case-lbl'>Name</Text>
-                                        <div className='case-val'>John Doe</div>
-                                    </div>
-                                </div>
-                            </Col>
-                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
-                                <div className="ribbon-item">
-                                    <span className='icon md cash' />
-                                    <div className='ml-16'>
-                                        <Text className='case-lbl'>Currency</Text>
-                                        <div className='case-val'>EUR</div>
-                                    </div>
-                                </div>
-                            </Col>
-                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
-                                <div className="ribbon-item">
-                                    <span className='icon md feature' />
-                                    <div className='ml-16'>
-                                        <Text className='case-lbl'>Bank Name</Text>
-                                        <div className='case-val'>UBS Bank</div>
-                                    </div>
-                                </div>
-                            </Col>
-                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
-                                <div className="ribbon-item">
-                                    <span className='icon md card' />
-                                    <div className='ml-16'>
-                                        <Text className='case-lbl'>Amount</Text>
-                                        <div className='case-val'>10,000</div>
-                                    </div>
-                                </div>
-                            </Col>
-                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
-                                <div className="ribbon-item">
-                                    <span className='icon md date' />
-                                    <div className='ml-16'>
-                                        <Text className='case-lbl'>Date</Text>
-                                        <div className='case-val'>29/03/2022</div>
-                                    </div>
-                                </div>
-                            </Col>
-                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
-                                <div className="ribbon-item">
-                                    <span className='icon md status' />
-                                    <div className='ml-16'>
-                                        <Text className='case-lbl'>Deposit State</Text>
-                                        <div className='case-val'>Submitted</div>
-                                    </div>
-                                </div>
-                            </Col>
-                            <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                                <div className="ribbon-item">
-                                    <span className='icon md text' />
-                                    <div className='ml-16' style={{ flex: 1 }}>
-                                        <Text className='case-lbl'>Deposit Description</Text>
-                                        <div className='case-val'>
-                                            In the process of internal desktop applications development
-                                        </div>
-                                    </div>
-                                </div>
-                            </Col>
-                        </Row>
-                    </div>
-                    <div className='case-stripe'>
-                        <Row gutter={[16, 16]}>
-                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
-                                <Text className='case-lbl'>Assigned To</Text>
-                                <div className='case-val'>Kishore</div>
-                            </Col>
-                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
-                                <Text className='case-lbl'>Assigned Remarks</Text>
-                                <div className='case-val'>Kishore</div>
-                            </Col>
-                            <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
-                                <Text className='case-lbl'>Case Sub State</Text>
-                                <div className='case-val'>Re-assigned</div>
-                            </Col>
-                        </Row>
-                    </div>
-                    <div className="px-16">
-                        <Text className='case-lbl'>Remarks</Text>
-                        <div className='case-val'>Remarks</div>
-                    </div>
-                    <Divider />
+                            </div>
+                        </Col>)}
+                    </Row>
+                </div>
+                <div className='case-stripe'>
+                    {caseData.assignedTo?.map((item, idx) => <Row key={idx} gutter={[16, 16]}>
+                        <Col xs={24} md={8} lg={8} xl={8} xxl={8}>
+                            <Text className='case-lbl'>Assigned To</Text>
+                            <div className='case-val'>{item.assignedNames}</div>
+                        </Col>
+                        <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                            <Text className='case-lbl'>Assigned Remarks</Text>
+                            <div className='case-val'>{item.assignedRemarks}</div>
+                        </Col>
+                        <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                            <Text className='case-lbl'>Case Sub State</Text>
+                            <div className='case-val'>{item.caseSubState}</div>
+                        </Col>
+                    </Row>)}
+                </div>
+                <div className="px-16">
+                    <Text className='case-lbl'>Remarks</Text>
+                    <div className='case-val'>{caseData.remarks}</div>
+                </div>
+                <Divider />
                 {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
                 <div className="bank-view">
-                    {this.state.docDetails?.details?.map((doc, idx) => 
-                    <Collapse onChange={(key) => {
-                       
-                        this.setState({
-                            ...this.state,
-                            collapse: !this.state.collapse,
-                        });
-                        if (key) {
-                            this.loadDocReplies(doc.id);
-                        }
-                    }}
-                    collapsible
-                     accordion className="accordian mb-24" 
-                    defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
-                        <Panel header={doc.documentName} key={idx + 1} extra={doc.state ? (<span className={`${doc.state ? doc.state.toLowerCase() + " staus-lbl" : ""}`}>{doc.state}</span>) : ""}>
-                        {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
-                            {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
-                                <div className="user-shortname">{reply?.repliedBy?.slice(0, 2)}</div>
-                                <div className="reply-body">
-                                    <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment format="DD MMM YY hh:mm A">{reply.repliedDate}</Moment> </Text>
-                                    <p className="reply-txt">{reply.reply}</p>
+                    {this.state.docDetails?.details?.map((doc, idx) =>
+                        <Collapse onChange={(key) => {
+
+                            this.setState({
+                                ...this.state,
+                                collapse: !this.state.collapse,
+                            });
+                            if (key) {
+                                this.loadDocReplies(doc.id);
+                            }
+                        }}
+                            collapsible
+                            accordion className="accordian mb-24"
+                            defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
+                            <Panel header={doc.documentName} key={idx + 1} extra={doc.state ? (<span className={`${doc.state ? doc.state.toLowerCase() + " staus-lbl" : ""}`}>{doc.state}</span>) : ""}>
+                                {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
+                                {this.state.documentReplies[doc.id]?.data?.map((reply, ix) => <div key={ix} className="reply-container">
+                                    <div className="user-shortname">{reply?.repliedBy?.slice(0, 2)}</div>
+                                    <div className="reply-body">
+                                        <Text className="reply-username">{reply.repliedBy}</Text><Text className="reply-date"><Moment format="DD MMM YY hh:mm A">{reply.repliedDate}</Moment> </Text>
+                                        <p className="reply-txt">{reply.reply}</p>
+                                        <div className="docfile-container">
+                                            {reply?.path?.map((file, idx1) => <div key={idx1} className="docfile">
+                                                <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                                                <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
+                                                    <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
+                                                    <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
+                                                </div>
+                                            </div>)}
+                                        </div>
+                                    </div>
+                                </div>)}
+                                {!this.state.documentReplies[doc.id]?.loading && doc.state != "Approved" && this.state.docDetails.caseState != 'Approved' && this.state.docDetails.caseState != 'Cancelled' && <><div>
+                                    <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
+                                    <Input
+                                        onChange={({ currentTarget: { value } }) => this.handleReplymessage(value, doc)}
+                                        className="cust-input"
+                                        placeholder="Write your message"
+                                        maxLength={200}
+                                    />
+                                    {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
+                                    {this.state.validHtmlError && <Translate Component={Text} content="please_enter_valid_content" className="fs-14 text-red" />}
+                                    {this.state.errorMessage != null && <Alert
+                                        description={this.state.errorMessage}
+                                        type="error"
+                                        showIcon
+                                        closable={false}
+                                        style={{ marginBottom: 0, marginTop: '16px' }}
+                                    />}
+                                    <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}>
+                                        <p className="ant-upload-drag-icon">
+                                            <span className="icon xxxl doc-upload" />
+                                        </p>
+                                        <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
+                                        <p className="ant-upload-hint text-secondary fs-12">
+                                            PNG, JPG,JPEG and PDF files are allowed
+                                        </p>
+                                    </Dragger>
+                                    {this.state.uploadLoader && <Loader />}
+                                </div>
                                     <div className="docfile-container">
-                                        {reply?.path?.map((file, idx1) => <div key={idx1} className="docfile">
+                                        {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) => <div key={idx1} className="docfile">
                                             <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                             <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                                 <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
                                                 <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
                                             </div>
+                                            <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx1, true)} />
                                         </div>)}
                                     </div>
-                                </div>
-                            </div>)}
-                            {!this.state.documentReplies[doc.id]?.loading && doc.state != "Approved" &&this.state.docDetails.caseState!='Approved'&&this.state.docDetails.caseState!='Cancelled'&& <><div>
-                                <Text className="fs-12 text-white-50 d-block mb-4 fw-200">Reply</Text>
-                                <Input 
-                                // onChange={({ currentTarget: { value } }) => { this.handleReplymessage(value, doc) }}
-                                onChange={({ currentTarget: { value } }) => this.handleReplymessage(value, doc)}
-                                    className="cust-input"
-                                    placeholder="Write your message"
-                                    maxLength={200}
-                                />
-                           
-
-                                {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
-                                {this.state.validHtmlError && <Translate Component={Text} content="please_enter_valid_content" className="fs-14 text-red" />}
-                                {this.state.errorMessage != null && <Alert
-                                    description={this.state.errorMessage}
-                                    type="error"
-                                    showIcon
-                                    closable={false}
-                                    style={{ marginBottom: 0, marginTop: '16px' }}
-                                />}
-                                <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}>
-                                    <p className="ant-upload-drag-icon">
-                                        <span className="icon xxxl doc-upload" />
-                                    </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Drag and drop or browse to choose file</p>
-                                    <p className="ant-upload-hint text-secondary fs-12">
-                                        PNG, JPG,JPEG and PDF files are allowed
-                                    </p>
-                                </Dragger>
-                                {this.state.uploadLoader && <Loader />}
-                            </div>
-                                <div className="docfile-container">
-                                    {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) => <div key={idx1} className="docfile">
-                                        <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
-                                        <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
-                                            <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
-                                            <span className="fs-12 text-secondary">{this.formatBytes(file.size)}</span>
-                                        </div>
-                                        <span className="icon md close c-pointer" onClick={() => this.deleteDocument(this.getUploadedFiles(doc.id), idx1, true)} />
-                                    </div>)}
-                                </div>
-                                <div className="text-center my-36">
-
-                                    <Button disabled={this.state.isSubmitting} className="pop-btn px-36" onClick={() => this.docReject(doc)}>Submit</Button>
-                                </div>
-                            </>}
-                        </Panel>
-                    </Collapse>)}
-
+                                    <div className="text-center my-36">
+                                        <Button disabled={this.state.isSubmitting} className="pop-btn px-36" onClick={() => this.docReject(doc)}>Submit</Button>
+                                    </div>
+                                </>}
+                            </Panel>
+                        </Collapse>)}
                 </div>
                 <Modal
                     className="documentmodal-width"
