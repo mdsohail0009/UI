@@ -332,7 +332,7 @@ class AddressBook extends Component {
                     closable={true}
                     visible={this.state.fiatDrawer}
                     closeIcon={null}
-                    className="side-drawer"
+                    className="side-drawer w-50p"
                 >
                     {this.state.fiatDrawer && <NewFiatAddress onCancel={() => this.closeBuyDrawer()} />}
                 </Drawer>

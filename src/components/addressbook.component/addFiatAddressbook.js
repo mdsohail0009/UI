@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Upload, Modal,Radio} from 'antd';
+import {
+    Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Upload, Modal, Radio,
+    Row, Col
+} from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
@@ -47,9 +50,9 @@ const LinkValue = (props) => {
     );
 };
 const link = <LinkValue content="terms_service" />;
-const NewFiatAddress = (props,{ buyInfo, userConfig, onCancel, addressBookReducer, userProfileInfo, trackAuditLogData, sendReceive
+const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReducer, userProfileInfo, trackAuditLogData, sendReceive
 }) => {
-  
+
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -63,10 +66,10 @@ const NewFiatAddress = (props,{ buyInfo, userConfig, onCancel, addressBookReduce
     const [stateLu, setStateLu] = useState([]);
     const [addressState, setAddressState] = useState(null);
     const [saveObj, setSaveObj] = useState(null);
-    const [isValidFile, setIsValidFile]=useState(true);
+    const [isValidFile, setIsValidFile] = useState(true);
 
     useEffect(() => {
-      
+
         if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && addressBookReducer?.selectedRowData?.id) {
             loadDataAddress();
         }
@@ -200,7 +203,7 @@ const NewFiatAddress = (props,{ buyInfo, userConfig, onCancel, addressBookReduce
             return Upload.LIST_IGNORE;
         }
     }
-    const radioChangeHandler = () =>{
+    const radioChangeHandler = () => {
 
     }
 
@@ -219,53 +222,58 @@ const NewFiatAddress = (props,{ buyInfo, userConfig, onCancel, addressBookReduce
                         className="mb-16 fs-14 text-aqua fw-500 text-upper"
                     />
                     <Form.Item>
-                    <Radio.Group  onChange={radioChangeHandler}
-            defaultValue={props?.checkThirdParty === true? "3rdparty":"1stparty"} value={props?.checkThirdParty === true? "3rdparty":"1stparty" } >
-           <Radio value={"1stparty"}>1st Party</Radio>
-            <Radio value={"3rdparty"}>3rd Party</Radio>
-                  </Radio.Group>
-                   
-                        </Form.Item>
-                    <Form.Item
-                        className="custom-forminput  custom-label mb-24 pr-0"
-                        name="favouriteName" required
-                        label={<Translate content="AddressLabel" component={Form.label} />}
-                        rules={[
-                            {
-                                required: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                            },
-                            {
-                                whitespace: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                            },
-                            {
-                                validator: validateContentRule
-                            }
-                        ]} >
-                        <Input className="cust-input" maxLength="20" placeholder={apiCalls.convertLocalLang('Enteraddresslabel')} />
+                        <Radio.Group onChange={radioChangeHandler}
+                            defaultValue={props?.checkThirdParty === true ? "3rdparty" : "1stparty"} value={props?.checkThirdParty === true ? "3rdparty" : "1stparty"} >
+                            <Radio value={"1stparty"}>1st Party</Radio>
+                            <Radio value={"3rdparty"}>3rd Party</Radio>
+                        </Radio.Group>
+
                     </Form.Item>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-24 pr-0"
-                        label={<Translate content="address" component={Form.label} />}
-                        name="toWalletAddress" required
-                        rules={[
-                            {
-                                required: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                            },
-                            {
-                                whitespace: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                            },
-                            {
-                                validator: validateContentRule
-                            }
-                        ]}
-                    >
-                        <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('address')} />
-                    </Form.Item>
-                    {/* <Form.Item
+                    <Row gutter={[16, 16]}>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="favouriteName" required
+                                label={<Translate content="AddressLabel" component={Form.label} />}
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        validator: validateContentRule
+                                    }
+                                ]} >
+                                <Input className="cust-input" maxLength="20" placeholder={apiCalls.convertLocalLang('Enteraddresslabel')} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                label={<Translate content="address" component={Form.label} />}
+                                name="toWalletAddress" required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        validator: validateContentRule
+                                    }
+                                ]}
+                            >
+                                <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('address')} />
+                            </Form.Item>
+                        </Col>
+                        {/* <Form.Item
                         className="custom-label"
                         name="addressType"
                         label={<Translate content="address_type" component={Form.label} />}
@@ -284,253 +292,277 @@ const NewFiatAddress = (props,{ buyInfo, userConfig, onCancel, addressBookReduce
                             <Option value="3rd Party">3rd Party</Option>
                         </Select>
                     </Form.Item> */}
-                    <Form.Item
-                        className="custom-forminput custom-label mb-24"
-                        name="toCoin"
-                        label={<Translate content="currency" component={Form.label} />}
-                        rules={[
-                            { required: true, message: apiCalls.convertLocalLang('is_required') },
-                        ]}
-                    >
-                        <WalletList hideBalance={true} valueFeild={'currencyCode'} selectedvalue={fiatAddress?.toCoin} placeholder={apiCalls.convertLocalLang('selectcurrency')} onWalletSelect={(e) => handleWalletSelection(e)} />
-                    </Form.Item>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-24"
-                        name="accountNumber"
-                        // label={<Translate content="Bank_account" component={Form.label} />}
-                        label={apiCalls.convertLocalLang('Bank_account')}
-                        required
-                        rules={[
-                            { required: true, message: apiCalls.convertLocalLang('is_required') },
-                            {
-                                pattern: /^[A-Za-z0-9]+$/,
-                                message: 'Invalid account number'
-                            }
-                        ]}
-                    >
-                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_account')} onBlur={(val) => getIbanData(val.currentTarget.value)} />
-                    </Form.Item>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-24"
-                        name="routingNumber"
-                        label={<Translate content="BIC_SWIFT_routing_number" component={Form.label} />}
-                        required
-                        rules={[
-                            { required: true, message: apiCalls.convertLocalLang('is_required') },
-                            {
-                                pattern: /^[A-Za-z0-9]+$/,
-                                message: 'Invalid BIC/SWIFT/Routing number'
-                            }
-                        ]}
-                    >
-                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('BIC_SWIFT_routing_number')} />
-                    </Form.Item>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-24"
-                        name="bankName"
-                        label={<Translate content="Bank_name" component={Form.label} />}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                            },
-                            {
-                                whitespace: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                            },
-                            {
-                                validator: validateContentRule
-                            }
-                        ]}
-                    >
-                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_name')} />
-                    </Form.Item>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-24"
-                        name="bankAddress"
-                        label={<Translate content="Bank_address1" component={Form.label} />}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                            },
-                            {
-                                whitespace: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                            },
-                            {
-                                validator: validateContentRule
-                            }
-                        ]}>
-                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_address1')} />
-                    </Form.Item>
-                    <Form.Item
-                        className="custom-forminput custom-label  mb-24"
-                        name="country"
-                        label={<Translate content="Country" component={Form.label} />}
-                        rules={[
-                            {
-                                required: true,
-                                message: apicalls.convertLocalLang("is_required")
-                            }
-                        ]}
-                    >
-                        <Select
-                            dropdownClassName="select-drpdwn"
-                            placeholder={apicalls.convertLocalLang("Country")}
-                            className="cust-input"
-                            style={{ width: "100%" }}
-                            bordered={false}
-                            showArrow={true}
-                            onChange={(e) => getStateLu(e, true)}
-                        >
-                            {countryLu?.map((item, idx) => (
-                                <Option key={idx} value={item.code}>
-                                    {item.name}
-                                </Option>
-                            ))}
-                        </Select>
-                    </Form.Item>
-
-                    <Form.Item
-                        className="custom-forminput custom-label mb-24"
-                        name="state"
-                        label={<Translate content="state" component={Form.label} />}
-                        rules={[
-                            {
-                                required: true,
-                                message: apicalls.convertLocalLang("is_required")
-                            }
-                        ]}
-                    >
-                        <Select
-                            dropdownClassName="select-drpdwn"
-                            placeholder={apicalls.convertLocalLang("state")}
-                            className="cust-input"
-                            style={{ width: "100%" }}
-                            bordered={false}
-                            showArrow={true}
-                            onChange={(e) => ""}
-                        >
-                            {stateLu?.map((item, idx) => (
-                                <Option key={idx} value={item.code}>
-                                    {item.code}
-                                </Option>
-                            ))}
-                        </Select>
-                    </Form.Item>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-24"
-                        name="zipCode"
-                        label={<Translate content="zipcode" component={Form.label} />}
-                        required
-                        rules={[
-                            {
-                                validator: (rule, value, callback) => {
-                                    var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                                    if (value) {
-                                        if (!regx.test(value)) {
-                                            callback("Invalid zip code");
-                                        } else if (regx.test(value)) {
-                                            callback();
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="toCoin"
+                                label={<Translate content="currency" component={Form.label} />}
+                                rules={[
+                                    { required: true, message: apiCalls.convertLocalLang('is_required') },
+                                ]}
+                            >
+                                <WalletList hideBalance={true} valueFeild={'currencyCode'} selectedvalue={fiatAddress?.toCoin} placeholder={apiCalls.convertLocalLang('selectcurrency')} onWalletSelect={(e) => handleWalletSelection(e)} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="accountNumber"
+                                // label={<Translate content="Bank_account" component={Form.label} />}
+                                label={apiCalls.convertLocalLang('Bank_account')}
+                                required
+                                rules={[
+                                    { required: true, message: apiCalls.convertLocalLang('is_required') },
+                                    {
+                                        pattern: /^[A-Za-z0-9]+$/,
+                                        message: 'Invalid account number'
+                                    }
+                                ]}
+                            >
+                                <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_account')} onBlur={(val) => getIbanData(val.currentTarget.value)} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="routingNumber"
+                                label={<Translate content="BIC_SWIFT_routing_number" component={Form.label} />}
+                                required
+                                rules={[
+                                    { required: true, message: apiCalls.convertLocalLang('is_required') },
+                                    {
+                                        pattern: /^[A-Za-z0-9]+$/,
+                                        message: 'Invalid BIC/SWIFT/Routing number'
+                                    }
+                                ]}
+                            >
+                                <Input className="cust-input" placeholder={apiCalls.convertLocalLang('BIC_SWIFT_routing_number')} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="bankName"
+                                label={<Translate content="Bank_name" component={Form.label} />}
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        validator: validateContentRule
+                                    }
+                                ]}
+                            >
+                                <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_name')} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="bankAddress"
+                                label={<Translate content="Bank_address1" component={Form.label} />}
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        validator: validateContentRule
+                                    }
+                                ]}>
+                                <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_address1')} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="country"
+                                label={<Translate content="Country" component={Form.label} />}
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apicalls.convertLocalLang("is_required")
+                                    }
+                                ]}
+                            >
+                                <Select
+                                    dropdownClassName="select-drpdwn"
+                                    placeholder={apicalls.convertLocalLang("Country")}
+                                    className="cust-input"
+                                    style={{ width: "100%" }}
+                                    bordered={false}
+                                    showArrow={true}
+                                    onChange={(e) => getStateLu(e, true)}
+                                >
+                                    {countryLu?.map((item, idx) => (
+                                        <Option key={idx} value={item.code}>
+                                            {item.name}
+                                        </Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="state"
+                                label={<Translate content="state" component={Form.label} />}
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apicalls.convertLocalLang("is_required")
+                                    }
+                                ]}
+                            >
+                                <Select
+                                    dropdownClassName="select-drpdwn"
+                                    placeholder={apicalls.convertLocalLang("state")}
+                                    className="cust-input"
+                                    style={{ width: "100%" }}
+                                    bordered={false}
+                                    showArrow={true}
+                                    onChange={(e) => ""}
+                                >
+                                    {stateLu?.map((item, idx) => (
+                                        <Option key={idx} value={item.code}>
+                                            {item.code}
+                                        </Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="zipCode"
+                                label={<Translate content="zipcode" component={Form.label} />}
+                                required
+                                rules={[
+                                    {
+                                        validator: (rule, value, callback) => {
+                                            var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                                            if (value) {
+                                                if (!regx.test(value)) {
+                                                    callback("Invalid zip code");
+                                                } else if (regx.test(value)) {
+                                                    callback();
+                                                }
+                                            } else {
+                                                callback();
+                                            }
                                         }
+                                    },
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang("is_required")
+                                    }
+                                ]}
+                            >
+                                <Input
+                                    className="cust-input"
+                                    maxLength="6"
+                                    placeholder={apiCalls.convertLocalLang("zipcode")}
+                                />
+                            </Form.Item>
+                        </Col>
+                        </Row>
+                        <Translate
+                                content="Beneficiary_Details"
+                                component={Paragraph}
+                                className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
+                            />
+                        <Row gutter={[16,16]}>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                            className='mb-0'>
+                                <div className="d-flex">
+                                    <Translate
+                                        className="input-label"
+                                        content={userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
+                                        component={Form.label}
+                                    />{" "}
+                                    <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
+                                <Input className="cust-input" value={userConfig?.firstName + " " + userConfig?.lastName} placeholder="Recipient full name" disabled={true} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="beneficiaryAccountAddress"
+                                label={<Translate content="Recipient_address1" component={Form.label} />}
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        validator: validateContentRule
+                                    }
+                                ]}>
+                                <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                                className="custom-label"
+                                name="remarks"
+                                label={<Translate content="remarks" component={Form.label} />}
+                                rules={[
+                                    { required: true, message: apiCalls.convertLocalLang('is_required') }
+                                ]} >
+                                <TextArea placeholder='Remarks' className='cust-input pt-16' autoSize={{ minRows: 2, maxRows: 5 }} maxLength={300}></TextArea>
+                            </Form.Item>
+                        </Col>
+                    </Row>
+
+                    {props?.checkThirdParty === true ? " "
+
+                        //   < KycDocuments /> 
+
+                        :
+                        <>
+                            <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
+                            <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={() => window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
+                            <Form.Item name={"file"} rules={[{
+                                validator: (_, value) => {
+                                    if (file) {
+                                        return Promise.resolve();
                                     } else {
-                                        callback();
+                                        return Promise.reject("Please upload file")
                                     }
                                 }
-                            },
-                            {
-                                required: true,
-                                message: apiCalls.convertLocalLang("is_required")
-                            }
-                        ]}
-                    >
-                        <Input
-                            className="cust-input"
-                            maxLength="6"
-                            placeholder={apiCalls.convertLocalLang("zipcode")}
-                        />
-                    </Form.Item>
+                            }]}>
+                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => {
+                                    setUploading(true);
+                                    if (res.status === "uploading") { setUploadPercentage(res.percent) }
+                                    else if (res.status === "done") {
+                                        setFile(res);
+                                        setUploading(false);
+                                    }
 
-                    <Translate
-                        content="Beneficiary_Details"
-                        component={Paragraph}
-                        className="mb-16 fs-14 text-aqua fw-500 text-upper"
-                    />
-                    <Form.Item>
-                        <div className="d-flex">
-                            <Translate
-                                className="input-label"
-                                content={userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
-                                component={Form.label}
-                            />{" "}
-                            <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
-                        <Input className="cust-input" value={userConfig?.firstName + " " + userConfig?.lastName} placeholder="Recipient full name" disabled={true} />
-                    </Form.Item>
-                    <Form.Item
-                        className="custom-forminput custom-label mb-24"
-                        name="beneficiaryAccountAddress"
-                        label={<Translate content="Recipient_address1" component={Form.label} />}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                            },
-                            {
-                                whitespace: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                            },
-                            {
-                                validator: validateContentRule
-                            }
-                        ]}>
-                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
-                    </Form.Item>
-                    <Form.Item
-                        className="custom-label"
-                        name="remarks"
-                        label={<Translate content="remarks" component={Form.label} />}
-                        rules={[
-                            { required: true, message: apiCalls.convertLocalLang('is_required') }
-                        ]} >
-                        <TextArea placeholder='Remarks' className='cust-input pt-16' autoSize={{ minRows: 2, maxRows: 5 }} maxLength={300}></TextArea>
-                    </Form.Item>
-                   
-                   { props?.checkThirdParty === true ? " "
-                  
-            //   < KycDocuments /> 
-       
-                   :
-                   <>
-                   <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
-                   <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={() => window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
-                    <Form.Item name={"file"} rules={[{
-                           validator: (_, value) => {
-                            if (file) {
-                                return Promise.resolve();
-                            } else {
-                                return Promise.reject("Please upload file")
-                            }
-                        }
-                    }]}>
-                        {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => {
-                            setUploading(true);
-                            if (res.status === "uploading") { setUploadPercentage(res.percent) }
-                            else if (res.status === "done") {
-                                setFile(res);
-                                setUploading(false);
-                            }
-
-                        }}>
-                            <p className="ant-upload-drag-icon mb-16">
-                                <span className="icon xxxl doc-upload" />
-                            </p>
-                            <p className="ant-upload-text fs-18 mb-0">Upload your signed document here</p>
-                        </Dragger>}
-                    </Form.Item> </>}
+                                }}>
+                                    <p className="ant-upload-drag-icon mb-16">
+                                        <span className="icon xxxl doc-upload" />
+                                    </p>
+                                    <p className="ant-upload-text fs-18 mb-0">Upload your signed document here</p>
+                                </Dragger>}
+                            </Form.Item> </>}
                     {isUploading && <div className="text-center">
                         <Spin />
                     </div>}
@@ -575,13 +607,13 @@ const NewFiatAddress = (props,{ buyInfo, userConfig, onCancel, addressBookReduce
                             />
                         </Checkbox>
                     </Form.Item>
-                    <Form.Item>
+                    <Form.Item className='text-center'>
                         <Button
                             htmlType="submit"
                             size="large"
-                            block
                             className="pop-btn mb-36"
                             disabled={btnDisabled}
+                            style={{minWidth: 300}}
                         >
                             {isLoading && <Spin indicator={antIcon} />}  <Translate content="Save_btn_text" />
                         </Button>
