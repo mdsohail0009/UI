@@ -8,8 +8,12 @@ import QueryString from 'query-string'
 import Settings from './settings';
 import Cases from '../case.component/cases';
 import Translate from 'react-translate-component';
+import { connect } from 'react-redux';
+import {addressTabUpdate} from '../../reducers/configReduser'
+
 const { TabPane } = Tabs;
 class UserProfile extends Component {
+    debugger
     state = {
         isProfile: false,
         isSecurity: false,
@@ -19,6 +23,7 @@ class UserProfile extends Component {
 
     }
     componentDidMount() {
+      
         let activeKey = QueryString.parse(this.props.history.location.search)?.key;
         if (activeKey) {
             this.setState({ ...this.state, activeTab: activeKey });
@@ -36,6 +41,10 @@ class UserProfile extends Component {
 
     render() {
         const { tabPosition } = this.state;
+        if (this.props.userConfig.addressTab) {
+           this.setState({...this.state,activeTab: "5"});
+           this.props.dispatch(addressTabUpdate(false));
+        }
         return (<>
 
             <div className="main-container hidden-mobile">
@@ -101,4 +110,9 @@ class UserProfile extends Component {
         </>);
     }
 }
-export default UserProfile;
+const connectStateToProps = ({ userConfig }) => {
+    return { userConfig: userConfig }
+}
+export default connect(
+    connectStateToProps,
+   )(UserProfile);

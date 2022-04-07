@@ -17,7 +17,7 @@ import { bytesToSize, getDocObj } from '../../utils/service';
 import { getCountryStateLu, getStateLookup } from "../../api/apiServer";
 import apicalls from "../../api/apiCalls";
 import { warning } from '../../utils/message';
-
+import {addressTabUpdate} from '../../reducers/configReduser'
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -54,6 +54,7 @@ const link = <LinkValue content="terms_service" />;
 const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReducer, userProfileInfo, trackAuditLogData, sendReceive
 }) => {
 
+
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -69,6 +70,7 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
     const [saveObj, setSaveObj] = useState(null);
     const [isValidFile, setIsValidFile] = useState(true);
       const[selectParty,setSelectParty] = useState(props?.checkThirdParty);
+      const[adressTab,setAddressTab] = useState(false);
 const[files,setFiles]  = useState([]);
 
     useEffect(() => {
@@ -175,7 +177,7 @@ const[files,setFiles]  = useState([]);
             saveObj.country = apiCalls.encryptValue(saveObj.country,props?. userConfig?.sk)
             saveObj.state = apiCalls.encryptValue(saveObj.state, props?.userConfig?.sk)
             saveObj.zipCode = apiCalls.encryptValue(saveObj.zipCode,props?.userConfig?.sk)
-            saveObj.document = {
+            saveObj.documents = {
                 "id": fiatAddress?.documents?.id,
                 "transactionId": null,
                 "adminId": "00000000-0000-0000-0000-000000000000",
@@ -205,7 +207,7 @@ const[files,setFiles]  = useState([]);
                         "status" : false,
                         "path" :item.response[0]
                        }
-                       saveObj.document.details.push(obj);
+                       saveObj.documents.details.push(obj);
                    })
                 }
             }
@@ -226,6 +228,9 @@ const[files,setFiles]  = useState([]);
                 form.resetFields();
                props?.onCancel()
                 setIsLoading(false)
+                props.dispatch(addressTabUpdate(true));
+                props.props.history.push('/userprofile');
+              
             }
             else {
                 setIsLoading(false);
@@ -280,7 +285,9 @@ const[files,setFiles]  = useState([]);
 
     }
     const deleteFile = (index) =>{
-       
+       debugger
+    //    setFiles((files) => files.findIndex((item) => item.id !== id));
+
         let filesList = files
        filesList.splice(index,1);
         setFiles(filesList);

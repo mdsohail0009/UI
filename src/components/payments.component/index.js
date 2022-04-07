@@ -119,7 +119,7 @@ const Payments = (props, { userConfig }) => {
                     className=" side-drawer w-50p"
                     size="large"
                 >
-                    <NewFiatAddress checkThirdParty = {checkRadio} onCancel={() => closeBuyDrawer()} />
+                    <NewFiatAddress checkThirdParty = {checkRadio} onCancel={() => closeBuyDrawer() } props={props}/>
                 </Drawer>
              </div>
         </>
