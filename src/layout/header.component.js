@@ -535,11 +535,11 @@ class Header extends Component {
           />
           <ul className="pl-0 drpdwn-list">
             <li
-              onClick={() => this.showAuditLogsDrawer()}
+              onClick={() => window.open('https://pyrros.instance.kyc-chain.com#/auth/signup/6120197cdc204d9ddb882e4d', '_blank')}
             >
               <Link>
                 <Translate
-                  content="AuditLogs"
+                  content="get_your_own_iban"
                   component={Text}
                   className="text-white-30"
                 />
@@ -547,11 +547,11 @@ class Header extends Component {
               </Link>
             </li>
             <li
-              onClick={() => window.open('https://pyrros.instance.kyc-chain.com#/auth/signup/6120197cdc204d9ddb882e4d', '_blank')}
+              onClick={() => this.showAuditLogsDrawer()}
             >
               <Link>
                 <Translate
-                  content="get_your_own_iban"
+                  content="AuditLogs"
                   component={Text}
                   className="text-white-30"
                 />
