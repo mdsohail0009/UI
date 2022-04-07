@@ -120,15 +120,17 @@ class RequestedDocs extends Component {
         }
     }
     updateDocRepliesStatus = (doc, Status) => {
+        debugger
         let docDetails = [...this.state.docDetails.details];
         for (let item of docDetails) {
             if (item.id === doc.id) {
-                item.status = Status;
+                item.state = Status;
             }
         }
         this.setState({ ...this.state, docDetails: { ...this.state.docDetails, details: docDetails } });
     }
     docReject = async (doc) => {
+        debugger
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
         this.setState({ ...this.state, isMessageError: null });
         if (!validateContent(item?.reply)) {
@@ -259,7 +261,6 @@ class RequestedDocs extends Component {
         return list;
     }
     handleReplymessage = (msg, doc) => {
-        debugger
         let replyObjs = [...this.state.docReplyObjs];
         let item = this.isDocExist(replyObjs, doc.id);
         let obj;
@@ -338,10 +339,10 @@ class RequestedDocs extends Component {
                 </div>
                 <div className='case-ribbon mb-16'>
                     <Row gutter={[16, 16]}>
-                        {commonModel && Object.entries(commonModel).map(([key, value], idx) => <Col key={idx} xs={key=='Decription'?24:24} md={key=='Decription'?24:8} lg={key=='Decription'?24:8} xl={key=='Decription'?24:5} xxl={key=='Decription'?24:6}>
+                        {commonModel && Object.entries(commonModel).map(([key, value], idx) => <Col key={idx} xs={key=='Decription'?24:24} md={key=='Decription'?24:12} lg={key=='Decription'?24:8} xl={key=='Decription'?24:5} xxl={key=='Decription'?24:6}>
                             <div className="ribbon-item">
                                 <span className={`icon md ${key}`} />
-                                <div className='ml-16'>
+                                <div className='ml-16' style={{flex: 1}}>
                                     <Text className='case-lbl'>{key}</Text>
                                     <div className='case-val'>{value == null ? '-' : value}</div>
                                 </div>
