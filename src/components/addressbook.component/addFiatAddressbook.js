@@ -17,13 +17,14 @@ import { bytesToSize, getDocObj } from '../../utils/service';
 import { getCountryStateLu, getStateLookup } from "../../api/apiServer";
 import apicalls from "../../api/apiCalls";
 import { warning } from '../../utils/message';
-import KycDocuments from '../payments.component/kycDocuments'
+
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
 const { Dragger } = Upload;
 const { confirm } = Modal;
+
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
@@ -59,7 +60,7 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
     const [fiatAddress, setFiatAddress] = useState({});
     const useDivRef = React.useRef(null);
     const [btnDisabled, setBtnDisabled] = useState(false);
-    const [file, setFile] = useState(null);
+    const [file, setFile] = useState([]);
     const [uploadPercentage, setUploadPercentage] = useState(0);
     const [isUploading, setUploading] = useState(false);
     const [countryLu, setCountryLu] = useState([]);
@@ -67,10 +68,11 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
     const [addressState, setAddressState] = useState(null);
     const [saveObj, setSaveObj] = useState(null);
     const [isValidFile, setIsValidFile] = useState(true);
+      const[selectParty,setSelectParty] = useState(props?.checkThirdParty);
+const[files,setFiles]  = useState([]);
 
     useEffect(() => {
-
-        if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && addressBookReducer?.selectedRowData?.id) {
+  if (props?.addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && props?.addressBookReducer?.selectedRowData?.id) {
             loadDataAddress();
         }
         addressbkTrack();
@@ -78,16 +80,17 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
         getStateLu();
     }, [])
     const addressbkTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat Address Book Details page view ', "Username": userProfileInfo?.userName, "MemeberId": userProfileInfo?.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Address book details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' });
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat Address Book Details page view ', "Username": props?.userProfileInfo?.userName, "MemeberId":props?.userProfileInfo?.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Address book details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' });
     }
     const loadDataAddress = async () => {
         setIsLoading(true)
-        let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'fiat');
+        let response = await getAddress(props?.addressBookReducer?.selectedRowData?.id, 'fiat');
         if (response.ok) {
+        
             setFiatAddress(response.data);
             setAddressState(response.data.addressState);
-            if (addressBookReducer?.selectedRowData && buyInfo.memberFiat?.data) {
-                handleWalletSelection(addressBookReducer?.selectedRowData?.currency)
+            if (props?.addressBookReducer?.selectedRowData && props?.buyInfo.memberFiat?.data) {
+                handleWalletSelection(props?.addressBookReducer?.selectedRowData?.currency)
             }
             const fileInfo = response?.data?.documents?.details[0];
             if (fileInfo?.path) {
@@ -103,17 +106,17 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
         form.setFieldsValue({ toCoin: walletId })
     }
     const getCountryLu = async () => {
-        let objj = sendReceive?.withdrawFiatObj;
+        let objj = props?.sendReceive?.withdrawFiatObj;
         setSaveObj(objj);
         if (objj) {
             form.setFieldsValue({
                 ...objj,
                 walletCode: objj.walletCode,
-                beneficiaryAccountName: userConfig?.firstName + " " + userConfig?.lastName
+                beneficiaryAccountName: props?.userConfig?.firstName + " " + props?.userConfig?.lastName
             });
         } else {
             form.setFieldsValue({
-                beneficiaryAccountName: userConfig?.firstName + " " + userConfig?.lastName
+                beneficiaryAccountName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName
             });
         }
         let recName = await getCountryStateLu();
@@ -130,51 +133,91 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
         if (isChange) form.setFieldsValue({ state: null });
     };
     const savewithdrawal = async (values) => {
-        debugger
+      
         setIsLoading(false)
         setErrorMsg(null)
         setBtnDisabled(true);
+        
         const type = 'fiat';
-        values['id'] = addressBookReducer?.selectedRowData?.id;
-        values['membershipId'] = userConfig.id;
-        values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
+        values['id'] = props?.addressBookReducer?.selectedRowData?.id;
+        values['membershipId'] = props?.userConfig?.id;
+        values['beneficiaryAccountName'] =props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
         values['type'] = type;
-        values['info'] = JSON.stringify(trackAuditLogData);
+        values['info'] = JSON.stringify(props?.trackAuditLogData);
         values['addressState'] = addressState;
         let Id = '00000000-0000-0000-0000-000000000000';
-        let favaddrId = addressBookReducer?.selectedRowData ? addressBookReducer?.selectedRowData?.id : Id;
+        let favaddrId = props?.addressBookReducer?.selectedRowData ? props?.addressBookReducer?.selectedRowData?.id : Id;
         let namecheck = values.favouriteName.trim();
-        let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'fiat', favaddrId);
+        let responsecheck = await favouriteNameCheck(props?.userConfig?.id, namecheck, 'fiat', favaddrId);
         if (responsecheck.data != null) {
             setIsLoading(false);
             setBtnDisabled(false);
             useDivRef.current.scrollIntoView()
             return setErrorMsg('Address label already existed');
-        } else {
+        }
+         else {
             setBtnDisabled(true);
             let saveObj = Object.assign({}, values);
-            saveObj.accountNumber = apiCalls.encryptValue(saveObj.accountNumber, userConfig.sk)
-            saveObj.bankAddress = apiCalls.encryptValue(saveObj.bankAddress, userConfig.sk)
-            saveObj.bankName = apiCalls.encryptValue(saveObj.bankName, userConfig.sk)
-            saveObj.beneficiaryAccountAddress = apiCalls.encryptValue(saveObj.beneficiaryAccountAddress, userConfig.sk)
-            saveObj.beneficiaryAccountName = apiCalls.encryptValue(saveObj.beneficiaryAccountName, userConfig.sk)
-            saveObj.routingNumber = apiCalls.encryptValue(saveObj.routingNumber, userConfig.sk)
-            saveObj.toWalletAddress = apiCalls.encryptValue(saveObj.toWalletAddress, userConfig.sk)
-            saveObj.country = apiCalls.encryptValue(saveObj.country, userConfig.sk)
-            saveObj.state = apiCalls.encryptValue(saveObj.state, userConfig.sk)
-            saveObj.zipCode = apiCalls.encryptValue(saveObj.zipCode, userConfig.sk)
-            if (file) {
-                const obj = getDocObj(userConfig?.id, file.response[0], file.name, file.size, fiatAddress?.documents?.id, fiatAddress?.documents?.details[0].id);
-                saveObj["documents"] = obj;
+            saveObj.accountNumber = apiCalls.encryptValue(saveObj.accountNumber, props?.userConfig?.sk)
+            saveObj.bankAddress = apiCalls.encryptValue(saveObj.bankAddress, props?.userConfig?.sk)
+            saveObj.bankName = apiCalls.encryptValue(saveObj.bankName, props?.userConfig?.sk)
+            saveObj.beneficiaryAccountAddress = apiCalls.encryptValue(saveObj.beneficiaryAccountAddress, props?.userConfig?.sk)
+            saveObj.beneficiaryAccountName = apiCalls.encryptValue(saveObj.beneficiaryAccountName, props?.userConfig?.sk)
+            saveObj.routingNumber = apiCalls.encryptValue(saveObj.routingNumber, props?.userConfig?.sk)
+            saveObj.toWalletAddress = apiCalls.encryptValue(saveObj.toWalletAddress, props?.userConfig?.sk)
+            saveObj.country = apiCalls.encryptValue(saveObj.country,props?. userConfig?.sk)
+            saveObj.state = apiCalls.encryptValue(saveObj.state, props?.userConfig?.sk)
+            saveObj.zipCode = apiCalls.encryptValue(saveObj.zipCode,props?.userConfig?.sk)
+            saveObj.document = {
+                "id": fiatAddress?.documents?.id,
+                "transactionId": null,
+                "adminId": "00000000-0000-0000-0000-000000000000",
+                "date": null,
+                "type": null,
+                "memberId": props?.userConfig?.id,
+                "caseTitle": null,
+                "caseState": null,
+                "remarks": null,
+                "status": null,
+                "state": null,
+        "details" : [
+          ]
+    } 
+            if(selectParty === true){
+            
+                if(files){
+                    files.map((item,index)=>{
+                      
+                       let obj = {
+                        "documentId" :"00000000-0000-0000-0000-000000000000",
+                        "documentName" : item.name,
+                        "id" : fiatAddress?.documents?.details[0].id,
+                        "isChecked" : true,
+                        "remarks" : item.size,
+                        "state" : null,
+                        "status" : false,
+                        "path" :item.response[0]
+                       }
+                       saveObj.document.details.push(obj);
+                   })
+                }
             }
+            else{
+            if (file) {
+                const obj = getDocObj(props?.userConfig?.id, file.response[0], file.name, file.size, fiatAddress?.documents?.id, fiatAddress?.documents?.details[0].id);
+                   
+                saveObj["documents"] = obj;
+            }}
+        
             let response = await saveAddress(saveObj);
+         
             if (response.ok) {
                 setBtnDisabled(false);
                 setErrorMsg('')
                 useDivRef.current.scrollIntoView();
                 message.success({ content: apiCalls.convertLocalLang('address_msg'), className: 'custom-msg' });
                 form.resetFields();
-                onCancel()
+               props?.onCancel()
                 setIsLoading(false)
             }
             else {
@@ -193,7 +236,7 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
         }
     }
     const beforeUpload = (file) => {
-        let fileType = { "image/png": false, 'image/jpg': false, 'image/jpeg': false, 'image/PNG': false, 'image/JPG': false, 'image/JPEG': false, 'application/pdf': true, 'application/PDF': true }
+           let fileType = { "image/png": false, 'image/jpg': false, 'image/jpeg': false, 'image/PNG': false, 'image/JPG': false, 'image/JPEG': false, 'application/pdf': true, 'application/PDF': true }
         if (fileType[file.type]) {
             setIsValidFile(true);
             return true;
@@ -203,10 +246,36 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
             return Upload.LIST_IGNORE;
         }
     }
-    const radioChangeHandler = () => {
+    const radioChangeHandler = (e) => {
+      
+        if(e.target.value === "1stparty"){
+            setSelectParty(false);
+        }
+        else{
+            setSelectParty(true);
+        }
 
     }
+  const upLoadFiles = (res) =>  {
+        
+        setUploading(true);
+        if (res.status === "uploading") { setUploadPercentage(res.percent) }
+        else if (res.status === "done") {
 
+        files.push(res);
+        setFiles(files);
+            setUploading(false);
+            
+           
+        }
+
+    }
+    const deleteFile = (index) =>{
+       
+        let filesList = files
+       filesList.splice(index,1);
+        setFiles(filesList);
+    }
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     return (
         <>
@@ -221,9 +290,11 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
                         component={Paragraph}
                         className="mb-16 fs-14 text-aqua fw-500 text-upper"
                     />
-                    <Form.Item>
+                    <Form.Item name="categeory">
                         <Radio.Group onChange={radioChangeHandler}
-                            defaultValue={props?.checkThirdParty === true ? "3rdparty" : "1stparty"} value={props?.checkThirdParty === true ? "3rdparty" : "1stparty"} >
+                            defaultValue={selectParty === true ? "3rdparty" : "1stparty"}
+                             value={selectParty === true ? "3rdparty" : "1stparty"}
+                           >
                             <Radio value={"1stparty"}>1st Party</Radio>
                             <Radio value={"3rdparty"}>3rd Party</Radio>
                         </Radio.Group>
@@ -273,25 +344,7 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
                                 <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('address')} />
                             </Form.Item>
                         </Col>
-                        {/* <Form.Item
-                        className="custom-label"
-                        name="addressType"
-                        label={<Translate content="address_type" component={Form.label} />}
-                        rules={[
-                            { required: true, message: apiCalls.convertLocalLang('is_required') }
-                        ]} >
-                        <Select
-                            className="cust-input mb-0"
-                            placeholder="Select Address Type"
-                            //onChange={(e) => this.handleCurrencyChange(e)}
-                            dropdownClassName='select-drpdwn'
-                            bordered={false}
-                            showArrow={true}
-                        >
-                            <Option value="1st Party">1st Party</Option>
-                            <Option value="3rd Party">3rd Party</Option>
-                        </Select>
-                    </Form.Item> */}
+                      
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
@@ -308,7 +361,7 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="accountNumber"
-                                // label={<Translate content="Bank_account" component={Form.label} />}
+                               
                                 label={apiCalls.convertLocalLang('Bank_account')}
                                 required
                                 rules={[
@@ -489,11 +542,11 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
                                 <div className="d-flex">
                                     <Translate
                                         className="input-label"
-                                        content={userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
+                                        content={props?.userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
                                         component={Form.label}
                                     />{" "}
                                     <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
-                                <Input className="cust-input" value={userConfig?.firstName + " " + userConfig?.lastName} placeholder="Recipient full name" disabled={true} />
+                                <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -531,11 +584,44 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
                         </Col>
                     </Row>
 
-                    {props?.checkThirdParty === true ? " "
+                    {selectParty === true ? 
+                    <> 
+                         <Form.Item name={"file"} rules={[{
+                                validator: (_, value) => {
+                                    if (file) {
+                                        return Promise.resolve();
+                                    } else {
+                                        return Promise.reject("Please upload Address file")
+                                    }
+                                }
+                            }]}>
+                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => upLoadFiles(res)
 
-                        //   < KycDocuments /> 
+                                
+                            }>
+                                    <p className="ant-upload-drag-icon mb-16">
+                                        <span className="icon xxxl doc-upload" />
+                                    </p>
+                                    <p className="ant-upload-text fs-18 mb-0">Upload your Identity here</p>
+                                </Dragger>}
+                            </Form.Item>
 
-                        :
+                            <Form.Item name={"file"} rules={[{
+                                validator: (_, value) => {
+                                    if (file) {
+                                        return Promise.resolve();
+                                    } else {
+                                        return Promise.reject("Please upload identity file")
+                                    }
+                                }
+                            }]}>
+                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => upLoadFiles(res)}>
+                                    <p className="ant-upload-drag-icon mb-16">
+                                        <span className="icon xxxl doc-upload" />
+                                    </p>
+                                    <p className="ant-upload-text fs-18 mb-0">Upload your Address Proofs here</p>
+                                </Dragger>}
+                            </Form.Item> </> :
                         <>
                             <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
                             <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={() => window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
@@ -566,18 +652,26 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
                     {isUploading && <div className="text-center">
                         <Spin />
                     </div>}
-                    {file != null && <div className="docfile mr-0">
+                    {<div className="docfile mr-0">
                         <span className={`icon xl file mr-16`} />
-                        <div className="docdetails c-pointer" onClick={() => this.docPreview()}>
-                            <EllipsisMiddle suffixCount={10}>{file.name}</EllipsisMiddle>
-                            <span className="fs-12 text-secondary">{bytesToSize(file.size)}</span>
-                        </div>
-                        <span className="icon md close c-pointer" onClick={() => confirm({
+                        <div className="docdetails c-pointer" >
+                        { files?.map((item,idx) => <>
+                        <EllipsisMiddle suffixCount={10}>{item.name}</EllipsisMiddle>
+                            <span className="fs-12 text-secondary">{bytesToSize(item.size)}</span>
+                            </>
+                            )}
+                         </div>
+
+                       { files?.map((item,index) => <>
+                      <span className="icon md close c-pointer" onClick={() =>  confirm({ 
                             content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
                             title: <div className='fs-18 text-white-30'>Delete File ?</div>,
-                            onOk: () => { setFile(null); }
-                        })} />
-                    </div>}
+                            onOk: () => {deleteFile(index) }
+                        })} /></>
+                        )}
+                    </div>} 
+                  
+               
                     <Form.Item
                         className="custom-forminput mt-36 agree"
                         name="isAgree"
@@ -618,6 +712,7 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
                             {isLoading && <Spin indicator={antIcon} />}  <Translate content="Save_btn_text" />
                         </Button>
                     </Form.Item>
+                 
                 </Form>
             </div>
 
@@ -639,6 +734,7 @@ const connectStateToProps = ({
         trackAuditLogData: userConfig.trackAuditLogData
     };
 };
+
 const connectDispatchToProps = (dispatch) => {
     return {
         changeStep: (stepcode) => {

@@ -116,7 +116,7 @@ const Payments = (props, { userConfig }) => {
                     closable={true}
                     visible={beneficiaryDetails}
                     closeIcon={null}
-                    className="side-drawer"
+                    className=" side-drawer w-50p"
                     size="large"
                 >
                     <NewFiatAddress checkThirdParty = {checkRadio} onCancel={() => closeBuyDrawer()} />
