@@ -17,7 +17,7 @@ import { bytesToSize, getDocObj } from '../../utils/service';
 import { getCountryStateLu, getStateLookup } from "../../api/apiServer";
 import apicalls from "../../api/apiCalls";
 import { warning } from '../../utils/message';
-import {addressTabUpdate} from '../../reducers/configReduser'
+import {addressTabUpdate} from '../../reducers/addressBookReducer'
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -141,7 +141,7 @@ const[files,setFiles]  = useState([]);
         if (isChange) form.setFieldsValue({ state: null });
     };
     const savewithdrawal = async (values) => {
-      debugger
+
         setIsLoading(false)
         setErrorMsg(null)
         setBtnDisabled(true);
@@ -230,8 +230,7 @@ const[files,setFiles]  = useState([]);
                 setIsLoading(false)
                 props.dispatch(addressTabUpdate(true));
                 props.props.history.push('/userprofile');
-              
-            }
+                }
             else {
                 setIsLoading(false);
                 setBtnDisabled(false);
@@ -259,7 +258,7 @@ const[files,setFiles]  = useState([]);
         }
     }
     const radioChangeHandler = (e) => {
-              debugger
+          
         if(e.target.value === "1stparty"){
             form.setFieldsValue({addressType:"1stparty"})
             setSelectParty(false);

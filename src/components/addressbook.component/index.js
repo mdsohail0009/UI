@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert } from 'antd'
-import { setAddressStep, rejectCoin, fetchUsersIdUpdate, clearValues, clearCryptoValues } from '../../reducers/addressBookReducer';
+import { setAddressStep, rejectCoin, fetchUsersIdUpdate, clearValues, clearCryptoValues,withdrawfiatUpdate } from '../../reducers/addressBookReducer';
 import Translate from 'react-translate-component';
 import { processSteps as config } from './config';
 import NewAddressBook from './newAddressBook';
@@ -12,6 +12,7 @@ import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import apiCalls from '../../api/apiCalls';
 import { warning } from '../../utils/message';
+
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -181,7 +182,7 @@ class AddressBook extends Component {
 
     }
     editAddressBook = () => {
-        debugger
+     
         let obj = this.state.selectedObj;
         if (!this.state.isCheck) {
             this.setState({ alert: true })
@@ -256,7 +257,10 @@ class AddressBook extends Component {
     }
     render() {
         const { cryptoFiat, gridUrlCrypto, gridUrlFiat, memberId, btnDisabled } = this.state;
-
+  if(this.props?.addressBookReducer.withdrawTab){
+     this.setState({cryptoFiat:true});
+    //   this.props.dispatch(withdrawfiatUpdate(false));
+     }
         return (
             <>
                 <div className="box basic-info">

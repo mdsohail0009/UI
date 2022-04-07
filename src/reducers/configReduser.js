@@ -1,11 +1,11 @@
 import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "./dashboardReducer";
-
 const USEER_INFO = "userInfo";
 const UPDATE_DOC_REQUEST = "updateDocRequest";
 const FETCH_TRACK_AUDITLOGS = "fetchtrackauditlogs";
 const CLEAR_USER_INFO = "clearUserInfo";
-const ADDRESS_TAB_UPDATE = "addressTabUpdate";
+
+
 const userInfo = (payload) => {
     return {
         type: USEER_INFO,
@@ -38,13 +38,7 @@ const getmemeberInfo = (useremail) => {
     }
 }
 
-const addressTabUpdate = (payload) => {
-    debugger
-    return {
-        type: ADDRESS_TAB_UPDATE,
-        payload
-    }
-}
+
 const getIpRegisteryData = () => {
     return async (dispatch) => {
         apiCalls.getIpRegistery().then((res) => {
@@ -75,7 +69,7 @@ const getIpRegisteryData = () => {
 let initialState = {
     userProfileInfo: null,
     trackAuditLogData: {},
-    addressTab:false
+    
 };
 const UserConfig = (state = initialState, action) => {
     switch (action.type) {
@@ -91,12 +85,10 @@ const UserConfig = (state = initialState, action) => {
         case CLEAR_USER_INFO:
             state = { userProfileInfo: null, trackAuditLogData: {} };
             return state;
-            case ADDRESS_TAB_UPDATE:
-            return { ...state, addressTab: action.payload  }
-        default:
+       default:
             return state;
     }
 }
 
 export default UserConfig;
-export { userInfo, getmemeberInfo, updateDocRequest, getIpRegisteryData,addressTabUpdate, fetchtrackauditlogs,clearUserInfo };
+export { userInfo, getmemeberInfo, updateDocRequest, getIpRegisteryData, fetchtrackauditlogs,clearUserInfo };

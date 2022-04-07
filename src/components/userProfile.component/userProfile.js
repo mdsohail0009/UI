@@ -9,18 +9,18 @@ import Settings from './settings';
 import Cases from '../case.component/cases';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
-import {addressTabUpdate} from '../../reducers/configReduser'
+import {addressTabUpdate,withdrawfiatUpdate} from '../../reducers/addressBookReducer'
 
 const { TabPane } = Tabs;
 class UserProfile extends Component {
-    debugger
+   
     state = {
         isProfile: false,
         isSecurity: false,
         isSetting: false,
         tabPosition: 'left',
-        activeTab: "1"
-
+        activeTab: "1",
+       activeWithdrawFiat : false
     }
     componentDidMount() {
       
@@ -41,9 +41,10 @@ class UserProfile extends Component {
 
     render() {
         const { tabPosition } = this.state;
-        if (this.props.userConfig.addressTab) {
+        if (this.props.addressBookReducer.addressTab) {
            this.setState({...this.state,activeTab: "5"});
            this.props.dispatch(addressTabUpdate(false));
+           this.props.dispatch(withdrawfiatUpdate(true));
         }
         return (<>
 
@@ -71,7 +72,7 @@ class UserProfile extends Component {
                         {this.state.activeTab == 4 && <Documents />}
                     </TabPane> */}
                     <TabPane tab={<span><span className="icon lg addressbook-icon mr-16" /><Translate content="address_book" component={Tabs.TabPane.tab} /></span>} key="5">
-                        {this.state.activeTab == 5 && <AddressBook />}
+                        {this.state.activeTab == 5 && <AddressBook activeFiat = {this.state.activeWithdrawFiat} />}
                     </TabPane>
                     <TabPane tab={<span><span className="icon lg cases-icon mr-16" />
                     <Translate content="case" className="f-16  mt-16" /></span>} key="6" >
@@ -110,8 +111,8 @@ class UserProfile extends Component {
         </>);
     }
 }
-const connectStateToProps = ({ userConfig }) => {
-    return { userConfig: userConfig }
+const connectStateToProps = ({ addressBookReducer}) => {
+    return { addressBookReducer }
 }
 export default connect(
     connectStateToProps,
