@@ -72,6 +72,7 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
 const[files,setFiles]  = useState([]);
 
     useEffect(() => {
+       
   if (props?.addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && props?.addressBookReducer?.selectedRowData?.id) {
             loadDataAddress();
         }
@@ -149,13 +150,13 @@ const[files,setFiles]  = useState([]);
         let favaddrId = props?.addressBookReducer?.selectedRowData ? props?.addressBookReducer?.selectedRowData?.id : Id;
         let namecheck = values.favouriteName.trim();
         let responsecheck = await favouriteNameCheck(props?.userConfig?.id, namecheck, 'fiat', favaddrId);
-        if (responsecheck.data != null) {
-            setIsLoading(false);
-            setBtnDisabled(false);
-            useDivRef.current.scrollIntoView()
-            return setErrorMsg('Address label already existed');
-        }
-         else {
+        // if (responsecheck.data != null) {
+        //     setIsLoading(false);
+        //     setBtnDisabled(false);
+        //     useDivRef.current.scrollIntoView()
+        //     return setErrorMsg('Address label already existed');
+        // }
+        //  else {
             setBtnDisabled(true);
             let saveObj = Object.assign({}, values);
             saveObj.accountNumber = apiCalls.encryptValue(saveObj.accountNumber, props?.userConfig?.sk)
@@ -225,7 +226,7 @@ const[files,setFiles]  = useState([]);
                 setBtnDisabled(false);
             }
         }
-    }
+    // }
     const getIbanData = async (val) => {
         if (val && val.length > 14) {
             let response = await apiCalls.getIBANData(val);
@@ -247,11 +248,13 @@ const[files,setFiles]  = useState([]);
         }
     }
     const radioChangeHandler = (e) => {
-      
+              debugger
         if(e.target.value === "1stparty"){
+            form.setFieldsValue({addressType:"1stparty"})
             setSelectParty(false);
         }
         else{
+            form.setFieldsValue({addressType:"3rdparty"})
             setSelectParty(true);
         }
 
@@ -290,7 +293,7 @@ const[files,setFiles]  = useState([]);
                         component={Paragraph}
                         className="mb-16 fs-14 text-aqua fw-500 text-upper"
                     />
-                    <Form.Item name="categeory">
+                    <Form.Item  name="addressType">
                         <Radio.Group onChange={radioChangeHandler}
                             defaultValue={selectParty === true ? "3rdparty" : "1stparty"}
                              value={selectParty === true ? "3rdparty" : "1stparty"}
