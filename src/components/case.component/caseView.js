@@ -52,7 +52,6 @@ class RequestedDocs extends Component {
     }
     componentDidMount() {
         this.getCaseData(QueryString.parse(this.props.location.search).id);
-        this.fetchAssignedToLu();
     }
     getDocument = async (id) => {
         this.setState({ ...this.state, loading: true, error: null });
@@ -302,33 +301,12 @@ class RequestedDocs extends Component {
             return this.state.previewPath;
         }
     }
-    fetchAssignedToLu = async () => {
-        const { caseData } = this.state;
-        let assignedIdList = caseData?.assignedTo;
-        let assignedNames = [];
-        let response = await getCaseLu(null);
-        if (response.ok) {
-            for (let x in assignedIdList) {
-                let data = assignedIdList[x].assignedToIds.split(',');
-                let namelist = [];
-                for (let i in data) {
-                    let nameObj = response.data.find(item => item.id === data[i]);
-                    namelist.push(nameObj.assignedTo);
-                }
-                assignedNames.push(assignedIdList[x].assignedNames = namelist.join(', '));
-                this.setState({ ...this.state.caseData.assignedTo, assignedTo: { ...this.state.caseData.assignedTo, assignedNames } });
-            }
-        } else {
-            warning('Data not getting from the server!');
-        }
-    }
     getCaseData = async (id) => {
         this.setState({ ...this.state, loading: true });
         let caseRes = await getCase(id);
-        if (caseRes) {
+        if (caseRes.ok) {
             this.setState({ ...this.state, caseData: caseRes.data, commonModel: caseRes.data.commonModel, loading: false });
             this.getDocument(caseRes.data?.documents?.id);
-            this.fetchAssignedToLu();
         } else {
             warning('Data not getting from the server!');
         }
@@ -370,22 +348,6 @@ class RequestedDocs extends Component {
                             </div>
                         </Col>)}
                     </Row>
-                </div>
-                <div className='case-stripe'>
-                    {caseData.assignedTo?.map((item, idx) => <Row key={idx} gutter={[16, 16]}>
-                        <Col xs={24} md={8} lg={8} xl={8} xxl={8}>
-                            <Text className='case-lbl'>Assigned To</Text>
-                            <div className='case-val'>{item.assignedNames}</div>
-                        </Col>
-                        <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
-                            <Text className='case-lbl'>Assigned Remarks</Text>
-                            <div className='case-val'>{item.assignedRemarks}</div>
-                        </Col>
-                        <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
-                            <Text className='case-lbl'>Case Sub State</Text>
-                            <div className='case-val'>{item.caseSubState}</div>
-                        </Col>
-                    </Row>)}
                 </div>
                 <div className="px-16">
                     <Text className='case-lbl'>Remarks</Text>
