@@ -55,7 +55,6 @@ class RequestedDocs extends Component {
         this.fetchAssignedToLu();
     }
     getDocument = async (id) => {
-        debugger
         this.setState({ ...this.state, loading: true, error: null });
         const response = await getDocDetails(id);
         if (response.ok) {
