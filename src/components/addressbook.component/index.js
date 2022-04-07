@@ -257,10 +257,10 @@ class AddressBook extends Component {
     }
     render() {
         const { cryptoFiat, gridUrlCrypto, gridUrlFiat, memberId, btnDisabled } = this.state;
-  if(this.props?.addressBookReducer.withdrawTab){
-     this.setState({cryptoFiat:true});
-    //   this.props.dispatch(withdrawfiatUpdate(false));
-     }
+//   if(this.props?.addressBookReducer.withdrawTab){
+//      this.setState({cryptoFiat:true});
+//        this.props.dispatch(withdrawfiatUpdate(false));
+//      }
         return (
             <>
                 <div className="box basic-info">
