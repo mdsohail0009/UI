@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { getPaymentsData,getBankData } from './api';
-import { Typography, Button, Spin,message,Alert,Popover } from 'antd';
+import { Typography, Button, Spin,message,Alert,Popover,Upload } from 'antd';
 import Translate from 'react-translate-component';
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 const { Title, Text } = Typography;
+const { Dragger } = Upload;
 class PaymentsView extends Component {
     constructor(props) {
         super(props);
@@ -88,6 +89,7 @@ class PaymentsView extends Component {
                             <thead>
                                 <tr>
                                     <th>Bank Name</th>
+                                    <th>Recipient Full Name</th>
                                     <th>Account Number</th>
                                     <th>Amount</th>
                                 </tr>
@@ -109,6 +111,7 @@ class PaymentsView extends Component {
                                                                     <span className='icon md info c-pointer' onClick={() => this.moreInfoPopover(item.addressId, idx)} />
                                                                 </Popover>
                                                 </td>
+                                                <td>{item?.beneficiaryAccountName}</td>
                                                 <td>{item.accountnumber}</td>
                                                 <td>
                                                     <NumberFormat
@@ -117,22 +120,15 @@ class PaymentsView extends Component {
                                                         displayType={'text'}
                                                         renderText={value => value}
                                                     />
+                                                    <br/>
+                                                   <span>{item.documents?.details.length>0 && item.documents?.details[0]?.documentName}    </span> 
                                                 </td>
                                             </tr>
                                             </>
                                         :"No bank details available."}</>
                                     )
                                 })}
-                                {/* <>
-                                
-                                <h2 className='text-white ml-36'>Total amount</h2>
-                                {paymentsData.map(item => {
-                                this.state.amount +=Number(item.amount) ;
-                            return <Text name={item.amount} />
-              })
-            }
-            <p>{this.state.amount}</p>
-                                </> */}
+
                                 {loading && <tr>
                                     <td colSpan='3' className='text-center p-16'><Spin size='default' /></td></tr>}
                             </tbody>

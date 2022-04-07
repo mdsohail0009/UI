@@ -19,38 +19,38 @@ const Payments = (props) => {
     const paymentsView = (prop) => {
         props.history.push(`/payments/${prop.dataItem.id}/view`)
     };
-    const paymentsEdit = () => {
+    const paymentsEdit = (prop) => {
+        debugger
         if (selection.length == 0) {
             message.warning("Please select the one record");
           }else{
-            // state 
-            if (selection.state === "Business")  {
+            if (selection.state !== "Submit")  {
             props.history.push(`/payments/${selectedObj}/edit`)
             }
           }
        
     };
     const gridColumns = [
-        {
-            field: "",
-            title: "",
-            width: 50,
-            customCell: (props) => (
-              <td className="text-center">
-                <label className="text-center custom-checkbox">
-                  <input
-                    id={props.dataItem.id}
-                    name="check"
-                    type="checkbox"
-                    checked={selection.indexOf(props.dataItem.id) > -1}
-                    onChange={(e) => handleInputChange(props, e)}
-                    className="grid_check_box"
-                  />
-                  <span></span>
-                </label>
-              </td>
-            )
-          },
+        // {
+        //     field: "",
+        //     title: "",
+        //     width: 50,
+        //     customCell: (props) => (
+        //       <td className="text-center">
+        //         <label className="text-center custom-checkbox">
+        //           <input
+        //             id={props.dataItem.id}
+        //             name="check"
+        //             type="checkbox"
+        //             checked={selection.indexOf(props.dataItem.id) > -1}
+        //             onChange={(e) => handleInputChange(props, e)}
+        //             className="grid_check_box"
+        //           />
+        //           <span></span>
+        //         </label>
+        //       </td>
+        //     )
+        //   },
         {
             field: "createdDate", title: 'Date', filter: true, filterType: "date", customCell: (props) => (
                 <td><div className="gridLink" onClick={() => paymentsView(props)}>
@@ -111,13 +111,13 @@ const Payments = (props) => {
                         >
                             New Bill Payment
                         </Button>
-                        <Button
+                        {/* <Button
                             className="pop-btn px-24"
                             style={{ margin: "0 8px", height: 40 }}
                             onClick={paymentsEdit}
                         >
                             Edit Bill Payment
-                        </Button> 
+                        </Button>  */}
                     </div>
                 </div>
                 <div className="box basic-info text-white">
