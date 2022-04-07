@@ -535,36 +535,56 @@ class Header extends Component {
           />
           <ul className="pl-0 drpdwn-list">
             <li
-              className="c-pointer"
               onClick={() => this.showAuditLogsDrawer()}
             >
-              <Translate
-                content="AuditLogs"
-                component={Link}
-                className="c-pointer px-0"
-              />
+              <Link>
+                <Translate
+                  content="AuditLogs"
+                  component={Text}
+                  className="text-white-30"
+                />
+                <span className="icon md rarrow-white" />
+              </Link>
             </li>
             <li
-              className="c-pointer"
-              onClick={() => window.open('https://suissebase.egnyte.com/ul/jnDqGI4Nxj')}
+              onClick={() => window.open('https://pyrros.instance.kyc-chain.com#/auth/signup/6120197cdc204d9ddb882e4d', '_blank')}
             >
-              <Translate
-                content="upload_documents"
-                component={Link}
-                className="c-pointer px-0 pb-0 l-height-normal"
-              />
-              <Translate
-                content='compliance'
-                component={Link}
-                className="c-pointer pt-0 px-0"
-              />
+              <Link>
+                <Translate
+                  content="get_your_own_iban"
+                  component={Text}
+                  className="text-white-30"
+                />
+                <span className="icon md rarrow-white" />
+              </Link>
             </li>
-            <li className="c-pointer" onClick={() => this.clearEvents()}>
-              <Translate
-                content="logout"
-                className="c-pointer px-0"
-                component={Link}
-              />
+            <li
+              onClick={() => window.open('https://suissebase.egnyte.com/ul/jnDqGI4Nxj', '_blank')}
+            >
+              <Link>
+                <span className="text-left">
+                  <Translate
+                    content="upload_documents"
+                    component={Text}
+                    className="d-block text-white-30"
+                  />
+                  <Translate
+                    content='compliance'
+                    component={Text}
+                    className="text-white-30"
+                  />
+                </span>
+                <span className="icon md rarrow-white" />
+              </Link>
+            </li>
+            <li onClick={() => this.clearEvents()}>
+              <Link>
+                <Translate
+                  content="logout"
+                  className="text-white-30"
+                  component={Text}
+                />
+              </Link>
             </li>
           </ul>
         </div>

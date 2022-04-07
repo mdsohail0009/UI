@@ -493,5 +493,6 @@ export default {
   fees: '费用',
   you_receive: '您将收到',
   upload_documents: '上传文件',
-  compliance: '(遵守)'
+  compliance: '(遵守)',
+  get_your_own_iban: '获取自己的 IBAN'
 }
