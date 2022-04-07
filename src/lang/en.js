@@ -519,5 +519,6 @@ export default {
   compliance: '(Compliance)',
   upload_documents: 'Upload Documents',
   business_recipient : "Business Name/Recipient Full Name",
-  cards : "Cards"
+  cards : "Cards",
+  get_your_own_iban: 'Get Your Own IBAN'
 }
