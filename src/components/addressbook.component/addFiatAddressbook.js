@@ -72,8 +72,13 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
 const[files,setFiles]  = useState([]);
 
     useEffect(() => {
-       
-  if (props?.addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && props?.addressBookReducer?.selectedRowData?.id) {
+       if(selectParty === true){
+        form.setFieldsValue({addressType:"3rdparty"})
+       }
+       else{
+        form.setFieldsValue({addressType:"1stparty"})
+       }
+    if (props?.addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && props?.addressBookReducer?.selectedRowData?.id) {
             loadDataAddress();
         }
         addressbkTrack();
@@ -134,7 +139,7 @@ const[files,setFiles]  = useState([]);
         if (isChange) form.setFieldsValue({ state: null });
     };
     const savewithdrawal = async (values) => {
-      
+      debugger
         setIsLoading(false)
         setErrorMsg(null)
         setBtnDisabled(true);
@@ -159,6 +164,7 @@ const[files,setFiles]  = useState([]);
         //  else {
             setBtnDisabled(true);
             let saveObj = Object.assign({}, values);
+            
             saveObj.accountNumber = apiCalls.encryptValue(saveObj.accountNumber, props?.userConfig?.sk)
             saveObj.bankAddress = apiCalls.encryptValue(saveObj.bankAddress, props?.userConfig?.sk)
             saveObj.bankName = apiCalls.encryptValue(saveObj.bankName, props?.userConfig?.sk)
