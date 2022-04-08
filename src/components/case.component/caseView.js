@@ -55,7 +55,6 @@ class RequestedDocs extends Component {
         if (response.ok) {
 			console.log(response)
             this.setState({ ...this.state, docDetails: response.data, loading: false });
-            console.log(response.data)
              this.loadDocReplies(response.data?.details[0]?.id)
             this.setState({ ...this.state, docDetails: response.data, loading: false });
 			console.log(this.state.docDetails)
@@ -229,7 +228,6 @@ class RequestedDocs extends Component {
         }
     }
     handleUpload = ({ file }, doc) => {
-        debugger
         this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
         if (file.status === "done" && this.state.isValidFile) {
             let replyObjs = [...this.state.docReplyObjs];
@@ -310,7 +308,6 @@ class RequestedDocs extends Component {
     }
     getUploadedFiles = (id) => {
         let data = this.state.docReplyObjs.filter(item => item.docunetDetailId === id)[0];
-        console.log(data)
         if (data && data.path) {
             data.path = (typeof (data.path) === "string" ? JSON.parse(data.path) : data.path) || [];
             return data
@@ -400,11 +397,7 @@ class RequestedDocs extends Component {
                                     closable={false}
                                     style={{ marginBottom: 0, marginTop: '16px' }}
                                 />}
-                                <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" 
-                                className="upload mt-16" multiple={false}
-                                 action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
-                                  showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }}
-                                   onChange={(props) => { this.handleUpload(props, doc) }}>
+                                <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}>
                                     <p className="ant-upload-drag-icon">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
@@ -416,8 +409,7 @@ class RequestedDocs extends Component {
                                 {this.state.uploadLoader && <Loader />}
                             </div>
                                 <div className="docfile-container">
-                                    {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) =>
-                                     <div key={idx1} className="docfile">
+                                    {this.getUploadedFiles(doc.id)?.path?.map((file, idx1) => <div key={idx1} className="docfile">
                                         <span className={`icon xl ${(file.filename.slice(-3) === "zip" ? "file" : "") || (file.filename.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                                         <div className="docdetails c-pointer" onClick={() => this.docPreview(file)}>
                                             <EllipsisMiddle suffixCount={6}>{file.filename}</EllipsisMiddle>
