@@ -366,7 +366,7 @@ class PaymentDetails extends Component {
                                         })}
                                     </tbody> : <tbody><tr><td colSpan='8' className="p-16 text-center" style={{ color: "white", width: 300 }} >No bank details available</td></tr> </tbody>}
                                     <tfoot><tr>
-                                <div >
+                                <div className='d-flex'>
                                 <span className='text-white fs-24'> Total:</span>
                                 <span className='text-white fs-24'> {total}</span>
                                 </div>
