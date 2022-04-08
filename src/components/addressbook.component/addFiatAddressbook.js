@@ -51,8 +51,7 @@ const LinkValue = (props) => {
     );
 };
 const link = <LinkValue content="terms_service" />;
-const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReducer, userProfileInfo, trackAuditLogData, sendReceive
-}) => {
+const NewFiatAddress = (props) => {
 
 
     const [form] = Form.useForm();
@@ -69,13 +68,14 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
     const [addressState, setAddressState] = useState(null);
     const [saveObj, setSaveObj] = useState(null);
     const [isValidFile, setIsValidFile] = useState(true);
-      const[selectParty,setSelectParty] = useState(props?.checkThirdParty);
-      const[adressTab,setAddressTab] = useState(false);
+    const[selectParty,setSelectParty] = useState(props?.checkThirdParty);
+    
     const[files,setFiles]  = useState([]);
 
     useEffect(() => {
        if(selectParty === true){
         form.setFieldsValue({addressType:"3rdparty"})
+        
        }
        else{
         form.setFieldsValue({addressType:"1stparty"})
@@ -109,12 +109,12 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
             }
           
             let fileInfo = response?.data?.documents?.details;
-            if(fileInfo.length != 0){
+            if(fileInfo?.length != 0){
                 debugger
-                for(let i =0; i<fileInfo.length; i++){
+                for(let i =0; i<fileInfo?.length; i++){
                     let obj = {
                         "name" : fileInfo[i]?.documentName,
-                        "size" : fileInfo[i].remarks,
+                        "size" : fileInfo[i]?.remarks,
                         "response" : [fileInfo[i]?.path]
                     }
                     files.push(obj);
@@ -159,15 +159,19 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
         if (isChange) form.setFieldsValue({ state: null });
     };
     const savewithdrawal = async (values) => {
-
+debugger
         setIsLoading(false)
         setErrorMsg(null)
         setBtnDisabled(true);
-        
-        const type = 'fiat';
+       const type = 'fiat';
         values['id'] = props?.addressBookReducer?.selectedRowData?.id;
         values['membershipId'] = props?.userConfig?.id;
+        if(selectParty){
+            values['beneficiaryAccountName'] = values.beneficiaryAccountName; 
+        }
+        else{
         values['beneficiaryAccountName'] =props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
+        }
         values['type'] = type;
         values['info'] = JSON.stringify(props?.trackAuditLogData);
         values['addressState'] = addressState;
@@ -237,8 +241,8 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
                 form.resetFields();
                props?.onCancel()
                 setIsLoading(false)
-                props.dispatch(addressTabUpdate(true));
-                props.props.history.push('/userprofile');
+                props?.dispatch(addressTabUpdate(true));
+                props?.props?.history?.push('/userprofile');
                 }
             else {
                 setIsLoading(false);
@@ -269,7 +273,7 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
     const radioChangeHandler = (e) => {
           setFiles([]);
         if(e.target.value === "1stparty"){
-            form.setFieldsValue({addressType:"1stparty"})
+            form.setFieldsValue({addressType:"1stparty",beneficiaryAccountName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName})
             setSelectParty(false);
         }
         else{
@@ -290,8 +294,15 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
              }  }
 
     const deleteFile = (item,index) =>{
+        debugger
         let filesList = [...files]
-       filesList= filesList.filter(obj => obj.uid!== item.uid);
+        for(let i =0;i<filesList.length;i++){
+         let deletedObj =  filesList.findIndex(filesList[i]) === index;
+         filesList.splice(deletedObj);
+        }
+    // setFiles(filesList);
+    //     filesList= filesList.filter(obj => files.findIndex(obj) !== index );
+    //    filesList= filesList.filter(obj => obj.uid!== item.uid);
        setFiles(filesList);
             }
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
@@ -308,8 +319,8 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
                         component={Paragraph}
                         className="mb-16 fs-14 text-aqua fw-500 text-upper"
                     />
-                    <Form.Item  name="addressType">
-                        <Radio.Group onChange={radioChangeHandler}
+                    <Form.Item  name="addressType" >
+                        <Radio.Group  buttonStyle="solid" className="my-16 wmy-graph" onChange={radioChangeHandler}
                             defaultValue={selectParty === true ? "3rdparty" : "1stparty"}
                              value={selectParty === true ? "3rdparty" : "1stparty"}
                            >
@@ -555,16 +566,19 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
                             />
                         <Row gutter={[16,16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                            <Form.Item
-                            className='mb-0'>
-                                <div className="d-flex">
+                        <div className="d-flex">
                                     <Translate
                                         className="input-label"
                                         content={props?.userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
                                         component={Form.label}
                                     />{" "}
                                     <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
-                                <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />
+                            <Form.Item
+                            className='mb-0'
+                            name="beneficiaryAccountName"
+                            >
+                 { selectParty ? <Input className="cust-input"  placeholder="Recipient full name"  /> :
+                  <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
