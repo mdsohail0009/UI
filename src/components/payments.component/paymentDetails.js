@@ -4,7 +4,7 @@ import Translate from 'react-translate-component';
 import { getCurrencyLu, getPaymentsData, savePayments, getBankData,creatPayment,updatePayments } from './api'
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
-import { UploadOutlined } from '@ant-design/icons';
+import Loader from '../../Shared/loader';
 
 const { Option } = Select;
 const FormItem = Form.Item
@@ -21,6 +21,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     );
 };
 class PaymentDetails extends Component {
+    debugger
     formRef = createRef();
     constructor(props) {
         super(props);
@@ -56,10 +57,10 @@ class PaymentDetails extends Component {
         this.useDivRef.current.scrollIntoView()
     }
     handleAlert = () => {
-        this.setState({ ...this.state, errorMessage: null })
+        this.setState({ ...this.state, errorMessage: null,loading: true })
     }
     handleCurrencyChange = async (val, props) => {
-        this.setState({ ...this.state, Currency: val, paymentsData: [] })
+        this.setState({ ...this.state, loading: true, Currency: val, paymentsData: [] })
         if (this.state.Currency = val) {
             let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id, this.state.Currency)
             if (response.ok) {
@@ -67,7 +68,7 @@ class PaymentDetails extends Component {
                      loading: false })
             } else {
                 message.destroy();
-                this.setState({ ...this.state, errorMessage: response.data })
+                this.setState({ ...this.state, errorMessage: response.data,loading: false })
                 this.useDivRef.current.scrollIntoView()
             }
         }
@@ -83,24 +84,32 @@ class PaymentDetails extends Component {
             this.useDivRef.current.scrollIntoView()
         }
     }
-    getPayments = async (item) => {
+    getPayments = async () => {
+        debugger
+        this.setState({ ...this.state, loading: true })
         if(this.props.match.params.id==='00000000-0000-0000-0000-000000000000'){
-            this.setState({ ...this.state, loading: true })
+            debugger
             let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id, this.state.Currency)
             if (response.ok) {
-                this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false,});
+                this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false});
             } else {
                 message.destroy();
-                this.setState({ ...this.state, errorMessage: response.data })
+                this.setState({ ...this.state, errorMessage: response.data,loading: false })
                 this.useDivRef.current.scrollIntoView()
             }
         }else{
             let response=await creatPayment(this.props.match.params.id)  
             if(response.ok){
-                this.setState({...this.state,paymentsData:response.data});
+                let paymentDetails=response.data;
+                for(let i in paymentDetails ){
+                    paymentDetails[i].checked=true;
+                }
+                this.setState({...this.state,paymentsData:paymentDetails, loading: false});
+
+                
             } else {
                 message.destroy();
-                this.setState({ ...this.state, errorMessage: response.data })
+                this.setState({ ...this.state, errorMessage: response.data,loading: false })
                 this.useDivRef.current.scrollIntoView()
             }
         }
@@ -112,7 +121,6 @@ class PaymentDetails extends Component {
         })
         let objAmount = this.state.paymentsData.some((item) => {
             return item.amount != null
-            //return item.amount>0
         })
         let obj = Object.assign({});
         obj.id = this.props.userConfig.id;
@@ -133,7 +141,8 @@ class PaymentDetails extends Component {
             }
             else {
                 this.setState({ btnDisabled: true });
-                let response = await savePayments(obj);
+                if(this.props.match.params.id==='00000000-0000-0000-0000-000000000000'){
+                    let response = await savePayments(obj);
                 if (response.ok) {
                     this.setState({ btnDisabled: false });
                     message.destroy();
@@ -149,6 +158,25 @@ class PaymentDetails extends Component {
                     this.setState({ ...this.state, errorMessage: response.data })
                     this.useDivRef.current.scrollIntoView()
                 }
+                }else{
+                    let response = await updatePayments(this.state.paymentsData);
+                if (response.ok) {
+                    this.setState({ btnDisabled: false, });
+                    message.destroy();
+                    message.success({
+                        content: 'Payment details update successfully',
+                        className: "custom-msg",
+                        duration: 0.5
+                    })
+                    this.props.history.push('/payments')
+                } else {
+                    this.setState({ btnDisabled: false });
+                    message.destroy();
+                    this.setState({ ...this.state, errorMessage: response.data })
+                    this.useDivRef.current.scrollIntoView()
+                }
+                }
+                
             }
         } else {
             this.setState({ ...this.state, errorMessage: "Please select currency" })
@@ -183,7 +211,7 @@ class PaymentDetails extends Component {
         }
     }
     handleUpload = ({file},item) => {
-        this.setState({ ...this.state,fileDetails:[], isSubmitting: true, errorMessage: null })
+        this.setState({ ...this.state,fileDetails:[], isSubmitting: true, errorMessage: null,loading: true })
             let paymentDetialsData= this.state.paymentsData;
             for(let pay in paymentDetialsData){
                 if(paymentDetialsData[pay].id===item.id){
@@ -200,7 +228,7 @@ class PaymentDetails extends Component {
                     paymentDetialsData[pay].documents.details=[obj];
                 }
             }
-            this.setState({...this.state,paymentsData:paymentDetialsData})
+            this.setState({...this.state,paymentsData:paymentDetialsData,loading: false})
     }
     popOverContent = () => {
         const { moreBankInfo, tooltipLoad } = this.state;
@@ -221,12 +249,12 @@ class PaymentDetails extends Component {
             </div>)
         }
     }
+
     render() {
         let total=0;
          for (let i=0; i<this.state.paymentsData.length; i++) {
             total += Number(this.state.paymentsData[i].amount);
         }
-
         const { currency, paymentsData, loading} = this.state;
         const { form } = this.props
         return (
@@ -250,6 +278,7 @@ class PaymentDetails extends Component {
                             <Form.Item
                                 className='mb-16'
                             >
+                                {/* {this.props.match.params.id === "00000000-0000-0000-0000-000000000000" && */}
                                 <Select
                                     className="cust-input"
                                     placeholder="Select Currency"
@@ -270,12 +299,14 @@ class PaymentDetails extends Component {
                                         > 
                                         {item.currencyCode}
                                             {<NumberFormat
+                                            // value={this.props.match.params.id === "00000000-0000-0000-0000-000000000000" ? <>{item.avilable}</>:<>{paymentsData.currency}</>}
                                                 value={item.avilable}
                                                 displayType={'text'}
                                                 thousandSeparator={true}
                                                 renderText={(value) => <span > Balance: {value}</span>} />}
                                         </Option>))}
                                 </Select>
+                                {/* } */}
                             </Form.Item>
                             <div>
                                 <table className='pay-grid'>
@@ -285,14 +316,16 @@ class PaymentDetails extends Component {
                                             <th>Name</th>
                                             <th>Bank Name</th>
                                             <th>BIC/SWIFT/Routing Number</th>
+                                            <th>State</th>
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
+                                    <div className='text-center'>
+                                    {loading && <Loader />}
+                                    </div>
+                                    
                                     {paymentsData?.length > 0 ? <tbody className="mb-0">
-                                        {loading && <tr>
-                                            <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>}
-                                       {/* {!this.props.match.params ?<> */}
-                                       {paymentsData?.map((item, i) => {
+                                            {paymentsData?.map((item, i) => {
                                             return (
                                                 <>
                                                     <tr key={i} >
@@ -302,7 +335,7 @@ class PaymentDetails extends Component {
                                                                     style={{ cursor: "not-allowed" }}
                                                                     name="check"
                                                                     type="checkbox"
-                                                                    disabled
+                                                                    disabled={item.state==="Approved"?true:false}
                                                                     checked={item.checked}
                                                                     className="grid_check_box"
                                                                 />
@@ -330,6 +363,7 @@ class PaymentDetails extends Component {
                                                             </div>
                                                         </td>
                                                         <td>{item.accountnumber}</td>
+                                                        <td>{item.state?item.state:"- -"}</td>
                                                         <td>
                                                         <div className='d-flex'>
                                                             <NumberFormat className="cust-input text-right"
@@ -345,6 +379,7 @@ class PaymentDetails extends Component {
                                                                     paymentData[i].checked = value > 0 ? true : false;
                                                                     this.setState({ ...this.state, paymentsData: paymentData })
                                                                 }}
+                                                                disabled={item.state==="Approved"}
                                                                 value={item.amount}
                                                             />
                                                              <Upload type='dashed' size='large' className='ml-8 mt-12'
@@ -352,15 +387,30 @@ class PaymentDetails extends Component {
                                                                 action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                                                                 showUploadList={false} 
                                                                 beforeUpload={(props) => { this.beforeUpload(props) }}
-                                                                onChange={(props) => { this.handleUpload(props,item) }}>
-                                                                        <span className='icon md attach c-pointer' />                                                      
+                                                                onChange={(props) => { this.handleUpload(props,item) }}
+                                                                disabled={item.state==="Approved"}
+                                                                >
+                                                                        <span className={`icon md attach ${item.state==="Approved"?"":"c-pointer"} `}/>                                                      
                                                                 </Upload>
+                                                                {/* {this.state.uploadLoader && <Loader />} */}
                                                             </div>
-                                                            <Text className='file-label fs-12'>{item.documents?.details.length>0 && item.documents?.details[0]?.documentName}</Text>  
+                                                          {item.documents?.details.length>0 && <>
+                                                            {item.documents?.details.map((file) =>
+                                                                    <>{file ? <div className="docfile">
+                                                    <span className={`icon xl file mr-16`} />
+                                                    <div className="docdetails c-pointer" >
+                                                        <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
+                                                    </div>
+                                                    <span className="icon md close c-pointer" 
+                                                    // onClick={() => this.deleteDocument(file)}
+                                                     />
+                                                </div> : ""}
+                                                </>
+                                                )} </>}
+                                                            {/* <Text className='file-label fs-12'>{item.documents?.details.length>0 && item.documents?.details[0]?.documentName}</Text>   */}
                                                       </td>
                                                     </tr>
-                                                </>)
-                                        })}
+                                                </>)                                        })}
                                     </tbody> : <tbody><tr><td colSpan='8' className="p-16 text-center" style={{ color: "white", width: 300 }} >No bank details available</td></tr> </tbody>}
                                     <tfoot><tr>
                                 <div className='d-flex'>

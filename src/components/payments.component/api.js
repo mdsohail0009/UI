@@ -23,11 +23,9 @@ const saveBeneficiary = (obj) => {
 const getFavourite = (id) => {
     return apiClient.get(ApiControllers.depositWithdraw + `Withdraw/Favourite/${id}`);
 }
-//https://routechanges.azurewebsites.net/api/v1/DepositeWithdraw/Withdraw/Favourite/dcc19ccd-3b8a-495d-8cf6-331af651bbcb
 const getFileURL = (obj) => {
     return apiClient.post(ApiControllers.accounts + `FetchFile`, obj);
 };
-// https://apiuat.suissebase.ch/api/v1/MassPayment/CreatPayment/6bfcd474-506e-43af-8a65-56f59516708e
 const creatPayment = (id) => {
     return apiClient.get(ApiControllers.massPayment + `payment/${id}`);
 };
