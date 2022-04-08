@@ -504,5 +504,6 @@ export default {
   confirm_beneficiary: 'Confirm Beneficiary',
   return_to_beneficairy: 'Back to Add New Beneficiary',
   compliance: '(Compliance)',
-  upload_documents: 'Upload Documents'
+  upload_documents: 'Upload Documents',
+  get_your_own_iban: 'Dapatkan IBAN Anda Sendiri'
 }
