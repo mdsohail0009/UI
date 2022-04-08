@@ -8,7 +8,7 @@ import { store } from "../../store";
 import { success, warning, error } from "../../utils/messages";
 import Moment from "react-moment";
 import apiCalls from "../../api/apiCalls";
-const { Title, Paragraph } = Typography;
+const { Title, Paragraph, Text } = Typography;
 const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerifyObj }, props) => {
   const [form] = Form.useForm();
   const [isChangepassword, setisChangepassword] = useState(false);
@@ -272,11 +272,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
           component={Title}
           className="basicinfo mb-0"
         />
-        <Translate
-          content="withdraw_verification_options"
-          component={Paragraph}
-          className="basic-decs"
-        />
+        <Paragraph className="basic-decs">Please select <Text className="text-yellow fw-700">any 2</Text> withdrawal verification options from below.</Paragraph>
         <Form>
           <Row gutter={[16, 16]}>
             <Col md={4} xl={4} xxl={4}>
