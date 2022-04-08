@@ -21,7 +21,6 @@ class PaymentsView extends Component {
         this.getPaymentsViewData();
     }
     getPaymentsViewData = async () => {
-        debugger
         this.setState({ ...this.state, loading: true });
         let response = await getPaymentsData(this.props.match.params.id, this.props.userConfig?.userId,this.state.currency);
         if (response.ok) {
@@ -100,8 +99,10 @@ class PaymentsView extends Component {
                                         <>
                                           {paymentsData.length > 0? <> <tr key={idx}>
                                           <td>{item?.beneficiaryAccountName}</td>
-                                                <td className='d-flex align-center justify-content'>{item.bankname}
-                                                <Popover
+                                                <td>
+                                                    <div className='d-flex align-center justify-content'>
+                                                    {item.bankname}
+                                                            <Popover
                                                                     className='more-popover'
                                                                     content={this.popOverContent}
                                                                     trigger="click"
@@ -111,6 +112,7 @@ class PaymentsView extends Component {
                                                                 >
                                                                     <span className='icon md info c-pointer' onClick={() => this.moreInfoPopover(item.addressId, idx)} />
                                                                 </Popover>
+                                                                </div>
                                                 </td>
                                                 <td>{item.accountnumber}</td>
                                                 <td>
@@ -121,7 +123,7 @@ class PaymentsView extends Component {
                                                         renderText={value => value}
                                                     />
                                                     <br/>
-                                                   <span>{item.documents?.details.length>0 && item.documents?.details[0]?.documentName}    </span> 
+                                                    <Text className='file-label fs-12'>{item.documents?.details.length>0 && item.documents?.details[0]?.documentName}</Text>  
                                                 </td>
                                             </tr>
                                             </>

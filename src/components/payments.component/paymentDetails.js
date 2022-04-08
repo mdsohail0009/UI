@@ -23,7 +23,6 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 class PaymentDetails extends Component {
     formRef = createRef();
     constructor(props) {
-        debugger
         super(props);
         this.state = {
             currency: [],
@@ -184,10 +183,8 @@ class PaymentDetails extends Component {
         }
     }
     handleUpload = ({file},item) => {
-        debugger
         this.setState({ ...this.state,fileDetails:[], isSubmitting: true, errorMessage: null })
             let paymentDetialsData= this.state.paymentsData;
-            console.log("paymentDetialsData",paymentDetialsData)
             for(let pay in paymentDetialsData){
                 if(paymentDetialsData[pay].id===item.id){
                     let obj = {
@@ -350,7 +347,7 @@ class PaymentDetails extends Component {
                                                                 }}
                                                                 value={item.amount}
                                                             />
-                                                             <Upload type='dashed' size='large' className='ml-8'
+                                                             <Upload type='dashed' size='large' className='ml-8 mt-12'
                                                                 shape='circle' style={{backgroundColor: 'transparent'}} 
                                                                 action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                                                                 showUploadList={false} 
