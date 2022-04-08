@@ -133,6 +133,11 @@ const getVerificationFields = (memberId) => {
         ApiControllers.master + `Verificationfields/${memberId}`
     );
 }
+const twofactor = (id) => {
+    return apiClient.get(
+        ApiControllers.accounts + `twofactor/${id}`
+    );
+}
 
 let apicalls = {
     getportfolio,
@@ -161,6 +166,7 @@ let apicalls = {
     sendEmail,
     verifyEmail,
     getAuthenticator,
-    getVerificationFields
+    getVerificationFields,
+    twofactor
   };
   export default apicalls;
