@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {
-    Collapse, Button, Typography, Modal, Tooltip, message, Input, Upload, Spin, Empty, Alert, Row, Col,
+    Collapse, Button, Typography, Modal, Tooltip, Input, Upload, Spin, Empty, Alert, Row, Col,
     Divider
 } from 'antd';
 import {
-    approveDoc, getDocDetails, getDocumentReplies, saveDocReply, uuidv4, getFileURL, getCase, getCaseLu
+    approveDoc, getDocDetails, getDocumentReplies, saveDocReply, uuidv4, getFileURL, getCase
 } from './api';
+import NumberFormat from 'react-number-format';
 import Loader from '../../Shared/loader';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
@@ -68,7 +69,6 @@ class RequestedDocs extends Component {
         this.setState({ ...this.state, isMessageError: null, validHtmlError: null, documentReplies: { ...this.state.documentReplies, [id]: { loading: true, data: [], error: null } }, docReplyObjs: docReObj, docErrorMessage: null });
         const response = await getDocumentReplies(id);
         if (response.ok) {
-            console.log(response, "getDocumentReplies")
             this.setState({
                 ...this.state, documentReplies: {
                     ...this.state.documentReplies, [id]: {
@@ -120,7 +120,6 @@ class RequestedDocs extends Component {
         }
     }
     updateDocRepliesStatus = (doc, Status) => {
-        debugger
         let docDetails = [...this.state.docDetails.details];
         for (let item of docDetails) {
             if (item.id === doc.id) {
@@ -130,7 +129,6 @@ class RequestedDocs extends Component {
         this.setState({ ...this.state, docDetails: { ...this.state.docDetails, details: docDetails } });
     }
     docReject = async (doc) => {
-        debugger
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
         this.setState({ ...this.state, isMessageError: null });
         if (!validateContent(item?.reply)) {
@@ -341,10 +339,10 @@ class RequestedDocs extends Component {
                     <Row gutter={[16, 16]}>
                         {commonModel && Object.entries(commonModel).map(([key, value], idx) => <Col key={idx} xs={key=='Decription'?24:24} md={key=='Decription'?24:12} lg={key=='Decription'?24:8} xl={key=='Decription'?24:5} xxl={key=='Decription'?24:6}>
                             <div className="ribbon-item">
-                                <span className={`icon md ${key}`} />
+                                <span className={`icon md ${key ? key : 'Decription'}`} />
                                 <div className='ml-16' style={{flex: 1}}>
                                     <Text className='case-lbl'>{key}</Text>
-                                    <div className='case-val'>{value == null ? '-' : value}</div>
+                                    <div className='case-val'>{value == null ? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}</div>
                                 </div>
                             </div>
                         </Col>)}
