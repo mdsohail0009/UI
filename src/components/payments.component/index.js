@@ -48,7 +48,7 @@ const Payments = (props) => {
     setVisible(false);
   };
     const gridColumns = [
-           // {
+        //    {
         //     field: "",
         //     title: "",
         //     width: 50,
@@ -133,13 +133,13 @@ const Payments = (props) => {
                         >
                             New Bill Payment
                         </Button>
-    {/* <Button
+                        {/* <Button
                             className="pop-btn px-24"
                             style={{ margin: "0 8px", height: 40 }}
                             onClick={paymentsEdit}
                         >
                             Edit Bill Payment
-                        </Button>  */}                  
+                        </Button>                  */}
                           </div>
                 </div>
                 <div className="box basic-info text-white">
