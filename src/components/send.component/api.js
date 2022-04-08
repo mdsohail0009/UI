@@ -15,4 +15,7 @@ const handleNewExchangeAPI = ({ memberId, amount, coin, address }) => {
 const handleFiatConfirm = (obj) => {
     return apiClient.post(ApiControllers.depositWithdraw + `Withdraw/Fiat/Confirm`, obj);
 }
-export { getCryptoWithDrawWallets, withDrawCrypto, getWithdrawmemberCrypto, handleNewExchangeAPI,handleFiatConfirm }
+const updateSecurity = (obj) => {
+    return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
+  };
+export { getCryptoWithDrawWallets, withDrawCrypto, getWithdrawmemberCrypto, handleNewExchangeAPI,handleFiatConfirm,updateSecurity }

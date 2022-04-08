@@ -34,7 +34,9 @@ class FaitDeposit extends Component {
     buyToggle: 'Buy',
     fiatDepEur: false,
     faitdeposit: false,
-    BankDetails: [], BankInfo: null, depObj: { currency: null, BankName: null, Amount: null },
+    BankDetails: [],
+     BankInfo: null, 
+     depObj: { currency: null, BankName: null, Amount: null },
     tabValue: 1, Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false
   }
   componentDidMount() {
@@ -114,6 +116,7 @@ class FaitDeposit extends Component {
     }
   }
   handlFiatDep = async (e, currencyLu) => {
+    debugger
     let { depObj } = this.state;
     depObj.currency = e;
     depObj.BankName = null;
@@ -281,14 +284,19 @@ class FaitDeposit extends Component {
                       rules={[
                         { required: true, message: apicalls.convertLocalLang('is_required') },
                       ]}
-                    > <div ><div className="d-flex">
+                    > 
+                    <div ><div className="d-flex">
                       <Translate
                         className="input-label"
                         content="amount"
                         component={Text}
 
                       /><span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
-                        <NumberFormat className="cust-input mb-0" customInput={Input} thousandSeparator={true} prefix={""}
+                        <NumberFormat
+                         className="cust-input mb-0" 
+                         customInput={Input} 
+                         thousandSeparator={true}
+                          prefix={""}
                           placeholder="0.00"
                           decimalScale={2}
                           allowNegative={false}

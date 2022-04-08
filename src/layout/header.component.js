@@ -284,10 +284,16 @@ class Header extends Component {
     });
   };
   showDocRequestError() {
-    this.props.history.push("/docnotices");
+    if (!this.props.userConfig?.twofactorVerified) {
+      this.props.history.push("/enabletwofactor");
+    }
+    else if (this.props?.userConfig?.isDocsRequested) {
+      this.props.history.push("/docnotices");
+    }
+
   }
   showBuyDrawer = () => {
-    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
+    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.userConfig?.twofactorVerified) {
       this.props.dispatch(setStep("step1"));
       this.setState({
         buyDrawer: true,
@@ -307,7 +313,7 @@ class Header extends Component {
     }
   };
   showSendDrawer = () => {
-    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
+    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.userConfig?.twofactorVerified) {
       this.props.dispatch(sendSetStep("step1"));
       this.setState({
         sendDrawer: true,
@@ -345,7 +351,7 @@ class Header extends Component {
     });
   };
   showSwapDrawer = () => {
-    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
+    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.userConfig?.twofactorVerified) {
       this.props.dispatch(swapSetStep("swapcoins"));
       this.setState({
         swapDrawer: true,
@@ -365,7 +371,7 @@ class Header extends Component {
     }
   };
   showBuyFiatDrawer = () => {
-    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested) {
+    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.userConfig?.twofactorVerified) {
       this.props.dispatch(byFiatSetStep("step1"));
       this.props.dispatch(setWithdrawfiatenaable(false));
       this.setState({
@@ -471,7 +477,23 @@ class Header extends Component {
   };
 
   showPayments = () => {
-    this.props.history.push('/payments')
+    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.userConfig?.twofactorVerified)
+      this.props.history.push('/payments');
+    else {
+      const isKyc = !this.props.userConfig.isKYC;
+
+      if (isKyc) {
+        this.props.history.push("/notkyc");
+      } else {
+        this.showDocRequestError();
+      }
+    }
+  }
+  showCards = () =>{
+    window.open(
+      process.env.REACT_APP_CARDS_URL,
+      "_blank"
+    )
   }
   routeToCockpit = () => {
     this.props.dispatch(setHeaderTab(''));
@@ -669,6 +691,7 @@ class Header extends Component {
                 this.props.dispatch(setHeaderTab(key.key));
               }}
             >
+              
               <Translate
                 content="menu_payments"
                 component={Menu.Item}
@@ -723,6 +746,13 @@ class Header extends Component {
                 onClick={this.showTransactionHistoryDrawer}
                 className="list-item"
               />
+              {this.props.userConfig.isBusiness &&<Translate
+                content="cards"
+                component={Menu.Item}
+                key="8"
+                onClick={this.showCards}
+                className="list-item"
+              />}
               <Menu.Item
                 key="7"
                 className="notification-conunt"
@@ -738,6 +768,7 @@ class Header extends Component {
                     )}
                 </span>
               </Menu.Item>
+              
               <Dropdown
                 onVisibleChange={() =>
                   this.setState({

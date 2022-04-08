@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Typography, Row, Col, Spin, Radio, Button,Image } from "antd";
+import { Typography, Row, Col, Spin, Radio, Button, Image } from "antd";
 import { Link, withRouter } from "react-router-dom";
 import { getcoinDetails, getCoinChatData } from './api'
 import LineChart from './line.graph.component';
@@ -46,7 +46,11 @@ class CoinView extends React.Component {
         }
 
     }
+    checkAlerts = (isDocRequested, isNotKyc, isTwoFactorNotVerified) => {
+        const _result = false;
 
+
+    }
     coinChartData = async (days) => {
         if (this.state.coinData) {
             const response = await getCoinChatData(this.state.coinData.id, 'usd', days);
@@ -62,14 +66,20 @@ class CoinView extends React.Component {
         selectedObj.coinFullName = selectedObj.name
         selectedObj.oneCoinValue = selectedObj.current_price;
         selectedObj.id = selectedObj.memberWalletId;
-        if (this.props?.userProfile?.isDocsRequested) {
-            this.props.history.push("/docnotices");
-            return;
-        }
         if (!this.props?.userProfile?.isKYC) {
             this.props.history.push("/notkyc");
             return;
         }
+        if(!this.props?.userProfile?.twofactorVerified){
+            this.props.history.push("/enabletwofactor");
+            return;
+        }
+
+        if (this.props?.userProfile?.isDocsRequested) {
+            this.props.history.push("/docnotices");
+            return;
+        }
+       
         if (key === "buy") {
             this.props.dispatch(fetchSelectedCoinDetails(selectedObj.coin, this.props.userProfile?.id));
             this.props.dispatch(setCoin({ ...selectedObj, toWalletCode: selectedObj.coin, toWalletId: selectedObj.id, toWalletName: selectedObj.coinFullName }));
@@ -100,6 +110,14 @@ class CoinView extends React.Component {
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
         this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
         let coin = value.symbol.toUpperCase();
+        if (!this.props?.userProfile?.isKYC) {
+            this.props.history.push("/notkyc");
+            return;
+        }
+        if(!this.props?.userProfile?.twofactorVerified){
+            this.props.history.push("/enabletwofactor");
+            return;
+        }
         if (this.props?.userProfile?.isDocsRequested) {
             this.props.history.push("/docnotices");
             return;
@@ -162,7 +180,7 @@ class CoinView extends React.Component {
                 <Col lg={14} xl={14} xxl={14}>
                     <div className="box p-24 coin-bal">
                         {this.state.coinData ? <><div className="d-flex align-center">
-                            <Image preview={false} src={coinData.imagePath}/>
+                            <Image preview={false} src={coinData.imagePath} />
                             <div className="summary-count ml-16">
                                 <Paragraph className="text-white-30 fs-30 mb-0 fw-500">
                                     <NumberFormat value={coinData?.avilableBalance} displayType="text" thousandSeparator={true} prefix="" />

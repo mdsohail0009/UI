@@ -1,10 +1,11 @@
 import apiCalls from "../api/apiCalls";
 import { setNotificationCount } from "./dashboardReducer";
-
 const USEER_INFO = "userInfo";
 const UPDATE_DOC_REQUEST = "updateDocRequest";
 const FETCH_TRACK_AUDITLOGS = "fetchtrackauditlogs";
 const CLEAR_USER_INFO = "clearUserInfo";
+
+
 const userInfo = (payload) => {
     return {
         type: USEER_INFO,
@@ -37,6 +38,7 @@ const getmemeberInfo = (useremail) => {
     }
 }
 
+
 const getIpRegisteryData = () => {
     return async (dispatch) => {
         apiCalls.getIpRegistery().then((res) => {
@@ -66,7 +68,8 @@ const getIpRegisteryData = () => {
 
 let initialState = {
     userProfileInfo: null,
-    trackAuditLogData: {}
+    trackAuditLogData: {},
+    
 };
 const UserConfig = (state = initialState, action) => {
     switch (action.type) {
@@ -82,7 +85,7 @@ const UserConfig = (state = initialState, action) => {
         case CLEAR_USER_INFO:
             state = { userProfileInfo: null, trackAuditLogData: {} };
             return state;
-        default:
+       default:
             return state;
     }
 }
