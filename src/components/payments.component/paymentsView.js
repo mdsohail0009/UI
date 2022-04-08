@@ -88,9 +88,9 @@ class PaymentsView extends Component {
                         <table className='pay-grid view'>
                             <thead>
                                 <tr>
+                                    <th>Name</th>
                                     <th>Bank Name</th>
-                                    <th>Recipient Full Name</th>
-                                    <th>Account Number</th>
+                                    <th>BIC/SWIFT/Routing Number</th>
                                     <th>Amount</th>
                                 </tr>
                             </thead>
@@ -99,6 +99,7 @@ class PaymentsView extends Component {
                                     return (
                                         <>
                                           {paymentsData.length > 0? <> <tr key={idx}>
+                                          <td>{item?.beneficiaryAccountName}</td>
                                                 <td className='d-flex align-center justify-content'>{item.bankname}
                                                 <Popover
                                                                     className='more-popover'
@@ -111,7 +112,6 @@ class PaymentsView extends Component {
                                                                     <span className='icon md info c-pointer' onClick={() => this.moreInfoPopover(item.addressId, idx)} />
                                                                 </Popover>
                                                 </td>
-                                                <td>{item?.beneficiaryAccountName}</td>
                                                 <td>{item.accountnumber}</td>
                                                 <td>
                                                     <NumberFormat
