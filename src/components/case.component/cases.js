@@ -40,7 +40,7 @@ class Cases extends Component {
 		{field: "state",title: "State",filter: true,},
 	];
      viewCase = ({dataItem}) => {
-		this.props.history.push("/cases?id=" + dataItem.documentId);
+		this.props.history.push("/cases?id=" + dataItem.id);
 	};
 
     handleAllDocuments = e => {
