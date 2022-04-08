@@ -347,7 +347,7 @@ class PaymentDetails extends Component {
                                                                 }}
                                                                 value={item.amount}
                                                             />
-                                                             <Upload type='dashed' size='large' className='ml-8'
+                                                             <Upload type='dashed' size='large' className='ml-8 mt-12'
                                                                 shape='circle' style={{backgroundColor: 'transparent'}} 
                                                                 action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                                                                 showUploadList={false} 
