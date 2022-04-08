@@ -26,8 +26,8 @@ const { Dragger } = Upload;
 const { confirm } = Modal;
 
 const EllipsisMiddle = ({ suffixCount, children }) => {
-    const start = children.slice(0, children.length - suffixCount).trim();
-    const suffix = children.slice(-suffixCount).trim();
+    const start = children?.slice(0, children.length - suffixCount)?.trim();
+    const suffix = children?.slice(-suffixCount)?.trim();
     return (
         <Text className="mb-0 fs-14 docname c-pointer d-block"
             style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
@@ -71,7 +71,7 @@ const NewFiatAddress = (props, { buyInfo, userConfig, onCancel, addressBookReduc
     const [isValidFile, setIsValidFile] = useState(true);
       const[selectParty,setSelectParty] = useState(props?.checkThirdParty);
       const[adressTab,setAddressTab] = useState(false);
-const[files,setFiles]  = useState([]);
+    const[files,setFiles]  = useState([]);
 
     useEffect(() => {
        if(selectParty === true){
@@ -192,8 +192,6 @@ const[files,setFiles]  = useState([]);
         "details" : [
           ]
     } 
-            if(selectParty === true){
-            
                 if(files){
                     files.map((item,index)=>{
                       
@@ -210,15 +208,8 @@ const[files,setFiles]  = useState([]);
                        saveObj.documents.details.push(obj);
                    })
                 }
-            }
-            else{
-            if (file) {
-                const obj = getDocObj(props?.userConfig?.id, file.response[0], file.name, file.size, fiatAddress?.documents?.id, fiatAddress?.documents?.details[0].id);
-                   
-                saveObj["documents"] = obj;
-            }}
-        
-            let response = await saveAddress(saveObj);
+     
+           let response = await saveAddress(saveObj);
          
             if (response.ok) {
                 setBtnDisabled(false);
@@ -285,11 +276,12 @@ const[files,setFiles]  = useState([]);
     }
     const deleteFile = (index) =>{
        debugger
-    //    setFiles((files) => files.findIndex((item) => item.id !== id));
-
+  
+    
         let filesList = files
+        console.log(typeof(filesList));
        filesList.splice(index,1);
-        setFiles(filesList);
+  
     }
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     return (
@@ -599,9 +591,10 @@ const[files,setFiles]  = useState([]);
                         </Col>
                     </Row>
 
-                    {selectParty === true ? 
-                    <> 
-                         <Form.Item name={"file"} rules={[{
+                  { selectParty === false && <><Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
+                 <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={() => window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip></>}
+
+                         <Form.Item name={"file1"} rules={[{
                                 validator: (_, value) => {
                                     if (file) {
                                         return Promise.resolve();
@@ -617,11 +610,11 @@ const[files,setFiles]  = useState([]);
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Upload your Identity here</p>
+                                    <p className="ant-upload-text fs-18 mb-0">{selectParty === true ? "Upload your Identity here" : "Upload your signed document here"}</p>
                                 </Dragger>}
                             </Form.Item>
 
-                            <Form.Item name={"file"} rules={[{
+                          { selectParty === true && <Form.Item name={"file2"} rules={[{
                                 validator: (_, value) => {
                                     if (file) {
                                         return Promise.resolve();
@@ -636,48 +629,22 @@ const[files,setFiles]  = useState([]);
                                     </p>
                                     <p className="ant-upload-text fs-18 mb-0">Upload your Address Proofs here</p>
                                 </Dragger>}
-                            </Form.Item> </> :
-                        <>
-                            <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
-                            <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={() => window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
-                            <Form.Item name={"file"} rules={[{
-                                validator: (_, value) => {
-                                    if (file) {
-                                        return Promise.resolve();
-                                    } else {
-                                        return Promise.reject("Please upload file")
-                                    }
-                                }
-                            }]}>
-                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => {
-                                    setUploading(true);
-                                    if (res.status === "uploading") { setUploadPercentage(res.percent) }
-                                    else if (res.status === "done") {
-                                        setFile(res);
-                                        setUploading(false);
-                                    }
-
-                                }}>
-                                    <p className="ant-upload-drag-icon mb-16">
-                                        <span className="icon xxxl doc-upload" />
-                                    </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Upload your signed document here</p>
-                                </Dragger>}
-                            </Form.Item> </>}
-                    {isUploading && <div className="text-center">
+                            </Form.Item> }
+                          {isUploading && <div className="text-center">
                         <Spin />
-                    </div>}
-                    {<div className="docfile mr-0">
+                    </div>
+                    }
+                 {files.length !=0  && <div className="docfile mr-0">
                         <span className={`icon xl file mr-16`} />
                         <div className="docdetails c-pointer" >
-                        { files?.map((item,idx) => <>
-                        <EllipsisMiddle suffixCount={10}>{item.name}</EllipsisMiddle>
+                        { files.length != 0 && files?.map((item,idx) => <>
+                        <EllipsisMiddle suffixCount={10}>{item.name }</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(item.size)}</span>
                             </>
                             )}
                          </div>
-
-                       { files?.map((item,index) => <>
+                    
+                       { files.length !=0 && files?.map((item,index) => <>
                       <span className="icon md close c-pointer" onClick={() =>  confirm({ 
                             content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
                             title: <div className='fs-18 text-white-30'>Delete File ?</div>,
@@ -686,8 +653,7 @@ const[files,setFiles]  = useState([]);
                         )}
                     </div>} 
                   
-               
-                    <Form.Item
+                   <Form.Item
                         className="custom-forminput mt-36 agree"
                         name="isAgree"
                         valuePropName="checked"
