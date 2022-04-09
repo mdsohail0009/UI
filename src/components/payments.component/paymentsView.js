@@ -141,7 +141,6 @@ class PaymentsView extends Component {
                                                             </>
                                                           
                                                                  )} 
-                                                    {/* <Text className='file-label fs-12'>{item.documents?.details.length>0 && item.documents?.details[0]?.documentName}</Text>   */}
                                                 </td>
                                             </tr>
                                             </>
@@ -155,7 +154,14 @@ class PaymentsView extends Component {
                             <tfoot><tr>
                                 <div >
                                 <span className='text-white fs-24'> Total:</span>
-                                <span className='text-white fs-24'> {total}</span>
+                                <span className='text-white fs-24'>  <NumberFormat className=" text-right"
+                                                                customInput={Text} thousandSeparator={true} prefix={""}
+                                                                decimalScale={2}
+                                                                allowNegative={false}
+                                                                maxlength={13}
+                                                                style={{ height: 44 }}
+                                                            >
+                               <span className='text-white'>{total}</span> </NumberFormat></span>
                                 </div>
                                     </tr>  
                             </tfoot>

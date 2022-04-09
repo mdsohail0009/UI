@@ -133,7 +133,6 @@ class PaymentDetails extends Component {
             if (!objAmount) {
                 this.setState({ ...this.state, errorMessage: "Please enter amount" })
                 this.useDivRef.current.scrollIntoView()
-
             }
             else if (!objAmount > 0) {
                 this.setState({ ...this.state, errorMessage: "Amount must be greater than zero." })
@@ -175,8 +174,7 @@ class PaymentDetails extends Component {
                     this.setState({ ...this.state, errorMessage: response.data })
                     this.useDivRef.current.scrollIntoView()
                 }
-                }
-                
+                }  
             }
         } else {
             this.setState({ ...this.state, errorMessage: "Please select currency" })
@@ -217,7 +215,7 @@ class PaymentDetails extends Component {
             for(let pay in paymentDetialsData){
                 if(paymentDetialsData[pay].id===item.id){
                     let obj = {
-                        "id": "00000000-0000-0000-0000-000000000000",
+                        "id":"00000000-0000-0000-0000-000000000000",
                         "documentId": "00000000-0000-0000-0000-000000000000",
                         "isChecked": file.name == "" ? false : true,
                         "documentName":`${file.name}`,
@@ -226,9 +224,7 @@ class PaymentDetails extends Component {
                         "status": false,
                         "path": `${file.name}`,
                     }
-                    paymentDetialsData[pay].documents.details=[obj];
-                    // paymentDetialsData[pay].documents.details.push(obj);
-                    
+                    paymentDetialsData[pay].documents.details=[obj];  
                 }
             }
             this.setState({...this.state,paymentsData:paymentDetialsData,loading: false})
@@ -281,7 +277,6 @@ class PaymentDetails extends Component {
                             <Form.Item
                                 className='mb-16'
                             >
-                                {/* {this.props.match.params.id === "00000000-0000-0000-0000-000000000000" && */}
                                 <Select
                                     className="cust-input"
                                     placeholder="Select Currency"
@@ -306,7 +301,6 @@ class PaymentDetails extends Component {
                                                 renderText={(value) => <span > Balance: {value}</span>} />}
                                         </Option>))}
                                 </Select>
-                                {/* } */}
                             </Form.Item>
                             <div>
                                 <table className='pay-grid'>
@@ -320,10 +314,8 @@ class PaymentDetails extends Component {
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
-                                    <div className='text-center'>
-                                    {loading && <Loader />}
-                                    </div>
-                                    
+                                   
+                                    {loading ?<tbody><tr><td colSpan='8' className="p-16 text-center"  ><Loader /></td></tr> </tbody>   :<>
                                     {paymentsData?.length > 0 ? <tbody className="mb-0">
                                             {paymentsData?.map((item, i) => {
                                             return (
@@ -391,26 +383,36 @@ class PaymentDetails extends Component {
                                                                 >
                                                                  <span className={`icon md attach ${item.state==="Approved"?"":"c-pointer"} `}/>                                                      
                                                                 </Upload>
-                                                                {/* {this.state.uploadLoader && <Loader />} */}
                                                             </div>
-                                                            {item.documents?.details.map((file) =><>
+                                                            
+                                                            {item.documents?.details.map((file) =><> 
                                                                 {file.documentName !== null && 
                                                              <Text  className='file-label fs-12'>
                                                                  {file.documentName}
                                                                  </Text>  
                                                             }
-                                                            </>
-                                                          
-                                                                 )} 
+                                                             </>)} 
                                                       </td>
                                                     </tr>
-                                                </>)                                        })}
-                                    </tbody> : <tbody><tr><td colSpan='8' className="p-16 text-center" style={{ color: "white", width: 300 }} >No bank details available</td></tr> </tbody>}
-                                    <tfoot><tr>
+                                                </>)   })}
+                                    </tbody> : <tbody><tr><td colSpan='8' className="p-16 text-center" style={{ color: "white", width: 300 }} >No bank details available</td></tr> </tbody>}</>}
+                                    <tfoot>
+                                        <tr>
+                                        <td colSpan='4'>
+                                        <div className='text-right'>
                                 <div className='d-flex'>
                                 <span className='text-white fs-24'> Total:</span>
-                                <span className='text-white fs-24'> {total}</span>
+                                <span className='text-white fs-24'> <NumberFormat className=" text-right"
+                                                                customInput={Text} thousandSeparator={true} prefix={""}
+                                                                decimalScale={2}
+                                                                allowNegative={false}
+                                                                maxlength={13}
+                                                                style={{ height: 44 }}  
+                                                            >
+                                 <span className='text-white'>{total}</span></NumberFormat></span>
                                 </div>
+                                </div>
+                                </td>
                                     </tr>  
                             </tfoot>
                                 </table>
