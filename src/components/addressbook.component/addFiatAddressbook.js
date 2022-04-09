@@ -193,13 +193,13 @@ debugger
         let favaddrId = props?.addressBookReducer?.selectedRowData ? props?.addressBookReducer?.selectedRowData?.id : Id;
         let namecheck = values.favouriteName.trim();
         let responsecheck = await favouriteNameCheck(props?.userConfig?.id, namecheck, 'fiat', favaddrId);
-        // if (responsecheck.data != null) {
-        //     setIsLoading(false);
-        //     setBtnDisabled(false);
-        //     useDivRef.current.scrollIntoView()
-        //     return setErrorMsg('Address label already existed');
-        // }
-        //  else {
+        if (responsecheck.data != null) {
+            setIsLoading(false);
+            setBtnDisabled(false);
+            useDivRef.current.scrollIntoView()
+            return setErrorMsg('Address label already existed');
+        }
+         else {
             setBtnDisabled(true);
             let saveObj = Object.assign({}, values);
             
@@ -303,7 +303,7 @@ debugger
                 setBtnDisabled(false);
             }
         }
-    // }
+    }
     const getIbanData = async (val) => {
         if (val && val.length > 14) {
             let response = await apiCalls.getIBANData(val);
