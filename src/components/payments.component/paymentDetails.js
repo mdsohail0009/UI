@@ -133,7 +133,6 @@ class PaymentDetails extends Component {
             if (!objAmount) {
                 this.setState({ ...this.state, errorMessage: "Please enter amount" })
                 this.useDivRef.current.scrollIntoView()
-
             }
             else if (!objAmount > 0) {
                 this.setState({ ...this.state, errorMessage: "Amount must be greater than zero." })
@@ -175,8 +174,7 @@ class PaymentDetails extends Component {
                     this.setState({ ...this.state, errorMessage: response.data })
                     this.useDivRef.current.scrollIntoView()
                 }
-                }
-                
+                }  
             }
         } else {
             this.setState({ ...this.state, errorMessage: "Please select currency" })
@@ -211,12 +209,13 @@ class PaymentDetails extends Component {
         }
     }
     handleUpload = ({file},item) => {
+        debugger
         this.setState({ ...this.state,fileDetails:[], isSubmitting: true, errorMessage: null,loading: true })
             let paymentDetialsData= this.state.paymentsData;
             for(let pay in paymentDetialsData){
                 if(paymentDetialsData[pay].id===item.id){
                     let obj = {
-                        "id": "00000000-0000-0000-0000-000000000000",
+                        "id":"00000000-0000-0000-0000-000000000000",
                         "documentId": "00000000-0000-0000-0000-000000000000",
                         "isChecked": file.name == "" ? false : true,
                         "documentName":`${file.name}`,
@@ -225,7 +224,7 @@ class PaymentDetails extends Component {
                         "status": false,
                         "path": `${file.name}`,
                     }
-                    paymentDetialsData[pay].documents.details=[obj];
+                    paymentDetialsData[pay].documents.details=[obj];  
                 }
             }
             this.setState({...this.state,paymentsData:paymentDetialsData,loading: false})
@@ -278,7 +277,6 @@ class PaymentDetails extends Component {
                             <Form.Item
                                 className='mb-16'
                             >
-                                {/* {this.props.match.params.id === "00000000-0000-0000-0000-000000000000" && */}
                                 <Select
                                     className="cust-input"
                                     placeholder="Select Currency"
@@ -288,8 +286,6 @@ class PaymentDetails extends Component {
                                     bordered={false}
                                     showArrow={true}
                                     defaultValue="USD"
-                                    // disabled={this.props.match.params.id !== "00000000-0000-0000-0000-000000000000" ? true:false}
-
                                 >
                                     {currency?.map((item, idx) => (
                                         <Option
@@ -299,14 +295,12 @@ class PaymentDetails extends Component {
                                         > 
                                         {item.currencyCode}
                                             {<NumberFormat
-                                            // value={this.props.match.params.id === "00000000-0000-0000-0000-000000000000" ? <>{item.avilable}</>:<>{paymentsData.currency}</>}
                                                 value={item.avilable}
                                                 displayType={'text'}
                                                 thousandSeparator={true}
                                                 renderText={(value) => <span > Balance: {value}</span>} />}
                                         </Option>))}
                                 </Select>
-                                {/* } */}
                             </Form.Item>
                             <div>
                                 <table className='pay-grid'>
@@ -316,14 +310,12 @@ class PaymentDetails extends Component {
                                             <th>Name</th>
                                             <th>Bank Name</th>
                                             <th>BIC/SWIFT/Routing Number</th>
-                                            <th>State</th>
+                                            {this.props.match.params.id !=='00000000-0000-0000-0000-000000000000' && <th>State</th>}
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
-                                    <div className='text-center'>
-                                    {loading && <Loader />}
-                                    </div>
-                                    
+                                   
+                                    {loading ?<tbody><tr><td colSpan='8' className="p-16 text-center"  ><Loader /></td></tr> </tbody>   :<>
                                     {paymentsData?.length > 0 ? <tbody className="mb-0">
                                             {paymentsData?.map((item, i) => {
                                             return (
@@ -346,9 +338,8 @@ class PaymentDetails extends Component {
                                                         <td>
                                                             <div className='d-flex align-center justify-content'>
                                                                 <span>{item.bankname}
-                                                                {item.isPrimary!==null? <Badge size="small" className='ml-8'
-                                                                count={'3rd Party'} 
-                                                                 style={{border: 'none'}} />:""}
+                                                                {item.isPrimary!==null? <Text  size="small" className='file-label ml-8'
+                                                                  >{item.addressType} </Text>:""}
                                                                  </span>
                                                                 <Popover
                                                                     className='more-popover'
@@ -363,7 +354,7 @@ class PaymentDetails extends Component {
                                                             </div>
                                                         </td>
                                                         <td>{item.accountnumber}</td>
-                                                        <td>{item.state?item.state:"- -"}</td>
+                                                        {this.props.match.params.id !=='00000000-0000-0000-0000-000000000000' && <td>{item.state?item.state:"- -"}</td>}
                                                         <td>
                                                         <div className='d-flex'>
                                                             <NumberFormat className="cust-input text-right"
@@ -390,33 +381,38 @@ class PaymentDetails extends Component {
                                                                 onChange={(props) => { this.handleUpload(props,item) }}
                                                                 disabled={item.state==="Approved"}
                                                                 >
-                                                                        <span className={`icon md attach ${item.state==="Approved"?"":"c-pointer"} `}/>                                                      
+                                                                 <span className={`icon md attach ${item.state==="Approved"?"":"c-pointer"} `}/>                                                      
                                                                 </Upload>
-                                                                {/* {this.state.uploadLoader && <Loader />} */}
                                                             </div>
-                                                          {item.documents?.details.length>0 && <>
-                                                            {item.documents?.details.map((file) =>
-                                                                    <>{file ? <div className="docfile">
-                                                    <span className={`icon xl file mr-16`} />
-                                                    <div className="docdetails c-pointer" >
-                                                        <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
-                                                    </div>
-                                                    <span className="icon md close c-pointer" 
-                                                    // onClick={() => this.deleteDocument(file)}
-                                                     />
-                                                </div> : ""}
-                                                </>
-                                                )} </>}
-                                                            {/* <Text className='file-label fs-12'>{item.documents?.details.length>0 && item.documents?.details[0]?.documentName}</Text>   */}
+                                                            
+                                                            {item.documents?.details.map((file) =><> 
+                                                                {file.documentName !== null && 
+                                                             <Text  className='file-label fs-12'>
+                                                                 {file.documentName}
+                                                                 </Text>  
+                                                            }
+                                                             </>)} 
                                                       </td>
                                                     </tr>
-                                                </>)                                        })}
-                                    </tbody> : <tbody><tr><td colSpan='8' className="p-16 text-center" style={{ color: "white", width: 300 }} >No bank details available</td></tr> </tbody>}
-                                    <tfoot><tr>
+                                                </>)   })}
+                                    </tbody> : <tbody><tr><td colSpan='8' className="p-16 text-center" style={{ color: "white", width: 300 }} >No bank details available</td></tr> </tbody>}</>}
+                                    <tfoot>
+                                        <tr>
+                                        <td colSpan='4'>
+                                        <div className='text-right'>
                                 <div className='d-flex'>
                                 <span className='text-white fs-24'> Total:</span>
-                                <span className='text-white fs-24'> {total}</span>
+                                <span className='text-white fs-24'> <NumberFormat className=" text-right"
+                                                                customInput={Text} thousandSeparator={true} prefix={""}
+                                                                decimalScale={2}
+                                                                allowNegative={false}
+                                                                maxlength={13}
+                                                                style={{ height: 44 }}  
+                                                            >
+                                 <span className='text-white'>{total}</span></NumberFormat></span>
                                 </div>
+                                </div>
+                                </td>
                                     </tr>  
                             </tfoot>
                                 </table>
