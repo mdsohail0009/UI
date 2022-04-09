@@ -151,18 +151,23 @@ class PaymentsView extends Component {
                                 {loading && <tr>
                                     <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>}
                             </tbody>
-                            <tfoot><tr>
-                                <div >
-                                <span className='text-white fs-24'> Total:</span>
-                                <span className='text-white fs-24'>  <NumberFormat className=" text-right"
+                            <tfoot>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                         <td >
+                                <span className='text-white fs-24 ml-8'> Total:</span>
+                                </td>
+                                <td><span className='text-white fs-24'> <NumberFormat className=" text-right"
                                                                 customInput={Text} thousandSeparator={true} prefix={""}
                                                                 decimalScale={2}
                                                                 allowNegative={false}
                                                                 maxlength={13}
-                                                                style={{ height: 44 }}
+                                                                style={{ height: 44 }}  
                                                             >
-                               <span className='text-white'>{total}</span> </NumberFormat></span>
-                                </div>
+                                 <span className='text-white '>{total}</span></NumberFormat></span></td>
+                                
+                              
                                     </tr>  
                             </tfoot>
                         </table>
