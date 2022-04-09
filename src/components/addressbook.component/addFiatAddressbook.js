@@ -709,7 +709,7 @@ debugger
                                 rules={[
                                     { required: true, message: apiCalls.convertLocalLang('is_required') }
                                 ]} >
-                                <TextArea placeholder='Remarks' className='cust-input pt-16' autoSize={{ minRows: 2, maxRows: 5 }} maxLength={300}></TextArea>
+                                <TextArea placeholder='Remarks' className='cust-input pt-16' autoSize={{ minRows: 3, maxRows: 3 }} maxLength={300}></TextArea>
                             </Form.Item>
                         </Col>
                     </Row>
@@ -747,14 +747,14 @@ debugger
                             onOk: () => { setIdentityFile(null); }
                         })} />
                     </div>}
-                    { uploadingActive && <div className="text-center">
+                    { uploadingActive && <div className="text-center mt-16">
                         <Spin />
                     </div>
                     }
                             </Form.Item>
     </Col>
     <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
-                         <Form.Item name={"file2"} rules={[{
+                         <Form.Item name={"file2"} className="mb-0" rules={[{
                                 validator: (_, value) => {
                                     if (addressFile) {
                                         return Promise.resolve();
@@ -782,7 +782,7 @@ debugger
                             onOk: () => { setAdressFile(null); }
                         })} />
                     </div>}
-                    { isUploading && <div className="text-center">
+                    { isUploading && <div className="text-center mt-16">
                         <Spin />
                     </div>
                    
