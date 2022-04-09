@@ -23,7 +23,6 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     );
 };
 class PaymentDetails extends Component {
-    debugger
     formRef = createRef();
     constructor(props) {
         super(props);
@@ -89,10 +88,8 @@ class PaymentDetails extends Component {
         }
     }
     getPayments = async () => {
-        debugger
         this.setState({ ...this.state, loading: true })
         if(this.props.match.params.id==='00000000-0000-0000-0000-000000000000'){
-            debugger
             let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id, this.state.Currency)
             if (response.ok) {
                 this.setState({ ...this.state,billPaymentData:response.data, paymentsData: response.data.paymentsDetails, loading: false});
@@ -186,13 +183,12 @@ class PaymentDetails extends Component {
         }
     }
     deleteDetials = async ( idx ) => {
-        debugger
         const response = await deletePayDetials(idx.id);
         message.destroy()
         if (response.ok) {
             message.warning('Document has been deleted');
             this.getPayments();
-            
+            this.props.history.push('/payments');
         } else {
             message.warning(response.data);
         }
@@ -225,7 +221,6 @@ class PaymentDetails extends Component {
         }
     }
     handleUpload = ({file},item) => {
-        debugger
         this.setState({ ...this.state,fileDetails:[], isSubmitting: true, errorMessage: null,loading: true })
             let paymentDetialsData= this.state.paymentsData;
             for(let pay in paymentDetialsData){
@@ -420,20 +415,18 @@ class PaymentDetails extends Component {
                                                                  <span className={`icon md attach ${item.state==="Approved"?"":"c-pointer"} `}/>                                                      
                                                                 </Upload>
                                                                 <Button
-                                                                // type="primary"
-                                                                // shape="circle"
                                                                 className="delete-btn mt-30"
                                                                 style={{ padding: "0 14px" }}
                                                                 onClick={() =>
                                                                     confirm({
                                                                     content: (
                                                                         <div className="fs-14 text-white-50">
-                                                                        Are you sure do you want to delete Assignee?
+                                                                        Are you sure do you want to delete document ?
                                                                         </div>
                                                                     ),
                                                                     title: (
                                                                         <div className="fs-18 text-white-30">
-                                                                    Delete Assignee ?
+                                                                    Delete document ?
                                                                         </div>
                                                                     ),
                                                                     onOk: () => {this.deleteDetials(item)}
