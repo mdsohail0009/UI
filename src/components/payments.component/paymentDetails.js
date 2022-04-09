@@ -47,6 +47,7 @@ class PaymentDetails extends Component {
             payData:[],
             amount:0,
             type:this.props.match.params.type,
+            billPaymentData:null
         }
         this.gridRef = React.createRef();
         this.useDivRef = React.createRef();
@@ -94,7 +95,7 @@ class PaymentDetails extends Component {
             debugger
             let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id, this.state.Currency)
             if (response.ok) {
-                this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false});
+                this.setState({ ...this.state,billPaymentData:response.data, paymentsData: response.data.paymentsDetails, loading: false});
             } else {
                 message.destroy();
                 this.setState({ ...this.state, errorMessage: response.data,loading: false })
@@ -104,10 +105,10 @@ class PaymentDetails extends Component {
             let response=await creatPayment(this.props.match.params.id)  
             if(response.ok){
                 let paymentDetails=response.data;
-                for(let i in paymentDetails ){
-                    paymentDetails[i].checked=true;
+                for(let i in paymentDetails.paymentsDetails ){
+                    paymentDetails.paymentsDetails[i].checked=true;
                 }
-                this.setState({...this.state,paymentsData:paymentDetails, loading: false});
+                this.setState({...this.state,billPaymentData:response.data,paymentsData:paymentDetails.paymentsDetails, loading: false});
 
                 
             } else {
@@ -300,6 +301,7 @@ class PaymentDetails extends Component {
                                     dropdownClassName='select-drpdwn'
                                     bordered={false}
                                     showArrow={true}
+                                    value={this.state.billPaymentData?.currency}
                                     defaultValue="USD"
                                     disabled={(type === 'disabled' ? true : false) || (this.props.match.params.id !== "00000000-0000-0000-0000-000000000000" ? true : false)}
                                 >
@@ -336,16 +338,23 @@ class PaymentDetails extends Component {
                                             {paymentsData?.map((item, i) => {
                                             return (
                                                 <>
-                                                    <tr key={i} disabled={item.state==="Submitted"?false:true} >
+                                                    <tr key={i} disabled={(this.props.match.params.id==='00000000-0000-0000-0000-000000000000' || item.state==="Submitted")?false:true} >
                                                         <td style={{ width: 50 }} className='text-center'>
                                                             <label className="text-center custom-checkbox p-relative">
                                                                 <Input
-                                                                    style={{ cursor: "not-allowed" }}
+                                                                     //style={(this.props.match.params.id==='00000000-0000-0000-0000-000000000000' || item.state==="Submitted")?'':{ cursor: "not-allowed" }}
                                                                     name="check"
                                                                     type="checkbox"
-                                                                    // disabled={item.state==="Approved"?true:false}
+                                                                    // disabled={(this.props.match.params.id==='00000000-0000-0000-0000-000000000000' || item.state==="Submitted")?false:true}
                                                                     checked={item.checked}
                                                                     className="grid_check_box"
+                                                                    onClick={(value)=>{
+                                                                        console.log(value.target.checked)
+                                                                        let paymentData = this.state.paymentsData;
+                                                                    if(value.target.checked===false){paymentData[i].amount = 0;}
+                                                                    paymentData[i].checked = value.target.checked;
+                                                                    this.setState({ ...this.state, paymentsData: paymentData })
+                                                                    }}
                                                                 />
                                                                 <span></span>
                                                             </label>
@@ -373,6 +382,16 @@ class PaymentDetails extends Component {
                                                         {this.props.match.params.id !=='00000000-0000-0000-0000-000000000000' && <td>{item.state?item.state:"- -"}</td>}
                                                         <td>
                                                         <div className='d-flex'>
+                                                        <Form.Item
+                                                            //name={item.id}
+                                                            className='mb-16'
+                                                            rules={item.checked &&[
+                                                                    {
+                                                                        required: true,
+                                                                        message: 'is_required'
+                                                                    }
+                                                                 ]}
+                                                        >
                                                             <NumberFormat className="cust-input text-right"
                                                                 customInput={Input} thousandSeparator={true} prefix={""}
                                                                 placeholder="0.00"
@@ -383,12 +402,13 @@ class PaymentDetails extends Component {
                                                                 onValueChange={({ e, value }) => {
                                                                     let paymentData = this.state.paymentsData;
                                                                     paymentData[i].amount = value;
-                                                                    paymentData[i].checked = value > 0 ? true : false;
+                                                                    paymentData[i].checked = value > 0 ? true : paymentData[i].checked;
                                                                     this.setState({ ...this.state, paymentsData: paymentData })
                                                                 }}
                                                                 disabled={item.state==="Approved"}
                                                                 value={item.amount}
                                                             />
+                                                            </Form.Item>
                                                              <Upload type='dashed' size='large' className='ml-8 mt-12'
                                                                 shape='circle' style={{backgroundColor: 'transparent'}} 
                                                                 action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
