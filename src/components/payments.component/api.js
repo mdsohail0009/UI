@@ -29,8 +29,10 @@ const getFileURL = (obj) => {
 const creatPayment = (id) => {
     return apiClient.get(ApiControllers.massPayment + `payment/${id}`);
 };
-
-export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment}
+const deletePayDetials = (id) => {
+    return apiClient.delete(ApiControllers.massPayment + `BillPayments/payment/${id}`);
+};
+export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials}
 
 //https://routechanges.azurewebsites.net/api/v1/DepositeWithdraw/Favourite
 //https://routechanges.azurewebsites.net/api/v1/Wallets/Fiat/f8be2fd6-9778-4408-ba57-7502046e13a5
