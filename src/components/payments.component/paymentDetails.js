@@ -190,7 +190,8 @@ class PaymentDetails extends Component {
         message.destroy()
         if (response.ok) {
             message.warning('Document has been deleted');
-            this.props.history.push('/payments')
+            this.getPayments();
+            // this.props.history.push('/payments')
         } else {
             message.warning(response.data);
         }
