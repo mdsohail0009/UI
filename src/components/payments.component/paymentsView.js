@@ -6,6 +6,15 @@ import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
+const EllipsisMiddle = ({ suffixCount, children }) => {
+    const start = children?.slice(0, children.length - suffixCount).trim();
+    const suffix = children?.slice(-suffixCount).trim();
+    return (
+        <Text className="mb-0 fs-14 docname c-pointer d-block" style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
+            {start}
+        </Text>
+    );
+};
 class PaymentsView extends Component {
     constructor(props) {
         super(props);
@@ -123,7 +132,15 @@ class PaymentsView extends Component {
                                                         renderText={value => value}
                                                     />
                                                     <br/>
-                                                    <Text className='file-label fs-12'>{item.documents?.details.length>0 && item.documents?.details[0]?.documentName}</Text>  
+                                                    {item.documents?.details.map((file) =><>
+                                                                {file.documentName !== null && 
+                                                             <Text  className='file-label fs-12'>
+                                                                 {file.documentName}
+                                                                 </Text>  
+                                                            }
+                                                            </>
+                                                          
+                                                                 )} 
                                                 </td>
                                             </tr>
                                             </>
@@ -132,12 +149,19 @@ class PaymentsView extends Component {
                                 })}
 
                                 {loading && <tr>
-                                    <td colSpan='3' className='text-center p-16'><Spin size='default' /></td></tr>}
+                                    <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>}
                             </tbody>
                             <tfoot><tr>
                                 <div >
                                 <span className='text-white fs-24'> Total:</span>
-                                <span className='text-white fs-24'> {total}</span>
+                                <span className='text-white fs-24'>  <NumberFormat className=" text-right"
+                                                                customInput={Text} thousandSeparator={true} prefix={""}
+                                                                decimalScale={2}
+                                                                allowNegative={false}
+                                                                maxlength={13}
+                                                                style={{ height: 44 }}
+                                                            >
+                               <span className='text-white'>{total}</span> </NumberFormat></span>
                                 </div>
                                     </tr>  
                             </tfoot>
