@@ -73,6 +73,7 @@ const NewFiatAddress = (props) => {
     const[selectParty,setSelectParty] = useState(props?.checkThirdParty);
     const[uploadingActive,setUploadingActive] = useState(false);
     const[files,setFiles]  = useState([]);
+    const[isEdit,setEdit] = useState(false);
 
     useEffect(() => {
        if(selectParty === true){
@@ -84,6 +85,7 @@ const NewFiatAddress = (props) => {
        }
     if (props?.addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && props?.addressBookReducer?.selectedRowData?.id) {
             loadDataAddress();
+            setEdit(true);
         }
         addressbkTrack();
         getCountryLu();
@@ -311,8 +313,12 @@ debugger
             }
         }
     }
-    const beforeUpload = (file) => {
+    const beforeUpload = (file,type) => {
         debugger
+        if(type === "IDENTITYPROOF" || type === "ADDRESSPROOF"){
+            setIsValidFile(true);
+        }
+        else{
            let fileType = { "image/png": false, 'image/jpg': false, 'image/jpeg': false, 'image/PNG': false, 'image/JPG': false, 'image/JPEG': false, 'application/pdf': true, 'application/PDF': true }
         if (fileType[file.type]) {
             setIsValidFile(true);
@@ -322,6 +328,7 @@ debugger
             setIsValidFile(false);
             return Upload.LIST_IGNORE;
         }
+    }
     }
     const radioChangeHandler = (e) => {
           setFiles([]);
@@ -344,14 +351,14 @@ debugger
         if (file?.status === "uploading") 
         { 
             setUploadPercentage(file?.percent)
-            if(type === "IDENTITYPROOF"){
+            if(type === "IDENTITYPROOF" ){
                 setUploadingActive(true);
             }
-            else{
+            else if(isValidFile === true){
                 setUploading(true);
             }
          }
-        else if (file?.status === "done") {
+        else if (file?.status === "done" && isValidFile === true) {
              if(type === "IDENTITYPROOF"){
                  let obj = {
                     "documentId": "00000000-0000-0000-0000-000000000000",
@@ -383,7 +390,7 @@ debugger
                 }
                 setAdressFile(obj);
             }
-            else{
+            else {
                 setUploading(true);
                 let obj = {
                     "documentId": "00000000-0000-0000-0000-000000000000",
@@ -422,8 +429,9 @@ debugger
                             defaultValue={selectParty === true ? "3rdparty" : "1stparty"}
                              value={selectParty === true ? "3rdparty" : "1stparty"}
                            >
-                            <Radio value={"1stparty"} className="text-white">1st Party</Radio>
-                            <Radio value={"3rdparty"} className="text-white">3rd Party</Radio>
+                            <Radio value={"1stparty"} className="text-white" disabled={isEdit}>1st Party</Radio>
+                            <Radio value={"3rdparty"} className="text-white" disabled={isEdit}
+                            >3rd Party</Radio>
                         </Radio.Group>
 
                     </Form.Item>
@@ -726,7 +734,7 @@ debugger
                                     }
                                 }
                             }]}>
-                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={(props) => upLoadFiles(props,"IDENTITYPROOF")
+                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props,"IDENTITYPROOF") }} onChange={(props) => upLoadFiles(props,"IDENTITYPROOF")
 
                                 
                             }>
@@ -763,7 +771,7 @@ debugger
                                     }
                                 }
                             }]}>
-                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={(props) => upLoadFiles(props,"ADDRESSPROOF")}>
+                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props,"ADDRESSPROOF") }} onChange={(props) => upLoadFiles(props,"ADDRESSPROOF")}>
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
@@ -803,7 +811,7 @@ debugger
                                     }
                                 }
                             }]}>
-                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={(props) => upLoadFiles(props,"DECLARATION")
+                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props,"DECLARATION") }} onChange={(props) => upLoadFiles(props,"DECLARATION")
 
                                 
                             }>
