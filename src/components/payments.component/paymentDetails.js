@@ -400,20 +400,18 @@ class PaymentDetails extends Component {
                                                                  <span className={`icon md attach ${item.state==="Approved"?"":"c-pointer"} `}/>                                                      
                                                                 </Upload>
                                                                 <Button
-                                                                // type="primary"
-                                                                // shape="circle"
                                                                 className="delete-btn mt-30"
                                                                 style={{ padding: "0 14px" }}
                                                                 onClick={() =>
                                                                     confirm({
                                                                     content: (
                                                                         <div className="fs-14 text-white-50">
-                                                                        Are you sure do you want to delete Assignee?
+                                                                        Are you sure do you want to delete document ?
                                                                         </div>
                                                                     ),
                                                                     title: (
                                                                         <div className="fs-18 text-white-30">
-                                                                    Delete Assignee ?
+                                                                    Delete document ?
                                                                         </div>
                                                                     ),
                                                                     onOk: () => {this.deleteDetials(item)}
