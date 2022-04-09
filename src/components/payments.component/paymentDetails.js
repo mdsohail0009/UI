@@ -211,6 +211,7 @@ class PaymentDetails extends Component {
         }
     }
     handleUpload = ({file},item) => {
+        debugger
         this.setState({ ...this.state,fileDetails:[], isSubmitting: true, errorMessage: null,loading: true })
             let paymentDetialsData= this.state.paymentsData;
             for(let pay in paymentDetialsData){
@@ -226,6 +227,8 @@ class PaymentDetails extends Component {
                         "path": `${file.name}`,
                     }
                     paymentDetialsData[pay].documents.details=[obj];
+                    // paymentDetialsData[pay].documents.details.push(obj);
+                    
                 }
             }
             this.setState({...this.state,paymentsData:paymentDetialsData,loading: false})
@@ -288,8 +291,6 @@ class PaymentDetails extends Component {
                                     bordered={false}
                                     showArrow={true}
                                     defaultValue="USD"
-                                    // disabled={this.props.match.params.id !== "00000000-0000-0000-0000-000000000000" ? true:false}
-
                                 >
                                     {currency?.map((item, idx) => (
                                         <Option
@@ -299,7 +300,6 @@ class PaymentDetails extends Component {
                                         > 
                                         {item.currencyCode}
                                             {<NumberFormat
-                                            // value={this.props.match.params.id === "00000000-0000-0000-0000-000000000000" ? <>{item.avilable}</>:<>{paymentsData.currency}</>}
                                                 value={item.avilable}
                                                 displayType={'text'}
                                                 thousandSeparator={true}
@@ -316,7 +316,7 @@ class PaymentDetails extends Component {
                                             <th>Name</th>
                                             <th>Bank Name</th>
                                             <th>BIC/SWIFT/Routing Number</th>
-                                            <th>State</th>
+                                            {this.props.match.params.id !=='00000000-0000-0000-0000-000000000000' && <th>State</th>}
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
@@ -346,9 +346,8 @@ class PaymentDetails extends Component {
                                                         <td>
                                                             <div className='d-flex align-center justify-content'>
                                                                 <span>{item.bankname}
-                                                                {item.isPrimary!==null? <Badge size="small" className='ml-8'
-                                                                count={'3rd Party'} 
-                                                                 style={{border: 'none'}} />:""}
+                                                                {item.isPrimary!==null? <Text  size="small" className='file-label ml-8'
+                                                                  >{item.addressType} </Text>:""}
                                                                  </span>
                                                                 <Popover
                                                                     className='more-popover'
@@ -363,7 +362,7 @@ class PaymentDetails extends Component {
                                                             </div>
                                                         </td>
                                                         <td>{item.accountnumber}</td>
-                                                        <td>{item.state?item.state:"- -"}</td>
+                                                        {this.props.match.params.id !=='00000000-0000-0000-0000-000000000000' && <td>{item.state?item.state:"- -"}</td>}
                                                         <td>
                                                         <div className='d-flex'>
                                                             <NumberFormat className="cust-input text-right"
@@ -390,24 +389,19 @@ class PaymentDetails extends Component {
                                                                 onChange={(props) => { this.handleUpload(props,item) }}
                                                                 disabled={item.state==="Approved"}
                                                                 >
-                                                                        <span className={`icon md attach ${item.state==="Approved"?"":"c-pointer"} `}/>                                                      
+                                                                 <span className={`icon md attach ${item.state==="Approved"?"":"c-pointer"} `}/>                                                      
                                                                 </Upload>
                                                                 {/* {this.state.uploadLoader && <Loader />} */}
                                                             </div>
-                                                          {item.documents?.details.length>0 && <>
-                                                            {item.documents?.details.map((file) =>
-                                                                    <>{file ? <div className="docfile">
-                                                    <span className={`icon xl file mr-16`} />
-                                                    <div className="docdetails c-pointer" >
-                                                        <EllipsisMiddle suffixCount={6}>{file.documentName}</EllipsisMiddle>
-                                                    </div>
-                                                    <span className="icon md close c-pointer" 
-                                                    // onClick={() => this.deleteDocument(file)}
-                                                     />
-                                                </div> : ""}
-                                                </>
-                                                )} </>}
-                                                            {/* <Text className='file-label fs-12'>{item.documents?.details.length>0 && item.documents?.details[0]?.documentName}</Text>   */}
+                                                            {item.documents?.details.map((file) =><>
+                                                                {file.documentName !== null && 
+                                                             <Text  className='file-label fs-12'>
+                                                                 {file.documentName}
+                                                                 </Text>  
+                                                            }
+                                                            </>
+                                                          
+                                                                 )} 
                                                       </td>
                                                     </tr>
                                                 </>)                                        })}
