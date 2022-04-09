@@ -193,13 +193,13 @@ debugger
         let favaddrId = props?.addressBookReducer?.selectedRowData ? props?.addressBookReducer?.selectedRowData?.id : Id;
         let namecheck = values.favouriteName.trim();
         let responsecheck = await favouriteNameCheck(props?.userConfig?.id, namecheck, 'fiat', favaddrId);
-        // if (responsecheck.data != null) {
-        //     setIsLoading(false);
-        //     setBtnDisabled(false);
-        //     useDivRef.current.scrollIntoView()
-        //     return setErrorMsg('Address label already existed');
-        // }
-        //  else {
+        if (responsecheck.data != null) {
+            setIsLoading(false);
+            setBtnDisabled(false);
+            useDivRef.current.scrollIntoView()
+            return setErrorMsg('Address label already existed');
+        }
+         else {
             setBtnDisabled(true);
             let saveObj = Object.assign({}, values);
             
@@ -303,7 +303,7 @@ debugger
                 setBtnDisabled(false);
             }
         }
-    // }
+    }
     const getIbanData = async (val) => {
         if (val && val.length > 14) {
             let response = await apiCalls.getIBANData(val);
@@ -424,14 +424,13 @@ debugger
                         component={Paragraph}
                         className="mb-16 fs-14 text-aqua fw-500 text-upper"
                     />
-                    <Form.Item  name="addressType" >
-                        <Radio.Group  buttonStyle="solid" className="text-white" onChange={radioChangeHandler}
+                    <Form.Item  name="addressType" label="Address Type" className="custom-forminput custom-label mb-0">
+                        <Radio.Group  buttonStyle="solid" className="text-white"  onChange={radioChangeHandler}
                             defaultValue={selectParty === true ? "3rdparty" : "1stparty"}
                              value={selectParty === true ? "3rdparty" : "1stparty"}
                            >
                             <Radio value={"1stparty"} className="text-white" disabled={isEdit}>1st Party</Radio>
-                            <Radio value={"3rdparty"} className="text-white" disabled={isEdit}
-                            >3rd Party</Radio>
+                            <Radio value={"3rdparty"} className="text-white" disabled={isEdit}>3rd Party</Radio>
                         </Radio.Group>
 
                     </Form.Item>
@@ -591,6 +590,8 @@ debugger
                                     style={{ width: "100%" }}
                                     bordered={false}
                                     showArrow={true}
+                                    optionFilterProp="children"
+                                    showSearch
                                     onChange={(e) => getStateLu(e, true)}
                                 >
                                     {countryLu?.map((item, idx) => (
@@ -620,6 +621,8 @@ debugger
                                     style={{ width: "100%" }}
                                     bordered={false}
                                     showArrow={true}
+                                    optionFilterProp="children"
+                                    showSearch
                                     onChange={(e) => ""}
                                 >
                                     {stateLu?.map((item, idx) => (

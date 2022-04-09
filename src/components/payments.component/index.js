@@ -24,7 +24,8 @@ const Payments = (props) => {
     const [visible, setVisible] = useState(false);
     const[checkRadio,setCheckRadio] = useState(false);
     const[selection,setSelection]=useState([]);
-    const [selectedObj,setSelectedObj]=useState({})
+    const [selectedObj,setSelectedObj]=useState()
+    const [setSelectData,setSetSelectData]=useState({})
     const paymentsView = (prop) => {
         props.history.push(`/payments/${prop.dataItem.id}/view`)
     };
@@ -32,7 +33,7 @@ const Payments = (props) => {
         if (selection.length == 0) {
             message.warning("Please select the one record");
           }else{
-            props.history.push(`/payments/${selectedObj}/edit`)
+            props.history.push(`/payments/${selectedObj}/${setSelectData.currency}/edit`)
           }
        
     };
@@ -88,6 +89,7 @@ const Payments = (props) => {
         } else {
           _selection.push(rowChecked.id);
         }
+        setSetSelectData(rowChecked)
         setSelection(_selection);
         setSelectedObj(rowChecked.id)
       };

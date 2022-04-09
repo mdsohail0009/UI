@@ -1,10 +1,12 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Button, Form, Select, message, Input, Alert, Popover, Spin, Collapse, Badge,Upload } from 'antd';
+import { Typography, Button, Form, Select, message, Input, Alert, Popover, Spin, Collapse, Badge,Upload,Modal } from 'antd';
 import Translate from 'react-translate-component';
-import { getCurrencyLu, getPaymentsData, savePayments, getBankData,creatPayment,updatePayments } from './api'
+import { getCurrencyLu, getPaymentsData, savePayments, getBankData,creatPayment,updatePayments,deletePayDetials } from './api'
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
+import { DeleteOutlined } from '@ant-design/icons';
+const { confirm } = Modal;
 
 const { Option } = Select;
 const FormItem = Form.Item
@@ -21,7 +23,6 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     );
 };
 class PaymentDetails extends Component {
-    debugger
     formRef = createRef();
     constructor(props) {
         super(props);
@@ -44,6 +45,8 @@ class PaymentDetails extends Component {
             paymentDoc:{},
             payData:[],
             amount:0,
+            type:this.props.match.params.type,
+            billPaymentData:null
         }
         this.gridRef = React.createRef();
         this.useDivRef = React.createRef();
@@ -85,13 +88,11 @@ class PaymentDetails extends Component {
         }
     }
     getPayments = async () => {
-        debugger
         this.setState({ ...this.state, loading: true })
         if(this.props.match.params.id==='00000000-0000-0000-0000-000000000000'){
-            debugger
             let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id, this.state.Currency)
             if (response.ok) {
-                this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false});
+                this.setState({ ...this.state,billPaymentData:response.data, paymentsData: response.data.paymentsDetails, loading: false});
             } else {
                 message.destroy();
                 this.setState({ ...this.state, errorMessage: response.data,loading: false })
@@ -101,10 +102,10 @@ class PaymentDetails extends Component {
             let response=await creatPayment(this.props.match.params.id)  
             if(response.ok){
                 let paymentDetails=response.data;
-                for(let i in paymentDetails ){
-                    paymentDetails[i].checked=true;
+                for(let i in paymentDetails.paymentsDetails ){
+                    paymentDetails.paymentsDetails[i].checked=true;
                 }
-                this.setState({...this.state,paymentsData:paymentDetails, loading: false});
+                this.setState({...this.state,billPaymentData:response.data,paymentsData:paymentDetails.paymentsDetails, loading: false});
 
                 
             } else {
@@ -158,6 +159,12 @@ class PaymentDetails extends Component {
                     this.useDivRef.current.scrollIntoView()
                 }
                 }else{
+                    let PaymentDetails = this.state.paymentsData;
+                    for(var i in PaymentDetails){
+                        if(PaymentDetails[i].checked===false){
+                            PaymentDetails[i].RecordStatus = 'Deleted'
+                        }
+                    }
                     let response = await updatePayments(this.state.paymentsData);
                 if (response.ok) {
                     this.setState({ btnDisabled: false, });
@@ -179,6 +186,17 @@ class PaymentDetails extends Component {
         } else {
             this.setState({ ...this.state, errorMessage: "Please select currency" })
             this.useDivRef.current.scrollIntoView()
+        }
+    }
+    deleteDetials = async ( idx ) => {
+        const response = await deletePayDetials(idx.id);
+        message.destroy()
+        if (response.ok) {
+            message.warning('Document has been deleted');
+            this.getPayments();
+            this.props.history.push('/payments');
+        } else {
+            message.warning(response.data);
         }
     }
     moreInfoPopover = async (id, index) => {
@@ -209,7 +227,6 @@ class PaymentDetails extends Component {
         }
     }
     handleUpload = ({file},item) => {
-        debugger
         this.setState({ ...this.state,fileDetails:[], isSubmitting: true, errorMessage: null,loading: true })
             let paymentDetialsData= this.state.paymentsData;
             for(let pay in paymentDetialsData){
@@ -254,7 +271,7 @@ class PaymentDetails extends Component {
          for (let i=0; i<this.state.paymentsData.length; i++) {
             total += Number(this.state.paymentsData[i].amount);
         }
-        const { currency, paymentsData, loading} = this.state;
+        const { currency, paymentsData, loading,type} = this.state;
         const { form } = this.props
         return (
             <>
@@ -285,7 +302,9 @@ class PaymentDetails extends Component {
                                     dropdownClassName='select-drpdwn'
                                     bordered={false}
                                     showArrow={true}
+                                    value={this.state.billPaymentData?.currency}
                                     defaultValue="USD"
+                                    disabled={(type === 'disabled' ? true : false) || (this.props.match.params.id !== "00000000-0000-0000-0000-000000000000" ? true : false)}
                                 >
                                     {currency?.map((item, idx) => (
                                         <Option
@@ -320,16 +339,23 @@ class PaymentDetails extends Component {
                                             {paymentsData?.map((item, i) => {
                                             return (
                                                 <>
-                                                    <tr key={i} >
+                                                    <tr key={i} disabled={(this.props.match.params.id==='00000000-0000-0000-0000-000000000000' || item.state==="Submitted")?false:true} >
                                                         <td style={{ width: 50 }} className='text-center'>
                                                             <label className="text-center custom-checkbox p-relative">
                                                                 <Input
-                                                                    style={{ cursor: "not-allowed" }}
+                                                                     //style={(this.props.match.params.id==='00000000-0000-0000-0000-000000000000' || item.state==="Submitted")?'':{ cursor: "not-allowed" }}
                                                                     name="check"
                                                                     type="checkbox"
-                                                                    disabled={item.state==="Approved"?true:false}
+                                                                    disabled={item.state==="Approved" ||item.state==="Cancelled" || item.state==="Pending"}
                                                                     checked={item.checked}
                                                                     className="grid_check_box"
+                                                                    onClick={(value)=>{
+                                                                        console.log(value.target.checked)
+                                                                        let paymentData = this.state.paymentsData;
+                                                                    if(value.target.checked===false){paymentData[i].amount = 0;}
+                                                                    paymentData[i].checked = value.target.checked;
+                                                                    this.setState({ ...this.state, paymentsData: paymentData })
+                                                                    }}
                                                                 />
                                                                 <span></span>
                                                             </label>
@@ -357,6 +383,16 @@ class PaymentDetails extends Component {
                                                         {this.props.match.params.id !=='00000000-0000-0000-0000-000000000000' && <td>{item.state?item.state:"- -"}</td>}
                                                         <td>
                                                         <div className='d-flex'>
+                                                        <Form.Item
+                                                            //name={item.id}
+                                                            className='mb-16'
+                                                            rules={item.checked &&[
+                                                                    {
+                                                                        required: true,
+                                                                        message: 'is_required'
+                                                                    }
+                                                                 ]}
+                                                        >
                                                             <NumberFormat className="cust-input text-right"
                                                                 customInput={Input} thousandSeparator={true} prefix={""}
                                                                 placeholder="0.00"
@@ -367,22 +403,45 @@ class PaymentDetails extends Component {
                                                                 onValueChange={({ e, value }) => {
                                                                     let paymentData = this.state.paymentsData;
                                                                     paymentData[i].amount = value;
-                                                                    paymentData[i].checked = value > 0 ? true : false;
+                                                                    paymentData[i].checked = value > 0 ? true : paymentData[i].checked;
                                                                     this.setState({ ...this.state, paymentsData: paymentData })
                                                                 }}
-                                                                disabled={item.state==="Approved"}
+                                                                disabled={item.state==="Approved" ||item.state==="Cancelled" || item.state==="Pending"}
                                                                 value={item.amount}
                                                             />
+                                                            </Form.Item>
                                                              <Upload type='dashed' size='large' className='ml-8 mt-12'
                                                                 shape='circle' style={{backgroundColor: 'transparent'}} 
                                                                 action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
                                                                 showUploadList={false} 
                                                                 beforeUpload={(props) => { this.beforeUpload(props) }}
                                                                 onChange={(props) => { this.handleUpload(props,item) }}
-                                                                disabled={item.state==="Approved"}
+                                                                disabled={item.state==="Approved" ||item.state==="Cancelled" || item.state==="Pending"}
                                                                 >
                                                                  <span className={`icon md attach ${item.state==="Approved"?"":"c-pointer"} `}/>                                                      
                                                                 </Upload>
+                                                                <Button
+                                                                disabled={item.state==="Approved" ||item.state==="Cancelled" || item.state==="Pending"}
+                                                                className="delete-btn mt-30"
+                                                                style={{ padding: "0 14px" }}
+                                                                onClick={() =>
+                                                                    confirm({
+                                                                    content: (
+                                                                        <div className="fs-14 text-white-50">
+                                                                        Are you sure do you want to Payment ?
+                                                                        </div>
+                                                                    ),
+                                                                    title: (
+                                                                        <div className="fs-18 text-white-30">
+                                                                    Delete Payment ?
+                                                                        </div>
+                                                                    ),
+                                                                    onOk: () => {this.deleteDetials(item)}
+                                                                    })
+                                                                }
+                                                        >
+                                                       <DeleteOutlined  className='ml-8 mt-12' />
+                                                        </Button>
                                                             </div>
                                                             
                                                             {item.documents?.details.map((file) =><> 
@@ -398,21 +457,26 @@ class PaymentDetails extends Component {
                                     </tbody> : <tbody><tr><td colSpan='8' className="p-16 text-center" style={{ color: "white", width: 300 }} >No bank details available</td></tr> </tbody>}</>}
                                     <tfoot>
                                         <tr>
-                                        <td colSpan='4'>
-                                        <div className='text-right'>
-                                <div className='d-flex'>
-                                <span className='text-white fs-24'> Total:</span>
-                                <span className='text-white fs-24'> <NumberFormat className=" text-right"
+                                            <td></td>
+                                            <td></td>
+                                            {this.props.match.params.id !=='00000000-0000-0000-0000-000000000000' && <td></td>}
+                                            <td></td>
+                                        <td >
+                                <span className='text-white fs-24 ml-8'> Total:</span>
+                                </td>
+                                <td><span className='text-white fs-24'> <NumberFormat className=" text-right"
                                                                 customInput={Text} thousandSeparator={true} prefix={""}
                                                                 decimalScale={2}
                                                                 allowNegative={false}
                                                                 maxlength={13}
                                                                 style={{ height: 44 }}  
                                                             >
-                                 <span className='text-white'>{total}</span></NumberFormat></span>
-                                </div>
-                                </div>
-                                </td>
+                                                                 <span className='text-white '>{parseFloat(total).toFixed(2)} </span>
+                                 {/* <span className='text-white '>{total}</span> */}
+                                 </NumberFormat>
+                                 </span></td>
+                                
+                              
                                     </tr>  
                             </tfoot>
                                 </table>
