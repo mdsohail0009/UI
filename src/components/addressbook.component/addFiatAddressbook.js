@@ -304,7 +304,16 @@ const NewFiatAddress = (props) => {
     const beforeUpload = (file,type) => {
    
         if(type === "IDENTITYPROOF" || type === "ADDRESSPROOF"){
+            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+            if (fileType[file.type]) {
             setIsValidFile(true);
+            return true;
+            }
+            else{
+                warning('File is not allowed. You can upload jpg, png, jpeg and PDF files')
+                setIsValidFile(false);
+                return Upload.LIST_IGNORE;   
+            }
         }
         else{
            let fileType = { "image/png": false, 'image/jpg': false, 'image/jpeg': false, 'image/PNG': false, 'image/JPG': false, 'image/JPEG': false, 'application/pdf': true, 'application/PDF': true }
