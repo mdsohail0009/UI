@@ -86,7 +86,7 @@ const NewFiatAddress = (props) => {
         getStateLu();
     }, [])
     const addressbkTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat Address Book Details page view ', "Username":props?.userConfig?.userName, "MemeberId": props?.userConfig?.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Address book details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' });
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat Address Book Details page view ', "Username":userProfileInfo?.id.userName, "MemeberId": props?.userConfig?.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Address book details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' });
     }
     const loadDataAddress = async () => {
         setIsLoading(true)
