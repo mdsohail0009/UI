@@ -57,6 +57,7 @@ class Home extends Component {
                             crypto_value='0.00'
                             crypto_usd="0.00 BTC"
                             crypto_stock="0.0%" />
+                            
                         <div className="markets-panel">
                             <MarketCap />
                         </div>
