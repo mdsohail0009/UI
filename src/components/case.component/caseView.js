@@ -337,9 +337,9 @@ class RequestedDocs extends Component {
                 </div>
                 <div className='case-ribbon mb-16'>
                     <Row gutter={[16, 16]}>
-                        {commonModel && Object.entries(commonModel).map(([key, value], idx) => <Col key={idx} xs={key=='description'?24:24} md={key=='description'?24:12} lg={key=='description'?24:8} xl={key=='description'?24:5} xxl={key=='description'?24:6}>
+                        {commonModel && Object.entries(commonModel).map(([key, value], idx) => <Col key={idx} xs={key=='description'?24:24} md={key=='description'?24:12} lg={key=='description'?24:8} xl={key=='description'?24:6} xxl={key=='description'?24:6}>
                             <div className="ribbon-item">
-                                <span className={`icon md ${key ? key : 'description'}`} />
+                                <span className={`icon md ${key != null ? key : 'description'}`} />
                                 <div className='ml-16' style={{flex: 1}}>
                                     <Text className='case-lbl text-captz'>{key}</Text>
                                     <div className='case-val'>{value == null ? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}</div>
@@ -353,7 +353,7 @@ class RequestedDocs extends Component {
                     <div className='case-val'>{caseData.remarks}</div>
                 </div>
                 <Divider />
-                {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} /></div>}
+                {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No documents available" /></div>}
                 <div className="bank-view">
                     {this.state.docDetails?.details?.map((doc, idx) =>
                         <Collapse onChange={(key) => {

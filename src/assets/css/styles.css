@@ -755,14 +755,19 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .case-ribbon{background-color: var(--bgGrey);padding: 20px;border-radius: 16px;}
 .ribbon-item{display: flex; align-items: center;margin-bottom: 16px;}
 .icon.md.Type{background-position:-577px -102px;}
-.icon.md.State{background-position:-184px -70px;}
+.icon.md.State{background-position:-408px -101px;}
 .icon.md.Email{background-position:-127px -71px;}
 .icon.md.Name{background-position:-212px -70px;}
-.icon.md.Currency{background-position:-213px -102px;}
+.icon.md.Currency{background-position:-428px -70px;}
 .icon.md.Bank.Name{background-position:-458px -71px;}
 .icon.md.Date{background-position:-481px -36px;}
-.icon.md.Amount{background-position:-428px -70px;}
-.icon.md.Decription{background-position:-155px -70px;}
+.icon.md.Amount{background-position:-185px -102px;}
+.icon.md.description, .icon.md.Alert.Description{background-position:-156px -70px;}
+.icon.md.Alert.Number{background-position:-241px -101px;}
+.icon.md.Alert.Type{background-position:-128px -134px;}
+.icon.md.Alert.Title{background-position:-156px -101px;}
+.icon.md.Transaction.Id{background-position:-542px -70px;}
+.icon.md.Features{background-position:-128px -102px;}
 
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
