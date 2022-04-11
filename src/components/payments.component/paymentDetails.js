@@ -62,20 +62,36 @@ class PaymentDetails extends Component {
     handleAlert = () => {
         this.setState({ ...this.state, errorMessage: null,loading: true })
     }
-    handleCurrencyChange = async (val, props) => {
-        this.setState({ ...this.state, loading: true, Currency: val, paymentsData: [] })
-        if (this.state.Currency = val) {
-            let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id, this.state.Currency)
+    // handleCurrencyChange = async (val, props) => {
+    //     this.setState({ ...this.state, loading: true, Currency: val, paymentsData: [] })
+    //     if (this.state.Currency = val) {
+    //         let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id, this.state.Currency)
+    //         if (response.ok) {
+    //             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails,
+    //                  loading: false })
+    //         } else {
+    //             message.destroy();
+    //             this.setState({ ...this.state, errorMessage: response.data,loading: false })
+    //             this.useDivRef.current.scrollIntoView()
+    //         }
+    //     }
+
+    // }
+
+    handleCurrencyChange = async(val,props) => {
+        this.setState({ ...this.state, Currency: val,paymentsData:[] })
+        if(this.state.Currency=val){
+            let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id,this.state.Currency)
             if (response.ok) {
-                this.setState({ ...this.state, paymentsData: response.data.paymentsDetails,
-                     loading: false })
+                console.log(response.data.paymentsDetails)
+                this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false }) 
             } else {
                 message.destroy();
-                this.setState({ ...this.state, errorMessage: response.data,loading: false })
+                this.setState({ ...this.state, errorMessage: response.data })
                 this.useDivRef.current.scrollIntoView()
             }
         }
-
+       
     }
     getCurrencyLookup = async () => {
         let response = await getCurrencyLu(this.props.userConfig?.id)
@@ -291,7 +307,7 @@ class PaymentDetails extends Component {
                         )}
                         <Form
                             autoComplete="off">
-                            <Form.Item
+                            {/* <Form.Item
                                 className='mb-16'
                             >
                                 <Select
@@ -320,7 +336,36 @@ class PaymentDetails extends Component {
                                                 renderText={(value) => <span > Balance: {value}</span>} />}
                                         </Option>))}
                                 </Select>
-                            </Form.Item>
+                            </Form.Item> */}
+                             <Form.Item
+                               
+                               >
+                                   <Select
+                                       className="cust-input"
+                                       placeholder="Select Currency"
+                                       onChange={(e) => this.handleCurrencyChange(e)}
+                                       style={{ width: 280 }}
+                                       dropdownClassName='select-drpdwn'
+                                       bordered={false}
+                                       showArrow={true}
+                                       defaultValue="USD"
+                                      
+                                   >
+                                       {currency?.map((item, idx) => (
+                                           <Option
+                                               key={idx}
+                                               className="fw-400"
+                                              
+                                               value={item.currencyCode}
+                                           > {item.currencyCode}
+                                           { <NumberFormat
+                                            value={item.avilable} 
+                                            displayType={'text'}
+                                             thousandSeparator={true}
+                                            renderText={(value) => <span > Balance: {value}</span>} />}
+                                            </Option>))}
+                                   </Select>
+                               </Form.Item>
                             <div>
                                 <table className='pay-grid'>
                                     <thead>
