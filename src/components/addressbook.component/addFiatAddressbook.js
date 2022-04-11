@@ -738,7 +738,8 @@ const NewFiatAddress = (props) => {
                                     <p className="ant-upload-text fs-18 mb-0">Upload your Identity Document here</p>
                                 </Dragger>}
                                 {identityFile != null && <div className="docfile mr-0">
-                        <span className={`icon xl file mr-16`} />
+                                <span className={`icon xl ${(identityFile.documentName?.slice(-3) === "zip" ? "file" : "") || (identityFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+
                         <div className="docdetails c-pointer" >
                             <EllipsisMiddle suffixCount={10}>{identityFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(identityFile.remarks)}</span>
@@ -773,7 +774,7 @@ const NewFiatAddress = (props) => {
                                 </Dragger>}
                             </Form.Item> 
                             {addressFile != null && <div className="docfile mr-0">
-                        <span className={`icon xl file mr-16`} />
+                            <span className={`icon xl ${(addressFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (addressFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                         <div className="docdetails c-pointer" >
                             <EllipsisMiddle suffixCount={10}>{addressFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(addressFile.remarks)}</span>
@@ -815,7 +816,7 @@ const NewFiatAddress = (props) => {
                                     <p className="ant-upload-text fs-18 mb-0">Upload your signed document here</p>
                                 </Dragger>}
                                 {declarationFile != null && <div className="docfile mr-0">
-                        <span className={`icon xl file mr-16`} />
+                                <span className={`icon xl ${(declarationFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (declarationFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                         <div className="docdetails c-pointer" >
                             <EllipsisMiddle suffixCount={10}>{declarationFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(declarationFile.remarks)}</span>

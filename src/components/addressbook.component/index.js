@@ -14,6 +14,7 @@ import apiCalls from '../../api/apiCalls';
 import { warning } from '../../utils/message';
 
 
+
 const { Title, Paragraph, Text } = Typography;
 
 class AddressBook extends Component {
@@ -32,6 +33,7 @@ class AddressBook extends Component {
             alert: false,
             successMsg: false,
             btnDisabled: false,
+
             obj: {
                 "id": [],
                 "tableName": "Member.FavouriteAddress",
@@ -59,11 +61,11 @@ class AddressBook extends Component {
     columnsFiat = [
         { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
         {
-            field: "",
-            customCell: (props) => (<td >{props.dataItem.favouriteName}<Text className='file-label ml-8 fs-12'>{props?.dataItem?.addressType}</Text></td>),
+            field: "", 
             title: apiCalls.convertLocalLang('AddressLabel'),
-            filter: true, width: 300
-        },
+            filter: true, width: 300,
+            customCell: (props) => (<td >{props.dataItem.favouriteName}<Text className='file-label ml-8 fs-12'>{this.addressTypeNames(props?.dataItem?.addressType)}</Text></td>),
+         },
         { field: "toWalletAddress", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
         { field: "currency", title: apiCalls.convertLocalLang('currency'), width: 150, filter: true, with: 150 },
         { field: "accountNumber", title: apiCalls.convertLocalLang('Bank_account'), filter: true, width: 250 },
@@ -238,7 +240,13 @@ class AddressBook extends Component {
             apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat Address book grid view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Fiat Address book grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
         }
     }
-
+ addressTypeNames = (type) =>{
+   const stepcodes = {
+             "1stparty" : "1st Party",
+             "3rdparty" : "3rd Party",
+    }
+    return stepcodes[type]
+}
     renderContent = () => {
         const stepcodes = {
             cryptoaddressbook: <NewAddressBook onCancel={() => this.closeBuyDrawer()} />,
