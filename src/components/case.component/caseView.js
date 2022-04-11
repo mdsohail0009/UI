@@ -337,11 +337,11 @@ class RequestedDocs extends Component {
                 </div>
                 <div className='case-ribbon mb-16'>
                     <Row gutter={[16, 16]}>
-                        {commonModel && Object.entries(commonModel).map(([key, value], idx) => <Col key={idx} xs={key=='Decription'?24:24} md={key=='Decription'?24:12} lg={key=='Decription'?24:8} xl={key=='Decription'?24:5} xxl={key=='Decription'?24:6}>
+                        {commonModel && Object.entries(commonModel).map(([key, value], idx) => <Col key={idx} xs={key=='description'?24:24} md={key=='description'?24:12} lg={key=='description'?24:8} xl={key=='description'?24:5} xxl={key=='description'?24:6}>
                             <div className="ribbon-item">
-                                <span className={`icon md ${key ? key : 'Decription'}`} />
+                                <span className={`icon md ${key ? key : 'description'}`} />
                                 <div className='ml-16' style={{flex: 1}}>
-                                    <Text className='case-lbl'>{key}</Text>
+                                    <Text className='case-lbl text-captz'>{key}</Text>
                                     <div className='case-val'>{value == null ? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}</div>
                                 </div>
                             </div>
