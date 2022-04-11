@@ -40,12 +40,13 @@ class UserProfile extends Component {
     }
 
     render() {
+  
         const { tabPosition } = this.state;
         if (this.props.addressBookReducer.addressTab) {
-           this.setState({...this.state,activeTab: "5"});
+           this.setState({...this.state,activeTab:"5",activeWithdrawFiat: true});
            this.props.dispatch(addressTabUpdate(false));
-           this.props.dispatch(withdrawfiatUpdate(true));
-        }
+          }
+       
         return (<>
 
             <div className="main-container hidden-mobile">

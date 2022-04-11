@@ -98,8 +98,8 @@ const NewFiatAddress = (props) => {
         setIsLoading(true)
         let response = await getAddress(props?.addressBookReducer?.selectedRowData?.id, 'fiat');
         if (response.ok) {
-            debugger
-        console.log(response.data);
+     
+    
         if(response.data.addressType === "3rdparty"){
             setSelectParty(true);
         }
@@ -113,7 +113,7 @@ const NewFiatAddress = (props) => {
             }
           
             let fileInfo = response?.data?.documents?.details;
-            console.log(response?.data?.documents?.details)
+           
             if(response?.data?.addressType === "1stparty" &&  fileInfo?.length !=0){
                 setDeclarationFile(response?.data?.documents?.details[0])
              
@@ -123,20 +123,8 @@ const NewFiatAddress = (props) => {
                  setAdressFile(response?.data?.documents?.details[1]);
               
             }
-            // if(fileInfo?.length != 0){
-            //     debugger
-            //     for(let i =0; i<fileInfo?.length; i++){
-            //         let obj = {
-            //             "name" : fileInfo[i]?.documentName,
-            //             "size" : fileInfo[i]?.remarks,
-            //             "response" : [fileInfo[i]?.path]
-            //         }
-            //         files.push(obj);
-            //         setFiles(files);
-            //       }
-            // }
-        
-            getStateLu(response.data.country)
+      
+          getStateLu(response.data.country)
             form.setFieldsValue({ ...response.data, });
             setIsLoading(false)
         }
@@ -173,7 +161,7 @@ const NewFiatAddress = (props) => {
         if (isChange) form.setFieldsValue({ state: null });
     };
     const savewithdrawal = async (values) => {
-debugger
+
         setIsLoading(false)
         setErrorMsg(null)
         setBtnDisabled(true);
@@ -286,7 +274,7 @@ debugger
                 }
      
            let response = await saveAddress(saveObj);
-         console.log(saveObj);
+        
             if (response.ok) {
                 setBtnDisabled(false);
                 setErrorMsg('')
@@ -314,7 +302,7 @@ debugger
         }
     }
     const beforeUpload = (file,type) => {
-        debugger
+   
         if(type === "IDENTITYPROOF" || type === "ADDRESSPROOF"){
             setIsValidFile(true);
         }
@@ -331,12 +319,15 @@ debugger
     }
     }
     const radioChangeHandler = (e) => {
-          setFiles([]);
           setUploading(false);
           setUploadingActive(false);
-        if(e.target.value === "1stparty"){
+          setIdentityFile(null);
+          setAdressFile(null);
+          setDeclarationFile(null);
+      if(e.target.value === "1stparty"){
             form.setFieldsValue({addressType:"1stparty",beneficiaryAccountName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName})
             setSelectParty(false);
+
         }
         else{
             form.setFieldsValue({addressType:"3rdparty"})
@@ -345,7 +336,7 @@ debugger
 
     }
   const upLoadFiles = ({file},type) =>  {
-     debugger
+  
      
       
         if (file?.status === "uploading") 
