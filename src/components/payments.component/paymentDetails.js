@@ -248,7 +248,7 @@ class PaymentDetails extends Component {
             for(let pay in paymentDetialsData){
                 if(paymentDetialsData[pay].id===item.id){
                     let obj = {
-                        "id":"00000000-0000-0000-0000-000000000000",
+                        "id": paymentDetialsData[pay].documents?.details[0]?.id||'00000000-0000-0000-0000-000000000000',
                         "documentId": "00000000-0000-0000-0000-000000000000",
                         "isChecked": file.name == "" ? false : true,
                         "documentName":`${file.name}`,
@@ -260,7 +260,7 @@ class PaymentDetails extends Component {
                     paymentDetialsData[pay].documents.details=[obj];  
                 }
             }
-            this.setState({...this.state,paymentsData:paymentDetialsData,loading: false})
+        this.setState({...this.state,paymentsData:paymentDetialsData,loading: false})
     }
     popOverContent = () => {
         const { moreBankInfo, tooltipLoad } = this.state;
