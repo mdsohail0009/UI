@@ -112,11 +112,11 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
       }
       else if(email||phone||factor===false){
         useDivRef.current.scrollIntoView(0,0);
-        return setErrorMsg("Please select  withdraw verification options");
+        return setErrorMsg("Please select two or more  withdraw verification options");
       }
       else {
         useDivRef.current.scrollIntoView(0,0);
-        return setErrorMsg("Please select  withdraw verification options");
+        return setErrorMsg("Please select two or more withdraw verification options");
       }
  } 
 
@@ -272,7 +272,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
           component={Title}
           className="basicinfo mb-0"
         />
-        <Paragraph className="basic-decs">Please select <Text className="text-yellow fw-700">any 2</Text> withdrawal verification options from below.</Paragraph>
+        <Paragraph className="basic-decs">Please select <Text className="text-yellow fw-700">any 2 or more</Text> withdrawal verification options from below.</Paragraph>
         <Form>
           <Row gutter={[16, 16]}>
             <Col md={4} xl={4} xxl={4}>

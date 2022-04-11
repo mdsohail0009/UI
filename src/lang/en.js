@@ -520,5 +520,8 @@ export default {
   upload_documents: 'Upload Documents',
   business_recipient : "Business Name/Recipient Full Name",
   cards : "Cards",
-  get_your_own_iban: 'Get Your Own IBAN'
+  get_your_own_iban: 'Get Your Own IBAN',
+  phone_invalid_code:'Invalid phone verification code',
+  twofa_invalid_code:'Invalid authenticator code',
+  email_invalid_code:'Invalid email verification code'
 }

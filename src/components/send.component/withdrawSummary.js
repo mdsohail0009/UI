@@ -59,7 +59,8 @@ class WithdrawSummary extends Component {
     inValidData:false,
     authenticator:"",
     EmailCode:"",
-    OtpVerification:""
+    OtpVerification:"",
+    emailCodeVal:"",
   };
 
   useDivRef = React.createRef();
@@ -169,7 +170,7 @@ class WithdrawSummary extends Component {
       });
 
       setTimeout(() => {
-        this.setState({ buttonText: "resendotp", tooltipVisible: false });
+        this.setState({ buttonText: "resendotp", tooltipVisible: false,verifyOtpText:null});
       }, 120000);
     } else {
       this.setState({
@@ -196,11 +197,10 @@ class WithdrawSummary extends Component {
         emailVerificationText:
           apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
       });
-      if(!this.state.verifyText){
         setTimeout(() => {
-          this.setState({ emailText: "resendEmail", tooltipEmail: false });
+          this.setState({ emailText: "resendEmail", tooltipEmail: false,verifyText:null });
         }, 120000);
-      }
+      
       
     } else {
       this.setState({
@@ -214,7 +214,7 @@ class WithdrawSummary extends Component {
     debugger
     let response = await apiCalls.verifyEmail(
       this.props.userProfile.id,
-      // values.code
+      this.state.emailCodeVal
     );
     if (response.ok) {
       this.setState({...this.state,EmailCode:response.data})
@@ -222,16 +222,16 @@ class WithdrawSummary extends Component {
     }else if(response.data==null){
       this.setState({
         ...this.state,
-        errorMsg: "Please enter verification code"
+        errorMsg: "Please enter email verification code"
       });      
   }
     else
     {
-      // error(response.data)
-      // setTimeout(() => {
-      //   this.setState({ errorMsg: null });
-      // }, 1000);
      this.setState({...this.state,inValidData:true})
+     this.setState({
+      ...this.state,
+     errorMsg: apiCalls.convertLocalLang("email_invalid_code")
+    }); 
     }
 
     
@@ -249,14 +249,14 @@ class WithdrawSummary extends Component {
     }else if(response.data==null){
       this.setState({
         ...this.state,
-        errorMsg: "Please enter verification code"
+        errorMsg: "Please enter phone verification code"
       });      
   } 
     else {
       this.useDivRef.current.scrollIntoView();
       this.setState({
         ...this.state,
-        errorMsg: apiCalls.convertLocalLang("invalid_code")
+        errorMsg: apiCalls.convertLocalLang("phone_invalid_code")
         
       });
       setTimeout(() => {
@@ -283,9 +283,8 @@ class WithdrawSummary extends Component {
       ...this.state,
       emailOtp: val.emailCode,
       verifyText: "verifyBtn",
-
       tooltipEmail: false,
-      // emailText: ""
+       emailText: ""
     });
   };
 
@@ -301,14 +300,14 @@ class WithdrawSummary extends Component {
     } else if(response.data==null){
       this.setState({
         ...this.state,
-        errorMsg: "Please enter verification code"
+        errorMsg: "Please enter authenticator verification code"
       });      
   }
     else {
       this.useDivRef.current.scrollIntoView();
       this.setState({
         ...this.state,
-        errorMsg: apiCalls.convertLocalLang("invalid_code")
+        errorMsg: apiCalls.convertLocalLang("twofa_invalid_code")
       });
       setTimeout(() => {
         this.setState({ errorMsg: null });
@@ -324,6 +323,10 @@ class WithdrawSummary extends Component {
     debugger
     this.setState({ ...this.state, authCode: e.target.value });
   };
+  handleEmailChange=(e)=>{
+    this.setState({ ...this.state, emailCodeVal: e.target.value });
+
+  }
   saveWithdrwal = async (values) => {
     debugger
     const{authenticator,OtpVerification,EmailCode}=this.state;
@@ -349,7 +352,7 @@ let withdrawal = await withDrawCrypto(saveObj);
           this.props.changeStep("withdraw_crpto_success");
           publishBalanceRfresh("success");
         }
-}
+
         
       } else {
         this.props.dispatch(
@@ -365,6 +368,14 @@ let withdrawal = await withDrawCrypto(saveObj);
       });
       this.useDivRef.current.scrollIntoView();
     }
+  }else{
+    this.setState({
+      ...this.state,
+      errorMsg:"Please enter valid codes"
+    });
+    this.useDivRef.current.scrollIntoView();
+  }
+  
   };
 
   fullNumber = this.props.userProfile?.phoneNumber;
@@ -606,7 +617,7 @@ let withdrawal = await withDrawCrypto(saveObj);
                 <Input
                   type="text"
                   className="cust-input text-left"
-                  placeholder={"Enter Code"}
+                  placeholder={"Enter code"}
                   maxLength={6}
                   onChange={(e) => this.handleAuthenticator(e, "authenticator")}
                   style={{ width: "100%" }}
@@ -661,7 +672,7 @@ let withdrawal = await withDrawCrypto(saveObj);
                 <Input
                   type="text"
                   className="cust-input text-left"
-                  placeholder={"Enter Code"}
+                  placeholder={"Enter code"}
                   maxLength={6}
                   disabled={this.state.inputDisable}
                   onKeyDown={(event) => {
@@ -737,9 +748,8 @@ let withdrawal = await withDrawCrypto(saveObj);
                 <Input
                   type="text"
                   className="cust-input text-left"
-                  placeholder={"Enter Code"}
+                  placeholder={"Enter code"}
                   maxLength={6}
-                  disabled={this.state.inputDisable}
                   onKeyDown={(event) => {
                     if (
                       event.currentTarget.value.length > 5 &&
@@ -757,7 +767,10 @@ let withdrawal = await withDrawCrypto(saveObj);
                     }
                   }}
                   style={{ width: "100%" }}
-                  // disabled={this.state.emailDisable}
+                  //disabled={this.state.emailDisable}
+                  onChange={(e) => this.handleEmailChange(e, "emailCodeVal")}
+                  disabled={this.state.inputDisable}
+
                 />
               </Form.Item>
             )}
