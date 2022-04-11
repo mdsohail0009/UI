@@ -322,9 +322,13 @@ const NewFiatAddress = (props) => {
           setFiles([]);
           setUploading(false);
           setUploadingActive(false);
-        if(e.target.value === "1stparty"){
+          setIdentityFile(null);
+          setAdressFile(null);
+          setDeclarationFile(null);
+      if(e.target.value === "1stparty"){
             form.setFieldsValue({addressType:"1stparty",beneficiaryAccountName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName})
             setSelectParty(false);
+
         }
         else{
             form.setFieldsValue({addressType:"3rdparty"})
