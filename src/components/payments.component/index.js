@@ -123,14 +123,14 @@ const Payments = (props) => {
                             style={{ margin: "0 8px", height: 40 }}
                             onClick={showNewBenificiary}
                         >
-                            Add New Beneficiary
+                            Add Beneficiary
                         </Button>
                         <Button
                             className="pop-btn px-24"
                             style={{ margin: "0 8px", height: 40 }}
                             onClick={addPayment}
                         >
-                            New Bill Payment
+                          Add  New Bill Payment
                         </Button>
                         <Button
                             className="pop-btn px-24"
@@ -159,7 +159,7 @@ const Payments = (props) => {
                     title={[<div className="side-drawer-header">
                         <span />
                         <div className="text-center fs-16">
-                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper">AddFiatAddress</Paragraph>
+                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper"><Translate content="AddFiatAddress" component={Paragraph} className="mb-0 text-white-30 fw-600 text-upper" /></Paragraph>
                         </div>
                         <span onClick={closeBuyDrawer} className="icon md close-white c-pointer" />
                     </div>]}

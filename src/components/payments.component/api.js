@@ -9,7 +9,7 @@ const savePayments = (obj) => {
     return apiClient.post(ApiControllers.massPayment + "Savepayments", obj);
 }
 const updatePayments = (obj) => {
-    return apiClient.put(ApiControllers.massPayment + "UpdatePayments", obj);
+    return apiClient.put(ApiControllers.massPayment + "UpdateUserpayments", obj);
 }
 const getPaymentsData = (id, memberId,currency) => {
     return apiClient.get(ApiControllers.massPayment + `payments/${id}/${memberId}/${currency}`);

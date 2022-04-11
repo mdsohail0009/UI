@@ -192,7 +192,7 @@ class PaymentDetails extends Component {
         const response = await deletePayDetials(idx.id);
         message.destroy()
         if (response.ok) {
-            message.warning('Document has been deleted');
+            message.warning('Payment has been deleted');
             this.getPayments();
             this.props.history.push('/payments');
         } else {
@@ -254,7 +254,7 @@ class PaymentDetails extends Component {
             return (<div className='more-popover'>
                 <Text className='lbl'>Address Label</Text>
                 <Text className='val'>{moreBankInfo?.favouriteName}</Text>
-                <Text className='lbl'>Recipient Full Name</Text>
+                <Text className='lbl'>Recipient Name</Text>
                 <Text className='val'>{moreBankInfo?.beneficiaryAccountName}</Text>
                 <Text className='lbl'>Recipient Address</Text>
                 <Text className='val'>{moreBankInfo?.beneficiaryAccountAddress}</Text>
@@ -328,7 +328,8 @@ class PaymentDetails extends Component {
                                             <th style={{ width: 50 }}></th>
                                             <th>Name</th>
                                             <th>Bank Name</th>
-                                            <th>BIC/SWIFT/Routing Number</th>
+                                            {/* <th>BIC/SWIFT/Routing Number</th> */}
+                                            <th>Bank account number</th>
                                             {this.props.match.params.id !=='00000000-0000-0000-0000-000000000000' && <th>State</th>}
                                             <th>Amount</th>
                                         </tr>
@@ -428,7 +429,7 @@ class PaymentDetails extends Component {
                                                                     confirm({
                                                                     content: (
                                                                         <div className="fs-14 text-white-50">
-                                                                        Are you sure do you want to Payment ?
+                                                                        Are you sure do you want to delete Payment ?
                                                                         </div>
                                                                     ),
                                                                     title: (
