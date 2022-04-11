@@ -130,7 +130,7 @@ const Payments = (props) => {
                             style={{ margin: "0 8px", height: 40 }}
                             onClick={addPayment}
                         >
-                            Add Bill Payment
+                          Add  New Bill Payment
                         </Button>
                         <Button
                             className="pop-btn px-24"
