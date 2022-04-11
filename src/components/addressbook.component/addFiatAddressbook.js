@@ -17,7 +17,7 @@ import { bytesToSize, getDocObj } from '../../utils/service';
 import { getCountryStateLu, getStateLookup } from "../../api/apiServer";
 import apicalls from "../../api/apiCalls";
 import { warning } from '../../utils/message';
-//import { addressTabUpdate } from '../../reducers/addressBookReducer'
+import { addressTabUpdate } from '../../reducers/addressBookReducer'
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -239,7 +239,7 @@ const NewFiatAddress = (props) => {
             form.resetFields();
             props?.onCancel()
             setIsLoading(false)
-           // props?.dispatch(addressTabUpdate(true));
+            props?.dispatch(addressTabUpdate(true));
             props?.props?.history?.push('/userprofile');
         }
         else {
