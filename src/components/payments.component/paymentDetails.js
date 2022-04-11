@@ -170,13 +170,13 @@ class PaymentDetails extends Component {
                             duration: 0.5
                         })
                         this.props.history.push('/payments')
-                        this.useDivRef.current.scrollIntoView()
+                       // this.useDivRef.current.scrollIntoView()
                     }
                      else {
                         this.setState({ btnDisabled: false });
-                        message.destroy();
-                        this.setState({ ...this.state, errorMessage: response.data })
-                        this.useDivRef.current.scrollIntoView()
+                        // message.destroy();
+                        // this.setState({ ...this.state, errorMessage: response.data })
+                        // this.useDivRef.current.scrollIntoView()
                     }
                 } 
                 // else {
