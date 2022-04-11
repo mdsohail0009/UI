@@ -281,7 +281,13 @@ class PaymentDetails extends Component {
             </div>)
         }
     }
-
+    addressTypeNames = (type) =>{
+        const stepcodes = {
+                  "1stparty" : "1st Party",
+                  "3rdparty" : "3rd Party",
+         }
+         return stepcodes[type]
+     }
     render() {
         let total=0;
          for (let i=0; i<this.state.paymentsData.length; i++) {
@@ -411,7 +417,7 @@ class PaymentDetails extends Component {
                                                             <div className='d-flex align-center justify-content'>
                                                                 <span>{item.bankname}
                                                                 {item.isPrimary!==null? <Text  size="small" className='file-label ml-8'
-                                                                  >{item.addressType} </Text>:""}
+                                                                  >{this.addressTypeNames(item.addressType)} </Text>:""}
                                                                  </span>
                                                                 <Popover
                                                                     className='more-popover'
