@@ -1,16 +1,28 @@
 import React, { Component } from 'react';
 import { getPaymentsData,getBankData } from './api';
-import { Typography, Button, Spin,message,Alert,Popover } from 'antd';
+import { Typography, Button, Spin,message,Alert,Popover,Upload } from 'antd';
 import Translate from 'react-translate-component';
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 const { Title, Text } = Typography;
+const { Dragger } = Upload;
+const EllipsisMiddle = ({ suffixCount, children }) => {
+    const start = children?.slice(0, children.length - suffixCount).trim();
+    const suffix = children?.slice(-suffixCount).trim();
+    return (
+        <Text className="mb-0 fs-14 docname c-pointer d-block" style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
+            {start}
+        </Text>
+    );
+};
 class PaymentsView extends Component {
     constructor(props) {
         super(props);
         this.state = {
             paymentsData: [],
-            loading: false
+            currency:'USD',
+            loading: false,
+            amount:0
         }
         this.useDivRef = React.createRef();
     }
@@ -19,7 +31,7 @@ class PaymentsView extends Component {
     }
     getPaymentsViewData = async () => {
         this.setState({ ...this.state, loading: true });
-        let response = await getPaymentsData(this.props.match.params.id, this.props.userConfig?.userId);
+        let response = await getPaymentsData(this.props.match.params.id, this.props.userConfig?.userId,this.state.currency);
         if (response.ok) {
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
         }else {
@@ -65,6 +77,7 @@ class PaymentsView extends Component {
         this.props.history.push('/payments')
     }
     render() {
+        const total=(this.state.paymentsData.reduce((total,currentItem) =>  total = total + currentItem.amount , 0 ));
         const { paymentsData, loading } = this.state;
         return (
             <>
@@ -83,8 +96,9 @@ class PaymentsView extends Component {
                         <table className='pay-grid view'>
                             <thead>
                                 <tr>
+                                    <th>Name</th>
                                     <th>Bank Name</th>
-                                    <th>Account Number</th>
+                                    <th>BIC/SWIFT/Routing Number</th>
                                     <th>Amount</th>
                                 </tr>
                             </thead>
@@ -92,9 +106,12 @@ class PaymentsView extends Component {
                                 {paymentsData?.map((item, idx) => {
                                     return (
                                         <>
-                                          {paymentsData.length > 0?  <tr key={idx}>
-                                                <td className='d-flex align-center justify-content'>{item.bankname}
-                                                <Popover
+                                          {paymentsData.length > 0? <> <tr key={idx}>
+                                          <td>{item?.beneficiaryAccountName}</td>
+                                                <td>
+                                                    <div className='d-flex align-center justify-content'>
+                                                    {item.bankname}
+                                                            <Popover
                                                                     className='more-popover'
                                                                     content={this.popOverContent}
                                                                     trigger="click"
@@ -104,6 +121,7 @@ class PaymentsView extends Component {
                                                                 >
                                                                     <span className='icon md info c-pointer' onClick={() => this.moreInfoPopover(item.addressId, idx)} />
                                                                 </Popover>
+                                                                </div>
                                                 </td>
                                                 <td>{item.accountnumber}</td>
                                                 <td>
@@ -113,14 +131,47 @@ class PaymentsView extends Component {
                                                         displayType={'text'}
                                                         renderText={value => value}
                                                     />
+                                                    <br/>
+                                                    {item.documents?.details.map((file) =><>
+                                                                {file.documentName !== null && 
+                                                             <Text  className='file-label fs-12'>
+                                                                 {file.documentName}
+                                                                 </Text>  
+                                                            }
+                                                            </>
+                                                          
+                                                                 )} 
                                                 </td>
                                             </tr>
+                                            </>
                                         :"No bank details available."}</>
                                     )
                                 })}
+
                                 {loading && <tr>
-                                    <td colSpan='3' className='text-center p-16'><Spin size='default' /></td></tr>}
+                                    <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>}
                             </tbody>
+                            <tfoot>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                         <td >
+                                <span className='text-white fs-24 ml-8'> Total:</span>
+                                </td>
+                                <td><span className='text-white fs-24'> <NumberFormat className=" text-right"
+                                                                customInput={Text} thousandSeparator={true} prefix={""}
+                                                                decimalScale={2}
+                                                                allowNegative={false}
+                                                                maxlength={13}
+                                                                style={{ height: 44 }}  
+                                                            >
+                                     <span className='text-white '>{parseFloat(total).toFixed(2)} </span>
+                                 {/* <span className='text-white '>{total}</span> */}
+                                 </NumberFormat></span></td>
+                                
+                              
+                                    </tr>  
+                            </tfoot>
                         </table>
                         <div className="text-right mt-36">
                             <Button

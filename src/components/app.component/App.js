@@ -12,6 +12,11 @@ import Notifications from "../../notifications";
 import { setNotificationCount } from '../../reducers/dashboardReducer';
 import { startConnection } from "../../utils/signalR";
 import { useThemeSwitcher } from "react-css-theme-switcher";
+import apiCalls from '../../api/apiCalls';
+import { connect } from 'react-redux';
+import { updatetwofactor } from "../../reducers/configReduser";
+import { warning } from "../../utils/message";
+
 function App(props) {
   const { switcher, themes } = useThemeSwitcher()
   const [loading, setLoading] = useState(true);
@@ -20,6 +25,13 @@ function App(props) {
     setTimeout(() => {
       const { userConfig: { userProfileInfo } } = store.getState();
       if (userProfileInfo?.id) {
+        apiCalls.twofactor(userProfileInfo?.id).then(res => {
+          if(res.ok){
+            store.dispatch(updatetwofactor(res.data));
+          } else {
+            warning("Two Factor data didno't get from the server!");
+          }
+        })
         startConnection(userProfileInfo?.id);
         switcher({ theme: userProfileInfo?.theme == 'Light Theme' ? themes.LHT : themes.DRT });
       } else {

@@ -1,15 +1,18 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Button, Form, Select, message, Input, Alert, Popover, Spin, Collapse, Badge } from 'antd';
+import { Typography, Button, Form, Select, message, Input, Alert, Popover, Spin, Collapse, Badge,Upload,Modal } from 'antd';
 import Translate from 'react-translate-component';
-import { getCurrencyLu, getPaymentsData, savePayments, getBankData } from './api'
+import { getCurrencyLu, getPaymentsData, savePayments, getBankData,creatPayment,updatePayments,deletePayDetials } from './api'
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
-import { validateContent } from "../../utils/custom.validator";
+import Loader from '../../Shared/loader';
+import { DeleteOutlined } from '@ant-design/icons';
+const { confirm } = Modal;
 
 const { Option } = Select;
 const FormItem = Form.Item
 const { Title, Text } = Typography;
 const { Panel } = Collapse;
+const { Dragger } = Upload;
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children?.slice(0, children.length - suffixCount).trim();
     const suffix = children?.slice(-suffixCount).trim();
@@ -35,6 +38,15 @@ class PaymentDetails extends Component {
             moreBankInfo: {},
             loading: false,
             tooltipLoad: false,
+            uploadLoader: false,
+            isValidFile: true,
+            paymentsDocDetails:[],
+            fileDetails: [],
+            paymentDoc:{},
+            payData:[],
+            amount:0,
+            type:this.props.match.params.type,
+            billPaymentData:null
         }
         this.gridRef = React.createRef();
         this.useDivRef = React.createRef();
@@ -48,18 +60,18 @@ class PaymentDetails extends Component {
         this.useDivRef.current.scrollIntoView()
     }
     handleAlert = () => {
-        this.setState({ ...this.state, errorMessage: null })
+        this.setState({ ...this.state, errorMessage: null,loading: true })
     }
     handleCurrencyChange = async (val, props) => {
-        this.setState({ ...this.state, Currency: val, paymentsData: [] })
+        this.setState({ ...this.state, loading: true, Currency: val, paymentsData: [] })
         if (this.state.Currency = val) {
             let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id, this.state.Currency)
             if (response.ok) {
-                console.log(response.data.paymentsDetails)
-                this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false })
+                this.setState({ ...this.state, paymentsData: response.data.paymentsDetails,
+                     loading: false })
             } else {
                 message.destroy();
-                this.setState({ ...this.state, errorMessage: response.data })
+                this.setState({ ...this.state, errorMessage: response.data,loading: false })
                 this.useDivRef.current.scrollIntoView()
             }
         }
@@ -75,25 +87,41 @@ class PaymentDetails extends Component {
             this.useDivRef.current.scrollIntoView()
         }
     }
-    getPayments = async (item) => {
+    getPayments = async () => {
         this.setState({ ...this.state, loading: true })
-        let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id, this.state.Currency)
-        if (response.ok) {
-            this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
-        } else {
-            message.destroy();
-            this.setState({ ...this.state, errorMessage: response.data })
-            this.useDivRef.current.scrollIntoView()
-        }
-    }
+        if(this.props.match.params.id==='00000000-0000-0000-0000-000000000000'){
+            let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id, this.state.Currency)
+            if (response.ok) {
+                this.setState({ ...this.state,billPaymentData:response.data, paymentsData: response.data.paymentsDetails, loading: false});
+            } else {
+                message.destroy();
+                this.setState({ ...this.state, errorMessage: response.data,loading: false })
+                this.useDivRef.current.scrollIntoView()
+            }
+        }else{
+            let response=await creatPayment(this.props.match.params.id)  
+            if(response.ok){
+                let paymentDetails=response.data;
+                for(let i in paymentDetails.paymentsDetails ){
+                    paymentDetails.paymentsDetails[i].checked=true;
+                }
+                this.setState({...this.state,billPaymentData:response.data,paymentsData:paymentDetails.paymentsDetails, loading: false});
 
+                
+            } else {
+                message.destroy();
+                this.setState({ ...this.state, errorMessage: response.data,loading: false })
+                this.useDivRef.current.scrollIntoView()
+            }
+        }
+
+    }
     saveRolesDetails = async () => {
         let objData = this.state.paymentsData.filter((item) => {
             return item.checked
         })
         let objAmount = this.state.paymentsData.some((item) => {
             return item.amount != null
-            //return item.amount>0
         })
         let obj = Object.assign({});
         obj.id = this.props.userConfig.id;
@@ -106,7 +134,6 @@ class PaymentDetails extends Component {
             if (!objAmount) {
                 this.setState({ ...this.state, errorMessage: "Please enter amount" })
                 this.useDivRef.current.scrollIntoView()
-
             }
             else if (!objAmount > 0) {
                 this.setState({ ...this.state, errorMessage: "Amount must be greater than zero." })
@@ -114,7 +141,8 @@ class PaymentDetails extends Component {
             }
             else {
                 this.setState({ btnDisabled: true });
-                let response = await savePayments(obj);
+                if(this.props.match.params.id==='00000000-0000-0000-0000-000000000000'){
+                    let response = await savePayments(obj);
                 if (response.ok) {
                     this.setState({ btnDisabled: false });
                     message.destroy();
@@ -130,10 +158,45 @@ class PaymentDetails extends Component {
                     this.setState({ ...this.state, errorMessage: response.data })
                     this.useDivRef.current.scrollIntoView()
                 }
+                }else{
+                    let PaymentDetails = this.state.paymentsData;
+                    for(var i in PaymentDetails){
+                        if(PaymentDetails[i].checked===false){
+                            PaymentDetails[i].RecordStatus = 'Deleted'
+                        }
+                    }
+                    let response = await updatePayments(this.state.paymentsData);
+                if (response.ok) {
+                    this.setState({ btnDisabled: false, });
+                    message.destroy();
+                    message.success({
+                        content: 'Payment details update successfully',
+                        className: "custom-msg",
+                        duration: 0.5
+                    })
+                    this.props.history.push('/payments')
+                } else {
+                    this.setState({ btnDisabled: false });
+                    message.destroy();
+                    this.setState({ ...this.state, errorMessage: response.data })
+                    this.useDivRef.current.scrollIntoView()
+                }
+                }  
             }
         } else {
             this.setState({ ...this.state, errorMessage: "Please select currency" })
             this.useDivRef.current.scrollIntoView()
+        }
+    }
+    deleteDetials = async ( idx ) => {
+        const response = await deletePayDetials(idx.id);
+        message.destroy()
+        if (response.ok) {
+            message.warning('Document has been deleted');
+            this.getPayments();
+            this.props.history.push('/payments');
+        } else {
+            message.warning(response.data);
         }
     }
     moreInfoPopover = async (id, index) => {
@@ -149,6 +212,39 @@ class PaymentDetails extends Component {
     }
     handleVisibleChange = (index) => {
         this.setState({ ...this.state, visible: false });
+    }
+    beforeUpload = (file) => {
+
+        let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+
+        if (fileType[file.type]) {
+            this.setState({ ...this.state, isValidFile: true, })
+            return true
+        } else {
+            this.state.errorMessage("File is not allowed. You can upload jpg, png, jpeg and PDF  files")
+            this.setState({ ...this.state, isValidFile: false, })
+            return Upload.LIST_IGNORE;
+        }
+    }
+    handleUpload = ({file},item) => {
+        this.setState({ ...this.state,fileDetails:[], isSubmitting: true, errorMessage: null,loading: true })
+            let paymentDetialsData= this.state.paymentsData;
+            for(let pay in paymentDetialsData){
+                if(paymentDetialsData[pay].id===item.id){
+                    let obj = {
+                        "id":"00000000-0000-0000-0000-000000000000",
+                        "documentId": "00000000-0000-0000-0000-000000000000",
+                        "isChecked": file.name == "" ? false : true,
+                        "documentName":`${file.name}`,
+                        "remarks": `${file.size}`,
+                        "state": null,
+                        "status": false,
+                        "path": `${file.name}`,
+                    }
+                    paymentDetialsData[pay].documents.details=[obj];  
+                }
+            }
+            this.setState({...this.state,paymentsData:paymentDetialsData,loading: false})
     }
     popOverContent = () => {
         const { moreBankInfo, tooltipLoad } = this.state;
@@ -169,8 +265,13 @@ class PaymentDetails extends Component {
             </div>)
         }
     }
+
     render() {
-        const { currency, paymentsData, loading } = this.state;
+        let total=0;
+         for (let i=0; i<this.state.paymentsData.length; i++) {
+            total += Number(this.state.paymentsData[i].amount);
+        }
+        const { currency, paymentsData, loading,type} = this.state;
         const { form } = this.props
         return (
             <>
@@ -201,16 +302,17 @@ class PaymentDetails extends Component {
                                     dropdownClassName='select-drpdwn'
                                     bordered={false}
                                     showArrow={true}
+                                    value={this.state.billPaymentData?.currency}
                                     defaultValue="USD"
-
+                                    disabled={(type === 'disabled' ? true : false) || (this.props.match.params.id !== "00000000-0000-0000-0000-000000000000" ? true : false)}
                                 >
                                     {currency?.map((item, idx) => (
                                         <Option
                                             key={idx}
                                             className="fw-400"
-
                                             value={item.currencyCode}
-                                        > {item.currencyCode}
+                                        > 
+                                        {item.currencyCode}
                                             {<NumberFormat
                                                 value={item.avilable}
                                                 displayType={'text'}
@@ -224,40 +326,46 @@ class PaymentDetails extends Component {
                                     <thead>
                                         <tr>
                                             <th style={{ width: 50 }}></th>
+                                            <th>Name</th>
                                             <th>Bank Name</th>
-                                            <th>Bank Account Number</th>
+                                            <th>BIC/SWIFT/Routing Number</th>
+                                            {this.props.match.params.id !=='00000000-0000-0000-0000-000000000000' && <th>State</th>}
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
-                                    {paymentsData.length > 0 ? <tbody className="mb-0">
-                                        {loading && <tr>
-                                            <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>}
-                                        {paymentsData?.map((item, i) => {
+                                   
+                                    {loading ?<tbody><tr><td colSpan='8' className="p-16 text-center"  ><Loader /></td></tr> </tbody>   :<>
+                                    {paymentsData?.length > 0 ? <tbody className="mb-0">
+                                            {paymentsData?.map((item, i) => {
                                             return (
                                                 <>
-                                                    <tr key={i} >
+                                                    <tr key={i} disabled={(this.props.match.params.id==='00000000-0000-0000-0000-000000000000' || item.state==="Submitted")?false:true} >
                                                         <td style={{ width: 50 }} className='text-center'>
                                                             <label className="text-center custom-checkbox p-relative">
                                                                 <Input
-                                                                    style={{ cursor: "not-allowed" }}
+                                                                     //style={(this.props.match.params.id==='00000000-0000-0000-0000-000000000000' || item.state==="Submitted")?'':{ cursor: "not-allowed" }}
                                                                     name="check"
                                                                     type="checkbox"
-                                                                    disabled
+                                                                    disabled={item.state==="Approved" ||item.state==="Cancelled" || item.state==="Pending"}
                                                                     checked={item.checked}
                                                                     className="grid_check_box"
+                                                                    onClick={(value)=>{
+                                                                        console.log(value.target.checked)
+                                                                        let paymentData = this.state.paymentsData;
+                                                                    if(value.target.checked===false){paymentData[i].amount = 0;}
+                                                                    paymentData[i].checked = value.target.checked;
+                                                                    this.setState({ ...this.state, paymentsData: paymentData })
+                                                                    }}
                                                                 />
                                                                 <span></span>
                                                             </label>
                                                         </td>
+                                                        <td>{item?.beneficiaryAccountName ?<>{item?.beneficiaryAccountName}</> :<span>{" - - "}</span>}</td>
                                                         <td>
                                                             <div className='d-flex align-center justify-content'>
                                                                 <span>{item.bankname}
-                                                                {/* <Badge size="small" className='ml-8'
-                                                                count={'3rd Party'} 
-                                                                 style={{border: 'none'}} /> */}
-                                                                {item.isPrimary!==null? <Badge size="small" className='ml-8'
-                                                                count={'3rd Party'} 
-                                                                 style={{border: 'none'}} />:""}
+                                                                {item.isPrimary!==null? <Text  size="small" className='file-label ml-8'
+                                                                  >{item.addressType} </Text>:""}
                                                                  </span>
                                                                 <Popover
                                                                     className='more-popover'
@@ -272,7 +380,19 @@ class PaymentDetails extends Component {
                                                             </div>
                                                         </td>
                                                         <td>{item.accountnumber}</td>
+                                                        {this.props.match.params.id !=='00000000-0000-0000-0000-000000000000' && <td>{item.state?item.state:"- -"}</td>}
                                                         <td>
+                                                        <div className='d-flex'>
+                                                        <Form.Item
+                                                            //name={item.id}
+                                                            className='mb-16'
+                                                            rules={item.checked &&[
+                                                                    {
+                                                                        required: true,
+                                                                        message: 'is_required'
+                                                                    }
+                                                                 ]}
+                                                        >
                                                             <NumberFormat className="cust-input text-right"
                                                                 customInput={Input} thousandSeparator={true} prefix={""}
                                                                 placeholder="0.00"
@@ -283,90 +403,85 @@ class PaymentDetails extends Component {
                                                                 onValueChange={({ e, value }) => {
                                                                     let paymentData = this.state.paymentsData;
                                                                     paymentData[i].amount = value;
-                                                                    paymentData[i].checked = value > 0 ? true : false;
+                                                                    paymentData[i].checked = value > 0 ? true : paymentData[i].checked;
                                                                     this.setState({ ...this.state, paymentsData: paymentData })
                                                                 }}
+                                                                disabled={item.state==="Approved" ||item.state==="Cancelled" || item.state==="Pending"}
                                                                 value={item.amount}
                                                             />
-                                                        </td>
-                                                    </tr>
-                                                    {/* <tr>
-                                                        <td colSpan={4}>
-                                                            <div className='payment-docs'>
-                                                                <Collapse
-                                                                    accordion className="accordian" defaultActiveKey={['1']}
-                                                                    expandIcon={() => <span className="icon md downangle" />}>
-                                                                    <Panel header="Documents" extra={<span className={`submitted-lbl staus-lbl`}>Approved</span>}>
-                                                                        {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
-                                                                        <div className="reply-container">
-                                                                            <div className="user-shortname">JH</div>
-                                                                            <div className="reply-body">
-                                                                                <Text className="reply-username">John Doe</Text><Text className="reply-date">
-                                                                                   <Moment format="DD MMM YY hh:mm A">{reply.repliedDate}</Moment>
-                                                                                </Text>
-                                                                                <p className="reply-txt">Lore text</p>
-                                                                                <div className="docfile-container">
-                                                                                    <div className="docfile">
-                                                                                        <span className={`icon xl file mr-16`} />
-                                                                                        <div className="docdetails c-pointer" onClick={() => this.docPreview()}>
-                                                                                            <EllipsisMiddle suffixCount={6}>HTML Documents</EllipsisMiddle>
-                                                                                            <span className="fs-12 text-secondary">25 KB</span>
-                                                                                        </div>
-                                                                                        {doc.status != "Approved" && <Popconfirm title="Are you sure to delete this document?"
-                                                onConfirm={() => this.deleteDocument(reply, idx)}
-                                                okText="Yes"
-                                                cancelText="No">
-                                                <span className="icon md close c-pointer" />
-                                            </Popconfirm>}
-                                                                                    </div>
-                                                                                </div>
-
-                                                                            </div>
+                                                            </Form.Item>
+                                                             <Upload type='dashed' size='large' className='ml-8 mt-12'
+                                                                shape='circle' style={{backgroundColor: 'transparent'}} 
+                                                                action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                                                                showUploadList={false} 
+                                                                beforeUpload={(props) => { this.beforeUpload(props) }}
+                                                                onChange={(props) => { this.handleUpload(props,item) }}
+                                                                disabled={item.state==="Approved" ||item.state==="Cancelled" || item.state==="Pending"}
+                                                                >
+                                                                 <span className={`icon md attach ${item.state==="Approved"?"":"c-pointer"} `}/>                                                      
+                                                                </Upload>
+                                                                <Button
+                                                                disabled={item.state==="Approved" ||item.state==="Cancelled" || item.state==="Pending"}
+                                                                className="delete-btn mt-30"
+                                                                style={{ padding: "0 14px" }}
+                                                                onClick={() =>
+                                                                    confirm({
+                                                                    content: (
+                                                                        <div className="fs-14 text-white-50">
+                                                                        Are you sure do you want to Payment ?
                                                                         </div>
-
-                                                                        <div className="reply-container">
-                                                                            <div className="user-shortname">{this.props?.userProfileInfo?.firstName?.slice(0, 2)}</div>
-                                                                            <div className="reply-body">
-                                                                                <div className="chat-send mb-0">
-                                                                                    <Input maxLength={200} autoFocus type="text" onChange={({ currentTarget: { value } }) => this.handleReplymessage(value)} placeholder="Write your message..." size="large" bordered={false} multiple={true} validator={validateContent} />
-
-                                                                                    <div className="d-flex align-center">
-                                                                                        <Tooltip title="Attachments">
-                                                                                            <Upload accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" onChange={(props) => this.handleUpload(props)} beforeUpload={(props) => { this.beforeUpload(props) }} showUploadList={false} action={process.env.REACT_APP_API_END_POINT + "/UploadFile"}>
-                                                                                                <span className="icon md attach mr-16 c-pointer" />
-                                                                                            </Upload> </Tooltip>
-
-                                                                                    </div>
-                                                                                </div>
-                                                                                {this.state.errorMessage != null && <div className="text-red">{this.state.errorMessage}</div>}
-                                        {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>{docErrorMessage}</div>}
-                                                                                <div className="docfile-container">
-                                                                                    <div className="docfile">
-                                                                                        <span className={`icon xl file mr-16`} />
-                                                                                        <div className="docdetails c-pointer" onClick={() => this.docPreview()}>
-                                                                                            <EllipsisMiddle suffixCount={6}>User Documents</EllipsisMiddle>
-                                                                                            <span className="fs-12 text-secondary">5 KB</span>
-                                                                                        </div>
-                                                                                        <span onClick={() => this.deleteDocument(this.getUploadedFiles(), true)} className="icon md close c-pointer" />
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
+                                                                    ),
+                                                                    title: (
+                                                                        <div className="fs-18 text-white-30">
+                                                                    Delete Payment ?
                                                                         </div>
-                                                                        <div className="text-center my-36">
-
-                                                                            <Button disabled={this.state.isSubmitting} className="pop-btn px-36">Submit</Button>
-                                                                        </div>
-                                                                        {(!this.state?.documentReplies[doc.id]?.data || this.state?.documentReplies[doc.id]?.data?.length == 0) && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No documents submitted" />}
-                                                                    </Panel>
-                                                                </Collapse>
+                                                                    ),
+                                                                    onOk: () => {this.deleteDetials(item)}
+                                                                    })
+                                                                }
+                                                        >
+                                                       <DeleteOutlined  className='ml-8 mt-12' />
+                                                        </Button>
                                                             </div>
-                                                        </td>
-                                                    </tr> */}
-                                                </>)
-                                        })}
-                                    </tbody> : <tbody><tr><td colSpan='8' className="p-16 text-center" style={{ color: "white", width: 300 }} >No bank details available</td></tr> </tbody>}
+                                                            
+                                                            {item.documents?.details.map((file) =><> 
+                                                                {file.documentName !== null && 
+                                                             <Text  className='file-label fs-12'>
+                                                                 {file.documentName}
+                                                                 </Text>  
+                                                            }
+                                                             </>)} 
+                                                      </td>
+                                                    </tr>
+                                                </>)   })}
+                                    </tbody> : <tbody><tr><td colSpan='8' className="p-16 text-center" style={{ color: "white", width: 300 }} >No bank details available</td></tr> </tbody>}</>}
+                                    <tfoot>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            {this.props.match.params.id !=='00000000-0000-0000-0000-000000000000' && <td></td>}
+                                            <td></td>
+                                        <td >
+                                <span className='text-white fs-24 ml-8'> Total:</span>
+                                </td>
+                                <td><span className='text-white fs-24'> <NumberFormat className=" text-right"
+                                                                customInput={Text} thousandSeparator={true} prefix={""}
+                                                                decimalScale={2}
+                                                                allowNegative={false}
+                                                                maxlength={13}
+                                                                style={{ height: 44 }}  
+                                                            >
+                                                                 <span className='text-white '>{parseFloat(total).toFixed(2)} </span>
+                                 {/* <span className='text-white '>{total}</span> */}
+                                 </NumberFormat>
+                                 </span></td>
+                                
+                              
+                                    </tr>  
+                            </tfoot>
                                 </table>
                             </div>
+                            
                         </Form>
                         <div className="text-right mt-36">
 

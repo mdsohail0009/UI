@@ -9,10 +9,10 @@ const savePayments = (obj) => {
     return apiClient.post(ApiControllers.massPayment + "Savepayments", obj);
 }
 const updatePayments = (obj) => {
-    return apiClient.put(ApiControllers.massPayment + "Savepayments", obj);
+    return apiClient.put(ApiControllers.massPayment + "UpdatePayments", obj);
 }
 const getPaymentsData = (id, memberId,currency) => {
-    return apiClient.get(ApiControllers.massPayment + `Getpayments/${id}/${memberId}/${currency}`);
+    return apiClient.get(ApiControllers.massPayment + `payments/${id}/${memberId}/${currency}`);
 }
 const getBankData = (addressId) => {
     return apiClient.get(ApiControllers.massPayment + `BankDetails/${addressId}`);
@@ -23,12 +23,16 @@ const saveBeneficiary = (obj) => {
 const getFavourite = (id) => {
     return apiClient.get(ApiControllers.depositWithdraw + `Withdraw/Favourite/${id}`);
 }
-//https://routechanges.azurewebsites.net/api/v1/DepositeWithdraw/Withdraw/Favourite/dcc19ccd-3b8a-495d-8cf6-331af651bbcb
 const getFileURL = (obj) => {
     return apiClient.post(ApiControllers.accounts + `FetchFile`, obj);
 };
- 
-export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData }
+const creatPayment = (id) => {
+    return apiClient.get(ApiControllers.massPayment + `payment/${id}`);
+};
+const deletePayDetials = (id) => {
+    return apiClient.delete(ApiControllers.massPayment + `BillPayments/payment/${id}`);
+};
+export { getCurrencyLu,saveBeneficiary,getFileURL, savePayments,getFavourite, getPaymentsData, updatePayments, getBankData,creatPayment,deletePayDetials}
 
 //https://routechanges.azurewebsites.net/api/v1/DepositeWithdraw/Favourite
 //https://routechanges.azurewebsites.net/api/v1/Wallets/Fiat/f8be2fd6-9778-4408-ba57-7502046e13a5

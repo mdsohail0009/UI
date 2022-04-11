@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert } from 'antd'
-import { setAddressStep, rejectCoin, fetchUsersIdUpdate, clearValues, clearCryptoValues } from '../../reducers/addressBookReducer';
+import { setAddressStep, rejectCoin, fetchUsersIdUpdate, clearValues, clearCryptoValues,withdrawfiatUpdate } from '../../reducers/addressBookReducer';
 import Translate from 'react-translate-component';
 import { processSteps as config } from './config';
 import NewAddressBook from './newAddressBook';
@@ -13,14 +13,17 @@ import { connect } from 'react-redux';
 import apiCalls from '../../api/apiCalls';
 import { warning } from '../../utils/message';
 
+
 const { Title, Paragraph, Text } = Typography;
 
 class AddressBook extends Component {
-    constructor(props) {
-        super(props);
+   
+     constructor(props) {
+    
+      super(props);
         this.state = {
             visible: false,
-            cryptoFiat: false,
+            cryptoFiat:this.props?.activeFiat ? true : false,
             fiatDrawer: false,
             isCheck: false,
             selection: [],
@@ -47,6 +50,9 @@ class AddressBook extends Component {
     componentDidMount() {
         if (!this.state.cryptoFiat) {
             apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto Address book grid view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Crypto Address book grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
+        }
+        else{
+            apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat Address book add view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Fiat Address book add view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
         }
     }
 
@@ -181,7 +187,7 @@ class AddressBook extends Component {
 
     }
     editAddressBook = () => {
-        debugger
+     
         let obj = this.state.selectedObj;
         if (!this.state.isCheck) {
             this.setState({ alert: true })
@@ -264,7 +270,7 @@ class AddressBook extends Component {
                     <Text className='fs-14 text-yellow fw-400 mb-36 d-block'>(NOTE: Whitelisting of Crypto Address and Bank Account is required, please add below.)</Text>
                     <div className="display-flex mb-16">
                         <Radio.Group
-                            defaultValue={1}
+                            defaultValue={this.props?.activeFiat ? 2 : 1}
                             onChange={this.handleWithdrawToggle}
                             className="buysell-toggle mx-0" style={{ display: "inline-block" }}>
                             <Translate content="withdrawCrypto" component={Radio.Button} value={1} className="buysell-toggle mx-0" />
@@ -332,7 +338,7 @@ class AddressBook extends Component {
                     closable={true}
                     visible={this.state.fiatDrawer}
                     closeIcon={null}
-                    className="side-drawer"
+                    className="side-drawer w-50p"
                 >
                     {this.state.fiatDrawer && <NewFiatAddress onCancel={() => this.closeBuyDrawer()} />}
                 </Drawer>

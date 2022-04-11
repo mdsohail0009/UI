@@ -624,7 +624,6 @@ class Header extends Component {
                       src={logoWhite}
                       alt="logo"
                       className="tlv-logo dark c-pointer"
-                      alt={"image"}
                       onClick={this.routeToHome}
                     />
                   }
@@ -633,7 +632,6 @@ class Header extends Component {
                       src={logoColor}
                       alt="logo"
                       className="tlv-logo light c-pointer"
-                      alt={"image"}
                       onClick={this.routeToHome}
                     />
                   }
@@ -843,7 +841,6 @@ class Header extends Component {
                 src={logoWhite}
                 alt="logo"
                 className="tlv-logo"
-                alt={"image"}
               />
               <div>
                 <span

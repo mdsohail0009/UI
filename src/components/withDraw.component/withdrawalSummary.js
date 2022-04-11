@@ -32,13 +32,9 @@ const WithdrawalFiatSummary = ({
   const [isResend, setIsResend] = useState(true);
   const [invalidcode, setInvalidCode] = useState("");
   const [verifyData, setVerifyData] = useState({});
-  const [validationText, setValidationText] = useState("");
   const [disable, setDisable] = useState(false);
   const [inputDisable, setInputDisable] = useState(true);
-  const [showtext, setShowTimer] = useState(true);
-  const [resendDisable, setResendDisable] = useState(false);
   const [errorMsg, setMsg] = useState(false);
-  const [refresh, setRefresh] = useState(false);
   const [type, setType] = useState("Send");
   const [textDisable, setTextDisable] = useState(false);
   const [emailText, setEmailText] = useState("get_email");
@@ -49,13 +45,16 @@ const WithdrawalFiatSummary = ({
   const [authCode, setAuthCode] = useState("");
   const [otpCode, setOtpCode] = useState("");
   const [verifyOtpText, setVerifyOtpText] = useState("");
-  const [verifyEmailText,setVerifyEmailText]=useState("");
+  const [verifyEmailText,setVerifyEmailText]=useState("")
   const [seconds, setSeconds] = useState(120);
-  const [minutes, setMinutes] = useState(2);
   const [emailOtp, setEmailOtp] = useState("");
   const [invalidData,setInvalidData]=useState(false);
   const [validData,setValidData]=useState(false)
   const[verify,setVerify]=useState(false);
+  const [emailCode, setEmailCode] = useState("");
+  const [disableSave, setDisableSave] = useState(false)
+  
+
   const btnList = {
     get_otp: (
       <Translate className="pl-0 ml-0 text-yellow-50" content="get_code" />
@@ -64,7 +63,7 @@ const WithdrawalFiatSummary = ({
       <Translate
         className="pl-0 ml-0 text-yellow-50"
         content="resend_code"
-        with={{ counter: `${disable ? "(" + seconds + ")" : ""}` }}
+        //with={{ counter: `${disable ? "(" + seconds + ")" : ""}` }}
       />
     ),
     sentVerify: (
@@ -92,7 +91,7 @@ const WithdrawalFiatSummary = ({
       <Translate
         className={`pl-0 ml-0 text-yellow-50 `}
         content="resend_email"
-        with={{ counter: `${disable ? "(" + seconds + ")" : ""}` }}
+        // with={{ counter: `${disable ? "(" + seconds + ")" : ""}` }}
       />
     ),
     sentVerification: (
@@ -104,11 +103,11 @@ const WithdrawalFiatSummary = ({
       />
     )
   };
-  // const verifyText = {
-  //   verifyTextBtn: (
-  //     <Translate className={`pl-0 ml-0 text-yellow-50 `} content="verify_btn" />
-  //   )
-  // };
+  const verifyText = {
+    verifyTextBtn: (
+      <Translate className={`pl-0 ml-0 text-yellow-50 `} content="verify_btn" />
+    )
+  };
 
   useEffect(() => {
     withdrawSummayTrack();
@@ -160,12 +159,19 @@ const WithdrawalFiatSummary = ({
     Obj.info = JSON.stringify(trackAuditLogData);
     let withdrawal = await withdrawSave(Obj);
     if(invalidData==false){
+      setDisableSave(true)
+
       if (withdrawal.ok) {
+        setDisableSave(false)
         dispatch(setWithdrawFinalRes(withdrawal.data));
         dispatch(fetchDashboardcalls(userConfig.id));
         dispatch(rejectWithdrawfiat());
         changeStep("step7");
-      } else {
+      } else if(setVerifyOtpText("") || setVerifyOtpText(null)){
+        setMsg("Please enter valid codes")
+      }
+      else {
+        
         setMsg(withdrawal.data);
         useOtpRef.current.scrollIntoView();
       }
@@ -203,24 +209,26 @@ const WithdrawalFiatSummary = ({
       setTimeout(() => {
         setEmailText("resendEmail"); setTooltipEmail(false)
       }, 120000);
-      // setTimeout(() => {
-      //   setTooltipEmail(false);
-      // }, 120000)
-      if(emailText=="resendEmail"){
-        setVerify(false);
-      }
+     setTimeout(() => {
+      setVerifyEmailText(null)
+     }, 120000);
       //timer();
       } else {
       setMsg(apiCalls.convertLocalLang("request_fail"));
+      
     }
   };
   const getEmailVerification = async (values) => {
+    debugger
     setValidData(true)
-    let response = await apiCalls.verifyEmail(userConfig.id, values.code);
+    let response = await apiCalls.verifyEmail(userConfig.id, emailCode);
     if (response.ok) {
       success("Email  verified successfully");
-    } else {
-      error(response.data);
+    } else if(response.data==null){
+      useOtpRef.current.scrollIntoView();
+        setMsg("Please enter email verification code") }
+    else {
+      setMsg(apiCalls.convertLocalLang("email_invalid_code"));
       setTimeout(() => {
         setMsg(null)
       }, 5000);
@@ -229,6 +237,19 @@ const WithdrawalFiatSummary = ({
     }
   };
 
+  const handleSendOtp = (val) => {
+    setEmailOtp(val.emailCode);
+    setVerifyEmailText("verifyTextBtn");
+    setTooltipEmail(false);
+    setEmailText(null);
+    setVerify(true);
+    setDisableSave(false)
+
+    
+  };
+  const handleEmailChange=(e)=>{
+    setEmailCode(e.target.value);
+  }
   const getOTP = async (val) => {
     let response = await apiCalls.getCode(userConfig.id, type);
     if (response.ok) {
@@ -242,10 +263,13 @@ const WithdrawalFiatSummary = ({
 
       setTimeout(() => {
         setButtonText("resendotp");
-      }, 20000);
+      }, 120000);
       setTimeout(() => {
         setTooltipVisible(false);
-      }, 20000);
+      }, 120000);
+      setTimeout(() => {
+        setVerifyOtpText(null)
+      }, 120000);
     } else {
       setMsg(apiCalls.convertLocalLang("request_fail"));
     }
@@ -256,10 +280,13 @@ const WithdrawalFiatSummary = ({
     let response = await apiCalls.getVerification(userConfig.id, otpCode);
     if (response.ok) {
       success("OTP verified successfully");
-    } else {
+    } else if(response.data==null){
+      useOtpRef.current.scrollIntoView();
+        setMsg("Please enter phone verification code") }
+    else {
       useOtpRef.current.scrollIntoView();
 
-      setMsg(apiCalls.convertLocalLang("invalid_code"));
+      setMsg(apiCalls.convertLocalLang("phone_invalid_code"));
       setTimeout(() => {
         setMsg(null)
       }, 5000);
@@ -270,11 +297,14 @@ const WithdrawalFiatSummary = ({
   const handleChange = (e) => {
     setOtpCode(e.target.value);
   };
+  
   const handleOtp = (val) => {
     setOtp(val.code);
     setVerifyOtpText("verifyOtpBtn");
     setTooltipVisible(false);
-    setButtonText(null);
+     setButtonText(null);
+    setDisableSave(false)
+    
   };
   const getAuthenticator = async () => {
     debugger
@@ -284,11 +314,12 @@ const WithdrawalFiatSummary = ({
       console.log(response.data)
       success("Authenticator verified successfully");
     } else if(response.data==null){
-        setMsg("Please enter verification code")      
+      useOtpRef.current.scrollIntoView();
+        setMsg("Please enter authenticator verification code")      
     }
     else {
       useOtpRef.current.scrollIntoView();
-      setMsg(apiCalls.convertLocalLang("invalid_code"));
+      setMsg(apiCalls.convertLocalLang("twofa_invalid_code"));
       setTimeout(() => {
         setMsg(null)
       }, 5000);
@@ -300,14 +331,7 @@ const WithdrawalFiatSummary = ({
     setAuthCode(e.target.value);
   };
 
-  const handleSendOtp = (val) => {
-    setEmailOtp(val.emailCode);
-    //setVerifyEmailText("verifyTextBtn");
-    setTooltipEmail(false);
-    setEmailText(false);
-    setVerify(true)
-    
-  };
+ 
 
   return (
     <div className="mt-16">
@@ -477,7 +501,7 @@ const WithdrawalFiatSummary = ({
             <Input
               type="text"
               className="cust-input text-left"
-              placeholder={"Enter Code"}
+              placeholder={"Enter code"}
               maxLength={6}
               onChange={(e) => handleAuthenticator(e, "authenticator")}
               style={{ width: "100%" }}
@@ -529,6 +553,7 @@ const WithdrawalFiatSummary = ({
                 )}
                 <Button type="text" onClick={getOtpVerification}>
                   {verifyOtp[verifyOtpText]}
+                  
                 </Button>
               </>
             }
@@ -536,7 +561,7 @@ const WithdrawalFiatSummary = ({
             <Input
               type="text"
               className="cust-input text-left"
-              placeholder={"Enter Code"}
+              placeholder={"Enter code"}
               maxLength={6}
               onKeyDown={(event) => {
                 if (
@@ -600,9 +625,9 @@ const WithdrawalFiatSummary = ({
                  
                 )}
                 {verify == true &&
-                <Button type="text" onClick={(e) => getEmailVerification(e)}>
-                  {/* {verifyText[verifyEmailText]} */}
-                  VERITY
+                <Button type="text" disabled onClick={(e) => getEmailVerification(e)}>
+                  {verifyText[verifyEmailText]}
+                  {/* VERIFY */}
                 </Button>}
               </>
             }
@@ -611,7 +636,7 @@ const WithdrawalFiatSummary = ({
             <Input
               type="text"
               className="cust-input text-left"
-              placeholder={"Enter Code"}
+              placeholder={"Enter code"}
               maxLength={6}
               onKeyDown={(event) => {
                 if (
@@ -628,6 +653,8 @@ const WithdrawalFiatSummary = ({
               }}
               style={{ width: "100%" }}
               disabled={emailDisable}
+              onChange={(e) => handleEmailChange(e, "Emailcode")}
+
             />
           </Form.Item>
         )}
