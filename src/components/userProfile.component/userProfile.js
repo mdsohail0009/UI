@@ -40,13 +40,13 @@ class UserProfile extends Component {
     }
 
     render() {
-     
+  
         const { tabPosition } = this.state;
         if (this.props.addressBookReducer.addressTab) {
-           this.setState({...this.state,activeTab: "5"});
+           this.setState({...this.state,activeTab:"5",activeWithdrawFiat: true});
            this.props.dispatch(addressTabUpdate(false));
-
-        }
+          }
+       
         return (<>
 
             <div className="main-container hidden-mobile">
@@ -73,7 +73,7 @@ class UserProfile extends Component {
                         {this.state.activeTab == 4 && <Documents />}
                     </TabPane> */}
                     <TabPane tab={<span><span className="icon lg addressbook-icon mr-16" /><Translate content="address_book" component={Tabs.TabPane.tab} /></span>} key="5">
-                        {this.state.activeTab == 5 && <AddressBook activeFiat = {this.state.activeWithdrawFiat} activeKey={this.state.activeTab}/>}
+                        {this.state.activeTab == 5 && <AddressBook activeFiat = {this.state.activeWithdrawFiat} />}
                     </TabPane>
                     <TabPane tab={<span><span className="icon lg cases-icon mr-16" />
                     <Translate content="case" className="f-16  mt-16" /></span>} key="6" >

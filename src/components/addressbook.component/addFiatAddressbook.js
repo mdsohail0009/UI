@@ -319,7 +319,6 @@ const NewFiatAddress = (props) => {
     }
     }
     const radioChangeHandler = (e) => {
-          setFiles([]);
           setUploading(false);
           setUploadingActive(false);
           setIdentityFile(null);

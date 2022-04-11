@@ -17,11 +17,13 @@ import { warning } from '../../utils/message';
 const { Title, Paragraph, Text } = Typography;
 
 class AddressBook extends Component {
+   
      constructor(props) {
+    
       super(props);
         this.state = {
             visible: false,
-            cryptoFiat:this.props?.activeKey === "5" ? true : false,
+            cryptoFiat:this.props?.activeFiat ? true : false,
             fiatDrawer: false,
             isCheck: false,
             selection: [],
@@ -268,7 +270,7 @@ class AddressBook extends Component {
                     <Text className='fs-14 text-yellow fw-400 mb-36 d-block'>(NOTE: Whitelisting of Crypto Address and Bank Account is required, please add below.)</Text>
                     <div className="display-flex mb-16">
                         <Radio.Group
-                            defaultValue={this.props?.activeKey ? 2 : 1}
+                            defaultValue={this.props?.activeFiat ? 2 : 1}
                             onChange={this.handleWithdrawToggle}
                             className="buysell-toggle mx-0" style={{ display: "inline-block" }}>
                             <Translate content="withdrawCrypto" component={Radio.Button} value={1} className="buysell-toggle mx-0" />
