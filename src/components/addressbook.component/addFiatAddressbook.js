@@ -675,16 +675,22 @@ const NewFiatAddress = (props) => {
                             />
                         <Row gutter={[16,16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <div className="d-flex">
-                                    <Translate
-                                        className="input-label"
-                                        content={props?.userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
-                                        component={Form.label}
-                                    />{" "}
-                                    <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
+
                             <Form.Item
-                            className='mb-0'
+                            className='custom-forminput custom-label mb-0'
                             name="beneficiaryAccountName"
+                            label={                        
+                            <Translate
+                                className="input-label"
+                                content={props?.userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
+                                component={Form.label}
+                            />}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: apicalls.convertLocalLang("is_required")
+                                }
+                            ]}
                             >
                  { selectParty ? <Input className="cust-input"  placeholder="Business Name"  /> :
                   <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
