@@ -6,6 +6,7 @@ import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
 import { DeleteOutlined } from '@ant-design/icons';
+import { warning } from '../../utils/messages';
 const { confirm } = Modal;
 
 const { Option } = Select;
@@ -206,13 +207,12 @@ class PaymentDetails extends Component {
     }
     deleteDetials = async ( idx ) => {
         const response = await deletePayDetials(idx.id);
-        message.destroy()
         if (response.ok) {
-            message.warning('Payment has been deleted');
+            warning('Payment has been deleted');
             this.getPayments();
             this.props.history.push('/payments');
         } else {
-            message.warning(response.data);
+            warning(response.data);
         }
     }
     moreInfoPopover = async (id, index) => {
@@ -248,7 +248,7 @@ class PaymentDetails extends Component {
             for(let pay in paymentDetialsData){
                 if(paymentDetialsData[pay].id===item.id){
                     let obj = {
-                        "id":"00000000-0000-0000-0000-000000000000",
+                        "id": paymentDetialsData[pay].documents?.details[0]?.id||'00000000-0000-0000-0000-000000000000',
                         "documentId": "00000000-0000-0000-0000-000000000000",
                         "isChecked": file.name == "" ? false : true,
                         "documentName":`${file.name}`,
@@ -260,7 +260,7 @@ class PaymentDetails extends Component {
                     paymentDetialsData[pay].documents.details=[obj];  
                 }
             }
-            this.setState({...this.state,paymentsData:paymentDetialsData,loading: false})
+        this.setState({...this.state,paymentsData:paymentDetialsData,loading: false})
     }
     popOverContent = () => {
         const { moreBankInfo, tooltipLoad } = this.state;
@@ -472,7 +472,7 @@ class PaymentDetails extends Component {
                                                                 >
                                                                  <span className={`icon md attach ${item.state==="Approved"?"":"c-pointer"} `}/>                                                      
                                                                 </Upload>
-                                                                <Button
+                                                                {this.props.match.params.id !=='00000000-0000-0000-0000-000000000000' && <Button
                                                                 disabled={item.state==="Approved" ||item.state==="Cancelled" || item.state==="Pending"}
                                                                 className="delete-btn mt-30"
                                                                 style={{ padding: "0 14px" }}
@@ -480,7 +480,7 @@ class PaymentDetails extends Component {
                                                                     confirm({
                                                                     content: (
                                                                         <div className="fs-14 text-white-50">
-                                                                        Are you sure do you want to delete Payment ?
+                                                                        If you delete, You may lose the entered data.
                                                                         </div>
                                                                     ),
                                                                     title: (
@@ -492,8 +492,8 @@ class PaymentDetails extends Component {
                                                                     })
                                                                 }
                                                         >
-                                                       <DeleteOutlined  className='ml-8 mt-12' />
-                                                        </Button>
+                                                       <span className='icon md delete mt-12' />
+                                                        </Button>}
                                                             </div>
                                                             
                                                             {item.documents?.details.map((file) =><> 
