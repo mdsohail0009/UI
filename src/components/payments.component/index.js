@@ -4,6 +4,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
+import {warning} from '../../utils/messages'
 import List from "../grid.component";
 import BeneficiaryDrawer from './beneficiaryDrawer';
 import NewFiatAddress from '../addressbook.component/addFiatAddressbook'
@@ -31,7 +32,7 @@ const Payments = (props) => {
     };
     const paymentsEdit = () => {
         if (selection.length == 0) {
-            message.warning("Please select the one record");
+            warning("Please select the one record");
           }else{
             props.history.push(`/payments/${selectedObj}/${setSelectData.currency}/edit`)
           }
