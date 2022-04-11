@@ -9,13 +9,10 @@ import ErrorBoundary from "antd/lib/alert/ErrorBoundary";
 import { AppInsightsContext } from "@microsoft/applicationinsights-react-js";
 import { reactPlugin } from "../../Shared/appinsights";
 import Notifications from "../../notifications";
-import { setNotificationCount } from '../../reducers/dashboardReducer';
 import { startConnection } from "../../utils/signalR";
 import { useThemeSwitcher } from "react-css-theme-switcher";
 import apiCalls from '../../api/apiCalls';
-import { connect } from 'react-redux';
 import { updatetwofactor } from "../../reducers/configReduser";
-import { warning } from "../../utils/message";
 
 function App(props) {
   const { switcher, themes } = useThemeSwitcher()
@@ -28,8 +25,6 @@ function App(props) {
         apiCalls.twofactor(userProfileInfo?.id).then(res => {
           if(res.ok){
             store.dispatch(updatetwofactor(res.data));
-          } else {
-            warning("Two Factor data didno't get from the server!");
           }
         })
         startConnection(userProfileInfo?.id);
