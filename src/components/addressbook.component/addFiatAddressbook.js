@@ -686,7 +686,7 @@ const NewFiatAddress = (props) => {
                             className='mb-0'
                             name="beneficiaryAccountName"
                             >
-                 { selectParty ? <Input className="cust-input"  placeholder="Recipient full name"  /> :
+                 { selectParty ? <Input className="cust-input"  placeholder="Business Name"  /> :
                   <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
                             </Form.Item>
                         </Col>
@@ -744,7 +744,7 @@ const NewFiatAddress = (props) => {
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Upload your Identity Document here</p>
+                                    <p className="ant-upload-text fs-18 mb-0">Please Upload Identity Document </p>
                                 </Dragger>}
                                 {identityFile != null && <div className="docfile mr-0">
                                 <span className={`icon xl ${(identityFile.documentName?.slice(-3) === "zip" ? "file" : "") || (identityFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
@@ -779,7 +779,7 @@ const NewFiatAddress = (props) => {
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Upload your Address Proofs here</p>
+                                    <p className="ant-upload-text fs-18 mb-0">Please Upload Address Proofs</p>
                                 </Dragger>}
                             </Form.Item> 
                             {addressFile != null && <div className="docfile mr-0">
@@ -822,7 +822,7 @@ const NewFiatAddress = (props) => {
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Upload your signed document here</p>
+                                    <p className="ant-upload-text fs-18 mb-0">Please Upload Signed Document</p>
                                 </Dragger>}
                                 {declarationFile != null && <div className="docfile mr-0">
                                 <span className={`icon xl ${(declarationFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (declarationFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
