@@ -1,7 +1,7 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Button, Form, Select, message, Input, Alert, Popover, Spin, Collapse, Badge,Upload,Modal } from 'antd';
+import { Typography, Button, Form, Select, message, Input, Alert, Popover, Spin, Collapse, Badge, Upload, Modal } from 'antd';
 import Translate from 'react-translate-component';
-import { getCurrencyLu, getPaymentsData, savePayments, getBankData,creatPayment,updatePayments,deletePayDetials } from './api'
+import { getCurrencyLu, getPaymentsData, savePayments, getBankData, creatPayment, updatePayments, deletePayDetials } from './api'
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
@@ -41,13 +41,13 @@ class PaymentDetails extends Component {
             tooltipLoad: false,
             uploadLoader: false,
             isValidFile: true,
-            paymentsDocDetails:[],
+            paymentsDocDetails: [],
             fileDetails: [],
-            paymentDoc:{},
-            payData:[],
-            amount:0,
-            type:this.props.match.params.type,
-            billPaymentData:null
+            paymentDoc: {},
+            payData: [],
+            amount: 0,
+            type: this.props.match.params.type,
+            billPaymentData: null
         }
         this.gridRef = React.createRef();
         this.useDivRef = React.createRef();
@@ -61,7 +61,7 @@ class PaymentDetails extends Component {
         this.useDivRef.current.scrollIntoView()
     }
     handleAlert = () => {
-        this.setState({ ...this.state, errorMessage: null,loading: true })
+        this.setState({ ...this.state, errorMessage: null, loading: true })
     }
     // handleCurrencyChange = async (val, props) => {
     //     this.setState({ ...this.state, loading: true, Currency: val, paymentsData: [] })
@@ -79,20 +79,20 @@ class PaymentDetails extends Component {
 
     // }
 
-    handleCurrencyChange = async(val,props) => {
-        this.setState({ ...this.state, Currency: val,paymentsData:[] })
-        if(this.state.Currency=val){
-            let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id,this.state.Currency)
+    handleCurrencyChange = async (val, props) => {
+        this.setState({ ...this.state, Currency: val, paymentsData: [] })
+        if (this.state.Currency = val) {
+            let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id, this.state.Currency)
             if (response.ok) {
                 console.log(response.data.paymentsDetails)
-                this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false }) 
+                this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false })
             } else {
                 message.destroy();
                 this.setState({ ...this.state, errorMessage: response.data })
                 this.useDivRef.current.scrollIntoView()
             }
         }
-       
+
     }
     getCurrencyLookup = async () => {
         let response = await getCurrencyLu(this.props.userConfig?.id)
@@ -106,28 +106,28 @@ class PaymentDetails extends Component {
     }
     getPayments = async () => {
         this.setState({ ...this.state, loading: true })
-        if(this.props.match.params.id==='00000000-0000-0000-0000-000000000000'){
+        if (this.props.match.params.id === '00000000-0000-0000-0000-000000000000') {
             let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id, this.state.Currency)
             if (response.ok) {
-                this.setState({ ...this.state,billPaymentData:response.data, paymentsData: response.data.paymentsDetails, loading: false});
+                this.setState({ ...this.state, billPaymentData: response.data, paymentsData: response.data.paymentsDetails, loading: false });
             } else {
                 message.destroy();
-                this.setState({ ...this.state, errorMessage: response.data,loading: false })
+                this.setState({ ...this.state, errorMessage: response.data, loading: false })
                 this.useDivRef.current.scrollIntoView()
             }
-        }else{
-            let response=await creatPayment(this.props.match.params.id)  
-            if(response.ok){
-                let paymentDetails=response.data;
-                for(let i in paymentDetails.paymentsDetails ){
-                    paymentDetails.paymentsDetails[i].checked=true;
+        } else {
+            let response = await creatPayment(this.props.match.params.id)
+            if (response.ok) {
+                let paymentDetails = response.data;
+                for (let i in paymentDetails.paymentsDetails) {
+                    paymentDetails.paymentsDetails[i].checked = true;
                 }
-                this.setState({...this.state,billPaymentData:response.data,paymentsData:paymentDetails.paymentsDetails, loading: false});
+                this.setState({ ...this.state, billPaymentData: response.data, paymentsData: paymentDetails.paymentsDetails, loading: false });
 
-                
+
             } else {
                 message.destroy();
-                this.setState({ ...this.state, errorMessage: response.data,loading: false })
+                this.setState({ ...this.state, errorMessage: response.data, loading: false })
                 this.useDivRef.current.scrollIntoView()
             }
         }
@@ -159,27 +159,36 @@ class PaymentDetails extends Component {
             }
             else {
                 this.setState({ btnDisabled: true });
-                if(this.props.match.params.id==='00000000-0000-0000-0000-000000000000'){
+                if (this.props.match.params.id === '00000000-0000-0000-0000-000000000000') {
                     let response = await savePayments(obj);
-                if (response.ok) {
-                    this.setState({ btnDisabled: false });
-                    message.destroy();
-                    message.success({
-                        content: 'Payment details saved successfully',
-                        className: "custom-msg",
-                        duration: 0.5
-                    })
-                    this.props.history.push('/payments')
-                } else {
-                    this.setState({ btnDisabled: false });
-                    // this.setState({ ...this.state, errorMessage:  response.data })
-                    // this.useDivRef.current.scrollIntoView()
-                    //error(response.data)
-                    // message.destroy();
-                    // this.setState({ ...this.state, errorMessage: response.data })
-                    // this.useDivRef.current.scrollIntoView()
-                }
-                }else{
+                    if (response.ok) {
+                        this.setState({ btnDisabled: false });
+                        message.destroy();
+                        message.success({
+                            content: 'Payment details saved successfully',
+                            className: "custom-msg",
+                            duration: 0.5
+                        })
+                        this.props.history.push('/payments')
+                        this.useDivRef.current.scrollIntoView()
+                    }
+                     else {
+                        this.setState({ btnDisabled: false });
+                        message.destroy();
+                        this.setState({ ...this.state, errorMessage: response.data })
+                        this.useDivRef.current.scrollIntoView()
+                    }
+                } 
+                // else {
+                //     this.setState({ btnDisabled: false });
+                //     // this.setState({ ...this.state, errorMessage:  response.data })
+                //     // this.useDivRef.current.scrollIntoView()
+                //     //error(response.data)
+                //     // message.destroy();
+                //     // this.setState({ ...this.state, errorMessage: response.data })
+                //     // this.useDivRef.current.scrollIntoView()
+                // }
+                else{
                     let PaymentDetail = this.state.paymentsData;
                     for(var i in PaymentDetail){
                         if(PaymentDetail[i].checked===false){
@@ -187,28 +196,29 @@ class PaymentDetails extends Component {
                         }
                     }
                     let response = await updatePayments(this.state.paymentsData);
-                if (response.ok) {
-                    this.setState({ btnDisabled: false, });
-                    message.destroy();
-                    message.success({
-                        content: 'Payment details update successfully',
-                        className: "custom-msg",
-                        duration: 0.5
-                    })
-                    this.props.history.push('/payments')
-                } else {
-                    this.setState({ btnDisabled: false });
-                    message.destroy();
-                    this.setState({ ...this.state, errorMessage: response.data })
-                    this.useDivRef.current.scrollIntoView()
+                    if (response.ok) {
+                        this.setState({ btnDisabled: false, });
+                        message.destroy();
+                        message.success({
+                            content: 'Payment details update successfully',
+                            className: "custom-msg",
+                            duration: 0.5
+                        })
+                        this.props.history.push('/payments')
+                    } else {
+                        this.setState({ btnDisabled: false });
+                        message.destroy();
+                        this.setState({ ...this.state, errorMessage: response.data })
+                        this.useDivRef.current.scrollIntoView()
+                    }
                 }
-                }  
             }
         } else {
             this.setState({ ...this.state, errorMessage: "Please select currency" })
             this.useDivRef.current.scrollIntoView()
         }
     }
+
     deleteDetials = async ( idx ) => {
         const response = await deletePayDetials(idx.id);
         message.destroy()
@@ -219,7 +229,9 @@ class PaymentDetails extends Component {
         } else {
             message.warning(response.data);
         }
+        this.setState({ ...this.state.paymentsData, paymentData: response.data });
     }
+
     moreInfoPopover = async (id, index) => {
         this.setState({ ...this.state, tooltipLoad: true });
         let response = await getBankData(id);
@@ -264,6 +276,7 @@ class PaymentDetails extends Component {
                     }
                     paymentDetialsData[pay].documents.details=[obj];  
                 }
+                // paymentDetialsData[pay].documents.details = [obj];
             }
             this.setState({...this.state,paymentsData:paymentDetialsData,loading: false})
     }
@@ -275,8 +288,8 @@ class PaymentDetails extends Component {
             return (<div className='more-popover'>
                 <Text className='lbl'>Address Label</Text>
                 <Text className='val'>{moreBankInfo?.favouriteName}</Text>
-                <Text className='lbl'>Recipient Name</Text>
-                <Text className='val'>{moreBankInfo?.beneficiaryAccountName}</Text>
+                {/* <Text className='lbl'>Recipient Name</Text>
+                <Text className='val'>{moreBankInfo?.beneficiaryAccountName}</Text> */}
                 <Text className='lbl'>Recipient Address</Text>
                 <Text className='val'>{moreBankInfo?.beneficiaryAccountAddress}</Text>
                 <Text className='lbl'>BIC/SWIFT/Routing Number</Text>
@@ -288,11 +301,11 @@ class PaymentDetails extends Component {
     }
 
     render() {
-        let total=0;
-         for (let i=0; i<this.state.paymentsData.length; i++) {
+        let total = 0;
+        for (let i = 0; i < this.state.paymentsData.length; i++) {
             total += Number(this.state.paymentsData[i].amount);
         }
-        const { currency, paymentsData, loading,type} = this.state;
+        const { currency, paymentsData, loading, type } = this.state;
         const { form } = this.props
         return (
             <>
@@ -342,35 +355,35 @@ class PaymentDetails extends Component {
                                         </Option>))}
                                 </Select>
                             </Form.Item> */}
-                             <Form.Item
-                               
-                               >
-                                   <Select
-                                       className="cust-input"
-                                       placeholder="Select Currency"
-                                       onChange={(e) => this.handleCurrencyChange(e)}
-                                       style={{ width: 280 }}
-                                       dropdownClassName='select-drpdwn'
-                                       bordered={false}
-                                       showArrow={true}
-                                       defaultValue="USD"
-                                      
-                                   >
-                                       {currency?.map((item, idx) => (
-                                           <Option
-                                               key={idx}
-                                               className="fw-400"
-                                              
-                                               value={item.currencyCode}
-                                           > {item.currencyCode}
-                                           { <NumberFormat
-                                            value={item.avilable} 
-                                            displayType={'text'}
-                                             thousandSeparator={true}
-                                            renderText={(value) => <span > Balance: {value}</span>} />}
-                                            </Option>))}
-                                   </Select>
-                               </Form.Item>
+                            <Form.Item
+
+                            >
+                                <Select
+                                    className="cust-input"
+                                    placeholder="Select Currency"
+                                    onChange={(e) => this.handleCurrencyChange(e)}
+                                    style={{ width: 280 }}
+                                    dropdownClassName='select-drpdwn'
+                                    bordered={false}
+                                    showArrow={true}
+                                    defaultValue="USD"
+
+                                >
+                                    {currency?.map((item, idx) => (
+                                        <Option
+                                            key={idx}
+                                            className="fw-400"
+
+                                            value={item.currencyCode}
+                                        > {item.currencyCode}
+                                            {<NumberFormat
+                                                value={item.avilable}
+                                                displayType={'text'}
+                                                thousandSeparator={true}
+                                                renderText={(value) => <span > Balance: {value}</span>} />}
+                                        </Option>))}
+                                </Select>
+                            </Form.Item>
                             <div>
                                 <table className='pay-grid'>
                                     <thead>
@@ -380,13 +393,13 @@ class PaymentDetails extends Component {
                                             <th>Bank Name</th>
                                             {/* <th>BIC/SWIFT/Routing Number</th> */}
                                             <th>Bank account number</th>
-                                            {this.props.match.params.id !=='00000000-0000-0000-0000-000000000000' && <th>State</th>}
+                                            {this.props.match.params.id !== '00000000-0000-0000-0000-000000000000' && <th>State</th>}
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
-                                   
-                                    {loading ?<tbody><tr><td colSpan='8' className="p-16 text-center"  ><Loader /></td></tr> </tbody>   :<>
-                                    {paymentsData?.length > 0 ? <tbody className="mb-0">
+
+                                    {loading ? <tbody><tr><td colSpan='8' className="p-16 text-center"  ><Loader /></td></tr> </tbody> : <>
+                                        {paymentsData?.length > 0 ? <tbody className="mb-0">
                                             {paymentsData?.map((item, i) => {
                                             return (
                                                 <>
@@ -510,29 +523,29 @@ class PaymentDetails extends Component {
                                         <tr>
                                             <td></td>
                                             <td></td>
-                                            {this.props.match.params.id !=='00000000-0000-0000-0000-000000000000' && <td></td>}
+                                            {this.props.match.params.id !== '00000000-0000-0000-0000-000000000000' && <td></td>}
                                             <td></td>
-                                        <td >
-                                <span className='text-white fs-24 ml-8'> Total:</span>
-                                </td>
-                                <td><span className='text-white fs-24'> <NumberFormat className=" text-right"
-                                                                customInput={Text} thousandSeparator={true} prefix={""}
-                                                                decimalScale={2}
-                                                                allowNegative={false}
-                                                                maxlength={13}
-                                                                style={{ height: 44 }}  
-                                                            >
-                                                                 <span className='text-white '>{parseFloat(total).toFixed(2)} </span>
-                                 {/* <span className='text-white '>{total}</span> */}
-                                 </NumberFormat>
-                                 </span></td>
-                                
-                              
-                                    </tr>  
-                            </tfoot>
+                                            <td >
+                                                <span className='text-white fs-24 ml-8'> Total:</span>
+                                            </td>
+                                            <td><span className='text-white fs-24'> <NumberFormat className=" text-right"
+                                                customInput={Text} thousandSeparator={true} prefix={""}
+                                                decimalScale={2}
+                                                allowNegative={false}
+                                                maxlength={13}
+                                                style={{ height: 44 }}
+                                            >
+                                                <span className='text-white '>{parseFloat(total).toFixed(2)} </span>
+                                                {/* <span className='text-white '>{total}</span> */}
+                                            </NumberFormat>
+                                            </span></td>
+
+
+                                        </tr>
+                                    </tfoot>
                                 </table>
                             </div>
-                            
+
                         </Form>
                         <div className="text-right mt-36">
 
