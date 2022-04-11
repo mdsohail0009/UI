@@ -8,6 +8,7 @@ import { fetchNotices } from '../../reducers/dashboardReducer';
 import Wallets from '../dashboard.component/wallets.component';
 import YourPortfolio from '../dashboard.component/yourportfolio.component';
 import apiCalls from '../../api/apiCalls';
+import Notices from './notices';
 
 class Home extends Component {
     state = {
@@ -57,7 +58,7 @@ class Home extends Component {
                             crypto_value='0.00'
                             crypto_usd="0.00 BTC"
                             crypto_stock="0.0%" />
-                            
+                        {/* <Notices /> */}
                         <div className="markets-panel">
                             <MarketCap />
                         </div>
