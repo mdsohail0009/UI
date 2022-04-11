@@ -5,8 +5,8 @@ import { getCurrencyLu, getPaymentsData, savePayments, getBankData,creatPayment,
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
+import {error} from '../../utils/messages'
 import { DeleteOutlined } from '@ant-design/icons';
-import { warning } from '../../utils/messages';
 const { confirm } = Modal;
 
 const { Option } = Select;
@@ -134,6 +134,7 @@ class PaymentDetails extends Component {
 
     }
     saveRolesDetails = async () => {
+        debugger
         let objData = this.state.paymentsData.filter((item) => {
             return item.checked
         })
@@ -152,7 +153,7 @@ class PaymentDetails extends Component {
                 this.setState({ ...this.state, errorMessage: "Please enter amount" })
                 this.useDivRef.current.scrollIntoView()
             }
-            else if (!objAmount > 0) {
+            else if (objAmount<=0) {
                 this.setState({ ...this.state, errorMessage: "Amount must be greater than zero." })
                 this.useDivRef.current.scrollIntoView()
             }
@@ -171,15 +172,18 @@ class PaymentDetails extends Component {
                     this.props.history.push('/payments')
                 } else {
                     this.setState({ btnDisabled: false });
-                    message.destroy();
-                    this.setState({ ...this.state, errorMessage: response.data })
-                    this.useDivRef.current.scrollIntoView()
+                    // this.setState({ ...this.state, errorMessage:  response.data })
+                    // this.useDivRef.current.scrollIntoView()
+                    //error(response.data)
+                    // message.destroy();
+                    // this.setState({ ...this.state, errorMessage: response.data })
+                    // this.useDivRef.current.scrollIntoView()
                 }
                 }else{
-                    let PaymentDetails = this.state.paymentsData;
-                    for(var i in PaymentDetails){
-                        if(PaymentDetails[i].checked===false){
-                            PaymentDetails[i].RecordStatus = 'Deleted'
+                    let PaymentDetail = this.state.paymentsData;
+                    for(var i in PaymentDetail){
+                        if(PaymentDetail[i].checked===false){
+                            PaymentDetail[i].RecordStatus = 'Deleted'
                         }
                     }
                     let response = await updatePayments(this.state.paymentsData);
@@ -207,12 +211,13 @@ class PaymentDetails extends Component {
     }
     deleteDetials = async ( idx ) => {
         const response = await deletePayDetials(idx.id);
+        message.destroy()
         if (response.ok) {
-            warning('Payment has been deleted');
+            message.warning('Payment has been deleted');
             this.getPayments();
             this.props.history.push('/payments');
         } else {
-            warning(response.data);
+            message.warning(response.data);
         }
     }
     moreInfoPopover = async (id, index) => {
@@ -248,7 +253,7 @@ class PaymentDetails extends Component {
             for(let pay in paymentDetialsData){
                 if(paymentDetialsData[pay].id===item.id){
                     let obj = {
-                        "id": paymentDetialsData[pay].documents?.details[0]?.id||'00000000-0000-0000-0000-000000000000',
+                        "id":"00000000-0000-0000-0000-000000000000",
                         "documentId": "00000000-0000-0000-0000-000000000000",
                         "isChecked": file.name == "" ? false : true,
                         "documentName":`${file.name}`,
@@ -260,7 +265,7 @@ class PaymentDetails extends Component {
                     paymentDetialsData[pay].documents.details=[obj];  
                 }
             }
-        this.setState({...this.state,paymentsData:paymentDetialsData,loading: false})
+            this.setState({...this.state,paymentsData:paymentDetialsData,loading: false})
     }
     popOverContent = () => {
         const { moreBankInfo, tooltipLoad } = this.state;
@@ -281,13 +286,7 @@ class PaymentDetails extends Component {
             </div>)
         }
     }
-    addressTypeNames = (type) =>{
-        const stepcodes = {
-                  "1stparty" : "1st Party",
-                  "3rdparty" : "3rd Party",
-         }
-         return stepcodes[type]
-     }
+
     render() {
         let total=0;
          for (let i=0; i<this.state.paymentsData.length; i++) {
@@ -417,7 +416,7 @@ class PaymentDetails extends Component {
                                                             <div className='d-flex align-center justify-content'>
                                                                 <span>{item.bankname}
                                                                 {item.isPrimary!==null? <Text  size="small" className='file-label ml-8'
-                                                                  >{this.addressTypeNames(item.addressType)} </Text>:""}
+                                                                  >{item.addressType} </Text>:""}
                                                                  </span>
                                                                 <Popover
                                                                     className='more-popover'
@@ -472,7 +471,7 @@ class PaymentDetails extends Component {
                                                                 >
                                                                  <span className={`icon md attach ${item.state==="Approved"?"":"c-pointer"} `}/>                                                      
                                                                 </Upload>
-                                                                {this.props.match.params.id !=='00000000-0000-0000-0000-000000000000' && <Button
+                                                                <Button
                                                                 disabled={item.state==="Approved" ||item.state==="Cancelled" || item.state==="Pending"}
                                                                 className="delete-btn mt-30"
                                                                 style={{ padding: "0 14px" }}
@@ -480,7 +479,7 @@ class PaymentDetails extends Component {
                                                                     confirm({
                                                                     content: (
                                                                         <div className="fs-14 text-white-50">
-                                                                        If you delete, You may lose the entered data.
+                                                                        Are you sure do you want to delete Payment ?
                                                                         </div>
                                                                     ),
                                                                     title: (
@@ -492,8 +491,8 @@ class PaymentDetails extends Component {
                                                                     })
                                                                 }
                                                         >
-                                                       <span className='icon md delete mt-12' />
-                                                        </Button>}
+                                                       <DeleteOutlined  className='ml-8 mt-12' />
+                                                        </Button>
                                                             </div>
                                                             
                                                             {item.documents?.details.map((file) =><> 
