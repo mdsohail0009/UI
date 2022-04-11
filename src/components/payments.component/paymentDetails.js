@@ -159,6 +159,12 @@ class PaymentDetails extends Component {
                     this.useDivRef.current.scrollIntoView()
                 }
                 }else{
+                    let PaymentDetails = this.state.paymentsData;
+                    for(var i in PaymentDetails){
+                        if(PaymentDetails[i].checked===false){
+                            PaymentDetails[i].RecordStatus = 'Deleted'
+                        }
+                    }
                     let response = await updatePayments(this.state.paymentsData);
                 if (response.ok) {
                     this.setState({ btnDisabled: false, });
@@ -340,7 +346,7 @@ class PaymentDetails extends Component {
                                                                      //style={(this.props.match.params.id==='00000000-0000-0000-0000-000000000000' || item.state==="Submitted")?'':{ cursor: "not-allowed" }}
                                                                     name="check"
                                                                     type="checkbox"
-                                                                    // disabled={(this.props.match.params.id==='00000000-0000-0000-0000-000000000000' || item.state==="Submitted")?false:true}
+                                                                    disabled={item.state==="Approved" ||item.state==="Cancelled" || item.state==="Pending"}
                                                                     checked={item.checked}
                                                                     className="grid_check_box"
                                                                     onClick={(value)=>{
@@ -400,7 +406,7 @@ class PaymentDetails extends Component {
                                                                     paymentData[i].checked = value > 0 ? true : paymentData[i].checked;
                                                                     this.setState({ ...this.state, paymentsData: paymentData })
                                                                 }}
-                                                                disabled={item.state==="Approved"}
+                                                                disabled={item.state==="Approved" ||item.state==="Cancelled" || item.state==="Pending"}
                                                                 value={item.amount}
                                                             />
                                                             </Form.Item>
@@ -410,30 +416,31 @@ class PaymentDetails extends Component {
                                                                 showUploadList={false} 
                                                                 beforeUpload={(props) => { this.beforeUpload(props) }}
                                                                 onChange={(props) => { this.handleUpload(props,item) }}
-                                                                disabled={item.state==="Approved"}
+                                                                disabled={item.state==="Approved" ||item.state==="Cancelled" || item.state==="Pending"}
                                                                 >
                                                                  <span className={`icon md attach ${item.state==="Approved"?"":"c-pointer"} `}/>                                                      
                                                                 </Upload>
                                                                 <Button
+                                                                disabled={item.state==="Approved" ||item.state==="Cancelled" || item.state==="Pending"}
                                                                 className="delete-btn mt-30"
                                                                 style={{ padding: "0 14px" }}
                                                                 onClick={() =>
                                                                     confirm({
                                                                     content: (
                                                                         <div className="fs-14 text-white-50">
-                                                                        Are you sure do you want to delete document ?
+                                                                        Are you sure do you want to Payment ?
                                                                         </div>
                                                                     ),
                                                                     title: (
                                                                         <div className="fs-18 text-white-30">
-                                                                    Delete document ?
+                                                                    Delete Payment ?
                                                                         </div>
                                                                     ),
                                                                     onOk: () => {this.deleteDetials(item)}
                                                                     })
                                                                 }
                                                         >
-                                                       <DeleteOutlined className='ml-8 mt-12' />
+                                                       <DeleteOutlined  className='ml-8 mt-12' />
                                                         </Button>
                                                             </div>
                                                             
@@ -464,7 +471,10 @@ class PaymentDetails extends Component {
                                                                 maxlength={13}
                                                                 style={{ height: 44 }}  
                                                             >
-                                 <span className='text-white '>{total}</span></NumberFormat></span></td>
+                                                                 <span className='text-white '>{parseFloat(total).toFixed(2)} </span>
+                                 {/* <span className='text-white '>{total}</span> */}
+                                 </NumberFormat>
+                                 </span></td>
                                 
                               
                                     </tr>  
