@@ -219,13 +219,13 @@ class PaymentDetails extends Component {
     // }
     deleteDetials = async (id) => {
         let data = this.state.paymentsData;
-        for(let i in data){
+        for (let i in data) {
             data[i].recordStatus = 'Deleted';
             data[i].amount = '0';
         }
-        this.setState({...this.state.paymentsData, paymentData: data});
+        this.setState({ ...this.state.paymentsData, paymentData: data });
     }
-    
+
     moreInfoPopover = async (id, index) => {
         this.setState({ ...this.state, tooltipLoad: true });
         let response = await getBankData(id);
@@ -394,124 +394,125 @@ class PaymentDetails extends Component {
                                     {loading ? <tbody><tr><td colSpan='8' className="p-16 text-center"  ><Loader /></td></tr> </tbody> : <>
                                         {paymentsData?.length > 0 ? <tbody className="mb-0">
                                             {paymentsData?.map((item, i) => {
-                                                if(item.recordStatus != 'Deleted'){
-                                                return (
-                                                    <>
-                                                        <tr key={i} disabled={(this.props.match.params.id === '00000000-0000-0000-0000-000000000000' || item.state === "Submitted") ? false : true} >
-                                                            <td style={{ width: 50 }} className='text-center'>
-                                                                <label className="text-center custom-checkbox p-relative">
-                                                                    <Input
-                                                                        //style={(this.props.match.params.id==='00000000-0000-0000-0000-000000000000' || item.state==="Submitted")?'':{ cursor: "not-allowed" }}
-                                                                        name="check"
-                                                                        type="checkbox"
-                                                                        disabled={item.state === "Approved" || item.state === "Cancelled" || item.state === "Pending"}
-                                                                        checked={item.checked}
-                                                                        className="grid_check_box"
-                                                                        onClick={(value) => {
-                                                                            console.log(value.target.checked)
-                                                                            let paymentData = this.state.paymentsData;
-                                                                            if (value.target.checked === false) { paymentData[i].amount = 0; }
-                                                                            paymentData[i].checked = value.target.checked;
-                                                                            this.setState({ ...this.state, paymentsData: paymentData })
-                                                                        }}
-                                                                    />
-                                                                    <span></span>
-                                                                </label>
-                                                            </td>
-                                                            <td>{item?.beneficiaryAccountName ? <>{item?.beneficiaryAccountName}</> : <span>{" - - "}</span>}</td>
-                                                            <td>
-                                                                <div className='d-flex align-center justify-content'>
-                                                                    <span>{item.bankname}
-                                                                        {item.isPrimary !== null ? <Text size="small" className='file-label ml-8'
-                                                                        >{item.addressType} </Text> : ""}
-                                                                    </span>
-                                                                    <Popover
-                                                                        className='more-popover'
-                                                                        content={this.popOverContent}
-                                                                        trigger="click"
-                                                                        visible={item.visible}
-                                                                        placement='top'
-                                                                        onVisibleChange={() => this.handleVisibleChange(i)}
-                                                                    >
-                                                                        <span className='icon md info c-pointer' onClick={() => this.moreInfoPopover(item.addressId, i)} />
-                                                                    </Popover>
-                                                                </div>
-                                                            </td>
-                                                            <td>{item.accountnumber}</td>
-                                                            {this.props.match.params.id !== '00000000-0000-0000-0000-000000000000' && <td>{item.state ? item.state : "- -"}</td>}
-                                                            <td>
-                                                                <div className='d-flex'>
-                                                                    <Form.Item
-                                                                        //name={item.id}
-                                                                        className='mb-0'
-                                                                        rules={item.checked && [
-                                                                            {
-                                                                                required: true,
-                                                                                message: 'is_required'
-                                                                            }
-                                                                        ]}
-                                                                    >
-                                                                        <NumberFormat className="cust-input text-right"
-                                                                            customInput={Input} thousandSeparator={true} prefix={""}
-                                                                            placeholder="0.00"
-                                                                            decimalScale={2}
-                                                                            allowNegative={false}
-                                                                            maxlength={13}
-                                                                            style={{ height: 44 }}
-                                                                            onValueChange={({ e, value }) => {
+                                                if (item.recordStatus != 'Deleted') {
+                                                    return (
+                                                        <>
+                                                            <tr key={i} disabled={(this.props.match.params.id === '00000000-0000-0000-0000-000000000000' || item.state === "Submitted") ? false : true} >
+                                                                <td style={{ width: 50 }} className='text-center'>
+                                                                    <label className="text-center custom-checkbox p-relative">
+                                                                        <Input
+                                                                            //style={(this.props.match.params.id==='00000000-0000-0000-0000-000000000000' || item.state==="Submitted")?'':{ cursor: "not-allowed" }}
+                                                                            name="check"
+                                                                            type="checkbox"
+                                                                            disabled={item.state === "Approved" || item.state === "Cancelled" || item.state === "Pending"}
+                                                                            checked={item.checked}
+                                                                            className="grid_check_box"
+                                                                            onClick={(value) => {
+                                                                                console.log(value.target.checked)
                                                                                 let paymentData = this.state.paymentsData;
-                                                                                paymentData[i].amount = value;
-                                                                                paymentData[i].checked = value > 0 ? true : paymentData[i].checked;
+                                                                                if (value.target.checked === false) { paymentData[i].amount = 0; }
+                                                                                paymentData[i].checked = value.target.checked;
                                                                                 this.setState({ ...this.state, paymentsData: paymentData })
                                                                             }}
-                                                                            disabled={item.state === "Approved" || item.state === "Cancelled" || item.state === "Pending"}
-                                                                            value={item.amount}
                                                                         />
-                                                                    </Form.Item>
-                                                                    <Upload type='dashed' size='large' className='ml-8 mt-12'
-                                                                        shape='circle' style={{ backgroundColor: 'transparent' }}
-                                                                        action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
-                                                                        showUploadList={false}
-                                                                        beforeUpload={(props) => { this.beforeUpload(props) }}
-                                                                        onChange={(props) => { this.handleUpload(props, item) }}
-                                                                        disabled={item.state === "Approved" || item.state === "Cancelled" || item.state === "Pending"}
-                                                                    >
-                                                                        <span className={`icon md attach ${item.state === "Approved" ? "" : "c-pointer"} `} />
-                                                                    </Upload>
-                                                                    {this.props.match.params.id !== '00000000-0000-0000-0000-000000000000' && <Button
-                                                                        disabled={item.state === "Approved" || item.state === "Cancelled" || item.state === "Pending"}
-                                                                        className="delete-btn mt-30"
-                                                                        style={{ padding: "0 14px" }}
-                                                                        onClick={() =>
-                                                                            confirm({
-                                                                                content: (
-                                                                                    <div className="fs-14 text-white-50">
-                                                                                        If you delete, You may lose the entered data.
-                                                                                    </div>
-                                                                                ),
-                                                                                title: (
-                                                                                    <div className="fs-18 text-white-30">
-                                                                                        Delete Payment ?
-                                                                                    </div>
-                                                                                ),
-                                                                                onOk: () => { this.deleteDetials(item.id) }
-                                                                            })
-                                                                        }
-                                                                    >
-                                                                        <span className='icon md delete mt-12' />
-                                                                    </Button>}
-                                                                </div>
+                                                                        <span></span>
+                                                                    </label>
+                                                                </td>
+                                                                <td>{item?.beneficiaryAccountName ? <>{item?.beneficiaryAccountName}</> : <span>{" - - "}</span>}</td>
+                                                                <td>
+                                                                    <div className='d-flex align-center justify-content'>
+                                                                        <span>{item.bankname}
+                                                                            {item.isPrimary !== null ? <Text size="small" className='file-label ml-8'
+                                                                            >{item.addressType} </Text> : ""}
+                                                                        </span>
+                                                                        <Popover
+                                                                            className='more-popover'
+                                                                            content={this.popOverContent}
+                                                                            trigger="click"
+                                                                            visible={item.visible}
+                                                                            placement='top'
+                                                                            onVisibleChange={() => this.handleVisibleChange(i)}
+                                                                        >
+                                                                            <span className='icon md info c-pointer' onClick={() => this.moreInfoPopover(item.addressId, i)} />
+                                                                        </Popover>
+                                                                    </div>
+                                                                </td>
+                                                                <td>{item.accountnumber}</td>
+                                                                {this.props.match.params.id !== '00000000-0000-0000-0000-000000000000' && <td>{item.state ? item.state : "- -"}</td>}
+                                                                <td>
+                                                                    <div className='d-flex'>
+                                                                        <Form.Item
+                                                                            //name={item.id}
+                                                                            className='mb-0'
+                                                                            rules={item.checked && [
+                                                                                {
+                                                                                    required: true,
+                                                                                    message: 'is_required'
+                                                                                }
+                                                                            ]}
+                                                                        >
+                                                                            <NumberFormat className="cust-input text-right"
+                                                                                customInput={Input} thousandSeparator={true} prefix={""}
+                                                                                placeholder="0.00"
+                                                                                decimalScale={2}
+                                                                                allowNegative={false}
+                                                                                maxlength={13}
+                                                                                style={{ height: 44 }}
+                                                                                onValueChange={({ e, value }) => {
+                                                                                    let paymentData = this.state.paymentsData;
+                                                                                    paymentData[i].amount = value;
+                                                                                    paymentData[i].checked = value > 0 ? true : paymentData[i].checked;
+                                                                                    this.setState({ ...this.state, paymentsData: paymentData })
+                                                                                }}
+                                                                                disabled={item.state === "Approved" || item.state === "Cancelled" || item.state === "Pending"}
+                                                                                value={item.amount}
+                                                                            />
+                                                                        </Form.Item>
+                                                                        <Upload type='dashed' size='large' className='ml-8 mt-12'
+                                                                            shape='circle' style={{ backgroundColor: 'transparent' }}
+                                                                            action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+                                                                            showUploadList={false}
+                                                                            beforeUpload={(props) => { this.beforeUpload(props) }}
+                                                                            onChange={(props) => { this.handleUpload(props, item) }}
+                                                                            disabled={item.state === "Approved" || item.state === "Cancelled" || item.state === "Pending"}
+                                                                        >
+                                                                            <span className={`icon md attach ${item.state === "Approved" ? "" : "c-pointer"} `} />
+                                                                        </Upload>
+                                                                        {this.props.match.params.id !== '00000000-0000-0000-0000-000000000000' && <Button
+                                                                            disabled={item.state === "Approved" || item.state === "Cancelled" || item.state === "Pending"}
+                                                                            className="delete-btn mt-30"
+                                                                            style={{ padding: "0 14px" }}
+                                                                            onClick={() =>
+                                                                                confirm({
+                                                                                    content: (
+                                                                                        <div className="fs-14 text-white-50">
+                                                                                            If you delete, You may lose the entered data.
+                                                                                        </div>
+                                                                                    ),
+                                                                                    title: (
+                                                                                        <div className="fs-18 text-white-30">
+                                                                                            Delete Payment ?
+                                                                                        </div>
+                                                                                    ),
+                                                                                    onOk: () => { this.deleteDetials(item.id) }
+                                                                                })
+                                                                            }
+                                                                        >
+                                                                            <span className='icon md delete mt-12' />
+                                                                        </Button>}
+                                                                    </div>
 
-                                                                {item.documents?.details.map((file) => <>
-                                                                    {file.documentName !== null &&
-                                                                        <Text className='file-label fs-12'>
-                                                                            {file.documentName}
-                                                                        </Text>
-                                                                    }
-                                                                </>)}
-                                                            </td>
-                                                        </tr>
-                                                    </>)}
+                                                                    {item.documents?.details.map((file) => <>
+                                                                        {file.documentName !== null &&
+                                                                            <Text className='file-label fs-12'>
+                                                                                {file.documentName}
+                                                                            </Text>
+                                                                        }
+                                                                    </>)}
+                                                                </td>
+                                                            </tr>
+                                                        </>)
+                                                }
                                             })}
                                         </tbody> : <tbody><tr><td colSpan='8' className="p-16 text-center" style={{ color: "white", width: 300 }} >No bank details available</td></tr> </tbody>}</>}
                                     <tfoot>
