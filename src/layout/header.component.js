@@ -748,13 +748,13 @@ class Header extends Component {
                 onClick={this.showTransactionHistoryDrawer}
                 className="list-item"
               />
-              {this.props.userConfig.isBusiness &&<Translate
+              {/* {this.props.userConfig.isBusiness &&<Translate
                 content="cards"
                 component={Menu.Item}
                 key="8"
                 onClick={this.showCards}
                 className="list-item"
-              />}
+              />} */}
               <Menu.Item
                 key="7"
                 className="notification-conunt"
