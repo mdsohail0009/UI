@@ -188,16 +188,20 @@ class PaymentDetails extends Component {
             this.useDivRef.current.scrollIntoView()
         }
     }
-    deleteDetials = async ( idx ) => {
-        const response = await deletePayDetials(idx.id);
-        message.destroy()
-        if (response.ok) {
-            message.warning('Document has been deleted');
-            this.getPayments();
-            this.props.history.push('/payments');
-        } else {
-            message.warning(response.data);
-        }
+    deleteDetials = async ( idx, i ) => {
+        // const response = await deletePayDetials(idx.id);
+        let paymentData = this.state.paymentsData;
+        paymentData[i].amount = 0;
+        paymentData[i].checked = false;
+        this.setState({ ...this.state, paymentsData: paymentData });
+        // message.destroy()
+        // if (response.ok) {
+        //     message.warning('Document has been deleted');
+        //     this.getPayments();
+        //     this.props.history.push('/payments');
+        // } else {
+        //     message.warning(response.data);
+        // }
     }
     moreInfoPopover = async (id, index) => {
         this.setState({ ...this.state, tooltipLoad: true });
@@ -350,7 +354,6 @@ class PaymentDetails extends Component {
                                                                     checked={item.checked}
                                                                     className="grid_check_box"
                                                                     onClick={(value)=>{
-                                                                        console.log(value.target.checked)
                                                                         let paymentData = this.state.paymentsData;
                                                                     if(value.target.checked===false){paymentData[i].amount = 0;}
                                                                     paymentData[i].checked = value.target.checked;
@@ -436,7 +439,7 @@ class PaymentDetails extends Component {
                                                                     Delete Payment ?
                                                                         </div>
                                                                     ),
-                                                                    onOk: () => {this.deleteDetials(item)}
+                                                                    onOk: () => {this.deleteDetials(item,i)}
                                                                     })
                                                                 }
                                                         >
