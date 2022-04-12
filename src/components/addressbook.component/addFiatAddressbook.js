@@ -73,7 +73,7 @@ const NewFiatAddress = (props) => {
     const [isValidFile, setIsValidFile] = useState(true);
     const[selectParty,setSelectParty] = useState(props?.checkThirdParty);
     const[uploadingActive,setUploadingActive] = useState(false);
-    const[files,setFiles]  = useState([]);
+    const[withdrawEdit,setWithdrawValues] = useState();
     const[isEdit,setEdit] = useState(false);
 
     useEffect(() => {
@@ -96,6 +96,7 @@ const NewFiatAddress = (props) => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat Address Book Details page view ', "Username": props?.userConfig?.id, "MemeberId": props?.userConfig?.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Address book details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' });
     }
     const loadDataAddress = async () => {
+        debugger
         setIsLoading(true)
         let response = await getAddress(props?.addressBookReducer?.selectedRowData?.id, 'fiat');
         if (response.ok) {
@@ -108,6 +109,7 @@ const NewFiatAddress = (props) => {
             setSelectParty(false);
         }
             setFiatAddress(response.data);
+            setWithdrawValues(response.data);
             setAddressState(response.data.addressState);
             if (props?.addressBookReducer?.selectedRowData && props?.buyInfo.memberFiat?.data) {
                 handleWalletSelection(props?.addressBookReducer?.selectedRowData?.currency)
@@ -203,11 +205,11 @@ const NewFiatAddress = (props) => {
             saveObj.state = apiCalls.encryptValue(saveObj.state, props?.userConfig?.sk)
             saveObj.zipCode = apiCalls.encryptValue(saveObj.zipCode,props?.userConfig?.sk)
             saveObj.documents = {
-                "id": fiatAddress?.documents?.id,
+                "id": withdrawEdit ? withdrawEdit?.documents?.id : "00000000-0000-0000-0000-000000000000",
                 "transactionId": null,
                 "adminId": "00000000-0000-0000-0000-000000000000",
                 "date": null,
-                "type": null,
+                "typeId": null,
                 "memberId": props?.userConfig?.id,
                 "caseTitle": null,
                 "caseState": null,
@@ -217,61 +219,51 @@ const NewFiatAddress = (props) => {
         "details" : [
           ]
     } 
-    let obj = {
-        "documentId" :"00000000-0000-0000-0000-000000000000",
-        "documentName" : "",
-        "id" : "",
-        "isChecked" : true,
-        "remarks" : "",
-        "state" : null,
-        "status" : false,
-        "path" :"",
-        // "size":"",
-       }
+   
                 if(selectParty){
                    
                  if(identityFile){
-                    let obj = {
-                        "documentId" :"00000000-0000-0000-0000-000000000000",
-                        "documentName" : identityFile.documentName,
-                        "id" : fiatAddress?.documents?.details[0].id,
-                        "isChecked" : true,
-                        "remarks" : identityFile.size,
-                        "state" : null,
-                        "status" : false,
-                        "path" :identityFile.path,
-                        "size":identityFile.size
-                       }
-                   saveObj.documents.details.push(obj);
+                    // let obj = {
+                    //     "documentId" :identityFile?.documentId,
+                    //     "documentName" : identityFile.documentName,
+                    //     "id" : identityFile?.id,
+                    //     "isChecked" : true,
+                    //     "remarks" : identityFile.size,
+                    //     "state" : null,
+                    //     "status" : false,
+                    //     "path" :identityFile.path,
+                    //     "size":identityFile.size
+                    //    }
+                   saveObj.documents.details.push(identityFile);
                  }
                      if(addressFile){
-                        let obj = {
-                            "documentId" :"00000000-0000-0000-0000-000000000000",
-                            "documentName" : addressFile.documentName,
-                            "id" : fiatAddress?.documents?.details[0].id,
-                            "isChecked" : true,
-                            "remarks" :  addressFile.size,
-                            "state" : null,
-                            "status" : false,
-                            "path" :addressFile.path,
-                            "size":addressFile.size
-                           }
-                         saveObj.documents.details.push(obj);
+                        // let obj = {
+                        //     "documentId" :addressFile?.documentId,
+                        //     "documentName" : addressFile.documentName,
+                        //     "id" : addressFile?.id,
+                        //     "isChecked" : true,
+                        //     "remarks" :  addressFile.size,
+                        //     "state" : null,
+                        //     "status" : false,
+                        //     "path" :addressFile.path,
+                        //     "size":addressFile.size
+                        //    }
+                         saveObj.documents.details.push(addressFile);
                     }
                 }
-                else{
-                    let obj = {
-                        "documentId" :"00000000-0000-0000-0000-000000000000",
-                        "documentName" : declarationFile.documentName,
-                        "id" : fiatAddress?.documents?.details[0].id,
-                        "isChecked" : true,
-                        "remarks" :  declarationFile.size,
-                        "state" : null,
-                        "status" : false,
-                        "path" :declarationFile.path,
-                        "size":declarationFile.size
-                       }
-                   saveObj.documents.details.push(obj);
+                else if (declarationFile){
+                    // let obj = {
+                    //     "documentId" :declarationFile?.documentId,
+                    //     "documentName" : declarationFile.documentName,
+                    //     "id" : declarationFile?.id,
+                    //     "isChecked" : true,
+                    //     "remarks" :  declarationFile.size,
+                    //     "state" : null,
+                    //     "status" : false,
+                    //     "path" :declarationFile.path,
+                    //     "size":declarationFile.size
+                    //    }
+                   saveObj.documents.details.push(declarationFile);
                 }
      
            let response = await saveAddress(saveObj);
@@ -306,6 +298,7 @@ const NewFiatAddress = (props) => {
     const beforeUpload = (file,type) => {
    
         if(type === "IDENTITYPROOF" || type === "ADDRESSPROOF"){
+
             let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
             if (fileType[file.type]) {
             setIsValidFile(true);
@@ -347,10 +340,8 @@ const NewFiatAddress = (props) => {
 
     }
   const upLoadFiles = ({file},type) =>  {
-  
-     
-      
-        if (file?.status === "uploading") 
+
+       if (file?.status === "uploading") 
         { 
             setUploadPercentage(file?.percent)
             if(type === "IDENTITYPROOF" ){
@@ -361,11 +352,12 @@ const NewFiatAddress = (props) => {
             }
          }
         else if (file?.status === "done" && isValidFile === true) {
+
              if(type === "IDENTITYPROOF"){
                  let obj = {
-                    "documentId": "00000000-0000-0000-0000-000000000000",
+                    "documentId": identityFile !== null ? identityFile?.documentId : "00000000-0000-0000-0000-000000000000",
                     "documentName": `${file.name}`,
-                    "id": "00000000-0000-0000-0000-000000000000",
+                    "id": identityFile !== null ? identityFile?.id : "00000000-0000-0000-0000-000000000000",
                     "isChecked": file.name == "" ? false : true,
                     "remarks": `${file.size}`,
                     "state": null,
@@ -380,9 +372,9 @@ const NewFiatAddress = (props) => {
             else if(type === "ADDRESSPROOF"){
                 setUploading(true);
                 let obj = {
-                    "documentId": "00000000-0000-0000-0000-000000000000",
+                    "documentId": addressFile!== null ? addressFile?.documentId : "00000000-0000-0000-0000-000000000000",
                     "documentName": `${file.name}`,
-                    "id": "00000000-0000-0000-0000-000000000000",
+                    "id": addressFile!== null ? addressFile?.id :"00000000-0000-0000-0000-000000000000",
                     "isChecked": file.name == "" ? false : true,
                     "remarks": `${file.size}`,
                     "state": null,
@@ -395,9 +387,9 @@ const NewFiatAddress = (props) => {
             else {
                 setUploading(true);
                 let obj = {
-                    "documentId": "00000000-0000-0000-0000-000000000000",
+                    "documentId": declarationFile!== null ? declarationFile?.documentId :"00000000-0000-0000-0000-000000000000",
                     "documentName": `${file.name}`,
-                    "id": "00000000-0000-0000-0000-000000000000",
+                    "id": declarationFile!== null ? declarationFile?.id :"00000000-0000-0000-0000-000000000000",
                     "isChecked": file.name == "" ? false : true,
                     "remarks": `${file.size}`,
                     "state": null,
@@ -426,8 +418,8 @@ const NewFiatAddress = (props) => {
                         component={Paragraph}
                         className="mb-16 fs-14 text-aqua fw-500 text-upper"
                     />
-                    <Form.Item  name="addressType" label="Address Type" className="custom-forminput custom-label mb-0">
-                        <Radio.Group  buttonStyle="solid" className="text-white"  onChange={radioChangeHandler}
+                    <Form.Item  name="addressType" label="Address Type" className="custom-label">
+                        <Radio.Group size='large'  buttonStyle="solid" className="text-white ml-8"  onChange={radioChangeHandler}
                             defaultValue={selectParty === true ? "3rdparty" : "1stparty"}
                              value={selectParty === true ? "3rdparty" : "1stparty"}
                            >
@@ -455,7 +447,7 @@ const NewFiatAddress = (props) => {
                                         validator: validateContentRule
                                     }
                                 ]} >
-                                <Input className="cust-input" maxLength="20" placeholder={apiCalls.convertLocalLang('Enteraddresslabel')} />
+                                <Input className="cust-input" maxLength="20" placeholder={apiCalls.convertLocalLang('AddressLabel')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -679,11 +671,10 @@ const NewFiatAddress = (props) => {
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
 
                             <Form.Item
-                            className='custom-forminput custom-label mb-0'
+                            className='custom-label mb-0'
                             name="beneficiaryAccountName"
                             label={                        
                             <Translate
-                                className="input-label"
                                 content={props?.userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
                                 component={Form.label}
                             />}
@@ -691,6 +682,13 @@ const NewFiatAddress = (props) => {
                                 {
                                     required: true,
                                     message: apicalls.convertLocalLang("is_required")
+                                },
+                                {
+                                    whitespace: true,
+                                    message: apiCalls.convertLocalLang('is_required')
+                                },
+                                {
+                                    validator: validateContentRule
                                 }
                             ]}
                             >
@@ -747,8 +745,7 @@ const NewFiatAddress = (props) => {
                             }]}>
                                 {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props,"IDENTITYPROOF") }} onChange={(props) => upLoadFiles(props,"IDENTITYPROOF")
 
-                                
-                            }>
+                                 }>
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
@@ -760,12 +757,13 @@ const NewFiatAddress = (props) => {
                         <div className="docdetails c-pointer" >
                             <EllipsisMiddle suffixCount={10}>{identityFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(identityFile.remarks)}</span>
-                        </div>
-                        <span className="icon md close c-pointer" onClick={() => confirm({
+                                  </div>
+
+                        {/* <span className="icon md close c-pointer" onClick={() => confirm({
                             content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
                             title: <div className='fs-18 text-white-30'>Delete File ?</div>,
                             onOk: () => { setIdentityFile(null); }
-                        })} />
+                        })} /> */}
                     </div>}
                     { uploadingActive && <div className="text-center mt-16">
                         <Spin />
@@ -796,11 +794,11 @@ const NewFiatAddress = (props) => {
                             <EllipsisMiddle suffixCount={10}>{addressFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(addressFile.remarks)}</span>
                         </div>
-                        <span className="icon md close c-pointer" onClick={() => confirm({
+                        {/* <span className="icon md close c-pointer" onClick={() => confirm({
                             content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
                             title: <div className='fs-18 text-white-30'>Delete File ?</div>,
                             onOk: () => { setAdressFile(null); }
-                        })} />
+                        })} /> */}
                     </div>}
                     { isUploading && <div className="text-center mt-16">
                         <Spin />
@@ -838,11 +836,11 @@ const NewFiatAddress = (props) => {
                             <EllipsisMiddle suffixCount={10}>{declarationFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(declarationFile.remarks)}</span>
                         </div>
-                        <span className="icon md close c-pointer" onClick={() => confirm({
+                        {/* <span className="icon md close c-pointer" onClick={() => confirm({
                             content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
                             title: <div className='fs-18 text-white-30'>Delete File ?</div>,
                             onOk: () => { setDeclarationFile(null); }
-                        })} />
+                        })} /> */}
                     </div>}
                     {isUploading && <div className="text-center">
                         <Spin />

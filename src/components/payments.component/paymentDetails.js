@@ -61,7 +61,7 @@ class PaymentDetails extends Component {
         this.useDivRef.current.scrollIntoView()
     }
     handleAlert = () => {
-        this.setState({ ...this.state, errorMessage: null, loading: true })
+        this.setState({ ...this.state, errorMessage: null })
     }
     // handleCurrencyChange = async (val, props) => {
     //     this.setState({ ...this.state, loading: true, Currency: val, paymentsData: [] })
@@ -141,6 +141,7 @@ class PaymentDetails extends Component {
         let objAmount = this.state.paymentsData.some((item) => {
             return item.amount != null
         })
+
         let obj = Object.assign({});
         obj.id = this.props.userConfig.id;
         obj.currency = this.state.Currency;
@@ -149,11 +150,11 @@ class PaymentDetails extends Component {
         obj.modifiedBy = "";
         obj.paymentsDetails = objData;
         if (obj.currency != null) {
-            if (!objAmount) {
+            if (!objAmount ) {
                 this.setState({ ...this.state, errorMessage: "Please enter amount" })
                 this.useDivRef.current.scrollIntoView()
             }
-            else if (objAmount<=0) {
+            else if (Number(objData[0]?.amount) <= 0 || objData[0]?.amount === "" ) {
                 this.setState({ ...this.state, errorMessage: "Amount must be greater than zero." })
                 this.useDivRef.current.scrollIntoView()
             }
@@ -217,6 +218,7 @@ class PaymentDetails extends Component {
             this.setState({ ...this.state, errorMessage: "Please select currency" })
             this.useDivRef.current.scrollIntoView()
         }
+
     }
 
     deleteDetials = async ( idx ) => {
