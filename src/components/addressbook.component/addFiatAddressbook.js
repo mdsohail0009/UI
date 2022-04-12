@@ -447,7 +447,7 @@ const NewFiatAddress = (props) => {
                                         validator: validateContentRule
                                     }
                                 ]} >
-                                <Input className="cust-input" maxLength="20" placeholder={apiCalls.convertLocalLang('Enteraddresslabel')} />
+                                <Input className="cust-input" maxLength="20" placeholder={apiCalls.convertLocalLang('AddressLabel')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
