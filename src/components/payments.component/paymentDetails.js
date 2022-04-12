@@ -61,7 +61,7 @@ class PaymentDetails extends Component {
         this.useDivRef.current.scrollIntoView()
     }
     handleAlert = () => {
-        this.setState({ ...this.state, errorMessage: null, loading: true })
+        this.setState({ ...this.state, errorMessage: null })
     }
     // handleCurrencyChange = async (val, props) => {
     //     this.setState({ ...this.state, loading: true, Currency: val, paymentsData: [] })
