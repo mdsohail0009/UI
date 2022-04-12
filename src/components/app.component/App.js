@@ -23,8 +23,8 @@ function App(props) {
       const { userConfig: { userProfileInfo } } = store.getState();
       if (userProfileInfo?.id) {
         apiCalls.twofactor(userProfileInfo?.id).then(res => {
-          if(res.ok){
-            store.dispatch(updatetwofactor(res.data));
+          if (res.ok) {
+            store.dispatch(updatetwofactor((process.env.REACT_APP_ISPROD?res.data:true)));
           }
         })
         startConnection(userProfileInfo?.id);
@@ -69,16 +69,16 @@ function App(props) {
     connectToHub();
   }, [])
   return (
-      <OidcProvider userManager={userManager} store={store}>
-        <Router basename={process.env.PUBLIC_URL}>
-          <AppInsightsContext.Provider value={reactPlugin}>
-            <ErrorBoundary>
-              {loading ? <div className="loader">Loading....</div> : <><Layout /></>}
-            </ErrorBoundary>
-          </AppInsightsContext.Provider>
-          <Notifications showDrawer={showNotifications} onClose={() => setNotifications(false)} />
-        </Router>
-      </OidcProvider>
+    <OidcProvider userManager={userManager} store={store}>
+      <Router basename={process.env.PUBLIC_URL}>
+        <AppInsightsContext.Provider value={reactPlugin}>
+          <ErrorBoundary>
+            {loading ? <div className="loader">Loading....</div> : <><Layout /></>}
+          </ErrorBoundary>
+        </AppInsightsContext.Provider>
+        <Notifications showDrawer={showNotifications} onClose={() => setNotifications(false)} />
+      </Router>
+    </OidcProvider>
   );
 }
 

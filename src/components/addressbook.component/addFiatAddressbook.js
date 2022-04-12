@@ -304,7 +304,16 @@ const NewFiatAddress = (props) => {
     const beforeUpload = (file,type) => {
    
         if(type === "IDENTITYPROOF" || type === "ADDRESSPROOF"){
+            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+            if (fileType[file.type]) {
             setIsValidFile(true);
+            return true;
+            }
+            else{
+                warning('File is not allowed. You can upload jpg, png, jpeg and PDF files')
+                setIsValidFile(false);
+                return Upload.LIST_IGNORE;   
+            }
         }
         else{
            let fileType = { "image/png": false, 'image/jpg': false, 'image/jpeg': false, 'image/PNG': false, 'image/JPG': false, 'image/JPEG': false, 'application/pdf': true, 'application/PDF': true }
@@ -666,18 +675,24 @@ const NewFiatAddress = (props) => {
                             />
                         <Row gutter={[16,16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <div className="d-flex">
-                                    <Translate
-                                        className="input-label"
-                                        content={props?.userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
-                                        component={Form.label}
-                                    />{" "}
-                                    <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
+
                             <Form.Item
-                            className='mb-0'
+                            className='custom-forminput custom-label mb-0'
                             name="beneficiaryAccountName"
+                            label={                        
+                            <Translate
+                                className="input-label"
+                                content={props?.userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
+                                component={Form.label}
+                            />}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: apicalls.convertLocalLang("is_required")
+                                }
+                            ]}
                             >
-                 { selectParty ? <Input className="cust-input"  placeholder="Recipient full name"  /> :
+                 { selectParty ? <Input className="cust-input"  placeholder="Business Name"  /> :
                   <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
                             </Form.Item>
                         </Col>
@@ -735,10 +750,11 @@ const NewFiatAddress = (props) => {
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Upload your Identity Document here</p>
+                                    <p className="ant-upload-text fs-18 mb-0">Please Upload Identity Document </p>
                                 </Dragger>}
                                 {identityFile != null && <div className="docfile mr-0">
-                        <span className={`icon xl file mr-16`} />
+                                <span className={`icon xl ${(identityFile.documentName?.slice(-3) === "zip" ? "file" : "") || (identityFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+
                         <div className="docdetails c-pointer" >
                             <EllipsisMiddle suffixCount={10}>{identityFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(identityFile.remarks)}</span>
@@ -769,11 +785,11 @@ const NewFiatAddress = (props) => {
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Upload your Address Proofs here</p>
+                                    <p className="ant-upload-text fs-18 mb-0">Please Upload Address Proofs</p>
                                 </Dragger>}
                             </Form.Item> 
                             {addressFile != null && <div className="docfile mr-0">
-                        <span className={`icon xl file mr-16`} />
+                            <span className={`icon xl ${(addressFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (addressFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                         <div className="docdetails c-pointer" >
                             <EllipsisMiddle suffixCount={10}>{addressFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(addressFile.remarks)}</span>
@@ -812,10 +828,10 @@ const NewFiatAddress = (props) => {
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Upload your signed document here</p>
+                                    <p className="ant-upload-text fs-18 mb-0">Please Upload Signed Document</p>
                                 </Dragger>}
                                 {declarationFile != null && <div className="docfile mr-0">
-                        <span className={`icon xl file mr-16`} />
+                                <span className={`icon xl ${(declarationFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (declarationFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                         <div className="docdetails c-pointer" >
                             <EllipsisMiddle suffixCount={10}>{declarationFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(declarationFile.remarks)}</span>
