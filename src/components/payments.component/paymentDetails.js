@@ -269,16 +269,28 @@ class PaymentDetails extends Component {
 //     }
 //     this.setState({ ...this.state.paymentsData, paymentData: response.data });
 //   };
-  deleteDetials = async (id) => {
-      debugger
-    let data = this.state.paymentsData;
+  deleteDetials = async (id,paymentsData) => {
+    let data = paymentsData;
+    let isAtleastOneRecord = false;
+    let indexno = '';
     for (let i in data) {
         if (data[i].id === id.id) {
-          data[i].recordStatus = "Deleted";
-          data[i].amount = "0";
+        indexno = i;
+        }else if(data[i].recordStatus!== "Deleted"){
+            isAtleastOneRecord = true
         }
     }
-    this.setState({ ...this.state.paymentsData, paymentData: data });
+    if(isAtleastOneRecord){
+            data[indexno].recordStatus = "Deleted";
+          data[indexno].amount = "0";
+        this.setState({ ...this.state.paymentsData, paymentData: data });
+    }else{
+        this.setState({
+            ...this.state,
+            errorMessage: "Atleast one record is required",
+          });
+          this.useDivRef.current.scrollIntoView();
+    }
   };
 
   moreInfoPopover = async (id, index) => {
@@ -698,7 +710,7 @@ class PaymentDetails extends Component {
                                                 </div>
                                               ),
                                               onOk: () => {
-                                                this.deleteDetials(item, i);
+                                                this.deleteDetials(item, this.state.paymentsData);
                                               },
                                             })
                                           }
