@@ -136,6 +136,7 @@ const WithdrawalFiatSummary = ({
  
 
   const saveWithdrwal = async (values) => {
+    debugger
     setIsLoding(true);
     let Obj = Object.assign({}, sendReceive.withdrawFiatObj);
     Obj.accountNumber = apiCalls.encryptValue(
@@ -167,14 +168,14 @@ const WithdrawalFiatSummary = ({
         dispatch(fetchDashboardcalls(userConfig.id));
         dispatch(rejectWithdrawfiat());
         changeStep("step7");
-      } else if(setVerifyOtpText("") || setVerifyOtpText(null)){
-        setMsg("Please enter valid codes")
-      }
-      else {
-        
+      } 
+      else {       
         setMsg(withdrawal.data);
         useOtpRef.current.scrollIntoView();
       }
+    }else{
+      setMsg("Please enter valid codes")
+      useOtpRef.current.scrollIntoView();
     }
     
   };
@@ -238,6 +239,7 @@ const WithdrawalFiatSummary = ({
   };
 
   const handleSendOtp = (val) => {
+    debugger
     setEmailOtp(val.emailCode);
     setVerifyEmailText("verifyTextBtn");
     setTooltipEmail(false);
@@ -446,8 +448,8 @@ const WithdrawalFiatSummary = ({
         className="mt-36"
         name="advanced_search"
         form={form}
-        //onFinish={saveWithdrwal}
-        onFinish={validData==true && saveWithdrwal}
+        onFinish={saveWithdrwal}
+        //onFinish={validData==true && saveWithdrwal}
         autoComplete="off"
       >
 
@@ -625,7 +627,7 @@ const WithdrawalFiatSummary = ({
                  
                 )}
                 {verify == true &&
-                <Button type="text" disabled onClick={(e) => getEmailVerification(e)}>
+                <Button type="text"  onClick={(e) => getEmailVerification(e)}>
                   {verifyText[verifyEmailText]}
                   {/* VERIFY */}
                 </Button>}
