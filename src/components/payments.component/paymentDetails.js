@@ -414,7 +414,6 @@ class PaymentDetails extends Component {
                                                                     checked={item.checked}
                                                                     className="grid_check_box"
                                                                     onClick={(value)=>{
-                                                                        console.log(value.target.checked)
                                                                         let paymentData = this.state.paymentsData;
                                                                     if(value.target.checked===false){paymentData[i].amount = 0;}
                                                                     paymentData[i].checked = value.target.checked;
@@ -500,7 +499,7 @@ class PaymentDetails extends Component {
                                                                     Delete Payment ?
                                                                         </div>
                                                                     ),
-                                                                    onOk: () => {this.deleteDetials(item)}
+                                                                    onOk: () => {this.deleteDetials(item,i)}
                                                                     })
                                                                 }
                                                         >
