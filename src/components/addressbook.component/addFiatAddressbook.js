@@ -424,8 +424,8 @@ const NewFiatAddress = (props) => {
                         component={Paragraph}
                         className="mb-16 fs-14 text-aqua fw-500 text-upper"
                     />
-                    <Form.Item  name="addressType" label="Address Type" className="custom-forminput custom-label mb-0">
-                        <Radio.Group  buttonStyle="solid" className="text-white"  onChange={radioChangeHandler}
+                    <Form.Item  name="addressType" label="Address Type" className="custom-label">
+                        <Radio.Group size='large'  buttonStyle="solid" className="text-white ml-8"  onChange={radioChangeHandler}
                             defaultValue={selectParty === true ? "3rdparty" : "1stparty"}
                              value={selectParty === true ? "3rdparty" : "1stparty"}
                            >
@@ -677,11 +677,10 @@ const NewFiatAddress = (props) => {
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
 
                             <Form.Item
-                            className='custom-forminput custom-label mb-0'
+                            className='custom-label mb-0'
                             name="beneficiaryAccountName"
                             label={                        
                             <Translate
-                                className="input-label"
                                 content={props?.userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
                                 component={Form.label}
                             />}
