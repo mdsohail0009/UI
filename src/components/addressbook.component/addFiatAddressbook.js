@@ -18,6 +18,7 @@ import { getCountryStateLu, getStateLookup } from "../../api/apiServer";
 import apicalls from "../../api/apiCalls";
 import { warning } from '../../utils/message';
 import {addressTabUpdate} from '../../reducers/addressBookReducer'
+import { setHeaderTab } from "../../reducers/buysellReducer";
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -284,6 +285,7 @@ const NewFiatAddress = (props) => {
                props?.onCancel()
                 setIsLoading(false)
                 props?.dispatch(addressTabUpdate(true));
+                props?.dispatch(setHeaderTab(''));
                 props?.props?.history?.push('/userprofile');
                 }
             else {
@@ -922,14 +924,16 @@ const connectStateToProps = ({
     buyInfo,
     userConfig,
     addressBookReducer,
-    sendReceive
+    sendReceive,
+    buySell
 }) => {
     return {
         buyInfo,
         userConfig: userConfig.userProfileInfo,
         sendReceive,
         addressBookReducer,
-        trackAuditLogData: userConfig.trackAuditLogData
+        trackAuditLogData: userConfig.trackAuditLogData,
+        buySell,
     };
 };
 
