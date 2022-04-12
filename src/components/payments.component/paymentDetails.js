@@ -612,7 +612,7 @@ class PaymentDetails extends Component {
                                     <div className="d-flex">
                                       <Form.Item
                                         //name={item.id}
-                                        className="mb-16"
+                                        className="mb-0"
                                         rules={
                                           item.checked && [
                                             {
@@ -715,7 +715,7 @@ class PaymentDetails extends Component {
                                             })
                                           }
                                         >
-                                          <DeleteOutlined className="ml-8 mt-12" />
+                                          <span className="icon md delete mt-12" />
                                         </Button>
                                       )}
                                     </div>
