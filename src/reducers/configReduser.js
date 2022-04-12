@@ -32,10 +32,17 @@ const updatetwofactor = (payload) => {
 const clearUserInfo = () => {
     return { type: CLEAR_USER_INFO, payload: null }
 }
-const getmemeberInfo = (useremail) => {
+const getmemeberInfo = (useremail, id) => {
     return async (dispatch) => {
+        let twofa;
+        apiCalls.twofactor(id).then(res => {
+            if (res.ok) {
+                twofa = res.data;
+            }
+        })
         apiCalls.getMember(useremail).then((res) => {
             if (res.ok) {
+                res.data.twofactorVerified = twofa;
                 dispatch(userInfo(res.data));
                 dispatch(setNotificationCount(res.data?.unReadCount))
             }
