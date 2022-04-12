@@ -98,8 +98,8 @@ const NewFiatAddress = (props) => {
         setIsLoading(true)
         let response = await getAddress(props?.addressBookReducer?.selectedRowData?.id, 'fiat');
         if (response.ok) {
-            debugger
-        console.log(response.data);
+     
+    
         if(response.data.addressType === "3rdparty"){
             setSelectParty(true);
         }
@@ -113,7 +113,7 @@ const NewFiatAddress = (props) => {
             }
           
             let fileInfo = response?.data?.documents?.details;
-            console.log(response?.data?.documents?.details)
+           
             if(response?.data?.addressType === "1stparty" &&  fileInfo?.length !=0){
                 setDeclarationFile(response?.data?.documents?.details[0])
              
@@ -123,20 +123,8 @@ const NewFiatAddress = (props) => {
                  setAdressFile(response?.data?.documents?.details[1]);
               
             }
-            // if(fileInfo?.length != 0){
-            //     debugger
-            //     for(let i =0; i<fileInfo?.length; i++){
-            //         let obj = {
-            //             "name" : fileInfo[i]?.documentName,
-            //             "size" : fileInfo[i]?.remarks,
-            //             "response" : [fileInfo[i]?.path]
-            //         }
-            //         files.push(obj);
-            //         setFiles(files);
-            //       }
-            // }
-        
-            getStateLu(response.data.country)
+      
+          getStateLu(response.data.country)
             form.setFieldsValue({ ...response.data, });
             setIsLoading(false)
         }
@@ -173,7 +161,7 @@ const NewFiatAddress = (props) => {
         if (isChange) form.setFieldsValue({ state: null });
     };
     const savewithdrawal = async (values) => {
-debugger
+
         setIsLoading(false)
         setErrorMsg(null)
         setBtnDisabled(true);
@@ -286,7 +274,7 @@ debugger
                 }
      
            let response = await saveAddress(saveObj);
-         console.log(saveObj);
+        
             if (response.ok) {
                 setBtnDisabled(false);
                 setErrorMsg('')
@@ -314,9 +302,18 @@ debugger
         }
     }
     const beforeUpload = (file,type) => {
-        debugger
+   
         if(type === "IDENTITYPROOF" || type === "ADDRESSPROOF"){
+            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+            if (fileType[file.type]) {
             setIsValidFile(true);
+            return true;
+            }
+            else{
+                warning('File is not allowed. You can upload jpg, png, jpeg and PDF files')
+                setIsValidFile(false);
+                return Upload.LIST_IGNORE;   
+            }
         }
         else{
            let fileType = { "image/png": false, 'image/jpg': false, 'image/jpeg': false, 'image/PNG': false, 'image/JPG': false, 'image/JPEG': false, 'application/pdf': true, 'application/PDF': true }
@@ -331,12 +328,15 @@ debugger
     }
     }
     const radioChangeHandler = (e) => {
-          setFiles([]);
           setUploading(false);
           setUploadingActive(false);
-        if(e.target.value === "1stparty"){
+          setIdentityFile(null);
+          setAdressFile(null);
+          setDeclarationFile(null);
+      if(e.target.value === "1stparty"){
             form.setFieldsValue({addressType:"1stparty",beneficiaryAccountName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName})
             setSelectParty(false);
+
         }
         else{
             form.setFieldsValue({addressType:"3rdparty"})
@@ -345,7 +345,7 @@ debugger
 
     }
   const upLoadFiles = ({file},type) =>  {
-     debugger
+  
      
       
         if (file?.status === "uploading") 
@@ -675,18 +675,24 @@ debugger
                             />
                         <Row gutter={[16,16]}>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <div className="d-flex">
-                                    <Translate
-                                        className="input-label"
-                                        content={props?.userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
-                                        component={Form.label}
-                                    />{" "}
-                                    <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
+
                             <Form.Item
-                            className='mb-0'
+                            className='custom-forminput custom-label mb-0'
                             name="beneficiaryAccountName"
+                            label={                        
+                            <Translate
+                                className="input-label"
+                                content={props?.userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
+                                component={Form.label}
+                            />}
+                            rules={[
+                                {
+                                    required: true,
+                                    message: apicalls.convertLocalLang("is_required")
+                                }
+                            ]}
                             >
-                 { selectParty ? <Input className="cust-input"  placeholder="Recipient full name"  /> :
+                 { selectParty ? <Input className="cust-input"  placeholder="Business Name"  /> :
                   <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
                             </Form.Item>
                         </Col>
@@ -744,10 +750,11 @@ debugger
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Upload your Identity Document here</p>
+                                    <p className="ant-upload-text fs-18 mb-0">Please Upload Identity Document </p>
                                 </Dragger>}
                                 {identityFile != null && <div className="docfile mr-0">
-                        <span className={`icon xl file mr-16`} />
+                                <span className={`icon xl ${(identityFile.documentName?.slice(-3) === "zip" ? "file" : "") || (identityFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+
                         <div className="docdetails c-pointer" >
                             <EllipsisMiddle suffixCount={10}>{identityFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(identityFile.remarks)}</span>
@@ -778,11 +785,11 @@ debugger
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Upload your Address Proofs here</p>
+                                    <p className="ant-upload-text fs-18 mb-0">Please Upload Address Proofs</p>
                                 </Dragger>}
                             </Form.Item> 
                             {addressFile != null && <div className="docfile mr-0">
-                        <span className={`icon xl file mr-16`} />
+                            <span className={`icon xl ${(addressFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (addressFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                         <div className="docdetails c-pointer" >
                             <EllipsisMiddle suffixCount={10}>{addressFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(addressFile.remarks)}</span>
@@ -821,10 +828,10 @@ debugger
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Upload your signed document here</p>
+                                    <p className="ant-upload-text fs-18 mb-0">Please Upload Signed Document</p>
                                 </Dragger>}
                                 {declarationFile != null && <div className="docfile mr-0">
-                        <span className={`icon xl file mr-16`} />
+                                <span className={`icon xl ${(declarationFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (declarationFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                         <div className="docdetails c-pointer" >
                             <EllipsisMiddle suffixCount={10}>{declarationFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(declarationFile.remarks)}</span>
