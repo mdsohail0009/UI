@@ -8,16 +8,17 @@ import { getmemeberInfo } from "../../reducers/configReduser";
 import DefaultUser from "../../assets/images/defaultuser.jpg";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
-
 import Loader from "../../Shared/loader";
 
 class ProfileInfo extends Component {
+  debuggers
   state = { Image: null, Loader: false, fileLoader: false };
   uploadProps = {
     name: "file",
     multiple: false,
     fileList: [],
     customRequest: ({ file }) => {
+      
       let formData = new FormData();
       this.setState({ ...this.state, Loader: true });
       formData.append("file", file, file.name);
@@ -28,6 +29,7 @@ class ProfileInfo extends Component {
             ImageURL: res.data[0],
             UserId: this.props.userConfig?.userId
           };
+          
           this.saveImage(Obj, res);
         } else {
           this.setState({ ...this.state, Loader: false });
@@ -65,6 +67,7 @@ class ProfileInfo extends Component {
   };
   componentDidMount() {
     this.profileTrack();
+    this.props.getmemeberInfoa(this.props.userConfig.userId, this.props.userConfig.id);
   }
   profileTrack = () => {
     apiCalls.trackEvent({
@@ -80,7 +83,6 @@ class ProfileInfo extends Component {
     });
   };
   saveImage = async (Obj, res) => {
-    debugger;
     this.setState({ ...this.state, Loader: true });
     Obj.info = JSON.stringify(this.props.trackAuditLogData);
     let res1 = await ProfileImageSave(Obj);
@@ -348,8 +350,8 @@ const connectStateToProps = ({ userConfig }) => {
 };
 const connectDispatchToProps = (dispatch) => {
   return {
-    getmemeberInfoa: (useremail) => {
-      dispatch(getmemeberInfo(useremail));
+    getmemeberInfoa: (useremail, id) => {
+      dispatch(getmemeberInfo(useremail, id));
     }
   };
 };
