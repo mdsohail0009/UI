@@ -24,7 +24,7 @@ function App(props) {
       if (userProfileInfo?.id) {
         apiCalls.twofactor(userProfileInfo?.id).then(res => {
           if (res.ok) {
-            store.dispatch(updatetwofactor((process.env.REACT_APP_ISPROD?res.data:true)));
+            store.dispatch(updatetwofactor((process.env.REACT_APP_ISPROD==true?res.data:true)));
           }
         })
         startConnection(userProfileInfo?.id);
