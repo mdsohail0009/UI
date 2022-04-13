@@ -330,8 +330,10 @@ class WithdrawSummary extends Component {
   };
   saveWithdrwal = async (values) => {
     debugger;
-    const { authenticator, OtpVerification, EmailCode } = this.state;
+    const { authenticator, OtpVerification, EmailCode,invalidData } = this.state;
     if (this.state.onTermsChange) {
+      if( authenticator&&OtpVerification||EmailCode&&OtpVerification||
+        EmailCode&&authenticator||EmailCode&&OtpVerification&&authenticator){
       if (this.props.userProfile.isBusiness) {
         let saveObj = this.props.sendReceive.withdrawCryptoObj;
         let trackAuditLogData = this.props.trackAuditLogData;
@@ -339,13 +341,7 @@ class WithdrawSummary extends Component {
         trackAuditLogData.Remarks = "Withdraw Crypto save";
         saveObj.info = JSON.stringify(trackAuditLogData);
 
-        if (
-          (authenticator && OtpVerification) ||
-          (EmailCode && OtpVerification) ||
-          (EmailCode && authenticator) ||
-          (EmailCode && OtpVerification && authenticator)
-        ) {
-          if (this.state.invalidData == false) {
+      
             console.log("Okay");
             let withdrawal = await withDrawCrypto(saveObj);
             if (withdrawal.ok) {
@@ -359,12 +355,13 @@ class WithdrawSummary extends Component {
               this.props.changeStep("withdraw_crpto_success");
               publishBalanceRfresh("success");
             }
-          } else {
-            this.setState({
-              ...this.state,
-              errorMsg: "Please enter valid codes"
-            });
-          }
+          
+          //  else {
+          //   this.setState({
+          //     ...this.state,
+          //     errorMsg: "Please enter valid codes"
+          //   });
+          // }
         } else {
           this.props.dispatch(
             setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
@@ -372,17 +369,18 @@ class WithdrawSummary extends Component {
           this.props.changeStep("withdraw_crypto_liveness");
         }
         this.setState({ ...this.state, errorMsg: false });
-      } else {
+       
+     } else {
         this.setState({
           ...this.state,
-          errorMsg: apiCalls.convertLocalLang("agree_termsofservice")
+          errorMsg: "Please enter valid codes"
         });
         this.useDivRef.current.scrollIntoView();
       }
     } else {
       this.setState({
         ...this.state,
-        errorMsg: "Please enter valid codes"
+        errorMsg: apiCalls.convertLocalLang("agree_termsofservice")
       });
       this.useDivRef.current.scrollIntoView();
     }

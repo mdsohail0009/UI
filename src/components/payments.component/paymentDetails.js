@@ -162,6 +162,7 @@ class PaymentDetails extends Component {
     }
   };
   saveRolesDetails = async () => {
+      debugger
     let objData = this.state.paymentsData.filter((item) => {
       return item.checked;
     });
@@ -188,13 +189,7 @@ class PaymentDetails extends Component {
       if (objAmount) {
         this.setState({ ...this.state, errorMessage: "Please enter amount" });
         this.useDivRef.current.scrollIntoView();
-      } else if (Number(objData[0]?.amount) <= 0 || objData[0]?.amount === "") {
-        this.setState({
-          ...this.state,
-          errorMessage: "Amount must be greater than zero.",
-        });
-        this.useDivRef.current.scrollIntoView();
-      } else {
+      }else {
         this.setState({ btnDisabled: true });
         if (
           this.props.match.params.id === "00000000-0000-0000-0000-000000000000"
