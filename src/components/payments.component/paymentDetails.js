@@ -364,6 +364,13 @@ class PaymentDetails extends Component {
       loading: false,
     });
   };
+  addressTypeNames = (type) =>{
+    const stepcodes = {
+              "1stparty" : "1st Party",
+              "3rdparty" : "3rd Party",
+     }
+     return stepcodes[type]
+ }
   popOverContent = () => {
     const { moreBankInfo, tooltipLoad } = this.state;
     if (tooltipLoad) {
@@ -575,7 +582,7 @@ class PaymentDetails extends Component {
                                             size="small"
                                             className="file-label ml-8"
                                           >
-                                            {item.addressType}{" "}
+                                            {this.addressTypeNames(item.addressType)}{" "}
                                           </Text>
                                         ) : (
                                           ""
