@@ -342,7 +342,10 @@ class RequestedDocs extends Component {
                                 <span className={`icon md ${key != null ? key : 'description'}`} />
                                 <div className='ml-16' style={{flex: 1}}>
                                     <Text className='case-lbl text-captz'>{key}</Text>
-                                    <div className='case-val'>{value == null ? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}</div>
+                                    <div className='case-val'>
+                                    {(value == null || value ==" ")? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
+                                        {/* {value == null ? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)} */}
+                                        </div>
                                 </div>
                             </div>
                         </Col>)}
@@ -350,7 +353,7 @@ class RequestedDocs extends Component {
                 </div>
                 <div className="px-16">
                     <Text className='case-lbl'>Remarks</Text>
-                    <div className='case-val'>{caseData.remarks}</div>
+                    <div className='case-val'>{caseData.remarks ? caseData.remarks : '-'}</div>
                 </div>
                 <Divider />
                 {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No documents available" /></div>}
