@@ -45,15 +45,18 @@ const WithdrawalFiatSummary = ({
   const [authCode, setAuthCode] = useState("");
   const [otpCode, setOtpCode] = useState("");
   const [verifyOtpText, setVerifyOtpText] = useState("");
-  const [verifyEmailText,setVerifyEmailText]=useState("")
+  const [verifyEmailText, setVerifyEmailText] = useState("");
   const [seconds, setSeconds] = useState(120);
   const [emailOtp, setEmailOtp] = useState("");
-  const [invalidData,setInvalidData]=useState(false);
-  const [validData,setValidData]=useState(false)
-  const[verify,setVerify]=useState(false);
+  const [invalidData, setInvalidData] = useState(false);
+  const [validData, setValidData] = useState(false);
+  const [verify, setVerify] = useState(false);
   const [emailCode, setEmailCode] = useState("");
-  const [disableSave, setDisableSave] = useState(false)
-  
+  const [disableSave, setDisableSave] = useState(false);
+  const [isEmailVerification, setIsEmailVerification] = useState(false);
+  const [isPhoneVerification, setIsPhoneVerification] = useState(false);
+  const [isAuthenticatorVerification, setIsAuthenticatorVerification] =
+    useState(false);
 
   const btnList = {
     get_otp: (
@@ -116,7 +119,7 @@ const WithdrawalFiatSummary = ({
 
   useEffect(() => {
     const timer =
-    seconds > 0 && setInterval(() => setSeconds(seconds - 1), 1000);
+      seconds > 0 && setInterval(() => setSeconds(seconds - 1), 1000);
     return () => clearInterval(timer);
   }, [seconds]);
 
@@ -133,11 +136,35 @@ const WithdrawalFiatSummary = ({
       FullFeatureName: "Withdraw Fiat"
     });
   };
- 
 
   const saveWithdrwal = async (values) => {
-    debugger
+    debugger;
+    if ((verifyData.isEmailVerification)) {
+      if(!isEmailVerification){
+        setMsg("Please enter valid codes");
+        useOtpRef.current.scrollIntoView();
+        return;
+      }
+      
+    }
+    if ((verifyData.isPhoneVerified)) {
+      if(!isPhoneVerification){
+        setMsg("Please enter valid codes");
+        useOtpRef.current.scrollIntoView();
+        return;
+      }
+      
+    }
+    if ((verifyData.twoFactorEnabled )) {
+      if(!isAuthenticatorVerification){
+        setMsg("Please enter valid codes");
+        useOtpRef.current.scrollIntoView();
+        return;
+      }
+     
+    }
     setIsLoding(true);
+
     let Obj = Object.assign({}, sendReceive.withdrawFiatObj);
     Obj.accountNumber = apiCalls.encryptValue(
       Obj.accountNumber,
@@ -158,32 +185,26 @@ const WithdrawalFiatSummary = ({
       userConfig?.sk
     );
     Obj.info = JSON.stringify(trackAuditLogData);
-    let withdrawal = await withdrawSave(Obj);
-    if(invalidData==false){
-      setDisableSave(true)
 
-      if (withdrawal.ok) {
-        setDisableSave(false)
-        dispatch(setWithdrawFinalRes(withdrawal.data));
-        dispatch(fetchDashboardcalls(userConfig.id));
-        dispatch(rejectWithdrawfiat());
-        changeStep("step7");
-      } 
-      else {       
-        setMsg(withdrawal.data);
-        useOtpRef.current.scrollIntoView();
-      }
-    }else{
-      setMsg("Please enter valid codes")
+    let withdrawal = await withdrawSave(Obj);
+
+    setDisableSave(true);
+
+    if (withdrawal.ok) {
+      setDisableSave(false);
+      dispatch(setWithdrawFinalRes(withdrawal.data));
+      dispatch(fetchDashboardcalls(userConfig.id));
+      dispatch(rejectWithdrawfiat());
+      changeStep("step7");
+    } else {
+      setMsg(withdrawal.data);
       useOtpRef.current.scrollIntoView();
     }
-    
   };
   const onCancel = () => {
     changeStep("step1");
     dispatch(setWithdrawfiatenaable(true));
     dispatch(rejectWithdrawfiat());
-
   };
   const fullNumber = userConfig.phoneNumber;
   const last4Digits = fullNumber.slice(-4);
@@ -197,7 +218,7 @@ const WithdrawalFiatSummary = ({
   };
 
   const getEmail = async (val) => {
-    debugger
+    debugger;
     let response = await apiCalls.sendEmail(userConfig.id, type);
     if (response.ok) {
       setEmailText("sentVerification");
@@ -208,50 +229,49 @@ const WithdrawalFiatSummary = ({
         apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
       );
       setTimeout(() => {
-        setEmailText("resendEmail"); setTooltipEmail(false)
+        setEmailText("resendEmail");
+        setTooltipEmail(false);
       }, 120000);
-     setTimeout(() => {
-      setVerifyEmailText(null)
-     }, 120000);
+      setTimeout(() => {
+        setVerifyEmailText(null);
+      }, 120000);
       //timer();
-      } else {
+    } else {
       setMsg(apiCalls.convertLocalLang("request_fail"));
-      
     }
   };
   const getEmailVerification = async (values) => {
-    debugger
-    setValidData(true)
+    debugger;
+    setValidData(true);
     let response = await apiCalls.verifyEmail(userConfig.id, emailCode);
     if (response.ok) {
+      setIsEmailVerification(true);
       success("Email  verified successfully");
-    } else if(response.data==null){
+    } else if (response.data == null) {
       useOtpRef.current.scrollIntoView();
-        setMsg("Please enter email verification code") }
-    else {
+      setMsg("Please enter email verification code");
+    } else {
       setMsg(apiCalls.convertLocalLang("email_invalid_code"));
       setTimeout(() => {
-        setMsg(null)
+        setMsg(null);
       }, 5000);
-      setInvalidData(true)
-
+      //setInvalidData(true)
+      setIsEmailVerification(false);
     }
   };
 
   const handleSendOtp = (val) => {
-    debugger
+    debugger;
     setEmailOtp(val.emailCode);
     setVerifyEmailText("verifyTextBtn");
     setTooltipEmail(false);
     setEmailText(null);
     setVerify(true);
-    setDisableSave(false)
-
-    
+    setDisableSave(false);
   };
-  const handleEmailChange=(e)=>{
+  const handleEmailChange = (e) => {
     setEmailCode(e.target.value);
-  }
+  };
   const getOTP = async (val) => {
     let response = await apiCalls.getCode(userConfig.id, type);
     if (response.ok) {
@@ -270,7 +290,7 @@ const WithdrawalFiatSummary = ({
         setTooltipVisible(false);
       }, 120000);
       setTimeout(() => {
-        setVerifyOtpText(null)
+        setVerifyOtpText(null);
       }, 120000);
     } else {
       setMsg(apiCalls.convertLocalLang("request_fail"));
@@ -278,62 +298,61 @@ const WithdrawalFiatSummary = ({
   };
 
   const getOtpVerification = async () => {
-    setValidData(true)
+    debugger;
+    setValidData(true);
     let response = await apiCalls.getVerification(userConfig.id, otpCode);
     if (response.ok) {
+      setIsPhoneVerification(true);
       success("OTP verified successfully");
-    } else if(response.data==null){
+    } else if (response.data == null) {
       useOtpRef.current.scrollIntoView();
-        setMsg("Please enter phone verification code") }
-    else {
+      setMsg("Please enter phone verification code");
+    } else {
       useOtpRef.current.scrollIntoView();
 
       setMsg(apiCalls.convertLocalLang("phone_invalid_code"));
       setTimeout(() => {
-        setMsg(null)
+        setMsg(null);
       }, 5000);
-      setInvalidData(true)
-
+      //setInvalidData(true)
+      setIsPhoneVerification(false);
     }
   };
   const handleChange = (e) => {
     setOtpCode(e.target.value);
   };
-  
+
   const handleOtp = (val) => {
     setOtp(val.code);
     setVerifyOtpText("verifyOtpBtn");
     setTooltipVisible(false);
-     setButtonText(null);
-    setDisableSave(false)
-    
+    setButtonText(null);
+    setDisableSave(false);
   };
   const getAuthenticator = async () => {
-    debugger
-    setValidData(true)
+    debugger;
+    setValidData(true);
     let response = await apiCalls.getAuthenticator(authCode, userConfig.userId);
-    if (response.ok) {  
-      console.log(response.data)
+    if (response.ok) {
+      setIsAuthenticatorVerification(true);
+      console.log(response.data);
       success("Authenticator verified successfully");
-    } else if(response.data==null){
+    } else if (response.data == null) {
       useOtpRef.current.scrollIntoView();
-        setMsg("Please enter authenticator verification code")      
-    }
-    else {
+      setMsg("Please enter authenticator verification code");
+    } else {
       useOtpRef.current.scrollIntoView();
       setMsg(apiCalls.convertLocalLang("twofa_invalid_code"));
       setTimeout(() => {
-        setMsg(null)
+        setMsg(null);
       }, 5000);
-      setInvalidData(true)
-
+      //setInvalidData(true)
+      setIsAuthenticatorVerification(false);
     }
   };
   const handleAuthenticator = (e) => {
     setAuthCode(e.target.value);
   };
-
- 
 
   return (
     <div className="mt-16">
@@ -452,8 +471,7 @@ const WithdrawalFiatSummary = ({
         //onFinish={validData==true && saveWithdrwal}
         autoComplete="off"
       >
-
-{verifyData.twoFactorEnabled == true && (
+        {verifyData.twoFactorEnabled == true && (
           <Text className="fs-14 mb-8 text-white d-block fw-200">
             2FA verification code *
           </Text>
@@ -555,7 +573,6 @@ const WithdrawalFiatSummary = ({
                 )}
                 <Button type="text" onClick={getOtpVerification}>
                   {verifyOtp[verifyOtpText]}
-                  
                 </Button>
               </>
             }
@@ -580,7 +597,7 @@ const WithdrawalFiatSummary = ({
               }}
               style={{ width: "100%" }}
               onChange={(e) => handleChange(e, "code")}
-               disabled={inputDisable}
+              disabled={inputDisable}
             />
           </Form.Item>
         )}
@@ -624,16 +641,15 @@ const WithdrawalFiatSummary = ({
                   >
                     <span className="icon md info mr-8" />
                   </Tooltip>
-                 
                 )}
-                {verify == true &&
-                <Button type="text"  onClick={(e) => getEmailVerification(e)}>
-                  {verifyText[verifyEmailText]}
-                  {/* VERIFY */}
-                </Button>}
+                {verify == true && (
+                  <Button type="text" onClick={(e) => getEmailVerification(e)}>
+                    {verifyText[verifyEmailText]}
+                    {/* VERIFY */}
+                  </Button>
+                )}
               </>
             }
-            
           >
             <Input
               type="text"
@@ -656,11 +672,9 @@ const WithdrawalFiatSummary = ({
               style={{ width: "100%" }}
               disabled={emailDisable}
               onChange={(e) => handleEmailChange(e, "Emailcode")}
-
             />
           </Form.Item>
         )}
-      
 
         <Button size="large" block className="pop-btn" htmlType="submit">
           <Translate content="with_draw" component={Text} />
