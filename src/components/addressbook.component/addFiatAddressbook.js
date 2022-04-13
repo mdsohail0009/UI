@@ -17,7 +17,8 @@ import { bytesToSize, getDocObj } from '../../utils/service';
 import { getCountryStateLu, getStateLookup } from "../../api/apiServer";
 import apicalls from "../../api/apiCalls";
 import { warning } from '../../utils/message';
-//import { addressTabUpdate } from '../../reducers/addressBookReducer'
+import {addressTabUpdate} from '../../reducers/addressBookReducer'
+import { setHeaderTab } from "../../reducers/buysellReducer";
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -52,13 +53,17 @@ const LinkValue = (props) => {
 };
 const link = <LinkValue content="terms_service" />;
 const NewFiatAddress = (props) => {
+
+
     const [form] = Form.useForm();
     const [errorMsg, setErrorMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [fiatAddress, setFiatAddress] = useState({});
     const useDivRef = React.useRef(null);
     const [btnDisabled, setBtnDisabled] = useState(false);
-    const [file, setFile] = useState([])
+    const [addressFile, setAdressFile] = useState(null);
+    const[identityFile,setIdentityFile] = useState(null);
+    const[declarationFile,setDeclarationFile] = useState(null)
     const [uploadPercentage, setUploadPercentage] = useState(0);
     const [isUploading, setUploading] = useState(false);
     const [countryLu, setCountryLu] = useState([]);
@@ -66,20 +71,22 @@ const NewFiatAddress = (props) => {
     const [addressState, setAddressState] = useState(null);
     const [saveObj, setSaveObj] = useState(null);
     const [isValidFile, setIsValidFile] = useState(true);
-    const [selectParty, setSelectParty] = useState(props?.checkThirdParty);
-
-    const [files, setFiles] = useState([]);
+    const[selectParty,setSelectParty] = useState(props?.checkThirdParty);
+    const[uploadingActive,setUploadingActive] = useState(false);
+    const[withdrawEdit,setWithdrawValues] = useState();
+    const[isEdit,setEdit] = useState(false);
 
     useEffect(() => {
-        if (selectParty === true) {
-            form.setFieldsValue({ addressType: "3rdparty" })
-
-        }
-        else {
-            form.setFieldsValue({ addressType: "1stparty" })
-        }
-        if (props?.addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && props?.addressBookReducer?.selectedRowData?.id) {
+       if(selectParty === true){
+        form.setFieldsValue({addressType:"3rdparty"})
+        
+       }
+       else{
+        form.setFieldsValue({addressType:"1stparty"})
+       }
+    if (props?.addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && props?.addressBookReducer?.selectedRowData?.id) {
             loadDataAddress();
+            setEdit(true);
         }
         addressbkTrack();
         getCountryLu();
@@ -89,38 +96,38 @@ const NewFiatAddress = (props) => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat Address Book Details page view ', "Username": props?.userConfig?.id, "MemeberId": props?.userConfig?.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Address book details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' });
     }
     const loadDataAddress = async () => {
+        debugger
         setIsLoading(true)
         let response = await getAddress(props?.addressBookReducer?.selectedRowData?.id, 'fiat');
         if (response.ok) {
-            debugger
-            console.log(response.data);
-            if (response.data.addressType === "3rdparty") {
-                setSelectParty(true);
-            }
-            else {
-                setSelectParty(false);
-            }
+     
+    
+        if(response.data.addressType === "3rdparty"){
+            setSelectParty(true);
+        }
+        else{
+            setSelectParty(false);
+        }
             setFiatAddress(response.data);
+            setWithdrawValues(response.data);
             setAddressState(response.data.addressState);
             if (props?.addressBookReducer?.selectedRowData && props?.buyInfo.memberFiat?.data) {
                 handleWalletSelection(props?.addressBookReducer?.selectedRowData?.currency)
             }
-
+          
             let fileInfo = response?.data?.documents?.details;
-            if (fileInfo?.length != 0) {
-                debugger
-                for (let i = 0; i < fileInfo?.length; i++) {
-                    let obj = {
-                        "name": fileInfo[i]?.documentName,
-                        "size": fileInfo[i]?.remarks,
-                        "response": [fileInfo[i]?.path]
-                    }
-                    files.push(obj);
-                    setFiles(files);
-                }
+           
+            if(response?.data?.addressType === "1stparty" &&  fileInfo?.length !=0){
+                setDeclarationFile(response?.data?.documents?.details[0])
+             
             }
-
-            getStateLu(response.data.country)
+            else{
+                setIdentityFile(response?.data?.documents?.details[0]);
+                 setAdressFile(response?.data?.documents?.details[1]);
+              
+            }
+      
+          getStateLu(response.data.country)
             form.setFieldsValue({ ...response.data, });
             setIsLoading(false)
         }
@@ -140,7 +147,7 @@ const NewFiatAddress = (props) => {
             });
         } else {
             form.setFieldsValue({
-                beneficiaryAccountName: props?.userConfig?.firstName + " " + props?.userConfig?.lastName
+                beneficiaryAccountName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName
             });
         }
         let recName = await getCountryStateLu();
@@ -157,18 +164,18 @@ const NewFiatAddress = (props) => {
         if (isChange) form.setFieldsValue({ state: null });
     };
     const savewithdrawal = async (values) => {
-        debugger
+
         setIsLoading(false)
         setErrorMsg(null)
         setBtnDisabled(true);
-        const type = 'fiat';
+       const type = 'fiat';
         values['id'] = props?.addressBookReducer?.selectedRowData?.id;
         values['membershipId'] = props?.userConfig?.id;
-        if (selectParty) {
-            values['beneficiaryAccountName'] = values.beneficiaryAccountName;
+        if(selectParty){
+            values['beneficiaryAccountName'] = values.beneficiaryAccountName; 
         }
-        else {
-            values['beneficiaryAccountName'] = props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
+        else{
+        values['beneficiaryAccountName'] =props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
         }
         values['type'] = type;
         values['info'] = JSON.stringify(props?.trackAuditLogData);
@@ -177,77 +184,108 @@ const NewFiatAddress = (props) => {
         let favaddrId = props?.addressBookReducer?.selectedRowData ? props?.addressBookReducer?.selectedRowData?.id : Id;
         let namecheck = values.favouriteName.trim();
         let responsecheck = await favouriteNameCheck(props?.userConfig?.id, namecheck, 'fiat', favaddrId);
-        // if (responsecheck.data != null) {
-        //     setIsLoading(false);
-        //     setBtnDisabled(false);
-        //     useDivRef.current.scrollIntoView()
-        //     return setErrorMsg('Address label already existed');
-        // }
-        //  else {
-        setBtnDisabled(true);
-        let saveObj = Object.assign({}, values);
-
-        saveObj.accountNumber = apiCalls.encryptValue(saveObj.accountNumber, props?.userConfig?.sk)
-        saveObj.bankAddress = apiCalls.encryptValue(saveObj.bankAddress, props?.userConfig?.sk)
-        saveObj.bankName = apiCalls.encryptValue(saveObj.bankName, props?.userConfig?.sk)
-        saveObj.beneficiaryAccountAddress = apiCalls.encryptValue(saveObj.beneficiaryAccountAddress, props?.userConfig?.sk)
-        saveObj.beneficiaryAccountName = apiCalls.encryptValue(saveObj.beneficiaryAccountName, props?.userConfig?.sk)
-        saveObj.routingNumber = apiCalls.encryptValue(saveObj.routingNumber, props?.userConfig?.sk)
-        saveObj.toWalletAddress = apiCalls.encryptValue(saveObj.toWalletAddress, props?.userConfig?.sk)
-        saveObj.country = apiCalls.encryptValue(saveObj.country, props?.userConfig?.sk)
-        saveObj.state = apiCalls.encryptValue(saveObj.state, props?.userConfig?.sk)
-        saveObj.zipCode = apiCalls.encryptValue(saveObj.zipCode, props?.userConfig?.sk)
-        saveObj.documents = {
-            "id": fiatAddress?.documents?.id,
-            "transactionId": null,
-            "adminId": "00000000-0000-0000-0000-000000000000",
-            "date": null,
-            "type": null,
-            "memberId": props?.userConfig?.id,
-            "caseTitle": null,
-            "caseState": null,
-            "remarks": null,
-            "status": null,
-            "state": null,
-            "details": [
-            ]
-        }
-        if (files) {
-            files.map((item, index) => {
-
-                let obj = {
-                    "documentId": "00000000-0000-0000-0000-000000000000",
-                    "documentName": item.name,
-                    "id": fiatAddress?.documents?.details[0].id,
-                    "isChecked": true,
-                    "remarks": item.size,
-                    "state": null,
-                    "status": false,
-                    "path": item.response[0]
-                }
-                saveObj.documents.details.push(obj);
-            })
-        }
-
-        let response = await saveAddress(saveObj);
-
-        if (response.ok) {
-            setBtnDisabled(false);
-            setErrorMsg('')
-            useDivRef.current.scrollIntoView();
-            message.success({ content: apiCalls.convertLocalLang('address_msg'), className: 'custom-msg' });
-            form.resetFields();
-            props?.onCancel()
-            setIsLoading(false)
-            //props?.dispatch(addressTabUpdate(true));
-            props?.props?.history?.push('/userprofile');
-        }
-        else {
+        if (responsecheck.data != null) {
             setIsLoading(false);
             setBtnDisabled(false);
+            useDivRef.current.scrollIntoView()
+            return setErrorMsg('Address label already existed');
+        }
+         else {
+            setBtnDisabled(true);
+            let saveObj = Object.assign({}, values);
+            
+            saveObj.accountNumber = apiCalls.encryptValue(saveObj.accountNumber, props?.userConfig?.sk)
+            saveObj.bankAddress = apiCalls.encryptValue(saveObj.bankAddress, props?.userConfig?.sk)
+            saveObj.bankName = apiCalls.encryptValue(saveObj.bankName, props?.userConfig?.sk)
+            saveObj.beneficiaryAccountAddress = apiCalls.encryptValue(saveObj.beneficiaryAccountAddress, props?.userConfig?.sk)
+            saveObj.beneficiaryAccountName = apiCalls.encryptValue(saveObj.beneficiaryAccountName, props?.userConfig?.sk)
+            saveObj.routingNumber = apiCalls.encryptValue(saveObj.routingNumber, props?.userConfig?.sk)
+            saveObj.toWalletAddress = apiCalls.encryptValue(saveObj.toWalletAddress, props?.userConfig?.sk)
+            saveObj.country = apiCalls.encryptValue(saveObj.country,props?. userConfig?.sk)
+            saveObj.state = apiCalls.encryptValue(saveObj.state, props?.userConfig?.sk)
+            saveObj.zipCode = apiCalls.encryptValue(saveObj.zipCode,props?.userConfig?.sk)
+            saveObj.documents = {
+                "id": withdrawEdit ? withdrawEdit?.documents?.id : "00000000-0000-0000-0000-000000000000",
+                "transactionId": null,
+                "adminId": "00000000-0000-0000-0000-000000000000",
+                "date": null,
+                "typeId": null,
+                "memberId": props?.userConfig?.id,
+                "caseTitle": null,
+                "caseState": null,
+                "remarks": null,
+                "status": null,
+                "state": null,
+        "details" : [
+          ]
+    } 
+   
+                if(selectParty){
+                   
+                 if(identityFile){
+                    // let obj = {
+                    //     "documentId" :identityFile?.documentId,
+                    //     "documentName" : identityFile.documentName,
+                    //     "id" : identityFile?.id,
+                    //     "isChecked" : true,
+                    //     "remarks" : identityFile.size,
+                    //     "state" : null,
+                    //     "status" : false,
+                    //     "path" :identityFile.path,
+                    //     "size":identityFile.size
+                    //    }
+                   saveObj.documents.details.push(identityFile);
+                 }
+                     if(addressFile){
+                        // let obj = {
+                        //     "documentId" :addressFile?.documentId,
+                        //     "documentName" : addressFile.documentName,
+                        //     "id" : addressFile?.id,
+                        //     "isChecked" : true,
+                        //     "remarks" :  addressFile.size,
+                        //     "state" : null,
+                        //     "status" : false,
+                        //     "path" :addressFile.path,
+                        //     "size":addressFile.size
+                        //    }
+                         saveObj.documents.details.push(addressFile);
+                    }
+                }
+                else if (declarationFile){
+                    // let obj = {
+                    //     "documentId" :declarationFile?.documentId,
+                    //     "documentName" : declarationFile.documentName,
+                    //     "id" : declarationFile?.id,
+                    //     "isChecked" : true,
+                    //     "remarks" :  declarationFile.size,
+                    //     "state" : null,
+                    //     "status" : false,
+                    //     "path" :declarationFile.path,
+                    //     "size":declarationFile.size
+                    //    }
+                   saveObj.documents.details.push(declarationFile);
+                }
+     
+           let response = await saveAddress(saveObj);
+        
+            if (response.ok) {
+                setBtnDisabled(false);
+                setErrorMsg('')
+                useDivRef.current.scrollIntoView();
+                message.success({ content: apiCalls.convertLocalLang('address_msg'), className: 'custom-msg' });
+                form.resetFields();
+               props?.onCancel()
+                setIsLoading(false)
+                props?.dispatch(addressTabUpdate(true));
+                props?.dispatch(setHeaderTab(''));
+                props?.props?.history?.push('/userprofile');
+                }
+            else {
+                setIsLoading(false);
+                setBtnDisabled(false);
+            }
         }
     }
-
     const getIbanData = async (val) => {
         if (val && val.length > 14) {
             let response = await apiCalls.getIBANData(val);
@@ -257,8 +295,23 @@ const NewFiatAddress = (props) => {
             }
         }
     }
-    const beforeUpload = (file) => {
-        let fileType = { "image/png": false, 'image/jpg': false, 'image/jpeg': false, 'image/PNG': false, 'image/JPG': false, 'image/JPEG': false, 'application/pdf': true, 'application/PDF': true }
+    const beforeUpload = (file,type) => {
+   
+        if(type === "IDENTITYPROOF" || type === "ADDRESSPROOF"){
+
+            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+            if (fileType[file.type]) {
+            setIsValidFile(true);
+            return true;
+            }
+            else{
+                warning('File is not allowed. You can upload jpg, png, jpeg and PDF files')
+                setIsValidFile(false);
+                return Upload.LIST_IGNORE;   
+            }
+        }
+        else{
+           let fileType = { "image/png": false, 'image/jpg': false, 'image/jpeg': false, 'image/PNG': false, 'image/JPG': false, 'image/JPEG': false, 'application/pdf': true, 'application/PDF': true }
         if (fileType[file.type]) {
             setIsValidFile(true);
             return true;
@@ -268,326 +321,367 @@ const NewFiatAddress = (props) => {
             return Upload.LIST_IGNORE;
         }
     }
+    }
     const radioChangeHandler = (e) => {
-        setFiles([]);
+          setUploading(false);
+          setUploadingActive(false);
+          setIdentityFile(null);
+          setAdressFile(null);
+          setDeclarationFile(null);
       if(e.target.value === "1stparty"){
-          form.setFieldsValue({addressType:"1stparty",beneficiaryAccountName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName})
-          setSelectParty(false);
-      }
-      else{
-          form.setFieldsValue({addressType:"3rdparty"})
-          setSelectParty(true);
-      }
+            form.setFieldsValue({addressType:"1stparty",beneficiaryAccountName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName})
+            setSelectParty(false);
 
-  }
-  const upLoadFiles = (res) =>  {
-     
-    let obj = {"name":"","size":""}
-    setUploading(true);
-    if (res.status === "uploading") { setUploadPercentage(res.percent) }
-    else if (res.status === "done") {
-     files.push(res);
-        setFiles(files);
-        setUploading(false);
-         }  }
-         const deleteFile = (item,index) =>{
-            debugger
-            let filesList = [...files]
-            for(let i =0;i<filesList.length;i++){
-             let deletedObj =  filesList.findIndex(filesList[i]) === index;
-             filesList.splice(deletedObj);
+        }
+        else{
+            form.setFieldsValue({addressType:"3rdparty"})
+            setSelectParty(true);
+        }
+
+    }
+  const upLoadFiles = ({file},type) =>  {
+
+       if (file?.status === "uploading") 
+        { 
+            setUploadPercentage(file?.percent)
+            if(type === "IDENTITYPROOF" ){
+                setUploadingActive(true);
             }
-        // setFiles(filesList);
-        //     filesList= filesList.filter(obj => files.findIndex(obj) !== index );
-        //    filesList= filesList.filter(obj => obj.uid!== item.uid);
-           setFiles(filesList);
+            else if(isValidFile === true){
+                setUploading(true);
+            }
+         }
+        else if (file?.status === "done" && isValidFile === true) {
+
+             if(type === "IDENTITYPROOF"){
+                 let obj = {
+                    "documentId": identityFile !== null ? identityFile?.documentId : "00000000-0000-0000-0000-000000000000",
+                    "documentName": `${file.name}`,
+                    "id": identityFile !== null ? identityFile?.id : "00000000-0000-0000-0000-000000000000",
+                    "isChecked": file.name == "" ? false : true,
+                    "remarks": `${file.size}`,
+                    "state": null,
+                    "status": false,
+                    "path": `${file.response}`,
+                    "size":`${file.size}`,
                 }
+
+            setIdentityFile(obj);
+            
+        }
+            else if(type === "ADDRESSPROOF"){
+                setUploading(true);
+                let obj = {
+                    "documentId": addressFile!== null ? addressFile?.documentId : "00000000-0000-0000-0000-000000000000",
+                    "documentName": `${file.name}`,
+                    "id": addressFile!== null ? addressFile?.id :"00000000-0000-0000-0000-000000000000",
+                    "isChecked": file.name == "" ? false : true,
+                    "remarks": `${file.size}`,
+                    "state": null,
+                    "status": false,
+                    "path": `${file.response}`,
+                    "size":`${file.size}`,
+                }
+                setAdressFile(obj);
+            }
+            else {
+                setUploading(true);
+                let obj = {
+                    "documentId": declarationFile!== null ? declarationFile?.documentId :"00000000-0000-0000-0000-000000000000",
+                    "documentName": `${file.name}`,
+                    "id": declarationFile!== null ? declarationFile?.id :"00000000-0000-0000-0000-000000000000",
+                    "isChecked": file.name == "" ? false : true,
+                    "remarks": `${file.size}`,
+                    "state": null,
+                    "status": false,
+                    "path": `${file.response}`,
+                    "size":`${file.size}`
+                }
+                setDeclarationFile(obj);
+            }
+            setUploadingActive(false);
+         setUploading(false);
+             }  }
+
+  
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     return (
         <>
 
-        {isLoading && <Loader />}
-        <div className="addbook-height">
-            <div ref={useDivRef}></div>
-            {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-            <Form form={form} onFinish={savewithdrawal} autoComplete="off" initialValues={fiatAddress}>
-                <Translate
-                    content="Beneficiary_BankDetails"
-                    component={Paragraph}
-                    className="mb-16 fs-14 text-aqua fw-500 text-upper"
-                />
-                <Form.Item  name="addressType" >
-                    <Radio.Group  buttonStyle="solid" className="my-16 wmy-graph" onChange={radioChangeHandler}
-                        defaultValue={selectParty === true ? "3rdparty" : "1stparty"}
-                         value={selectParty === true ? "3rdparty" : "1stparty"}
-                       >
-                        <Radio value={"1stparty"}>1st Party</Radio>
-                        <Radio value={"3rdparty"}>3rd Party</Radio>
-                    </Radio.Group>
+            {isLoading && <Loader />}
+            <div className="addbook-height">
+                <div ref={useDivRef}></div>
+                {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
+                <Form form={form} onFinish={savewithdrawal} autoComplete="off" initialValues={fiatAddress}>
+                    <Translate
+                        content="Beneficiary_BankDetails"
+                        component={Paragraph}
+                        className="mb-16 fs-14 text-aqua fw-500 text-upper"
+                    />
+                    <Form.Item  name="addressType" label="Address Type" className="custom-label">
+                        <Radio.Group size='large'  buttonStyle="solid" className="text-white ml-8"  onChange={radioChangeHandler}
+                            defaultValue={selectParty === true ? "3rdparty" : "1stparty"}
+                             value={selectParty === true ? "3rdparty" : "1stparty"}
+                           >
+                            <Radio value={"1stparty"} className="text-white" disabled={isEdit}>1st Party</Radio>
+                            <Radio value={"3rdparty"} className="text-white" disabled={isEdit}>3rd Party</Radio>
+                        </Radio.Group>
 
-                </Form.Item>
-                <Row gutter={[16, 16]}>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="favouriteName" required
-                            label={<Translate content="AddressLabel" component={Form.label} />}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: apiCalls.convertLocalLang('is_required')
-                                },
-                                {
-                                    whitespace: true,
-                                    message: apiCalls.convertLocalLang('is_required')
-                                },
-                                {
-                                    validator: validateContentRule
-                                }
-                            ]} >
-                            <Input className="cust-input" maxLength="20" placeholder={apiCalls.convertLocalLang('Enteraddresslabel')} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            label={<Translate content="address" component={Form.label} />}
-                            name="toWalletAddress" required
-                            rules={[
-                                {
-                                    required: true,
-                                    message: apiCalls.convertLocalLang('is_required')
-                                },
-                                {
-                                    whitespace: true,
-                                    message: apiCalls.convertLocalLang('is_required')
-                                },
-                                {
-                                    validator: validateContentRule
-                                }
-                            ]}
-                        >
-                            <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('address')} />
-                        </Form.Item>
-                    </Col>
-                  
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="toCoin"
-                            label={<Translate content="currency" component={Form.label} />}
-                            rules={[
-                                { required: true, message: apiCalls.convertLocalLang('is_required') },
-                            ]}
-                        >
-                            <WalletList hideBalance={true} valueFeild={'currencyCode'} selectedvalue={fiatAddress?.toCoin} placeholder={apiCalls.convertLocalLang('selectcurrency')} onWalletSelect={(e) => handleWalletSelection(e)} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="accountNumber"
-                           
-                            label={apiCalls.convertLocalLang('Bank_account')}
-                            required
-                            rules={[
-                                { required: true, message: apiCalls.convertLocalLang('is_required') },
-                                {
-                                    pattern: /^[A-Za-z0-9]+$/,
-                                    message: 'Invalid account number'
-                                }
-                            ]}
-                        >
-                            <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_account')} onBlur={(val) => getIbanData(val.currentTarget.value)} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="routingNumber"
-                            label={<Translate content="BIC_SWIFT_routing_number" component={Form.label} />}
-                            required
-                            rules={[
-                                { required: true, message: apiCalls.convertLocalLang('is_required') },
-                                {
-                                    pattern: /^[A-Za-z0-9]+$/,
-                                    message: 'Invalid BIC/SWIFT/Routing number'
-                                }
-                            ]}
-                        >
-                            <Input className="cust-input" placeholder={apiCalls.convertLocalLang('BIC_SWIFT_routing_number')} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="bankName"
-                            label={<Translate content="Bank_name" component={Form.label} />}
-                            required
-                            rules={[
-                                {
-                                    required: true,
-                                    message: apiCalls.convertLocalLang('is_required')
-                                },
-                                {
-                                    whitespace: true,
-                                    message: apiCalls.convertLocalLang('is_required')
-                                },
-                                {
-                                    validator: validateContentRule
-                                }
-                            ]}
-                        >
-                            <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_name')} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="bankAddress"
-                            label={<Translate content="Bank_address1" component={Form.label} />}
-                            required
-                            rules={[
-                                {
-                                    required: true,
-                                    message: apiCalls.convertLocalLang('is_required')
-                                },
-                                {
-                                    whitespace: true,
-                                    message: apiCalls.convertLocalLang('is_required')
-                                },
-                                {
-                                    validator: validateContentRule
-                                }
-                            ]}>
-                            <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_address1')} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="country"
-                            label={<Translate content="Country" component={Form.label} />}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: apicalls.convertLocalLang("is_required")
-                                }
-                            ]}
-                        >
-                            <Select
-                                dropdownClassName="select-drpdwn"
-                                placeholder={apicalls.convertLocalLang("Country")}
-                                className="cust-input"
-                                style={{ width: "100%" }}
-                                bordered={false}
-                                showArrow={true}
-                                onChange={(e) => getStateLu(e, true)}
+                    </Form.Item>
+                    <Row gutter={[16, 16]}>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="favouriteName" required
+                                label={<Translate content="AddressLabel" component={Form.label} />}
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        validator: validateContentRule
+                                    }
+                                ]} >
+                                <Input className="cust-input" maxLength="20" placeholder={apiCalls.convertLocalLang('AddressLabel')} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                label={<Translate content="address" component={Form.label} />}
+                                name="toWalletAddress" required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        validator: validateContentRule
+                                    }
+                                ]}
                             >
-                                {countryLu?.map((item, idx) => (
-                                    <Option key={idx} value={item.code}>
-                                        {item.name}
-                                    </Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="state"
-                            label={<Translate content="state" component={Form.label} />}
-                            rules={[
-                                {
-                                    required: true,
-                                    message: apicalls.convertLocalLang("is_required")
-                                }
-                            ]}
-                        >
-                            <Select
-                                dropdownClassName="select-drpdwn"
-                                placeholder={apicalls.convertLocalLang("state")}
-                                className="cust-input"
-                                style={{ width: "100%" }}
-                                bordered={false}
-                                showArrow={true}
-                                onChange={(e) => ""}
+                                <Input className="cust-input" maxLength="30" placeholder={apiCalls.convertLocalLang('address')} />
+                            </Form.Item>
+                        </Col>
+                      
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="toCoin"
+                                label={<Translate content="currency" component={Form.label} />}
+                                rules={[
+                                    { required: true, message: apiCalls.convertLocalLang('is_required') },
+                                ]}
                             >
-                                {stateLu?.map((item, idx) => (
-                                    <Option key={idx} value={item.code}>
-                                        {item.code}
-                                    </Option>
-                                ))}
-                            </Select>
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="zipCode"
-                            label={<Translate content="zipcode" component={Form.label} />}
-                            required
-                            rules={[
-                                {
-                                    validator: (rule, value, callback) => {
-                                        var regx = new RegExp(/^[A-Za-z0-9]+$/);
-                                        if (value) {
-                                            if (!regx.test(value)) {
-                                                callback("Invalid zip code");
-                                            } else if (regx.test(value)) {
+                                <WalletList hideBalance={true} valueFeild={'currencyCode'} selectedvalue={fiatAddress?.toCoin} placeholder={apiCalls.convertLocalLang('selectcurrency')} onWalletSelect={(e) => handleWalletSelection(e)} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="accountNumber"
+                               
+                                label={apiCalls.convertLocalLang('Bank_account')}
+                                required
+                                rules={[
+                                    { required: true, message: apiCalls.convertLocalLang('is_required') },
+                                    {
+                                        pattern: /^[A-Za-z0-9]+$/,
+                                        message: 'Invalid account number'
+                                    }
+                                ]}
+                            >
+                                <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_account')} onBlur={(val) => getIbanData(val.currentTarget.value)} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="routingNumber"
+                                label={<Translate content="BIC_SWIFT_routing_number" component={Form.label} />}
+                                required
+                                rules={[
+                                    { required: true, message: apiCalls.convertLocalLang('is_required') },
+                                    {
+                                        pattern: /^[A-Za-z0-9]+$/,
+                                        message: 'Invalid BIC/SWIFT/Routing number'
+                                    }
+                                ]}
+                            >
+                                <Input className="cust-input" placeholder={apiCalls.convertLocalLang('BIC_SWIFT_routing_number')} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="bankName"
+                                label={<Translate content="Bank_name" component={Form.label} />}
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        validator: validateContentRule
+                                    }
+                                ]}
+                            >
+                                <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_name')} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="bankAddress"
+                                label={<Translate content="Bank_address1" component={Form.label} />}
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        validator: validateContentRule
+                                    }
+                                ]}>
+                                <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_address1')} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="country"
+                                label={<Translate content="Country" component={Form.label} />}
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apicalls.convertLocalLang("is_required")
+                                    }
+                                ]}
+                            >
+                                <Select
+                                    dropdownClassName="select-drpdwn"
+                                    placeholder={apicalls.convertLocalLang("Country")}
+                                    className="cust-input"
+                                    style={{ width: "100%" }}
+                                    bordered={false}
+                                    showArrow={true}
+                                    optionFilterProp="children"
+                                    showSearch
+                                    onChange={(e) => getStateLu(e, true)}
+                                >
+                                    {countryLu?.map((item, idx) => (
+                                        <Option key={idx} value={item.code}>
+                                            {item.name}
+                                        </Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="state"
+                                label={<Translate content="state" component={Form.label} />}
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apicalls.convertLocalLang("is_required")
+                                    }
+                                ]}
+                            >
+                                <Select
+                                    dropdownClassName="select-drpdwn"
+                                    placeholder={apicalls.convertLocalLang("state")}
+                                    className="cust-input"
+                                    style={{ width: "100%" }}
+                                    bordered={false}
+                                    showArrow={true}
+                                    optionFilterProp="children"
+                                    showSearch
+                                    onChange={(e) => ""}
+                                >
+                                    {stateLu?.map((item, idx) => (
+                                        <Option key={idx} value={item.code}>
+                                            {item.code}
+                                        </Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="zipCode"
+                                label={<Translate content="zipcode" component={Form.label} />}
+                                required
+                                rules={[
+                                    {
+                                        validator: (rule, value, callback) => {
+                                            var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                                            if (value) {
+                                                if (!regx.test(value)) {
+                                                    callback("Invalid zip code");
+                                                } else if (regx.test(value)) {
+                                                    callback();
+                                                }
+                                            } else {
                                                 callback();
                                             }
-                                        } else {
-                                            callback();
                                         }
+                                    },
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang("is_required")
                                     }
-                                },
-                                {
-                                    required: true,
-                                    message: apiCalls.convertLocalLang("is_required")
-                                }
-                            ]}
-                        >
-                            <Input
-                                className="cust-input"
-                                maxLength="6"
-                                placeholder={apiCalls.convertLocalLang("zipcode")}
+                                ]}
+                            >
+                                <Input
+                                    className="cust-input"
+                                    maxLength="6"
+                                    placeholder={apiCalls.convertLocalLang("zipcode")}
+                                />
+                            </Form.Item>
+                        </Col>
+                        </Row>
+                        <Translate
+                                content="Beneficiary_Details"
+                                component={Paragraph}
+                                className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
                             />
-                        </Form.Item>
-                    </Col>
-                    </Row>
-                    <Translate
-                            content="Beneficiary_Details"
-                            component={Paragraph}
-                            className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
-                        />
-                    <Row gutter={[16,16]}>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                    <div className="d-flex">
-                                <Translate
-                                    className="input-label"
-                                    content={props?.userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
-                                    component={Form.label}
-                                />{" "}
-                                <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
-                        <Form.Item
-                        className='mb-0'
-                        name="beneficiaryAccountName"
-                        >
-             { selectParty ? <Input className="cust-input"  placeholder="Recipient full name"  /> :
-              <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="beneficiaryAccountAddress"
-                            label={<Translate content="Recipient_address1" component={Form.label} />}
-                            required
+                        <Row gutter={[16,16]}>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+
+                            <Form.Item
+                            className='custom-label mb-0'
+                            name="beneficiaryAccountName"
+                            label={                        
+                            <Translate
+                                content={props?.userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
+                                component={Form.label}
+                            />}
                             rules={[
                                 {
                                     required: true,
-                                    message: apiCalls.convertLocalLang('is_required')
+                                    message: apicalls.convertLocalLang("is_required")
                                 },
                                 {
                                     whitespace: true,
@@ -596,136 +690,231 @@ const NewFiatAddress = (props) => {
                                 {
                                     validator: validateContentRule
                                 }
-                            ]}>
-                            <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
-                        </Form.Item>
-                    </Col>
-                    <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                        <Form.Item
-                            className="custom-label"
-                            name="remarks"
-                            label={<Translate content="remarks" component={Form.label} />}
-                            rules={[
-                                { required: true, message: apiCalls.convertLocalLang('is_required') }
-                            ]} >
-                            <TextArea placeholder='Remarks' className='cust-input pt-16' autoSize={{ minRows: 2, maxRows: 5 }} maxLength={300}></TextArea>
-                        </Form.Item>
-                    </Col>
-                </Row>
+                            ]}
+                            >
+                 { selectParty ? <Input className="cust-input"  placeholder="Business Name"  /> :
+                  <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                            <Form.Item
+                                className="custom-forminput custom-label mb-0"
+                                name="beneficiaryAccountAddress"
+                                label={<Translate content="Recipient_address1" component={Form.label} />}
+                                required
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        whitespace: true,
+                                        message: apiCalls.convertLocalLang('is_required')
+                                    },
+                                    {
+                                        validator: validateContentRule
+                                    }
+                                ]}>
+                                <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
+                            </Form.Item>
+                        </Col>
+                        <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                            <Form.Item
+                                className="custom-label"
+                                name="remarks"
+                                label={<Translate content="remarks" component={Form.label} />}
+                                rules={[
+                                    { required: true, message: apiCalls.convertLocalLang('is_required') }
+                                ]} >
+                                <TextArea placeholder='Remarks' className='cust-input pt-16' autoSize={{ minRows: 3, maxRows: 3 }} maxLength={300}></TextArea>
+                            </Form.Item>
+                        </Col>
+                    </Row>
 
-              { selectParty === false && <><Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
-             <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={() => window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip></>}
-{/* <Row gutter={[12,12]}>
-<Col xs={24} md={24} lg={12}  xl={12} xxl={12}> */}
-                     <Form.Item name={"file1"} rules={[{
-                            validator: (_, value) => {
-                                if (file) {
-                                    return Promise.resolve();
-                                } else {
-                                    return Promise.reject("Please upload Address file")
+                  
+   {  selectParty === true ?<Row gutter={[12,12]}>
+    <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
+                         <Form.Item name={"file1"} rules={[{
+                                validator: (_, value) => {
+                                    if (identityFile) {
+                                        return Promise.resolve();
+                                    } else {
+                                        return Promise.reject("Please upload Identity file here")
+                                    }
                                 }
-                            }
-                        }]}>
-                            {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => upLoadFiles(res)
+                            }]}>
+                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props,"IDENTITYPROOF") }} onChange={(props) => upLoadFiles(props,"IDENTITYPROOF")
 
-                            
-                        }>
-                                <p className="ant-upload-drag-icon mb-16">
-                                    <span className="icon xxxl doc-upload" />
-                                </p>
-                                <p className="ant-upload-text fs-18 mb-0">{selectParty === true ? "Upload your Identity here" : "Upload your signed document here"}</p>
-                            </Dragger>}
-                        </Form.Item>
-{/* </Col>
-<Col xs={24} md={24} lg={12}  xl={12} xxl={12}> */}
-                      { selectParty === true && <Form.Item name={"file2"} rules={[{
-                            validator: (_, value) => {
-                                if (file) {
-                                    return Promise.resolve();
-                                } else {
-                                    return Promise.reject("Please upload identity file")
+                                 }>
+                                    <p className="ant-upload-drag-icon mb-16">
+                                        <span className="icon xxxl doc-upload" />
+                                    </p>
+                                    <p className="ant-upload-text fs-18 mb-0">Please Upload Identity Document </p>
+                                </Dragger>}
+                                {identityFile != null && <div className="docfile mr-0">
+                                <span className={`icon xl ${(identityFile.documentName?.slice(-3) === "zip" ? "file" : "") || (identityFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+
+                        <div className="docdetails c-pointer" >
+                            <EllipsisMiddle suffixCount={10}>{identityFile.documentName}</EllipsisMiddle>
+                            <span className="fs-12 text-secondary">{bytesToSize(identityFile.remarks)}</span>
+                                  </div>
+
+                        {/* <span className="icon md close c-pointer" onClick={() => confirm({
+                            content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
+                            title: <div className='fs-18 text-white-30'>Delete File ?</div>,
+                            onOk: () => { setIdentityFile(null); }
+                        })} /> */}
+                    </div>}
+                    { uploadingActive && <div className="text-center mt-16">
+                        <Spin />
+                    </div>
+                    }
+                            </Form.Item>
+    </Col>
+    <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
+                         <Form.Item name={"file2"} className="mb-0" rules={[{
+                                validator: (_, value) => {
+                                    if (addressFile) {
+                                        return Promise.resolve();
+                                    } else {
+                                        return Promise.reject("Please upload Address Document here")
+                                    }
                                 }
-                            }
-                        }]}>
-                            {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => upLoadFiles(res)}>
-                                <p className="ant-upload-drag-icon mb-16">
-                                    <span className="icon xxxl doc-upload" />
-                                </p>
-                                <p className="ant-upload-text fs-18 mb-0">Upload your Address Proofs here</p>
-                            </Dragger>}
-                        </Form.Item> }
-                        {/* </Col>
-                        </Row> */}
-                      {isUploading && <div className="text-center">
-                    <Spin />
-                </div>
-               
-                }
-             {files?.length !=0  && <div className="docfile mr-0">
-                    <span className={`icon xl file mr-16`} />
-                    <div className="docdetails c-pointer" >
-                    { files.length != 0 && files?.map((item,idx) => <>
-                    <EllipsisMiddle suffixCount={10}>{item.name }</EllipsisMiddle>
-                        <span className="fs-12 text-secondary">{bytesToSize(item.size)}</span>
-                        <br/>
-                        </>
+                            }]}>
+                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props,"ADDRESSPROOF") }} onChange={(props) => upLoadFiles(props,"ADDRESSPROOF")}>
+                                    <p className="ant-upload-drag-icon mb-16">
+                                        <span className="icon xxxl doc-upload" />
+                                    </p>
+                                    <p className="ant-upload-text fs-18 mb-0">Please Upload Address Proofs</p>
+                                </Dragger>}
+                            </Form.Item> 
+                            {addressFile != null && <div className="docfile mr-0">
+                            <span className={`icon xl ${(addressFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (addressFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                        <div className="docdetails c-pointer" >
+                            <EllipsisMiddle suffixCount={10}>{addressFile.documentName}</EllipsisMiddle>
+                            <span className="fs-12 text-secondary">{bytesToSize(addressFile.remarks)}</span>
+                        </div>
+                        {/* <span className="icon md close c-pointer" onClick={() => confirm({
+                            content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
+                            title: <div className='fs-18 text-white-30'>Delete File ?</div>,
+                            onOk: () => { setAdressFile(null); }
+                        })} /> */}
+                    </div>}
+                    { isUploading && <div className="text-center mt-16">
+                        <Spin />
+                    </div>
+                   
+                    }
+                            </Col>
+                            </Row>
+                             :
+                             <>
+                             <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
+                             <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={() => window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip> <Row gutter={[12,12]}>
+    <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
+                         <Form.Item name={"file1"} rules={[{
+                                validator: (_, value) => {
+                                    if (declarationFile) {
+                                        return Promise.resolve();
+                                    } else {
+                                        return Promise.reject("Please upload declaration file")
+                                    }
+                                }
+                            }]}>
+                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props,"DECLARATION") }} onChange={(props) => upLoadFiles(props,"DECLARATION")
+
+                                
+                            }>
+                                    <p className="ant-upload-drag-icon mb-16">
+                                        <span className="icon xxxl doc-upload" />
+                                    </p>
+                                    <p className="ant-upload-text fs-18 mb-0">Please Upload Signed Document</p>
+                                </Dragger>}
+                                {declarationFile != null && <div className="docfile mr-0">
+                                <span className={`icon xl ${(declarationFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (declarationFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                        <div className="docdetails c-pointer" >
+                            <EllipsisMiddle suffixCount={10}>{declarationFile.documentName}</EllipsisMiddle>
+                            <span className="fs-12 text-secondary">{bytesToSize(declarationFile.remarks)}</span>
+                        </div>
+                        {/* <span className="icon md close c-pointer" onClick={() => confirm({
+                            content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
+                            title: <div className='fs-18 text-white-30'>Delete File ?</div>,
+                            onOk: () => { setDeclarationFile(null); }
+                        })} /> */}
+                    </div>}
+                    {isUploading && <div className="text-center">
+                        <Spin />
+                    </div>
+                   
+                    }
+                            </Form.Item>
+    </Col></Row></>}
+                        
+                 {/* {files?.length !=0  && <div className="docfile mr-0">
+                        <span className={`icon xl file mr-16`} />
+                        <div className="docdetails c-pointer" >
+                        { files.length != 0 && files?.map((item,idx) => <>
+                        <EllipsisMiddle suffixCount={10}>{item.name }</EllipsisMiddle>
+                            <span className="fs-12 text-secondary">{bytesToSize(item.size)}</span>
+                            <br/>
+                            </>
+                            )}
+                         </div>
+                    
+                       { files?.length !=0 && files?.map((item,index) => <>
+                      <span className="icon md close c-pointer" onClick={() =>  confirm({ 
+                            content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
+                            title: <div className='fs-18 text-white-30'>Delete File ?</div>,
+                            onOk: () => {deleteFile(item,index) }
+                        })} /></>
                         )}
-                     </div>
-                
-                   { files?.length !=0 && files?.map((item,index) => <>
-                  <span className="icon md close c-pointer" onClick={() =>  confirm({ 
-                        content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
-                        title: <div className='fs-18 text-white-30'>Delete File ?</div>,
-                        onOk: () => {deleteFile(item,index) }
-                    })} /></>
-                    )}
-                </div>} 
-              
-               <Form.Item
-                    className="custom-forminput mt-36 agree"
-                    name="isAgree"
-                    valuePropName="checked"
-                    rules={[
-                        {
-                            validator: (_, value) =>
-                                value
-                                    ? Promise.resolve()
-                                    : Promise.reject(
-                                        new Error(
-                                            apiCalls.convertLocalLang("agree_termsofservice")
+                    </div>}  */}
+                  
+                   <Form.Item
+                        className="custom-forminput mt-36 agree"
+                        name="isAgree"
+                        valuePropName="checked"
+                        rules={[
+                            {
+                                validator: (_, value) =>
+                                    value
+                                        ? Promise.resolve()
+                                        : Promise.reject(
+                                            new Error(
+                                                apiCalls.convertLocalLang("agree_termsofservice")
+                                            )
                                         )
-                                    )
-                        }
+                            }
 
-                    ]}
-                >
-                    <Checkbox className="ant-custumcheck">
-                        <span className="withdraw-check"></span>
-                        <Translate
-                            content="agree_to_suissebase"
-                            with={{ link }}
-                            component={Paragraph}
-                            className="fs-14 text-white-30 ml-16 mb-4"
-                            style={{ flex: 1 }}
-                        />
-                    </Checkbox>
-                </Form.Item>
-                <Form.Item className='text-center'>
-                    <Button
-                        htmlType="submit"
-                        size="large"
-                        className="pop-btn mb-36"
-                        disabled={btnDisabled}
-                        style={{minWidth: 300}}
+                        ]}
                     >
-                        {isLoading && <Spin indicator={antIcon} />}  <Translate content="Save_btn_text" />
-                    </Button>
-                </Form.Item>
-             
-            </Form>
-        </div>
+                        <Checkbox className="ant-custumcheck">
+                            <span className="withdraw-check"></span>
+                            <Translate
+                                content="agree_to_suissebase"
+                                with={{ link }}
+                                component={Paragraph}
+                                className="fs-14 text-white-30 ml-16 mb-4"
+                                style={{ flex: 1 }}
+                            />
+                        </Checkbox>
+                    </Form.Item>
+                    <Form.Item className='text-center'>
+                        <Button
+                            htmlType="submit"
+                            size="large"
+                            className="pop-btn mb-36"
+                            disabled={btnDisabled}
+                            style={{minWidth: 300}}
+                        >
+                            {isLoading && <Spin indicator={antIcon} />}  <Translate content="Save_btn_text" />
+                        </Button>
+                    </Form.Item>
+                 
+                </Form>
+            </div>
 
-    </>
+        </>
     );
 }
 
@@ -733,14 +922,16 @@ const connectStateToProps = ({
     buyInfo,
     userConfig,
     addressBookReducer,
-    sendReceive
+    sendReceive,
+    buySell
 }) => {
     return {
         buyInfo,
         userConfig: userConfig.userProfileInfo,
         sendReceive,
         addressBookReducer,
-        trackAuditLogData: userConfig.trackAuditLogData
+        trackAuditLogData: userConfig.trackAuditLogData,
+        buySell,
     };
 };
 
