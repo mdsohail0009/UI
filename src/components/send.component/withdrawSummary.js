@@ -16,7 +16,7 @@ import {
 } from "../../reducers/sendreceiveReducer";
 import apiCalls from "../../api/apiCalls";
 import { publishBalanceRfresh } from "../../utils/pubsub";
-import {success,warning,error} from "../../utils/message";
+import { success, warning, error } from "../../utils/message";
 
 class WithdrawSummary extends Component {
   state = {
@@ -35,6 +35,7 @@ class WithdrawSummary extends Component {
     validationText: "",
     disable: false,
     inputDisable: true,
+    inputEmailDisable: true,
     showtext: true,
     timeInterval: "",
     count: 120,
@@ -56,11 +57,12 @@ class WithdrawSummary extends Component {
     verifyData: "",
     minutes: 2,
     seconds: 0,
-    inValidData:false,
-    authenticator:"",
-    EmailCode:"",
-    OtpVerification:"",
-    emailCodeVal:"",
+    inValidData: false,
+    authenticator: "",
+    EmailCode: "",
+    OtpVerification: "",
+    emailCodeVal: "",
+    invalidData: false
   };
 
   useDivRef = React.createRef();
@@ -144,7 +146,7 @@ class WithdrawSummary extends Component {
   };
 
   getVerifyData = async () => {
-    debugger
+    debugger;
     let response = await apiCalls.getVerificationFields(
       this.props.userProfile.id
     );
@@ -153,7 +155,7 @@ class WithdrawSummary extends Component {
     }
   };
   getOTP = async (val) => {
-    debugger
+    debugger;
     let response = await apiCalls.getCode(
       this.props.userProfile.id,
       this.state.type
@@ -170,7 +172,11 @@ class WithdrawSummary extends Component {
       });
 
       setTimeout(() => {
-        this.setState({ buttonText: "resendotp", tooltipVisible: false,verifyOtpText:null});
+        this.setState({
+          buttonText: "resendotp",
+          tooltipVisible: false,
+          verifyOtpText: null
+        });
       }, 120000);
     } else {
       this.setState({
@@ -181,7 +187,7 @@ class WithdrawSummary extends Component {
   };
 
   getEmail = async (val) => {
-    debugger
+    debugger;
     let response = await apiCalls.sendEmail(
       this.props.userProfile.id,
       this.state.type
@@ -192,16 +198,18 @@ class WithdrawSummary extends Component {
         emailText: "sentVerification",
         emailDisable: false,
         textDisable: true,
-        inputDisable: false,
+        inputEmailDisable: false,
         tooltipEmail: true,
         emailVerificationText:
           apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
       });
-        setTimeout(() => {
-          this.setState({ emailText: "resendEmail", tooltipEmail: false,verifyText:null });
-        }, 120000);
-      
-      
+      setTimeout(() => {
+        this.setState({
+          emailText: "resendEmail",
+          tooltipEmail: false,
+          verifyText: null
+        });
+      }, 120000);
     } else {
       this.setState({
         ...this.state,
@@ -211,62 +219,58 @@ class WithdrawSummary extends Component {
   };
 
   getEmailVerification = async () => {
-    debugger
+    debugger;
     let response = await apiCalls.verifyEmail(
       this.props.userProfile.id,
       this.state.emailCodeVal
     );
     if (response.ok) {
-      this.setState({...this.state,EmailCode:response.data})
-      success("Email verification code verified successfully") 
-    }else if(response.data==null){
+      this.setState({ ...this.state, EmailCode: response.data });
+      success("Email verification code verified successfully");
+    } else if (response.data == null) {
       this.setState({
         ...this.state,
         errorMsg: "Please enter email verification code"
-      });      
-  }
-    else
-    {
-     this.setState({...this.state,inValidData:true})
-     this.setState({
-      ...this.state,
-     errorMsg: apiCalls.convertLocalLang("email_invalid_code")
-    }); 
+      });
+    } else {
+      this.setState({ ...this.state, inValidData: true });
+      this.setState({
+        ...this.state,
+        errorMsg: apiCalls.convertLocalLang("email_invalid_code"),
+        invalidData: true
+      });
     }
-
-    
   };
 
   getOtpVerification = async () => {
-    debugger
+    debugger;
     let response = await apiCalls.getVerification(
       this.props.userProfile.id,
       this.state.otpCode
     );
     if (response.ok) {
-      this.setState({...this.state,OtpVerification:response.data})
-      success("Phone verification code verified successfully") 
-    }else if(response.data==null){
+      this.setState({ ...this.state, OtpVerification: response.data });
+      success("Phone verification code verified successfully");
+    } else if (response.data == null) {
       this.setState({
         ...this.state,
-        errorMsg: "Please enter phone verification code"
-      });      
-  } 
-    else {
+        errorMsg: "Please enter phone verification code",
+        invalidData: true
+      });
+    } else {
       this.useDivRef.current.scrollIntoView();
       this.setState({
         ...this.state,
         errorMsg: apiCalls.convertLocalLang("phone_invalid_code")
-        
       });
       setTimeout(() => {
         this.setState({ errorMsg: null });
       }, 1000);
-     this.setState({...this.state,inValidData:true})
+      this.setState({ ...this.state, inValidData: true });
     }
   };
   handleOtp = (val) => {
-    debugger
+    debugger;
     this.setState({
       ...this.state,
       otp: val.code,
@@ -277,33 +281,31 @@ class WithdrawSummary extends Component {
   };
 
   handleSendOtp = (val) => {
-    
-    debugger
+    debugger;
     this.setState({
       ...this.state,
       emailOtp: val.emailCode,
       verifyText: "verifyBtn",
       tooltipEmail: false,
-       emailText: ""
+      emailText: ""
     });
   };
 
   getAuthenticator = async () => {
-    debugger
+    debugger;
     let response = await apiCalls.getAuthenticator(
       this.state.authCode,
       this.props.userProfile.userId
     );
     if (response.ok) {
-      this.setState({...this.state,authenticator:response.data})
-      success("2FA verification code verified successfully") 
-    } else if(response.data==null){
+      this.setState({ ...this.state, authenticator: response.data });
+      success("2FA verification code verified successfully");
+    } else if (response.data == null) {
       this.setState({
         ...this.state,
         errorMsg: "Please enter authenticator verification code"
-      });      
-  }
-    else {
+      });
+    } else {
       this.useDivRef.current.scrollIntoView();
       this.setState({
         ...this.state,
@@ -312,24 +314,23 @@ class WithdrawSummary extends Component {
       setTimeout(() => {
         this.setState({ errorMsg: null });
       }, 5000);
-     this.setState({...this.state,inValidData:true})
+      this.setState({ ...this.state, inValidData: true });
     }
   };
   handleChange = (e) => {
-    debugger
+    debugger;
     this.setState({ ...this.state, otpCode: e.target.value });
   };
   handleAuthenticator = (e) => {
-    debugger
+    debugger;
     this.setState({ ...this.state, authCode: e.target.value });
   };
-  handleEmailChange=(e)=>{
+  handleEmailChange = (e) => {
     this.setState({ ...this.state, emailCodeVal: e.target.value });
-
-  }
+  };
   saveWithdrwal = async (values) => {
-    debugger
-    const{authenticator,OtpVerification,EmailCode}=this.state;
+    debugger;
+    const { authenticator, OtpVerification, EmailCode } = this.state;
     if (this.state.onTermsChange) {
       if (this.props.userProfile.isBusiness) {
         let saveObj = this.props.sendReceive.withdrawCryptoObj;
@@ -338,44 +339,53 @@ class WithdrawSummary extends Component {
         trackAuditLogData.Remarks = "Withdraw Crypto save";
         saveObj.info = JSON.stringify(trackAuditLogData);
 
-        if( authenticator&&OtpVerification||EmailCode&&OtpVerification||
-          EmailCode&&authenticator||EmailCode&&OtpVerification&&authenticator)
-{
-console.log("Okay")
-let withdrawal = await withDrawCrypto(saveObj);
-        if (withdrawal.ok) {
-          this.props.dispatch(setCryptoFinalRes(withdrawal.data));
-          this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
-          //setIsWithdrawSuccess(true)
-          this.props.dispatch(setWithdrawcrypto(null));
-          this.props.dispatch(setSubTitle(""));
-          this.props.changeStep("withdraw_crpto_success");
-          publishBalanceRfresh("success");
+        if (
+          (authenticator && OtpVerification) ||
+          (EmailCode && OtpVerification) ||
+          (EmailCode && authenticator) ||
+          (EmailCode && OtpVerification && authenticator)
+        ) {
+          if (this.state.invalidData == false) {
+            console.log("Okay");
+            let withdrawal = await withDrawCrypto(saveObj);
+            if (withdrawal.ok) {
+              this.props.dispatch(setCryptoFinalRes(withdrawal.data));
+              this.props.dispatch(
+                fetchDashboardcalls(this.props.userProfile.id)
+              );
+              //setIsWithdrawSuccess(true)
+              this.props.dispatch(setWithdrawcrypto(null));
+              this.props.dispatch(setSubTitle(""));
+              this.props.changeStep("withdraw_crpto_success");
+              publishBalanceRfresh("success");
+            }
+          } else {
+            this.setState({
+              ...this.state,
+              errorMsg: "Please enter valid codes"
+            });
+          }
+        } else {
+          this.props.dispatch(
+            setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
+          );
+          this.props.changeStep("withdraw_crypto_liveness");
         }
-
-        
+        this.setState({ ...this.state, errorMsg: false });
       } else {
-        this.props.dispatch(
-          setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
-        );
-        this.props.changeStep("withdraw_crypto_liveness");
+        this.setState({
+          ...this.state,
+          errorMsg: apiCalls.convertLocalLang("agree_termsofservice")
+        });
+        this.useDivRef.current.scrollIntoView();
       }
-      this.setState({ ...this.state, errorMsg: false });
     } else {
       this.setState({
         ...this.state,
-        errorMsg: apiCalls.convertLocalLang("agree_termsofservice")
+        errorMsg: "Please enter valid codes"
       });
       this.useDivRef.current.scrollIntoView();
     }
-  }else{
-    this.setState({
-      ...this.state,
-      errorMsg:"Please enter valid codes"
-    });
-    this.useDivRef.current.scrollIntoView();
-  }
-  
   };
 
   fullNumber = this.props.userProfile?.phoneNumber;
@@ -564,10 +574,9 @@ let withdrawal = await withDrawCrypto(saveObj);
             form={this.form}
             onFinish={this.saveWithdrwal}
           >
-
-{this.state.verifyData.twoFactorEnabled == true && (
+            {this.state.verifyData.twoFactorEnabled == true && (
               <Text className="fs-14 mb-8 text-white d-block fw-200">
-               2FA verification code *
+                2FA verification code *
               </Text>
             )}
             {this.state.verifyData.twoFactorEnabled == true && (
@@ -598,14 +607,12 @@ let withdrawal = await withDrawCrypto(saveObj);
                         callback();
                       }
                     }
-                    
                   },
                   {
-                      required: true,
-                      message: apiCalls.convertLocalLang('is_required')
+                    required: true,
+                    message: apiCalls.convertLocalLang("is_required")
                   }
-                 
-                ]}                
+                ]}
                 label={
                   <>
                     <Button type="text" onClick={this.getAuthenticator}>
@@ -769,12 +776,11 @@ let withdrawal = await withDrawCrypto(saveObj);
                   style={{ width: "100%" }}
                   //disabled={this.state.emailDisable}
                   onChange={(e) => this.handleEmailChange(e, "emailCodeVal")}
-                  disabled={this.state.inputDisable}
-
+                  disabled={this.state.inputEmailDisable}
                 />
               </Form.Item>
             )}
-        
+
             <div className="d-flex p-16 mb-36 agree-check">
               <label>
                 <input
