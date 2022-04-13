@@ -21,10 +21,9 @@ const getPortfolioGraph = (memId, type) => {
 const getCoinChatData = (coinName, currency, days) => {
     return coinGekoClient.get(`coins/${coinName}/market_chart?vs_currency=${currency}&days=${days}`);
 }
-const getNotices = (member_id) => {
-    return apiClient.get(ApiControllers.exchange + `MemberNoticesDashboard?memberId=${member_id}`)
+const getNotices = () => {
+    return apiClient.get(ApiControllers.accounts + 'Dashboard/Notice');
 }
-export {
-    fetchMarketCaps, fetchMemberWallets, fetchPortfolio, fetchYourPortfolio, getPortfolioGraph, getcoinDetails,
-    getNotices, getCoinChatData
-}
+
+export { fetchMarketCaps, fetchMemberWallets, fetchPortfolio, fetchYourPortfolio, getPortfolioGraph, getcoinDetails,
+    getNotices, getCoinChatData }
