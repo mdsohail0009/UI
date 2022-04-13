@@ -43,14 +43,7 @@ class Home extends Component {
                             } />
                     </div>)}
                 </Carousel> : ""}
-                {!this.props?.userProfileInfo?.twofactorVerified && <div>
-                    <AlertConfirmation type="error" title={"2FA"} showIcon description="Please enable two-factor authentication (2FA) in Security section. "
-                        action={
-                            <Button size="small" type="text" onClick={() => this.props.history.push(`/userprofile?key=2`)}>
-                                Enable 2FA
-                            </Button>
-                        } />
-                </div>}
+                
                 <Row justify="center mt-36">
                     <Col xs={24} md={12} xl={10}>
                         <div className="markets-panel mb-36">
@@ -66,7 +59,7 @@ class Home extends Component {
                             crypto_value='0.00'
                             crypto_usd="0.00 BTC"
                             crypto_stock="0.0%" />
-                        {/* <Notices /> */}
+                            <Notices />
                         <div className="markets-panel">
                             <MarketCap />
                         </div>
