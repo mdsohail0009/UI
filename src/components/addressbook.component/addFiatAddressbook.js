@@ -287,6 +287,7 @@ const NewFiatAddress = (props) => {
         }
     }
     const getIbanData = async (val) => {
+        form.setFieldsValue({routingNumber:"",bankName:"",bankAddress:""});
         if (val && val.length > 14) {
             let response = await apiCalls.getIBANData(val);
             if (response.ok) {
@@ -500,7 +501,7 @@ const NewFiatAddress = (props) => {
                                     }
                                 ]}
                             >
-                                <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_account')} onBlur={(val) => getIbanData(val.currentTarget.value)} />
+                                <Input className="cust-input" maxLength={100} placeholder={apiCalls.convertLocalLang('Bank_account')} onBlur={(val) => getIbanData(val.currentTarget.value)} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -517,7 +518,7 @@ const NewFiatAddress = (props) => {
                                     }
                                 ]}
                             >
-                                <Input className="cust-input" placeholder={apiCalls.convertLocalLang('BIC_SWIFT_routing_number')} />
+                                <Input className="cust-input" maxLength={100} placeholder={apiCalls.convertLocalLang('BIC_SWIFT_routing_number')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -540,7 +541,7 @@ const NewFiatAddress = (props) => {
                                     }
                                 ]}
                             >
-                                <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_name')} />
+                                <Input className="cust-input" maxLength={200} placeholder={apiCalls.convertLocalLang('Bank_name')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -562,7 +563,7 @@ const NewFiatAddress = (props) => {
                                         validator: validateContentRule
                                     }
                                 ]}>
-                                <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Bank_address1')} />
+                                <Input className="cust-input" maxLength={200} placeholder={apiCalls.convertLocalLang('Bank_address1')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -715,7 +716,7 @@ const NewFiatAddress = (props) => {
                                         validator: validateContentRule
                                     }
                                 ]}>
-                                <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
+                                <Input className="cust-input" maxLength={200} placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -739,7 +740,7 @@ const NewFiatAddress = (props) => {
                                     if (identityFile) {
                                         return Promise.resolve();
                                     } else {
-                                        return Promise.reject("Please upload Identity file here")
+                                        return Promise.reject("Please upload identity document")
                                     }
                                 }
                             }]}>
@@ -749,7 +750,7 @@ const NewFiatAddress = (props) => {
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Please Upload Identity Document </p>
+                                    <p className="ant-upload-text fs-18 mb-0">Please upload identity document here</p>
                                 </Dragger>}
                                 {identityFile != null && <div className="docfile mr-0">
                                 <span className={`icon xl ${(identityFile.documentName?.slice(-3) === "zip" ? "file" : "") || (identityFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
@@ -777,7 +778,7 @@ const NewFiatAddress = (props) => {
                                     if (addressFile) {
                                         return Promise.resolve();
                                     } else {
-                                        return Promise.reject("Please upload Address Document here")
+                                        return Promise.reject("Please upload address proof")   
                                     }
                                 }
                             }]}>
@@ -785,7 +786,7 @@ const NewFiatAddress = (props) => {
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Please Upload Address Proofs</p>
+                                    <p className="ant-upload-text fs-18 mb-0">Please upload address proof here</p>
                                 </Dragger>}
                             </Form.Item> 
                             {addressFile != null && <div className="docfile mr-0">
@@ -817,7 +818,7 @@ const NewFiatAddress = (props) => {
                                     if (declarationFile) {
                                         return Promise.resolve();
                                     } else {
-                                        return Promise.reject("Please upload declaration file")
+                                        return Promise.reject("Please upload your signed PDF document")
                                     }
                                 }
                             }]}>
@@ -828,7 +829,7 @@ const NewFiatAddress = (props) => {
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
-                                    <p className="ant-upload-text fs-18 mb-0">Please Upload Signed Document</p>
+                                    <p className="ant-upload-text fs-18 mb-0">Upload your signed PDF document here</p>
                                 </Dragger>}
                                 {declarationFile != null && <div className="docfile mr-0">
                                 <span className={`icon xl ${(declarationFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (declarationFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
