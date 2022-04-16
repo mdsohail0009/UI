@@ -232,7 +232,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                         rules={[
                             { required: true, message: apiCalls.convertLocalLang('is_required') }
                         ]} >
-                        <Input disabled placeholder={apiCalls.convertLocalLang('Selectcoin')} className="cust-input cust-adon mb-0 c-pointer"
+                        <Input disabled placeholder={apiCalls.convertLocalLang('Selectcoin')} className="cust-input cust-adon mb-0 text-center c-pointer"
                             addonAfter={<i className="icon md rarrow-white c-pointer" onClick={selectCrypto} />} />
                     </Form.Item>
                     <Form.Item
@@ -240,7 +240,11 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                         name="remarks"
                         label={<Translate content="remarks" component={Form.label} />}
                         rules={[
-                            { required: true, message: apiCalls.convertLocalLang('is_required') }
+                            { required: true, message: apiCalls.convertLocalLang('is_required') },
+                       
+                        {
+                            validator: validateContentRule
+                        },
                         ]} >
                         <TextArea placeholder='Remarks' className='cust-input pt-16' autoSize={{ minRows: 2, maxRows: 5 }} maxLength={300}></TextArea>
                     </Form.Item>

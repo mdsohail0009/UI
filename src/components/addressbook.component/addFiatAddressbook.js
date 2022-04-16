@@ -724,7 +724,10 @@ const NewFiatAddress = (props) => {
                                 name="remarks"
                                 label={<Translate content="remarks" component={Form.label} />}
                                 rules={[
-                                    { required: true, message: apiCalls.convertLocalLang('is_required') }
+                                    { required: true, message: apiCalls.convertLocalLang('is_required') },
+                                    {
+                                        validator: validateContentRule
+                                    }
                                 ]} >
                                 <TextArea placeholder='Remarks' className='cust-input pt-16' autoSize={{ minRows: 3, maxRows: 3 }} maxLength={300}></TextArea>
                             </Form.Item>
