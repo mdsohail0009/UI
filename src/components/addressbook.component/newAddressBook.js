@@ -46,6 +46,7 @@ const LinkValue = (props) => {
 const link = <LinkValue content="terms_service" />;
 const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, rejectCoinWallet, InputFormValues, userProfileInfo, trackAuditLogData }) => {
     const [form] = Form.useForm();
+    const useDivRef = React.useRef(null);
     const [errorMsg, setErrorMsg] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [cryptoAddress, setCryptoAddress] = useState({});
@@ -113,6 +114,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         if (responsecheck.data != null) {
             setBtnDisabled(false);
             setIsLoading(false)
+            useDivRef.current.scrollIntoView()
             return setErrorMsg('Address label already existed');
         } else {
             setBtnDisabled(true);
@@ -160,8 +162,10 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
     return (
         <>
             <div>
+            <div ref={useDivRef}></div>
                 {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
                 {isLoading && <Loader />}
+              
                 <Form
                     form={form} initialValues={cryptoAddress}
                     onFinish={saveAddressBook} autoComplete="off" >
