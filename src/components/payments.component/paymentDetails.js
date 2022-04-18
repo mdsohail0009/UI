@@ -47,6 +47,7 @@ class PaymentDetails extends Component {
       payData: [],
       amount: 0,
       type: this.props.match.params.type,
+      state:this.props.match.params.state,
       billPaymentData: null,
     };
     this.gridRef = React.createRef();
@@ -487,15 +488,18 @@ class PaymentDetails extends Component {
                 <table className="pay-grid">
                   <thead>
                     <tr>
-                      <th style={{ width: 50 }}></th>
+                    {(this.props.match.params.id ===
+                        "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
+                       && (<th style={{ width: 50 }}></th>)}
+                      {/* <th style={{ width: 50 }}></th> */}
                       <th>Name</th>
                       <th>Bank Name</th>
                       {/* <th>BIC/SWIFT/Routing Number</th> */}
                       <th>Bank account number</th>
-                      {this.props.match.params.id !==
-                        "00000000-0000-0000-0000-000000000000" && (
-                        <th>State</th>
-                      )}
+                      {(this.props.match.params.id !==
+                        "00000000-0000-0000-0000-000000000000" && this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
+                       && (<th>State</th>)}
+                        
                       <th>Amount</th>
                     </tr>
                   </thead>
@@ -526,6 +530,9 @@ class PaymentDetails extends Component {
                                       : true
                                   }
                                 >
+                            {(this.props.match.params.id ===
+                                "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
+                              &&
                                   <td
                                     style={{ width: 50 }}
                                     className="text-center"
@@ -561,6 +568,7 @@ class PaymentDetails extends Component {
                                       <span></span>
                                     </label>
                                   </td>
+                            }
                                   <td>
                                     {item?.beneficiaryAccountName ? (
                                       <>{item?.beneficiaryAccountName}</>
@@ -572,14 +580,21 @@ class PaymentDetails extends Component {
                                     <div className="d-flex align-center justify-content">
                                       <span>
                                         {item.bankname}
-                                        {item.isPrimary !== null ? (
+
+                                        {item.isPrimary !== null ? (<>
+                                            {(this.props.match.params.id ===
+                                              "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
+                                                && <>
                                           <Text
                                             size="small"
                                             className="file-label ml-8"
                                           >
-                                            {this.addressTypeNames(item.addressType)}{" "}
+                                            
+                                           {this.addressTypeNames(item.addressType)}{" "} 
+
                                           </Text>
-                                        ) : (
+                                            </>}
+                                            </>) : (
                                           ""
                                         )}
                                       </span>
@@ -606,10 +621,14 @@ class PaymentDetails extends Component {
                                     </div>
                                   </td>
                                   <td>{item.accountnumber}</td>
-                                  {this.props.match.params.id !==
-                                    "00000000-0000-0000-0000-000000000000" && (
+                                  {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000" 
+                                   &&this.props.match.params.state =="Submitted" || this.props.match.params.state =="Pending")
+                                     && (
                                     <td>{item.state ? item.state : "- -"}</td>
                                   )}
+                                  {(this.props.match.params.id ===
+                                              "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
+                                                ? <>
                                   <td>
                                     <div className="d-flex">
                                       <Form.Item
@@ -732,6 +751,24 @@ class PaymentDetails extends Component {
                                       </>
                                     ))}
                                   </td>
+                                  </>: <td>
+                                                    <NumberFormat
+                                                        value={item.amount}
+                                                        thousandSeparator={true}
+                                                        displayType={'text'}
+                                                        renderText={value => value}
+                                                    />
+                                                    <br/>
+                                                    {item.documents?.details.map((file) =><>
+                                                                {file.documentName !== null && 
+                                                             <Text  className='file-label fs-12'>
+                                                                 {file.documentName}
+                                                                 </Text>  
+                                                            }
+                                                            </>
+                                                          
+                                                                 )} 
+                                                </td>}
                                 </tr>
                               </>
                             );
@@ -755,8 +792,12 @@ class PaymentDetails extends Component {
                   )}
                   <tfoot>
                     <tr>
+                    {(this.props.match.params.id ===
+                                              "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending") &&<>
                       <td></td>
                       <td></td>
+                      </>
+                    }
                       {this.props.match.params.id !==
                         "00000000-0000-0000-0000-000000000000" && <td></td>}
                       <td></td>
@@ -798,6 +839,8 @@ class PaymentDetails extends Component {
                   >
                     Cancel
                   </Button>
+                  {(this.props.match.params.id ===
+                                              "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending") &&
                   <Button
                     className="pop-btn px-36"
                     disabled={this.state.btnDisabled}
@@ -807,6 +850,7 @@ class PaymentDetails extends Component {
                   >
                     Pay Now
                   </Button>
+  }
                 </div>
               ) : (
                 ""
