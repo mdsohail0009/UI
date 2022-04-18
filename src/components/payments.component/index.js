@@ -34,7 +34,7 @@ const Payments = (props) => {
         if (selection.length == 0) {
             warning("Please select the one record");
           }else{
-            props.history.push(`/payments/${selectedObj}/${setSelectData.currency}/edit`)
+            props.history.push(`/payments/${selectedObj}/${setSelectData.currency}/${setSelectData.state}/edit`)
           }
        
     };
