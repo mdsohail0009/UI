@@ -31,7 +31,7 @@ class Wallets extends Component {
     }
     showSendReceiveDrawer = (e, value) => {
         this.props.dispatch(setStep("step1"));
-        const is2faEnabled = this.props.userProfile.twofactorVerified;
+        const is2faEnabled = this.props.twoFA?.isEnabled;
         if (!this.props?.userProfile?.isKYC) {
             this.props.history.push("/notkyc");
             return;

@@ -85,7 +85,7 @@ class Header extends Component {
           2FA
           <Switch
             size="small"
-            checked={this.props.userConfig?.twofactorVerified}
+            checked={this.props.twoFA?.isEnabled}
             onChange={(status) => {
               if (status === true) {
                 window.open(
@@ -284,7 +284,7 @@ class Header extends Component {
     });
   };
   showDocRequestError() {
-    if (!this.props.userConfig?.twofactorVerified) {
+    if (!this.props.twoFA?.isEnabled) {
       this.props.history.push("/enabletwofactor");
     }
     else if (this.props?.userConfig?.isDocsRequested) {
@@ -293,7 +293,7 @@ class Header extends Component {
 
   }
   showBuyDrawer = () => {
-    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.userConfig?.twofactorVerified) {
+    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) {
       this.props.dispatch(setStep("step1"));
       this.setState({
         buyDrawer: true,
@@ -313,7 +313,7 @@ class Header extends Component {
     }
   };
   showSendDrawer = () => {
-    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.userConfig?.twofactorVerified) {
+    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) {
       this.props.dispatch(sendSetStep("step1"));
       this.setState({
         sendDrawer: true,
@@ -351,7 +351,7 @@ class Header extends Component {
     });
   };
   showSwapDrawer = () => {
-    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.userConfig?.twofactorVerified) {
+    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) {
       this.props.dispatch(swapSetStep("swapcoins"));
       this.setState({
         swapDrawer: true,
@@ -371,7 +371,7 @@ class Header extends Component {
     }
   };
   showBuyFiatDrawer = () => {
-    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.userConfig?.twofactorVerified) {
+    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) {
       this.props.dispatch(byFiatSetStep("step1"));
       this.props.dispatch(setWithdrawfiatenaable(false));
       this.setState({
@@ -477,7 +477,7 @@ class Header extends Component {
   };
 
   showPayments = () => {
-    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.userConfig?.twofactorVerified)
+    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled)
       this.props.history.push('/payments');
     else {
       const isKyc = !this.props.userConfig.isKYC;
@@ -489,7 +489,7 @@ class Header extends Component {
       }
     }
   }
-  showCards = () =>{
+  showCards = () => {
     window.open(
       process.env.REACT_APP_CARDS_URL,
       "_blank"
@@ -711,7 +711,7 @@ class Header extends Component {
                 this.props.dispatch(setHeaderTab(key.key));
               }}
             >
-              
+
               <Translate
                 content="menu_payments"
                 component={Menu.Item}
@@ -788,7 +788,7 @@ class Header extends Component {
                     )}
                 </span>
               </Menu.Item>
-              
+
               <Dropdown
                 onVisibleChange={() =>
                   this.setState({
@@ -1400,6 +1400,7 @@ const connectStateToProps = ({
   return {
     swapStore,
     userConfig: userConfig.userProfileInfo,
+    twoFA: userConfig.twoFA,
     dashboard,
     buySell,
     oidc

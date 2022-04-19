@@ -31,7 +31,7 @@ class YourPortfolio extends Component {
             this.props.history.push("/notkyc");
             return;
         }
-        else if (!this.props.userProfile?.twofactorVerified) {
+        else if (!this.props.twoFA?.isEnabled) {
             this.props.history.push("/enabletwofactor");
             return;
         }

@@ -70,7 +70,7 @@ class CoinView extends React.Component {
             this.props.history.push("/notkyc");
             return;
         }
-        if(!this.props?.userProfile?.twofactorVerified){
+        if(!this.props?.twoFA?.isEnabled){
             this.props.history.push("/enabletwofactor");
             return;
         }
@@ -114,7 +114,7 @@ class CoinView extends React.Component {
             this.props.history.push("/notkyc");
             return;
         }
-        if(!this.props?.userProfile?.twofactorVerified){
+        if(!this.props?.twoFA?.isEnabled){
             this.props.history.push("/enabletwofactor");
             return;
         }
@@ -302,7 +302,7 @@ class CoinView extends React.Component {
 }
 
 const connectStateToProps = ({ sendReceive, userConfig, dashboard }) => {
-    return { sendReceive, userProfile: userConfig.userProfileInfo, dashboard }
+    return { sendReceive, userProfile: userConfig.userProfileInfo, dashboard,twoFA:userConfig.twoFA }
 }
 const connectDispatchToProps = dispatch => {
     return {
