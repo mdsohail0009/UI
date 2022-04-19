@@ -85,7 +85,7 @@ let initialState = {
 const UserConfig = (state = initialState, action) => {
     switch (action.type) {
         case USEER_INFO:
-            state = { ...state, userProfileInfo: action.payload,twoFA:{loading:false,isEnabled:action?.payload?.twofactorVerified} }
+            state = { ...state, userProfileInfo: action.payload }
             return state;
         case UPDATE_DOC_REQUEST:
             state = { ...state, userProfileInfo: { ...state.userProfileInfo, isDocsRequested: action.payload } }
