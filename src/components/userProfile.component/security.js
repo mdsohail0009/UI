@@ -9,7 +9,7 @@ import { success, warning, error } from "../../utils/messages";
 import Moment from "react-moment";
 import apiCalls from "../../api/apiCalls";
 const { Title, Paragraph, Text } = Typography;
-const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerifyObj }, props) => {
+const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerifyObj,twoFA }, props) => {
   const [form] = Form.useForm();
   const [isChangepassword, setisChangepassword] = useState(false);
   const [verifyData, setVerifyData] = useState({})
@@ -78,7 +78,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
     }
   }
   const saveDetails=async()=>{
-    debugger
+    
     
    
     // if (email && phone && factor) {
@@ -95,7 +95,6 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
       }
         const response = await apiCalls.updateSecurity(obj);
         if (response.ok) {
-          debugger
           setErrorMsg(false)
           fetchWithdrawVerifyObj(obj);
           success("Withdraw verification details saved successfully")
@@ -158,7 +157,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
                 />
               </label>
               <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
-                {userConfig?.twofactorVerified ? (
+                {twoFA?.isEnabled ? (
                   <Translate
                     content="Enabled"
                     component={Paragraph.p}
@@ -175,7 +174,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
               <div>
                 <Switch
                   onChange={(status) => enableDisable2fa(status)}
-                  checked={userConfig?.twofactorVerified}
+                  checked={twoFA?.isEnabled}
                   size="medium"
                   className="custom-toggle"
                 />
@@ -344,7 +343,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
 };
 const connectStateToProps = ({ userConfig, userProfile }) => {
   return {
-    userConfig: userConfig.userProfileInfo, userProfile
+    userConfig: userConfig.userProfileInfo, userProfile,twoFA:userConfig.twoFA
 
   };
 };
