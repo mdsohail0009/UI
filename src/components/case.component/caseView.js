@@ -352,9 +352,11 @@ class RequestedDocs extends Component {
                     </Row>
                 </div>
                 <div className="px-16">
-                    <Text className='case-lbl'>Remarks</Text>
-                    <div className='case-val'>{caseData.remarks ? caseData.remarks : '-'}</div>
+                    <Text className='fw-300 text-white-50 fs-12'>Remarks</Text>
+                    {/* <div className='case-val'>{caseData.remarks ? caseData.remarks : '-'}</div> */}
+                    <Title level={5} className='case-val' maxLength={500} rows={4}>{caseData.remarks ? caseData.remarks : '-'}</Title>
                 </div>
+               
                 <Divider />
                 {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No documents available" /></div>}
                 <div className="bank-view">
