@@ -39,7 +39,7 @@ const getmemeberInfo = (useremail, id) => {
             if (res.ok) {
                 twofa = res.data;
             }
-        })
+        });
         apiCalls.getMember(useremail).then((res) => {
             if (res.ok) {
                 res.data.twofactorVerified = twofa;
@@ -79,7 +79,8 @@ const getIpRegisteryData = () => {
 
 let initialState = {
     userProfileInfo: null,
-    trackAuditLogData: {}
+    trackAuditLogData: {},
+    twoFA: { loading: true, isEnabled: false }
 };
 const UserConfig = (state = initialState, action) => {
     switch (action.type) {
@@ -90,7 +91,10 @@ const UserConfig = (state = initialState, action) => {
             state = { ...state, userProfileInfo: { ...state.userProfileInfo, isDocsRequested: action.payload } }
             return state;
         case UPDATE_TWOFACTOR:
-            state = { ...state, userProfileInfo: { ...state.userProfileInfo, twofactorVerified: action.payload } }
+            if (typeof action.payload == "boolean")
+                state = { ...state, userProfileInfo: { ...state.userProfileInfo, twofactorVerified: action.payload } }
+            else
+                state = { ...state, twoFA: { loading: action.payload.loading, isEnabled: action.payload.isEnabled } }
             return state;
         case FETCH_TRACK_AUDITLOGS:
             state = { ...state, trackAuditLogData: action.payload }
