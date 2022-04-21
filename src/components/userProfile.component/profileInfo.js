@@ -80,7 +80,6 @@ class ProfileInfo extends Component {
     });
   };
   saveImage = async (Obj, res) => {
-    debugger;
     this.setState({ ...this.state, Loader: true });
     Obj.info = JSON.stringify(this.props.trackAuditLogData);
     let res1 = await ProfileImageSave(Obj);
@@ -182,6 +181,21 @@ class ProfileInfo extends Component {
             />
           </Paragraph>
           <ul className="user-list pl-0">
+          {this.props.userConfig.isBusiness&&<li className="profileinfo">
+              <div className="profile-block">
+                <label className="mb-0 profile-label">
+                  <Translate
+                    content="business"
+                    component={Text}
+                    className="mb-0 profile-label"
+                  />
+                </label>
+                <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
+                  {this.props.userConfig.businessName || "--"}
+                </p>
+                <div></div>
+              </div>
+            </li>}
             <li className="profileinfo">
               <div className="profile-block">
                 <label className="mb-0 profile-label">
