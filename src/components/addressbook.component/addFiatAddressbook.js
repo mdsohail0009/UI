@@ -248,7 +248,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                                 component={Form.label}
                             />{" "}
                             <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
-                        <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
+                        <Input className="cust-input" value={userConfig.isBusiness?userConfig.businessName:userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
