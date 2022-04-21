@@ -724,6 +724,7 @@ class PaymentDetails extends Component {
                       )}
                     </>
                   )}
+                  {paymentsData?.length > 0 &&
                   <tfoot>
                     <tr>
                     {(this.props.match.params.id ===
@@ -759,6 +760,7 @@ class PaymentDetails extends Component {
                       </td>
                     </tr>
                   </tfoot>
+                }
                 </table>
               </div>
             </Form>
@@ -766,7 +768,7 @@ class PaymentDetails extends Component {
               {paymentsData.length > 0 ? (
                 <div>
                   <Button
-                    className="pop-cancel mr-36"
+                    className="pop-btn px-36"
                     style={{ margin: "0 8px" }}
                     onClick={this.backToPayments}
                   >
@@ -775,7 +777,7 @@ class PaymentDetails extends Component {
                   {(this.props.match.params.id ===
                                               "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending") &&
                   <Button
-                    className="pop-btn px-36"
+                   className="pop-btn px-36"
                     disabled={this.state.btnDisabled}
                     onClick={() => {
                       this.saveRolesDetails();

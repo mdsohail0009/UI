@@ -151,29 +151,30 @@ class PaymentsView extends Component {
                                 {loading && <tr>
                                     <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>}
                             </tbody>
+
                             <tfoot>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                         <td >
-                                <span className='text-white fs-24 ml-8'> Total:</span>
-                                </td>
-                                <td><span className='text-white fs-24'> <NumberFormat className=" text-right"
-                                                                customInput={Text} thousandSeparator={true} prefix={""}
-                                                                decimalScale={2}
-                                                                allowNegative={false}
-                                                                maxlength={13}
-                                                                style={{ height: 44 }}  
-                                                            >
-                                     <span className='text-white '>{parseFloat(total).toFixed(2)} </span>
-                                 {/* <span className='text-white '>{total}</span> */}
-                                 </NumberFormat></span></td>
-                                
-                              
-                                    </tr>  
+                            {paymentsData?.length > 0 &&
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td >
+                                            <span className='text-white fs-24 ml-8'> Total:</span>
+                                        </td>
+                                        <td><span className='text-white fs-24'> <NumberFormat className=" text-right"
+                                            customInput={Text} thousandSeparator={true} prefix={""}
+                                            decimalScale={2}
+                                            allowNegative={false}
+                                            maxlength={13}
+                                            style={{ height: 44 }}
+                                        >
+                                            <span className='text-white '>{parseFloat(total).toFixed(2)} </span>
+                                        </NumberFormat></span></td>
+                                    </tr>
+                                }
                             </tfoot>
                         </table>
                         <div className="text-right mt-36">
+                        {paymentsData?.length > 0 &&
                             <Button
                                 className="pop-btn px-36"
                                 style={{ margin: "0 8px" }}
@@ -181,6 +182,7 @@ class PaymentsView extends Component {
                             >
                                 Cancel
                             </Button>
+                                }
                         </div>
                     </div>
                 </div>
