@@ -64,21 +64,6 @@ class PaymentDetails extends Component {
   handleAlert = () => {
     this.setState({ ...this.state, errorMessage: null });
   };
-  // handleCurrencyChange = async (val, props) => {
-  //     this.setState({ ...this.state, loading: true, Currency: val, paymentsData: [] })
-  //     if (this.state.Currency = val) {
-  //         let response = await getPaymentsData("00000000-0000-0000-0000-000000000000", this.props.userConfig?.id, this.state.Currency)
-  //         if (response.ok) {
-  //             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails,
-  //                  loading: false })
-  //         } else {
-  //             message.destroy();
-  //             this.setState({ ...this.state, errorMessage: response.data,loading: false })
-  //             this.useDivRef.current.scrollIntoView()
-  //         }
-  //     }
-
-  // }
 
   handleCurrencyChange = async (val, props) => {
     this.setState({ ...this.state, currency: val, paymentsData: [] });
@@ -213,15 +198,6 @@ class PaymentDetails extends Component {
             // this.useDivRef.current.scrollIntoView()
           }
         }
-        // else {
-        //     this.setState({ btnDisabled: false });
-        //     // this.setState({ ...this.state, errorMessage:  response.data })
-        //     // this.useDivRef.current.scrollIntoView()
-        //     //error(response.data)
-        //     // message.destroy();
-        //     // this.setState({ ...this.state, errorMessage: response.data })
-        //     // this.useDivRef.current.scrollIntoView()
-        // }
         else {
           let PaymentDetail = this.state.paymentsData;
           for (var i in PaymentDetail) {
@@ -253,18 +229,6 @@ class PaymentDetails extends Component {
     }
   };
 
-//   deleteDetials = async (idx) => {
-//     const response = await deletePayDetials(idx.id);
-//     message.destroy();
-//     if (response.ok) {
-//       message.warning("Payment has been deleted");
-//       this.getPayments();
-//       this.props.history.push("/payments");
-//     } else {
-//       message.warning(response.data);
-//     }
-//     this.setState({ ...this.state.paymentsData, paymentData: response.data });
-//   };
   deleteDetials = async (id,paymentsData) => {
     let data = paymentsData;
     let isAtleastOneRecord = false;
@@ -419,36 +383,6 @@ class PaymentDetails extends Component {
               />
             )}
             <Form autoComplete="off">
-              {/* <Form.Item
-                                className='mb-16'
-                            >
-                                <Select
-                                    className="cust-input"
-                                    placeholder="Select Currency"
-                                    onChange={(e) => this.handleCurrencyChange(e)}
-                                    style={{ width: 280 }}
-                                    dropdownClassName='select-drpdwn'
-                                    bordered={false}
-                                    showArrow={true}
-                                    value={this.state.billPaymentData?.currency}
-                                    defaultValue="USD"
-                                    disabled={(type === 'disabled' ? true : false) || (this.props.match.params.id !== "00000000-0000-0000-0000-000000000000" ? true : false)}
-                                >
-                                    {currency?.map((item, idx) => (
-                                        <Option
-                                            key={idx}
-                                            className="fw-400"
-                                            value={item.currencyCode}
-                                        > 
-                                        {item.currencyCode}
-                                            {<NumberFormat
-                                                value={item.avilable}
-                                                displayType={'text'}
-                                                thousandSeparator={true}
-                                                renderText={(value) => <span > Balance: {value}</span>} />}
-                                        </Option>))}
-                                </Select>
-                            </Form.Item> */}
               <Form.Item>
                 <Select
                   className="cust-input"
@@ -539,7 +473,7 @@ class PaymentDetails extends Component {
                                   >
                                     <label className="text-center custom-checkbox p-relative">
                                       <Input
-                                        //style={(this.props.match.params.id==='00000000-0000-0000-0000-000000000000' || item.state==="Submitted")?'':{ cursor: "not-allowed" }}
+                                
                                         name="check"
                                         type="checkbox"
                                         disabled={
@@ -790,6 +724,7 @@ class PaymentDetails extends Component {
                       )}
                     </>
                   )}
+                  {paymentsData?.length > 0 &&
                   <tfoot>
                     <tr>
                     {(this.props.match.params.id ===
@@ -820,12 +755,12 @@ class PaymentDetails extends Component {
                             <span className="text-white ">
                               {parseFloat(total).toFixed(2)}{" "}
                             </span>
-                            {/* <span className='text-white '>{total}</span> */}
                           </NumberFormat>
                         </span>
                       </td>
                     </tr>
                   </tfoot>
+                }
                 </table>
               </div>
             </Form>
@@ -833,7 +768,7 @@ class PaymentDetails extends Component {
               {paymentsData.length > 0 ? (
                 <div>
                   <Button
-                    className="pop-cancel mr-36"
+                    className="pop-btn px-36"
                     style={{ margin: "0 8px" }}
                     onClick={this.backToPayments}
                   >
@@ -842,7 +777,7 @@ class PaymentDetails extends Component {
                   {(this.props.match.params.id ===
                                               "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending") &&
                   <Button
-                    className="pop-btn px-36"
+                   className="pop-btn px-36"
                     disabled={this.state.btnDisabled}
                     onClick={() => {
                       this.saveRolesDetails();

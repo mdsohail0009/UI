@@ -164,7 +164,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
             <div>
             <div ref={useDivRef}></div>
                 {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-                {isLoading && <Loader />}
+                {isLoading  ? <Loader />:
               
                 <Form
                     form={form} initialValues={cryptoAddress}
@@ -236,7 +236,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                         rules={[
                             { required: true, message: apiCalls.convertLocalLang('is_required') }
                         ]} >
-                        <Input disabled placeholder={apiCalls.convertLocalLang('Selectcoin')} className="cust-input cust-adon mb-0 text-center c-pointer"
+                        <Input disabled placeholder={apiCalls.convertLocalLang('Selectcoin')} className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                             addonAfter={<i className="icon md rarrow-white c-pointer" onClick={selectCrypto} />} />
                     </Form.Item>
                     <Form.Item
@@ -340,6 +340,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                         </Button>
                     </div>
                 </Form>
+}
             </div>
         </>
     )
