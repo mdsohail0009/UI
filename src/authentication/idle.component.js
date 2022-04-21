@@ -44,7 +44,7 @@ class IdleCmp extends Component {
             <div>
                 <IdleTimer
                     ref={ref => { this.idleTimer = ref }}
-                    timeout={1000 * 60 * 10}
+                    timeout={1000 * 60 * 3}
                     onActive={this.handleOnActive}
                     onIdle={this.handleOnIdle}
                     onAction={this.handleOnAction}
