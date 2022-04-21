@@ -51,7 +51,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
         const type = 'fiat';
         values['id'] = addressBookReducer?.selectedRowData?.id;
         values['membershipId'] = userConfig.id;
-        values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
+        values['beneficiaryAccountName'] = userConfig.isBusiness?userConfig.businessName:userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
         values['info'] = JSON.stringify(trackAuditLogData);
         let Id = '00000000-0000-0000-0000-000000000000';
@@ -248,7 +248,7 @@ const NewFiatAddress = ({ buyInfo, userConfig, onCancel, addressBookReducer, use
                                 component={Form.label}
                             />{" "}
                             <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}></span></div>
-                        <Input className="cust-input" value={userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
+                        <Input className="cust-input" value={userConfig.isBusiness?userConfig.businessName:userConfig.firstName + " " + userConfig.lastName} placeholder="Recipient full name" disabled={true} />
                     </Form.Item>
                     <Form.Item
                         className="custom-forminput custom-label mb-24"
