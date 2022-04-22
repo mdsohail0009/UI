@@ -4,7 +4,7 @@ import {
     Row, Col
 } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import { setStep } from '../../reducers/buysellReducer';
+import { setStep,setHeaderTab } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import WalletList from '../shared/walletList';
@@ -18,7 +18,7 @@ import { getCountryStateLu, getStateLookup } from "../../api/apiServer";
 import apicalls from "../../api/apiCalls";
 import { warning } from '../../utils/message';
 import {addressTabUpdate} from '../../reducers/addressBookReducer'
-import { setHeaderTab } from "../../reducers/buysellReducer";
+
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -122,8 +122,8 @@ const NewFiatAddress = (props) => {
              
             }
             else{
-                setIdentityFile(response?.data?.documents?.details[0]);
-                 setAdressFile(response?.data?.documents?.details[1]);
+                setIdentityFile(response?.data?.documents?.details[1]);
+                 setAdressFile(response?.data?.documents?.details[0]);
               
             }
       
@@ -171,10 +171,8 @@ const NewFiatAddress = (props) => {
        const type = 'fiat';
         values['id'] = props?.addressBookReducer?.selectedRowData?.id;
         values['membershipId'] = props?.userConfig?.id;
-        if(selectParty){
-            values['beneficiaryAccountName'] = values.beneficiaryAccountName; 
-        }
-        else{
+      
+       if(!selectParty){
         values['beneficiaryAccountName'] =props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
         }
         values['type'] = type;
@@ -223,47 +221,14 @@ const NewFiatAddress = (props) => {
                 if(selectParty){
                    
                  if(identityFile){
-                    // let obj = {
-                    //     "documentId" :identityFile?.documentId,
-                    //     "documentName" : identityFile.documentName,
-                    //     "id" : identityFile?.id,
-                    //     "isChecked" : true,
-                    //     "remarks" : identityFile.size,
-                    //     "state" : null,
-                    //     "status" : false,
-                    //     "path" :identityFile.path,
-                    //     "size":identityFile.size
-                    //    }
-                   saveObj.documents.details.push(identityFile);
+               saveObj.documents.details.push(identityFile);
                  }
                      if(addressFile){
-                        // let obj = {
-                        //     "documentId" :addressFile?.documentId,
-                        //     "documentName" : addressFile.documentName,
-                        //     "id" : addressFile?.id,
-                        //     "isChecked" : true,
-                        //     "remarks" :  addressFile.size,
-                        //     "state" : null,
-                        //     "status" : false,
-                        //     "path" :addressFile.path,
-                        //     "size":addressFile.size
-                        //    }
-                         saveObj.documents.details.push(addressFile);
+              saveObj.documents.details.push(addressFile);
                     }
                 }
                 else if (declarationFile){
-                    // let obj = {
-                    //     "documentId" :declarationFile?.documentId,
-                    //     "documentName" : declarationFile.documentName,
-                    //     "id" : declarationFile?.id,
-                    //     "isChecked" : true,
-                    //     "remarks" :  declarationFile.size,
-                    //     "state" : null,
-                    //     "status" : false,
-                    //     "path" :declarationFile.path,
-                    //     "size":declarationFile.size
-                    //    }
-                   saveObj.documents.details.push(declarationFile);
+              saveObj.documents.details.push(declarationFile);
                 }
      
            let response = await saveAddress(saveObj);
@@ -317,7 +282,7 @@ const NewFiatAddress = (props) => {
             setIsValidFile(true);
             return true;
         } else {
-            warning('File is not allowed. You can upload PDF  files')
+            warning('File is not allowed. You can upload only PDF files')
             setIsValidFile(false);
             return Upload.LIST_IGNORE;
         }
@@ -574,7 +539,7 @@ const NewFiatAddress = (props) => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: apicalls.convertLocalLang("is_required")
+                                        message: apiCalls.convertLocalLang("is_required")
                                     }
                                 ]}
                             >
@@ -853,28 +818,8 @@ const NewFiatAddress = (props) => {
                     }
                             </Form.Item>
     </Col></Row></>}
-                        
-                 {/* {files?.length !=0  && <div className="docfile mr-0">
-                        <span className={`icon xl file mr-16`} />
-                        <div className="docdetails c-pointer" >
-                        { files.length != 0 && files?.map((item,idx) => <>
-                        <EllipsisMiddle suffixCount={10}>{item.name }</EllipsisMiddle>
-                            <span className="fs-12 text-secondary">{bytesToSize(item.size)}</span>
-                            <br/>
-                            </>
-                            )}
-                         </div>
-                    
-                       { files?.length !=0 && files?.map((item,index) => <>
-                      <span className="icon md close c-pointer" onClick={() =>  confirm({ 
-                            content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
-                            title: <div className='fs-18 text-white-30'>Delete File ?</div>,
-                            onOk: () => {deleteFile(item,index) }
-                        })} /></>
-                        )}
-                    </div>}  */}
-                  
-                   <Form.Item
+               
+           <Form.Item
                         className="custom-forminput mt-36 agree"
                         name="isAgree"
                         valuePropName="checked"
