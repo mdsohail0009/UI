@@ -308,7 +308,7 @@ const NewFiatAddress = (props) => {
   const upLoadFiles = ({file},type) =>  {
 
         if((file.name.split('.')).length > 2){
-            warning("File don't allow double Extension");
+            warning("File don't allow double extension");
         }
        if (file?.status === "uploading") 
         { 
