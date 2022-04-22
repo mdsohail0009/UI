@@ -164,7 +164,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
             <div>
             <div ref={useDivRef}></div>
                 {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
-                {isLoading  ? <Loader />:
+                {isLoading  ? <Loader  className='loader'/>:
               
                 <Form
                     form={form} initialValues={cryptoAddress}
