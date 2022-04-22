@@ -44,7 +44,7 @@ class PaymentDetails extends Component {
       paymentsDocDetails: [],
       fileDetails: [],
       paymentDoc: {},
-      payData: [],
+      payAmount: null,
       amount: 0,
       type: this.props.match.params.type,
       state:this.props.match.params.state,
@@ -157,7 +157,7 @@ class PaymentDetails extends Component {
         ...this.state,
         errorMessage: "Please Check atleast one record",
       });
-      this.useDivRef.current.scrollIntoView();
+      // this.useDivRef.current.scrollIntoView();
       return;
     }
     let objAmount = objData.some((item) => {
@@ -174,7 +174,7 @@ class PaymentDetails extends Component {
     if (obj.currency != null) {
       if (objAmount) {
         this.setState({ ...this.state, errorMessage: "Please enter amount" });
-        this.useDivRef.current.scrollIntoView();
+        // this.useDivRef.current.scrollIntoView();
       }else {
         this.setState({ btnDisabled: true });
         if (
@@ -193,8 +193,8 @@ class PaymentDetails extends Component {
             // this.useDivRef.current.scrollIntoView()
           } else {
             this.setState({ btnDisabled: false });
-            // message.destroy();
-            // this.setState({ ...this.state, errorMessage: response.data })
+            message.destroy();
+            this.setState({ ...this.state, errorMessage: response.data })
             // this.useDivRef.current.scrollIntoView()
           }
         }
@@ -219,13 +219,13 @@ class PaymentDetails extends Component {
             this.setState({ btnDisabled: false });
             message.destroy();
             this.setState({ ...this.state, errorMessage: response.data });
-            this.useDivRef.current.scrollIntoView();
+            // this.useDivRef.current.scrollIntoView();
           }
         }
       }
     } else {
       this.setState({ ...this.state, errorMessage: "Please select currency" });
-      this.useDivRef.current.scrollIntoView();
+      // this.useDivRef.current.scrollIntoView();
     }
   };
 
@@ -753,7 +753,7 @@ class PaymentDetails extends Component {
                             style={{ height: 44 }}
                           >
                             <span className="text-white ">
-                              {parseFloat(total).toFixed(2)}{" "}
+                              {parseFloat(total).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{" "}
                             </span>
                           </NumberFormat>
                         </span>
