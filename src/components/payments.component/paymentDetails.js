@@ -1,28 +1,15 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Button, Form, Select, message, Input, Alert, Popover, Spin, Collapse, Badge, Upload, Modal } from 'antd';
+import { Typography, Button, Form, Select, message, Input, Alert, Popover, Spin, Tooltip, Upload, Modal } from 'antd';
 import Translate from 'react-translate-component';
-import { getCurrencyLu, getPaymentsData, savePayments, getBankData, creatPayment, updatePayments, deletePayDetials } from './api'
+import { getCurrencyLu, getPaymentsData, savePayments, getBankData, creatPayment, updatePayments } from './api'
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
-import {error} from '../../utils/messages'
-import { DeleteOutlined } from '@ant-design/icons';
-const { confirm } = Modal;
 
+const { confirm } = Modal;
 const { Option } = Select;
-const FormItem = Form.Item
 const { Title, Text } = Typography;
-const { Panel } = Collapse;
-const { Dragger } = Upload;
-const EllipsisMiddle = ({ suffixCount, children }) => {
-    const start = children?.slice(0, children.length - suffixCount).trim();
-    const suffix = children?.slice(-suffixCount).trim();
-    return (
-        <Text className="mb-0 fs-14 docname c-pointer d-block" style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
-            {start}
-        </Text>
-    );
-};
+
 class PaymentDetails extends Component {
   formRef = createRef();
   constructor(props) {
@@ -148,7 +135,6 @@ class PaymentDetails extends Component {
     }
   };
   saveRolesDetails = async () => {
-      debugger
     let objData = this.state.paymentsData.filter((item) => {
       return item.checked;
     });
@@ -281,7 +267,6 @@ class PaymentDetails extends Component {
       "application/pdf": true,
       "application/PDF": true,
     };
-
     if (fileType[file.type]) {
       this.setState({ ...this.state, isValidFile: true });
       return true;
@@ -302,6 +287,12 @@ class PaymentDetails extends Component {
       loading: true,
     });
     let paymentDetialsData = this.state.paymentsData;
+    if((file.name.split('.')).length > 2){
+      this.setState({
+        ...this.state,
+        errorMessage: "File don't allow double Extension",
+      });
+  }
     for (let pay in paymentDetialsData) {
       if (paymentDetialsData[pay].id === item.id) {
         let obj = {
@@ -431,8 +422,12 @@ class PaymentDetails extends Component {
                       {/* <th>BIC/SWIFT/Routing Number</th> */}
                       <th>Bank account number</th>
                       {(this.props.match.params.id !==
-                        "00000000-0000-0000-0000-000000000000" && this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
-                       && (<th>State</th>)}
+                        "00000000-0000-0000-0000-000000000000" 
+                        // && this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending"
+                        )
+                       && (
+                       <th>State</th>
+                        )} 
                         
                       <th>Amount</th>
                     </tr>
@@ -556,10 +551,10 @@ class PaymentDetails extends Component {
                                   </td>
                                   <td>{item.accountnumber}</td>
                                   {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000" 
-                                   &&this.props.match.params.state =="Submitted" || this.props.match.params.state =="Pending")
-                                     && (
+                                  //  &&this.props.match.params.state =="Submitted" || this.props.match.params.state =="Pending")
+                                         ) && (
                                     <td>{item.state ? item.state : "- -"}</td>
-                                  )}
+                                  )} 
                                   {(this.props.match.params.id ===
                                               "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
                                                 ? <>
@@ -678,9 +673,13 @@ class PaymentDetails extends Component {
                                     {item.documents?.details.map((file) => (
                                       <>
                                         {file.documentName !== null && (
+                                          <div className='pay-doc'>
+                                          <Tooltip title={file.documentName}>
                                           <Text className="file-label fs-12">
                                             {file.documentName}
                                           </Text>
+                                          </Tooltip>
+                                          </div>
                                         )}
                                       </>
                                     ))}

@@ -99,6 +99,7 @@ class PaymentsView extends Component {
                                     <th>Name</th>
                                     <th>Bank Name</th>
                                     <th>BIC/SWIFT/Routing Number</th>
+                                    <th>State</th>
                                     <th>Amount</th>
                                 </tr>
                             </thead>
@@ -124,6 +125,7 @@ class PaymentsView extends Component {
                                                                 </div>
                                                 </td>
                                                 <td>{item.accountnumber}</td>
+                                                <td>{item.state}</td>
                                                 <td>
                                                     <NumberFormat
                                                         value={item.amount}
