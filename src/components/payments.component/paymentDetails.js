@@ -305,8 +305,8 @@ class PaymentDetails extends Component {
     for (let pay in paymentDetialsData) {
       if (paymentDetialsData[pay].id === item.id) {
         let obj = {
-          id: "00000000-0000-0000-0000-000000000000",
-          documentId: "00000000-0000-0000-0000-000000000000",
+          id: paymentDetialsData[pay].documents.details[pay].id,
+          documentId:paymentDetialsData[pay].documents.details[pay].documentId,
           isChecked: file.name == "" ? false : true,
           documentName: `${file.name}`,
           remarks: `${file.size}`,
