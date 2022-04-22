@@ -325,6 +325,9 @@ const NewFiatAddress = (props) => {
     }
   const upLoadFiles = ({file},type) =>  {
 
+    // if((file.name.split('.')).length > 2){
+    //     warning("File don't allow double extension");
+    // }
          if (file?.status === "done") {
              if(type === "IDENTITYPROOF" && isUploading ){
                  let obj = {
@@ -383,7 +386,7 @@ const NewFiatAddress = (props) => {
     return (
         <>
 
-            {isLoading && <Loader />}
+            {isLoading ? <Loader />:
             <div className="addbook-height">
                 <div ref={useDivRef}></div>
                 {errorMsg && <Alert closable type="error" description={errorMsg} onClose={() => setErrorMsg(null)} showIcon />}
@@ -856,6 +859,7 @@ const NewFiatAddress = (props) => {
                  
                 </Form>
             </div>
+}
 
         </>
     );

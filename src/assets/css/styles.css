@@ -1111,3 +1111,5 @@ input[type=number]::-webkit-outer-spin-button {
 .sumSub-confirm{background: var(--bgGrey);color: var(--black); padding: 50px 40px 16px;width: 500px;height:350px;margin: 80px auto;border-radius: 14px;}
 .sumSub-review{font-size: 22px;font-weight: 700;line-height: 1.29;}
 .select-crypto.cust-input .ant-input{text-align: center !important;padding: 0 !important;background-color: transparent !important;}
+.pay-doc .file-label{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 200px;word-break: inherit; display: inline-block; vertical-align: bottom;}
+.cust-disable.ant-select-disabled.ant-select:not(.ant-select-customize-input) .ant-select-selector{color:#fafcfe7a;}

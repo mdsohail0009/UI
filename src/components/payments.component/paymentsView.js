@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getPaymentsData,getBankData } from './api';
-import { Typography, Button, Spin,message,Alert,Popover,Upload } from 'antd';
+import { Typography, Button, Spin,message,Alert,Popover,Upload,Tooltip } from 'antd';
 import Translate from 'react-translate-component';
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
@@ -99,6 +99,7 @@ class PaymentsView extends Component {
                                     <th>Name</th>
                                     <th>Bank Name</th>
                                     <th>BIC/SWIFT/Routing Number</th>
+                                    <th>State</th>
                                     <th>Amount</th>
                                 </tr>
                             </thead>
@@ -124,6 +125,7 @@ class PaymentsView extends Component {
                                                                 </div>
                                                 </td>
                                                 <td>{item.accountnumber}</td>
+                                                <td>{item.state}</td>
                                                 <td>
                                                     <NumberFormat
                                                         value={item.amount}
@@ -132,14 +134,18 @@ class PaymentsView extends Component {
                                                         renderText={value => value}
                                                     />
                                                     <br/>
-                                                    {item.documents?.details.map((file) =><>
-                                                                {file.documentName !== null && 
-                                                             <Text  className='file-label fs-12'>
-                                                                 {file.documentName}
-                                                                 </Text>  
-                                                            }
-                                                            </>
-                                                          
+                                                    {item.documents?.details.map((file) =>
+                                                   <>
+                                                   {file.documentName !== null && (
+                                                     <div className='pay-doc'>
+                                                     <Tooltip title={file.documentName}>
+                                                     <Text className="file-label fs-12">
+                                                       {file.documentName}
+                                                     </Text>
+                                                     </Tooltip>
+                                                     </div>
+                                                   )}
+                                                 </>
                                                                  )} 
                                                 </td>
                                             </tr>
