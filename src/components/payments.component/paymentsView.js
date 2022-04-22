@@ -167,7 +167,9 @@ class PaymentsView extends Component {
                                             maxlength={13}
                                             style={{ height: 44 }}
                                         >
-                                            <span className='text-white '>{parseFloat(total).toFixed(2)} </span>
+                                            <span className='text-white '>
+                                            {parseFloat(total).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{" "}
+                                                </span>
                                         </NumberFormat></span></td>
                                     </tr>
                                 }
