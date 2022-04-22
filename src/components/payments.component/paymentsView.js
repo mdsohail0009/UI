@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { getPaymentsData,getBankData } from './api';
-import { Typography, Button, Spin,message,Alert,Popover,Upload } from 'antd';
+import { Typography, Button, Spin,message,Alert,Popover,Upload,Tooltip } from 'antd';
 import Translate from 'react-translate-component';
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
@@ -134,14 +134,18 @@ class PaymentsView extends Component {
                                                         renderText={value => value}
                                                     />
                                                     <br/>
-                                                    {item.documents?.details.map((file) =><>
-                                                                {file.documentName !== null && 
-                                                             <Text  className='file-label fs-12'>
-                                                                 {file.documentName}
-                                                                 </Text>  
-                                                            }
-                                                            </>
-                                                          
+                                                    {item.documents?.details.map((file) =>
+                                                   <>
+                                                   {file.documentName !== null && (
+                                                     <div className='pay-doc'>
+                                                     <Tooltip title={file.documentName}>
+                                                     <Text className="file-label fs-12">
+                                                       {file.documentName}
+                                                     </Text>
+                                                     </Tooltip>
+                                                     </div>
+                                                   )}
+                                                 </>
                                                                  )} 
                                                 </td>
                                             </tr>

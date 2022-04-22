@@ -135,6 +135,7 @@ class PaymentDetails extends Component {
     }
   };
   saveRolesDetails = async () => {
+    debugger
     let objData = this.state.paymentsData.filter((item) => {
       return item.checked;
     });
@@ -376,7 +377,7 @@ class PaymentDetails extends Component {
             <Form autoComplete="off">
               <Form.Item>
                 <Select
-                  className="cust-input"
+                  className="cust-input cust-disable"
                   placeholder="Select Currency"
                   onChange={(e) => this.handleCurrencyChange(e)}
                   style={{ width: 280 }}
@@ -692,15 +693,20 @@ class PaymentDetails extends Component {
                                                         renderText={value => value}
                                                     />
                                                     <br/>
-                                                    {item.documents?.details.map((file) =><>
-                                                                {file.documentName !== null && 
-                                                             <Text  className='file-label fs-12'>
-                                                                 {file.documentName}
-                                                                 </Text>  
-                                                            }
-                                                            </>
-                                                          
-                                                                 )} 
+                                      {item.documents?.details.map((file) => 
+                                     <>
+                                     {file.documentName !== null && (
+                                       <div className='pay-doc'>
+                                       <Tooltip title={file.documentName}>
+                                       <Text className="file-label fs-12">
+                                         {file.documentName}
+                                       </Text>
+                                       </Tooltip>
+                                       </div>
+                                     )}
+                                   </>
+
+                                      )} 
                                                 </td>}
                                 </tr>
                               </>
