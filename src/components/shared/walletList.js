@@ -24,7 +24,7 @@ class WalletList extends Component {
         return (<>
             {this.props.buyInfo.memberFiat &&
                 <form className="form" id="withdrawCurrency">
-                    <Select  optionFilterProp="children" showSearch getPopupContainer={() => document.getElementById('withdrawCurrency')} dropdownClassName="select-drpdwn" loading={this.props?.buyInfo?.memberFiat?.loading} placeholder={this.props.placeholder || apicalls.convertLocalLang("selectWallet")} className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
+                    <Select    getPopupContainer={() => document.getElementById('withdrawCurrency')} dropdownClassName="select-drpdwn" loading={this.props?.buyInfo?.memberFiat?.loading} placeholder={this.props.placeholder || apicalls.convertLocalLang("selectWallet")} className="cust-input" style={{ width: '100%' }} bordered={false} showArrow={true}
                         value={this.props.selectedvalue ? this.props.selectedvalue : this.state.selectedvalue} 
                         onChange={(e) => {
                             
