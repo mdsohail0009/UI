@@ -268,7 +268,9 @@ const NewFiatAddress = (props) => {
         //    }
     }
     const beforeUpload = (file,type) => {
-   
+   if((file.name.split('.')).length > 2){
+        warning("File don't allow double extension");
+    }
         if(type === "IDENTITYPROOF"){
            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
             if (fileType[file.type]) {
@@ -325,9 +327,7 @@ const NewFiatAddress = (props) => {
     }
   const upLoadFiles = ({file},type) =>  {
 
-    // if((file.name.split('.')).length > 2){
-    //     warning("File don't allow double extension");
-    // }
+    
          if (file?.status === "done") {
              if(type === "IDENTITYPROOF" && isUploading ){
                  let obj = {
