@@ -129,6 +129,7 @@ class RequestedDocs extends Component {
         this.setState({ ...this.state, docDetails: { ...this.state.docDetails, details: docDetails } });
     }
     docReject = async (doc) => {
+        debugger
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
         this.setState({ ...this.state, isMessageError: null });
         if (!validateContent(item?.reply)) {
@@ -147,6 +148,7 @@ class RequestedDocs extends Component {
         };
         item.path = itemPath();
         item.status = "Submitted";
+        item.repliedBy = `${(this.props.userProfileInfo?.isBusiness==true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         item.info = JSON.stringify(this.props.trackAuditLogData);
         this.setState({ ...this.state, isSubmitting: true });
