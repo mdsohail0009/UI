@@ -291,14 +291,16 @@ class PaymentDetails extends Component {
     if((file.name.split('.')).length > 2){
       this.setState({
         ...this.state,
-        errorMessage: "File don't allow double Extension",
+        errorMessage: "File don't allow double extension",
       });
   }
+  debugger
     for (let pay in paymentDetialsData) {
+     
       if (paymentDetialsData[pay].id === item.id) {
         let obj = {
-          id: paymentDetialsData[pay].documents.details[pay].id,
-          documentId:paymentDetialsData[pay].documents.details[pay].documentId,
+          id: paymentDetialsData[pay]?.documents?.details[pay]?.id ==="00000000-0000-0000-0000-000000000000" ? paymentDetialsData[pay]?.documents?.details[pay]?.id:"00000000-0000-0000-0000-000000000000",
+          documentId:paymentDetialsData[pay]?.documents?.details[pay]?.documentId ==='00000000-0000-0000-0000-000000000000' ? paymentDetialsData[pay]?.documents?.details[pay]?.documentId:"00000000-0000-0000-0000-000000000000",
           isChecked: file.name == "" ? false : true,
           documentName: `${file.name}`,
           remarks: `${file.size}`,
@@ -772,14 +774,7 @@ class PaymentDetails extends Component {
             <div className="text-right mt-36">
               {paymentsData.length > 0 ? (
                 <div>
-                  <Button
-                    className="pop-btn px-36"
-                    style={{ margin: "0 8px" }}
-                    onClick={this.backToPayments}
-                  >
-                    Cancel
-                  </Button>
-                  {(this.props.match.params.id ===
+                   {(this.props.match.params.id ===
                                               "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending") &&
                   <Button
                    className="pop-btn px-36"
@@ -791,6 +786,14 @@ class PaymentDetails extends Component {
                     Pay Now
                   </Button>
   }
+                  <Button
+                    className="pop-btn px-36"
+                    style={{ margin: "0 8px" }}
+                    onClick={this.backToPayments}
+                  >
+                    Cancel
+                  </Button>
+                 
                 </div>
               ) : (
                 ""
