@@ -12,14 +12,13 @@ class IdleCmp extends Component {
         showIdleModal: false
     }
     handleOnIdle = () => {
-        userManager.signoutRedirect();
-        // this.setState({ ...this.state, showIdleModal: true });
-        // this.timeInterval = setInterval(() => {
-        //     if (this._count === 0) { clearInterval(this.timeInterval); userManager.signoutRedirect(); } else {
-        //         this._count = this._count - 1;
-        //         this.setState({ ...this.state, counter: this._count });
-        //     }
-        // }, 1000);
+        this.setState({ ...this.state, showIdleModal: true });
+        this.timeInterval = setInterval(() => {
+            if (this._count === 0) { clearInterval(this.timeInterval); userManager.signoutRedirect(); } else {
+                this._count = this._count - 1;
+                this.setState({ ...this.state, counter: this._count });
+            }
+        }, 1000);
     }
 
 
@@ -42,7 +41,7 @@ class IdleCmp extends Component {
             <div>
                 <IdleTimer
                     ref={ref => { this.idleTimer = ref }}
-                    timeout={1000 * 60 * 10}
+                    timeout={1000 * 60 * 15}
                     onActive={this.handleOnActive}
                     onIdle={this.handleOnIdle}
                     onAction={this.handleOnAction}

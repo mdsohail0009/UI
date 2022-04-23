@@ -493,5 +493,6 @@ export default {
   fees: 'Yuran',
   you_receive: 'Anda akan menerima',
   upload_documents: 'Muat Naik Dokumen',
-  compliance: '(Pematuhan)'
+  compliance: '(Pematuhan)',
+  get_your_own_iban: 'Dapatkan IBAN Anda Sendiri'
 }

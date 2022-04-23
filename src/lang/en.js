@@ -498,5 +498,6 @@ export default {
   fees: 'Fees',
   you_receive: 'You will receive',
   upload_documents: 'Upload Documents',
-  compliance: '(Compliance)'
+  compliance: '(Compliance)',
+  get_your_own_iban: 'Get Your Own IBAN'
 }
