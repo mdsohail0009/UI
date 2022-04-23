@@ -260,7 +260,8 @@ const NewFiatAddress = (props) => {
             let response = await apiCalls.getIBANData(val);
             if (response.ok) {
                 const oldVal = form.getFieldValue();
-                 form.setFieldsValue({ routingNumber: response.data.routingNumber || oldVal.routingNumber, bankName: response.data.bankName || oldVal.bankName, bankAddress: response.data.bankAddress || oldVal.bankAddress, zipCode: response.data.zipCode || oldVal.zipCode,	state:response.data.state || oldVal.state, country:response.data.country || oldVal.country})
+                
+                form.setFieldsValue({ routingNumber: response.data.routingNumber || oldVal.routingNumber, bankName: response.data.bankName || oldVal.bankName, bankAddress: response.data.bankAddress || oldVal.bankAddress, zipCode: response.data.zipCode || oldVal.zipCode,	state:response.data.state || oldVal.state, country:response.data.country || oldVal.country})
             }
            }
          }
@@ -697,7 +698,7 @@ const NewFiatAddress = (props) => {
                     </Row>
 
                   
-   {  selectParty === true  && <Row gutter={[12,12]}>
+   {  selectParty === true && <Row gutter={[12,12]}>
     <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
                          <Form.Item name={"file1"} rules={[{
                                validator: (_, value) => {
@@ -760,8 +761,9 @@ const NewFiatAddress = (props) => {
                    
                     }
                       </Col>
-                            </Row>}
-                             {selectParty === false && 
+                            </Row> }
+                            {!selectParty &&
+                        
 <>
                              <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>We require you to download and complete the declaration form as part of the regulation. Please remember to sign and upload it below..</Text>
                              <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={() => window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip> <Row gutter={[12,12]}>
