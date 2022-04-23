@@ -260,7 +260,7 @@ const NewFiatAddress = (props) => {
             let response = await apiCalls.getIBANData(val);
             if (response.ok) {
                 const oldVal = form.getFieldValue();
-                form.setFieldsValue({ routingNumber: response.data.routingNumber || oldVal.routingNumber, bankName: response.data.bankName || oldVal.bankName, bankAddress: response.data.bankAddress || oldVal.bankAddress, zipCode: response.data.zipCode || oldVal.zipCode,	state:response.data.state || oldVal.state, country:response.data.country || oldVal.country})
+                 form.setFieldsValue({ routingNumber: response.data.routingNumber || oldVal.routingNumber, bankName: response.data.bankName || oldVal.bankName, bankAddress: response.data.bankAddress || oldVal.bankAddress, zipCode: response.data.zipCode || oldVal.zipCode,	state:response.data.state || oldVal.state, country:response.data.country || oldVal.country})
             }
            }
          }
@@ -653,7 +653,8 @@ const NewFiatAddress = (props) => {
                                 }
                             ]}
                             >
-                 { selectParty ? <Input className="cust-input"  placeholder={props?.userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}  /> :
+                 { selectParty ? <Input className="cust-input"  
+                 placeholder= {props?.userConfig?.isBusiness ? apicalls.convertLocalLang("company_name") : apicalls.convertLocalLang("Recipient_full_name")}/>:
                   <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
                             </Form.Item>
                         </Col>
