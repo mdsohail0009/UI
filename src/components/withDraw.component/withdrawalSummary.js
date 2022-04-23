@@ -55,6 +55,9 @@ const WithdrawalFiatSummary = ({
   const [disableSave, setDisableSave] = useState(false);
   const [isEmailVerification, setIsEmailVerification] = useState(false);
   const [isPhoneVerification, setIsPhoneVerification] = useState(false);
+  const [verifyPhone,setVerifyPhone]=useState(false);
+  const [verifyEmail,setEmail]=useState(false);
+  const [verifyAuth,setVerifyAuth]=useState(false);
   const [isAuthenticatorVerification, setIsAuthenticatorVerification] =
     useState(false);
 
@@ -122,6 +125,8 @@ const WithdrawalFiatSummary = ({
       seconds > 0 && setInterval(() => setSeconds(seconds - 1), 1000);
     return () => clearInterval(timer);
   }, [seconds]);
+ 
+ 
 
   const withdrawSummayTrack = () => {
     apiCalls.trackEvent({
@@ -246,12 +251,16 @@ const WithdrawalFiatSummary = ({
     let response = await apiCalls.verifyEmail(userConfig.id, emailCode);
     if (response.ok) {
       setIsEmailVerification(true);
+      setEmail(true)
+      useOtpRef.current.scrollIntoView();
       success("Email  verified successfully");
     } else if (response.data == null) {
       useOtpRef.current.scrollIntoView();
       setMsg("Please enter email verification code");
     } else {
+      setEmail(false)
       setMsg(apiCalls.convertLocalLang("email_invalid_code"));
+      useOtpRef.current.scrollIntoView();
       setTimeout(() => {
         setMsg(null);
       }, 5000);
@@ -302,6 +311,7 @@ const WithdrawalFiatSummary = ({
     setValidData(true);
     let response = await apiCalls.getVerification(userConfig.id, otpCode);
     if (response.ok) {
+      setVerifyPhone(true)
       setIsPhoneVerification(true);
       success("OTP verified successfully");
     } else if (response.data == null) {
@@ -309,6 +319,7 @@ const WithdrawalFiatSummary = ({
       setMsg("Please enter phone verification code");
     } else {
       useOtpRef.current.scrollIntoView();
+      setVerifyPhone(false)
 
       setMsg(apiCalls.convertLocalLang("phone_invalid_code"));
       setTimeout(() => {
@@ -334,6 +345,7 @@ const WithdrawalFiatSummary = ({
     setValidData(true);
     let response = await apiCalls.getAuthenticator(authCode, userConfig.userId);
     if (response.ok) {
+      setVerifyAuth(true)
       setIsAuthenticatorVerification(true);
       console.log(response.data);
       success("Authenticator verified successfully");
@@ -341,6 +353,7 @@ const WithdrawalFiatSummary = ({
       useOtpRef.current.scrollIntoView();
       setMsg("Please enter authenticator verification code");
     } else {
+      setVerifyAuth(false)
       useOtpRef.current.scrollIntoView();
       setMsg(apiCalls.convertLocalLang("twofa_invalid_code"));
       setTimeout(() => {
@@ -512,7 +525,7 @@ const WithdrawalFiatSummary = ({
             ]}
             label={
               <>
-                <Button type="text" onClick={getAuthenticator}>
+                <Button type="text" onClick={getAuthenticator} disabled={verifyAuth==true}>
                   VERIFY
                 </Button>
               </>
@@ -566,12 +579,12 @@ const WithdrawalFiatSummary = ({
                 {tooltipVisible == true && (
                   <Tooltip
                     placement="topRight"
-                    title={`Haven\'t receive code? Request new code in ${seconds}. The code will expire after 30mins.`}
+                    title={`Haven\'t receive code ? Request new code in ${seconds}. The code will expire after 30mins.`}
                   >
                     <span className="icon md info mr-8" />
                   </Tooltip>
                 )}
-                <Button type="text" onClick={getOtpVerification}>
+                <Button type="text" onClick={getOtpVerification} disabled={verifyPhone==true}>
                   {verifyOtp[verifyOtpText]}
                 </Button>
               </>
@@ -637,13 +650,13 @@ const WithdrawalFiatSummary = ({
                 {tooltipEmail == true && (
                   <Tooltip
                     placement="topRight"
-                    title={`Haven\'t receive code? Request new code in ${seconds}. The code will expire after 30mins.`}
+                    title={`Haven\'t receive code ? Request new code in ${seconds}. The code will expire after 30mins.`}
                   >
                     <span className="icon md info mr-8" />
                   </Tooltip>
                 )}
                 {verify == true && (
-                  <Button type="text" onClick={(e) => getEmailVerification(e)}>
+                  <Button type="text" onClick={(e) => getEmailVerification(e)} disabled={verifyEmail==true}>
                     {verifyText[verifyEmailText]}
                     {/* VERIFY */}
                   </Button>
