@@ -29,6 +29,7 @@ const { confirm } = Modal;
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children?.slice(0, children.length - suffixCount)?.trim();
     const suffix = children?.slice(-suffixCount)?.trim();
+
     return (
         <Text className="mb-0 fs-14 docname c-pointer d-block"
             style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
@@ -72,10 +73,10 @@ const NewFiatAddress = (props) => {
     const [saveObj, setSaveObj] = useState(null);
     const [isValidFile, setIsValidFile] = useState(true);
     const[selectParty,setSelectParty] = useState(props?.checkThirdParty);
-    const[uploadingActive,setUploadingActive] = useState(false);
     const[withdrawEdit,setWithdrawValues] = useState();
     const[isEdit,setEdit] = useState(false);
     const[uploadAdress,setUploadAddress] = useState(false);
+    const[uploadIdentity,setUploadIdentity] = useState(false);
 
     useEffect(() => {
        if(selectParty === true){
@@ -123,8 +124,8 @@ const NewFiatAddress = (props) => {
              
             }
             else{
-                setIdentityFile(response?.data?.documents?.details[1]);
-                 setAdressFile(response?.data?.documents?.details[0]);
+                setIdentityFile(response?.data?.documents?.details[0]);
+                 setAdressFile(response?.data?.documents?.details[1]);
               
             }
       
@@ -262,24 +263,21 @@ const NewFiatAddress = (props) => {
                 form.setFieldsValue({ routingNumber: response.data.routingNumber || oldVal.routingNumber, bankName: response.data.bankName || oldVal.bankName, bankAddress: response.data.bankAddress || oldVal.bankAddress, zipCode: response.data.zipCode || oldVal.zipCode,	state:response.data.state || oldVal.state, country:response.data.country || oldVal.country})
             }
            }
-        //    else{
-        //        debugger
-        //     form.setFieldsValue({bankName:"",bankAddress:"",  state:"",country:null,zipCode:"",routingNumber:""});    
-        //    }
-    }
+         }
     const beforeUpload = (file,type) => {
    if((file.name.split('.')).length > 2){
-        warning("File don't allow double extension");
+        warning(" File don't allow double Extension");
+        return
     }
         if(type === "IDENTITYPROOF"){
            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
             if (fileType[file.type]) {
-            setUploading(true);
+                setUploadIdentity(true);
             return true;
             }
             else{
                 warning('File is not allowed. You can upload jpg, png, jpeg and PDF files')
-                setUploading(false);
+                setUploadIdentity(false);
                 return Upload.LIST_IGNORE;   
             }}
             else if( type === "ADDRESSPROOF"){
@@ -288,8 +286,7 @@ const NewFiatAddress = (props) => {
             setUploadAddress(true);
             return true;  
             }
-        
-            else{
+         else{
                 warning('File is not allowed. You can upload jpg, png, jpeg and PDF files')
                 setUploadAddress(false);
                 return Upload.LIST_IGNORE;   
@@ -310,76 +307,60 @@ const NewFiatAddress = (props) => {
     const radioChangeHandler = (e) => {
           setUploading(false);
           setUploadAddress(false);
-          setUploadingActive(false);
+          setUploadIdentity(false);
           setIdentityFile(null);
           setAdressFile(null);
           setDeclarationFile(null);
+          form.setFieldsValue({file1:false,file2:false,file3:false});
       if(e.target.value === "1stparty"){
             form.setFieldsValue({addressType:"1stparty",beneficiaryAccountName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName})
             setSelectParty(false);
-
-        }
+           }
         else{
             form.setFieldsValue({addressType:"3rdparty"})
             setSelectParty(true);
         }
+        }
 
-    }
   const upLoadFiles = ({file},type) =>  {
-
-    
-         if (file?.status === "done") {
-             if(type === "IDENTITYPROOF" && isUploading ){
-                 let obj = {
-                    "documentId": identityFile !== null ? identityFile?.documentId : "00000000-0000-0000-0000-000000000000",
-                    "documentName": `${file.name}`,
-                    "id": identityFile !== null ? identityFile?.id : "00000000-0000-0000-0000-000000000000",
-                    "isChecked": file.name == "" ? false : true,
-                    "remarks": `${file.size}`,
-                    "state": null,
-                    "status": false,
-                    "path": `${file.response}`,
-                    "size":`${file.size}`,
-                }
-
+    let obj = {
+        "documentName": `${file.name}`,
+        "isChecked": file.name == "" ? false : true,
+        "remarks": `${file.size}`,
+        "state": null,
+        "status": false,
+        "path": `${file.response}`,
+        "size":`${file.size}`,
+    }
+    if (file?.status === "done") {
+             if(type === "IDENTITYPROOF" && uploadIdentity ){
+                  obj["documentId"] =identityFile !== null ? identityFile?.documentId : "00000000-0000-0000-0000-000000000000";
+                  obj["id"] =  identityFile !== null ? identityFile?.id : "00000000-0000-0000-0000-000000000000";
+           
             setIdentityFile(obj);
-            setUploading(false);
-           form.setFieldsValue({file1:true}); 
+            setUploadIdentity(false);
+            form.setFieldsValue({file1:true}); 
         }
             else if(type === "ADDRESSPROOF" && uploadAdress){
-               let obj = {
-                    "documentId": addressFile!== null ? addressFile?.documentId : "00000000-0000-0000-0000-000000000000",
-                    "documentName": `${file.name}`,
-                    "id": addressFile!== null ? addressFile?.id :"00000000-0000-0000-0000-000000000000",
-                    "isChecked": file.name == "" ? false : true,
-                    "remarks": `${file.size}`,
-                    "state": null,
-                    "status": false,
-                    "path": `${file.response}`,
-                    "size":`${file.size}`,
-                }
+             
+                    obj["documentId"] = addressFile!== null ? addressFile?.documentId : "00000000-0000-0000-0000-000000000000";
+                    obj["id"] = addressFile!== null ? addressFile?.id :"00000000-0000-0000-0000-000000000000";
+                    
                 setAdressFile(obj);
                 setUploadAddress(false);
                 form.setFieldsValue({file2:true}); 
             }
+
             else if(type === "DECLARATION" && isUploading){
-               
-               let obj = {
-                    "documentId": declarationFile!== null ? declarationFile?.documentId :"00000000-0000-0000-0000-000000000000",
-                    "documentName": `${file.name}`,
-                    "id": declarationFile!== null ? declarationFile?.id :"00000000-0000-0000-0000-000000000000",
-                    "isChecked": file.name == "" ? false : true,
-                    "remarks": `${file.size}`,
-                    "state": null,
-                    "status": false,
-                    "path": `${file.response}`,
-                    "size":`${file.size}`
-                }
+               obj["documentId"] = declarationFile!== null ? declarationFile?.documentId :"00000000-0000-0000-0000-000000000000";
+                     obj["id"] = declarationFile!== null ? declarationFile?.id :"00000000-0000-0000-0000-000000000000";
+                 
                 setDeclarationFile(obj);
                 form.setFieldsValue({file3:true});
                 setUploading(false);
             }
-          }  }
+            }
+          }
 
   
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
@@ -614,8 +595,9 @@ const NewFiatAddress = (props) => {
                                 required
                                 rules={[
                                     {
+                                        // validator: validateContentRule
                                         validator: (rule, value, callback) => {
-                                            var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                                            var regx = new RegExp(/^[A-Za-z0-9 ]+$/);
                                             if (value) {
                                                 if (!regx.test(value)) {
                                                     callback("Invalid zip code");
@@ -671,7 +653,7 @@ const NewFiatAddress = (props) => {
                                 }
                             ]}
                             >
-                 { selectParty ? <Input className="cust-input"  placeholder="Business Name"  /> :
+                 { selectParty ? <Input className="cust-input"  placeholder={props?.userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}  /> :
                   <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
                             </Form.Item>
                         </Col>
@@ -714,7 +696,7 @@ const NewFiatAddress = (props) => {
                     </Row>
 
                   
-   {  selectParty === true ?<Row gutter={[12,12]}>
+   {  selectParty === true  && <Row gutter={[12,12]}>
     <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
                          <Form.Item name={"file1"} rules={[{
                                validator: (_, value) => {
@@ -737,11 +719,11 @@ const NewFiatAddress = (props) => {
                                 <span className={`icon xl ${(identityFile.documentName?.slice(-3) === "zip" ? "file" : "") || (identityFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
 
                         <div className="docdetails c-pointer" >
-                            <EllipsisMiddle suffixCount={10}>{identityFile.documentName}</EllipsisMiddle>
+                            <EllipsisMiddle suffixCount={4}>{identityFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(identityFile.remarks)}</span>
                                   </div>
                                 </div>}
-                    { isUploading && <div className="text-center mt-16">
+                    { uploadIdentity && <div className="text-center mt-16">
                         <Spin />
                     </div>
                     }
@@ -767,7 +749,7 @@ const NewFiatAddress = (props) => {
                             {addressFile != null && <div className="docfile mr-0">
                             <span className={`icon xl ${(addressFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (addressFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                         <div className="docdetails c-pointer" >
-                            <EllipsisMiddle suffixCount={10}>{addressFile.documentName}</EllipsisMiddle>
+                            <EllipsisMiddle suffixCount={4}>{addressFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(addressFile.remarks)}</span>
                         </div>
                     </div>}
@@ -776,11 +758,11 @@ const NewFiatAddress = (props) => {
                     </div>
                    
                     }
-                            </Col>
-                            </Row>
-                             :
+                      </Col>
+                            </Row>}
+                             {selectParty === false && 
 <>
-                             <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Download and complete the declaration form as part of the regulation. Please remember to sign and upload it below..</Text>
+                             <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>We require you to download and complete the declaration form as part of the regulation. Please remember to sign and upload it below..</Text>
                              <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={() => window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip> <Row gutter={[12,12]}>
                 <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
                          <Form.Item name={"file3"}
@@ -804,7 +786,7 @@ const NewFiatAddress = (props) => {
                                 {declarationFile != null && <div className="docfile mr-0">
                                 <span className={`icon xl ${(declarationFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (declarationFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                         <div className="docdetails c-pointer" >
-                            <EllipsisMiddle suffixCount={10}>{declarationFile.documentName}</EllipsisMiddle>
+                            <EllipsisMiddle suffixCount={4}>{declarationFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(declarationFile.remarks)}</span>
                         </div>
                      </div>}
