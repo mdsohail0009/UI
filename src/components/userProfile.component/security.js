@@ -272,6 +272,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
           className="basicinfo mb-0"
         />
         <Paragraph className="basic-decs">Please select <Text className="text-yellow fw-700">any 2 or more</Text> withdrawal verification options from below.</Paragraph>
+       
         <Form>
           <Row gutter={[16, 16]}>
             <Col md={4} xl={4} xxl={4}>

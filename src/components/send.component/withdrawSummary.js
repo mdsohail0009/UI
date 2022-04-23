@@ -62,7 +62,10 @@ class WithdrawSummary extends Component {
     EmailCode: "",
     OtpVerification: "",
     emailCodeVal: "",
-    invalidData: false
+    invalidData: false,
+    verifyPhone:false,
+    verifyEmail:false,
+    verifyAuth:false,
   };
 
   useDivRef = React.createRef();
@@ -225,7 +228,7 @@ class WithdrawSummary extends Component {
       this.state.emailCodeVal
     );
     if (response.ok) {
-      this.setState({ ...this.state, EmailCode: response.data });
+      this.setState({ ...this.state, EmailCode: response.data,verifyEmail:true });
       success("Email verification code verified successfully");
     } else if (response.data == null) {
       this.setState({
@@ -237,7 +240,7 @@ class WithdrawSummary extends Component {
       this.setState({
         ...this.state,
         errorMsg: apiCalls.convertLocalLang("email_invalid_code"),
-        invalidData: true
+        invalidData: true,verifyEmail:false
       });
     }
   };
@@ -249,7 +252,7 @@ class WithdrawSummary extends Component {
       this.state.otpCode
     );
     if (response.ok) {
-      this.setState({ ...this.state, OtpVerification: response.data });
+      this.setState({ ...this.state, OtpVerification: response.data,verifyPhone:true});
       success("Phone verification code verified successfully");
     } else if (response.data == null) {
       this.setState({
@@ -261,7 +264,7 @@ class WithdrawSummary extends Component {
       this.useDivRef.current.scrollIntoView();
       this.setState({
         ...this.state,
-        errorMsg: apiCalls.convertLocalLang("phone_invalid_code")
+        errorMsg: apiCalls.convertLocalLang("phone_invalid_code"),verifyPhone:false
       });
       setTimeout(() => {
         this.setState({ errorMsg: null });
@@ -298,7 +301,7 @@ class WithdrawSummary extends Component {
       this.props.userProfile.userId
     );
     if (response.ok) {
-      this.setState({ ...this.state, authenticator: response.data });
+      this.setState({ ...this.state, authenticator: response.data,verifyAuth:true });
       success("2FA verification code verified successfully");
     } else if (response.data == null) {
       this.setState({
@@ -309,7 +312,7 @@ class WithdrawSummary extends Component {
       this.useDivRef.current.scrollIntoView();
       this.setState({
         ...this.state,
-        errorMsg: apiCalls.convertLocalLang("twofa_invalid_code")
+        errorMsg: apiCalls.convertLocalLang("twofa_invalid_code"),verifyAuth:false
       });
       setTimeout(() => {
         this.setState({ errorMsg: null });
@@ -462,7 +465,7 @@ class WithdrawSummary extends Component {
 
     const tooltipTimer = seconds < 10 ? `0${seconds}` : seconds;
     const tooltipValue =
-      "Haven't receive code? Request new code in " +
+      "Haven't receive code ? Request new code in " +
       tooltipTimer +
       " seconds. The code will expire after 30mins.";
 
@@ -613,7 +616,7 @@ class WithdrawSummary extends Component {
                 ]}
                 label={
                   <>
-                    <Button type="text" onClick={this.getAuthenticator}>
+                    <Button type="text" onClick={this.getAuthenticator} disabled={this.state.verifyAuth==true}>
                       VERIFY
                     </Button>
                   </>
@@ -668,7 +671,7 @@ class WithdrawSummary extends Component {
                         <span className="icon md info mr-8" />
                       </Tooltip>
                     )}
-                    <Button type="text" onClick={this.getOtpVerification}>
+                    <Button type="text" onClick={this.getOtpVerification} disabled={this.state.verifyPhone==true}>
                       {verifyOtpText[this.state.verifyOtpText]}
                     </Button>
                   </>
@@ -742,6 +745,7 @@ class WithdrawSummary extends Component {
                     <Button
                       type="text"
                       onClick={(e) => this.getEmailVerification(e)}
+                      disabled={this.state.verifyEmail==true}
                     >
                       {verifyText[this.state.verifyText]}
                     </Button>
