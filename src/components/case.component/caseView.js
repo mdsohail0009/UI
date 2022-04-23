@@ -384,9 +384,9 @@ class RequestedDocs extends Component {
                     </Row>
                 </div>
                 <div className="px-16">
-                    <Text className='fw-300 text-white-50 fs-12'>Remarks</Text>
+                    <Text className='fw-300 text-white-50 fs-12 '>Remarks</Text>
                     {/* <div className='case-val'>{caseData.remarks ? caseData.remarks : '-'}</div> */}
-                    <Title level={5} className='case-val' maxLength={500} rows={4}>{caseData.remarks ? caseData.remarks : '-'}</Title>
+                    <Title level={5} className='case-val'style={{ marginTop: '3px' }} maxLength={500} rows={4}>{caseData.remarks ? caseData.remarks : '-'}</Title>
                 </div>
                
                 <Divider />
