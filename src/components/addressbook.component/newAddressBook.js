@@ -262,13 +262,13 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                                     return Promise.resolve();
                                 } else {
                                     if(!isUploading){
-                                        return Promise.reject("Please upload file");
+                                        return Promise.reject("Please upload your signed PDF document");
                                     }
                                     return Promise.resolve();
                                 }
                             }}
                         ]}>
-                        {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => {
+                        {<Dragger accept=".pdf,.PDF," className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => {
                             setUploading(true);
                             if (res.status === "uploading") { setUploadPercentage(res.percent) }
                             else if (res.status === "done") {
