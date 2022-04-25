@@ -109,13 +109,13 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
           error(response.data)
         }
       }
-      else if(email||phone||factor===false){
-        useDivRef.current.scrollIntoView(0,0);
-        return setErrorMsg("Please select two or more  withdraw verification options");
-      }
+      // else if(email||phone||factor===false){
+      //   useDivRef.current.scrollIntoView(0,0);
+      //   return setErrorMsg("Please select two or more  withdraw verification options");
+      // }
       else {
         useDivRef.current.scrollIntoView(0,0);
-        return setErrorMsg("Please select two or more withdraw verification options");
+        return setErrorMsg("Please select two or more withdraw verification options from below under title");
       }
  } 
 
