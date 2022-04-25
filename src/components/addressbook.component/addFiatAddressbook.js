@@ -648,7 +648,7 @@ const NewFiatAddress = (props) => {
                                 }
                             ]}
                             >
-           { selectParty && <Input className="cust-input"  
+  { selectParty && <Input className="cust-input"  
                  placeholder= {(props?.userConfig?.isBusiness && apiCalls.convertLocalLang("company_name")) || (!props?.userConfig?.isBusiness && apiCalls.convertLocalLang("Recipient_full_name"))}/>}
                  {!selectParty && <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
                             </Form.Item>
@@ -772,7 +772,7 @@ const NewFiatAddress = (props) => {
                                 }
                         }
                         ]}>
-                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props,"DECLARATION") }} onChange={(props) => upLoadFiles(props,"DECLARATION") }>
+                                {<Dragger accept=".pdf,.PDF," className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props,"DECLARATION") }} onChange={(props) => upLoadFiles(props,"DECLARATION") }>
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
