@@ -13,9 +13,8 @@ import Loader from '../../Shared/loader';
 import apiCalls from '../../api/apiCalls';
 import { validateContentRule } from '../../utils/custom.validator';
 import { Link } from "react-router-dom";
-import { bytesToSize, getDocObj } from '../../utils/service';
+import { bytesToSize} from '../../utils/service';
 import { getCountryStateLu, getStateLookup } from "../../api/apiServer";
-import apicalls from "../../api/apiCalls";
 import { warning } from '../../utils/message';
 import {addressTabUpdate} from '../../reducers/addressBookReducer'
 
@@ -65,13 +64,10 @@ const NewFiatAddress = (props) => {
     const [addressFile, setAdressFile] = useState(null);
     const[identityFile,setIdentityFile] = useState(null);
     const[declarationFile,setDeclarationFile] = useState(null)
-    const [uploadPercentage, setUploadPercentage] = useState(0);
     const [isUploading, setUploading] = useState(false);
     const [countryLu, setCountryLu] = useState([]);
     const [stateLu, setStateLu] = useState([]);
     const [addressState, setAddressState] = useState(null);
-    const [saveObj, setSaveObj] = useState(null);
-    const [isValidFile, setIsValidFile] = useState(true);
     const[selectParty,setSelectParty] = useState(props?.checkThirdParty);
     const[withdrawEdit,setWithdrawValues] = useState();
     const[isEdit,setEdit] = useState(false);
@@ -124,8 +120,8 @@ const NewFiatAddress = (props) => {
              
             }
             else{
-                setIdentityFile(response?.data?.documents?.details[0]);
-                 setAdressFile(response?.data?.documents?.details[1]);
+                setIdentityFile(response?.data?.documents?.details[1]);
+                 setAdressFile(response?.data?.documents?.details[0]);
               
             }
       
@@ -140,8 +136,7 @@ const NewFiatAddress = (props) => {
     }
     const getCountryLu = async () => {
         let objj = props?.sendReceive?.withdrawFiatObj;
-        setSaveObj(objj);
-        if (objj) {
+      if (objj) {
             form.setFieldsValue({
                 ...objj,
                 walletCode: objj.walletCode,
@@ -380,8 +375,8 @@ const NewFiatAddress = (props) => {
                     />
                     <Form.Item  name="addressType" label="Address Type" className="custom-label">
                         <Radio.Group size='large'  buttonStyle="solid" className="text-white ml-8"  onChange={radioChangeHandler}
-                            defaultValue={selectParty === true ? "3rdparty" : "1stparty"}
-                             value={selectParty === true ? "3rdparty" : "1stparty"}
+                            defaultValue={(selectParty && "3rdparty") || (!selectParty && "1stparty")}
+                             value={(selectParty && "3rdparty") || (!selectParty && "1stparty")}
                            >
                             <Radio value={"1stparty"} className="text-white" disabled={isEdit}>1st Party</Radio>
                             <Radio value={"3rdparty"} className="text-white" disabled={isEdit}>3rd Party</Radio>
@@ -540,7 +535,7 @@ const NewFiatAddress = (props) => {
                             >
                                 <Select
                                     dropdownClassName="select-drpdwn"
-                                    placeholder={apicalls.convertLocalLang("Country")}
+                                    placeholder={apiCalls.convertLocalLang("Country")}
                                     className="cust-input"
                                     style={{ width: "100%" }}
                                     bordered={false}
@@ -565,13 +560,13 @@ const NewFiatAddress = (props) => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: apicalls.convertLocalLang("is_required")
+                                        message: apiCalls.convertLocalLang("is_required")
                                     }
                                 ]}
                             >
                                 <Select
                                     dropdownClassName="select-drpdwn"
-                                    placeholder={apicalls.convertLocalLang("state")}
+                                    placeholder={apiCalls.convertLocalLang("state")}
                                     className="cust-input"
                                     style={{ width: "100%" }}
                                     bordered={false}
@@ -596,8 +591,7 @@ const NewFiatAddress = (props) => {
                                 required
                                 rules={[
                                     {
-                                        // validator: validateContentRule
-                                        validator: (rule, value, callback) => {
+                                    validator: (rule, value, callback) => {
                                             var regx = new RegExp(/^[A-Za-z0-9 ]+$/);
                                             if (value) {
                                                 if (!regx.test(value)) {
@@ -637,13 +631,13 @@ const NewFiatAddress = (props) => {
                             name="beneficiaryAccountName"
                             label={                        
                             <Translate
-                                content={props?.userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
+                                content={(props?.userConfig?.isBusiness && "company_name" ) || (!props?.userConfig?.isBusiness && "Recipient_full_name")}
                                 component={Form.label}
                             />}
                             rules={[
                                 {
                                     required: true,
-                                    message: apicalls.convertLocalLang("is_required")
+                                    message: apiCalls.convertLocalLang("is_required")
                                 },
                                 {
                                     whitespace: true,
@@ -654,9 +648,9 @@ const NewFiatAddress = (props) => {
                                 }
                             ]}
                             >
-                 { selectParty ? <Input className="cust-input"  
-                 placeholder= {props?.userConfig?.isBusiness ? apicalls.convertLocalLang("company_name") : apicalls.convertLocalLang("Recipient_full_name")}/>:
-                  <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
+           { selectParty && <Input className="cust-input"  
+                 placeholder= {(props?.userConfig?.isBusiness && apiCalls.convertLocalLang("company_name")) || (!props?.userConfig?.isBusiness && apiCalls.convertLocalLang("Recipient_full_name"))}/>}
+                 {!selectParty && <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -717,7 +711,7 @@ const NewFiatAddress = (props) => {
                                     </p>
                                     <p className="ant-upload-text fs-18 mb-0">Please upload identity document here</p>
                                 </Dragger>}
-                                {identityFile != null && <div className="docfile mr-0">
+                                {!uploadIdentity && identityFile != null && <div className="docfile mr-0">
                                 <span className={`icon xl ${(identityFile.documentName?.slice(-3) === "zip" ? "file" : "") || (identityFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
 
                         <div className="docdetails c-pointer" >
@@ -748,7 +742,7 @@ const NewFiatAddress = (props) => {
                                     <p className="ant-upload-text fs-18 mb-0">Please upload address proof here</p>
                                 </Dragger>}
                             </Form.Item> 
-                            {addressFile != null && <div className="docfile mr-0">
+                            {!uploadAdress && addressFile != null && <div className="docfile mr-0">
                             <span className={`icon xl ${(addressFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (addressFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                         <div className="docdetails c-pointer" >
                             <EllipsisMiddle suffixCount={4}>{addressFile.documentName}</EllipsisMiddle>
@@ -763,9 +757,7 @@ const NewFiatAddress = (props) => {
                       </Col>
                             </Row> }
                             {!selectParty &&
-                        
-<>
-                             <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>We require you to download and complete the declaration form as part of the regulation. Please remember to sign and upload it below..</Text>
+        <><Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>We require you to download and complete the declaration form as part of the regulation. Please remember to sign and upload it below..</Text>
                              <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={() => window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip> <Row gutter={[12,12]}>
                 <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
                          <Form.Item name={"file3"}
@@ -786,7 +778,7 @@ const NewFiatAddress = (props) => {
                                     </p>
                                     <p className="ant-upload-text fs-18 mb-0">Upload your signed PDF document here</p>
                                 </Dragger>}
-                                {declarationFile != null && <div className="docfile mr-0">
+                                {!isUploading && declarationFile != null && <div className="docfile mr-0">
                                 <span className={`icon xl ${(declarationFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (declarationFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
                         <div className="docdetails c-pointer" >
                             <EllipsisMiddle suffixCount={4}>{declarationFile.documentName}</EllipsisMiddle>
