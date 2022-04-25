@@ -471,14 +471,20 @@ class PaymentDetails extends Component {
                                     style={{ width: 50 }}
                                     className="text-center"
                                   >
-                                    <label className="text-center custom-checkbox p-relative">
+                                    <label className={`text-center ${ (this.props.match.params.id !==
+                                            "00000000-0000-0000-0000-000000000000" ||
+                                             item.state === "Submitted" ||
+                                          item.state === "Approved" ||
+                                          item.state === "Cancelled" ||
+                                          item.state === "Pending")? "c-pointer":"disabled" }  custom-checkbox p-relative`}>
                                       <Input
-                                
+
                                         name="check"
                                         type="checkbox"
                                         disabled={
                                           this.props.match.params.id !==
                                             "00000000-0000-0000-0000-000000000000" ||
+                                             item.state === "Submitted" ||
                                           item.state === "Approved" ||
                                           item.state === "Cancelled" ||
                                           item.state === "Pending"
