@@ -120,8 +120,8 @@ const NewFiatAddress = (props) => {
              
             }
             else{
-                setIdentityFile(response?.data?.documents?.details[1]);
-                 setAdressFile(response?.data?.documents?.details[0]);
+                setIdentityFile(response?.data?.documents?.details[0]);
+                 setAdressFile(response?.data?.documents?.details[1]);
               
             }
       
@@ -333,7 +333,7 @@ const NewFiatAddress = (props) => {
              if(type === "IDENTITYPROOF" && uploadIdentity ){
                   obj["documentId"] =identityFile !== null ? identityFile?.documentId : "00000000-0000-0000-0000-000000000000";
                   obj["id"] =  identityFile !== null ? identityFile?.id : "00000000-0000-0000-0000-000000000000";
-           
+                  obj["Recorder"] = 1;
             setIdentityFile(obj);
             setUploadIdentity(false);
             form.setFieldsValue({file1:true}); 
@@ -342,7 +342,7 @@ const NewFiatAddress = (props) => {
              
                     obj["documentId"] = addressFile!== null ? addressFile?.documentId : "00000000-0000-0000-0000-000000000000";
                     obj["id"] = addressFile!== null ? addressFile?.id :"00000000-0000-0000-0000-000000000000";
-                    
+                    obj["Recorder"] = 2;
                 setAdressFile(obj);
                 setUploadAddress(false);
                 form.setFieldsValue({file2:true}); 
