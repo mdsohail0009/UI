@@ -253,7 +253,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                         <TextArea placeholder='Remarks' className='cust-input pt-16' autoSize={{ minRows: 2, maxRows: 5 }} maxLength={300}></TextArea>
                     </Form.Item>
 
-                    <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
+                    <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>We require you to download and complete the declaration form as part of the regulation. Please remember to sign and upload it below..</Text>
                     <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={()=>window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip>
 
                     <Form.Item name={"file"}  rules={[
@@ -262,13 +262,13 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                                     return Promise.resolve();
                                 } else {
                                     if(!isUploading){
-                                        return Promise.reject("Please upload file");
+                                        return Promise.reject("Please upload your signed PDF document");
                                     }
                                     return Promise.resolve();
                                 }
                             }}
                         ]}>
-                        {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => {
+                        {<Dragger accept=".pdf,.PDF," className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => {
                             setUploading(true);
                             if (res.status === "uploading") { setUploadPercentage(res.percent) }
                             else if (res.status === "done") {

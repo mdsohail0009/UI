@@ -515,10 +515,7 @@ class PaymentDetails extends Component {
                                       <span>
                                         {item.bankname}
 
-                                        {item.isPrimary !== null ? (<>
-                                            {(this.props.match.params.id ===
-                                              "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
-                                                && <>
+                                      
                                           <Text
                                             size="small"
                                             className="file-label ml-8"
@@ -527,10 +524,7 @@ class PaymentDetails extends Component {
                                            {this.addressTypeNames(item.addressType)}{" "} 
 
                                           </Text>
-                                            </>}
-                                            </>) : (
-                                          ""
-                                        )}
+                                          
                                       </span>
                                       <Popover
                                         className="more-popover"
