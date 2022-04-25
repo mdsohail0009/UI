@@ -29,6 +29,13 @@ class PaymentsView extends Component {
     componentDidMount() {
         this.getPaymentsViewData();
     }
+    addressTypeNames = (type) =>{
+       const stepcodes = {
+                  "1stparty" : "1st Party",
+                  "3rdparty" : "3rd Party",
+         }
+         return stepcodes[type]
+     }
     getPaymentsViewData = async () => {
         this.setState({ ...this.state, loading: true });
         let response = await getPaymentsData(this.props.match.params.id, this.props.userConfig?.userId,this.state.currency);
@@ -111,7 +118,15 @@ class PaymentsView extends Component {
                                           <td>{item?.beneficiaryAccountName}</td>
                                                 <td>
                                                     <div className='d-flex align-center justify-content'>
+                                                   <span>
                                                     {item.bankname}
+                                                    <Text
+                                            size="small"
+                                            className="file-label ml-8"
+                                          >
+                                                    {this.addressTypeNames(item.addressType)}
+                                                    </Text>
+                                              </span>
                                                             <Popover
                                                                     className='more-popover'
                                                                     content={this.popOverContent}

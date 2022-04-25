@@ -13,9 +13,8 @@ import Loader from '../../Shared/loader';
 import apiCalls from '../../api/apiCalls';
 import { validateContentRule } from '../../utils/custom.validator';
 import { Link } from "react-router-dom";
-import { bytesToSize, getDocObj } from '../../utils/service';
+import { bytesToSize} from '../../utils/service';
 import { getCountryStateLu, getStateLookup } from "../../api/apiServer";
-import apicalls from "../../api/apiCalls";
 import { warning } from '../../utils/message';
 import {addressTabUpdate} from '../../reducers/addressBookReducer'
 
@@ -29,6 +28,7 @@ const { confirm } = Modal;
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children?.slice(0, children.length - suffixCount)?.trim();
     const suffix = children?.slice(-suffixCount)?.trim();
+
     return (
         <Text className="mb-0 fs-14 docname c-pointer d-block"
             style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
@@ -64,17 +64,15 @@ const NewFiatAddress = (props) => {
     const [addressFile, setAdressFile] = useState(null);
     const[identityFile,setIdentityFile] = useState(null);
     const[declarationFile,setDeclarationFile] = useState(null)
-    const [uploadPercentage, setUploadPercentage] = useState(0);
     const [isUploading, setUploading] = useState(false);
     const [countryLu, setCountryLu] = useState([]);
     const [stateLu, setStateLu] = useState([]);
     const [addressState, setAddressState] = useState(null);
-    const [saveObj, setSaveObj] = useState(null);
-    const [isValidFile, setIsValidFile] = useState(true);
     const[selectParty,setSelectParty] = useState(props?.checkThirdParty);
-    const[uploadingActive,setUploadingActive] = useState(false);
     const[withdrawEdit,setWithdrawValues] = useState();
     const[isEdit,setEdit] = useState(false);
+    const[uploadAdress,setUploadAddress] = useState(false);
+    const[uploadIdentity,setUploadIdentity] = useState(false);
 
     useEffect(() => {
        if(selectParty === true){
@@ -138,8 +136,7 @@ const NewFiatAddress = (props) => {
     }
     const getCountryLu = async () => {
         let objj = props?.sendReceive?.withdrawFiatObj;
-        setSaveObj(objj);
-        if (objj) {
+      if (objj) {
             form.setFieldsValue({
                 ...objj,
                 walletCode: objj.walletCode,
@@ -151,6 +148,7 @@ const NewFiatAddress = (props) => {
             });
         }
         let recName = await getCountryStateLu();
+        debugger
         if (recName.ok) {
             setCountryLu(recName.data);
         }
@@ -252,125 +250,114 @@ const NewFiatAddress = (props) => {
         }
     }
     const getIbanData = async (val) => {
-        form.setFieldsValue({routingNumber:"",bankName:"",bankAddress:""});
+        form.setFieldsValue({bankName:"",bankAddress:"",  state:"",country:null,zipCode:"",routingNumber:""});  
         if (val && val.length > 14) {
             let response = await apiCalls.getIBANData(val);
             if (response.ok) {
                 const oldVal = form.getFieldValue();
-                form.setFieldsValue({ routingNumber: response.data.routingNumber || oldVal.routingNumber, bankName: response.data.bankName || oldVal.bankName, bankAddress: response.data.bankAddress || oldVal.bankAddress })
+                
+                form.setFieldsValue({ routingNumber: response.data.routingNumber || oldVal.routingNumber, bankName: response.data.bankName || oldVal.bankName, bankAddress: response.data.bankAddress || oldVal.bankAddress, zipCode: response.data.zipCode || oldVal.zipCode,	state:response.data.state || oldVal.state, country:response.data.country || oldVal.country})
             }
-        }
-    }
+           }
+         }
     const beforeUpload = (file,type) => {
-   
-        if(type === "IDENTITYPROOF" || type === "ADDRESSPROOF"){
-
-            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+        debugger
+   if((file.name.split('.')).length > 2){
+     warning(" File don't allow double Extension");
+        return
+}
+        if(type === "IDENTITYPROOF"){
+           let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
             if (fileType[file.type]) {
-            setIsValidFile(true);
+                setUploadIdentity(true);
             return true;
             }
             else{
                 warning('File is not allowed. You can upload jpg, png, jpeg and PDF files')
-                setIsValidFile(false);
+                setUploadIdentity(false);
                 return Upload.LIST_IGNORE;   
+            }}
+            else if( type === "ADDRESSPROOF"){
+                let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+            if (fileType[file.type]) {
+            setUploadAddress(true);
+            return true;  
             }
+         else{
+                warning('File is not allowed. You can upload jpg, png, jpeg and PDF files')
+                setUploadAddress(false);
+                return Upload.LIST_IGNORE;   
         }
-        else{
+    }
+        else if(type === "DECLARATION"){
            let fileType = { "image/png": false, 'image/jpg': false, 'image/jpeg': false, 'image/PNG': false, 'image/JPG': false, 'image/JPEG': false, 'application/pdf': true, 'application/PDF': true }
         if (fileType[file.type]) {
-            setIsValidFile(true);
+            setUploading(true);
             return true;
         } else {
-            warning('File is not allowed. You can upload only PDF files')
-            setIsValidFile(false);
+             warning('File is not allowed. You can upload only PDF file')
+            setUploading(false);
             return Upload.LIST_IGNORE;
         }
     }
     }
     const radioChangeHandler = (e) => {
           setUploading(false);
-          setUploadingActive(false);
+          setUploadAddress(false);
+          setUploadIdentity(false);
           setIdentityFile(null);
           setAdressFile(null);
           setDeclarationFile(null);
+          form.setFieldsValue({file1:false,file2:false,file3:false});
       if(e.target.value === "1stparty"){
             form.setFieldsValue({addressType:"1stparty",beneficiaryAccountName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName})
             setSelectParty(false);
-
-        }
+           }
         else{
             form.setFieldsValue({addressType:"3rdparty"})
             setSelectParty(true);
         }
+        }
 
-    }
   const upLoadFiles = ({file},type) =>  {
-
-        if((file.name.split('.')).length > 2){
-            warning("File don't allow double extension");
-        }
-       if (file?.status === "uploading") 
-        { 
-            setUploadPercentage(file?.percent)
-            if(type === "IDENTITYPROOF" ){
-                setUploadingActive(true);
-            }
-            else if(isValidFile === true){
-                setUploading(true);
-            }
-         }
-        else if (file?.status === "done" && isValidFile === true) {
-
-             if(type === "IDENTITYPROOF"){
-                 let obj = {
-                    "documentId": identityFile !== null ? identityFile?.documentId : "00000000-0000-0000-0000-000000000000",
-                    "documentName": `${file.name}`,
-                    "id": identityFile !== null ? identityFile?.id : "00000000-0000-0000-0000-000000000000",
-                    "isChecked": file.name == "" ? false : true,
-                    "remarks": `${file.size}`,
-                    "state": null,
-                    "status": false,
-                    "path": `${file.response}`,
-                    "size":`${file.size}`,
-                }
-
+    let obj = {
+        "documentName": `${file.name}`,
+        "isChecked": file.name == "" ? false : true,
+        "remarks": `${file.size}`,
+        "state": null,
+        "status": false,
+        "path": `${file.response}`,
+        "size":`${file.size}`,
+    }
+    if (file?.status === "done") {
+             if(type === "IDENTITYPROOF" && uploadIdentity ){
+                  obj["documentId"] =identityFile !== null ? identityFile?.documentId : "00000000-0000-0000-0000-000000000000";
+                  obj["id"] =  identityFile !== null ? identityFile?.id : "00000000-0000-0000-0000-000000000000";
+           
             setIdentityFile(obj);
-            
+            setUploadIdentity(false);
+            form.setFieldsValue({file1:true}); 
         }
-            else if(type === "ADDRESSPROOF"){
-                setUploading(true);
-                let obj = {
-                    "documentId": addressFile!== null ? addressFile?.documentId : "00000000-0000-0000-0000-000000000000",
-                    "documentName": `${file.name}`,
-                    "id": addressFile!== null ? addressFile?.id :"00000000-0000-0000-0000-000000000000",
-                    "isChecked": file.name == "" ? false : true,
-                    "remarks": `${file.size}`,
-                    "state": null,
-                    "status": false,
-                    "path": `${file.response}`,
-                    "size":`${file.size}`,
-                }
+            else if(type === "ADDRESSPROOF" && uploadAdress){
+             
+                    obj["documentId"] = addressFile!== null ? addressFile?.documentId : "00000000-0000-0000-0000-000000000000";
+                    obj["id"] = addressFile!== null ? addressFile?.id :"00000000-0000-0000-0000-000000000000";
+                    
                 setAdressFile(obj);
+                setUploadAddress(false);
+                form.setFieldsValue({file2:true}); 
             }
-            else {
-                setUploading(true);
-                let obj = {
-                    "documentId": declarationFile!== null ? declarationFile?.documentId :"00000000-0000-0000-0000-000000000000",
-                    "documentName": `${file.name}`,
-                    "id": declarationFile!== null ? declarationFile?.id :"00000000-0000-0000-0000-000000000000",
-                    "isChecked": file.name == "" ? false : true,
-                    "remarks": `${file.size}`,
-                    "state": null,
-                    "status": false,
-                    "path": `${file.response}`,
-                    "size":`${file.size}`
-                }
+
+            else if(type === "DECLARATION" && isUploading){
+               obj["documentId"] = declarationFile!== null ? declarationFile?.documentId :"00000000-0000-0000-0000-000000000000";
+                     obj["id"] = declarationFile!== null ? declarationFile?.id :"00000000-0000-0000-0000-000000000000";
+                 
                 setDeclarationFile(obj);
+                form.setFieldsValue({file3:true});
+                setUploading(false);
             }
-            setUploadingActive(false);
-         setUploading(false);
-             }  }
+            }
+          }
 
   
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
@@ -389,8 +376,8 @@ const NewFiatAddress = (props) => {
                     />
                     <Form.Item  name="addressType" label="Address Type" className="custom-label">
                         <Radio.Group size='large'  buttonStyle="solid" className="text-white ml-8"  onChange={radioChangeHandler}
-                            defaultValue={selectParty === true ? "3rdparty" : "1stparty"}
-                             value={selectParty === true ? "3rdparty" : "1stparty"}
+                            defaultValue={(selectParty && "3rdparty") || (!selectParty && "1stparty")}
+                             value={(selectParty && "3rdparty") || (!selectParty && "1stparty")}
                            >
                             <Radio value={"1stparty"} className="text-white" disabled={isEdit}>1st Party</Radio>
                             <Radio value={"3rdparty"} className="text-white" disabled={isEdit}>3rd Party</Radio>
@@ -538,6 +525,7 @@ const NewFiatAddress = (props) => {
                             <Form.Item
                                 className="custom-forminput custom-label mb-0"
                                 name="country"
+                                required
                                 label={<Translate content="Country" component={Form.label} />}
                                 rules={[
                                     {
@@ -548,7 +536,7 @@ const NewFiatAddress = (props) => {
                             >
                                 <Select
                                     dropdownClassName="select-drpdwn"
-                                    placeholder={apicalls.convertLocalLang("Country")}
+                                    placeholder={apiCalls.convertLocalLang("Country")}
                                     className="cust-input"
                                     style={{ width: "100%" }}
                                     bordered={false}
@@ -573,13 +561,13 @@ const NewFiatAddress = (props) => {
                                 rules={[
                                     {
                                         required: true,
-                                        message: apicalls.convertLocalLang("is_required")
+                                        message: apiCalls.convertLocalLang("is_required")
                                     }
                                 ]}
                             >
                                 <Select
                                     dropdownClassName="select-drpdwn"
-                                    placeholder={apicalls.convertLocalLang("state")}
+                                    placeholder={apiCalls.convertLocalLang("state")}
                                     className="cust-input"
                                     style={{ width: "100%" }}
                                     bordered={false}
@@ -604,8 +592,8 @@ const NewFiatAddress = (props) => {
                                 required
                                 rules={[
                                     {
-                                        validator: (rule, value, callback) => {
-                                            var regx = new RegExp(/^[A-Za-z0-9]+$/);
+                                    validator: (rule, value, callback) => {
+                                            var regx = new RegExp(/^[A-Za-z0-9 ]+$/);
                                             if (value) {
                                                 if (!regx.test(value)) {
                                                     callback("Invalid zip code");
@@ -644,13 +632,13 @@ const NewFiatAddress = (props) => {
                             name="beneficiaryAccountName"
                             label={                        
                             <Translate
-                                content={props?.userConfig?.isBusiness ? "company_name" : "Recipient_full_name"}
+                                content={(props?.userConfig?.isBusiness && "company_name" ) || (!props?.userConfig?.isBusiness && "Recipient_full_name")}
                                 component={Form.label}
                             />}
                             rules={[
                                 {
                                     required: true,
-                                    message: apicalls.convertLocalLang("is_required")
+                                    message: apiCalls.convertLocalLang("is_required")
                                 },
                                 {
                                     whitespace: true,
@@ -661,8 +649,9 @@ const NewFiatAddress = (props) => {
                                 }
                             ]}
                             >
-                 { selectParty ? <Input className="cust-input"  placeholder="Business Name"  /> :
-                  <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
+  { selectParty && <Input className="cust-input"  
+                 placeholder= {(props?.userConfig?.isBusiness && apiCalls.convertLocalLang("company_name")) || (!props?.userConfig?.isBusiness && apiCalls.convertLocalLang("Recipient_full_name"))}/>}
+                 {!selectParty && <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -704,40 +693,33 @@ const NewFiatAddress = (props) => {
                     </Row>
 
                   
-   {  selectParty === true ?<Row gutter={[12,12]}>
+   {  selectParty === true && <Row gutter={[12,12]}>
     <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
                          <Form.Item name={"file1"} rules={[{
-                                validator: (_, value) => {
-                                    if (identityFile) {
-                                        return Promise.resolve();
-                                    } else {
-                                        return Promise.reject("Please upload identity document")
-                                    }
+                               validator: (_, value) => {
+                                if (identityFile) {
+                                    return Promise.resolve();
+                                } else {
+                                    return Promise.reject("Please upload identity document")   
                                 }
-                            }]}>
-                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props,"IDENTITYPROOF") }} onChange={(props) => upLoadFiles(props,"IDENTITYPROOF")
-
-                                 }>
+                            }
+                         }]}>
+                              
+                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(identityprop) => { beforeUpload(identityprop,"IDENTITYPROOF") }} onChange={(identityprop) => upLoadFiles(identityprop,"IDENTITYPROOF") }>
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
                                     <p className="ant-upload-text fs-18 mb-0">Please upload identity document here</p>
                                 </Dragger>}
-                                {identityFile != null && <div className="docfile mr-0">
-                                <span className={`icon xl ${(identityFile.documentName?.slice(-3) === "zip" ? "file" : "") || (identityFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                                {!uploadIdentity && identityFile != null && <div className="docfile mr-0">
+                                <span className={`icon xl ${(identityFile.documentName?.slice(-3) === "zip" && "file" ) || (identityFile.documentName?.slice(-3) !== "zip" && "") || (identityFile.documentName?.slice(-3) === "pdf" && "file") || (identityFile.documentName?.slice(-3) !== "pdf" &&  "image")} mr-16`} />
 
                         <div className="docdetails c-pointer" >
-                            <EllipsisMiddle suffixCount={10}>{identityFile.documentName}</EllipsisMiddle>
+                            <EllipsisMiddle suffixCount={4}>{identityFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(identityFile.remarks)}</span>
                                   </div>
-
-                        {/* <span className="icon md close c-pointer" onClick={() => confirm({
-                            content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
-                            title: <div className='fs-18 text-white-30'>Delete File ?</div>,
-                            onOk: () => { setIdentityFile(null); }
-                        })} /> */}
-                    </div>}
-                    { uploadingActive && <div className="text-center mt-16">
+                                </div>}
+                    { uploadIdentity && <div className="text-center mt-16">
                         <Spin />
                     </div>
                     }
@@ -753,67 +735,56 @@ const NewFiatAddress = (props) => {
                                     }
                                 }
                             }]}>
-                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props,"ADDRESSPROOF") }} onChange={(props) => upLoadFiles(props,"ADDRESSPROOF")}>
+                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(addressprop) => { beforeUpload(addressprop,"ADDRESSPROOF") }} onChange={(addressprop) => upLoadFiles(addressprop,"ADDRESSPROOF")}>
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
                                     <p className="ant-upload-text fs-18 mb-0">Please upload address proof here</p>
                                 </Dragger>}
                             </Form.Item> 
-                            {addressFile != null && <div className="docfile mr-0">
-                            <span className={`icon xl ${(addressFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (addressFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                            {!uploadAdress && addressFile != null && <div className="docfile mr-0">
+                            <span className={`icon xl ${(addressFile?.documentName?.slice(-3) === "zip" && "file") ||(addressFile?.documentName?.slice(-3) !== "zip" && "") || (addressFile.documentName?.slice(-3) === "pdf" && "file") ||(addressFile.documentName?.slice(-3) !== "pdf" && "image")} mr-16`} />
                         <div className="docdetails c-pointer" >
-                            <EllipsisMiddle suffixCount={10}>{addressFile.documentName}</EllipsisMiddle>
+                            <EllipsisMiddle suffixCount={4}>{addressFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(addressFile.remarks)}</span>
                         </div>
-                        {/* <span className="icon md close c-pointer" onClick={() => confirm({
-                            content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
-                            title: <div className='fs-18 text-white-30'>Delete File ?</div>,
-                            onOk: () => { setAdressFile(null); }
-                        })} /> */}
                     </div>}
-                    { isUploading && <div className="text-center mt-16">
+                    { uploadAdress && <div className="text-center mt-16">
                         <Spin />
                     </div>
                    
                     }
-                            </Col>
-                            </Row>
-                             :
-                             <>
-                             <Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>Declaration Form is required, Please download the form. Be sure the information is accurate, Complete and signed.</Text>
+                      </Col>
+                            </Row> }
+                            {!selectParty &&
+        <><Text className='fs-14 fw-400 text-white-30 l-height-normal d-block mb-16'>We require you to download and complete the declaration form as part of the regulation. Please remember to sign and upload it below..</Text>
                              <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={() => window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip> <Row gutter={[12,12]}>
-    <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
-                         <Form.Item name={"file1"} rules={[{
+                <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
+                         <Form.Item name={"file3"}
+                           rules={[
+                            {  
                                 validator: (_, value) => {
                                     if (declarationFile) {
                                         return Promise.resolve();
                                     } else {
-                                        return Promise.reject("Please upload your signed PDF document")
+                                        return Promise.reject("Please upload your signed PDF document")   
                                     }
                                 }
-                            }]}>
-                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props,"DECLARATION") }} onChange={(props) => upLoadFiles(props,"DECLARATION")
-
-                                
-                            }>
+                        }
+                        ]}>
+                                {<Dragger accept=".pdf,.PDF," className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(declarationprop) => { beforeUpload(declarationprop,"DECLARATION") }} onChange={(declarationprop) => upLoadFiles(declarationprop,"DECLARATION") }>
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
                                     <p className="ant-upload-text fs-18 mb-0">Upload your signed PDF document here</p>
                                 </Dragger>}
-                                {declarationFile != null && <div className="docfile mr-0">
-                                <span className={`icon xl ${(declarationFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (declarationFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                                {!isUploading && declarationFile != null && <div className="docfile mr-0">
+                                <span className={`icon xl ${(declarationFile?.documentName?.slice(-3) === "zip" && "file") ||(declarationFile?.documentName?.slice(-3) !== "zip" &&  "") || (declarationFile.documentName?.slice(-3) === "pdf" && "file") || (declarationFile.documentName?.slice(-3) !== "pdf" && "image")} mr-16`} />
                         <div className="docdetails c-pointer" >
-                            <EllipsisMiddle suffixCount={10}>{declarationFile.documentName}</EllipsisMiddle>
+                            <EllipsisMiddle suffixCount={4}>{declarationFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(declarationFile.remarks)}</span>
                         </div>
-                        {/* <span className="icon md close c-pointer" onClick={() => confirm({
-                            content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
-                            title: <div className='fs-18 text-white-30'>Delete File ?</div>,
-                            onOk: () => { setDeclarationFile(null); }
-                        })} /> */}
-                    </div>}
+                     </div>}
                     {isUploading && <div className="text-center">
                         <Spin />
                     </div>
