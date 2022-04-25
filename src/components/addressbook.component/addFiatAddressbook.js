@@ -261,10 +261,11 @@ const NewFiatAddress = (props) => {
            }
          }
     const beforeUpload = (file,type) => {
+        debugger
    if((file.name.split('.')).length > 2){
-        warning(" File don't allow double Extension");
+     warning(" File don't allow double Extension");
         return
-    }
+}
         if(type === "IDENTITYPROOF"){
            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
             if (fileType[file.type]) {
@@ -703,16 +704,15 @@ const NewFiatAddress = (props) => {
                                 }
                             }
                          }]}>
-                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props,"IDENTITYPROOF") }} onChange={(props) => upLoadFiles(props,"IDENTITYPROOF")
-
-                                 }>
+                              
+                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(identityprop) => { beforeUpload(identityprop,"IDENTITYPROOF") }} onChange={(identityprop) => upLoadFiles(identityprop,"IDENTITYPROOF") }>
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
                                     <p className="ant-upload-text fs-18 mb-0">Please upload identity document here</p>
                                 </Dragger>}
                                 {!uploadIdentity && identityFile != null && <div className="docfile mr-0">
-                                <span className={`icon xl ${(identityFile.documentName?.slice(-3) === "zip" ? "file" : "") || (identityFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                                <span className={`icon xl ${(identityFile.documentName?.slice(-3) === "zip" && "file" ) || (identityFile.documentName?.slice(-3) !== "zip" && "") || (identityFile.documentName?.slice(-3) === "pdf" && "file") || (identityFile.documentName?.slice(-3) !== "pdf" &&  "image")} mr-16`} />
 
                         <div className="docdetails c-pointer" >
                             <EllipsisMiddle suffixCount={4}>{identityFile.documentName}</EllipsisMiddle>
@@ -735,7 +735,7 @@ const NewFiatAddress = (props) => {
                                     }
                                 }
                             }]}>
-                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props,"ADDRESSPROOF") }} onChange={(props) => upLoadFiles(props,"ADDRESSPROOF")}>
+                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(addressprop) => { beforeUpload(addressprop,"ADDRESSPROOF") }} onChange={(addressprop) => upLoadFiles(addressprop,"ADDRESSPROOF")}>
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
@@ -743,7 +743,7 @@ const NewFiatAddress = (props) => {
                                 </Dragger>}
                             </Form.Item> 
                             {!uploadAdress && addressFile != null && <div className="docfile mr-0">
-                            <span className={`icon xl ${(addressFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (addressFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                            <span className={`icon xl ${(addressFile?.documentName?.slice(-3) === "zip" && "file") ||(addressFile?.documentName?.slice(-3) !== "zip" && "") || (addressFile.documentName?.slice(-3) === "pdf" && "file") ||(addressFile.documentName?.slice(-3) !== "pdf" && "image")} mr-16`} />
                         <div className="docdetails c-pointer" >
                             <EllipsisMiddle suffixCount={4}>{addressFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(addressFile.remarks)}</span>
@@ -772,14 +772,14 @@ const NewFiatAddress = (props) => {
                                 }
                         }
                         ]}>
-                                {<Dragger accept=".pdf,.PDF," className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props,"DECLARATION") }} onChange={(props) => upLoadFiles(props,"DECLARATION") }>
+                                {<Dragger accept=".pdf,.PDF," className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(declarationprop) => { beforeUpload(declarationprop,"DECLARATION") }} onChange={(declarationprop) => upLoadFiles(declarationprop,"DECLARATION") }>
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
                                     <p className="ant-upload-text fs-18 mb-0">Upload your signed PDF document here</p>
                                 </Dragger>}
                                 {!isUploading && declarationFile != null && <div className="docfile mr-0">
-                                <span className={`icon xl ${(declarationFile?.documentName?.slice(-3) === "zip" ? "file" : "") || (declarationFile.documentName?.slice(-3) === "pdf" ? "file" : "image")} mr-16`} />
+                                <span className={`icon xl ${(declarationFile?.documentName?.slice(-3) === "zip" && "file") ||(declarationFile?.documentName?.slice(-3) !== "zip" &&  "") || (declarationFile.documentName?.slice(-3) === "pdf" && "file") || (declarationFile.documentName?.slice(-3) !== "pdf" && "image")} mr-16`} />
                         <div className="docdetails c-pointer" >
                             <EllipsisMiddle suffixCount={4}>{declarationFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(declarationFile.remarks)}</span>
