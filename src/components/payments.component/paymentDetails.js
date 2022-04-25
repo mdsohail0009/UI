@@ -205,6 +205,11 @@ class PaymentDetails extends Component {
           } else {
             this.setState({ btnDisabled: false });
             message.destroy();
+            message.error({
+              content: response.data,
+              className: "custom-msg",
+              duration: 0.5,
+            });
             this.setState({ ...this.state, errorMessage: response.data });
             // this.useDivRef.current.scrollIntoView();
           }
@@ -294,13 +299,11 @@ class PaymentDetails extends Component {
         errorMessage: "File don't allow double extension",
       });
   }
-  debugger
     for (let pay in paymentDetialsData) {
-     
       if (paymentDetialsData[pay].id === item.id) {
         let obj = {
-          id: paymentDetialsData[pay]?.documents?.details[pay]?.id ==="00000000-0000-0000-0000-000000000000" ? paymentDetialsData[pay]?.documents?.details[pay]?.id:"00000000-0000-0000-0000-000000000000",
-          documentId:paymentDetialsData[pay]?.documents?.details[pay]?.documentId ==='00000000-0000-0000-0000-000000000000' ? paymentDetialsData[pay]?.documents?.details[pay]?.documentId:"00000000-0000-0000-0000-000000000000",
+          id: paymentDetialsData[pay]?.documents?.details[0]?.id !==null ? paymentDetialsData[pay]?.documents?.details[0]?.id :"00000000-0000-0000-0000-000000000000",
+          documentId:paymentDetialsData[pay]?.documents?.details[0]?.documentId !==null ? paymentDetialsData[pay]?.documents?.details[0]?.documentId :"00000000-0000-0000-0000-000000000000",
           isChecked: file.name == "" ? false : true,
           documentName: `${file.name}`,
           remarks: `${file.size}`,
@@ -310,7 +313,6 @@ class PaymentDetails extends Component {
         };
         paymentDetialsData[pay].documents.details = [obj];
       }
-      // paymentDetialsData[pay].documents.details = [obj];
     }
     this.setState({
       ...this.state,
@@ -627,7 +629,7 @@ class PaymentDetails extends Component {
                                       >
                                         <span
                                           className={`icon md attach ${
-                                            item.state === "Approved"
+                                            item.state === "Approved" || item.state === "Cancelled" 
                                               ? ""
                                               : "c-pointer"
                                           } `}
