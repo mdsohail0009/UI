@@ -47,6 +47,8 @@ const WithdrawalFiatSummary = ({
   const [verifyOtpText, setVerifyOtpText] = useState("");
   const [verifyEmailText, setVerifyEmailText] = useState("");
   const [seconds, setSeconds] = useState(120);
+  const [seconds2, setSeconds2] = useState(120);
+  //const [seconds, setSeconds] = useState("02:00");
   const [emailOtp, setEmailOtp] = useState("");
   const [invalidData, setInvalidData] = useState(false);
   const [validData, setValidData] = useState(false);
@@ -120,12 +122,56 @@ const WithdrawalFiatSummary = ({
     getVerifyData();
   }, []);
 
-  useEffect(() => {
-    const timer =
-      seconds > 0 && setInterval(() => setSeconds(seconds - 1), 1000);
-    return () => clearInterval(timer);
-  }, [seconds]);
- 
+  // useEffect(() => {
+  //   const timer =
+  //     seconds > 0 && setInterval(() => setSeconds(seconds - 1), 1000);
+  //   return () => clearInterval(timer);
+  // }, [seconds]);
+
+  let timeInterval;
+  let count = 120;
+  const startTimer = () => {
+    debugger
+    let timer = count-1;
+    let minutes, seconds;
+    timeInterval = setInterval(function () {
+      //minutes = parseInt(timer / 60, 10)
+      //seconds = parseInt(timer % 60, 10);
+     
+        seconds = parseInt(timer % 120);
+
+      
+      //minutes = minutes < 10 ? "0" + minutes : minutes;
+     // seconds = seconds < 10 ? "0" + seconds : seconds;
+      //seconds = seconds < 10 ? "0" + seconds : seconds;
+      //setSeconds(minutes + ":" + seconds);
+      setSeconds(seconds)
+      if (--timer < 0) {
+        timer = count;
+        clearInterval(timeInterval);
+        setDisable(false);
+        setType("Resend");
+      }
+
+    }, 1000);
+  }
+  let timeInterval2;
+  let count2 = 120;
+  const startTimer2 = () => {
+    debugger;
+    let timer2 = count2 - 1;
+    let seconds2;
+    timeInterval2 = setInterval(function () {
+      seconds2 = parseInt(timer2 % 120);
+      setSeconds2(seconds2);
+      if (--timer2 < 0) {
+        timer2 = count2;
+        clearInterval(timeInterval2);
+        setDisable(false);
+        setType("Resend");
+      }
+    }, 1000);
+  };
  
 
   const withdrawSummayTrack = () => {
@@ -147,7 +193,7 @@ const WithdrawalFiatSummary = ({
     if ((verifyData.isEmailVerification)) {
       if(!isEmailVerification){
         setMsg("Please enter valid codes");
-        useOtpRef.current.scrollIntoView();
+        useOtpRef.current.scrollIntoView(0,0);
         return;
       }
       
@@ -155,7 +201,7 @@ const WithdrawalFiatSummary = ({
     if ((verifyData.isPhoneVerified)) {
       if(!isPhoneVerification){
         setMsg("Please enter valid codes");
-        useOtpRef.current.scrollIntoView();
+        useOtpRef.current.scrollIntoView(0,0);
         return;
       }
       
@@ -163,7 +209,7 @@ const WithdrawalFiatSummary = ({
     if ((verifyData.twoFactorEnabled )) {
       if(!isAuthenticatorVerification){
         setMsg("Please enter valid codes");
-        useOtpRef.current.scrollIntoView();
+        useOtpRef.current.scrollIntoView(0,0);
         return;
       }
      
@@ -171,15 +217,9 @@ const WithdrawalFiatSummary = ({
     setIsLoding(true);
 
     let Obj = Object.assign({}, sendReceive.withdrawFiatObj);
-    Obj.accountNumber = apiCalls.encryptValue(
-      Obj.accountNumber,
-      userConfig?.sk
-    );
+    Obj.accountNumber = apiCalls.encryptValue(Obj.accountNumber,userConfig?.sk);
     Obj.bankName = apiCalls.encryptValue(Obj.bankName, userConfig?.sk);
-    Obj.routingNumber = apiCalls.encryptValue(
-      Obj.routingNumber,
-      userConfig?.sk
-    );
+    Obj.routingNumber = apiCalls.encryptValue(Obj.routingNumber,userConfig?.sk);
     Obj.bankAddress = apiCalls.encryptValue(Obj.bankAddress, userConfig?.sk);
     Obj.beneficiaryAccountAddress = apiCalls.encryptValue(
       Obj.beneficiaryAccountAddress,
@@ -203,7 +243,7 @@ const WithdrawalFiatSummary = ({
       changeStep("step7");
     } else {
       setMsg(withdrawal.data);
-      useOtpRef.current.scrollIntoView();
+      useOtpRef.current.scrollIntoView(0,0);
     }
   };
   const onCancel = () => {
@@ -233,6 +273,7 @@ const WithdrawalFiatSummary = ({
       setEmailVerificationText(
         apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
       );
+      startTimer2()
       setTimeout(() => {
         setEmailText("resendEmail");
         setTooltipEmail(false);
@@ -252,18 +293,18 @@ const WithdrawalFiatSummary = ({
     if (response.ok) {
       setIsEmailVerification(true);
       setEmail(true)
-      useOtpRef.current.scrollIntoView();
+      useOtpRef.current.scrollIntoView(0,0);
       success("Email  verified successfully");
     } else if (response.data == null) {
-      useOtpRef.current.scrollIntoView();
+      useOtpRef.current.scrollIntoView(0,0);
       setMsg("Please enter email verification code");
     } else {
       setEmail(false)
       setMsg(apiCalls.convertLocalLang("email_invalid_code"));
-      useOtpRef.current.scrollIntoView();
+      useOtpRef.current.scrollIntoView(0,0);
       setTimeout(() => {
         setMsg(null);
-      }, 5000);
+      }, 1500);
       //setInvalidData(true)
       setIsEmailVerification(false);
     }
@@ -291,7 +332,7 @@ const WithdrawalFiatSummary = ({
       setVerificationText(
         apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
       );
-
+      startTimer();
       setTimeout(() => {
         setButtonText("resendotp");
       }, 120000);
@@ -315,16 +356,16 @@ const WithdrawalFiatSummary = ({
       setIsPhoneVerification(true);
       success("OTP verified successfully");
     } else if (response.data == null) {
-      useOtpRef.current.scrollIntoView();
+      useOtpRef.current.scrollIntoView(0,0);
       setMsg("Please enter phone verification code");
     } else {
-      useOtpRef.current.scrollIntoView();
+      useOtpRef.current.scrollIntoView(0,0);
       setVerifyPhone(false)
 
       setMsg(apiCalls.convertLocalLang("phone_invalid_code"));
       setTimeout(() => {
         setMsg(null);
-      }, 5000);
+      }, 1500);
       //setInvalidData(true)
       setIsPhoneVerification(false);
     }
@@ -350,15 +391,15 @@ const WithdrawalFiatSummary = ({
       console.log(response.data);
       success("Authenticator verified successfully");
     } else if (response.data == null) {
-      useOtpRef.current.scrollIntoView();
+      useOtpRef.current.scrollIntoView(0,0);
       setMsg("Please enter authenticator verification code");
     } else {
       setVerifyAuth(false)
-      useOtpRef.current.scrollIntoView();
+      useOtpRef.current.scrollIntoView(0,0);
       setMsg(apiCalls.convertLocalLang("twofa_invalid_code"));
       setTimeout(() => {
         setMsg(null);
-      }, 5000);
+      }, 1500);
       //setInvalidData(true)
       setIsAuthenticatorVerification(false);
     }

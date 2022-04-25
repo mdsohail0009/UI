@@ -56,7 +56,9 @@ class WithdrawSummary extends Component {
     authCode: "",
     verifyData: "",
     minutes: 2,
-    seconds: 0,
+    //seconds: 0,
+    seconds:120,
+    seconds2:120,
     inValidData: false,
     authenticator: "",
     EmailCode: "",
@@ -75,30 +77,64 @@ class WithdrawSummary extends Component {
     this.handleNewExchangeRate();
     this.getVerifyData();
 
-    this.myInterval = setInterval(() => {
-      const { seconds, minutes } = this.state;
+    // this.myInterval = setInterval(() => {
+    //   const { seconds, minutes } = this.state;
 
-      if (seconds > 0) {
-        this.setState(({ seconds }) => ({
-          seconds: seconds - 1
-        }));
-      }
-      if (seconds === 0) {
-        if (minutes === 0) {
-          clearInterval(this.myInterval);
-        } else {
-          this.setState(({ minutes }) => ({
-            minutes: minutes - 1,
-            seconds: 120
-          }));
-        }
+    //   if (seconds > 0) {
+    //     this.setState(({ seconds }) => ({
+    //       seconds: seconds - 1
+    //     }));
+    //   }
+    //   if (seconds === 0) {
+    //     if (minutes === 0) {
+    //       clearInterval(this.myInterval);
+    //     } else {
+    //       this.setState(({ minutes }) => ({
+    //         minutes: minutes - 1,
+    //         seconds: 120
+    //       }));
+    //     }
+    //   }
+    // }, 1000);
+  }
+
+  // componentWillUnmount() {
+  //   clearInterval(this.myInterval);
+  // }
+
+  startTimer = () => {
+    debugger;
+    let timeInterval;
+    let count = 120;
+    let timer = count - 1;
+    let seconds;
+    timeInterval = setInterval(function () {
+      this.state.seconds = parseInt(timer % 120);
+       this.setState({...this.state,seconds:seconds})
+      if (--timer < 0) {
+        timer = count;
+        clearInterval(timeInterval);
+        this.setState({...this.state,disable:false,type:"Resend"})
       }
     }, 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.myInterval);
-  }
+  };
+   startTimer2 = () => {
+    debugger;
+    let timeInterval2;
+    let count2 = 120;
+    let timer2 = count2 - 1;
+    let seconds2;
+    timeInterval2 = setInterval(function () {
+      this.state.seconds2 = parseInt(timer2 % 120);
+       this.setState({...this.state,seconds2:seconds2})
+      if (--timer2 < 0) {
+        timer2 = count2;
+        clearInterval(timeInterval2);
+        this.setState({...this.state,disable:false,type:"Resend"})
+      }
+    }, 1000);
+  };
+ 
   trackEvent = () => {
     apiCalls.trackEvent({
       Type: "User",
@@ -173,6 +209,7 @@ class WithdrawSummary extends Component {
         verificationText:
           apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber
       });
+      this.startTimer();
 
       setTimeout(() => {
         this.setState({
@@ -206,6 +243,7 @@ class WithdrawSummary extends Component {
         emailVerificationText:
           apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
       });
+      this.startTimer2();
       setTimeout(() => {
         this.setState({
           emailText: "resendEmail",
@@ -316,7 +354,7 @@ class WithdrawSummary extends Component {
       });
       setTimeout(() => {
         this.setState({ errorMsg: null });
-      }, 5000);
+      }, 1000);
       this.setState({ ...this.state, inValidData: true });
     }
   };
