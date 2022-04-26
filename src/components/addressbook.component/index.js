@@ -61,7 +61,7 @@ class AddressBook extends Component {
     columnsFiat = [
         { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
         {
-            field: "addressLable", 
+            field: "addressState", 
             title: apiCalls.convertLocalLang('AddressLabel'),
             filter: true, width: 300,
             customCell: (props) => (<td >{props.dataItem.favouriteName}<Text className='file-label ml-8 fs-12'>{this.addressTypeNames(props?.dataItem?.addressType)}</Text></td>),
