@@ -87,7 +87,7 @@ class AddressBook extends Component {
                 <span></span> </label></td>)
         },
         {
-            field: "", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 300,
+            field: "addressLable", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 300,
             customCell: (props) => (<td >{props.dataItem.addressLable}<Text className='file-label ml-8 fs-12'>{props?.dataItem?.addressType}</Text></td>)
         },
         { field: "address", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
