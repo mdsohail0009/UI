@@ -7,10 +7,15 @@ import './assets/css/styles.css';
 import './assets/css/framework.css';
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
 import IdleCmp from './authentication/idle.component';
+import { Provider } from 'react-redux';
+import { store } from './store';
 ReactDOM.render(
   <React.StrictMode>
     <ThemeSwitcherProvider defaultTheme="DRT" themeMap={{ DRT: "./dark-theme.css", LHT: "./light-theme.css" }}>
+     <Provider store={store}>
       <IdleCmp />
+      </Provider>
+
     </ThemeSwitcherProvider>
   </React.StrictMode>,
   document.getElementById('root')

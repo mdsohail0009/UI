@@ -43,7 +43,11 @@ class MassPayment extends Component {
         this.props.dispatch(setWithdrawfiatenaable(true))
         this.props.dispatch(setStep("step1"))
     }
-
+withdrawFiatSummaryBack = () => {
+    this.props.dispatch(setStep("step1"));
+    this.props.dispatch(setWithdrawfiatenaable(true));
+    this.props.dispatch(rejectWithdrawfiat());
+}
     renderContent = () => {
         const stepcodes = {
             fiatdeposit: <FiatDeposit tab={this.props.tabData} fiatRef={(cd) => this.child = cd} />,
@@ -64,7 +68,7 @@ class MassPayment extends Component {
     renderTitle = () => {
         const stepcodes = {
             fiatdeposit: <span />,
-            faitsummary: <span />,
+            faitsummary: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             fiatdepositsummary: <span />,
             addcard: <span onClick={() => this.props.dispatch(setStep("step2"))} className="icon md lftarw-white c-pointer" />,
             selectwallet: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
@@ -74,7 +78,7 @@ class MassPayment extends Component {
             withdrwalfiatsummary: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
             withdrwlive: <span onClick={() => this.props.dispatch(setStep("step5"))} className="icon md lftarw-white c-pointer" />,
             withdrwsuccess: null,
-            withdrawfaitsummary:<span  />,
+            withdrawfaitsummary:<span onClick={this.withdrawFiatSummaryBack} className="icon md lftarw-white c-pointer" />,
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }

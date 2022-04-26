@@ -13,12 +13,12 @@ const getCryptos = () => {
 const getMember = (useremail) => {
     return apiClient.get(ApiControllers.accounts + '/' + useremail);
 }
-const sumsubacesstoken = (userid,flow) => {
+const sumsubacesstoken = (userid, flow) => {
     https://api.sumsub.com/resources/accessTokens?userId=JamesBond007&levelName=basic-kyc-level
-    return apiClient.get('Sumsub/AccessToken1?applicantId=' + userid+'&levelName='+flow);
+    return apiClient.get('Sumsub/AccessToken1?applicantId=' + userid + '&levelName=' + flow);
 }
 const sumsublivenessacesstoken = (userid, flow) => {
-    return apiClient.get('Sumsub/ExternalAccessToken?userId=' + userid+'&levelName='+flow);
+    return apiClient.get('Sumsub/ExternalAccessToken?userId=' + userid + '&levelName=' + flow);
 }
 const sumsubacesstokennew = (userid) => {
     return apiClient.get('Sumsub/KYBAccessToken?applicantId=' + userid);
@@ -88,6 +88,9 @@ const getVerification = (AccountId, code) => {
 const downloadKyc = (memberId) => {
     return apiClient.get(ApiControllers.accounts + `DownloadFile/${memberId}`)
 }
+const updateSecurity = (obj) => {
+    return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
+};
 
 const encryptValue = (msg, key) => {
 
@@ -109,8 +112,61 @@ const encryptValue = (msg, key) => {
     });
     return ((salt.toString()) + (iv.toString()) + (encrypted.toString()));
 }
-let apicalls = {
-    getportfolio, getCryptos, getMember, sumsubacesstoken, updateKyc, sumsubacesstokennew, sumsublivenessacesstoken, trackEvent, sellMemberCrypto, convertLocalLang, getIBANData,
-    getdshKpis, getdshcumulativePnl, getAssetNetwroth, getAssetAllowcation, getprofits, getdailypnl, getCode, getVerification, getIpRegistery, encryptValue, downloadKyc
+const sendEmail = (AccountId, isResendOTP) => {
+    return apiClient.get(
+        ApiControllers.master + `SendEmailOTP/${AccountId}/${isResendOTP}`
+    );
+};
+
+const verifyEmail = (AccountId, code) => {
+    return apiClient.get(
+        ApiControllers.master + `EmailOTPVerification/${AccountId}/${code}`
+    );
+};
+const getAuthenticator = (Code, memberId) => {
+    return apiClient.get(
+        ApiControllers.master + `VerifyAuthenticator/${Code}/${memberId}`
+    );
+};
+const getVerificationFields = (memberId) => {
+    return apiClient.get(
+        ApiControllers.master + `Verificationfields/${memberId}`
+    );
 }
-export default apicalls
+const twofactor = (id) => {
+    return apiClient.get(
+        ApiControllers.accounts + `twofactor/${id}`
+    );
+}
+
+let apicalls = {
+    getportfolio,
+    getCryptos,
+    getMember,
+    sumsubacesstoken,
+    updateKyc,
+    sumsubacesstokennew,
+    sumsublivenessacesstoken,
+    trackEvent,
+    sellMemberCrypto,
+    convertLocalLang,
+    getIBANData,
+    getdshKpis,
+    getdshcumulativePnl,
+    getAssetNetwroth,
+    getAssetAllowcation,
+    getprofits,
+    getdailypnl,
+    getCode,
+    getVerification,
+    getIpRegistery,
+    encryptValue,
+    downloadKyc,
+    updateSecurity,
+    sendEmail,
+    verifyEmail,
+    getAuthenticator,
+    getVerificationFields,
+    twofactor
+  };
+  export default apicalls;

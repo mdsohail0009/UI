@@ -28,3 +28,4 @@ const getAddress = (addreddId) => {
     return apiClient.get(ApiControllers.depositWithdraw + `Withdraw/Favourite/${addreddId}`)
 }
 export {getCoinList,favouriteFiatAddress, saveAddress,getSelectedCoinDetails,detailsAddress,favouriteNameCheck,activeInactive,getAddress}
+            
