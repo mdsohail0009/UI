@@ -492,6 +492,8 @@ export default {
   you_are_sending: '您正在发送',
   fees: '费用',
   you_receive: '您将收到',
+  upload_documents: '上传文件',
+  compliance: '(遵守)',
   company_name:'公司名',
   withdraw_verification:'撤銷驗證',
   Phone_verification:'電話驗證',
@@ -503,7 +505,5 @@ export default {
   kyc_documents: 'KYC Documents',
   confirm_beneficiary: 'Confirm Beneficiary',
   return_to_beneficairy: 'Back to Add New Beneficiary',
-  compliance: '(Compliance)',
-  upload_documents: 'Upload Documents',
   get_your_own_iban: '获取自己的 IBAN'
 }

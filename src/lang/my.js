@@ -492,6 +492,8 @@ export default {
   you_are_sending: 'Anda menghantar',
   fees: 'Yuran',
   you_receive: 'Anda akan menerima',
+  upload_documents: 'Muat Naik Dokumen',
+  compliance: '(Pematuhan)',
   company_name:'pangalan ng Kumpanya',
   withdraw_verification:'Bawiin ang Pagpapatunay',
   Phone_verification:'Pag-verify ng Telepono',
@@ -503,7 +505,5 @@ export default {
   kyc_documents: 'KYC Documents',
   confirm_beneficiary: 'Confirm Beneficiary',
   return_to_beneficairy: 'Back to Add New Beneficiary',
-  compliance: '(Compliance)',
-  upload_documents: 'Upload Documents',
   get_your_own_iban: 'Dapatkan IBAN Anda Sendiri'
 }

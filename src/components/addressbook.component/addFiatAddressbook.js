@@ -171,7 +171,7 @@ const NewFiatAddress = (props) => {
         values['membershipId'] = props?.userConfig?.id;
       
        if(!selectParty){
-        values['beneficiaryAccountName'] =props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
+        values['beneficiaryAccountName'] = props?.userConfig.isBusiness?props?.userConfig.businessName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
         }
         values['type'] = type;
         values['info'] = JSON.stringify(props?.trackAuditLogData);
@@ -651,7 +651,7 @@ const NewFiatAddress = (props) => {
                             >
   { selectParty && <Input className="cust-input"  
                  placeholder= {(props?.userConfig?.isBusiness && apiCalls.convertLocalLang("company_name")) || (!props?.userConfig?.isBusiness && apiCalls.convertLocalLang("Recipient_full_name"))}/>}
-                 {!selectParty && <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
+                 {!selectParty && <Input className="cust-input" value={props?.userConfig.isBusiness?props?.userConfig.businessName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
