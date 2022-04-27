@@ -4,6 +4,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
+import moment from 'moment';
 import {warning} from '../../utils/messages'
 import List from "../grid.component";
 import BeneficiaryDrawer from './beneficiaryDrawer';
@@ -68,9 +69,10 @@ const Payments = (props) => {
             )
           },
         {
-            field: "createdDate", title: 'Date', filter: true, filterType: "date", customCell: (props) => (
+            field: "createdDate", title: 'Date', filter: true, filterType: "date",
+             customCell: (props) => (
                 <td><div className="gridLink" onClick={() => paymentsView(props)}>
-                    <Moment format="DD/MM/YYYY">{new Date(props.dataItem.createdDate).toLocaleDateString()}</Moment></div></td>)
+                    <Moment format="DD/MM/YYYY">{moment(new Date(props.dataItem.createdDate),"DD/MM/YYYY")}</Moment></div></td>)
         },
         { field: "currency", title: 'Currency', filter: true },
         { field: "totalAmount", title: 'Total Amount', filter: true },
