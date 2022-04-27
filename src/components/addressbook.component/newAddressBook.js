@@ -57,7 +57,6 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
     const [isValidFile, setIsValidFile]=useState(true);
     useEffect(() => {
         if (addressBookReducer?.cryptoValues) {
-            debugger
             form.setFieldsValue({
                 toCoin: addressBookReducer?.cryptoValues?.toCoin, favouriteName: addressBookReducer?.cryptoValues.favouriteName,
                 toWalletAddress: addressBookReducer?.cryptoValues.toWalletAddress,addressType:addressBookReducer?.cryptoValues?.addressType,remarks:addressBookReducer?.cryptoValues?.remarks,isAgree:addressBookReducer?.cryptoValues?.isAgree,
@@ -89,7 +88,6 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         changeStep("step2");
     }
     const loadDataAddress = async () => {
-        debugger
         setIsLoading(true)
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'crypto');
         if (response.ok) {
@@ -104,7 +102,6 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         }
     }
     const saveAddressBook = async (values) => {
-        debugger
         setIsLoading(false);
         setBtnDisabled(true);
         const type = 'crypto';

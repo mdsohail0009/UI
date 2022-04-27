@@ -94,7 +94,7 @@ const NewFiatAddress = (props) => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat Address Book Details page view ', "Username": props?.userConfig?.id, "MemeberId": props?.userConfig?.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Address book details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' });
     }
     const loadDataAddress = async () => {
-        debugger
+    
         setIsLoading(true)
         let response = await getAddress(props?.addressBookReducer?.selectedRowData?.id, 'fiat');
         if (response.ok) {
@@ -148,7 +148,7 @@ const NewFiatAddress = (props) => {
             });
         }
         let recName = await getCountryStateLu();
-        debugger
+    
         if (recName.ok) {
             setCountryLu(recName.data);
         }

@@ -78,7 +78,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
     }
   }
   const saveDetails=async()=>{
-    debugger
+    
     
    
     // if (email && phone && factor) {
@@ -95,7 +95,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
       }
         const response = await apiCalls.updateSecurity(obj);
         if (response.ok) {
-          debugger
+          
           setErrorMsg(false)
           fetchWithdrawVerifyObj(obj);
           success("Withdraw verification details saved successfully")

@@ -11,7 +11,6 @@ import apiCalls from "../../api/apiCalls";
 import Loader from "../../Shared/loader";
 
 class ProfileInfo extends Component {
-  debuggers
   state = { Image: null, Loader: false, fileLoader: false };
   uploadProps = {
     name: "file",

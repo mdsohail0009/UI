@@ -116,7 +116,6 @@ class FaitDeposit extends Component {
     }
   }
   handlFiatDep = async (e, currencyLu) => {
-    debugger
     let { depObj } = this.state;
     depObj.currency = e;
     depObj.BankName = null;
@@ -158,7 +157,6 @@ class FaitDeposit extends Component {
     this.formRef.current.setFieldsValue({ ...depObj })
   }
   ConfirmDeposit = async () => {
-    debugger
     let { BankInfo, depObj } = this.state;
     const dFObj = { ...BankInfo, ...depObj };
     this.props.dispatch(updatdepfiatobject(dFObj));
