@@ -250,7 +250,7 @@ const NewFiatAddress = (props) => {
         }
     }
     const getIbanData = async (val) => {
-        form.setFieldsValue({bankName:"",bankAddress:"",  state:null,country:"",zipCode:"",routingNumber:""});  
+        form.setFieldsValue({bankName:"",bankAddress:"",  state:null,country:null,zipCode:"",routingNumber:""});  
         if (val && val.length > 14) {
             let response = await apiCalls.getIBANData(val);
             if (response.ok) {
@@ -630,11 +630,7 @@ const NewFiatAddress = (props) => {
                             className='custom-label mb-0'
                             name="beneficiaryAccountName"
                             required
-                            label={                        
-                            <Translate
-                                content={(props?.userConfig?.isBusiness && "company_name" ) || (!props?.userConfig?.isBusiness && "Recipient_full_name")}
-                                component={Form.label}
-                            />}
+                            label={<Translate content={(props?.userConfig?.isBusiness && "company_name" ) || (!props?.userConfig?.isBusiness && "Recipient_full_name")} component={Form.label}/>}
                             rules={[
                                 {
                                     required: true,
