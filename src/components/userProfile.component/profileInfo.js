@@ -11,7 +11,6 @@ import apiCalls from "../../api/apiCalls";
 import Loader from "../../Shared/loader";
 
 class ProfileInfo extends Component {
-  debuggers
   state = { Image: null, Loader: false, fileLoader: false };
   uploadProps = {
     name: "file",
@@ -58,7 +57,7 @@ class ProfileInfo extends Component {
         message.error({
           content: isFileName
             ? `File is not allowed. You can upload jpg, png, jpeg files`
-            : "File don't allow double Extension",
+            : "File don't allow double extension",
           className: "custom-msg"
         });
         return Upload.LIST_IGNORE;
