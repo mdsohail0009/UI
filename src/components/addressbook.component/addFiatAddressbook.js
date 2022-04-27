@@ -250,13 +250,12 @@ const NewFiatAddress = (props) => {
         }
     }
     const getIbanData = async (val) => {
-        form.setFieldsValue({bankName:"",bankAddress:"",  state:"",country:null,zipCode:"",routingNumber:""});  
+        form.setFieldsValue({bankName:"",bankAddress:"",  state:null,country:"",zipCode:"",routingNumber:""});  
         if (val && val.length > 14) {
             let response = await apiCalls.getIBANData(val);
             if (response.ok) {
                 const oldVal = form.getFieldValue();
-                
-                form.setFieldsValue({ routingNumber: response.data.routingNumber || oldVal.routingNumber, bankName: response.data.bankName || oldVal.bankName, bankAddress: response.data.bankAddress || oldVal.bankAddress, zipCode: response.data.zipCode || oldVal.zipCode,	state:response.data.state || oldVal.state, country:response.data.country || oldVal.country})
+                 form.setFieldsValue({ routingNumber: response.data.routingNumber || oldVal.routingNumber, bankName: response.data.bankName || oldVal.bankName, bankAddress: response.data.bankAddress || oldVal.bankAddress, zipCode: response.data.zipCode || oldVal.zipCode,	state:response.data.state || oldVal.state, country:response.data.country || oldVal.country})
             }
            }
          }
@@ -592,7 +591,8 @@ const NewFiatAddress = (props) => {
                                 rules={[
                                     {
                                     validator: (rule, value, callback) => {
-                                            var regx = new RegExp(/^[A-Za-z0-9 ]+$/);
+                                        var regx = new RegExp (/^[ z0-9_/-]*$/);
+                                            // var regx = new RegExp(!(/^[A-Za-z]+$/));
                                             if (value) {
                                                 if (!regx.test(value)) {
                                                     callback("Invalid zip code");
@@ -612,7 +612,7 @@ const NewFiatAddress = (props) => {
                             >
                                 <Input
                                     className="cust-input"
-                                    maxLength="6"
+                                    maxLength="10"
                                     placeholder={apiCalls.convertLocalLang("zipcode")}
                                 />
                             </Form.Item>
@@ -629,6 +629,7 @@ const NewFiatAddress = (props) => {
                             <Form.Item
                             className='custom-label mb-0'
                             name="beneficiaryAccountName"
+                            required
                             label={                        
                             <Translate
                                 content={(props?.userConfig?.isBusiness && "company_name" ) || (!props?.userConfig?.isBusiness && "Recipient_full_name")}

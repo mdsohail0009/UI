@@ -19,8 +19,8 @@ const { TextArea } = Input;
 const { Dragger } = Upload;
 const { confirm } = Modal;
 const EllipsisMiddle = ({ suffixCount, children }) => {
-    const start = children.slice(0, children.length - suffixCount).trim();
-    const suffix = children.slice(-suffixCount).trim();
+    const start = children?.slice(0, children.length - suffixCount).trim();
+    const suffix = children?.slice(-suffixCount).trim();
     return (
         <Text className="mb-0 fs-14 docname c-pointer d-block"
             style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
@@ -52,33 +52,39 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
     const [cryptoAddress, setCryptoAddress] = useState({});
     const [btnDisabled, setBtnDisabled] = useState(false);
     const [file, setFile] = useState(null);
-    const [uploadPercentage, setUploadPercentage] = useState(0);
+   
     const [isUploading, setUploading] = useState(false);
     const [isValidFile, setIsValidFile]=useState(true);
     useEffect(() => {
         if (addressBookReducer?.cryptoValues) {
+            debugger
             form.setFieldsValue({
                 toCoin: addressBookReducer?.cryptoValues?.toCoin, favouriteName: addressBookReducer?.cryptoValues.favouriteName,
-                toWalletAddress: addressBookReducer?.cryptoValues.toWalletAddress
+                toWalletAddress: addressBookReducer?.cryptoValues.toWalletAddress,addressType:addressBookReducer?.cryptoValues?.addressType,remarks:addressBookReducer?.cryptoValues?.remarks,isAgree:addressBookReducer?.cryptoValues?.isAgree,
+
             })
+          
+ setFile(addressBookReducer?.cryptoValues?.uploadedFile);
         } else {
             if (addressBookReducer?.selectedRowData?.id != "00000000-0000-0000-0000-000000000000" && addressBookReducer?.selectedRowData?.id) {
                 loadDataAddress();
             }
         }
+        form.setFieldsValue(addressBookReducer?.cryptoValues);
     }, [])
 
-    useEffect(() => {
-        if (addressBookReducer?.cryptoValues) {
-            form.setFieldsValue({
-                toCoin: addressBookReducer?.cryptoValues?.toCoin, favouriteName: addressBookReducer?.cryptoValues.favouriteName,
-                toWalletAddress: addressBookReducer?.cryptoValues.toWalletAddress
-            })
-        }
-    }, [addressBookReducer?.cryptoValues])
+    // useEffect(() => {
+    //     if (addressBookReducer?.cryptoValues) {
+    //         form.setFieldsValue({
+    //             toCoin: addressBookReducer?.cryptoValues?.toCoin, favouriteName: addressBookReducer?.cryptoValues.favouriteName,
+    //             toWalletAddress: addressBookReducer?.cryptoValues.toWalletAddress
+    //         })
+    //     }
+    // }, [addressBookReducer?.cryptoValues])
 
     const selectCrypto = () => {
         let getvalues = form.getFieldsValue();
+        getvalues.uploadedFile = file || ""
         InputFormValues(getvalues);
         changeStep("step2");
     }
@@ -91,6 +97,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
             form.setFieldsValue({ ...response.data, toCoin: addressBookReducer?.selectedRowData?.coin });
             const fileInfo = response?.data?.documents?.details[0];
             if (fileInfo?.path) {
+                console.log([fileInfo.path]);
                 setFile({ name: fileInfo?.documentName, size: fileInfo.remarks, response: [fileInfo.path] })
             }
             setIsLoading(false)
@@ -123,7 +130,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
             saveObj.toWalletAddress = apiCalls.encryptValue(saveObj.toWalletAddress, userConfig.sk)
             saveObj.beneficiaryAccountName = apiCalls.encryptValue(saveObj.beneficiaryAccountName, userConfig.sk)
             if (file) {
-                const obj = getDocObj(userConfig?.id, file.response[0], file.name, file.size, cryptoAddress?.documents?.id, cryptoAddress?.documents?.details[0].id)
+               const obj = getDocObj(userConfig?.id, file?.path, file.name, file.size, cryptoAddress?.documents?.id, cryptoAddress?.documents?.details[0].id)
                 saveObj["documents"] = obj;
             }
             let response = await saveAddress(saveObj);
@@ -146,16 +153,36 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
             }
         }
     }
+    const uploadFile = ({file}) =>{
+     if (file?.status === "done" && isUploading) {
+             let obj = {
+                    "name": `${file.name}`,
+                    "isChecked": file.name == "" ? false : true,
+                    "remarks": `${file.size}`,
+                    "state": null,
+                    "status": false,
+                    "path": `${file.response}`,
+                    "size":`${file.size}`,
+                }
+                setFile(obj);
+                setUploading(false);
+
+        }
+    }
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     const beforeUpload = (file) => {
-        debugger
+      
+        if((file.name.split('.')).length > 2){
+            warning(" File don't allow double extension");
+            return
+            }
         let fileType = { "image/png": false, 'image/jpg': false, 'image/jpeg': false, 'image/PNG': false, 'image/JPG': false, 'image/JPEG': false, 'application/pdf': true, 'application/PDF': true }
         if (fileType[file.type]) {
-            setIsValidFile(true);
+            setUploading(true);
             return true;
         } else {
             warning('File is not allowed. You can upload PDF  files')
-            setIsValidFile(false);
+            setUploading(false);
             return Upload.LIST_IGNORE;
         }
     }
@@ -268,15 +295,9 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                                 }
                             }}
                         ]}>
-                        {<Dragger accept=".pdf,.PDF," className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={({ file: res }) => {
-                            setUploading(true);
-                            if (res.status === "uploading") { setUploadPercentage(res.percent) }
-                            else if (res.status === "done") {
-                                setFile(res);
-                                setUploading(false);
-                            }
-
-                        }}>
+ {<Dragger accept=".pdf,.PDF," className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { beforeUpload(props) }} onChange={( upload ) => uploadFile(upload)
+               
+                        }>
                             <p className="ant-upload-drag-icon mb-16">
                                 <span className="icon xxxl doc-upload" />
                             </p>
@@ -286,18 +307,13 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                     {isUploading && <div className="text-center">
                         <Spin />
                     </div>}
-                    {file != null && <div className="docfile mr-0 c-pointer">
+                    {!isUploading && file != null && <div className="docfile mr-0 c-pointer">
                         <span className={`icon xl file mr-16`} />
                         <div className="docdetails">
-                            <EllipsisMiddle suffixCount={10}>{file.name}</EllipsisMiddle>
+                            <EllipsisMiddle suffixCount={4}>{file.name}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(file.size)}</span>
                         </div>
-                        <span className="icon md close c-pointer" onClick={() => confirm({
-                            content: <div className='fs-14 text-white-50'>Are you sure do you want to delete file?</div>,
-                            title: <div className='fs-18 text-white-30'>Delete File ?</div>,
-                            onOk: () => { setFile(null); }
-                            
-                        })} />
+                  
                     </div>}
                     <Form.Item
                         className="custom-forminput mt-36 agree"
