@@ -163,6 +163,8 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                     "status": false,
                     "path": `${file.response}`,
                     "size":`${file.size}`,
+                    "documentId" : file !== null ? file?.documentId : "00000000-0000-0000-0000-000000000000",
+                    "id ": file!== null ? file?.id :"00000000-0000-0000-0000-000000000000",
                 }
                 setFile(obj);
                 setUploading(false);
