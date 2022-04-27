@@ -8,7 +8,6 @@ import Loader from '../../Shared/loader';
 import Translate from 'react-translate-component';
 import apiCalls from '../../api/apiCalls';
 import { validateContentRule } from '../../utils/custom.validator';
-import apicalls from "../../api/apiCalls";
 import { Link } from "react-router-dom";
 import { bytesToSize, getDocObj } from '../../utils/service';
 import { warning } from '../../utils/message';
@@ -17,7 +16,7 @@ const { Text, Paragraph } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
 const { Dragger } = Upload;
-const { confirm } = Modal;
+
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children?.slice(0, children.length - suffixCount).trim();
     const suffix = children?.slice(-suffixCount).trim();
@@ -52,9 +51,8 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
     const [cryptoAddress, setCryptoAddress] = useState({});
     const [btnDisabled, setBtnDisabled] = useState(false);
     const [file, setFile] = useState(null);
-   
-    const [isUploading, setUploading] = useState(false);
-    const [isValidFile, setIsValidFile]=useState(true);
+   const [isUploading, setUploading] = useState(false);
+    
     useEffect(() => {
         if (addressBookReducer?.cryptoValues) {
             form.setFieldsValue({
@@ -71,15 +69,6 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         }
         form.setFieldsValue(addressBookReducer?.cryptoValues);
     }, [])
-
-    // useEffect(() => {
-    //     if (addressBookReducer?.cryptoValues) {
-    //         form.setFieldsValue({
-    //             toCoin: addressBookReducer?.cryptoValues?.toCoin, favouriteName: addressBookReducer?.cryptoValues.favouriteName,
-    //             toWalletAddress: addressBookReducer?.cryptoValues.toWalletAddress
-    //         })
-    //     }
-    // }, [addressBookReducer?.cryptoValues])
 
     const selectCrypto = () => {
         let getvalues = form.getFieldsValue();
@@ -325,7 +314,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                                         ? Promise.resolve()
                                         : Promise.reject(
                                             new Error(
-                                                apicalls.convertLocalLang("agree_termsofservice")
+                                                apiCalls.convertLocalLang("agree_termsofservice")
                                             )
                                         )
                             }
