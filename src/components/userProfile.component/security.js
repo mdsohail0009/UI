@@ -9,7 +9,7 @@ import { success, warning, error } from "../../utils/messages";
 import Moment from "react-moment";
 import apiCalls from "../../api/apiCalls";
 const { Title, Paragraph, Text } = Typography;
-const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerifyObj }, props) => {
+const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerifyObj,twoFA }, props) => {
   const [form] = Form.useForm();
   const [isChangepassword, setisChangepassword] = useState(false);
   const [verifyData, setVerifyData] = useState({})
@@ -95,7 +95,6 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
       }
         const response = await apiCalls.updateSecurity(obj);
         if (response.ok) {
-          
           setErrorMsg(false)
           fetchWithdrawVerifyObj(obj);
           success("Withdraw verification details saved successfully")
@@ -110,13 +109,13 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
           error(response.data)
         }
       }
-      else if(email||phone||factor===false){
-        useDivRef.current.scrollIntoView(0,0);
-        return setErrorMsg("Please select two or more  withdraw verification options");
-      }
+      // else if(email||phone||factor===false){
+      //   useDivRef.current.scrollIntoView(0,0);
+      //   return setErrorMsg("Please select two or more  withdraw verification options");
+      // }
       else {
         useDivRef.current.scrollIntoView(0,0);
-        return setErrorMsg("Please select two or more withdraw verification options");
+        return setErrorMsg("Please select two or more withdraw verification options from below under title");
       }
  } 
 
@@ -158,7 +157,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
                 />
               </label>
               <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
-                {userConfig?.twofactorVerified ? (
+                {twoFA?.isEnabled ? (
                   <Translate
                     content="Enabled"
                     component={Paragraph.p}
@@ -175,7 +174,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
               <div>
                 <Switch
                   onChange={(status) => enableDisable2fa(status)}
-                  checked={userConfig?.twofactorVerified}
+                  checked={twoFA?.isEnabled}
                   size="medium"
                   className="custom-toggle"
                 />
@@ -273,6 +272,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
           className="basicinfo mb-0"
         />
         <Paragraph className="basic-decs">Please select <Text className="text-yellow fw-700">any 2 or more</Text> withdrawal verification options from below.</Paragraph>
+       
         <Form>
           <Row gutter={[16, 16]}>
             <Col md={4} xl={4} xxl={4}>
@@ -344,7 +344,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
 };
 const connectStateToProps = ({ userConfig, userProfile }) => {
   return {
-    userConfig: userConfig.userProfileInfo, userProfile
+    userConfig: userConfig.userProfileInfo, userProfile,twoFA:userConfig.twoFA
 
   };
 };
