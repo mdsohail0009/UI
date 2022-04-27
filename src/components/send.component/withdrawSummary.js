@@ -185,7 +185,6 @@ class WithdrawSummary extends Component {
   };
 
   getVerifyData = async () => {
-    debugger;
     let response = await apiCalls.getVerificationFields(
       this.props.userProfile.id
     );
@@ -194,7 +193,6 @@ class WithdrawSummary extends Component {
     }
   };
   getOTP = async (val) => {
-    debugger;
     let response = await apiCalls.getCode(
       this.props.userProfile.id,
       this.state.type
@@ -227,7 +225,6 @@ class WithdrawSummary extends Component {
   };
 
   getEmail = async (val) => {
-    debugger;
     let response = await apiCalls.sendEmail(
       this.props.userProfile.id,
       this.state.type
@@ -260,7 +257,6 @@ class WithdrawSummary extends Component {
   };
 
   getEmailVerification = async () => {
-    debugger;
     let response = await apiCalls.verifyEmail(
       this.props.userProfile.id,
       this.state.emailCodeVal
@@ -284,7 +280,6 @@ class WithdrawSummary extends Component {
   };
 
   getOtpVerification = async () => {
-    debugger;
     let response = await apiCalls.getVerification(
       this.props.userProfile.id,
       this.state.otpCode
@@ -311,7 +306,7 @@ class WithdrawSummary extends Component {
     }
   };
   handleOtp = (val) => {
-    debugger;
+    ;
     this.setState({
       ...this.state,
       otp: val.code,
@@ -322,7 +317,7 @@ class WithdrawSummary extends Component {
   };
 
   handleSendOtp = (val) => {
-    debugger;
+    ;
     this.setState({
       ...this.state,
       emailOtp: val.emailCode,
@@ -333,7 +328,7 @@ class WithdrawSummary extends Component {
   };
 
   getAuthenticator = async () => {
-    debugger;
+    ;
     let response = await apiCalls.getAuthenticator(
       this.state.authCode,
       this.props.userProfile.userId
@@ -359,18 +354,18 @@ class WithdrawSummary extends Component {
     }
   };
   handleChange = (e) => {
-    debugger;
+    ;
     this.setState({ ...this.state, otpCode: e.target.value });
   };
   handleAuthenticator = (e) => {
-    debugger;
+    ;
     this.setState({ ...this.state, authCode: e.target.value });
   };
   handleEmailChange = (e) => {
     this.setState({ ...this.state, emailCodeVal: e.target.value });
   };
   saveWithdrwal = async (values) => {
-    debugger;
+    ;
     const { authenticator, OtpVerification, EmailCode,invalidData } = this.state;
     if (this.state.onTermsChange) {
       if( authenticator&&OtpVerification||EmailCode&&OtpVerification||

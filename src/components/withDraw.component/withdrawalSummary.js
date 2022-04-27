@@ -189,7 +189,7 @@ const WithdrawalFiatSummary = ({
   };
 
   const saveWithdrwal = async (values) => {
-    debugger;
+    ;
     if ((verifyData.isEmailVerification)) {
       if(!isEmailVerification){
         setMsg("Please enter valid codes");
@@ -263,7 +263,7 @@ const WithdrawalFiatSummary = ({
   };
 
   const getEmail = async (val) => {
-    debugger;
+    ;
     let response = await apiCalls.sendEmail(userConfig.id, type);
     if (response.ok) {
       setEmailText("sentVerification");
@@ -287,7 +287,7 @@ const WithdrawalFiatSummary = ({
     }
   };
   const getEmailVerification = async (values) => {
-    debugger;
+    ;
     setValidData(true);
     let response = await apiCalls.verifyEmail(userConfig.id, emailCode);
     if (response.ok) {
@@ -311,7 +311,7 @@ const WithdrawalFiatSummary = ({
   };
 
   const handleSendOtp = (val) => {
-    debugger;
+    ;
     setEmailOtp(val.emailCode);
     setVerifyEmailText("verifyTextBtn");
     setTooltipEmail(false);
@@ -348,7 +348,7 @@ const WithdrawalFiatSummary = ({
   };
 
   const getOtpVerification = async () => {
-    debugger;
+    ;
     setValidData(true);
     let response = await apiCalls.getVerification(userConfig.id, otpCode);
     if (response.ok) {
@@ -382,7 +382,7 @@ const WithdrawalFiatSummary = ({
     setDisableSave(false);
   };
   const getAuthenticator = async () => {
-    debugger;
+    ;
     setValidData(true);
     let response = await apiCalls.getAuthenticator(authCode, userConfig.userId);
     if (response.ok) {
