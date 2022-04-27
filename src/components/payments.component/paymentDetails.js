@@ -5,6 +5,7 @@ import { getCurrencyLu, getPaymentsData, savePayments, getBankData, creatPayment
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
+import { warning } from '../../utils/message';
 
 const { confirm } = Modal;
 const { Option } = Select;
@@ -293,11 +294,13 @@ class PaymentDetails extends Component {
       loading: true,
     });
     let paymentDetialsData = this.state.paymentsData;
-    if((file.name.split('.')).length > 2){
+    if(file.name.split('.').length > 2){
       this.setState({
         ...this.state,
-        errorMessage: "File don't allow double extension",
+        loading: false,
       });
+      warning("File don't allow double extension")
+      return
   }
     for (let pay in paymentDetialsData) {
       if (paymentDetialsData[pay].id === item.id) {

@@ -366,7 +366,7 @@ export default {
   AddressLabel: 'Address Label',
   Coin: 'Coin',
   submit: 'Submit',
-  Enteraddresslabel: 'Address label',
+  Enteraddresslabel: 'Address Label',
   Enteraddress: 'Enter Address',
   AddFiatAddress: 'ADD FIAT ADDRESS',
   Selectcoin: 'Select Coin',

@@ -261,9 +261,8 @@ const NewFiatAddress = (props) => {
            }
          }
     const beforeUpload = (file,type) => {
-        debugger
    if((file.name.split('.')).length > 2){
-     warning(" File don't allow double Extension");
+     warning(" File don't allow double extension");
         return
 }
         if(type === "IDENTITYPROOF"){
