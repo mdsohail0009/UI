@@ -374,7 +374,7 @@ class RequestedDocs extends Component {
                         {/* <div className="fw-600 text-white-30 fs-16 l-height-normal">
                         {(value == null || value ==" ")? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
                         </div> */}
-                                <div className='fw-600 text-white-30 fs-16 l-height-normal' >
+                                <div className='fw-600 text-white-30 fs-16 l-height-normal'style={{wordBreak:"break-all"}} >
                                     {(value == null || value == " ") ? '-' : (isNaN(value) || (key === 'Transaction Id') ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
                                 </div>
                       </div>
