@@ -173,7 +173,7 @@ class PaymentsView extends Component {
         }
     }
     // handleUpload = ({ file }, type) => {
-    //     debugger
+    //     
     //     this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, error: null })
     //     let obj = {
     //         "documentId": "00000000-0000-0000-0000-000000000000",
@@ -207,7 +207,6 @@ class PaymentsView extends Component {
        
     // }
     handleUpload = ({ file }, type) => {
-        debugger
         this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, error: null })
         
         if (type == "IDENTITYPROOF") {
@@ -293,7 +292,6 @@ class PaymentsView extends Component {
         }
     }
     deleteDocument=(file,type)=>{
-        debugger
         if(this.state.docIdentityProofObjs && type == "IDENTITYPROOF"){
             let deleteIdentityList = this.state.docIdentityProofObjs.filter((file) => file.documentName !== file.documentName);
                 this.state.fileDetails.splice(0, 1);
@@ -414,7 +412,6 @@ class PaymentsView extends Component {
         }
     }
     saveRolesDetails = async (values) => {
-        debugger
         let Obj = {
             "favouriteName": values.favouriteName,
             "toWalletAddress": apiCalls.encryptValue(values.toWalletAddress, this.props.userConfig?.sk),

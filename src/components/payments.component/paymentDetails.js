@@ -136,7 +136,6 @@ class PaymentDetails extends Component {
     }
   };
   saveRolesDetails = async () => {
-    debugger
     let objData = this.state.paymentsData.filter((item) => {
       return item.checked;
     });
