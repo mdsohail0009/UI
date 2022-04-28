@@ -171,7 +171,7 @@ const NewFiatAddress = (props) => {
         values['membershipId'] = props?.userConfig?.id;
       
        if(!selectParty){
-        values['beneficiaryAccountName'] =props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
+        values['beneficiaryAccountName'] = props?.userConfig.isBusiness?props?.userConfig.businessName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
         }
         values['type'] = type;
         values['info'] = JSON.stringify(props?.trackAuditLogData);
@@ -224,20 +224,19 @@ const NewFiatAddress = (props) => {
                  else{
                     setBtnDisabled(false);
                     useDivRef.current.scrollIntoView()
-                  return  setErrorMsg("Please upload identity document")
+                  return setErrorMsg("Please upload identity document")
                  
                  }
              if(addressFile){
               saveObj.documents.details.push(addressFile);
                     }
                     else{
-                    setBtnDisabled(false);
-                      useDivRef.current.scrollIntoView()
-                     return   setErrorMsg("Please upload address proof")
-                    }
+                        setBtnDisabled(false);
+                          useDivRef.current.scrollIntoView()
+                         return   setErrorMsg("Please upload address proof")
+                        }
                 }
-                else 
-                if (declarationFile){
+                else if (declarationFile){
               saveObj.documents.details.push(declarationFile);
                 }
                 else{
@@ -277,7 +276,6 @@ const NewFiatAddress = (props) => {
            }
          }
     const beforeUpload = (file,type) => {
-       
    if((file.name.split('.')).length > 2){
     warning(" File don't allow double extension");
         return
@@ -338,7 +336,6 @@ else{
         }
 
   const upLoadFiles = ({file},type) =>  {
-    
     let obj = {
         "documentName": `${file.name}`,
         "isChecked": file.name == "" ? false : true,
@@ -669,7 +666,7 @@ else{
                             >
   { selectParty ?
   <Input className="cust-input" placeholder= {(props?.userConfig?.isBusiness && apiCalls.convertLocalLang("company_name")) || (!props?.userConfig?.isBusiness && apiCalls.convertLocalLang("Recipient_full_name"))}/>
-  : <Input className="cust-input" value={props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
+  : <Input className="cust-input" value={props?.userConfig.isBusiness?props?.userConfig.businessName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName} placeholder="Recipient full name" disabled={true} />}
                             </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -711,10 +708,10 @@ else{
                     </Row>
 
                   
-    <Row gutter={[12,12]}>
+   <Row gutter={[12,12]}>
    {  selectParty === true && <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
                          <Form.Item name={"file1"} className="mb-0"
-                          rules={[{
+                         rules={[{
                                validator: (_, value) => {
                                 if (identityFile) {
                                     return Promise.resolve();
@@ -746,8 +743,8 @@ else{
                             </Form.Item>
     </Col>}
     {  selectParty === true && <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
-                         <Form.Item name={"file2"} className="mb-0"
-                          rules={[{
+                         <Form.Item name={"file2"} className="mb-0"className="mb-0"
+                         rules={[{
                                 validator: (_, value) => {
                                     if (addressFile) {
                                         return Promise.resolve();
