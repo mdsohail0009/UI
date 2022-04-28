@@ -10,7 +10,16 @@ import { warning } from '../../utils/message';
 const { confirm } = Modal;
 const { Option } = Select;
 const { Title, Text } = Typography;
-
+const EllipsisMiddle = ({ suffixCount, children }) => {
+  const start = children?.slice(0, children.length - suffixCount).trim();
+  const suffix = children?.slice(-suffixCount).trim();
+  return (
+      <Text className="mb-0 fs-14 docname c-pointer d-block file-label fs-12 text-yellow fw-400"
+          style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
+          {start}
+      </Text>
+  );
+};
 class PaymentDetails extends Component {
   formRef = createRef();
   constructor(props) {
@@ -645,7 +654,7 @@ class PaymentDetails extends Component {
                                       </Upload>
                                       {this.props.match.params.id !==
                                         "00000000-0000-0000-0000-000000000000" && (
-                                        <Button
+                                        <span
                                           disabled={
                                             item.state === "Approved" ||
                                             item.state === "Cancelled" ||
@@ -673,18 +682,18 @@ class PaymentDetails extends Component {
                                           }
                                         >
                                           <span className="icon md delete mt-12" />
-                                        </Button>
+                                        </span>
                                       )}
                                     </div>
 
                                     {item.documents?.details.map((file) => (
                                       <>
                                         {file.documentName !== null && (
-                                          <div className='pay-doc'>
+                                          <div className='docdetails'>
                                           <Tooltip title={file.documentName}>
-                                          <Text className="file-label fs-12">
+                                          <EllipsisMiddle  suffixCount={4}>
                                             {file.documentName}
-                                          </Text>
+                                            </EllipsisMiddle>
                                           </Tooltip>
                                           </div>
                                         )}
@@ -702,13 +711,13 @@ class PaymentDetails extends Component {
                                       {item.documents?.details.map((file) => 
                                      <>
                                      {file.documentName !== null && (
-                                       <div className='pay-doc'>
-                                       <Tooltip title={file.documentName}>
-                                       <Text className="file-label fs-12">
-                                         {file.documentName}
-                                       </Text>
-                                       </Tooltip>
-                                       </div>
+                                        <div className='docdetails'>
+                                        <Tooltip title={file.documentName}>
+                                        <EllipsisMiddle  suffixCount={4}>
+                                          {file.documentName}
+                                          </EllipsisMiddle>
+                                        </Tooltip>
+                                        </div>
                                      )}
                                    </>
 
