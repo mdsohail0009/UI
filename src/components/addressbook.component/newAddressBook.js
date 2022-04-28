@@ -77,18 +77,16 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
     const selectCrypto = () => {
         let getvalues = form.getFieldsValue();
         getvalues.uploadedFile = file || ""
+        getvalues.addressState=addressState
         InputFormValues(getvalues);
-        // getvalues.addressState=addressState
         changeStep("step2");
     }
     const loadDataAddress = async () => {
-        debugger
         setIsLoading(true)
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'crypto');
         if (response.ok) {
             setCryptoAddress(response.data)
             setAddressState(response.data.addressState);
-            console.log(response.data.addressState);
             form.setFieldsValue({ ...response.data, toCoin: addressBookReducer?.selectedRowData?.coin });
             const fileInfo = response?.data?.documents?.details[0];
             if (fileInfo?.path) {
@@ -98,8 +96,6 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         }
     }
     const saveAddressBook = async (values) => {
-        console.log(addressState)
-        console.log(cryptoAddress)
         setIsLoading(false);
         setBtnDisabled(true);
         const type = 'crypto';
@@ -109,7 +105,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
         values['info'] = JSON.stringify(trackAuditLogData);
-        values['addressState'] = addressState;
+        values['addressState'] = addressBookReducer?.selectedRowData?.addressState;
         let namecheck = values.favouriteName.trim();
         let favaddrId = addressBookReducer?.selectedRowData ? addressBookReducer?.selectedRowData?.id : Id;
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'crypto', favaddrId);
@@ -127,7 +123,6 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
             if (file) {
                const obj = getDocObj(userConfig?.id, file?.path, file.name, file.size, cryptoAddress?.documents?.id, cryptoAddress?.documents?.details[0].id)
                 saveObj["documents"] = obj;
-                console.log(obj)
             }
             let response = await saveAddress(saveObj);
             if (response.ok) {
