@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Alert, Spin, message, Typography, Select, Upload, Tooltip, Checkbox, Modal } from 'antd';
+import { Form, Input, Button, Alert, Spin, message, Typography, Select, Upload, Tooltip, Checkbox } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { rejectCoin, setAddressStep, fetchAddressCrypto } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
@@ -43,7 +43,7 @@ const LinkValue = (props) => {
     );
 };
 const link = <LinkValue content="terms_service" />;
-const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, rejectCoinWallet, InputFormValues, userProfileInfo, trackAuditLogData }) => {
+const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, rejectCoinWallet, InputFormValues, trackAuditLogData }) => {
     const [form] = Form.useForm();
     const useDivRef = React.useRef(null);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -52,6 +52,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
     const [btnDisabled, setBtnDisabled] = useState(false);
     const [file, setFile] = useState(null);
    const [isUploading, setUploading] = useState(false);
+   const [addressState, setAddressState] = useState("");
     
     useEffect(() => {
         if (addressBookReducer?.cryptoValues) {
@@ -74,13 +75,17 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         let getvalues = form.getFieldsValue();
         getvalues.uploadedFile = file || ""
         InputFormValues(getvalues);
+        // getvalues.addressState=addressState
         changeStep("step2");
     }
     const loadDataAddress = async () => {
+        debugger
         setIsLoading(true)
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'crypto');
         if (response.ok) {
             setCryptoAddress(response.data)
+            setAddressState(response.data.addressState);
+            console.log(response.data.addressState);
             form.setFieldsValue({ ...response.data, toCoin: addressBookReducer?.selectedRowData?.coin });
             const fileInfo = response?.data?.documents?.details[0];
             if (fileInfo?.path) {
@@ -91,6 +96,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         }
     }
     const saveAddressBook = async (values) => {
+        console.log(addressState)
         setIsLoading(false);
         setBtnDisabled(true);
         const type = 'crypto';
@@ -100,7 +106,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
         values['info'] = JSON.stringify(trackAuditLogData);
-        values['addressState'] = cryptoAddress.addressState;
+        values['addressState'] = addressState;
         let namecheck = values.favouriteName.trim();
         let favaddrId = addressBookReducer?.selectedRowData ? addressBookReducer?.selectedRowData?.id : Id;
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'crypto', favaddrId);
