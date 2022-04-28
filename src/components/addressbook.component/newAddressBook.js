@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Input, Button, Alert, Spin, message, Typography, Select, Upload, Tooltip, Checkbox } from 'antd';
+import { Form, Input, Button, Alert, Spin, message, Typography, Select, Upload, Tooltip,Modal, Checkbox } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { rejectCoin, setAddressStep, fetchAddressCrypto } from '../../reducers/addressBookReducer';
 import { connect } from 'react-redux';
-import { saveAddress, favouriteNameCheck, getAddress } from './api';
+import { saveAddress, favouriteNameCheck, getAddress,getFileURL } from './api';
 import Loader from '../../Shared/loader';
 import Translate from 'react-translate-component';
 import apiCalls from '../../api/apiCalls';
@@ -11,6 +11,7 @@ import { validateContentRule } from '../../utils/custom.validator';
 import { Link } from "react-router-dom";
 import { bytesToSize, getDocObj } from '../../utils/service';
 import { warning } from '../../utils/message';
+import FilePreviewer from "react-file-previewer";
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -53,6 +54,8 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
     const [file, setFile] = useState(null);
    const [isUploading, setUploading] = useState(false);
    const [addressState, setAddressState] = useState("");
+   const [previewPath, setPreviewPath] = useState(null);
+	const [previewModal, setPreviewModal] = useState(false);
     
     useEffect(() => {
         if (addressBookReducer?.cryptoValues) {
@@ -74,29 +77,25 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
     const selectCrypto = () => {
         let getvalues = form.getFieldsValue();
         getvalues.uploadedFile = file || ""
+        getvalues.addressState=addressState
         InputFormValues(getvalues);
-        // getvalues.addressState=addressState
         changeStep("step2");
     }
     const loadDataAddress = async () => {
-        debugger
         setIsLoading(true)
         let response = await getAddress(addressBookReducer?.selectedRowData?.id, 'crypto');
         if (response.ok) {
             setCryptoAddress(response.data)
             setAddressState(response.data.addressState);
-            console.log(response.data.addressState);
             form.setFieldsValue({ ...response.data, toCoin: addressBookReducer?.selectedRowData?.coin });
             const fileInfo = response?.data?.documents?.details[0];
             if (fileInfo?.path) {
-                console.log([fileInfo.path]);
                 setFile({ name: fileInfo?.documentName, size: fileInfo.remarks, response: [fileInfo.path] })
             }
             setIsLoading(false)
         }
     }
     const saveAddressBook = async (values) => {
-        console.log(addressState)
         setIsLoading(false);
         setBtnDisabled(true);
         const type = 'crypto';
@@ -106,7 +105,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
         values['beneficiaryAccountName'] = userConfig.firstName + " " + userConfig.lastName;
         values['type'] = type;
         values['info'] = JSON.stringify(trackAuditLogData);
-        values['addressState'] = addressState;
+        values['addressState'] = addressBookReducer?.selectedRowData?.addressState;
         let namecheck = values.favouriteName.trim();
         let favaddrId = addressBookReducer?.selectedRowData ? addressBookReducer?.selectedRowData?.id : Id;
         let responsecheck = await favouriteNameCheck(userConfig.id, namecheck, 'crypto', favaddrId);
@@ -180,6 +179,60 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
             return Upload.LIST_IGNORE;
         }
     }
+    const docPreview = async (file) => {
+		let res = await getFileURL({ url: file.response[0] });
+		if (res.ok) {
+			setPreviewModal(true);
+			setPreviewPath(res.data);
+		} else {
+			// error(res.data);
+		}
+	};
+    const filePreviewPath = () => {
+		if (previewPath?.includes(".pdf")) {
+			return previewPath;
+		} else {
+			return previewPath;
+		}
+	};
+    const filePreviewModal = (
+		<Modal
+			className="documentmodal-width"
+			destroyOnClose={true}
+			title="Preview"
+			width={1000}
+			visible={previewModal}
+			closeIcon={
+				<Tooltip title="Close">
+					<span className="icon md close-white c-pointer" onClick={() => setPreviewModal(false)} />
+				</Tooltip>
+			}
+			footer={
+				<>
+                    <Button
+                    className="pop-btn px-36"
+                    style={{ margin: "0 8px" }}
+                    onClick={() => setPreviewModal(false)}
+                  >
+                    Close
+                  </Button>
+					<Button
+                     className="pop-btn px-36"
+                     style={{ margin: "0 8px" }}
+						onClick={() => window.open(previewPath, "_blank")}>
+						Download
+					</Button>
+				</>
+			}>
+			<FilePreviewer
+				hideControls={true}
+				file={{
+					url: previewPath ? filePreviewPath() : null,
+					mimeType: previewPath?.includes(".pdf") ? "application/pdf" : "",
+				}}
+			/>
+		</Modal>
+	);
     return (
         <>
             <div>
@@ -303,7 +356,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                     </div>}
                     {!isUploading && file != null && <div className="docfile mr-0 c-pointer">
                         <span className={`icon xl file mr-16`} />
-                        <div className="docdetails">
+                        <div className="docdetails" onClick={() => docPreview(file)}>
                             <EllipsisMiddle suffixCount={4}>{file.name}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(file.size)}</span>
                         </div>
@@ -350,7 +403,9 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                         </Button>
                     </div>
                 </Form>
+                
 }
+{filePreviewModal}
             </div>
         </>
     )

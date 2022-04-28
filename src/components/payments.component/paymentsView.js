@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { getPaymentsData,getBankData } from './api';
-import { Typography, Button, Spin,message,Alert,Popover,Upload,Tooltip } from 'antd';
+import { getPaymentsData,getBankData,getFileURL } from './api';
+import { Typography, Button, Spin,message,Alert,Popover,Upload,Tooltip,Modal } from 'antd';
 import Translate from 'react-translate-component';
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
+import FilePreviewer from 'react-file-previewer';
 const { Title, Text } = Typography;
 const { Dragger } = Upload;
 const EllipsisMiddle = ({ suffixCount, children }) => {
@@ -81,6 +82,23 @@ class PaymentsView extends Component {
             </div>)
         }
     }
+    filePreview = async (file) => {
+        let res = await getFileURL({ url: file.path });
+        if (res.ok) {
+          this.state.PreviewFilePath = file.path;
+          this.setState({ ...this.state, previewModal: true, previewPath: res.data });
+        }else {
+                message.error(res.data);
+            }
+      }
+      filePreviewPath() {
+        console.log(this.state.previewPath)
+        if (this.state.previewPath?.includes(".pdf")) {
+          return this.state.previewPath;
+        } else {
+          return this.state.previewPath;
+        }
+      }
     backToPayments = () => {
         this.props.history.push('/payments')
     }
@@ -153,7 +171,7 @@ class PaymentsView extends Component {
                                                     {item.documents?.details.map((file) =>
                                                    <>
                                                    {file.documentName !== null && (
-                                                     <div className='docdetails'>
+                                                     <div className='docdetails' onClick={() => this.filePreview(file)}>
                                                      <Tooltip title={file.documentName}>
                                                      <EllipsisMiddle  suffixCount={4}>
                                                        {file.documentName}
@@ -210,6 +228,27 @@ class PaymentsView extends Component {
                         </div>
                     </div>
                 </div>
+                <Modal
+            className="documentmodal-width"
+            destroyOnClose={true}
+            title="Preview"
+            width={1000}
+            visible={this.state.previewModal}
+            closeIcon={<Tooltip title="Close"><span className="icon md x" onClick={this.backToPayments} /></Tooltip>}
+            footer={<>
+              <Button type="primary" onClick={this.backToPayments} className="primary-btn cancel-btn">Close</Button>
+              <Button type="primary" className="primary-btn" onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
+            </>}
+          >
+            {/* <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : "", }} /> */}
+            <FilePreviewer
+				hideControls={true}
+				file={{
+					url: this.state.previewPath ? this.filePreviewPath() : null,
+					mimeType: this.state.previewPath?.includes(".pdf") ? "application/pdf" : ""
+				}}
+			/>
+          </Modal>
             </>
         )
     }
