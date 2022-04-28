@@ -743,7 +743,7 @@ else{
                             </Form.Item>
     </Col>}
     {  selectParty === true && <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
-                         <Form.Item name={"file2"} className="mb-0"className="mb-0"
+                         <Form.Item name={"file2"} className="mb-0"
                          rules={[{
                                 validator: (_, value) => {
                                     if (addressFile) {
