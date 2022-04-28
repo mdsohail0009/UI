@@ -771,6 +771,8 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .icon.md.Alert.Title{background-position:-156px -101px;}
 .icon.md.Transaction.Id{background-position:-542px -70px;}
 .icon.md.Features{background-position:-128px -102px;}
+.icon.md.EURS{background-position: -269px -102px;}
+.icon.md.USDS{background-position: -213px -102px;}
 
 @media (min-width: 320px){
     .tlv-header{padding: 8px 16px !important;}
