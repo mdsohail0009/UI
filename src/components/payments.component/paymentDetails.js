@@ -711,13 +711,13 @@ class PaymentDetails extends Component {
                                       {item.documents?.details.map((file) => 
                                      <>
                                      {file.documentName !== null && (
-                                       <div className='pay-doc'>
-                                       <Tooltip title={file.documentName}>
-                                       <Text className="file-label fs-12">
-                                         {file.documentName}
-                                       </Text>
-                                       </Tooltip>
-                                       </div>
+                                        <div className='docdetails'>
+                                        <Tooltip title={file.documentName}>
+                                        <EllipsisMiddle  suffixCount={4}>
+                                          {file.documentName}
+                                          </EllipsisMiddle>
+                                        </Tooltip>
+                                        </div>
                                      )}
                                    </>
 

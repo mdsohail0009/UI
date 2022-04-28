@@ -10,11 +10,12 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children?.slice(0, children.length - suffixCount).trim();
     const suffix = children?.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docname c-pointer d-block" style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
+        <Text className="mb-0 fs-14 docname c-pointer d-block file-label fs-12 text-yellow fw-400"
+            style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
             {start}
         </Text>
     );
-};
+  };
 class PaymentsView extends Component {
     constructor(props) {
         super(props);
@@ -152,11 +153,11 @@ class PaymentsView extends Component {
                                                     {item.documents?.details.map((file) =>
                                                    <>
                                                    {file.documentName !== null && (
-                                                     <div className='pay-doc'>
+                                                     <div className='docdetails'>
                                                      <Tooltip title={file.documentName}>
-                                                     <Text className="file-label fs-12">
+                                                     <EllipsisMiddle  suffixCount={4}>
                                                        {file.documentName}
-                                                     </Text>
+                                                       </EllipsisMiddle>
                                                      </Tooltip>
                                                      </div>
                                                    )}
