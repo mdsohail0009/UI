@@ -209,15 +209,16 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
 			}
 			footer={
 				<>
+                    <Button
+                    className="pop-btn px-36"
+                    style={{ margin: "0 8px" }}
+                    onClick={() => setPreviewModal(false)}
+                  >
+                    Close
+                  </Button>
 					<Button
-						type="primary"
-						onClick={() => setPreviewModal(false)}
-						className="primary-btn cancel-btn">
-						Close
-					</Button>
-					<Button
-						type="primary"
-						className="primary-btn"
+                     className="pop-btn px-36"
+                     style={{ margin: "0 8px" }}
 						onClick={() => window.open(previewPath, "_blank")}>
 						Download
 					</Button>

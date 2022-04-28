@@ -10,6 +10,7 @@ import { warning } from '../../utils/message';
 const { confirm } = Modal;
 const { Option } = Select;
 const { Title, Text } = Typography;
+const { Dragger } = Upload;
 const EllipsisMiddle = ({ suffixCount, children }) => {
   const start = children?.slice(0, children.length - suffixCount).trim();
   const suffix = children?.slice(-suffixCount).trim();
@@ -46,6 +47,7 @@ class PaymentDetails extends Component {
       type: this.props.match.params.type,
       state:this.props.match.params.state,
       billPaymentData: null,
+      url: process.env.REACT_APP_UPLOAD_API + "UploadFile"
     };
     this.gridRef = React.createRef();
     this.useDivRef = React.createRef();
@@ -294,6 +296,7 @@ class PaymentDetails extends Component {
     }
   };
   handleUpload = ({ file }, item) => {
+    debugger
     this.setState({
       ...this.state,
       fileDetails: [],
@@ -389,7 +392,7 @@ class PaymentDetails extends Component {
                 onClose={() => this.handleAlert()}
               />
             )}
-            <Form autoComplete="off">
+            <Form autoComplete="off" ref={this.formRef}>
               <Form.Item>
                 <Select
                   className="cust-input cust-disable"
@@ -619,7 +622,7 @@ class PaymentDetails extends Component {
                                           value={item.amount}
                                         />
                                       </Form.Item>
-                                      <Upload
+                                      {/* <Upload
                                         type="dashed"
                                         size="large"
                                         className="ml-8 mt-12"
@@ -628,8 +631,7 @@ class PaymentDetails extends Component {
                                           backgroundColor: "transparent",
                                         }}
                                         action={
-                                          process.env.REACT_APP_UPLOAD_API +
-                                          "UploadFile"
+                                         this.state.url
                                         }
                                         showUploadList={false}
                                         beforeUpload={(props) => {
@@ -651,7 +653,18 @@ class PaymentDetails extends Component {
                                               : "c-pointer"
                                           } `}
                                         />
-                                      </Upload>
+                                      </Upload> */}
+                                      <Form.Item name={"file"} >
+                                       {<Dragger className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => {
+                                          this.handleUpload(props, item);
+                                        }
+               
+              }>
+                  <p className="ant-upload-drag-icon mb-16">
+                      <span className="icon xxxl doc-upload" />
+                  </p>
+              </Dragger>}
+              </Form.Item>
                                       {this.props.match.params.id !==
                                         "00000000-0000-0000-0000-000000000000" && (
                                         <span
