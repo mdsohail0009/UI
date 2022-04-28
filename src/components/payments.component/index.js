@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Typography , Button,  Drawer, Select,message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import Translate from 'react-translate-component';
@@ -8,11 +8,13 @@ import moment from 'moment';
 import {warning} from '../../utils/messages'
 import List from "../grid.component";
 import BeneficiaryDrawer from './beneficiaryDrawer';
-import NewFiatAddress from '../addressbook.component/addFiatAddressbook'
+import NewFiatAddress from '../addressbook.component/addFiatAddressbook';
+import { setHeaderTab } from "../../reducers/buysellReducer"
 const { Title, Text, Paragraph } = Typography;
 const { Option } = Select;
 
 const Payments = (props) => {
+ 
     const gridRef = React.createRef();
     const [addBenifeciary, setaddBenifeciary] = useState(false);
     const [form] = Form.useForm();
@@ -39,8 +41,14 @@ const Payments = (props) => {
           }
        
     };
-
+    useEffect(() => {
+  
+      if(props?.match?.path === '/payments'){
+        let key = "1"
+      props.dispatch(setHeaderTab(key));
+      }
     
+    },[])
   const showDrawer = () => {
     setVisible(true);
   };

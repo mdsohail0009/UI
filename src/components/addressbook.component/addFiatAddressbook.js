@@ -277,10 +277,12 @@ const NewFiatAddress = (props) => {
            }
          }
     const beforeUpload = (file,type) => {
+       
    if((file.name.split('.')).length > 2){
-     warning(" File don't allow double extension");
+    warning(" File don't allow double extension");
         return
 }
+else{
         if(type === "IDENTITYPROOF"){
            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
             if (fileType[file.type]) {
@@ -316,6 +318,7 @@ const NewFiatAddress = (props) => {
         }
     }
     }
+}
     const radioChangeHandler = (e) => {
           setUploading(false);
           setUploadAddress(false);
@@ -335,6 +338,7 @@ const NewFiatAddress = (props) => {
         }
 
   const upLoadFiles = ({file},type) =>  {
+    
     let obj = {
         "documentName": `${file.name}`,
         "isChecked": file.name == "" ? false : true,
@@ -360,7 +364,7 @@ const NewFiatAddress = (props) => {
                     obj["Recorder"] = 2;
                 setAdressFile(obj);
                 setUploadAddress(false);
-                form.setFieldsValue({file2:true}); 
+                 form.setFieldsValue({file2:true}); 
             }
 
             else if(type === "DECLARATION" && isUploading){
@@ -709,16 +713,16 @@ const NewFiatAddress = (props) => {
                   
     <Row gutter={[12,12]}>
    {  selectParty === true && <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
-                         <Form.Item name={"file1"}
-                        //   rules={[{
-                        //        validator: (_, value) => {
-                        //         if (identityFile) {
-                        //             return Promise.resolve();
-                        //         } else {
-                        //             return Promise.reject("Please upload identity document")   
-                        //         }
-                        //     }
-                        //  }]}
+                         <Form.Item name={"file1"} className="mb-0"
+                          rules={[{
+                               validator: (_, value) => {
+                                if (identityFile) {
+                                    return Promise.resolve();
+                                } else {
+                                    return Promise.reject("Please upload identity document")   
+                                }
+                            }
+                         }]}
                          >
                               
                                 {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(identityprop) => { beforeUpload(identityprop,"IDENTITYPROOF") }} onChange={(identityprop) => upLoadFiles(identityprop,"IDENTITYPROOF") }>
@@ -743,15 +747,15 @@ const NewFiatAddress = (props) => {
     </Col>}
     {  selectParty === true && <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
                          <Form.Item name={"file2"} className="mb-0"
-                        //   rules={[{
-                        //         validator: (_, value) => {
-                        //             if (addressFile) {
-                        //                 return Promise.resolve();
-                        //             } else {
-                        //                 return Promise.reject("Please upload address proof")   
-                        //             }
-                        //         }
-                        //     }]}
+                          rules={[{
+                                validator: (_, value) => {
+                                    if (addressFile) {
+                                        return Promise.resolve();
+                                    } else {
+                                        return Promise.reject("Please upload address proof")   
+                                    }
+                                }
+                            }]}
                             >
                                 {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(addressprop) => { beforeUpload(addressprop,"ADDRESSPROOF") }} onChange={(addressprop) => upLoadFiles(addressprop,"ADDRESSPROOF")}>
                                     <p className="ant-upload-drag-icon mb-16">
@@ -779,16 +783,16 @@ const NewFiatAddress = (props) => {
                              <Tooltip title="Click here to open file in a new tab to download"><Text className='file-label c-pointer' onClick={() => window.open('https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf', "_blank")}>Declaration_Form.pdf</Text></Tooltip> <Row gutter={[12,12]}>
                 <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
                          <Form.Item name={"file3"}
-                        //    rules={[
-                        //     {  
-                        //         validator: (_, value) => {
-                        //             if (declarationFile) {
-                        //                 return Promise.resolve();
-                        //             } else {
-                        //                 return Promise.reject("Please upload your signed PDF document")   
-                        //             }
-                        //         }
-                        // }]}
+                           rules={[
+                            {  
+                                validator: (_, value) => {
+                                    if (declarationFile) {
+                                        return Promise.resolve();
+                                    } else {
+                                        return Promise.reject("Please upload your signed PDF document")   
+                                    }
+                                }
+                        }]}
                         >
                                 {<Dragger accept=".pdf,.PDF," className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(declarationprop) => { beforeUpload(declarationprop,"DECLARATION") }} onChange={(declarationprop) => upLoadFiles(declarationprop,"DECLARATION") }>
                                     <p className="ant-upload-drag-icon mb-16">
