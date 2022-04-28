@@ -364,7 +364,7 @@ class RequestedDocs extends Component {
                     <div className="ribbon-item">
                       <span
                         className={`icon md ${
-                          key === null ? "Decription" : key
+                            key === null ? "Decription" : ((key == "Currency"&&value =="EUR")? "EURS" : (key == "Amount" ? 'Currency': (key == "Currency"&&value =="USD")? "USDS" :key))
                         }`}
                       />
                       <div className="ml-16" style={{ flex: 1 }}>
