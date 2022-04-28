@@ -209,7 +209,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
 			visible={previewModal}
 			closeIcon={
 				<Tooltip title="Close">
-					<span className="icon md x" onClick={() => setPreviewModal(false)} />
+					<span className="icon md close-white c-pointer" onClick={() => setPreviewModal(false)} />
 				</Tooltip>
 			}
 			footer={
