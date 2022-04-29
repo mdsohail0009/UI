@@ -208,6 +208,7 @@ class AddressBook extends Component {
             setTimeout(() => this.setState({ alert: false }), 2000)
         } else if(obj.addressState === 'Approved' || obj.addressState === "Rejected") {
             warning(`Record is already ${obj.addressState} you can't modify`);
+            this.setState({ ...this.state, visible: false, selection: [], isCheck: false, })
         }
         else {
             obj.walletCode = obj.coin;
