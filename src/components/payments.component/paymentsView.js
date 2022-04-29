@@ -124,7 +124,7 @@ class PaymentsView extends Component {
                                 <tr>
                                     <th>Name</th>
                                     <th>Bank Name</th>
-                                    <th>BIC/SWIFT/Routing Number</th>
+                                    <th>Bank account number</th>
                                     <th>State</th>
                                     <th>Amount</th>
                                 </tr>

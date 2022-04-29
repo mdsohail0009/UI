@@ -94,7 +94,7 @@ const NewFiatAddress = (props) => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat Address Book Details page view ', "Username": props?.userConfig?.id, "MemeberId": props?.userConfig?.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Address book details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' });
     }
     const loadDataAddress = async () => {
-    
+    debugger
         setIsLoading(true)
         let response = await getAddress(props?.addressBookReducer?.selectedRowData?.id, 'fiat');
         if (response.ok) {
@@ -233,7 +233,7 @@ const NewFiatAddress = (props) => {
                     else{
                         setBtnDisabled(false);
                           useDivRef.current.scrollIntoView()
-                         return   setErrorMsg("Please upload address proof")
+                         return setErrorMsg("Please upload address proof")
                         }
                 }
                 else if (declarationFile){
@@ -276,11 +276,11 @@ const NewFiatAddress = (props) => {
            }
          }
     const beforeUpload = (file,type) => {
-   if((file.name.split('.')).length > 2){
-    warning(" File don't allow double extension");
-        return
-}
-else{
+        if ((file.name.split('.')).length > 2) {
+            warning(" File don't allow double extension");
+            return
+        }
+        else {
         if(type === "IDENTITYPROOF"){
            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
             if (fileType[file.type]) {

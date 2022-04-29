@@ -33,6 +33,14 @@ class Home extends Component {
         const { data: notices } = this.props.dashboard?.notices;
         return (
             <div className="main-container">
+                 {!this.props?.twoFA?.isEnabled && !this.props?.twoFA?.loading && <div>
+                        <AlertConfirmation type="error" title={"2FA"} showIcon description="Please enable two-factor authentication (2FA) in Security section."
+                            action={
+                                <Button size="small" type="text" onClick={() => this.props.history.push(`/userprofile?key=2`)}>
+                                    Enable 2FA
+                                </Button>
+                            } />
+                    </div>}
                 {this.props.dashboard.notices.loading === false ? <Carousel className="docreq-slider" autoplay={true}>
                     {notices?.map((notice, idx) => <div key={idx}>
                         <AlertConfirmation type="error" title={notice.title} showIcon description="Our Compliance Team is requesting documents in line with your recent transaction, please click View Details. Thank you for your patience."
@@ -42,14 +50,6 @@ class Home extends Component {
                                 </Button>
                             } />
                     </div>)}
-                    {!this.props?.twoFA?.isEnabled && !this.props?.twoFA?.loading && <div>
-                        <AlertConfirmation type="error" title={"2FA"} showIcon description="Please enable two-factor authentication (2FA) in Security section."
-                            action={
-                                <Button size="small" type="text" onClick={() => this.props.history.push(`/userprofile?key=2`)}>
-                                    Enable 2FA
-                                </Button>
-                            } />
-                    </div>}
                 </Carousel> : ""}
 
                 <Row justify="center mt-36">
