@@ -64,7 +64,16 @@ class AddressBook extends Component {
             field: "addressState", 
             title: apiCalls.convertLocalLang('AddressLabel'),
             filter: true, width: 300,
-            customCell: (props) => (<td >{props.dataItem.favouriteName}<Text className='file-label ml-8 fs-12'>{this.addressTypeNames(props?.dataItem?.addressType)}</Text></td>),
+            customCell: (props) => (
+                <td>
+				  <div className="gridLink" 
+                //   onClick={() => this.addressFiatView(props)}
+                  >
+				  {props.dataItem.favouriteName}<Text className='file-label ml-8 fs-12'>{this.addressTypeNames(props?.dataItem?.addressType)}</Text>
+				  </div>
+				</td>
+            // <td >{props.dataItem.favouriteName}<Text className='file-label ml-8 fs-12'>{this.addressTypeNames(props?.dataItem?.addressType)}</Text></td>
+            ),
          },
         { field: "toWalletAddress", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
         { field: "currency", title: apiCalls.convertLocalLang('currency'), width: 150, filter: true, with: 150 },
@@ -95,6 +104,9 @@ class AddressBook extends Component {
         { field: "addressState", title: apiCalls.convertLocalLang('addressState'), filter: true, width: 180 },
         { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 100 }
     ];
+      addressFiatView = ({dataItem}) => {
+		this.props.history.push("/address?id=" + dataItem.id);
+	};
     handleInputChange = (prop, e) => {
         const rowObj = prop.dataItem;
         const value = e.currentTarget.type === 'checkbox' ? e.currentTarget.checked : e.currentTarget.value;
@@ -350,6 +362,22 @@ class AddressBook extends Component {
                 >
                     {this.state.fiatDrawer && <NewFiatAddress onCancel={() => this.closeBuyDrawer()} />}
                 </Drawer>
+                {/* <Drawer destroyOnClose={true}
+                    title={[<div className="side-drawer-header">
+                        <span />
+                        <div className="text-center fs-16">
+                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper"><Translate content="AddFiatAddress" component={Paragraph} className="mb-0 text-white-30 fw-600 text-upper" /></Paragraph>
+                        </div>
+                        <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
+                    </div>]}
+                    placement="right"
+                    closable={true}
+                    visible={this.state.fiatDrawer}
+                    closeIcon={null}
+                    className="side-drawer w-50p"
+                >
+                    {this.state.fiatDrawer && <AddressFiatView onCancel={() => this.closeBuyDrawer()} />}
+                </Drawer> */}
                 <Modal
                     title={this.state.selectedObj.status === 'Active' ? 'Deactivate Account?' : 'Activate Account'}
                     visible={this.state.modal}
