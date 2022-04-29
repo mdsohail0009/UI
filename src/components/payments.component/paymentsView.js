@@ -234,10 +234,12 @@ class PaymentsView extends Component {
             title="Preview"
             width={1000}
             visible={this.state.previewModal}
-            closeIcon={<Tooltip title="Close"><span className="icon md x" onClick={this.backToPayments} /></Tooltip>}
+            closeIcon={<Tooltip title="Close"><span className="icon md close-white c-pointer" onClick={this.backToPayments} /></Tooltip>}
             footer={<>
-              <Button type="primary" onClick={this.backToPayments} className="primary-btn cancel-btn">Close</Button>
-              <Button type="primary" className="primary-btn" onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
+              <Button  onClick={this.backToPayments} className="pop-btn px-36"
+                         style={{ margin: "0 8px" }}>Close</Button>
+              <Button  className="pop-btn px-36"
+                         style={{ margin: "0 8px" }}onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
             </>}
           >
             {/* <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : "", }} /> */}
