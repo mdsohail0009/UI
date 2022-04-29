@@ -76,7 +76,7 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
 
     const selectCrypto = () => {
         let getvalues = form.getFieldsValue();
-        getvalues.uploadedFile = file || ""
+        getvalues.uploadedFile = file; 
         getvalues.addressState=addressState
         InputFormValues(getvalues);
         changeStep("step2");
