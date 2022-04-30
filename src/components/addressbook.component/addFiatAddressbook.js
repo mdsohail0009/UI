@@ -114,10 +114,8 @@ const NewFiatAddress = (props) => {
             if (props?.addressBookReducer?.selectedRowData && props?.buyInfo.memberFiat?.data) {
                 handleWalletSelection(props?.addressBookReducer?.selectedRowData?.currency)
             }
-          
-            let fileInfo = response?.data?.documents?.details;
-           
-            if(response?.data?.addressType === "1stparty" &&  fileInfo?.length !=0){
+          let fileInfo = response?.data?.documents?.details;
+           if(response?.data?.addressType === "1stparty" &&  fileInfo?.length !=0){
                 setDeclarationFile(response?.data?.documents?.details[0])
              
             }
@@ -217,36 +215,19 @@ const NewFiatAddress = (props) => {
         "details" : [
           ]
     } 
-   
-                if(selectParty){
-                   
-                 if(identityFile){
+           if(selectParty){
+                    if(identityFile){
                saveObj.documents.details.push(identityFile);
                  }
-                 else{
-                    setBtnDisabled(false);
-                    useDivRef.current.scrollIntoView()
-                  return setErrorMsg("Please upload identity document")
-                 
-                 }
-             if(addressFile){
+                 if(addressFile){
               saveObj.documents.details.push(addressFile);
                     }
-                    else{
-                        setBtnDisabled(false);
-                          useDivRef.current.scrollIntoView()
-                         return setErrorMsg("Please upload address proof")
-                        }
-                }
-                else if (declarationFile){
+                   }
+                else{ 
+                    if (declarationFile){
               saveObj.documents.details.push(declarationFile);
                 }
-                else{
-                    setBtnDisabled(false);
-                    useDivRef.current.scrollIntoView()
-                  return  setErrorMsg("Please upload your signed PDF document")
-                 
-                 }
+            }
            let response = await saveAddress(saveObj);
         
             if (response.ok) {
@@ -766,14 +747,9 @@ const NewFiatAddress = (props) => {
    {  selectParty === true && <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
                          <Form.Item name={"file1"} className="mb-0"
                          rules={[{
-                               validator: (_, value) => {
-                                if (identityFile) {
-                                    return Promise.resolve();
-                                } else {
-                                    return Promise.reject("Please upload identity document")   
-                                }
-                            }
-                         }]}
+                             required : true,
+                             message: "Please upload identity document"
+                           }]}
                          >
                               
                                 {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={
@@ -802,14 +778,9 @@ const NewFiatAddress = (props) => {
     {  selectParty === true && <Col xs={24} md={24} lg={12}  xl={12} xxl={12}>
                          <Form.Item name={"file2"} className="mb-0"
                          rules={[{
-                                validator: (_, value) => {
-                                    if (addressFile) {
-                                        return Promise.resolve();
-                                    } else {
-                                        return Promise.reject("Please upload address proof")   
-                                    }
-                                }
-                            }]}
+                             required:true,
+                             message:"Please upload address proof"
+                               }]}
                             >
                                 {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(addressprop) => { beforeUpload(addressprop,"ADDRESSPROOF") }} onChange={(addressprop) => upLoadFiles(addressprop,"ADDRESSPROOF")}>
                                     <p className="ant-upload-drag-icon mb-16">
@@ -839,14 +810,9 @@ const NewFiatAddress = (props) => {
                          <Form.Item name={"file3"}
                            rules={[
                             {  
-                                validator: (_, value) => {
-                                    if (declarationFile) {
-                                        return Promise.resolve();
-                                    } else {
-                                        return Promise.reject("Please upload your signed PDF document")   
-                                    }
-                                }
-                        }]}
+                                required: true,
+                                message: "Please upload your signed PDF document"
+                               }]}
                         >
                                 {<Dragger accept=".pdf,.PDF," className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(declarationprop) => { beforeUpload(declarationprop,"DECLARATION") }} onChange={(declarationprop) => upLoadFiles(declarationprop,"DECLARATION") }>
                                     <p className="ant-upload-drag-icon mb-16">

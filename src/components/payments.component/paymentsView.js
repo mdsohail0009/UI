@@ -71,14 +71,12 @@ class PaymentsView extends Component {
             return (<div className='more-popover'>
                 <Text className='lbl'>Address Label</Text>
                 <Text className='val'>{moreBankInfo?.favouriteName}</Text>
-                <Text className='lbl'>Recipient Full Name</Text>
-                <Text className='val'>{moreBankInfo?.beneficiaryAccountName}</Text>
-                <Text className='lbl'>Recipient Address</Text>
-                <Text className='val'>{moreBankInfo?.beneficiaryAccountAddress}</Text>
-                <Text className='lbl'>BIC/SWIFT/Routing Number</Text>
-                <Text className='val'>{moreBankInfo?.routingNumber}</Text>
                 <Text className='lbl'>Bank Address</Text>
                 <Text className='val'>{moreBankInfo?.bankAddress}</Text>
+                <Text className='lbl'>BIC/SWIFT/Routing Number</Text>
+                <Text className='val'>{moreBankInfo?.routingNumber}</Text>
+                <Text className='lbl'>Recipient Address</Text>
+                <Text className='val'>{moreBankInfo?.beneficiaryAccountAddress}</Text>
             </div>)
         }
     }
