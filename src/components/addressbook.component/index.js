@@ -61,7 +61,7 @@ class AddressBook extends Component {
     columnsFiat = [
         { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
         {
-            field: "addressState", 
+            field: "favouriteName", 
             title: apiCalls.convertLocalLang('AddressLabel'),
             filter: true, width: 300,
             customCell: (props) => (
@@ -75,6 +75,12 @@ class AddressBook extends Component {
 
             ),
          },
+        //  {
+        //     field: "addressLable", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 300,
+        //     customCell: (props) => (<td > <div className="gridLink" 
+        //     onClick={() => this.addressCryptoView(props)}
+        //     >{props.dataItem.addressLable}<Text className='file-label ml-8 fs-12'>{props?.dataItem?.addressType}</Text></div></td>)
+        // }
         { field: "toWalletAddress", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
         { field: "currency", title: apiCalls.convertLocalLang('currency'), width: 150, filter: true, with: 150 },
         { field: "accountNumber", title: apiCalls.convertLocalLang('Bank_account'), filter: true, width: 250 },
