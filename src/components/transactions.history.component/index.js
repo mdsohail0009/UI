@@ -88,7 +88,7 @@ class TransactionsHistory extends Component {
     { field: "beforeValue", title: apiCalls.convertLocalLang('BeforeValue'), width: 200, filter: true, dataType: 'number', filterType: "numeric" },
     { field: "afterValue", title: apiCalls.convertLocalLang('AfterValue'), width: 200, filter: true, dataType: 'number', filterType: "numeric" },
     { field: "totalAmount", title: apiCalls.convertLocalLang('TotalAmount'), filter: true, width: 210, dataType: 'number', filterType: "numeric" },
-    { field: "amountInUsd", title: apiCalls.convertLocalLang('AmountInUsd'), filter: true, width: 200, dataType: 'number', filterType: "numeric" },
+    // { field: "amountInUsd", title: apiCalls.convertLocalLang('AmountInUsd'), filter: true, width: 200, dataType: 'number', filterType: "numeric" },
   ];
   depositCryptoColomns = [
     { field: "walletCode", title: apiCalls.convertLocalLang('Wallet'), filter: true },
@@ -143,13 +143,13 @@ class TransactionsHistory extends Component {
                   </Panel>
                 </Collapse>
 
-                  <Collapse onChange={collapseGrids} className="mb-16">
+                  {/* <Collapse onChange={collapseGrids} className="mb-16">
                     <Panel
                       header={<Translate content="menu_swap" component={Collapse.Panel.header} className="custom-font fw-400 fs-14 text-white " />}
                       key="2">
                       {this.state.activeTab === '1' && <HistoryGridComponent columns={this.SwapColmns} gridUrl={SwapURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
                     </Panel>
-                  </Collapse>
+                  </Collapse> */}
 
                   <Collapse onChange={collapseGrids} className="mb-16">
                     <Panel
@@ -191,12 +191,12 @@ class TransactionsHistory extends Component {
                 onClick={() => this.changeTab("2")}>
                 {this.state.activeTab === '2' && <HistoryGridComponent columns={this.BuySellColmns} gridUrl={BuySellURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
               </TabPane>
-              <TabPane
+              {/* <TabPane
                 tab={<Translate content="menu_swap" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-14" />}
                 key='3'
                 onClick={() => this.changeTab("3")}>
                 {this.state.activeTab === '3' && <HistoryGridComponent columns={this.SwapColmns} gridUrl={SwapURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
-              </TabPane>
+              </TabPane> */}
               <TabPane tab={<Translate content="DepositandFiat" component={Tabs.TabPane.tab} className="custom-font fw-400 fs-14" />} key='4' onClick={() => this.changeTab("4")}>
                 {this.state.activeTab === '4' && <HistoryGridComponent columns={this.DepositColmns} gridUrl={DepositURL} params={{ memberId: this.props.member?.id }}></HistoryGridComponent>}
               </TabPane>

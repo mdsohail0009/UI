@@ -733,13 +733,13 @@ class Header extends Component {
                 onClick={this.showBuyDrawer}
                 className="list-item"
               />
-              <Translate
+              {/* <Translate
                 content="menu_swap"
                 component={Menu.Item}
                 key="4"
                 onClick={this.showSwapDrawer}
                 className="list-item"
-              />
+              /> */}
               <Dropdown
                 onClick={() =>
                   this.setState({ ...this.state, Visibleprofilemenu: false })

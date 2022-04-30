@@ -27,7 +27,7 @@ class CryptoWithDrawWallet extends Component {
     componentDidMount() {
         if (this.props.sendReceive.withdrawCryptoObj) {
             this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.withdrawCryptoObj?.totalValue, localValue: 0 })
-            this.setState({ ...this.state, walletAddress: null, amountPercentageType: this.props.sendReceive.withdrawCryptoObj.amounttype });
+            this.setState({ ...this.state, walletAddress: this.props.sendReceive.withdrawCryptoObj.toWalletAddress, amountPercentageType: this.props.sendReceive.withdrawCryptoObj.amounttype });
         } else {
             this.eleRef.current.handleConvertion({ cryptoValue: this.props.sendReceive?.cryptoWithdraw?.selectedWallet?.withdrawMinValue, localValue: 0 })
         }

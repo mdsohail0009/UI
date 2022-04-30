@@ -342,7 +342,7 @@ class RequestedDocs extends Component {
                                 <span className={`icon md ${key != null ? key : 'description'}`} />
                                 <div className='ml-16' style={{flex: 1}}>
                                     <Text className='case-lbl text-captz'>{key}</Text>
-                                    <div className='case-val'>
+                                    <div className='case-val'style={{wordBreak:"break-all"}}>
                                     {(value == null || value ==" ")? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
                                         {/* {value == null ? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)} */}
                                         </div>

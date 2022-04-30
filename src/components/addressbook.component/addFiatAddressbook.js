@@ -8,7 +8,7 @@ import { setStep,setHeaderTab } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import WalletList from '../shared/walletList';
-import { saveAddress, favouriteNameCheck, getAddress } from './api';
+import { saveAddress, favouriteNameCheck, getAddress,getFileURL } from './api';
 import Loader from '../../Shared/loader';
 import apiCalls from '../../api/apiCalls';
 import { validateContentRule } from '../../utils/custom.validator';
@@ -17,6 +17,7 @@ import { bytesToSize} from '../../utils/service';
 import { getCountryStateLu, getStateLookup } from "../../api/apiServer";
 import { warning } from '../../utils/message';
 import {addressTabUpdate} from '../../reducers/addressBookReducer'
+import FilePreviewer from "react-file-previewer";
 
 
 const { Text, Paragraph } = Typography;
@@ -73,6 +74,8 @@ const NewFiatAddress = (props) => {
     const[isEdit,setEdit] = useState(false);
     const[uploadAdress,setUploadAddress] = useState(false);
     const[uploadIdentity,setUploadIdentity] = useState(false);
+    const [previewPath, setPreviewPath] = useState(null);
+	const [previewModal, setPreviewModal] = useState(false);
 
     useEffect(() => {
        if(selectParty === true){
@@ -94,7 +97,6 @@ const NewFiatAddress = (props) => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat Address Book Details page view ', "Username": props?.userConfig?.id, "MemeberId": props?.userConfig?.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Address book details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' });
     }
     const loadDataAddress = async () => {
-    
         setIsLoading(true)
         let response = await getAddress(props?.addressBookReducer?.selectedRowData?.id, 'fiat');
         if (response.ok) {
@@ -257,15 +259,11 @@ const NewFiatAddress = (props) => {
            }
          }
     const beforeUpload = (file,type) => {
-   if((file.name.split('.')).length > 2){
-       if(type == "IDENTITYPROOF"){
-           form.setFieldsValue({file1:true});
-           setIdentityFile(null);
-       }
-    warning(" File don't allow double extension");
-        return
-}
-else{
+        if ((file.name.split('.')).length > 2) {
+            warning(" File don't allow double extension");
+            return
+        }
+        else {
         if(type === "IDENTITYPROOF"){
            let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
             if (fileType[file.type]) {
@@ -360,6 +358,58 @@ else{
             }
           }
 
+          const docPreview = async (file) => {
+            let res = await getFileURL({ url: file.path });
+            if (res.ok) {
+                setPreviewModal(true);
+                setPreviewPath(res.data);
+            } 
+        };
+        const filePreviewPath = () => {
+            if (previewPath?.includes(".pdf")) {
+                return previewPath;
+            } else {
+                return previewPath;
+            }
+        };
+        const filePreviewModal = (
+            <Modal
+                className="documentmodal-width"
+                destroyOnClose={true}
+                title="Preview"
+                width={1000}
+                visible={previewModal}
+                closeIcon={
+                    <Tooltip title="Close">
+                        <span className="icon md close-white c-pointer" onClick={() => setPreviewModal(false)} />
+                    </Tooltip>
+                }
+                footer={
+                    <>
+                        <Button
+                        className="pop-btn px-36"
+                        style={{ margin: "0 8px" }}
+                        onClick={() => setPreviewModal(false)}
+                      >
+                        Close
+                      </Button>
+                        <Button
+                         className="pop-btn px-36"
+                         style={{ margin: "0 8px" }}
+                            onClick={() => window.open(previewPath, "_blank")}>
+                            Download
+                        </Button>
+                    </>
+                }>
+                <FilePreviewer
+                    hideControls={true}
+                    file={{
+                        url: previewPath ? filePreviewPath() : null,
+                        mimeType: previewPath?.includes(".pdf") ? "application/pdf" : "",
+                    }}
+                />
+            </Modal>
+        );
   
     const antIcon = <LoadingOutlined style={{ fontSize: 18, color: '#fff', marginRight: '16px' }} spin />;
     return (
@@ -702,7 +752,10 @@ else{
                            }]}
                          >
                               
-                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(identityprop) => { beforeUpload(identityprop,"IDENTITYPROOF") }} onChange={(identityprop) => upLoadFiles(identityprop,"IDENTITYPROOF") }>
+                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={
+                                          process.env.REACT_APP_UPLOAD_API +
+                                          "UploadFile"
+                                        } showUploadList={false} beforeUpload={(identityprop) => { beforeUpload(identityprop,"IDENTITYPROOF") }} onChange={(identityprop) => upLoadFiles(identityprop,"IDENTITYPROOF") }>
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>
@@ -711,7 +764,7 @@ else{
                                 {!uploadIdentity && identityFile != null && <div className="docfile mr-0">
                                 <span className={`icon xl ${(identityFile.documentName?.slice(-3) === "zip" && "file" ) || (identityFile.documentName?.slice(-3) !== "zip" && "") || (identityFile.documentName?.slice(-3) === "pdf" && "file") || (identityFile.documentName?.slice(-3) !== "pdf" &&  "image")} mr-16`} />
 
-                        <div className="docdetails c-pointer" >
+                        <div className="docdetails c-pointer" onClick={() => docPreview(identityFile)} >
                             <EllipsisMiddle suffixCount={4}>{identityFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(identityFile.remarks)}</span>
                                   </div>
@@ -738,7 +791,7 @@ else{
                             </Form.Item> 
                             {!uploadAdress && addressFile != null && <div className="docfile mr-0">
                             <span className={`icon xl ${(addressFile?.documentName?.slice(-3) === "zip" && "file") ||(addressFile?.documentName?.slice(-3) !== "zip" && "") || (addressFile.documentName?.slice(-3) === "pdf" && "file") ||(addressFile.documentName?.slice(-3) !== "pdf" && "image")} mr-16`} />
-                        <div className="docdetails c-pointer" >
+                        <div className="docdetails c-pointer" onClick={() => docPreview(addressFile)} >
                             <EllipsisMiddle suffixCount={4}>{addressFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(addressFile.remarks)}</span>
                         </div>
@@ -769,7 +822,7 @@ else{
                                 </Dragger>}
                                 {!isUploading && declarationFile != null && <div className="docfile mr-0">
                                 <span className={`icon xl ${(declarationFile?.documentName?.slice(-3) === "zip" && "file") ||(declarationFile?.documentName?.slice(-3) !== "zip" &&  "") || (declarationFile.documentName?.slice(-3) === "pdf" && "file") || (declarationFile.documentName?.slice(-3) !== "pdf" && "image")} mr-16`} />
-                        <div className="docdetails c-pointer" >
+                        <div className="docdetails c-pointer" onClick={() => docPreview(declarationFile)}>
                             <EllipsisMiddle suffixCount={4}>{declarationFile.documentName}</EllipsisMiddle>
                             <span className="fs-12 text-secondary">{bytesToSize(declarationFile.remarks)}</span>
                         </div>
@@ -824,6 +877,7 @@ else{
                     </Form.Item>
                  
                 </Form>
+                {filePreviewModal}
             </div>
 }
 

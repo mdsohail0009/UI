@@ -1,11 +1,12 @@
 import React, { Component, createRef } from 'react';
 import { Typography, Button, Form, Select, message, Input, Alert, Popover, Spin, Tooltip, Upload, Modal } from 'antd';
 import Translate from 'react-translate-component';
-import { getCurrencyLu, getPaymentsData, savePayments, getBankData, creatPayment, updatePayments } from './api'
+import { getCurrencyLu, getPaymentsData, savePayments, getBankData, creatPayment, updatePayments,getFileURL } from './api'
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
 import { warning } from '../../utils/message';
+import FilePreviewer from 'react-file-previewer';
 
 const { confirm } = Modal;
 const { Option } = Select;
@@ -39,13 +40,13 @@ class PaymentDetails extends Component {
       uploadLoader: false,
       isValidFile: true,
       paymentsDocDetails: [],
-      fileDetails: [],
       paymentDoc: {},
       payAmount: null,
       amount: 0,
       type: this.props.match.params.type,
       state:this.props.match.params.state,
       billPaymentData: null,
+      uploadUrl:process.env.REACT_APP_UPLOAD_API +"UploadFile"
     };
     this.gridRef = React.createRef();
     this.useDivRef = React.createRef();
@@ -294,43 +295,64 @@ class PaymentDetails extends Component {
     }
   };
   handleUpload = ({ file }, item) => {
-    this.setState({
-      ...this.state,
-      fileDetails: [],
-      isSubmitting: true,
-      errorMessage: null,
-      loading: true,
-    });
+    console.log(file)
+    if(file?.status === "done"){
     let paymentDetialsData = this.state.paymentsData;
+
     if(file.name.split('.').length > 2){
-      this.setState({
-        ...this.state,
-        loading: false,
-      });
       warning("File don't allow double extension")
       return
   }
+  let obj = {
+    "documentName": `${file.name}`,
+    "isChecked": file.name == "" ? false : true,
+    "remarks": `${file.size}`,
+    "state": null,
+    "status": false,
+    "path": `${file.response}`,
+    "size":`${file.size}`,
+}
     for (let pay in paymentDetialsData) {
       if (paymentDetialsData[pay].id === item.id) {
-        let obj = {
-          id: paymentDetialsData[pay]?.documents?.details[0]?.id !==null ? paymentDetialsData[pay]?.documents?.details[0]?.id :"00000000-0000-0000-0000-000000000000",
-          documentId:paymentDetialsData[pay]?.documents?.details[0]?.documentId !==null ? paymentDetialsData[pay]?.documents?.details[0]?.documentId :"00000000-0000-0000-0000-000000000000",
-          isChecked: file.name == "" ? false : true,
-          documentName: `${file.name}`,
-          remarks: `${file.size}`,
-          state: null,
-          status: false,
-          path: `${file.name}`,
-        };
+        obj["id"]= paymentDetialsData[pay]?.documents?.details[0]?.id !==null ? paymentDetialsData[pay]?.documents?.details[0]?.id :"00000000-0000-0000-0000-000000000000"
+        obj["documentId"]=paymentDetialsData[pay]?.documents?.details[0]?.documentId !==null ? paymentDetialsData[pay]?.documents?.details[0]?.documentId :"00000000-0000-0000-0000-000000000000"
         paymentDetialsData[pay].documents.details = [obj];
       }
     }
-    this.setState({
-      ...this.state,
-      paymentsData: paymentDetialsData,
-      loading: false,
-    });
+    this.setState({...this.state, paymentsData: paymentDetialsData,loading: false });
+}
   };
+
+  docPreview = async (file) => {
+    let res = await getFileURL({ url: file.path });
+    if (res.ok) {
+        this.state.PreviewFilePath = file.path;
+        this.setState({ ...this.state, previewModal: true, previewPath: res.data });
+    }
+}
+docPreviewClose = () => {
+  this.setState({ ...this.state, previewModal: false, previewPath: null })
+}
+DownloadUpdatedFile = async () => {
+  let res = await getFileURL({ url: this.state.PreviewFilePath });
+  if (res.ok) {
+      this.setState({ ...this.state, previewModal: true, previewPath: res.data });
+      window.open(res.data, "_blank")
+  }
+}
+fileDownload = async () => {
+  let res = await getFileURL({ url: this.state.previewPath });
+  if (res.ok) {
+      this.DownloadUpdatedFile()
+  }
+}
+filePreviewPath() {
+  if (this.state.previewPath.includes(".pdf")) {
+      return this.state.previewPath;
+  } else {
+      return this.state.previewPath;
+  }
+}
   addressTypeNames = (type) =>{
     const stepcodes = {
               "1stparty" : "1st Party",
@@ -349,12 +371,12 @@ class PaymentDetails extends Component {
           <Text className="val">{moreBankInfo?.favouriteName}</Text>
           {/* <Text className='lbl'>Recipient Name</Text>
                 <Text className='val'>{moreBankInfo?.beneficiaryAccountName}</Text> */}
-          <Text className="lbl">Recipient Address</Text>
-          <Text className="val">{moreBankInfo?.beneficiaryAccountAddress}</Text>
+                <Text className="lbl">Bank Address</Text>
+          <Text className="val">{moreBankInfo?.bankAddress}</Text>
           <Text className="lbl">BIC/SWIFT/Routing Number</Text>
           <Text className="val">{moreBankInfo?.routingNumber}</Text>
-          <Text className="lbl">Bank Address</Text>
-          <Text className="val">{moreBankInfo?.bankAddress}</Text>
+          <Text className="lbl">Recipient Address</Text>
+          <Text className="val">{moreBankInfo?.beneficiaryAccountAddress}</Text>
         </div>
       );
     }
@@ -627,17 +649,11 @@ class PaymentDetails extends Component {
                                         style={{
                                           backgroundColor: "transparent",
                                         }}
-                                        action={
-                                          process.env.REACT_APP_UPLOAD_API +
-                                          "UploadFile"
-                                        }
+                                        multiple={false}
+                                        action={this.state.uploadUrl}
                                         showUploadList={false}
-                                        beforeUpload={(props) => {
-                                          this.beforeUpload(props);
-                                        }}
-                                        onChange={(props) => {
-                                          this.handleUpload(props, item);
-                                        }}
+                                        beforeUpload={(props) => this.beforeUpload(props)}
+                                        onChange={(props) =>this.handleUpload(props, item)}
                                         disabled={
                                           item.state === "Approved" ||
                                           item.state === "Cancelled" ||
@@ -689,7 +705,7 @@ class PaymentDetails extends Component {
                                     {item.documents?.details.map((file) => (
                                       <>
                                         {file.documentName !== null && (
-                                          <div className='docdetails'>
+                                          <div className='docdetails' onClick={() => this.docPreview(file)}>
                                           <Tooltip title={file.documentName}>
                                           <EllipsisMiddle  suffixCount={4}>
                                             {file.documentName}
@@ -711,7 +727,7 @@ class PaymentDetails extends Component {
                                       {item.documents?.details.map((file) => 
                                      <>
                                      {file.documentName !== null && (
-                                        <div className='docdetails'>
+                                        <div className='docdetails' onClick={() => this.docPreview(file)}>
                                         <Tooltip title={file.documentName}>
                                         <EllipsisMiddle  suffixCount={4}>
                                           {file.documentName}
@@ -814,6 +830,20 @@ class PaymentDetails extends Component {
             </div>
           </div>
         </div>
+        <Modal
+                    className="documentmodal-width"
+                    title="Preview"
+                    width={1000}
+                    visible={this.state.previewModal}
+                    destroyOnClose={true}
+                    closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
+                    footer={<>
+                        <Button type="primary" onClick={this.docPreviewClose} className="text-center text-white-30 pop-cancel fw-400 mr-36">Close</Button>
+                        <Button className="pop-btn px-36" onClick={() => this.fileDownload()}>Download</Button>
+                    </>}
+                >
+                    <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />
+                </Modal>
       </>
     );
   }
