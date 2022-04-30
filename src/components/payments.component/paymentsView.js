@@ -85,14 +85,12 @@ class PaymentsView extends Component {
     filePreview = async (file) => {
         let res = await getFileURL({ url: file.path });
         if (res.ok) {
-          this.state.PreviewFilePath = file.path;
           this.setState({ ...this.state, previewModal: true, previewPath: res.data });
         }else {
                 message.error(res.data);
             }
       }
       filePreviewPath() {
-        console.log(this.state.previewPath)
         if (this.state.previewPath?.includes(".pdf")) {
           return this.state.previewPath;
         } else {
@@ -234,10 +232,12 @@ class PaymentsView extends Component {
             title="Preview"
             width={1000}
             visible={this.state.previewModal}
-            closeIcon={<Tooltip title="Close"><span className="icon md x" onClick={this.backToPayments} /></Tooltip>}
+            closeIcon={<Tooltip title="Close"><span className="icon md close-white c-pointer" onClick={this.backToPayments} /></Tooltip>}
             footer={<>
-              <Button type="primary" onClick={this.backToPayments} className="primary-btn cancel-btn">Close</Button>
-              <Button type="primary" className="primary-btn" onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
+              <Button  onClick={this.backToPayments} className="pop-btn px-36"
+                         style={{ margin: "0 8px" }}>Close</Button>
+              <Button  className="pop-btn px-36"
+                         style={{ margin: "0 8px" }}onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
             </>}
           >
             {/* <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : "", }} /> */}
