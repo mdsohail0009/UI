@@ -297,8 +297,8 @@ const FaitWithdrawal = ({
       values.favouriteName || addressDetails.favouriteName;
     values["comission"] = "0.0";
     values["bankName"] = addressInfo.bankName;
-    values["accountNumber"] = addressDetails.accountNumber;
-    values["routingNumber"] = addressDetails.routingNumber;
+    values["accountNumber"] = addressInfo.accountNumber;
+    values["routingNumber"] = addressInfo.routingNumber;
     //values["country"] =
     setLoading(true);
     const response = await handleFiatConfirm(values);
