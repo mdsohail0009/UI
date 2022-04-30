@@ -21,6 +21,8 @@ const Payments = React.lazy(() => import("../components/payments.component"));
 const PaymentDetails = React.lazy(() => import("../components/payments.component/paymentDetails"));
 const paymentsView = React.lazy(() => import("../components/payments.component/paymentsView"));
 const BeneficiaryDetails = React.lazy(() => import("../components/payments.component/beneficiaryDetails"));
+const AddressFiatView=React.lazy(()=>import("../components/addressbook.component/addressFiatView"))
+const AddressCryptoView=React.lazy(()=>import("../components/addressbook.component/addressCryptoView"))
 
 class RouteConfig extends Component {
   render() {
@@ -39,7 +41,8 @@ class RouteConfig extends Component {
         <ReactRoute path='/cases' component={CaseDocs} />
         <ReactRoute path='/docnotices' component={DocNotices} />
         <ReactRoute path='/enabletwofactor' component={TwoFactor} />
-
+        <ReactRoute path='/addressFiatView/:id' component={AddressFiatView} />
+        <ReactRoute path='/addressCryptoView/:id' component={AddressCryptoView} />
         <Route path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
         <ReactRoute path='/cockpitCharts' component={DashboardCharts} />
