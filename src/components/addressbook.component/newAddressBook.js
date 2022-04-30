@@ -299,8 +299,8 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
                             bordered={false}
                             showArrow={true}
                         >
-                            <Option value="1st Party">1st Party</Option>
-                            <Option value="3rd Party">3rd Party</Option>
+                            <Option value="1stparty">1st Party</Option>
+                            <Option value="3rdparty">3rd Party</Option>
                         </Select>
                     </Form.Item>
                     <Form.Item
