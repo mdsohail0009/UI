@@ -91,7 +91,7 @@ class CockpitCharts extends Component {
                     <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                         <div className="db-kpi">
                             <Text className="db-kpi-label">{'Fiat Balance'}</Text>
-                            <Text className="db-kpi-val">${this.state.kpis.currency}{this.state.kpis.fiatBalance}</Text><Text className="badge">BTC<span>=</span>${this.state.kpis.cryptoBTC}</Text>
+                            <Text className="db-kpi-val">${this.state.kpis.currency}{this.state.kpis.fiatBalance}</Text><Text className="badge">BTC<span>=</span>${this.state.kpis.fiatBTC}</Text>
                         </div>
                     </Col>
 
