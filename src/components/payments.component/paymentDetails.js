@@ -670,13 +670,13 @@ filePreviewPath() {
                                       </Upload>
                                       {this.props.match.params.id !==
                                         "00000000-0000-0000-0000-000000000000" && (
-                                        <Button
+                                        <span
                                           disabled={
                                             item.state === "Approved" ||
                                             item.state === "Cancelled" ||
                                             item.state === "Pending"
                                           }
-                                          className="delete-btn mt-30"
+                                          className="delete-btn mt-30 delete-disable"
                                           style={{ padding: "0 14px" }}
                                           onClick={() =>
                                             confirm({
@@ -698,10 +698,8 @@ filePreviewPath() {
                                           }
                                         >
                                           <span className={`icon md delete mt-12 ${item.state === "Submitted"  ? "c-pointer":''} `}
-                                          // disabled={item.state === "Approved" 
-                                          // item.state === "Cancelled"}
                                           />
-                                        </Button>
+                                        </span>
                                       )}
                                     </div>
 

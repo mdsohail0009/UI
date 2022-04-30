@@ -45,6 +45,13 @@ const docPreview = async (file) => {
       setPreviewPath(res.data);
   } 
 };
+const addressTypeNames = (type) =>{
+  const stepcodes = {
+            "1stparty" : "1st Party",
+            "3rd Party" : "3rd Party",
+   }
+   return stepcodes[type]
+}
 const filePreviewPath = () => {
   if (previewPath?.includes(".pdf")) {
       return previewPath;
@@ -95,7 +102,7 @@ const filePreviewModal = (
      <div className="main-container">
       <div className='box basic-info'>
       {loading ?<Loader />:<>
-      <Title className="page-title">BENEFICIARY BANK DETAILS VIEW</Title>
+      <Title className="page-title text-white">BENEFICIARY BANK DETAILS VIEW</Title>
       {fiatAddress && <Row gutter={8}>
         <Col xl={24} xxl={24} className="bank-view">
           <Row className="kpi-List">
@@ -115,7 +122,7 @@ const filePreviewModal = (
             <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
               <div>
                 <label className="kpi-label">Address Type</label>
-                <div className=" kpi-val">{fiatAddress?.addressType}</div>
+                <div className=" kpi-val">{addressTypeNames(fiatAddress?.addressType)}</div>
               </div>
             </Col>
             <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
@@ -176,7 +183,7 @@ const filePreviewModal = (
               </div>
             </Col>
             </Row>
-            <Title className="page-title"> BENEFICIARY DETAILS VIEW</Title>
+            <Title className="page-title text-white"> BENEFICIARY DETAILS VIEW</Title>
             <Row className="kpi-List">
             
            
@@ -215,7 +222,10 @@ const filePreviewModal = (
             {fiatAddress?.documents?.details.map((file)=>
             <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 							<div className="docfile mr-0" key={file.id}>
-								<span className={`icon xl file mr-16`} />
+              <span className={`icon xl ${(file.documentName?.slice(-3) === "zip" && "file" ) || 
+								 (file.documentName?.slice(-3) !== "zip" && "") || 
+								 ((file.documentName?.slice(-3) === "pdf"||file.documentName?.slice(-3) === "PDF") && "file") || 
+								 ((file.documentName?.slice(-3) !== "pdf"&&file.documentName?.slice(-3) !== "PDF") && "image")} mr-16`} />
 								<div
 									className="docdetails c-pointer"
 									onClick={() => docPreview(file)}
