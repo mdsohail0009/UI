@@ -105,7 +105,7 @@ class AddressBook extends Component {
             field: "addressLable", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 300,
             customCell: (props) => (<td > <div className="gridLink" 
             onClick={() => this.addressCryptoView(props)}
-            >{props.dataItem.addressLable}<Text className='file-label ml-8 fs-12'>{props?.dataItem?.addressType}</Text></div></td>)
+            >{props.dataItem.addressLable}<Text className='file-label ml-8 fs-12'>{this.addressTypeNames(props?.dataItem?.addressType)}</Text></div></td>)
         },
         { field: "address", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
         { field: "coin", title: apiCalls.convertLocalLang('Coin'), filter: true, width: 120 },
