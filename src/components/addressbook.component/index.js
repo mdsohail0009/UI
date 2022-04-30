@@ -61,20 +61,26 @@ class AddressBook extends Component {
     columnsFiat = [
         { field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox"><input id={props.dataItem.id} name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
         {
-            field: "addressState", 
+            field: "favouriteName", 
             title: apiCalls.convertLocalLang('AddressLabel'),
             filter: true, width: 300,
             customCell: (props) => (
                 <td>
 				  <div className="gridLink" 
-                //   onClick={() => this.addressFiatView(props)}
+                  onClick={() => this.addressFiatView(props)}
                   >
 				  {props.dataItem.favouriteName}<Text className='file-label ml-8 fs-12'>{this.addressTypeNames(props?.dataItem?.addressType)}</Text>
 				  </div>
 				</td>
-            // <td >{props.dataItem.favouriteName}<Text className='file-label ml-8 fs-12'>{this.addressTypeNames(props?.dataItem?.addressType)}</Text></td>
+
             ),
          },
+        //  {
+        //     field: "addressLable", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 300,
+        //     customCell: (props) => (<td > <div className="gridLink" 
+        //     onClick={() => this.addressCryptoView(props)}
+        //     >{props.dataItem.addressLable}<Text className='file-label ml-8 fs-12'>{props?.dataItem?.addressType}</Text></div></td>)
+        // }
         { field: "toWalletAddress", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
         { field: "currency", title: apiCalls.convertLocalLang('currency'), width: 150, filter: true, with: 150 },
         { field: "accountNumber", title: apiCalls.convertLocalLang('Bank_account'), filter: true, width: 250 },
@@ -97,7 +103,9 @@ class AddressBook extends Component {
         },
         {
             field: "addressLable", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 300,
-            customCell: (props) => (<td >{props.dataItem.addressLable}<Text className='file-label ml-8 fs-12'>{props?.dataItem?.addressType}</Text></td>)
+            customCell: (props) => (<td > <div className="gridLink" 
+            onClick={() => this.addressCryptoView(props)}
+            >{props.dataItem.addressLable}<Text className='file-label ml-8 fs-12'>{props?.dataItem?.addressType}</Text></div></td>)
         },
         { field: "address", title: apiCalls.convertLocalLang('address'), filter: true, width: 380 },
         { field: "coin", title: apiCalls.convertLocalLang('Coin'), filter: true, width: 120 },
@@ -105,7 +113,10 @@ class AddressBook extends Component {
         { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 100 }
     ];
       addressFiatView = ({dataItem}) => {
-		this.props.history.push("/address?id=" + dataItem.id);
+		this.props.history.push(`/addressFiatView/${dataItem.id}`);
+	};
+    addressCryptoView = ({dataItem}) => {
+		this.props.history.push(`/addressCryptoView/${dataItem.id}`);
 	};
     handleInputChange = (prop, e) => {
         const rowObj = prop.dataItem;
@@ -363,22 +374,6 @@ class AddressBook extends Component {
                 >
                     {this.state.fiatDrawer && <NewFiatAddress onCancel={() => this.closeBuyDrawer()} />}
                 </Drawer>
-                {/* <Drawer destroyOnClose={true}
-                    title={[<div className="side-drawer-header">
-                        <span />
-                        <div className="text-center fs-16">
-                            <Paragraph className="mb-0 text-white-30 fw-600 text-upper"><Translate content="AddFiatAddress" component={Paragraph} className="mb-0 text-white-30 fw-600 text-upper" /></Paragraph>
-                        </div>
-                        <span onClick={this.closeBuyDrawer} className="icon md close-white c-pointer" />
-                    </div>]}
-                    placement="right"
-                    closable={true}
-                    visible={this.state.fiatDrawer}
-                    closeIcon={null}
-                    className="side-drawer w-50p"
-                >
-                    {this.state.fiatDrawer && <AddressFiatView onCancel={() => this.closeBuyDrawer()} />}
-                </Drawer> */}
                 <Modal
                     title={this.state.selectedObj.status === 'Active' ? 'Deactivate Account?' : 'Activate Account'}
                     visible={this.state.modal}

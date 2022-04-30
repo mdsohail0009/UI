@@ -273,6 +273,10 @@ class PaymentDetails extends Component {
     this.setState({ ...this.state, visible: false });
   };
   beforeUpload = (file) => {
+    if(file.name.split('.').length > 2){
+      warning("File don't allow double extension")
+      return
+  }
     let fileType = {
       "image/png": true,
       "image/jpg": true,
@@ -295,14 +299,10 @@ class PaymentDetails extends Component {
     }
   };
   handleUpload = ({ file }, item) => {
-    console.log(file)
+    this.setState({...this.state,errorMessage:null });
     if(file?.status === "done"){
     let paymentDetialsData = this.state.paymentsData;
 
-    if(file.name.split('.').length > 2){
-      warning("File don't allow double extension")
-      return
-  }
   let obj = {
     "documentName": `${file.name}`,
     "isChecked": file.name == "" ? false : true,
@@ -670,7 +670,7 @@ filePreviewPath() {
                                       </Upload>
                                       {this.props.match.params.id !==
                                         "00000000-0000-0000-0000-000000000000" && (
-                                        <span
+                                        <Button
                                           disabled={
                                             item.state === "Approved" ||
                                             item.state === "Cancelled" ||
@@ -697,8 +697,11 @@ filePreviewPath() {
                                             })
                                           }
                                         >
-                                          <span className="icon md delete mt-12" />
-                                        </span>
+                                          <span className={`icon md delete mt-12 ${item.state === "Submitted"  ? "c-pointer":''} `}
+                                          // disabled={item.state === "Approved" 
+                                          // item.state === "Cancelled"}
+                                          />
+                                        </Button>
                                       )}
                                     </div>
 
