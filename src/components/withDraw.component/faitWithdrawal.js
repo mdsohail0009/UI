@@ -93,6 +93,7 @@ const FaitWithdrawal = ({
     beneficiaryAccountAddress: null
   });
   const [addressInfo, setAddressInfo] = useState(null);
+  const [address1,setAddress1]=useState(false)
   useEffect(() => {
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       handleWalletSelection(selectedWalletCode);
@@ -129,6 +130,7 @@ const FaitWithdrawal = ({
     });
   };
   const handleWalletSelection = (walletId, isClearObj) => {
+    debugger
     if (isClearObj) {
       let clearobj = {
         walletCode: "",
@@ -161,6 +163,7 @@ const FaitWithdrawal = ({
       });
       setSelectedWallet(wallet[0]);
       console.log(buyInfo.memberFiat?.data[1].currencyCode)
+      // setAddressInfo(null)
       if (wallet[0]) {
         getAddressLu(wallet[0]);
       }
@@ -169,6 +172,7 @@ const FaitWithdrawal = ({
   };
 
   const getAddressLu = async (obj, e) => {
+    debugger
     let selectedFiat = obj.currencyCode;
     let recAddress = await favouriteFiatAddress(
       userConfig.id,
@@ -193,11 +197,11 @@ const FaitWithdrawal = ({
       }
       else{
         setAddressLu(recAddress.data)
-        setAddressInfo(addressInfo)
+        //setAddressInfo(addressInfo)
         setAddressObj(addressObj); 
-        setAddressShow(null)     
-
-        form.setFieldsValue(addressInfo)
+        setAddressShow(null)  
+        setAddress1(true)
+        //form.setFieldsValue(addressInfo)
       }
     }
   };
@@ -433,9 +437,9 @@ const FaitWithdrawal = ({
                     </Form.Item>
                  
                 </div>}
-            
                {addressInfo && 
                 <div className="fiatdep-info">
+
                   <Form.Item
                     className="custom-forminput custom-label  mb-24 min-max-btn"
                     name="totalValue"
@@ -494,6 +498,7 @@ const FaitWithdrawal = ({
                     content="SIGNU"
                     component={Text}
                     with={{ value: addressInfo.bankName }}
+                    
                   />
                   <Translate
                     className="fw-200 text-white-50 fs-14"
