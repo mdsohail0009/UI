@@ -88,7 +88,7 @@ class TransactionsHistory extends Component {
     { field: "beforeValue", title: apiCalls.convertLocalLang('BeforeValue'), width: 200, filter: true, dataType: 'number', filterType: "numeric" },
     { field: "afterValue", title: apiCalls.convertLocalLang('AfterValue'), width: 200, filter: true, dataType: 'number', filterType: "numeric" },
     { field: "totalAmount", title: apiCalls.convertLocalLang('TotalAmount'), filter: true, width: 210, dataType: 'number', filterType: "numeric" },
-    { field: "amountInUsd", title: apiCalls.convertLocalLang('AmountInUsd'), filter: true, width: 200, dataType: 'number', filterType: "numeric" },
+    // { field: "amountInUsd", title: apiCalls.convertLocalLang('AmountInUsd'), filter: true, width: 200, dataType: 'number', filterType: "numeric" },
   ];
   depositCryptoColomns = [
     { field: "walletCode", title: apiCalls.convertLocalLang('Wallet'), filter: true },
