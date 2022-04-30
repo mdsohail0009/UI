@@ -97,7 +97,6 @@ const NewFiatAddress = (props) => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat Address Book Details page view ', "Username": props?.userConfig?.id, "MemeberId": props?.userConfig?.id, "Feature": 'Withdraw Fiat', "Remarks": 'Withdraw Fiat Address book details view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Withdraw Fiat' });
     }
     const loadDataAddress = async () => {
-    debugger
         setIsLoading(true)
         let response = await getAddress(props?.addressBookReducer?.selectedRowData?.id, 'fiat');
         if (response.ok) {
@@ -379,8 +378,6 @@ const NewFiatAddress = (props) => {
           }
 
           const docPreview = async (file) => {
-              debugger
-
             let res = await getFileURL({ url: file.path });
             if (res.ok) {
                 setPreviewModal(true);
@@ -779,7 +776,10 @@ const NewFiatAddress = (props) => {
                          }]}
                          >
                               
-                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(identityprop) => { beforeUpload(identityprop,"IDENTITYPROOF") }} onChange={(identityprop) => upLoadFiles(identityprop,"IDENTITYPROOF") }>
+                                {<Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={
+                                          process.env.REACT_APP_UPLOAD_API +
+                                          "UploadFile"
+                                        } showUploadList={false} beforeUpload={(identityprop) => { beforeUpload(identityprop,"IDENTITYPROOF") }} onChange={(identityprop) => upLoadFiles(identityprop,"IDENTITYPROOF") }>
                                     <p className="ant-upload-drag-icon mb-16">
                                         <span className="icon xxxl doc-upload" />
                                     </p>

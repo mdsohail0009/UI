@@ -85,14 +85,12 @@ class PaymentsView extends Component {
     filePreview = async (file) => {
         let res = await getFileURL({ url: file.path });
         if (res.ok) {
-          this.state.PreviewFilePath = file.path;
           this.setState({ ...this.state, previewModal: true, previewPath: res.data });
         }else {
                 message.error(res.data);
             }
       }
       filePreviewPath() {
-        console.log(this.state.previewPath)
         if (this.state.previewPath?.includes(".pdf")) {
           return this.state.previewPath;
         } else {
