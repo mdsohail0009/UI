@@ -119,7 +119,7 @@ class PaymentsView extends Component {
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Bank Name</th>
+                                    <th>Bank name</th>
                                     <th>Bank account number</th>
                                     <th>State</th>
                                     <th>Amount</th>
