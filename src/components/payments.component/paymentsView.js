@@ -238,7 +238,6 @@ class PaymentsView extends Component {
                          style={{ margin: "0 8px" }}onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
             </>}
           >
-            {/* <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : "", }} /> */}
             <FilePreviewer
 				hideControls={true}
 				file={{
