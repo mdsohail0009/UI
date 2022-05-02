@@ -119,8 +119,8 @@ class PaymentsView extends Component {
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Bank Name</th>
-                                    <th>Bank account number</th>
+                                    <th>Bank name</th>
+                                    <th>Bank Account Number/IBAN</th>
                                     <th>State</th>
                                     <th>Amount</th>
                                 </tr>
@@ -135,12 +135,12 @@ class PaymentsView extends Component {
                                                     <div className='d-flex align-center justify-content'>
                                                    <span>
                                                     {item.bankname}
-                                                    <Text
-                                            size="small"
-                                            className="file-label ml-8"
-                                          >
-                                                    {this.addressTypeNames(item.addressType)}
-                                                    </Text>
+                                                            <Text
+                                                                size="small"
+                                                                className="file-label ml-8"
+                                                            >
+                                                                {this.addressTypeNames(item.addressType)}
+                                                            </Text>
                                               </span>
                                                             <Popover
                                                                     className='more-popover'
@@ -238,7 +238,6 @@ class PaymentsView extends Component {
                          style={{ margin: "0 8px" }}onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
             </>}
           >
-            {/* <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : "", }} /> */}
             <FilePreviewer
 				hideControls={true}
 				file={{
