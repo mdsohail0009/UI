@@ -252,7 +252,8 @@ class AddressBook extends Component {
             ...this.state, cryptoFiat: e.target.value === 2, selection: [], selectedObj: {}, isCheck: false
         })
         if (this.state.cryptoFiat) {
-            apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto Address book grid view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Crypto Address book grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
+            apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Crypto Address book grid view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Crypto Address book grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' ,
+        });
         } else {
             apiCalls.trackEvent({ "Type": 'User', "Action": 'Withdraw Fiat Address book grid view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Withdraw Fiat Address book grid view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
         }
