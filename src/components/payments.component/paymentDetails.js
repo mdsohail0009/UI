@@ -154,7 +154,6 @@ class PaymentDetails extends Component {
         ...this.state,
         errorMessage: "Please Check atleast one record",
       });
-      // this.useDivRef.current.scrollIntoView();
       return;
     }
     let objAmount = objData.some((item) => {
@@ -171,7 +170,6 @@ class PaymentDetails extends Component {
     if (obj.currency != null) {
       if (objAmount) {
         this.setState({ ...this.state, errorMessage: "Please enter amount" });
-        // this.useDivRef.current.scrollIntoView();
       }else {
         this.setState({ btnDisabled: true });
         if (
@@ -187,12 +185,10 @@ class PaymentDetails extends Component {
               duration: 0.5,
             });
             this.props.history.push("/payments");
-            // this.useDivRef.current.scrollIntoView()
           } else {
             this.setState({ btnDisabled: false });
             message.destroy();
             this.setState({ ...this.state, errorMessage: response.data })
-            // this.useDivRef.current.scrollIntoView()
           }
         }
         else {
@@ -221,13 +217,11 @@ class PaymentDetails extends Component {
               duration: 0.5,
             });
             this.setState({ ...this.state, errorMessage: response.data });
-            // this.useDivRef.current.scrollIntoView();
           }
         }
       }
     } else {
       this.setState({ ...this.state, errorMessage: "Please select currency" });
-      // this.useDivRef.current.scrollIntoView();
     }
   };
 
@@ -255,7 +249,7 @@ class PaymentDetails extends Component {
     }
   };
 
-  moreInfoPopover = async (id, index) => {
+  moreInfoPopover = async (id) => {
     this.setState({ ...this.state, tooltipLoad: true });
     let response = await getBankData(id);
     if (response.ok) {
@@ -269,7 +263,7 @@ class PaymentDetails extends Component {
       this.setState({ ...this.state, visible: false, tooltipLoad: false });
     }
   };
-  handleVisibleChange = (index) => {
+  handleVisibleChange = () => {
     this.setState({ ...this.state, visible: false });
   };
   beforeUpload = (file) => {
@@ -569,7 +563,7 @@ filePreviewPath() {
                                         visible={item.visible}
                                         placement="top"
                                         onVisibleChange={() =>
-                                          this.handleVisibleChange(i)
+                                          this.handleVisibleChange()
                                         }
                                       >
                                         <span
@@ -577,7 +571,6 @@ filePreviewPath() {
                                           onClick={() =>
                                             this.moreInfoPopover(
                                               item.addressId,
-                                              i
                                             )
                                           }
                                         />
@@ -586,7 +579,6 @@ filePreviewPath() {
                                   </td>
                                   <td>{item.accountnumber}</td>
                                   {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000" 
-                                  //  &&this.props.match.params.state =="Submitted" || this.props.match.params.state =="Pending")
                                          ) && (
                                     <td>{item.state ? item.state : "- -"}</td>
                                   )} 
@@ -596,7 +588,6 @@ filePreviewPath() {
                                   <td>
                                     <div className="d-flex">
                                       <Form.Item
-                                        //name={item.id}
                                         className="mb-0"
                                         rules={
                                           item.checked && [

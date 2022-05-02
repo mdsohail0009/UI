@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { getPaymentsData,getBankData,getFileURL } from './api';
-import { Typography, Button, Spin,message,Alert,Popover,Upload,Tooltip,Modal } from 'antd';
+import { Typography, Button, Spin,message,Alert,Popover,Tooltip,Modal } from 'antd';
 import Translate from 'react-translate-component';
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import FilePreviewer from 'react-file-previewer';
 const { Title, Text } = Typography;
-const { Dragger } = Upload;
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children?.slice(0, children.length - suffixCount).trim();
     const suffix = children?.slice(-suffixCount).trim();
