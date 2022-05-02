@@ -201,6 +201,7 @@ const FaitWithdrawal = ({
         setAddressObj(addressObj); 
         setAddressShow(null)  
         setAddress1(true)
+        setAddressInfo(null)
         //form.setFieldsValue(addressInfo)
       }
     }
@@ -450,7 +451,8 @@ const FaitWithdrawal = ({
                     ]}
                     label={
                       <>
-                        <Translate content="amount" component={Form.label} />
+                        <Translate className="input-label"
+ content="amount" component={Form.label} />
                         <div className="minmax">
                           <Translate
                             type="text"
