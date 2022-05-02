@@ -120,7 +120,7 @@ class PaymentsView extends Component {
                                 <tr>
                                     <th>Name</th>
                                     <th>Bank name</th>
-                                    <th>Bank account number</th>
+                                    <th>Bank Account Number/IBAN</th>
                                     <th>State</th>
                                     <th>Amount</th>
                                 </tr>
@@ -135,12 +135,12 @@ class PaymentsView extends Component {
                                                     <div className='d-flex align-center justify-content'>
                                                    <span>
                                                     {item.bankname}
-                                                    <Text
-                                            size="small"
-                                            className="file-label ml-8"
-                                          >
-                                                    {this.addressTypeNames(item.addressType)}
-                                                    </Text>
+                                                            <Text
+                                                                size="small"
+                                                                className="file-label ml-8"
+                                                            >
+                                                                {this.addressTypeNames(item.addressType)}
+                                                            </Text>
                                               </span>
                                                             <Popover
                                                                     className='more-popover'
