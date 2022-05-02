@@ -8,6 +8,8 @@ import LineChart from '../trading.components/linechart';
 import { Link } from 'react-router-dom';
 import BChart from '../trading.components/bar.Chart';
 import LChart from '../trading.components/line.Chart';
+import Loader from '../../Shared/loader';
+
 const { Title, Paragraph, Text } = Typography;
 
 class CockpitCharts extends Component {
@@ -18,7 +20,8 @@ class CockpitCharts extends Component {
         assetAlloction: null,
         dailyPnl: null,
         profits: null,
-        assetnetWorth: null
+        assetnetWorth: null,
+
     }
 
     componentDidMount() {
@@ -81,6 +84,7 @@ class CockpitCharts extends Component {
         return (<>
             <div className="main-container db-container">
                 <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cockpit" />Back</div>
+                 
                 {this.state.kpis && <Row gutter={16} className="mb-8">
                     <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                         <div className="db-kpi">
@@ -126,6 +130,7 @@ class CockpitCharts extends Component {
                         </div>
                     </Col>}
                 </Row>}
+
                 <Radio.Group defaultValue={30} buttonStyle="solid" className="my-16 wmy-graph" onChange={(e) => this.loadDashboards(e.target.value)}>
                     <Radio.Button value={1}>1 Day</Radio.Button>
                     <Radio.Button value={7}>7 Days</Radio.Button>
