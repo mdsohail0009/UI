@@ -44,7 +44,7 @@ class FiatSummary extends Component {
         this.props.changeStep("step1");
     }
 
-    saveDepFiat = async () => {
+    saveDepFiat = async (values) => {
         this.setState({ btnDisabled: true });
         let Obj = Object.assign({}, this.props.depositInfo?.setDepFiatSaveObj);
         Obj.currency = apiCalls.encryptValue(Obj.currency, this.props.userConfig?.sk)
@@ -56,6 +56,8 @@ class FiatSummary extends Component {
         Obj.benficiaryAccountAddrress = apiCalls.encryptValue(Obj.benficiaryAccountAddrress, this.props.userConfig?.sk)
         Obj.accountNumber = apiCalls.encryptValue(Obj.accountNumber, this.props.userConfig.sk)
         Obj.bankAddress = apiCalls.encryptValue(Obj.bankAddress, this.props.userConfig.sk)
+        // Obj.amount = apiCalls.encryptValue(Obj.amount, this.props.userConfig.sk)
+
         Obj.info = JSON.stringify(this.props.trackAuditLogData);
         let response = await savedepositFiat(Obj);
         if (response.ok === true) {
