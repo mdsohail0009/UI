@@ -4,6 +4,7 @@ import Loader from '../../Shared/loader';
 import {getAddress,getFileURL} from "./api";
 import { connect } from 'react-redux';
 import FilePreviewer from "react-file-previewer";
+import { bytesToSize} from '../../utils/service';
 
 const { Title,Text } = Typography
 const EllipsisMiddle = ({ suffixCount, children }) => {
@@ -237,6 +238,7 @@ const filePreviewModal = (
 									) : (
 										<EllipsisMiddle suffixCount={4}>Name</EllipsisMiddle>
 									)}
+                   <span className="fs-12 text-secondary">{bytesToSize(file.remarks)}</span>
 								</div>
 							</div>
             </Col>
