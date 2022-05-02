@@ -363,9 +363,7 @@ filePreviewPath() {
         <div className="more-popover">
           <Text className="lbl">Address Label</Text>
           <Text className="val">{moreBankInfo?.favouriteName}</Text>
-          {/* <Text className='lbl'>Recipient Name</Text>
-                <Text className='val'>{moreBankInfo?.beneficiaryAccountName}</Text> */}
-                <Text className="lbl">Bank Address</Text>
+          <Text className="lbl">Bank Address</Text>
           <Text className="val">{moreBankInfo?.bankAddress}</Text>
           <Text className="lbl">BIC/SWIFT/Routing Number</Text>
           <Text className="val">{moreBankInfo?.routingNumber}</Text>
@@ -381,8 +379,7 @@ filePreviewPath() {
     for (let i = 0; i < this.state.paymentsData.length; i++) {
       total += Number(this.state.paymentsData[i].amount);
     }
-    const { currencylu, paymentsData, loading, type } = this.state;
-    const { form } = this.props;
+    const { currencylu, paymentsData, loading } = this.state;
     return (
       <>
         <div ref={this.useDivRef}></div>
@@ -579,6 +576,7 @@ filePreviewPath() {
                                   </td>
                                   <td>{item.accountnumber}</td>
                                   {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000" 
+                
                                          ) && (
                                     <td>{item.state ? item.state : "- -"}</td>
                                   )} 

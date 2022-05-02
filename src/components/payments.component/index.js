@@ -46,15 +46,15 @@ const Payments = (props) => {
             field: "",
             title: "",
             width: 50,
-            customCell: (props) => (
+            customCell: (prop) => (
               <td className="text-center">
                 <label className="text-center custom-checkbox">
                   <input
-                    id={props.dataItem.id}
+                    id={prop.dataItem.id}
                     name="check"
                     type="checkbox"
-                    checked={selection.indexOf(props.dataItem.id) > -1}
-                    onChange={(e) => handleInputChange(props, e)}
+                    checked={selection.indexOf(prop.dataItem.id) > -1}
+                    onChange={(e) => handleInputChange(prop)}
                     className="grid_check_box"
                   />
                   <span></span>
@@ -64,9 +64,9 @@ const Payments = (props) => {
           },
         {
             field: "createdDate", title: 'Date', filter: true, filterType: "date",
-             customCell: (props) => (
-                <td><div className="gridLink" onClick={() => paymentsView(props)}>
-                    <Moment format="DD/MM/YYYY">{moment(new Date(props.dataItem.createdDate),"DD/MM/YYYY")}</Moment></div></td>)
+             customCell: (prop) => (
+                <td><div className="gridLink" onClick={() => paymentsView(prop)}>
+                    <Moment format="DD/MM/YYYY">{moment(new Date(prop.dataItem.createdDate),"DD/MM/YYYY")}</Moment></div></td>)
         },
         { field: "currency", title: 'Currency', filter: true },
         { field: "totalAmount", title: 'Total Amount', filter: true },
@@ -74,7 +74,7 @@ const Payments = (props) => {
         { field: "count", title: 'Count', filter: true },
         { field: "state", title: 'State', filter: true },
     ];
-    const handleInputChange = (prop, e) => {
+    const handleInputChange = (prop) => {
         const rowChecked = prop.dataItem;
         let _selection = [...selection];
         let idx = _selection.indexOf(rowChecked.id);

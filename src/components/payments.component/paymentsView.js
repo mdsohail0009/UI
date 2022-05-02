@@ -48,7 +48,7 @@ class PaymentsView extends Component {
             this.useDivRef.current.scrollIntoView()
         }
     }
-    moreInfoPopover = async (id, index) => {
+    moreInfoPopover = async (id) => {
         this.setState({ ...this.state, tooltipLoad: true });
         let response = await getBankData(id);
         if (response.ok) {
@@ -59,7 +59,7 @@ class PaymentsView extends Component {
             this.setState({ ...this.state, visible: false, tooltipLoad: false });
         }
     }
-    handleVisibleChange = (index) => {
+    handleVisibleChange = () => {
         this.setState({ ...this.state, visible: false });
     }
     popOverContent = () => {
@@ -147,9 +147,9 @@ class PaymentsView extends Component {
                                                                     trigger="click"
                                                                     visible={item.visible}
                                                                     placement='top'
-                                                                    onVisibleChange={() => this.handleVisibleChange(idx)}
+                                                                    onVisibleChange={() => this.handleVisibleChange()}
                                                                 >
-                                                                    <span className='icon md info c-pointer' onClick={() => this.moreInfoPopover(item.addressId, idx)} />
+                                                                    <span className='icon md info c-pointer' onClick={() => this.moreInfoPopover(item.addressId)} />
                                                                 </Popover>
                                                                 </div>
                                                 </td>
