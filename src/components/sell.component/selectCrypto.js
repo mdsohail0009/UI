@@ -205,7 +205,7 @@ class SelectSellCrypto extends Component {
                     <Translate content="find_with_wallet" component={Paragraph} className="text-upper fw-600 mb-4 text-white-50" />
                     <WalletList isArrow={true} className="mb-4" onWalletSelect={(e) => this.handleWalletSelection(e)} />
                     <div className="mt-24">
-                        <SuisseBtn autoDisable={true} title="Confirm" className="pop-btn" onClick={() => { this.previewSellData() }} />
+                        <SuisseBtn autoDisable={true} title="PreviewSell" className="pop-btn" onClick={() => { this.previewSellData() }} />
                     </div></div>
             </>
 

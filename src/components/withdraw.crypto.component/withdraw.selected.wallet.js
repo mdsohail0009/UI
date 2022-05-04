@@ -161,7 +161,7 @@ class CryptoWithDrawWallet extends Component {
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
-                                <Button>Get Code</Button>
+                                <Button>Click here to get code</Button>
                             </Col>
                         </Row>
                     </Form.Item>
@@ -177,7 +177,7 @@ class CryptoWithDrawWallet extends Component {
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
-                                <Button>Get Code</Button>
+                                <Button>Click here to get code</Button>
                             </Col>
                         </Row>
                     </Form.Item>
