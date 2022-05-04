@@ -112,11 +112,10 @@ class AddressBook extends Component {
 			customCell: (props) => (
 				<td>
 					<div className="gridLink" onClick={() => this.addressFiatView(props)}>
-						{props.dataItem.favouriteName}
+						{props.dataItem.favouriteName}</div>
 						<Text className="file-label ml-8 fs-12">
 							{this.addressTypeNames(props?.dataItem?.addressType)}
 						</Text>
-					</div>
 				</td>
 			),
 		},
@@ -220,11 +219,10 @@ class AddressBook extends Component {
 					<div
 						className="gridLink"
 						onClick={() => this.addressCryptoView(props)}>
-						{props.dataItem.addressLable}
+						{props.dataItem.addressLable}</div>
 						<Text className="file-label ml-8 fs-12">
 							{this.addressTypeNames(props?.dataItem?.addressType)}
 						</Text>
-					</div>
 				</td>
 			),
 		},
@@ -731,7 +729,7 @@ class AddressBook extends Component {
 								/>
 							</div>
 							{this.renderIcon()}
-						</div>,
+						</div>
 					]}
 					placement="right"
 					closable={true}
