@@ -188,6 +188,11 @@ class WithdrawSummary extends Component {
     );
     if (response.ok) {
       this.setState({ ...this.state, verifyData: response.data });
+    }else{
+      this.setState({
+        ...this.state,
+        errorMsg: "Without Verifications you can't withdraw.Please select withdraw verifications from security section"
+      });
     }
   };
   getOTP = async (val) => {
@@ -606,7 +611,7 @@ class WithdrawSummary extends Component {
             form={this.form}
             onFinish={this.saveWithdrwal}
           >
-            {this.state.verifyData.twoFactorEnabled == true && (
+            {/* {this.state.verifyData.twoFactorEnabled == true && (
               <Text className="fs-14 mb-8 text-white d-block fw-200">
                 2FA verification code *
               </Text>
@@ -663,7 +668,7 @@ class WithdrawSummary extends Component {
                   // disabled={this.state.inputDisable}
                 />
               </Form.Item>
-            )}
+            )} */}
 
             {this.state.verifyData.isPhoneVerified == true && (
               <Text className="fs-14 mb-8 text-white d-block fw-200">
@@ -815,7 +820,7 @@ class WithdrawSummary extends Component {
             )}
  {this.state.verifyData.twoFactorEnabled == true && (
               <Text className="fs-14 mb-8 text-white d-block fw-200">
-                Authenticator Code *
+                2FA verification code *
               </Text>
             )}
             {this.state.verifyData.twoFactorEnabled == true && (
