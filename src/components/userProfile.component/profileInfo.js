@@ -175,13 +175,13 @@ class ProfileInfo extends Component {
               className="basicinfo"
             />
           </Title>
-          <Paragraph className="basic-decs">
+          {/* <Paragraph className="basic-decs">
             <Translate
               content="BasicInfotag"
               component={Text}
               className="basic-decs"
             />
-          </Paragraph>
+          </Paragraph> */}
           <ul className="user-list pl-0">
             <li className="profileinfo">
               <div className="profile-block">
