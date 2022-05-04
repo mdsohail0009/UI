@@ -261,9 +261,13 @@ const WithdrawalFiatSummary = ({
   const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
 
   const getVerifyData = async () => {
+    debugger
     let response = await apiCalls.getVerificationFields(userConfig.id);
     if (response.ok) {
       setVerifyData(response.data);
+    }
+    else{
+      setMsg("Without Verifications you can't withdraw.Please select withdraw verifications from security section")
     }
   };
 
