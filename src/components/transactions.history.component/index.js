@@ -193,6 +193,13 @@ class TransactionsHistory extends Component {
 		},
 	];
 	DepositColmns = [
+    {
+			field: "date",
+			title: apiCalls.convertLocalLang("Date"),
+			filter: true,
+			width: 210,
+			filterType: "date",
+		},
 		{
 			field: "refrenceId",
 			title: apiCalls.convertLocalLang("ReferenceId"),
@@ -219,13 +226,7 @@ class TransactionsHistory extends Component {
 			dataType: "number",
 			filterType: "numeric",
 		},
-		{
-			field: "date",
-			title: apiCalls.convertLocalLang("Date"),
-			filter: true,
-			width: 210,
-			filterType: "date",
-		},
+		
 		{
 			field: "status",
 			title: apiCalls.convertLocalLang("Status"),
@@ -374,6 +375,8 @@ class TransactionsHistory extends Component {
 			field: "availableCoins",
 			title: apiCalls.convertLocalLang("availableCoins"),
 			filter: true,
+      filterType: "numeric", 
+      dataType: 'number',
 			width: 200,
 		},
 		{
