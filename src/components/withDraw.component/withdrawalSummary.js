@@ -534,12 +534,12 @@ const WithdrawalFiatSummary = ({
         //onFinish={validData==true && saveWithdrwal}
         autoComplete="off"
       >
-      {verifyData.twoFactorEnabled == true && (
+      {/* {verifyData.twoFactorEnabled == true && (
           <Text className="fs-14 mb-8 text-white d-block fw-200">
             2FA verification code *
           </Text>
-        )}
-        {verifyData.twoFactorEnabled == true && (
+        )} */}
+        {/* {verifyData.twoFactorEnabled == true && (
           <Form.Item
             name="authenticator"
             className="input-label otp-verify"
@@ -591,7 +591,7 @@ const WithdrawalFiatSummary = ({
               // disabled={inputDisable}
             />
           </Form.Item>
-        )}
+        )} */}
         {verifyData.isPhoneVerified == true && (
           <Text className="fs-14 mb-8 text-white d-block fw-200">
             Phone verification code *
