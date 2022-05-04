@@ -324,13 +324,11 @@ const NewAddressBook = ({
 
 	const validateAddressType = (_, value) => {
 		if (value) {
-			console.log("Validator", value);
 			let address = value;
 			let coinType = form.getFieldValue("toCoin");
 			if (coinType) {
 				const validAddress = WAValidator.validate(address, coinType, "both");
 				if (!validAddress) {
-					console.log("NOt Valid", validAddress);
 					return Promise.reject(
 						"Address is not Valid, please enter a valid address according to the coin selected"
 					);
