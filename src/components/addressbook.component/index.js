@@ -19,7 +19,7 @@ import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import apiCalls from "../../api/apiCalls";
 import { warning } from "../../utils/message";
-import Info from "./info";
+import Info from "../shared/info";
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -260,7 +260,7 @@ class AddressBook extends Component {
 						</Tooltip>
 					</td>
 				) : (
-					<td></td>
+					<td>{0}</td>
 				);
 			},
 		},
@@ -289,7 +289,7 @@ class AddressBook extends Component {
 						</Tooltip>
 					</td>
 				) : (
-					<td></td>
+					<td>{0}</td>
 				);
 			},
 		},

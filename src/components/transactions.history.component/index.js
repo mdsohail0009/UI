@@ -12,7 +12,7 @@ import HistoryGridComponent from "./HistoryGridComponent";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
-import Info from "../addressbook.component/info";
+import Info from "../shared/info";
 
 const { Panel } = Collapse;
 
@@ -387,51 +387,59 @@ class TransactionsHistory extends Component {
 			title: "Input Score",
 			width: 150,
 			filter: true,
-			customCell: (props) => (
-				<td>
-					{props.dataItem.inputScore}
-					<Tooltip title="View More">
-						<span
-							className="icon md info c-pointer ml-8"
-							style={{ float: "right" }}
-							onClick={() =>
-								this.setState({
-									...this.state,
+			customCell: (props) => {
+				return props.dataItem.inputScore ? (
+					<td>
+						{props.dataItem.inputScore}
+						<Tooltip title="View More">
+							<span
+								className="icon md info c-pointer ml-8"
+								style={{ float: "right" }}
+								onClick={() =>
+									this.setState({
+										...this.state,
 
-									cryptoModal: true,
-									selectedId: props.dataItem.id,
-									selectedModal: "input",
-								})
-							}
-						/>
-					</Tooltip>
-				</td>
-			),
+										cryptoModal: true,
+										selectedId: props.dataItem.id,
+										selectedModal: "input",
+									})
+								}
+							/>
+						</Tooltip>
+					</td>
+				) : (
+					<td>{0}</td>
+				);
+			},
 		},
 		{
 			field: "outputScore",
 			title: "Output Score",
 			width: 150,
 			filter: true,
-			customCell: (props) => (
-				<td>
-					{props.dataItem.outputScore}
-					<Tooltip title="View More">
-						<span
-							className="icon md info c-pointer ml-8"
-							style={{ float: "right" }}
-							onClick={() =>
-								this.setState({
-									...this.state,
-									cryptoModal: true,
-									selectedId: props.dataItem.id,
-									selectedModal: "output",
-								})
-							}
-						/>
-					</Tooltip>
-				</td>
-			),
+			customCell: (props) => {
+				return props.dataItem.outputScore ? (
+					<td>
+						{props.dataItem.outputScore}
+						<Tooltip title="View More">
+							<span
+								className="icon md info c-pointer ml-8"
+								style={{ float: "right" }}
+								onClick={() =>
+									this.setState({
+										...this.state,
+										cryptoModal: true,
+										selectedId: props.dataItem.id,
+										selectedModal: "output",
+									})
+								}
+							/>
+						</Tooltip>
+					</td>
+				) : (
+					<td>{0}</td>
+				);
+			},
 		},
 		{
 			field: "createdDate",

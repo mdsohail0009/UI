@@ -421,14 +421,6 @@ const NewAddressBook = ({
 							required
 							rules={[
 								// {
-								// 	required: true,
-								// 	message: apiCalls.convertLocalLang("is_required"),
-								// },
-								// {
-								// 	whitespace: true,
-								// 	message: apiCalls.convertLocalLang("is_required"),
-								// },
-								// {
 								// 	validator: validateContentRule,
 								// },
 								{
