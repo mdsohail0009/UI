@@ -243,7 +243,7 @@ class CryptoWithDrawWallet extends Component {
                             name="toWalletAddress"
                             className="custom-forminput custom-label  mb-16"
                             required
-                            label={apicalls.convertLocalLang('address')}
+                            label={apicalls.convertLocalLang('sendTo')}
                         >
                             <div className="p-relative d-flex align-center">
                                 {/* <Input className="cust-input custom-add-select mb-0" placeholder="Enter address" value={this.state.walletAddress} */}
