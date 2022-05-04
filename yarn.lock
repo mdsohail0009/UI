@@ -1987,6 +1987,13 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
+"@progress/jszip-esm@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@progress/jszip-esm/-/jszip-esm-1.0.3.tgz#778e2845206e2370eb72ca8d5f32041ee0d9dbbb"
+  integrity sha512-qu5qeIlUsJX0Z2oi3Aax3gvfjKrrtVzQ2LIEhmw2CVWffZ0JvtifiomyJOc0ZFk7oEyEyrVvab97bqKkNCKvfQ==
+  dependencies:
+    "@progress/pako-esm" "^1.0.1"
+
 "@progress/kendo-data-query@^1.5.5":
   version "1.5.5"
   resolved "https://registry.npmjs.org/@progress/kendo-data-query/-/kendo-data-query-1.5.5.tgz"
@@ -2008,12 +2015,25 @@
   dependencies:
     "@progress/pako-esm" "^1.0.1"
 
+"@progress/kendo-file-saver@^1.0.0":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-file-saver/-/kendo-file-saver-1.1.1.tgz#4225affb7064fe9e12d3a89f36e00ab6c92deef0"
+  integrity sha512-mo0Cw3MLoLcx2bA+Ma/VAxkM9vHSJ4Sg0vgh6U1ZIvPXmnfO8Dgsdiv/475lafyju0kG8KOhl3bcVagCF71glQ==
+
 "@progress/kendo-licensing@^1.2.0":
   version "1.2.0"
   resolved "https://registry.npmjs.org/@progress/kendo-licensing/-/kendo-licensing-1.2.0.tgz"
   integrity sha512-2uXd/NthlPqMUHk2qS6nVqe5s/2gUbLoqkhcS6xc1o/082N7e7+Tmde/KCU24kNIpVHUAGCUFMXXZGsEzLJQxA==
   dependencies:
     jsonwebtoken "^8.5.1"
+
+"@progress/kendo-ooxml@^1.6.3":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-ooxml/-/kendo-ooxml-1.6.5.tgz#b977f411e9dac6a71f36de4b27eb9e8fd1c769d1"
+  integrity sha512-z0I0pHD2fC0o16RTj4j8wKZ9/mBEzFxwIQNI+jrv7r0TibA32LvI2x9MQyPvdz/UvYhYZexUAL0yGkr3JfpyPw==
+  dependencies:
+    "@progress/jszip-esm" "^1.0.3"
+    "@progress/pako-esm" "^1.0.1"
 
 "@progress/kendo-popup-common@^1.2.2":
   version "1.8.0"
@@ -2082,6 +2102,15 @@
     "@progress/kendo-react-common" "4.9.0"
     "@progress/kendo-react-labels" "4.9.0"
     "@progress/kendo-react-popup" "4.9.0"
+    prop-types "^15.6.0"
+
+"@progress/kendo-react-excel-export@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@progress/kendo-react-excel-export/-/kendo-react-excel-export-5.2.0.tgz#4af96d5552a12591849e51cc373df65b94022bd6"
+  integrity sha512-8gL3xmNn90exfpcCOr0Zcvcav6PlnOdU7UJt3wmexwWx95+0k3P7Na2dDwKmNoZtlFub2Zfe2SMXjpP3hqIomw==
+  dependencies:
+    "@progress/kendo-file-saver" "^1.0.0"
+    "@progress/kendo-ooxml" "^1.6.3"
     prop-types "^15.6.0"
 
 "@progress/kendo-react-grid@^4.8.0":
