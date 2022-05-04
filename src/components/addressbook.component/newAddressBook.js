@@ -324,11 +324,12 @@ const NewAddressBook = ({
 
 	const handleAddressValidation = (e) => {
 		let address = e.target.value;
-		const validAddress = WAValidator.validate(address, "", "both");
+		const validAddress = WAValidator.validate(address);
 		if (!validAddress) {
 			console.log("NOt Valid", validAddress);
 			form.setFields([
 				{
+					required: true,
 					name: "toWalletAddress",
 					errors: ["Address is not Valid, please enter a valid address"],
 				},
