@@ -21,7 +21,7 @@ class CockpitCharts extends Component {
         dailyPnl: null,
         profits: null,
         assetnetWorth: null,
-
+        isLoading:true,
     }
 
     componentDidMount() {
@@ -84,8 +84,8 @@ class CockpitCharts extends Component {
         return (<>
             <div className="main-container db-container">
                 <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cockpit" />Back</div>
-                 
                 {this.state.kpis && <Row gutter={16} className="mb-8">
+
                     <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                         <div className="db-kpi">
                             <Text className="db-kpi-label">{'Crypto Balance'} </Text>
@@ -129,6 +129,7 @@ class CockpitCharts extends Component {
                             </div>
                         </div>
                     </Col>}
+
                 </Row>}
 
                 <Radio.Group defaultValue={30} buttonStyle="solid" className="my-16 wmy-graph" onChange={(e) => this.loadDashboards(e.target.value)}>
