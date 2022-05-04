@@ -322,22 +322,25 @@ const NewAddressBook = ({
 		</Modal>
 	);
 
-	const handleAddressValidation = (e) => {
-		let address = e.target.value;
-		const validAddress = WAValidator.validate(address);
-		if (!validAddress) {
-			console.log("NOt Valid", validAddress);
-			form.setFields([
-				{
-					required: true,
-					name: "toWalletAddress",
-					errors: ["Address is not Valid, please enter a valid address"],
-				},
-			]);
+	const validateAddressType = (_, value) => {
+		console.log("Validator", value);
+		let address = value;
+		let coinType = form.getFieldValue("toCoin");
+		if (coinType) {
+			const validAddress = WAValidator.validate(address, coinType, "both");
+			if (!validAddress) {
+				console.log("NOt Valid", validAddress);
+				return Promise.reject(
+					"Address is not Valid, please enter a valid address according to the coin selected"
+				);
+			} else {
+				return Promise.resolve();
+			}
 		} else {
-			console.log("True Valid", validAddress);
+			return Promise.reject("Please select a coin first");
 		}
 	};
+
 	return (
 		<>
 			<div>
@@ -387,31 +390,6 @@ const NewAddressBook = ({
 						</Form.Item>
 						<Form.Item
 							className="custom-label"
-							name="toWalletAddress"
-							label={<Translate content="address" component={Form.label} />}
-							required
-							rules={[
-								{
-									required: true,
-									message: apiCalls.convertLocalLang("is_required"),
-								},
-								{
-									whitespace: true,
-									message: apiCalls.convertLocalLang("is_required"),
-								},
-								{
-									validator: validateContentRule,
-								},
-							]}>
-							<Input
-								className="cust-input mb-0"
-								maxLength="100"
-								onBlur={(e) => handleAddressValidation(e)}
-								placeholder={apiCalls.convertLocalLang("address")}
-							/>
-						</Form.Item>
-						<Form.Item
-							className="custom-label"
 							name="toCoin"
 							label={<Translate content="Coin" component={Form.label} />}
 							rules={[
@@ -432,6 +410,35 @@ const NewAddressBook = ({
 								}
 							/>
 						</Form.Item>
+						<Form.Item
+							className="custom-label"
+							name="toWalletAddress"
+							label={<Translate content="address" component={Form.label} />}
+							required
+							rules={[
+								{
+									required: true,
+									message: apiCalls.convertLocalLang("is_required"),
+								},
+								{
+									whitespace: true,
+									message: apiCalls.convertLocalLang("is_required"),
+								},
+								// {
+								// 	validator: validateContentRule,
+								// },
+								{
+									validator: validateAddressType,
+								},
+							]}>
+							<Input
+								className="cust-input mb-0"
+								maxLength="100"
+								// onBlur={(e) => handleAddressValidation(e)}
+								placeholder={apiCalls.convertLocalLang("address")}
+							/>
+						</Form.Item>
+
 						<Form.Item
 							className="custom-label"
 							name="addressType"
