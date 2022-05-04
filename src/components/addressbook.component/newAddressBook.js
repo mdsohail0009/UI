@@ -323,21 +323,25 @@ const NewAddressBook = ({
 	);
 
 	const validateAddressType = (_, value) => {
-		console.log("Validator", value);
-		let address = value;
-		let coinType = form.getFieldValue("toCoin");
-		if (coinType) {
-			const validAddress = WAValidator.validate(address, coinType, "both");
-			if (!validAddress) {
-				console.log("NOt Valid", validAddress);
-				return Promise.reject(
-					"Address is not Valid, please enter a valid address according to the coin selected"
-				);
+		if (value) {
+			console.log("Validator", value);
+			let address = value;
+			let coinType = form.getFieldValue("toCoin");
+			if (coinType) {
+				const validAddress = WAValidator.validate(address, coinType, "both");
+				if (!validAddress) {
+					console.log("NOt Valid", validAddress);
+					return Promise.reject(
+						"Address is not Valid, please enter a valid address according to the coin selected"
+					);
+				} else {
+					return Promise.resolve();
+				}
 			} else {
-				return Promise.resolve();
+				return Promise.reject("Please select a coin first");
 			}
 		} else {
-			return Promise.reject("Please select a coin first");
+			return Promise.reject("is required");
 		}
 	};
 
@@ -416,14 +420,14 @@ const NewAddressBook = ({
 							label={<Translate content="address" component={Form.label} />}
 							required
 							rules={[
-								{
-									required: true,
-									message: apiCalls.convertLocalLang("is_required"),
-								},
-								{
-									whitespace: true,
-									message: apiCalls.convertLocalLang("is_required"),
-								},
+								// {
+								// 	required: true,
+								// 	message: apiCalls.convertLocalLang("is_required"),
+								// },
+								// {
+								// 	whitespace: true,
+								// 	message: apiCalls.convertLocalLang("is_required"),
+								// },
 								// {
 								// 	validator: validateContentRule,
 								// },
