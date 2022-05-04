@@ -192,7 +192,7 @@ class SelectSellCrypto extends Component {
                             this.setState({ ...this.state, isSwap: !this.state.isSwap });
                         }}
                         isConvertionLoad={this.state.isConvertionLoading}
-                        isSwaped={this.state.isSwap}
+                       isSwaped={this.state.isSwap}
                     />
                     <Translate content="thousandKText" component={Paragraph} className="text-center f-16 text-yellow fw-400" />
                     <Radio.Group defaultValue='min' buttonStyle="solid" className="round-pills" onChange={({ target: { value } }) => {

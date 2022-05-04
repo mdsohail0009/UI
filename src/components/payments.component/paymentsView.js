@@ -98,7 +98,7 @@ class PaymentsView extends Component {
         this.props.history.push('/payments')
     }
     render() {
-        const total=(this.state.paymentsData.reduce((total,currentItem) =>  total = total + currentItem.amount , 0 ));
+        const total=(this.state.paymentsData.reduce((totalVal,currentItem) =>  totalVal + currentItem.amount , 0 ));
         const { paymentsData, loading } = this.state;
         return (
             <>

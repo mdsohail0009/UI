@@ -376,8 +376,8 @@ filePreviewPath() {
 
   render() {
     let total = 0;
-    for (let i = 0; i < this.state.paymentsData.length; i++) {
-      total += Number(this.state.paymentsData[i].amount);
+    for(const idx in this.state.paymentsData){
+      total += Number(this.state.paymentsData[idx].amount);
     }
     const { currencylu, paymentsData, loading } = this.state;
     return (
