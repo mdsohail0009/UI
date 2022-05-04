@@ -240,7 +240,7 @@ class AddressBook extends Component {
 			width: 150,
 			filter: true,
 			customCell: (props) => {
-				return props.dataItem.inputScore !== null ? (
+				return props.dataItem.inputScore ? (
 					<td>
 						{props.dataItem.inputScore}
 						<Tooltip title="View More">
@@ -270,7 +270,7 @@ class AddressBook extends Component {
 			width: 150,
 			filter: true,
 			customCell: (props) => {
-				return props.dataItem.outputScore !== null ? (
+				return props.dataItem.outputScore ? (
 					<td>
 						{props.dataItem.outputScore}
 						<Tooltip title="View More">
