@@ -29,7 +29,7 @@ import { Link } from "react-router-dom";
 import { bytesToSize, getDocObj } from "../../utils/service";
 import { warning } from "../../utils/message";
 import FilePreviewer from "react-file-previewer";
-import WAValidator from "wallet-address-validator";
+import WAValidator from "multicoin-address-validator";
 // var WAValidator = require("wallet-address-validator");
 
 const { Text, Paragraph } = Typography;
