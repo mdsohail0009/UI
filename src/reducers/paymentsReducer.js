@@ -37,37 +37,19 @@ const setHeaderTab = (payload) => {
 let initialState = {
     stepcode: "step1",
     stepTitles: {
-        buycrypto: "buy_assets",
-        selectcrypto: "selected_crypto",
-        summary: "selected_crypto",
-        billtype: "link_a_card",
-        addcard: "credit_card",
-        depositcrypto: "deposit",
-        billingaddress: "change_billing_address",
-        addressscanner: "deposit",
-        depositfiat: "deposit",
-        selectedcrypto: "sell_btc",
-         sellsummary: "sell_btc",
-        wiretransfor: "wire_transfer"
+        newBeneficiary: "add_new_beneficiary",
+        kycDocuments: 'kyc_documents',
+        successMsg: null
     },
     stepSubTitles: {
-        buycrypto: null,
-        selectcrypto: null,
-        summary: "crypto_compare_val",
-        billtype: "select_from_below",
-        addcard: null,
-        depositcrypto: "select_a_currency",
-        billingaddress: null,
-        addressscanner: "select_a_currency",
-        depositfiat: "select_a_currency",
-        selectedcrypto: null,
-        sellsummary: "confirm_sell",
-        wiretransfor: "select_a_method"
+        newBeneficiary: null,
+        kycDocuments: null,
+        successMsg: null
     },
     tabKey: 1,
     headerTab:""
 }
-const buySellReducer = (state = initialState, action) => {
+const payementsReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_STEP:
             return { ...state, stepcode: action.payload };
@@ -84,5 +66,5 @@ const buySellReducer = (state = initialState, action) => {
     }
 
 }
-export default buySellReducer;
+export default payementsReducer;
 export { setStep, clearStep, changeStep, setTab,setHeaderTab }

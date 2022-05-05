@@ -13,12 +13,16 @@ const OnBoarding = React.lazy(() => import('../layout/onboard.component'));
 const UserProfile = React.lazy(() => import('../components/userProfile.component/userProfile'));
 const RequestedDocs = React.lazy(() => import('../components/documents.component/requestedDocs'));
 const DocNotices = React.lazy(() => import("../components/shared/doc.notices"));
+const TwoFactor = React.lazy(() => import("../components/shared/two.factor"));
 const CaseDocs = React.lazy(() => import('../components/case.component/caseView'));
 const CoinDetails = React.lazy(() => import("../components/dashboard.component/coinview"));
 const DashboardCharts = React.lazy(() => import("../components/dashboard.component/cockpitCharts"));
 const Payments = React.lazy(() => import("../components/payments.component"));
 const PaymentDetails = React.lazy(() => import("../components/payments.component/paymentDetails"));
 const paymentsView = React.lazy(() => import("../components/payments.component/paymentsView"));
+const BeneficiaryDetails = React.lazy(() => import("../components/payments.component/beneficiaryDetails"));
+const AddressFiatView=React.lazy(()=>import("../components/addressbook.component/addressFiatView"))
+const AddressCryptoView=React.lazy(()=>import("../components/addressbook.component/addressCryptoView"))
 
 class RouteConfig extends Component {
   render() {
@@ -36,6 +40,9 @@ class RouteConfig extends Component {
         <ReactRoute path='/documents' component={RequestedDocs} />
         <ReactRoute path='/cases' component={CaseDocs} />
         <ReactRoute path='/docnotices' component={DocNotices} />
+        <ReactRoute path='/enabletwofactor' component={TwoFactor} />
+        <ReactRoute path='/addressFiatView/:id' component={AddressFiatView} />
+        <ReactRoute path='/addressCryptoView/:id' component={AddressCryptoView} />
         <Route path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
         <ReactRoute path='/cockpitCharts' component={DashboardCharts} />
@@ -45,7 +52,9 @@ class RouteConfig extends Component {
             <>
               <Route path={`${url}`} component={Payments} exact />
               <Route path={`${url}/:id/add`} component={PaymentDetails} />
+              <Route path={`${url}/:id/:type/:state/edit`} component={PaymentDetails} />
               <Route path={`${url}/:id/view`} component={paymentsView} />
+              <Route path={`${url}/newbeneficiary/:id`} component={BeneficiaryDetails} />
             </>
           )}
         />

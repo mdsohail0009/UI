@@ -22,9 +22,11 @@ const getSelectedCoinDetails = (coin_code, member_id) => {
 const activeInactive = (obj) => {
     return apiClient.put(ApiControllers.master + "useractiveinactive", obj)
 }
-// https://apitst.suissebase.ch/api/v1/DepositeWithdraw/CreateAddressFavourite?addrId=cd0599b9-9745-4e50-8f15-ea31dcd631e3&type=fiat
-// https://apitst.suissebase.ch/api/v1/DepositeWithdraw/CreateAddressFavourite?addrId=e7269eeb-c967-404b-a757-c249e5327d5c&type=crypto
 const getAddress = (addreddId) => {
     return apiClient.get(ApiControllers.depositWithdraw + `Withdraw/Favourite/${addreddId}`)
 }
-export {getCoinList,favouriteFiatAddress, saveAddress,getSelectedCoinDetails,detailsAddress,favouriteNameCheck,activeInactive,getAddress}
+const getFileURL = (obj) => {
+    return apiClient.post(ApiControllers.accounts + `FetchFile`, obj);
+};
+export {getCoinList,favouriteFiatAddress, saveAddress,getSelectedCoinDetails,detailsAddress,favouriteNameCheck,activeInactive,getAddress,getFileURL}
+            

@@ -20,27 +20,26 @@ class Cases extends Component {
         {
             field: "createdDate",
             title: "Date",
-            width: 160,
+            width: 120,
             filter: true,
             filterType: "date",
             customCell: (props) => (
               <td>
                 <div className="gridLink" onClick={() => this.viewCase(props)}>
                 <Moment format="DD/MM/YYYY">
-                    {new Date(props.dataItem.createdDate).toLocaleDateString()}
-                  </Moment>
+                    {props.dataItem.createdDate}
+                    {/* {new Date(props.dataItem.createdDate).toLocaleDateString()} */}
+                </Moment>
                 </div>
               </td>
             )
           },
-        {field: "caseNumber",title: "Case Number",filter: true,},
-		{field: "caseTitle",title: "Case Title",filter: true,},
-        // {field: "remindDate",title: "Remind Date", filterType: "date",filter: true,},
-        // {field: "closedDate",title: "Closed Date", filterType: "date",filter: true,},
-		{field: "state",title: "State",filter: true,},
+        {field: "caseNumber",title: "Case Number",filter: true, width: 150,},
+		{field: "customerCaseTitle",title: "Title",filter: true,},
+		{field: "state",title: "State",filter: true,width: 120,},
 	];
      viewCase = ({dataItem}) => {
-		this.props.history.push("/cases?id=" + dataItem.documentId);
+		this.props.history.push("/cases?id=" + dataItem.id);
 	};
 
     handleAllDocuments = e => {

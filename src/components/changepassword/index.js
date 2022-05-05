@@ -137,7 +137,9 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
                   )
                 } else if (!value || !(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/.test(value))) {
                   return Promise.reject(
-                    "Password must be at least 8 characters long one uppercase with one lowercase, one numeric & special character"
+                    // "Password must be at least 8 characters long one uppercase with one lowercase, one numeric & special character"
+                    "Password must have at least 8 characters and cannot contain common words or patterns. Try adding numbers, symbols, or characters to make your password longer and unique."
+
                   )
                 } else if (!validateContent(value)) {
                   return Promise.reject(

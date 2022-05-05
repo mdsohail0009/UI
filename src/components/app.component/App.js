@@ -9,9 +9,11 @@ import ErrorBoundary from "antd/lib/alert/ErrorBoundary";
 import { AppInsightsContext } from "@microsoft/applicationinsights-react-js";
 import { reactPlugin } from "../../Shared/appinsights";
 import Notifications from "../../notifications";
-import { setNotificationCount } from '../../reducers/dashboardReducer';
 import { startConnection } from "../../utils/signalR";
 import { useThemeSwitcher } from "react-css-theme-switcher";
+import apiCalls from '../../api/apiCalls';
+import { updatetwofactor } from "../../reducers/configReduser";
+
 function App(props) {
   const { switcher, themes } = useThemeSwitcher()
   const [loading, setLoading] = useState(true);
@@ -20,6 +22,12 @@ function App(props) {
     setTimeout(() => {
       const { userConfig: { userProfileInfo } } = store.getState();
       if (userProfileInfo?.id) {
+        store.dispatch(updatetwofactor({ loading: true, isEnabled: false }));
+        apiCalls.twofactor(userProfileInfo?.id).then(res => {
+          if (res.ok) {
+            store.dispatch(updatetwofactor({ loading: false, isEnabled: res.data }));
+          }
+        })
         startConnection(userProfileInfo?.id);
         switcher({ theme: userProfileInfo?.theme == 'Light Theme' ? themes.LHT : themes.DRT });
       } else {
@@ -62,18 +70,16 @@ function App(props) {
     connectToHub();
   }, [])
   return (
-    <Provider store={store}>
-      <OidcProvider userManager={userManager} store={store}>
-        <Router basename={process.env.PUBLIC_URL}>
-          <AppInsightsContext.Provider value={reactPlugin}>
-            <ErrorBoundary>
-              {loading ? <div className="loader">Loading....</div> : <><Layout /></>}
-            </ErrorBoundary>
-          </AppInsightsContext.Provider>
-          <Notifications showDrawer={showNotifications} onClose={() => setNotifications(false)} />
-        </Router>
-      </OidcProvider>
-    </Provider>
+    <OidcProvider userManager={userManager} store={store}>
+      <Router basename={process.env.PUBLIC_URL}>
+        <AppInsightsContext.Provider value={reactPlugin}>
+          <ErrorBoundary>
+            {loading ? <div className="loader">Loading....</div> : <><Layout /></>}
+          </ErrorBoundary>
+        </AppInsightsContext.Provider>
+        <Notifications showDrawer={showNotifications} onClose={() => setNotifications(false)} />
+      </Router>
+    </OidcProvider>
   );
 }
 

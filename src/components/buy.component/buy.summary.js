@@ -81,7 +81,7 @@ class BuySummary extends Component {
         return <Summary
             loading={this.props.sellData?.previewDetails?.loading || !this.props.sellData?.previewDetails?.data}
             coin={coin}
-            oneCoinValue={oneCoinValue}
+             oneCoinValue={oneCoinValue}
             amount={amount}
             amountNativeCurrency={amountNativeCurrency}
             nativeCurrency={this.props.sellData?.selectedWallet?.currencyCode}
