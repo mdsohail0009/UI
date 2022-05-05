@@ -76,7 +76,7 @@ const WithdrawalFiatSummary = ({
     ),
     sentVerify: (
       <Translate
-        className={`pl-0 ml-0 text-yellow-50 ${
+        className={`pl-0 ml-0 text-grey-50 ${
           textDisable ? "c-notallowed" : ""
         }`}
         content="sent_verification"
@@ -104,7 +104,7 @@ const WithdrawalFiatSummary = ({
     ),
     sentVerification: (
       <Translate
-        className={`pl-0 ml-0 text-yellow-50 ${
+        className={`pl-0 ml-0 text-grey-50 ${
           textDisable ? "c-notallowed" : ""
         }`}
         content="sent_verification"
@@ -518,13 +518,13 @@ const WithdrawalFiatSummary = ({
             component={Text}
           />{" "}
         </li>
-        <li>
+        {/* <li>
           <Translate
             className="pl-0 ml-0 text-white-50"
             content="Cancel_select"
             component={Text}
           />
-        </li>
+        </li> */}
       </ul>
       <Form
         className="mt-36"
@@ -740,7 +740,7 @@ const WithdrawalFiatSummary = ({
         )}
   {verifyData.twoFactorEnabled == true && (
           <Text className="fs-14 mb-8 text-white d-block fw-200">
-            2FA verification code *
+          Authenticator Code *
           </Text>
         )}
         {verifyData.twoFactorEnabled == true && (
