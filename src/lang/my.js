@@ -503,6 +503,8 @@ export default {
   upload_documents: 'Muat Naik Dokumen',
   compliance: '(Pematuhan)',
   you_receive:"Matatanggap ang tatanggap",
+  upload_documents: 'Muat Naik Dokumen',
+  compliance: '(Pematuhan)',
   company_name:'pangalan ng Kumpanya',
  // withdraw_verification:'Bawiin ang Pagpapatunay',
  withdraw_verification:'Pagpapatunay sa Pag-withdraw',
