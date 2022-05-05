@@ -273,9 +273,9 @@ class FaitDeposit extends Component {
                     </Select>
                   </div></Form.Item>}
                 {this.state.BankInfo &&
-                  // !fiatDepEur?
+                   !this.state.fiatDepEur?
                   <div className="fiatdep-info">
-                    {/* <Form.Item
+                    <Form.Item
                       className="custom-forminput mb-16"
                       name="Amount"
                       required
@@ -306,7 +306,7 @@ class FaitDeposit extends Component {
                           value={depObj.Amount} />
 
                       </div>
-                      </Form.Item> */}
+                      </Form.Item>
 
                     <div className="d-flex">
                       <span className={`coin ${depObj.currency.toLowerCase()}`} style={{ marginRight: '8px', marginTop: '15px' }} />
@@ -414,7 +414,7 @@ class FaitDeposit extends Component {
                     <Paragraph
                       className="fs-14 text-white-30 fw-200 l-height-normal"
                     ><span className="textpure-yellow">{apicalls.convertLocalLang('reference_hint_text')}</span> </Paragraph>
-                    {/* <Form.Item
+                    <Form.Item
                       className="custom-forminput mb-36 agree"
                       name="isAccept"
                       valuePropName="checked"
@@ -440,15 +440,15 @@ class FaitDeposit extends Component {
                           style={{ flex: 1 }}
                         />
                       </div>
-                    </Form.Item> */}
+                    </Form.Item>
 
                   </div>
-                  // :<selectCurrency />
+                   :<selectCurrency />
 
                 }
               </div>
 
-              {/* {this.state.BankInfo &&
+              {this.state.BankInfo &&
                 <><Button
                   htmlType="submit"
                   size="large"
@@ -456,7 +456,7 @@ class FaitDeposit extends Component {
                   className="pop-btn mt-36"
                 >
                   <Translate content="Confirm" component='Text' />
-                </Button></>} */}
+                </Button></>}
             </div>
             </Form>}
             {this.state.showSuccessMsg && <div className="success-pop text-center">
