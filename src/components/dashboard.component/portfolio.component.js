@@ -176,7 +176,7 @@ class Portfolio extends Component {
 
         return (
             <div className="mb-24">
-                <Translate content="Portfolio_title" component={Title} level={3} className="fs-24 fw-600 mb-0 text-white-30" />
+                {/* <Translate content="Portfolio_title" component={Title} level={3} className="fs-24 fw-600 mb-0 text-white-30" /> */}
                 <div className="portfolio-count py-36">
                     {/* <div className="summary-count mr-16">
                         <Currency defaultValue={totalFiatValue} className={`fs-40 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }} />
