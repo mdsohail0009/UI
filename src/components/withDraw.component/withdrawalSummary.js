@@ -47,6 +47,8 @@ const WithdrawalFiatSummary = ({
   const [verifyOtpText, setVerifyOtpText] = useState("");
   const [verifyEmailText, setVerifyEmailText] = useState("");
   const [seconds, setSeconds] = useState(120);
+  const [seconds2, setSeconds2] = useState(120);
+  //const [seconds, setSeconds] = useState("02:00");
   const [emailOtp, setEmailOtp] = useState("");
   const [invalidData, setInvalidData] = useState(false);
   const [validData, setValidData] = useState(false);
@@ -55,6 +57,9 @@ const WithdrawalFiatSummary = ({
   const [disableSave, setDisableSave] = useState(false);
   const [isEmailVerification, setIsEmailVerification] = useState(false);
   const [isPhoneVerification, setIsPhoneVerification] = useState(false);
+  const [verifyPhone,setVerifyPhone]=useState(false);
+  const [verifyEmail,setEmail]=useState(false);
+  const [verifyAuth,setVerifyAuth]=useState(false);
   const [isAuthenticatorVerification, setIsAuthenticatorVerification] =
     useState(false);
 
@@ -117,11 +122,57 @@ const WithdrawalFiatSummary = ({
     getVerifyData();
   }, []);
 
-  useEffect(() => {
-    const timer =
-      seconds > 0 && setInterval(() => setSeconds(seconds - 1), 1000);
-    return () => clearInterval(timer);
-  }, [seconds]);
+  // useEffect(() => {
+  //   const timer =
+  //     seconds > 0 && setInterval(() => setSeconds(seconds - 1), 1000);
+  //   return () => clearInterval(timer);
+  // }, [seconds]);
+
+  let timeInterval;
+  let count = 120;
+  const startTimer = () => {
+    debugger
+    let timer = count-1;
+    let minutes, seconds;
+    timeInterval = setInterval(function () {
+      //minutes = parseInt(timer / 60, 10)
+      //seconds = parseInt(timer % 60, 10);
+     
+        seconds = parseInt(timer % 120);
+
+      
+      //minutes = minutes < 10 ? "0" + minutes : minutes;
+     // seconds = seconds < 10 ? "0" + seconds : seconds;
+      //seconds = seconds < 10 ? "0" + seconds : seconds;
+      //setSeconds(minutes + ":" + seconds);
+      setSeconds(seconds)
+      if (--timer < 0) {
+        timer = count;
+        clearInterval(timeInterval);
+        setDisable(false);
+        setType("Resend");
+      }
+
+    }, 1000);
+  }
+  let timeInterval2;
+  let count2 = 120;
+  const startTimer2 = () => {
+    debugger;
+    let timer2 = count2 - 1;
+    let seconds2;
+    timeInterval2 = setInterval(function () {
+      seconds2 = parseInt(timer2 % 120);
+      setSeconds2(seconds2);
+      if (--timer2 < 0) {
+        timer2 = count2;
+        clearInterval(timeInterval2);
+        setDisable(false);
+        setType("Resend");
+      }
+    }, 1000);
+  };
+ 
 
   const withdrawSummayTrack = () => {
     apiCalls.trackEvent({
@@ -142,7 +193,7 @@ const WithdrawalFiatSummary = ({
     if ((verifyData.isEmailVerification)) {
       if(!isEmailVerification){
         setMsg("Please enter valid codes");
-        useOtpRef.current.scrollIntoView();
+        useOtpRef.current.scrollIntoView(0,0);
         return;
       }
       
@@ -150,7 +201,7 @@ const WithdrawalFiatSummary = ({
     if ((verifyData.isPhoneVerified)) {
       if(!isPhoneVerification){
         setMsg("Please enter valid codes");
-        useOtpRef.current.scrollIntoView();
+        useOtpRef.current.scrollIntoView(0,0);
         return;
       }
       
@@ -158,7 +209,7 @@ const WithdrawalFiatSummary = ({
     if ((verifyData.twoFactorEnabled )) {
       if(!isAuthenticatorVerification){
         setMsg("Please enter valid codes");
-        useOtpRef.current.scrollIntoView();
+        useOtpRef.current.scrollIntoView(0,0);
         return;
       }
      
@@ -198,7 +249,7 @@ const WithdrawalFiatSummary = ({
       changeStep("step7");
     } else {
       setMsg(withdrawal.data);
-      useOtpRef.current.scrollIntoView();
+      useOtpRef.current.scrollIntoView(0,0);
     }
   };
   const onCancel = () => {
@@ -228,6 +279,7 @@ const WithdrawalFiatSummary = ({
       setEmailVerificationText(
         apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
       );
+      startTimer2()
       setTimeout(() => {
         setEmailText("resendEmail");
         setTooltipEmail(false);
@@ -246,15 +298,19 @@ const WithdrawalFiatSummary = ({
     let response = await apiCalls.verifyEmail(userConfig.id, emailCode);
     if (response.ok) {
       setIsEmailVerification(true);
+      setEmail(true)
+      useOtpRef.current.scrollIntoView(0,0);
       success("Email  verified successfully");
     } else if (response.data == null) {
-      useOtpRef.current.scrollIntoView();
+      useOtpRef.current.scrollIntoView(0,0);
       setMsg("Please enter email verification code");
     } else {
+      setEmail(false)
       setMsg(apiCalls.convertLocalLang("email_invalid_code"));
+      useOtpRef.current.scrollIntoView(0,0);
       setTimeout(() => {
         setMsg(null);
-      }, 5000);
+      }, 1500);
       //setInvalidData(true)
       setIsEmailVerification(false);
     }
@@ -282,7 +338,7 @@ const WithdrawalFiatSummary = ({
       setVerificationText(
         apiCalls.convertLocalLang("digit_code") + " " + maskedNumber
       );
-
+      startTimer();
       setTimeout(() => {
         setButtonText("resendotp");
       }, 120000);
@@ -302,18 +358,20 @@ const WithdrawalFiatSummary = ({
     setValidData(true);
     let response = await apiCalls.getVerification(userConfig.id, otpCode);
     if (response.ok) {
+      setVerifyPhone(true)
       setIsPhoneVerification(true);
       success("OTP verified successfully");
     } else if (response.data == null) {
-      useOtpRef.current.scrollIntoView();
+      useOtpRef.current.scrollIntoView(0,0);
       setMsg("Please enter phone verification code");
     } else {
-      useOtpRef.current.scrollIntoView();
+      useOtpRef.current.scrollIntoView(0,0);
+      setVerifyPhone(false)
 
       setMsg(apiCalls.convertLocalLang("phone_invalid_code"));
       setTimeout(() => {
         setMsg(null);
-      }, 5000);
+      }, 1500);
       //setInvalidData(true)
       setIsPhoneVerification(false);
     }
@@ -334,18 +392,20 @@ const WithdrawalFiatSummary = ({
     setValidData(true);
     let response = await apiCalls.getAuthenticator(authCode, userConfig.userId);
     if (response.ok) {
+      setVerifyAuth(true)
       setIsAuthenticatorVerification(true);
       console.log(response.data);
       success("Authenticator verified successfully");
     } else if (response.data == null) {
-      useOtpRef.current.scrollIntoView();
+      useOtpRef.current.scrollIntoView(0,0);
       setMsg("Please enter authenticator verification code");
     } else {
-      useOtpRef.current.scrollIntoView();
+      setVerifyAuth(false)
+      useOtpRef.current.scrollIntoView(0,0);
       setMsg(apiCalls.convertLocalLang("twofa_invalid_code"));
       setTimeout(() => {
         setMsg(null);
-      }, 5000);
+      }, 1500);
       //setInvalidData(true)
       setIsAuthenticatorVerification(false);
     }
@@ -509,12 +569,12 @@ const WithdrawalFiatSummary = ({
                 {tooltipVisible == true && (
                   <Tooltip
                     placement="topRight"
-                    title={`Haven\'t receive code? Request new code in ${seconds}. The code will expire after 30mins.`}
+                    title={`Haven\'t receive code ? Request new code in ${seconds}. The code will expire after 30mins.`}
                   >
                     <span className="icon md info mr-8" />
                   </Tooltip>
                 )}
-                <Button type="text" onClick={getOtpVerification}>
+                <Button type="text" onClick={getOtpVerification} disabled={verifyPhone==true}>
                   {verifyOtp[verifyOtpText]}
                 </Button>
               </>
@@ -586,7 +646,7 @@ const WithdrawalFiatSummary = ({
                   </Tooltip>
                 )}
                 {verify == true && (
-                  <Button type="text" onClick={(e) => getEmailVerification(e)}>
+                  <Button type="text" onClick={(e) => getEmailVerification(e)} disabled={verifyEmail==true}>
                     {verifyText[verifyEmailText]}
                     {/* VERIFY */}
                   </Button>
