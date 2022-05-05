@@ -21,7 +21,7 @@ class CockpitCharts extends Component {
         dailyPnl: null,
         profits: null,
         assetnetWorth: null,
-        isLoading:true,
+        isLoading:false,
     }
 
     componentDidMount() {
@@ -69,9 +69,12 @@ class CockpitCharts extends Component {
         }
     }
     loadKpis = async () => {
+        this.setState({...this.state,isLoading:true})
         let response = await apiCalls.getdshKpis(this.props?.userConfig?.id);
         if (response.ok) {
             this.setState({ ...this.state, kpis: response.data })
+            this.setState({...this.state,isLoading:false})
+
         }
     }
 
@@ -84,22 +87,67 @@ class CockpitCharts extends Component {
         return (<>
             <div className="main-container db-container">
                 <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cockpit" />Back</div>
-                {this.state.kpis && <Row gutter={16} className="mb-8">
+                {/* {this.state.kpis &&  */}
 
-                    <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
+                <Row gutter={16} className="mb-8">
+
+                    {/* <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                         <div className="db-kpi">
                             <Text className="db-kpi-label">{'Crypto Balance'} </Text>
                             <Text className="db-kpi-val"> ${this.state.kpis.cryptoBalance}</Text><Text className="badge">BTC=${this.state.kpis.cryptoBTC} </Text>
                         </div>
-                    </Col>
-                    <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
+                    </Col> */}
+
+                    <Col xs={24} sm={24} md={24} lg={12} xl={6} xxl={6}>
+							{this.state.kpis ? (
+								<div className="db-kpi">
+                                <Text className="db-kpi-label">{'Crypto Balance'} </Text>
+                                <Text className="db-kpi-val"> ${this.state.kpis.cryptoBalance}</Text><Text className="badge">BTC=${this.state.kpis.cryptoBTC} </Text>
+                            </div>
+							) : (
+								<div
+									className="db-kpi p-relative text-center"
+									style={{
+										display: "flex",
+										justifyContent: "center",
+										alignItems: "center",
+									}}>
+									{" "}
+									<Spin />
+								</div>
+							)}
+						</Col>
+                    {/* <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
                         <div className="db-kpi">
                             <Text className="db-kpi-label">{'Fiat Balance'}</Text>
                             <Text className="db-kpi-val">${this.state.kpis.currency}{this.state.kpis.fiatBalance}</Text><Text className="badge">BTC<span>=</span>${this.state.kpis.fiatBTC}</Text>
                         </div>
-                    </Col>
+                    </Col> */}
+                    
+                    <Col xs={24} sm={24} md={24} lg={12} xl={6} xxl={6}>
+							{this.state.kpis ? (
+								<div className="db-kpi">
+                                <Text className="db-kpi-label">{'Fiat Balance'}</Text>
+                                <Text className="db-kpi-val">${this.state.kpis.currency}{this.state.kpis.fiatBalance}</Text><Text className="badge">BTC<span>=</span>${this.state.kpis.fiatBTC}</Text>
+                            </div>
+							) : (
+								<div
+									className="db-kpi p-relative text-center"
+									style={{
+										display: "flex",
+										justifyContent: "center",
+										alignItems: "center",
+									}}>
+									{" "}
+									<Spin />
+								</div>
+							)}
+						</Col>
 
-                    {this.state.kpis?.yesterdayPNL != 0 && <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
+                    {this.state.kpis?.yesterdayPNL != 0 && 
+                    <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
+							{this.state.kpis ? (
+
                         <div className="db-kpi vthicon">
                             <div className="icon-bg">
                                 <span className={`icon md ${this.state.kpis?.monthPNL > 0 ? "profit" : "lose"}-arw`} />
@@ -111,9 +159,24 @@ class CockpitCharts extends Component {
                                 {this.state.kpis?.yesterdayPNL > 0 && <>
                                     <Text className="db-kpi-val text-red">{this.state.kpis.currency}{this.state.kpis.yesterdayPNL}</Text><Text className="badge"><span>-</span>{this.state.kpis.percentage}</Text></>}
                             </div>
-                        </div>
+                        </div> ): (
+								<div
+									className="db-kpi p-relative text-center"
+									style={{
+										display: "flex",
+										justifyContent: "center",
+										alignItems: "center",
+									}}>
+									{" "}
+									<Spin />
+								</div>
+	                        )}
                     </Col>}
-                    {this.state.kpis?.monthPNL != 0 && <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
+                                      
+                    {this.state.kpis?.monthPNL != 0 && 
+                    <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
+							{this.state.kpis ? (
+
                         <div className="db-kpi vthicon">
                             <div className="icon-bg">
                                 <span className={`icon md ${this.state.kpis?.monthPNL > 0 ? "profit" : "lose"}-arw`} />
@@ -127,10 +190,23 @@ class CockpitCharts extends Component {
                                     <Text className="db-kpi-val text-red"><span>$</span>{this.state.kpis.monthPNL}</Text><Text className="badge">${this.state.kpis.monthPNL}</Text>
                                 </>}
                             </div>
-                        </div>
+                        </div>): (
+								<div
+									className="db-kpi p-relative text-center"
+									style={{
+										display: "flex",
+										justifyContent: "center",
+										alignItems: "center",
+									}}>
+									{" "}
+									<Spin />
+								</div>
+	                        )}
+
                     </Col>}
 
-                </Row>}
+                </Row>
+                 {/* } */}
 
                 <Radio.Group defaultValue={30} buttonStyle="solid" className="my-16 wmy-graph" onChange={(e) => this.loadDashboards(e.target.value)}>
                     <Radio.Button value={1}>1 Day</Radio.Button>
