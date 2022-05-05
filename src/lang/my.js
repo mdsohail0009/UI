@@ -516,6 +516,7 @@ export default {
   confirm_beneficiary: 'Confirm Beneficiary',
   return_to_beneficairy: 'Back to Add New Beneficiary',
   get_your_own_iban: 'Dapatkan IBAN Anda Sendiri',
-  sendTo:'Ipadala sa'
-
+  sendTo:'Ipadala sa',
+  account_address:'Lugar ng pagbibigyan',
+  account_name:'Pangalan ng Makikinabang',
 }
