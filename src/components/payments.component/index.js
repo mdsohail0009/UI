@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form, Typography , Button,  Drawer, Select,message } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import { Typography , Button,  Drawer, Select } from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
@@ -11,7 +10,6 @@ import BeneficiaryDrawer from './beneficiaryDrawer';
 import NewFiatAddress from '../addressbook.component/addFiatAddressbook';
 import { setHeaderTab } from "../../reducers/buysellReducer"
 const { Title, Text, Paragraph } = Typography;
-const { Option } = Select;
 
 const Payments = (props) => {
  
