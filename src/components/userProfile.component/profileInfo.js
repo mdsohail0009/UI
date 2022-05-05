@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import Moment from "react-moment";
 import { uploadClient } from "../../api";
 import { ProfileImageSave } from "../../api/apiServer";
-import { getmemeberInfo } from "../../reducers/configReduser";
+import { getmemeberInfo,getIpRegisteryData } from "../../reducers/configReduser";
 import DefaultUser from "../../assets/images/defaultuser.jpg";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
@@ -69,6 +69,7 @@ class ProfileInfo extends Component {
     this.props.getmemeberInfoa(this.props.userConfig.userId, this.props.userConfig.id);
   }
   profileTrack = () => {
+    debugger
     apiCalls.trackEvent({
       Type: "User",
       Action: "Profile page view",
@@ -78,7 +79,8 @@ class ProfileInfo extends Component {
       Remarks: "Profile Info page view",
       Duration: 1,
       Url: window.location.href,
-      FullFeatureName: "Profile Info"
+      FullFeatureName: "Profile Info",
+      
     });
   };
   saveImage = async (Obj, res) => {
@@ -351,8 +353,12 @@ const connectDispatchToProps = (dispatch) => {
   return {
     getmemeberInfoa: (useremail, id) => {
       dispatch(getmemeberInfo(useremail, id));
+    },
+    trackauditlogs: () => {
+      dispatch(getIpRegisteryData());
     }
   };
+
 };
 export default connect(
   connectStateToProps,
