@@ -190,6 +190,11 @@ class WithdrawSummary extends Component {
     );
     if (response.ok) {
       this.setState({ ...this.state, verifyData: response.data });
+    }else{
+      this.setState({
+        ...this.state,
+        errorMsg: "Without Verifications you can't withdraw.Please select withdraw verifications from security section"
+      });
     }
   };
   getOTP = async (val) => {
