@@ -23,6 +23,9 @@ function Info({ id, type }) {
 	const [errorType, setErrorType] = useState("error");
 
 	useEffect(() => {
+		setInfoVal(null);
+		setError(null);
+		setErrorType("error");
 		getInfoData(id, type);
 	}, []);
 
