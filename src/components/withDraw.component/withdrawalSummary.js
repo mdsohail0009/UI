@@ -76,7 +76,7 @@ const WithdrawalFiatSummary = ({
     ),
     sentVerify: (
       <Translate
-        className={`pl-0 ml-0 text-yellow-50 ${
+        className={`pl-0 ml-0 text-grey-50 ${
           textDisable ? "c-notallowed" : ""
         }`}
         content="sent_verification"
@@ -104,7 +104,7 @@ const WithdrawalFiatSummary = ({
     ),
     sentVerification: (
       <Translate
-        className={`pl-0 ml-0 text-yellow-50 ${
+        className={`pl-0 ml-0 text-grey-50 ${
           textDisable ? "c-notallowed" : ""
         }`}
         content="sent_verification"
@@ -217,9 +217,15 @@ const WithdrawalFiatSummary = ({
     setIsLoding(true);
 
     let Obj = Object.assign({}, sendReceive.withdrawFiatObj);
-    Obj.accountNumber = apiCalls.encryptValue(Obj.accountNumber,userConfig?.sk);
+    Obj.accountNumber = apiCalls.encryptValue(
+      Obj.accountNumber,
+      userConfig?.sk
+    );
     Obj.bankName = apiCalls.encryptValue(Obj.bankName, userConfig?.sk);
-    Obj.routingNumber = apiCalls.encryptValue(Obj.routingNumber,userConfig?.sk);
+    Obj.routingNumber = apiCalls.encryptValue(
+      Obj.routingNumber,
+      userConfig?.sk
+    );
     Obj.bankAddress = apiCalls.encryptValue(Obj.bankAddress, userConfig?.sk);
     Obj.beneficiaryAccountAddress = apiCalls.encryptValue(
       Obj.beneficiaryAccountAddress,
@@ -509,13 +515,13 @@ const WithdrawalFiatSummary = ({
             component={Text}
           />{" "}
         </li>
-        <li>
+        {/* <li>
           <Translate
             className="pl-0 ml-0 text-white-50"
             content="Cancel_select"
             component={Text}
           />
-        </li>
+        </li> */}
       </ul>
       <Form
         className="mt-36"
@@ -525,64 +531,7 @@ const WithdrawalFiatSummary = ({
         //onFinish={validData==true && saveWithdrwal}
         autoComplete="off"
       >
-        {verifyData.twoFactorEnabled == true && (
-          <Text className="fs-14 mb-8 text-white d-block fw-200">
-            2FA verification code *
-          </Text>
-        )}
-        {verifyData.twoFactorEnabled == true && (
-          <Form.Item
-            name="authenticator"
-            className="input-label otp-verify"
-            extra={
-              <div>
-                <Text
-                  className="fs-12 text-red fw-200"
-                  style={{ float: "right", color: "var(--textRed)" }}
-                >
-                  {invalidcode}
-                </Text>
-              </div>
-            }
-            rules={[
-              {
-                validator: (rule, value, callback) => {
-                  var regx = new RegExp(/^[0-9]+$/);
-                  if (value) {
-                    if (!regx.test(value)) {
-                      callback("Invalid 2fa code");
-                    } else if (regx.test(value)) {
-                      callback();
-                    }
-                  } else {
-                    callback();
-                  }
-                }
-              },
-              {
-                required: true,
-                message: apiCalls.convertLocalLang("is_required")
-              }
-            ]}
-            label={
-              <>
-                <Button type="text" onClick={getAuthenticator} disabled={verifyAuth==true}>
-                  VERIFY
-                </Button>
-              </>
-            }
-          >
-            <Input
-              type="text"
-              className="cust-input text-left"
-              placeholder={"Enter code"}
-              maxLength={6}
-              onChange={(e) => handleAuthenticator(e, "authenticator")}
-              style={{ width: "100%" }}
-              // disabled={inputDisable}
-            />
-          </Form.Item>
-        )}
+      
         {verifyData.isPhoneVerified == true && (
           <Text className="fs-14 mb-8 text-white d-block fw-200">
             Phone verification code *
@@ -691,7 +640,7 @@ const WithdrawalFiatSummary = ({
                 {tooltipEmail == true && (
                   <Tooltip
                     placement="topRight"
-                    title={`Haven\'t receive code ? Request new code in ${seconds}. The code will expire after 30mins.`}
+                    title={`Haven\'t receive code? Request new code in ${seconds}. The code will expire after 30mins.`}
                   >
                     <span className="icon md info mr-8" />
                   </Tooltip>
@@ -729,7 +678,64 @@ const WithdrawalFiatSummary = ({
             />
           </Form.Item>
         )}
-
+  {verifyData.twoFactorEnabled == true && (
+          <Text className="fs-14 mb-8 text-white d-block fw-200">
+          Authenticator Code *
+          </Text>
+        )}
+        {verifyData.twoFactorEnabled == true && (
+          <Form.Item
+            name="authenticator"
+            className="input-label otp-verify"
+            extra={
+              <div>
+                <Text
+                  className="fs-12 text-red fw-200"
+                  style={{ float: "right", color: "var(--textRed)" }}
+                >
+                  {invalidcode}
+                </Text>
+              </div>
+            }
+            rules={[
+              {
+                validator: (rule, value, callback) => {
+                  var regx = new RegExp(/^[0-9]+$/);
+                  if (value) {
+                    if (!regx.test(value)) {
+                      callback("Invalid 2fa code");
+                    } else if (regx.test(value)) {
+                      callback();
+                    }
+                  } else {
+                    callback();
+                  }
+                }
+              },
+              {
+                required: true,
+                message: apiCalls.convertLocalLang("is_required")
+              }
+            ]}
+            label={
+              <>
+                <Button type="text" onClick={getAuthenticator}>
+                Click here to verify
+                </Button>
+              </>
+            }
+          >
+            <Input
+              type="text"
+              className="cust-input text-left"
+              placeholder={"Enter code"}
+              maxLength={6}
+              onChange={(e) => handleAuthenticator(e, "authenticator")}
+              style={{ width: "100%" }}
+              // disabled={inputDisable}
+            />
+          </Form.Item>
+        )}
         <Button size="large" block className="pop-btn" htmlType="submit">
           <Translate content="with_draw" component={Text} />
         </Button>

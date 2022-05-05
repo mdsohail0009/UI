@@ -56,9 +56,9 @@ class WithdrawSummary extends Component {
     authCode: "",
     verifyData: "",
     minutes: 2,
-    //seconds: 0,
-    seconds:120,
-    seconds2:120,
+     //seconds: 0,
+     seconds:120,
+     seconds2:120,
     inValidData: false,
     authenticator: "",
     EmailCode: "",
@@ -575,7 +575,7 @@ class WithdrawSummary extends Component {
           <div className="pay-list fs-14">
             <Translate
               className="fw-400 text-white"
-              content="comssion"
+              content="WithdrawalFee"
               component={Text}
             />
             <Text
@@ -608,65 +608,7 @@ class WithdrawSummary extends Component {
             form={this.form}
             onFinish={this.saveWithdrwal}
           >
-            {this.state.verifyData.twoFactorEnabled == true && (
-              <Text className="fs-14 mb-8 text-white d-block fw-200">
-                2FA verification code *
-              </Text>
-            )}
-            {this.state.verifyData.twoFactorEnabled == true && (
-              <Form.Item
-                name="authenticator"
-                className="input-label otp-verify"
-                extra={
-                  <div>
-                    <Text
-                      className="fs-12 text-red fw-200"
-                      style={{ float: "right", color: "var(--textRed)" }}
-                    >
-                      {this.state.invalidcode}
-                    </Text>
-                  </div>
-                }
-                rules={[
-                  {
-                    validator: (rule, value, callback) => {
-                      var regx = new RegExp(/^[0-9]+$/);
-                      if (value) {
-                        if (!regx.test(value)) {
-                          callback("Invalid 2fa code");
-                        } else if (regx.test(value)) {
-                          callback();
-                        }
-                      } else {
-                        callback();
-                      }
-                    }
-                  },
-                  {
-                    required: true,
-                    message: apiCalls.convertLocalLang("is_required")
-                  }
-                ]}
-                label={
-                  <>
-                    <Button type="text" onClick={this.getAuthenticator} disabled={this.state.verifyAuth==true}>
-                      VERIFY
-                    </Button>
-                  </>
-                }
-              >
-                <Input
-                  type="text"
-                  className="cust-input text-left"
-                  placeholder={"Enter code"}
-                  maxLength={6}
-                  onChange={(e) => this.handleAuthenticator(e, "authenticator")}
-                  style={{ width: "100%" }}
-                  // disabled={this.state.inputDisable}
-                />
-              </Form.Item>
-            )}
-
+          
             {this.state.verifyData.isPhoneVerified == true && (
               <Text className="fs-14 mb-8 text-white d-block fw-200">
                 Phone verification code *
@@ -815,7 +757,64 @@ class WithdrawSummary extends Component {
                 />
               </Form.Item>
             )}
-
+ {this.state.verifyData.twoFactorEnabled == true && (
+              <Text className="fs-14 mb-8 text-white d-block fw-200">
+                Authenticator Code *
+              </Text>
+            )}
+            {this.state.verifyData.twoFactorEnabled == true && (
+              <Form.Item
+                name="authenticator"
+                className="input-label otp-verify"
+                extra={
+                  <div>
+                    <Text
+                      className="fs-12 text-red fw-200"
+                      style={{ float: "right", color: "var(--textRed)" }}
+                    >
+                      {this.state.invalidcode}
+                    </Text>
+                  </div>
+                }
+                rules={[
+                  {
+                    validator: (rule, value, callback) => {
+                      var regx = new RegExp(/^[0-9]+$/);
+                      if (value) {
+                        if (!regx.test(value)) {
+                          callback("Invalid 2fa code");
+                        } else if (regx.test(value)) {
+                          callback();
+                        }
+                      } else {
+                        callback();
+                      }
+                    }
+                  },
+                  {
+                    required: true,
+                    message: apiCalls.convertLocalLang("is_required")
+                  }
+                ]}
+                label={
+                  <>
+                    <Button type="text" onClick={this.getAuthenticator}>
+                    Click here to verify
+                    </Button>
+                  </>
+                }
+              >
+                <Input
+                  type="text"
+                  className="cust-input text-left"
+                  placeholder={"Enter code"}
+                  maxLength={6}
+                  onChange={(e) => this.handleAuthenticator(e, "authenticator")}
+                  style={{ width: "100%" }}
+                  // disabled={this.state.inputDisable}
+                />
+              </Form.Item>
+            )}
             <div className="d-flex p-16 mb-36 agree-check">
               <label>
                 <input
