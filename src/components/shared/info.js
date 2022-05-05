@@ -33,7 +33,7 @@ function Info({ id, type }) {
 		if (response.ok) {
 			setLoader(false);
 			if (response.data.length === 0) {
-				setError("NO data found");
+				setError("No data found");
 				setErrorType("info");
 			} else {
 				setInfoVal(response.data);
