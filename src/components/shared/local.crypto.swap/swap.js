@@ -59,9 +59,9 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
               </div>
             )}
           />
-            <Button className="val-updown c-pointer" onClick={onCurrencySwap} disabled={isConvertionLoad}>
+            <span className="val-updown c-pointer" onClick={onCurrencySwap} disabled={isConvertionLoad}>
               <span className="icon md swaparrow" />
-            </Button>
+            </span>
         </>
       </div>
     );
