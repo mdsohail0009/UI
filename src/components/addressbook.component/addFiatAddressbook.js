@@ -444,10 +444,10 @@ const NewFiatAddress = (props) => {
                 component={Paragraph}
                 className="mb-16 fs-14 text-aqua fw-500 text-upper"
               />
-              <div style={{ display: "flex" }}>
               <Form.Item
                 name="addressType"
-                label="Address Type"
+                label={<div>Address Type <Tooltip title="1st party & 3rd party"><div className="icon md info c-pointer"></div></Tooltip>
+                </div>}
                 className="custom-label"
               >
                 <Radio.Group
@@ -478,8 +478,6 @@ const NewFiatAddress = (props) => {
                   </Radio>
                 </Radio.Group>
               </Form.Item>
-              {/* <Tooltip title="1st party & 3rd party"><div className="icon md info c-pointer"></div></Tooltip> */}
-              </div>
               <Row gutter={[16, 16]}>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                   <Form.Item
