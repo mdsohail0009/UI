@@ -560,5 +560,7 @@ export default {
 	phone_invalid_code: "Invalid phone verification code",
 	twofa_invalid_code: "Invalid authenticator code",
 	email_invalid_code: "Invalid email verification code",
-  sendTo:'Send to'
+  sendTo:'Send to',
+  account_address:'Beneficiary Address',
+  account_name:"Beneficiary Name"
 };
