@@ -10,11 +10,13 @@ import Cases from '../case.component/cases';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import {addressTabUpdate,withdrawfiatUpdate} from '../../reducers/addressBookReducer'
+import { setHeaderTab } from "../../reducers/buysellReducer"
 
 const { TabPane } = Tabs;
 class UserProfile extends Component {
-   
-    state = {
+    constructor(props) {
+        super(props);
+   this.state = {
         isProfile: false,
         isSecurity: false,
         isSetting: false,
@@ -22,8 +24,11 @@ class UserProfile extends Component {
         activeTab: "1",
        activeWithdrawFiat : false
     }
+}
     componentDidMount() {
-      
+      if(this.props?.match?.path === '/userprofile'){
+       this.props.dispatch(setHeaderTab(""));
+      }
         let activeKey = QueryString.parse(this.props.history.location.search)?.key;
         if (activeKey) {
             this.setState({ ...this.state, activeTab: activeKey });

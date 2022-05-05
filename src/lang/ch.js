@@ -517,6 +517,7 @@ export default {
   upload_documents: '上传文件',
   compliance: '(遵守)',
   get_your_own_iban: '获取自己的 IBAN',
-  sendTo:'發送至'
-
+  sendTo:'發送至',
+  account_address:'受益人地址',
+  account_name:'受益人姓名',
 }
