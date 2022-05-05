@@ -46,8 +46,8 @@ const WithdrawalFiatSummary = ({
   const [otpCode, setOtpCode] = useState("");
   const [verifyOtpText, setVerifyOtpText] = useState("");
   const [verifyEmailText, setVerifyEmailText] = useState("");
-  const [seconds, setSeconds] = useState(120);
-  const [seconds2, setSeconds2] = useState(120);
+  const [seconds, setSeconds] = useState(30);
+  const [seconds2, setSeconds2] = useState(30);
   //const [seconds, setSeconds] = useState("02:00");
   const [emailOtp, setEmailOtp] = useState("");
   const [invalidData, setInvalidData] = useState(false);
@@ -76,7 +76,9 @@ const WithdrawalFiatSummary = ({
     ),
     sentVerify: (
       <Translate
-        className={`pl-0 ml-0 text-grey-50 ${
+      className={`pl-0 ml-0 text-white-50
+        
+        ${
           textDisable ? "c-notallowed" : ""
         }`}
         content="sent_verification"
@@ -104,7 +106,8 @@ const WithdrawalFiatSummary = ({
     ),
     sentVerification: (
       <Translate
-        className={`pl-0 ml-0 text-grey-50 ${
+      className={`pl-0 ml-0 text-white-50
+      ${
           textDisable ? "c-notallowed" : ""
         }`}
         content="sent_verification"
@@ -127,8 +130,9 @@ const WithdrawalFiatSummary = ({
   //     seconds > 0 && setInterval(() => setSeconds(seconds - 1), 1000);
   //   return () => clearInterval(timer);
   // }, [seconds]);
+
   let timeInterval;
-  let count = 120;
+  let count = 30;
   const startTimer = () => {
     debugger
     let timer = count-1;
@@ -137,7 +141,7 @@ const WithdrawalFiatSummary = ({
       //minutes = parseInt(timer / 60, 10)
       //seconds = parseInt(timer % 60, 10);
      
-        seconds = parseInt(timer % 120);
+        seconds = parseInt(timer % 30);
 
       
       //minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -155,13 +159,13 @@ const WithdrawalFiatSummary = ({
     }, 1000);
   }
   let timeInterval2;
-  let count2 = 120;
+  let count2 = 30;
   const startTimer2 = () => {
     debugger;
     let timer2 = count2 - 1;
     let seconds2;
     timeInterval2 = setInterval(function () {
-      seconds2 = parseInt(timer2 % 120);
+      seconds2 = parseInt(timer2 % 30);
       setSeconds2(seconds2);
       if (--timer2 < 0) {
         timer2 = count2;
@@ -261,7 +265,6 @@ const WithdrawalFiatSummary = ({
   const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
 
   const getVerifyData = async () => {
-    debugger
     let response = await apiCalls.getVerificationFields(userConfig.id);
     if (response.ok) {
       setVerifyData(response.data);
@@ -282,14 +285,14 @@ const WithdrawalFiatSummary = ({
       setEmailVerificationText(
         apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
       );
-      startTimer2()
+      startTimer()
       setTimeout(() => {
         setEmailText("resendEmail");
         setTooltipEmail(false);
-      }, 120000);
+      }, 30000);
       setTimeout(() => {
         setVerifyEmailText(null);
-      }, 120000);
+      }, 30000);
       //timer();
     } else {
       setMsg(apiCalls.convertLocalLang("request_fail"));
@@ -344,13 +347,13 @@ const WithdrawalFiatSummary = ({
       startTimer();
       setTimeout(() => {
         setButtonText("resendotp");
-      }, 120000);
+      }, 30000);
       setTimeout(() => {
         setTooltipVisible(false);
-      }, 120000);
+      }, 30000);
       setTimeout(() => {
         setVerifyOtpText(null);
-      }, 120000);
+      }, 30000);
     } else {
       setMsg(apiCalls.convertLocalLang("request_fail"));
     }
@@ -534,64 +537,7 @@ const WithdrawalFiatSummary = ({
         //onFinish={validData==true && saveWithdrwal}
         autoComplete="off"
       >
-      {/* {verifyData.twoFactorEnabled == true && (
-          <Text className="fs-14 mb-8 text-white d-block fw-200">
-            2FA verification code *
-          </Text>
-        )} */}
-        {/* {verifyData.twoFactorEnabled == true && (
-          <Form.Item
-            name="authenticator"
-            className="input-label otp-verify"
-            extra={
-              <div>
-                <Text
-                  className="fs-12 text-red fw-200"
-                  style={{ float: "right", color: "var(--textRed)" }}
-                >
-                  {invalidcode}
-                </Text>
-              </div>
-            }
-            rules={[
-              {
-                validator: (rule, value, callback) => {
-                  var regx = new RegExp(/^[0-9]+$/);
-                  if (value) {
-                    if (!regx.test(value)) {
-                      callback("Invalid 2fa code");
-                    } else if (regx.test(value)) {
-                      callback();
-                    }
-                  } else {
-                    callback();
-                  }
-                }
-              },
-              {
-                required: true,
-                message: apiCalls.convertLocalLang("is_required")
-              }
-            ]}
-            label={
-              <>
-                <Button type="text" onClick={getAuthenticator} disabled={verifyAuth==true}>
-                  VERIFY
-                </Button>
-              </>
-            }
-          >
-            <Input
-              type="text"
-              className="cust-input text-left"
-              placeholder={"Enter code"}
-              maxLength={6}
-              onChange={(e) => handleAuthenticator(e, "authenticator")}
-              style={{ width: "100%" }}
-              // disabled={inputDisable}
-            />
-          </Form.Item>
-        )} */}
+      
         {verifyData.isPhoneVerified == true && (
           <Text className="fs-14 mb-8 text-white d-block fw-200">
             Phone verification code *
@@ -629,7 +575,7 @@ const WithdrawalFiatSummary = ({
                 {tooltipVisible == true && (
                   <Tooltip
                     placement="topRight"
-                    title={`Haven\'t receive code? Request new code in ${seconds}. The code will expire after 30mins.`}
+                    title={`Haven\'t receive code ? Request new code in ${seconds}. The code will expire after 30mins.`}
                   >
                     <span className="icon md info mr-8" />
                   </Tooltip>

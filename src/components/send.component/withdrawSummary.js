@@ -57,7 +57,7 @@ class WithdrawSummary extends Component {
     verifyData: "",
     minutes: 2,
      //seconds: 0,
-     seconds:120,
+     seconds:30,
      seconds2:120,
     inValidData: false,
     authenticator: "",
@@ -77,62 +77,64 @@ class WithdrawSummary extends Component {
     this.handleNewExchangeRate();
     this.getVerifyData();
 
-    // this.myInterval = setInterval(() => {
-    //   const { seconds, minutes } = this.state;
+    this.myInterval = setInterval(() => {
+      const { seconds, minutes } = this.state;
 
-    //   if (seconds > 0) {
-    //     this.setState(({ seconds }) => ({
-    //       seconds: seconds - 1
-    //     }));
-    //   }
-      // if (seconds === 0) {
-      //   if (minutes === 0) {
-      //     clearInterval(this.myInterval);
-      //   } else {
-      //     this.setState(({ minutes }) => ({
-      //       minutes: minutes - 1,
-      //       seconds: 120
-      //     }));
-      //   }
-    //   }
-    // }, 1000);
+      if (seconds > 0) {
+        this.setState(({ seconds }) => ({
+          seconds: seconds - 1
+        }));
+      }
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(this.myInterval);
+        } else {
+          this.setState(({ minutes }) => ({
+            minutes: minutes - 1,
+            seconds: 30
+          }));
+        }
+      }
+    }, 1000);
   }
 
-  // componentWillUnmount() {
-  //   clearInterval(this.myInterval);
-  // }
-  startTimer = () => {
-    debugger;
-    let timeInterval;
-    let count = 120;
-    let timer = count - 1;
-    let seconds;
-    timeInterval = setInterval(function () {
-      this.state.seconds = parseInt(timer % 120);
-       this.setState({...this.state,seconds:seconds})
-      if (--timer < 0) {
-        timer = count;
-        clearInterval(timeInterval);
-        this.setState({...this.state,disable:false,type:"Resend"})
-      }
-    }, 1000);
-  };
-   startTimer2 = () => {
-    debugger;
-    let timeInterval2;
-    let count2 = 120;
-    let timer2 = count2 - 1;
-    let seconds2;
-    timeInterval2 = setInterval(function () {
-      this.state.seconds2 = parseInt(timer2 % 120);
-       this.setState({...this.state,seconds2:seconds2})
-      if (--timer2 < 0) {
-        timer2 = count2;
-        clearInterval(timeInterval2);
-        this.setState({...this.state,disable:false,type:"Resend"})
-      }
-    }, 1000);
-  };
+  componentWillUnmount() {
+    clearInterval(this.myInterval);
+  }
+
+  // startTimer = () => {
+  //   debugger;
+  //   let timeInterval;
+  //   let count = 120;
+  //   let timer = count - 1;
+  //   let seconds;
+  //   timeInterval = setInterval(function () {
+  //    seconds = parseInt(timer % 120);
+  //      this.setState({...this.state,seconds:seconds})
+  //     if (--timer < 0) {
+  //       timer = count;
+  //       clearInterval(timeInterval);
+  //       this.setState({...this.state,disable:false,type:"Resend"})
+  //     }
+  //   }, 1000);
+  // };
+  //  startTimer2 = () => {
+  //   debugger;
+  //   let timeInterval2;
+  //   let count2 = 120;
+  //   let timer2 = count2 - 1;
+  //   let seconds2;
+  //   timeInterval2 = setInterval(function () {
+  //     seconds2 = parseInt(timer2 % 120);
+  //      this.setState({...this.state,seconds2:seconds2})
+  //     if (--timer2 < 0) {
+  //       timer2 = count2;
+  //       clearInterval(timeInterval2);
+  //       this.setState({...this.state,disable:false,type:"Resend"})
+  //     }
+  //   }, 1000);
+  // };
+ 
   trackEvent = () => {
     apiCalls.trackEvent({
       Type: "User",
@@ -210,7 +212,7 @@ class WithdrawSummary extends Component {
         verificationText:
           apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber
       });
-      this.startTimer();
+      //this.startTimer();
 
       setTimeout(() => {
         this.setState({
@@ -218,7 +220,7 @@ class WithdrawSummary extends Component {
           tooltipVisible: false,
           verifyOtpText: null
         });
-      }, 120000);
+      }, 30000);
     } else {
       this.setState({
         ...this.state,
@@ -243,14 +245,14 @@ class WithdrawSummary extends Component {
         emailVerificationText:
           apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
       });
-      this.startTimer2();
+     // this.startTimer2();
       setTimeout(() => {
         this.setState({
           emailText: "resendEmail",
           tooltipEmail: false,
           verifyText: null
         });
-      }, 120000);
+      }, 30000);
     } else {
       this.setState({
         ...this.state,
@@ -453,8 +455,9 @@ class WithdrawSummary extends Component {
       ),
       sentVerify: (
         <Translate
-          className={`pl-0 ml-0 text-yellow-50 
-          `}
+          // className={`pl-0 ml-0 text-yellow-50 
+          // `}
+          className={`pl-0 ml-0 text-white-50`}
           content="sent_verification"
           with={{ counter: `${textDisable ? "(" + seconds + ")" : ""}` }}
         />
@@ -483,7 +486,9 @@ class WithdrawSummary extends Component {
       ),
       sentVerification: (
         <Translate
-          className={`pl-0 ml-0 text-yellow-50 ${
+          // className={`pl-0 ml-0 text-yellow-50 
+          className={`pl-0 ml-0 text-white-50
+          ${
             textDisable ? "c-notallowed" : ""
           }`}
           content="sent_verification"
@@ -501,7 +506,7 @@ class WithdrawSummary extends Component {
 
     const tooltipTimer = seconds < 10 ? `0${seconds}` : seconds;
     const tooltipValue =
-      "Haven't receive code? Request new code in " +
+      "Haven't receive code ? Request new code in " +
       tooltipTimer +
       " seconds. The code will expire after 30mins.";
 
@@ -611,65 +616,7 @@ class WithdrawSummary extends Component {
             form={this.form}
             onFinish={this.saveWithdrwal}
           >
-            {/* {this.state.verifyData.twoFactorEnabled == true && (
-              <Text className="fs-14 mb-8 text-white d-block fw-200">
-                2FA verification code *
-              </Text>
-            )}
-            {this.state.verifyData.twoFactorEnabled == true && (
-              <Form.Item
-                name="authenticator"
-                className="input-label otp-verify"
-                extra={
-                  <div>
-                    <Text
-                      className="fs-12 text-red fw-200"
-                      style={{ float: "right", color: "var(--textRed)" }}
-                    >
-                      {this.state.invalidcode}
-                    </Text>
-                  </div>
-                }
-                rules={[
-                  {
-                    validator: (rule, value, callback) => {
-                      var regx = new RegExp(/^[0-9]+$/);
-                      if (value) {
-                        if (!regx.test(value)) {
-                          callback("Invalid 2fa code");
-                        } else if (regx.test(value)) {
-                          callback();
-                        }
-                      } else {
-                        callback();
-                      }
-                    }
-                  },
-                  {
-                    required: true,
-                    message: apiCalls.convertLocalLang("is_required")
-                  }
-                ]}
-                label={
-                  <>
-                    <Button type="text" onClick={this.getAuthenticator} disabled={this.state.verifyAuth==true}>
-                      VERIFY
-                    </Button>
-                  </>
-                }
-              >
-                <Input
-                  type="text"
-                  className="cust-input text-left"
-                  placeholder={"Enter code"}
-                  maxLength={6}
-                  onChange={(e) => this.handleAuthenticator(e, "authenticator")}
-                  style={{ width: "100%" }}
-                  // disabled={this.state.inputDisable}
-                />
-              </Form.Item>
-            )} */}
-
+          
             {this.state.verifyData.isPhoneVerified == true && (
               <Text className="fs-14 mb-8 text-white d-block fw-200">
                 Phone verification code *
@@ -820,7 +767,7 @@ class WithdrawSummary extends Component {
             )}
  {this.state.verifyData.twoFactorEnabled == true && (
               <Text className="fs-14 mb-8 text-white d-block fw-200">
-                2FA verification code *
+                Authenticator Code *
               </Text>
             )}
             {this.state.verifyData.twoFactorEnabled == true && (
