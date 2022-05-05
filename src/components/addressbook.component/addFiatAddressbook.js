@@ -346,6 +346,8 @@ const NewFiatAddress = (props) => {
 					state: response.data.state || oldVal.state,
 					country: response.data.country || oldVal.country,
 				});
+			} else {
+				setErrorMsg(response.originalError);
 			}
 		}
 	};
@@ -513,16 +515,16 @@ const NewFiatAddress = (props) => {
 
 	const changeBankType = (e) => {
 		setBankType(e);
-		if (e === "bank")
-			form.setFieldsValue({
-				accountNumber: "",
-				routingNumber: "",
-				bankName: "",
-				bankAddress: "",
-				country: "",
-				state: "",
-				zipCode: "",
-			});
+
+		form.setFieldsValue({
+			accountNumber: "",
+			routingNumber: "",
+			bankName: "",
+			bankAddress: "",
+			country: "",
+			state: "",
+			zipCode: "",
+		});
 	};
 
 	// const validateBank = (_, value) => {
@@ -534,6 +536,10 @@ const NewFiatAddress = (props) => {
 	// 		Promise.reject("Please select a bank type first");
 	// 	}
 	// };
+
+	const doNothing = () => {
+		//---
+	};
 
 	const filePreviewModal = (
 		<Modal
@@ -752,7 +758,7 @@ const NewFiatAddress = (props) => {
 										onBlur={
 											bankType === "iban"
 												? (val) => getIbanData(val.currentTarget.value)
-												: ""
+												: doNothing
 										}
 									/>
 								</Form.Item>
@@ -882,12 +888,14 @@ const NewFiatAddress = (props) => {
 									className="custom-forminput custom-label mb-0"
 									name="state"
 									label={<Translate content="state" component={Form.label} />}
-									rules={[
-										{
-											required: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-									]}>
+									rules={
+										[
+											// {
+											// 	required: true,
+											// 	message: apiCalls.convertLocalLang("is_required"),
+											// },
+										]
+									}>
 									<Select
 										disabled={bankType === "iban" ? true : false}
 										dropdownClassName="select-drpdwn"

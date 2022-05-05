@@ -239,59 +239,51 @@ class AddressBook extends Component {
 			title: "Input Score",
 			width: 150,
 			filter: true,
-			customCell: (props) => {
-				return props.dataItem.inputScore ? (
-					<td>
-						{props.dataItem.inputScore}
-						<Tooltip title="View More">
-							<span
-								className="icon md info c-pointer ml-8"
-								style={{ float: "right" }}
-								onClick={() =>
-									this.setState({
-										...this.state,
+			customCell: (props) => (
+				<td>
+					{props.dataItem.inputScore ? props.dataItem.inputScore : 0}
+					<Tooltip title="View More">
+						<span
+							className="icon md info c-pointer ml-8"
+							style={{ float: "right" }}
+							onClick={() =>
+								this.setState({
+									...this.state,
 
-										cryptoModal: true,
-										selectedId: props.dataItem.id,
-										selectedModal: "Input",
-									})
-								}
-							/>
-						</Tooltip>
-					</td>
-				) : (
-					<td>{0}</td>
-				);
-			},
+									cryptoModal: true,
+									selectedId: props.dataItem.id,
+									selectedModal: "Input",
+								})
+							}
+						/>
+					</Tooltip>
+				</td>
+			),
 		},
 		{
 			field: "outputScore",
 			title: "Output Score",
 			width: 150,
 			filter: true,
-			customCell: (props) => {
-				return props.dataItem.outputScore ? (
-					<td>
-						{props.dataItem.outputScore}
-						<Tooltip title="View More">
-							<span
-								className="icon md info c-pointer ml-8"
-								style={{ float: "right" }}
-								onClick={() =>
-									this.setState({
-										...this.state,
-										cryptoModal: true,
-										selectedId: props.dataItem.id,
-										selectedModal: "Output",
-									})
-								}
-							/>
-						</Tooltip>
-					</td>
-				) : (
-					<td>{0}</td>
-				);
-			},
+			customCell: (props) => (
+				<td>
+					{props.dataItem.outputScore ? props.dataItem.outputScore : 0}
+					<Tooltip title="View More">
+						<span
+							className="icon md info c-pointer ml-8"
+							style={{ float: "right" }}
+							onClick={() =>
+								this.setState({
+									...this.state,
+									cryptoModal: true,
+									selectedId: props.dataItem.id,
+									selectedModal: "Output",
+								})
+							}
+						/>
+					</Tooltip>
+				</td>
+			),
 		},
 		{
 			field: "coin",
