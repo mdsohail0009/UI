@@ -140,11 +140,11 @@ const NewFiatAddress = (props) => {
             form.setFieldsValue({
                 ...objj,
                 walletCode: objj.walletCode,
-                beneficiaryAccountName: props?.userConfig?.firstName + " " + props?.userConfig?.lastName
+                beneficiaryAccountName: props?.userConfig.isBusiness?props?.userConfig.businessName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName
             });
         } else {
             form.setFieldsValue({
-                beneficiaryAccountName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName
+                beneficiaryAccountName:props?.userConfig.isBusiness?props?.userConfig.businessName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName
             });
         }
         let recName = await getCountryStateLu();
@@ -311,7 +311,7 @@ const NewFiatAddress = (props) => {
           form.resetFields()
           setFiatAddress(null)
       if(e.target.value === "1stparty"){
-            form.setFieldsValue({addressType:"1stparty",beneficiaryAccountName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName})
+            form.setFieldsValue({addressType:"1stparty",beneficiaryAccountName:props?.userConfig.isBusiness?props?.userConfig.businessName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName})
             setSelectParty(false);
            }
         else{
