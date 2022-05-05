@@ -70,10 +70,15 @@ class Wallets extends Component {
     }
     render() {
         const { wallets } = this.props.dashboard;
+        const { totalCryptoValue, totalFiatValue } = this.props.dashboard.portFolio.data;
+
         return (
             <>
-                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 mb-0 text-white" />
-                <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16" />
+                <div style={{ display: "flex",alignItems:"baseline" }}>
+                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 mb-0 text-white px-4" />
+                <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16 px-4" />
+                <Currency defaultValue={totalFiatValue} className={`fs-24 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }} />
+                </div>
                 <List
                     itemLayout="horizontal"
                     dataSource={wallets.data}
