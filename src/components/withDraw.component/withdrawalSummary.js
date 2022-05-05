@@ -46,8 +46,8 @@ const WithdrawalFiatSummary = ({
   const [otpCode, setOtpCode] = useState("");
   const [verifyOtpText, setVerifyOtpText] = useState("");
   const [verifyEmailText, setVerifyEmailText] = useState("");
-  const [seconds, setSeconds] = useState(120);
-  const [seconds2, setSeconds2] = useState(120);
+  const [seconds, setSeconds] = useState(30);
+  const [seconds2, setSeconds2] = useState(30);
   //const [seconds, setSeconds] = useState("02:00");
   const [emailOtp, setEmailOtp] = useState("");
   const [invalidData, setInvalidData] = useState(false);
@@ -76,7 +76,9 @@ const WithdrawalFiatSummary = ({
     ),
     sentVerify: (
       <Translate
-        className={`pl-0 ml-0 text-grey-50 ${
+      className={`pl-0 ml-0 text-white-50
+        
+        ${
           textDisable ? "c-notallowed" : ""
         }`}
         content="sent_verification"
@@ -104,7 +106,8 @@ const WithdrawalFiatSummary = ({
     ),
     sentVerification: (
       <Translate
-        className={`pl-0 ml-0 text-grey-50 ${
+      className={`pl-0 ml-0 text-white-50
+      ${
           textDisable ? "c-notallowed" : ""
         }`}
         content="sent_verification"
@@ -129,7 +132,7 @@ const WithdrawalFiatSummary = ({
   // }, [seconds]);
 
   let timeInterval;
-  let count = 120;
+  let count = 30;
   const startTimer = () => {
     debugger
     let timer = count-1;
@@ -138,7 +141,7 @@ const WithdrawalFiatSummary = ({
       //minutes = parseInt(timer / 60, 10)
       //seconds = parseInt(timer % 60, 10);
      
-        seconds = parseInt(timer % 120);
+        seconds = parseInt(timer % 30);
 
       
       //minutes = minutes < 10 ? "0" + minutes : minutes;
@@ -156,13 +159,13 @@ const WithdrawalFiatSummary = ({
     }, 1000);
   }
   let timeInterval2;
-  let count2 = 120;
+  let count2 = 30;
   const startTimer2 = () => {
     debugger;
     let timer2 = count2 - 1;
     let seconds2;
     timeInterval2 = setInterval(function () {
-      seconds2 = parseInt(timer2 % 120);
+      seconds2 = parseInt(timer2 % 30);
       setSeconds2(seconds2);
       if (--timer2 < 0) {
         timer2 = count2;
@@ -279,14 +282,14 @@ const WithdrawalFiatSummary = ({
       setEmailVerificationText(
         apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
       );
-      startTimer2()
+      startTimer()
       setTimeout(() => {
         setEmailText("resendEmail");
         setTooltipEmail(false);
-      }, 120000);
+      }, 30000);
       setTimeout(() => {
         setVerifyEmailText(null);
-      }, 120000);
+      }, 30000);
       //timer();
     } else {
       setMsg(apiCalls.convertLocalLang("request_fail"));
@@ -341,13 +344,13 @@ const WithdrawalFiatSummary = ({
       startTimer();
       setTimeout(() => {
         setButtonText("resendotp");
-      }, 120000);
+      }, 30000);
       setTimeout(() => {
         setTooltipVisible(false);
-      }, 120000);
+      }, 30000);
       setTimeout(() => {
         setVerifyOtpText(null);
-      }, 120000);
+      }, 30000);
     } else {
       setMsg(apiCalls.convertLocalLang("request_fail"));
     }

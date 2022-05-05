@@ -520,7 +520,7 @@ export default {
   Phone_verification:'Phone Verification',
   Email_verification:'Email Verification',
   get_email:"Click here to get code",
-  resend_email: "RESEND CODE%(counter)s",
+  resend_email: "Click here to resend code",
   sent_verification:'Verification code sent',
   verify_btn:'Click here to verify',
   verify_button:'Click here to verify',
