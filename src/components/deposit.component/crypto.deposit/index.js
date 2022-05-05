@@ -16,7 +16,9 @@ const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
     }
     const onCryptoCoinSelect = async (coin) => {
         dispatch(setStep("step7"));
-        dispatch(setSubTitle(`${coin.coinBalance ? coin.coinBalance : '0'} ${coin.coin}` + " " + apicalls.convertLocalLang('available')
+        // dispatch(setSubTitle(`${coin.coinBalance ? coin.coinBalance : '0'} ${coin.coin}` + " " + apicalls.convertLocalLang('available')
+        // ));
+        dispatch(setSubTitle(` ${coin.coin}` + " " + "balance" +" "+ ":" +" "+ `${coin.coinBalance ? coin.coinBalance : '0'}`+`${coin.coin}`
         ));
         const response = await createCryptoDeposit({ memberId: userProfile?.id, walletCode: coin?.coin });
         if (response.ok) {

@@ -61,11 +61,11 @@ class TransactionsHistory extends Component {
     { field: "statusRemarks", title: apiCalls.convertLocalLang('remarks'), width: 280, filter: true }
   ];
   DepositColmns = [
+    { field: "date", title: apiCalls.convertLocalLang('Date'), filter: true, width: 210, filterType: "date" },
     { field: "refrenceId", title: apiCalls.convertLocalLang('ReferenceId'), filter: true, width: 346 },
     { field: "currency", title: apiCalls.convertLocalLang('currency'), filter: true, width: 210 },
     { field: "bankName", title: apiCalls.convertLocalLang('Bank_name'), filter: true, width: 260 },
     { field: "amountDeposit", title: apiCalls.convertLocalLang('amount'), filter: true, width: 250, dataType: "number", filterType: "numeric" },
-    { field: "date", title: apiCalls.convertLocalLang('Date'), filter: true, width: 210, filterType: "date" },
     { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 260 },
     { field: "statusRemarks", title: apiCalls.convertLocalLang('remarks'), filter: true, width: 460 }
   ];
@@ -93,7 +93,7 @@ class TransactionsHistory extends Component {
   depositCryptoColomns = [
     { field: "walletCode", title: apiCalls.convertLocalLang('Wallet'), filter: true },
     { field: "coinName", title: apiCalls.convertLocalLang('coinName'), filter: true, width: 180 },
-    { field: "availableCoins", title: apiCalls.convertLocalLang('availableCoins'), filter: true, width: 200 },
+    { field: "availableCoins", title: apiCalls.convertLocalLang('availableCoins'), filter: true, width: 200, filterType: "numeric", dataType: 'number', },
     { field: "fromWalletAddress", title: apiCalls.convertLocalLang('walletAddress'), filter: true, width: 400 },
     { field: "createdDate", title: apiCalls.convertLocalLang('RequestDate'), width: 150, filterType: "date", filter: true, },
     { field: "status", title: apiCalls.convertLocalLang('Status'), filter: true, width: 200 },

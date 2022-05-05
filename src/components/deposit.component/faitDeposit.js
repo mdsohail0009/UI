@@ -167,15 +167,15 @@ class FaitDeposit extends Component {
       this.myRef.current.scrollIntoView();
       return;
     }
-    if ((depObj.Amount.indexOf('.') > -1 && depObj.Amount.split('.')[0].length >= 9) || (depObj.Amount.indexOf('.') < 0 && depObj.Amount.length >= 9)) {
-      this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('exceeded_amount') });
-      this.myRef.current.scrollIntoView()
-    }
-    else if (depObj.Amount === '.') {
-      this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('amount_greater_zero') }); this.myRef.current.scrollIntoView()
+    // if ((depObj.Amount.indexOf('.') > -1 && depObj.Amount.split('.')[0].length >= 9) || (depObj.Amount.indexOf('.') < 0 && depObj.Amount.length >= 9)) {
+    //   this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('exceeded_amount') });
+    //   this.myRef.current.scrollIntoView()
+    // }
+    // else if (depObj.Amount === '.') {
+    //   this.setState({ ...this.state, errorMessage: apicalls.convertLocalLang('amount_greater_zero') }); this.myRef.current.scrollIntoView()
 
-    }
-    else {
+    // }
+    // else {
       this.formRef.current.validateFields().then(async () => {
         this.setState({ ...this.state, Loader: true, errorMessage: null })
         let createObj = { "id": "00000000-0000-0000-0000-000000000000", "bankId": BankInfo.id, "currency": depObj.currency, "bankName": BankInfo.bankName, "bankAddress": BankInfo.bankAddress, "amount": parseFloat(depObj.Amount), "accountNumber": BankInfo.accountNumber, "routingNumber": BankInfo.routingNumber, "swiftorBICCode": BankInfo.networkCode, "benficiaryBankName": BankInfo.accountName, "reference": BankInfo.depReferenceNo, "benficiaryAccountAddrress": BankInfo.accountAddress, 'referenceNo': BankInfo.referenceNo }
@@ -198,7 +198,7 @@ class FaitDeposit extends Component {
         //   });
         // }
       });
-    }
+    // }
   }
   onTermsChange = (chkd) => {
     this.setState({ ...this.state, isTermsAgreed: chkd })
@@ -273,7 +273,7 @@ class FaitDeposit extends Component {
                     </Select>
                   </div></Form.Item>}
                 {this.state.BankInfo &&
-                  // !fiatDepEur?
+                   !this.state.fiatDepEur?
                   <div className="fiatdep-info">
                     <Form.Item
                       className="custom-forminput mb-16"
@@ -305,17 +305,42 @@ class FaitDeposit extends Component {
                           }}
                           value={depObj.Amount} />
 
-                      </div></Form.Item>
+                      </div>
+                      </Form.Item>
 
                     <div className="d-flex">
                       <span className={`coin ${depObj.currency.toLowerCase()}`} style={{ marginRight: '8px', marginTop: '15px' }} />
                       <div style={{ flex: 1 }}>
-                        <Paragraph className="mb-0 fs-16 text-white-30 fw-500 mt-16 text-upper" style={{ wordBreak: 'break-all' }}>{BankInfo.accountName}</Paragraph>
-                        <Paragraph className="mb-0 fs-14 text-white-30 fw-300" style={{ wordBreak: 'break-all' }}>
-                          {BankInfo.accountAddress}</Paragraph>
+                        {/* <Paragraph className="mb-0 fs-16 text-white-30 fw-500 mt-16 text-upper" style={{ wordBreak: 'break-all' }}>{BankInfo.accountName}</Paragraph> */}
+                        {/* <Paragraph className="mb-0 fs-14 text-white-30 fw-300" style={{ wordBreak: 'break-all' }}>
+                          {BankInfo.accountAddress}</Paragraph> */}
+                          <Translate
+                      className="fw-200 text-white-50 fs-14"
+                      content="account_name"
+                      component={Text}
+                    />
+                    <Translate
+                      className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                      content="signature_bank"
+                      component={Text}
+                      with={{ value: BankInfo.accountName }} />
+                          <Translate
+                      className="fw-200 text-white-50 fs-14"
+                      content="account_address"
+                      component={Text}
+                    />
+                    <Translate
+                      className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                      content="signature_bank"
+                      component={Text}
+                      with={{ value: BankInfo.accountAddress }} />
                       </div>
+                      
                     </div>
-                    <Text className="text-white-30 fs-14">A/C </Text>
+                    {/* <Text className="text-white-30 fs-14">A/C </Text> */}
+                    {BankInfo.currencyCode == "USD" &&   <Text className="text-white-30 fs-14">Beneficiary Account No. </Text> }
+                    {BankInfo.currencyCode == "EUR" &&   <Text className="text-white-30 fs-14">Beneficiary IBAN No. </Text> }
+
                     <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="mb-0 fs-14 text-yellow fw-500" >{BankInfo.accountNumber}</Text>
 
                     {BankInfo.routingNumber != null && BankInfo.routingNumber != '' && <Translate
@@ -418,13 +443,12 @@ class FaitDeposit extends Component {
                     </Form.Item>
 
                   </div>
-                  // :<selectCurrency />
+                   :<selectCurrency />
 
                 }
               </div>
 
               {this.state.BankInfo &&
-                // !fiatDepEur?
                 <><Button
                   htmlType="submit"
                   size="large"

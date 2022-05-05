@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { getPaymentsData,getBankData,getFileURL } from './api';
-import { Typography, Button, Spin,message,Alert,Popover,Upload,Tooltip,Modal } from 'antd';
+import { Typography, Button, Spin,message,Alert,Popover,Tooltip,Modal } from 'antd';
 import Translate from 'react-translate-component';
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import FilePreviewer from 'react-file-previewer';
 const { Title, Text } = Typography;
-const { Dragger } = Upload;
 const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children?.slice(0, children.length - suffixCount).trim();
     const suffix = children?.slice(-suffixCount).trim();
@@ -49,7 +48,7 @@ class PaymentsView extends Component {
             this.useDivRef.current.scrollIntoView()
         }
     }
-    moreInfoPopover = async (id, index) => {
+    moreInfoPopover = async (id) => {
         this.setState({ ...this.state, tooltipLoad: true });
         let response = await getBankData(id);
         if (response.ok) {
@@ -60,7 +59,7 @@ class PaymentsView extends Component {
             this.setState({ ...this.state, visible: false, tooltipLoad: false });
         }
     }
-    handleVisibleChange = (index) => {
+    handleVisibleChange = () => {
         this.setState({ ...this.state, visible: false });
     }
     popOverContent = () => {
@@ -99,13 +98,13 @@ class PaymentsView extends Component {
         this.props.history.push('/payments')
     }
     render() {
-        const total=(this.state.paymentsData.reduce((total,currentItem) =>  total = total + currentItem.amount , 0 ));
+        const total=(this.state.paymentsData.reduce((totalVal,currentItem) =>  totalVal + currentItem.amount , 0 ));
         const { paymentsData, loading } = this.state;
         return (
             <>
              <div ref={this.useDivRef}></div>
                 <div className="main-container">
-                {this.state.errorMessage != null && (
+                {this.state.errorMessage !== null && (
                             <Alert
                                 description={this.state.errorMessage}
                                 type="error"
@@ -119,8 +118,8 @@ class PaymentsView extends Component {
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Bank Name</th>
-                                    <th>Bank account number</th>
+                                    <th>Bank name</th>
+                                    <th>Bank Account Number/IBAN</th>
                                     <th>State</th>
                                     <th>Amount</th>
                                 </tr>
@@ -135,12 +134,12 @@ class PaymentsView extends Component {
                                                     <div className='d-flex align-center justify-content'>
                                                    <span>
                                                     {item.bankname}
-                                                    <Text
-                                            size="small"
-                                            className="file-label ml-8"
-                                          >
-                                                    {this.addressTypeNames(item.addressType)}
-                                                    </Text>
+                                                            <Text
+                                                                size="small"
+                                                                className="file-label ml-8"
+                                                            >
+                                                                {this.addressTypeNames(item.addressType)}
+                                                            </Text>
                                               </span>
                                                             <Popover
                                                                     className='more-popover'
@@ -148,9 +147,9 @@ class PaymentsView extends Component {
                                                                     trigger="click"
                                                                     visible={item.visible}
                                                                     placement='top'
-                                                                    onVisibleChange={() => this.handleVisibleChange(idx)}
+                                                                    onVisibleChange={() => this.handleVisibleChange()}
                                                                 >
-                                                                    <span className='icon md info c-pointer' onClick={() => this.moreInfoPopover(item.addressId, idx)} />
+                                                                    <span className='icon md info c-pointer' onClick={() => this.moreInfoPopover(item.addressId)} />
                                                                 </Popover>
                                                                 </div>
                                                 </td>
@@ -238,7 +237,6 @@ class PaymentsView extends Component {
                          style={{ margin: "0 8px" }}onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
             </>}
           >
-            {/* <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : "", }} /> */}
             <FilePreviewer
 				hideControls={true}
 				file={{

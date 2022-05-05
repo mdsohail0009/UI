@@ -82,6 +82,7 @@ const FaitWithdrawal = ({
   const [btnDisabled, setBtnDisabled] = useState(false);
   const useDivRef = React.useRef(null);
   const [addressShow, setAddressShow] = useState(true);
+  const [validated,setValidated]=useState(false)
   const [addressObj, setAddressObj] = useState({
     bankName: null,
     accountNumber: null,
@@ -201,6 +202,7 @@ const FaitWithdrawal = ({
         setAddressObj(addressObj); 
         setAddressShow(null)  
         setAddress1(true)
+        setAddressInfo(null)
         //form.setFieldsValue(addressInfo)
       }
     }
@@ -256,7 +258,15 @@ const FaitWithdrawal = ({
     dispatch(setWithdrawfiat(values));
     changeStep("step4");
   };
+
+  const validate = (rule, value) => {
+    if (value == ".") {
+      return Promise.reject(apicalls.convertLocalLang("is_required"));
+    }
+  };
   const savewithdrawal = async (values) => {
+  debugger
+    setValidated(true)
     dispatch(setWFTotalValue(values.totalValue));
     if (
       parseFloat(
@@ -447,10 +457,15 @@ const FaitWithdrawal = ({
                     required
                     rules={[
                       { required: true, message: apicalls.convertLocalLang('is_required') },
+                      {
+                        validator:validated==true ? validate :false
+                       }
+                     
                     ]}
                     label={
                       <>
-                        <Translate content="amount" component={Form.label} />
+                        <Translate className="input-label"
+                         content="amount" component={Form.label} />
                         <div className="minmax">
                           <Translate
                             type="text"
@@ -633,8 +648,11 @@ const FaitWithdrawal = ({
                      },
                    ]}
                   >
-                    <Checkbox className="ant-custumcheck">
-                      <span className="withdraw-check"></span>
+                    <span className="d-flex">
+                    <Checkbox className="ant-custumcheck"/>
+                      
+                    {/* </Checkbox> */}
+                    <span className="withdraw-check"></span>
                       <Translate
                         content="agree_to_suissebase"
                         with={{ link }}
@@ -642,7 +660,7 @@ const FaitWithdrawal = ({
                         className="fs-14 text-white-30 ml-16 mb-4"
                         style={{ flex: 1 }}
                       />
-                    </Checkbox>
+                      </span>
                   </Form.Item>
                   <Form.Item className="mb-0 mt-16">
                     <Button

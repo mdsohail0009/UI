@@ -47,7 +47,7 @@ let initialState = {
         addressscanner: "deposit",
         depositfiat: "deposit",
         selectedcrypto: "sell_btc",
-        sellsummary: "sell_btc",
+         sellsummary: "sell_btc",
         wiretransfor: "wire_transfer"
     },
     stepSubTitles: {

@@ -63,9 +63,9 @@ class PaymentDetails extends Component {
     this.setState({ ...this.state, errorMessage: null });
   };
 
-  handleCurrencyChange = async (val, props) => {
+  handleCurrencyChange = async (val) => {
     this.setState({ ...this.state, currency: val, paymentsData: [] });
-    if ((this.state.currency = val)) {
+    if ((this.state.currency === val)) {
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
         this.props.userConfig?.id,
@@ -154,11 +154,10 @@ class PaymentDetails extends Component {
         ...this.state,
         errorMessage: "Please Check atleast one record",
       });
-      // this.useDivRef.current.scrollIntoView();
       return;
     }
     let objAmount = objData.some((item) => {
-      return (item.recordStatus !== "Deleted" && (item.amount == null || item.amount <= 0));
+      return (item.recordStatus !== "Deleted" && (item.amount === null || item.amount <= 0));
     });
 
     let obj = Object.assign({});
@@ -171,7 +170,6 @@ class PaymentDetails extends Component {
     if (obj.currency != null) {
       if (objAmount) {
         this.setState({ ...this.state, errorMessage: "Please enter amount" });
-        // this.useDivRef.current.scrollIntoView();
       }else {
         this.setState({ btnDisabled: true });
         if (
@@ -187,12 +185,10 @@ class PaymentDetails extends Component {
               duration: 0.5,
             });
             this.props.history.push("/payments");
-            // this.useDivRef.current.scrollIntoView()
           } else {
             this.setState({ btnDisabled: false });
             message.destroy();
             this.setState({ ...this.state, errorMessage: response.data })
-            // this.useDivRef.current.scrollIntoView()
           }
         }
         else {
@@ -221,13 +217,11 @@ class PaymentDetails extends Component {
               duration: 0.5,
             });
             this.setState({ ...this.state, errorMessage: response.data });
-            // this.useDivRef.current.scrollIntoView();
           }
         }
       }
     } else {
       this.setState({ ...this.state, errorMessage: "Please select currency" });
-      // this.useDivRef.current.scrollIntoView();
     }
   };
 
@@ -255,7 +249,7 @@ class PaymentDetails extends Component {
     }
   };
 
-  moreInfoPopover = async (id, index) => {
+  moreInfoPopover = async (id) => {
     this.setState({ ...this.state, tooltipLoad: true });
     let response = await getBankData(id);
     if (response.ok) {
@@ -269,7 +263,7 @@ class PaymentDetails extends Component {
       this.setState({ ...this.state, visible: false, tooltipLoad: false });
     }
   };
-  handleVisibleChange = (index) => {
+  handleVisibleChange = () => {
     this.setState({ ...this.state, visible: false });
   };
   beforeUpload = (file) => {
@@ -305,7 +299,7 @@ class PaymentDetails extends Component {
 
   let obj = {
     "documentName": `${file.name}`,
-    "isChecked": file.name == "" ? false : true,
+    "isChecked": file.name === "" ? false : true,
     "remarks": `${file.size}`,
     "state": null,
     "status": false,
@@ -369,9 +363,7 @@ filePreviewPath() {
         <div className="more-popover">
           <Text className="lbl">Address Label</Text>
           <Text className="val">{moreBankInfo?.favouriteName}</Text>
-          {/* <Text className='lbl'>Recipient Name</Text>
-                <Text className='val'>{moreBankInfo?.beneficiaryAccountName}</Text> */}
-                <Text className="lbl">Bank Address</Text>
+          <Text className="lbl">Bank Address</Text>
           <Text className="val">{moreBankInfo?.bankAddress}</Text>
           <Text className="lbl">BIC/SWIFT/Routing Number</Text>
           <Text className="val">{moreBankInfo?.routingNumber}</Text>
@@ -384,11 +376,10 @@ filePreviewPath() {
 
   render() {
     let total = 0;
-    for (let i = 0; i < this.state.paymentsData.length; i++) {
-      total += Number(this.state.paymentsData[i].amount);
+    for(const idx in this.state.paymentsData){
+      total += Number(this.state.paymentsData[idx].amount);
     }
-    const { currencylu, paymentsData, loading, type } = this.state;
-    const { form } = this.props;
+    const { currencylu, paymentsData, loading } = this.state;
     return (
       <>
         <div ref={this.useDivRef}></div>
@@ -454,14 +445,11 @@ filePreviewPath() {
                     {(this.props.match.params.id ===
                         "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
                        && (<th style={{ width: 50 }}></th>)}
-                      {/* <th style={{ width: 50 }}></th> */}
                       <th>Name</th>
-                      <th>Bank Name</th>
-                      {/* <th>BIC/SWIFT/Routing Number</th> */}
-                      <th>Bank account number</th>
+                      <th>Bank name</th>
+                      <th>Bank Account Number/IBAN</th>
                       {(this.props.match.params.id !==
                         "00000000-0000-0000-0000-000000000000" 
-                        // && this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending"
                         )
                        && (
                        <th>State</th>
@@ -572,7 +560,7 @@ filePreviewPath() {
                                         visible={item.visible}
                                         placement="top"
                                         onVisibleChange={() =>
-                                          this.handleVisibleChange(i)
+                                          this.handleVisibleChange()
                                         }
                                       >
                                         <span
@@ -580,7 +568,6 @@ filePreviewPath() {
                                           onClick={() =>
                                             this.moreInfoPopover(
                                               item.addressId,
-                                              i
                                             )
                                           }
                                         />
@@ -589,7 +576,7 @@ filePreviewPath() {
                                   </td>
                                   <td>{item.accountnumber}</td>
                                   {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000" 
-                                  //  &&this.props.match.params.state =="Submitted" || this.props.match.params.state =="Pending")
+                
                                          ) && (
                                     <td>{item.state ? item.state : "- -"}</td>
                                   )} 
@@ -599,7 +586,6 @@ filePreviewPath() {
                                   <td>
                                     <div className="d-flex">
                                       <Form.Item
-                                        //name={item.id}
                                         className="mb-0"
                                         rules={
                                           item.checked && [
@@ -669,14 +655,14 @@ filePreviewPath() {
                                         />
                                       </Upload>
                                       {this.props.match.params.id !==
-                                        "00000000-0000-0000-0000-000000000000" && (
-                                        <span
+                                        "00000000-0000-0000-0000-000000000000"  && (
+                                        <Button
                                           disabled={
                                             item.state === "Approved" ||
                                             item.state === "Cancelled" ||
                                             item.state === "Pending"
                                           }
-                                          className="delete-btn mt-30 delete-disable"
+                                          className="delete-btn mt-30"
                                           style={{ padding: "0 14px" }}
                                           onClick={() =>
                                             confirm({
@@ -699,7 +685,7 @@ filePreviewPath() {
                                         >
                                           <span className={`icon md delete mt-12 ${item.state === "Submitted"  ? "c-pointer":''} `}
                                           />
-                                        </span>
+                                        </Button>
                                       )}
                                     </div>
 
