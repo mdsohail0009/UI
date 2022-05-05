@@ -430,6 +430,8 @@ const NewFiatAddress = (props) => {
 		setAdressFile(null);
 		setDeclarationFile(null);
 		form.setFieldsValue({ file1: false, file2: false, file3: false });
+    form.resetFields()
+    setFiatAddress(null)
 		if (e.target.value === "1stparty") {
 			form.setFieldsValue({
 				addressType: "1stparty",
@@ -614,9 +616,11 @@ const NewFiatAddress = (props) => {
 							component={Paragraph}
 							className="mb-16 fs-14 text-aqua fw-500 text-upper"
 						/>
+            
 						<Form.Item
 							name="addressType"
-							label="Address Type"
+              label={<div>Address Type <Tooltip title="1st party & 3rd party"><div className="icon md info c-pointer"></div></Tooltip>
+              </div>}
 							className="custom-label">
 							<Radio.Group
 								size="large"
@@ -643,6 +647,7 @@ const NewFiatAddress = (props) => {
 								</Radio>
 							</Radio.Group>
 						</Form.Item>
+          
 						<Row gutter={[16, 16]}>
 							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
 								<Form.Item
