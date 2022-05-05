@@ -12,7 +12,7 @@ import HistoryGridComponent from "./HistoryGridComponent";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
-import Info from "../addressbook.component/info";
+import Info from "../shared/info";
 
 const { Panel } = Collapse;
 
@@ -392,7 +392,7 @@ class TransactionsHistory extends Component {
 			filter: true,
 			customCell: (props) => (
 				<td>
-					{props.dataItem.inputScore}
+					{props.dataItem.inputScore ? props.dataItem.inputScore : 0}
 					<Tooltip title="View More">
 						<span
 							className="icon md info c-pointer ml-8"
@@ -418,7 +418,7 @@ class TransactionsHistory extends Component {
 			filter: true,
 			customCell: (props) => (
 				<td>
-					{props.dataItem.outputScore}
+					{props.dataItem.outputScore ? props.dataItem.outputScore : 0}
 					<Tooltip title="View More">
 						<span
 							className="icon md info c-pointer ml-8"
@@ -428,7 +428,7 @@ class TransactionsHistory extends Component {
 									...this.state,
 									cryptoModal: true,
 									selectedId: props.dataItem.id,
-									selectedModal: "output",
+									selectedModal: "Output",
 								})
 							}
 						/>

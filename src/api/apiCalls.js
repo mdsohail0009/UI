@@ -1,172 +1,192 @@
-import { apiClient, ipRegistry } from './';
-import { ApiControllers } from './config';
-import counterpart from 'counterpart';
-import { store } from '../store';
-import CryptoJS from 'crypto-js'
+import { apiClient, ipRegistry } from "./";
+import { ApiControllers } from "./config";
+import counterpart from "counterpart";
+import { store } from "../store";
+import CryptoJS from "crypto-js";
 
 const getportfolio = (memID) => {
-    return apiClient.get(ApiControllers.wallets + `Crypto/${memID}`);
-}
+	return apiClient.get(ApiControllers.wallets + `Crypto/${memID}`);
+};
 const getCryptos = () => {
-    return apiClient.get(ApiControllers.buySell + 'Coins');
-}
+	return apiClient.get(ApiControllers.buySell + "Coins");
+};
 const getMember = (useremail) => {
-    return apiClient.get(ApiControllers.accounts + '/' + useremail);
-}
+	return apiClient.get(ApiControllers.accounts + "/" + useremail);
+};
 const sumsubacesstoken = (userid, flow) => {
-    https://api.sumsub.com/resources/accessTokens?userId=JamesBond007&levelName=basic-kyc-level
-    return apiClient.get('Sumsub/AccessToken1?applicantId=' + userid + '&levelName=' + flow);
-}
+	//api.sumsub.com/resources/accessTokens?userId=JamesBond007&levelName=basic-kyc-level
+	https: return apiClient.get(
+		"Sumsub/AccessToken1?applicantId=" + userid + "&levelName=" + flow
+	);
+};
 const sumsublivenessacesstoken = (userid, flow) => {
-    return apiClient.get('Sumsub/ExternalAccessToken?userId=' + userid + '&levelName=' + flow);
-}
+	return apiClient.get(
+		"Sumsub/ExternalAccessToken?userId=" + userid + "&levelName=" + flow
+	);
+};
 const sumsubacesstokennew = (userid) => {
-    return apiClient.get('Sumsub/KYBAccessToken?applicantId=' + userid);
-}
+	return apiClient.get("Sumsub/KYBAccessToken?applicantId=" + userid);
+};
 const updateKyc = (userid) => {
-    return apiClient.put(ApiControllers.accounts + `${userid}/KYC`);
-}
+	return apiClient.put(ApiControllers.accounts + `${userid}/KYC`);
+};
 const trackEvent = (obj) => {
-    const { userConfig: { userProfileInfo, trackAuditLogData } } = store.getState()
-    let trackObj = {
-        "id": "00000000-0000-0000-0000-000000000000",
-        "date": "",
-        "type": obj.Type,
-        "featurePath": obj.FullFeatureName,
-        "username": obj.userName,
-        "memberId": userProfileInfo?.id,
-        "feature": obj.Feature,
-        "action": obj.Action,
-        "remarks": obj.Remarks,
-        "ipAddress": trackAuditLogData?.Ip,
-        "countryName": trackAuditLogData?.Location?.countryName,
-        "info": JSON.stringify(trackAuditLogData)
-    }
-    return apiClient.post(ApiControllers.master + `Auditlogs`, trackObj);
-}
+	const {
+		userConfig: { userProfileInfo, trackAuditLogData },
+	} = store.getState();
+	let trackObj = {
+		id: "00000000-0000-0000-0000-000000000000",
+		date: "",
+		type: obj.Type,
+		featurePath: obj.FullFeatureName,
+		username: obj.userName,
+		memberId: userProfileInfo?.id,
+		feature: obj.Feature,
+		action: obj.Action,
+		remarks: obj.Remarks,
+		ipAddress: trackAuditLogData?.Ip,
+		countryName: trackAuditLogData?.Location?.countryName,
+		info: JSON.stringify(trackAuditLogData),
+	};
+	return apiClient.post(ApiControllers.master + `Auditlogs`, trackObj);
+};
 
 const getIpRegistery = () => {
-    return ipRegistry.get("/?key=l4rtc0buncs5dej9");
-}
+	return ipRegistry.get("/?key=l4rtc0buncs5dej9");
+};
 const sellMemberCrypto = (memID) => {
-    return apiClient.get(ApiControllers.wallets + memID);
-}
+	return apiClient.get(ApiControllers.wallets + memID);
+};
 const convertLocalLang = (key) => {
-    return counterpart.translate(key)
-}
+	return counterpart.translate(key);
+};
 const getIBANData = (ibannumber) => {
-    return apiClient.get(ApiControllers.master + `GetIBANAccountDetails?ibanNumber=` + ibannumber);
-}
+	return apiClient.get(
+		ApiControllers.master + `GetIBANAccountDetails?ibanNumber=` + ibannumber
+	);
+};
 
 const getdshKpis = (userid) => {
-    return apiClient.get(ApiControllers.dashboard + `KPI/${userid}`);
-}
+	return apiClient.get(ApiControllers.dashboard + `KPI/${userid}`);
+};
 const getdshcumulativePnl = (userid, days) => {
-    return apiClient.get(ApiControllers.dashboard + `CumulativePNL/${userid}/${days}`);
-}
+	return apiClient.get(
+		ApiControllers.dashboard + `CumulativePNL/${userid}/${days}`
+	);
+};
 const getAssetNetwroth = (userid, days) => {
-    return apiClient.get(ApiControllers.dashboard + `AssetsNetWorth/${userid}/${days}`);
-}
+	return apiClient.get(
+		ApiControllers.dashboard + `AssetsNetWorth/${userid}/${days}`
+	);
+};
 const getAssetAllowcation = (userid, days) => {
-    return apiClient.get(ApiControllers.dashboard + `AssetAllocation/${userid}/${days}`);
-}
+	return apiClient.get(
+		ApiControllers.dashboard + `AssetAllocation/${userid}/${days}`
+	);
+};
 const getprofits = (userid, days) => {
-    return apiClient.get(ApiControllers.dashboard + `Profits/${userid}/${days}`);
-}
+	return apiClient.get(ApiControllers.dashboard + `Profits/${userid}/${days}`);
+};
 const getdailypnl = (userid, days) => {
-    return apiClient.get(ApiControllers.dashboard + `DailyPNL/${userid}/${days}`);
-}
+	return apiClient.get(ApiControllers.dashboard + `DailyPNL/${userid}/${days}`);
+};
 
 const getCode = (AccountId, isResendOTP) => {
-    return apiClient.get(ApiControllers.master + `SendOTP/${AccountId}/${isResendOTP}`);
-
-}
+	return apiClient.get(
+		ApiControllers.master + `SendOTP/${AccountId}/${isResendOTP}`
+	);
+};
 const getVerification = (AccountId, code) => {
-    return apiClient.get(ApiControllers.master + `OTPVerification/${AccountId}/${code}`)
-}
+	return apiClient.get(
+		ApiControllers.master + `OTPVerification/${AccountId}/${code}`
+	);
+};
 
 const downloadKyc = (memberId) => {
-    return apiClient.get(ApiControllers.accounts + `DownloadFile/${memberId}`)
-}
+	return apiClient.get(ApiControllers.accounts + `DownloadFile/${memberId}`);
+};
 const updateSecurity = (obj) => {
-    return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
+	return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
 };
 
 const encryptValue = (msg, key) => {
+	msg = typeof msg == "string" ? msg : JSON.stringify(msg);
+	let salt = CryptoJS.lib.WordArray.random(128 / 8);
 
-    msg = typeof (msg) == 'string' ? msg : JSON.stringify(msg);
-    let salt = CryptoJS.lib.WordArray.random(128 / 8);
+	let key1 = CryptoJS.PBKDF2(key, salt, {
+		keySize: 256 / 32,
+		iterations: 10,
+	});
 
-    let key1 = CryptoJS.PBKDF2(key, salt, {
-        keySize: 256 / 32,
-        iterations: 10
-    });
+	let iv = CryptoJS.lib.WordArray.random(128 / 8);
 
-    let iv = CryptoJS.lib.WordArray.random(128 / 8);
-
-    let encrypted = CryptoJS.AES.encrypt(msg, key1, {
-        iv: iv,
-        padding: CryptoJS.pad.Pkcs7,
-        mode: CryptoJS.mode.CBC
-
-    });
-    return ((salt.toString()) + (iv.toString()) + (encrypted.toString()));
-}
+	let encrypted = CryptoJS.AES.encrypt(msg, key1, {
+		iv: iv,
+		padding: CryptoJS.pad.Pkcs7,
+		mode: CryptoJS.mode.CBC,
+	});
+	return salt.toString() + iv.toString() + encrypted.toString();
+};
 const sendEmail = (AccountId, isResendOTP) => {
-    return apiClient.get(
-        ApiControllers.master + `SendEmailOTP/${AccountId}/${isResendOTP}`
-    );
+	return apiClient.get(
+		ApiControllers.master + `SendEmailOTP/${AccountId}/${isResendOTP}`
+	);
 };
 
 const verifyEmail = (AccountId, code) => {
-    return apiClient.get(
-        ApiControllers.master + `EmailOTPVerification/${AccountId}/${code}`
-    );
+	return apiClient.get(
+		ApiControllers.master + `EmailOTPVerification/${AccountId}/${code}`
+	);
 };
 const getAuthenticator = (Code, memberId) => {
-    return apiClient.get(
-        ApiControllers.master + `VerifyAuthenticator/${Code}/${memberId}`
-    );
+	return apiClient.get(
+		ApiControllers.master + `VerifyAuthenticator/${Code}/${memberId}`
+	);
 };
 const getVerificationFields = (memberId) => {
-    return apiClient.get(
-        ApiControllers.master + `Verificationfields/${memberId}`
-    );
-}
+	return apiClient.get(
+		ApiControllers.master + `Verificationfields/${memberId}`
+	);
+};
 const twofactor = (id) => {
-    return apiClient.get(
-        ApiControllers.accounts + `twofactor/${id}`
-    );
-}
+	return apiClient.get(ApiControllers.accounts + `twofactor/${id}`);
+};
+
+const getInfoVal = (id, type) => {
+	return apiClient.get(
+		ApiControllers.depositWithdraw + `GetScoreChainInfo/${id}/${type}`
+	);
+};
 
 let apicalls = {
-    getportfolio,
-    getCryptos,
-    getMember,
-    sumsubacesstoken,
-    updateKyc,
-    sumsubacesstokennew,
-    sumsublivenessacesstoken,
-    trackEvent,
-    sellMemberCrypto,
-    convertLocalLang,
-    getIBANData,
-    getdshKpis,
-    getdshcumulativePnl,
-    getAssetNetwroth,
-    getAssetAllowcation,
-    getprofits,
-    getdailypnl,
-    getCode,
-    getVerification,
-    getIpRegistery,
-    encryptValue,
-    downloadKyc,
-    updateSecurity,
-    sendEmail,
-    verifyEmail,
-    getAuthenticator,
-    getVerificationFields,
-    twofactor
-  };
-  export default apicalls;
+	getportfolio,
+	getCryptos,
+	getMember,
+	sumsubacesstoken,
+	updateKyc,
+	sumsubacesstokennew,
+	sumsublivenessacesstoken,
+	trackEvent,
+	sellMemberCrypto,
+	convertLocalLang,
+	getIBANData,
+	getdshKpis,
+	getdshcumulativePnl,
+	getAssetNetwroth,
+	getAssetAllowcation,
+	getprofits,
+	getdailypnl,
+	getCode,
+	getVerification,
+	getIpRegistery,
+	encryptValue,
+	downloadKyc,
+	updateSecurity,
+	sendEmail,
+	verifyEmail,
+	getAuthenticator,
+	getVerificationFields,
+	twofactor,
+	getInfoVal,
+};
+export default apicalls;
