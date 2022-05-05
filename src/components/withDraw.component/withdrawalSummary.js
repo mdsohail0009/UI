@@ -269,6 +269,9 @@ const WithdrawalFiatSummary = ({
     if (response.ok) {
       setVerifyData(response.data);
     }
+    else{
+      setMsg("Without Verifications you can't withdraw.Please select withdraw verifications from security section")
+    }
   };
 
   const getEmail = async (val) => {
