@@ -63,9 +63,9 @@ class PaymentDetails extends Component {
     this.setState({ ...this.state, errorMessage: null });
   };
 
-  handleCurrencyChange = async (val, props) => {
+  handleCurrencyChange = async (val) => {
     this.setState({ ...this.state, currency: val, paymentsData: [] });
-    if ((this.state.currency = val)) {
+    if ((this.state.currency === val)) {
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
         this.props.userConfig?.id,
@@ -157,7 +157,7 @@ class PaymentDetails extends Component {
       return;
     }
     let objAmount = objData.some((item) => {
-      return (item.recordStatus !== "Deleted" && (item.amount == null || item.amount <= 0));
+      return (item.recordStatus !== "Deleted" && (item.amount === null || item.amount <= 0));
     });
 
     let obj = Object.assign({});
@@ -299,7 +299,7 @@ class PaymentDetails extends Component {
 
   let obj = {
     "documentName": `${file.name}`,
-    "isChecked": file.name == "" ? false : true,
+    "isChecked": file.name === "" ? false : true,
     "remarks": `${file.size}`,
     "state": null,
     "status": false,
