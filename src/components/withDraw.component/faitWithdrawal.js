@@ -232,11 +232,11 @@ const FaitWithdrawal = ({
       form.setFieldsValue({
         ...objj,
         walletCode: objj.walletCode,
-        beneficiaryAccountName: userConfig.firstName + " " + userConfig.lastName
+        beneficiaryAccountName: userConfig.isBusiness?userConfig.businessName:userConfig.firstName + " " + userConfig.lastName
       });
     } else {
       form.setFieldsValue({
-        beneficiaryAccountName: userConfig.firstName + " " + userConfig.lastName
+        beneficiaryAccountName: userConfig.isBusiness?userConfig.businessName:userConfig.firstName + " " + userConfig.lastName
       });
     }
     let recName = await getCountryStateLu();
@@ -306,8 +306,7 @@ const FaitWithdrawal = ({
     setErrorMsg(null);
     values["membershipId"] = userConfig.id;
     values["memberWalletId"] = selectedWallet.id;
-    values["beneficiaryAccountName"] =
-      userConfig.firstName + " " + userConfig.lastName;
+    values["beneficiaryAccountName"] = userConfig.isBusiness?userConfig.businessName:userConfig.firstName + " " + userConfig.lastName;
     values["favouriteName"] =
       values.favouriteName || addressDetails.favouriteName;
     values["comission"] = "0.0";

@@ -159,7 +159,7 @@ class ProfileInfo extends Component {
           )}
         </div>
         <div className="box contact-info coin-bal">
-          <Text className="basicinfo mb-0">Bank Referral Letter</Text>
+          <Text className="basicinfo mb-0">Account Reference Confirmation/Letter</Text>
           <ul class="m-0 pl-0">
             {this.state.fileLoader ? <Spin size="Large" style={{ padding: 10 }} /> : <li>
               <Tooltip title="Download">
@@ -185,6 +185,21 @@ class ProfileInfo extends Component {
             />
           </Paragraph> */}
           <ul className="user-list pl-0">
+          {this.props.userConfig.isBusiness&&<li className="profileinfo">
+              <div className="profile-block">
+                <label className="mb-0 profile-label">
+                  <Translate
+                    content="business"
+                    component={Text}
+                    className="mb-0 profile-label"
+                  />
+                </label>
+                <p className="mb-0 profile-value" style={{ flexGrow: 12 }}>
+                  {this.props.userConfig.businessName || "--"}
+                </p>
+                <div></div>
+              </div>
+            </li>}
             <li className="profileinfo">
               <div className="profile-block">
                 <label className="mb-0 profile-label">

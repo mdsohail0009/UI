@@ -129,6 +129,7 @@ class RequestedDocs extends Component {
         this.setState({ ...this.state, docDetails: { ...this.state.docDetails, details: docDetails } });
     }
     docReject = async (doc) => {
+        debugger
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
         this.setState({ ...this.state, isMessageError: null });
         if (!validateContent(item?.reply)) {
@@ -147,6 +148,7 @@ class RequestedDocs extends Component {
         };
         item.path = itemPath();
         item.status = "Submitted";
+        item.repliedBy = `${(this.props.userProfileInfo?.isBusiness==true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         item.info = JSON.stringify(this.props.trackAuditLogData);
         this.setState({ ...this.state, isSubmitting: true });
@@ -337,24 +339,59 @@ class RequestedDocs extends Component {
                 </div>
                 <div className='case-ribbon mb-16'>
                     <Row gutter={[16, 16]}>
-                        {commonModel && Object.entries(commonModel).map(([key, value], idx) => <Col key={idx} xs={key=='description'?24:24} md={key=='description'?24:12} lg={key=='description'?24:8} xl={key=='description'?24:6} xxl={key=='description'?24:6}>
+                        {/* {commonModel && Object.entries(commonModel).map(([key, value], idx) => <Col key={idx} xs={key=='description'?24:24} md={key=='description'?24:12} lg={key=='description'?24:8} xl={key=='description'?24:6} xxl={key=='description'?24:6}>
                             <div className="ribbon-item">
                                 <span className={`icon md ${key != null ? key : 'description'}`} />
                                 <div className='ml-16' style={{flex: 1}}>
                                     <Text className='case-lbl text-captz'>{key}</Text>
                                     <div className='case-val'style={{wordBreak:"break-all"}}>
                                     {(value == null || value ==" ")? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
-                                        {/* {value == null ? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)} */}
+                                       
                                         </div>
                                 </div>
                             </div>
-                        </Col>)}
+                        </Col>)} */}
+                         {commonModel ? (
+                Object.entries(commonModel).map(([key, value], idx) => (
+                  <Col
+                    key={idx}
+                    xs={key == "Decription" ? 24 : 24}
+                    md={key == "Decription" ? 24 : 24}
+                    lg={key == "Decription" ? 24 : 8}
+                    xl={key == "Decription" ? 24 : 8}
+                    xxl={key == "Decription" ? 24 : 6}
+                  >
+                    <div className="ribbon-item">
+                      <span
+                        className={`icon md ${
+                            key === null ? "Decription" : ((key == "Currency"&&value =="EUR")? "EURS" : (key == "Amount" ? 'Currency': (key == "Currency"&&value =="USD")? "USDS" :key))
+                        }`}
+                      />
+                      <div className="ml-16" style={{ flex: 1 }}>
+                        <Text className="fw-300 text-white-50 fs-12">
+                          {key}
+                        </Text>
+                        {/* <div className="fw-600 text-white-30 fs-16 l-height-normal">
+                        {(value == null || value ==" ")? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
+                        </div> */}
+                                <div className='fw-600 text-white-30 fs-16 l-height-normal'style={{wordBreak:"break-all"}} >
+                                    {(value == null || value == " ") ? '-' : (isNaN(value) || (key === 'Transaction Id') ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
+                                </div>
+                      </div>
+                    </div>
+                  </Col>
+                ))
+              ) : (
+                <Loader />
+              )}
                     </Row>
                 </div>
                 <div className="px-16">
-                    <Text className='case-lbl'>Remarks</Text>
-                    <div className='case-val'>{caseData.remarks ? caseData.remarks : '-'}</div>
+                    <Text className='fw-300 text-white-50 fs-12 '>Remarks</Text>
+                    {/* <div className='case-val'>{caseData.remarks ? caseData.remarks : '-'}</div> */}
+                    <Title level={5} className='case-val'style={{ marginTop: '3px' }} maxLength={500} rows={4}>{caseData.remarks ? caseData.remarks : '-'}</Title>
                 </div>
+               
                 <Divider />
                 {!this.state.docDetails?.details || this.state.docDetails?.details.length === 0 && <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}><Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="No documents available" /></div>}
                 <div className="bank-view">
