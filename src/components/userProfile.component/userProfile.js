@@ -19,7 +19,7 @@ class UserProfile extends Component {
         isSecurity: false,
         isSetting: false,
         tabPosition: 'left',
-        activeTab: "1",
+        activeTab: this.props.match.params.key,
        activeWithdrawFiat : false
     }
     componentDidMount() {
