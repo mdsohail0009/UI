@@ -730,7 +730,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 
 /* --Payments --*/
 .pay-grid{width: 100%;border: 1px solid rgba(0,0,0,.08);}
-.pay-grid thead th{background-color: var(--bgDarkGrey);padding: 8px; color: var(--textWhite30);font-weight: 400;text-align: left;}
+.pay-grid thead th{background-color: var(--bgDarkGrey);padding: 8px;width: 250px; color: var(--textWhite30);font-weight: 400;text-align: left;}
 .pay-grid thead th:last-child{width: 300px;}
 .pay-grid tbody td{padding: 8px; color: var(--textWhite30);font-weight: 400;border: 1px solid rgba(0,0,0,.08);}
 .pay-grid tbody tr:nth-child(even){background-color: rgba(0,0,0,.04);}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Typography, Radio } from 'antd';
+import { Typography, Radio,message } from 'antd';
 import Translate from 'react-translate-component';
+import { getData } from './api';
 import ConnectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import { fetchPortfolioData } from '../../reducers/dashboardReducer';
@@ -8,28 +9,58 @@ import { createChart, ColorType, PriceScaleMode, LineStyle } from "lightweight-c
 import { getPortfolioGraph } from './api';
 import { Link } from 'react-router-dom';
 import PortfolioChart from './portfolioChart';
+import List from '../grid.component'
+import Moment from 'react-moment';
+import { connect } from 'react-redux';
 class Portfolio extends Component {
     chart;
-    state = {
-        loading: true,
-        info: {},
-        portfolioData: null
-    }
-    portFolioGraphRef = React.createRef();
-    async fetchInfo() {
-        this.props.dispatch(fetchPortfolioData(this.props.userProfile?.id));
-    }
-    componentDidMount() {
-        this.fetchInfo();
-        this.getGraph("week");
-    }
-    getGraph = async (type) => {
-        const response = await getPortfolioGraph(this.props.userProfile?.id, type);
-        if (response.ok) {
-            this.setState({ ...this.state, portfolioData: response.data });
-        } else {
-            this.setState({ ...this.state, portfolioData: [] });
+    // state = {
+    //     loading: true,
+    //     info: {},
+    //     portfolioData: null
+    // }
+    constructor(props) {
+        super(props);
+        this.state = {
+            // gridUrl:process.env.REACT_APP_GRID_API + `Dashboard/Tranactions`,
+            alert: false,
+            errorMessage: "",
+            allDocs: false,
+            selection: [],
+            portfolioData: null,
+            info: {},
+            loading: true,
+            transactionData:[]
         }
+        // this.gridRef = React.createRef();
+    }
+    getTransactionData = async () => {
+        this.setState({ ...this.state, loading: true });
+        let response = await getData(this.props.userProfileInfo?.id);
+        if (response.ok) {
+            console.log(response.data)
+            this.setState({ ...this.state, transactionData: response.data, loading: false });
+        }else {
+            message.destroy();
+            // this.useDivRef.current.scrollIntoView()
+        }
+    }
+    // portFolioGraphRef = React.createRef();
+    // async fetchInfo() {
+    //     this.props.dispatch(fetchPortfolioData(this.props.userProfile?.id));
+    // }
+    componentDidMount() {
+        this.getTransactionData()
+        // this.fetchInfo();
+        // this.getGraph("week");
+    }
+    // getGraph = async (type) => {
+    //     const response = await getPortfolioGraph(this.props.userProfile?.id, type);
+    //     if (response.ok) {
+    //         this.setState({ ...this.state, portfolioData: response.data });
+    //     } else {
+    //         this.setState({ ...this.state, portfolioData: [] });
+    //     }
         // this.portFolioGraphRef.current.innerHTML = ""
         // this.chart = createChart(this.portFolioGraphRef.current, {
         //     height: 300,
@@ -169,23 +200,30 @@ class Portfolio extends Component {
         //     });
         //     this.chart.timeScale().fitContent();
         // }
-    }
+    // }
+    // columnGrid = [
+    //     {field: "Type",title: "Type",filter: true, width: 150,},
+    //     {field: "Refrence Id",title: "Refrence Id",filter: true, width: 150,},
+	// 	{field: "Currency",title: "Currency",filter: true,},
+	// 	{field: "Amount",title: "Amount",filter: true,width: 120,},
+    //     {field: "Status",title: "Status",filter: true,width: 120,},
+	// ];
     render() {
         const { Title } = Typography;
-        const { totalCryptoValue, totalFiatValue } = this.props.dashboard.portFolio.data;
-
+        // const { totalCryptoValue, totalFiatValue } = this.props.dashboard.portFolio.data;
+        const { gridUrl } = this.state;
         return (
             <div className="mb-24">
                 {/* <Translate content="Portfolio_title" component={Title} level={3} className="fs-24 fw-600 mb-0 text-white-30" /> */}
-                <div className="portfolio-count py-36">
+                {/* <div className="portfolio-count py-36"> */}
                     {/* <div className="summary-count mr-16">
                         <Currency defaultValue={totalFiatValue} className={`fs-40 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }} />
                         <div style={{ display: 'flex' }}><Currency defaultValue={totalCryptoValue} prefix={""} suffixText={"BTC"} className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
                         <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500"><Translate content="cockpit" /><span className="icon sm right-angle ml-4" /></Link>
                         </div>
                     </div> */}
-                </div>
-                <div className="text-center mb-16 wmy-graph" >
+                {/* </div> */}
+                {/* <div className="text-center mb-16 wmy-graph" >
                     <Radio.Group defaultValue="week" buttonStyle="solid" onChange={({ target: { value } }) => {
                         this.getGraph(value)
                     }}>
@@ -196,12 +234,57 @@ class Portfolio extends Component {
                         <Radio.Button value="year">1
                             <Translate content='Y' /></Radio.Button>
                     </Radio.Group>
-                </div>
+                </div> */}
                 {/* <div ref={this.portFolioGraphRef} /> */}
-                <PortfolioChart data={this.state.portfolioData} />
+                {/* <PortfolioChart data={this.state.portfolioData} /> */}
+                <div>
+                <Translate content="menu_transactions_history" className="basicinfo" />
+                {/* <div className="mt-16"> */}
+                    {/* <List  ref={this.gridRef} columns={this.columnGrid} additionalParams={{ "memberId": this.props.userProfileInfo?.id }} /> */}
+                    {/* <List url={gridUrl} ref={this.gridRef} columns={this.columnGrid} additionalParams={{ "memberId": this.props.userProfileInfo?.id }} /> */}
+                {/* </div> */}
+                <div className="box basic-info">
+                <table className='pay-grid view'>
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th className="file-label ml-8">Refrence Id</th>
+                                    <th>Currency</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {this.state.transactionData?.map((item, idx) => {
+                                    return (
+                                        <>
+                                          {this.state.transactionData.length > 0? <> <tr key={idx}>
+                                          <td>{item?.type}</td>
+                                                
+                                                <td style={{width:"100px"}}>{item.referenceId}</td>
+                                                <td>{item.currency}</td>
+                                                <td>{item.amount} </td>
+                                                <td>{item.status} </td>
+                                            </tr>
+                                            </>
+                                        :"No  details available."}</>
+                                    )
+                                })}
+
+                                {/* {loading && <tr>
+                                    <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>} */}
+                            </tbody>
+                </table>
+                </div>
+                </div>
             </div>
         );
     }
 }
-
-export default ConnectStateProps(Portfolio);
+const connectDispatchToProps = dispath => {
+    return { dispath }
+}
+const connectStateToProps = ({ userConfig }) => {
+    return { userProfileInfo: userConfig.userProfileInfo }
+}
+export default connect(connectStateToProps, connectDispatchToProps) (Portfolio);
