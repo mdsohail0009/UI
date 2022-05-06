@@ -10,7 +10,7 @@ import FilePreviewer from 'react-file-previewer';
 
 const { confirm } = Modal;
 const { Option } = Select;
-const { Title, Text } = Typography;
+const { Title, Text,Paragraph } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
   const start = children?.slice(0, children.length - suffixCount).trim();
   const suffix = children?.slice(-suffixCount).trim();
@@ -46,7 +46,10 @@ class PaymentDetails extends Component {
       type: this.props.match.params.type,
       state:this.props.match.params.state,
       billPaymentData: null,
-      uploadUrl:process.env.REACT_APP_UPLOAD_API +"UploadFile"
+      uploadUrl:process.env.REACT_APP_UPLOAD_API +"UploadFile",
+      isUploading:false,
+      modal:false,
+      selectData:null,
     };
     this.gridRef = React.createRef();
     this.useDivRef = React.createRef();
@@ -145,7 +148,7 @@ class PaymentDetails extends Component {
       }
     }
   };
-  saveRolesDetails = async () => {
+  savePayment = async () => {
     let objData = this.state.paymentsData.filter((item) => {
       return item.checked;
     });
@@ -226,6 +229,7 @@ class PaymentDetails extends Component {
   };
 
   deleteDetials = async (id,paymentsData) => {
+    
     let data = paymentsData;
     let isAtleastOneRecord = false;
     let indexno = '';
@@ -239,11 +243,11 @@ class PaymentDetails extends Component {
     if(isAtleastOneRecord){
             data[indexno].recordStatus = "Deleted";
           data[indexno].amount = "0";
-        this.setState({ ...this.state.paymentsData, paymentData: data });
+        this.setState({ ...this.state.paymentsData, paymentData: data,modal:false });
     }else{
         this.setState({
             ...this.state,
-            errorMessage: "Atleast one record is required",
+            errorMessage: "Atleast one record is required",modal:false
           });
           this.useDivRef.current.scrollIntoView();
     }
@@ -282,18 +286,20 @@ class PaymentDetails extends Component {
       "application/PDF": true,
     };
     if (fileType[file.type]) {
-      this.setState({ ...this.state, isValidFile: true });
+      this.setState({ ...this.state, isValidFile: true ,isUploading:true});
       return true;
     } else {
       this.state.errorMessage(
         "File is not allowed. You can upload jpg, png, jpeg and PDF  files"
       );
-      this.setState({ ...this.state, isValidFile: false });
+      this.setState({ ...this.state, isValidFile: false,isUploading:false });
       return Upload.LIST_IGNORE;
     }
   };
   handleUpload = ({ file }, item) => {
-    this.setState({...this.state,errorMessage:null });
+    debugger
+    this.setState({...this.state,errorMessage:null,isUploading:true });
+    if(item.id){
     if(file?.status === "done"){
     let paymentDetialsData = this.state.paymentsData;
 
@@ -313,10 +319,25 @@ class PaymentDetails extends Component {
         paymentDetialsData[pay].documents.details = [obj];
       }
     }
-    this.setState({...this.state, paymentsData: paymentDetialsData,loading: false });
+    this.setState({...this.state, paymentsData: paymentDetialsData,loading: false,
+      isUploading:false
+     });
+}
 }
   };
+  onModalOpen=(item)=>{
+    if(
+    item.state === "Approved" || item.state === "Cancelled" ||item.state === "Pending"){
+      this.setState({ ...this.state, modal: false, selectData: item })
+    }else{
+      this.setState({  ...this.state,modal: true,selectData:item })
+    }                                  
 
+  }
+  handleCancel = e => {
+    this.setState({ ...this.state, modal: false });
+    
+}
   docPreview = async (file) => {
     let res = await getFileURL({ url: file.path });
     if (res.ok) {
@@ -374,12 +395,13 @@ filePreviewPath() {
     }
   };
 
+
   render() {
     let total = 0;
     for(const idx in this.state.paymentsData){
       total += Number(this.state.paymentsData[idx].amount);
     }
-    const { currencylu, paymentsData, loading } = this.state;
+    const { currencylu, paymentsData, loading,isUploading } = this.state;
     return (
       <>
         <div ref={this.useDivRef}></div>
@@ -652,46 +674,32 @@ filePreviewPath() {
                                               ? ""
                                               : "c-pointer"
                                           } `}
-                                        />
+                                        />   
+                                        {item.id ?<>{isUploading && (
+                                              <div className="text-center">
+                                                <Spin />
+                                              </div>
+                                            )}</> :""}
+                                        
                                       </Upload>
+                                          
                                       {this.props.match.params.id !==
                                         "00000000-0000-0000-0000-000000000000"  && (
-                                        <Button
-                                          disabled={
-                                            item.state === "Approved" ||
-                                            item.state === "Cancelled" ||
-                                            item.state === "Pending"
-                                          }
-                                          className="delete-btn mt-30"
-                                          style={{ padding: "0 14px" }}
-                                          onClick={() =>
-                                            confirm({
-                                              content: (
-                                                <div className="fs-14 text-white-50">
-                                                  Are you sure do you want to
-                                                  delete Payment ?
-                                                </div>
-                                              ),
-                                              title: (
-                                                <div className="fs-18 text-white-30">
-                                                  Delete Payment ?
-                                                </div>
-                                              ),
-                                              onOk: () => {
-                                                this.deleteDetials(item, this.state.paymentsData);
-                                              },
-                                            })
-                                          }
-                                        >
-                                          <span className={`icon md delete mt-12 ${item.state === "Submitted"  ? "c-pointer":''} `}
-                                          />
-                                        </Button>
+                                        <span className='mt-30 delete-btn delete-disable' disabled={
+                                          item.state === "Approved" ||
+                                          item.state === "Cancelled" ||
+                                          item.state === "Pending"
+                                        }>
+                                        <span onClick={()=>this.onModalOpen(item)} 
+                                         className={`icon md delete mt-12 ${item.state === "Submitted"  ? "c-pointer":''} `}
+                                        />
+                                        </span>
                                       )}
                                     </div>
-
+                                   
                                     {item.documents?.details.map((file) => (
                                       <>
-                                        {file.documentName !== null && (
+                                        {!isUploading && file.documentName !== null && (
                                           <div className='docdetails' onClick={() => this.docPreview(file)}>
                                           <Tooltip title={file.documentName}>
                                           <EllipsisMiddle  suffixCount={4}>
@@ -713,7 +721,7 @@ filePreviewPath() {
                                                     <br/>
                                       {item.documents?.details.map((file) => 
                                      <>
-                                     {file.documentName !== null && (
+                                     {!isUploading && file.documentName !== null && (
                                         <div className='docdetails' onClick={() => this.docPreview(file)}>
                                         <Tooltip title={file.documentName}>
                                         <EllipsisMiddle  suffixCount={4}>
@@ -796,7 +804,7 @@ filePreviewPath() {
                    className="pop-btn px-36"
                     disabled={this.state.btnDisabled}
                     onClick={() => {
-                      this.saveRolesDetails();
+                      this.savePayment();
                     }}
                   >
                     Pay Now
@@ -831,6 +839,31 @@ filePreviewPath() {
                 >
                     <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />
                 </Modal>
+        <Modal 
+          closable={false}
+          closeIcon={false}
+          visible={this.state.modal}
+          className="payments-modal"
+          footer={[
+            <>
+                <Button 
+                    className="pop-cancel"
+                    onClick={this.handleCancel}>Cancel</Button>
+                <Button className="primary-btn pop-btn"
+                    
+                    onClick={()=>this.deleteDetials(this.state.selectData,this.state.paymentsData)}>Ok</Button>
+            </>
+        ]} 
+        >
+          <div className="fs-14 text-white-50">
+            <Title className='fs-18 text-white-50'><span class="icon lg info-icon"></span> Delete Payment?</Title>
+            <Paragraph className="fs-14 text-white-50 modal-para">Are you sure do you want to
+            delete Payment ?</Paragraph>
+            
+
+          </div>
+        </Modal>
+
       </>
     );
   }

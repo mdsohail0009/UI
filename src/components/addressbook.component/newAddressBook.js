@@ -380,16 +380,17 @@ const NewAddressBook = ({ changeStep, addressBookReducer, userConfig, onCancel, 
 
                         ]}
                     >
-                        <Checkbox className="ant-custumcheck">
-                            <span className="withdraw-check"></span>
-                            <Translate
-                                content="agree_to_suissebase"
-                                with={{ link }}
-                                component={Paragraph}
-                                className="fs-14 text-white-30 ml-16 mb-4"
-                                style={{ flex: 1 }}
-                            />
-                        </Checkbox>
+                        <span className="d-flex">
+                    <Checkbox className="ant-custumcheck"/>
+                    <span className="withdraw-check"></span>
+                      <Translate
+                        content="agree_to_suissebase"
+                        with={{ link }}
+                        component={Paragraph}
+                        className="fs-14 text-white-30 ml-16 mb-4"
+                        style={{ flex: 1 }}
+                      />
+                      </span>
                     </Form.Item>
                     <div style={{ marginTop: '50px' }}>
                         <Button

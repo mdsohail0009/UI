@@ -210,7 +210,7 @@ class AddressBook extends Component {
         if (!this.state.isCheck) {
             this.setState({ alert: true })
             setTimeout(() => this.setState({ alert: false }), 2000)
-        } else if(obj.addressState === 'Approved' || obj.addressState === "Rejected") {
+        } else if(obj.addressState === 'Approved' || obj.addressState === "Rejected" ||obj.addressState === "Reject") {
             warning(`Record is already ${obj.addressState} you can't modify`);
             this.setState({ ...this.state, visible: false, selection: [], isCheck: false, })
         }
