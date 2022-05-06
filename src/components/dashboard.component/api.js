@@ -22,7 +22,7 @@ const getCoinChatData = (coinName, currency, days) => {
     return coinGekoClient.get(`coins/${coinName}/market_chart?vs_currency=${currency}&days=${days}`);
 }
 const getData = (id) => {
-    return apiClient.get(ApiControllers.transaction + `Dashboard/Tranactions/${id}`);
+    return apiClient.get(ApiControllers.transaction + `Accounts/Dashboard/${id}`);
 }
 const getNotices = () => {
     return apiClient.get(ApiControllers.accounts + 'Dashboard/Notice');

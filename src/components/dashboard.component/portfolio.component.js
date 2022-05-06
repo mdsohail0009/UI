@@ -248,9 +248,9 @@ class Portfolio extends Component {
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th >Type</th>
+                                    <th>Type</th>
                                     <th>Wallet</th>
-                                    <th>value</th>
+                                    <th>Value</th>
                                     <th>State</th>
                                 </tr>
                             </thead>
@@ -259,12 +259,12 @@ class Portfolio extends Component {
                                     return (
                                         <>
                                           {this.state.transactionData.length > 0? <> <tr key={idx}>
-                                          <td>{item?.type}</td>
+                                          <td>{item?.date}</td>
                                                 
-                                                <td style={{width:"100px"}}>{item.referenceId}</td>
-                                                <td>{item.currency}</td>
-                                                <td>{item.amount} </td>
-                                                <td>{item.status} </td>
+                                                <td style={{width:"100px"}}>{item.type}</td>
+                                                <td>{item.wallet}</td>
+                                                <td>{item.value} </td>
+                                                <td>{item.state} </td>
                                             </tr>
                                             </>
                                         :"No  details available."}</>
