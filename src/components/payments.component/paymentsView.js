@@ -44,7 +44,6 @@ class PaymentsView extends Component {
             this.setState({ ...this.state, paymentsData: response.data.paymentsDetails, loading: false });
         }else {
             message.destroy();
-            this.setState({ ...this.state, errorMessage: response.data})
             this.useDivRef.current.scrollIntoView()
         }
     }
@@ -104,14 +103,6 @@ class PaymentsView extends Component {
             <>
              <div ref={this.useDivRef}></div>
                 <div className="main-container">
-                {this.state.errorMessage !== null && (
-                            <Alert
-                                description={this.state.errorMessage}
-                                type="error"
-                                closable
-                                onClose={() => this.handleAlert()}
-                            />
-                        )}
                     <Title className="basicinfo mb-16"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
                     <div className="box basic-info">
                         <table className='pay-grid view'>
