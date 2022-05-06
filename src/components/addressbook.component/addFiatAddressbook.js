@@ -152,9 +152,12 @@ const NewFiatAddress = (props) => {
 			let fileInfo = response?.data?.documents?.details;
 			if (response?.data?.addressType === "1stparty" && fileInfo?.length != 0) {
 				setDeclarationFile(response?.data?.documents?.details[0]);
+				 form.setFieldsValue({ file3: true });
 			} else {
 				setIdentityFile(response?.data?.documents?.details[0]);
 				setAdressFile(response?.data?.documents?.details[1]);
+				form.setFieldsValue({ file1: true });
+				   form.setFieldsValue({ file2: true });
 			}
 
 			getStateLu(response.data.country);
