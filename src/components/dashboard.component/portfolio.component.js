@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Radio,message } from 'antd';
+import { Typography, Radio,message ,Spin} from 'antd';
 import Translate from 'react-translate-component';
 import { getData } from './api';
 import ConnectStateProps from '../../utils/state.connect';
@@ -211,7 +211,7 @@ class Portfolio extends Component {
     render() {
         const { Title } = Typography;
         // const { totalCryptoValue, totalFiatValue } = this.props.dashboard.portFolio.data;
-        const { gridUrl } = this.state;
+        const { gridUrl,loading } = this.state;
         return (
             <div className="mb-24">
                 {/* <Translate content="Portfolio_title" component={Title} level={3} className="fs-24 fw-600 mb-0 text-white-30" /> */}
@@ -271,8 +271,8 @@ class Portfolio extends Component {
                                     )
                                 })}
 
-                                {/* {loading && <tr>
-                                    <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>} */}
+                                {loading && <tr>
+                                    <td colSpan='5' className='text-center p-16'><Spin size='default' /></td></tr>}
                             </tbody>
                 </table>
                 </div>
