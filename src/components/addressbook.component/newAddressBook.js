@@ -566,7 +566,8 @@ const NewAddressBook = ({
 											  ),
 								},
 							]}>
-							<Checkbox className="ant-custumcheck">
+							 <span className="d-flex">
+                    <Checkbox className="ant-custumcheck"/>
 								<span className="withdraw-check"></span>
 								<Translate
 									content="agree_to_suissebase"
@@ -575,7 +576,7 @@ const NewAddressBook = ({
 									className="fs-14 text-white-30 ml-16 mb-4"
 									style={{ flex: 1 }}
 								/>
-							</Checkbox>
+							 </span>
 						</Form.Item>
 						<div style={{ marginTop: "50px" }}>
 							<Button
