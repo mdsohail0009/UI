@@ -402,7 +402,7 @@ export default {
 	tab_fiat: "Fiat",
 	total_balance: "Total balance",
 	// wallet_address: 'Select wallet address',
-  wallet_address:"Withdraw to your whitelisted cryptocurrency wallet.",
+  wallet_address:"Withdraw to your whitelisted crypto currency wallet.",
 	enter_address: "Enter address",
 	enter_wallet_address: "Please enter wallet address",
 	enter_amount: "Please enter amount",
