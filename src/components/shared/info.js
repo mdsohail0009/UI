@@ -43,7 +43,7 @@ function Info({ id, type }) {
 			}
 		} else {
 			setLoader(false);
-			console.log(response.data);
+			setError("Some error occur, try later");
 		}
 	};
 	return (
@@ -60,17 +60,19 @@ function Info({ id, type }) {
 			{infoVal &&
 				infoVal.map((item) => (
 					<>
-						<div className="case-ribbon">
-							<Row gutter={[8, 8]} wrap={true}>
+						<div
+							className="box basic-info text-left text-white mx-0"
+							style={{ width: "100%" }}>
+							<Row gutter={[6, 6]} wrap={true}>
 								<div className="ml-16 mb-16" style={{ flex: 1 }}>
 									<div
 										className="fw-600 text-white-30 fs-16 l-height-normal"
 										style={{ wordBreak: "break-all" }}>
-										<Text>{item.label}</Text>
+										<Text className="text-white">{item.label}</Text>
 									</div>
 								</div>
 							</Row>
-							<Row gutter={[8, 8]} wrap={true}>
+							<Row gutter={[6, 6]} wrap={true}>
 								<Col span={12}>
 									<div className="ribbon-item">
 										<div className="ml-16" style={{ flex: 1 }}>
@@ -80,7 +82,7 @@ function Info({ id, type }) {
 											<div
 												className="fw-600 text-white-30 fs-14 l-height-normal"
 												style={{ wordBreak: "break-all" }}>
-												<Text>{item.type}</Text>
+												<Text className="text-white">{item.type}</Text>
 											</div>
 										</div>
 									</div>
@@ -94,15 +96,15 @@ function Info({ id, type }) {
 											<div
 												className="fw-600 text-white-30 fs-14 l-height-normal"
 												style={{ wordBreak: "break-all" }}>
-												<Text>{item.address}</Text>
+												<Text className="text-white">{item.address}</Text>
 											</div>
 										</div>
 									</div>
 								</Col>
 							</Row>
-							<Row gutter={[8, 8]} wrap={true}>
+							<Row gutter={[6, 6]} wrap={true}>
 								<Col span={12}>
-									<div className="ribbon-item">
+									<div className="ribbon-item ">
 										<div className="ml-16" style={{ flex: 1 }}>
 											<Text className="fw-300 text-white-50 fs-12 text-captz">
 												Score
@@ -110,7 +112,7 @@ function Info({ id, type }) {
 											<div
 												className="fw-600 text-white-30 fs-16 l-height-normal"
 												style={{ wordBreak: "break-all" }}>
-												<Text>{item.score}</Text>
+												<Text className="text-white">{item.score}</Text>
 											</div>
 										</div>
 									</div>
@@ -124,7 +126,7 @@ function Info({ id, type }) {
 											<div
 												className="fw-600 text-white-30 fs-16 l-height-normal"
 												style={{ wordBreak: "break-all" }}>
-												<Text>{item.value}</Text>
+												<Text className="text-white">{item.value}</Text>
 											</div>
 										</div>
 									</div>
