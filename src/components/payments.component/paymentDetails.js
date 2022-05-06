@@ -50,6 +50,7 @@ class PaymentDetails extends Component {
       isUploading:false,
       modal:false,
       selectData:null,
+      uploadData:null,
     };
     this.gridRef = React.createRef();
     this.useDivRef = React.createRef();
@@ -68,7 +69,7 @@ class PaymentDetails extends Component {
 
   handleCurrencyChange = async (val) => {
     this.setState({ ...this.state, currency: val, paymentsData: [] });
-    if ((this.state.currency === val)) {
+    if ((this.state.currency = val)) {
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
         this.props.userConfig?.id,
@@ -286,21 +287,21 @@ class PaymentDetails extends Component {
       "application/PDF": true,
     };
     if (fileType[file.type]) {
-      this.setState({ ...this.state, isValidFile: true ,isUploading:true});
+      this.setState({ ...this.state, isValidFile: true,isUploading:true });
       return true;
     } else {
       this.state.errorMessage(
         "File is not allowed. You can upload jpg, png, jpeg and PDF  files"
       );
-      this.setState({ ...this.state, isValidFile: false,isUploading:false });
+      this.setState({ ...this.state, isValidFile: false });
       return Upload.LIST_IGNORE;
     }
   };
   handleUpload = ({ file }, item) => {
-    debugger
-    this.setState({...this.state,errorMessage:null,isUploading:true });
+    console.log(item)
+    this.setState({...this.state,errorMessage:null,isUploading:true,uploadData:item });
     if(item.id){
-    if(file?.status === "done"){
+    if(file?.status === "done" && this.state.isUploading){
     let paymentDetialsData = this.state.paymentsData;
 
   let obj = {
@@ -401,7 +402,7 @@ filePreviewPath() {
     for(const idx in this.state.paymentsData){
       total += Number(this.state.paymentsData[idx].amount);
     }
-    const { currencylu, paymentsData, loading,isUploading } = this.state;
+    const { currencylu, paymentsData, loading,isUploading,uploadData } = this.state;
     return (
       <>
         <div ref={this.useDivRef}></div>
@@ -650,6 +651,7 @@ filePreviewPath() {
                                         />
                                       </Form.Item>
                                       <Upload
+                                        key={i}
                                         type="dashed"
                                         size="large"
                                         className="ml-8 mt-12"
@@ -675,12 +677,6 @@ filePreviewPath() {
                                               : "c-pointer"
                                           } `}
                                         />   
-                                        {item.id ?<>{isUploading && (
-                                              <div className="text-center">
-                                                <Spin />
-                                              </div>
-                                            )}</> :""}
-                                        
                                       </Upload>
                                           
                                       {this.props.match.params.id !==
@@ -699,7 +695,11 @@ filePreviewPath() {
                                    
                                     {item.documents?.details.map((file) => (
                                       <>
-                                        {!isUploading && file.documentName !== null && (
+                                      {isUploading&& file.documentName !== null &&<div className="text-center" >
+                                            <Spin />
+                                          </div>}
+                                        {
+                                          file.documentName !== null && (
                                           <div className='docdetails' onClick={() => this.docPreview(file)}>
                                           <Tooltip title={file.documentName}>
                                           <EllipsisMiddle  suffixCount={4}>
