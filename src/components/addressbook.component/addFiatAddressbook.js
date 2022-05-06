@@ -174,13 +174,11 @@ const NewFiatAddress = (props) => {
 			form.setFieldsValue({
 				...objj,
 				walletCode: objj.walletCode,
-				beneficiaryAccountName:
-					props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
+				beneficiaryAccountName: props?.userConfig.isBusiness?props?.userConfig.businessName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName
 			});
 		} else {
 			form.setFieldsValue({
-				beneficiaryAccountName:
-					props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
+				beneficiaryAccountName: props?.userConfig.isBusiness?props?.userConfig.businessName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName
 			});
 		}
 		let recName = await getCountryStateLu();
