@@ -443,7 +443,7 @@ class AddressBook extends Component {
 			setTimeout(() => this.setState({ alert: false }), 2000);
 		} else if (
 			obj.addressState === "Approved" ||
-			obj.addressState === "Rejected"
+			obj.addressState === "Rejected"||obj.addressState === "Reject"
 		) {
 			warning(`Record is already ${obj.addressState} you can't modify`);
 			this.setState({
