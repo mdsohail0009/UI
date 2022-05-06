@@ -685,7 +685,7 @@ filePreviewPath() {
                                           
                                       {this.props.match.params.id !==
                                         "00000000-0000-0000-0000-000000000000"  && (
-                                        <span className='mt-30 delete-btn delete-disable' disabled={
+                                        <span className='mt-30 ml-12 delete-btn delete-disable' disabled={
                                           item.state === "Approved" ||
                                           item.state === "Cancelled" ||
                                           item.state === "Pending"
