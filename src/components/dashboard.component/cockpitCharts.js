@@ -145,7 +145,7 @@ class CockpitCharts extends Component {
 						</Col>
 
                     {this.state.kpis?.yesterdayPNL != 0 && 
-                    <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
 							{this.state.kpis ? (
 
                         <div className="db-kpi vthicon">
@@ -174,7 +174,7 @@ class CockpitCharts extends Component {
                     </Col>}
                                       
                     {this.state.kpis?.monthPNL != 0 && 
-                    <Col xs={24} sm={24} md={12} lg={12} xl={8} xxl={6}>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={6} xxl={6}>
 							{this.state.kpis ? (
 
                         <div className="db-kpi vthicon">

@@ -448,8 +448,9 @@ const NewFiatAddress = (props) => {
               />
               <Form.Item
                 name="addressType"
-                label={<div>Address Type <Tooltip title="1st party & 3rd party"><div className="icon md info c-pointer"></div></Tooltip>
-                </div>}
+                //  label={<div>Address Type <Tooltip title="1st party & 3rd party"><div className="icon md info c-pointer"></div></Tooltip>
+                // </div>}
+				label="Address Type"
                 className="custom-label"
               >
                 <Radio.Group
