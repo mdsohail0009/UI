@@ -239,7 +239,7 @@ class Portfolio extends Component {
                 {/* <PortfolioChart data={this.state.portfolioData} /> */}
                 <div>
                 <Translate content="menu_transactions_history" className="basicinfo" />
-                {/* <div className="mt-16"> */}
+                <div className="mt-16">
                     {/* <List  ref={this.gridRef} columns={this.columnGrid} additionalParams={{ "memberId": this.props.userProfileInfo?.id }} /> */}
                     {/* <List url={gridUrl} ref={this.gridRef} columns={this.columnGrid} additionalParams={{ "memberId": this.props.userProfileInfo?.id }} /> */}
                 {/* </div> */}
@@ -248,7 +248,7 @@ class Portfolio extends Component {
                             <thead>
                                 <tr>
                                     <th>Type</th>
-                                    <th className="file-label ml-8">Refrence Id</th>
+                                    <th >Reference Id</th>
                                     <th>Currency</th>
                                     <th>Amount</th>
                                     <th>Status</th>
@@ -275,6 +275,7 @@ class Portfolio extends Component {
                                     <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>} */}
                             </tbody>
                 </table>
+                </div>
                 </div>
                 </div>
             </div>
