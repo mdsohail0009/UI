@@ -104,7 +104,7 @@ class PaymentsView extends Component {
             <>
              <div ref={this.useDivRef}></div>
                 <div className="main-container">
-                {this.state.errorMessage != null && (
+                {this.state.errorMessage !== null && (
                             <Alert
                                 description={this.state.errorMessage}
                                 type="error"
