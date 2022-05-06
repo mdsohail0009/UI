@@ -21,7 +21,7 @@ class UserProfile extends Component {
         isSecurity: false,
         isSetting: false,
         tabPosition: 'left',
-        activeTab: "1",
+        activeTab: this.props.match.params.key ? this.props.match.params.key : "1",
        activeWithdrawFiat : false
     }
 }

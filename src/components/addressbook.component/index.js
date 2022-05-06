@@ -799,7 +799,7 @@ class AddressBook extends Component {
 					</p>
 				</Modal>
 				<Modal
-					title="Crypto Currency"
+					title="Info Detail"
 					visible={this.state.cryptoModal}
 					className="crypto-list"
 					destroyOnClose
