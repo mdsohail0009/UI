@@ -117,6 +117,7 @@ const NewFiatAddress = (props) => {
           let fileInfo = response?.data?.documents?.details;
            if(response?.data?.addressType === "1stparty" &&  fileInfo?.length !=0){
                 setDeclarationFile(response?.data?.documents?.details[0])
+                
 				 form.setFieldsValue({ file3: true });
             }
             else{
