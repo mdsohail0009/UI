@@ -354,11 +354,11 @@ const FaitWithdrawal = ({
     });
     let avilableamt = wallet[0]?.avilable;
     if (type === "min") {
-      values.totalValue = 100;
+      values.totalValue = "100";
       setSaveObj(values);
       form.setFieldsValue({ ...values });
     } else if (type === "max") {
-      values.totalValue = avilableamt ? avilableamt : 0;
+      values.totalValue = avilableamt ? avilableamt.toString() : 0;
       setSaveObj(values);
       form.setFieldsValue({ ...values });
     }
