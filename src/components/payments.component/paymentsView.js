@@ -183,6 +183,7 @@ class PaymentsView extends Component {
                                     <tr>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                         <td >
                                             <span className='text-white fs-24 ml-8'> Total:</span>
                                         </td>
