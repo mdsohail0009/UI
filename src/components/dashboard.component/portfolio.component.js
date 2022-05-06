@@ -247,11 +247,11 @@ class Portfolio extends Component {
                 <table className='pay-grid view'>
                             <thead>
                                 <tr>
-                                    <th>Type</th>
-                                    <th >Reference Id</th>
-                                    <th>Currency</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th >Type</th>
+                                    <th>Wallet</th>
+                                    <th>value</th>
+                                    <th>State</th>
                                 </tr>
                             </thead>
                             <tbody>
