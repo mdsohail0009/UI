@@ -620,8 +620,9 @@ const NewFiatAddress = (props) => {
             
 						<Form.Item
 							name="addressType"
-              label={<div>Address Type <Tooltip title="1st party & 3rd party"><div className="icon md info c-pointer"></div></Tooltip>
-              </div>}
+            //   label={<div>Address Type <Tooltip title="1st party & 3rd party"><div className="icon md info c-pointer"></div></Tooltip>
+            //   </div>}
+			                label="Address Type"
 							className="custom-label">
 							<Radio.Group
 								size="large"
@@ -1317,7 +1318,8 @@ const NewFiatAddress = (props) => {
 											  ),
 								},
 							]}>
-							<Checkbox className="ant-custumcheck">
+							 <span className="d-flex">
+                                <Checkbox className="ant-custumcheck"/>
 								<span className="withdraw-check"></span>
 								<Translate
 									content="agree_to_suissebase"
@@ -1326,7 +1328,7 @@ const NewFiatAddress = (props) => {
 									className="fs-14 text-white-30 ml-16 mb-4"
 									style={{ flex: 1 }}
 								/>
-							</Checkbox>
+							  </span>
 						</Form.Item>
 						<Form.Item className="text-center">
 							<Button
