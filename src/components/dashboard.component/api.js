@@ -12,7 +12,7 @@ const fetchPortfolio = (member_id) => {
 const fetchYourPortfolio = (member_id) => {
     return apiClient.get(ApiControllers.wallets + `CryptoPortFolio/${member_id}`);
 }
-const getcoinDetails = (member_id, coinName) => {
+const getcoinDetails = (coinName,member_id) => {
     return apiClient.get(ApiControllers.markets + `Coins/PriceChart/${coinName}/${member_id}`);
 }
 const getPortfolioGraph = (memId, type) => {

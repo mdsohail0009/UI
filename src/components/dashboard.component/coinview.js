@@ -17,36 +17,48 @@ import NumberFormat from "react-number-format";
 import { coinSubject } from '../../utils/pubsub'
 class CoinView extends React.Component {
     refreshSubscribe;
-    state = {
-        coinData: null,
-        chatData: null,
-        type: 'prices',
-        buyDrawer: false,
-        sendDrawer: false,
-    }
+   state = {
+    coinData: null,
+    chatData: null,
+    type: 'prices',
+    buyDrawer: false,
+    sendDrawer: false,
+    coin:""
+}
+   
+   
 
     componentDidMount() {
         window.scrollTo(0, 0)
         this.listner = this.props.history.listen(() => {
+            debugger
             this.loadCoinDetailData();
             this.coinViewTrack();
         });
-        this.loadCoinDetailData();
         this.coinViewTrack();
         this.refreshSubscribe = coinSubject.subscribe((val) => {
             this.loadCoinDetailData();
         });
+        this.coinChartData(1);
+        this.loadCoinDetailData();
+    } 
+    componentWillUnmount() {
+        this.refreshSubscribe.unsubscribe();
+        this.listner();
     }
     coinViewTrack = () => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Coin page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Coin page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
     }
     loadCoinDetailData = async () => {
         this.props.dispatch(fetchMarketCoinData(false))
-        const response = await getcoinDetails(this.props.userProfile.id, this.props.match.params.coinName);
+        const response = await getcoinDetails(this.props.match.params?.coinName,this.props.userProfile?.id);
         if (response.ok) {
-            this.setState({ ...this.state, coinData: response.data }, () => {
+            console.log(response.data)
+            this.setState({ ...this.state, coinData: response.data },
+                 () => {
                 this.coinChartData(1);
-            })
+            }
+            )
         }
 
     }
@@ -169,10 +181,7 @@ class CoinView extends React.Component {
             sendDrawer: false
         })
     }
-    componentWillUnmount() {
-        this.refreshSubscribe.unsubscribe();
-        this.listner();
-    }
+   
     render() {
         const { Paragraph, Text, Title } = Typography
         const { coinData } = this.state;

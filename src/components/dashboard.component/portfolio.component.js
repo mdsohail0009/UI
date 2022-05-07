@@ -267,7 +267,7 @@ class Portfolio extends Component {
                                                 <td>{item.state} </td>
                                             </tr>
                                             </>
-                                        :"No  details available."}</>
+                                        :"No transaction details available."}</>
                                     )
                                 })}
 

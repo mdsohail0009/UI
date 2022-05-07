@@ -3,7 +3,7 @@ import { List, Typography, Empty,Image} from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import ConnectStateProps from '../../utils/state.connect';
-import { fetchYourPortfoliodata } from '../../reducers/dashboardReducer';
+import { fetchYourPortfoliodata,fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import Currency from '../shared/number.formate';
 import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reducers/buyReducer';
 import { setStep } from '../../reducers/buysellReducer';
@@ -11,7 +11,7 @@ import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import { withRouter } from 'react-router-dom';
 import apiCalls from '../../api/apiCalls';
-
+// import { fetchMarketCoinData } from '../../reducers/dashboardReducer'
 class CryptoWallets extends Component {
     state = {
         loading: true,
@@ -66,6 +66,7 @@ class CryptoWallets extends Component {
         this.props.history.push(
                   "/coindetails/" + item.coinFullName.toLowerCase()
                 )
+                this.props.dispatch(fetchMarketCoinData(true))
     }
     render() {
         const { Title } = Typography;
