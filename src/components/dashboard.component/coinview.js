@@ -27,6 +27,11 @@ class CoinView extends React.Component {
 
     componentDidMount() {
         window.scrollTo(0, 0)
+        this.listner = this.props.history.listen(() => {
+            window.location.reload();
+            this.loadCoinDetailData();
+            this.coinViewTrack();
+        });
         this.loadCoinDetailData();
         this.coinViewTrack();
         this.refreshSubscribe = coinSubject.subscribe((val) => {
@@ -167,6 +172,7 @@ class CoinView extends React.Component {
     }
     componentWillUnmount() {
         this.refreshSubscribe.unsubscribe();
+        this.listner();
     }
     render() {
         const { Paragraph, Text, Title } = Typography

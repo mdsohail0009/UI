@@ -19,6 +19,7 @@ class CryptoWallets extends Component {
         portfolioData: [], buyDrawer: false
     }
     componentDidMount() {
+       
         this.loadCryptos();
     }
     loadCryptos = () => {
@@ -57,6 +58,15 @@ class CryptoWallets extends Component {
             buyDrawer: false,
         })
     }
+    showCoinDetails = (item) => {
+        debugger
+        if (this.props.onClose) {
+            this.props.onClose();
+        }
+        this.props.history.push(
+                  "/coindetails/" + item.coinFullName.toLowerCase()
+                )
+    }
     render() {
         const { Title } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
@@ -78,7 +88,17 @@ class CryptoWallets extends Component {
                             </div>
                         }>
                             <List.Item.Meta
-                                avatar={<Image preview={false} src={item.impagePath} />}
+                                // avatar={<Image preview={false} src={item.impagePath} />}
+                                avatar={
+                                    <span
+                                      className={`coin c-pointer ${item.coin}`}
+                                      onClick={() => this.showCoinDetails(item)}
+                                    //     this.props.history.push(
+                                    //       "/coindetails/" + item.coinFullName.toLowerCase()
+                                    //     )
+                                    //   }
+                                    />
+                                  }
                                 title={<div className="fs-18 fw-500 text-upper text-white-30 mt-12 mb-0">{item.coin}</div>}
                             />
                         </List.Item>
