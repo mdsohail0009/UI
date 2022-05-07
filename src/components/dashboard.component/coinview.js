@@ -28,7 +28,6 @@ class CoinView extends React.Component {
     componentDidMount() {
         window.scrollTo(0, 0)
         this.listner = this.props.history.listen(() => {
-            window.location.reload();
             this.loadCoinDetailData();
             this.coinViewTrack();
         });
