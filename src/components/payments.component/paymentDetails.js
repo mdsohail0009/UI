@@ -568,16 +568,14 @@ filePreviewPath() {
                                   <td>
                                     <div className="d-flex align-center justify-content">
                                       <span>
-                                        {item.bankname}
-
-                                      
+                                        <Tooltip title= {item.bankname}>
+                                          <span className='pay-docs'>{item.bankname}</span>
+                                        </Tooltip>
                                           <Text
                                             size="small"
                                             className="file-label ml-8"
-                                          >
-                                            
+                                          >                                           
                                            {this.addressTypeNames(item.addressType)}{" "} 
-
                                           </Text>
                                           
                                       </span>
@@ -602,7 +600,11 @@ filePreviewPath() {
                                       </Popover>
                                     </div>
                                   </td>
-                                  <td>{item.accountnumber}</td>
+                                  <td>
+                                  <Tooltip title={item.accountnumber}>
+                                    <span className='pay-account'>{item.accountnumber}</span>
+                                    
+                                    </Tooltip></td>
                                   {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000" 
                 
                                          ) && (
@@ -703,7 +705,7 @@ filePreviewPath() {
                                       {uploadIndex ===i && isUploading && <div className="text-center" >
                                             <Spin />
                                           </div>}
-                                        {!isUploading &&
+                                        {
                                           file.documentName !== null && (
                                           <div className='docdetails' onClick={() => this.docPreview(file)}>
                                           <Tooltip title={file.documentName}>
