@@ -50,7 +50,7 @@ class PaymentDetails extends Component {
       isUploading:false,
       modal:false,
       selectData:null,
-      uploadData:null,
+      uploadIndex:null,
     };
     this.gridRef = React.createRef();
     this.useDivRef = React.createRef();
@@ -76,7 +76,6 @@ class PaymentDetails extends Component {
         this.state.currency
       );
       if (response.ok) {
-        console.log(response.data.paymentsDetails);
         this.setState({
           ...this.state,
           paymentsData: response.data.paymentsDetails,
@@ -273,6 +272,7 @@ class PaymentDetails extends Component {
   };
   beforeUpload = (file) => {
     if(file.name.split('.').length > 2){
+      this.setState({ ...this.state, isValidFile: true,isUploading:false });
       warning("File don't allow double extension")
       return
   }
@@ -297,10 +297,14 @@ class PaymentDetails extends Component {
       return Upload.LIST_IGNORE;
     }
   };
-  handleUpload = ({ file }, item) => {
-    console.log(item)
-    this.setState({...this.state,errorMessage:null,isUploading:true,uploadData:item });
-    if(item.id){
+  handleUpload = ({ file }, item,i) => {
+    if(file.name.split('.').length > 2){
+    this.setState({...this.state,errorMessage:null,isUploading:false,uploadIndex:i });
+    }
+    else{
+      this.setState({...this.state,errorMessage:null,isUploading:true,uploadIndex:i });
+
+    }
     if(file?.status === "done" && this.state.isUploading){
     let paymentDetialsData = this.state.paymentsData;
 
@@ -323,7 +327,8 @@ class PaymentDetails extends Component {
     this.setState({...this.state, paymentsData: paymentDetialsData,loading: false,
       isUploading:false
      });
-}
+
+    
 }
   };
   onModalOpen=(item)=>{
@@ -402,7 +407,7 @@ filePreviewPath() {
     for(const idx in this.state.paymentsData){
       total += Number(this.state.paymentsData[idx].amount);
     }
-    const { currencylu, paymentsData, loading,isUploading,uploadData } = this.state;
+    const { currencylu, paymentsData, loading,isUploading,uploadIndex } = this.state;
     return (
       <>
         <div ref={this.useDivRef}></div>
@@ -663,7 +668,7 @@ filePreviewPath() {
                                         action={this.state.uploadUrl}
                                         showUploadList={false}
                                         beforeUpload={(props) => this.beforeUpload(props)}
-                                        onChange={(props) =>this.handleUpload(props, item)}
+                                        onChange={(props) =>this.handleUpload(props, item,i)}
                                         disabled={
                                           item.state === "Approved" ||
                                           item.state === "Cancelled" ||
@@ -695,7 +700,8 @@ filePreviewPath() {
                                    
                                     {item.documents?.details.map((file) => (
                                       <>
-                                      {isUploading&& file.documentName !== null &&<div className="text-center" >
+                                      {/* file.documentName==uploadItem.documentName */}
+                                      {uploadIndex ===i&&isUploading&&<div className="text-center" >
                                             <Spin />
                                           </div>}
                                         {
