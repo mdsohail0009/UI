@@ -15,13 +15,7 @@ const filterOperators = {
     ],
     'numeric': [
         { text: 'grid.filterEqOperator', operator: 'eq' },
-        { text: 'grid.filterNotEqOperator', operator: 'neq' },
-        // { text: 'grid.filterGteOperator', operator: 'gte' },
-        // { text: 'grid.filterGtOperator', operator: 'gt' },
-        // { text: 'grid.filterLteOperator', operator: 'lte' },
-        // { text: 'grid.filterLtOperator', operator: 'lt' },
-        // { text: 'grid.filterIsNullOperator', operator: 'isnull' },
-        // { text: 'grid.filterIsNotNullOperator', operator: 'isnotnull' }
+        { text: 'grid.filterNotEqOperator', operator: 'neq' }
     ],
     'date': [
         { text: 'grid.filterAfterOrEqualOperator', operator: 'gte' },
