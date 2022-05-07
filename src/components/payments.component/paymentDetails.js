@@ -700,11 +700,10 @@ filePreviewPath() {
                                    
                                     {item.documents?.details.map((file) => (
                                       <>
-                                      {/* file.documentName==uploadItem.documentName */}
-                                      {uploadIndex ===i&&isUploading&&<div className="text-center" >
+                                      {uploadIndex ===i && isUploading && <div className="text-center" >
                                             <Spin />
                                           </div>}
-                                        {
+                                        {!isUploading &&
                                           file.documentName !== null && (
                                           <div className='docdetails' onClick={() => this.docPreview(file)}>
                                           <Tooltip title={file.documentName}>
