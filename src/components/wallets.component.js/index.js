@@ -33,7 +33,7 @@ class Wallets extends Component {
                     <FiatWallets />
                 </div>
                 <div className="mb-36">
-                    <CryptoWallets />
+                <CryptoWallets  onClose={this.props.onClose}/>
                 </div>
             </div>
         </Drawer>);

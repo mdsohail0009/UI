@@ -3,7 +3,7 @@ import { List, Typography, Empty,Image} from 'antd';
 import Translate from 'react-translate-component';
 import BuySell from '../buy.component';
 import ConnectStateProps from '../../utils/state.connect';
-import { fetchYourPortfoliodata } from '../../reducers/dashboardReducer';
+import { fetchYourPortfoliodata,fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import Currency from '../shared/number.formate';
 import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reducers/buyReducer';
 import { setStep } from '../../reducers/buysellReducer';
@@ -11,7 +11,7 @@ import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import { withRouter } from 'react-router-dom';
 import apiCalls from '../../api/apiCalls';
-
+// import { fetchMarketCoinData } from '../../reducers/dashboardReducer'
 class CryptoWallets extends Component {
     state = {
         loading: true,
@@ -19,6 +19,7 @@ class CryptoWallets extends Component {
         portfolioData: [], buyDrawer: false
     }
     componentDidMount() {
+       
         this.loadCryptos();
     }
     loadCryptos = () => {
@@ -57,6 +58,16 @@ class CryptoWallets extends Component {
             buyDrawer: false,
         })
     }
+    showCoinDetails = (item) => {
+        debugger
+        if (this.props.onClose) {
+            this.props.onClose();
+        }
+        this.props.history.push(
+                  "/coindetails/" + item.coinFullName.toLowerCase()
+                )
+                this.props.dispatch(fetchMarketCoinData(true))
+    }
     render() {
         const { Title } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
@@ -78,7 +89,17 @@ class CryptoWallets extends Component {
                             </div>
                         }>
                             <List.Item.Meta
-                                avatar={<Image preview={false} src={item.impagePath} />}
+                                // avatar={<Image preview={false} src={item.impagePath} />}
+                                avatar={
+                                    <span
+                                      className={`coin c-pointer ${item.coin}`}
+                                      onClick={() => this.showCoinDetails(item)}
+                                    //     this.props.history.push(
+                                    //       "/coindetails/" + item.coinFullName.toLowerCase()
+                                    //     )
+                                    //   }
+                                    />
+                                  }
                                 title={<div className="fs-18 fw-500 text-upper text-white-30 mt-12 mb-0">{item.coin}</div>}
                             />
                         </List.Item>

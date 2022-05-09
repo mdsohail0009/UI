@@ -7,7 +7,7 @@ class HistoryGridComponent extends Component {
   render() {
     return (
       <>
-        <List url={this.props.gridUrl} additionalParams={this.props.params} ref={this.gridRef}
+        <List url={this.props.gridUrl} showExcelExport={true} additionalParams={this.props.params} ref={this.gridRef}
           key={this.props.gridUrl}
           columns={this.props.columns} />
       </>

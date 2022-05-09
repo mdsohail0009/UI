@@ -163,7 +163,6 @@ const FaitWithdrawal = ({
         return walletId === item.currencyCode;
       });
       setSelectedWallet(wallet[0]);
-      console.log(buyInfo.memberFiat?.data[1].currencyCode)
       // setAddressInfo(null)
       if (wallet[0]) {
         getAddressLu(wallet[0]);
