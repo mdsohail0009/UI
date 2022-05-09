@@ -702,10 +702,9 @@ filePreviewPath() {
                                    
                                     {item.documents?.details.map((file) => (
                                       <>
-                                      {uploadIndex ===i && isUploading && <div className="text-center" >
+                                      {uploadIndex ===i && isUploading ? <div className="text-center" >
                                             <Spin />
-                                          </div>}
-                                        {
+                                          </div>:
                                           file.documentName !== null && (
                                           <div className='docdetails' onClick={() => this.docPreview(file)}>
                                           <Tooltip title={file.documentName}>
@@ -726,9 +725,13 @@ filePreviewPath() {
                                                         renderText={value => value}
                                                     />
                                                     <br/>
+                                                    
                                       {item.documents?.details.map((file) => 
                                      <>
-                                     {!isUploading && file.documentName !== null && (
+                                     {uploadIndex ===i && isUploading ? <div className="text-center" >
+                                            <Spin />
+                                          </div>:
+                                     file.documentName !== null && (
                                         <div className='docdetails' onClick={() => this.docPreview(file)}>
                                         <Tooltip title={file.documentName}>
                                         <EllipsisMiddle  suffixCount={4}>
