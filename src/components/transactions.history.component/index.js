@@ -7,7 +7,7 @@ import {
 	Tooltip,
 	Modal,
 	Button,
-	Row, Col, Select, Button, Form
+	Row, Col, Select, Form
 } from "antd";
 import HistoryGridComponent from "./HistoryGridComponent";
 import { connect } from "react-redux";
