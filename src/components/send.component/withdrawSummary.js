@@ -294,7 +294,7 @@ class WithdrawSummary extends Component {
         invalidData: true
       });
     } else {
-      this.useDivRef.current.scrollIntoView();
+      this.useDivRef.current.scrollIntoView(0,0);
       this.setState({
         ...this.state,
         errorMsg: apiCalls.convertLocalLang("phone_invalid_code"),verifyPhone:false
@@ -342,7 +342,7 @@ class WithdrawSummary extends Component {
         errorMsg: "Please enter authenticator verification code"
       });
     } else {
-      this.useDivRef.current.scrollIntoView();
+      this.useDivRef.current.scrollIntoView(0,0);
       this.setState({
         ...this.state,
         errorMsg: apiCalls.convertLocalLang("twofa_invalid_code"),verifyAuth:false
@@ -409,16 +409,16 @@ class WithdrawSummary extends Component {
      } else {
         this.setState({
           ...this.state,
-          errorMsg: "Please enter valid codes"
+          errorMsg: "Please verify verification codes"
         });
-        this.useDivRef.current.scrollIntoView();
+        this.useDivRef.current.scrollIntoView(0,0);
       }
     } else {
       this.setState({
         ...this.state,
         errorMsg: apiCalls.convertLocalLang("agree_termsofservice")
       });
-      this.useDivRef.current.scrollIntoView();
+      this.useDivRef.current.scrollIntoView(0,0);
     }
   };
 

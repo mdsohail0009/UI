@@ -277,7 +277,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
           <Row gutter={[16, 16]}>
             <Col md={4} xl={4} xxl={4}>
               <div className="d-flex align-center mt-16">
-                <label className="custom-checkbox p-relative">
+                <label className="custom-checkbox p-relative c-pointer">
                   <Input
                     name="check"
                     type="checkbox"
@@ -295,7 +295,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
             </Col>
             <Col md={7} xl={7} xxl={7}>
               <div className="d-flex align-center mt-16">
-                <label className="custom-checkbox p-relative">
+                <label className="custom-checkbox p-relative c-pointer">
                   <Input
                     name="check"
                     type="checkbox"
@@ -313,7 +313,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
             </Col>
             <Col md={7} xl={7} xxl={7}>
               <div className="d-flex align-center mt-16">
-                <label className="custom-checkbox p-relative">
+                <label className="custom-checkbox p-relative c-pointer">
                   <Input
                     name="check"
                     type="checkbox"
