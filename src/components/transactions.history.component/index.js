@@ -37,9 +37,9 @@ class TransactionsHistory extends Component {
   gridColumns = [
     {field: "date", title: "Date", filter: true, isShowTime: true, filterType: "date", locked: true, width: 210,
 },
-    { field: "memberName", title: "Name", filter: true, width: 150, },
-    { field: "userName", title: "User Name", filter: true, width: 200 },
-    { field: "memberEmail", title: "Email", filter: true, width: 220 },
+    // { field: "memberName", title: "Name", filter: true, width: 150, },
+    // { field: "userName", title: "User Name", filter: true, width: 200 },
+    // { field: "memberEmail", title: "Email", filter: true, width: 220 },
     { field: "docType", title: "Doc Type", filter: true, width: 120, },
     { field: "fromWalletCode", title: "From Wallet Code", filter: true, width: 180, },
     { field: "fromValue", title: "From Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
