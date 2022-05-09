@@ -37,8 +37,9 @@ const AddressFiatView=(props)=> {
         }
     }
 const backToAddressBook = () => {
-  props?.history?.push('/userprofile');
+  props?.history?.push('/userprofile/?key=5');
 };
+
 const docPreview = async (file) => {
   let res = await getFileURL({ url: file.path });
   if (res.ok) {
@@ -117,7 +118,7 @@ const filePreviewModal = (
             <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
               <div>
                 <label className="kpi-label">Address</label>
-                <div className="kpi-val">{fiatAddress?.bankAddress}</div>
+                <div className="kpi-val">{fiatAddress?.toWalletAddress}</div>
               </div>
             </Col>
             <Col xs={24} sm={24} md={12} lg={8} xxl={8}>

@@ -46,14 +46,14 @@ const Payments = (props) => {
             width: 50,
             customCell: (prop) => (
               <td className="text-center">
-                <label className="text-center custom-checkbox">
+                <label className="text-center custom-checkbox c-pointer">
                   <input
                     id={prop.dataItem.id}
                     name="check"
                     type="checkbox"
                     checked={selection.indexOf(prop.dataItem.id) > -1}
                     onChange={(e) => handleInputChange(prop)}
-                    className="grid_check_box"
+                    className="c-pointer"
                   />
                   <span></span>
                 </label>

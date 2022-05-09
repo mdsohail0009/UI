@@ -37,7 +37,8 @@ const AddressCryptoView=(props)=> {
         }
     }
 const backToAddressBook = () => {
-  props?.history?.push('/userprofile');
+  props?.history?.push('/userprofile/?key=5');
+  
 };
 const addressTypeNames = (type) =>{
   const stepcodes = {
@@ -117,7 +118,7 @@ const filePreviewModal = (
             <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
               <div>
                 <label className="kpi-label">Address</label>
-                <div className="kpi-val">{cryptoAddress?.bankAddress}</div>
+                <div className="kpi-val">{cryptoAddress?.toWalletAddress}</div>
               </div>
             </Col>
             <Col xs={24} sm={24} md={12} lg={8} xxl={8}>

@@ -317,7 +317,8 @@ const NewFiatAddress = (props) => {
             setSelectParty(false);
            }
         else{
-            form.setFieldsValue({addressType:"3rdparty"})
+            // form.setFieldsValue({addressType:"3rdparty"})
+            form.setFieldsValue({addressType:"3rdparty",beneficiaryAccountName:props?.userConfig.isBusiness?props?.userConfig.businessName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName})
             setSelectParty(true);
         }
         }
