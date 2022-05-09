@@ -63,7 +63,7 @@ class List extends React.Component {
         const { columns, url, additionalParams } = this.props
         return (
             <div>
-                <StatefullGrid url={url} additionalParams={additionalParams} ref={this.eleRef}>
+                <StatefullGrid url={url} additionalParams={additionalParams} ref={this.eleRef} {...this.props} >
                     {columns?.map((column, indx) => <GridColumn key={indx}
                         columnMenu={column.filter ? ColumnMenu : null}
                         field={column.field}

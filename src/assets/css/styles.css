@@ -1120,3 +1120,7 @@ input[type=number]::-webkit-outer-spin-button {
 .delete-disable[disabled]{cursor: not-allowed;}
 .payments-modal .ant-modal-footer{border: none !important;}
 .payments-modal .modal-para{margin-left: 26px !important;} 
+.excel-btn{background-color: var(--bgYellow); border-color: var(--bgYellow); border-radius: 40px;height: 42px; text-transform: uppercase;font-weight: 700; transition: 0.3s ease; color: rgba(0, 0, 0, 0.85);}
+.excel-btn:hover, .excel-btn:focus, .excel-btn:active{background-color: var(--bgDarkYellow);color: var(--textDark);border-color: var(--bgYellow);}
+.pay-docs{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 65px;word-break: inherit; display: inline-block; vertical-align: bottom;}
+.pay-account{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 100px;word-break: inherit; display: inline-block; vertical-align: bottom;}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Typography, Radio,message ,Spin} from 'antd';
 import Translate from 'react-translate-component';
 import { getData } from './api';
+import NumberFormat from 'react-number-format';
 import ConnectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import { fetchPortfolioData } from '../../reducers/dashboardReducer';
@@ -263,11 +264,11 @@ class Portfolio extends Component {
                                                 
                                                 <td style={{width:"100px"}}>{item.type}</td>
                                                 <td>{item.wallet}</td>
-                                                <td>{item.value} </td>
+                                                <td><NumberFormat style={{color:"white"}} value={item.value} decimalSeparator="." displayType={'text'} thousandSeparator={true} /></td>
                                                 <td>{item.state} </td>
                                             </tr>
                                             </>
-                                        :"No  details available."}</>
+                                        :"No transaction details available."}</>
                                     )
                                 })}
 
