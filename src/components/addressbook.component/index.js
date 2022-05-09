@@ -126,12 +126,12 @@ class AddressBook extends Component {
 		//     onClick={() => this.addressCryptoView(props)}
 		//     >{props.dataItem.addressLable}<Text className='file-label ml-8 fs-12'>{props?.dataItem?.addressType}</Text></div></td>)
 		// }
-		{
-			field: "toWalletAddress",
-			title: apiCalls.convertLocalLang("address"),
-			filter: true,
-			width: 380,
-		},
+		// {
+		// 	field: "toWalletAddress",
+		// 	title: apiCalls.convertLocalLang("address"),
+		// 	filter: true,
+		// 	width: 380,
+		// },
 		{
 			field: "currency",
 			title: apiCalls.convertLocalLang("currency"),
