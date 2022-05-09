@@ -2,7 +2,7 @@ import { Spin } from "antd";
 
 const Loader = (props) => {
 	return (
-		<div className="loader-antd">
+		<div className="loader-antd" style={props.style}>
 			<Spin {...props} />
 		</div>
 	);

@@ -47,7 +47,7 @@ function Info({ id, type }) {
 		}
 	};
 	return (
-		<Loader spinning={loader}>
+		<Loader style={{ padding: 0 }} spinning={loader}>
 			{error && (
 				<Alert
 					closable
@@ -62,7 +62,7 @@ function Info({ id, type }) {
 					<>
 						<div
 							className="box basic-info text-left text-white mx-0"
-							style={{ width: "100%" }}>
+							style={{ width: "100%", backgroundColor: "#313c46" }}>
 							<Row gutter={[6, 6]} wrap={true}>
 								<div className="ml-16 mb-16" style={{ flex: 1 }}>
 									<div
@@ -94,9 +94,9 @@ function Info({ id, type }) {
 												Address
 											</Text>
 											<div
-												className="fw-600 text-white-30 fs-14 l-height-normal"
+												className="fw-600 text-white-30 fs-14 l-height-normal pr-30	"
 												style={{ wordBreak: "break-all" }}>
-												<Text className="text-white">{item.address}</Text>
+												<Text className="text-white ">{item.address}</Text>
 											</div>
 										</div>
 									</div>
