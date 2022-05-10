@@ -87,8 +87,9 @@ const NewAddressBook = ({
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
 	const [validateAddress, setValidateAddress] = useState(false);
-
+   const [type,SetType]=useState();
 	useEffect(() => {
+		
 		if (addressBookReducer?.cryptoValues) {
 			form.setFieldsValue({
 				toCoin: addressBookReducer?.cryptoValues?.toCoin,
@@ -109,6 +110,7 @@ const NewAddressBook = ({
 				loadDataAddress();
 			}
 		}
+		
 		form.setFieldsValue(addressBookReducer?.cryptoValues);
 	}, []);
 
@@ -363,7 +365,9 @@ const NewAddressBook = ({
 			return Promise.reject("is required");
 		}
 	};
-
+const handleTypeChange=(e)=>{
+console.log(e)
+}
 	return (
 		<>
 			<div>
@@ -473,6 +477,7 @@ const NewAddressBook = ({
 								dropdownClassName="select-drpdwn"
 								bordered={false}
 								showArrow={true}>
+								
 								<Option value="1stparty">1st Party</Option>
 								<Option value="3rdparty">3rd Party</Option>
 							</Select>
@@ -504,7 +509,7 @@ const NewAddressBook = ({
 							part of the regulation. Please remember to sign and upload it
 							below..
 						</Text>
-						<Tooltip title="Click here to open file in a new tab to download">
+						{/* <Tooltip title="Click here to open file in a new tab to download">
 							<Text
 								className="file-label c-pointer"
 								onClick={() =>
@@ -570,7 +575,7 @@ const NewAddressBook = ({
 									</span>
 								</div>
 							</div>
-						)}
+						)} */}
 						<Form.Item
 							className="custom-forminput mt-36 agree"
 							name="isAgree"
