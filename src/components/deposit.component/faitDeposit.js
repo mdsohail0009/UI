@@ -278,7 +278,7 @@ class FaitDeposit extends Component {
                   <div className="fiatdep-info">
 
                     <div className="d-flex">
-                      <span className={`coin ${depObj.currency.toLowerCase()}`} style={{ marginRight: '8px', marginTop: '15px' }} />
+                      {/* <span className={`coin ${depObj.currency.toLowerCase()}`} style={{ marginRight: '8px', marginTop: '15px' }} /> */}
                       <div style={{ flex: 1 }}>
                           <Translate
                       className="fw-200 text-white-50 fs-14"

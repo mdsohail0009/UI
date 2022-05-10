@@ -510,7 +510,7 @@ class WithdrawSummary extends Component {
 
     const tooltipTimer = seconds < 10 ? `0${seconds}` : seconds;
     const tooltipValue =
-      "Haven't receive code ? Request new code in " +
+      "Haven't received code ? Request new code in " +
       tooltipTimer +
       " seconds. The code will expire after 30mins.";
 

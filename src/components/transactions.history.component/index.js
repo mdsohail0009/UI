@@ -48,7 +48,7 @@ componentDidMount() {
     // { field: "memberName", title: "Name", filter: true, width: 150, },
     // { field: "userName", title: "User Name", filter: true, width: 200 },
     // { field: "memberEmail", title: "Email", filter: true, width: 220 },
-    { field: "docType", title: "Doc Type", filter: true, width: 120, },
+    { field: "docType", title: "Transaction", filter: true, width: 120, },
     { field: "fromWalletCode", title: "From Wallet Code", filter: true, width: 180, },
     { field: "fromValue", title: "From Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
     { field: "toWalletCode", title: "To Wallet Code", filter: true, width: 150 },
