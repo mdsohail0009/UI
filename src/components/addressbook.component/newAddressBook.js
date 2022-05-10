@@ -89,7 +89,6 @@ const NewAddressBook = ({
 
 	useEffect(() => {
 		if (addressBookReducer?.cryptoValues) {
-        
 			form.setFieldsValue({
 				toCoin: addressBookReducer?.cryptoValues?.toCoin,
 				favouriteName: addressBookReducer?.cryptoValues.favouriteName,
@@ -134,6 +133,7 @@ const NewAddressBook = ({
 			});
 			const fileInfo = response?.data?.documents?.details[0];
 			if (fileInfo?.path) {
+				form.setFieldsValue({ file: true });
 				setFile({
 					name: fileInfo?.documentName,
 					size: fileInfo.remarks,
@@ -144,7 +144,6 @@ const NewAddressBook = ({
 		}
 	};
 	const saveAddressBook = async (values) => {
-		debugger;
 		setIsLoading(false);
 		setBtnDisabled(true);
 		const type = "crypto";
@@ -207,8 +206,6 @@ const NewAddressBook = ({
 				onCancel();
 				setIsLoading(false);
 			} else {
-				setBtnDisabled(false);
-				setErrorMsg(response.data);
 				message.error({
 					content: response.data,
 					className: "custom-msg",
@@ -219,6 +216,7 @@ const NewAddressBook = ({
 		}
 	};
 	const uploadFile = ({ file }) => {
+		debugger;
 		if (file?.status === "done" && isUploading) {
 			let obj = {
 				name: `${file.name}`,
@@ -232,8 +230,7 @@ const NewAddressBook = ({
 					file !== null
 						? file?.documentId
 						: "00000000-0000-0000-0000-000000000000",
-				"id ":
-					file !== null ? file?.id : "00000000-0000-0000-0000-000000000000",
+				id: file !== null ? file?.id : "00000000-0000-0000-0000-000000000000",
 			};
 			setFile(obj);
 			setUploading(false);
@@ -504,8 +501,18 @@ const NewAddressBook = ({
 							name={"file"}
 							rules={[
 								{
-									required: true,
-									message: "Please upload your signed PDF document",
+									validator: (_, value) => {
+										if (file) {
+											return Promise.resolve();
+										} else {
+											if (!isUploading) {
+												return Promise.reject(
+													"Please upload your signed PDF document"
+												);
+											}
+											return Promise.resolve();
+										}
+									},
 								},
 							]}>
 							{
@@ -544,8 +551,6 @@ const NewAddressBook = ({
 								</div>
 							</div>
 						)}
-                        <div className="d-flex align-center">
-                        	
 						<Form.Item
 							className="custom-forminput mt-36 agree"
 							name="isAgree"
@@ -562,16 +567,17 @@ const NewAddressBook = ({
 											  ),
 								},
 							]}>
-							<Checkbox className="ant-custumcheck" />
-							</Form.Item>
-                        <Translate
+							<Checkbox className="ant-custumcheck">
+								<span className="withdraw-check"></span>
+								<Translate
 									content="agree_to_suissebase"
 									with={{ link }}
 									component={Paragraph}
-									className="fs-14 text-white-30 ml-16 mb-4 pt-16"
+									className="fs-14 text-white-30 ml-16 mb-4"
 									style={{ flex: 1 }}
 								/>
-                        </div>
+							</Checkbox>
+						</Form.Item>
 						<div style={{ marginTop: "50px" }}>
 							<Button
 								htmlType="submit"
