@@ -47,13 +47,13 @@ const AddressFiatView = (props) => {
 			setPreviewPath(res.data);
 		}
 	};
-	const addressTypeNames = (type) => {
-		const stepcodes = {
-			"1stparty": "1st Party",
-			"3rd Party": "3rd Party",
-		};
-		return stepcodes[type];
-	};
+	// const addressTypeNames = (type) =>{
+	//   const stepcodes = {
+	//             "1stparty" : "1st Party",
+	//             "3rd Party" : "3rd Party",
+	//    }
+	//    return stepcodes[type]
+	// }
 	const filePreviewPath = () => {
 		if (previewPath?.includes(".pdf")) {
 			return previewPath;
@@ -125,7 +125,7 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>
-											{/* <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											{/* {/* <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
               <div>
                 <label className="kpi-label">Address</label>
                 <div className="kpi-val">{fiatAddress?.toWalletAddress}</div>
@@ -135,7 +135,7 @@ const AddressFiatView = (props) => {
 												<div>
 													<label className="kpi-label">Address Type</label>
 													<div className=" kpi-val">
-														{addressTypeNames(fiatAddress?.addressType)}
+														{fiatAddress?.addressType}
 													</div>
 												</div>
 											</Col>
