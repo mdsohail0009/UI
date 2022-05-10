@@ -483,6 +483,16 @@ const WithdrawalFiatSummary = ({
         defaultValue={sendReceive.withdrawFiatObj?.totalValue}
         suffixText={sendReceive.withdrawFiatObj?.walletCode}
       />
+       <Text className="fs-14 text-white-50 fw-200">
+        <Translate
+          content="Bank_name"
+          component={Text}
+          className="fs-14 text-white-50 fw-200"
+        />
+      </Text>
+      <Text className="fs-20 text-white-30 d-block mb-36">
+        {sendReceive.withdrawFiatObj?.bankName}
+      </Text>
       <Text className="fs-14 text-white-50 fw-200">
         {" "}
         <Translate
@@ -504,16 +514,7 @@ const WithdrawalFiatSummary = ({
       <Text className="fs-20 text-white-30 d-block mb-36">
         {sendReceive.withdrawFiatObj?.routingNumber}
       </Text>
-      <Text className="fs-14 text-white-50 fw-200">
-        <Translate
-          content="Bank_name"
-          component={Text}
-          className="fs-14 text-white-50 fw-200"
-        />
-      </Text>
-      <Text className="fs-20 text-white-30 d-block mb-36">
-        {sendReceive.withdrawFiatObj?.bankName}
-      </Text>
+     
       {/* <Text className="fs-14 text-white-50 fw-200">
         <Translate
           content="Recipient_full_name"

@@ -116,6 +116,7 @@ class FaitDeposit extends Component {
     }
   }
   handlFiatDep = async (e, currencyLu) => {
+    debugger
     let { depObj } = this.state;
     depObj.currency = e;
     depObj.BankName = null;
@@ -140,6 +141,7 @@ class FaitDeposit extends Component {
     this.formRef.current.setFieldsValue({ ...depObj })
   }
   handlebankName = async (e) => {
+    debugger
     let { depObj } = this.state;
     depObj.BankName = e;
     depObj.Amount = null;
@@ -257,7 +259,7 @@ class FaitDeposit extends Component {
                         </Option>
                       )}
                     </Select></div></Form.Item>}
-                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 0 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
+                {this.state.BankInfo === null && depObj.currency !== null && this.state.BankDetails?.length === 1 && <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="bank_msg" /></Text>}
                 {this.state.BankDetails?.length > 1 && depObj.currency !== null && <Form.Item><Translate
                   className="input-label"
                   content="BankName"
@@ -273,47 +275,11 @@ class FaitDeposit extends Component {
                     </Select>
                   </div></Form.Item>}
                 {this.state.BankInfo &&
-                   !this.state.fiatDepEur?
                   <div className="fiatdep-info">
-                    {/* <Form.Item
-                      className="custom-forminput mb-16"
-                      name="Amount"
-                      required
-                      rules={[
-                        { required: true, message: apicalls.convertLocalLang('is_required') },
-                      ]}
-                    > 
-                    <div ><div className="d-flex">
-                      <Translate
-                        className="input-label"
-                        content="amount"
-                        component={Text}
-
-                      /><span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span></div>
-                        <NumberFormat
-                         className="cust-input mb-0" 
-                         customInput={Input} 
-                         thousandSeparator={true}
-                          prefix={""}
-                          placeholder="0.00"
-                          decimalScale={2}
-                          allowNegative={false}
-                          maxlength={13}
-                          onValueChange={({ value }) => {
-                            depObj.Amount = value;
-                            this.formRef.current.setFieldsValue({ ...depObj })
-                          }}
-                          value={depObj.Amount} />
-
-                      </div>
-                      </Form.Item> */}
 
                     <div className="d-flex">
                       <span className={`coin ${depObj.currency.toLowerCase()}`} style={{ marginRight: '8px', marginTop: '15px' }} />
                       <div style={{ flex: 1 }}>
-                        {/* <Paragraph className="mb-0 fs-16 text-white-30 fw-500 mt-16 text-upper" style={{ wordBreak: 'break-all' }}>{BankInfo.accountName}</Paragraph> */}
-                        {/* <Paragraph className="mb-0 fs-14 text-white-30 fw-300" style={{ wordBreak: 'break-all' }}>
-                          {BankInfo.accountAddress}</Paragraph> */}
                           <Translate
                       className="fw-200 text-white-50 fs-14"
                       content="account_name"
@@ -443,8 +409,7 @@ class FaitDeposit extends Component {
                     </Form.Item> */}
 
                   </div>
-                   :<selectCurrency />
-
+                  
                 }
               </div>
 
