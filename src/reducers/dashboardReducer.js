@@ -1,5 +1,6 @@
 import { fetchMemberWallets, fetchPortfolio, fetchYourPortfolio, getPortfolioGraph } from '../components/dashboard.component/api'
 import { getDashboardNotices } from '../components/documents.component/api';
+import { publishTransactionRefresh } from '../utils/pubsub';
 const FETCH_DETAIL_DATA = "fetchDetailData";
 const SET_DETAIL_DATA = "setDetailData";
 const REJECT_DETAIL_DATA = "rejectDetailData";
@@ -41,10 +42,12 @@ const fetchMarketCoinData =(payload) => {
     }
 }
 const fetchDashboardcalls = (member_id) => {
+  publishTransactionRefresh()
     return async (dispatch) => {
         dispatch(fetchMemberWalletsData(member_id))
         dispatch(fetchPortfolioData(member_id))
         dispatch(fetchYourPortfoliodata(member_id))
+
     }
 }
 const fetchMemberWalletsData = (member_id) => {
