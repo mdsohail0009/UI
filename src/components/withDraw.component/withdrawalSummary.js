@@ -37,6 +37,7 @@ const WithdrawalFiatSummary = ({
   const [inputDisable, setInputDisable] = useState(true);
   const [errorMsg, setMsg] = useState(false);
   const [type, setType] = useState("Send");
+  const [types, setTypes] = useState("Send");
   const [textDisable, setTextDisable] = useState(false);
   const [emailText, setEmailText] = useState("get_email");
   const [emailDisable, setEmailDisable] = useState(true);
@@ -64,6 +65,7 @@ const WithdrawalFiatSummary = ({
   const [verifyTextotp,setVerifyTextOtp]=useState(false);
   const [verifyEmailOtp,setVerifyEmailOtp]=useState(false);
   const [verifyAuthCode,setVerifyAuthCode]=useState(false);
+  const [authDisable,setAuthDisable]=useState(false);
   const [isAuthenticatorVerification, setIsAuthenticatorVerification] =
     useState(false);
 
@@ -157,7 +159,7 @@ const WithdrawalFiatSummary = ({
         timer = count;
         clearInterval(timeInterval);
         setDisable(false);
-        setType("Resend");
+        setTypes("Resend");
       }
 
     }, 1000);
@@ -289,7 +291,7 @@ const WithdrawalFiatSummary = ({
       setEmailVerificationText(
         apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
       );
-      startTimer()
+      startTimer2()
       setTimeout(() => {
         setEmailText("resendEmail");
         setTooltipEmail(false);
@@ -307,6 +309,7 @@ const WithdrawalFiatSummary = ({
     setValidData(true);
     let response = await apiCalls.verifyEmail(userConfig.id, emailCode);
     if (response.ok) {
+      setEmailDisable(true);
       setIsEmailVerification(true);
       setEmail(true)
       setVerifyEmailOtp(true)
@@ -319,6 +322,7 @@ const WithdrawalFiatSummary = ({
       setMsg("Please enter email verification code");
     } else {
       setEmail(false)
+      setEmailDisable(false);
       setMsg(apiCalls.convertLocalLang("email_invalid_code"));
       useOtpRef.current.scrollIntoView(0,0);
       setTimeout(() => {
@@ -342,7 +346,7 @@ const WithdrawalFiatSummary = ({
     setEmailCode(e.target.value);
   };
   const getOTP = async (val) => {
-    let response = await apiCalls.getCode(userConfig.id, type);
+    let response = await apiCalls.getCode(userConfig.id, types);
     if (response.ok) {
       setTooltipVisible(true);
       setButtonText("sentVerify");
@@ -375,6 +379,7 @@ const WithdrawalFiatSummary = ({
       setIsPhoneVerification(true);
       setVerifyTextOtp(true)
       setVerifyOtpText(null)
+      setInputDisable(true)
       //  {verifyTextotp == true ? setButtonText(null):setButtonText("resendotp")}
 
       //success("OTP verified successfully");
@@ -385,6 +390,7 @@ const WithdrawalFiatSummary = ({
       useOtpRef.current.scrollIntoView(0,0);
       setVerifyPhone(false)
       setVerifyTextOtp(false)
+      setInputDisable(false)
       setMsg(apiCalls.convertLocalLang("phone_invalid_code"));
       setTimeout(() => {
         setMsg(null);
@@ -413,12 +419,14 @@ const WithdrawalFiatSummary = ({
       setIsAuthenticatorVerification(true);
       console.log(response.data);
       setVerifyAuthCode(true)
+      setAuthDisable(true)
       //success("Authenticator verified successfully");
     } else if (response.data == null) {
       useOtpRef.current.scrollIntoView(0,0);
       setMsg("Please enter authenticator verification code");
     } else {
       setVerifyAuth(false)
+      setAuthDisable(false)
       useOtpRef.current.scrollIntoView(0,0);
       setMsg(apiCalls.convertLocalLang("twofa_invalid_code"));
       setTimeout(() => {
@@ -756,7 +764,7 @@ const WithdrawalFiatSummary = ({
               maxLength={6}
               onChange={(e) => handleAuthenticator(e, "authenticator")}
               style={{ width: "100%" }}
-              // disabled={inputDisable}
+               disabled={authDisable==true}
             />
           </Form.Item>
         )}

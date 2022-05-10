@@ -70,7 +70,8 @@ class WithdrawSummary extends Component {
     verifyAuth:false,
     verifyTextotp:false,
     verifyEmailOtp:false,
-    verifyAuthCode:false
+    verifyAuthCode:false,
+    inputAuthDisable:false
   };
 
   useDivRef = React.createRef();
@@ -270,7 +271,7 @@ class WithdrawSummary extends Component {
       this.state.emailCodeVal
     );
     if (response.ok) {
-      this.setState({ ...this.state, EmailCode: response.data,verifyEmail:true,verifyEmailOtp:true , verifyOtpText: null, verifyText: null,emailText:null});
+      this.setState({ ...this.state, EmailCode: response.data,verifyEmail:true,verifyEmailOtp:true , verifyOtpText: null, verifyText: null,emailText:null,inputEmailDisable:true});
       //success("Email verification code verified successfully");
     } else if (response.data == null) {
       this.setState({
@@ -282,7 +283,7 @@ class WithdrawSummary extends Component {
       this.setState({
         ...this.state,
         errorMsg: apiCalls.convertLocalLang("email_invalid_code"),
-        invalidData: true,verifyEmail:false
+        invalidData: true,verifyEmail:false,inputEmailDisable:false
       });
     }
   };
@@ -293,7 +294,7 @@ class WithdrawSummary extends Component {
       this.state.otpCode
     );
     if (response.ok) {
-      this.setState({ ...this.state, OtpVerification: response.data,verifyPhone:true,verifyTextotp:true,verifyOtpText:null,buttonText:null});
+      this.setState({ ...this.state, OtpVerification: response.data,verifyPhone:true,verifyTextotp:true,verifyOtpText:null,buttonText:null,inputDisable:true});
       //success("Phone verification code verified successfully");
     } else if (response.data == null) {
       this.setState({
@@ -305,7 +306,7 @@ class WithdrawSummary extends Component {
       this.useDivRef.current.scrollIntoView(0,0);
       this.setState({
         ...this.state,
-        errorMsg: apiCalls.convertLocalLang("phone_invalid_code"),verifyPhone:false
+        errorMsg: apiCalls.convertLocalLang("phone_invalid_code"),verifyPhone:false,inputDisable:false
       });
       setTimeout(() => {
         this.setState({ errorMsg: null });
@@ -342,7 +343,7 @@ class WithdrawSummary extends Component {
       this.props.userProfile.userId
     );
     if (response.ok) {
-      this.setState({ ...this.state, authenticator: response.data,verifyAuth:true,verifyAuthCode:true });
+      this.setState({ ...this.state, authenticator: response.data,verifyAuth:true,verifyAuthCode:true,inputAuthDisable:true });
       //success("2FA verification code verified successfully");
     } else if (response.data == null) {
       this.setState({
@@ -353,7 +354,7 @@ class WithdrawSummary extends Component {
       this.useDivRef.current.scrollIntoView(0,0);
       this.setState({
         ...this.state,
-        errorMsg: apiCalls.convertLocalLang("twofa_invalid_code"),verifyAuth:false
+        errorMsg: apiCalls.convertLocalLang("twofa_invalid_code"),verifyAuth:false,inputAuthDisable:false
       });
       setTimeout(() => {
         this.setState({ errorMsg: null });
@@ -829,7 +830,7 @@ class WithdrawSummary extends Component {
                   maxLength={6}
                   onChange={(e) => this.handleAuthenticator(e, "authenticator")}
                   style={{ width: "100%" }}
-                  // disabled={this.state.inputDisable}
+                   disabled={this.state.inputAuthDisable==true}
                 />
               </Form.Item>
             )}
