@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Typography, List, Button, Image } from 'antd';
 import Translate from 'react-translate-component';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
-import { fetchMemberWalletsData } from '../../reducers/dashboardReducer';
+import { fetchMemberWalletsData, fetchPortfolioData } from '../../reducers/dashboardReducer';
 import ConnectStateProps from '../../utils/state.connect';
 import Currency from '../shared/number.formate';
 import MassPayment from '../buyfiat.component'
@@ -25,6 +25,7 @@ class Wallets extends Component {
     }
     async fetchWallets() {
         this.props.dispatch(fetchMemberWalletsData(this.props.userProfile.id))
+        this.props.dispatch(fetchPortfolioData(this.props.userProfile.id))
     }
     showDocsError() {
         this.props.history.push("/docnotices");

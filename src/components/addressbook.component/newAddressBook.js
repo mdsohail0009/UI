@@ -504,18 +504,8 @@ const NewAddressBook = ({
 							name={"file"}
 							rules={[
 								{
-									validator: (_, value) => {
-										if (file) {
-											return Promise.resolve();
-										} else {
-											if (!isUploading) {
-												return Promise.reject(
-													"Please upload your signed PDF document"
-												);
-											}
-											return Promise.resolve();
-										}
-									},
+									required: true,
+									message: "Please upload your signed PDF document",
 								},
 							]}>
 							{
