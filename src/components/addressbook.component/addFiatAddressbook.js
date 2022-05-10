@@ -106,6 +106,7 @@ const NewFiatAddress = (props) => {
 		) {
 			loadDataAddress();
 			setEdit(true);
+     
 		}
 		addressbkTrack();
 		getCountryLu();
@@ -161,7 +162,9 @@ const NewFiatAddress = (props) => {
 			}
 
 			getStateLu(response.data.country);
-			form.setFieldsValue({ ...response.data });
+    
+			form.setFieldsValue({ ...response.data});
+
 			setIsLoading(false);
 		}
 	};
@@ -1302,7 +1305,8 @@ const NewFiatAddress = (props) => {
 								</Row>
 							</>
 						)}
-
+            <div className="d-flex align-center">
+	             
 						<Form.Item
 							className="custom-forminput mt-36 agree"
 							name="isAgree"
@@ -1319,18 +1323,16 @@ const NewFiatAddress = (props) => {
 											  ),
 								},
 							]}>
-							 <span className="d-flex">
-                                <Checkbox className="ant-custumcheck"/>
-								<span className="withdraw-check"></span>
-								<Translate
+						   <Checkbox  className="ant-custumcheck"/>
+							</Form.Item>
+              <Translate
 									content="agree_to_suissebase"
 									with={{ link }}
 									component={Paragraph}
-									className="fs-14 text-white-30 ml-16 mb-4"
+									className="fs-14 text-white-30 ml-16 mb-4 pt-16"
 									style={{ flex: 1 }}
 								/>
-							  </span>
-						</Form.Item>
+            </div>
 						<Form.Item className="text-center">
 							<Button
 								htmlType="submit"

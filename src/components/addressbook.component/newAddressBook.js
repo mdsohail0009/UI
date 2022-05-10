@@ -89,6 +89,7 @@ const NewAddressBook = ({
 
 	useEffect(() => {
 		if (addressBookReducer?.cryptoValues) {
+        
 			form.setFieldsValue({
 				toCoin: addressBookReducer?.cryptoValues?.toCoin,
 				favouriteName: addressBookReducer?.cryptoValues.favouriteName,
@@ -553,6 +554,8 @@ const NewAddressBook = ({
 								</div>
 							</div>
 						)}
+                        <div className="d-flex align-center">
+                        	
 						<Form.Item
 							className="custom-forminput mt-36 agree"
 							name="isAgree"
@@ -569,18 +572,16 @@ const NewAddressBook = ({
 											  ),
 								},
 							]}>
-							<span className="d-flex">
-								<Checkbox className="ant-custumcheck" />
-								<span className="withdraw-check"></span>
-								<Translate
+							<Checkbox className="ant-custumcheck" />
+							</Form.Item>
+                        <Translate
 									content="agree_to_suissebase"
 									with={{ link }}
 									component={Paragraph}
-									className="fs-14 text-white-30 ml-16 mb-4"
+									className="fs-14 text-white-30 ml-16 mb-4 pt-16"
 									style={{ flex: 1 }}
 								/>
-							</span>
-						</Form.Item>
+                        </div>
 						<div style={{ marginTop: "50px" }}>
 							<Button
 								htmlType="submit"
