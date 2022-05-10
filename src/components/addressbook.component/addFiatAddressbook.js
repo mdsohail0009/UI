@@ -51,7 +51,6 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 		</Text>
 	);
 };
-
 const LinkValue = (props) => {
 	return (
 		<Translate
@@ -67,9 +66,7 @@ const LinkValue = (props) => {
 		/>
 	);
 };
-
 const link = <LinkValue content="terms_service" />;
-
 const NewFiatAddress = (props) => {
 	const [form] = Form.useForm();
 	const [errorMsg, setErrorMsg] = useState(null);
@@ -91,7 +88,6 @@ const NewFiatAddress = (props) => {
 	const [uploadIdentity, setUploadIdentity] = useState(false);
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
-	const [bankType, setBankType] = useState("");
 
 	useEffect(() => {
 		if (selectParty === true) {
@@ -106,13 +102,11 @@ const NewFiatAddress = (props) => {
 		) {
 			loadDataAddress();
 			setEdit(true);
-     
 		}
 		addressbkTrack();
 		getCountryLu();
 		getStateLu();
 	}, []);
-
 	const addressbkTrack = () => {
 		apiCalls.trackEvent({
 			Type: "User",
@@ -126,7 +120,6 @@ const NewFiatAddress = (props) => {
 			FullFeatureName: "Withdraw Fiat",
 		});
 	};
-
 	const loadDataAddress = async () => {
 		setIsLoading(true);
 		let response = await getAddress(
@@ -153,38 +146,33 @@ const NewFiatAddress = (props) => {
 			let fileInfo = response?.data?.documents?.details;
 			if (response?.data?.addressType === "1stparty" && fileInfo?.length != 0) {
 				setDeclarationFile(response?.data?.documents?.details[0]);
-				 form.setFieldsValue({ file3: true });
 			} else {
 				setIdentityFile(response?.data?.documents?.details[0]);
 				setAdressFile(response?.data?.documents?.details[1]);
-				form.setFieldsValue({ file1: true });
-				   form.setFieldsValue({ file2: true });
 			}
 
 			getStateLu(response.data.country);
-    
-			form.setFieldsValue({ ...response.data});
-
+			form.setFieldsValue({ ...response.data });
 			setIsLoading(false);
 		}
 	};
-
 	const handleWalletSelection = (walletId) => {
 		setFiatAddress({ toCoin: walletId });
 		form.setFieldsValue({ toCoin: walletId });
 	};
-
 	const getCountryLu = async () => {
 		let objj = props?.sendReceive?.withdrawFiatObj;
 		if (objj) {
 			form.setFieldsValue({
 				...objj,
 				walletCode: objj.walletCode,
-				beneficiaryAccountName: props?.userConfig.isBusiness?props?.userConfig.businessName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName
+				beneficiaryAccountName:
+					props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
 			});
 		} else {
 			form.setFieldsValue({
-				beneficiaryAccountName: props?.userConfig.isBusiness?props?.userConfig.businessName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName
+				beneficiaryAccountName:
+					props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
 			});
 		}
 		let recName = await getCountryStateLu();
@@ -201,7 +189,6 @@ const NewFiatAddress = (props) => {
 		}
 		if (isChange) form.setFieldsValue({ state: null });
 	};
-
 	const savewithdrawal = async (values) => {
 		setIsLoading(false);
 		setErrorMsg(null);
@@ -328,7 +315,6 @@ const NewFiatAddress = (props) => {
 			}
 		}
 	};
-
 	const getIbanData = async (val) => {
 		form.setFieldsValue({
 			bankName: "",
@@ -350,12 +336,9 @@ const NewFiatAddress = (props) => {
 					state: response.data.state || oldVal.state,
 					country: response.data.country || oldVal.country,
 				});
-			} else {
-				setErrorMsg(response.originalError);
 			}
 		}
 	};
-
 	const beforeUpload = (file, type) => {
 		if (file.name.split(".").length > 2) {
 			warning(" File don't allow double extension");
@@ -425,7 +408,6 @@ const NewFiatAddress = (props) => {
 			}
 		}
 	};
-
 	const radioChangeHandler = (e) => {
 		setUploading(false);
 		setUploadAddress(false);
@@ -434,8 +416,8 @@ const NewFiatAddress = (props) => {
 		setAdressFile(null);
 		setDeclarationFile(null);
 		form.setFieldsValue({ file1: false, file2: false, file3: false });
-    form.resetFields()
-    setFiatAddress(null)
+		form.resetFields();
+		setFiatAddress(null);
 		if (e.target.value === "1stparty") {
 			form.setFieldsValue({
 				addressType: "1stparty",
@@ -444,8 +426,7 @@ const NewFiatAddress = (props) => {
 			});
 			setSelectParty(false);
 		} else {
-			//form.setFieldsValue({ addressType: "3rdparty" });
-			form.setFieldsValue({addressType:"3rdparty",beneficiaryAccountName:props?.userConfig.isBusiness?props?.userConfig.businessName:props?.userConfig?.firstName + " " + props?.userConfig?.lastName})
+			form.setFieldsValue({ addressType: "3rdparty" });
 			setSelectParty(true);
 		}
 	};
@@ -511,7 +492,6 @@ const NewFiatAddress = (props) => {
 			setPreviewPath(res.data);
 		}
 	};
-
 	const filePreviewPath = () => {
 		if (previewPath?.includes(".pdf")) {
 			return previewPath;
@@ -519,35 +499,6 @@ const NewFiatAddress = (props) => {
 			return previewPath;
 		}
 	};
-
-	const changeBankType = (e) => {
-		setBankType(e);
-
-		form.setFieldsValue({
-			accountNumber: "",
-			routingNumber: "",
-			bankName: "",
-			bankAddress: "",
-			country: "",
-			state: "",
-			zipCode: "",
-		});
-	};
-
-	// const validateBank = (_, value) => {
-	// 	let _bankType = form.getFieldValue("bankType");
-	// 	if (bankType) {
-	// 		if (_bankType === "iban") {
-	// 		}
-	// 	} else {
-	// 		Promise.reject("Please select a bank type first");
-	// 	}
-	// };
-
-	const doNothing = () => {
-		//---
-	};
-
 	const filePreviewModal = (
 		<Modal
 			className="documentmodal-width"
@@ -589,6 +540,9 @@ const NewFiatAddress = (props) => {
 		</Modal>
 	);
 
+	// const showData=()=>{
+	// }
+
 	const antIcon = (
 		<LoadingOutlined
 			style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
@@ -621,12 +575,16 @@ const NewFiatAddress = (props) => {
 							component={Paragraph}
 							className="mb-16 fs-14 text-aqua fw-500 text-upper"
 						/>
-            
 						<Form.Item
 							name="addressType"
-            //   label={<div>Address Type <Tooltip title="1st party & 3rd party"><div className="icon md info c-pointer"></div></Tooltip>
-            //   </div>}
-			                label="Address Type"
+							label={
+								<div>
+									Address Type{" "}
+									<Tooltip title="1st party & 3rd party">
+										<div className="icon md info c-pointer"></div>
+									</Tooltip>
+								</div>
+							}
 							className="custom-label">
 							<Radio.Group
 								size="large"
@@ -653,7 +611,6 @@ const NewFiatAddress = (props) => {
 								</Radio>
 							</Radio.Group>
 						</Form.Item>
-          
 						<Row gutter={[16, 16]}>
 							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
 								<Form.Item
@@ -686,6 +643,33 @@ const NewFiatAddress = (props) => {
 							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
 								<Form.Item
 									className="custom-forminput custom-label mb-0"
+									label={<Translate content="address" component={Form.label} />}
+									name="toWalletAddress"
+									required
+									rules={[
+										{
+											required: true,
+											message: apiCalls.convertLocalLang("is_required"),
+										},
+										{
+											whitespace: true,
+											message: apiCalls.convertLocalLang("is_required"),
+										},
+										{
+											validator: validateContentRule,
+										},
+									]}>
+									<Input
+										className="cust-input"
+										maxLength="30"
+										placeholder={apiCalls.convertLocalLang("address")}
+									/>
+								</Form.Item>
+							</Col>
+
+							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+								<Form.Item
+									className="custom-forminput custom-label mb-0"
 									name="toCoin"
 									label={
 										<Translate content="currency" component={Form.label} />
@@ -708,42 +692,8 @@ const NewFiatAddress = (props) => {
 							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
 								<Form.Item
 									className="custom-forminput custom-label mb-0"
-									label={
-										<Translate content="bank_type" component={Form.label} />
-									}
-									name="bankType"
-									required
-									rules={[
-										{
-											required: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-									]}>
-									<Select
-										dropdownClassName="select-drpdwn"
-										placeholder={apiCalls.convertLocalLang("bank_type")}
-										className="cust-input"
-										style={{ width: "100%" }}
-										bordered={false}
-										showArrow={true}
-										optionFilterProp="children"
-										showSearch
-										onChange={(e) => changeBankType(e)}>
-										<Option value={"bank"}>{"Bank Account"}</Option>
-										<Option value={"iban"}>{"IBAN"}</Option>
-									</Select>
-								</Form.Item>
-							</Col>
-
-							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-								<Form.Item
-									className="custom-forminput custom-label mb-0"
 									name="accountNumber"
-									label={
-										bankType !== "iban"
-											? apiCalls.convertLocalLang("Bank_account")
-											: apiCalls.convertLocalLang("iban")
-									}
+									label={apiCalls.convertLocalLang("Bank_account")}
 									required
 									rules={[
 										{
@@ -754,23 +704,12 @@ const NewFiatAddress = (props) => {
 											pattern: /^[A-Za-z0-9]+$/,
 											message: "Invalid account number",
 										},
-										// {
-										// 	validator: validateBank,
-										// },
 									]}>
 									<Input
 										className="cust-input"
 										maxLength={100}
-										placeholder={
-											bankType !== "iban"
-												? apiCalls.convertLocalLang("Bank_account")
-												: apiCalls.convertLocalLang("iban")
-										}
-										onBlur={
-											bankType === "iban"
-												? (val) => getIbanData(val.currentTarget.value)
-												: doNothing
-										}
+										placeholder={apiCalls.convertLocalLang("Bank_account")}
+										onBlur={(val) => getIbanData(val.currentTarget.value)}
 									/>
 								</Form.Item>
 							</Col>
@@ -797,7 +736,6 @@ const NewFiatAddress = (props) => {
 									]}>
 									<Input
 										className="cust-input"
-										disabled={bankType === "iban" ? true : false}
 										maxLength={100}
 										placeholder={apiCalls.convertLocalLang(
 											"BIC_SWIFT_routing_number"
@@ -827,7 +765,6 @@ const NewFiatAddress = (props) => {
 										},
 									]}>
 									<Input
-										disabled={bankType === "iban" ? true : false}
 										className="cust-input"
 										maxLength={200}
 										placeholder={apiCalls.convertLocalLang("Bank_name")}
@@ -856,7 +793,6 @@ const NewFiatAddress = (props) => {
 										},
 									]}>
 									<Input
-										disabled={bankType === "iban" ? true : false}
 										className="cust-input"
 										maxLength={200}
 										placeholder={apiCalls.convertLocalLang("Bank_address1")}
@@ -876,7 +812,6 @@ const NewFiatAddress = (props) => {
 										},
 									]}>
 									<Select
-										disabled={bankType === "iban" ? true : false}
 										dropdownClassName="select-drpdwn"
 										placeholder={apiCalls.convertLocalLang("Country")}
 										className="cust-input"
@@ -899,16 +834,13 @@ const NewFiatAddress = (props) => {
 									className="custom-forminput custom-label mb-0"
 									name="state"
 									label={<Translate content="state" component={Form.label} />}
-									rules={
-										[
-											// {
-											// 	required: true,
-											// 	message: apiCalls.convertLocalLang("is_required"),
-											// },
-										]
-									}>
+									rules={[
+										{
+											required: true,
+											message: apiCalls.convertLocalLang("is_required"),
+										},
+									]}>
 									<Select
-										disabled={bankType === "iban" ? true : false}
 										dropdownClassName="select-drpdwn"
 										placeholder={apiCalls.convertLocalLang("state")}
 										className="cust-input"
@@ -954,7 +886,6 @@ const NewFiatAddress = (props) => {
 										},
 									]}>
 									<Input
-										disabled={bankType === "iban" ? true : false}
 										className="cust-input"
 										maxLength="10"
 										placeholder={apiCalls.convertLocalLang("zipcode")}
@@ -1305,8 +1236,7 @@ const NewFiatAddress = (props) => {
 								</Row>
 							</>
 						)}
-            <div className="d-flex align-center">
-	             
+
 						<Form.Item
 							className="custom-forminput mt-36 agree"
 							name="isAgree"
@@ -1323,16 +1253,17 @@ const NewFiatAddress = (props) => {
 											  ),
 								},
 							]}>
-						   <Checkbox  className="ant-custumcheck"/>
-							</Form.Item>
-              <Translate
+							<Checkbox className="ant-custumcheck">
+								<span className="withdraw-check"></span>
+								<Translate
 									content="agree_to_suissebase"
 									with={{ link }}
 									component={Paragraph}
-									className="fs-14 text-white-30 ml-16 mb-4 pt-16"
+									className="fs-14 text-white-30 ml-16 mb-4"
 									style={{ flex: 1 }}
 								/>
-            </div>
+							</Checkbox>
+						</Form.Item>
 						<Form.Item className="text-center">
 							<Button
 								htmlType="submit"
