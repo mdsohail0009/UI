@@ -47,13 +47,13 @@ const docPreview = async (file) => {
       setPreviewPath(res.data);
   } 
 };
-const addressTypeNames = (type) =>{
-  const stepcodes = {
-            "1stparty" : "1st Party",
-            "3rd Party" : "3rd Party",
-   }
-   return stepcodes[type]
-}
+// const addressTypeNames = (type) =>{
+//   const stepcodes = {
+//             "1stparty" : "1st Party",
+//             "3rd Party" : "3rd Party",
+//    }
+//    return stepcodes[type]
+// }
 const filePreviewPath = () => {
   if (previewPath?.includes(".pdf")) {
       return previewPath;
@@ -124,7 +124,7 @@ const filePreviewModal = (
             <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
               <div>
                 <label className="kpi-label">Address Type</label>
-                <div className=" kpi-val">{addressTypeNames(fiatAddress?.addressType)}</div>
+                <div className=" kpi-val">{fiatAddress?.addressType}</div>
               </div>
             </Col>
             <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
