@@ -36,7 +36,7 @@ function Info({ id, type }) {
 		if (response.ok) {
 			setLoader(false);
 			if (response.data.length === 0) {
-				setError("No data found");
+				setError("To No data found");
 				setErrorType("info");
 			} else {
 				setInfoVal(response.data);
@@ -50,7 +50,7 @@ function Info({ id, type }) {
 		<Loader style={{ padding: 0 }} spinning={loader}>
 			{error && (
 				<Alert
-					closable
+					//closable
 					type={errorType}
 					description={error || "No data here"}
 					onClose={() => setError(null)}
