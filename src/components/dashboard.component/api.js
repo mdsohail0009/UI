@@ -7,7 +7,7 @@ const fetchMemberWallets = (member_id) => {
     return apiClient.get(ApiControllers.wallets + `FiatDashboard/${member_id}`);
 }
 const fetchPortfolio = (member_id) => {
-    return apiClient.get(ApiControllers.accounts + `/${member_id}/Portfolio`);
+    return apiClient.get(ApiControllers.accounts + `${member_id}/Portfolio`);
 }
 const fetchYourPortfolio = (member_id) => {
     return apiClient.get(ApiControllers.wallets + `CryptoPortFolio/${member_id}`);
