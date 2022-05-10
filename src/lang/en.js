@@ -509,7 +509,7 @@ export default {
 	withdraw_verification_options:
 		"Please select withdraw verification options from below.",
 	get_code: "Click here to get code",
-	resend_code: "RESEND CODE%(counter)s",
+	resend_code: "Click here to Resend",
 	digit_code: " Enter 6 digit code sent to",
 	selectcurrency: "Select Currency",
 	bank_account_number: "Bank Account Number",
