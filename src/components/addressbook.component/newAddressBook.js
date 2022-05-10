@@ -81,6 +81,7 @@ const NewAddressBook = ({
 	const [cryptoAddress, setCryptoAddress] = useState({});
 	const [btnDisabled, setBtnDisabled] = useState(false);
 	const [file, setFile] = useState(null);
+	const [detailfile, setDetailFile] = useState(null);
 	const [isUploading, setUploading] = useState(false);
 	const [addressState, setAddressState] = useState("");
 	const [previewPath, setPreviewPath] = useState(null);
@@ -132,6 +133,7 @@ const NewAddressBook = ({
 				toCoin: addressBookReducer?.selectedRowData?.coin,
 			});
 			const fileInfo = response?.data?.documents?.details[0];
+			setDetailFile(response?.data?.documents?.details[0]);
 			if (fileInfo?.path) {
 				form.setFieldsValue({ file: true });
 				setFile({
@@ -182,17 +184,36 @@ const NewAddressBook = ({
 				saveObj.beneficiaryAccountName,
 				userConfig.sk
 			);
-			if (file) {
-				const obj = getDocObj(
-					userConfig?.id,
-					file?.path,
-					file.name,
-					file.size,
-					cryptoAddress?.documents?.id,
-					cryptoAddress?.documents?.details[0].id
-				);
-				saveObj["documents"] = obj;
-			}
+
+			saveObj.documents = {
+				id: cryptoAddress
+					? cryptoAddress?.documents?.id
+					: "00000000-0000-0000-0000-000000000000",
+				transactionId: null,
+				adminId: "00000000-0000-0000-0000-000000000000",
+				date: null,
+				typeId: null,
+				memberId: userConfig?.id,
+				caseTitle: null,
+				caseState: null,
+				remarks: null,
+				status: null,
+				state: null,
+				details: [],
+			};
+			saveObj.documents.details.push(detailfile);
+			// if (file) {
+			// 	const obj = getDocObj(
+			// 		userConfig?.id,
+			// 		file?.path,
+			// 		file.name,
+			// 		file.size,
+			// 		cryptoAddress?.documents?.id,
+			// 		cryptoAddress?.documents?.details[0].id
+			// 	);
+
+			// 	saveObj["documents"] = obj;
+			// }
 			let response = await saveAddress(saveObj);
 			if (response.ok) {
 				setBtnDisabled(false);
@@ -216,7 +237,6 @@ const NewAddressBook = ({
 		}
 	};
 	const uploadFile = ({ file }) => {
-		debugger;
 		if (file?.status === "done" && isUploading) {
 			let obj = {
 				name: `${file.name}`,

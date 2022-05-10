@@ -121,7 +121,6 @@ const NewFiatAddress = (props) => {
 		});
 	};
 	const loadDataAddress = async () => {
- 
 		setIsLoading(true);
 		let response = await getAddress(
 			props?.addressBookReducer?.selectedRowData?.id,
@@ -147,12 +146,12 @@ const NewFiatAddress = (props) => {
 			let fileInfo = response?.data?.documents?.details;
 			if (response?.data?.addressType === "1stparty" && fileInfo?.length != 0) {
 				setDeclarationFile(response?.data?.documents?.details[0]);
-        form.setFieldsValue({file3:true});
+				form.setFieldsValue({ file3: true });
 			} else {
 				setIdentityFile(response?.data?.documents?.details[0]);
 				setAdressFile(response?.data?.documents?.details[1]);
-        form.setFieldsValue({file1:true});
-        form.setFieldsValue({file2:true});
+				form.setFieldsValue({ file1: true });
+				form.setFieldsValue({ file2: true });
 			}
 
 			getStateLu(response.data.country);
@@ -285,6 +284,9 @@ const NewFiatAddress = (props) => {
 				state: null,
 				details: [],
 			};
+			console.log("====================================");
+			console.log(declarationFile);
+			console.log("====================================");
 			if (selectParty) {
 				if (identityFile) {
 					saveObj.documents.details.push(identityFile);
