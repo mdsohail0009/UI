@@ -90,6 +90,7 @@ const NewFiatAddress = (props) => {
 	const [previewModal, setPreviewModal] = useState(false);
 
 	useEffect(() => {
+		debugger
 		if (selectParty === true) {
 			form.setFieldsValue({ addressType: "3rdparty" });
 		} else {
@@ -1150,13 +1151,14 @@ const NewFiatAddress = (props) => {
 								</Col>
 							)}
 						</Row>
-						{!selectParty && (
+						{/* {!selectParty && (
 							<>
 								<Text className="fs-14 fw-400 text-white-30 l-height-normal d-block mb-16">
 									We require you to download and complete the declaration form
 									as part of the regulation. Please remember to sign and upload
 									it below..
 								</Text>
+								
 								<Tooltip title="Click here to open file in a new tab to download">
 									<Text
 										className="file-label c-pointer"
@@ -1240,8 +1242,9 @@ const NewFiatAddress = (props) => {
 										</Form.Item>
 									</Col>
 								</Row>
+								
 							</>
-						)}
+						)} */}
 
 						<Form.Item
 							className="custom-forminput mt-36 agree"
