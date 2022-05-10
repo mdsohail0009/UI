@@ -255,9 +255,11 @@ const WithdrawalFiatSummary = ({
       dispatch(setWithdrawFinalRes(withdrawal.data));
       dispatch(fetchDashboardcalls(userConfig.id));
       dispatch(rejectWithdrawfiat());
+      setIsLoding(true);
       changeStep("step7");
     } else {
       setMsg(withdrawal.data);
+      setIsLoding(true);
       useOtpRef.current.scrollIntoView(0,0);
     }
   };
