@@ -290,10 +290,9 @@ class PaymentDetails extends Component {
       this.setState({ ...this.state, isValidFile: true,isUploading:true });
       return true;
     } else {
-      this.state.errorMessage(
-        "File is not allowed. You can upload jpg, png, jpeg and PDF  files"
-      );
-      this.setState({ ...this.state, isValidFile: false });
+      this.setState({ ...this.state, isValidFile: true,isUploading:false });
+      warning('File is not allowed. You can upload jpg, png, jpeg and PDF files')
+      // this.setState({ ...this.state, isValidFile: false });
       return Upload.LIST_IGNORE;
     }
   };

@@ -195,7 +195,7 @@ const WithdrawalFiatSummary = ({
     ;
     if ((verifyData.isEmailVerification)) {
       if(!isEmailVerification){
-        setMsg("Please enter valid codes");
+        setMsg("Please verify verification codes");
         useOtpRef.current.scrollIntoView(0,0);
         return;
       }
@@ -203,7 +203,7 @@ const WithdrawalFiatSummary = ({
     }
     if ((verifyData.isPhoneVerified)) {
       if(!isPhoneVerification){
-        setMsg("Please enter valid codes");
+        setMsg("Please verify verification codes");
         useOtpRef.current.scrollIntoView(0,0);
         return;
       }
@@ -211,7 +211,7 @@ const WithdrawalFiatSummary = ({
     }
     if ((verifyData.twoFactorEnabled )) {
       if(!isAuthenticatorVerification){
-        setMsg("Please enter valid codes");
+        setMsg("Please verify verification codes");
         useOtpRef.current.scrollIntoView(0,0);
         return;
       }
