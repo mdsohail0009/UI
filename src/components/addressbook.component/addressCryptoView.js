@@ -39,13 +39,13 @@ const AddressCryptoView=(props)=> {
 const backToAddressBook = () => {
   props?.history?.push('/userprofile/?key=5');
 };
-const addressTypeNames = (type) =>{
-  const stepcodes = {
-            "1stparty" : "1st Party",
-            "3rdparty" : "3rd Party",
-   }
-   return stepcodes[type]
-}
+// const addressTypeNames = (type) =>{
+//   const stepcodes = {
+//             "1stparty" : "1st Party",
+//             "3rdparty" : "3rd Party",
+//    }
+//    return stepcodes[type]
+// }
 const docPreview = async (file) => {
   let res = await getFileURL({ url: file.path });
   if (res.ok) {
@@ -123,7 +123,7 @@ const filePreviewModal = (
             <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
               <div>
                 <label className="kpi-label">Address Type</label>
-                <div className=" kpi-val">{addressTypeNames(cryptoAddress?.addressType)}</div>
+                <div className=" kpi-val">{cryptoAddress?.addressType}</div>
               </div>
             </Col>
             <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
