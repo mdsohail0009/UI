@@ -68,6 +68,9 @@ class WithdrawSummary extends Component {
     verifyPhone:false,
     verifyEmail:false,
     verifyAuth:false,
+    verifyTextotp:false,
+    verifyEmailOtp:false,
+    verifyAuthCode:false
   };
 
   useDivRef = React.createRef();
@@ -267,8 +270,8 @@ class WithdrawSummary extends Component {
       this.state.emailCodeVal
     );
     if (response.ok) {
-      this.setState({ ...this.state, EmailCode: response.data,verifyEmail:true });
-      success("Email verification code verified successfully");
+      this.setState({ ...this.state, EmailCode: response.data,verifyEmail:true,verifyEmailOtp:true , verifyOtpText: null, verifyText: null,emailText:null});
+      //success("Email verification code verified successfully");
     } else if (response.data == null) {
       this.setState({
         ...this.state,
@@ -290,8 +293,8 @@ class WithdrawSummary extends Component {
       this.state.otpCode
     );
     if (response.ok) {
-      this.setState({ ...this.state, OtpVerification: response.data,verifyPhone:true});
-      success("Phone verification code verified successfully");
+      this.setState({ ...this.state, OtpVerification: response.data,verifyPhone:true,verifyTextotp:true,verifyOtpText:null,buttonText:null});
+      //success("Phone verification code verified successfully");
     } else if (response.data == null) {
       this.setState({
         ...this.state,
@@ -333,14 +336,14 @@ class WithdrawSummary extends Component {
   };
 
   getAuthenticator = async () => {
-    ;
+    
     let response = await apiCalls.getAuthenticator(
       this.state.authCode,
       this.props.userProfile.userId
     );
     if (response.ok) {
-      this.setState({ ...this.state, authenticator: response.data,verifyAuth:true });
-      success("2FA verification code verified successfully");
+      this.setState({ ...this.state, authenticator: response.data,verifyAuth:true,verifyAuthCode:true });
+      //success("2FA verification code verified successfully");
     } else if (response.data == null) {
       this.setState({
         ...this.state,
@@ -656,6 +659,8 @@ class WithdrawSummary extends Component {
                     )}
                     <Button type="text" onClick={this.getOtpVerification} disabled={this.state.verifyPhone==true}>
                       {verifyOtpText[this.state.verifyOtpText]}
+                      {this.state.verifyTextotp==true && <span className="icon md greenCheck" />}
+
                     </Button>
                   </>
                 }
@@ -731,6 +736,8 @@ class WithdrawSummary extends Component {
                       disabled={this.state.verifyEmail==true}
                     >
                       {verifyText[this.state.verifyText]}
+                      {this.state.verifyEmailOtp==true && <span className="icon md greenCheck" />}
+
                     </Button>
 
                     {/* )}  */}
@@ -807,7 +814,9 @@ class WithdrawSummary extends Component {
                 label={
                   <>
                     <Button type="text" onClick={this.getAuthenticator}>
-                    Click here to verify
+                    {/* Click here to verify */}
+                    {this.state.verifyAuthCode? <span className="icon md greenCheck" />:"Click here to verify"}
+
                     </Button>
                   </>
                 }

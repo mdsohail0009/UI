@@ -60,6 +60,9 @@ const WithdrawalFiatSummary = ({
   const [verifyPhone,setVerifyPhone]=useState(false);
   const [verifyEmail,setEmail]=useState(false);
   const [verifyAuth,setVerifyAuth]=useState(false);
+  const [verifyTextotp,setVerifyTextOtp]=useState(false);
+  const [verifyEmailOtp,setVerifyEmailOtp]=useState(false);
+  const [verifyAuthCode,setVerifyAuthCode]=useState(false);
   const [isAuthenticatorVerification, setIsAuthenticatorVerification] =
     useState(false);
 
@@ -299,15 +302,18 @@ const WithdrawalFiatSummary = ({
     }
   };
   const getEmailVerification = async (values) => {
-    ;
+    
     setValidData(true);
     let response = await apiCalls.verifyEmail(userConfig.id, emailCode);
     if (response.ok) {
       setIsEmailVerification(true);
       setEmail(true)
-      useOtpRef.current.scrollIntoView(0,0);
-      success("Email  verified successfully");
+      setVerifyEmailOtp(true)
+      setEmailText(null)
+      //useOtpRef.current.scrollIntoView(0,0);
+      //success("Email  verified successfully");
     } else if (response.data == null) {
+      setVerifyEmailOtp(false)
       useOtpRef.current.scrollIntoView(0,0);
       setMsg("Please enter email verification code");
     } else {
@@ -366,14 +372,18 @@ const WithdrawalFiatSummary = ({
     if (response.ok) {
       setVerifyPhone(true)
       setIsPhoneVerification(true);
-      success("OTP verified successfully");
+      setVerifyTextOtp(true)
+      setVerifyOtpText(null)
+      //  {verifyTextotp == true ? setButtonText(null):setButtonText("resendotp")}
+
+      //success("OTP verified successfully");
     } else if (response.data == null) {
       useOtpRef.current.scrollIntoView(0,0);
       setMsg("Please enter phone verification code");
     } else {
       useOtpRef.current.scrollIntoView(0,0);
       setVerifyPhone(false)
-
+      setVerifyTextOtp(false)
       setMsg(apiCalls.convertLocalLang("phone_invalid_code"));
       setTimeout(() => {
         setMsg(null);
@@ -401,7 +411,8 @@ const WithdrawalFiatSummary = ({
       setVerifyAuth(true)
       setIsAuthenticatorVerification(true);
       console.log(response.data);
-      success("Authenticator verified successfully");
+      setVerifyAuthCode(true)
+      //success("Authenticator verified successfully");
     } else if (response.data == null) {
       useOtpRef.current.scrollIntoView(0,0);
       setMsg("Please enter authenticator verification code");
@@ -582,6 +593,7 @@ const WithdrawalFiatSummary = ({
                 )}
                 <Button type="text" onClick={getOtpVerification} disabled={verifyPhone==true}>
                   {verifyOtp[verifyOtpText]}
+                  {verifyTextotp==true && <span className="icon md greenCheck" />}
                 </Button>
               </>
             }
@@ -654,6 +666,8 @@ const WithdrawalFiatSummary = ({
                 {verify == true && (
                   <Button type="text" onClick={(e) => getEmailVerification(e)} disabled={verifyEmail==true}>
                     {verifyText[verifyEmailText]}
+                    {verifyEmailOtp==true && <span className="icon md greenCheck" />}
+
                     {/* VERIFY */}
                   </Button>
                 )}
@@ -726,7 +740,8 @@ const WithdrawalFiatSummary = ({
             label={
               <>
                 <Button type="text" onClick={getAuthenticator}>
-                Click here to verify
+                
+                 {verifyAuthCode? <span className="icon md greenCheck" />:"Click here to verify"}
                 </Button>
               </>
             }
