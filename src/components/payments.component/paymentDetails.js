@@ -152,13 +152,13 @@ class PaymentDetails extends Component {
     let objData = this.state.paymentsData.filter((item) => {
       return item.checked;
     });
-    if (objData.length <1) {
-      this.setState({
-        ...this.state,
-        errorMessage: "Please Check atleast one record",
-      });
-      return;
-    }
+    // if (objData.length <1) {
+    //   this.setState({
+    //     ...this.state,
+    //     errorMessage: "Please Check atleast one record",
+    //   });
+    //   return;
+    // }
     let objAmount = objData.some((item) => {
       return (item.recordStatus !== "Deleted" && (item.amount === null || item.amount <= 0));
     });
@@ -469,9 +469,9 @@ filePreviewPath() {
                 <table className="pay-grid">
                   <thead>
                     <tr>
-                    {(this.props.match.params.id ===
+                    {/* {(this.props.match.params.id ===
                         "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
-                       && (<th style={{ width: 50 }}></th>)}
+                       && (<th style={{ width: 50 }}></th>)} */}
                       <th>Name</th>
                       <th>Bank name</th>
                       <th>Bank Account Number/IBAN</th>
@@ -512,7 +512,7 @@ filePreviewPath() {
                                       : true
                                   }
                                 >
-                            {(this.props.match.params.id ===
+                            {/* {(this.props.match.params.id ===
                                 "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
                               &&
                                   <td
@@ -556,7 +556,7 @@ filePreviewPath() {
                                       <span></span>
                                     </label>
                                   </td>
-                            }
+                            } */}
                                   <td>
                                     {item?.beneficiaryAccountName ? (
                                       <>{item?.beneficiaryAccountName}</>
@@ -770,7 +770,7 @@ filePreviewPath() {
                     {(this.props.match.params.id ===
                                               "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending") &&<>
                       <td></td>
-                      <td></td>
+                      {/* <td></td> */}
                       </>
                     }
                       {this.props.match.params.id !==
@@ -858,7 +858,8 @@ filePreviewPath() {
                 <Button 
                     className="pop-cancel"
                     onClick={this.handleCancel}>Cancel</Button>
-                <Button className="primary-btn pop-btn"
+                <Button className="pop-btn px-36"
+                // className="primary-btn pop-btn"
                     
                     onClick={()=>this.deleteDetials(this.state.selectData,this.state.paymentsData)}>Ok</Button>
             </>

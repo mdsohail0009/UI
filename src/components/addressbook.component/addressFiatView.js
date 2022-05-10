@@ -221,9 +221,11 @@ const filePreviewModal = (
                   </div>
               </div>
             </Col>
-            {fiatAddress?.documents?.details.map((file)=>
+          </Row>
+          <Row>
+          {fiatAddress?.documents?.details.map((file)=>
             <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-							<div className="docfile mr-0" key={file.id}>
+							<div className="docfile mr-0 d-flex ml-8" key={file.id}>
               <span className={`icon xl ${(file.documentName?.slice(-3) === "zip" && "file" ) || 
 								 (file.documentName?.slice(-3) !== "zip" && "") || 
 								 ((file.documentName?.slice(-3) === "pdf"||file.documentName?.slice(-3) === "PDF") && "file") || 

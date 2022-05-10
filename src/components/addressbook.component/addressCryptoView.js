@@ -136,15 +136,25 @@ const filePreviewModal = (
             </Col>
             <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
               <div>
+                <label className="kpi-label">Address State</label>
+                <div className="kpi-val">
+                <div className=" kpi-val">{cryptoAddress?.addressState}</div>
+                  </div>
+              </div>
+            </Col>
+            <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+              <div>
                 <label className="kpi-label">Remarks</label>
                 <div className="kpi-val">
                   {cryptoAddress?.remarks}
                   </div>
               </div>
             </Col>
-            {cryptoAddress?.documents?.details.map((file)=>
+          </Row>
+          <Row>
+          {cryptoAddress?.documents?.details.map((file)=>
             <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-							<div className="docfile mr-0" key={file.id}>
+							<div className="docfile mr-0 ml-8 d-flex" key={file.id}>
               <span className={`icon xl ${(file.documentName?.slice(-3) === "zip" && "file" ) || 
 								 (file.documentName?.slice(-3) !== "zip" && "") || 
 								 ((file.documentName?.slice(-3) === "pdf"||file.documentName?.slice(-3) === "PDF") && "file") || 
