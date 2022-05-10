@@ -115,7 +115,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
       // }
       else {
         useDivRef.current.scrollIntoView(0,0);
-        return setErrorMsg("Please select two or more withdraw verification options from below under title");
+        return setErrorMsg("Please select atleast 2 of the withdrawal verification options");
       }
  } 
 
