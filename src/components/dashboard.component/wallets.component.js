@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, List, Button,Image } from 'antd';
+import { Typography, List, Button, Image } from 'antd';
 import Translate from 'react-translate-component';
 import SuissebaseFiat from '../buyfiat.component/suissebaseFiat';
 import { fetchMemberWalletsData } from '../../reducers/dashboardReducer';
@@ -31,19 +31,20 @@ class Wallets extends Component {
     }
     showSendReceiveDrawer = (e, value) => {
         this.props.dispatch(setStep("step1"));
-        if (this.props?.userProfile?.isDocsRequested) {
-            this.props.history.push("/docnotices");
-            return;
-        }
+        const is2faEnabled = this.props.twoFA?.isEnabled;
         if (!this.props?.userProfile?.isKYC) {
             this.props.history.push("/notkyc");
             return;
         }
-        const isDocsRequested = this.props.userProfile.isDocsRequested;
-        if (isDocsRequested) {
-            this.showDocsError();
+        if (!is2faEnabled) {
+            this.props.history.push("/enabletwofactor");
             return;
         }
+        if (this.props?.userProfile?.isDocsRequested) {
+            this.props.history.push("/docnotices");
+            return;
+        }
+
         if (e === 2) {
             this.props.dispatch(setWithdrawfiatenaable(true))
             this.props.dispatch(setWithdrawfiat({ walletCode: value }))
@@ -69,10 +70,16 @@ class Wallets extends Component {
     }
     render() {
         const { wallets } = this.props.dashboard;
+        const { totalCryptoValue, totalFiatValue } = this.props.dashboard.portFolio.data;
+
         return (
             <>
-                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 mb-0 text-white" />
-                <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16" />
+                <Translate content="suissebase_title" component={Title} className="fs-24 fw-600 mb-0 text-white px-4" />
+                <div style={{ display: "flex",alignItems:"baseline" }}>
+
+                <Translate content="suissebase_subtitle" component={Paragraph} className="text-white-30 fs-16 mb-16 px-4" />
+                <Currency defaultValue={totalFiatValue} className={`fs-24 m-0 fw-600 ${totalFiatValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '54px' }} />
+                </div>
                 <List
                     itemLayout="horizontal"
                     dataSource={wallets.data}
@@ -82,7 +89,7 @@ class Wallets extends Component {
                     renderItem={item =>
                         <List.Item className="py-10 px-0">
                             <List.Item.Meta
-                                avatar={<Image preview={false} src={item.imagePath}/>}
+                                avatar={<Image preview={false} src={item.imagePath} />}
                                 title={<div className="fs-16 fw-600 text-upper text-white-30 l-height-normal">{item.walletCode}</div>}
                                 description={<Currency className="fs-16 text-white-30 m-0" defaultValue={item.amount} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />}
                             />

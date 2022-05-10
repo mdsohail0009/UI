@@ -63,7 +63,8 @@ const MarketCap = ({ member }) => {
 
     return <>
         <div>
-            <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey" }}>
+            <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey",width: "760px"
+}}>
                 <div className="d-flex justify-content mt-36">
                     <div>
                         <Translate content="markets_title" component={Title} className="fs-24 fw-600 mb-8 text-white-30" />

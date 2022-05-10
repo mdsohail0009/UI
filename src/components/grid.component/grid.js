@@ -2,6 +2,7 @@ import React from 'react';
 import { toDataSourceRequestString, translateDataSourceResultGroups } from '@progress/kendo-data-query';
 import { store } from '../../store'
 import moment from 'moment';
+import { ExcelExport } from '@progress/kendo-react-excel-export'
 const filterOperators = {
     'text': [
         { text: 'grid.filterContainsOperator', operator: 'contains' },
@@ -15,13 +16,7 @@ const filterOperators = {
     ],
     'numeric': [
         { text: 'grid.filterEqOperator', operator: 'eq' },
-        { text: 'grid.filterNotEqOperator', operator: 'neq' },
-        // { text: 'grid.filterGteOperator', operator: 'gte' },
-        // { text: 'grid.filterGtOperator', operator: 'gt' },
-        // { text: 'grid.filterLteOperator', operator: 'lte' },
-        // { text: 'grid.filterLtOperator', operator: 'lt' },
-        // { text: 'grid.filterIsNullOperator', operator: 'isnull' },
-        // { text: 'grid.filterIsNotNullOperator', operator: 'isnotnull' }
+        { text: 'grid.filterNotEqOperator', operator: 'neq' }
     ],
     'date': [
         { text: 'grid.filterAfterOrEqualOperator', operator: 'gte' },
@@ -44,9 +39,10 @@ const filterOperators = {
 export function withState(WrappedGrid) {
     return class StatefullGrid extends React.Component {
         constructor(props) {
+            debugger
             super(props);
             this.state = { dataState: { skip: 0, take: 10 }, additionalParams: null, data: [], isLoading: false };
-
+            this.excelRef = React.createRef();
         }
         refreshGrid() {
             this.fetchData(this.state.dataState);
@@ -62,7 +58,35 @@ export function withState(WrappedGrid) {
             return (
                 <div style={{ position: 'relative' }}>
                     {this.state.isLoading && this.loadingPanel}
-                    <WrappedGrid
+                    {this.props.showExcelExport && <div className='text-right'> <button
+                        title="Export Excel"
+                        className="k-button k-button-md k-rounded-md k-button-solid  mt-16 mb-16 mr-16 search-btn primary-btn excel-btn"
+                        onClick={() => {
+                            if (this.excelRef) {
+                                this.excelRef.current.save();
+                            }
+                        }}
+                    >
+                        Export to Excel
+                    </button>
+                    </div>}
+                    {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef}>
+
+                        <WrappedGrid
+                            sortable={true}
+                            resizable={true}
+                            filterOperators={filterOperators}
+                            pageable={{ pageSizes: [5, 10, 20, 30, 40, 50, "All"] }}
+                            {...this.props}
+                            total={this.state.total}
+                            data={this.state.data}
+                            skip={this.state.dataState.skip}
+                            pageSize={this.state.dataState.take}
+                            filter={this.state.dataState.filter}
+                            sort={this.state.dataState.sort}
+                            onDataStateChange={this.handleDataStateChange}
+                        />
+                    </ExcelExport> : <WrappedGrid
                         sortable={true}
                         resizable={true}
                         filterOperators={filterOperators}
@@ -75,7 +99,7 @@ export function withState(WrappedGrid) {
                         filter={this.state.dataState.filter}
                         sort={this.state.dataState.sort}
                         onDataStateChange={this.handleDataStateChange}
-                    />
+                    />}
                 </div>
             );
         }
