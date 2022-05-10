@@ -37,7 +37,7 @@ const AddressCryptoView=(props)=> {
         }
     }
 const backToAddressBook = () => {
-  props?.history?.push("/userprofile/5");
+  props?.history?.push('/userprofile/?key=5');
 };
 const addressTypeNames = (type) =>{
   const stepcodes = {

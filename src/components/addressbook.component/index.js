@@ -84,26 +84,8 @@ class AddressBook extends Component {
 	}
 
 	columnsFiat = [
-		{
-			field: "",
-			title: "",
-			width: 50,
-			customCell: (props) => (
-				<td>
-					{" "}
-					<label className="text-center custom-checkbox">
-						<input
-							id={props.dataItem.id}
-							name="isCheck"
-							type="checkbox"
-							checked={this.state.selection.indexOf(props.dataItem.id) > -1}
-							onChange={(e) => this.handleInputChange(props, e)}
-						/>
-						<span></span>{" "}
-					</label>
-				</td>
-			),
-		},
+		{ field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox c-pointer"><input id={props.dataItem.id} className="c-pointer"
+		name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
 		{
 			field: "favouriteName",
 			title: apiCalls.convertLocalLang("AddressLabel"),
@@ -195,11 +177,12 @@ class AddressBook extends Component {
 			customCell: (props) => (
 				<td>
 					{" "}
-					<label className="text-center custom-checkbox">
+					<label className="text-center custom-checkbox c-pointer">
 						<input
 							id={props.dataItem.id}
 							name="isCheck"
-							type="checkbox"
+							type="checkbox"  
+							className='c-pointer'
 							checked={this.state.selection.indexOf(props.dataItem.id) > -1}
 							onChange={(e) => this.handleInputChange(props, e)}
 						/>
