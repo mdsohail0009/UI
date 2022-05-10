@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import { withdrawSave } from "../../api/apiServer";
+import Loader from "../../Shared/loader";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
 import {
   setWithdrawfiat,
@@ -444,6 +445,7 @@ const WithdrawalFiatSummary = ({
           closable={false}
         />
       )}
+      {isLoding?<Loader />:<>
       <Text className="fs-14 text-white-50 fw-200">
         <Translate
           content="you_are_sending"
@@ -771,7 +773,7 @@ const WithdrawalFiatSummary = ({
           size="large"
           className="text-center text-white-30 pop-cancel fw-400 fs-16 text-center"
         />
-      </div>
+      </div></>}
     </div>
   );
 };

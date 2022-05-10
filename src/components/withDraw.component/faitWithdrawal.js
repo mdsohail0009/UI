@@ -41,6 +41,7 @@ import apicalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
 import { handleFiatConfirm } from "../send.component/api";
 import walletList from "../shared/walletList";
+import WAValidator from "multicoin-address-validator";
 
 const LinkValue = (props) => {
   return (
@@ -82,7 +83,7 @@ const FaitWithdrawal = ({
   const [btnDisabled, setBtnDisabled] = useState(false);
   const useDivRef = React.useRef(null);
   const [addressShow, setAddressShow] = useState(true);
-  const [validated,setValidated]=useState(false)
+  const [validated, setValidated] = useState(false)
   const [addressObj, setAddressObj] = useState({
     bankName: null,
     accountNumber: null,
@@ -94,7 +95,7 @@ const FaitWithdrawal = ({
     beneficiaryAccountAddress: null
   });
   const [addressInfo, setAddressInfo] = useState(null);
-  const [address1,setAddress1]=useState(false)
+  const [address1, setAddress1] = useState(false)
   useEffect(() => {
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       handleWalletSelection(selectedWalletCode);
@@ -131,7 +132,6 @@ const FaitWithdrawal = ({
     });
   };
   const handleWalletSelection = (walletId, isClearObj) => {
-    debugger
     if (isClearObj) {
       let clearobj = {
         walletCode: "",
@@ -168,11 +168,10 @@ const FaitWithdrawal = ({
         getAddressLu(wallet[0]);
       }
     }
-    
+
   };
 
   const getAddressLu = async (obj, e) => {
-    debugger
     let selectedFiat = obj.currencyCode;
     let recAddress = await favouriteFiatAddress(
       userConfig.id,
@@ -181,7 +180,7 @@ const FaitWithdrawal = ({
     );
     if (recAddress.ok) {
       if (recAddress.data.length === 1) {
-        
+
         let recAddressDetails = await detailsAddress(recAddress.data[0].id);
         if (recAddressDetails.ok === true) {
           setAddressInfo(recAddressDetails.data);
@@ -189,17 +188,17 @@ const FaitWithdrawal = ({
           setAddressObj(addressObj);
           setAddressShow(null)
         }
-      } 
+      }
       else if (recAddress.data.length === 0) {
         setAddressShow(false);
         setAddressInfo(null)
         setAddressLu(null)
       }
-      else{
+      else {
         setAddressLu(recAddress.data)
         //setAddressInfo(addressInfo)
-        setAddressObj(addressObj); 
-        setAddressShow(null)  
+        setAddressObj(addressObj);
+        setAddressShow(null)
         setAddress1(true)
         setAddressInfo(null)
         //form.setFieldsValue(addressInfo)
@@ -231,11 +230,11 @@ const FaitWithdrawal = ({
       form.setFieldsValue({
         ...objj,
         walletCode: objj.walletCode,
-        beneficiaryAccountName: userConfig.isBusiness?userConfig.businessName:userConfig.firstName + " " + userConfig.lastName
+        beneficiaryAccountName: userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName
       });
     } else {
       form.setFieldsValue({
-        beneficiaryAccountName: userConfig.isBusiness?userConfig.businessName:userConfig.firstName + " " + userConfig.lastName
+        beneficiaryAccountName: userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName
       });
     }
     let recName = await getCountryStateLu();
@@ -264,7 +263,6 @@ const FaitWithdrawal = ({
     }
   };
   const savewithdrawal = async (values) => {
-  debugger
     setValidated(true)
     dispatch(setWFTotalValue(values.totalValue));
     if (
@@ -305,7 +303,7 @@ const FaitWithdrawal = ({
     setErrorMsg(null);
     values["membershipId"] = userConfig.id;
     values["memberWalletId"] = selectedWallet.id;
-    values["beneficiaryAccountName"] = userConfig.isBusiness?userConfig.businessName:userConfig.firstName + " " + userConfig.lastName;
+    values["beneficiaryAccountName"] = userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName;
     values["favouriteName"] =
       values.favouriteName || addressDetails.favouriteName;
     values["comission"] = "0.0";
@@ -362,6 +360,22 @@ const FaitWithdrawal = ({
       form.setFieldsValue({ ...values });
     }
   };
+
+  const validateAddressType = (_, value) => {
+    if (value) {
+      if (value == '.') {
+        return Promise.reject(
+          "Invalid Amount"
+        );
+      } else {
+        return Promise.resolve();
+      }
+    }
+    else {
+      return Promise.reject(apicalls.convertLocalLang('is_required'));
+    }
+  };
+
   const renderModalContent = () => {
     const _types = {
       step1: (
@@ -406,47 +420,47 @@ const FaitWithdrawal = ({
                   onWalletSelect={(e) => handleWalletSelection(e, true)}
                 />
               </Form.Item>
-              
-              {addressShow == false && 
-               <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="noaddress_msg" /></Text> 
-               } 
-             {addressLu?.length > 1 && 
+
+              {addressShow == false &&
+                <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="noaddress_msg" /></Text>
+              }
+              {addressLu?.length > 1 &&
                 <div style={{ position: "relative" }}>
-                 
-                    <Form.Item
-                      className="custom-forminput custom-label mb-24"
-                      name="favouriteName"
-                      label={
+
+                  <Form.Item
+                    className="custom-forminput custom-label mb-24"
+                    name="favouriteName"
+                    label={
+                      <Translate
+                        content="address_book"
+                        component={Form.label}
+                      />
+                    }
+                  >
+                    <Select
+                      dropdownClassName="select-drpdwn"
+                      className="cust-input"
+                      style={{ width: "100%" }}
+                      bordered={false}
+                      showArrow={true}
+                      onChange={(e) => handleAddressChange(e)}
+                      placeholder={
                         <Translate
-                          content="address_book"
+                          content="SelectAddress"
                           component={Form.label}
                         />
                       }
                     >
-                      <Select
-                        dropdownClassName="select-drpdwn"
-                        className="cust-input"
-                        style={{ width: "100%" }}
-                        bordered={false}
-                        showArrow={true}
-                        onChange={(e) => handleAddressChange(e)}
-                        placeholder={
-                          <Translate
-                            content="SelectAddress"
-                            component={Form.label}
-                          />
-                        }
-                      >
-                        {addressLu?.map((item, idx) => (
-                          <Option key={idx} value={item.name}>
-                            {item.name}
-                          </Option>
-                        ))}
-                      </Select>
-                    </Form.Item>
-                 
+                      {addressLu?.map((item, idx) => (
+                        <Option key={idx} value={item.name}>
+                          {item.name}
+                        </Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+
                 </div>}
-               {addressInfo && 
+              {addressInfo &&
                 <div className="fiatdep-info">
 
                   <Form.Item
@@ -454,16 +468,14 @@ const FaitWithdrawal = ({
                     name="totalValue"
                     required
                     rules={[
-                      { required: true, message: apicalls.convertLocalLang('is_required') },
                       {
-                        validator:validated==true ? validate :false
-                       }
-                     
+                        validator: validateAddressType
+                      }
                     ]}
                     label={
                       <>
                         <Translate className="input-label"
-                         content="amount" component={Form.label} />
+                          content="amount" component={Form.label} />
                         <div className="minmax">
                           <Translate
                             type="text"
@@ -485,21 +497,21 @@ const FaitWithdrawal = ({
                       </>
                     }
                   >
-                   
-                     <NumberFormat
-                         className="cust-input mb-0" 
-                         customInput={Input} 
-                         thousandSeparator={true}
-                          prefix={""}
-                          placeholder="0.00"
-                          decimalScale={2}
-                          allowNegative={false}
-                          maxlength={13}
-                          onValueChange={({ value }) => {
-                            addressObj.Amount = value;
-                            form.setFieldsValue({ ...addressObj })
-                          }}
-                          value={addressObj.Amount} />
+
+                    <NumberFormat
+                      className="cust-input mb-0"
+                      customInput={Input}
+                      thousandSeparator={true}
+                      prefix={""}
+                      placeholder="0.00"
+                      decimalScale={2}
+                      allowNegative={false}
+                      maxlength={13}
+                      onValueChange={({ value }) => {
+                        addressObj.Amount = value;
+                        form.setFieldsValue({ ...addressObj })
+                      }}
+                      value={addressObj.Amount} />
                   </Form.Item>
 
                   <Translate
@@ -512,7 +524,7 @@ const FaitWithdrawal = ({
                     content="SIGNU"
                     component={Text}
                     with={{ value: addressInfo.bankName }}
-                    
+
                   />
                   <Translate
                     className="fw-200 text-white-50 fs-14"
@@ -634,23 +646,23 @@ const FaitWithdrawal = ({
                   />
 
                   <Form.Item
-                   className="custom-forminput mb-36 agree"
-                   name="isAccept"
-                   valuePropName="checked"
-                   required
-                   rules={[
-                     {
-                       validator: (_, value) =>
-                         value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice')
-                         )),
-                     },
-                   ]}
+                    className="custom-forminput mb-36 agree"
+                    name="isAccept"
+                    valuePropName="checked"
+                    required
+                    rules={[
+                      {
+                        validator: (_, value) =>
+                          value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice')
+                          )),
+                      },
+                    ]}
                   >
                     <span className="d-flex">
-                    <Checkbox className="ant-custumcheck"/>
-                      
-                    {/* </Checkbox> */}
-                    <span className="withdraw-check"></span>
+                      <Checkbox className="ant-custumcheck" />
+
+                      {/* </Checkbox> */}
+                      <span className="withdraw-check"></span>
                       <Translate
                         content="agree_to_suissebase"
                         with={{ link }}
@@ -658,7 +670,7 @@ const FaitWithdrawal = ({
                         className="fs-14 text-white-30 ml-16 mb-4"
                         style={{ flex: 1 }}
                       />
-                      </span>
+                    </span>
                   </Form.Item>
                   <Form.Item className="mb-0 mt-16">
                     <Button
@@ -672,7 +684,7 @@ const FaitWithdrawal = ({
                     </Button>
                   </Form.Item>
                 </div>}
-             
+
             </Form>
           </div>
         </>

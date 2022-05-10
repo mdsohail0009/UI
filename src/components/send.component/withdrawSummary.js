@@ -528,6 +528,7 @@ class WithdrawSummary extends Component {
             closable={false}
           />
         )}
+        {this.state.loading?<Loader />:
         <div className="auto-scroll">
           <div
             className="fs-36 text-white-30 fw-200 text-center"
@@ -875,7 +876,7 @@ class WithdrawSummary extends Component {
               className="text-white-30 pop-cancel fw-400"
             />
           </div>
-        </div>
+        </div>}
       </>
     );
   }
