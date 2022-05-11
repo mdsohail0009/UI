@@ -96,6 +96,9 @@ class PaymentsView extends Component {
     backToPayments = () => {
         this.props.history.push('/payments')
     }
+    docPreviewClose = () => {
+        this.setState({ ...this.state, previewModal: false, previewPath: null })
+      }
     render() {
         const total=(this.state.paymentsData.reduce((totalVal,currentItem) =>  totalVal + currentItem.amount , 0 ));
         const { paymentsData, loading } = this.state;
@@ -221,9 +224,9 @@ class PaymentsView extends Component {
             title="Preview"
             width={1000}
             visible={this.state.previewModal}
-            closeIcon={<Tooltip title="Close"><span className="icon md close-white c-pointer" onClick={this.backToPayments} /></Tooltip>}
+            closeIcon={<Tooltip title="Close"><span className="icon md close-white c-pointer" onClick={this.docPreviewClose} /></Tooltip>}
             footer={<>
-              <Button  onClick={this.backToPayments} className="pop-btn px-36"
+              <Button  onClick={this.docPreviewClose} className="pop-btn px-36"
                          style={{ margin: "0 8px" }}>Close</Button>
               <Button  className="pop-btn px-36"
                          style={{ margin: "0 8px" }}onClick={() => window.open(this.state.previewPath, "_blank")}>Download</Button>
