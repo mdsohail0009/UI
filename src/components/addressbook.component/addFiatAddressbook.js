@@ -994,27 +994,31 @@ const NewFiatAddress = (props) => {
 									/>
 								</Form.Item>
 							</Col>
-							{selectParty &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-								<Form.Item
-									className="custom-label"
-									name="remarks"
-									label={<Translate content="remarks" component={Form.label} />}
-									rules={[
-										{
-											required: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-										{
-											validator: validateContentRule,
-										},
-									]}>
-									<TextArea
-										placeholder="Remarks"
-										className="cust-input pt-16"
-										autoSize={{ minRows: 3, maxRows: 3 }}
-										maxLength={300}></TextArea>
-								</Form.Item>
-							</Col>}
+							{selectParty && (
+								<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+									<Form.Item
+										className="custom-label"
+										name="remarks"
+										label={
+											<Translate content="remarks" component={Form.label} />
+										}
+										rules={[
+											{
+												required: true,
+												message: apiCalls.convertLocalLang("is_required"),
+											},
+											{
+												validator: validateContentRule,
+											},
+										]}>
+										<TextArea
+											placeholder="Remarks"
+											className="cust-input pt-16"
+											autoSize={{ minRows: 3, maxRows: 3 }}
+											maxLength={300}></TextArea>
+									</Form.Item>
+								</Col>
+							)}
 						</Row>
 
 						<Row gutter={[12, 12]}>
@@ -1246,34 +1250,40 @@ const NewFiatAddress = (props) => {
 								
 							</>
 						)} */}
+						<div
+							style={{
+								display: "flex",
+								justifyContent: "center",
+								alignItems: "center",
+							}}>
+							<Form.Item
+								className="custom-forminput mt-36 agree"
+								name="isAgree"
+								valuePropName="checked"
+								rules={[
+									{
+										validator: (_, value) =>
+											value
+												? Promise.resolve()
+												: Promise.reject(
+														new Error(
+															apiCalls.convertLocalLang("agree_termsofservice")
+														)
+												  ),
+									},
+								]}>
+								<Checkbox className="ant-custumcheck" />
+								{/* <span className="withdraw-check"></span> */}
+							</Form.Item>
+							<Translate
+								content="agree_to_suissebase"
+								with={{ link }}
+								component={Paragraph}
+								className="fs-14 text-white-30 ml-16 mb-4 mt-16"
+								style={{ flex: 1 }}
+							/>
+						</div>
 
-						<Form.Item
-							className="custom-forminput mt-36 agree"
-							name="isAgree"
-							valuePropName="checked"
-							rules={[
-								{
-									validator: (_, value) =>
-										value
-											? Promise.resolve()
-											: Promise.reject(
-													new Error(
-														apiCalls.convertLocalLang("agree_termsofservice")
-													)
-											  ),
-								},
-							]}>
-							<Checkbox className="ant-custumcheck">
-								<span className="withdraw-check"></span>
-								<Translate
-									content="agree_to_suissebase"
-									with={{ link }}
-									component={Paragraph}
-									className="fs-14 text-white-30 ml-16 mb-4"
-									style={{ flex: 1 }}
-								/>
-							</Checkbox>
-						</Form.Item>
 						<Form.Item className="text-center">
 							<Button
 								htmlType="submit"

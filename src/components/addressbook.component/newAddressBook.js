@@ -87,9 +87,8 @@ const NewAddressBook = ({
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
 	const [validateAddress, setValidateAddress] = useState(false);
-   const [type,SetType]=useState();
+	const [type, SetType] = useState();
 	useEffect(() => {
-		
 		if (addressBookReducer?.cryptoValues) {
 			form.setFieldsValue({
 				toCoin: addressBookReducer?.cryptoValues?.toCoin,
@@ -110,7 +109,7 @@ const NewAddressBook = ({
 				loadDataAddress();
 			}
 		}
-		
+
 		form.setFieldsValue(addressBookReducer?.cryptoValues);
 	}, []);
 
@@ -187,23 +186,24 @@ const NewAddressBook = ({
 				userConfig.sk
 			);
 
-			saveObj.documents = {
-				id: cryptoAddress
-					? cryptoAddress?.documents?.id
-					: "00000000-0000-0000-0000-000000000000",
-				transactionId: null,
-				adminId: "00000000-0000-0000-0000-000000000000",
-				date: null,
-				typeId: null,
-				memberId: userConfig?.id,
-				caseTitle: null,
-				caseState: null,
-				remarks: null,
-				status: null,
-				state: null,
-				details: [],
-			};
-			saveObj.documents.details.push(detailfile);
+			// saveObj.documents = {
+			// 	id: cryptoAddress
+			// 		? cryptoAddress?.documents?.id
+			// 		: "00000000-0000-0000-0000-000000000000",
+			// 	transactionId: null,
+			// 	adminId: "00000000-0000-0000-0000-000000000000",
+			// 	date: null,
+			// 	typeId: null,
+			// 	memberId: userConfig?.id,
+			// 	caseTitle: null,
+			// 	caseState: null,
+			// 	remarks: null,
+			// 	status: null,
+			// 	state: null,
+			// 	details: [],
+			// };
+			// saveObj.documents.details.push(detailfile);
+			//!--------
 			// if (file) {
 			// 	const obj = getDocObj(
 			// 		userConfig?.id,
@@ -234,6 +234,7 @@ const NewAddressBook = ({
 					className: "custom-msg",
 					duration: 0.5,
 				});
+				setBtnDisabled(false);
 				setIsLoading(false);
 			}
 		}
@@ -365,9 +366,9 @@ const NewAddressBook = ({
 			return Promise.reject("is required");
 		}
 	};
-const handleTypeChange=(e)=>{
-console.log(e)
-}
+	const handleTypeChange = (e) => {
+		console.log(e);
+	};
 	return (
 		<>
 			<div>
@@ -477,7 +478,6 @@ console.log(e)
 								dropdownClassName="select-drpdwn"
 								bordered={false}
 								showArrow={true}>
-								
 								<Option value="1stparty">1st Party</Option>
 								<Option value="3rdparty">3rd Party</Option>
 							</Select>
@@ -576,33 +576,39 @@ console.log(e)
 								</div>
 							</div>
 						)} */}
-						<Form.Item
-							className="custom-forminput mt-36 agree"
-							name="isAgree"
-							valuePropName="checked"
-							rules={[
-								{
-									validator: (_, value) =>
-										value
-											? Promise.resolve()
-											: Promise.reject(
-													new Error(
-														apiCalls.convertLocalLang("agree_termsofservice")
-													)
-											  ),
-								},
-							]}>
-							<Checkbox className="ant-custumcheck">
-								<span className="withdraw-check"></span>
-								<Translate
-									content="agree_to_suissebase"
-									with={{ link }}
-									component={Paragraph}
-									className="fs-14 text-white-30 ml-16 mb-4"
-									style={{ flex: 1 }}
-								/>
-							</Checkbox>
-						</Form.Item>
+						<div
+							style={{
+								display: "flex",
+								justifyContent: "center",
+								alignItems: "center",
+							}}>
+							<Form.Item
+								className="custom-forminput mt-36 agree"
+								name="isAgree"
+								valuePropName="checked"
+								rules={[
+									{
+										validator: (_, value) =>
+											value
+												? Promise.resolve()
+												: Promise.reject(
+														new Error(
+															apiCalls.convertLocalLang("agree_termsofservice")
+														)
+												  ),
+									},
+								]}>
+								<Checkbox className="ant-custumcheck" />
+							</Form.Item>
+							<Translate
+								content="agree_to_suissebase"
+								with={{ link }}
+								component={Paragraph}
+								className="fs-14 text-white-30 ml-16 mb-4 mt-16"
+								style={{ flex: 1 }}
+							/>
+						</div>
+
 						<div style={{ marginTop: "50px" }}>
 							<Button
 								htmlType="submit"
