@@ -2,7 +2,7 @@ export default {
 	header_title: "Cockpit",
 	user_type: "%(lable)s",
 	Portfolio_title: "Crypto Portfolio",
-	your_portfolio: "Cryptocurrency Balances",
+	your_portfolio: "Crypto Balances",
 	suissebase_title: "Suissebase",
 	suissebase_subtitle: "Fiat Balances",
 	markets_title: "Markets",

@@ -588,7 +588,7 @@ const NewFiatAddress = (props) => {
 							label={
 								<div>
 									Address Type{" "}
-									<Tooltip title="1st party : Funds will be deposited to your own bank account. 3rd party : Funds will be deposited to other beneficiary bank account.">
+									<Tooltip title="1st party : Funds will be deposited to your own bank account.3rd party : Funds will be deposited to other beneficiary bank account.">
 										<div className="icon md info c-pointer"></div>
 									</Tooltip>
 								</div>
