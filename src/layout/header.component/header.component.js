@@ -48,6 +48,7 @@ class Header extends Component {
         return this.props?.dashnboard?.notices?.data?.length > 0;
     }
     showBuyDrawer = () => {
+        
         if (this.props.userConfig.isKYC && !this.isDocsRequested()) {
             this.setState({
                 buyDrawer: true
@@ -56,7 +57,7 @@ class Header extends Component {
             this.showNotification()
         }
     }
-    showSendDrawer = () => {
+    showSendDrawer = () => { 
         if (this.props.userConfig.isKYC && !this.isDocsRequested()) {
             this.setState({
                 sendDrawer: true
@@ -83,7 +84,7 @@ class Header extends Component {
             this.showNotification()
         }
     }
-    showNotification = () => {
+    showNotification = () => { 
         const isKyc = !this.props.userConfig.isKYC;
         if (isKyc) {
             notification.error({ message: "", description: `Please complete Your ${this.props.userConfig.isBusiness ? 'KYB' : 'KYC'}` });

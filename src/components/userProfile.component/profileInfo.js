@@ -4,11 +4,10 @@ import { connect } from "react-redux";
 import Moment from "react-moment";
 import { uploadClient } from "../../api";
 import { ProfileImageSave } from "../../api/apiServer";
-import { getmemeberInfo } from "../../reducers/configReduser";
+import { getmemeberInfo,getIpRegisteryData } from "../../reducers/configReduser";
 import DefaultUser from "../../assets/images/defaultuser.jpg";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
-
 import Loader from "../../Shared/loader";
 
 class ProfileInfo extends Component {
@@ -18,6 +17,7 @@ class ProfileInfo extends Component {
     multiple: false,
     fileList: [],
     customRequest: ({ file }) => {
+      
       let formData = new FormData();
       this.setState({ ...this.state, Loader: true });
       formData.append("file", file, file.name);
@@ -28,6 +28,7 @@ class ProfileInfo extends Component {
             ImageURL: res.data[0],
             UserId: this.props.userConfig?.userId
           };
+          
           this.saveImage(Obj, res);
         } else {
           this.setState({ ...this.state, Loader: false });
@@ -56,7 +57,7 @@ class ProfileInfo extends Component {
         message.error({
           content: isFileName
             ? `File is not allowed. You can upload jpg, png, jpeg files`
-            : "File don't allow double Extension",
+            : "File don't allow double extension",
           className: "custom-msg"
         });
         return Upload.LIST_IGNORE;
@@ -65,8 +66,10 @@ class ProfileInfo extends Component {
   };
   componentDidMount() {
     this.profileTrack();
+    this.props.getmemeberInfoa(this.props.userConfig.userId, this.props.userConfig.id);
   }
   profileTrack = () => {
+    debugger
     apiCalls.trackEvent({
       Type: "User",
       Action: "Profile page view",
@@ -76,7 +79,8 @@ class ProfileInfo extends Component {
       Remarks: "Profile Info page view",
       Duration: 1,
       Url: window.location.href,
-      FullFeatureName: "Profile Info"
+      FullFeatureName: "Profile Info",
+      
     });
   };
   saveImage = async (Obj, res) => {
@@ -173,13 +177,13 @@ class ProfileInfo extends Component {
               className="basicinfo"
             />
           </Title>
-          <Paragraph className="basic-decs">
+          {/* <Paragraph className="basic-decs">
             <Translate
               content="BasicInfotag"
               component={Text}
               className="basic-decs"
             />
-          </Paragraph>
+          </Paragraph> */}
           <ul className="user-list pl-0">
           {this.props.userConfig.isBusiness&&<li className="profileinfo">
               <div className="profile-block">
@@ -362,10 +366,14 @@ const connectStateToProps = ({ userConfig }) => {
 };
 const connectDispatchToProps = (dispatch) => {
   return {
-    getmemeberInfoa: (useremail) => {
-      dispatch(getmemeberInfo(useremail));
+    getmemeberInfoa: (useremail, id) => {
+      dispatch(getmemeberInfo(useremail, id));
+    },
+    trackauditlogs: () => {
+      dispatch(getIpRegisteryData());
     }
   };
+
 };
 export default connect(
   connectStateToProps,

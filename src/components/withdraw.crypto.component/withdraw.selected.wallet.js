@@ -161,7 +161,7 @@ class CryptoWithDrawWallet extends Component {
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
-                                <Button>Get Code</Button>
+                                <Button>Click here to get code</Button>
                             </Col>
                         </Row>
                     </Form.Item>
@@ -177,7 +177,7 @@ class CryptoWithDrawWallet extends Component {
                                 </Form.Item>
                             </Col>
                             <Col span={12}>
-                                <Button>Get Code</Button>
+                                <Button>Click here to get code</Button>
                             </Col>
                         </Row>
                     </Form.Item>
@@ -243,17 +243,17 @@ class CryptoWithDrawWallet extends Component {
                             name="toWalletAddress"
                             className="custom-forminput custom-label  mb-16"
                             required
-                            label={apicalls.convertLocalLang('address')}
+                            label={apicalls.convertLocalLang('sendTo')}
                         >
                             <div className="p-relative d-flex align-center">
                                 {/* <Input className="cust-input custom-add-select mb-0" placeholder="Enter address" value={this.state.walletAddress} */}
                                 <Input className="cust-input custom-add-select mb-0" placeholder={apicalls.convertLocalLang('enter_address')} value={this.state.walletAddress}
 
-                                    onChange={({ currentTarget: { value } }) => { this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null) }}
+                                   disabled={true} onChange={({ currentTarget: { value } }) => { this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null) }}
                                     maxLength="250" />
                                 <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" onClick={() => this.selectCrypto()}>
-                                        <span className="icon md address-book d-block c-pointer"></span>
+                                        <span className="icon md downarrow-icon d-block c-pointer"></span>
                                     </div>
                                 </Tooltip>
                             </div>

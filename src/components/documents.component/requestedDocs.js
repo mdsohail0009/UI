@@ -53,11 +53,11 @@ class RequestedDocs extends Component {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Documents request view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Documents', "Remarks": 'Documents request view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Documents' });
     }
     getDocument = async (id) => {
-        debugger
         this.setState({ ...this.state, loading: true, error: null });
         const response = await getDocDetails(id);
         if (response.ok) {
             this.setState({ ...this.state, docDetails: response.data, loading: false });
+           
             this.loadDocReplies(response.data?.details[0]?.id)
         } else {
             this.setState({ ...this.state, loading: false, error: response.data });

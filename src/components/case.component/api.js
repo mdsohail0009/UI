@@ -23,8 +23,6 @@ const sendRequest = (obj) => {
 const getDocDetails = (docId) => {
   return clientApi.get(ApiControllers.documents + `Accouts/${docId}`);
 };
-//https://routechanges.azurewebsites.net/api/v1/Documents/Accouts/{Id}--Id means DocumentId
-//https://apiuat.suissebase.ch/api/v1/Documents/Accounts/{id}/Messages
 const getDocumentReplies = (docDetailId) => {
   return clientApi.get(
     ApiControllers.documents + `Accounts/${docDetailId}/Messages`
@@ -44,13 +42,13 @@ const getDashboardNotices = (id) => {
 const getFileURL = (obj) => {
   return clientApi.post(ApiControllers.accounts + `FetchFile`, obj);
 };
+const getCase = (id) => {
+  return clientApi.get(ApiControllers.accounts + `Cases/${id}`);
+};
+const getCaseLu = (name) => {
+  return clientApi.get(ApiControllers.accounts + `AdminUsers/${name}`)
+}
 export {
-  sendRequest,
-  uuidv4,
-  getDocDetails,
-  getDocumentReplies,
-  saveDocReply,
-  approveDoc,
-  getDashboardNotices,
-  getFileURL,
+  sendRequest, uuidv4, getDocDetails, getDocumentReplies, saveDocReply, approveDoc, getDashboardNotices,
+  getFileURL, getCase, getCaseLu
 };

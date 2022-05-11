@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input, Typography, Spin } from "antd";
+import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input, Typography, Spin ,Empty} from "antd";
 import List from "../grid.component";
 import Loader from '../../Shared/loader'
 import { userNameLuSearch, getFeatureLuSearch, getAuditLogInfo } from './api';
@@ -71,6 +71,7 @@ class AuditLogs extends Component {
     this.fetchAuditLoginfo(e.dataItem.id, e);
   }
   fetchAuditLoginfo = async (id, e) => {
+    debugger
     this.setState({
       ...this.state, isLoading: false, moreAuditLogs: true, featureName: e.dataItem.feature
     })
@@ -363,7 +364,9 @@ class AuditLogs extends Component {
           className="side-drawer"
           destoryOnClose={true}
         >
-          {(isLoading && logRowData?.browser == null || logRowData?.location == null || logRowData?.ip == null || logRowData?.deviceType == null) ? <div className="text-center"><Spin /></div> : <><div className="coin-info">
+          {(isLoading && logRowData?.browser == null || logRowData?.location == null || logRowData?.ip == null || 
+            logRowData?.deviceType == null) ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />
+            : <><div className="coin-info">
             <Text>City</Text>
             <Text>{logRowData?.location?.city}</Text>
           </div>
@@ -403,6 +406,7 @@ class AuditLogs extends Component {
               <Text>Device Version</Text>
               <Text>{logRowData?.deviceType?.version}</Text>
             </div></>}
+
         </Drawer>
       </>
     );

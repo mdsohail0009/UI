@@ -8,17 +8,27 @@ import QueryString from 'query-string'
 import Settings from './settings';
 import Cases from '../case.component/cases';
 import Translate from 'react-translate-component';
+import { connect } from 'react-redux';
+import {addressTabUpdate,withdrawfiatUpdate} from '../../reducers/addressBookReducer'
+import { setHeaderTab } from "../../reducers/buysellReducer"
+
 const { TabPane } = Tabs;
 class UserProfile extends Component {
-    state = {
+    constructor(props) {
+        super(props);
+   this.state = {
         isProfile: false,
         isSecurity: false,
         isSetting: false,
         tabPosition: 'left',
-        activeTab: "1"
-
+        activeTab: this.props.match.params.key ? this.props.match.params.key : "1",
+       activeWithdrawFiat : false
     }
+}
     componentDidMount() {
+      if(this.props?.match?.path === '/userprofile'){
+       this.props.dispatch(setHeaderTab(""));
+      }
         let activeKey = QueryString.parse(this.props.history.location.search)?.key;
         if (activeKey) {
             this.setState({ ...this.state, activeTab: activeKey });
@@ -35,7 +45,13 @@ class UserProfile extends Component {
     }
 
     render() {
+  
         const { tabPosition } = this.state;
+        if (this.props.addressBookReducer.addressTab) {
+           this.setState({...this.state,activeTab:"5",activeWithdrawFiat: true});
+           this.props.dispatch(addressTabUpdate(false));
+          }
+       
         return (<>
 
             <div className="main-container hidden-mobile">
@@ -62,7 +78,7 @@ class UserProfile extends Component {
                         {this.state.activeTab == 4 && <Documents />}
                     </TabPane> */}
                     <TabPane tab={<span><span className="icon lg addressbook-icon mr-16" /><Translate content="address_book" component={Tabs.TabPane.tab} /></span>} key="5">
-                        {this.state.activeTab == 5 && <AddressBook />}
+                        {this.state.activeTab == 5 && <AddressBook activeFiat = {this.state.activeWithdrawFiat} />}
                     </TabPane>
                     <TabPane tab={<span><span className="icon lg cases-icon mr-16" />
                     <Translate content="case" className="f-16  mt-16" /></span>} key="6" >
@@ -101,4 +117,9 @@ class UserProfile extends Component {
         </>);
     }
 }
-export default UserProfile;
+const connectStateToProps = ({ addressBookReducer}) => {
+    return { addressBookReducer }
+}
+export default connect(
+    connectStateToProps,
+   )(UserProfile);

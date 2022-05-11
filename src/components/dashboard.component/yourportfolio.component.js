@@ -27,14 +27,19 @@ class YourPortfolio extends Component {
         }
     }
     showBuyDrawer = (item, key) => {
-        if (this.props?.userProfile?.isDocsRequested) {
-            this.props.history.push("/docnotices");
-            return;
-        }
         if (!this.props?.userProfile?.isKYC) {
             this.props.history.push("/notkyc");
             return;
         }
+        else if (!this.props.twoFA?.isEnabled) {
+            this.props.history.push("/enabletwofactor");
+            return;
+        }
+        else if (this.props?.userProfile?.isDocsRequested) {
+            this.props.history.push("/docnotices");
+            return;
+        }
+
         if (key === "buy") {
             this.props.dispatch(fetchSelectedCoinDetails(item.coin, this.props.userProfile?.id));
             this.props.dispatch(setCoin({ ...item, toWalletCode: item.coin, toWalletId: item.id, toWalletName: item.coinFullName }));
@@ -60,45 +65,107 @@ class YourPortfolio extends Component {
     render() {
         const { Title, Text } = Typography;
         const { cryptoPortFolios } = this.props.dashboard
+        const { totalCryptoValue, totalFiatValue } = this.props.dashboard.portFolio.data;
+
         return (
-            <div className="portfolio-list">
-                <Translate content="your_portfolio" component={Title} className="fs-24 text-white mb-0 fw-600" />
-                <List className="mobile-list"
-                    itemLayout="horizontal"
-                    dataSource={cryptoPortFolios.data}
-                    loading={cryptoPortFolios.loading}
-                    locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }}
-                    renderItem={item => (
-                        <List.Item className="" extra={
-                            <div>
-                                <Translate content="buy" component={Button} type="primary" onClick={() => this.showBuyDrawer(item, "buy")} className="custom-btn prime" />
-                                <Translate content="sell" component={Button} className="custom-btn sec ml-16" onClick={() => this.showBuyDrawer(item, "sell")} />
-                            </div>
-                        }>
-                            {/* to={"/coindetails/" + item.coinFullName.toLowerCase()} */}
-                            <List.Item.Meta
-                                avatar={<span className={`coin c-pointer ${item.coin}`} onClick={() => this.props.history.push("/coindetails/" + item.coinFullName.toLowerCase())}
-                                />}
-                                title={<div className='mr-16'>
-
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <Text className="fs-18 fw-400 text-upper text-white">{item.coin}</Text>
-                                        <Text className="fs-14 px-16 text-secondary">|</Text>
-                                        <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-14 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
-                                    </div>
-                                    <Currency defaultValue={item.coinBalance} className="text-white fs-20 text-left" type={"text"} prefix={""} />
-
-                                </div>}
-                            />
-                            {/* <div className='text-right fs-20 text-white'>
+          <div className="portfolio-list">
+           
+            <div style={{ display: "flex",alignItems:"baseline"}}>
+            <Translate
+              content="your_portfolio"
+              component={Title}
+              className="fs-24 text-white mb-0 fw-600 px-8"
+            />
+            <Currency defaultValue={totalCryptoValue} prefix={""} suffixText={"BTC"} className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
+              <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500" style={{width:"20%"}}>
+                <Translate content="cockpit" />
+                <span className="icon sm right-angle ml-4" />
+              </Link>
+            </div>
+            <List
+              className="mobile-list"
+              itemLayout="horizontal"
+              dataSource={cryptoPortFolios.data}
+              loading={cryptoPortFolios.loading}
+              locale={{
+                emptyText: (
+                  <Empty
+                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    description={apiCalls.convertLocalLang("No_data")}
+                  />
+                )
+              }}
+              renderItem={(item) => (
+                <List.Item
+                  className=""
+                  extra={
+                    <div>
+                      <Translate
+                        content="buy"
+                        component={Button}
+                        type="primary"
+                        onClick={() => this.showBuyDrawer(item, "buy")}
+                        className="custom-btn prime"
+                      />
+                      <Translate
+                        content="sell"
+                        component={Button}
+                        className="custom-btn sec ml-16"
+                        onClick={() => this.showBuyDrawer(item, "sell")}
+                      />
+                    </div>
+                  }
+                >
+                  {/* to={"/coindetails/" + item.coinFullName.toLowerCase()} */}
+                  <List.Item.Meta
+                    avatar={
+                      <span
+                        className={`coin c-pointer ${item.coin}`}
+                        onClick={() =>
+                          this.props.history.push(
+                            "/coindetails/" + item.coinFullName.toLowerCase()
+                          )
+                        }
+                      />
+                    }
+                    title={
+                      <div className="mr-16">
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <Text className="fs-18 fw-400 text-upper text-white">
+                            {item.coin}
+                          </Text>
+                          <Text className="fs-14 px-16 text-secondary">|</Text>
+                          <Currency
+                            defaultValue={item.coinValueinNativeCurrency}
+                            type={"text"}
+                            className={`fs-14 ${
+                              item.coinValueinNativeCurrency > 0
+                                ? "text-green"
+                                : "text-red"
+                            }`}
+                          />
+                        </div>
+                        <Currency
+                          defaultValue={item.coinBalance}
+                          className="text-white fs-20 text-left"
+                          type={"text"}
+                          prefix={""}
+                        />
+                      </div>
+                    }
+                  />
+                  {/* <div className='text-right fs-20 text-white'>
                                 <Currency defaultValue={item.coinBalance} type={"text"} prefix={""} />
                                 <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
                             </div> */}
-                        </List.Item>
-                    )}
-                />
-                <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
-            </div>
+                </List.Item>
+              )}
+            />
+            <BuySell
+              showDrawer={this.state.buyDrawer}
+              onClose={() => this.closeDrawer()}
+            />
+          </div>
         );
     }
 }

@@ -10,6 +10,8 @@ const CLEAR_VALUES = 'clearValues';
 const FETCH_USERSID_UPDATE = 'fetchUsersIdUpdate';
 const FETCH_ADDRESS_CRYPTO = 'fetchAddressCrypto';
 const CLEAR_CRYPTO_VALUES = 'clearCryptoValues';
+const ADDRESS_TAB_UPDATE = "addressTabUpdate";
+const WITHDRAW_FIAT_UPDATE = "withdrawfiatUpdate";
 
 const handleFetch = (payload) => {
     return { type: HANDLE_FETCH, payload }
@@ -74,6 +76,20 @@ const fetchAddressCrypto = (payload) => {
         payload
     }
 }
+const addressTabUpdate = (payload) => {
+  
+    return {
+        type: ADDRESS_TAB_UPDATE,
+        payload
+    }
+}
+const withdrawfiatUpdate = (payload) => {
+  
+    return {
+        type: WITHDRAW_FIAT_UPDATE,
+        payload
+    }
+}
 const handleFavouritAddress = () => {
     return async (dispatch) => {
         dispatch(fetchAddress({ key: "favouriteAddress", loading: true, data: [] }));
@@ -109,6 +125,8 @@ const fetchGetAddress = (member_id, type) => {
 }
 
 let initialState = {
+    addressTab:false,
+    withdrawTab:false,
     selectedCoin: {},
     favouriteAddress: [],
     coinWallet: null,
@@ -154,10 +172,14 @@ const AddressBookReducer = (state = initialState, action) => {
             return { ...state, cryptoValues: null };
         case CLEAR_VALUES:
             return { ...state, selectedRowData: null };
+            case ADDRESS_TAB_UPDATE:
+                return { ...state, addressTab: action.payload  }
+                case WITHDRAW_FIAT_UPDATE:
+                    return { ...state, withdrawTab: action.payload  }
         default:
             return state;
     }
 
 }
 export default AddressBookReducer;
-export { setAddressStep, clearStep, setAddressCoin, handleFavouritAddress, fetchSelectedCoinDetails, setExchangeValue, rejectCoin, fetchUsersIdUpdate, fetchGetAddress, clearValues, fetchAddressCrypto, clearCryptoValues }
+export { setAddressStep, clearStep, setAddressCoin, handleFavouritAddress, fetchSelectedCoinDetails, setExchangeValue, rejectCoin, fetchUsersIdUpdate, fetchGetAddress, clearValues, fetchAddressCrypto, clearCryptoValues,addressTabUpdate,withdrawfiatUpdate }

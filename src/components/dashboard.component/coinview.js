@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Typography, Row, Col, Spin, Radio, Button,Image } from "antd";
+import { Typography, Row, Col, Spin, Radio, Button, Image } from "antd";
 import { Link, withRouter } from "react-router-dom";
 import { getcoinDetails, getCoinChatData } from './api'
 import LineChart from './line.graph.component';
@@ -17,36 +17,56 @@ import NumberFormat from "react-number-format";
 import { coinSubject } from '../../utils/pubsub'
 class CoinView extends React.Component {
     refreshSubscribe;
-    state = {
-        coinData: null,
-        chatData: null,
-        type: 'prices',
-        buyDrawer: false,
-        sendDrawer: false,
-    }
+   state = {
+    coinData: null,
+    chatData: null,
+    type: 'prices',
+    buyDrawer: false,
+    sendDrawer: false,
+    coin:""
+}
+   
+   
 
     componentDidMount() {
         window.scrollTo(0, 0)
-        this.loadCoinDetailData();
+        this.listner = this.props.history.listen(() => {
+            debugger
+            this.loadCoinDetailData();
+            this.coinViewTrack();
+        });
         this.coinViewTrack();
         this.refreshSubscribe = coinSubject.subscribe((val) => {
             this.loadCoinDetailData();
         });
+        this.coinChartData(1);
+        this.loadCoinDetailData();
+    } 
+    componentWillUnmount() {
+        this.refreshSubscribe.unsubscribe();
+        this.listner();
     }
     coinViewTrack = () => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Coin page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Coin page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
     }
     loadCoinDetailData = async () => {
         this.props.dispatch(fetchMarketCoinData(false))
-        const response = await getcoinDetails(this.props.userProfile.id, this.props.match.params.coinName);
+        const response = await getcoinDetails(this.props.match.params?.coinName,this.props.userProfile?.id);
         if (response.ok) {
-            this.setState({ ...this.state, coinData: response.data }, () => {
+            console.log(response.data)
+            this.setState({ ...this.state, coinData: response.data },
+                 () => {
                 this.coinChartData(1);
-            })
+            }
+            )
         }
 
     }
+    checkAlerts = (isDocRequested, isNotKyc, isTwoFactorNotVerified) => {
+        const _result = false;
 
+
+    }
     coinChartData = async (days) => {
         if (this.state.coinData) {
             const response = await getCoinChatData(this.state.coinData.id, 'usd', days);
@@ -62,14 +82,20 @@ class CoinView extends React.Component {
         selectedObj.coinFullName = selectedObj.name
         selectedObj.oneCoinValue = selectedObj.current_price;
         selectedObj.id = selectedObj.memberWalletId;
-        if (this.props?.userProfile?.isDocsRequested) {
-            this.props.history.push("/docnotices");
-            return;
-        }
         if (!this.props?.userProfile?.isKYC) {
             this.props.history.push("/notkyc");
             return;
         }
+        if(!this.props?.twoFA?.isEnabled){
+            this.props.history.push("/enabletwofactor");
+            return;
+        }
+
+        if (this.props?.userProfile?.isDocsRequested) {
+            this.props.history.push("/docnotices");
+            return;
+        }
+       
         if (key === "buy") {
             this.props.dispatch(fetchSelectedCoinDetails(selectedObj.coin, this.props.userProfile?.id));
             this.props.dispatch(setCoin({ ...selectedObj, toWalletCode: selectedObj.coin, toWalletId: selectedObj.id, toWalletName: selectedObj.coinFullName }));
@@ -100,6 +126,14 @@ class CoinView extends React.Component {
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
         this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
         let coin = value.symbol.toUpperCase();
+        if (!this.props?.userProfile?.isKYC) {
+            this.props.history.push("/notkyc");
+            return;
+        }
+        if(!this.props?.twoFA?.isEnabled){
+            this.props.history.push("/enabletwofactor");
+            return;
+        }
         if (this.props?.userProfile?.isDocsRequested) {
             this.props.history.push("/docnotices");
             return;
@@ -147,9 +181,7 @@ class CoinView extends React.Component {
             sendDrawer: false
         })
     }
-    componentWillUnmount() {
-        this.refreshSubscribe.unsubscribe();
-    }
+   
     render() {
         const { Paragraph, Text, Title } = Typography
         const { coinData } = this.state;
@@ -162,7 +194,7 @@ class CoinView extends React.Component {
                 <Col lg={14} xl={14} xxl={14}>
                     <div className="box p-24 coin-bal">
                         {this.state.coinData ? <><div className="d-flex align-center">
-                            <Image preview={false} src={coinData.imagePath}/>
+                            <Image preview={false} src={coinData.imagePath} />
                             <div className="summary-count ml-16">
                                 <Paragraph className="text-white-30 fs-30 mb-0 fw-500">
                                     <NumberFormat value={coinData?.avilableBalance} displayType="text" thousandSeparator={true} prefix="" />
@@ -284,7 +316,7 @@ class CoinView extends React.Component {
 }
 
 const connectStateToProps = ({ sendReceive, userConfig, dashboard }) => {
-    return { sendReceive, userProfile: userConfig.userProfileInfo, dashboard }
+    return { sendReceive, userProfile: userConfig.userProfileInfo, dashboard,twoFA:userConfig.twoFA }
 }
 const connectDispatchToProps = dispatch => {
     return {
