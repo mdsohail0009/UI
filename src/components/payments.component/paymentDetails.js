@@ -600,10 +600,10 @@ filePreviewPath() {
                                     </div>
                                   </td>
                                   <td>
-                                  {/* <Tooltip title={item.accountnumber}> */}
+                                  <Tooltip title={item.accountnumber}>
                                     <span className=''>{item.accountnumber}</span>
                                     
-                                    {/* </Tooltip> */}
+                                    </Tooltip>
                                     </td>
                                   {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000" 
                 
