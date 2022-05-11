@@ -229,11 +229,12 @@ const NewAddressBook = ({
 				onCancel();
 				setIsLoading(false);
 			} else {
-				message.error({
-					content: response.data,
-					className: "custom-msg",
-					duration: 0.5,
-				});
+				// message.error({
+				// 	content: response.data,
+				// 	className: "custom-msg",
+				// 	duration: 0.5,
+				// });
+				setErrorMsg(response.data)
 				setBtnDisabled(false);
 				setIsLoading(false);
 			}
