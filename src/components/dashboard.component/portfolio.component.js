@@ -51,8 +51,6 @@ class Portfolio extends Component {
         const { gridUrl, loading } = this.state;
         return (
             <div className="mb-24">
-
-                <div>
                     <Translate content="menu_transactions_history" className="basicinfo" />
                     <div className="mt-16">
 
@@ -76,30 +74,48 @@ class Portfolio extends Component {
                                         </tr>{" "}
                                     </tbody>
                                 ) : (
+                                    <>
+                                   {this.state.transactionData.length > 0 ?
                                     <tbody>
                                         {this.state.transactionData?.map((item, idx) => {
                                             return (
                                                 <>
-                                                    {this.state.transactionData.length > 0 ? <> <tr key={idx}>
+                                                    {this.state.transactionData.length > 0 ? 
+                                                    <>
+                                                     <tr key={idx}>
                                                         <td>{item?.date}</td>
-
                                                         <td style={{ width: "100px" }}>{item.type}</td>
                                                         <td>{item.wallet}</td>
                                                         <td><NumberFormat style={{ color: "white" }} value={item.value} decimalSeparator="." displayType={'text'} thousandSeparator={true} /></td>
                                                         <td>{item.state} </td>
                                                     </tr>
                                                     </>
-                                                        : "No transaction details available."}</>
+                                                        : <tr>
+                                                            <td>No transaction details available.</td>
+                                                        </tr>
+                                                        }
+                                                        </>
                                             )
                                         })}
 
                                         {loading && <tr>
                                             <td colSpan='5' className='text-center p-16'><Spin size='default' /></td></tr>}
-                                    </tbody>)}
+                                    </tbody>:<tbody>
+                          <tr>
+                            <td
+                              colSpan="8"
+                              className="p-16 text-center"
+                              style={{ color: "white", width: 300 }}
+                            >
+                             No transaction details available
+                            </td>
+                          </tr>{" "}
+                        </tbody>}
+                                    </>
+                                    )}
                             </table>
                         </div>
                     </div>
-                </div>
             </div>
         );
     }

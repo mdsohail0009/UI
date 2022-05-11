@@ -994,7 +994,7 @@ const NewFiatAddress = (props) => {
 									/>
 								</Form.Item>
 							</Col>
-							<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+							{selectParty &&<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 								<Form.Item
 									className="custom-label"
 									name="remarks"
@@ -1014,7 +1014,7 @@ const NewFiatAddress = (props) => {
 										autoSize={{ minRows: 3, maxRows: 3 }}
 										maxLength={300}></TextArea>
 								</Form.Item>
-							</Col>
+							</Col>}
 						</Row>
 
 						<Row gutter={[12, 12]}>

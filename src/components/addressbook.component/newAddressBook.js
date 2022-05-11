@@ -483,7 +483,7 @@ console.log(e)
 							</Select>
 						</Form.Item>
 
-						<Form.Item
+						{/* <Form.Item
 							className="custom-label"
 							name="remarks"
 							label={<Translate content="remarks" component={Form.label} />}
@@ -508,7 +508,7 @@ console.log(e)
 							We require you to download and complete the declaration form as
 							part of the regulation. Please remember to sign and upload it
 							below..
-						</Text>
+						</Text> */}
 						{/* <Tooltip title="Click here to open file in a new tab to download">
 							<Text
 								className="file-label c-pointer"

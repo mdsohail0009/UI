@@ -178,7 +178,7 @@ const AddressFiatView = (props) => {
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">
-														Bank Address Line 1
+														Bank Address 
 													</label>
 													<div className="kpi-val">
 														{fiatAddress?.bankAddress}
@@ -233,7 +233,7 @@ const AddressFiatView = (props) => {
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">
-														Recipient Address Line 1
+														Recipient Address 
 													</label>
 													<div className=" kpi-val">
 														<div className="kpi-val">
