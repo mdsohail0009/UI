@@ -90,11 +90,12 @@ const NewFiatAddress = (props) => {
 	const [previewModal, setPreviewModal] = useState(false);
 
 	useEffect(() => {
-		debugger;
 		if (selectParty === true) {
 			form.setFieldsValue({ addressType: "3rdparty" });
 		} else {
-			form.setFieldsValue({ addressType: "1stparty" });
+			form.setFieldsValue({ addressType: "1stparty",beneficiaryAccountName:(props?.userConfig.isBusiness)
+			? (props?.userConfig.businessName)
+			: (props?.userConfig?.firstName + " " + props?.userConfig?.lastName) });
 		}
 		if (
 			props?.addressBookReducer?.selectedRowData?.id !=
@@ -170,13 +171,11 @@ const NewFiatAddress = (props) => {
 			form.setFieldsValue({
 				...objj,
 				walletCode: objj.walletCode,
-				beneficiaryAccountName:
-					props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
+				beneficiaryAccountName:null
 			});
 		} else {
 			form.setFieldsValue({
-				beneficiaryAccountName:
-					props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
+				beneficiaryAccountName:null
 			});
 		}
 		let recName = await getCountryStateLu();
@@ -202,9 +201,9 @@ const NewFiatAddress = (props) => {
 		values["membershipId"] = props?.userConfig?.id;
 
 		if (!selectParty) {
-			values["beneficiaryAccountName"] = props?.userConfig.isBusiness
-				? props?.userConfig.businessName
-				: props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
+			values["beneficiaryAccountName"] = (props?.userConfig.isBusiness)
+				? (props?.userConfig.businessName)
+				: (props?.userConfig?.firstName + " " + props?.userConfig?.lastName);
 		}
 		values["type"] = type;
 		values["info"] = JSON.stringify(props?.trackAuditLogData);
@@ -430,11 +429,15 @@ const NewFiatAddress = (props) => {
 			form.setFieldsValue({
 				addressType: "1stparty",
 				beneficiaryAccountName:
-					props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
+				(	(props?.userConfig.isBusiness)
+						? (props?.userConfig.businessName)
+						: (props?.userConfig?.firstName +
+							" " +
+							props?.userConfig?.lastName))
 			});
 			setSelectParty(false);
 		} else {
-			form.setFieldsValue({ addressType: "3rdparty" });
+			form.setFieldsValue({ addressType: "3rdparty",beneficiaryAccountName:null });
 			setSelectParty(true);
 		}
 	};
@@ -949,11 +952,11 @@ const NewFiatAddress = (props) => {
 										<Input
 											className="cust-input"
 											value={
-												props?.userConfig.isBusiness
-													? props?.userConfig.businessName
-													: props?.userConfig?.firstName +
+												(props?.userConfig.isBusiness)
+													? (props?.userConfig.businessName)
+													: (props?.userConfig?.firstName +
 													  " " +
-													  props?.userConfig?.lastName
+													  props?.userConfig?.lastName)
 											}
 											placeholder="Recipient full name"
 											disabled={true}
