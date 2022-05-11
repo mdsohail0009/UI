@@ -125,12 +125,12 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>
-											{/* {/* <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-              <div>
-                <label className="kpi-label">Address</label>
-                <div className="kpi-val">{fiatAddress?.toWalletAddress}</div>
-              </div>
-            </Col> */}
+											 <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+													<div>
+														<label className="kpi-label">Address</label>
+														<div className="kpi-val">{fiatAddress?.toWalletAddress}</div>
+													</div>
+												</Col> 
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Address Type</label>
@@ -220,8 +220,10 @@ const AddressFiatView = (props) => {
 										<Row className="kpi-List">
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">
-														Recipient Full Name
+												<label className="kpi-label" >
+												{(props?.userConfig?.isBusiness && "Business Name") ||
+												(!props?.userConfig?.isBusiness &&
+													"Recipient Full Name")}
 													</label>
 													<div className="kpi-val">
 														{fiatAddress?.beneficiaryAccountName}
