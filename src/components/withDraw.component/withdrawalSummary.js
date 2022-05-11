@@ -709,7 +709,7 @@ const WithdrawalFiatSummary = ({
               }}
               style={{ width: "100%" }}
               disabled={emailDisable}
-              onClick={(event)=>handleSendOtp(event.currentTarget.value)}
+              // onClick={(event)=>handleSendOtp(event.currentTarget.value)}
               onChange={(e) => handleEmailChange(e, "Emailcode")}
             />
           </Form.Item>
