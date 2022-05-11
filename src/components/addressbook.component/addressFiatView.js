@@ -250,12 +250,12 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+											{fiatAddress?.addressType=="3rdparty"&&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Remarks</label>
 													<div className="kpi-val">{fiatAddress?.remarks}</div>
 												</div>
-											</Col>
+											</Col>}
 										</Row>
 										<Row>
 											{fiatAddress?.documents?.details.map((file) => (
