@@ -317,6 +317,7 @@ const WithdrawalFiatSummary = ({
       setEmail(true)
       setVerifyEmailOtp(true)
       setEmailText(null)
+      setVerifyEmailText(null);
       //useOtpRef.current.scrollIntoView(0,0);
       //success("Email  verified successfully");
     } else if (response.data == null) {
@@ -694,22 +695,22 @@ const WithdrawalFiatSummary = ({
               className="cust-input text-left"
               placeholder={"Enter code"}
               maxLength={6}
-              onKeyDown={(event) => {
-                if (
-                  event.currentTarget.value.length >= 6 &&
-                  !(event.key == "Backspace" || event.key == "Delete")
-                ) {
-                  event.preventDefault();
-                } else if (/^\d+$/.test(event.key)) {
-                  handleSendOtp(event.currentTarget.value);
-                } else if (event.key == "Backspace" || event.key == "Delete") {
-                } else {
-                  event.preventDefault();
-                }
-              }}
+              // onKeyDown={(event) => {
+              //   if (
+              //     event.currentTarget.value.length >= 6 &&
+              //     !(event.key == "Backspace" || event.key == "Delete")
+              //   ) {
+              //     event.preventDefault();
+              //   } else if (/^\d+$/.test(event.key)) {
+              //     handleSendOtp(event.currentTarget.value);
+              //   } else if (event.key == "Backspace" || event.key == "Delete") {
+              //   } else {
+              //     event.preventDefault();
+              //   }
+              // }}
               style={{ width: "100%" }}
               disabled={emailDisable}
-              // onClick={(event)=>handleSendOtp(event.currentTarget.value)}
+               onClick={(event)=>handleSendOtp(event.currentTarget.value)}
               onChange={(e) => handleEmailChange(e, "Emailcode")}
             />
           </Form.Item>

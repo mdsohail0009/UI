@@ -58,7 +58,7 @@ class WithdrawSummary extends Component {
     minutes: 2,
      //seconds: 0,
      seconds:30,
-     seconds2:120,
+     seconds2:30,
     inValidData: false,
     authenticator: "",
     EmailCode: "",
@@ -751,24 +751,25 @@ class WithdrawSummary extends Component {
                   className="cust-input text-left"
                   placeholder={"Enter code"}
                   maxLength={6}
-                  onKeyDown={(event) => {
-                    if (
-                      event.currentTarget.value.length > 5 &&
-                      !(event.key == "Backspace" || event.key == "Delete")
-                    ) {
-                      event.preventDefault();
-                    } else if (/^\d+$/.test(event.key)) {
-                      this.handleSendOtp(event.currentTarget.value);
-                    } else if (
-                      event.key == "Backspace" ||
-                      event.key == "Delete"
-                    ) {
-                    } else {
-                      event.preventDefault();
-                    }
-                  }}
+                  // onKeyDown={(event) => {
+                  //   if (
+                  //     event.currentTarget.value.length > 5 &&
+                  //     !(event.key == "Backspace" || event.key == "Delete")
+                  //   ) {
+                  //     event.preventDefault();
+                  //   } else if (/^\d+$/.test(event.key)) {
+                  //     this.handleSendOtp(event.currentTarget.value);
+                  //   } else if (
+                  //     event.key == "Backspace" ||
+                  //     event.key == "Delete"
+                  //   ) {
+                  //   } else {
+                  //     event.preventDefault();
+                  //   }
+                  // }}
                   style={{ width: "100%" }}
                   //disabled={this.state.emailDisable}
+                  onClick={(event)=>this.handleSendOtp(event.currentTarget.value)}
                   onChange={(e) => this.handleEmailChange(e, "emailCodeVal")}
                   disabled={this.state.inputEmailDisable}
                 />
