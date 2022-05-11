@@ -673,7 +673,7 @@ const WithdrawalFiatSummary = ({
                 {tooltipEmail == true && (
                   <Tooltip
                     placement="topRight"
-                    title={`Haven\'t received code? Request new code in ${seconds}. The code will expire after 30mins.`}
+                    title={`Haven\'t received code? Request new code in ${seconds2}. The code will expire after 30mins.`}
                   >
                     <span className="icon md info mr-8" />
                   </Tooltip>
