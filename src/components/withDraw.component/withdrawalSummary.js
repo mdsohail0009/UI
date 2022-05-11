@@ -304,6 +304,7 @@ const WithdrawalFiatSummary = ({
       //timer();
     } else {
       setMsg(apiCalls.convertLocalLang("request_fail"));
+      useOtpRef.current.scrollIntoView(0,0);
     }
   };
   const getEmailVerification = async (values) => {
@@ -336,7 +337,7 @@ const WithdrawalFiatSummary = ({
   };
 
   const handleSendOtp = (val) => {
-    ;
+    debugger
     setEmailOtp(val.emailCode);
     setVerifyEmailText("verifyTextBtn");
     setTooltipEmail(false);
@@ -369,6 +370,7 @@ const WithdrawalFiatSummary = ({
       }, 30000);
     } else {
       setMsg(apiCalls.convertLocalLang("request_fail"));
+      useOtpRef.current.scrollIntoView(0,0);
     }
   };
 
@@ -694,7 +696,7 @@ const WithdrawalFiatSummary = ({
               maxLength={6}
               onKeyDown={(event) => {
                 if (
-                  event.currentTarget.value.length > 5 &&
+                  event.currentTarget.value.length >= 6 &&
                   !(event.key == "Backspace" || event.key == "Delete")
                 ) {
                   event.preventDefault();
@@ -707,6 +709,7 @@ const WithdrawalFiatSummary = ({
               }}
               style={{ width: "100%" }}
               disabled={emailDisable}
+              onClick={(event)=>handleSendOtp(event.currentTarget.value)}
               onChange={(e) => handleEmailChange(e, "Emailcode")}
             />
           </Form.Item>
