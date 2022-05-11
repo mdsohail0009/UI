@@ -45,6 +45,39 @@ class Portfolio extends Component {
             this.getTransactionData()
         })
     }
+    getNumberVal(item){
+        if (item.value.indexOf("/") > -1) {
+          let list = item.value.split("/");
+          return (
+            <>
+              <NumberFormat
+                style={{ color: "white" }}
+                value={list[0]}
+                decimalSeparator="."
+                displayType={"text"}
+                thousandSeparator={true}
+              />/
+              <NumberFormat
+                style={{ color: "white" }}
+                value={list[1]}
+                decimalSeparator="."
+                displayType={"text"}
+                thousandSeparator={true}
+              />
+            </>
+          );
+        } else {
+          return (
+            <NumberFormat
+              style={{ color: "white" }}
+              value={item.value}
+              decimalSeparator="."
+              displayType={"text"}
+              thousandSeparator={true}
+            />
+          );
+        }
+    }
     render() {
         const { Title } = Typography;
 
@@ -86,7 +119,7 @@ class Portfolio extends Component {
                                                         <td>{item?.date}</td>
                                                         <td style={{ width: "100px" }}>{item.type}</td>
                                                         <td>{item.wallet}</td>
-                                                        <td><NumberFormat style={{ color: "white" }} value={item.value} decimalSeparator="." displayType={'text'} thousandSeparator={true} /></td>
+                                                        <td>{this.getNumberVal(item)}</td>
                                                         <td>{item.state} </td>
                                                     </tr>
                                                     </>
