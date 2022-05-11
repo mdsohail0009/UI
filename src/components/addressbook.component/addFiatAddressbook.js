@@ -93,9 +93,7 @@ const NewFiatAddress = (props) => {
 		if (selectParty === true) {
 			form.setFieldsValue({ addressType: "3rdparty" });
 		} else {
-			form.setFieldsValue({ addressType: "1stparty",beneficiaryAccountName:(props?.userConfig.isBusiness)
-			? (props?.userConfig.businessName)
-			: (props?.userConfig?.firstName + " " + props?.userConfig?.lastName) });
+			form.setFieldsValue({ addressType: "1stparty",beneficiaryAccountName:getName() });
 		}
 		if (
 			props?.addressBookReducer?.selectedRowData?.id !=
@@ -109,6 +107,11 @@ const NewFiatAddress = (props) => {
 		getCountryLu();
 		getStateLu();
 	}, []);
+	const getName = () =>{
+		return ((props?.userConfig.isBusiness)
+		? (props?.userConfig.businessName)
+		: (props?.userConfig?.firstName + " " + props?.userConfig?.lastName))
+	}
 	const addressbkTrack = () => {
 		apiCalls.trackEvent({
 			Type: "User",
@@ -171,11 +174,11 @@ const NewFiatAddress = (props) => {
 			form.setFieldsValue({
 				...objj,
 				walletCode: objj.walletCode,
-				beneficiaryAccountName:null
+				beneficiaryAccountName:selectParty?null:getName()
 			});
 		} else {
 			form.setFieldsValue({
-				beneficiaryAccountName:null
+				beneficiaryAccountName:selectParty?null:getName()
 			});
 		}
 		let recName = await getCountryStateLu();
@@ -591,7 +594,7 @@ const NewFiatAddress = (props) => {
 							label={
 								<div>
 									Address Type{" "}
-									<Tooltip title="1st party : Funds will be deposited to your own bank account.3rd party : Funds will be deposited to other beneficiary bank account.">
+									<Tooltip title="1st party : Funds will be deposited to your own bank account. 3rd party : Funds will be deposited to other beneficiary bank account.">
 										<div className="icon md info c-pointer"></div>
 									</Tooltip>
 								</div>
@@ -947,16 +950,12 @@ const NewFiatAddress = (props) => {
 												(!props?.userConfig?.isBusiness &&
 													apiCalls.convertLocalLang("Recipient_full_name"))
 											}
+											value='naresh'
 										/>
 									) : (
 										<Input
 											className="cust-input"
-											value={
-												(props?.userConfig.isBusiness)
-													? (props?.userConfig.businessName)
-													: (props?.userConfig?.firstName +
-													  " " +
-													  props?.userConfig?.lastName)
+											value={'naresh'
 											}
 											placeholder="Recipient full name"
 											disabled={true}
