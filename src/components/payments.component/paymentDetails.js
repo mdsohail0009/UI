@@ -473,7 +473,7 @@ filePreviewPath() {
                         "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
                        && (<th style={{ width: 50 }}></th>)} */}
                       <th>Name</th>
-                      <th>Bank name</th>
+                      <th style={{width:"350px"}}>Bank name</th>
                       <th>Bank Account Number/IBAN</th>
                       {(this.props.match.params.id !==
                         "00000000-0000-0000-0000-000000000000" 
@@ -564,7 +564,7 @@ filePreviewPath() {
                                       <span>{" - - "}</span>
                                     )}
                                   </td>
-                                  <td>
+                                  <td style={{width:"350px"}}>
                                     <div className="d-flex align-center justify-content">
                                       <span>
                                         <Tooltip title= {item.bankname}>
@@ -600,10 +600,11 @@ filePreviewPath() {
                                     </div>
                                   </td>
                                   <td>
-                                  <Tooltip title={item.accountnumber}>
-                                    <span className='pay-account'>{item.accountnumber}</span>
+                                  {/* <Tooltip title={item.accountnumber}> */}
+                                    <span className=''>{item.accountnumber}</span>
                                     
-                                    </Tooltip></td>
+                                    {/* </Tooltip> */}
+                                    </td>
                                   {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000" 
                 
                                          ) && (
