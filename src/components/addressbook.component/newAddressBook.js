@@ -113,6 +113,17 @@ const NewAddressBook = ({
 		form.setFieldsValue(addressBookReducer?.cryptoValues);
 	}, []);
 
+	useEffect(() => {
+		let address = form.getFieldValue("toWalletAddress");
+		let coinType = form.getFieldValue("toCoin");
+		if (form.getFieldValue("toWalletAddress")) {
+			// const validAddress = WAValidator.validate(address, coinType, "both");
+			form
+				.validateFields(["toWalletAddress"])
+				.then((values) => console.log(values));
+		}
+	}, []);
+
 	const selectCrypto = () => {
 		let getvalues = form.getFieldsValue();
 		getvalues.uploadedFile = file;
