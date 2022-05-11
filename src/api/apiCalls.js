@@ -52,7 +52,7 @@ const trackEvent = (obj) => {
 };
 
 const getIpRegistery = () => {
-	return ipRegistry.get("/?key=l4rtc0buncs5dej9");
+	return ipRegistry.get("/?key=hb9lsmlhafyn1s1s");
 };
 const sellMemberCrypto = (memID) => {
 	return apiClient.get(ApiControllers.wallets + memID);

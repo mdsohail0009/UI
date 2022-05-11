@@ -33,7 +33,7 @@ class Home extends Component {
         const { data: notices } = this.props.dashboard?.notices;
         return (
             <div className="main-container">
-                 {!this.props?.twoFA?.isEnabled && !this.props?.twoFA?.loading && <div>
+                 {this.props?.twoFA &&((!this.props?.twoFA?.isEnabled) && (!this.props?.twoFA?.loading)) && <div>
                         <AlertConfirmation type="error" title={"2FA"} showIcon description="Please enable two-factor authentication (2FA) by clicking on user profile in the top right hand corner and navigating to “Manage Your Account” > “Security” or by clicking on Enable 2FA."
                             action={
                                 <Button size="small" type="text" onClick={() => this.props.history.push(`/userprofile?key=2`)}>
