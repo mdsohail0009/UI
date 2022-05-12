@@ -89,7 +89,14 @@ const WithdrawalFiatSummary = ({
         }`}
         content="sent_verification"
       />
+    ),
+    verified:(
+      <Translate
+      className="pl-0 ml-0 text-yellow-50"
+      content="empty"
+    />
     )
+
   };
   const verifyOtp = {
     verifyOtpBtn: (
@@ -372,7 +379,7 @@ const WithdrawalFiatSummary = ({
   };
 
   const getOtpVerification = async () => {
-    ;
+    debugger
     setValidData(true);
     let response = await apiCalls.getVerification(userConfig.id, otpCode);
     if (response.ok) {
@@ -381,7 +388,8 @@ const WithdrawalFiatSummary = ({
       setVerifyTextOtp(true)
       setVerifyOtpText(null)
       setInputDisable(true)
-      //  {verifyTextotp == true ? setButtonText(null):setButtonText("resendotp")}
+     
+      //{verifyTextotp == false ? setButtonText(null):setButtonText("resendotp")}
 
       //success("OTP verified successfully");
     } else if (response.data == null) {

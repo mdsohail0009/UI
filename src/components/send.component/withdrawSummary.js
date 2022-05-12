@@ -218,7 +218,7 @@ class WithdrawSummary extends Component {
         verificationText:
           apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber
       });
-      this.startTimer();
+      //this.startTimer();
 
       setTimeout(() => {
         this.setState({
@@ -251,7 +251,7 @@ class WithdrawSummary extends Component {
         emailVerificationText:
           apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
       });
-      this.startTimer2();
+      //this.startTimer2();
       setTimeout(() => {
         this.setState({
           emailText: "resendEmail",
