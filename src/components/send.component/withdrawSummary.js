@@ -81,63 +81,63 @@ class WithdrawSummary extends Component {
     this.handleNewExchangeRate();
     this.getVerifyData();
 
-    // this.myInterval = setInterval(() => {
-    //   const { seconds, minutes } = this.state;
+    this.myInterval = setInterval(() => {
+      const { seconds, minutes } = this.state;
 
-    //   if (seconds > 0) {
-    //     this.setState(({ seconds }) => ({
-    //       seconds: seconds - 1
-    //     }));
-    //   }
-    //   if (seconds === 0) {
-    //     if (minutes === 0) {
-    //       clearInterval(this.myInterval);
-    //     } else {
-    //       this.setState(({ minutes }) => ({
-    //         minutes: minutes - 1,
-    //         seconds: 30
-    //       }));
-    //     }
-    //   }
-    // }, 1000);
+      if (seconds > 0) {
+        this.setState(({ seconds }) => ({
+          seconds: seconds - 1
+        }));
+      }
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(this.myInterval);
+        } else {
+          this.setState(({ minutes }) => ({
+            minutes: minutes - 1,
+            seconds: 30
+          }));
+        }
+      }
+    }, 1000);
   }
 
-  // componentWillUnmount() {
-  //   clearInterval(this.myInterval);
-  // }
+  componentWillUnmount() {
+    clearInterval(this.myInterval);
+  }
 
-  startTimer = () => {
-    let timeInterval;
-    let count = 30;
-    let timer = count-1;
-    let seconds;
-    timeInterval = (setInterval=()=>{
-      debugger
-     seconds = parseInt(timer % 30);
-       this.setState({...this.state,seconds:seconds})
-      if (--timer < 0) {
-        timer = count;
-        clearInterval(timeInterval);
-        this.setState({...this.state,disable:false,type:"Resend"})
-      }
-    }, 1000);
-  };
-   startTimer2 = () => {
-    debugger;
-    let timeInterval2;
-    let count2 = 30;
-    let timer2 = count2 - 1;
-    let seconds2;
-    timeInterval2 = setInterval(function () {
-      seconds2 = parseInt(timer2 % 30);
-       this.setState({...this.state,seconds2:seconds2})
-      if (--timer2 < 0) {
-        timer2 = count2;
-        clearInterval(timeInterval2);
-        this.setState({...this.state,disable:false,type:"Resend"})
-      }
-    }, 1000);
-  };
+  // startTimer = () => {
+  //   let timeInterval;
+  //   let count = 30;
+  //   let timer = count-1;
+  //   let seconds;
+  //   timeInterval = setInterval(function() {
+  //     debugger
+  //    seconds = parseInt(timer % 30);
+  //      this.setState({...this.state,seconds:seconds})
+  //     if (--timer < 0) {
+  //       timer = count;
+  //       clearInterval(timeInterval);
+  //       this.setState({...this.state,disable:false,type:"Resend"})
+  //     }
+  //   }, 1000);
+  // };
+  //  startTimer2 = () => {
+  //   debugger;
+  //   let timeInterval2;
+  //   let count2 = 30;
+  //   let timer2 = count2 - 1;
+  //   let seconds2;
+  //   timeInterval2 = setInterval(function () {
+  //     seconds2 = parseInt(timer2 % 30);
+  //      this.setState({...this.state,seconds2:seconds2})
+  //     if (--timer2 < 0) {
+  //       timer2 = count2;
+  //       clearInterval(timeInterval2);
+  //       this.setState({...this.state,disable:false,type:"Resend"})
+  //     }
+  //   }, 1000);
+  // };
 
   
  
@@ -516,11 +516,11 @@ class WithdrawSummary extends Component {
       )
     };
 
-    // const tooltipTimer = seconds < 10 ? `0${seconds}` : seconds;
-    // const tooltipValue =
-    //   "Haven't received code ? Request new code in " +
-    //   tooltipTimer +
-    //   " seconds. The code will expire after 30mins.";
+    const tooltipTimer = seconds < 10 ? `0${seconds}` : seconds;
+    const tooltipValue =
+      "Haven't received code ? Request new code in " +
+      tooltipTimer +
+      " seconds. The code will expire after 30mins.";
 
       
 
@@ -666,7 +666,7 @@ class WithdrawSummary extends Component {
                     </Button>
                     {this.state.tooltipVisible == true && (
                       <Tooltip placement="topRight"
-                      title={`Haven\'t received code? Request new code in ${seconds}. The code will expire after 30mins.`}>
+                      title={`Haven\'t received code? Request new code in ${tooltipValue}. The code will expire after 30mins.`}>
                       <span className="icon md info mr-8" />
                       </Tooltip>
                     )}
@@ -735,7 +735,7 @@ class WithdrawSummary extends Component {
                     </Button>
                     {this.state.tooltipEmail == true && (
                       <Tooltip placement="topRight" 
-                      title={`Haven\'t received code? Request new code in ${seconds2}. The code will expire after 30mins.`}>
+                      title={`Haven\'t received code? Request new code in ${tooltipValue}. The code will expire after 30mins.`}>
                       
                         <span className="icon md info mr-8" />
                       </Tooltip>
