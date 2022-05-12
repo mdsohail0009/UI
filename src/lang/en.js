@@ -380,7 +380,7 @@ export default {
 	SelectCurrency: "Select Currency",
 	//account_details: 'Ensure that the account details are correct',
 	account_details:
-		"Please ensure that the above details are accurate and correct as the transaction is irreversible",
+		"Please ensure that the above details are accurate and correct as the transaction is irreversible.",
 	Cancel_select: "Transaction can't be cancelled",
 	Confirm: "Confirm",
 	totalbalance: "Total balance",
