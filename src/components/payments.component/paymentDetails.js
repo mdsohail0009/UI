@@ -472,8 +472,8 @@ filePreviewPath() {
                     {/* {(this.props.match.params.id ===
                         "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
                        && (<th style={{ width: 50 }}></th>)} */}
-                      <th>Name</th>
-                      <th style={{width:"350px"}}>Bank name</th>
+                      <th className="doc-def">Name</th>
+                      <th className="doc-def">Bank name</th>
                       <th>Bank Account Number/IBAN</th>
                       {(this.props.match.params.id !==
                         "00000000-0000-0000-0000-000000000000" 
@@ -557,14 +557,14 @@ filePreviewPath() {
                                     </label>
                                   </td>
                             } */}
-                                  <td>
+                                  <td className="doc-def">
                                     {item?.beneficiaryAccountName ? (
                                       <>{item?.beneficiaryAccountName}</>
                                     ) : (
                                       <span>{" - - "}</span>
                                     )}
                                   </td>
-                                  <td style={{width:"350px"}}>
+                                  <td className="doc-def">
                                     <div className="d-flex align-center justify-content">
                                       <span>
                                         <Tooltip title= {item.bankname}>
@@ -572,7 +572,7 @@ filePreviewPath() {
                                         </Tooltip>
                                           <Text
                                             size="small"
-                                            className="file-label ml-8"
+                                            className="file-label doc-def"
                                           >                                           
                                            {this.addressTypeNames(item.addressType)}{" "} 
                                           </Text>
@@ -860,14 +860,13 @@ filePreviewPath() {
                     className="pop-cancel"
                     onClick={this.handleCancel}>Cancel</Button>
                 <Button className="pop-btn px-36"
-                // className="primary-btn pop-btn"
                     
                     onClick={()=>this.deleteDetials(this.state.selectData,this.state.paymentsData)}>Ok</Button>
             </>
         ]} 
         >
-          <div className="fs-14 text-white-50">
-            <Title className='fs-18 text-white-50'><span class="icon lg info-icon"></span> Delete Payment?</Title>
+          <div className="fs-14 text-white-50 ">
+            <Title className='fs-18 text-white-50 mt-10'><span class="icon lg info-icon"></span> Delete Payment?</Title>
             <Paragraph className="fs-14 text-white-50 modal-para">Are you sure do you want to
             delete Payment ?</Paragraph>
             
