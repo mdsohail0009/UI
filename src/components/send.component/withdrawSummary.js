@@ -81,63 +81,65 @@ class WithdrawSummary extends Component {
     this.handleNewExchangeRate();
     this.getVerifyData();
 
-    this.myInterval = setInterval(() => {
-      const { seconds, minutes } = this.state;
+    // this.myInterval = setInterval(() => {
+    //   const { seconds, minutes } = this.state;
 
-      if (seconds > 0) {
-        this.setState(({ seconds }) => ({
-          seconds: seconds - 1
-        }));
-      }
-      if (seconds === 0) {
-        if (minutes === 0) {
-          clearInterval(this.myInterval);
-        } else {
-          this.setState(({ minutes }) => ({
-            minutes: minutes - 1,
-            seconds: 30
-          }));
-        }
+    //   if (seconds > 0) {
+    //     this.setState(({ seconds }) => ({
+    //       seconds: seconds - 1
+    //     }));
+    //   }
+    //   if (seconds === 0) {
+    //     if (minutes === 0) {
+    //       clearInterval(this.myInterval);
+    //     } else {
+    //       this.setState(({ minutes }) => ({
+    //         minutes: minutes - 1,
+    //         seconds: 30
+    //       }));
+    //     }
+    //   }
+    // }, 1000);
+  }
+
+  // componentWillUnmount() {
+  //   clearInterval(this.myInterval);
+  // }
+
+  startTimer = () => {
+    let timeInterval;
+    let count = 30;
+    let timer = count-1;
+    let seconds;
+    timeInterval = (setInterval=()=>{
+      debugger
+     seconds = parseInt(timer % 30);
+       this.setState({...this.state,seconds:seconds})
+      if (--timer < 0) {
+        timer = count;
+        clearInterval(timeInterval);
+        this.setState({...this.state,disable:false,type:"Resend"})
       }
     }, 1000);
-  }
+  };
+   startTimer2 = () => {
+    debugger;
+    let timeInterval2;
+    let count2 = 30;
+    let timer2 = count2 - 1;
+    let seconds2;
+    timeInterval2 = setInterval(function () {
+      seconds2 = parseInt(timer2 % 30);
+       this.setState({...this.state,seconds2:seconds2})
+      if (--timer2 < 0) {
+        timer2 = count2;
+        clearInterval(timeInterval2);
+        this.setState({...this.state,disable:false,type:"Resend"})
+      }
+    }, 1000);
+  };
 
-  componentWillUnmount() {
-    clearInterval(this.myInterval);
-  }
-
-  // startTimer = () => {
-  //   debugger;
-  //   let timeInterval;
-  //   let count = 120;
-  //   let timer = count - 1;
-  //   let seconds;
-  //   timeInterval = setInterval(function () {
-  //    seconds = parseInt(timer % 120);
-  //      this.setState({...this.state,seconds:seconds})
-  //     if (--timer < 0) {
-  //       timer = count;
-  //       clearInterval(timeInterval);
-  //       this.setState({...this.state,disable:false,type:"Resend"})
-  //     }
-  //   }, 1000);
-  // };
-  //  startTimer2 = () => {
-  //   debugger;
-  //   let timeInterval2;
-  //   let count2 = 120;
-  //   let timer2 = count2 - 1;
-  //   let seconds2;
-  //   timeInterval2 = setInterval(function () {
-  //     seconds2 = parseInt(timer2 % 120);
-  //      this.setState({...this.state,seconds2:seconds2})
-  //     if (--timer2 < 0) {
-  //       timer2 = count2;
-  //       clearInterval(timeInterval2);
-  //       this.setState({...this.state,disable:false,type:"Resend"})
-  //     }
-  //   }, 1000);
-  // };
+  
  
   trackEvent = () => {
     apiCalls.trackEvent({
@@ -216,7 +218,7 @@ class WithdrawSummary extends Component {
         verificationText:
           apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber
       });
-      //this.startTimer();
+      this.startTimer();
 
       setTimeout(() => {
         this.setState({
@@ -249,7 +251,7 @@ class WithdrawSummary extends Component {
         emailVerificationText:
           apiCalls.convertLocalLang("digit_code") + " " + "your Email Id "
       });
-     // this.startTimer2();
+      this.startTimer2();
       setTimeout(() => {
         this.setState({
           emailText: "resendEmail",
@@ -310,7 +312,7 @@ class WithdrawSummary extends Component {
       });
       setTimeout(() => {
         this.setState({ errorMsg: null });
-      }, 1000);
+      }, 2500);
       this.setState({ ...this.state, inValidData: true });
     }
   };
@@ -358,7 +360,7 @@ class WithdrawSummary extends Component {
       });
       setTimeout(() => {
         this.setState({ errorMsg: null });
-      }, 1000);
+      }, 2500);
       this.setState({ ...this.state, inValidData: true });
     }
   };
@@ -374,7 +376,7 @@ class WithdrawSummary extends Component {
     this.setState({ ...this.state, emailCodeVal: e.target.value });
   };
   saveWithdrwal = async (values) => {
-    ;
+    debugger
     const { authenticator, OtpVerification, EmailCode,invalidData } = this.state;
     if (this.state.onTermsChange) {
       if( authenticator&&OtpVerification||EmailCode&&OtpVerification||
@@ -415,12 +417,18 @@ class WithdrawSummary extends Component {
         }
         this.setState({ ...this.state, errorMsg: false });
        
-     } else {
+     } else if(OtpVerification=="" && EmailCode=="" && authenticator==""){
+       this.setState({...this.state,errorMsg:"Without Verifications you can't withdraw. Please select withdraw verifications from security section"})
+     }
+     else {
         this.setState({
           ...this.state,
           errorMsg: "Please verify verification codes"
         });
         this.useDivRef.current.scrollIntoView(0,0);
+        setTimeout(() => {
+          this.setState({ errorMsg: null });
+        }, 2500);
       }
     } else {
       this.setState({
@@ -441,7 +449,7 @@ class WithdrawSummary extends Component {
 
   render() {
     const { Paragraph, Text } = Typography;
-    const { seconds, disable, textDisable, minutes } = this.state;
+    const { seconds, disable, textDisable, minutes,seconds2 } = this.state;
     const btnList = {
       get_otp: (
         <Translate
@@ -508,11 +516,13 @@ class WithdrawSummary extends Component {
       )
     };
 
-    const tooltipTimer = seconds < 10 ? `0${seconds}` : seconds;
-    const tooltipValue =
-      "Haven't received code ? Request new code in " +
-      tooltipTimer +
-      " seconds. The code will expire after 30mins.";
+    // const tooltipTimer = seconds < 10 ? `0${seconds}` : seconds;
+    // const tooltipValue =
+    //   "Haven't received code ? Request new code in " +
+    //   tooltipTimer +
+    //   " seconds. The code will expire after 30mins.";
+
+      
 
     if (this.state.loading) {
       return <Loader />;
@@ -655,8 +665,9 @@ class WithdrawSummary extends Component {
                       {btnList[this.state.buttonText]}
                     </Button>
                     {this.state.tooltipVisible == true && (
-                      <Tooltip placement="topRight" title={tooltipValue}>
-                        <span className="icon md info mr-8" />
+                      <Tooltip placement="topRight"
+                      title={`Haven\'t received code? Request new code in ${seconds}. The code will expire after 30mins.`}>
+                      <span className="icon md info mr-8" />
                       </Tooltip>
                     )}
                     <Button type="text" onClick={this.getOtpVerification} disabled={this.state.verifyPhone==true}>
@@ -723,7 +734,9 @@ class WithdrawSummary extends Component {
                       {emailBtn[this.state.emailText]}
                     </Button>
                     {this.state.tooltipEmail == true && (
-                      <Tooltip placement="topRight" title={tooltipValue}>
+                      <Tooltip placement="topRight" 
+                      title={`Haven\'t received code? Request new code in ${seconds2}. The code will expire after 30mins.`}>
+                      
                         <span className="icon md info mr-8" />
                       </Tooltip>
                     )}

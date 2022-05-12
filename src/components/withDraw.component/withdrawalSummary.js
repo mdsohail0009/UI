@@ -142,18 +142,9 @@ const WithdrawalFiatSummary = ({
   const startTimer = () => {
     debugger
     let timer = count-1;
-    let minutes, seconds;
+    let  seconds;
     timeInterval = setInterval(function () {
-      //minutes = parseInt(timer / 60, 10)
-      //seconds = parseInt(timer % 60, 10);
-     
         seconds = parseInt(timer % 30);
-
-      
-      //minutes = minutes < 10 ? "0" + minutes : minutes;
-     // seconds = seconds < 10 ? "0" + seconds : seconds;
-      //seconds = seconds < 10 ? "0" + seconds : seconds;
-      //setSeconds(minutes + ":" + seconds);
       setSeconds(seconds)
       if (--timer < 0) {
         timer = count;
