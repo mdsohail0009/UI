@@ -93,7 +93,10 @@ const NewFiatAddress = (props) => {
 		if (selectParty === true) {
 			form.setFieldsValue({ addressType: "3rdparty" });
 		} else {
-			form.setFieldsValue({ addressType: "1stparty",beneficiaryAccountName:getName() });
+			form.setFieldsValue({
+				addressType: "1stparty",
+				beneficiaryAccountName: getName(),
+			});
 		}
 		if (
 			props?.addressBookReducer?.selectedRowData?.id !=
@@ -107,11 +110,11 @@ const NewFiatAddress = (props) => {
 		getCountryLu();
 		getStateLu();
 	}, []);
-	const getName = () =>{
-		return ((props?.userConfig.isBusiness)
-		? (props?.userConfig.businessName)
-		: (props?.userConfig?.firstName + " " + props?.userConfig?.lastName))
-	}
+	const getName = () => {
+		return props?.userConfig.isBusiness
+			? props?.userConfig.businessName
+			: props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
+	};
 	const addressbkTrack = () => {
 		apiCalls.trackEvent({
 			Type: "User",
@@ -174,11 +177,11 @@ const NewFiatAddress = (props) => {
 			form.setFieldsValue({
 				...objj,
 				walletCode: objj.walletCode,
-				beneficiaryAccountName:selectParty?null:getName()
+				beneficiaryAccountName: selectParty ? null : getName(),
 			});
 		} else {
 			form.setFieldsValue({
-				beneficiaryAccountName:selectParty?null:getName()
+				beneficiaryAccountName: selectParty ? null : getName(),
 			});
 		}
 		let recName = await getCountryStateLu();
@@ -204,9 +207,9 @@ const NewFiatAddress = (props) => {
 		values["membershipId"] = props?.userConfig?.id;
 
 		if (!selectParty) {
-			values["beneficiaryAccountName"] = (props?.userConfig.isBusiness)
-				? (props?.userConfig.businessName)
-				: (props?.userConfig?.firstName + " " + props?.userConfig?.lastName);
+			values["beneficiaryAccountName"] = props?.userConfig.isBusiness
+				? props?.userConfig.businessName
+				: props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
 		}
 		values["type"] = type;
 		values["info"] = JSON.stringify(props?.trackAuditLogData);
@@ -431,16 +434,16 @@ const NewFiatAddress = (props) => {
 		if (e.target.value === "1stparty") {
 			form.setFieldsValue({
 				addressType: "1stparty",
-				beneficiaryAccountName:
-				(	(props?.userConfig.isBusiness)
-						? (props?.userConfig.businessName)
-						: (props?.userConfig?.firstName +
-							" " +
-							props?.userConfig?.lastName))
+				beneficiaryAccountName: props?.userConfig.isBusiness
+					? props?.userConfig.businessName
+					: props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
 			});
 			setSelectParty(false);
 		} else {
-			form.setFieldsValue({ addressType: "3rdparty",beneficiaryAccountName:null });
+			form.setFieldsValue({
+				addressType: "3rdparty",
+				beneficiaryAccountName: null,
+			});
 			setSelectParty(true);
 		}
 	};
@@ -950,13 +953,12 @@ const NewFiatAddress = (props) => {
 												(!props?.userConfig?.isBusiness &&
 													apiCalls.convertLocalLang("Recipient_full_name"))
 											}
-											value='naresh'
+											value="naresh"
 										/>
 									) : (
 										<Input
 											className="cust-input"
-											value={'naresh'
-											}
+											value={"naresh"}
 											placeholder="Recipient full name"
 											disabled={true}
 										/>
@@ -1252,12 +1254,7 @@ const NewFiatAddress = (props) => {
 								
 							</>
 						)} */}
-						<div
-							style={{
-								display: "flex",
-								justifyContent: "center",
-								alignItems: "center",
-							}}>
+						<div style={{ position: "relative" }}>
 							<Form.Item
 								className="custom-forminput mt-36 agree"
 								name="isAgree"
@@ -1282,7 +1279,15 @@ const NewFiatAddress = (props) => {
 								with={{ link }}
 								component={Paragraph}
 								className="fs-14 text-white-30 ml-16 mb-4 mt-16"
-								style={{ flex: 1 }}
+								style={{
+									index: 50,
+									position: "absolute",
+									width: "600px",
+									top: -10,
+									left: 30,
+									paddingBottom: "10px",
+									marginBottom: "10px",
+								}}
 							/>
 						</div>
 
