@@ -119,16 +119,6 @@ class PaymentsView extends Component {
                                     <th>Amount</th>
                                 </tr>
                             </thead>
-                            {/* {loading ? (
-                    <tbody>
-                      <tr>
-                        <td colSpan="4" className="p-16 text-center">
-                        <Spin size='default' />
-                        </td>
-                      </tr>{" "}
-                    </tbody>
-                  ) : 
-                    <> */}
                             <tbody>
                                 {paymentsData?.map((item, idx) => {
                                     return (
@@ -194,7 +184,6 @@ class PaymentsView extends Component {
                                 {loading && <tr>
                                     <td colSpan='5' className='text-center p-16'><Spin size='default' /></td></tr>}
                             </tbody>
-                            {/* </>} */}
                             <tfoot>
                             {paymentsData?.length > 0 &&
                                     <tr>
@@ -220,6 +209,7 @@ class PaymentsView extends Component {
                             </tfoot>
                         </table>
                         </div>
+                        {!loading ?
                         <div className="text-right mt-36">
                         {paymentsData?.length > 0 &&
                             <Button
@@ -230,7 +220,7 @@ class PaymentsView extends Component {
                                 Cancel
                             </Button>
                                 }
-                        </div>
+                        </div>:""}
                     </div>
                 </div>
                 <Modal
