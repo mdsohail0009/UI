@@ -290,9 +290,6 @@ const NewFiatAddress = (props) => {
 				state: null,
 				details: [],
 			};
-			console.log("====================================");
-			console.log(declarationFile);
-			console.log("====================================");
 			if (selectParty) {
 				if (identityFile) {
 					saveObj.documents.details.push(identityFile);
