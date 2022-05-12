@@ -1296,7 +1296,7 @@ const NewFiatAddress = (props) => {
 								htmlType="submit"
 								size="large"
 								className="pop-btn mb-36"
-								disabled={btnDisabled}
+								loading={btnDisabled}
 								style={{ minWidth: 300 }}>
 								{isLoading && <Spin indicator={antIcon} />}{" "}
 								<Translate content="Save_btn_text" />

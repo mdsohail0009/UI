@@ -630,7 +630,7 @@ const NewAddressBook = ({
 								size="large"
 								block
 								className="pop-btn"
-								disabled={btnDisabled}>
+								loading={btnDisabled}>
 								{isLoading && <Spin indicator={antIcon} />}{" "}
 								<Translate content="Save_btn_text" component={Text} />
 							</Button>
