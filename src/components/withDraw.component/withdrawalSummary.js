@@ -204,6 +204,7 @@ const WithdrawalFiatSummary = ({
         setMsg("Please verify verification codes");
         useOtpRef.current.scrollIntoView(0,0);
         return;
+        
       }
       
     }
@@ -223,7 +224,10 @@ const WithdrawalFiatSummary = ({
       }
      
     }
-    setIsLoding(true);
+   if(verifyData.isPhoneVerified=="" && verifyData.isEmailVerification=="" && verifyData.twoFactorEnabled==""){
+      this.setState({...this.state,errorMsg:"Without Verifications you can't withdraw. Please select withdraw verifications from security section"})
+    }
+    //setIsLoding(true);
 
     let Obj = Object.assign({}, sendReceive.withdrawFiatObj);
     Obj.accountNumber = apiCalls.encryptValue(
@@ -273,6 +277,7 @@ const WithdrawalFiatSummary = ({
   const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
 
   const getVerifyData = async () => {
+    debugger
     let response = await apiCalls.getVerificationFields(userConfig.id);
     if (response.ok) {
       setVerifyData(response.data);
@@ -399,7 +404,7 @@ const WithdrawalFiatSummary = ({
       setMsg(apiCalls.convertLocalLang("phone_invalid_code"));
       setTimeout(() => {
         setMsg(null);
-      }, 1500);
+      }, 2500);
       //setInvalidData(true)
       setIsPhoneVerification(false);
     }
@@ -436,7 +441,7 @@ const WithdrawalFiatSummary = ({
       setMsg(apiCalls.convertLocalLang("twofa_invalid_code"));
       setTimeout(() => {
         setMsg(null);
-      }, 1500);
+      }, 2500);
       //setInvalidData(true)
       setIsAuthenticatorVerification(false);
     }
