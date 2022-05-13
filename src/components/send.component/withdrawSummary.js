@@ -310,9 +310,9 @@ class WithdrawSummary extends Component {
         ...this.state,
         errorMsg: apiCalls.convertLocalLang("phone_invalid_code"),verifyPhone:false,inputDisable:false
       });
-      setTimeout(() => {
-        this.setState({ errorMsg: null });
-      }, 2500);
+      // setTimeout(() => {
+      //   this.setState({ errorMsg: null });
+      // }, 2500);
       this.setState({ ...this.state, inValidData: true });
     }
   };
@@ -358,9 +358,9 @@ class WithdrawSummary extends Component {
         ...this.state,
         errorMsg: apiCalls.convertLocalLang("twofa_invalid_code"),verifyAuth:false,inputAuthDisable:false
       });
-      setTimeout(() => {
-        this.setState({ errorMsg: null });
-      }, 2500);
+      // setTimeout(() => {
+      //   this.setState({ errorMsg: null });
+      // }, 2500);
       this.setState({ ...this.state, inValidData: true });
     }
   };
@@ -430,9 +430,9 @@ class WithdrawSummary extends Component {
           errorMsg: "Please verify verification codes"
         });
         this.useDivRef.current.scrollIntoView(0,0);
-        setTimeout(() => {
-          this.setState({ errorMsg: null });
-        }, 2500);
+        // setTimeout(() => {
+        //   this.setState({ errorMsg: null });
+        // }, 2500);
       }
     } else {
       this.setState({

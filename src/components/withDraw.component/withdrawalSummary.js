@@ -438,9 +438,9 @@ const WithdrawalFiatSummary = ({
       setAuthDisable(false)
       useOtpRef.current.scrollIntoView(0,0);
       setMsg(apiCalls.convertLocalLang("twofa_invalid_code"));
-      setTimeout(() => {
-        setMsg(null);
-      }, 2500);
+      // setTimeout(() => {
+      //   setMsg(null);
+      // }, 2500);
       //setInvalidData(true)
       setIsAuthenticatorVerification(false);
     }
