@@ -410,12 +410,16 @@ class WithdrawSummary extends Component {
           //   });
           // }
         } else {
+          // this.setState({
+          //   ...this.state,
+          //   errorMsg:"We can not process this request, Since commission is more than or equal to requested amount"
+          // });
           this.props.dispatch(
             setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
           );
           this.props.changeStep("withdraw_crypto_liveness");
         }
-        this.setState({ ...this.state, errorMsg: false });
+        this.setState({ ...this.state, errorMsg: "We can not process this request, Since commission is more than or equal to requested amount" });
        
      } else if(OtpVerification=="" && EmailCode=="" && authenticator==""){
        this.setState({...this.state,errorMsg:"Without Verifications you can't withdraw. Please select withdraw verifications from security section"})
