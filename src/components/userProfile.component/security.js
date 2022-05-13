@@ -276,7 +276,7 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
         <Form>
           <Row gutter={[16, 16]}>
             <Col md={4} xl={4} xxl={4}>
-              <div className="d-flex align-center mt-16">
+              <div className="d-flex align-center mt-16 ">
                 <label className="custom-checkbox p-relative c-pointer">
                   <Input
                     name="check"
