@@ -152,13 +152,6 @@ class PaymentDetails extends Component {
     let objData = this.state.paymentsData.filter((item) => {
       return item.checked;
     });
-    // if (objData.length <1) {
-    //   this.setState({
-    //     ...this.state,
-    //     errorMessage: "Please Check atleast one record",
-    //   });
-    //   return;
-    // }
     let objAmount = objData.some((item) => {
       return (item.recordStatus !== "Deleted" && (item.amount === null || item.amount <= 0));
     });
@@ -292,7 +285,6 @@ class PaymentDetails extends Component {
     } else {
       this.setState({ ...this.state, isValidFile: true,isUploading:false });
       warning('File is not allowed. You can upload jpg, png, jpeg and PDF files')
-      // this.setState({ ...this.state, isValidFile: false });
       return Upload.LIST_IGNORE;
     }
   };
@@ -469,9 +461,6 @@ filePreviewPath() {
                 <table className="pay-grid">
                   <thead>
                     <tr>
-                    {/* {(this.props.match.params.id ===
-                        "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
-                       && (<th style={{ width: 50 }}></th>)} */}
                       <th className="doc-def">Name</th>
                       <th className="doc-def">Bank name</th>
                       <th>Bank Account Number/IBAN</th>
@@ -512,51 +501,6 @@ filePreviewPath() {
                                       : true
                                   }
                                 >
-                            {/* {(this.props.match.params.id ===
-                                "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
-                              &&
-                                  <td
-                                    style={{ width: 50 }}
-                                    className="text-center"
-                                  >
-                                    <label className={`text-center ${ (this.props.match.params.id !==
-                                            "00000000-0000-0000-0000-000000000000" ||
-                                             item.state === "Submitted" ||
-                                          item.state === "Approved" ||
-                                          item.state === "Cancelled" ||
-                                          item.state === "Pending")? "c-pointer":"disabled" }  custom-checkbox p-relative`}>
-                                      <Input
-
-                                        name="check"
-                                        type="checkbox"
-                                        disabled={
-                                          this.props.match.params.id !==
-                                            "00000000-0000-0000-0000-000000000000" ||
-                                             item.state === "Submitted" ||
-                                          item.state === "Approved" ||
-                                          item.state === "Cancelled" ||
-                                          item.state === "Pending"
-                                        }
-                                        checked={item.checked}
-                                        className="grid_check_box"
-                                        onClick={(value) => {
-                                          let paymentData =
-                                            this.state.paymentsData;
-                                          if (value.target.checked === false) {
-                                            paymentData[i].amount = 0;
-                                          }
-                                          paymentData[i].checked =
-                                            value.target.checked;
-                                          this.setState({
-                                            ...this.state,
-                                            paymentsData: paymentData,
-                                          });
-                                        }}
-                                      />
-                                      <span></span>
-                                    </label>
-                                  </td>
-                            } */}
                                   <td className="doc-def">
                                     {item?.beneficiaryAccountName ? (
                                       <>{item?.beneficiaryAccountName}</>
@@ -699,13 +643,12 @@ filePreviewPath() {
                                         </span>
                                       )}
                                     </div>
-                                   
+                                    {uploadIndex ===i && isUploading ? <div className="text-center" >
+                                            <Spin />
+                                          </div>:<>
                                     {item.documents?.details.map((file) => (
                                       <>
-                                      {uploadIndex ===i && isUploading ? <div className="text-center" >
-                                            <Spin />
-                                          </div>:
-                                          file.documentName !== null && (
+                                          {file.documentName !== null && (
                                           <div className='docdetails' onClick={() => this.docPreview(file)}>
                                           <Tooltip title={file.documentName}>
                                           <EllipsisMiddle  suffixCount={4}>
@@ -716,6 +659,7 @@ filePreviewPath() {
                                         )}
                                       </>
                                     ))}
+                                    </>}
                                   </td>
                                   </>: <td>
                                                     <NumberFormat
