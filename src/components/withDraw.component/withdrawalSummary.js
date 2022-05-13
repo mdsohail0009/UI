@@ -613,13 +613,15 @@ const WithdrawalFiatSummary = ({
 								]}
 								label={
 									<>
-										<Button
-											type="text"
-											loading={phoneLoading}
-											onClick={getOTP}
-											disabled={disable}>
-											{btnList[buttonText]}
-										</Button>
+										{!verifyTextotp && (
+											<Button
+												type="text"
+												loading={phoneLoading}
+												onClick={getOTP}
+												disabled={disable}>
+												{btnList[buttonText]}
+											</Button>
+										)}
 										{tooltipVisible == true && (
 											<Tooltip
 												placement="topRight"
@@ -695,12 +697,14 @@ const WithdrawalFiatSummary = ({
 								]}
 								label={
 									<>
-										<Button
-											type="text"
-											loading={emailLoading}
-											onClick={getEmail}>
-											{isResend && emailBtn[emailText]}
-										</Button>
+										{!verifyEmailOtp && (
+											<Button
+												type="text"
+												loading={emailLoading}
+												onClick={getEmail}>
+												{isResend && emailBtn[emailText]}
+											</Button>
+										)}
 										{tooltipEmail == true && (
 											<Tooltip
 												placement="topRight"

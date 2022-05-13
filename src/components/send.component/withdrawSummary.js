@@ -722,13 +722,15 @@ class WithdrawSummary extends Component {
 									rules={[{ required: true, message: "Is required" }]}
 									label={
 										<>
-											<Button
-												type="text"
-												loading={this.state.phoneLoading}
-												onClick={this.getOTP}
-												disabled={this.state.disable}>
-												{btnList[this.state.buttonText]}
-											</Button>
+											{!this.state.verifyTextotp && (
+												<Button
+													type="text"
+													loading={this.state.phoneLoading}
+													onClick={this.getOTP}
+													disabled={this.state.disable}>
+													{btnList[this.state.buttonText]}
+												</Button>
+											)}
 											{this.state.tooltipVisible == true && (
 												<Tooltip
 													placement="topRight"
@@ -799,12 +801,14 @@ class WithdrawSummary extends Component {
 									rules={[{ required: true, message: "Is required" }]}
 									label={
 										<>
-											<Button
-												type="text"
-												loading={this.state.emailLoading}
-												onClick={this.getEmail}>
-												{emailBtn[this.state.emailText]}
-											</Button>
+											{!this.state.verifyEmailOtp && (
+												<Button
+													type="text"
+													loading={this.state.emailLoading}
+													onClick={this.getEmail}>
+													{emailBtn[this.state.emailText]}
+												</Button>
+											)}
 											{this.state.tooltipEmail == true && (
 												<Tooltip
 													placement="topRight"
