@@ -52,8 +52,8 @@ class SumSub extends Component {
 
     render() {
         const sumSubConfirms=<div className='sumSub-confirm text-white text-center'><img src={success} className="confirm-icon" alt={"success"} /><br/>
-        <span className='sumSub-review'>Verification Complete</span>
-        <p className='p-0'>After sumSub completed,Please refresh the page or re login</p></div>
+        <span className='sumSub-review'>Verification Completed,</span>
+        <p className='p-0'>After Sumsub completed, Please refresh the page or reLogin</p></div>
         return (
             <>
                 {this.state.loading && <div className="loader">Loading .....</div>}
