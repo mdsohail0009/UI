@@ -88,6 +88,7 @@ const NewFiatAddress = (props) => {
 	const [uploadIdentity, setUploadIdentity] = useState(false);
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
+	const [bankType, setBankType] = useState("");
 
 	useEffect(() => {
 		if (selectParty === true) {
@@ -557,6 +558,24 @@ const NewFiatAddress = (props) => {
 	// const showData=()=>{
 	// }
 
+	const changeBankType = (e) => {
+		setBankType(e);
+
+		form.setFieldsValue({
+			accountNumber: "",
+			routingNumber: "",
+			bankName: "",
+			bankAddress: "",
+			country: "",
+			state: "",
+			zipCode: "",
+		});
+	};
+
+	const doNothing = () => {
+		//---
+	};
+
 	const antIcon = (
 		<LoadingOutlined
 			style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
@@ -584,17 +603,25 @@ const NewFiatAddress = (props) => {
 						onFinish={savewithdrawal}
 						autoComplete="off"
 						initialValues={fiatAddress}>
-						<Translate
-							content="Beneficiary_BankDetails"
-							component={Paragraph}
-							className="mb-16 fs-14 text-aqua fw-500 text-upper"
-						/>
 						<Form.Item
 							name="addressType"
 							label={
 								<div>
 									Address Type{" "}
-									<Tooltip title="1st party : Funds will be deposited to your own bank account. 3rd party : Funds will be deposited to other beneficiary bank account.">
+									<Tooltip
+										title={
+											<ul className=" p-0" style={{ listStyleType: "none" }}>
+												<li className=" mb-4">
+													<span className=" text-yellow">1st party </span>:
+													Funds will be deposited to your own bank account.
+												</li>
+												<li className=" mb-4">
+													<span className=" text-yellow">3rd party </span>:
+													Funds will be deposited to other beneficiary bank
+													account.
+												</li>
+											</ul>
+										}>
 										<div className="icon md info c-pointer"></div>
 									</Tooltip>
 								</div>
@@ -625,6 +652,12 @@ const NewFiatAddress = (props) => {
 								</Radio>
 							</Radio.Group>
 						</Form.Item>
+
+						<Translate
+							content="Beneficiary_BankDetails"
+							component={Paragraph}
+							className="mb-16 fs-14 text-aqua fw-500 text-upper"
+						/>
 						<Row gutter={[16, 16]}>
 							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
 								<Form.Item
@@ -654,32 +687,6 @@ const NewFiatAddress = (props) => {
 									/>
 								</Form.Item>
 							</Col>
-							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-								<Form.Item
-									className="custom-forminput custom-label mb-0"
-									label={<Translate content="address" component={Form.label} />}
-									name="toWalletAddress"
-									required
-									rules={[
-										{
-											required: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-										{
-											whitespace: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-										{
-											validator: validateContentRule,
-										},
-									]}>
-									<Input
-										className="cust-input"
-										maxLength="30"
-										placeholder={apiCalls.convertLocalLang("address")}
-									/>
-								</Form.Item>
-							</Col>
 
 							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
 								<Form.Item
@@ -706,8 +713,41 @@ const NewFiatAddress = (props) => {
 							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
 								<Form.Item
 									className="custom-forminput custom-label mb-0"
+									label={
+										<Translate content="bank_type" component={Form.label} />
+									}
+									name="bankType"
+									required
+									rules={[
+										{
+											required: true,
+											message: apiCalls.convertLocalLang("is_required"),
+										},
+									]}>
+									<Select
+										dropdownClassName="select-drpdwn"
+										placeholder={apiCalls.convertLocalLang("bank_type")}
+										className="cust-input"
+										style={{ width: "100%" }}
+										bordered={false}
+										showArrow={true}
+										optionFilterProp="children"
+										showSearch
+										onChange={(e) => changeBankType(e)}>
+										<Option value={"bank"}>{"Bank Account"}</Option>
+										<Option value={"iban"}>{"IBAN"}</Option>
+									</Select>
+								</Form.Item>
+							</Col>
+							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+								<Form.Item
+									className="custom-forminput custom-label mb-0"
 									name="accountNumber"
-									label={apiCalls.convertLocalLang("Bank_account")}
+									label={
+										bankType !== "iban"
+											? apiCalls.convertLocalLang("Bank_account")
+											: apiCalls.convertLocalLang("iban")
+									}
 									required
 									rules={[
 										{
@@ -718,12 +758,23 @@ const NewFiatAddress = (props) => {
 											pattern: /^[A-Za-z0-9]+$/,
 											message: "Invalid account number",
 										},
+										// {
+										// 	validator: validateBank,
+										// },
 									]}>
 									<Input
 										className="cust-input"
 										maxLength={100}
-										placeholder={apiCalls.convertLocalLang("Bank_account")}
-										onBlur={(val) => getIbanData(val.currentTarget.value)}
+										placeholder={
+											bankType !== "iban"
+												? apiCalls.convertLocalLang("Bank_account")
+												: apiCalls.convertLocalLang("iban")
+										}
+										onBlur={
+											bankType === "iban"
+												? (val) => getIbanData(val.currentTarget.value)
+												: doNothing
+										}
 									/>
 								</Form.Item>
 							</Col>
@@ -750,6 +801,7 @@ const NewFiatAddress = (props) => {
 									]}>
 									<Input
 										className="cust-input"
+										disabled={bankType === "iban" ? true : false}
 										maxLength={100}
 										placeholder={apiCalls.convertLocalLang(
 											"BIC_SWIFT_routing_number"
@@ -780,12 +832,13 @@ const NewFiatAddress = (props) => {
 									]}>
 									<Input
 										className="cust-input"
+										disabled={bankType === "iban" ? true : false}
 										maxLength={200}
 										placeholder={apiCalls.convertLocalLang("Bank_name")}
 									/>
 								</Form.Item>
 							</Col>
-							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+							<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 								<Form.Item
 									className="custom-forminput custom-label mb-0"
 									name="bankAddress"
@@ -808,101 +861,9 @@ const NewFiatAddress = (props) => {
 									]}>
 									<Input
 										className="cust-input"
+										disabled={bankType === "iban" ? true : false}
 										maxLength={200}
 										placeholder={apiCalls.convertLocalLang("Bank_address1")}
-									/>
-								</Form.Item>
-							</Col>
-							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-								<Form.Item
-									className="custom-forminput custom-label mb-0"
-									name="country"
-									required
-									label={<Translate content="Country" component={Form.label} />}
-									rules={[
-										{
-											required: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-									]}>
-									<Select
-										dropdownClassName="select-drpdwn"
-										placeholder={apiCalls.convertLocalLang("Country")}
-										className="cust-input"
-										style={{ width: "100%" }}
-										bordered={false}
-										showArrow={true}
-										optionFilterProp="children"
-										showSearch
-										onChange={(e) => getStateLu(e, true)}>
-										{countryLu?.map((item, idx) => (
-											<Option key={idx} value={item.code}>
-												{item.name}
-											</Option>
-										))}
-									</Select>
-								</Form.Item>
-							</Col>
-							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-								<Form.Item
-									className="custom-forminput custom-label mb-0"
-									name="state"
-									label={<Translate content="state" component={Form.label} />}
-									rules={[
-										{
-											required: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-									]}>
-									<Select
-										dropdownClassName="select-drpdwn"
-										placeholder={apiCalls.convertLocalLang("state")}
-										className="cust-input"
-										style={{ width: "100%" }}
-										bordered={false}
-										showArrow={true}
-										optionFilterProp="children"
-										showSearch
-										onChange={(e) => ""}>
-										{stateLu?.map((item, idx) => (
-											<Option key={idx} value={item.code}>
-												{item.code}
-											</Option>
-										))}
-									</Select>
-								</Form.Item>
-							</Col>
-							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-								<Form.Item
-									className="custom-forminput custom-label mb-0"
-									name="zipCode"
-									label={<Translate content="zipcode" component={Form.label} />}
-									required
-									rules={[
-										{
-											validator: (rule, value, callback) => {
-												var regx = new RegExp(/^[ z0-9_/-]*$/);
-												// var regx = new RegExp(!(/^[A-Za-z]+$/));
-												if (value) {
-													if (!regx.test(value)) {
-														callback("Invalid zip code");
-													} else if (regx.test(value)) {
-														callback();
-													}
-												} else {
-													callback();
-												}
-											},
-										},
-										{
-											required: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-									]}>
-									<Input
-										className="cust-input"
-										maxLength="10"
-										placeholder={apiCalls.convertLocalLang("zipcode")}
 									/>
 								</Form.Item>
 							</Col>
@@ -913,7 +874,7 @@ const NewFiatAddress = (props) => {
 							className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
 						/>
 						<Row gutter={[16, 16]}>
-							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+							<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 								<Form.Item
 									className="custom-label mb-0"
 									name="beneficiaryAccountName"
@@ -962,7 +923,7 @@ const NewFiatAddress = (props) => {
 									)}
 								</Form.Item>
 							</Col>
-							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+							<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 								<Form.Item
 									className="custom-forminput custom-label mb-0"
 									name="beneficiaryAccountAddress"
@@ -1157,100 +1118,7 @@ const NewFiatAddress = (props) => {
 								</Col>
 							)}
 						</Row>
-						{/* {!selectParty && (
-							<>
-								<Text className="fs-14 fw-400 text-white-30 l-height-normal d-block mb-16">
-									We require you to download and complete the declaration form
-									as part of the regulation. Please remember to sign and upload
-									it below..
-								</Text>
-								
-								<Tooltip title="Click here to open file in a new tab to download">
-									<Text
-										className="file-label c-pointer"
-										onClick={() =>
-											window.open(
-												"https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf",
-												"_blank"
-											)
-										}>
-										Declaration_Form.pdf
-									</Text>
-								</Tooltip>{" "}
-								<Row gutter={[12, 12]}>
-									<Col xs={24} md={24} lg={12} xl={12} xxl={12}>
-										<Form.Item
-											name={"file3"}
-											rules={[
-												{
-													required: true,
-													message: "Please upload your signed PDF document",
-												},
-											]}>
-											{
-												<Dragger
-													accept=".pdf,.PDF,"
-													className="upload mt-16"
-													multiple={false}
-													action={
-														process.env.REACT_APP_UPLOAD_API + "UploadFile"
-													}
-													showUploadList={false}
-													beforeUpload={(declarationprop) => {
-														beforeUpload(declarationprop, "DECLARATION");
-													}}
-													onChange={(declarationprop) =>
-														upLoadFiles(declarationprop, "DECLARATION")
-													}>
-													<p className="ant-upload-drag-icon mb-16">
-														<span className="icon xxxl doc-upload" />
-													</p>
-													<p className="ant-upload-text fs-18 mb-0">
-														Upload your signed PDF document here
-													</p>
-												</Dragger>
-											}
-											{!isUploading && declarationFile != null && (
-												<div className="docfile mr-0">
-													<span
-														className={`icon xl ${
-															(declarationFile?.documentName?.slice(-3) ===
-																"zip" &&
-																"file") ||
-															(declarationFile?.documentName?.slice(-3) !==
-																"zip" &&
-																"") ||
-															(declarationFile.documentName?.slice(-3) ===
-																"pdf" &&
-																"file") ||
-															(declarationFile.documentName?.slice(-3) !==
-																"pdf" &&
-																"image")
-														} mr-16`}
-													/>
-													<div
-														className="docdetails c-pointer"
-														onClick={() => docPreview(declarationFile)}>
-														<EllipsisMiddle suffixCount={4}>
-															{declarationFile.documentName}
-														</EllipsisMiddle>
-														<span className="fs-12 text-secondary">
-															{bytesToSize(declarationFile.remarks)}
-														</span>
-													</div>
-												</div>
-											)}
-											{isUploading && (
-												<div className="text-center">
-													<Spin />
-												</div>
-											)}
-										</Form.Item>
-									</Col>
-								</Row>
-								
-							</>
-						)} */}
+
 						<div style={{ position: "relative" }}>
 							<Form.Item
 								className="custom-forminput mt-36 agree"

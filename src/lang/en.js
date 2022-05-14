@@ -238,7 +238,7 @@ export default {
 	buy_crypto: "Buy Crypto",
 	Beneficiary_BankDetails: "Beneficiary Bank Details",
 	bank_type: "Bank type",
-	Bank_account: "Bank Account Number/IBAN",
+	Bank_account: "Bank Account Number",
 	iban: "IBAN",
 	BIC_SWIFT_routing_number: "BIC/SWIFT/Routing Number",
 	Bank_name: "Bank Name",
@@ -571,6 +571,5 @@ export default {
 	sendTo: "Send to",
 	account_address: "Beneficiary Address",
 	account_name: "Beneficiary Name",
-	empty:" ",
-
+	empty: " ",
 };
