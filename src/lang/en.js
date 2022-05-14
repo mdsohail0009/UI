@@ -59,8 +59,9 @@ export default {
 	select_a_currency: "Select a currency",
 	// address_hint_text: "Please make sure your delivery address is correct",
 	address_hint_text:
-		"Be sure to select the right cryptocurrency. If you send crypto to the wrong address (eg, Bitcoin to a Bitcoin Cash address), your crypto will be lost.",
-	copy: "Copy",
+		"Be sure to select the right cryptocurrency." ,
+		address_hint_text_1:"If you send crypto to the wrong address (eg, Bitcoin to a Bitcoin Cash address), your crypto will be lost.",
+		copy: "Copy",
 	share: "Share",
 	from_crypto: "From Crypto",
 	from_fiat: "From Fiat",
@@ -382,7 +383,8 @@ export default {
 	account_details:
 		"Please ensure that the above details are accurate and correct as the transaction is irreversible.",
 	Cancel_select: "Transaction can't be cancelled",
-	Confirm: "Confirm",
+	Confirm_fiat: "Preview Withdraw Fiat",
+	Confirm_crypto: "Preview Withdraw Crypto",
 	totalbalance: "Total balance",
 	select_currency: "Select a currency in your wallet",
 	BasicInfotag:
@@ -409,8 +411,8 @@ export default {
 	total_balance: "Total balance",
 	// wallet_address: 'Select wallet address',
 	wallet_address: "Withdraw to your whitelisted cryptocurrency wallet.",
-	enter_address: "Enter address",
-	enter_wallet_address: "Please enter wallet address",
+	enter_address: "Select address",
+	enter_wallet_address: "Please select wallet address",
 	enter_amount: "Please enter amount",
 	amount_less: "Entered amount should be less than available balance",
 	amount_max: "Entered amount should be less than max withdraw amount of ",
