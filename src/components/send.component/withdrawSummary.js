@@ -293,7 +293,7 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
-				ememailVerifyLoading: false,
+				emailVerifyLoading: false,
 				EmailCode: response.data,
 				verifyEmail: true,
 				verifyEmailOtp: true,
