@@ -357,10 +357,10 @@ const WithdrawalFiatSummary = ({
 		setEmailCode(e.target.value);
 	};
 	const getOTP = async (val) => {
+		setPhoneLoading(true);
 		let response = await apiCalls.getCode(userConfig.id, types);
 		if (response.ok) {
 			setPhoneLoading(false);
-			setPhoneLoading(true);
 			setTooltipVisible(true);
 			setButtonText("sentVerify");
 			setInputDisable(false);
@@ -816,7 +816,12 @@ const WithdrawalFiatSummary = ({
 								/>
 							</Form.Item>
 						)}
-						<Button size="large" block className="pop-btn" htmlType="submit">
+						<Button
+							size="large"
+							block
+							className="pop-btn"
+							loading={disableSave}
+							htmlType="submit">
 							<Translate content="with_draw" component={Text} />
 						</Button>
 					</Form>
