@@ -259,7 +259,7 @@ const WithdrawalFiatSummary = ({
 			changeStep("step7");
 		} else {
 			setMsg(withdrawal.data);
-			setIsLoding(true);
+			setIsLoding(false);
 			useOtpRef.current.scrollIntoView(0, 0);
 		}
 	};
