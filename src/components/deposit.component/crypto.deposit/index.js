@@ -1,5 +1,5 @@
 import { Typography } from "antd";
-import { useEffect } from "react";
+import { useState,useEffect } from "react";
 import Translate from "react-translate-component";
 import { setStep, setSubTitle, setWalletAddress } from "../../../reducers/sendreceiveReducer";
 import { getMemberCoins } from "../../../reducers/swapReducer";
@@ -31,7 +31,8 @@ const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
         <Translate content="deposite_a_cryto_txt" component={Paragraph} className="text-white-30 fw-300 fs-16 mt-16" />
         <div className="dep-withdraw auto-scroll">
             <CryptoList showSearch={true} titleField={'coin'} iconField={'coin'} showValues={true} coinList={swapStore.isLoading ? [] : swapStore.MemberCoins} isLoading={swapStore.isLoading} onCoinSelected={(coin) => onCryptoCoinSelect(coin)} coinType={"swap"} />
-        </div></>
+        </div>
+        </>
 }
 
 export default ConnectStateProps(CryptoDeposit);

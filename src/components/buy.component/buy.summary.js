@@ -69,9 +69,10 @@ class BuySummary extends Component {
                 this.setState({ ...this.state, error: { valid: false, message: response.data || response.originalError.message } })
             }
             this.setState({ isLoading: false })
-        } else {
-            this.setState({ ...this.state, error: { valid: false, message: apicalls.convertLocalLang('agree_terms') } })
-        }
+        } 
+        // else {
+        //     this.setState({ ...this.state, error: { valid: false, message: apicalls.convertLocalLang('agree_terms') } })
+        // }
     }
     render() {
         if (this.props.sellData?.previewDetails?.loading || !this.props.sellData?.previewDetails?.data) {

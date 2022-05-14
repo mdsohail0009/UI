@@ -173,8 +173,10 @@ class Summary extends Component {
 						/>
 					</div>
 					<div className="d-flex p-16 mb-36 agree-check">
-						<label>
+						<label
+						>
 							<input
+							
 								type="checkbox"
 								id="agree-check"
 								checked={onCheked}
@@ -194,6 +196,7 @@ class Summary extends Component {
 								target="_blank">
 								<Translate content="terms" component="Text" />
 							</a>{" "}
+							
 							<Translate content="refund_cancellation" component="Text" />
 						</Paragraph>
 					</div>
