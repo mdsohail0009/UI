@@ -176,7 +176,6 @@ class Summary extends Component {
 						<label
 						>
 							<input
-							
 								type="checkbox"
 								id="agree-check"
 								checked={onCheked}
