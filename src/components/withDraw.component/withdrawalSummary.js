@@ -604,48 +604,25 @@ const WithdrawalFiatSummary = ({
 										</Text>
 									</div>
 								}
-								//rules={[{ required: true, message: "Is required" }]}
+								
 								rules={[
 									{
 										required: true,
 										message: apiCalls.convertLocalLang("is_required"),
 									},
 								]}
-								label={
-									<>
-										{!verifyTextotp && (
-											<Button
-												type="text"
-												loading={phoneLoading}
-												onClick={getOTP}
-												disabled={disable}>
-												{btnList[buttonText]}
-											</Button>
-										)}
-										{tooltipVisible == true && (
-											<Tooltip
-												placement="topRight"
-												title={`Haven\'t received code ? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
-												<span className="icon md info mr-8" />
-											</Tooltip>
-										)}
-										<Button
-											type="text"
-											loading={phoneVerifyLoading}
-											onClick={getOtpVerification}
-											disabled={verifyPhone == true}>
-											{verifyOtp[verifyOtpText]}
-											{verifyTextotp == true && (
-												<span className="icon md greenCheck" />
-											)}
-										</Button>
-									</>
-								}>
+								// label={
+									
+								// }
+								>
+									<div className="p-relative d-flex align-center">
 								<Input
 									type="text"
-									className="cust-input text-left"
+									// className="cust-input text-left"
+									className="cust-input custom-add-select mb-0"
 									placeholder={"Enter code"}
 									maxLength={6}
+									// style={{ flexGrow: 1 }}
 									onKeyDown={(event) => {
 										if (
 											event.currentTarget.value.length >= 6 &&
@@ -662,10 +639,41 @@ const WithdrawalFiatSummary = ({
 											event.preventDefault();
 										}
 									}}
-									style={{ width: "100%" }}
+									style={{ width: "100%"  }}
 									onChange={(e) => handleChange(e, "code")}
 									disabled={inputDisable}
 								/>
+								<div className="new-add c-pointer get-code">
+										{!verifyTextotp && (
+											<Button
+												type="text"
+												style={{paddingTop:"15px",color:"black"}}
+												loading={phoneLoading}
+												onClick={getOTP}
+												disabled={disable}>
+												{btnList[buttonText]}
+											</Button>
+										)}
+										{tooltipVisible == true && (
+											<Tooltip
+												placement="topRight"
+												title={`Haven\'t received code ? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
+												<span className="icon md info mr-8" />
+											</Tooltip>
+										)}
+										<Button
+											type="text"
+											loading={phoneVerifyLoading}
+											style={{color:"black"}}
+											onClick={getOtpVerification}
+											disabled={verifyPhone == true}>
+											{verifyOtp[verifyOtpText]}
+											{verifyTextotp == true && (
+												<span className="icon md greenCheck" />
+											)}
+										</Button>
+									</div>
+									</div>
 							</Form.Item>
 						)}
 						{verifyData.isEmailVerification == true && (
@@ -695,11 +703,37 @@ const WithdrawalFiatSummary = ({
 										message: apiCalls.convertLocalLang("is_required"),
 									},
 								]}
-								label={
-									<>
+							>
+								<div className="p-relative d-flex align-center">
+								<Input
+									type="text"
+									// className="cust-input text-left"
+									className="cust-input custom-add-select mb-0"
+									placeholder={"Enter code"}
+									maxLength={6}
+									// onKeyDown={(event) => {
+									//   if (
+									//     event.currentTarget.value.length >= 6 &&
+									//     !(event.key == "Backspace" || event.key == "Delete")
+									//   ) {
+									//     event.preventDefault();
+									//   } else if (/^\d+$/.test(event.key)) {
+									//     handleSendOtp(event.currentTarget.value);
+									//   } else if (event.key == "Backspace" || event.key == "Delete") {
+									//   } else {
+									//     event.preventDefault();
+									//   }
+									// }}
+									style={{ width: "100%" }}
+									disabled={emailDisable}
+									onClick={(event) => handleSendOtp(event.currentTarget.value)}
+									onChange={(e) => handleEmailChange(e, "Emailcode")}
+								/>
+								<div className="new-add c-pointer get-code">
 										{!verifyEmailOtp && (
 											<Button
 												type="text"
+												style={{paddingTop:"15px",color:"black"}}
 												loading={emailLoading}
 												onClick={getEmail}>
 												{isResend && emailBtn[emailText]}
@@ -726,31 +760,8 @@ const WithdrawalFiatSummary = ({
 												{/* VERIFY */}
 											</Button>
 										)}
-									</>
-								}>
-								<Input
-									type="text"
-									className="cust-input text-left"
-									placeholder={"Enter code"}
-									maxLength={6}
-									// onKeyDown={(event) => {
-									//   if (
-									//     event.currentTarget.value.length >= 6 &&
-									//     !(event.key == "Backspace" || event.key == "Delete")
-									//   ) {
-									//     event.preventDefault();
-									//   } else if (/^\d+$/.test(event.key)) {
-									//     handleSendOtp(event.currentTarget.value);
-									//   } else if (event.key == "Backspace" || event.key == "Delete") {
-									//   } else {
-									//     event.preventDefault();
-									//   }
-									// }}
-									style={{ width: "100%" }}
-									disabled={emailDisable}
-									onClick={(event) => handleSendOtp(event.currentTarget.value)}
-									onChange={(e) => handleEmailChange(e, "Emailcode")}
-								/>
+									</div>
+									</div>
 							</Form.Item>
 						)}
 						{verifyData.twoFactorEnabled == true && (
@@ -791,29 +802,32 @@ const WithdrawalFiatSummary = ({
 										message: apiCalls.convertLocalLang("is_required"),
 									},
 								]}
-								label={
-									<>
-										<Button
-											type="text"
-											loading={authLoading}
-											onClick={getAuthenticator}>
-											{verifyAuthCode ? (
-												<span className="icon md greenCheck" />
-											) : (
-												"Click here to verify"
-											)}
-										</Button>
-									</>
-								}>
+								>
+									<div className="p-relative d-flex align-center">
+									
 								<Input
 									type="text"
-									className="cust-input text-left"
+									// className="cust-input text-left"
+									className="cust-input custom-add-select mb-0"
 									placeholder={"Enter code"}
 									maxLength={6}
 									onChange={(e) => handleAuthenticator(e, "authenticator")}
 									style={{ width: "100%" }}
 									disabled={authDisable == true}
 								/>
+								<div className="new-add c-pointer get-code">
+										<Button
+											type="text"
+											loading={authLoading}
+											onClick={getAuthenticator}>
+											{verifyAuthCode ? (
+												<span className="icon md greenCheck" style={{paddingTop: "15px"}} />
+											) : (
+												"Click here to verify"
+											)}
+										</Button>
+									</div>
+									</div>
 							</Form.Item>
 						)}
 						<Button

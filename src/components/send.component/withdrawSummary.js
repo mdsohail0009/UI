@@ -720,39 +720,12 @@ class WithdrawSummary extends Component {
 										</div>
 									}
 									rules={[{ required: true, message: "Is required" }]}
-									label={
-										<>
-											{!this.state.verifyTextotp && (
-												<Button
-													type="text"
-													loading={this.state.phoneLoading}
-													onClick={this.getOTP}
-													disabled={this.state.disable}>
-													{btnList[this.state.buttonText]}
-												</Button>
-											)}
-											{this.state.tooltipVisible == true && (
-												<Tooltip
-													placement="topRight"
-													title={tooltipValue}>
-													<span className="icon md info mr-8" />
-												</Tooltip>
-											)}
-											<Button
-												type="text"
-												loading={this.state.phoneVerifyLoading}
-												onClick={this.getOtpVerification}
-												disabled={this.state.verifyPhone == true}>
-												{verifyOtpText[this.state.verifyOtpText]}
-												{this.state.verifyTextotp == true && (
-													<span className="icon md greenCheck" />
-												)}
-											</Button>
-										</>
-									}>
+									>
+										<div className="p-relative d-flex align-center">	
 									<Input
 										type="text"
-										className="cust-input text-left"
+										// className="cust-input text-left"
+										className="cust-input custom-add-select mb-0"
 										placeholder={"Enter code"}
 										maxLength={6}
 										disabled={this.state.inputDisable}
@@ -775,6 +748,37 @@ class WithdrawSummary extends Component {
 										style={{ width: "100%" }}
 										onChange={(e) => this.handleChange(e, "code")}
 									/>
+									<div className="new-add c-pointer get-code">
+											{!this.state.verifyTextotp && (
+												<Button
+													type="text"
+													loading={this.state.phoneLoading}
+													style={{paddingTop:"15px",color:"black"}}
+													onClick={this.getOTP}
+													disabled={this.state.disable}>
+													{btnList[this.state.buttonText]}
+												</Button>
+											)}
+											{this.state.tooltipVisible == true && (
+												<Tooltip
+													placement="topRight"
+													title={tooltipValue}>
+													<span className="icon md info mr-8" />
+												</Tooltip>
+											)}
+											<Button
+												type="text"
+												loading={this.state.phoneVerifyLoading}
+												style={{color:"black"}}
+												onClick={this.getOtpVerification}
+												disabled={this.state.verifyPhone == true}>
+												{verifyOtpText[this.state.verifyOtpText]}
+												{this.state.verifyTextotp == true && (
+													<span className="icon md greenCheck" />
+												)}
+											</Button>
+										</div>
+										</div>
 								</Form.Item>
 							)}
 							{this.state.verifyData.isEmailVerification == true && (
@@ -799,46 +803,12 @@ class WithdrawSummary extends Component {
 										</div>
 									}
 									rules={[{ required: true, message: "Is required" }]}
-									label={
-										<>
-											{!this.state.verifyEmailOtp && (
-												<Button
-													type="text"
-													loading={this.state.emailLoading}
-													onClick={this.getEmail}>
-													{emailBtn[this.state.emailText]}
-												</Button>
-											)}
-											{this.state.tooltipEmail == true && (
-												<Tooltip
-													placement="topRight"
-													// title={`Haven\'t received code? Request new code in ${tooltipValue}. The code will expire after 30mins.`}>
-													title={tooltipValue}>
-													<span className="icon md info mr-8" />
-												</Tooltip>
-											)}
-											{/* {this.state.tooltipEmail==true &&(
-
-                    )} */}
-											{/* {this.state.verifyVisible == true && ( */}
-
-											<Button
-												type="text"
-												loading={this.state.emailVerifyLoading}
-												onClick={(e) => this.getEmailVerification(e)}
-												disabled={this.state.verifyEmail == true}>
-												{verifyText[this.state.verifyText]}
-												{this.state.verifyEmailOtp == true && (
-													<span className="icon md greenCheck" />
-												)}
-											</Button>
-
-											{/* )}  */}
-										</>
-									}>
+									>
+										<div className="p-relative d-flex align-center">
 									<Input
 										type="text"
-										className="cust-input text-left"
+										// className="cust-input text-left"
+										className="cust-input custom-add-select mb-0"
 										placeholder={"Enter code"}
 										maxLength={6}
 										// onKeyDown={(event) => {
@@ -865,6 +835,44 @@ class WithdrawSummary extends Component {
 										onChange={(e) => this.handleEmailChange(e, "emailCodeVal")}
 										disabled={this.state.inputEmailDisable}
 									/>
+									<div className="new-add c-pointer get-code">
+											{!this.state.verifyEmailOtp && (
+												<Button
+													type="text"
+													style={{paddingTop:"15px",color:"black"}}
+													loading={this.state.emailLoading}
+													onClick={this.getEmail}>
+													{emailBtn[this.state.emailText]}
+												</Button>
+											)}
+											{this.state.tooltipEmail == true && (
+												<Tooltip
+													placement="topRight"
+													// title={`Haven\'t received code? Request new code in ${tooltipValue}. The code will expire after 30mins.`}>
+													title={tooltipValue}>
+													<span className="icon md info mr-8" />
+												</Tooltip>
+											)}
+											{/* {this.state.tooltipEmail==true &&(
+
+                    )} */}
+											{/* {this.state.verifyVisible == true && ( */}
+
+											<Button
+												type="text"
+												style={{color:"black"}}
+												loading={this.state.emailVerifyLoading}
+												onClick={(e) => this.getEmailVerification(e)}
+												disabled={this.state.verifyEmail == true}>
+												{verifyText[this.state.verifyText]}
+												{this.state.verifyEmailOtp == true && (
+													<span className="icon md greenCheck" />
+												)}
+											</Button>
+
+											{/* )}  */}
+										</div>
+										</div>
 								</Form.Item>
 							)}
 							{this.state.verifyData.twoFactorEnabled == true && (
@@ -905,24 +913,12 @@ class WithdrawSummary extends Component {
 											message: apiCalls.convertLocalLang("is_required"),
 										},
 									]}
-									label={
-										<>
-											<Button
-												type="text"
-												loading={this.state.faLoading}
-												onClick={this.getAuthenticator}>
-												{/* Click here to verify */}
-												{this.state.verifyAuthCode ? (
-													<span className="icon md greenCheck" />
-												) : (
-													"Click here to verify"
-												)}
-											</Button>
-										</>
-									}>
+									>
+										<div className="p-relative d-flex align-center">
 									<Input
 										type="text"
-										className="cust-input text-left"
+										// className="cust-input text-left"
+										className="cust-input custom-add-select mb-0"
 										placeholder={"Enter code"}
 										maxLength={6}
 										onChange={(e) =>
@@ -931,6 +927,20 @@ class WithdrawSummary extends Component {
 										style={{ width: "100%" }}
 										disabled={this.state.inputAuthDisable == true}
 									/>
+									<div className="new-add c-pointer get-code">
+											<Button
+												type="text"
+												loading={this.state.faLoading}
+												onClick={this.getAuthenticator}>
+												{/* Click here to verify */}
+												{this.state.verifyAuthCode ? (
+													<span className="icon md greenCheck" style={{paddingTop: "15px"}}/>
+												) : (
+													"Click here to verify"
+												)}
+											</Button>
+										</div>
+										</div>
 								</Form.Item>
 							)}
 							<div className="d-flex p-16 mb-36 agree-check">
