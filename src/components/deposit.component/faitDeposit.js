@@ -146,11 +146,11 @@ class FaitDeposit extends Component {
     depObj.Amount = null;
     for (var k in this.state.BankDetails) {
       if (this.state.BankDetails[k].bankName === e) {
-        this.setState({ ...this.state, Loader: true })
+        this.setState({ ...this.state, bankLoader: true })
         let reqdepositObj = await requestDepositFiat(this.state.BankDetails[k].bankId, this.props.member?.id);
         if (reqdepositObj.ok === true) {
           this.setState({
-            ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, depObj: depObj, Loader: false, isTermsAgreed: false
+            ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, depObj: depObj, bankLoader: false, isTermsAgreed: false
           });
         }
       }
@@ -273,6 +273,8 @@ class FaitDeposit extends Component {
                       )}
                     </Select>
                   </div></Form.Item>}
+                  {this.state.bankLoader && <Loader />}
+
                 {this.state.BankInfo &&
                   <div className="fiatdep-info">
 
