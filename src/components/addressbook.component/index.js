@@ -154,7 +154,10 @@ class AddressBook extends Component {
 		},
 		{
 			field: "beneficiaryAccountName",
-			title: apiCalls.convertLocalLang("business_recipient"),
+			title:
+			(this.props?.userConfig?.isBusiness && apiCalls.convertLocalLang("company_name")) ||
+													(!this.props?.userConfig?.isBusiness &&
+														apiCalls.convertLocalLang("Recipient_full_name")),
 			filter: true,
 			width: 300,
 		},

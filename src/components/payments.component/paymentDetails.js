@@ -150,7 +150,7 @@ class PaymentDetails extends Component {
   };
   savePayment = async () => {
     let objData = this.state.paymentsData.filter((item) => {
-      return item.checked;
+      return item.amount;
     });
     let objAmount = objData.some((item) => {
       return (item.recordStatus !== "Deleted" && (item.amount === null || item.amount <= 0));
@@ -165,7 +165,7 @@ class PaymentDetails extends Component {
     obj.paymentsDetails = objData;
     if (obj.currency != null) {
       if (objAmount) {
-        this.setState({ ...this.state, errorMessage: "Please enter amount" });
+        this.setState({ ...this.state, errorMessage: "Amount must be greater than zero."  });
       }else {
         this.setState({ btnDisabled: true });
         if (
@@ -207,12 +207,12 @@ class PaymentDetails extends Component {
           } else {
             this.setState({ btnDisabled: false });
             message.destroy();
-            message.error({
-              content: response.data,
-              className: "custom-msg",
-              duration: 0.5,
-            });
-            this.setState({ ...this.state, errorMessage: response.data });
+            // message.error({
+            //   content: response.data,
+            //   className: "custom-msg",
+            //   duration: 0.5,
+            // });
+            this.setState({ ...this.state, errorMessage:"please enter amount" });
           }
         }
       }
