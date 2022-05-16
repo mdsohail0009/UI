@@ -85,6 +85,9 @@ class WithdrawSummary extends Component {
 		emailLoading: false,
 		emailVerifyLoading: false,
 		faLoading: false,
+    isEmailVerification:false,
+    isPhoneVerification:false,
+    isAuthenticatorVerification:false
 	};
 
 	useDivRef = React.createRef();
@@ -298,6 +301,8 @@ class WithdrawSummary extends Component {
 				verifyText: null,
 				emailText: null,
 				inputEmailDisable: true,
+        isEmailVerification:true,
+
 			});
 			//success("Email verification code verified successfully");
 		} else if (response.data == null) {
@@ -335,6 +340,7 @@ class WithdrawSummary extends Component {
 				verifyOtpText: null,
 				buttonText: null,
 				inputDisable: true,
+        isPhoneVerification:true,
 			});
 			//success("Phone verification code verified successfully");
 		} else if (response.data == null) {
@@ -393,6 +399,7 @@ class WithdrawSummary extends Component {
 				verifyAuth: true,
 				verifyAuthCode: true,
 				inputAuthDisable: true,
+        isAuthenticatorVerification:true,
 			});
 			//success("2FA verification code verified successfully");
 		} else if (response.data == null) {
@@ -428,13 +435,56 @@ class WithdrawSummary extends Component {
 	saveWithdrwal = async (values) => {
 		const { authenticator, OtpVerification, EmailCode, invalidData } =
 			this.state;
-		if (this.state.onTermsChange) {
-			if (
-				(authenticator && OtpVerification) ||
-				(EmailCode && OtpVerification) ||
-				(EmailCode && authenticator) ||
-				(EmailCode && OtpVerification && authenticator)
-			) {
+		// if (this.state.onTermsChange) {
+			// if (
+			// 	(authenticator && OtpVerification) ||
+			// 	(EmailCode && OtpVerification) ||
+			// 	(EmailCode && authenticator) ||
+			// 	(EmailCode && OtpVerification && authenticator)
+			// ) 
+      
+      // {
+      if (this.state.verifyData.isEmailVerification) {
+          if (!this.state.isEmailVerification) {
+            this.setState({
+              ...this.state,
+              errorMsg: "Please verify email verification code"
+            });
+            this.useDivRef.current.scrollIntoView(0, 0);
+            return;
+          }
+        }
+        if (this.state.verifyData.isPhoneVerified) {
+          if (!this.state.isPhoneVerification) {
+            this.setState({
+              ...this.state,
+              errorMsg: "Please verify phone verification code"
+            });
+            this.useDivRef.current.scrollIntoView(0, 0);
+            return;
+          }
+        }
+        if (this.state.verifyData.twoFactorEnabled) {
+          if (!this.state.isAuthenticatorVerification) {
+            this.setState({
+              ...this.state,
+              errorMsg: "Please verify authenticator code"
+            });
+            this.useDivRef.current.scrollIntoView(0, 0);            
+            return;
+          }
+        }
+        if (
+          this.state.verifyData.isPhoneVerified == "" &&
+          this.state.verifyData.isEmailVerification == "" &&
+          this.state.verifyData.twoFactorEnabled == ""
+        ) {
+          this.setState({
+            ...this.state,
+            errorMsg:
+              "Without Verifications you can't withdraw. Please select withdraw verifications from security section",
+          });
+        }
 				if (this.props.userProfile.isBusiness) {
 					let saveObj = this.props.sendReceive.withdrawCryptoObj;
 					let trackAuditLogData = this.props.trackAuditLogData;
@@ -475,33 +525,34 @@ class WithdrawSummary extends Component {
 					errorMsg:
 						"We can not process this request, Since commission is more than or equal to requested amount",
 				});
-			} else if (
-				OtpVerification == "" &&
-				EmailCode == "" &&
-				authenticator == ""
-			) {
-				this.setState({
-					...this.state,
-					errorMsg:
-						"Without Verifications you can't withdraw. Please select withdraw verifications from security section",
-				});
-			} else {
-				this.setState({
-					...this.state,
-					errorMsg: "Please verify verification codes",
-				});
-				this.useDivRef.current.scrollIntoView(0, 0);
-				// setTimeout(() => {
-				//   this.setState({ errorMsg: null });
-				// }, 2500);
-			}
-		} else {
-			this.setState({
-				...this.state,
-				errorMsg: apiCalls.convertLocalLang("agree_termsofservice"),
-			});
-			this.useDivRef.current.scrollIntoView(0, 0);
-		}
+		//	}
+      //  else if (
+			// 	OtpVerification == "" &&
+			// 	EmailCode == "" &&
+			// 	authenticator == ""
+			// ) {
+			// 	this.setState({
+			// 		...this.state,
+			// 		errorMsg:
+			// 			"Without Verifications you can't withdraw. Please select withdraw verifications from security section",
+			// 	});
+			// } 
+      // else {
+			// 	this.setState({
+			// 		...this.state,
+			// 		errorMsg: "Please verify verification codes",
+			// 	});
+			// 	this.useDivRef.current.scrollIntoView(0, 0);
+				
+			// }
+	//	} 
+    // else {
+		// 	this.setState({
+		// 		...this.state,
+		// 		errorMsg: apiCalls.convertLocalLang("agree_termsofservice"),
+		// 	});
+		// 	this.useDivRef.current.scrollIntoView(0, 0);
+		// }
 	};
 
 	fullNumber = this.props.userProfile?.phoneNumber;
