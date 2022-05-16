@@ -253,7 +253,7 @@ class CryptoWithDrawWallet extends Component {
                                     maxLength="250" />
                                 <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" onClick={() => this.selectCrypto()}>
-                                        <span className="icon md downarrow-icon d-block c-pointer"></span>
+                                        <span className="icon md diag-arrow d-block c-pointer"></span>
                                     </div>
                                 </Tooltip>
                             </div>

@@ -192,9 +192,9 @@ class CoinView extends React.Component {
             this.loadCoinDetailData();
         }
         return <div className="main-container">
-            {this.state.loading ?(
-					<Loader />
-				):(
+            {/* {this.state.loading ?(
+					<Spin />
+				):( */}
             <>
             <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cockpit" />{coinData?.name} ({coinData?.symbol.toUpperCase()})</div>
             <Row gutter={[24, 24]}>
@@ -222,7 +222,7 @@ class CoinView extends React.Component {
                                 {/*<li  onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1}><div><span className="icon md file" /></div>DEPOSIT</li>*/}
                                 <li onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} className="c-pointer"><div><span className="icon md withdraw" /></div>WITHDRAW</li>
                             </ul>
-                        </> : <div className="text-center"><Spin /></div>}
+                        </> : <div className="text-center"><Spin className="text-center"/></div>}
                     </div>
                     <div className="box p-24 coin-details">
                         <Title component={Title} className="fs-24 fw-600 mb-36 text-white-30">{coinData?.name} ({coinData?.symbol.toUpperCase()}) Price Chart</Title>
@@ -318,7 +318,9 @@ class CoinView extends React.Component {
             </Row>
             <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
             <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
-            </> )}</div >
+            </>
+              {/* )}  */}
+             </div >
     }
 }
 
