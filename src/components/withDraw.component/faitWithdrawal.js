@@ -660,8 +660,6 @@ const FaitWithdrawal = ({
                   >
                     <span className="d-flex">
                       <Checkbox className="ant-custumcheck" />
-
-                      {/* </Checkbox> */}
                       <span className="withdraw-check"></span>
                       <Translate
                         content="agree_to_suissebase"
@@ -814,7 +812,7 @@ const FaitWithdrawal = ({
                   onClick={handleCancel}
                   disabled={loading}
                 >
-                  Back
+                  Cancel
                 </Button>
                 <Button
                   key="submit"

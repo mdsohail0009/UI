@@ -8,6 +8,7 @@ import Loader from '../../Shared/loader';
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
 import apicalls from '../../api/apiCalls';
+import { validateContentRule } from '../../utils/custom.validator';
 
 class BuySummary extends Component {
     constructor(props) {
@@ -16,7 +17,8 @@ class BuySummary extends Component {
             isLoading: false,
             disablePay: false,
             error: { valid: true, error: null },
-            isTermsAgreed: false
+            isTermsAgreed: false,
+            buyTerms:false
         }
     }
 
@@ -29,6 +31,7 @@ class BuySummary extends Component {
     pay = async () => {
         this.setState({ ...this.state, error: { valid: true, message: null } });
         if (this.state.isTermsAgreed) {
+            debugger
             const { id: toWalletId, walletName: toWalletName, walletCode: toWalletCode } = this.props.sellData?.coinWallet;
             const { id: fromWalletId, bankName: fromWalletName, currencyCode: fromWalletCode } = this.props.sellData?.selectedWallet;
             const obj = {
@@ -70,9 +73,9 @@ class BuySummary extends Component {
             }
             this.setState({ isLoading: false })
         } 
-        // else {
-        //     this.setState({ ...this.state, error: { valid: false, message: apicalls.convertLocalLang('agree_terms') } })
-        // }
+        else {
+            this.setState({ ...this.state, error: { valid: false, message: apicalls.convertLocalLang('agree_terms') } })
+        }
     }
     render() {
         if (this.props.sellData?.previewDetails?.loading || !this.props.sellData?.previewDetails?.data) {

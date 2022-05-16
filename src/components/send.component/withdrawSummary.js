@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Typography, Button, Alert, message, Form, Input, Tooltip } from "antd";
+import { Typography, Button, Alert, message, Form, Input, Tooltip,Checkbox } from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
@@ -17,6 +17,7 @@ import {
 import apiCalls from "../../api/apiCalls";
 import { publishBalanceRfresh } from "../../utils/pubsub";
 import { success, warning, error } from "../../utils/message";
+import { Link } from "react-router-dom";
 
 class WithdrawSummary extends Component {
 	state = {
@@ -93,30 +94,26 @@ class WithdrawSummary extends Component {
 		this.handleNewExchangeRate();
 		this.getVerifyData();
 
-		// this.myInterval = setInterval(() => {
-		// 	const { seconds, minutes } = this.state;
-
-		// 	if (seconds > 0) {
-		// 		this.setState(({ seconds }) => ({
-		// 			seconds: seconds - 1,
-		// 		}));
-		// 	}
-		// 	if (seconds === 0) {
-		// 		if (minutes === 0) {
-		// 			clearInterval(this.myInterval);
-		// 		} else {
-		// 			this.setState(({ minutes }) => ({
-		// 				minutes: minutes - 1,
-		// 				seconds: 30,
-		// 			}));
-		// 		}
-		// 	}
-		// }, 1000);
+		
 	}
 
-	// componentWillUnmount() {
-	// 	clearInterval(this.myInterval);
-	// }
+	
+
+   LinkValue = (props) => {
+    return (
+      <Translate
+        className="textpure-yellow text-underline c-pointer"
+        content={props.content}
+        component={Link}
+        onClick={() =>
+          window.open(
+            "https://www.iubenda.com/terms-and-conditions/42856099",
+            "_blank"
+          )
+        }
+      />
+    );
+  };
 
 	startTimer = () => {
     debugger
@@ -518,6 +515,8 @@ class WithdrawSummary extends Component {
 	render() {
 		const { Paragraph, Text } = Typography;
 		const { seconds, disable, textDisable, minutes, seconds2 } = this.state;
+    const link = <this.LinkValue content="terms_service" />;
+
 		const btnList = {
 			get_otp: (
 				<Translate
@@ -944,7 +943,7 @@ class WithdrawSummary extends Component {
 										</div>
 								</Form.Item>
 							)}
-							<div className="d-flex p-16 mb-36 agree-check">
+							{/* <div className="d-flex p-16 mb-36 agree-check">
 								<label>
 									<input
 										type="checkbox"
@@ -969,7 +968,33 @@ class WithdrawSummary extends Component {
 									</a>{" "}
 									<Translate content="refund_cancellation" component="Text" />
 								</Paragraph>
-							</div>
+							</div> */}
+               
+               <Form.Item
+                    className="custom-forminput mb-36 agree"
+                    name="isAccept"
+                    valuePropName="checked"
+                    required
+                    rules={[
+                      {
+                        validator: (_, value) =>
+                          value ? Promise.resolve() : Promise.reject(new Error(apiCalls.convertLocalLang('agree_termsofservice')
+                          )),
+                      },
+                    ]}
+                  >
+                    <span className="d-flex">
+                      <Checkbox className="ant-custumcheck" />
+                      <span className="withdraw-check"></span>
+                      <Translate
+                        content="agree_to_suissebase"
+                        with={{ link }}
+                        component={Paragraph}
+                        className="fs-14 text-white-30 ml-16 mb-4"
+                        style={{ flex: 1 }}
+                      />
+                    </span>
+                  </Form.Item>
 
 							<Button size="large" block className="pop-btn" htmlType="submit">
 								<Translate content="with_draw" component={Text} />
