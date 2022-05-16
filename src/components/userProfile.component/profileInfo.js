@@ -69,7 +69,6 @@ class ProfileInfo extends Component {
     this.props.getmemeberInfoa(this.props.userConfig.userId, this.props.userConfig.id);
   }
   profileTrack = () => {
-    debugger
     apiCalls.trackEvent({
       Type: "User",
       Action: "Profile page view",

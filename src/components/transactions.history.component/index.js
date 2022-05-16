@@ -61,7 +61,6 @@ componentDidMount() {
 
   ]
   TransactionSearch = async () => {
-    debugger
     let response = await getTransactionSearch();
     if (response.ok) {
       console.log(response.data)
@@ -72,7 +71,6 @@ componentDidMount() {
     }
   };
   handleChange = (value, prop) => {
-    debugger
     var val = "";
     let { memberData, searchObj } = this.state;
     if (prop == "memberId") {
@@ -83,7 +81,6 @@ componentDidMount() {
     this.setState({ ...this.state, searchObj });
   };
   handleSearch = (values) => {
-    debugger
     let { searchObj } = this.state;
     this.setState({ ...this.state, searchObj },
        () => { this.gridRef.current.refreshGrid(); }

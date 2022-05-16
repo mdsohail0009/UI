@@ -31,7 +31,6 @@ const AddressFiatView=(props)=> {
 		loadDataAddress();
 	}, []);
     const loadDataAddress = async () => {
-      debugger
     console.log(props?.addressBookReducer)
         setIsLoading(true)
         let response = await getAddress(props.match.params.id, 'fiat');

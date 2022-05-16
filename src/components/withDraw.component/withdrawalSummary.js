@@ -144,7 +144,6 @@ const WithdrawalFiatSummary = ({
 	let timeInterval;
 	let count = 30;
 	const startTimer = () => {
-		debugger;
 		let timer = count - 1;
 		let seconds;
 		timeInterval = setInterval(function () {
@@ -161,7 +160,6 @@ const WithdrawalFiatSummary = ({
 	let timeInterval2;
 	let count2 = 30;
 	const startTimer2 = () => {
-		debugger;
 		let timer2 = count2 - 1;
 		let seconds2;
 		timeInterval2 = setInterval(function () {
@@ -273,7 +271,6 @@ const WithdrawalFiatSummary = ({
 	const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
 
 	const getVerifyData = async () => {
-		debugger;
 		let response = await apiCalls.getVerificationFields(userConfig.id);
 		if (response.ok) {
 			setVerifyData(response.data);
@@ -345,7 +342,6 @@ const WithdrawalFiatSummary = ({
 	};
 
 	const handleSendOtp = (val) => {
-		debugger;
 		setEmailOtp(val.emailCode);
 		setVerifyEmailText("verifyTextBtn");
 		setTooltipEmail(false);

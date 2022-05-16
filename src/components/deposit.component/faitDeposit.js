@@ -141,7 +141,6 @@ class FaitDeposit extends Component {
     this.formRef.current.setFieldsValue({ ...depObj })
   }
   handlebankName = async (e) => {
-    debugger
     let { depObj } = this.state;
     depObj.BankName = e;
     depObj.Amount = null;

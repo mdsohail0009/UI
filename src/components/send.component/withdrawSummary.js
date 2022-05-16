@@ -119,7 +119,6 @@ class WithdrawSummary extends Component {
   };
 
 	startTimer = () => {
-    debugger
 	  let timeInterval;
 	  let count = 30;
 	  let timer = count-1;
@@ -135,7 +134,6 @@ class WithdrawSummary extends Component {
 	  }, 1000);
 	};
 	 startTimer2 = () => {
-	  debugger;
 	  let timeInterval2;
 	  let count2 = 30;
 	  let timer2 = count2 - 1;
