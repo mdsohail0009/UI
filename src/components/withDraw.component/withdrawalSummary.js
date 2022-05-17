@@ -191,21 +191,24 @@ const WithdrawalFiatSummary = ({
 	const saveWithdrwal = async (values) => {
 		if (verifyData.isEmailVerification) {
 			if (!isEmailVerification) {
-				setMsg("Please verify  email verification code");
+				// setMsg("Please verify  email verification code");
+				error("Please verify  email verification code")				
 				useOtpRef.current.scrollIntoView(0, 0);
 				return;
 			}
 		}
 		if (verifyData.isPhoneVerified) {
 			if (!isPhoneVerification) {
-				setMsg("Please verify phone verification code");
+				//setMsg("Please verify phone verification code");
+				error("Please verify  phone verification code")
 				useOtpRef.current.scrollIntoView(0, 0);
 				return;
 			}
 		}
 		if (verifyData.twoFactorEnabled) {
 			if (!isAuthenticatorVerification) {
-				setMsg("Please verify authenticator code");
+				//setMsg("Please verify authenticator code");
+				error("Please verify  phone authenticator code")
 				useOtpRef.current.scrollIntoView(0, 0);
 				return;
 			}
@@ -465,7 +468,7 @@ const WithdrawalFiatSummary = ({
 			{errorMsg && (
 				<Alert
 					showIcon
-					type="info"
+					type="error"
 					message={apiCalls.convertLocalLang("withdrawFiat")}
 					description={errorMsg}
 					closable={false}
@@ -835,7 +838,7 @@ const WithdrawalFiatSummary = ({
 							<Translate content="with_draw" component={Text} />
 						</Button>
 					</Form>
-					<div className="text-center">
+					{/* <div className="text-center">
 						<Translate
 							content="back"
 							component={Button}
@@ -844,7 +847,7 @@ const WithdrawalFiatSummary = ({
 							size="large"
 							className="text-center text-white-30 pop-cancel fw-400 fs-16 text-center"
 						/>
-					</div>
+					</div> */}
 				</>
 			)}
 		</div>

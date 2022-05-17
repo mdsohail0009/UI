@@ -645,7 +645,7 @@ class WithdrawSummary extends Component {
 				{this.state.errorMsg && (
 					<Alert
 						showIcon
-						type="info"
+						type="error"
 						message={apiCalls.convertLocalLang("withdraw_crypto")}
 						description={this.state.errorMsg}
 						closable={false}
