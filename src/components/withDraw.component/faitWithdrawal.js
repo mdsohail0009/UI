@@ -209,7 +209,6 @@ const FaitWithdrawal = ({
     }
   };
   const handleAddressChange = async (e) => {
-    debugger
     setAmountLoading(true)
     let val = addressLu.filter((item) => {
       if (item.name == e) {
