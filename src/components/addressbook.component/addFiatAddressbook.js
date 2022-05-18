@@ -44,7 +44,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 
 	return (
 		<Text
-			className="mb-0 fs-14 docname c-pointer d-block"
+			className="mb-0 fs-14 docnames c-pointer d-block"
 			style={{ maxWidth: "100% !important" }}
 			ellipsis={{ suffix }}>
 			{start}
