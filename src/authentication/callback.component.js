@@ -20,7 +20,11 @@ class CallbackPage extends React.Component {
                 userManager={userManager}
                 successCallback={(user) => this.handleSuccess(user)}
                 errorCallback={error => {
-                    console.error(error);
+                    if(error.message === "No matching state found in storage"){
+                        window.location.replace(window.location.origin)
+                    }else{
+                        console.error(error.message);
+                    }
                 }}
             >
                 <div className="loader">Loading .....</div>
