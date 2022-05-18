@@ -796,7 +796,7 @@ class WithdrawSummary extends Component {
 										style={{ width: "100%" }}
 										onChange={(e) => this.handleChange(e, "code")}
 									/>
-									<div className="new-add c-pointer get-code">
+									<div className="new-add c-pointer get-code text-yellow">
 											{!this.state.verifyTextotp && (
 												<Button
 													type="text"
@@ -884,7 +884,7 @@ class WithdrawSummary extends Component {
 										onChange={(e) => this.handleEmailChange(e, "emailCodeVal")}
 										disabled={this.state.inputEmailDisable}
 									/>
-									<div className="new-add c-pointer get-code">
+									<div className="new-add c-pointer get-code text-yellow">
 											{!this.state.verifyEmailOtp && (
 												<Button
 													type="text"
@@ -976,7 +976,7 @@ class WithdrawSummary extends Component {
 										style={{ width: "100%" }}
 										disabled={this.state.inputAuthDisable == true}
 									/>
-									<div className="new-add c-pointer get-code">
+									<div className="new-add c-pointer get-code text-yellow">
 											<Button
 												type="text"
 												loading={this.state.faLoading}

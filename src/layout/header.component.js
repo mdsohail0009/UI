@@ -641,7 +641,7 @@ class Header extends Component {
                     content="header_title"
                     onClick={this.routeToCockpit}
                     component={Text}
-                    className="text-white-30 fs-16 c-pointer cp-link"
+                    className="text-white-30 fs-16 c-pointer cp-link ml-8"
                   />
                   <Text className="text-white-30 fs-24">|</Text>
                   <Translate

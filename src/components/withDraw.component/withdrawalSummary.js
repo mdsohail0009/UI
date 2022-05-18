@@ -642,7 +642,7 @@ const WithdrawalFiatSummary = ({
 									onChange={(e) => handleChange(e, "code")}
 									disabled={inputDisable}
 								/>
-								<div className="new-add c-pointer get-code">
+								<div className="new-add c-pointer get-code text-yellow">
 										{!verifyTextotp && (
 											<Button
 												type="text"
@@ -728,7 +728,7 @@ const WithdrawalFiatSummary = ({
 									onClick={(event) => handleSendOtp(event.currentTarget.value)}
 									onChange={(e) => handleEmailChange(e, "Emailcode")}
 								/>
-								<div className="new-add c-pointer get-code">
+								<div className="new-add c-pointer get-code text-yellow">
 										{!verifyEmailOtp && (
 											<Button
 												type="text"
@@ -771,7 +771,7 @@ const WithdrawalFiatSummary = ({
 						{verifyData.twoFactorEnabled == true && (
 							<Form.Item
 								name="authenticator"
-								className="input-label otp-verify"
+								className="input-label otp-verify "
 								extra={
 									<div>
 										<Text
@@ -814,7 +814,7 @@ const WithdrawalFiatSummary = ({
 									style={{ width: "100%" }}
 									disabled={authDisable == true}
 								/>
-								<div className="new-add c-pointer get-code">
+								<div className="new-add c-pointer get-code text-yellow">
 										<Button
 											type="text"
 											loading={authLoading}
