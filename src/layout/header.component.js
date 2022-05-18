@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {
+import {Collapse,
   Layout,
   Menu,
   Modal,
@@ -57,6 +57,9 @@ import { getmemeberInfo } from "../reducers/configReduser";
 counterpart.registerTranslations("en", en);
 counterpart.registerTranslations("ch", ch);
 counterpart.registerTranslations("my", my);
+
+const { Panel } = Collapse;
+
 const LinkValue = (props) => {
   return (
     <Translate
@@ -556,7 +559,38 @@ class Header extends Component {
             onClick={() => this.userProfile()}
           />
           <ul className="pl-0 drpdwn-list">
-            <li
+            <li>
+              <Collapse expandIconPosition="right" className="text-left profile-collapse">
+              {/* <Link>
+                <Translate
+                  content="get_your_own_iban"
+                  component={Panel}
+                  className="text-white-30" key="1"
+                />
+                <span className="icon md rarrow-white" />
+              </Link> */}
+                <Panel header="Get Your Own IBAN" key="1" >
+                  <Link to="/https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d">
+                  <Translate
+                  content="personal_account"
+                  component={Text}
+                  className="text-white-30" key="1"
+                />
+                <span className="icon md rarrow-white" />
+                  </Link>
+                  <Link to="/https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7">
+                  <Translate
+                  content="business_account"
+                  component={Text}
+                  className="text-white-30" key="1"
+                />
+                <span className="icon md rarrow-white" />
+                    </Link>
+                </Panel>
+              </Collapse>
+            </li>
+
+            {/* <li
               onClick={() => window.open('https://pyrros.instance.kyc-chain.com#/auth/signup/6120197cdc204d9ddb882e4d', '_blank')}
             >
               <Link>
@@ -567,7 +601,7 @@ class Header extends Component {
                 />
                 <span className="icon md rarrow-white" />
               </Link>
-            </li>
+            </li> */}
             <li
               onClick={() => this.showAuditLogsDrawer()}
             >
