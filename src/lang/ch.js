@@ -233,7 +233,7 @@ export default {
 	// Bank_account: '银行账号/IBAN',
 	bank_type: "银行类型",
 	iban: "IBAN",
-	Bank_account: "銀行賬戶/IBAN",
+	Bank_account: "銀行賬戶",
 	BIC_SWIFT_routing_number: "BIC/迅捷/路由号码",
 	Bank_name: "银行的名字",
 	Bank_address1: "银行地址",

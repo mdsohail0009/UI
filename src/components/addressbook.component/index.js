@@ -84,8 +84,27 @@ class AddressBook extends Component {
 	}
 
 	columnsFiat = [
-		{ field: "", title: "", width: 50, customCell: (props) => (<td > <label className="text-center custom-checkbox c-pointer"><input id={props.dataItem.id} className="c-pointer"
-		name="isCheck" type="checkbox" checked={this.state.selection.indexOf(props.dataItem.id) > -1} onChange={(e) => this.handleInputChange(props, e)} /><span></span> </label></td>) },
+		{
+			field: "",
+			title: "",
+			width: 50,
+			customCell: (props) => (
+				<td>
+					{" "}
+					<label className="text-center custom-checkbox c-pointer">
+						<input
+							id={props.dataItem.id}
+							className="c-pointer"
+							name="isCheck"
+							type="checkbox"
+							checked={this.state.selection.indexOf(props.dataItem.id) > -1}
+							onChange={(e) => this.handleInputChange(props, e)}
+						/>
+						<span></span>{" "}
+					</label>
+				</td>
+			),
+		},
 		{
 			field: "favouriteName",
 			title: apiCalls.convertLocalLang("AddressLabel"),
@@ -94,24 +113,13 @@ class AddressBook extends Component {
 			customCell: (props) => (
 				<td>
 					<div className="gridLink" onClick={() => this.addressFiatView(props)}>
-						{props.dataItem.favouriteName}</div>
-						<Text className="file-label ml-8 fs-12">
-							{this.addressTypeNames(props?.dataItem?.addressType)}
-						</Text>
+						{props.dataItem.favouriteName}
+					</div>
+					<Text className="file-label ml-8 fs-12">
+						{this.addressTypeNames(props?.dataItem?.addressType)}
+					</Text>
 				</td>
 			),
-		},
-		//  {
-		//     field: "addressLable", title: apiCalls.convertLocalLang('AddressLabel'), filter: true, width: 300,
-		//     customCell: (props) => (<td > <div className="gridLink"
-		//     onClick={() => this.addressCryptoView(props)}
-		//     >{props.dataItem.addressLable}<Text className='file-label ml-8 fs-12'>{props?.dataItem?.addressType}</Text></div></td>)
-		// }
-		{
-			field: "toWalletAddress",
-			title: apiCalls.convertLocalLang("address"),
-			filter: true,
-			width: 380,
 		},
 		{
 			field: "currency",
@@ -146,7 +154,10 @@ class AddressBook extends Component {
 		},
 		{
 			field: "beneficiaryAccountName",
-			title: apiCalls.convertLocalLang("business_recipient"),
+			title:
+			(this.props?.userConfig?.isBusiness && apiCalls.convertLocalLang("company_name")) ||
+													(!this.props?.userConfig?.isBusiness &&
+														apiCalls.convertLocalLang("Recipient_full_name")),
 			filter: true,
 			width: 300,
 		},
@@ -181,8 +192,8 @@ class AddressBook extends Component {
 						<input
 							id={props.dataItem.id}
 							name="isCheck"
-							type="checkbox"  
-							className='c-pointer'
+							type="checkbox"
+							className="c-pointer"
 							checked={this.state.selection.indexOf(props.dataItem.id) > -1}
 							onChange={(e) => this.handleInputChange(props, e)}
 						/>
@@ -202,10 +213,11 @@ class AddressBook extends Component {
 					<div
 						className="gridLink"
 						onClick={() => this.addressCryptoView(props)}>
-						{props.dataItem.addressLable}</div>
-						<Text className="file-label ml-8 fs-12">
-							{this.addressTypeNames(props?.dataItem?.addressType)}
-						</Text>
+						{props.dataItem.addressLable}
+					</div>
+					<Text className="file-label ml-8 fs-12">
+						{this.addressTypeNames(props?.dataItem?.addressType)}
+					</Text>
 				</td>
 			),
 		},
@@ -426,7 +438,8 @@ class AddressBook extends Component {
 			setTimeout(() => this.setState({ alert: false }), 2000);
 		} else if (
 			obj.addressState === "Approved" ||
-			obj.addressState === "Rejected"||obj.addressState === "Reject"
+			obj.addressState === "Rejected" ||
+			obj.addressState === "Reject"
 		) {
 			warning(`Record is already ${obj.addressState} you can't modify`);
 			this.setState({
@@ -704,7 +717,7 @@ class AddressBook extends Component {
 								/>
 							</div>
 							{this.renderIcon()}
-						</div>
+						</div>,
 					]}
 					placement="right"
 					closable={true}

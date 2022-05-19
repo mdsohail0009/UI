@@ -12,7 +12,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 	const suffix = children?.slice(-suffixCount).trim();
 	return (
 		<Text
-			className="mb-0 fs-14 docname c-pointer d-block"
+			className="mb-0 fs-14 docnames c-pointer d-block"
 			style={{ maxWidth: "100% !important" }}
 			ellipsis={{ suffix }}>
 			{start}
@@ -125,12 +125,7 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>
-											 <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-													<div>
-														<label className="kpi-label">Address</label>
-														<div className="kpi-val">{fiatAddress?.toWalletAddress}</div>
-													</div>
-												</Col> 
+
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Address Type</label>
@@ -177,38 +172,9 @@ const AddressFiatView = (props) => {
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">
-														Bank Address 
-													</label>
+													<label className="kpi-label">Bank Address</label>
 													<div className="kpi-val">
 														{fiatAddress?.bankAddress}
-													</div>
-												</div>
-											</Col>
-
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
-													<label className="kpi-label">Country</label>
-													<div className=" kpi-val">
-														<div className="kpi-val">
-															{fiatAddress?.country}
-														</div>
-													</div>
-												</div>
-											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
-													<label className="kpi-label">State</label>
-													<div className="kpi-val">{fiatAddress?.state}</div>
-												</div>
-											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
-													<label className="kpi-label">Zip Code</label>
-													<div className=" kpi-val">
-														<div className="kpi-val">
-															{fiatAddress?.zipCode}
-														</div>
 													</div>
 												</div>
 											</Col>
@@ -220,10 +186,11 @@ const AddressFiatView = (props) => {
 										<Row className="kpi-List">
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-												<label className="kpi-label" >
-												{(props?.userConfig?.isBusiness && "Business Name") ||
-												(!props?.userConfig?.isBusiness &&
-													"Recipient Full Name")}
+													<label className="kpi-label">
+														{(props?.userConfig?.isBusiness &&
+															"Business Name") ||
+															(!props?.userConfig?.isBusiness &&
+																"Recipient Full Name")}
 													</label>
 													<div className="kpi-val">
 														{fiatAddress?.beneficiaryAccountName}
@@ -232,9 +199,7 @@ const AddressFiatView = (props) => {
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">
-														Recipient Address 
-													</label>
+													<label className="kpi-label">Recipient Address</label>
 													<div className=" kpi-val">
 														<div className="kpi-val">
 															{fiatAddress?.beneficiaryAccountAddress}
@@ -250,12 +215,16 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>
-											{fiatAddress?.addressType=="3rdparty"&&<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
-													<label className="kpi-label">Remarks</label>
-													<div className="kpi-val">{fiatAddress?.remarks}</div>
-												</div>
-											</Col>}
+											{fiatAddress?.addressType == "3rdparty" && (
+												<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+													<div>
+														<label className="kpi-label">Remarks</label>
+														<div className="kpi-val">
+															{fiatAddress?.remarks}
+														</div>
+													</div>
+												</Col>
+											)}
 										</Row>
 										<Row>
 											{fiatAddress?.documents?.details.map((file) => (

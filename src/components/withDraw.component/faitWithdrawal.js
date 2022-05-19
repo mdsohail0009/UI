@@ -42,6 +42,7 @@ import { validateContentRule } from "../../utils/custom.validator";
 import { handleFiatConfirm } from "../send.component/api";
 import walletList from "../shared/walletList";
 import WAValidator from "multicoin-address-validator";
+import Loader from '../../Shared/loader';
 
 const LinkValue = (props) => {
   return (
@@ -84,6 +85,8 @@ const FaitWithdrawal = ({
   const useDivRef = React.useRef(null);
   const [addressShow, setAddressShow] = useState(true);
   const [validated, setValidated] = useState(false)
+  const [amountLoading, setAmountLoading] = useState(false);
+
   const [addressObj, setAddressObj] = useState({
     bankName: null,
     accountNumber: null,
@@ -206,6 +209,7 @@ const FaitWithdrawal = ({
     }
   };
   const handleAddressChange = async (e) => {
+    setAmountLoading(true)
     let val = addressLu.filter((item) => {
       if (item.name == e) {
         return item;
@@ -216,6 +220,8 @@ const FaitWithdrawal = ({
     let recAddressDetails = await detailsAddress(val[0].id);
     if (recAddressDetails.ok) {
       bindEditableData(recAddressDetails.data);
+      setAmountLoading(false)
+
     }
   };
   const bindEditableData = (obj) => {
@@ -424,6 +430,7 @@ const FaitWithdrawal = ({
               {addressShow == false &&
                 <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="noaddress_msg" /></Text>
               }
+
               {addressLu?.length > 1 &&
                 <div style={{ position: "relative" }}>
 
@@ -460,6 +467,8 @@ const FaitWithdrawal = ({
                   </Form.Item>
 
                 </div>}
+                {amountLoading && <Loader />}
+
               {addressInfo &&
                 <div className="fiatdep-info">
 
@@ -660,8 +669,6 @@ const FaitWithdrawal = ({
                   >
                     <span className="d-flex">
                       <Checkbox className="ant-custumcheck" />
-
-                      {/* </Checkbox> */}
                       <span className="withdraw-check"></span>
                       <Translate
                         content="agree_to_suissebase"
@@ -680,7 +687,7 @@ const FaitWithdrawal = ({
                       className="pop-btn"
                       disabled={btnDisabled}
                     >
-                      <Translate content="Confirm" component={Form.label} />
+                      <Translate content="Confirm_fiat" component={Form.label} />
                     </Button>
                   </Form.Item>
                 </div>}
@@ -814,7 +821,7 @@ const FaitWithdrawal = ({
                   onClick={handleCancel}
                   disabled={loading}
                 >
-                  Back
+                  Cancel
                 </Button>
                 <Button
                   key="submit"

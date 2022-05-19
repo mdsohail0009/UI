@@ -10,7 +10,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 	const suffix = children?.slice(-suffixCount).trim();
 	return (
 		<Text
-			className="mb-0 fs-14 docname c-pointer d-block"
+			className="mb-0 fs-14 docnames c-pointer d-block"
 			style={{ maxWidth: "100% !important" }}
 			ellipsis={{ suffix }}>
 			{start}
@@ -31,7 +31,6 @@ const AddressFiatView=(props)=> {
 		loadDataAddress();
 	}, []);
     const loadDataAddress = async () => {
-      debugger
     console.log(props?.addressBookReducer)
         setIsLoading(true)
         let response = await getAddress(props.match.params.id, 'fiat');

@@ -44,7 +44,7 @@ body, h1, h2, h3, h4, h5, h6, a, p div{font-family: 'SF Pro Text', sans-serif !i
 .login-user, .side-drawer .side-drawer-header, .side-drawer-full .side-drawer-header, .wire-trans, .crypto-card-bottom{display: flex;justify-content: space-between;align-items: center;}
 .header-logo{list-style: none;display: inline-flex;padding-right: 0 !important;align-items: center;margin-bottom: 0;}
 .tlv-logo{height: 45px;}
-.header-logo li:first-child::after{content: '';position: absolute;width: 1px;height: 27px;right: 0;top: 10px;background-color: var(--bgWhiteSpin);}
+.header-logo li:first-child::after{content: '';position: absolute;width: 1px;height: 27px;right: 0;top: 16px;background-color: var(--bgWhiteSpin);}
 .tlv-header .list-item.ant-menu-item .ant-menu-title-content{padding:6px 12px;}
 .tlv-header .list-item.ant-menu-item-selected .ant-menu-title-content, .tlv-header .list-item.ant-menu-item-active .ant-menu-title-content{
 background-image: linear-gradient(99.09deg, var(--btnGrad1) 0%, var(--btnGrad2) 100%); filter: drop-shadow(0px 4px 8px rgba(0, 0, 0, 0.25));margin: 0px;border-radius: 5px;border:0;
@@ -95,7 +95,7 @@ border-radius: 5px;}
 .icon.xl{width: 32px; height: 32px;}
 .icon.md{width: 20px; height: 20px;}
 .icon.xxxl{width: 70px; height: 70px;}
-.icon.xl.closewhite{background-position: -2px -243px;}
+.icon.xl.closewhite{background-position: -2px -243px;} 
 .icon.md.close{background-position: -42px -70px;}
 .icon.lg{width: 26px; height: 26px;}
 .icon.lg.drawer-close{background-position: -1px -112px;}
@@ -704,9 +704,10 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .coin-bal ul li{display: inline-block;list-style: none;font-size: 10px;text-align: center;color: var(--textWhite30);font-weight: 500;margin-left:16px;}
 .otp-verify{position: relative;margin-left: 0 !important;}
 .otp-verify button{
-    color: var(--textYellow) !important;
+    color: var(--textBlack) !important;
     font-weight: 500;
     padding: 0 6px 0 0;
+    padding-top: 14px;
 }
 .otp-verify .ant-form-item-label{
     width: auto;
@@ -1122,7 +1123,22 @@ input[type=number]::-webkit-outer-spin-button {
 .payments-modal .modal-para{margin-left: 26px !important;} 
 .excel-btn{background-color: var(--bgYellow); border-color: var(--bgYellow); border-radius: 40px;height: 42px; text-transform: uppercase;font-weight: 700; transition: 0.3s ease; color: rgba(0, 0, 0, 0.85);}
 .excel-btn:hover, .excel-btn:focus, .excel-btn:active{background-color: var(--bgDarkYellow);color: var(--textDark);border-color: var(--bgYellow);}
-.pay-docs{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 65px;word-break: inherit; display: inline-block; vertical-align: bottom;}
 .pay-account{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 100px;word-break: inherit; display: inline-block; vertical-align: bottom;}
 .docdetails .docnames{font-weight: 700;color: var(--textWhite30); line-height: 16px;max-width: 150px !important;}
 .pay-docs{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 215px;word-break: inherit; display: inline-block; vertical-align: bottom;}
+.doc-def{width: 500px;margin-left: -2px;}
+.get-code{
+    padding: 1px;
+    width: 100%;
+    text-align: center;
+    /* background-color: var(--bgYellow);
+    border-color: var(--bgYellow); */
+    height: 50px;
+    border: 1px solid var(--borderLight);
+    color: var(--textWhite30);
+    text-align: center;
+    font-size: 16px;
+    padding: 0 16px !important;
+    /* color: black; */
+    
+}
