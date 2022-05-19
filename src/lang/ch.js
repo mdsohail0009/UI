@@ -539,4 +539,6 @@ export default {
 	sendTo: "發送至",
 	account_address: "受益人地址",
 	account_name: "受益人姓名",
+	personal_account:'个人账户',
+	business_account:"商业账户",
 };
