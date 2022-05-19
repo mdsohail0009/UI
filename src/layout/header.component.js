@@ -570,22 +570,24 @@ class Header extends Component {
                 <span className="icon md rarrow-white" />
               </Link> */}
                 <Panel header="Get Your Own IBAN" key="1" >
-                  <Link to="/https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d">
+                <span onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
+                  <Link >
                   <Translate
                   content="personal_account"
                   component={Text}
                   className="text-white-30" key="1"
                 />
                 <span className="icon md rarrow-white" />
-                  </Link>
-                  <Link to="/https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7">
+                  </Link></span>
+                  <span onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
+                  <Link>
                   <Translate
                   content="business_account"
                   component={Text}
                   className="text-white-30" key="1"
                 />
                 <span className="icon md rarrow-white" />
-                    </Link>
+                    </Link></span>
                 </Panel>
               </Collapse>
             </li>
