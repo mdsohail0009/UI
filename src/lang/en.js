@@ -573,5 +573,7 @@ export default {
 	sendTo: "Send to",
 	account_address: "Beneficiary Address",
 	account_name: "Beneficiary Name",
+	personal_account:'Personal Account',
+	business_account:"Business Account",
 	empty: " ",
 };
