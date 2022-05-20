@@ -12,7 +12,7 @@ import {Collapse,
   Carousel,
   Switch,
   Drawer,
-  Button
+  Button,Popover
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { Link, withRouter } from "react-router-dom";
@@ -559,16 +559,8 @@ class Header extends Component {
             onClick={() => this.userProfile()}
           />
           <ul className="pl-0 drpdwn-list">
-            <li>
+            {/* <li>
               <Collapse expandIconPosition="right" className="text-left profile-collapse">
-              {/* <Link>
-                <Translate
-                  content="get_your_own_iban"
-                  component={Panel}
-                  className="text-white-30" key="1"
-                />
-                <span className="icon md rarrow-white" />
-              </Link> */}
                 <Panel header="Get Your Own IBAN" key="1" >
                 <span onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
                   <Link >
@@ -590,7 +582,37 @@ class Header extends Component {
                     </Link></span>
                 </Panel>
               </Collapse>
-            </li>
+            </li> */}
+             <li
+              // onClick={() => window.open('https://pyrros.instance.kyc-chain.com#/auth/signup/6120197cdc204d9ddb882e4d', '_blank')}
+            >
+             <Popover placement="left"  content={<><div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
+                  <Link>
+                  <Translate
+                  content="personal_account"
+                  component={Text}
+                  className="text-white-30" key="1"
+                />
+                  </Link><span className="icon md rarrow-white ml-12" /></div>
+                  <div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
+                  <Link>
+                  <Translate
+                  content="business_account"
+                  component={Text}
+                  className="text-white-30" key="1"
+                /> 
+                </Link><span className="icon md rarrow-white ml-12" /></div></>} >
+              <Link>
+                <Translate
+                  content="get_your_own_iban"
+                  component={Text}
+                  className="text-white-30"
+                />
+                <span className="icon md rarrow-white" />
+              </Link>
+        
+      </Popover>
+      </li>
 
             {/* <li
               onClick={() => window.open('https://pyrros.instance.kyc-chain.com#/auth/signup/6120197cdc204d9ddb882e4d', '_blank')}
