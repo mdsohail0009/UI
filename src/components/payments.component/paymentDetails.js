@@ -240,7 +240,7 @@ class PaymentDetails extends Component {
     }else{
         this.setState({
             ...this.state,
-            errorMessage: "Atleast one record is required",modal:false
+            errorMessage: "At least one record is required",modal:false
           });
           this.useDivRef.current.scrollIntoView();
     }

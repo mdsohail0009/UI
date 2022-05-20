@@ -192,6 +192,8 @@ componentDidMount() {
          key={gridUrl}
          columns={this.gridColumns}
          showExcelExport ={true}
+         excelFileName = {'Transactions'}
+
         />
 				{/* <Modal
 					title="Crypto Currency"
