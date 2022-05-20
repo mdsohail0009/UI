@@ -1130,3 +1130,6 @@ input[type=number]::-webkit-outer-spin-button {
 .drpdwn-list .ant-collapse > .ant-collapse-item{border-bottom: 0 !important;}
 .ant-collapse-icon-position-right.profile-collapse > .ant-collapse-item > .ant-collapse-header{padding: 10px 0 10px 10px;color: var(--textWhite30);font-size: 14px;font-weight: 300;}
 svg{margin-right: -12px;font-size: 14px;}
+.ant-popover-inner-content div:hover{padding: 8px 27px;background: #243540 !important;margin: 0 -15px;}
+.ant-popover-inner-content div, .ant-popover-inner{padding: 8px 12px;background: #313c46 !important;}
+.ant-popover-arrow{background: #313c46 !important;border-color:#313c46 !important;}
