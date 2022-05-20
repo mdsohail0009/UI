@@ -71,7 +71,6 @@ class AuditLogs extends Component {
     this.fetchAuditLoginfo(e.dataItem.id, e);
   }
   fetchAuditLoginfo = async (id, e) => {
-    debugger
     this.setState({
       ...this.state, isLoading: false, moreAuditLogs: true, featureName: e.dataItem.feature
     })

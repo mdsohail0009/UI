@@ -39,7 +39,7 @@ const filterOperators = {
 export function withState(WrappedGrid) {
     return class StatefullGrid extends React.Component {
         constructor(props) {
-            debugger
+            
             super(props);
             this.state = { dataState: { skip: 0, take: 10 }, additionalParams: null, data: [], isLoading: false };
             this.excelRef = React.createRef();

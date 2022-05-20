@@ -37,7 +37,8 @@ class FaitDeposit extends Component {
     BankDetails: [],
      BankInfo: null, 
      depObj: { currency: null, BankName: null, Amount: null },
-    tabValue: 1, Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false
+    tabValue: 1, Loader: false, isTermsAgreed: false, errorMessage: null, showSuccessMsg: false,
+    bankLoader:false
   }
   componentDidMount() {
     this.props.fiatRef(this)
@@ -116,7 +117,6 @@ class FaitDeposit extends Component {
     }
   }
   handlFiatDep = async (e, currencyLu) => {
-    debugger
     let { depObj } = this.state;
     depObj.currency = e;
     depObj.BankName = null;
@@ -141,17 +141,16 @@ class FaitDeposit extends Component {
     this.formRef.current.setFieldsValue({ ...depObj })
   }
   handlebankName = async (e) => {
-    debugger
     let { depObj } = this.state;
     depObj.BankName = e;
     depObj.Amount = null;
     for (var k in this.state.BankDetails) {
       if (this.state.BankDetails[k].bankName === e) {
-        this.setState({ ...this.state, Loader: true })
+        this.setState({ ...this.state, bankLoader: true })
         let reqdepositObj = await requestDepositFiat(this.state.BankDetails[k].bankId, this.props.member?.id);
         if (reqdepositObj.ok === true) {
           this.setState({
-            ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, depObj: depObj, Loader: false, isTermsAgreed: false
+            ...this.state, fiatDepEur: e === "EUR", BankInfo: reqdepositObj.data, depObj: depObj, bankLoader: false, isTermsAgreed: false
           });
         }
       }
@@ -274,6 +273,8 @@ class FaitDeposit extends Component {
                       )}
                     </Select>
                   </div></Form.Item>}
+                  {this.state.bankLoader && <Loader />}
+
                 {this.state.BankInfo &&
                   <div className="fiatdep-info">
 

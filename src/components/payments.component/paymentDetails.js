@@ -150,15 +150,8 @@ class PaymentDetails extends Component {
   };
   savePayment = async () => {
     let objData = this.state.paymentsData.filter((item) => {
-      return item.checked;
+      return item.amount;
     });
-    // if (objData.length <1) {
-    //   this.setState({
-    //     ...this.state,
-    //     errorMessage: "Please Check atleast one record",
-    //   });
-    //   return;
-    // }
     let objAmount = objData.some((item) => {
       return (item.recordStatus !== "Deleted" && (item.amount === null || item.amount <= 0));
     });
@@ -172,7 +165,7 @@ class PaymentDetails extends Component {
     obj.paymentsDetails = objData;
     if (obj.currency != null) {
       if (objAmount) {
-        this.setState({ ...this.state, errorMessage: "Please enter amount" });
+        this.setState({ ...this.state, errorMessage: "Amount must be greater than zero."  });
       }else {
         this.setState({ btnDisabled: true });
         if (
@@ -214,12 +207,12 @@ class PaymentDetails extends Component {
           } else {
             this.setState({ btnDisabled: false });
             message.destroy();
-            message.error({
-              content: response.data,
-              className: "custom-msg",
-              duration: 0.5,
-            });
-            this.setState({ ...this.state, errorMessage: response.data });
+            // message.error({
+            //   content: response.data,
+            //   className: "custom-msg",
+            //   duration: 0.5,
+            // });
+            this.setState({ ...this.state, errorMessage:"please enter amount" });
           }
         }
       }
@@ -292,7 +285,6 @@ class PaymentDetails extends Component {
     } else {
       this.setState({ ...this.state, isValidFile: true,isUploading:false });
       warning('File is not allowed. You can upload jpg, png, jpeg and PDF files')
-      // this.setState({ ...this.state, isValidFile: false });
       return Upload.LIST_IGNORE;
     }
   };
@@ -469,11 +461,8 @@ filePreviewPath() {
                 <table className="pay-grid">
                   <thead>
                     <tr>
-                    {/* {(this.props.match.params.id ===
-                        "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
-                       && (<th style={{ width: 50 }}></th>)} */}
-                      <th>Name</th>
-                      <th style={{width:"350px"}}>Bank name</th>
+                      <th className="doc-def">Name</th>
+                      <th className="doc-def">Bank name</th>
                       <th>Bank Account Number/IBAN</th>
                       {(this.props.match.params.id !==
                         "00000000-0000-0000-0000-000000000000" 
@@ -512,59 +501,14 @@ filePreviewPath() {
                                       : true
                                   }
                                 >
-                            {/* {(this.props.match.params.id ===
-                                "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
-                              &&
-                                  <td
-                                    style={{ width: 50 }}
-                                    className="text-center"
-                                  >
-                                    <label className={`text-center ${ (this.props.match.params.id !==
-                                            "00000000-0000-0000-0000-000000000000" ||
-                                             item.state === "Submitted" ||
-                                          item.state === "Approved" ||
-                                          item.state === "Cancelled" ||
-                                          item.state === "Pending")? "c-pointer":"disabled" }  custom-checkbox p-relative`}>
-                                      <Input
-
-                                        name="check"
-                                        type="checkbox"
-                                        disabled={
-                                          this.props.match.params.id !==
-                                            "00000000-0000-0000-0000-000000000000" ||
-                                             item.state === "Submitted" ||
-                                          item.state === "Approved" ||
-                                          item.state === "Cancelled" ||
-                                          item.state === "Pending"
-                                        }
-                                        checked={item.checked}
-                                        className="grid_check_box"
-                                        onClick={(value) => {
-                                          let paymentData =
-                                            this.state.paymentsData;
-                                          if (value.target.checked === false) {
-                                            paymentData[i].amount = 0;
-                                          }
-                                          paymentData[i].checked =
-                                            value.target.checked;
-                                          this.setState({
-                                            ...this.state,
-                                            paymentsData: paymentData,
-                                          });
-                                        }}
-                                      />
-                                      <span></span>
-                                    </label>
-                                  </td>
-                            } */}
-                                  <td>
+                                  <td className="doc-def">
                                     {item?.beneficiaryAccountName ? (
                                       <>{item?.beneficiaryAccountName}</>
                                     ) : (
                                       <span>{" - - "}</span>
                                     )}
                                   </td>
-                                  <td style={{width:"350px"}}>
+                                  <td className="doc-def">
                                     <div className="d-flex align-center justify-content">
                                       <span>
                                         <Tooltip title= {item.bankname}>
@@ -572,7 +516,7 @@ filePreviewPath() {
                                         </Tooltip>
                                           <Text
                                             size="small"
-                                            className="file-label ml-8"
+                                            className="file-label doc-def"
                                           >                                           
                                            {this.addressTypeNames(item.addressType)}{" "} 
                                           </Text>
@@ -699,13 +643,12 @@ filePreviewPath() {
                                         </span>
                                       )}
                                     </div>
-                                   
+                                    {uploadIndex ===i && isUploading ? <div className="text-center" >
+                                            <Spin />
+                                          </div>:<>
                                     {item.documents?.details.map((file) => (
                                       <>
-                                      {uploadIndex ===i && isUploading ? <div className="text-center" >
-                                            <Spin />
-                                          </div>:
-                                          file.documentName !== null && (
+                                          {file.documentName !== null && (
                                           <div className='docdetails' onClick={() => this.docPreview(file)}>
                                           <Tooltip title={file.documentName}>
                                           <EllipsisMiddle  suffixCount={4}>
@@ -716,6 +659,7 @@ filePreviewPath() {
                                         )}
                                       </>
                                     ))}
+                                    </>}
                                   </td>
                                   </>: <td>
                                                     <NumberFormat
@@ -860,14 +804,13 @@ filePreviewPath() {
                     className="pop-cancel"
                     onClick={this.handleCancel}>Cancel</Button>
                 <Button className="pop-btn px-36"
-                // className="primary-btn pop-btn"
                     
                     onClick={()=>this.deleteDetials(this.state.selectData,this.state.paymentsData)}>Ok</Button>
             </>
         ]} 
         >
-          <div className="fs-14 text-white-50">
-            <Title className='fs-18 text-white-50'><span class="icon lg info-icon"></span> Delete Payment?</Title>
+          <div className="fs-14 text-white-50 ">
+            <Title className='fs-18 text-white-50 mt-10'><span class="icon lg info-icon"></span> Delete Payment?</Title>
             <Paragraph className="fs-14 text-white-50 modal-para">Are you sure do you want to
             delete Payment ?</Paragraph>
             

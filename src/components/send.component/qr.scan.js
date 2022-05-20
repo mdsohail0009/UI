@@ -89,7 +89,8 @@ class QRScan extends Component {
                             <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"></Text>
                         </CopyToClipboard></div>
                 </div>}
-                <Translate className="text-center f-12 text-white fw-200 mt-16" content="address_hint_text" component={Paragraph} />
+                <Translate className="text-center f-12 text-white  mt-16" style={{fontWeight:"bolder"}}  content="address_hint_text" component={Paragraph} />
+                <Translate className="text-center f-12 text-white fw-200 mt-16" content="address_hint_text_1" component={Paragraph} />
                 <Paragraph className="text-center f-16 text-yellow fw-400 mt-16 mb-0">Note: {this.props?.sendReceive?.depositWallet?.note}</Paragraph>
                 <Dropdown overlay={this.shareMenu}>
                     {/* <Button className="pop-btn mt-36" block>Share</Button> */}

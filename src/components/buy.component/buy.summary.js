@@ -8,6 +8,7 @@ import Loader from '../../Shared/loader';
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
 import apicalls from '../../api/apiCalls';
+import { validateContentRule } from '../../utils/custom.validator';
 
 class BuySummary extends Component {
     constructor(props) {
@@ -16,7 +17,8 @@ class BuySummary extends Component {
             isLoading: false,
             disablePay: false,
             error: { valid: true, error: null },
-            isTermsAgreed: false
+            isTermsAgreed: false,
+            buyTerms:false
         }
     }
 
@@ -69,7 +71,8 @@ class BuySummary extends Component {
                 this.setState({ ...this.state, error: { valid: false, message: response.data || response.originalError.message } })
             }
             this.setState({ isLoading: false })
-        } else {
+        } 
+        else {
             this.setState({ ...this.state, error: { valid: false, message: apicalls.convertLocalLang('agree_terms') } })
         }
     }

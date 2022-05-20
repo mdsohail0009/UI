@@ -42,7 +42,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 	const suffix = children?.slice(-suffixCount).trim();
 	return (
 		<Text
-			className="mb-0 fs-14 docname c-pointer d-block"
+			className="mb-0 fs-14 docnames c-pointer d-block"
 			style={{ maxWidth: "100% !important" }}
 			ellipsis={{ suffix }}>
 			{start}
@@ -245,7 +245,7 @@ const NewAddressBook = ({
 				// 	className: "custom-msg",
 				// 	duration: 0.5,
 				// });
-				setErrorMsg(response.data)
+				setErrorMsg(response.data);
 				setBtnDisabled(false);
 				setIsLoading(false);
 			}
@@ -588,12 +588,7 @@ const NewAddressBook = ({
 								</div>
 							</div>
 						)} */}
-						<div
-							style={{
-								display: "flex",
-								justifyContent: "center",
-								alignItems: "center",
-							}}>
+						<div style={{ position: "relative" }}>
 							<Form.Item
 								className="custom-forminput mt-36 agree"
 								name="isAgree"
@@ -617,7 +612,15 @@ const NewAddressBook = ({
 								with={{ link }}
 								component={Paragraph}
 								className="fs-14 text-white-30 ml-16 mb-4 mt-16"
-								style={{ flex: 1 }}
+								style={{
+									index: 100,
+									position: "absolute",
+									width: "420px",
+									top: -20,
+									left: 30,
+									paddingBottom: "10px",
+									marginBottom: "10px",
+								}}
 							/>
 						</div>
 
@@ -627,7 +630,7 @@ const NewAddressBook = ({
 								size="large"
 								block
 								className="pop-btn"
-								disabled={btnDisabled}>
+								loading={btnDisabled}>
 								{isLoading && <Spin indicator={antIcon} />}{" "}
 								<Translate content="Save_btn_text" component={Text} />
 							</Button>

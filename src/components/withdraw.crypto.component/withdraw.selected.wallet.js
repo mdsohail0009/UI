@@ -253,13 +253,13 @@ class CryptoWithDrawWallet extends Component {
                                     maxLength="250" />
                                 <Tooltip placement="top" title={<span>{apicalls.convertLocalLang('SelectAddress')}</span>} style={{ flexGrow: 1 }}>
                                     <div className="new-add c-pointer" onClick={() => this.selectCrypto()}>
-                                        <span className="icon md downarrow-icon d-block c-pointer"></span>
+                                        <span className="icon md diag-arrow d-block c-pointer"></span>
                                     </div>
                                 </Tooltip>
                             </div>
                         </Form.Item>
                     </Form>
-                    <Translate content="Confirm" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
+                    <Translate content="Confirm_crypto" loading={this.state.loading} component={Button} size="large" block className="pop-btn" style={{ marginTop: '30px' }} onClick={() => this.handlePreview()} target="#top" />
                     <Modal onCancel={() => { this.setState({ ...this.state, showModal: false }) }} title="Withdrawal" footer={[
                         <Button key="back" onClick={this.handleCancel} disabled={this.state.loading}>
                             Return

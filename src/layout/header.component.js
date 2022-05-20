@@ -694,12 +694,12 @@ class Header extends Component {
                     />
                   }
                 </li>
-                <li className="mb-d-none px-36">
+                <li className=" px-33" style={{marginTop:"13px"}}>
                   <Translate
                     content="header_title"
                     onClick={this.routeToCockpit}
                     component={Text}
-                    className="text-white-30 fs-24 c-pointer cp-link"
+                    className="text-white-30 fs-16 c-pointer cp-link ml-8"
                   />
                   <Text className="text-white-30 fs-24">|</Text>
                   <Translate
@@ -710,7 +710,7 @@ class Header extends Component {
                         : "Personal"
                     }}
                     component={Text}
-                    className="text-white-30 fs-24 ml-16"
+                    className="text-white-30 fs-16 ml-16"
                   />
                 </li>
               </ul>
