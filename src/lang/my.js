@@ -558,4 +558,6 @@ export default {
 	sendTo: "Ipadala sa",
 	account_address: "Lugar ng pagbibigyan",
 	account_name: "Pangalan ng Makikinabang",
+  personal_account:'Kaonty manokana',
+  business_account:"Kaonty fandraharahana",
 };
