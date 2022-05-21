@@ -73,6 +73,7 @@ const WithdrawalFiatSummary = ({
 	const [authDisable, setAuthDisable] = useState(false);
 	const [isAuthenticatorVerification, setIsAuthenticatorVerification] =
 		useState(false);
+		const [isLoading,setIsLoading]=useState(false);
 
 	const btnList = {
 		get_otp: (
@@ -191,25 +192,25 @@ const WithdrawalFiatSummary = ({
 	const saveWithdrwal = async (values) => {
 		if (verifyData.isEmailVerification) {
 			if (!isEmailVerification) {
-				// setMsg("Please verify  email verification code");
-				error("Please verify  email verification code")				
-				useOtpRef.current.scrollIntoView(0, 0);
+				setMsg("Please verify  email verification code");
+				// error("Please verify  email verification code")				
+				// useOtpRef.current.scrollIntoView(0, 0);
 				return;
 			}
 		}
 		if (verifyData.isPhoneVerified) {
 			if (!isPhoneVerification) {
-				//setMsg("Please verify phone verification code");
-				error("Please verify  phone verification code")
-				useOtpRef.current.scrollIntoView(0, 0);
+				setMsg("Please verify phone verification code");
+				// error("Please verify  phone verification code")
+				// useOtpRef.current.scrollIntoView(0, 0);
 				return;
 			}
 		}
 		if (verifyData.twoFactorEnabled) {
 			if (!isAuthenticatorVerification) {
-				//setMsg("Please verify authenticator code");
-				error("Please verify  phone authenticator code")
-				useOtpRef.current.scrollIntoView(0, 0);
+				setMsg("Please verify authenticator code");
+				// error("Please verify  phone authenticator code")
+				// useOtpRef.current.scrollIntoView(0, 0);
 				return;
 			}
 		}
@@ -250,18 +251,19 @@ const WithdrawalFiatSummary = ({
 		let withdrawal = await withdrawSave(Obj);
 
 		setDisableSave(true);
-
+		setIsLoading(false);
 		if (withdrawal.ok) {
 			setDisableSave(false);
 			dispatch(setWithdrawFinalRes(withdrawal.data));
 			dispatch(fetchDashboardcalls(userConfig.id));
 			dispatch(rejectWithdrawfiat());
-			setIsLoding(true);
+			setIsLoding(false);
 			changeStep("step7");
 		} else {
 			setMsg(withdrawal.data);
 			setIsLoding(false);
-			useOtpRef.current.scrollIntoView(0, 0);
+			setDisableSave(false);
+			// useOtpRef.current.scrollIntoView(0, 0);
 		}
 	};
 	const onCancel = () => {

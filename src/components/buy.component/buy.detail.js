@@ -115,7 +115,7 @@ class SelectCrypto extends Component {
         const { coin, coinFullName, coinBalance, percentage,impageWhitePath } = this.props.buyInfo?.selectedCoin?.data;
         return (
             <div id="divScroll" ref={this.myRef}>
-                {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} closable />}
+                {!this.state?.error?.valid && <Alert onClose={() => this.setState({ ...this.state, error: { valid: true, description: null } })} showIcon type="error" message={apicalls.convertLocalLang('buy_crypto')} description={this.state.error?.message} />}
                 <div className="selectcrypto-container">
                     <Card className="crypto-card select mb-36" bordered={false}>
                         <span className="d-flex align-center">
