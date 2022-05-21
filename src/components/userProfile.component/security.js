@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Switch, Drawer, message, Button, Checkbox, Form, Input, Alert, Row, Col } from "antd";
+import { Typography, Switch, Drawer, Button,  Form, Input, Alert, Row, Col,Spin } from "antd";
 import Translate from "react-translate-component";
 import Changepassword from "../../components/changepassword";
 import { connect } from "react-redux";
 import { updatechange, withdrawVerifyObj } from "../../reducers/UserprofileReducer";
 import { store } from "../../store";
-import { success, warning, error } from "../../utils/messages";
+import { success } from "../../utils/messages";
 import Moment from "react-moment";
 import apiCalls from "../../api/apiCalls";
+import { LoadingOutlined } from "@ant-design/icons";
 const { Title, Paragraph, Text } = Typography;
-const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerifyObj,twoFA }, props) => {
+const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA }) => {
   const [form] = Form.useForm();
   const [isChangepassword, setisChangepassword] = useState(false);
-  const [verifyData, setVerifyData] = useState({})
   const [factor, setFactor] = useState(false)
   const [phone, setPhone] = useState(false)
   const [email, setEmail] = useState(false)
   const [errorMsg, setErrorMsg] = useState(null);
   const useDivRef = React.useRef(null);
+  const [isLoading,setIsLoading]=useState(false);
+  const [btnDisabled, setBtnDisabled] = useState(false);
+  const [error,setError]=useState(null);
 
   const showDrawer = () => {
     setisChangepassword(true);
@@ -25,16 +28,18 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
   };
   useEffect(() => {
     securityTrack()
-    getVerifyData()
-  }, []);
+    getVerifyData();
+  }, []) //eslint-disable-line react-hooks/exhaustive-deps
   const getVerifyData = async () => {
     let response = await apiCalls.getVerificationFields(userConfig.id);
     if (response.ok) {
-      setVerifyData(response.data);
       setPhone(response.data?.isPhoneVerified);
       setEmail(response.data?.isEmailVerification);
       setFactor(response.data?.twoFactorEnabled)
       form.setFieldsValue(response.data);
+    }
+    else{
+      return setError( response.data || "Something went wrong please try again!");
     }
   }
   const securityTrack = () => {
@@ -69,24 +74,19 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
   };
 
   const handleInputChange = (e, type) => {
-    if (type == "phone") {
+    if (type === "phone") {
       setPhone(e.target.checked ? true : false)
-    } else if (type == "email") {
+    } else if (type === "email") {
       setEmail(e.target.checked ? true : false)
-    } else if (type == "factor") {
+    } else if (type === "factor") {
       setFactor(e.target.checked ? true : false)
     }
   }
   const saveDetails=async()=>{
-    
-    
-   
-    // if (email && phone && factor) {
-    //   useDivRef.current.scrollIntoView(0,0);
-    //   return setErrorMsg("Please select  two or morethan two checkboxes");
-    // }
-    //else
-      if (email && phone || email && factor || phone && factor || email&&phone&&factor) {
+    setBtnDisabled(true)
+    setIsLoading(false)
+    setErrorMsg(null);
+      if ((email && phone)|| (email && factor) || (phone && factor) || (email && phone && factor)) {
         let obj={
           "MemberId": userConfig.id,
           "isEmailVerification": email,
@@ -95,30 +95,41 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
       }
         const response = await apiCalls.updateSecurity(obj);
         if (response.ok) {
+          setBtnDisabled(false)
           setErrorMsg(false)
           fetchWithdrawVerifyObj(obj);
           success("Withdraw verification details saved successfully")
           setErrorMsg(null)
+          setError(null)
           useDivRef.current.scrollIntoView();
+          setIsLoading(false)
 
         } else if(email||phone||factor===false){
           useDivRef.current.scrollIntoView(0,0);
-          return setErrorMsg(response.data);
+          setError(response.data || "Something went wrong please try again!");
+           setIsLoading(false)
+           setBtnDisabled(false)
         }
         else {
-          error(response.data)
+          setError(response.data || "Something went wrong please try again!")
+          setIsLoading(false)
+          setBtnDisabled(false)
         }
       }
-      // else if(email||phone||factor===false){
-      //   useDivRef.current.scrollIntoView(0,0);
-      //   return setErrorMsg("Please select two or more  withdraw verification options");
-      // }
       else {
         useDivRef.current.scrollIntoView(0,0);
-        return setErrorMsg("Please select at least 2 of the withdrawal verification options");
+        setError(null);
+         setErrorMsg("Please select at least 2 of the withdrawal verification options");
+         setIsLoading(false)
+         setBtnDisabled(false);         
       }
  } 
-
+ const antIcon = (
+  <LoadingOutlined
+      style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
+      spin
+  />
+);
   return (
     <>
       <div ref={useDivRef}></div>
@@ -126,11 +137,19 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
       {errorMsg !== null && (
         <Alert
           className="mb-12"
-          closable
           type="error"
           message={"Withdraw Verification"}
           description={errorMsg}
           onClose={() => setErrorMsg(null)}
+          showIcon
+        />
+      )}
+       {error !== null && (
+        <Alert
+          className="mb-12"
+          type="error"
+          description={error}
+          onClose={() => setError(null)}
           showIcon
         />
       )}
@@ -331,9 +350,13 @@ const Security = ({ userConfig, userProfileInfo, userProfile, fetchWithdrawVerif
             </Col>
             <Col md={6} xl={6} xxl={6}>
               <div className="text-right">
-                <Button className="pop-btn px-36" style={{ height: 44 }} onClick={() => saveDetails()} >
-                  save
-                </Button>
+              <Button
+                        className="pop-btn px-36"
+                        loading={btnDisabled}
+                        style={{ height: 44,minWidth: 100 }} onClick={() => saveDetails()}>
+                        {isLoading && <Spin indicator={antIcon} />}{" "}
+                        save
+                    </Button>
               </div>
             </Col>
           </Row>

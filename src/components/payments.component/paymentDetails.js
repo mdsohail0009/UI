@@ -5,8 +5,8 @@ import { getCurrencyLu, getPaymentsData, savePayments, getBankData, creatPayment
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
-import { warning } from '../../utils/message';
 import FilePreviewer from 'react-file-previewer';
+import { LoadingOutlined } from "@ant-design/icons";
 
 const { confirm } = Modal;
 const { Option } = Select;
@@ -51,6 +51,7 @@ class PaymentDetails extends Component {
       modal:false,
       selectData:null,
       uploadIndex:null,
+      errorWarning:null
     };
     this.gridRef = React.createRef();
     this.useDivRef = React.createRef();
@@ -68,7 +69,7 @@ class PaymentDetails extends Component {
   };
 
   handleCurrencyChange = async (val) => {
-    this.setState({ ...this.state, currency: val, paymentsData: [] });
+    this.setState({ ...this.state, currency: val, paymentsData: [] ,errorMessage:null,errorWarning:null});
     if ((this.state.currency = val)) {
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
@@ -165,7 +166,7 @@ class PaymentDetails extends Component {
     obj.paymentsDetails = objData;
     if (obj.currency != null) {
       if (objAmount) {
-        this.setState({ ...this.state, errorMessage: "Amount must be greater than zero."  });
+        this.setState({ ...this.state,errorWarning:null, errorMessage: "Amount must be greater than zero."  });
       }else {
         this.setState({ btnDisabled: true });
         if (
@@ -173,7 +174,7 @@ class PaymentDetails extends Component {
         ) {
           let response = await savePayments(obj);
           if (response.ok) {
-            this.setState({ btnDisabled: false });
+            this.setState({ btnDisabled: false,loading:false, });
             message.destroy();
             message.success({
               content: "Payment details saved successfully",
@@ -182,9 +183,8 @@ class PaymentDetails extends Component {
             });
             this.props.history.push("/payments");
           } else {
-            this.setState({ btnDisabled: false });
             message.destroy();
-            this.setState({ ...this.state, errorMessage: response.data })
+            this.setState({ ...this.state,btnDisabled: false ,loading:false,errorWarning:null, errorMessage: response.data || "Something went wrong please try again!" })
           }
         }
         else {
@@ -196,7 +196,7 @@ class PaymentDetails extends Component {
           }
           let response = await updatePayments(this.state.paymentsData);
           if (response.ok) {
-            this.setState({ btnDisabled: false });
+            this.setState({ btnDisabled: false,loading:false });
             message.destroy();
             message.success({
               content: "Payment details update successfully",
@@ -205,19 +205,13 @@ class PaymentDetails extends Component {
             });
             this.props.history.push("/payments");
           } else {
-            this.setState({ btnDisabled: false });
             message.destroy();
-            // message.error({
-            //   content: response.data,
-            //   className: "custom-msg",
-            //   duration: 0.5,
-            // });
-            this.setState({ ...this.state, errorMessage:"please enter amount" });
+            this.setState({ ...this.state,btnDisabled: false,loading:false,errorWarning:null,errorMessage:response.data||"please enter amount" });
           }
         }
       }
     } else {
-      this.setState({ ...this.state, errorMessage: "Please select currency" });
+      this.setState({ ...this.state,errorWarning:null, errorMessage: "Please select currency" });
     }
   };
 
@@ -240,7 +234,7 @@ class PaymentDetails extends Component {
     }else{
         this.setState({
             ...this.state,
-            errorMessage: "Atleast one record is required",modal:false
+            errorMessage: "At least one record is required",modal:false
           });
           this.useDivRef.current.scrollIntoView();
     }
@@ -264,9 +258,9 @@ class PaymentDetails extends Component {
     this.setState({ ...this.state, visible: false });
   };
   beforeUpload = (file) => {
+    this.setState({ ...this.state,errorWarning:null,errorMessage:null });
     if(file.name.split('.').length > 2){
-      this.setState({ ...this.state, isValidFile: true,isUploading:false });
-      warning("File don't allow double extension")
+      this.setState({ ...this.state, isValidFile: true,isUploading:false,errorMessage:null,errorWarning:"File don't allow double extension" });
       return
   }
     let fileType = {
@@ -280,11 +274,10 @@ class PaymentDetails extends Component {
       "application/PDF": true,
     };
     if (fileType[file.type]) {
-      this.setState({ ...this.state, isValidFile: true,isUploading:true });
+      this.setState({ ...this.state, isValidFile: true,isUploading:true,errorWarning:null,errorMessage:null });
       return true;
     } else {
-      this.setState({ ...this.state, isValidFile: true,isUploading:false });
-      warning('File is not allowed. You can upload jpg, png, jpeg and PDF files')
+      this.setState({ ...this.state, isValidFile: true,isUploading:false,errorMessage:null,errorWarning:"File is not allowed. You can upload jpg, png, jpeg and PDF files" });
       return Upload.LIST_IGNORE;
     }
   };
@@ -391,7 +384,12 @@ filePreviewPath() {
       );
     }
   };
-
+   antIcon = (
+    <LoadingOutlined
+        style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
+        spin
+    />
+);
 
   render() {
     let total = 0;
@@ -413,12 +411,20 @@ filePreviewPath() {
             </Title>
           </div>
           <div className="box basic-info text-white">
-            {this.state.errorMessage != null && (
+            {this.state.errorMessage && (
               <Alert
                 description={this.state.errorMessage}
                 type="error"
-                closable
                 onClose={() => this.handleAlert()}
+                showIcon
+              />
+            )}
+             {this.state.errorWarning  && (
+              <Alert
+                description={ this.state.errorWarning}
+                type="warning"
+                onClose={() => this.handleAlert()}
+                showIcon
               />
             )}
             <Form autoComplete="off">
@@ -754,15 +760,17 @@ filePreviewPath() {
                 <div>
                    {(this.props.match.params.id ===
                                               "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending") &&
-                  <Button
-                   className="pop-btn px-36"
-                    disabled={this.state.btnDisabled}
-                    onClick={() => {
-                      this.savePayment();
-                    }}
-                  >
-                    Pay Now
-                  </Button>
+                                              <Button
+                                              htmlType="submit"
+                                              size="large"
+                                              className="pop-btn mt-36"
+                                              loading={this.state.btnDisabled}
+                                              style={{ minWidth: 150 }}onClick={() => {
+                                                this.savePayment();
+                                              }}>
+                                              {loading && <Spin indicator={this.antIcon} />}{" "}
+                                              Pay Now
+                                          </Button>
   }
                   <Button
                     className="pop-btn px-36"

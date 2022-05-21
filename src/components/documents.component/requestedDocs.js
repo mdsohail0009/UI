@@ -78,7 +78,7 @@ class RequestedDocs extends Component {
                 }
             });
         } else {
-            this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: response.data } } });
+            this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: response.data ||"Something went wrong please try again!" } } });
         }
     }
     docPreview = async (file) => {

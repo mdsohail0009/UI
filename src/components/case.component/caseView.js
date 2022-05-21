@@ -16,7 +16,8 @@ import QueryString from 'query-string';
 import { validateContent } from "../../utils/custom.validator";
 import Translate from 'react-translate-component';
 import Mome from 'moment'
-import { error, success, warning } from '../../utils/messages';
+import {  success } from '../../utils/messages';
+import { LoadingOutlined } from "@ant-design/icons";
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
@@ -49,7 +50,8 @@ class RequestedDocs extends Component {
         PreviewFilePath: null,
         caseData: {},
         commonModel: {},
-        assignedTo: []
+        assignedTo: [],
+        errorWarning:null
     }
     componentDidMount() {
         this.getCaseData(QueryString.parse(this.props.location.search).id);
@@ -111,12 +113,12 @@ class RequestedDocs extends Component {
             "documentDetailId": doc.id,
             "status": "Approved"
         });
-        this.setState({ ...this.state, isMessageError: null });
+        this.setState({ ...this.state, isMessageError: null,errorWarning:null });
         if (response.ok) {
             success('Document has been approved');
             this.loadDocReplies(doc.id);
         } else {
-            warning(response.data);
+            this.setState({ ...this.state, loading: false ,errorWarning:response.data});
         }
     }
     updateDocRepliesStatus = (doc, Status) => {
@@ -150,18 +152,18 @@ class RequestedDocs extends Component {
         item.repliedBy = `${(this.props.userProfileInfo?.isBusiness==true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         item.info = JSON.stringify(this.props.trackAuditLogData);
-        this.setState({ ...this.state, isSubmitting: true });
+        this.setState({ ...this.state, isSubmitting: true,errorWarning:null,errorMessage:null });
         const response = await saveDocReply(item);
         if (response.ok) {
             success('Document has been submitted');
             this.updateDocRepliesStatus(doc, "Submitted");
             this.loadDocReplies(doc.id)
         } else {
-            warning(response.data);
+            this.setState({ ...this.state, loading: false ,errorWarning:response.data,errorMessage:null});
         }
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
-        this.setState({ ...this.state, docReplyObjs: objs, isSubmitting: false, isMessageError: null });
+        this.setState({ ...this.state, docReplyObjs: objs, isSubmitting: false, isMessageError: null,errorWarning:null,errorMessage:null });
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
     deleteDocument = async (doc, idx, isAdd) => {
@@ -181,9 +183,9 @@ class RequestedDocs extends Component {
             this.loadDocReplies(doc.id);
             let objs = [...this.state.docReplyObjs];
             objs = objs.filter(item1 => item1.docunetDetailId !== doc.id);
-            this.setState({ ...this.state, docReplyObjs: objs });
+            this.setState({ ...this.state, docReplyObjs: objs,errorWarning:null });
         } else {
-            warning(response.data);
+            this.setState({ ...this.state, loading: false ,errorWarning:response.data});
         }
     }
     isDocExist(lstObj, id) {
@@ -233,11 +235,10 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
         }
         else if (file.status === 'error') {
-            error(file.response);
-            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false })
+            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false,errorMessage:file.response || "Something went wrong please try again!" })
         }
         else if (!this.state.isValidFile) {
-            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false });
+            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false, });
         }
     }
     beforeUpload = (file) => {
@@ -246,8 +247,7 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, isValidFile: true, })
             return true
         } else {
-            error('File is not allowed. You can upload jpg, png, jpeg and PDF  files');
-            this.setState({ ...this.state, isValidFile: false, })
+            this.setState({ ...this.state, isValidFile: false,errorMessage:"File is not allowed. You can upload jpg, png, jpeg and PDF  files" })
             return Upload.LIST_IGNORE;
         }
     }
@@ -308,10 +308,15 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, caseData: caseRes.data, commonModel: caseRes.data.commonModel, loading: false });
             this.getDocument(caseRes.data?.documents?.id);
         } else {
-            warning('Data not getting from the server!');
+            this.setState({ ...this.state, loading: false ,errorMessage:caseRes.data ||"Something went wrong please try again!"});
         }
     }
-    
+     antIcon = (
+        <LoadingOutlined
+            style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
+            spin
+        />
+      );
     render() {
         const { caseData, commonModel } = this.state;
         if (this.state.loading) {
@@ -319,6 +324,20 @@ class RequestedDocs extends Component {
         }
         return <>
             <div className="main-container">
+                {this.state.errorMessage != null && <Alert
+                    description={this.state.errorMessage}
+                    type="error"
+                    showIcon
+                    closable={false}
+                    style={{ marginBottom: 0, marginTop: '16px' }}
+                />}
+                {this.state.errorWarning != null && <Alert
+                    description={this.state.errorWarning}
+                    type="warning"
+                    showIcon
+                    closable={false}
+                    style={{ marginBottom: 0, marginTop: '16px' }}
+                />}
                 <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=6" />{caseData?.documents?.customerCaseTitle}</div>
                 <div className='case-stripe'>
                     <Row gutter={[16, 16]}>
@@ -338,18 +357,6 @@ class RequestedDocs extends Component {
                 </div>
                 <div className='case-ribbon mb-16'>
                     <Row gutter={[16, 16]}>
-                        {/* {commonModel && Object.entries(commonModel).map(([key, value], idx) => <Col key={idx} xs={key=='description'?24:24} md={key=='description'?24:12} lg={key=='description'?24:8} xl={key=='description'?24:6} xxl={key=='description'?24:6}>
-                            <div className="ribbon-item">
-                                <span className={`icon md ${key != null ? key : 'description'}`} />
-                                <div className='ml-16' style={{flex: 1}}>
-                                    <Text className='case-lbl text-captz'>{key}</Text>
-                                    <div className='case-val'style={{wordBreak:"break-all"}}>
-                                    {(value == null || value ==" ")? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
-                                       
-                                        </div>
-                                </div>
-                            </div>
-                        </Col>)} */}
                          {commonModel ? (
                 Object.entries(commonModel).map(([key, value], idx) => (
                   <Col
@@ -370,9 +377,6 @@ class RequestedDocs extends Component {
                         <Text className="fw-300 text-white-50 fs-12">
                           {key}
                         </Text>
-                        {/* <div className="fw-600 text-white-30 fs-16 l-height-normal">
-                        {(value == null || value ==" ")? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
-                        </div> */}
                                 <div className='fw-600 text-white-30 fs-16 l-height-normal'style={{wordBreak:"break-all"}} >
                                     {(value == null || value == " ") ? '-' : (isNaN(value) || (key === 'Transaction Id') ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
                                 </div>
@@ -465,7 +469,15 @@ class RequestedDocs extends Component {
                                         </div>)}
                                     </div>
                                     <div className="text-center my-36">
-                                        <Button disabled={this.state.isSubmitting} className="pop-btn px-36" onClick={() => this.docReject(doc)}>Submit</Button>
+                                    <Button
+								htmlType="submit"
+								size="large"
+								loading={this.state.isSubmitting}
+								className="pop-btn px-36" onClick={() => this.docReject(doc)}>
+								{this.state.loading && <Spin indicator={this.antIcon} />}{" "}
+								Submit
+							</Button>
+                                        {/* <Button disabled={this.state.isSubmitting} className="pop-btn px-36" onClick={() => this.docReject(doc)}>Submit</Button> */}
                                     </div>
                                 </>}
                             </Panel>
