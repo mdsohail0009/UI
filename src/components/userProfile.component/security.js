@@ -20,6 +20,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
   const useDivRef = React.useRef(null);
   const [isLoading,setIsLoading]=useState(false);
   const [btnDisabled, setBtnDisabled] = useState(false);
+  const [error,setError]=useState(null);
 
   const showDrawer = () => {
     setisChangepassword(true);
@@ -38,7 +39,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
       form.setFieldsValue(response.data);
     }
     else{
-      return setErrorMsg( response.data || "Something went wrong please try again!");
+      return setError( response.data || "Something went wrong please try again!");
     }
   }
   const securityTrack = () => {
@@ -84,6 +85,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
   const saveDetails=async()=>{
     setBtnDisabled(true)
     setIsLoading(false)
+    setErrorMsg(null);
       if ((email && phone)|| (email && factor) || (phone && factor) || (email && phone && factor)) {
         let obj={
           "MemberId": userConfig.id,
@@ -98,23 +100,25 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           fetchWithdrawVerifyObj(obj);
           success("Withdraw verification details saved successfully")
           setErrorMsg(null)
+          setError(null)
           useDivRef.current.scrollIntoView();
           setIsLoading(false)
 
         } else if(email||phone||factor===false){
           useDivRef.current.scrollIntoView(0,0);
-           setErrorMsg(response.data || "Something went wrong please try again!");
+          setError(response.data || "Something went wrong please try again!");
            setIsLoading(false)
            setBtnDisabled(false)
         }
         else {
-          setErrorMsg(response.data || "Something went wrong please try again!")
+          setError(response.data || "Something went wrong please try again!")
           setIsLoading(false)
           setBtnDisabled(false)
         }
       }
       else {
         useDivRef.current.scrollIntoView(0,0);
+        setError(null);
          setErrorMsg("Please select at least 2 of the withdrawal verification options");
          setIsLoading(false)
          setBtnDisabled(false);         
@@ -137,6 +141,15 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           message={"Withdraw Verification"}
           description={errorMsg}
           onClose={() => setErrorMsg(null)}
+          showIcon
+        />
+      )}
+       {error !== null && (
+        <Alert
+          className="mb-12"
+          type="error"
+          description={error}
+          onClose={() => setError(null)}
           showIcon
         />
       )}
