@@ -206,7 +206,7 @@ class PaymentDetails extends Component {
             this.props.history.push("/payments");
           } else {
             message.destroy();
-            this.setState({ ...this.state,btnDisabled: false,loading:false,errorWarning:null,errorMessage:response.data||"please enter amount" });
+            this.setState({ ...this.state,btnDisabled: false,loading:false,errorWarning:null,errorMessage:"please enter amount" });
           }
         }
       }
