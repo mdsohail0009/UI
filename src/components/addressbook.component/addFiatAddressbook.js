@@ -28,7 +28,6 @@ import { validateContentRule } from "../../utils/custom.validator";
 import { Link } from "react-router-dom";
 import { bytesToSize } from "../../utils/service";
 import { getCountryStateLu, getStateLookup } from "../../api/apiServer";
-import { warning } from "../../utils/message";
 import { addressTabUpdate } from "../../reducers/addressBookReducer";
 import FilePreviewer from "react-file-previewer";
 
@@ -36,7 +35,7 @@ const { Text, Paragraph } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
 const { Dragger } = Upload;
-const { confirm } = Modal;
+
 
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount)?.trim();
@@ -89,6 +88,7 @@ const NewFiatAddress = (props) => {
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
 	const [bankType, setBankType] = useState("");
+	const [errorWarning,setErrorWarning]=useState(null);
 
 	useEffect(() => {
 		if (selectParty === true) {
@@ -165,6 +165,10 @@ const NewFiatAddress = (props) => {
 
 			getStateLu(response.data.country);
 			form.setFieldsValue({ ...response.data });
+			setIsLoading(false);
+		}
+		else{
+			setErrorMsg(response.data || "Something went wrong please try again!")	
 			setIsLoading(false);
 		}
 	};
@@ -312,6 +316,7 @@ const NewFiatAddress = (props) => {
 				message.success({
 					content: apiCalls.convertLocalLang("address_msg"),
 					className: "custom-msg",
+					duration:3
 				});
 				form.resetFields();
 				props?.onCancel();
@@ -320,6 +325,7 @@ const NewFiatAddress = (props) => {
 				props?.dispatch(setHeaderTab(""));
 				props?.props?.history?.push("/userprofile");
 			} else {
+				setErrorMsg(response.data||"Something went wrong please try again!")
 				setIsLoading(false);
 				setBtnDisabled(false);
 			}
@@ -351,8 +357,9 @@ const NewFiatAddress = (props) => {
 		}
 	};
 	const beforeUpload = (file, type) => {
+		setErrorWarning(null)
 		if (file.name.split(".").length > 2) {
-			warning(" File don't allow double extension");
+			setErrorWarning("File don't allow double extension");
 			return;
 		} else {
 			if (type === "IDENTITYPROOF") {
@@ -370,7 +377,7 @@ const NewFiatAddress = (props) => {
 					setUploadIdentity(true);
 					return true;
 				} else {
-					warning(
+					setErrorWarning(
 						"File is not allowed. You can upload jpg, png, jpeg and PDF files"
 					);
 					setUploadIdentity(false);
@@ -391,7 +398,7 @@ const NewFiatAddress = (props) => {
 					setUploadAddress(true);
 					return true;
 				} else {
-					warning(
+					setErrorWarning(
 						"File is not allowed. You can upload jpg, png, jpeg and PDF files"
 					);
 					setUploadAddress(false);
@@ -412,7 +419,7 @@ const NewFiatAddress = (props) => {
 					setUploading(true);
 					return true;
 				} else {
-					warning("File is not allowed. You can upload only PDF file");
+					setErrorWarning("File is not allowed. You can upload only PDF file");
 					setUploading(false);
 					return Upload.LIST_IGNORE;
 				}
@@ -420,6 +427,7 @@ const NewFiatAddress = (props) => {
 		}
 	};
 	const radioChangeHandler = (e) => {
+		setErrorWarning(null)
 		setUploading(false);
 		setUploadAddress(false);
 		setUploadIdentity(false);
@@ -555,9 +563,6 @@ const NewFiatAddress = (props) => {
 		</Modal>
 	);
 
-	// const showData=()=>{
-	// }
-
 	const changeBankType = (e) => {
 		setBankType(e);
 
@@ -589,12 +594,19 @@ const NewFiatAddress = (props) => {
 			) : (
 				<div className="addbook-height">
 					<div ref={useDivRef}></div>
-					{errorMsg && (
+					{errorMsg!==null  && (
 						<Alert
-							closable
 							type="error"
 							description={errorMsg}
 							onClose={() => setErrorMsg(null)}
+							showIcon
+						/>
+					)}
+					{errorMsg!==null || errorWarning !==null && (
+						<Alert
+							type= "warning"
+							description={errorWarning}
+							onClose={() => setErrorWarning(null)}
 							showIcon
 						/>
 					)}

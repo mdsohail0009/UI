@@ -206,7 +206,7 @@ class CryptoWithDrawWallet extends Component {
         }
         return (
             <div ref={this.myRef}>
-                <div> {this.state.error != null && <Alert closable type="error"
+                <div> {this.state.error != null && <Alert type="error"
                     description={this.state.error} onClose={() => this.setState({ ...this.state, error: null })} showIcon />}
 
                     <Card className="crypto-card select mb-36" bordered={false}>
