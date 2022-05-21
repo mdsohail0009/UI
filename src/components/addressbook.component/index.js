@@ -39,6 +39,7 @@ class AddressBook extends Component {
 			btnDisabled: false,
 			cryptoModal: false,
 			selectedModal: "",
+			errorWorning:null,
 
 			obj: {
 				id: [],
@@ -304,6 +305,7 @@ class AddressBook extends Component {
 		this.props.history.push(`/addressCryptoView/${dataItem.id}`);
 	};
 	handleInputChange = (prop, e) => {
+		this.setState({...this.state,errorWorning:null})
 		const rowObj = prop.dataItem;
 		const value =
 			e.currentTarget.type === "checkbox"
@@ -434,20 +436,21 @@ class AddressBook extends Component {
 	editAddressBook = () => {
 		let obj = this.state.selectedObj;
 		if (!this.state.isCheck) {
-			this.setState({ alert: true });
+			this.setState({ alert: true,errorWorning:null });
 			setTimeout(() => this.setState({ alert: false }), 2000);
 		} else if (
 			obj.addressState === "Approved" ||
 			obj.addressState === "Rejected" ||
 			obj.addressState === "Reject"
 		) {
-			warning(`Record is already ${obj.addressState} you can't modify`);
 			this.setState({
 				...this.state,
 				visible: false,
 				selection: [],
 				isCheck: false,
+				errorWorning:`Record is already ${obj.addressState} you can't modify`
 			});
+			setTimeout(() => this.setState({ errorWorning: null }), 2000);
 		} else {
 			obj.walletCode = obj.coin;
 			this.props.rowSelectedData(obj);
@@ -652,6 +655,15 @@ class AddressBook extends Component {
 						<div className="custom-alert">
 							<Alert
 								description={apiCalls.convertLocalLang("one_record")}
+								type="warning"
+								showIcon
+							/>
+						</div>
+					)}
+					{this.state.errorWorning && (
+						<div className="custom-alert">
+							<Alert
+								description={this.state.errorWorning}
 								type="warning"
 								showIcon
 							/>
