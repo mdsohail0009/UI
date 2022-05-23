@@ -108,8 +108,6 @@ const NewFiatAddress = (props) => {
 			setEdit(true);
 		}
 		addressbkTrack();
-		getCountryLu();
-		getStateLu();
 	}, []);
 	const getName = () => {
 		return props?.userConfig.isBusiness
@@ -164,7 +162,6 @@ const NewFiatAddress = (props) => {
 				form.setFieldsValue({ file2: true });
 			}
 
-			getStateLu(response.data.country);
 			form.setFieldsValue({ ...response.data });
 			setIsLoading(false);
 		} else {
@@ -175,33 +172,6 @@ const NewFiatAddress = (props) => {
 	const handleWalletSelection = (walletId) => {
 		setFiatAddress({ toCoin: walletId });
 		form.setFieldsValue({ toCoin: walletId });
-	};
-	const getCountryLu = async () => {
-		let objj = props?.sendReceive?.withdrawFiatObj;
-		if (objj) {
-			form.setFieldsValue({
-				...objj,
-				walletCode: objj.walletCode,
-				beneficiaryAccountName: selectParty ? null : getName(),
-			});
-		} else {
-			form.setFieldsValue({
-				beneficiaryAccountName: selectParty ? null : getName(),
-			});
-		}
-		let recName = await getCountryStateLu();
-
-		if (recName.ok) {
-			setCountryLu(recName.data);
-		}
-	};
-
-	const getStateLu = async (countryname, isChange) => {
-		let recName = await getStateLookup(countryname);
-		if (recName.ok) {
-			setStateLu(recName.data);
-		}
-		if (isChange) form.setFieldsValue({ state: null });
 	};
 	const savewithdrawal = async (values) => {
 		setIsLoading(false);
@@ -352,7 +322,6 @@ const NewFiatAddress = (props) => {
 					state: response.data.state || oldVal.state,
 					country: response.data.country || oldVal.country,
 				});
-				getStateLu(response.data.country, true);
 			}
 		}
 	};
@@ -771,9 +740,6 @@ const NewFiatAddress = (props) => {
 											pattern: /^[A-Za-z0-9]+$/,
 											message: "Invalid account number",
 										},
-										// {
-										// 	validator: validateBank,
-										// },
 									]}>
 									<Input
 										className="cust-input"
