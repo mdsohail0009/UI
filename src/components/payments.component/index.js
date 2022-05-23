@@ -136,7 +136,7 @@ const Payments = (props) => {
           {errorWarning !== null && (
             <Alert
               className="mb-12"
-              type="error"
+              type="warning"
               description={errorWarning}
               onClose={() => setErrorWarning(null)}
               showIcon

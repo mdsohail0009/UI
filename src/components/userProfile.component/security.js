@@ -138,7 +138,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         <Alert
           className="mb-12"
           type="error"
-          message={"Withdraw Verification"}
+          message={"Withdrawal Verification"}
           description={errorMsg}
           onClose={() => setErrorMsg(null)}
           showIcon
