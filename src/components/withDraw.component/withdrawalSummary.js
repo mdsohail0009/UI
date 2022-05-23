@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Button, Form, message, Input, Alert, Tooltip } from "antd";
+import { Typography, Button, Form, Spin, Input, Alert, Tooltip } from "antd";
 import Currency from "../shared/number.formate";
 import { setStep } from "../../reducers/buysellReducer";
 import { connect } from "react-redux";
@@ -9,13 +9,11 @@ import { withdrawSave } from "../../api/apiServer";
 import Loader from "../../Shared/loader";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
 import {
-	setWithdrawfiat,
 	rejectWithdrawfiat,
 	setWithdrawfiatenaable,
 	setWithdrawFinalRes,
 } from "../../reducers/sendreceiveReducer";
-import { success, warning, error } from "../../utils/messages";
-
+import { LoadingOutlined } from "@ant-design/icons";
 const WithdrawalFiatSummary = ({
 	sendReceive,
 	userConfig,
@@ -190,26 +188,30 @@ const WithdrawalFiatSummary = ({
 	};
 
 	const saveWithdrwal = async (values) => {
+		setDisableSave(true);
 		if (verifyData.isEmailVerification) {
 			if (!isEmailVerification) {
-				setMsg("Please verify  email verification code");
-				// error("Please verify  email verification code")				
+				setDisableSave(false);
+				setIsLoading(false);
+				setMsg("Please verify  email verification code");			
 				// useOtpRef.current.scrollIntoView(0, 0);
 				return;
 			}
 		}
 		if (verifyData.isPhoneVerified) {
 			if (!isPhoneVerification) {
+				setDisableSave(false);
+				setIsLoading(false);
 				setMsg("Please verify phone verification code");
-				// error("Please verify  phone verification code")
 				// useOtpRef.current.scrollIntoView(0, 0);
 				return;
 			}
 		}
 		if (verifyData.twoFactorEnabled) {
 			if (!isAuthenticatorVerification) {
+				setDisableSave(false);
+				setIsLoading(false);
 				setMsg("Please verify authenticator code");
-				// error("Please verify  phone authenticator code")
 				// useOtpRef.current.scrollIntoView(0, 0);
 				return;
 			}
@@ -225,7 +227,6 @@ const WithdrawalFiatSummary = ({
 					"Without Verifications you can't withdraw. Please select withdraw verifications from security section",
 			});
 		}
-		//setIsLoding(true);
 
 		let Obj = Object.assign({}, sendReceive.withdrawFiatObj);
 		Obj.accountNumber = apiCalls.encryptValue(
@@ -250,7 +251,7 @@ const WithdrawalFiatSummary = ({
 
 		let withdrawal = await withdrawSave(Obj);
 
-		setDisableSave(true);
+	
 		setIsLoading(false);
 		if (withdrawal.ok) {
 			setDisableSave(false);
@@ -260,7 +261,7 @@ const WithdrawalFiatSummary = ({
 			setIsLoding(false);
 			changeStep("step7");
 		} else {
-			setMsg(withdrawal.data);
+			setMsg(withdrawal.data || "Something went wrong please try again!");
 			setIsLoding(false);
 			setDisableSave(false);
 			// useOtpRef.current.scrollIntoView(0, 0);
@@ -345,7 +346,12 @@ const WithdrawalFiatSummary = ({
 			setIsEmailVerification(false);
 		}
 	};
-
+	const antIcon = (
+		<LoadingOutlined
+			style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
+			spin
+		/>
+	  );
 	const handleSendOtp = (val) => {
 		setEmailOtp(val.emailCode);
 		setVerifyEmailText("verifyTextBtn");
@@ -837,19 +843,10 @@ const WithdrawalFiatSummary = ({
 							className="pop-btn"
 							loading={disableSave}
 							htmlType="submit">
+								{isLoading && <Spin indicator={antIcon} />}
 							<Translate content="with_draw" component={Text} />
 						</Button>
 					</Form>
-					{/* <div className="text-center">
-						<Translate
-							content="back"
-							component={Button}
-							onClick={() => onCancel()}
-							type="text"
-							size="large"
-							className="text-center text-white-30 pop-cancel fw-400 fs-16 text-center"
-						/>
-					</div> */}
 				</>
 			)}
 		</div>

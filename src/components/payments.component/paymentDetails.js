@@ -179,7 +179,7 @@ class PaymentDetails extends Component {
             message.success({
               content: "Payment details saved successfully",
               className: "custom-msg",
-              duration: 0.5,
+              duration: 3,
             });
             this.props.history.push("/payments");
           } else {
@@ -201,7 +201,7 @@ class PaymentDetails extends Component {
             message.success({
               content: "Payment details update successfully",
               className: "custom-msg",
-              duration: 0.5,
+              duration: 3,
             });
             this.props.history.push("/payments");
           } else {

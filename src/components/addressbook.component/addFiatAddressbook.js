@@ -714,7 +714,7 @@ const NewFiatAddress = (props) => {
 										bordered={false}
 										showArrow={true}
 										optionFilterProp="children"
-										showSearch
+										defaultValue={"bank"}
 										onChange={(e) => changeBankType(e)}>
 										<Option value={"bank"}>{"Bank Account"}</Option>
 										<Option value={"iban"}>{"IBAN"}</Option>
@@ -738,7 +738,7 @@ const NewFiatAddress = (props) => {
 										},
 										{
 											pattern: /^[A-Za-z0-9]+$/,
-											message: "Invalid account number",
+											message: "Invalid IBAN Number",
 										},
 									]}>
 									<Input
@@ -770,7 +770,7 @@ const NewFiatAddress = (props) => {
 									required
 									rules={[
 										{
-											required: true,
+											required: bankType === "iban" ? false : true,
 											message: apiCalls.convertLocalLang("is_required"),
 										},
 										{
@@ -798,7 +798,7 @@ const NewFiatAddress = (props) => {
 									required
 									rules={[
 										{
-											required: true,
+											required: bankType === "iban" ? false : true,
 											message: apiCalls.convertLocalLang("is_required"),
 										},
 										{
@@ -827,7 +827,7 @@ const NewFiatAddress = (props) => {
 									required
 									rules={[
 										{
-											required: true,
+											required: bankType === "iban" ? false : true,
 											message: apiCalls.convertLocalLang("is_required"),
 										},
 										{
@@ -942,16 +942,7 @@ const NewFiatAddress = (props) => {
 										name="remarks"
 										label={
 											<Translate content="remarks" component={Form.label} />
-										}
-										rules={[
-											{
-												required: true,
-												message: apiCalls.convertLocalLang("is_required"),
-											},
-											{
-												validator: validateContentRule,
-											},
-										]}>
+										}>
 										<TextArea
 											placeholder="Remarks"
 											className="cust-input pt-16"
