@@ -67,7 +67,7 @@ export function withState(WrappedGrid) {
                             }
                         }}
                     >
-                        Export to Excel
+                        Export Excel
                     </button>
                     </div>}
                     {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName = {this.props?.excelFileName}>
