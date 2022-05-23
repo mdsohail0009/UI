@@ -59,7 +59,6 @@ class Summary extends Component {
 						type="info"
 						message={error?.title || apicalls.convertLocalLang("buy_crypto")}
 						description={error?.message}
-						closable
 						onClose={() => (onErrorClose ? onErrorClose() : "")}
 					/>
 				)}
