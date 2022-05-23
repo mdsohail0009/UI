@@ -58,10 +58,10 @@ export default {
 	delivery_address: "Your delivery address",
 	select_a_currency: "Select a currency",
 	// address_hint_text: "Please make sure your delivery address is correct",
-	address_hint_text:
-		"Be sure to select the right cryptocurrency." ,
-		address_hint_text_1:"If you send crypto to the wrong address (eg, Bitcoin to a Bitcoin Cash address), your crypto will be lost.",
-		copy: "Copy",
+	address_hint_text: "Be sure to select the right cryptocurrency.",
+	address_hint_text_1:
+		"If you send crypto to the wrong address (eg, Bitcoin to a Bitcoin Cash address), your crypto will be lost.",
+	copy: "Copy",
 	share: "Share",
 	from_crypto: "From Crypto",
 	from_fiat: "From Fiat",
@@ -238,7 +238,7 @@ export default {
 	the_dashboard: "The Dashboard",
 	buy_crypto: "Buy Crypto",
 	Beneficiary_BankDetails: "Beneficiary Bank Details",
-	bank_type: "Bank type",
+	bank_type: "Bank Type",
 	Bank_account: "Bank Account Number",
 	iban: "IBAN",
 	BIC_SWIFT_routing_number: "BIC/SWIFT/Routing Number",

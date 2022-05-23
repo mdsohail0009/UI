@@ -39,7 +39,7 @@ class AddressBook extends Component {
 			btnDisabled: false,
 			cryptoModal: false,
 			selectedModal: "",
-			errorWorning:null,
+			errorWorning: null,
 
 			obj: {
 				id: [],
@@ -123,6 +123,13 @@ class AddressBook extends Component {
 			),
 		},
 		{
+			field: "beneficiaryAccountName",
+			title: apiCalls.convertLocalLang("Recipient_full_name"),
+			width: 200,
+			filter: true,
+			with: 150,
+		},
+		{
 			field: "currency",
 			title: apiCalls.convertLocalLang("currency"),
 			width: 150,
@@ -156,9 +163,10 @@ class AddressBook extends Component {
 		{
 			field: "beneficiaryAccountName",
 			title:
-			(this.props?.userConfig?.isBusiness && apiCalls.convertLocalLang("company_name")) ||
-													(!this.props?.userConfig?.isBusiness &&
-														apiCalls.convertLocalLang("Recipient_full_name")),
+				(this.props?.userConfig?.isBusiness &&
+					apiCalls.convertLocalLang("company_name")) ||
+				(!this.props?.userConfig?.isBusiness &&
+					apiCalls.convertLocalLang("Recipient_full_name")),
 			filter: true,
 			width: 300,
 		},
@@ -305,7 +313,7 @@ class AddressBook extends Component {
 		this.props.history.push(`/addressCryptoView/${dataItem.id}`);
 	};
 	handleInputChange = (prop, e) => {
-		this.setState({...this.state,errorWorning:null})
+		this.setState({ ...this.state, errorWorning: null });
 		const rowObj = prop.dataItem;
 		const value =
 			e.currentTarget.type === "checkbox"
@@ -436,7 +444,7 @@ class AddressBook extends Component {
 	editAddressBook = () => {
 		let obj = this.state.selectedObj;
 		if (!this.state.isCheck) {
-			this.setState({ alert: true,errorWorning:null });
+			this.setState({ alert: true, errorWorning: null });
 			setTimeout(() => this.setState({ alert: false }), 2000);
 		} else if (
 			obj.addressState === "Approved" ||
@@ -448,7 +456,7 @@ class AddressBook extends Component {
 				visible: false,
 				selection: [],
 				isCheck: false,
-				errorWorning:`Record is already ${obj.addressState} you can't modify`
+				errorWorning: `Record is already ${obj.addressState} you can't modify`,
 			});
 			setTimeout(() => this.setState({ errorWorning: null }), 2000);
 		} else {
