@@ -30,12 +30,12 @@ import { bytesToSize } from "../../utils/service";
 import { getCountryStateLu, getStateLookup } from "../../api/apiServer";
 import { addressTabUpdate } from "../../reducers/addressBookReducer";
 import FilePreviewer from "react-file-previewer";
+import { logDOM } from "@testing-library/react";
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
 const { Dragger } = Upload;
-
 
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount)?.trim();
@@ -88,7 +88,7 @@ const NewFiatAddress = (props) => {
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
 	const [bankType, setBankType] = useState("");
-	const [errorWarning,setErrorWarning]=useState(null);
+	const [errorWarning, setErrorWarning] = useState(null);
 
 	useEffect(() => {
 		if (selectParty === true) {
@@ -144,6 +144,7 @@ const NewFiatAddress = (props) => {
 			setFiatAddress(response.data);
 			setWithdrawValues(response.data);
 			setAddressState(response.data.addressState);
+			setBankType(response.data.bankType);
 			if (
 				props?.addressBookReducer?.selectedRowData &&
 				props?.buyInfo.memberFiat?.data
@@ -166,9 +167,8 @@ const NewFiatAddress = (props) => {
 			getStateLu(response.data.country);
 			form.setFieldsValue({ ...response.data });
 			setIsLoading(false);
-		}
-		else{
-			setErrorMsg(response.data || "Something went wrong please try again!")	
+		} else {
+			setErrorMsg(response.data || "Something went wrong please try again!");
 			setIsLoading(false);
 		}
 	};
@@ -316,7 +316,7 @@ const NewFiatAddress = (props) => {
 				message.success({
 					content: apiCalls.convertLocalLang("address_msg"),
 					className: "custom-msg",
-					duration:3
+					duration: 3,
 				});
 				form.resetFields();
 				props?.onCancel();
@@ -325,7 +325,7 @@ const NewFiatAddress = (props) => {
 				props?.dispatch(setHeaderTab(""));
 				props?.props?.history?.push("/userprofile");
 			} else {
-				setErrorMsg(response.data||"Something went wrong please try again!")
+				setErrorMsg(response.data || "Something went wrong please try again!");
 				setIsLoading(false);
 				setBtnDisabled(false);
 			}
@@ -357,7 +357,7 @@ const NewFiatAddress = (props) => {
 		}
 	};
 	const beforeUpload = (file, type) => {
-		setErrorWarning(null)
+		setErrorWarning(null);
 		if (file.name.split(".").length > 2) {
 			setErrorWarning("File don't allow double extension");
 			return;
@@ -427,7 +427,7 @@ const NewFiatAddress = (props) => {
 		}
 	};
 	const radioChangeHandler = (e) => {
-		setErrorWarning(null)
+		setErrorWarning(null);
 		setUploading(false);
 		setUploadAddress(false);
 		setUploadIdentity(false);
@@ -578,7 +578,7 @@ const NewFiatAddress = (props) => {
 	};
 
 	const doNothing = () => {
-		//---
+		//---Do nothing
 	};
 
 	const antIcon = (
@@ -594,7 +594,7 @@ const NewFiatAddress = (props) => {
 			) : (
 				<div className="addbook-height">
 					<div ref={useDivRef}></div>
-					{errorMsg!==null  && (
+					{errorMsg !== null && (
 						<Alert
 							type="error"
 							description={errorMsg}
@@ -602,14 +602,15 @@ const NewFiatAddress = (props) => {
 							showIcon
 						/>
 					)}
-					{errorMsg!==null || errorWarning !==null && (
-						<Alert
-							type= "warning"
-							description={errorWarning}
-							onClose={() => setErrorWarning(null)}
-							showIcon
-						/>
-					)}
+					{errorMsg !== null ||
+						(errorWarning !== null && (
+							<Alert
+								type="warning"
+								description={errorWarning}
+								onClose={() => setErrorWarning(null)}
+								showIcon
+							/>
+						))}
 					<Form
 						form={form}
 						onFinish={savewithdrawal}
