@@ -183,6 +183,7 @@ const NewFiatAddress = (props) => {
 		} else {
 			setErrorMsg(response.data || "Something went wrong please try again!");
 			setIsLoading(false);
+			useDivRef.current.scrollIntoView();
 		}
 	};
 	const handleWalletSelection = (walletId) => {
@@ -314,6 +315,7 @@ const NewFiatAddress = (props) => {
 				setErrorMsg(response.data || "Something went wrong please try again!");
 				setIsLoading(false);
 				setBtnDisabled(false);
+				useDivRef.current.scrollIntoView();
 			}
 		}
 	};
@@ -344,6 +346,7 @@ const NewFiatAddress = (props) => {
 	const beforeUpload = (file, type) => {
 		setErrorWarning(null);
 		if (file.name.split(".").length > 2) {
+			useDivRef.current.scrollIntoView();
 			setErrorWarning("File don't allow double extension");
 			return;
 		} else {
@@ -365,6 +368,7 @@ const NewFiatAddress = (props) => {
 					setErrorWarning(
 						"File is not allowed. You can upload jpg, png, jpeg and PDF files"
 					);
+					useDivRef.current.scrollIntoView();
 					setUploadIdentity(false);
 					return Upload.LIST_IGNORE;
 				}
@@ -1051,7 +1055,7 @@ const NewFiatAddress = (props) => {
 												message: "Please upload address proof",
 											},
 										]}>
-										{
+										{<>
 											<Dragger
 												accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
 												className="upload mt-16"
@@ -1071,6 +1075,7 @@ const NewFiatAddress = (props) => {
 													Please upload address proof here
 												</p>
 											</Dragger>
+											</>
 										}
 									</Form.Item>
 									{!uploadAdress && addressFile != null && (
