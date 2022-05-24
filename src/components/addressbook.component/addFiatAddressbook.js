@@ -89,15 +89,29 @@ const NewFiatAddress = (props) => {
 	const [previewModal, setPreviewModal] = useState(false);
 	const [bankType, setBankType] = useState("");
 	const [errorWarning, setErrorWarning] = useState(null);
+	const bankNameRegex = /^[A-Za-z0-9]+$/;
+	const IbanRegex = /^[A-Za-z0-9]{14,}$/;
 
 	useEffect(() => {
 		if (selectParty === true) {
-			form.setFieldsValue({ addressType: "3rdparty",bankType:'bank' });
+			form.setFieldsValue({ addressType: "3rdparty",bankType:'bank',accountNumber: "",
+			routingNumber: "",
+			bankName: "",
+			bankAddress: "",
+			country: "",
+			state: "",
+			zipCode: "", });
 		} else {
 			form.setFieldsValue({
 				addressType: "1stparty",
 				beneficiaryAccountName: getName(),
-				bankType:'bank'
+				bankType:'bank',accountNumber: "",
+				routingNumber: "",
+				bankName: "",
+				bankAddress: "",
+				country: "",
+				state: "",
+				zipCode: "",
 			});
 		}
 		if (
@@ -742,7 +756,7 @@ const NewFiatAddress = (props) => {
 											message: apiCalls.convertLocalLang("is_required"),
 										},
 										{
-											pattern: /^[A-Za-z0-9]+$/,
+											pattern: bankType !== "iban"?bankNameRegex:IbanRegex,
 											message: bankType !== "iban"?"Invalid Bank account number":"Invalid IBAN",
 										},
 									]}>
@@ -775,7 +789,7 @@ const NewFiatAddress = (props) => {
 									required
 									rules={[
 										{
-											required: bankType === "iban" ? false : true,
+											required: true,
 											message: apiCalls.convertLocalLang("is_required"),
 										},
 										{
@@ -803,7 +817,7 @@ const NewFiatAddress = (props) => {
 									required
 									rules={[
 										{
-											required: bankType === "iban" ? false : true,
+											required: true,
 											message: apiCalls.convertLocalLang("is_required"),
 										},
 										{
@@ -832,7 +846,7 @@ const NewFiatAddress = (props) => {
 									required
 									rules={[
 										{
-											required: bankType === "iban" ? false : true,
+											required: true,
 											message: apiCalls.convertLocalLang("is_required"),
 										},
 										{
