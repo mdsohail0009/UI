@@ -150,7 +150,7 @@ const AddressFiatView = (props) => {
 													<div className=" kpi-val">
 														{fiatAddress?.bankType === "iban"
 															? "IBAN"
-															: "Bank account"}
+															: "Bank Account"}
 													</div>
 												</div>
 											</Col>
