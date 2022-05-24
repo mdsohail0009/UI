@@ -188,8 +188,9 @@ class CoinView extends React.Component {
             this.loadCoinDetailData();
         }
         return <div className="main-container">
+           
             {this.state.loading ?(
-					<Spin />
+				<div className="text-center"><Spin /></div>	
 				):(
             <>
             <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cockpit" />{coinData?.name} ({coinData?.symbol.toUpperCase()})</div>
