@@ -5,11 +5,19 @@ import { getSellPreviewData, savesellData } from '../buy.component/api'
 import Summary from '../summary.component';
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
-import { message } from 'antd';
+import {Alert} from 'antd'
 import { setSellFinalRes } from '../../reducers/sellReducer'
 import apicalls from '../../api/apiCalls';
+
+
 class SellSummary extends Component {
-    state = { sellpreviewData: {}, loader: true, disableConfirm: false, isTermsAgree: false, error: { valid: true, message: null } }
+    state = {
+         sellpreviewData: {},
+          loader: true,
+          isLoading: false,
+           disableConfirm: false,
+            isTermsAgree: false,
+             error: { valid: true, message: null } }
     componentDidMount() {
         this.fetchPreviewData()
         setTimeout(() => this.setState({ ...this.state, disableConfirm: true }), 12000)
@@ -36,7 +44,7 @@ class SellSummary extends Component {
         }
     }
     async saveSellData() {
-        this.setState({ ...this.state, error: { valid: true, message: '' } })
+        this.setState({ ...this.state,loader:true, error: { valid: true, message: '' } })
         if (!this.state.isTermsAgree) {
             this.setState({
                 ...this.state, error: {
@@ -45,7 +53,7 @@ class SellSummary extends Component {
             })
 
         } else {
-            this.setState({ ...this.state, loader: true, error: { valid: true, message: '' } })
+            this.setState({ ...this.state, isLoading: true, error: { valid: true, message: '' } })
             let obj = Object.assign({}, this.props.sellData.sellsaveObject)
             obj.fromValue = this.state.sellpreviewData.amount
             obj.toValue = this.state.sellpreviewData.amountNativeCurrency
@@ -60,33 +68,44 @@ class SellSummary extends Component {
             if (res.ok) {
                 this.props.sellResData(res.data);
                 this.props.changeStep('sellsuccess')
-                this.setState({ ...this.state, loader: false, disableConfirm: false })
+                this.setState({ ...this.state, loader: false,isLoading: false, disableConfirm: false })
                 this.props.fetchDashboardData(this.props.member.id)
                 this.props.fetchMarketCoinDataValue();
                 appInsights.trackEvent({
                     name: 'Sell', properties: { "Type": 'User', "Action": 'Save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Sell', "Remarks": obj.fromValue + " " + this.state.sellpreviewData.coin + " selled", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto' }
                 });
             } else {
-                this.setState({ ...this.state, loader: false, disableConfirm: false, error: { valid: false, message: res.data, title: apicalls.convertLocalLang('sellCrypto') } })
+                this.setState({ ...this.state, loader: false,isLoading: false, disableConfirm: false, error: { valid: false, message: res.data || "Something went wrong please try again!", title: apicalls.convertLocalLang('sellCrypto')  } })
             }
         }
     }
     render() {
         const { sellpreviewData } = this.state;
         const { amount, amountNativeCurrency, oneCoinValue, coin, currency } = sellpreviewData;
-
+        {this.state.error !== null && (
+            <Alert
+                closable
+                type="error"
+                description={this.state.error}
+                onClose={() => this.setState({error:null})}
+                showIcon
+            />
+        )}
+      
         return <Summary
-            loading={this.state.loader}
+         loading={this.state.loader}
             coin={coin}
             oneCoinValue={oneCoinValue}
             amount={amount}
             amountNativeCurrency={amountNativeCurrency}
             nativeCurrency={currency ? currency : "USD"}
-            error={this.state.error} iButtonLoad={this.state.isLoading}
+            error={this.state.error} 
+            isButtonLoad={this.state.isLoading}
             onRefresh={() => { this.refreshPage() }}
             onCancel={() => this.props.changeStep('step1')}
             onClick={() => this.saveSellData()}
             okBtnTitle={"sell"}
+
             onTermsChange={(checked) => { this.setState({ ...this.state, isTermsAgree: checked }) }}
             onCheked={this.state.isTermsAgree}
             onErrorClose={() => this.setState({ ...this.state, error: { valid: true, message: null } })} />

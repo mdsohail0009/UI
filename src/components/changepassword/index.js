@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Input, Form, notification, Typography, Alert, message } from 'antd';
-import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
+import { Button, Input, Form, notification, Typography, Alert, message,Spin } from 'antd';
+import { EyeInvisibleOutlined, EyeOutlined,LoadingOutlined } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
@@ -9,7 +9,6 @@ import { getmemeberInfo } from '../../reducers/configReduser';
 import apiClient from '../../api/apiCalls';
 import apiCalls from '../../api/apiCalls';
 import { validateContentRule, validateContent } from '../../utils/custom.validator'
-
 
 notification.config({
   placement: "topRight",
@@ -37,7 +36,10 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
     apiCalls.trackEvent({ "Type": 'User', "Action": 'Change password page view', "Username": userConfig?.userName, "MemeberId": userConfig?.id, "Feature": 'Change Password', "Remarks": 'Change password page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Change Password' });
   }
   const saveUserPass = async (values) => {
+    setBtnDisabled(true);
     if (values.CurrentPassword === values.Password) {
+      setBtnDisabled(false)
+      setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
       passwordResponce(true, "Current password and New password should not be same", false);
     } else {
       setBtnDisabled(true);
@@ -50,9 +52,10 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       obj.Email = apiClient.encryptValue(obj.Email, userConfig.sk)
       obj.info = apiClient.encryptValue(obj.info, userConfig.sk)
       const result = await changePassword(obj);
+      setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
       if (result.ok) {
         setBtnDisabled(false);
-        message.success({ content: 'Password changed successfully', className: 'custom-msg' });
+        message.success({ content: 'Password changed successfully', className: 'custom-msg',duration:3 });
         passwordResponce(false, '', false);
         form.resetFields();
         onSubmit()
@@ -60,7 +63,8 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
         apiClient.trackEvent({ "Action": 'Save', "Feature": 'Change password', "Remarks": "Password changed", "FullFeatureName": 'Change password', "userName": userConfig.userName, id: userConfig.id });
       } else {
         setBtnDisabled(false);
-        passwordResponce(true, result.data, false);
+        setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
+        passwordResponce(true, result.data || 'Something went wrong please try again!', false);
       }
     }
   }
@@ -72,6 +76,12 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
     object[prop] = val.currentTarget.value;
     setInitialValues(object);
   }
+ const antIcon = (
+    <LoadingOutlined
+        style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
+        spin
+    />
+  );
   return (<>
     <div className="mt-16">
       <Form form={form}
@@ -207,13 +217,13 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
 
         <div style={{ marginTop: '50px' }} className="">
           <Button
-            loading={changePasswordResponse.isLoading}
+            // loading={changePasswordResponse.isLoading}
             htmlType="submit"
             size="large"
             block
             className="pop-btn"
-            disabled={btnDisabled}
-          >
+            loading={btnDisabled}
+          >{changePasswordResponse.isLoading && <Spin indicator={antIcon} />}{" "}
             <Translate content="Save_btn_text" />
           </Button>
           <Button

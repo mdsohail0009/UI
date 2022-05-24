@@ -9,7 +9,7 @@ import {
   Tooltip,
   Select,
   Checkbox,
-  Empty
+  Empty,Spin
 } from "antd";
 import { Link } from "react-router-dom";
 import { setStep } from "../../reducers/buysellReducer";
@@ -42,6 +42,8 @@ import { validateContentRule } from "../../utils/custom.validator";
 import { handleFiatConfirm } from "../send.component/api";
 import walletList from "../shared/walletList";
 import WAValidator from "multicoin-address-validator";
+import Loader from '../../Shared/loader';
+import { LoadingOutlined } from "@ant-design/icons";
 
 const LinkValue = (props) => {
   return (
@@ -84,6 +86,8 @@ const FaitWithdrawal = ({
   const useDivRef = React.useRef(null);
   const [addressShow, setAddressShow] = useState(true);
   const [validated, setValidated] = useState(false)
+  const [amountLoading, setAmountLoading] = useState(false);
+
   const [addressObj, setAddressObj] = useState({
     bankName: null,
     accountNumber: null,
@@ -206,6 +210,7 @@ const FaitWithdrawal = ({
     }
   };
   const handleAddressChange = async (e) => {
+    setAmountLoading(true)
     let val = addressLu.filter((item) => {
       if (item.name == e) {
         return item;
@@ -216,6 +221,8 @@ const FaitWithdrawal = ({
     let recAddressDetails = await detailsAddress(val[0].id);
     if (recAddressDetails.ok) {
       bindEditableData(recAddressDetails.data);
+      setAmountLoading(false)
+
     }
   };
   const bindEditableData = (obj) => {
@@ -263,7 +270,10 @@ const FaitWithdrawal = ({
     }
   };
   const savewithdrawal = async (values) => {
+    debugger
     setValidated(true)
+    setBtnDisabled(true)
+    // setErrorMsg(null)
     dispatch(setWFTotalValue(values.totalValue));
     if (
       parseFloat(
@@ -273,6 +283,8 @@ const FaitWithdrawal = ({
       ) > parseFloat(selectedWallet?.avilable)
     ) {
       useDivRef.current.scrollIntoView();
+      setBtnDisabled(false)
+      setLoading(false);
       return setErrorMsg(apicalls.convertLocalLang("insufficient_balance"));
     }
     if (
@@ -283,13 +295,11 @@ const FaitWithdrawal = ({
       ) <= 0
     ) {
       useDivRef.current.scrollIntoView();
-      return setErrorMsg(apicalls.convertLocalLang("amount_greater_zero"));
+      setBtnDisabled(false)
+      setLoading(false);
+       return setErrorMsg(apicalls.convertLocalLang("amount_greater_zero"));   
     }
-    // if (values.totalValue === ".") {
-    //   useDivRef.current.scrollIntoView();
-    //   //form.resetFields();
-    //   return setErrorMsg(apicalls.convertLocalLang("is_required"));
-    // }
+
     let _totalamount = values.totalValue.toString();
     if (
       (_totalamount.indexOf(".") > -1 &&
@@ -297,9 +307,11 @@ const FaitWithdrawal = ({
       (_totalamount.indexOf(".") < 0 && _totalamount.length >= 9)
     ) {
       useDivRef.current.scrollIntoView();
+      setBtnDisabled(false)
+      setLoading(false);
       return setErrorMsg(apicalls.convertLocalLang("exceeded_amount"));
     }
-    setBtnDisabled(true);
+    setLoading(false);
     setErrorMsg(null);
     values["membershipId"] = userConfig.id;
     values["memberWalletId"] = selectedWallet.id;
@@ -311,7 +323,7 @@ const FaitWithdrawal = ({
     values["accountNumber"] = addressInfo.accountNumber;
     values["routingNumber"] = addressInfo.routingNumber;
     //values["country"] =
-    setLoading(true);
+    // setLoading(false);
     const response = await handleFiatConfirm(values);
     if (response.ok) {
       setBtnDisabled(false);
@@ -319,12 +331,21 @@ const FaitWithdrawal = ({
       dispatch(setWithdrawfiat(response.data));
       changeStep("withdrawfaitsummary");
       form.resetFields();
+      setLoading(false);
     } else {
       setBtnDisabled(false);
+      setLoading(false);
+      setErrorMsg(response.data ||  "Something went wrong please try again!");
     }
     setLoading(false);
 
   };
+ const antIcon = (
+    <LoadingOutlined
+        style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
+        spin
+    />
+  );
   const getIbanData = async (val) => {
     if (val && val.length > 14) {
       let response = await apicalls.getIBANData(val);
@@ -385,7 +406,6 @@ const FaitWithdrawal = ({
             {errorMsg !== null && (
               <Alert
                 className="mb-12"
-                closable
                 // type="error"
                 // message={"Error"}
                 description={errorMsg}
@@ -424,6 +444,7 @@ const FaitWithdrawal = ({
               {addressShow == false &&
                 <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="noaddress_msg" /></Text>
               }
+
               {addressLu?.length > 1 &&
                 <div style={{ position: "relative" }}>
 
@@ -460,6 +481,8 @@ const FaitWithdrawal = ({
                   </Form.Item>
 
                 </div>}
+                {amountLoading && <Loader />}
+
               {addressInfo &&
                 <div className="fiatdep-info">
 
@@ -660,8 +683,6 @@ const FaitWithdrawal = ({
                   >
                     <span className="d-flex">
                       <Checkbox className="ant-custumcheck" />
-
-                      {/* </Checkbox> */}
                       <span className="withdraw-check"></span>
                       <Translate
                         content="agree_to_suissebase"
@@ -678,9 +699,10 @@ const FaitWithdrawal = ({
                       size="large"
                       block
                       className="pop-btn"
-                      disabled={btnDisabled}
+                      loading={btnDisabled}
                     >
-                      <Translate content="Confirm" component={Form.label} />
+              {loading && <Spin indicator={antIcon} />}
+                      <Translate content="Confirm_fiat" style={{marginLeft:"15px"}} component={Form.label} />
                     </Button>
                   </Form.Item>
                 </div>}
@@ -814,7 +836,7 @@ const FaitWithdrawal = ({
                   onClick={handleCancel}
                   disabled={loading}
                 >
-                  Back
+                  Cancel
                 </Button>
                 <Button
                   key="submit"

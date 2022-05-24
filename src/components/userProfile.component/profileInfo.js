@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Typography, Button, Upload, notification, message, Tooltip, Spin } from "antd";
+import { Typography, Button, Upload, notification, message, Tooltip, Spin,Alert } from "antd";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 import { uploadClient } from "../../api";
@@ -11,7 +11,7 @@ import apiCalls from "../../api/apiCalls";
 import Loader from "../../Shared/loader";
 
 class ProfileInfo extends Component {
-  state = { Image: null, Loader: false, fileLoader: false };
+  state = { Image: null, Loader: false, fileLoader: false,errorMessage:null };
   uploadProps = {
     name: "file",
     multiple: false,
@@ -31,13 +31,7 @@ class ProfileInfo extends Component {
           
           this.saveImage(Obj, res);
         } else {
-          this.setState({ ...this.state, Loader: false });
-          notification.open({
-            message: "Error",
-            description: "Something went wrong",
-            placement: "bottomRight",
-            type: "success"
-          });
+          this.setState({ ...this.state, Loader: false ,errorMessage:"Something went wrong please try again!" });
         }
       });
     },
@@ -54,12 +48,9 @@ class ProfileInfo extends Component {
       if (fileType[file.type] && isFileName) {
         return true;
       } else {
-        message.error({
-          content: isFileName
-            ? `File is not allowed. You can upload jpg, png, jpeg files`
-            : "File don't allow double extension",
-          className: "custom-msg"
-        });
+        this.setState({ ...this.state, Loader: false,errorMessage:isFileName
+          ? `File is not allowed. You can upload jpg, png, jpeg files`
+          : "File don't allow double extension" });
         return Upload.LIST_IGNORE;
       }
     }
@@ -69,7 +60,6 @@ class ProfileInfo extends Component {
     this.props.getmemeberInfoa(this.props.userConfig.userId, this.props.userConfig.id);
   }
   profileTrack = () => {
-    debugger
     apiCalls.trackEvent({
       Type: "User",
       Action: "Profile page view",
@@ -90,12 +80,13 @@ class ProfileInfo extends Component {
     if (res1.ok) {
       message.success({
         content: "Profile uploaded successfully",
-        className: "custom-msg"
+        className: "custom-msg",
+        duration: 3
       });
-      this.setState({ ...this.state, Loader: false });
+      this.setState({ ...this.state, Loader: false,errorMessage:null });
       this.props.getmemeberInfoa(this.props.userConfig.userId);
     } else {
-      this.setState({ ...this.state, Loader: false });
+      this.setState({ ...this.state, Loader: false,errorMessage:res1.data||"Something went wrong please try again!" });
     }
   };
 
@@ -107,16 +98,25 @@ class ProfileInfo extends Component {
       message.destroy();
       message.success({
         content: "Document downloaded successfully",
-        className: "custom-msg"
+        className: "custom-msg",
+        duration: 3,
       });
       this.setState({ ...this.state, fileLoader: false });
     }
   }
 
   render() {
-    const { Title, Paragraph, Text } = Typography;
+    const { Title, Text } = Typography;
     return (
       <>
+       {this.state.errorMessage !== null && (
+        <Alert
+          className="mb-12"
+          type="error"
+          description={this.state.errorMessage}
+          showIcon
+        />
+      )}
         <div className="profile-info text-center">
           {this.state.Loader && <Loader />}
           {!this.state.Loader && (
@@ -177,13 +177,6 @@ class ProfileInfo extends Component {
               className="basicinfo"
             />
           </Title>
-          {/* <Paragraph className="basic-decs">
-            <Translate
-              content="BasicInfotag"
-              component={Text}
-              className="basic-decs"
-            />
-          </Paragraph> */}
           <ul className="user-list pl-0">
           {this.props.userConfig.isBusiness&&<li className="profileinfo">
               <div className="profile-block">

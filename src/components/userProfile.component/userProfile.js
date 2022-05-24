@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import { Tabs } from 'antd'
 import ProfileInfo from './profileInfo';
 import Security from './security'
-import Documents from '../documents.component/documents';
 import AddressBook from '../addressbook.component';
 import QueryString from 'query-string'
 import Settings from './settings';
 import Cases from '../case.component/cases';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
-import {addressTabUpdate,withdrawfiatUpdate} from '../../reducers/addressBookReducer'
+import {addressTabUpdate} from '../../reducers/addressBookReducer'
 import { setHeaderTab } from "../../reducers/buysellReducer"
 
 const { TabPane } = Tabs;
@@ -71,12 +70,6 @@ class UserProfile extends Component {
                     </span>} key="3">
                         {this.state.activeTab == 3 && <Settings />}
                     </TabPane>
-                    {/* <TabPane tab={<span><span className="icon lg documents-icon mr-16" />
-                        <Translate content="documents" className="f-16  mt-16" />
-                    </span>} key="4" destroyInactiveTabPane={true}>
-
-                        {this.state.activeTab == 4 && <Documents />}
-                    </TabPane> */}
                     <TabPane tab={<span><span className="icon lg addressbook-icon mr-16" /><Translate content="address_book" component={Tabs.TabPane.tab} /></span>} key="5">
                         {this.state.activeTab == 5 && <AddressBook activeFiat = {this.state.activeWithdrawFiat} />}
                     </TabPane>
@@ -87,33 +80,6 @@ class UserProfile extends Component {
 
                 </Tabs>
             </div>
-            {/* <div className="main-container visible-mobile">
-                <Tabs className="user-list"  activeKey={this.state.activeTab} onChange={(key)=>this.setState({...this.state,activeTab:key})}>
-                    <TabPane tab={<span><span className="icon lg profile-icon mr-16" /><Translate content="ProfileInfo" component={Tabs.TabPane.tab}/></span>} key="1" className=" ">
-                        <ProfileInfo />
-                    </TabPane>
-                    <TabPane tab={<span><span className="icon lg security-icon mr-16" />
-                    <Translate content="security" className="f-16  mt-16"  />
-                    </span>} key="2">
-                        <Security />
-                    </TabPane>
-                    <TabPane tab={<span><span className="icon lg settings-icon mr-16" />
-                    <Translate content="settings" className="f-16  mt-16"  />
-                    </span>} key="3">
-                    {this.state.activeTab == 3 &&<Settings />}
-                    </TabPane>
-                    <TabPane tab={<span><span className="icon lg documents-icon mr-16" />
-                    <Translate content="documents" className="f-16  mt-16"  />
-                    </span>} key="4" destroyInactiveTabPane={true}>
-                     
-                        {this.state.activeTab == 4 &&     <Documents />}
-                    </TabPane>
-                    <TabPane tab={<span><span className="icon lg addressbook-icon mr-16" /><Translate content="address_book" component={Tabs.TabPane.tab}/></span>} key="5">
-                   {this.state.activeTab == 5 &&  <AddressBook  />}
-                    </TabPane>
-                    
-                </Tabs>
-            </div> */}
         </>);
     }
 }
