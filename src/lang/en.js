@@ -240,6 +240,7 @@ export default {
 	Beneficiary_BankDetails: "Beneficiary Bank Details",
 	bank_type: "Bank Type",
 	Bank_account: "Bank Account Number",
+	Bank_account_iban: "Bank Account Number/IBAN",
 	iban: "IBAN",
 	BIC_SWIFT_routing_number: "BIC/SWIFT/Routing Number",
 	Bank_name: "Bank Name",

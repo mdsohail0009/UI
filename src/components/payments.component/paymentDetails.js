@@ -468,7 +468,7 @@ filePreviewPath() {
                   <thead>
                     <tr>
                       <th className="doc-def">Name</th>
-                      <th className="doc-def">Bank name</th>
+                      <th className="doc-def">Bank Name</th>
                       <th>Bank Account Number/IBAN</th>
                       {(this.props.match.params.id !==
                         "00000000-0000-0000-0000-000000000000" 
