@@ -810,8 +810,8 @@ class WithdrawSummary extends Component {
 											{this.state.tooltipVisible == true && (
 												<Tooltip
 													placement="topRight"
-                          title={`Haven\'t received code? Request new code in ${seconds}seconds. The code will expire after 30mins.`}>
-													{/* title={tooltipValue}> */}
+                          title={`Haven\'t received code? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
+													
 													<span className="icon md info mr-8" />
 												</Tooltip>
 											)}
@@ -897,15 +897,12 @@ class WithdrawSummary extends Component {
 											{this.state.tooltipEmail == true && (
 												<Tooltip
 													placement="topRight"
-													 title={`Haven\'t received code? Request new code in ${seconds2}seconds. The code will expire after 30mins.`}>
-													 {/* title={tooltipValue}> */}
+													 title={`Haven\'t received code? Request new code in ${seconds2} seconds. The code will expire after 30mins.`}>
+													
 													<span className="icon md info mr-8" />
 												</Tooltip>
 											)}
-											{/* {this.state.tooltipEmail==true &&(
-
-                    )} */}
-											{/* {this.state.verifyVisible == true && ( */}
+											
 
 											<Button
 												type="text"
@@ -919,7 +916,7 @@ class WithdrawSummary extends Component {
 												)}
 											</Button>
 
-											{/* )}  */}
+											
 										</div>
 										</div>
 								</Form.Item>

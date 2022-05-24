@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Typography, Row, Col, Spin, Radio, Button, Image } from "antd";
+import { Typography, Row, Col, Spin, Radio, Image } from "antd";
 import { Link, withRouter } from "react-router-dom";
 import { getcoinDetails, getCoinChatData } from './api'
 import LineChart from './line.graph.component';
@@ -11,7 +11,6 @@ import { setStep } from '../../reducers/buysellReducer';
 import { updateCoinDetail } from '../../reducers/sellReducer'
 import { convertCurrency } from '../buy.component/buySellService';
 import apiCalls from '../../api/apiCalls';
-import Loader from "../../Shared/loader";
 import { fetchMarketCoinData } from '../../reducers/dashboardReducer'
 import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat } from "../../reducers/sendreceiveReducer";
 import NumberFormat from "react-number-format";
@@ -64,11 +63,7 @@ class CoinView extends React.Component {
         }
         this.setState({ ...this.state, loading: false})
     }
-    checkAlerts = (isDocRequested, isNotKyc, isTwoFactorNotVerified) => {
-        const _result = false;
-
-
-    }
+   
     coinChartData = async (days) => {
         if (this.state.coinData) {
             const response = await getCoinChatData(this.state.coinData.id, 'usd', days);
@@ -191,9 +186,11 @@ class CoinView extends React.Component {
             this.loadCoinDetailData();
         }
         return <div className="main-container">
-            {/* {this.state.loading ?(
-					<Spin />
-				):( */}
+            {this.state.loading ?(
+                <div className="text-center mt-16">
+                <Spin />
+            </div>
+				):(
             <>
             <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cockpit" />{coinData?.name} ({coinData?.symbol.toUpperCase()})</div>
             <Row gutter={[24, 24]}>
@@ -218,7 +215,6 @@ class CoinView extends React.Component {
                             <ul className="m-0 pl-0">
                                 <li onClick={() => this.showBuyDrawer(coinData, "buy")} className="c-pointer"><div><span className="icon md buy" /></div>BUY</li>
                                 <li onClick={() => this.showBuyDrawer(coinData, "sell")} className="c-pointer"><div><span className="icon md sell" /></div>SELL</li>
-                                {/*<li  onClick={() => this.showSendReceiveDrawer(1, coinData)} value={1}><div><span className="icon md file" /></div>DEPOSIT</li>*/}
                                 <li onClick={() => this.showSendReceiveDrawer(2, coinData)} value={2} className="c-pointer"><div><span className="icon md withdraw" /></div>WITHDRAW</li>
                             </ul>
                         </> : <div className="text-center"><Spin className="text-center"/></div>}
@@ -318,7 +314,7 @@ class CoinView extends React.Component {
             <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
             <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
             </>
-              {/* )}  */}
+             )}  
              </div >
     }
 }
@@ -331,10 +327,6 @@ const connectDispatchToProps = dispatch => {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
-
-        // SelectedAddress: (addressObj) => {
-        //     dispatch(setAddress(addressObj));
-        // },
         dispatch
     }
 }
