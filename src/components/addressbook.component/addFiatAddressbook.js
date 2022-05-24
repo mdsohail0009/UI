@@ -92,11 +92,12 @@ const NewFiatAddress = (props) => {
 
 	useEffect(() => {
 		if (selectParty === true) {
-			form.setFieldsValue({ addressType: "3rdparty" });
+			form.setFieldsValue({ addressType: "3rdparty",bankType:'bank' });
 		} else {
 			form.setFieldsValue({
 				addressType: "1stparty",
 				beneficiaryAccountName: getName(),
+				bankType:'bank'
 			});
 		}
 		if (
@@ -107,6 +108,7 @@ const NewFiatAddress = (props) => {
 			loadDataAddress();
 			setEdit(true);
 		}
+		setBankType('bank');
 		addressbkTrack();
 	}, []);
 	const getName = () => {
@@ -412,13 +414,17 @@ const NewFiatAddress = (props) => {
 				beneficiaryAccountName: props?.userConfig.isBusiness
 					? props?.userConfig.businessName
 					: props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
+					bankType:'bank'
 			});
+			setBankType('bank');
 			setSelectParty(false);
 		} else {
 			form.setFieldsValue({
 				addressType: "3rdparty",
 				beneficiaryAccountName: null,
+				bankType:'bank'
 			});
+			setBankType('bank');
 			setSelectParty(true);
 		}
 	};
@@ -714,7 +720,6 @@ const NewFiatAddress = (props) => {
 										bordered={false}
 										showArrow={true}
 										optionFilterProp="children"
-										defaultValue={"bank"}
 										onChange={(e) => changeBankType(e)}>
 										<Option value={"bank"}>{"Bank Account"}</Option>
 										<Option value={"iban"}>{"IBAN"}</Option>
@@ -738,7 +743,7 @@ const NewFiatAddress = (props) => {
 										},
 										{
 											pattern: /^[A-Za-z0-9]+$/,
-											message: "Invalid IBAN Number",
+											message: bankType !== "iban"?"Invalid Bank account number":"Invalid IBAN",
 										},
 									]}>
 									<Input
