@@ -122,13 +122,13 @@ class AddressBook extends Component {
 				</td>
 			),
 		},
-		{
-			field: "beneficiaryAccountName",
-			title: apiCalls.convertLocalLang("Recipient_full_name"),
-			width: 200,
-			filter: true,
-			with: 150,
-		},
+		// {
+		// 	field: "beneficiaryAccountName",
+		// 	title: apiCalls.convertLocalLang("Recipient_full_name"),
+		// 	width: 200,
+		// 	filter: true,
+		// 	with: 150,
+		// },
 		{
 			field: "currency",
 			title: apiCalls.convertLocalLang("currency"),
@@ -138,7 +138,7 @@ class AddressBook extends Component {
 		},
 		{
 			field: "accountNumber",
-			title: apiCalls.convertLocalLang("Bank_account"),
+			title: apiCalls.convertLocalLang("Bank_account_iban"),
 			filter: true,
 			width: 250,
 		},
