@@ -8,7 +8,7 @@ import Loader from '../../Shared/loader';
 import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
 import { appInsights } from "../../Shared/appinsights";
 import apicalls from '../../api/apiCalls';
-import { validateContentRule } from '../../utils/custom.validator';
+import {Alert} from 'antd'
 
 class BuySummary extends Component {
     constructor(props) {
@@ -68,7 +68,7 @@ class BuySummary extends Component {
                     name: 'Buy', properties: { "Type": 'User', "Action": 'Save ', "Username": this.props?.member.userName, "MemeberId": this.props?.member.id, "Feature": 'Buy', "Remarks": obj.toValue + ' ' + obj.toWalletName + ' buy success', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy Crypto' }
                 });
             } else {
-                this.setState({ ...this.state, error: { valid: false, message: response.data || response.originalError.message } })
+                this.setState({ ...this.state, error: { valid: false, message: response.data || response.originalError.message || "Something went wrong please try again!" } })
             }
             this.setState({ isLoading: false })
         } 
@@ -77,6 +77,15 @@ class BuySummary extends Component {
         }
     }
     render() {
+        {this.state.error !== null && (
+            <Alert
+                closable
+                type="error"
+                description={this.state.error}
+                onClose={() => this.setState({error:null})}
+                showIcon
+            />
+        )}
         if (this.props.sellData?.previewDetails?.loading || !this.props.sellData?.previewDetails?.data) {
             return <Loader />
         }
