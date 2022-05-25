@@ -43,7 +43,7 @@ class Home extends Component {
                     </div>}
                     {this.props.dashboard.notices.loading === false ? <Carousel className="docreq-slider" autoplay={true}>
                     {notices?.map((notice, idx) => <div key={idx}>
-                        <AlertConfirmation type="error" title={notice.title} showIcon description="Our Compliance Team is requesting documents in line with your recent transaction, please click View Details. Thank you for your patience."
+                        <AlertConfirmation type="error" title={notice.title} showIcon description="Our Compliance Team is requesting documents in line with your recent transaction, Please click View Details. Thank you for your patience."
                             action={
                                 <Button size="small" type="text" onClick={() => this.props.history.push(`/cases?id=${notice.typeId}`)}>
                                     View Details

@@ -5,8 +5,8 @@ import { getCurrencyLu, getPaymentsData, savePayments, getBankData, creatPayment
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
-import { warning } from '../../utils/message';
 import FilePreviewer from 'react-file-previewer';
+import { LoadingOutlined } from "@ant-design/icons";
 
 const { confirm } = Modal;
 const { Option } = Select;
@@ -51,6 +51,7 @@ class PaymentDetails extends Component {
       modal:false,
       selectData:null,
       uploadIndex:null,
+      errorWarning:null
     };
     this.gridRef = React.createRef();
     this.useDivRef = React.createRef();
@@ -68,7 +69,7 @@ class PaymentDetails extends Component {
   };
 
   handleCurrencyChange = async (val) => {
-    this.setState({ ...this.state, currency: val, paymentsData: [] });
+    this.setState({ ...this.state, currency: val, paymentsData: [] ,errorMessage:null,errorWarning:null});
     if ((this.state.currency = val)) {
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
@@ -150,15 +151,8 @@ class PaymentDetails extends Component {
   };
   savePayment = async () => {
     let objData = this.state.paymentsData.filter((item) => {
-      return item.checked;
+      return item.amount;
     });
-    // if (objData.length <1) {
-    //   this.setState({
-    //     ...this.state,
-    //     errorMessage: "Please Check atleast one record",
-    //   });
-    //   return;
-    // }
     let objAmount = objData.some((item) => {
       return (item.recordStatus !== "Deleted" && (item.amount === null || item.amount <= 0));
     });
@@ -172,7 +166,7 @@ class PaymentDetails extends Component {
     obj.paymentsDetails = objData;
     if (obj.currency != null) {
       if (objAmount) {
-        this.setState({ ...this.state, errorMessage: "Please enter amount" });
+        this.setState({ ...this.state,errorWarning:null, errorMessage: "Amount must be greater than zero."  });
       }else {
         this.setState({ btnDisabled: true });
         if (
@@ -180,18 +174,17 @@ class PaymentDetails extends Component {
         ) {
           let response = await savePayments(obj);
           if (response.ok) {
-            this.setState({ btnDisabled: false });
+            this.setState({ btnDisabled: false,loading:false, });
             message.destroy();
             message.success({
               content: "Payment details saved successfully",
               className: "custom-msg",
-              duration: 0.5,
+              duration: 3,
             });
             this.props.history.push("/payments");
           } else {
-            this.setState({ btnDisabled: false });
             message.destroy();
-            this.setState({ ...this.state, errorMessage: response.data })
+            this.setState({ ...this.state,btnDisabled: false ,loading:false,errorWarning:null, errorMessage: response.data || "Something went wrong please try again!" })
           }
         }
         else {
@@ -203,28 +196,22 @@ class PaymentDetails extends Component {
           }
           let response = await updatePayments(this.state.paymentsData);
           if (response.ok) {
-            this.setState({ btnDisabled: false });
+            this.setState({ btnDisabled: false,loading:false });
             message.destroy();
             message.success({
               content: "Payment details update successfully",
               className: "custom-msg",
-              duration: 0.5,
+              duration: 3,
             });
             this.props.history.push("/payments");
           } else {
-            this.setState({ btnDisabled: false });
             message.destroy();
-            message.error({
-              content: response.data,
-              className: "custom-msg",
-              duration: 0.5,
-            });
-            this.setState({ ...this.state, errorMessage: response.data });
+            this.setState({ ...this.state,btnDisabled: false,loading:false,errorWarning:null,errorMessage:"please enter amount" });
           }
         }
       }
     } else {
-      this.setState({ ...this.state, errorMessage: "Please select currency" });
+      this.setState({ ...this.state,errorWarning:null, errorMessage: "Please select currency" });
     }
   };
 
@@ -247,7 +234,7 @@ class PaymentDetails extends Component {
     }else{
         this.setState({
             ...this.state,
-            errorMessage: "Atleast one record is required",modal:false
+            errorMessage: "At least one record is required",modal:false
           });
           this.useDivRef.current.scrollIntoView();
     }
@@ -271,9 +258,9 @@ class PaymentDetails extends Component {
     this.setState({ ...this.state, visible: false });
   };
   beforeUpload = (file) => {
+    this.setState({ ...this.state,errorWarning:null,errorMessage:null });
     if(file.name.split('.').length > 2){
-      this.setState({ ...this.state, isValidFile: true,isUploading:false });
-      warning("File don't allow double extension")
+      this.setState({ ...this.state, isValidFile: true,isUploading:false,errorMessage:null,errorWarning:"File don't allow double extension" });
       return
   }
     let fileType = {
@@ -287,12 +274,10 @@ class PaymentDetails extends Component {
       "application/PDF": true,
     };
     if (fileType[file.type]) {
-      this.setState({ ...this.state, isValidFile: true,isUploading:true });
+      this.setState({ ...this.state, isValidFile: true,isUploading:true,errorWarning:null,errorMessage:null });
       return true;
     } else {
-      this.setState({ ...this.state, isValidFile: true,isUploading:false });
-      warning('File is not allowed. You can upload jpg, png, jpeg and PDF files')
-      // this.setState({ ...this.state, isValidFile: false });
+      this.setState({ ...this.state, isValidFile: true,isUploading:false,errorMessage:null,errorWarning:"File is not allowed. You can upload jpg, png, jpeg and PDF files" });
       return Upload.LIST_IGNORE;
     }
   };
@@ -399,7 +384,12 @@ filePreviewPath() {
       );
     }
   };
-
+   antIcon = (
+    <LoadingOutlined
+        style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
+        spin
+    />
+);
 
   render() {
     let total = 0;
@@ -421,12 +411,20 @@ filePreviewPath() {
             </Title>
           </div>
           <div className="box basic-info text-white">
-            {this.state.errorMessage != null && (
+            {this.state.errorMessage && (
               <Alert
                 description={this.state.errorMessage}
                 type="error"
-                closable
                 onClose={() => this.handleAlert()}
+                showIcon
+              />
+            )}
+             {this.state.errorWarning  && (
+              <Alert
+                description={ this.state.errorWarning}
+                type="warning"
+                onClose={() => this.handleAlert()}
+                showIcon
               />
             )}
             <Form autoComplete="off">
@@ -469,11 +467,8 @@ filePreviewPath() {
                 <table className="pay-grid">
                   <thead>
                     <tr>
-                    {/* {(this.props.match.params.id ===
-                        "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
-                       && (<th style={{ width: 50 }}></th>)} */}
-                      <th>Name</th>
-                      <th style={{width:"350px"}}>Bank name</th>
+                      <th className="doc-def">Name</th>
+                      <th className="doc-def">Bank Name</th>
                       <th>Bank Account Number/IBAN</th>
                       {(this.props.match.params.id !==
                         "00000000-0000-0000-0000-000000000000" 
@@ -512,59 +507,14 @@ filePreviewPath() {
                                       : true
                                   }
                                 >
-                            {/* {(this.props.match.params.id ===
-                                "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending")
-                              &&
-                                  <td
-                                    style={{ width: 50 }}
-                                    className="text-center"
-                                  >
-                                    <label className={`text-center ${ (this.props.match.params.id !==
-                                            "00000000-0000-0000-0000-000000000000" ||
-                                             item.state === "Submitted" ||
-                                          item.state === "Approved" ||
-                                          item.state === "Cancelled" ||
-                                          item.state === "Pending")? "c-pointer":"disabled" }  custom-checkbox p-relative`}>
-                                      <Input
-
-                                        name="check"
-                                        type="checkbox"
-                                        disabled={
-                                          this.props.match.params.id !==
-                                            "00000000-0000-0000-0000-000000000000" ||
-                                             item.state === "Submitted" ||
-                                          item.state === "Approved" ||
-                                          item.state === "Cancelled" ||
-                                          item.state === "Pending"
-                                        }
-                                        checked={item.checked}
-                                        className="grid_check_box"
-                                        onClick={(value) => {
-                                          let paymentData =
-                                            this.state.paymentsData;
-                                          if (value.target.checked === false) {
-                                            paymentData[i].amount = 0;
-                                          }
-                                          paymentData[i].checked =
-                                            value.target.checked;
-                                          this.setState({
-                                            ...this.state,
-                                            paymentsData: paymentData,
-                                          });
-                                        }}
-                                      />
-                                      <span></span>
-                                    </label>
-                                  </td>
-                            } */}
-                                  <td>
+                                  <td className="doc-def">
                                     {item?.beneficiaryAccountName ? (
                                       <>{item?.beneficiaryAccountName}</>
                                     ) : (
                                       <span>{" - - "}</span>
                                     )}
                                   </td>
-                                  <td style={{width:"350px"}}>
+                                  <td className="doc-def">
                                     <div className="d-flex align-center justify-content">
                                       <span>
                                         <Tooltip title= {item.bankname}>
@@ -572,7 +522,7 @@ filePreviewPath() {
                                         </Tooltip>
                                           <Text
                                             size="small"
-                                            className="file-label ml-8"
+                                            className="file-label doc-def"
                                           >                                           
                                            {this.addressTypeNames(item.addressType)}{" "} 
                                           </Text>
@@ -699,13 +649,12 @@ filePreviewPath() {
                                         </span>
                                       )}
                                     </div>
-                                   
+                                    {uploadIndex ===i && isUploading ? <div className="text-center" >
+                                            <Spin />
+                                          </div>:<>
                                     {item.documents?.details.map((file) => (
                                       <>
-                                      {uploadIndex ===i && isUploading ? <div className="text-center" >
-                                            <Spin />
-                                          </div>:
-                                          file.documentName !== null && (
+                                          {file.documentName !== null && (
                                           <div className='docdetails' onClick={() => this.docPreview(file)}>
                                           <Tooltip title={file.documentName}>
                                           <EllipsisMiddle  suffixCount={4}>
@@ -716,6 +665,7 @@ filePreviewPath() {
                                         )}
                                       </>
                                     ))}
+                                    </>}
                                   </td>
                                   </>: <td>
                                                     <NumberFormat
@@ -810,15 +760,17 @@ filePreviewPath() {
                 <div>
                    {(this.props.match.params.id ===
                                               "00000000-0000-0000-0000-000000000000" || this.props.match.params.state ==="Submitted" || this.props.match.params.state ==="Pending") &&
-                  <Button
-                   className="pop-btn px-36"
-                    disabled={this.state.btnDisabled}
-                    onClick={() => {
-                      this.savePayment();
-                    }}
-                  >
-                    Pay Now
-                  </Button>
+                                              <Button
+                                              htmlType="submit"
+                                              size="large"
+                                              className="pop-btn mt-36"
+                                              loading={this.state.btnDisabled}
+                                              style={{ minWidth: 150 }}onClick={() => {
+                                                this.savePayment();
+                                              }}>
+                                              {loading && <Spin indicator={this.antIcon} />}{" "}
+                                              Pay Now
+                                          </Button>
   }
                   <Button
                     className="pop-btn px-36"
@@ -860,14 +812,13 @@ filePreviewPath() {
                     className="pop-cancel"
                     onClick={this.handleCancel}>Cancel</Button>
                 <Button className="pop-btn px-36"
-                // className="primary-btn pop-btn"
                     
                     onClick={()=>this.deleteDetials(this.state.selectData,this.state.paymentsData)}>Ok</Button>
             </>
         ]} 
         >
-          <div className="fs-14 text-white-50">
-            <Title className='fs-18 text-white-50'><span class="icon lg info-icon"></span> Delete Payment?</Title>
+          <div className="fs-14 text-white-50 ">
+            <Title className='fs-18 text-white-50 mt-10'><span class="icon lg info-icon"></span> Delete Payment?</Title>
             <Paragraph className="fs-14 text-white-50 modal-para">Are you sure do you want to
             delete Payment ?</Paragraph>
             

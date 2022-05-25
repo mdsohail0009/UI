@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Typography, Select, Form, Button, message, Row, Col } from 'antd'
+import { Typography, Select, Form, Button, message, Row, Col,Alert,Spin } from 'antd'
 import { getSettingsLuData, saveSettingsData } from '../../api/apiServer'
 import { connect } from 'react-redux';
 import { getmemeberInfo } from '../../reducers/configReduser';
@@ -10,6 +10,7 @@ import ch from '../../lang/ch';
 import my from '../../lang/my';
 import Translate from 'react-translate-component';
 import apiCalls from '../../api/apiCalls';
+import { LoadingOutlined } from "@ant-design/icons";
 
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
@@ -19,12 +20,15 @@ const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
     const [btnDisabled, setBtnDisabled] = useState(false);
     const [form] = Form.useForm();
     const [SettingsLu, setSettingsLu] = useState('')
-    const [theme, setTheme] = useState(member?.theme == 'Light Theme' ? true : false);
+    const [theme, setTheme] = useState(member?.theme === 'Light Theme' ? true : false);
     const [settingsObj, setSettingsObj] = useState({ MemberId: '', Language: member?.language ? member.language : 'en', LCurrency: member?.lCurrency ? member.lCurrency : 'USD', Theme: member?.theme ? member.theme : null })
+    const [errorMsg,setErrorMsg]=useState(null);
+    const [isLoading,setIsLoading]=useState(false);
     useEffect(() => {
         getSettingsLu()
-        switcher({ theme: member?.theme == 'Light Theme' ? themes.LHT : themes.DRT });
+        switcher({ theme: member?.theme === 'Light Theme' ? themes.LHT : themes.DRT });
         settingsTrack();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const settingsTrack = () => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Settings page view', "Username": member?.userName, "MemeberId": member?.id, "Feature": 'Settings', "Remarks": 'Settings page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Settings' });
@@ -34,20 +38,34 @@ const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
         if (res.ok) {
             setSettingsLu(res.data)
         }
+        else
+        {
+            setErrorMsg("Something went wrong please try again!")
+        }
     }
     const saveSettings = async () => {
         setBtnDisabled(true);
+        setIsLoading(false);
         settingsObj.Theme = theme ? 'Light Theme' : 'Dark Theme';
         settingsObj.MemberId = member?.id;
         settingsObj.info = JSON.stringify(trackAuditLogData);
         let res = await saveSettingsData(settingsObj);
         if (res.ok) {
+            setBtnDisabled(false);
             setTimeout(() => setBtnDisabled(false), 2000);
             message.destroy()
-            message.success({ content: <Translate content="settings_msg" />, className: 'custom-msg' });
+            message.success({ content: <Translate content="settings_msg" />, className: 'custom-msg',duration:3 });
             getmemeberInfoa(member.userId)
             switcher({ theme: theme ? themes.LHT : themes.DRT });
             counterpart.setLocale(settingsObj.Language);
+            setErrorMsg(null);
+            setIsLoading(false);
+            
+        }
+        else{
+            setErrorMsg( res.data || "Something went wrong please try again!")
+            setIsLoading(false);
+            setBtnDisabled(false);
         }
     }
     const themeSwitch = async () => {
@@ -64,10 +82,24 @@ const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
         }
     }
 
-    // render() {
+        const antIcon = (
+            <LoadingOutlined
+                style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
+                spin
+            />
+        );
     const { Option } = Select;
     const { Text, Paragraph } = Typography;
-    return (<><Form layout="vertical" initialValues={{ ...settingsObj }} onFinish={saveSettings} form={form}>
+    return (<>
+      {errorMsg !== null && (
+        <Alert
+          className="mb-12"
+          type="error"
+          description={errorMsg}
+          showIcon
+        />
+      )}
+    <Form layout="vertical" initialValues={{ ...settingsObj }} onFinish={saveSettings} form={form}>
         <div className="box basic-info">
             <Translate content="settings" className="basicinfo" />
             <Paragraph className="basic-decs"><Translate content="User_customized_settings" className="basic-decs" /></Paragraph>
@@ -128,15 +160,15 @@ const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
                 </div>
             </div>
             <div className="text-center">
-                <Button
-                    htmlType="submit"
-                    size="medium"
-                    className="pop-btn mt-36"
-                    style={{ width: 300 }}
-                    disabled={btnDisabled}
-                >
-                    <Translate content="Save_btn_text" />
-                </Button>
+                    <Button
+                        htmlType="submit"
+                        size="large"
+                        className="pop-btn mt-36"
+                        loading={btnDisabled}
+                        style={{ minWidth: 300 }}>
+                        {isLoading && <Spin indicator={antIcon} />}{" "}
+                        <Translate content="Save_btn_text" />
+                    </Button>
             </div>
         </div>
     </Form>

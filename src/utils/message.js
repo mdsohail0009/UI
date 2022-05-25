@@ -5,7 +5,7 @@ export const success = (msg) => {
     message.success({
         content: msg,
         className: "custom-msg",
-        duration: 1
+        duration: 3
     });
 };
 export const warning = (msg) => {
@@ -13,7 +13,7 @@ export const warning = (msg) => {
     message.warning({
         content: msg,
         className: "custom-msg",
-        duration: 0.75
+        duration: 4
     });
 };
 
@@ -22,6 +22,6 @@ export const error = (msg) => {
     message.error({
         content: msg,
         className: 'custom-msg',
-        duration: 0.5
+        duration: 4
       });
 };

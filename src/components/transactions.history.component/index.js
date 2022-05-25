@@ -61,7 +61,6 @@ componentDidMount() {
 
   ]
   TransactionSearch = async () => {
-    debugger
     let response = await getTransactionSearch();
     if (response.ok) {
       console.log(response.data)
@@ -72,7 +71,6 @@ componentDidMount() {
     }
   };
   handleChange = (value, prop) => {
-    debugger
     var val = "";
     let { memberData, searchObj } = this.state;
     if (prop == "memberId") {
@@ -83,7 +81,6 @@ componentDidMount() {
     this.setState({ ...this.state, searchObj });
   };
   handleSearch = (values) => {
-    debugger
     let { searchObj } = this.state;
     this.setState({ ...this.state, searchObj },
        () => { this.gridRef.current.refreshGrid(); }
@@ -147,7 +144,9 @@ componentDidMount() {
                 <Form.Item name="type" className="input-label mb-0" label="Type">
                   <Select
                     defaultValue="All"
-                    className="cust-input w-100 bgwhite"
+                    //className="cust-input w-100 bgwhite"
+                    className="cust-input mb-0"
+                    dropdownClassName="select-drpdwn"
                     showSearch
                     onChange={(e) => this.handleChange(e, "type")}
                     placeholder="Select Type"
@@ -157,10 +156,12 @@ componentDidMount() {
                 </Form.Item>
               </Col>
               <Col sm={24} md={7} className="px-8">
-                <Form.Item name="docType" className="input-label mb-0" label="Doc Type">
+                <Form.Item name="docType" className="input-label mb-0" label="Transaction">
                   <Select
                     defaultValue="All"
-                    className="cust-input w-100 bgwhite"
+                    // className="cust-input w-100 bgwhite"
+                    className="cust-input mb-0"
+                    dropdownClassName="select-drpdwn"
                     showSearch
                     onChange={(e) => this.handleChange(e, "docType")}
                     placeholder="Select Doc Type"
@@ -195,6 +196,8 @@ componentDidMount() {
          key={gridUrl}
          columns={this.gridColumns}
          showExcelExport ={true}
+         excelFileName = {'Transactions'}
+
         />
 				{/* <Modal
 					title="Crypto Currency"

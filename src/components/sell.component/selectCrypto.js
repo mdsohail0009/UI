@@ -168,7 +168,7 @@ class SelectSellCrypto extends Component {
         const { coinDetailData } = this.props.sellData;
         return (
             <>
-                <div ref={this.myRef}>  {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message={apicalls.convertLocalLang('sellCrypto')} description={this.state?.errorMessage} closable />}
+                <div ref={this.myRef}>  {this.state?.errorMessage !== null && this.state?.errorMessage !== '' && <Alert onClose={() => this.setState({ ...this.state, errorMessage: null })} showIcon type="error" message={apicalls.convertLocalLang('sellCrypto')} description={this.state?.errorMessage} />}
                     {coinDetailData && <Card className="crypto-card select mb-36" bordered={false}>
                         <span className="d-flex align-center">
                             <Image preview={false} src={coinDetailData.impageWhitePath}/>

@@ -59,7 +59,6 @@ class CryptoWallets extends Component {
         })
     }
     showCoinDetails = (item) => {
-        debugger
         if (this.props.onClose) {
             this.props.onClose();
         }
