@@ -557,16 +557,7 @@ const WithdrawalFiatSummary = ({
 						{sendReceive.withdrawFiatObj?.routingNumber}
 					</Text>
 
-					{/* <Text className="fs-14 text-white-50 fw-200">
-        <Translate
-          content="Recipient_full_name"
-          component={Text}
-          className="fs-14 text-white-50 fw-200"
-        />
-      </Text> */}
-					{/* <Text className="fs-20 text-white-30 d-block mb-36">
-        {sendReceive.withdrawFiatObj?.beneficiaryAccountName}
-      </Text> */}
+					
 					<ul className="pl-0 ml-16 text-white-50 my-36">
 						<li>
 							<Translate
@@ -575,20 +566,14 @@ const WithdrawalFiatSummary = ({
 								component={Text}
 							/>{" "}
 						</li>
-						{/* <li>
-          <Translate
-            className="pl-0 ml-0 text-white-50"
-            content="Cancel_select"
-            component={Text}
-          />
-        </li> */}
+					
 					</ul>
 					<Form
 						className="mt-36"
 						name="advanced_search"
 						form={form}
 						onFinish={saveWithdrwal}
-						//onFinish={validData==true && saveWithdrwal}
+						
 						autoComplete="off">
 						{verifyData.isPhoneVerified == true && (
 							<Text className="fs-14 mb-8 text-white d-block fw-200">
@@ -618,18 +603,16 @@ const WithdrawalFiatSummary = ({
 										message: apiCalls.convertLocalLang("is_required"),
 									},
 								]}
-								// label={
-									
-								// }
+								
 								>
 									<div className="p-relative d-flex align-center">
 								<Input
 									type="text"
-									// className="cust-input text-left"
+									
 									className="cust-input custom-add-select mb-0"
 									placeholder={"Enter code"}
 									maxLength={6}
-									// style={{ flexGrow: 1 }}
+									
 									onKeyDown={(event) => {
 										if (
 											event.currentTarget.value.length >= 6 &&
@@ -714,23 +697,11 @@ const WithdrawalFiatSummary = ({
 								<div className="p-relative d-flex align-center">
 								<Input
 									type="text"
-									// className="cust-input text-left"
+									
 									className="cust-input custom-add-select mb-0"
 									placeholder={"Enter code"}
 									maxLength={6}
-									// onKeyDown={(event) => {
-									//   if (
-									//     event.currentTarget.value.length >= 6 &&
-									//     !(event.key == "Backspace" || event.key == "Delete")
-									//   ) {
-									//     event.preventDefault();
-									//   } else if (/^\d+$/.test(event.key)) {
-									//     handleSendOtp(event.currentTarget.value);
-									//   } else if (event.key == "Backspace" || event.key == "Delete") {
-									//   } else {
-									//     event.preventDefault();
-									//   }
-									// }}
+									
 									style={{ width: "100%" }}
 									disabled={emailDisable}
 									onClick={(event) => handleSendOtp(event.currentTarget.value)}
