@@ -18,7 +18,6 @@ import apiCalls from "../../api/apiCalls";
 import { publishBalanceRfresh } from "../../utils/pubsub";
 import { success, warning, error } from "../../utils/message";
 import { Link } from "react-router-dom";
-
 class WithdrawSummary extends Component {
 	state = {
 		onTermsChange: false,
@@ -87,7 +86,8 @@ class WithdrawSummary extends Component {
 		faLoading: false,
     isEmailVerification:false,
     isPhoneVerification:false,
-    isAuthenticatorVerification:false
+    isAuthenticatorVerification:false,
+	btnLoading:false
 	};
 
 	useDivRef = React.createRef();
@@ -213,7 +213,7 @@ class WithdrawSummary extends Component {
 		}
 	};
 	getOTP = async (val) => {
-		this.setState({ ...this.state, phoneLoading: true });
+		// this.setState({ ...this.state, phoneLoading: true });
 		let response = await apiCalls.getCode(
 			this.props.userProfile.id,
 			this.state.type
@@ -221,7 +221,7 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
-				phoneLoading: false,
+				// phoneLoading: false,
 				tooltipVisible: true,
 				buttonText: "sentVerify",
 				inputDisable: false,
@@ -241,14 +241,14 @@ class WithdrawSummary extends Component {
 		} else {
 			this.setState({
 				...this.state,
-				phoneLoading: false,
+				// phoneLoading: false,
 				errorMsg: apiCalls.convertLocalLang("request_fail"),
 			});
 		}
 	};
 
 	getEmail = async (val) => {
-		this.setState({ ...this.state, emailLoading: true });
+		// this.setState({ ...this.state, emailLoading: true });
 		let response = await apiCalls.sendEmail(
 			this.props.userProfile.id,
 			this.state.type
@@ -256,7 +256,7 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
-				emailLoading: false,
+				// emailLoading: false,
 				emailText: "sentVerification",
 				emailDisable: false,
 				textDisable: true,
@@ -276,14 +276,14 @@ class WithdrawSummary extends Component {
 		} else {
 			this.setState({
 				...this.state,
-				emailLoading: false,
+				// emailLoading: false,
 				errorMsg: apiCalls.convertLocalLang("request_fail"),
 			});
 		}
 	};
 
 	getEmailVerification = async () => {
-		this.setState({ ...this.state, emailVerifyLoading: true });
+		// this.setState({ ...this.state, emailVerifyLoading: true });
 		let response = await apiCalls.verifyEmail(
 			this.props.userProfile.id,
 			this.state.emailCodeVal
@@ -291,7 +291,7 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
-				emailVerifyLoading: false,
+				// emailVerifyLoading: false,
 				EmailCode: response.data,
 				verifyEmail: true,
 				verifyEmailOtp: true,
@@ -306,14 +306,14 @@ class WithdrawSummary extends Component {
 		} else if (response.data == null) {
 			this.setState({
 				...this.state,
-				emailVerifyLoading: false,
+				// emailVerifyLoading: false,
 				errorMsg: "Please enter email verification code",
 			});
 		} else {
 			this.setState({ ...this.state, inValidData: true });
 			this.setState({
 				...this.state,
-				emailVerifyLoading: false,
+				// emailVerifyLoading: false,
 				errorMsg: apiCalls.convertLocalLang("email_invalid_code"),
 				invalidData: true,
 				verifyEmail: false,
@@ -323,7 +323,7 @@ class WithdrawSummary extends Component {
 	};
 
 	getOtpVerification = async () => {
-		this.setState({ ...this.state, phoneVerifyLoading: true });
+		// this.setState({ ...this.state, phoneVerifyLoading: true });
 		let response = await apiCalls.getVerification(
 			this.props.userProfile.id,
 			this.state.otpCode
@@ -331,7 +331,7 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
-				phoneVerifyLoading: false,
+				// phoneVerifyLoading: false,
 				OtpVerification: response.data,
 				verifyPhone: true,
 				verifyTextotp: true,
@@ -344,7 +344,7 @@ class WithdrawSummary extends Component {
 		} else if (response.data == null) {
 			this.setState({
 				...this.state,
-				phoneVerifyLoading: false,
+				// phoneVerifyLoading: false,
 				errorMsg: "Please enter phone verification code",
 				invalidData: true,
 			});
@@ -352,7 +352,7 @@ class WithdrawSummary extends Component {
 			this.useDivRef.current.scrollIntoView(0, 0);
 			this.setState({
 				...this.state,
-				phoneVerifyLoading: false,
+				// phoneVerifyLoading: false,
 				errorMsg: apiCalls.convertLocalLang("phone_invalid_code"),
 				verifyPhone: false,
 				inputDisable: false,
@@ -384,7 +384,7 @@ class WithdrawSummary extends Component {
 	};
 
 	getAuthenticator = async () => {
-		this.setState({ ...this.state, faLoading: true });
+		// this.setState({ ...this.state, faLoading: true });
 		let response = await apiCalls.getAuthenticator(
 			this.state.authCode,
 			this.props.userProfile.userId
@@ -392,7 +392,7 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
-				faLoading: false,
+				// faLoading: false,
 				authenticator: response.data,
 				verifyAuth: true,
 				verifyAuthCode: true,
@@ -403,14 +403,14 @@ class WithdrawSummary extends Component {
 		} else if (response.data == null) {
 			this.setState({
 				...this.state,
-				faLoading: false,
+				// faLoading: false,
 				errorMsg: "Please enter authenticator verification code",
 			});
 		} else {
 			this.useDivRef.current.scrollIntoView(0, 0);
 			this.setState({
 				...this.state,
-				faLoading: false,
+				// faLoading: false,
 				errorMsg: apiCalls.convertLocalLang("twofa_invalid_code"),
 				verifyAuth: false,
 				inputAuthDisable: false,
@@ -442,11 +442,12 @@ class WithdrawSummary extends Component {
 			// ) 
       
       // {
+		  this.setState({...this.state,btnLoading:true})
       if (this.state.verifyData.isEmailVerification) {
           if (!this.state.isEmailVerification) {
             this.setState({
               ...this.state,
-              errorMsg: "Please verify email verification code"
+              errorMsg: "Please verify email verification code",btnLoading:false
             });
             this.useDivRef.current.scrollIntoView(0, 0);
             return;
@@ -456,7 +457,7 @@ class WithdrawSummary extends Component {
           if (!this.state.isPhoneVerification) {
             this.setState({
               ...this.state,
-              errorMsg: "Please verify phone verification code"
+              errorMsg: "Please verify phone verification code",btnLoading:false
             });
             this.useDivRef.current.scrollIntoView(0, 0);
             return;
@@ -466,7 +467,7 @@ class WithdrawSummary extends Component {
           if (!this.state.isAuthenticatorVerification) {
             this.setState({
               ...this.state,
-              errorMsg: "Please verify authenticator code"
+              errorMsg: "Please verify authenticator code",btnLoading:false
             });
             this.useDivRef.current.scrollIntoView(0, 0);            
             return;
@@ -480,7 +481,7 @@ class WithdrawSummary extends Component {
           this.setState({
             ...this.state,
             errorMsg:
-              "Without Verifications you can't withdraw. Please select withdraw verifications from security section",
+              "Without Verifications you can't withdraw. Please select withdraw verifications from security section",btnLoading:false
           });
         }
 				if (this.props.userProfile.isBusiness) {
@@ -493,6 +494,7 @@ class WithdrawSummary extends Component {
 					console.log("Okay");
 					let withdrawal = await withDrawCrypto(saveObj);
 					if (withdrawal.ok) {
+						this.setState({...this.state,btnLoading:false})
 						this.props.dispatch(setCryptoFinalRes(withdrawal.data));
 						this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
 						//setIsWithdrawSuccess(true)
@@ -502,12 +504,12 @@ class WithdrawSummary extends Component {
 						publishBalanceRfresh("success");
 					}
 
-					//  else {
-					//   this.setState({
-					//     ...this.state,
-					//     errorMsg: "Please enter valid codes"
-					//   });
-					// }
+					 else {
+					  this.setState({
+					    ...this.state,
+					    errorMsg: withdrawal.data || "Something went wrong please try again!",btnLoading:false
+					  });
+					}
 				} else {
 					// this.setState({
 					//   ...this.state,
@@ -560,6 +562,8 @@ class WithdrawSummary extends Component {
 	address = this.props.sendReceive.withdrawCryptoObj?.toWalletAddress;
 	firstAddress = this.address.slice(0, 4);
 	lastAddress = this.address.slice(-4);
+	
+	
 
 	render() {
 		const { Paragraph, Text } = Typography;
@@ -644,12 +648,14 @@ class WithdrawSummary extends Component {
 				<div ref={this.useDivRef}></div>
 				{this.state.errorMsg && (
 					<Alert
+					    className="mb-12"
 						showIcon
-						type="error"
-						message={apiCalls.convertLocalLang("withdraw_crypto")}
+						// message={apiCalls.convertLocalLang("withdraw_crypto")}
+						onClose={() => this.state.errorMsg(null)}
 						description={this.state.errorMsg}
 						closable={false}
-					/>
+						type="error"
+						/>
 				)}
 				{this.state.loading ? (
 					<Loader />
@@ -973,14 +979,15 @@ class WithdrawSummary extends Component {
 										style={{ width: "100%" }}
 										disabled={this.state.inputAuthDisable == true}
 									/>
-									<div className="new-add c-pointer get-code text-yellow">
+									<div className="new-add c-pointer get-code text-yellow" >
 											<Button
 												type="text"
 												loading={this.state.faLoading}
+												style={{margin: "9px"}}
 												onClick={this.getAuthenticator}>
 												{/* Click here to verify */}
 												{this.state.verifyAuthCode ? (
-													<span className="icon md greenCheck" style={{paddingTop: "15px"}}/>
+													<span className="icon md greenCheck" />
 												) : (
 													"Click here to verify"
 												)}
@@ -1042,9 +1049,10 @@ class WithdrawSummary extends Component {
                     </span>
                   </Form.Item>
 
-							<Button size="large" block className="pop-btn" htmlType="submit">
+							<Button size="large" block className="pop-btn" htmlType="submit" loading={this.state.btnLoading}>
 								<Translate content="with_draw" component={Text} />
 							</Button>
+							
 						</Form>
 						<div className="text-center mt-16">
 							<Translate
