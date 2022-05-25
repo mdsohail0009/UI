@@ -288,10 +288,10 @@ const WithdrawalFiatSummary = ({
 	};
 
 	const getEmail = async (val) => {
-		setEmailLoading(true);
+		// setEmailLoading(true);
 		let response = await apiCalls.sendEmail(userConfig.id, type);
 		if (response.ok) {
-			setEmailLoading(false);
+			// setEmailLoading(false);
 			setEmailText("sentVerification");
 			setEmailDisable(false);
 			setTextDisable(true);
@@ -309,17 +309,17 @@ const WithdrawalFiatSummary = ({
 			}, 30000);
 			//timer();
 		} else {
-			setEmailLoading(false);
+			// setEmailLoading(false);
 			setMsg(apiCalls.convertLocalLang("request_fail"));
 			useOtpRef.current.scrollIntoView(0, 0);
 		}
 	};
 	const getEmailVerification = async (values) => {
-		setEmailVerifyLoading(true);
+		// setEmailVerifyLoading(true);
 		setValidData(true);
 		let response = await apiCalls.verifyEmail(userConfig.id, emailCode);
 		if (response.ok) {
-			setEmailVerifyLoading(false);
+			// setEmailVerifyLoading(false);
 			setEmailDisable(true);
 			setIsEmailVerification(true);
 			setEmail(true);
@@ -329,12 +329,12 @@ const WithdrawalFiatSummary = ({
 			//useOtpRef.current.scrollIntoView(0,0);
 			//success("Email  verified successfully");
 		} else if (response.data == null) {
-			setEmailVerifyLoading(false);
+			// setEmailVerifyLoading(false);
 			setVerifyEmailOtp(false);
 			useOtpRef.current.scrollIntoView(0, 0);
 			setMsg("Please enter email verification code");
 		} else {
-			setEmailVerifyLoading(false);
+			// setEmailVerifyLoading(false);
 			setEmail(false);
 			setEmailDisable(false);
 			setMsg(apiCalls.convertLocalLang("email_invalid_code"));
@@ -364,10 +364,10 @@ const WithdrawalFiatSummary = ({
 		setEmailCode(e.target.value);
 	};
 	const getOTP = async (val) => {
-		setPhoneLoading(true);
+		// setPhoneLoading(true);
 		let response = await apiCalls.getCode(userConfig.id, types);
 		if (response.ok) {
-			setPhoneLoading(false);
+			// setPhoneLoading(false);
 			setTooltipVisible(true);
 			setButtonText("sentVerify");
 			setInputDisable(false);
@@ -385,19 +385,19 @@ const WithdrawalFiatSummary = ({
 			setTimeout(() => {
 				setVerifyOtpText(null);
 			}, 30000);
-		} else {
-			setPhoneLoading(false);
+		// } else {
+		// 	setPhoneLoading(false);
 			setMsg(apiCalls.convertLocalLang("request_fail"));
 			useOtpRef.current.scrollIntoView(0, 0);
 		}
 	};
 
 	const getOtpVerification = async () => {
-		setPhoneVerifyLoading(true);
+		// setPhoneVerifyLoading(true);
 		setValidData(true);
 		let response = await apiCalls.getVerification(userConfig.id, otpCode);
 		if (response.ok) {
-			setPhoneVerifyLoading(false);
+			// setPhoneVerifyLoading(false);
 			setVerifyPhone(true);
 			setIsPhoneVerification(true);
 			setVerifyTextOtp(true);
@@ -408,11 +408,11 @@ const WithdrawalFiatSummary = ({
 
 			//success("OTP verified successfully");
 		} else if (response.data == null) {
-			setPhoneVerifyLoading(false);
+			// setPhoneVerifyLoading(false);
 			useOtpRef.current.scrollIntoView(0, 0);
 			setMsg("Please enter phone verification code");
 		} else {
-			setPhoneVerifyLoading(false);
+			// setPhoneVerifyLoading(false);
 			useOtpRef.current.scrollIntoView(0, 0);
 			setVerifyPhone(false);
 			setVerifyTextOtp(false);
@@ -437,11 +437,11 @@ const WithdrawalFiatSummary = ({
 		setDisableSave(false);
 	};
 	const getAuthenticator = async () => {
-		setAuthLoading(true);
+		// setAuthLoading(true);
 		setValidData(true);
 		let response = await apiCalls.getAuthenticator(authCode, userConfig.userId);
 		if (response.ok) {
-			setAuthLoading(false);
+			// setAuthLoading(false);
 			setVerifyAuth(true);
 			setIsAuthenticatorVerification(true);
 			console.log(response.data);
@@ -449,11 +449,11 @@ const WithdrawalFiatSummary = ({
 			setAuthDisable(true);
 			//success("Authenticator verified successfully");
 		} else if (response.data == null) {
-			setAuthLoading(false);
+			// setAuthLoading(false);
 			useOtpRef.current.scrollIntoView(0, 0);
 			setMsg("Please enter authenticator verification code");
 		} else {
-			setAuthLoading(false);
+			// setAuthLoading(false);
 			setVerifyAuth(false);
 			setAuthDisable(false);
 			useOtpRef.current.scrollIntoView(0, 0);
@@ -822,13 +822,14 @@ const WithdrawalFiatSummary = ({
 									style={{ width: "100%" }}
 									disabled={authDisable == true}
 								/>
-								<div className="new-add c-pointer get-code text-yellow">
+								<div className="new-add c-pointer get-code text-yellow" >
 										<Button
 											type="text"
 											loading={authLoading}
+											style={{margin: "9px"}}
 											onClick={getAuthenticator}>
 											{verifyAuthCode ? (
-												<span className="icon md greenCheck" style={{paddingTop: "15px"}} />
+												<span className="icon md greenCheck"  />
 											) : (
 												"Click here to verify"
 											)}
