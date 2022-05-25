@@ -144,7 +144,9 @@ componentDidMount() {
                 <Form.Item name="type" className="input-label mb-0" label="Type">
                   <Select
                     defaultValue="All"
-                    className="cust-input w-100 bgwhite"
+                    //className="cust-input w-100 bgwhite"
+                    className="cust-input mb-0"
+                    dropdownClassName="select-drpdwn"
                     showSearch
                     onChange={(e) => this.handleChange(e, "type")}
                     placeholder="Select Type"
@@ -157,7 +159,9 @@ componentDidMount() {
                 <Form.Item name="docType" className="input-label mb-0" label="Transaction">
                   <Select
                     defaultValue="All"
-                    className="cust-input w-100 bgwhite"
+                    // className="cust-input w-100 bgwhite"
+                    className="cust-input mb-0"
+                    dropdownClassName="select-drpdwn"
                     showSearch
                     onChange={(e) => this.handleChange(e, "docType")}
                     placeholder="Select Doc Type"
