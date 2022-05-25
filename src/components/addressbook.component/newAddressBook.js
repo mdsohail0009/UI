@@ -42,7 +42,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 	const suffix = children?.slice(-suffixCount).trim();
 	return (
 		<Text
-			className="mb-0 fs-14 docname c-pointer d-block"
+			className="mb-0 fs-14 docnames c-pointer d-block"
 			style={{ maxWidth: "100% !important" }}
 			ellipsis={{ suffix }}>
 			{start}
@@ -86,8 +86,7 @@ const NewAddressBook = ({
 	const [addressState, setAddressState] = useState("");
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
-	const [validateAddress, setValidateAddress] = useState(false);
-	const [type, SetType] = useState();
+	const [error,setError]=useState(null);
 	useEffect(() => {
 		if (addressBookReducer?.cryptoValues) {
 			form.setFieldsValue({
@@ -156,6 +155,10 @@ const NewAddressBook = ({
 			}
 			setIsLoading(false);
 		}
+		else{
+			setIsLoading(false);
+			setErrorMsg("Something went wrong please try again!")	
+		}
 	};
 	const saveAddressBook = async (values) => {
 		setIsLoading(false);
@@ -196,56 +199,23 @@ const NewAddressBook = ({
 				saveObj.beneficiaryAccountName,
 				userConfig.sk
 			);
-
-			// saveObj.documents = {
-			// 	id: cryptoAddress
-			// 		? cryptoAddress?.documents?.id
-			// 		: "00000000-0000-0000-0000-000000000000",
-			// 	transactionId: null,
-			// 	adminId: "00000000-0000-0000-0000-000000000000",
-			// 	date: null,
-			// 	typeId: null,
-			// 	memberId: userConfig?.id,
-			// 	caseTitle: null,
-			// 	caseState: null,
-			// 	remarks: null,
-			// 	status: null,
-			// 	state: null,
-			// 	details: [],
-			// };
-			// saveObj.documents.details.push(detailfile);
-			//!--------
-			// if (file) {
-			// 	const obj = getDocObj(
-			// 		userConfig?.id,
-			// 		file?.path,
-			// 		file.name,
-			// 		file.size,
-			// 		cryptoAddress?.documents?.id,
-			// 		cryptoAddress?.documents?.details[0].id
-			// 	);
-
-			// 	saveObj["documents"] = obj;
-			// }
 			let response = await saveAddress(saveObj);
 			if (response.ok) {
 				setBtnDisabled(false);
 				message.success({
 					content: apiCalls.convertLocalLang("address_msg"),
 					className: "custom-msg",
+					duration:4
 				});
 				form.resetFields();
 				rejectCoinWallet();
 				InputFormValues(null);
 				onCancel();
 				setIsLoading(false);
+				setError("")
 			} else {
-				// message.error({
-				// 	content: response.data,
-				// 	className: "custom-msg",
-				// 	duration: 0.5,
-				// });
-				setErrorMsg(response.data)
+				setError(response.data||"Something went wrong please try again!")
+				setErrorMsg(response.data);
 				setBtnDisabled(false);
 				setIsLoading(false);
 			}
@@ -387,10 +357,16 @@ const NewAddressBook = ({
 				<div ref={useDivRef}></div>
 				{errorMsg && (
 					<Alert
-						closable
 						type="error"
 						description={errorMsg}
 						onClose={() => setErrorMsg(null)}
+						showIcon
+					/>
+				)}
+					{error && (
+					<Alert
+						type="error"
+						description={error}
 						showIcon
 					/>
 				)}
@@ -495,105 +471,7 @@ const NewAddressBook = ({
 							</Select>
 						</Form.Item>
 
-						{/* <Form.Item
-							className="custom-label"
-							name="remarks"
-							label={<Translate content="remarks" component={Form.label} />}
-							rules={[
-								{
-									required: true,
-									message: apiCalls.convertLocalLang("is_required"),
-								},
-
-								{
-									validator: validateContentRule,
-								},
-							]}>
-							<TextArea
-								placeholder="Remarks"
-								className="cust-input pt-16"
-								autoSize={{ minRows: 2, maxRows: 5 }}
-								maxLength={300}></TextArea>
-						</Form.Item>
-
-						<Text className="fs-14 fw-400 text-white-30 l-height-normal d-block mb-16">
-							We require you to download and complete the declaration form as
-							part of the regulation. Please remember to sign and upload it
-							below..
-						</Text> */}
-						{/* <Tooltip title="Click here to open file in a new tab to download">
-							<Text
-								className="file-label c-pointer"
-								onClick={() =>
-									window.open(
-										"https://prdsuissebasestorage.blob.core.windows.net/suissebase/Declaration Form.pdf",
-										"_blank"
-									)
-								}>
-								Declaration_Form.pdf
-							</Text>
-						</Tooltip>
-
-						<Form.Item
-							name={"file"}
-							rules={[
-								{
-									validator: (_, value) => {
-										if (file) {
-											return Promise.resolve();
-										} else {
-											if (!isUploading) {
-												return Promise.reject(
-													"Please upload your signed PDF document"
-												);
-											}
-											return Promise.resolve();
-										}
-									},
-								},
-							]}>
-							{
-								<Dragger
-									accept=".pdf,.PDF,"
-									className="upload mt-16"
-									multiple={false}
-									action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
-									showUploadList={false}
-									beforeUpload={(props) => {
-										beforeUpload(props);
-									}}
-									onChange={(upload) => uploadFile(upload)}>
-									<p className="ant-upload-drag-icon mb-16">
-										<span className="icon xxxl doc-upload" />
-									</p>
-									<p className="ant-upload-text fs-18 mb-0">
-										Upload your signed PDF document here
-									</p>
-								</Dragger>
-							}
-						</Form.Item>
-						{isUploading && (
-							<div className="text-center">
-								<Spin />
-							</div>
-						)}
-						{!isUploading && file != null && (
-							<div className="docfile mr-0 c-pointer">
-								<span className={`icon xl file mr-16`} />
-								<div className="docdetails" onClick={() => docPreview(file)}>
-									<EllipsisMiddle suffixCount={4}>{file.name}</EllipsisMiddle>
-									<span className="fs-12 text-secondary">
-										{bytesToSize(file.size)}
-									</span>
-								</div>
-							</div>
-						)} */}
-						<div
-							style={{
-								display: "flex",
-								justifyContent: "center",
-								alignItems: "center",
-							}}>
+						<div style={{ position: "relative" }}>
 							<Form.Item
 								className="custom-forminput mt-36 agree"
 								name="isAgree"
@@ -617,7 +495,15 @@ const NewAddressBook = ({
 								with={{ link }}
 								component={Paragraph}
 								className="fs-14 text-white-30 ml-16 mb-4 mt-16"
-								style={{ flex: 1 }}
+								style={{
+									index: 100,
+									position: "absolute",
+									width: "420px",
+									top: -20,
+									left: 30,
+									paddingBottom: "10px",
+									marginBottom: "10px",
+								}}
 							/>
 						</div>
 
@@ -627,7 +513,7 @@ const NewAddressBook = ({
 								size="large"
 								block
 								className="pop-btn"
-								disabled={btnDisabled}>
+								loading={btnDisabled}>
 								{isLoading && <Spin indicator={antIcon} />}{" "}
 								<Translate content="Save_btn_text" component={Text} />
 							</Button>

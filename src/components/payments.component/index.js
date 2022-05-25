@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Typography , Button,  Drawer, Select } from 'antd';
+import { Typography , Button,  Drawer, Select,Alert } from 'antd';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
@@ -20,12 +20,13 @@ const Payments = (props) => {
     const[selection,setSelection]=useState([]);
     const [selectedObj,setSelectedObj]=useState()
     const [setSelectData,setSetSelectData]=useState({})
+    const [errorWarning,setErrorWarning]=useState(null)
     const paymentsView = (prop) => {
         props.history.push(`/payments/${prop.dataItem.id}/view`)
     };
     const paymentsEdit = () => {
         if (selection.length == 0) {
-            warning("Please select the one record");
+          setErrorWarning("Please select the one record");
           }else{
             props.history.push(`/payments/${selectedObj}/${setSelectData.currency}/${setSelectData.state}/edit`)
           }
@@ -132,6 +133,15 @@ const Payments = (props) => {
                         </Button>                 
                           </div>
                 </div>
+          {errorWarning !== null && (
+            <Alert
+              className="mb-12"
+              type="warning"
+              description={errorWarning}
+              onClose={() => setErrorWarning(null)}
+              showIcon
+            />
+          )}
                 <div className="box basic-info text-white">
                     <List
                         showActionBar={false}

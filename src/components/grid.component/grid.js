@@ -39,7 +39,7 @@ const filterOperators = {
 export function withState(WrappedGrid) {
     return class StatefullGrid extends React.Component {
         constructor(props) {
-            debugger
+            
             super(props);
             this.state = { dataState: { skip: 0, take: 10 }, additionalParams: null, data: [], isLoading: false };
             this.excelRef = React.createRef();
@@ -67,10 +67,10 @@ export function withState(WrappedGrid) {
                             }
                         }}
                     >
-                        Export to Excel
+                        Export Excel
                     </button>
                     </div>}
-                    {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef}>
+                    {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName = {this.props?.excelFileName}>
 
                         <WrappedGrid
                             sortable={true}
