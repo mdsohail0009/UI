@@ -385,7 +385,7 @@ const WithdrawalFiatSummary = ({
 			setTimeout(() => {
 				setVerifyOtpText(null);
 			}, 30000);
-		// } else {
+		 } else {
 		// 	setPhoneLoading(false);
 			setMsg(apiCalls.convertLocalLang("request_fail"));
 			useOtpRef.current.scrollIntoView(0, 0);
