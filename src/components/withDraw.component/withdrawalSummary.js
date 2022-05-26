@@ -195,7 +195,7 @@ const WithdrawalFiatSummary = ({
 				setDisableSave(false);
 				setIsLoading(false);
 				setMsg("Please verify phone verification code");
-				// useOtpRef.current.scrollIntoView(0, 0);
+				 useOtpRef.current.scrollIntoView(0, 0);
 				return;
 			}
 		}
@@ -204,7 +204,7 @@ const WithdrawalFiatSummary = ({
 				setDisableSave(false);
 				setIsLoading(false);
 				setMsg("Please verify  email verification code");			
-				// useOtpRef.current.scrollIntoView(0, 0);
+				 useOtpRef.current.scrollIntoView(0, 0);
 				return;
 			}
 		}
@@ -213,7 +213,7 @@ const WithdrawalFiatSummary = ({
 				setDisableSave(false);
 				setIsLoading(false);
 				setMsg("Please verify authenticator code");
-				// useOtpRef.current.scrollIntoView(0, 0);
+				 useOtpRef.current.scrollIntoView(0, 0);
 				return;
 			}
 		}
