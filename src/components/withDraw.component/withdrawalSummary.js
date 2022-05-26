@@ -539,7 +539,7 @@ const WithdrawalFiatSummary = ({
 					<Text className="fs-14 text-white-50 fw-200">
 						{" "}
 						<Translate
-							content="Bank_account"
+							content="Bank_account_iban"
 							component={Text}
 							className="fs-14 text-white-50 fw-200"
 						/>
