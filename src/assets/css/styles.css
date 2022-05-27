@@ -1150,3 +1150,5 @@ input[type=number]::-webkit-outer-spin-button {
     
     
 }
+
+.hy-align{margin:auto 0; display: flex;align-items: center;}
