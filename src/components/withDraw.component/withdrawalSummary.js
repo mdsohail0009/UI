@@ -189,21 +189,22 @@ const WithdrawalFiatSummary = ({
 
 	const saveWithdrwal = async (values) => {
 		setDisableSave(true);
-		if (verifyData.isEmailVerification) {
-			if (!isEmailVerification) {
-				setDisableSave(false);
-				setIsLoading(false);
-				setMsg("Please verify  email verification code");			
-				// useOtpRef.current.scrollIntoView(0, 0);
-				return;
-			}
-		}
+		
 		if (verifyData.isPhoneVerified) {
 			if (!isPhoneVerification) {
 				setDisableSave(false);
 				setIsLoading(false);
 				setMsg("Please verify phone verification code");
-				// useOtpRef.current.scrollIntoView(0, 0);
+				 useOtpRef.current.scrollIntoView(0, 0);
+				return;
+			}
+		}
+		if (verifyData.isEmailVerification) {
+			if (!isEmailVerification) {
+				setDisableSave(false);
+				setIsLoading(false);
+				setMsg("Please verify  email verification code");			
+				 useOtpRef.current.scrollIntoView(0, 0);
 				return;
 			}
 		}
@@ -212,7 +213,7 @@ const WithdrawalFiatSummary = ({
 				setDisableSave(false);
 				setIsLoading(false);
 				setMsg("Please verify authenticator code");
-				// useOtpRef.current.scrollIntoView(0, 0);
+				 useOtpRef.current.scrollIntoView(0, 0);
 				return;
 			}
 		}
@@ -385,7 +386,7 @@ const WithdrawalFiatSummary = ({
 			setTimeout(() => {
 				setVerifyOtpText(null);
 			}, 30000);
-		// } else {
+		 } else {
 		// 	setPhoneLoading(false);
 			setMsg(apiCalls.convertLocalLang("request_fail"));
 			useOtpRef.current.scrollIntoView(0, 0);
@@ -538,7 +539,7 @@ const WithdrawalFiatSummary = ({
 					<Text className="fs-14 text-white-50 fw-200">
 						{" "}
 						<Translate
-							content="Bank_account"
+							content="Bank_account_iban"
 							component={Text}
 							className="fs-14 text-white-50 fw-200"
 						/>
@@ -633,11 +634,11 @@ const WithdrawalFiatSummary = ({
 									onChange={(e) => handleChange(e, "code")}
 									disabled={inputDisable}
 								/>
-								<div className="new-add c-pointer get-code text-yellow">
+								<div className="new-add c-pointer get-code text-yellow hy-align">
 										{!verifyTextotp && (
 											<Button
 												type="text"
-												style={{paddingTop:"15px",color:"black"}}
+												style={{color:"black"}}
 												loading={phoneLoading}
 												onClick={getOTP}
 												disabled={disable}>
@@ -654,7 +655,7 @@ const WithdrawalFiatSummary = ({
 										<Button
 											type="text"
 											loading={phoneVerifyLoading}
-											style={{color:"black"}}
+											style={{color:"black", margin:"0 auto"}}
 											onClick={getOtpVerification}
 											disabled={verifyPhone == true}>
 											{verifyOtp[verifyOtpText]}
@@ -703,15 +704,15 @@ const WithdrawalFiatSummary = ({
 									maxLength={6}
 									
 									style={{ width: "100%" }}
-									disabled={emailDisable}
+									 disabled={emailDisable}
 									onClick={(event) => handleSendOtp(event.currentTarget.value)}
 									onChange={(e) => handleEmailChange(e, "Emailcode")}
 								/>
-								<div className="new-add c-pointer get-code text-yellow">
+								<div className="new-add c-pointer get-code text-yellow hy-align">
 										{!verifyEmailOtp && (
 											<Button
 												type="text"
-												style={{paddingTop:"15px",color:"black"}}
+												style={{color:"black"}}
 												loading={emailLoading}
 												onClick={getEmail}>
 												{isResend && emailBtn[emailText]}
@@ -793,7 +794,7 @@ const WithdrawalFiatSummary = ({
 									style={{ width: "100%" }}
 									disabled={authDisable == true}
 								/>
-								<div className="new-add c-pointer get-code text-yellow" >
+								<div className="new-add c-pointer get-code text-yellow hy-align" >
 										<Button
 											type="text"
 											loading={authLoading}

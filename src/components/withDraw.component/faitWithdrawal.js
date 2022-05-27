@@ -551,7 +551,7 @@ const FaitWithdrawal = ({
                   />
                   <Translate
                     className="fw-200 text-white-50 fs-14"
-                    content="Bank_account"
+                    content="Bank_account_iban"
                     component={Text}
                   />
                   <Translate
@@ -595,7 +595,7 @@ const FaitWithdrawal = ({
                     with={{ value: addressInfo.bankAddress }}
                   />
 
-                  <Translate
+                 {/* <Translate
                     className="fw-200 text-white-50 fs-14"
                     content="Country"
                     component={Text}
@@ -607,7 +607,7 @@ const FaitWithdrawal = ({
                     with={{ value: addressInfo.country || "--" }}
                   />
 
-                  <Translate
+                   <Translate
                     className="fw-200 text-white-50 fs-14"
                     content="state"
                     component={Text}
@@ -623,13 +623,13 @@ const FaitWithdrawal = ({
                     className="fw-200 text-white-50 fs-14"
                     content="zipcode"
                     component={Text}
-                  />
+                  /> 
                   <Translate
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     content="SIGNU"
                     component={Text}
                     with={{ value: addressInfo.zipCode || "--" }}
-                  />
+                  />*/}
                   <Translate
                     content="Beneficiary_Details"
                     component={Paragraph}
@@ -639,7 +639,7 @@ const FaitWithdrawal = ({
                   <Translate
                     className="fw-200 text-white-50 fs-14"
                     content={
-                      userConfig?.isBusiness
+                      userConfig?.isBusiness&&addressInfo.addressType !== "3rdparty"
                         ? "company_name"
                         : "Recipient_full_name"
                     }
@@ -650,9 +650,9 @@ const FaitWithdrawal = ({
                     content="SIGNU"
                     component={Text}
                     with={{
-                      value: userConfig?.isBusiness
+                      value: userConfig?.isBusiness&&addressInfo.addressType !== "3rdparty"
                         ? userConfig?.businessName
-                        : userConfig.firstName + " " + userConfig.lastName
+                        : addressInfo.beneficiaryAccountName
                     }}
                   />
 
