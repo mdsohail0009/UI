@@ -14,7 +14,7 @@ import apiCalls from '../../api/apiCalls';
 import { fetchMarketCoinData } from '../../reducers/dashboardReducer'
 import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat } from "../../reducers/sendreceiveReducer";
 import NumberFormat from "react-number-format";
-import { coinSubject } from '../../utils/pubsub'
+
 class CoinView extends React.Component {
     refreshSubscribe;
    state = {
@@ -26,29 +26,12 @@ class CoinView extends React.Component {
     coin:"",
     loading:false
 }
-   
-   
 
     componentDidMount() {
-        // debugger
         window.scrollTo(0, 0)
-        // this.listner = this.props.history.listen(() => {
-        //     this.loadCoinDetailData();
-        //     this.coinViewTrack();
-        // });
-        // this.coinViewTrack();
-        // this.refreshSubscribe = coinSubject.subscribe((val) => {
-        //     this.loadCoinDetailData();
-        // });
-        // this.coinChartData(1);
         this.loadCoinDetailData();
-        // if (this.props.dashboard.isCoinViewChange) {
-        //     this.loadCoinDetailData();
-        // }
     } 
     componentWillUnmount() {
-        // this.refreshSubscribe.unsubscribe();
-        // this.listner();
     }
     coinViewTrack = () => {
         apiCalls.trackEvent({ "Type": 'User', "Action": 'Coin page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Coin page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
@@ -58,7 +41,6 @@ class CoinView extends React.Component {
         this.props.dispatch(fetchMarketCoinData(false))
         const response = await getcoinDetails(this.props.match.params?.coinName,this.props.userProfile?.id);
         if (response.ok) {
-            console.log(response.data)
             this.setState({ ...this.state, coinData: response.data },
                  () => {this.coinChartData(1); }
             )
