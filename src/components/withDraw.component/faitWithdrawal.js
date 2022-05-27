@@ -639,7 +639,7 @@ const FaitWithdrawal = ({
                   <Translate
                     className="fw-200 text-white-50 fs-14"
                     content={
-                      userConfig?.isBusiness
+                      userConfig?.isBusiness&&addressInfo.addressType !== "3rdparty"
                         ? "company_name"
                         : "Recipient_full_name"
                     }
@@ -650,9 +650,9 @@ const FaitWithdrawal = ({
                     content="SIGNU"
                     component={Text}
                     with={{
-                      value: userConfig?.isBusiness
+                      value: userConfig?.isBusiness&&addressInfo.addressType !== "3rdparty"
                         ? userConfig?.businessName
-                        : userConfig.firstName + " " + userConfig.lastName
+                        : addressInfo.beneficiaryAccountName
                     }}
                   />
 
