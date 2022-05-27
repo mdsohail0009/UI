@@ -885,8 +885,8 @@ const NewFiatAddress = (props) => {
 									label={
 										<Translate
 											content={
-												(props?.userConfig?.isBusiness && "company_name") ||
-												(!props?.userConfig?.isBusiness &&
+												(props?.userConfig?.isBusiness&& !selectParty && "company_name") ||
+												(!props?.userConfig?.isBusiness || selectParty&&
 													"Recipient_full_name")
 											}
 											component={Form.label}
@@ -909,9 +909,9 @@ const NewFiatAddress = (props) => {
 										<Input
 											className="cust-input"
 											placeholder={
-												(props?.userConfig?.isBusiness &&
+												(props?.userConfig?.isBusiness && !selectParty&&
 													apiCalls.convertLocalLang("company_name")) ||
-												(!props?.userConfig?.isBusiness &&
+												(!props?.userConfig?.isBusiness || selectParty&&
 													apiCalls.convertLocalLang("Recipient_full_name"))
 											}
 											value="naresh"
