@@ -27,7 +27,7 @@ const AddressCryptoView=(props)=> {
 
   useEffect(() => {
 		loadDataAddress();
-	}, []);
+	}, []);// eslint-disable-line react-hooks/exhaustive-deps
     const loadDataAddress = async () => {     
         setIsLoading(true)
         let response = await getAddress(props?.match?.params?.id, 'crypto');
@@ -39,13 +39,6 @@ const AddressCryptoView=(props)=> {
 const backToAddressBook = () => {
   props?.history?.push('/userprofile/?key=5');
 };
-// const addressTypeNames = (type) =>{
-//   const stepcodes = {
-//             "1stparty" : "1st Party",
-//             "3rdparty" : "3rd Party",
-//    }
-//    return stepcodes[type]
-// }
 const docPreview = async (file) => {
   let res = await getFileURL({ url: file.path });
   if (res.ok) {

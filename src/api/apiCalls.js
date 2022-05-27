@@ -14,8 +14,7 @@ const getMember = (useremail) => {
 	return apiClient.get(ApiControllers.accounts + "/" + useremail);
 };
 const sumsubacesstoken = (userid, flow) => {
-	//api.sumsub.com/resources/accessTokens?userId=JamesBond007&levelName=basic-kyc-level
-	https: return apiClient.get(
+return apiClient.get(
 		"Sumsub/AccessToken1?applicantId=" + userid + "&levelName=" + flow
 	);
 };

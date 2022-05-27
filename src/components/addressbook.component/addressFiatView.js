@@ -27,7 +27,7 @@ const AddressFiatView = (props) => {
 
 	useEffect(() => {
 		loadDataAddress();
-	}, []);
+	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 	const loadDataAddress = async () => {
 		setIsLoading(true);
 		let response = await getAddress(props?.match?.params?.id, "Fiat");
@@ -227,7 +227,7 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>
-											{fiatAddress?.addressType == "3rdparty" && (
+											{fiatAddress?.addressType === "3rdparty" && (
 												<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 													<div>
 														<label className="kpi-label">Remarks</label>

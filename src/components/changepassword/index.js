@@ -31,7 +31,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       form.resetFields();
     }
     trakEvet()
-  }, [userProfile]);
+  }, [userProfile]);// eslint-disable-line react-hooks/exhaustive-deps
   const trakEvet = () => {
     apiCalls.trackEvent({ "Type": 'User', "Action": 'Change password page view', "Username": userConfig?.userName, "MemeberId": userConfig?.id, "Feature": 'Change Password', "Remarks": 'Change password page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Change Password' });
   }

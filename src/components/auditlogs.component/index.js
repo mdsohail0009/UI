@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input, Typography, Spin ,Empty} from "antd";
+import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input, Typography ,Empty} from "antd";
 import List from "../grid.component";
 import Loader from '../../Shared/loader'
 import { userNameLuSearch, getFeatureLuSearch, getAuditLogInfo } from './api';

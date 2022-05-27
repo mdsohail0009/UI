@@ -109,7 +109,7 @@ class BuySummary extends Component {
         />
     }
 }
-const connectStateToProps = ({ buySell, buyInfo, userConfig, trackAuditLogData }) => {
+const connectStateToProps = ({ buySell, buyInfo, userConfig }) => {
     return { buySell, sellData: buyInfo, member: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {

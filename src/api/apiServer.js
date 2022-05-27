@@ -1,4 +1,4 @@
-import { apiClient, firebaseServer } from '.';
+import { apiClient } from '.';
 import { ApiControllers } from './config'
 
 export const changePassword = (obj) => {

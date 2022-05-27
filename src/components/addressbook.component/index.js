@@ -6,7 +6,6 @@ import {
 	fetchUsersIdUpdate,
 	clearValues,
 	clearCryptoValues,
-	withdrawfiatUpdate,
 } from "../../reducers/addressBookReducer";
 import Translate from "react-translate-component";
 import { processSteps as config } from "./config";
@@ -18,10 +17,9 @@ import SelectCrypto from "./selectCrypto";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import apiCalls from "../../api/apiCalls";
-import { warning } from "../../utils/message";
 import Info from "../shared/info";
 
-const { Title, Paragraph, Text } = Typography;
+const { Paragraph, Text } = Typography;
 
 class AddressBook extends Component {
 	constructor(props) {
@@ -462,7 +460,7 @@ class AddressBook extends Component {
 		} else {
 			obj.walletCode = obj.coin;
 			this.props.rowSelectedData(obj);
-			if (obj.isPrimary == false) {
+			if (obj.isPrimary === false) {
 				this.props.history.push(`/payments/newbeneficiary/${obj.id}`);
 			} else {
 				if (this.state.cryptoFiat) {
@@ -682,7 +680,7 @@ class AddressBook extends Component {
 							type="success"
 							description={
 								"Record " +
-								(this.state.selectedObj.status == "Active"
+								(this.state.selectedObj.status === "Active"
 									? "deactivated"
 									: "activated") +
 								" successfully"
