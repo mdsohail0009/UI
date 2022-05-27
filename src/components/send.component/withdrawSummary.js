@@ -803,12 +803,12 @@ class WithdrawSummary extends Component {
 										style={{ width: "100%" }}
 										onChange={(e) => this.handleChange(e, "code")}
 									/>
-									<div className="new-add c-pointer get-code text-yellow">
+									<div className="new-add c-pointer get-code text-yellow hy-align">
 											{!this.state.verifyTextotp && (
 												<Button
 													type="text"
 													loading={this.state.phoneLoading}
-													style={{paddingTop:"15px",color:"black"}}
+													style={{color:"black"}}
 													onClick={this.getOTP}
 													disabled={this.state.disable}>
 													{btnList[this.state.buttonText]}
@@ -825,7 +825,7 @@ class WithdrawSummary extends Component {
 											<Button
 												type="text"
 												loading={this.state.phoneVerifyLoading}
-												style={{color:"black"}}
+												style={{color:"black",margin:"0 auto"}}
 												onClick={this.getOtpVerification}
 												disabled={this.state.verifyPhone == true}>
 												{verifyOtpText[this.state.verifyOtpText]}
@@ -891,11 +891,11 @@ class WithdrawSummary extends Component {
 										onChange={(e) => this.handleEmailChange(e, "emailCodeVal")}
 										disabled={this.state.inputEmailDisable}
 									/>
-									<div className="new-add c-pointer get-code text-yellow">
+									<div className="new-add c-pointer get-code text-yellow hy-align">
 											{!this.state.verifyEmailOtp && (
 												<Button
 													type="text"
-													style={{paddingTop:"15px",color:"black"}}
+													style={{color:"black"}}
 													loading={this.state.emailLoading}
 													onClick={this.getEmail}>
 													{emailBtn[this.state.emailText]}
@@ -913,7 +913,7 @@ class WithdrawSummary extends Component {
 
 											<Button
 												type="text"
-												style={{color:"black"}}
+												style={{color:"black" , margin:"0 auto"}}
 												loading={this.state.emailVerifyLoading}
 												onClick={(e) => this.getEmailVerification(e)}
 												disabled={this.state.verifyEmail == true}>
@@ -980,7 +980,7 @@ class WithdrawSummary extends Component {
 										style={{ width: "100%" }}
 										disabled={this.state.inputAuthDisable == true}
 									/>
-									<div className="new-add c-pointer get-code text-yellow" >
+									<div className="new-add c-pointer get-code text-yellow hy-align" >
 											<Button
 												type="text"
 												loading={this.state.faLoading}

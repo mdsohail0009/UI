@@ -634,11 +634,11 @@ const WithdrawalFiatSummary = ({
 									onChange={(e) => handleChange(e, "code")}
 									disabled={inputDisable}
 								/>
-								<div className="new-add c-pointer get-code text-yellow">
+								<div className="new-add c-pointer get-code text-yellow hy-align">
 										{!verifyTextotp && (
 											<Button
 												type="text"
-												style={{paddingTop:"15px",color:"black"}}
+												style={{color:"black"}}
 												loading={phoneLoading}
 												onClick={getOTP}
 												disabled={disable}>
@@ -655,7 +655,7 @@ const WithdrawalFiatSummary = ({
 										<Button
 											type="text"
 											loading={phoneVerifyLoading}
-											style={{color:"black"}}
+											style={{color:"black", margin:"0 auto"}}
 											onClick={getOtpVerification}
 											disabled={verifyPhone == true}>
 											{verifyOtp[verifyOtpText]}
@@ -708,11 +708,11 @@ const WithdrawalFiatSummary = ({
 									onClick={(event) => handleSendOtp(event.currentTarget.value)}
 									onChange={(e) => handleEmailChange(e, "Emailcode")}
 								/>
-								<div className="new-add c-pointer get-code text-yellow">
+								<div className="new-add c-pointer get-code text-yellow hy-align">
 										{!verifyEmailOtp && (
 											<Button
 												type="text"
-												style={{paddingTop:"15px",color:"black"}}
+												style={{color:"black"}}
 												loading={emailLoading}
 												onClick={getEmail}>
 												{isResend && emailBtn[emailText]}
@@ -794,7 +794,7 @@ const WithdrawalFiatSummary = ({
 									style={{ width: "100%" }}
 									disabled={authDisable == true}
 								/>
-								<div className="new-add c-pointer get-code text-yellow" >
+								<div className="new-add c-pointer get-code text-yellow hy-align" >
 										<Button
 											type="text"
 											loading={authLoading}
