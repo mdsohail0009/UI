@@ -189,21 +189,22 @@ const WithdrawalFiatSummary = ({
 
 	const saveWithdrwal = async (values) => {
 		setDisableSave(true);
-		if (verifyData.isEmailVerification) {
-			if (!isEmailVerification) {
-				setDisableSave(false);
-				setIsLoading(false);
-				setMsg("Please verify  email verification code");			
-				// useOtpRef.current.scrollIntoView(0, 0);
-				return;
-			}
-		}
+		
 		if (verifyData.isPhoneVerified) {
 			if (!isPhoneVerification) {
 				setDisableSave(false);
 				setIsLoading(false);
 				setMsg("Please verify phone verification code");
-				// useOtpRef.current.scrollIntoView(0, 0);
+				 useOtpRef.current.scrollIntoView(0, 0);
+				return;
+			}
+		}
+		if (verifyData.isEmailVerification) {
+			if (!isEmailVerification) {
+				setDisableSave(false);
+				setIsLoading(false);
+				setMsg("Please verify  email verification code");			
+				 useOtpRef.current.scrollIntoView(0, 0);
 				return;
 			}
 		}
@@ -212,7 +213,7 @@ const WithdrawalFiatSummary = ({
 				setDisableSave(false);
 				setIsLoading(false);
 				setMsg("Please verify authenticator code");
-				// useOtpRef.current.scrollIntoView(0, 0);
+				 useOtpRef.current.scrollIntoView(0, 0);
 				return;
 			}
 		}
@@ -385,7 +386,7 @@ const WithdrawalFiatSummary = ({
 			setTimeout(() => {
 				setVerifyOtpText(null);
 			}, 30000);
-		// } else {
+		 } else {
 		// 	setPhoneLoading(false);
 			setMsg(apiCalls.convertLocalLang("request_fail"));
 			useOtpRef.current.scrollIntoView(0, 0);
@@ -538,7 +539,7 @@ const WithdrawalFiatSummary = ({
 					<Text className="fs-14 text-white-50 fw-200">
 						{" "}
 						<Translate
-							content="Bank_account"
+							content="Bank_account_iban"
 							component={Text}
 							className="fs-14 text-white-50 fw-200"
 						/>
@@ -703,7 +704,7 @@ const WithdrawalFiatSummary = ({
 									maxLength={6}
 									
 									style={{ width: "100%" }}
-									disabled={emailDisable}
+									 disabled={emailDisable}
 									onClick={(event) => handleSendOtp(event.currentTarget.value)}
 									onChange={(e) => handleEmailChange(e, "Emailcode")}
 								/>

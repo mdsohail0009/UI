@@ -443,16 +443,7 @@ class WithdrawSummary extends Component {
       
       // {
 		  this.setState({...this.state,btnLoading:true})
-      if (this.state.verifyData.isEmailVerification) {
-          if (!this.state.isEmailVerification) {
-            this.setState({
-              ...this.state,
-              errorMsg: "Please verify email verification code",btnLoading:false
-            });
-            this.useDivRef.current.scrollIntoView(0, 0);
-            return;
-          }
-        }
+     
         if (this.state.verifyData.isPhoneVerified) {
           if (!this.state.isPhoneVerification) {
             this.setState({
@@ -463,6 +454,16 @@ class WithdrawSummary extends Component {
             return;
           }
         }
+		if (this.state.verifyData.isEmailVerification) {
+			if (!this.state.isEmailVerification) {
+			  this.setState({
+				...this.state,
+				errorMsg: "Please verify email verification code",btnLoading:false
+			  });
+			  this.useDivRef.current.scrollIntoView(0, 0);
+			  return;
+			}
+		  }
         if (this.state.verifyData.twoFactorEnabled) {
           if (!this.state.isAuthenticatorVerification) {
             this.setState({
