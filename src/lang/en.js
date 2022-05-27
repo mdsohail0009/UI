@@ -455,7 +455,7 @@ export default {
 	Select_Date: "Select Date",
 	ok: "OK",
 	funds_to_swap: "Insufficiant funds to swap",
-	No_data: "To No data found",
+	No_data: "No Data Found",
 	confirm_button: "Confirm",
 	new_pass_word_msg: "Please enter new password",
 	Back_to_Withdrawfiat: "Back to Withdraw Fiat",

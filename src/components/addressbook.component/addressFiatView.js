@@ -199,9 +199,9 @@ const AddressFiatView = (props) => {
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">
-														{(props?.userConfig?.isBusiness &&
+														{(props?.userConfig?.isBusiness && fiatAddress?.addressType !== "3rdparty"&&
 															"Business Name") ||
-															(!props?.userConfig?.isBusiness &&
+															(!props?.userConfig?.isBusiness || fiatAddress?.addressType === "3rdparty"&&
 																"Recipient Full Name")}
 													</label>
 													<div className="kpi-val">
@@ -232,7 +232,7 @@ const AddressFiatView = (props) => {
 													<div>
 														<label className="kpi-label">Remarks</label>
 														<div className="kpi-val">
-															{fiatAddress?.remarks}
+															{fiatAddress?.remarks?fiatAddress?.remarks:'-'}
 														</div>
 													</div>
 												</Col>
