@@ -365,10 +365,8 @@ const WithdrawalFiatSummary = ({
 		setEmailCode(e.target.value);
 	};
 	const getOTP = async (val) => {
-		// setPhoneLoading(true);
 		let response = await apiCalls.getCode(userConfig.id, types);
 		if (response.ok) {
-			// setPhoneLoading(false);
 			setTooltipVisible(true);
 			setButtonText("sentVerify");
 			setInputDisable(false);
@@ -387,33 +385,24 @@ const WithdrawalFiatSummary = ({
 				setVerifyOtpText(null);
 			}, 30000);
 		 } else {
-		// 	setPhoneLoading(false);
 			setMsg(apiCalls.convertLocalLang("request_fail"));
 			useOtpRef.current.scrollIntoView(0, 0);
 		}
 	};
 
 	const getOtpVerification = async () => {
-		// setPhoneVerifyLoading(true);
 		setValidData(true);
 		let response = await apiCalls.getVerification(userConfig.id, otpCode);
 		if (response.ok) {
-			// setPhoneVerifyLoading(false);
 			setVerifyPhone(true);
 			setIsPhoneVerification(true);
 			setVerifyTextOtp(true);
 			setVerifyOtpText(null);
 			setInputDisable(true);
-
-			//{verifyTextotp == false ? setButtonText(null):setButtonText("resendotp")}
-
-			//success("OTP verified successfully");
 		} else if (response.data == null) {
-			// setPhoneVerifyLoading(false);
 			useOtpRef.current.scrollIntoView(0, 0);
 			setMsg("Please enter phone verification code");
 		} else {
-			// setPhoneVerifyLoading(false);
 			useOtpRef.current.scrollIntoView(0, 0);
 			setVerifyPhone(false);
 			setVerifyTextOtp(false);
@@ -422,7 +411,6 @@ const WithdrawalFiatSummary = ({
 			setTimeout(() => {
 				setMsg(null);
 			}, 2500);
-			//setInvalidData(true)
 			setIsPhoneVerification(false);
 		}
 	};
@@ -438,31 +426,21 @@ const WithdrawalFiatSummary = ({
 		setDisableSave(false);
 	};
 	const getAuthenticator = async () => {
-		// setAuthLoading(true);
 		setValidData(true);
 		let response = await apiCalls.getAuthenticator(authCode, userConfig.userId);
 		if (response.ok) {
-			// setAuthLoading(false);
 			setVerifyAuth(true);
 			setIsAuthenticatorVerification(true);
-			console.log(response.data);
 			setVerifyAuthCode(true);
 			setAuthDisable(true);
-			//success("Authenticator verified successfully");
 		} else if (response.data == null) {
-			// setAuthLoading(false);
 			useOtpRef.current.scrollIntoView(0, 0);
 			setMsg("Please enter authenticator verification code");
 		} else {
-			// setAuthLoading(false);
 			setVerifyAuth(false);
 			setAuthDisable(false);
 			useOtpRef.current.scrollIntoView(0, 0);
 			setMsg(apiCalls.convertLocalLang("twofa_invalid_code"));
-			// setTimeout(() => {
-			//   setMsg(null);
-			// }, 2500);
-			//setInvalidData(true)
 			setIsAuthenticatorVerification(false);
 		}
 	};
@@ -786,7 +764,6 @@ const WithdrawalFiatSummary = ({
 									
 								<Input
 									type="text"
-									// className="cust-input text-left"
 									className="cust-input custom-add-select mb-0"
 									placeholder={"Enter code"}
 									maxLength={6}

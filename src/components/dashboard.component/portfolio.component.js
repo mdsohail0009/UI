@@ -22,13 +22,11 @@ class Portfolio extends Component {
             loading: true,
             transactionData: []
         }
-        // this.gridRef = React.createRef();
     }
     getTransactionData = async () => {
         this.setState({ ...this.state, loading: true });
         let response = await getData(this.props.userProfileInfo?.id);
         if (response.ok) {
-            console.log(response.data)
             this.setState({ ...this.state, transactionData: response.data, loading: false });
         } else {
             message.destroy();
