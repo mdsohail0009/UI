@@ -8,9 +8,6 @@ import {
 	message,
 	Typography,
 	Select,
-	Upload,
-	Tooltip,
-	Modal,
 	Checkbox,
 } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -20,35 +17,17 @@ import {
 	fetchAddressCrypto,
 } from "../../reducers/addressBookReducer";
 import { connect } from "react-redux";
-import { saveAddress, favouriteNameCheck, getAddress, getFileURL } from "./api";
+import { saveAddress, favouriteNameCheck, getAddress } from "./api";
 import Loader from "../../Shared/loader";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
 import { Link } from "react-router-dom";
-import { bytesToSize, getDocObj } from "../../utils/service";
-import { warning } from "../../utils/message";
-import FilePreviewer from "react-file-previewer";
 import WAValidator from "multicoin-address-validator";
-// var WAValidator = require("wallet-address-validator");
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
-const { TextArea } = Input;
-const { Dragger } = Upload;
 
-const EllipsisMiddle = ({ suffixCount, children }) => {
-	const start = children?.slice(0, children.length - suffixCount).trim();
-	const suffix = children?.slice(-suffixCount).trim();
-	return (
-		<Text
-			className="mb-0 fs-14 docnames c-pointer d-block"
-			style={{ maxWidth: "100% !important" }}
-			ellipsis={{ suffix }}>
-			{start}
-		</Text>
-	);
-};
 const LinkValue = (props) => {
 	return (
 		<Translate
@@ -81,11 +60,7 @@ const NewAddressBook = ({
 	const [cryptoAddress, setCryptoAddress] = useState({});
 	const [btnDisabled, setBtnDisabled] = useState(false);
 	const [file, setFile] = useState(null);
-	const [detailfile, setDetailFile] = useState(null);
-	const [isUploading, setUploading] = useState(false);
 	const [addressState, setAddressState] = useState("");
-	const [previewPath, setPreviewPath] = useState(null);
-	const [previewModal, setPreviewModal] = useState(false);
 	const [error,setError]=useState(null);
 	useEffect(() => {
 		if (addressBookReducer?.cryptoValues) {
@@ -101,7 +76,7 @@ const NewAddressBook = ({
 			setFile(addressBookReducer?.cryptoValues?.uploadedFile);
 		} else {
 			if (
-				addressBookReducer?.selectedRowData?.id !=
+				addressBookReducer?.selectedRowData?.id !==
 					"00000000-0000-0000-0000-000000000000" &&
 				addressBookReducer?.selectedRowData?.id
 			) {
@@ -110,18 +85,15 @@ const NewAddressBook = ({
 		}
 
 		form.setFieldsValue(addressBookReducer?.cryptoValues);
-	}, []);
+	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 
 	useEffect(() => {
-		let address = form.getFieldValue("toWalletAddress");
-		let coinType = form.getFieldValue("toCoin");
 		if (form.getFieldValue("toWalletAddress")) {
-			// const validAddress = WAValidator.validate(address, coinType, "both");
 			form
 				.validateFields(["toWalletAddress"])
 				.then((values) => console.log(values));
 		}
-	}, []);
+	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 
 	const selectCrypto = () => {
 		let getvalues = form.getFieldsValue();
@@ -144,7 +116,6 @@ const NewAddressBook = ({
 				toCoin: addressBookReducer?.selectedRowData?.coin,
 			});
 			const fileInfo = response?.data?.documents?.details[0];
-			setDetailFile(response?.data?.documents?.details[0]);
 			if (fileInfo?.path) {
 				form.setFieldsValue({ file: true });
 				setFile({
@@ -182,7 +153,7 @@ const NewAddressBook = ({
 			"crypto",
 			favaddrId
 		);
-		if (responsecheck.data != null) {
+		if (responsecheck.data !== null) {
 			setBtnDisabled(false);
 			setIsLoading(false);
 			useDivRef.current.scrollIntoView();
@@ -221,111 +192,12 @@ const NewAddressBook = ({
 			}
 		}
 	};
-	const uploadFile = ({ file }) => {
-		if (file?.status === "done" && isUploading) {
-			let obj = {
-				name: `${file.name}`,
-				isChecked: file.name == "" ? false : true,
-				remarks: `${file.size}`,
-				state: null,
-				status: false,
-				path: `${file.response}`,
-				size: `${file.size}`,
-				documentId:
-					file !== null
-						? file?.documentId
-						: "00000000-0000-0000-0000-000000000000",
-				id: file !== null ? file?.id : "00000000-0000-0000-0000-000000000000",
-			};
-			setFile(obj);
-			setUploading(false);
-		}
-	};
+
 	const antIcon = (
 		<LoadingOutlined
 			style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
 			spin
 		/>
-	);
-	const beforeUpload = (file) => {
-		if (file.name.split(".").length > 2) {
-			warning(" File don't allow double extension");
-			return;
-		}
-		let fileType = {
-			"image/png": false,
-			"image/jpg": false,
-			"image/jpeg": false,
-			"image/PNG": false,
-			"image/JPG": false,
-			"image/JPEG": false,
-			"application/pdf": true,
-			"application/PDF": true,
-		};
-		if (fileType[file.type]) {
-			setUploading(true);
-			return true;
-		} else {
-			warning("File is not allowed. You can upload PDF  files");
-			setUploading(false);
-			return Upload.LIST_IGNORE;
-		}
-	};
-	const docPreview = async (file) => {
-		let res = await getFileURL({ url: file.response[0] });
-		if (res.ok) {
-			setPreviewModal(true);
-			setPreviewPath(res.data);
-		} else {
-			// error(res.data);
-		}
-	};
-	const filePreviewPath = () => {
-		if (previewPath?.includes(".pdf")) {
-			return previewPath;
-		} else {
-			return previewPath;
-		}
-	};
-	const filePreviewModal = (
-		<Modal
-			className="documentmodal-width"
-			destroyOnClose={true}
-			title="Preview"
-			width={1000}
-			visible={previewModal}
-			closeIcon={
-				<Tooltip title="Close">
-					<span
-						className="icon md close-white c-pointer"
-						onClick={() => setPreviewModal(false)}
-					/>
-				</Tooltip>
-			}
-			footer={
-				<>
-					<Button
-						className="pop-btn px-36"
-						style={{ margin: "0 8px" }}
-						onClick={() => setPreviewModal(false)}>
-						Close
-					</Button>
-					<Button
-						className="pop-btn px-36"
-						style={{ margin: "0 8px" }}
-						onClick={() => window.open(previewPath, "_blank")}>
-						Download
-					</Button>
-				</>
-			}>
-			<FilePreviewer
-				hideControls={true}
-				file={{
-					url: previewPath ? filePreviewPath() : null,
-					mimeType: previewPath?.includes(".pdf") ? "application/pdf" : "",
-				}}
-			/>
-		</Modal>
 	);
 
 	const validateAddressType = (_, value) => {
@@ -347,9 +219,6 @@ const NewAddressBook = ({
 		} else {
 			return Promise.reject("is required");
 		}
-	};
-	const handleTypeChange = (e) => {
-		console.log(e);
 	};
 	return (
 		<>
@@ -520,7 +389,6 @@ const NewAddressBook = ({
 						</div>
 					</Form>
 				)}
-				{filePreviewModal}
 			</div>
 		</>
 	);

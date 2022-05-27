@@ -470,7 +470,6 @@ class RequestedDocs extends Component {
 								{this.state.loading && <Spin indicator={this.antIcon} />}{" "}
 								Submit
 							</Button>
-                                        {/* <Button disabled={this.state.isSubmitting} className="pop-btn px-36" onClick={() => this.docReject(doc)}>Submit</Button> */}
                                     </div>
                                 </>}
                             </Panel>
