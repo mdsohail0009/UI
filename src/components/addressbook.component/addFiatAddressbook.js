@@ -343,6 +343,7 @@ const NewFiatAddress = (props) => {
 		setErrorWarning(null);
 		if (file.name.split(".").length > 2) {
 			useDivRef.current.scrollIntoView();
+			setErrorMsg(null);
 			setErrorWarning("File don't allow double extension");
 			return;
 		} else {
@@ -361,6 +362,7 @@ const NewFiatAddress = (props) => {
 					setUploadIdentity(true);
 					return true;
 				} else {
+					setErrorMsg(null);
 					setErrorWarning(
 						"File is not allowed. You can upload jpg, png, jpeg and PDF files"
 					);
@@ -383,6 +385,7 @@ const NewFiatAddress = (props) => {
 					setUploadAddress(true);
 					return true;
 				} else {
+					setErrorMsg(null);
 					setErrorWarning(
 						"File is not allowed. You can upload jpg, png, jpeg and PDF files"
 					);
@@ -404,6 +407,7 @@ const NewFiatAddress = (props) => {
 					setUploading(true);
 					return true;
 				} else {
+					setErrorMsg(null);
 					setErrorWarning("File is not allowed. You can upload only PDF file");
 					setUploading(false);
 					return Upload.LIST_IGNORE;
@@ -412,6 +416,7 @@ const NewFiatAddress = (props) => {
 		}
 	};
 	const radioChangeHandler = (e) => {
+		setErrorMsg(null);
 		setErrorWarning(null);
 		setUploading(false);
 		setUploadAddress(false);
@@ -505,11 +510,7 @@ const NewFiatAddress = (props) => {
 		}
 	};
 	const filePreviewPath = () => {
-		if (previewPath?.includes(".pdf")) {
 			return previewPath;
-		} else {
-			return previewPath;
-		}
 	};
 	const filePreviewModal = (
 		<Modal

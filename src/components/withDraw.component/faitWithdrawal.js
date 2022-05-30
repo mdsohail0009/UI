@@ -146,7 +146,6 @@ const FaitWithdrawal = ({
         bankAddress: "",
         bankAddress2: "",
         zipCode: "",
-        //beneficiaryAccountName: "",
         beneficiaryAccountAddress: "",
         beneficiaryAccountAddress1: "",
         description: "",
@@ -156,7 +155,6 @@ const FaitWithdrawal = ({
         favouriteName: null
       };
       setSaveObj({ ...clearobj, walletCode: walletId });
-      console.log(saveObj)
       setAddressDetails({});
       setStateLu([]);
       form.setFieldsValue({ ...clearobj, walletCode: walletId });
@@ -167,7 +165,6 @@ const FaitWithdrawal = ({
         return walletId === item.currencyCode;
       });
       setSelectedWallet(wallet[0]);
-      // setAddressInfo(null)
       if (wallet[0]) {
         getAddressLu(wallet[0]);
       }
@@ -200,12 +197,10 @@ const FaitWithdrawal = ({
       }
       else {
         setAddressLu(recAddress.data)
-        //setAddressInfo(addressInfo)
         setAddressObj(addressObj);
         setAddressShow(null)
         setAddress1(true)
         setAddressInfo(null)
-        //form.setFieldsValue(addressInfo)
       }
     }
   };
@@ -270,10 +265,8 @@ const FaitWithdrawal = ({
     }
   };
   const savewithdrawal = async (values) => {
-    debugger
     setValidated(true)
     setBtnDisabled(true)
-    // setErrorMsg(null)
     dispatch(setWFTotalValue(values.totalValue));
     if (
       parseFloat(
@@ -322,8 +315,6 @@ const FaitWithdrawal = ({
     values["bankName"] = addressInfo.bankName;
     values["accountNumber"] = addressInfo.accountNumber;
     values["routingNumber"] = addressInfo.routingNumber;
-    //values["country"] =
-    // setLoading(false);
     const response = await handleFiatConfirm(values);
     if (response.ok) {
       setBtnDisabled(false);
@@ -594,42 +585,6 @@ const FaitWithdrawal = ({
                     component={Text}
                     with={{ value: addressInfo.bankAddress }}
                   />
-
-                 {/* <Translate
-                    className="fw-200 text-white-50 fs-14"
-                    content="Country"
-                    component={Text}
-                  />
-                  <Translate
-                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                    content="SIGNU"
-                    component={Text}
-                    with={{ value: addressInfo.country || "--" }}
-                  />
-
-                   <Translate
-                    className="fw-200 text-white-50 fs-14"
-                    content="state"
-                    component={Text}
-                  />
-                  <Translate
-                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                    content="SIGNU"
-                    component={Text}
-                    with={{ value: addressInfo.state || "--" }}
-                  />
-
-                  <Translate
-                    className="fw-200 text-white-50 fs-14"
-                    content="zipcode"
-                    component={Text}
-                  /> 
-                  <Translate
-                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                    content="SIGNU"
-                    component={Text}
-                    with={{ value: addressInfo.zipCode || "--" }}
-                  />*/}
                   <Translate
                     content="Beneficiary_Details"
                     component={Paragraph}

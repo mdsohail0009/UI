@@ -17,7 +17,6 @@ import { validateContent } from "../../utils/custom.validator";
 import Translate from 'react-translate-component';
 import Mome from 'moment'
 import {  success } from '../../utils/messages';
-import { LoadingOutlined } from "@ant-design/icons";
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
@@ -206,7 +205,7 @@ class RequestedDocs extends Component {
         }
     }
     handleUpload = ({ file }, doc) => {
-        this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
+        this.setState({ ...this.state, errorMessage: null })
         if (file.status === "done" && this.state.isValidFile) {
             let replyObjs = [...this.state.docReplyObjs];
             let item = this.isDocExist(replyObjs, doc.id);
@@ -232,22 +231,22 @@ class RequestedDocs extends Component {
                 obj.repliedBy = this.props.userProfileInfo?.firstName;
                 replyObjs.push(obj);
             }
-            this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
+            this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false,  });
         }
         else if (file.status === 'error') {
-            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false,errorMessage:file.response || "Something went wrong please try again!" })
+            this.setState({ ...this.state,errorMessage:file.response || "Something went wrong please try again!" })
         }
         else if (!this.state.isValidFile) {
-            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false, });
+            this.setState({ ...this.state,});
         }
     }
     beforeUpload = (file) => {
         let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
         if (fileType[file.type]) {
-            this.setState({ ...this.state, isValidFile: true, })
+            this.setState({ ...this.state, isValidFile: true,errorMessage:null,errorWarning:null })
             return true
         } else {
-            this.setState({ ...this.state, isValidFile: false,uploadLoader: false, isSubmitting: false,errorWarning:"File is not allowed. You can upload jpg, png, jpeg and PDF files" });
+            this.setState({ ...this.state, isValidFile: false,errorMessage:null,errorWarning:"File is not allowed. You can upload jpg, png, jpeg and PDF files" });
             return Upload.LIST_IGNORE;
         }
     }
@@ -295,11 +294,7 @@ class RequestedDocs extends Component {
         return parseFloat((bytes / Math.pow(k, i)).toFixed()) + ' ' + sizes[i];
     }
     filePreviewPath() {
-        if (this.state.previewPath.includes(".pdf")) {
             return this.state.previewPath;
-        } else {
-            return this.state.previewPath;
-        }
     }
     getCaseData = async (id) => {
         this.setState({ ...this.state, loading: true });
@@ -311,12 +306,6 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, loading: false ,errorMessage:caseRes.data ||"Something went wrong please try again!"});
         }
     }
-     antIcon = (
-        <LoadingOutlined
-            style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
-            spin
-        />
-      );
     render() {
         const { caseData, commonModel } = this.state;
         if (this.state.loading) {
@@ -324,20 +313,6 @@ class RequestedDocs extends Component {
         }
         return <>
             <div className="main-container">
-                {this.state.errorMessage != null && <Alert
-                    description={this.state.errorMessage}
-                    type="error"
-                    showIcon
-                    closable={false}
-                    style={{ marginBottom: 0, marginTop: '16px' }}
-                />}
-                {this.state.errorWarning != null && <Alert
-                    description={this.state.errorWarning}
-                    type="warning"
-                    showIcon
-                    closable={false}
-                    style={{ marginBottom: 0, marginTop: '16px' }}
-                />}
                 <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=6" />{caseData?.documents?.customerCaseTitle}</div>
                 <div className='case-stripe'>
                     <Row gutter={[16, 16]}>
@@ -361,9 +336,9 @@ class RequestedDocs extends Component {
                 Object.entries(commonModel).map(([key, value], idx) => (
                   <Col
                     key={idx}
-                    xs={key == "Decription" ? 24 : 24}
-                    md={key == "Decription" ? 24 : 24}
-                    lg={key == "Decription" ? 24 : 8}
+                    xs={key == "Decription" ? 24 : 22}
+                    md={key == "Decription" ? 24 : 20}
+                    lg={key == "Decription" ? 24 : 12}
                     xl={key == "Decription" ? 24 : 8}
                     xxl={key == "Decription" ? 24 : 6}
                   >
@@ -391,7 +366,6 @@ class RequestedDocs extends Component {
                 </div>
                 <div className="px-16">
                     <Text className='fw-300 text-white-50 fs-12 '>Remarks</Text>
-                    {/* <div className='case-val'>{caseData.remarks ? caseData.remarks : '-'}</div> */}
                     <Title level={5} className='case-val'style={{ marginTop: '3px' }} maxLength={500} rows={4}>{caseData.remarks ? caseData.remarks : '-'}</Title>
                 </div>
                
@@ -438,6 +412,20 @@ class RequestedDocs extends Component {
                                         placeholder="Write your message"
                                         maxLength={200}
                                     />
+                                    {this.state.errorMessage != null && <Alert
+                                        description={this.state.errorMessage}
+                                        type="error"
+                                        showIcon
+                                        closable={false}
+                                        style={{ marginBottom: 0, marginTop: '16px' }}
+                                    />}
+                                    {this.state.errorWarning != null && <Alert
+                                        description={this.state.errorWarning}
+                                        type="warning"
+                                        showIcon
+                                        closable={false}
+                                        style={{ marginBottom: 0, marginTop: '16px' }}
+                                    />}
                                     {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
                                     {this.state.validHtmlError && <Translate Component={Text} content="please_enter_valid_content" className="fs-14 text-red" />}
                                     <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}>
@@ -467,7 +455,6 @@ class RequestedDocs extends Component {
 								size="large"
 								loading={this.state.isSubmitting}
 								className="pop-btn px-36" onClick={() => this.docReject(doc)}>
-								{this.state.loading && <Spin indicator={this.antIcon} />}{" "}
 								Submit
 							</Button>
                                     </div>

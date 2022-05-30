@@ -72,13 +72,6 @@ class WithdrawSummary extends Component {
 		verifyEmailOtp: false,
 		verifyAuthCode: false,
 		inputAuthDisable: false,
-		verifyPhone: false,
-		verifyEmail: false,
-		verifyAuth: false,
-		verifyTextotp: false,
-		verifyEmailOtp: false,
-		verifyAuthCode: false,
-		inputAuthDisable: false,
 		phoneLoading: false,
 		phoneVerifyLoading: false,
 		emailLoading: false,
@@ -221,11 +214,11 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
-				// phoneLoading: false,
 				tooltipVisible: true,
 				buttonText: "sentVerify",
 				inputDisable: false,
 				disable: true,
+				errorMsg:null,
 				verificationText:
 					apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber,
 			});
@@ -262,6 +255,7 @@ class WithdrawSummary extends Component {
 				textDisable: true,
 				inputEmailDisable: false,
 				tooltipEmail: true,
+				errorMsg:null,
 				emailVerificationText:
 					apiCalls.convertLocalLang("digit_code") + " " + "your Email Id ",
 			});
@@ -300,13 +294,12 @@ class WithdrawSummary extends Component {
 				emailText: null,
 				inputEmailDisable: true,
         isEmailVerification:true,
+		errorMsg:null
 
 			});
-			//success("Email verification code verified successfully");
 		} else if (response.data == null) {
 			this.setState({
 				...this.state,
-				// emailVerifyLoading: false,
 				errorMsg: "Please enter email verification code",
 			});
 		} else {
@@ -339,6 +332,7 @@ class WithdrawSummary extends Component {
 				buttonText: null,
 				inputDisable: true,
         isPhoneVerification:true,
+		errorMsg:null
 			});
 			//success("Phone verification code verified successfully");
 		} else if (response.data == null) {
@@ -398,6 +392,7 @@ class WithdrawSummary extends Component {
 				verifyAuthCode: true,
 				inputAuthDisable: true,
         isAuthenticatorVerification:true,
+		errorMsg:null
 			});
 			//success("2FA verification code verified successfully");
 		} else if (response.data == null) {
@@ -895,7 +890,7 @@ class WithdrawSummary extends Component {
 											{!this.state.verifyEmailOtp && (
 												<Button
 													type="text"
-													style={{color:"black"}}
+													style={{color:"black",margin:"0 auto"}}
 													loading={this.state.emailLoading}
 													onClick={this.getEmail}>
 													{emailBtn[this.state.emailText]}
@@ -970,7 +965,6 @@ class WithdrawSummary extends Component {
 										<div className="p-relative d-flex align-center">
 									<Input
 										type="text"
-										// className="cust-input text-left"
 										className="cust-input custom-add-select mb-0"
 										placeholder={"Enter code"}
 										maxLength={6}
@@ -984,7 +978,7 @@ class WithdrawSummary extends Component {
 											<Button
 												type="text"
 												loading={this.state.faLoading}
-												style={{margin: "9px"}}
+												style={{color:"black",margin:"0 auto"}}
 												onClick={this.getAuthenticator}>
 												{/* Click here to verify */}
 												{this.state.verifyAuthCode ? (

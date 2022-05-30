@@ -47,19 +47,9 @@ const AddressFiatView = (props) => {
 			setPreviewPath(res.data);
 		}
 	};
-	// const addressTypeNames = (type) =>{
-	//   const stepcodes = {
-	//             "1stparty" : "1st Party",
-	//             "3rd Party" : "3rd Party",
-	//    }
-	//    return stepcodes[type]
-	// }
 	const filePreviewPath = () => {
-		if (previewPath?.includes(".pdf")) {
 			return previewPath;
-		} else {
-			return previewPath;
-		}
+
 	};
 	const filePreviewModal = (
 		<Modal
