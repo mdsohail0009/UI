@@ -134,12 +134,6 @@ const WithdrawalFiatSummary = ({
 		getVerifyData();
 	}, []);
 
-	// useEffect(() => {
-	//   const timer =
-	//     seconds > 0 && setInterval(() => setSeconds(seconds - 1), 1000);
-	//   return () => clearInterval(timer);
-	// }, [seconds]);
-
 	let timeInterval;
 	let count = 30;
 	const startTimer = () => {
@@ -694,7 +688,6 @@ const WithdrawalFiatSummary = ({
 													<span className="icon md greenCheck" />
 												)}
 
-												{/* VERIFY */}
 											</Button>
 										)}
 									</div>

@@ -417,7 +417,7 @@ export default {
 	withdrawSummary: "Withdraw Crypto Summary",
 	selectCurrencyinWallet: "Select a currency in your wallet",
 	agree_termsofservice:
-		"Please click the checkbox above after reading and agreeing to the Terms of Service before proceeding",
+		"Please click the checkbox after reading and agreeing to the Terms of Service before proceeding",
 	withdraw_crypto: "Withdraw crypto",
 	TwoFactorAuthentication: "Two Factor Authentication",
 	TwoFactorAuthentication_tag: "Protect your account with 2-step verification",

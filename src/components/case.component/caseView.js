@@ -288,7 +288,6 @@ class RequestedDocs extends Component {
     formatBytes(bytes, decimals = 2) {
         if (bytes === 0) return '0 Bytes';
         const k = 1024;
-        const dm = decimals < 0 ? 0 : decimals;
         const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed()) + ' ' + sizes[i];
@@ -412,6 +411,8 @@ class RequestedDocs extends Component {
                                         placeholder="Write your message"
                                         maxLength={200}
                                     />
+                                    {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
+                                    {this.state.validHtmlError && <Translate Component={Text} content="please_enter_valid_content" className="fs-14 text-red" />}
                                     {this.state.errorMessage != null && <Alert
                                         description={this.state.errorMessage}
                                         type="error"
@@ -426,8 +427,6 @@ class RequestedDocs extends Component {
                                         closable={false}
                                         style={{ marginBottom: 0, marginTop: '16px' }}
                                     />}
-                                    {this.state.isMessageError == doc.id.replace(/-/g, "") && <div style={{ color: "red" }}>Please enter message</div>}
-                                    {this.state.validHtmlError && <Translate Component={Text} content="please_enter_valid_content" className="fs-14 text-red" />}
                                     <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}>
                                         <p className="ant-upload-drag-icon">
                                             <span className="icon xxxl doc-upload" />
