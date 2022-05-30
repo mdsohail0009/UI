@@ -265,13 +265,7 @@ const WithdrawalFiatSummary = ({
 			setMsg(withdrawal.data || "Something went wrong please try again!");
 			setIsLoding(false);
 			setDisableSave(false);
-			// useOtpRef.current.scrollIntoView(0, 0);
 		}
-	};
-	const onCancel = () => {
-		changeStep("step1");
-		dispatch(setWithdrawfiatenaable(true));
-		dispatch(rejectWithdrawfiat());
 	};
 	const fullNumber = userConfig.phoneNumber;
 	const last4Digits = fullNumber.slice(-4);
@@ -289,10 +283,8 @@ const WithdrawalFiatSummary = ({
 	};
 
 	const getEmail = async (val) => {
-		// setEmailLoading(true);
 		let response = await apiCalls.sendEmail(userConfig.id, type);
 		if (response.ok) {
-			// setEmailLoading(false);
 			setEmailText("sentVerification");
 			setEmailDisable(false);
 			setTextDisable(true);
@@ -308,42 +300,30 @@ const WithdrawalFiatSummary = ({
 			setTimeout(() => {
 				setVerifyEmailText(null);
 			}, 30000);
-			//timer();
 		} else {
-			// setEmailLoading(false);
 			setMsg(apiCalls.convertLocalLang("request_fail"));
 			useOtpRef.current.scrollIntoView(0, 0);
 		}
 	};
 	const getEmailVerification = async (values) => {
-		// setEmailVerifyLoading(true);
 		setValidData(true);
 		let response = await apiCalls.verifyEmail(userConfig.id, emailCode);
 		if (response.ok) {
-			// setEmailVerifyLoading(false);
 			setEmailDisable(true);
 			setIsEmailVerification(true);
 			setEmail(true);
 			setVerifyEmailOtp(true);
 			setEmailText(null);
 			setVerifyEmailText(null);
-			//useOtpRef.current.scrollIntoView(0,0);
-			//success("Email  verified successfully");
 		} else if (response.data == null) {
-			// setEmailVerifyLoading(false);
 			setVerifyEmailOtp(false);
 			useOtpRef.current.scrollIntoView(0, 0);
 			setMsg("Please enter email verification code");
 		} else {
-			// setEmailVerifyLoading(false);
 			setEmail(false);
 			setEmailDisable(false);
 			setMsg(apiCalls.convertLocalLang("email_invalid_code"));
 			useOtpRef.current.scrollIntoView(0, 0);
-			setTimeout(() => {
-				setMsg(null);
-			}, 1500);
-			//setInvalidData(true)
 			setIsEmailVerification(false);
 		}
 	};
@@ -367,6 +347,7 @@ const WithdrawalFiatSummary = ({
 	const getOTP = async (val) => {
 		let response = await apiCalls.getCode(userConfig.id, types);
 		if (response.ok) {
+			setMsg(null);
 			setTooltipVisible(true);
 			setButtonText("sentVerify");
 			setInputDisable(false);
@@ -394,6 +375,7 @@ const WithdrawalFiatSummary = ({
 		setValidData(true);
 		let response = await apiCalls.getVerification(userConfig.id, otpCode);
 		if (response.ok) {
+			setMsg(null)
 			setVerifyPhone(true);
 			setIsPhoneVerification(true);
 			setVerifyTextOtp(true);
@@ -408,9 +390,6 @@ const WithdrawalFiatSummary = ({
 			setVerifyTextOtp(false);
 			setInputDisable(false);
 			setMsg(apiCalls.convertLocalLang("phone_invalid_code"));
-			setTimeout(() => {
-				setMsg(null);
-			}, 2500);
 			setIsPhoneVerification(false);
 		}
 	};
@@ -429,6 +408,7 @@ const WithdrawalFiatSummary = ({
 		setValidData(true);
 		let response = await apiCalls.getAuthenticator(authCode, userConfig.userId);
 		if (response.ok) {
+			setMsg(null)
 			setVerifyAuth(true);
 			setIsAuthenticatorVerification(true);
 			setVerifyAuthCode(true);
@@ -623,7 +603,7 @@ const WithdrawalFiatSummary = ({
 												{btnList[buttonText]}
 											</Button>
 										)}
-										{tooltipVisible == true && (
+										{tooltipVisible === true && (
 											<Tooltip
 												placement="topRight"
 												title={`Haven\'t received code ? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
@@ -635,9 +615,9 @@ const WithdrawalFiatSummary = ({
 											loading={phoneVerifyLoading}
 											style={{color:"black", margin:"0 auto"}}
 											onClick={getOtpVerification}
-											disabled={verifyPhone == true}>
+											disabled={verifyPhone === true}>
 											{verifyOtp[verifyOtpText]}
-											{verifyTextotp == true && (
+											{verifyTextotp === true && (
 												<span className="icon md greenCheck" />
 											)}
 										</Button>
@@ -645,12 +625,12 @@ const WithdrawalFiatSummary = ({
 									</div>
 							</Form.Item>
 						)}
-						{verifyData.isEmailVerification == true && (
+						{verifyData.isEmailVerification === true && (
 							<Text className="fs-14 mb-8 text-white d-block fw-200">
 								Email verification code *
 							</Text>
 						)}
-						{verifyData.isEmailVerification == true && (
+						{verifyData.isEmailVerification === true && (
 							<Form.Item
 								name="emailCode"
 								className="input-label otp-verify"
@@ -708,9 +688,9 @@ const WithdrawalFiatSummary = ({
 												type="text"
 												loading={emailVerifyLoading}
 												onClick={(e) => getEmailVerification(e)}
-												disabled={verifyEmail == true}>
+												disabled={verifyEmail === true}>
 												{verifyText[verifyEmailText]}
-												{verifyEmailOtp == true && (
+												{verifyEmailOtp === true && (
 													<span className="icon md greenCheck" />
 												)}
 
@@ -775,7 +755,8 @@ const WithdrawalFiatSummary = ({
 										<Button
 											type="text"
 											loading={authLoading}
-											style={{margin: "9px"}}
+											style={{color:"black", margin:"0 auto"}}
+											// style={{margin: "9px"}}
 											onClick={getAuthenticator}>
 											{verifyAuthCode ? (
 												<span className="icon md greenCheck"  />

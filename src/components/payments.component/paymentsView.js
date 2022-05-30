@@ -87,11 +87,7 @@ class PaymentsView extends Component {
             }
       }
       filePreviewPath() {
-        if (this.state.previewPath?.includes(".pdf")) {
           return this.state.previewPath;
-        } else {
-          return this.state.previewPath;
-        }
       }
     backToPayments = () => {
         this.props.history.push('/payments')

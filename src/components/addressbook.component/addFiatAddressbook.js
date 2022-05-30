@@ -510,11 +510,7 @@ const NewFiatAddress = (props) => {
 		}
 	};
 	const filePreviewPath = () => {
-		if (previewPath?.includes(".pdf")) {
 			return previewPath;
-		} else {
-			return previewPath;
-		}
 	};
 	const filePreviewModal = (
 		<Modal
