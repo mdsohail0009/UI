@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Typography, Button, Alert, message, Form, Input, Tooltip,Checkbox } from "antd";
+import { Typography, Button, Alert, Form, Input, Tooltip,Checkbox } from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
