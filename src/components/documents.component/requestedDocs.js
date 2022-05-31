@@ -325,12 +325,7 @@ class RequestedDocs extends Component {
     }
 
     filePreviewPath() {
-        if (this.state.previewPath.includes(".pdf")) {
-            //return "https://suissebasecors.herokuapp.com/" + this.state.previewPath;
             return this.state.previewPath;
-        } else {
-            return this.state.previewPath;
-        }
     }
 
 
