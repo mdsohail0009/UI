@@ -83,14 +83,16 @@ class CryptoWithDrawWallet extends Component {
         }
     }
     handlePreview = () => {
+
         const amt = parseFloat(this.state.CryptoAmnt);
         const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
-        if (amt===0) {
-            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
+        if (this.state.CryptoAmnt === "") {
+            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('enter_amount') });
             this.myRef.current.scrollIntoView();
-        } else if (!amt) {
-            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang("enter_amount") });
+        }
+      else if (this.state.CryptoAmnt === "0" || amt === 0) {
+            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
             this.myRef.current.scrollIntoView();
         }
         else if (amt < withdrawMinValue) {
