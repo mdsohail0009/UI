@@ -60,6 +60,7 @@ class SelectSellCrypto extends Component {
         }
     }
     previewSellData() {
+       
         this.setState({ ...this.state, errorMessage: '' })
         let obj = Object.assign({}, this.state.sellSaveData);
         let { sellMinValue, gbpInUsd, eurInUsd } = this.props.sellData.coinDetailData;
@@ -70,9 +71,15 @@ class SelectSellCrypto extends Component {
             USD: this.state.USDAmnt
         }
         const maxAmtMesage = "$100,000";
-        if ((!this.state.USDAmnt && !this.state.CryptoAmnt) || (parseFloat(this.state.USDAmnt) === 0 || parseFloat(this.state.CryptoAmnt) === 0)) {
+        if ((this.state.CryptoAmnt === "" )) {
             this.setState({
                 ...this.state, errorMessage: apicalls.convertLocalLang('enter_amount')
+            })
+            this.myRef.current.scrollIntoView();
+        }
+       else if ( (parseFloat(this.state.USDAmnt) === 0 || parseFloat(this.state.CryptoAmnt) === 0)) {
+            this.setState({
+                ...this.state, errorMessage: apicalls.convertLocalLang('amount_greater_zero')
             })
             this.myRef.current.scrollIntoView();
         }

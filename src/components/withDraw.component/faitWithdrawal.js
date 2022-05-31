@@ -311,6 +311,12 @@ const FaitWithdrawal = ({
       setLoading(false);
       return setErrorMsg(apicalls.convertLocalLang("exceeded_amount"));
     }
+    // else if(values.totalValue < 100){
+    //   useDivRef.current.scrollIntoView();
+    //   setBtnDisabled(false)
+    //   setLoading(false);
+    //    return setErrorMsg(apicalls.convertLocalLang("amount_min") + " " + "100" );
+    // }
     setLoading(false);
     setErrorMsg(null);
     values["membershipId"] = userConfig.id;
@@ -406,12 +412,12 @@ const FaitWithdrawal = ({
             {errorMsg !== null && (
               <Alert
                 className="mb-12"
-                // type="error"
+                type="error"
                 // message={"Error"}
                 description={errorMsg}
                 onClose={() => setErrorMsg(null)}
                 showIcon
-                type="info"
+             
               />
             )}
             <Form
