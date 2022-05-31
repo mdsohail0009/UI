@@ -249,6 +249,7 @@ const FaitWithdrawal = ({
     dispatch(setWFTotalValue(values.totalValue));
     if(!values.isAccept){
       setBtnDisabled(false);
+      useDivRef.current.scrollIntoView();
     setErrorMsg(apicalls.convertLocalLang("agree_termsofservice"))
     }else{
     if (
@@ -377,7 +378,7 @@ const FaitWithdrawal = ({
                 description={errorMsg}
                 onClose={() => setErrorMsg(null)}
                 showIcon
-                type="info"
+                type="error"
               />
             )}
             <Form

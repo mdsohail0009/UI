@@ -213,7 +213,11 @@ const NewFiatAddress = (props) => {
 			"fiat",
 			favaddrId
 		);
-		if (responsecheck.data !== null) {
+		if (!values.isAgree) {
+			setBtnDisabled(false);
+			useDivRef.current.scrollIntoView();
+			setErrorMsg(apiCalls.convertLocalLang("agree_termsofservice"))
+		} else if (responsecheck.data !== null) {
 			setIsLoading(false);
 			setBtnDisabled(false);
 			useDivRef.current.scrollIntoView();
@@ -1115,18 +1119,7 @@ const NewFiatAddress = (props) => {
 								className="custom-forminput mt-36 agree"
 								name="isAgree"
 								valuePropName="checked"
-								rules={[
-									{
-										validator: (_, value) =>
-											value
-												? Promise.resolve()
-												: Promise.reject(
-														new Error(
-															apiCalls.convertLocalLang("agree_termsofservice")
-														)
-												  ),
-									},
-								]}>
+								>
 								<Checkbox className="ant-custumcheck" />
 							</Form.Item>
 							<Translate

@@ -749,7 +749,6 @@ const WithdrawalFiatSummary = ({
 											type="text"
 											loading={authLoading}
 											style={{color:"black", margin:"0 auto"}}
-											// style={{margin: "9px"}}
 											onClick={getAuthenticator}>
 											{verifyAuthCode ? (
 												<span className="icon md greenCheck"  />
