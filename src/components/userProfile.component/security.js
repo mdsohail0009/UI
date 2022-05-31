@@ -98,7 +98,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           setBtnDisabled(false)
           setErrorMsg(false)
           fetchWithdrawVerifyObj(obj);
-          success("Withdraw verification details saved successfully")
+          success("Withdrawal verification details saved successfully")
           setErrorMsg(null)
           setError(null)
           useDivRef.current.scrollIntoView();

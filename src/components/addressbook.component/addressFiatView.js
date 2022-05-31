@@ -47,19 +47,9 @@ const AddressFiatView = (props) => {
 			setPreviewPath(res.data);
 		}
 	};
-	// const addressTypeNames = (type) =>{
-	//   const stepcodes = {
-	//             "1stparty" : "1st Party",
-	//             "3rd Party" : "3rd Party",
-	//    }
-	//    return stepcodes[type]
-	// }
 	const filePreviewPath = () => {
-		if (previewPath?.includes(".pdf")) {
 			return previewPath;
-		} else {
-			return previewPath;
-		}
+
 	};
 	const filePreviewModal = (
 		<Modal
@@ -201,7 +191,7 @@ const AddressFiatView = (props) => {
 													<label className="kpi-label">
 														{(props?.userConfig?.isBusiness && fiatAddress?.addressType !== "3rdparty"&&
 															"Business Name") ||
-															(!props?.userConfig?.isBusiness || fiatAddress?.addressType === "3rdparty"&&
+															((!props?.userConfig?.isBusiness || fiatAddress?.addressType === "3rdparty")&&
 																"Recipient Full Name")}
 													</label>
 													<div className="kpi-val">

@@ -47,11 +47,7 @@ const docPreview = async (file) => {
   } 
 };
 const filePreviewPath = () => {
-  if (previewPath?.includes(".pdf")) {
       return previewPath;
-  } else {
-      return previewPath;
-  }
 };
 const filePreviewModal = (
   <Modal
@@ -135,14 +131,6 @@ const filePreviewModal = (
                   </div>
               </div>
             </Col>
-            {/* <Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-              <div>
-                <label className="kpi-label">Remarks</label>
-                <div className="kpi-val">
-                  {cryptoAddress?.remarks}
-                  </div>
-              </div>
-            </Col> */}
           </Row>
           <Row>
           {cryptoAddress?.documents?.details.map((file)=>
