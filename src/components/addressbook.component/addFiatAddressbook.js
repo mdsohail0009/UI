@@ -882,7 +882,7 @@ const NewFiatAddress = (props) => {
 										<Translate
 											content={
 												(props?.userConfig?.isBusiness&& !selectParty && "company_name") ||
-												(!props?.userConfig?.isBusiness || selectParty&&
+												((!props?.userConfig?.isBusiness || selectParty)&&
 													"Recipient_full_name")
 											}
 											component={Form.label}
@@ -907,7 +907,7 @@ const NewFiatAddress = (props) => {
 											placeholder={
 												(props?.userConfig?.isBusiness && !selectParty&&
 													apiCalls.convertLocalLang("company_name")) ||
-												(!props?.userConfig?.isBusiness || selectParty&&
+												((!props?.userConfig?.isBusiness || selectParty) &&
 													apiCalls.convertLocalLang("Recipient_full_name"))
 											}
 											value="naresh"

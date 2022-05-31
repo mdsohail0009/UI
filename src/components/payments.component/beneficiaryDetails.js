@@ -172,40 +172,6 @@ class PaymentsView extends Component {
             this.state.fileDetails.push(obj);
         }
     }
-    // handleUpload = ({ file }, type) => {
-    //     
-    //     this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, error: null })
-    //     let obj = {
-    //         "documentId": "00000000-0000-0000-0000-000000000000",
-    //         "documentName": `${file.name}`,
-    //         "id": "00000000-0000-0000-0000-000000000000",
-    //         "isChecked": file.name == "" ? false : true,
-    //         "remarks": `${file.size}`,
-    //         "state": null,
-    //         "status": false,
-    //         "Path": `${file.response}`,
-    //     }
-        
-    //     if (file.response !== undefined) {
-    //         if(type == "IDENTITYPROOF"){
-    //            this.state.docIdentityProofObjs.shift()
-    //         this.preList([0],obj)
-    //             this.state.docIdentityProofObjs.push(obj);
-    //             this.setState({ ...this.state, docIdentityProof: obj });
-    //         }
-    //         else if (type == "ADDRESSPROOF") {
-    //              this.state.docAddressProofObjs.shift()
-    //             this.preList([1],obj)
-    //              this.state.docAddressProofObjs.push(obj)
-    //             this.setState({ ...this.state, docAddressProof: obj })}
-    //         else if (type == "BANKPROOF") {
-    //             this.state.docBankProofObjs.shift()
-    //             this.preList([2],obj)
-    //             this.state.docBankProofObjs.push(obj)
-    //             this.setState({ ...this.state, docBankProof: obj })}
-    //         }
-       
-    // }
     handleUpload = ({ file }, type) => {
         this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, error: null })
         
@@ -465,28 +431,6 @@ class PaymentsView extends Component {
                                         <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
                                     </Form.Item>
                                 </Col>
-                                {/* <Col xl={16}>
-                                    <Form.Item
-                                        className="custom-forminput custom-label mb-24"
-                                        name="beneficiaryAccountAddress"
-                                        label={<Translate content="Recipient_address2" component={Form.label} />}
-                                        required
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: "Is required"
-                                            },
-                                            {
-                                                whitespace: true,
-                                                message: apiCalls.convertLocalLang('is_required')
-                                            },
-                                            {
-                                                validator: validateContentRule
-                                            }
-                                        ]}   >
-                                        <Input className="cust-input" placeholder={apiCalls.convertLocalLang('Recipient_address1')} />
-                                    </Form.Item>
-                                </Col> */}
                             </Row>
                             <Translate
                                 content="Beneficiary_BankDetails"
