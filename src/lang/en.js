@@ -337,7 +337,7 @@ export default {
 	select_wallet: "Please select wallet to proceed",
 	insufficientFunds: "Insufficient funds",
 	agree_terms:
-		"Please click the checkbox above after reading and agreeing to the Terms of Service before proceeding",
+		"Please click the checkbox after reading and agreeing to the Terms of Service before proceeding",
 	All: "All",
 	BuyandSell: "Buy/Sell",
 	DepositandFiat: "Deposit Fiat",
@@ -417,7 +417,7 @@ export default {
 	withdrawSummary: "Withdraw Crypto Summary",
 	selectCurrencyinWallet: "Select a currency in your wallet",
 	agree_termsofservice:
-		"Please click the checkbox above after reading and agreeing to the Terms of Service before proceeding",
+		"Please click the checkbox after reading and agreeing to the Terms of Service before proceeding",
 	withdraw_crypto: "Withdraw crypto",
 	TwoFactorAuthentication: "Two Factor Authentication",
 	TwoFactorAuthentication_tag: "Protect your account with 2-step verification",
@@ -455,7 +455,7 @@ export default {
 	Select_Date: "Select Date",
 	ok: "OK",
 	funds_to_swap: "Insufficiant funds to swap",
-	No_data: "To No data found",
+	No_data: "No Data Found",
 	confirm_button: "Confirm",
 	new_pass_word_msg: "Please enter new password",
 	Back_to_Withdrawfiat: "Back to Withdraw Fiat",
@@ -484,7 +484,7 @@ export default {
 	confirm_pass_word_msg: "Please enter confirm password",
 	one_record: "Please select one record",
 	accept_terms:
-		"Please click the checkbox above after reading and agreeing to the Terms of Service before proceeding",
+		"Please click the checkbox after reading and agreeing to the Terms of Service before proceeding",
 	amount_greater_zero: "Amount must be greater than zero.",
 	exceeded_amount: "You have exceeded maximum amount",
 	mkt_Cap: "Mkt Cap",
@@ -562,4 +562,5 @@ export default {
 	personal_account:'Personal Account',
 	business_account:"Business Account",
 	empty: " ",
+	Recipient_Business_name: "Recipient Full Name/Business Name",
 };

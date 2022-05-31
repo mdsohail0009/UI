@@ -48,7 +48,6 @@ class BuySummary extends Component {
                 "comission": 0,
                 "exicutedPrice": this.props.sellData?.previewDetails?.data?.oneCoinValue,
                 "totalAmount": this.props.sellData.previewDetails?.data?.amount,
-                "comission": this.props.sellData.previewDetails?.data?.comission,
                 "isCrypto": this.props.sellData.previewDetails?.data?.isCrypto
             }
             obj.toWalletId = obj.toWalletId ? obj.toWalletId : this.props.sellData?.id;

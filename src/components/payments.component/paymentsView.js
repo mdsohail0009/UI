@@ -87,11 +87,7 @@ class PaymentsView extends Component {
             }
       }
       filePreviewPath() {
-        if (this.state.previewPath?.includes(".pdf")) {
           return this.state.previewPath;
-        } else {
-          return this.state.previewPath;
-        }
       }
     backToPayments = () => {
         this.props.history.push('/payments')
@@ -113,7 +109,7 @@ class PaymentsView extends Component {
                             <thead>
                                 <tr>
                                     <th className="doc-def">Name</th>
-                                    <th className="doc-def">Bank Name</th>
+                                    <th className="doc-def" style={{width: "300px"}}>Bank Name</th>
                                     <th>Bank Account Number/IBAN</th>
                                     <th>State</th>
                                     <th>Amount</th>
@@ -151,7 +147,7 @@ class PaymentsView extends Component {
                                                                 </Popover>
                                                                 </div>
                                                 </td>
-                                                <td>{item.accountnumber}</td>
+                                                <td style={{width: "300px"}}>{item.accountnumber}</td>
                                                 <td>{item.state}</td>
                                                 <td>
                                                     <NumberFormat
