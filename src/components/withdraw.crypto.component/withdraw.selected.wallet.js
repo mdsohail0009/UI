@@ -249,7 +249,6 @@ class CryptoWithDrawWallet extends Component {
                             label={apicalls.convertLocalLang('sendTo')}
                         >
                             <div className="p-relative d-flex align-center">
-                                {/* <Input className="cust-input custom-add-select mb-0" placeholder="Enter address" value={this.state.walletAddress} */}
                                 <Input className="cust-input custom-add-select mb-0" placeholder={apicalls.convertLocalLang('enter_address')} value={this.state.walletAddress}
 
                                    disabled={true} onChange={({ currentTarget: { value } }) => { this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null) }}
