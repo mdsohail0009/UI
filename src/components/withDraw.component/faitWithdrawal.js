@@ -9,7 +9,6 @@ import {
   Tooltip,
   Select,
   Checkbox,
-  Empty,Spin
 } from "antd";
 import { Link } from "react-router-dom";
 import { setStep } from "../../reducers/buysellReducer";
@@ -38,12 +37,8 @@ import {
 import WithdrawalSummary from "./withdrawalSummary";
 import WithdrawalLive from "./withdrawLive";
 import apicalls from "../../api/apiCalls";
-import { validateContentRule } from "../../utils/custom.validator";
 import { handleFiatConfirm } from "../send.component/api";
-import walletList from "../shared/walletList";
-import WAValidator from "multicoin-address-validator";
 import Loader from '../../Shared/loader';
-import { LoadingOutlined } from "@ant-design/icons";
 
 const LinkValue = (props) => {
   return (
@@ -85,7 +80,6 @@ const FaitWithdrawal = ({
   const [btnDisabled, setBtnDisabled] = useState(false);
   const useDivRef = React.useRef(null);
   const [addressShow, setAddressShow] = useState(true);
-  const [validated, setValidated] = useState(false)
   const [amountLoading, setAmountLoading] = useState(false);
 
   const [addressObj, setAddressObj] = useState({
@@ -99,7 +93,6 @@ const FaitWithdrawal = ({
     beneficiaryAccountAddress: null
   });
   const [addressInfo, setAddressInfo] = useState(null);
-  const [address1, setAddress1] = useState(false)
   useEffect(() => {
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       handleWalletSelection(selectedWalletCode);
@@ -146,7 +139,6 @@ const FaitWithdrawal = ({
         bankAddress: "",
         bankAddress2: "",
         zipCode: "",
-        //beneficiaryAccountName: "",
         beneficiaryAccountAddress: "",
         beneficiaryAccountAddress1: "",
         description: "",
@@ -156,7 +148,6 @@ const FaitWithdrawal = ({
         favouriteName: null
       };
       setSaveObj({ ...clearobj, walletCode: walletId });
-      console.log(saveObj)
       setAddressDetails({});
       setStateLu([]);
       form.setFieldsValue({ ...clearobj, walletCode: walletId });
@@ -167,7 +158,6 @@ const FaitWithdrawal = ({
         return walletId === item.currencyCode;
       });
       setSelectedWallet(wallet[0]);
-      // setAddressInfo(null)
       if (wallet[0]) {
         getAddressLu(wallet[0]);
       }
@@ -200,12 +190,9 @@ const FaitWithdrawal = ({
       }
       else {
         setAddressLu(recAddress.data)
-        //setAddressInfo(addressInfo)
         setAddressObj(addressObj);
         setAddressShow(null)
-        setAddress1(true)
         setAddressInfo(null)
-        //form.setFieldsValue(addressInfo)
       }
     }
   };
@@ -257,24 +244,14 @@ const FaitWithdrawal = ({
     }
     if (isChange) form.setFieldsValue({ state: null });
   };
-  const selectAddress = () => {
-    let values = form.getFieldsValue();
-    values.favouriteName = values.favouriteName || addressDetails.favouriteName;
-    dispatch(setWithdrawfiat(values));
-    changeStep("step4");
-  };
-
-  const validate = (rule, value) => {
-    if (value == ".") {
-      return Promise.reject(apicalls.convertLocalLang("is_required"));
-    }
-  };
   const savewithdrawal = async (values) => {
-    debugger
-    setValidated(true)
     setBtnDisabled(true)
-    // setErrorMsg(null)
     dispatch(setWFTotalValue(values.totalValue));
+    if(!values.isAccept){
+      setBtnDisabled(false);
+      useDivRef.current.scrollIntoView();
+    setErrorMsg(apicalls.convertLocalLang("agree_termsofservice"))
+    }else{
     if (
       parseFloat(
         typeof values.totalValue === "string"
@@ -311,12 +288,6 @@ const FaitWithdrawal = ({
       setLoading(false);
       return setErrorMsg(apicalls.convertLocalLang("exceeded_amount"));
     }
-    // else if(values.totalValue < 100){
-    //   useDivRef.current.scrollIntoView();
-    //   setBtnDisabled(false)
-    //   setLoading(false);
-    //    return setErrorMsg(apicalls.convertLocalLang("amount_min") + " " + "100" );
-    // }
     setLoading(false);
     setErrorMsg(null);
     values["membershipId"] = userConfig.id;
@@ -328,8 +299,6 @@ const FaitWithdrawal = ({
     values["bankName"] = addressInfo.bankName;
     values["accountNumber"] = addressInfo.accountNumber;
     values["routingNumber"] = addressInfo.routingNumber;
-    //values["country"] =
-    // setLoading(false);
     const response = await handleFiatConfirm(values);
     if (response.ok) {
       setBtnDisabled(false);
@@ -344,14 +313,8 @@ const FaitWithdrawal = ({
       setErrorMsg(response.data ||  "Something went wrong please try again!");
     }
     setLoading(false);
-
+  }
   };
- const antIcon = (
-    <LoadingOutlined
-        style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
-        spin
-    />
-  );
   const getIbanData = async (val) => {
     if (val && val.length > 14) {
       let response = await apicalls.getIBANData(val);
@@ -412,12 +375,10 @@ const FaitWithdrawal = ({
             {errorMsg !== null && (
               <Alert
                 className="mb-12"
-                type="error"
-                // message={"Error"}
                 description={errorMsg}
                 onClose={() => setErrorMsg(null)}
                 showIcon
-             
+                type="error"
               />
             )}
             <Form
@@ -503,7 +464,7 @@ const FaitWithdrawal = ({
                     ]}
                     label={
                       <>
-                        <Translate className="input-label"
+                        <Translate
                           content="amount" component={Form.label} />
                         <div className="minmax">
                           <Translate
@@ -600,42 +561,6 @@ const FaitWithdrawal = ({
                     component={Text}
                     with={{ value: addressInfo.bankAddress }}
                   />
-
-                 {/* <Translate
-                    className="fw-200 text-white-50 fs-14"
-                    content="Country"
-                    component={Text}
-                  />
-                  <Translate
-                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                    content="SIGNU"
-                    component={Text}
-                    with={{ value: addressInfo.country || "--" }}
-                  />
-
-                   <Translate
-                    className="fw-200 text-white-50 fs-14"
-                    content="state"
-                    component={Text}
-                  />
-                  <Translate
-                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                    content="SIGNU"
-                    component={Text}
-                    with={{ value: addressInfo.state || "--" }}
-                  />
-
-                  <Translate
-                    className="fw-200 text-white-50 fs-14"
-                    content="zipcode"
-                    component={Text}
-                  /> 
-                  <Translate
-                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                    content="SIGNU"
-                    component={Text}
-                    with={{ value: addressInfo.zipCode || "--" }}
-                  />*/}
                   <Translate
                     content="Beneficiary_Details"
                     component={Paragraph}
@@ -679,13 +604,6 @@ const FaitWithdrawal = ({
                     name="isAccept"
                     valuePropName="checked"
                     required
-                    rules={[
-                      {
-                        validator: (_, value) =>
-                          value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice')
-                          )),
-                      },
-                    ]}
                   >
                     <span className="d-flex">
                       <Checkbox className="ant-custumcheck" />
@@ -707,7 +625,6 @@ const FaitWithdrawal = ({
                       className="pop-btn"
                       loading={btnDisabled}
                     >
-              {loading && <Spin indicator={antIcon} />}
                       <Translate content="Confirm_fiat" style={{marginLeft:"15px"}} component={Form.label} />
                     </Button>
                   </Form.Item>
@@ -780,9 +697,6 @@ const FaitWithdrawal = ({
   const handleOk = async () => {
     let currentStep = parseInt(confirmationStep.split("step")[1]);
     if (confirmationStep === "step2") {
-      // trackAuditLogData.Action = "Save";
-      // trackAuditLogData.Remarks =
-      //   saveObj?.totalValue + " " + saveObj.walletCode + " withdraw.";
       let Obj = Object.assign({}, saveObj);
       Obj.accountNumber = apicalls.encryptValue(
         Obj.accountNumber,
