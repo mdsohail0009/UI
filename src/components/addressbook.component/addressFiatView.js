@@ -191,7 +191,7 @@ const AddressFiatView = (props) => {
 													<label className="kpi-label">
 														{(props?.userConfig?.isBusiness && fiatAddress?.addressType !== "3rdparty"&&
 															"Business Name") ||
-															(!props?.userConfig?.isBusiness || fiatAddress?.addressType === "3rdparty"&&
+															((!props?.userConfig?.isBusiness || fiatAddress?.addressType === "3rdparty")&&
 																"Recipient Full Name")}
 													</label>
 													<div className="kpi-val">
