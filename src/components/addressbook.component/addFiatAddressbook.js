@@ -90,18 +90,20 @@ const NewFiatAddress = (props) => {
 
 	useEffect(() => {
 		if (selectParty === true) {
-			form.setFieldsValue({ addressType: "3rdparty",bankType:'bank',accountNumber: "",
-			routingNumber: "",
-			bankName: "",
-			bankAddress: "",
-			country: "",
-			state: "",
-			zipCode: "", });
+			form.setFieldsValue({
+				addressType: "3rdparty", bankType: 'bank', accountNumber: "",
+				routingNumber: "",
+				bankName: "",
+				bankAddress: "",
+				country: "",
+				state: "",
+				zipCode: "",
+			});
 		} else {
 			form.setFieldsValue({
 				addressType: "1stparty",
 				beneficiaryAccountName: getName(),
-				bankType:'bank',accountNumber: "",
+				bankType: 'bank', accountNumber: "",
 				routingNumber: "",
 				bankName: "",
 				bankAddress: "",
@@ -112,7 +114,7 @@ const NewFiatAddress = (props) => {
 		}
 		if (
 			props?.addressBookReducer?.selectedRowData?.id !==
-				"00000000-0000-0000-0000-000000000000" &&
+			"00000000-0000-0000-0000-000000000000" &&
 			props?.addressBookReducer?.selectedRowData?.id
 		) {
 			loadDataAddress();
@@ -345,7 +347,7 @@ const NewFiatAddress = (props) => {
 			useDivRef.current.scrollIntoView();
 			setErrorMsg(null);
 			setErrorWarning("File don't allow double extension");
-			return;
+
 		} else {
 			if (type === "IDENTITYPROOF") {
 				let fileType = {
@@ -433,7 +435,7 @@ const NewFiatAddress = (props) => {
 				beneficiaryAccountName: props?.userConfig.isBusiness
 					? props?.userConfig.businessName
 					: props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
-					bankType:'bank'
+				bankType: 'bank'
 			});
 			setBankType('bank');
 			setSelectParty(false);
@@ -441,7 +443,7 @@ const NewFiatAddress = (props) => {
 			form.setFieldsValue({
 				addressType: "3rdparty",
 				beneficiaryAccountName: null,
-				bankType:'bank'
+				bankType: 'bank'
 			});
 			setBankType('bank');
 			setSelectParty(true);
@@ -510,7 +512,7 @@ const NewFiatAddress = (props) => {
 		}
 	};
 	const filePreviewPath = () => {
-			return previewPath;
+		return previewPath;
 	};
 	const filePreviewModal = (
 		<Modal
@@ -577,6 +579,28 @@ const NewFiatAddress = (props) => {
 			spin
 		/>
 	);
+	const iban = (bankType !== "iban") ? apiCalls.convertLocalLang("Bank_account") : apiCalls.convertLocalLang("iban")
+	const ibanBlur = (bankType === "iban") ? (val) => getIbanData(val.currentTarget.value) : doNothing
+	const disable = (bankType === "iban") ? true : false
+	const selectparty = (selectParty) ? (
+		<Input
+			className="cust-input"
+			placeholder={
+				(props?.userConfig?.isBusiness && !selectParty &&
+					apiCalls.convertLocalLang("company_name")) ||
+				((!props?.userConfig?.isBusiness || selectParty) &&
+					apiCalls.convertLocalLang("Recipient_full_name"))
+			}
+			value="naresh"
+		/>
+	) : (
+		<Input
+			className="cust-input"
+			value={"naresh"}
+			placeholder="Recipient full name"
+			disabled={true}
+		/>
+	)
 	return (
 		<>
 			{isLoading ? (
@@ -745,11 +769,9 @@ const NewFiatAddress = (props) => {
 								<Form.Item
 									className="custom-forminput custom-label mb-0"
 									name="accountNumber"
-									label={
-										bankType !== "iban"
-											? apiCalls.convertLocalLang("Bank_account")
-											: apiCalls.convertLocalLang("iban")
-									}
+									label={iban}
+
+
 									required
 									rules={[
 										{
@@ -757,23 +779,17 @@ const NewFiatAddress = (props) => {
 											message: apiCalls.convertLocalLang("is_required"),
 										},
 										{
-											pattern: bankType !== "iban"?bankNameRegex:IbanRegex,
-											message: bankType !== "iban"?"Invalid Bank account number":"Invalid IBAN",
+											pattern: bankType !== "iban" ? bankNameRegex : IbanRegex,
+											message: bankType !== "iban" ? "Invalid Bank account number" : "Invalid IBAN",
 										},
 									]}>
 									<Input
 										className="cust-input"
 										maxLength={100}
-										placeholder={
-											bankType !== "iban"
-												? apiCalls.convertLocalLang("Bank_account")
-												: apiCalls.convertLocalLang("iban")
-										}
-										onBlur={
-											bankType === "iban"
-												? (val) => getIbanData(val.currentTarget.value)
-												: doNothing
-										}
+										placeholder={iban}
+
+										onBlur={ibanBlur}
+
 									/>
 								</Form.Item>
 							</Col>
@@ -800,7 +816,8 @@ const NewFiatAddress = (props) => {
 									]}>
 									<Input
 										className="cust-input"
-										disabled={bankType === "iban" ? true : false}
+										disabled={disable}
+
 										maxLength={100}
 										placeholder={apiCalls.convertLocalLang(
 											"BIC_SWIFT_routing_number"
@@ -831,7 +848,8 @@ const NewFiatAddress = (props) => {
 									]}>
 									<Input
 										className="cust-input"
-										disabled={bankType === "iban" ? true : false}
+										disabled={disable}
+
 										maxLength={200}
 										placeholder={apiCalls.convertLocalLang("Bank_name")}
 									/>
@@ -860,7 +878,8 @@ const NewFiatAddress = (props) => {
 									]}>
 									<Input
 										className="cust-input"
-										disabled={bankType === "iban" ? true : false}
+										disabled={disable}
+
 										maxLength={200}
 										placeholder={apiCalls.convertLocalLang("Bank_address1")}
 									/>
@@ -881,8 +900,8 @@ const NewFiatAddress = (props) => {
 									label={
 										<Translate
 											content={
-												(props?.userConfig?.isBusiness&& !selectParty && "company_name") ||
-												((!props?.userConfig?.isBusiness || selectParty)&&
+												(props?.userConfig?.isBusiness && !selectParty && "company_name") ||
+												((!props?.userConfig?.isBusiness || selectParty) &&
 													"Recipient_full_name")
 											}
 											component={Form.label}
@@ -901,25 +920,8 @@ const NewFiatAddress = (props) => {
 											validator: validateContentRule,
 										},
 									]}>
-									{selectParty ? (
-										<Input
-											className="cust-input"
-											placeholder={
-												(props?.userConfig?.isBusiness && !selectParty&&
-													apiCalls.convertLocalLang("company_name")) ||
-												((!props?.userConfig?.isBusiness || selectParty) &&
-													apiCalls.convertLocalLang("Recipient_full_name"))
-											}
-											value="naresh"
-										/>
-									) : (
-										<Input
-											className="cust-input"
-											value={"naresh"}
-											placeholder="Recipient full name"
-											disabled={true}
-										/>
-									)}
+									{selectparty}
+
 								</Form.Item>
 							</Col>
 							<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -1009,8 +1011,7 @@ const NewFiatAddress = (props) => {
 										{!uploadIdentity && identityFile !== null && (
 											<div className="docfile mr-0">
 												<span
-													className={`icon xl ${
-														(identityFile.documentName?.slice(-3) === "zip" &&
+													className={`icon xl ${(identityFile.documentName?.slice(-3) === "zip" &&
 															"file") ||
 														(identityFile.documentName?.slice(-3) !== "zip" &&
 															"") ||
@@ -1018,7 +1019,7 @@ const NewFiatAddress = (props) => {
 															"file") ||
 														(identityFile.documentName?.slice(-3) !== "pdf" &&
 															"image")
-													} mr-16`}
+														} mr-16`}
 												/>
 
 												<div
@@ -1072,14 +1073,13 @@ const NewFiatAddress = (props) => {
 													Please upload address proof here
 												</p>
 											</Dragger>
-											</>
+										</>
 										}
 									</Form.Item>
 									{!uploadAdress && addressFile !== null && (
 										<div className="docfile mr-0">
 											<span
-												className={`icon xl ${
-													(addressFile?.documentName?.slice(-3) === "zip" &&
+												className={`icon xl ${(addressFile?.documentName?.slice(-3) === "zip" &&
 														"file") ||
 													(addressFile?.documentName?.slice(-3) !== "zip" &&
 														"") ||
@@ -1087,7 +1087,7 @@ const NewFiatAddress = (props) => {
 														"file") ||
 													(addressFile.documentName?.slice(-3) !== "pdf" &&
 														"image")
-												} mr-16`}
+													} mr-16`}
 											/>
 											<div
 												className="docdetails c-pointer"
@@ -1121,10 +1121,10 @@ const NewFiatAddress = (props) => {
 											value
 												? Promise.resolve()
 												: Promise.reject(
-														new Error(
-															apiCalls.convertLocalLang("agree_termsofservice")
-														)
-												  ),
+													new Error(
+														apiCalls.convertLocalLang("agree_termsofservice")
+													)
+												),
 									},
 								]}>
 								<Checkbox className="ant-custumcheck" />
