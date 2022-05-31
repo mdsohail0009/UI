@@ -523,4 +523,5 @@ export default {
 	account_name: "受益人姓名",
 	personal_account:'个人账户',
 	business_account:"商业账户",
+	Recipient_Business_name: "收件人全名/公司名称",
 };
