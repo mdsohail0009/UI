@@ -213,7 +213,11 @@ const NewFiatAddress = (props) => {
 			"fiat",
 			favaddrId
 		);
-		if (responsecheck.data !== null) {
+		if (!values.isAgree) {
+			setBtnDisabled(false);
+			useDivRef.current.scrollIntoView();
+			setErrorMsg(apiCalls.convertLocalLang("agree_termsofservice"))
+		} else if (responsecheck.data !== null) {
 			setIsLoading(false);
 			setBtnDisabled(false);
 			useDivRef.current.scrollIntoView();
@@ -343,6 +347,7 @@ const NewFiatAddress = (props) => {
 		setErrorWarning(null);
 		if (file.name.split(".").length > 2) {
 			useDivRef.current.scrollIntoView();
+			setErrorMsg(null);
 			setErrorWarning("File don't allow double extension");
 			return;
 		} else {
@@ -361,6 +366,7 @@ const NewFiatAddress = (props) => {
 					setUploadIdentity(true);
 					return true;
 				} else {
+					setErrorMsg(null);
 					setErrorWarning(
 						"File is not allowed. You can upload jpg, png, jpeg and PDF files"
 					);
@@ -383,6 +389,7 @@ const NewFiatAddress = (props) => {
 					setUploadAddress(true);
 					return true;
 				} else {
+					setErrorMsg(null);
 					setErrorWarning(
 						"File is not allowed. You can upload jpg, png, jpeg and PDF files"
 					);
@@ -404,6 +411,7 @@ const NewFiatAddress = (props) => {
 					setUploading(true);
 					return true;
 				} else {
+					setErrorMsg(null);
 					setErrorWarning("File is not allowed. You can upload only PDF file");
 					setUploading(false);
 					return Upload.LIST_IGNORE;
@@ -412,6 +420,7 @@ const NewFiatAddress = (props) => {
 		}
 	};
 	const radioChangeHandler = (e) => {
+		setErrorMsg(null);
 		setErrorWarning(null);
 		setUploading(false);
 		setUploadAddress(false);
@@ -505,11 +514,7 @@ const NewFiatAddress = (props) => {
 		}
 	};
 	const filePreviewPath = () => {
-		if (previewPath?.includes(".pdf")) {
 			return previewPath;
-		} else {
-			return previewPath;
-		}
 	};
 	const filePreviewModal = (
 		<Modal
@@ -880,8 +885,8 @@ const NewFiatAddress = (props) => {
 									label={
 										<Translate
 											content={
-												(props?.userConfig?.isBusiness && "company_name") ||
-												(!props?.userConfig?.isBusiness &&
+												(props?.userConfig?.isBusiness&& !selectParty && "company_name") ||
+												((!props?.userConfig?.isBusiness || selectParty)&&
 													"Recipient_full_name")
 											}
 											component={Form.label}
@@ -904,9 +909,9 @@ const NewFiatAddress = (props) => {
 										<Input
 											className="cust-input"
 											placeholder={
-												(props?.userConfig?.isBusiness &&
+												(props?.userConfig?.isBusiness && !selectParty&&
 													apiCalls.convertLocalLang("company_name")) ||
-												(!props?.userConfig?.isBusiness &&
+												((!props?.userConfig?.isBusiness || selectParty) &&
 													apiCalls.convertLocalLang("Recipient_full_name"))
 											}
 											value="naresh"
@@ -1114,18 +1119,7 @@ const NewFiatAddress = (props) => {
 								className="custom-forminput mt-36 agree"
 								name="isAgree"
 								valuePropName="checked"
-								rules={[
-									{
-										validator: (_, value) =>
-											value
-												? Promise.resolve()
-												: Promise.reject(
-														new Error(
-															apiCalls.convertLocalLang("agree_termsofservice")
-														)
-												  ),
-									},
-								]}>
+								>
 								<Checkbox className="ant-custumcheck" />
 							</Form.Item>
 							<Translate

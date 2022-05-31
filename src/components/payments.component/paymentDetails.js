@@ -1,14 +1,12 @@
 import React, { Component, createRef } from 'react';
-import { Typography, Button, Form, Select, message, Input, Alert, Popover, Spin, Tooltip, Upload, Modal } from 'antd';
+import { Typography, Button, Form, Select, message, Input, Alert, Popover, Tooltip,Spin, Upload, Modal } from 'antd';
 import Translate from 'react-translate-component';
 import { getCurrencyLu, getPaymentsData, savePayments, getBankData, creatPayment, updatePayments,getFileURL } from './api'
 import NumberFormat from 'react-number-format';
 import { connect } from "react-redux";
 import Loader from '../../Shared/loader';
 import FilePreviewer from 'react-file-previewer';
-import { LoadingOutlined } from "@ant-design/icons";
 
-const { confirm } = Modal;
 const { Option } = Select;
 const { Title, Text,Paragraph } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
@@ -199,7 +197,7 @@ class PaymentDetails extends Component {
             this.setState({ btnDisabled: false,loading:false });
             message.destroy();
             message.success({
-              content: "Payment details update successfully",
+              content: "Payment details updated successfully",
               className: "custom-msg",
               duration: 3,
             });
@@ -352,11 +350,7 @@ fileDownload = async () => {
   }
 }
 filePreviewPath() {
-  if (this.state.previewPath.includes(".pdf")) {
       return this.state.previewPath;
-  } else {
-      return this.state.previewPath;
-  }
 }
   addressTypeNames = (type) =>{
     const stepcodes = {
@@ -384,12 +378,6 @@ filePreviewPath() {
       );
     }
   };
-   antIcon = (
-    <LoadingOutlined
-        style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
-        spin
-    />
-);
 
   render() {
     let total = 0;
@@ -468,7 +456,7 @@ filePreviewPath() {
                   <thead>
                     <tr>
                       <th className="doc-def">Name</th>
-                      <th className="doc-def">Bank Name</th>
+                      <th className="doc-def" style={{width: "300px"}}>Bank Name</th>
                       <th>Bank Account Number/IBAN</th>
                       {(this.props.match.params.id !==
                         "00000000-0000-0000-0000-000000000000" 
@@ -549,7 +537,7 @@ filePreviewPath() {
                                       </Popover>
                                     </div>
                                   </td>
-                                  <td>
+                                  <td style={{width: "300px"}}>
                                   <Tooltip title={item.accountnumber}>
                                     <span className=''>{item.accountnumber}</span>
                                     
@@ -768,7 +756,6 @@ filePreviewPath() {
                                               style={{ minWidth: 150 }}onClick={() => {
                                                 this.savePayment();
                                               }}>
-                                              {loading && <Spin indicator={this.antIcon} />}{" "}
                                               Pay Now
                                           </Button>
   }

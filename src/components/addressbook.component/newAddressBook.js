@@ -153,7 +153,11 @@ const NewAddressBook = ({
 			"crypto",
 			favaddrId
 		);
-		if (responsecheck.data !== null) {
+		if (!values.isAgree) {
+			setBtnDisabled(false);
+			useDivRef.current.scrollIntoView();
+			setErrorMsg(apiCalls.convertLocalLang("agree_termsofservice"))
+		} else if (responsecheck.data !== null) {
 			setBtnDisabled(false);
 			setIsLoading(false);
 			useDivRef.current.scrollIntoView();
@@ -301,9 +305,6 @@ const NewAddressBook = ({
 							label={<Translate content="address" component={Form.label} />}
 							required
 							rules={[
-								// {
-								// 	validator: validateContentRule,
-								// },
 								{
 									validator: validateAddressType,
 								},
@@ -311,7 +312,6 @@ const NewAddressBook = ({
 							<Input
 								className="cust-input mb-0"
 								maxLength="100"
-								// onBlur={(e) => handleAddressValidation(e)}
 								placeholder={apiCalls.convertLocalLang("address")}
 							/>
 						</Form.Item>
@@ -331,7 +331,6 @@ const NewAddressBook = ({
 							<Select
 								className="cust-input mb-0"
 								placeholder="Select Address Type"
-								//onChange={(e) => this.handleCurrencyChange(e)}
 								dropdownClassName="select-drpdwn"
 								bordered={false}
 								showArrow={true}>
@@ -345,18 +344,7 @@ const NewAddressBook = ({
 								className="custom-forminput mt-36 agree"
 								name="isAgree"
 								valuePropName="checked"
-								rules={[
-									{
-										validator: (_, value) =>
-											value
-												? Promise.resolve()
-												: Promise.reject(
-														new Error(
-															apiCalls.convertLocalLang("agree_termsofservice")
-														)
-												  ),
-									},
-								]}>
+								>
 								<Checkbox className="ant-custumcheck" />
 							</Form.Item>
 							<Translate

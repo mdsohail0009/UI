@@ -43,7 +43,7 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, t
     <div>
       <LiveNessSumsub onConfirm={confirmFaceLive} />
       {faceCapture && <Button
-        disabled={isLoding}
+        loading={isLoding}
         size="large"
         block
         className="pop-btn"
