@@ -548,4 +548,4 @@ export default {
 	account_name: "Pangalan ng Makikinabang",
   personal_account:'Kaonty manokana',
   business_account:"Kaonty fandraharahana",
-};
+};Recipient_Business_name: "Anarana feno/Anaran'ny orinasa"

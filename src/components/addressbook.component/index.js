@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert } from "antd";
+import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message } from "antd";
 import {
 	setAddressStep,
 	rejectCoin,
@@ -33,7 +33,6 @@ class AddressBook extends Component {
 			selectedObj: {},
 			modal: false,
 			alert: false,
-			successMsg: false,
 			btnDisabled: false,
 			cryptoModal: false,
 			selectedModal: "",
@@ -120,13 +119,6 @@ class AddressBook extends Component {
 				</td>
 			),
 		},
-		// {
-		// 	field: "beneficiaryAccountName",
-		// 	title: apiCalls.convertLocalLang("Recipient_full_name"),
-		// 	width: 200,
-		// 	filter: true,
-		// 	with: 150,
-		// },
 		{
 			field: "currency",
 			title: apiCalls.convertLocalLang("currency"),
@@ -162,7 +154,7 @@ class AddressBook extends Component {
 			field: "beneficiaryAccountName",
 			title:
 				(this.props?.userConfig?.isBusiness &&
-					apiCalls.convertLocalLang("company_name")) ||
+					apiCalls.convertLocalLang("Recipient_Business_name")) ||
 				(!this.props?.userConfig?.isBusiness &&
 					apiCalls.convertLocalLang("Recipient_full_name")),
 			filter: true,
@@ -333,12 +325,12 @@ class AddressBook extends Component {
 			[name]: value,
 			selectedObj: rowObj,
 			selection,
+			errorWorning: null
 		});
 	};
 	statusUpdate = () => {
 		if (!this.state.isCheck) {
-			this.setState({ alert: true });
-			setTimeout(() => this.setState({ alert: false }), 2500);
+			this.setState({...this.state, errorWorning: "Please select the one record" });
 		} else {
 			this.setState({ modal: true });
 		}
@@ -379,9 +371,16 @@ class AddressBook extends Component {
 					modifiedBy: "",
 					status: [],
 				},
-				successMsg: true,
 			});
-			setTimeout(() => this.setState({ successMsg: false }), 1000);
+			message.success({
+				content: "Record " +
+					(this.state.selectedObj.status === "Active"
+						? "deactivated"
+						: "activated") +
+					" successfully",
+				className: "custom-msg",
+				duration: 3,
+			})
 			if (this.state.cryptoFiat) {
 				this.gridFiatRef.current.refreshGrid();
 			} else {
@@ -402,9 +401,6 @@ class AddressBook extends Component {
 				},
 			});
 		}
-	};
-	setSuccessMsg = () => {
-		this.setState({ ...this.state, successMsg: false });
 	};
 	addAddressBook = () => {
 		if (this.state.cryptoFiat) {
@@ -440,10 +436,10 @@ class AddressBook extends Component {
 		}
 	};
 	editAddressBook = () => {
+		this.setState({...this.state, errorWorning: null,selection: [] });
 		let obj = this.state.selectedObj;
 		if (!this.state.isCheck) {
-			this.setState({ alert: true, errorWorning: null });
-			setTimeout(() => this.setState({ alert: false }), 2000);
+			this.setState({...this.state, errorWorning: "Please select the one record" });
 		} else if (
 			obj.addressState === "Approved" ||
 			obj.addressState === "Rejected" ||
@@ -456,7 +452,6 @@ class AddressBook extends Component {
 				isCheck: false,
 				errorWorning: `Record is already ${obj.addressState} you can't modify`,
 			});
-			setTimeout(() => this.setState({ errorWorning: null }), 2000);
 		} else {
 			obj.walletCode = obj.coin;
 			this.props.rowSelectedData(obj);
@@ -524,6 +519,7 @@ class AddressBook extends Component {
 			selection: [],
 			selectedObj: {},
 			isCheck: false,
+			errorWorning:null
 		});
 		if (this.state.cryptoFiat) {
 			apiCalls.trackEvent({
@@ -657,15 +653,6 @@ class AddressBook extends Component {
 							</li>
 						</ul>
 					</div>
-					{this.state.alert && (
-						<div className="custom-alert">
-							<Alert
-								description={apiCalls.convertLocalLang("one_record")}
-								type="warning"
-								showIcon
-							/>
-						</div>
-					)}
 					{this.state.errorWorning && (
 						<div className="custom-alert">
 							<Alert
@@ -674,19 +661,6 @@ class AddressBook extends Component {
 								showIcon
 							/>
 						</div>
-					)}
-					{this.state.successMsg && (
-						<Alert
-							type="success"
-							description={
-								"Record " +
-								(this.state.selectedObj.status === "Active"
-									? "deactivated"
-									: "activated") +
-								" successfully"
-							}
-							showIcon
-						/>
 					)}
 					{cryptoFiat ? (
 						<List
@@ -800,7 +774,7 @@ class AddressBook extends Component {
 								className="primary-btn pop-btn"
 								onClick={this.handleSatatuSave}
 								style={{ width: 120, height: 50 }}
-								disabled={btnDisabled}>
+								loading={btnDisabled}>
 								Yes
 							</Button>
 						</>
