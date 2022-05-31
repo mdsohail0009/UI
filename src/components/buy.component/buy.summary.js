@@ -29,6 +29,7 @@ class BuySummary extends Component {
         apicalls.trackEvent({ "Type": 'User', "Action": 'Buy summary page view', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Buy', "Remarks": 'Buy Crypto coin summary', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy Crypto' });
     }
     pay = async () => {
+        debugger
         this.setState({ ...this.state, error: { valid: true, message: null } });
         if (this.state.isTermsAgreed) {
             const { id: toWalletId, walletName: toWalletName, walletCode: toWalletCode } = this.props.sellData?.coinWallet;
@@ -48,7 +49,6 @@ class BuySummary extends Component {
                 "comission": 0,
                 "exicutedPrice": this.props.sellData?.previewDetails?.data?.oneCoinValue,
                 "totalAmount": this.props.sellData.previewDetails?.data?.amount,
-                "comission": this.props.sellData.previewDetails?.data?.comission,
                 "isCrypto": this.props.sellData.previewDetails?.data?.isCrypto
             }
             obj.toWalletId = obj.toWalletId ? obj.toWalletId : this.props.sellData?.id;

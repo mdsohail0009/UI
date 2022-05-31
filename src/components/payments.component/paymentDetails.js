@@ -456,7 +456,7 @@ filePreviewPath() {
                   <thead>
                     <tr>
                       <th className="doc-def">Name</th>
-                      <th className="doc-def">Bank Name</th>
+                      <th className="doc-def" style={{width: "300px"}}>Bank Name</th>
                       <th>Bank Account Number/IBAN</th>
                       {(this.props.match.params.id !==
                         "00000000-0000-0000-0000-000000000000" 
@@ -537,7 +537,7 @@ filePreviewPath() {
                                       </Popover>
                                     </div>
                                   </td>
-                                  <td>
+                                  <td style={{width: "300px"}}>
                                   <Tooltip title={item.accountnumber}>
                                     <span className=''>{item.accountnumber}</span>
                                     

@@ -1,22 +1,18 @@
 import React, { Component } from "react";
 
-import { Typography, Button, Alert, message, Form, Input, Tooltip,Checkbox } from "antd";
+import { Typography, Button, Alert, Form, Input, Tooltip,Checkbox } from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
 import Currency from "../shared/number.formate";
 import { handleNewExchangeAPI, withDrawCrypto } from "../send.component/api";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
-import { setCryptoFinalRes } from "../../reducers/sendreceiveReducer";
-
-import {
-	setStep,
+import { setCryptoFinalRes,	setStep,
 	setSubTitle,
-	setWithdrawcrypto,
-} from "../../reducers/sendreceiveReducer";
+	setWithdrawcrypto, } from "../../reducers/sendreceiveReducer";
+
 import apiCalls from "../../api/apiCalls";
 import { publishBalanceRfresh } from "../../utils/pubsub";
-import { success, warning, error } from "../../utils/message";
 import { Link } from "react-router-dom";
 class WithdrawSummary extends Component {
 	state = {
@@ -56,7 +52,6 @@ class WithdrawSummary extends Component {
 		authCode: "",
 		verifyData: "",
 		minutes: 2,
-		//seconds: 0,
 		seconds: 30,
 		seconds2: 30,
 		inValidData: false,
@@ -206,7 +201,6 @@ class WithdrawSummary extends Component {
 		}
 	};
 	getOTP = async (val) => {
-		// this.setState({ ...this.state, phoneLoading: true });
 		let response = await apiCalls.getCode(
 			this.props.userProfile.id,
 			this.state.type
@@ -234,14 +228,12 @@ class WithdrawSummary extends Component {
 		} else {
 			this.setState({
 				...this.state,
-				// phoneLoading: false,
 				errorMsg: apiCalls.convertLocalLang("request_fail"),
 			});
 		}
 	};
 
 	getEmail = async (val) => {
-		// this.setState({ ...this.state, emailLoading: true });
 		let response = await apiCalls.sendEmail(
 			this.props.userProfile.id,
 			this.state.type
@@ -249,7 +241,6 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
-				// emailLoading: false,
 				emailText: "sentVerification",
 				emailDisable: false,
 				textDisable: true,
@@ -270,14 +261,12 @@ class WithdrawSummary extends Component {
 		} else {
 			this.setState({
 				...this.state,
-				// emailLoading: false,
 				errorMsg: apiCalls.convertLocalLang("request_fail"),
 			});
 		}
 	};
 
 	getEmailVerification = async () => {
-		// this.setState({ ...this.state, emailVerifyLoading: true });
 		let response = await apiCalls.verifyEmail(
 			this.props.userProfile.id,
 			this.state.emailCodeVal
@@ -285,7 +274,6 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
-				// emailVerifyLoading: false,
 				EmailCode: response.data,
 				verifyEmail: true,
 				verifyEmailOtp: true,
@@ -306,7 +294,6 @@ class WithdrawSummary extends Component {
 			this.setState({ ...this.state, inValidData: true });
 			this.setState({
 				...this.state,
-				// emailVerifyLoading: false,
 				errorMsg: apiCalls.convertLocalLang("email_invalid_code"),
 				invalidData: true,
 				verifyEmail: false,
@@ -316,7 +303,6 @@ class WithdrawSummary extends Component {
 	};
 
 	getOtpVerification = async () => {
-		// this.setState({ ...this.state, phoneVerifyLoading: true });
 		let response = await apiCalls.getVerification(
 			this.props.userProfile.id,
 			this.state.otpCode
@@ -324,7 +310,6 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
-				// phoneVerifyLoading: false,
 				OtpVerification: response.data,
 				verifyPhone: true,
 				verifyTextotp: true,
@@ -334,11 +319,9 @@ class WithdrawSummary extends Component {
         isPhoneVerification:true,
 		errorMsg:null
 			});
-			//success("Phone verification code verified successfully");
 		} else if (response.data == null) {
 			this.setState({
 				...this.state,
-				// phoneVerifyLoading: false,
 				errorMsg: "Please enter phone verification code",
 				invalidData: true,
 			});
@@ -346,15 +329,11 @@ class WithdrawSummary extends Component {
 			this.useDivRef.current.scrollIntoView(0, 0);
 			this.setState({
 				...this.state,
-				// phoneVerifyLoading: false,
 				errorMsg: apiCalls.convertLocalLang("phone_invalid_code"),
 				verifyPhone: false,
 				inputDisable: false,
 				inValidData: true,
 			});
-			// setTimeout(() => {
-			//   this.setState({ errorMsg: null });
-			// }, 2500);
 		}
 	};
 	handleOtp = (val) => {
@@ -378,7 +357,6 @@ class WithdrawSummary extends Component {
 	};
 
 	getAuthenticator = async () => {
-		// this.setState({ ...this.state, faLoading: true });
 		let response = await apiCalls.getAuthenticator(
 			this.state.authCode,
 			this.props.userProfile.userId
@@ -386,7 +364,6 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
-				// faLoading: false,
 				authenticator: response.data,
 				verifyAuth: true,
 				verifyAuthCode: true,
@@ -394,26 +371,20 @@ class WithdrawSummary extends Component {
         isAuthenticatorVerification:true,
 		errorMsg:null
 			});
-			//success("2FA verification code verified successfully");
 		} else if (response.data == null) {
 			this.setState({
 				...this.state,
-				// faLoading: false,
 				errorMsg: "Please enter authenticator verification code",
 			});
 		} else {
 			this.useDivRef.current.scrollIntoView(0, 0);
 			this.setState({
 				...this.state,
-				// faLoading: false,
 				errorMsg: apiCalls.convertLocalLang("twofa_invalid_code"),
 				verifyAuth: false,
 				inputAuthDisable: false,
 				inValidData: true,
 			});
-			// setTimeout(() => {
-			//   this.setState({ errorMsg: null });
-			// }, 2500);
 		}
 	};
 	handleChange = (e) => {
@@ -426,17 +397,15 @@ class WithdrawSummary extends Component {
 		this.setState({ ...this.state, emailCodeVal: e.target.value });
 	};
 	saveWithdrwal = async (values) => {
-		const { authenticator, OtpVerification, EmailCode, invalidData } =
-			this.state;
-		// if (this.state.onTermsChange) {
-			// if (
-			// 	(authenticator && OtpVerification) ||
-			// 	(EmailCode && OtpVerification) ||
-			// 	(EmailCode && authenticator) ||
-			// 	(EmailCode && OtpVerification && authenticator)
-			// ) 
-      
-      // {
+		if (!values.isAccept) {
+			this.setState({
+				...this.state,
+				errorMsg: apiCalls.convertLocalLang("agree_termsofservice"),
+			});
+			this.useDivRef.current.scrollIntoView(0, 0);
+		}
+			else{
+
 		  this.setState({...this.state,btnLoading:true})
      
         if (this.state.verifyData.isPhoneVerified) {
@@ -486,14 +455,11 @@ class WithdrawSummary extends Component {
 					trackAuditLogData.Action = "Save";
 					trackAuditLogData.Remarks = "Withdraw Crypto save";
 					saveObj.info = JSON.stringify(trackAuditLogData);
-
-					console.log("Okay");
 					let withdrawal = await withDrawCrypto(saveObj);
 					if (withdrawal.ok) {
 						this.setState({...this.state,btnLoading:false})
 						this.props.dispatch(setCryptoFinalRes(withdrawal.data));
 						this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
-						//setIsWithdrawSuccess(true)
 						this.props.dispatch(setWithdrawcrypto(null));
 						this.props.dispatch(setSubTitle(""));
 						this.props.changeStep("withdraw_crpto_success");
@@ -507,10 +473,6 @@ class WithdrawSummary extends Component {
 					  });
 					}
 				} else {
-					// this.setState({
-					//   ...this.state,
-					//   errorMsg:"We can not process this request, Since commission is more than or equal to requested amount"
-					// });
 					this.props.dispatch(
 						setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
 					);
@@ -521,34 +483,7 @@ class WithdrawSummary extends Component {
 					errorMsg:
 						"We can not process this request, Since commission is more than or equal to requested amount",
 				});
-		//	}
-      //  else if (
-			// 	OtpVerification == "" &&
-			// 	EmailCode == "" &&
-			// 	authenticator == ""
-			// ) {
-			// 	this.setState({
-			// 		...this.state,
-			// 		errorMsg:
-			// 			"Without Verifications you can't withdraw. Please select withdraw verifications from security section",
-			// 	});
-			// } 
-      // else {
-			// 	this.setState({
-			// 		...this.state,
-			// 		errorMsg: "Please verify verification codes",
-			// 	});
-			// 	this.useDivRef.current.scrollIntoView(0, 0);
-				
-			// }
-	//	} 
-    // else {
-		// 	this.setState({
-		// 		...this.state,
-		// 		errorMsg: apiCalls.convertLocalLang("agree_termsofservice"),
-		// 	});
-		// 	this.useDivRef.current.scrollIntoView(0, 0);
-		// }
+			}
 	};
 
 	fullNumber = this.props.userProfile?.phoneNumber;
@@ -563,7 +498,7 @@ class WithdrawSummary extends Component {
 
 	render() {
 		const { Paragraph, Text } = Typography;
-		const { seconds, disable, textDisable, minutes, seconds2 } = this.state;
+		const { seconds, disable, textDisable, seconds2 } = this.state;
     const link = <this.LinkValue content="terms_service" />;
 
 		const btnList = {
@@ -583,8 +518,6 @@ class WithdrawSummary extends Component {
 			),
 			sentVerify: (
 				<Translate
-					// className={`pl-0 ml-0 text-yellow-50
-					// `}
 					className={`pl-0 ml-0 text-white-50`}
 					content="sent_verification"
 					with={{ counter: `${textDisable ? "(" + seconds + ")" : ""}` }}
@@ -614,7 +547,6 @@ class WithdrawSummary extends Component {
 			),
 			sentVerification: (
 				<Translate
-					// className={`pl-0 ml-0 text-yellow-50
 					className={`pl-0 ml-0 text-white-50
           ${textDisable ? "c-notallowed" : ""}`}
 					content="sent_verification"
@@ -630,11 +562,6 @@ class WithdrawSummary extends Component {
 			),
 		};
 
-		// const tooltipTimer = seconds < 10 ? `0${seconds}` : seconds;
-		// const tooltipValue =
-		// 	"Haven't received code ? Request new code in " +
-		// 	tooltipTimer +
-		// 	" seconds. The code will expire after 30mins.";
 
 		if (this.state.loading) {
 			return <Loader />;
@@ -646,7 +573,6 @@ class WithdrawSummary extends Component {
 					<Alert
 					    className="mb-12"
 						showIcon
-						// message={apiCalls.convertLocalLang("withdraw_crypto")}
 						onClose={() => this.state.errorMsg(null)}
 						description={this.state.errorMsg}
 						closable={false}
@@ -774,7 +700,6 @@ class WithdrawSummary extends Component {
 										<div className="p-relative d-flex align-center">	
 									<Input
 										type="text"
-										// className="cust-input text-left"
 										className="cust-input custom-add-select mb-0"
 										placeholder={"Enter code"}
 										maxLength={6}
@@ -858,28 +783,11 @@ class WithdrawSummary extends Component {
 										<div className="p-relative d-flex align-center">
 									<Input
 										type="text"
-										// className="cust-input text-left"
+					
 										className="cust-input custom-add-select mb-0"
 										placeholder={"Enter code"}
 										maxLength={6}
-										// onKeyDown={(event) => {
-										//   if (
-										//     event.currentTarget.value.length > 5 &&
-										//     !(event.key == "Backspace" || event.key == "Delete")
-										//   ) {
-										//     event.preventDefault();
-										//   } else if (/^\d+$/.test(event.key)) {
-										//     this.handleSendOtp(event.currentTarget.value);
-										//   } else if (
-										//     event.key == "Backspace" ||
-										//     event.key == "Delete"
-										//   ) {
-										//   } else {
-										//     event.preventDefault();
-										//   }
-										// }}
 										style={{ width: "100%" }}
-										//disabled={this.state.emailDisable}
 										onClick={(event) =>
 											this.handleSendOtp(event.currentTarget.value)
 										}
@@ -980,7 +888,6 @@ class WithdrawSummary extends Component {
 												loading={this.state.faLoading}
 												style={{color:"black",margin:"0 auto"}}
 												onClick={this.getAuthenticator}>
-												{/* Click here to verify */}
 												{this.state.verifyAuthCode ? (
 													<span className="icon md greenCheck" />
 												) : (
@@ -991,45 +898,12 @@ class WithdrawSummary extends Component {
 										</div>
 								</Form.Item>
 							)}
-							{/* <div className="d-flex p-16 mb-36 agree-check">
-								<label>
-									<input
-										type="checkbox"
-										id="agree-check"
-										checked={this.state.onTermsChange}
-										onChange={({ currentTarget: { checked } }) => {
-											this.setState({ onTermsChange: checked ? true : false });
-										}}
-									/>
-									<span for="agree-check" />
-								</label>
-
-								<Paragraph
-									className="fs-14 text-white-30 ml-16 mb-0"
-									style={{ flex: 1 }}>
-									<Translate content="agree_sell" component="Paragraph" />{" "}
-									<a
-										className="textpure-yellow"
-										href="https://www.iubenda.com/terms-and-conditions/42856099"
-										target="_blank">
-										<Translate content="terms" component="Text" />
-									</a>{" "}
-									<Translate content="refund_cancellation" component="Text" />
-								</Paragraph>
-							</div> */}
                
                <Form.Item
                     className="custom-forminput mb-36 agree"
                     name="isAccept"
                     valuePropName="checked"
                     required
-                    rules={[
-                      {
-                        validator: (_, value) =>
-                          value ? Promise.resolve() : Promise.reject(new Error(apiCalls.convertLocalLang('agree_termsofservice')
-                          )),
-                      },
-                    ]}
                   >
                     <span className="d-flex">
                       <Checkbox className="ant-custumcheck" />
