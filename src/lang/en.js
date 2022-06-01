@@ -562,4 +562,5 @@ export default {
 	personal_account:'Personal Account',
 	business_account:"Business Account",
 	empty: " ",
+	Recipient_Business_name: "Recipient Full Name/Business Name",
 };

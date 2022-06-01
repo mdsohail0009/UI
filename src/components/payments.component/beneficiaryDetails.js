@@ -175,13 +175,13 @@ class PaymentsView extends Component {
     handleUpload = ({ file }, type) => {
         this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, error: null })
         
-        if (type == "IDENTITYPROOF") {
+        if (type === "IDENTITYPROOF") {
             this.state.docIdentityProofObjs.shift()
             let obj = {
                 "documentId": "00000000-0000-0000-0000-000000000000",
                 "documentName": `${file.name}`,
                 "id": "00000000-0000-0000-0000-000000000000",
-                "isChecked": file.name == "" ? false : true,
+                "isChecked": file.name === "" ? false : true,
                 "remarks": `${file.size}`,
                 "state": null,
                 "status": false,
@@ -202,14 +202,14 @@ class PaymentsView extends Component {
             }
 
         }
-        else if (type == "ADDRESSPROOF") {
+        else if (type === "ADDRESSPROOF") {
             this.state.docAddressProofObjs.shift()
 
             let obj = {
                 "documentId": "00000000-0000-0000-0000-000000000000",
                 "documentName": `${file.name}`,
                 "id": "00000000-0000-0000-0000-000000000000",
-                "isChecked": file.name == "" ? false : true,
+                "isChecked": file.name === "" ? false : true,
                 "remarks": `${file.size}`,
                 "state": null,
                 "status": false,
@@ -230,14 +230,14 @@ class PaymentsView extends Component {
 
 
         }
-        else if (type == "BANKPROOF") {
+        else if (type === "BANKPROOF") {
             this.state.docBankProofObjs.shift()
 
             let obj = {
                 "documentId": "00000000-0000-0000-0000-000000000000",
                 "documentName": `${file.name}`,
                 "id": "00000000-0000-0000-0000-000000000000",
-                "isChecked": file.name == "" ? false : true,
+                "isChecked": file.name === "" ? false : true,
                 "remarks": `${file.size}`,
                 "state": null,
                 "status": false,
@@ -258,7 +258,7 @@ class PaymentsView extends Component {
         }
     }
     deleteDocument=(file,type)=>{
-        if(this.state.docIdentityProofObjs && type == "IDENTITYPROOF"){
+        if(this.state.docIdentityProofObjs && type === "IDENTITYPROOF"){
             let deleteIdentityList = this.state.docIdentityProofObjs.filter((file) => file.documentName !== file.documentName);
                 this.state.fileDetails.splice(0, 1);
             let obj=this.state.docIdentityProofObjs[0];
@@ -268,7 +268,7 @@ class PaymentsView extends Component {
             success("Document deleted sucessfully")
        
        
-        }else if (this.state.docAddressProofObjs && type == "ADDRESSPROOF") {
+        }else if (this.state.docAddressProofObjs && type === "ADDRESSPROOF") {
             let deleteAddressProofList = this.state.docAddressProofObjs.filter((file) => file.documentName !== file.documentName)
             this.state.fileDetails.splice(0, 1)
             let obj=this.state.docAddressProofObjs[0];
@@ -277,7 +277,7 @@ class PaymentsView extends Component {
             this.setState({ ...this.state, docAddressProofObjs: deleteAddressProofList });
             success("Document deleted sucessfully")
         }
-        else if (this.state.docBankProofObjs && type == "BANKPROOF") {
+        else if (this.state.docBankProofObjs && type === "BANKPROOF") {
             let deleteBankProofList = this.state.docBankProofObjs.filter((file) => file.documentName !== file.documentName)
             this.state.fileDetails.splice(0, 1)
             let obj=this.state.docBankProofObjs[0];
@@ -344,7 +344,7 @@ class PaymentsView extends Component {
             "info": "{\"Ip\":\"183.82.126.210\",\"Location\":{\"countryName\":\"India\",\"state\":\"Telangana\",\"city\":\"Hyderabad\",\"postal\":\"500034\",\"latitude\":17.41364,\"longitude\":78.44675},\"Browser\":\"Chrome\",\"DeviceType\":{\"name\":\"Desktop\",\"type\":\"desktop\",\"version\":\"Windows NT 10.0\"}}"
 
         }
-        if (Obj.id == "00000000-0000-0000-0000-000000000000") {
+        if (Obj.id === "00000000-0000-0000-0000-000000000000") {
             let response = await saveBeneficiary(Obj);
             if (response.ok) {
                 success("Case details saved successfully")
