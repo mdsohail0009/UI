@@ -62,8 +62,7 @@ const NewAddressBook = ({
 	const [file, setFile] = useState(null);
 	const [addressState, setAddressState] = useState("");
 	const [error,setError]=useState(null);
-	useEffect(() => {
-		if (addressBookReducer?.cryptoValues) {
+	useEffect(() => {if (addressBookReducer?.cryptoValues) {
 			form.setFieldsValue({
 				toCoin: addressBookReducer?.cryptoValues?.toCoin,
 				favouriteName: addressBookReducer?.cryptoValues.favouriteName,
@@ -72,10 +71,8 @@ const NewAddressBook = ({
 				remarks: addressBookReducer?.cryptoValues?.remarks,
 				isAgree: addressBookReducer?.cryptoValues?.isAgree,
 			});
-
 			setFile(addressBookReducer?.cryptoValues?.uploadedFile);
-		} else {
-			if (
+		} else {if (
 				addressBookReducer?.selectedRowData?.id !==
 					"00000000-0000-0000-0000-000000000000" &&
 				addressBookReducer?.selectedRowData?.id
@@ -87,8 +84,7 @@ const NewAddressBook = ({
 		form.setFieldsValue(addressBookReducer?.cryptoValues);
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 
-	useEffect(() => {
-		if (form.getFieldValue("toWalletAddress")) {
+	useEffect(() => {if (form.getFieldValue("toWalletAddress")) {
 			form
 				.validateFields(["toWalletAddress"])
 				.then((values) => console.log(values));

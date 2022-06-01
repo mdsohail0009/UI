@@ -88,8 +88,7 @@ const NewFiatAddress = (props) => {
 	const bankNameRegex = /^[A-Za-z0-9]+$/;
 	const IbanRegex = /^[A-Za-z0-9]{14,}$/;
 
-	useEffect(() => {
-		if (selectParty === true) {
+	useEffect(() => {if (selectParty === true) {
 			form.setFieldsValue({
 				addressType: "3rdparty", bankType: 'bank', accountNumber: "",
 				routingNumber: "",
@@ -99,8 +98,7 @@ const NewFiatAddress = (props) => {
 				state: "",
 				zipCode: "",
 			});
-		} else {
-			form.setFieldsValue({
+		} else {form.setFieldsValue({
 				addressType: "1stparty",
 				beneficiaryAccountName: getName(),
 				bankType: 'bank', accountNumber: "",
@@ -112,24 +110,19 @@ const NewFiatAddress = (props) => {
 				zipCode: "",
 			});
 		}
-		if (
-			props?.addressBookReducer?.selectedRowData?.id !==
+		if (props?.addressBookReducer?.selectedRowData?.id !==
 			"00000000-0000-0000-0000-000000000000" &&
 			props?.addressBookReducer?.selectedRowData?.id
-		) {
-			loadDataAddress();
-			setEdit(true);
-		}
+		) {loadDataAddress();
+			setEdit(true);}
 		setBankType('bank');
 		addressbkTrack();
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
-	const getName = () => {
-		return props?.userConfig.isBusiness
+	const getName = () => {return props?.userConfig.isBusiness
 			? props?.userConfig.businessName
 			: props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
 	};
-	const addressbkTrack = () => {
-		apiCalls.trackEvent({
+	const addressbkTrack = () => {apiCalls.trackEvent({
 			Type: "User",
 			Action: "Withdraw Fiat Address Book Details page view ",
 			Username: props?.userConfig?.id,
@@ -141,48 +134,37 @@ const NewFiatAddress = (props) => {
 			FullFeatureName: "Withdraw Fiat",
 		});
 	};
-	const loadDataAddress = async () => {
-		setIsLoading(true);
+	const loadDataAddress = async () => {setIsLoading(true);
 		let response = await getAddress(
 			props?.addressBookReducer?.selectedRowData?.id,
 			"fiat"
 		);
-		if (response.ok) {
-			if (response.data.addressType === "3rdparty") {
+		if (response.ok) {if (response.data.addressType === "3rdparty") {
 				setSelectParty(true);
-			} else {
-				setSelectParty(false);
+			} else {setSelectParty(false);
 			}
 			setFiatAddress(response.data);
 			setWithdrawValues(response.data);
 			setAddressState(response.data.addressState);
 			setBankType(response.data.bankType);
-			if (
-				props?.addressBookReducer?.selectedRowData &&
-				props?.buyInfo.memberFiat?.data
-			) {
+			if (props?.addressBookReducer?.selectedRowData &&
+				props?.buyInfo.memberFiat?.data) {
 				handleWalletSelection(
-					props?.addressBookReducer?.selectedRowData?.currency
-				);
-			}
+					props?.addressBookReducer?.selectedRowData?.currency);}
 			let fileInfo = response?.data?.documents?.details;
 			if (response?.data?.addressType === "1stparty" && fileInfo?.length !== 0) {
 				setDeclarationFile(response?.data?.documents?.details[0]);
 				form.setFieldsValue({ file3: true });
-			} else {
-				setIdentityFile(response?.data?.documents?.details[0]);
+			} else {setIdentityFile(response?.data?.documents?.details[0]);
 				setAdressFile(response?.data?.documents?.details[1]);
 				form.setFieldsValue({ file1: true });
 				form.setFieldsValue({ file2: true });
 			}
-
 			form.setFieldsValue({ ...response.data });
 			setIsLoading(false);
-		} else {
-			setErrorMsg(response.data || "Something went wrong please try again!");
+		} else {setErrorMsg(response.data || "Something went wrong please try again!");
 			setIsLoading(false);
-			useDivRef.current.scrollIntoView();
-		}
+			useDivRef.current.scrollIntoView();}
 	};
 	const handleWalletSelection = (walletId) => {
 		setFiatAddress({ toCoin: walletId });
@@ -195,18 +177,14 @@ const NewFiatAddress = (props) => {
 		const type = "fiat";
 		values["id"] = props?.addressBookReducer?.selectedRowData?.id;
 		values["membershipId"] = props?.userConfig?.id;
-
-		if (!selectParty) {
-			values["beneficiaryAccountName"] = props?.userConfig.isBusiness
+	if (!selectParty) {values["beneficiaryAccountName"] = props?.userConfig.isBusiness
 				? props?.userConfig.businessName
 				: props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
-		}
-		values["type"] = type;
+		}values["type"] = type;
 		values["info"] = JSON.stringify(props?.trackAuditLogData);
 		values["addressState"] = addressState;
 		let Id = "00000000-0000-0000-0000-000000000000";
-		let favaddrId = props?.addressBookReducer?.selectedRowData
-			? props?.addressBookReducer?.selectedRowData?.id
+		let favaddrId = props?.addressBookReducer?.selectedRowData? props?.addressBookReducer?.selectedRowData?.id
 			: Id;
 		let namecheck = values.favouriteName.trim();
 		let responsecheck = await favouriteNameCheck(
@@ -220,53 +198,40 @@ const NewFiatAddress = (props) => {
 			setBtnDisabled(false);
 			useDivRef.current.scrollIntoView();
 			return setErrorMsg("Address label already existed");
-		} else {
-			setBtnDisabled(true);
+		} else {setBtnDisabled(true);
 			let saveObj = Object.assign({}, values);
-
 			saveObj.accountNumber = apiCalls.encryptValue(
 				saveObj.accountNumber,
-				props?.userConfig?.sk
-			);
+				props?.userConfig?.sk);
 			saveObj.bankAddress = apiCalls.encryptValue(
 				saveObj.bankAddress,
-				props?.userConfig?.sk
-			);
+				props?.userConfig?.sk);
 			saveObj.bankName = apiCalls.encryptValue(
 				saveObj.bankName,
-				props?.userConfig?.sk
-			);
+				props?.userConfig?.sk);
 			saveObj.beneficiaryAccountAddress = apiCalls.encryptValue(
 				saveObj.beneficiaryAccountAddress,
-				props?.userConfig?.sk
-			);
+				props?.userConfig?.sk);
 			saveObj.beneficiaryAccountName = apiCalls.encryptValue(
 				saveObj.beneficiaryAccountName,
-				props?.userConfig?.sk
-			);
+				props?.userConfig?.sk);
 			saveObj.routingNumber = apiCalls.encryptValue(
 				saveObj.routingNumber,
-				props?.userConfig?.sk
-			);
+				props?.userConfig?.sk);
 			saveObj.toWalletAddress = apiCalls.encryptValue(
 				saveObj.toWalletAddress,
-				props?.userConfig?.sk
-			);
+				props?.userConfig?.sk);
 			saveObj.country = apiCalls.encryptValue(
 				saveObj.country,
-				props?.userConfig?.sk
-			);
+				props?.userConfig?.sk);
 			saveObj.state = apiCalls.encryptValue(
 				saveObj.state,
-				props?.userConfig?.sk
-			);
+				props?.userConfig?.sk);
 			saveObj.zipCode = apiCalls.encryptValue(
 				saveObj.zipCode,
-				props?.userConfig?.sk
-			);
+				props?.userConfig?.sk);
 			saveObj.documents = {
-				id: withdrawEdit
-					? withdrawEdit?.documents?.id
+				id: withdrawEdit? withdrawEdit?.documents?.id
 					: "00000000-0000-0000-0000-000000000000",
 				transactionId: null,
 				adminId: "00000000-0000-0000-0000-000000000000",
@@ -280,13 +245,11 @@ const NewFiatAddress = (props) => {
 				state: null,
 				details: [],
 			};
-			if (selectParty) {
-				if (identityFile) {
+			if (selectParty) {if (identityFile) {
 					saveObj.documents.details.push(identityFile);
 				}
 				if (addressFile) {
-					saveObj.documents.details.push(addressFile);
-				}
+					saveObj.documents.details.push(addressFile);}
 			} else {
 				if (declarationFile) {
 					saveObj.documents.details.push(declarationFile);
@@ -347,7 +310,6 @@ const NewFiatAddress = (props) => {
 			useDivRef.current.scrollIntoView();
 			setErrorMsg(null);
 			setErrorWarning("File don't allow double extension");
-
 		} else {
 			if (type === "IDENTITYPROOF") {
 				let fileType = {
@@ -365,9 +327,7 @@ const NewFiatAddress = (props) => {
 					return true;
 				} else {
 					setErrorMsg(null);
-					setErrorWarning(
-						"File is not allowed. You can upload jpg, png, jpeg and PDF files"
-					);
+					setErrorWarning("File is not allowed. You can upload jpg, png, jpeg and PDF files");
 					useDivRef.current.scrollIntoView();
 					setUploadIdentity(false);
 					return Upload.LIST_IGNORE;
@@ -388,9 +348,7 @@ const NewFiatAddress = (props) => {
 					return true;
 				} else {
 					setErrorMsg(null);
-					setErrorWarning(
-						"File is not allowed. You can upload jpg, png, jpeg and PDF files"
-					);
+					setErrorWarning("File is not allowed. You can upload jpg, png, jpeg and PDF files");
 					setUploadAddress(false);
 					return Upload.LIST_IGNORE;
 				}

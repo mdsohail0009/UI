@@ -143,6 +143,7 @@ const AddressFiatView = (props) => {
 												<div>
 													<label className="kpi-label">Bank Type</label>
 													<div className=" kpi-val">
+											
 															{iban}
 													</div>
 												</div>
@@ -150,6 +151,9 @@ const AddressFiatView = (props) => {
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">
+														{/* {fiatAddress?.bankType === "iban"
+															? "IBAN"
+															: "Bank Account Number"} */}
 															{iban1}
 													</label>
 													<div className=" kpi-val">
