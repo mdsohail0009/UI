@@ -6,7 +6,6 @@ import Translate from 'react-translate-component';
 import QRCodeComponent from '../qr.code.component';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Loader from '../../Shared/loader';
-import { appInsights } from "../../Shared/appinsights";
 import apicalls from '../../api/apiCalls';
 import {
     EmailShareButton, EmailIcon,

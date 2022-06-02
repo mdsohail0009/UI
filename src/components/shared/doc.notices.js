@@ -8,7 +8,7 @@ const DocNotices = (props) => {
 
     useEffect(() => {
         props.dispatch(fetchNotices(props.userProfile.id))
-    }, [])
+    }, []);// eslint-disable-line react-hooks/exhaustive-deps
     return <React.Fragment style={{ top: 10 }}>
         <div className="main-container">
             {props?.dashboard?.notices?.data.length !== 0 && <Alert style={{ padding: 16 }} type="info" message={"Please submit the listed documents to proceed"} showIcon />}

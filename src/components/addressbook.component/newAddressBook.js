@@ -190,7 +190,6 @@ const NewAddressBook = ({
 				setError("")
 			} else {
 				setError(response.data||"Something went wrong please try again!")
-				setErrorMsg(response.data);
 				setBtnDisabled(false);
 				setIsLoading(false);
 			}
