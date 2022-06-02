@@ -6,6 +6,7 @@ export const ApiControllers = {
     member:"Member/",
     swap:"Swap/",
     depositWithdraw:"DepositeWithdraw/",
+    deposit:"Deposit/",
     admin:"Admin/",
     buy:"Buy/",
     sell:"Sell/",
