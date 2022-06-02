@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Typography, Row, Col, Spin, Radio, Image } from "antd";
 import { Link, withRouter } from "react-router-dom";
 import { getcoinDetails, getCoinChatData } from './api'
-import LineChart from './line.graph.component';
+import LineChart from './lineChart';
 import BuySell from '../buy.component';
 import SendReceive from '../send.component'
 import { fetchSelectedCoinDetails, setExchangeValue, setCoin } from '../../reducers/buyReducer';
@@ -14,7 +14,6 @@ import apiCalls from '../../api/apiCalls';
 import { fetchMarketCoinData } from '../../reducers/dashboardReducer'
 import { fetchWithDrawWallets, handleSendFetch, setSelectedWithDrawWallet, setSubTitle, setWithdrawfiatenaable, setWithdrawfiat } from "../../reducers/sendreceiveReducer";
 import NumberFormat from "react-number-format";
-import { coinSubject } from '../../utils/pubsub'
 class CoinView extends React.Component {
     refreshSubscribe;
    state = {
