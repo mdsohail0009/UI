@@ -311,8 +311,7 @@ const NewFiatAddress = (props) => {
 			setErrorMsg(null);
 			setErrorWarning("File don't allow double extension");
 		} else {
-			if (type === "IDENTITYPROOF") {
-				let fileType = {
+			if (type === "IDENTITYPROOF") {let fileType = {
 					"image/png": true,
 					"image/jpg": true,
 					"image/jpeg": true,
@@ -325,13 +324,11 @@ const NewFiatAddress = (props) => {
 				if (fileType[file.type]) {
 					setUploadIdentity(true);
 					return true;
-				} else {
-					setErrorMsg(null);
+				} else {setErrorMsg(null);
 					setErrorWarning("File is not allowed. You can upload jpg, png, jpeg and PDF files");
 					useDivRef.current.scrollIntoView();
 					setUploadIdentity(false);
-					return Upload.LIST_IGNORE;
-				}
+					return Upload.LIST_IGNORE;}
 			} else if (type === "ADDRESSPROOF") {
 				let fileType = {
 					"image/png": true,
@@ -342,8 +339,7 @@ const NewFiatAddress = (props) => {
 					"image/JPEG": true,
 					"application/pdf": true,
 					"application/PDF": true,
-				};
-				if (fileType[file.type]) {
+				};if (fileType[file.type]) {
 					setUploadAddress(true);
 					return true;
 				} else {
@@ -728,8 +724,6 @@ const NewFiatAddress = (props) => {
 									className="custom-forminput custom-label mb-0"
 									name="accountNumber"
 									label={iban}
-
-
 									required
 									rules={[
 										{
@@ -745,7 +739,6 @@ const NewFiatAddress = (props) => {
 										className="cust-input"
 										maxLength={100}
 										placeholder={iban}
-
 										onBlur={ibanBlur}
 
 									/>
@@ -775,7 +768,6 @@ const NewFiatAddress = (props) => {
 									<Input
 										className="cust-input"
 										disabled={disable}
-
 										maxLength={100}
 										placeholder={apiCalls.convertLocalLang(
 											"BIC_SWIFT_routing_number"
@@ -807,7 +799,6 @@ const NewFiatAddress = (props) => {
 									<Input
 										className="cust-input"
 										disabled={disable}
-
 										maxLength={200}
 										placeholder={apiCalls.convertLocalLang("Bank_name")}
 									/>
@@ -837,7 +828,6 @@ const NewFiatAddress = (props) => {
 									<Input
 										className="cust-input"
 										disabled={disable}
-
 										maxLength={200}
 										placeholder={apiCalls.convertLocalLang("Bank_address1")}
 									/>

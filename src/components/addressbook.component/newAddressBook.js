@@ -197,11 +197,11 @@ const NewAddressBook = ({
 	);
 
 	const validateAddressType = (_, value) => {
+		
 		if (value) {
 			let address = value;
-			let coinType = form.getFieldValue("toCoin");
-			if (coinType) {
-				const validAddress = WAValidator.validate(address, coinType, "both");
+			if (form.getFieldValue("toCoin")) {
+				const validAddress = WAValidator.validate(address, form.getFieldValue("toCoin"), "both");
 				if (!validAddress) {
 					return Promise.reject(
 						"Address is not Valid, please enter a valid address according to the coin selected"
@@ -297,9 +297,7 @@ const NewAddressBook = ({
 							label={<Translate content="address" component={Form.label} />}
 							required
 							rules={[
-								// {
-								// 	validator: validateContentRule,
-								// },
+								
 								{
 									validator: validateAddressType,
 								},
@@ -307,7 +305,6 @@ const NewAddressBook = ({
 							<Input
 								className="cust-input mb-0"
 								maxLength="100"
-								// onBlur={(e) => handleAddressValidation(e)}
 								placeholder={apiCalls.convertLocalLang("address")}
 							/>
 						</Form.Item>
@@ -327,7 +324,6 @@ const NewAddressBook = ({
 							<Select
 								className="cust-input mb-0"
 								placeholder="Select Address Type"
-								//onChange={(e) => this.handleCurrencyChange(e)}
 								dropdownClassName="select-drpdwn"
 								bordered={false}
 								showArrow={true}>
