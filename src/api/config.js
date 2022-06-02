@@ -16,5 +16,6 @@ export const ApiControllers = {
     notifications:"Notifications/",
     documents:"Documents/",
     dashboard:"Dashboard/" ,
-    massPayment:"MassPayment/"
+    massPayment:"MassPayment/",
+    common:"Common/"
 }
