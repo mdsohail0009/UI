@@ -1,6 +1,5 @@
 import React, {useEffect, useState } from 'react';
 import { Row, Col, Typography,Button } from 'antd';
-import Loader from '../../Shared/loader';
 import {getAddress,} from "./api";
 import { connect } from 'react-redux';
 
@@ -18,14 +17,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
 	);
 };
 const AddressFiatView=(props)=> {
-    const [loading, setIsLoading] = useState(false);
     const [fiatAddress, setFiatAddress] = useState({});
-    const [addressFile, setAdressFile] = useState(null);
-    const[identityFile,setIdentityFile] = useState(null);
-    const[declarationFile,setDeclarationFile] = useState(null)
-    const [addressState, setAddressState] = useState(null);
-    const[selectParty,setSelectParty] = useState(props?.checkThirdParty);
-    const[withdrawEdit,setWithdrawValues] = useState();
 
   useEffect(() => {
 		loadDataAddress();
@@ -68,7 +60,7 @@ const backToAddressBook = () => {
 
 
     return (<>
-      {/* {loading && <Loader />} */}
+      
       <Title className="page-title">BENEFICIARY BANK DETAILS VIEW</Title>
       {fiatAddress && <Row gutter={8}>
         <Col xl={24} xxl={24} className="bank-view">

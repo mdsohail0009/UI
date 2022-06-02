@@ -51,7 +51,6 @@ class WithdrawSummary extends Component {
 		otpCode: "",
 		authCode: "",
 		verifyData: "",
-		minutes: 2,
 		seconds: 30,
 		seconds2: 30,
 		inValidData: false,
@@ -716,7 +715,8 @@ class WithdrawSummary extends Component {
 												event.key == "Backspace" ||
 												event.key == "Delete"
 											) {
-											} else {
+											} 
+											else {
 												event.preventDefault();
 											}
 										}}
