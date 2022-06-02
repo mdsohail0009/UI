@@ -62,7 +62,8 @@ const NewAddressBook = ({
 	const [file, setFile] = useState(null);
 	const [addressState, setAddressState] = useState("");
 	const [error,setError]=useState(null);
-	useEffect(() => {if (addressBookReducer?.cryptoValues) {
+	useEffect(() => {
+		if (addressBookReducer?.cryptoValues) {
 			form.setFieldsValue({
 				toCoin: addressBookReducer?.cryptoValues?.toCoin,
 				favouriteName: addressBookReducer?.cryptoValues.favouriteName,
@@ -71,8 +72,10 @@ const NewAddressBook = ({
 				remarks: addressBookReducer?.cryptoValues?.remarks,
 				isAgree: addressBookReducer?.cryptoValues?.isAgree,
 			});
+
 			setFile(addressBookReducer?.cryptoValues?.uploadedFile);
-		} else {if (
+		} else {
+			if (
 				addressBookReducer?.selectedRowData?.id !==
 					"00000000-0000-0000-0000-000000000000" &&
 				addressBookReducer?.selectedRowData?.id
@@ -84,7 +87,8 @@ const NewAddressBook = ({
 		form.setFieldsValue(addressBookReducer?.cryptoValues);
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 
-	useEffect(() => {if (form.getFieldValue("toWalletAddress")) {
+	useEffect(() => {
+		if (form.getFieldValue("toWalletAddress")) {
 			form
 				.validateFields(["toWalletAddress"])
 				.then((values) => console.log(values));
@@ -149,7 +153,11 @@ const NewAddressBook = ({
 			"crypto",
 			favaddrId
 		);
-		if (responsecheck.data !== null) {
+		if (!values.isAgree) {
+			setBtnDisabled(false);
+			useDivRef.current.scrollIntoView();
+			setErrorMsg(apiCalls.convertLocalLang("agree_termsofservice"))
+		} else if (responsecheck.data !== null) {
 			setBtnDisabled(false);
 			setIsLoading(false);
 			useDivRef.current.scrollIntoView();
@@ -182,7 +190,6 @@ const NewAddressBook = ({
 				setError("")
 			} else {
 				setError(response.data||"Something went wrong please try again!")
-				setErrorMsg(response.data);
 				setBtnDisabled(false);
 				setIsLoading(false);
 			}
@@ -197,11 +204,11 @@ const NewAddressBook = ({
 	);
 
 	const validateAddressType = (_, value) => {
-		
 		if (value) {
 			let address = value;
-			if (form.getFieldValue("toCoin")) {
-				const validAddress = WAValidator.validate(address, form.getFieldValue("toCoin"), "both");
+			let coinType = form.getFieldValue("toCoin");
+			if (coinType) {
+				const validAddress = WAValidator.validate(address, coinType, "both");
 				if (!validAddress) {
 					return Promise.reject(
 						"Address is not Valid, please enter a valid address according to the coin selected"
@@ -297,7 +304,6 @@ const NewAddressBook = ({
 							label={<Translate content="address" component={Form.label} />}
 							required
 							rules={[
-								
 								{
 									validator: validateAddressType,
 								},
@@ -337,18 +343,7 @@ const NewAddressBook = ({
 								className="custom-forminput mt-36 agree"
 								name="isAgree"
 								valuePropName="checked"
-								rules={[
-									{
-										validator: (_, value) =>
-											value
-												? Promise.resolve()
-												: Promise.reject(
-														new Error(
-															apiCalls.convertLocalLang("agree_termsofservice")
-														)
-												  ),
-									},
-								]}>
+								>
 								<Checkbox className="ant-custumcheck" />
 							</Form.Item>
 							<Translate
