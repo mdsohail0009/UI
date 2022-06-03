@@ -11,7 +11,7 @@ export const withdrawRecepientNamecheck = (memberid, name) => {
 }
 export const getCountryStateLu = () => {
 
-    return apiClient.get(ApiControllers.master + "ControlCodes?codeCategory=country");
+    return apiClient.get(ApiControllers.common + "ControlCodes?codeCategory=country");
 }
 export const getStateLookup = (country) => {
 
