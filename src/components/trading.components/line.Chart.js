@@ -4,7 +4,7 @@ import HighchartsReact from 'highcharts-react-official';
 const LineChart = ({ data, showPnl, showBtc }) => {
     const dateConverter = (d) => {
         d = d.split("/")
-        d[1] = d[1].length == 1 ? d[1] = '0' + d[1] : d[1]
+        d[1] = d[1].length == 1 ? d[1] === '0' + d[1] : d[1]
         return `${d[2]}-${d[0]}-${d[1]}`
     }
     let dateData = [];
