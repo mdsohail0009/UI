@@ -64,10 +64,21 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       } else {
         setBtnDisabled(false);
         setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
-        passwordResponce(true, result.data || 'Something went wrong please try again!', false);
+        passwordResponce(true, isErrorDispaly(result), false);
       }
     }
   }
+  const isErrorDispaly = (objValue) => {
+		if (objValue.data && typeof objValue.data === "string") {
+		  return objValue.data;
+		} else if (objValue.originalError &&typeof objValue.originalError.message === "string"
+		) {
+		  return objValue.originalError.message;
+		} else {
+		  return "Something went wrong please try again!";
+		}
+	  };
+
   const passwordResponce = (isError, msg, isloading) => {
     setChangePasswordResponse({ error: isError, messsage: msg, isLoading: isloading });
   }
