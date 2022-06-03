@@ -12,16 +12,15 @@ const CryptoList = forwardRef(({ coinList, isLoading, onCoinSelected, coinType, 
     const { Search } = Input;
     useEffect(() => {
         setCoinListData(coinList)
-    }, [coinList])
+    }, [coinList])// eslint-disable-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (selectedCoin) {
             setselList(selectedCoin)
-            // selectList(selectedCoin)
             if (!onReturnCoin) {
                 selectList(selectedCoin)
             }
         }
-    }, [selectedCoin]);
+    }, [selectedCoin]);// eslint-disable-line react-hooks/exhaustive-deps
     useImperativeHandle(ref, () => ({
         clearSearch() {
             setSearchVal("");
@@ -49,7 +48,6 @@ const CryptoList = forwardRef(({ coinList, isLoading, onCoinSelected, coinType, 
             className="crypto-list auto-scroll wallet-list c-pointer"
             loading={isLoading ? isLoading : false}
            locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={
-            //    apiCalls.convertLocalLang('No_data')
             <Translate content="No_data"  />
             } /> }}
             renderItem={item => (

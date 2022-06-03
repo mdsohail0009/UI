@@ -436,6 +436,7 @@ class AddressBook extends Component {
 		}
 	};
 	editAddressBook = () => {
+		debugger
 		this.setState({...this.state, errorWorning: null,selection: [] });
 		let obj = this.state.selectedObj;
 		if (!this.state.isCheck) {
@@ -455,7 +456,7 @@ class AddressBook extends Component {
 		} else {
 			obj.walletCode = obj.coin;
 			this.props.rowSelectedData(obj);
-			if (obj.isPrimary === false) {
+			if (obj.isPrimary) {
 				this.props.history.push(`/payments/newbeneficiary/${obj.id}`);
 			} else {
 				if (this.state.cryptoFiat) {

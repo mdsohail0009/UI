@@ -363,7 +363,7 @@ class AuditLogs extends Component {
           className="side-drawer"
           destoryOnClose={true}
         >
-          {(isLoading && logRowData?.browser == null || logRowData?.location == null || logRowData?.ip == null || 
+          {(isLoading && (logRowData?.browser == null) || (logRowData?.location == null) || (logRowData?.ip == null )|| 
             logRowData?.deviceType == null) ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />
             : <><div className="coin-info">
             <Text>City</Text>

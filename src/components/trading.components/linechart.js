@@ -1,7 +1,7 @@
 import { createChart, ColorType, PriceScaleMode } from "lightweight-charts";
 import React, { useEffect, useState, useRef } from 'react';
 
-const LineChart = ({ data, lineColor, id, height }) => {
+const LineChart = ({ data }) => {
     const lineGraphRef = useRef();
     const [, setChart] = useState(null)
     useEffect(() => {
@@ -97,7 +97,7 @@ const LineChart = ({ data, lineColor, id, height }) => {
         });
         _chart.timeScale().fitContent();
         setChart(_chart);
-    }, [data]);
+    }, [data]);// eslint-disable-line react-hooks/exhaustive-deps
     return <>
         <div id="graph-container" ref={lineGraphRef}></div>
     </>
