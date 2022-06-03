@@ -256,11 +256,23 @@ const WithdrawalFiatSummary = ({
 			setIsLoding(false);
 			changeStep("step7");
 		} else {
-			setMsg(withdrawal.data || "Something went wrong please try again!");
+			setMsg(isErrorDispaly(withdrawal));
 			setIsLoding(false);
 			setDisableSave(false);
 		}
 	};
+	const isErrorDispaly = (objValue) => {
+		if (objValue.data && typeof objValue.data === "string") {
+		  return objValue.data;
+		} else if (
+		  objValue.originalError &&
+		  typeof objValue.originalError.message === "string"
+		) {
+		  return objValue.originalError.message;
+		} else {
+		  return "Something went wrong please try again!";
+		}
+	  };
 	const fullNumber = userConfig.phoneNumber;
 	const last4Digits = fullNumber.slice(-4);
 	const maskedNumber = last4Digits.padStart(fullNumber.length, "*");
