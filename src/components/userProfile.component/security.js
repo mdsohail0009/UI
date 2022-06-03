@@ -39,9 +39,21 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
       form.setFieldsValue(response.data);
     }
     else{
-      return setError( response.data || "Something went wrong please try again!");
+      return setError(isErrorDispaly(response));
     }
   }
+  const isErrorDispaly = (objValue) => {
+    if (objValue.data && typeof objValue.data === "string") {
+      return objValue.data;
+    } else if (
+      objValue.originalError &&
+      typeof objValue.originalError.message === "string"
+    ) {
+      return objValue.originalError.message;
+    } else {
+      return "Something went wrong please try again!";
+    }
+  };
   const securityTrack = () => {
     apiCalls.trackEvent({
       Type: "User",
@@ -106,12 +118,12 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
 
         } else if(email||phone||factor===false){
           useDivRef.current.scrollIntoView(0,0);
-          setError(response.data || "Something went wrong please try again!");
+          setError(isErrorDispaly(response));
            setIsLoading(false)
            setBtnDisabled(false)
         }
         else {
-          setError(response.data || "Something went wrong please try again!")
+          setError(isErrorDispaly(response))
           setIsLoading(false)
           setBtnDisabled(false)
         }
