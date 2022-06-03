@@ -18,7 +18,7 @@ const getBankData = (addressId) => {
     return apiClient.get(ApiControllers.massPayment + `BankDetails/${addressId}`);
 }
 const saveBeneficiary = (obj) => {
-    return apiClient.post(ApiControllers.depositWithdraw + "Favourite", obj);
+    return apiClient.post(ApiControllers.withdraw + "Favourite", obj);
 }
 const getFavourite = (id) => {
     return apiClient.get(ApiControllers.depositWithdraw + `Withdraw/Favourite/${id}`);

@@ -245,6 +245,7 @@ const FaitWithdrawal = ({
     if (isChange) form.setFieldsValue({ state: null });
   };
   const savewithdrawal = async (values) => {
+
     setBtnDisabled(true)
     dispatch(setWFTotalValue(values.totalValue));
     if(!values.isAccept){
@@ -294,7 +295,7 @@ const FaitWithdrawal = ({
     values["memberWalletId"] = selectedWallet.id;
     values["beneficiaryAccountName"] = userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName;
     values["favouriteName"] =
-      values.favouriteName || addressDetails.favouriteName;
+      values.favouriteName || addressDetails.favouriteName || addressInfo.favouriteName;
     values["comission"] = "0.0";
     values["bankName"] = addressInfo.bankName;
     values["accountNumber"] = addressInfo.accountNumber;
