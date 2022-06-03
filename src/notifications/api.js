@@ -1,10 +1,10 @@
 import { apiClient } from '../api';
 import { ApiControllers } from '../api/config';
 const getNotifications = (memberId) => {
-    return apiClient.get(ApiControllers.notifications + `${memberId}`)
+    return apiClient.get(ApiControllers.common + `${memberId}`)
 }
 const readNotification = (id, isRead) => {
-    return apiClient.put(ApiControllers.notifications + `UpdateReadMsg/${id}`)
+    return apiClient.put(ApiControllers.common + `UpdateReadMsg/${id}`)
 }
 const deleteToken = (obj) => {
     return apiClient.post(ApiControllers.accounts + `Tokens`, obj)
