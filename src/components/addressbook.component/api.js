@@ -3,23 +3,23 @@ import { ApiControllers } from "../../api/config";
 
 const favouriteFiatAddress = (member_id, type, coin_code) => {
 	return apiClient.get(
-		ApiControllers.depositWithdraw +
+		ApiControllers.addressbook +
 			`Favourite/${member_id}/${type}/${coin_code}`
 	);
 };
 const detailsAddress = (id) => {
 	return apiClient.get(
-		ApiControllers.depositWithdraw + `Withdraw/Favourite/${id}`
+		ApiControllers.addressbook + `Withdraw/Favourite/${id}`
 	);
 };
 const favouriteNameCheck = (member_id, name, type, favaddrId) => {
 	return apiClient.get(
-		ApiControllers.depositWithdraw +
+		ApiControllers.withdraw +
 			`Favourite/${favaddrId}/${member_id}/${name}/${type}`
 	);
 };
 const saveAddress = (obj) => {
-	return apiClient.post(ApiControllers.depositWithdraw + `Favourite`, obj);
+	return apiClient.post(ApiControllers.withdraw + `Favourite`, obj);
 };
 const getCoinList = (type) => {
 	return apiClient.get(ApiControllers.markets + `Coins/${type}`);
@@ -34,7 +34,7 @@ const activeInactive = (obj) => {
 };
 const getAddress = (addreddId) => {
 	return apiClient.get(
-		ApiControllers.depositWithdraw + `Withdraw/Favourite/${addreddId}`
+		ApiControllers.withdraw + `Withdraw/Favourite/${addreddId}`
 	);
 };
 const getFileURL = (obj) => {
