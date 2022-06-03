@@ -177,11 +177,23 @@ const NewFiatAddress = (props) => {
 			form.setFieldsValue({ ...response.data });
 			setIsLoading(false);
 		} else {
-			setErrorMsg(response.data || "Something went wrong please try again!");
+			setErrorMsg(isErrorDispaly(response));
 			setIsLoading(false);
 			useDivRef.current.scrollIntoView();
 		}
 	};
+	const isErrorDispaly = (objValue) => {
+		if (objValue.data && typeof objValue.data === "string") {
+		  return objValue.data;
+		} else if (
+		  objValue.originalError &&
+		  typeof objValue.originalError.message === "string"
+		) {
+		  return objValue.originalError.message;
+		} else {
+		  return "Something went wrong please try again!";
+		}
+	  };
 	const handleWalletSelection = (walletId) => {
 		setFiatAddress({ toCoin: walletId });
 		form.setFieldsValue({ toCoin: walletId });
@@ -312,7 +324,7 @@ const NewFiatAddress = (props) => {
 				props?.dispatch(setHeaderTab(""));
 				props?.props?.history?.push("/userprofile");
 			} else {
-				setErrorMsg(response.data || "Something went wrong please try again!");
+				setErrorMsg(isErrorDispaly(response));
 				setIsLoading(false);
 				setBtnDisabled(false);
 				useDivRef.current.scrollIntoView();

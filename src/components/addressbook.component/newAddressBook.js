@@ -128,9 +128,22 @@ const NewAddressBook = ({
 		}
 		else{
 			setIsLoading(false);
-			setErrorMsg("Something went wrong please try again!")	
+			setErrorMsg(isErrorDispaly(response));
+
 		}
 	};
+	const isErrorDispaly = (objValue) => {
+		if (objValue.data && typeof objValue.data === "string") {
+		  return objValue.data;
+		} else if (
+		  objValue.originalError &&
+		  typeof objValue.originalError.message === "string"
+		) {
+		  return objValue.originalError.message;
+		} else {
+		  return "Something went wrong please try again!";
+		}
+	  };
 	const saveAddressBook = async (values) => {
 		setIsLoading(false);
 		setBtnDisabled(true);
@@ -189,7 +202,7 @@ const NewAddressBook = ({
 				setIsLoading(false);
 				setError("")
 			} else {
-				setError(response.data||"Something went wrong please try again!")
+				setError(isErrorDispaly(response));
 				setBtnDisabled(false);
 				setIsLoading(false);
 			}

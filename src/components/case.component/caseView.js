@@ -240,6 +240,18 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state,});
         }
     }
+     isErrorDispaly = (objValue) => {
+		if (objValue.data && typeof objValue.data === "string") {
+		  return objValue.data;
+		} else if (
+		  objValue.originalError &&
+		  typeof objValue.originalError.message === "string"
+		) {
+		  return objValue.originalError.message;
+		} else {
+		  return "Something went wrong please try again!";
+		}
+	  };
     beforeUpload = (file) => {
         let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
         if (fileType[file.type]) {
@@ -302,7 +314,7 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, caseData: caseRes.data, commonModel: caseRes.data.commonModel, loading: false });
             this.getDocument(caseRes.data?.documents?.id);
         } else {
-            this.setState({ ...this.state, loading: false ,errorMessage:caseRes.data ||"Something went wrong please try again!"});
+            this.setState({ ...this.state, loading: false ,errorMessage:isErrorDispaly(caseRes) });
         }
     }
     render() {
