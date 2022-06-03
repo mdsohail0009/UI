@@ -259,7 +259,7 @@ class PaymentsView extends Component {
     }
     deleteDocument=(file,type)=>{
         if(this.state.docIdentityProofObjs && type === "IDENTITYPROOF"){
-            let deleteIdentityList = this.state.docIdentityProofObjs.filter((file) => file.documentName !== file.documentName);
+            let deleteIdentityList = this.state.docIdentityProofObjs.filter((file1) => file1.documentName !== file.documentName);
                 this.state.fileDetails.splice(0, 1);
             let obj=this.state.docIdentityProofObjs[0];
             obj.isChecked=false
@@ -269,7 +269,7 @@ class PaymentsView extends Component {
        
        
         }else if (this.state.docAddressProofObjs && type === "ADDRESSPROOF") {
-            let deleteAddressProofList = this.state.docAddressProofObjs.filter((file) => file.documentName !== file.documentName)
+            let deleteAddressProofList = this.state.docAddressProofObjs.filter((file1) => file1.documentName !== file.documentName)
             this.state.fileDetails.splice(0, 1)
             let obj=this.state.docAddressProofObjs[0];
             obj.isChecked=false
@@ -278,7 +278,7 @@ class PaymentsView extends Component {
             success("Document deleted sucessfully")
         }
         else if (this.state.docBankProofObjs && type === "BANKPROOF") {
-            let deleteBankProofList = this.state.docBankProofObjs.filter((file) => file.documentName !== file.documentName)
+            let deleteBankProofList = this.state.docBankProofObjs.filter((file1) => file1.documentName !== file.documentName)
             this.state.fileDetails.splice(0, 1)
             let obj=this.state.docBankProofObjs[0];
             obj.isChecked=false
