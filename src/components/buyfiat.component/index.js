@@ -16,7 +16,6 @@ import WithdrawalSummary from '../withDraw.component/withdrawalSummary';
 import WithdrawalLive from '../withDraw.component/withdrawLive';
 import WithdrawalSuccess from '../withDraw.component/withdrwSuccess';
 import ConfirmMsg from './confirmMsg';
-import WithdrawFaitSummary from '../../reducers/buyFiatReducer'
 
 class MassPayment extends Component {
     state = {
@@ -28,10 +27,9 @@ class MassPayment extends Component {
         if (this.props.onClose) {
             this.props.onClose();
         }
-        if (this.child){
-            this.child.clearfiatValues()}
+        if (this.child)
+            this.child.clearfiatValues();
             this.props.dispatch(setClearAmount())
-        
 
     }
     onHhandleClick = () => {
@@ -59,7 +57,7 @@ withdrawFiatSummaryBack = () => {
             withdrwalfiatsummary: < WithdrawalSummary />,
             withdrwlive: < WithdrawalLive />,
             withdrwsuccess: < WithdrawalSuccess />,
-            withdrawfaitsummary:<WithdrawFaitSummary />
+            withdrawfaitsummary:<WithdrawalSummary />
         }
         return stepcodes[config[this.props.buyFiat.stepcode]]
     }
