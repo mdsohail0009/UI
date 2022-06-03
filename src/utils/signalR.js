@@ -22,7 +22,6 @@ async function start(id) {
         await connection.start();
     } catch (err) {
         const { userConfig: { userProfileInfo } } = store.getState();
-        //openNotification("Connection failed to hub", err.message || err.data);
         setTimeout(() => { start(userProfileInfo?.id) }, 10000);
     }
     connection.onclose(async () => {

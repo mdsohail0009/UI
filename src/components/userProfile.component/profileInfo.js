@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Typography, Button, Upload, notification, message, Tooltip, Spin,Alert } from "antd";
+import { Typography, Button, Upload, message, Tooltip, Spin,Alert } from "antd";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 import { uploadClient } from "../../api";
@@ -29,7 +29,7 @@ class ProfileInfo extends Component {
             UserId: this.props.userConfig?.userId
           };
           
-          this.saveImage(Obj, res);
+          this.saveImage(Obj);
         } else {
           this.setState({ ...this.state, Loader: false ,errorMessage:"Something went wrong please try again!" });
         }
@@ -73,7 +73,7 @@ class ProfileInfo extends Component {
       
     });
   };
-  saveImage = async (Obj, res) => {
+  saveImage = async (Obj) => {
     this.setState({ ...this.state, Loader: true });
     Obj.info = JSON.stringify(this.props.trackAuditLogData);
     let res1 = await ProfileImageSave(Obj);

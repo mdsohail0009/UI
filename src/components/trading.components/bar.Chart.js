@@ -32,7 +32,7 @@ const BarChart = ({ data }) => {
             labels: {
                 autoRotation: [0, -90],
                 step: 6,
-                formatter: function (data) {
+                formatter: function () {
                     return this.value
                 }
             },
