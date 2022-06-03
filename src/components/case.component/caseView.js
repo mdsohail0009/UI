@@ -314,7 +314,7 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, caseData: caseRes.data, commonModel: caseRes.data.commonModel, loading: false });
             this.getDocument(caseRes.data?.documents?.id);
         } else {
-            this.setState({ ...this.state, loading: false ,errorMessage:isErrorDispaly(caseRes) });
+            this.setState({ ...this.state, loading: false ,errorMessage:this.isErrorDispaly(caseRes) });
         }
     }
     render() {
