@@ -468,7 +468,7 @@ class WithdrawSummary extends Component {
 					 else {
 					  this.setState({
 					    ...this.state,
-					    errorMsg: withdrawal.data || "Something went wrong please try again!",btnLoading:false
+					    errorMsg: this.isErrorDispaly(withdrawal),btnLoading:false
 					  });
 					}
 				} else {
@@ -484,6 +484,16 @@ class WithdrawSummary extends Component {
 				});
 			}
 	};
+	isErrorDispaly = (objValue) => {
+		if (objValue.data && typeof objValue.data === "string") {
+		  return objValue.data;
+		} else if (objValue.originalError &&typeof objValue.originalError.message === "string"
+		) {
+		  return objValue.originalError.message;
+		} else {
+		  return "Something went wrong please try again!";
+		}
+	  };
 
 	fullNumber = this.props.userProfile?.phoneNumber;
 	last4Digits = this.fullNumber.slice(-4);

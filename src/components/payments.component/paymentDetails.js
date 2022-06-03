@@ -182,7 +182,7 @@ class PaymentDetails extends Component {
             this.props.history.push("/payments");
           } else {
             message.destroy();
-            this.setState({ ...this.state,btnDisabled: false ,loading:false,errorWarning:null, errorMessage: response.data || "Something went wrong please try again!" })
+            this.setState({ ...this.state,btnDisabled: false ,loading:false,errorWarning:null, errorMessage: this.isErrorDispaly(response) })
           }
         }
         else {
@@ -204,7 +204,7 @@ class PaymentDetails extends Component {
             this.props.history.push("/payments");
           } else {
             message.destroy();
-            this.setState({ ...this.state,btnDisabled: false,loading:false,errorWarning:null,errorMessage:"please enter amount" });
+            this.setState({ ...this.state,btnDisabled: false,loading:false,errorWarning:null,errorMessage:this.isErrorDispaly(response) });
           }
         }
       }
@@ -212,7 +212,18 @@ class PaymentDetails extends Component {
       this.setState({ ...this.state,errorWarning:null, errorMessage: "Please select currency" });
     }
   };
-
+  isErrorDispaly = (objValue) => {
+    if (objValue.data && typeof objValue.data === "string") {
+      return objValue.data;
+    } else if (
+      objValue.originalError &&
+      typeof objValue.originalError.message === "string"
+    ) {
+      return objValue.originalError.message;
+    } else {
+      return "Something went wrong please try again!";
+    }
+  };
   deleteDetials = async (id,paymentsData) => {
     
     let data = paymentsData;

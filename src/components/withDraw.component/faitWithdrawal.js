@@ -311,10 +311,22 @@ const FaitWithdrawal = ({
     } else {
       setBtnDisabled(false);
       setLoading(false);
-      setErrorMsg(response.data ||  "Something went wrong please try again!");
+      setErrorMsg(isErrorDispaly(response));
     }
     setLoading(false);
   }
+  };
+ const isErrorDispaly = (objValue) => {
+    if (objValue.data && typeof objValue.data === "string") {
+      return objValue.data;
+    } else if (
+      objValue.originalError &&
+      typeof objValue.originalError.message === "string"
+    ) {
+      return objValue.originalError.message;
+    } else {
+      return "Something went wrong please try again!";
+    }
   };
   const getIbanData = async (val) => {
     if (val && val.length > 14) {
