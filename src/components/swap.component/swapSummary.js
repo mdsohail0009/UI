@@ -64,7 +64,6 @@ class SwapSummary extends Component {
     confirmswapvalidation() {
         if (!this.state.agreeValue) {
 
-            // this.setState({ ...this.state, errorMessage: 'Please agree terms of service' })
             this.setState({ ...this.state, errorMessage: apiCalls.convertLocalLang('agree_termsofservice') })
         }
         else if (!this.props.swapStore.coinDetailData.coinBalance) {
@@ -147,7 +146,7 @@ class SwapSummary extends Component {
         )
     }
 }
-const connectStateToProps = ({ swapStore, oidc, userConfig }) => {
+const connectStateToProps = ({ swapStore, userConfig }) => {
     return { swapStore, userProfile: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
