@@ -148,7 +148,7 @@ class RequestedDocs extends Component {
         };
         item.path = itemPath();
         item.status = "Submitted";
-        item.repliedBy = `${(this.props.userProfileInfo?.isBusiness==true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
+        item.repliedBy = `${(this.props.userProfileInfo?.isBusiness===true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         item.info = JSON.stringify(this.props.trackAuditLogData);
         this.setState({ ...this.state, isSubmitting: true,errorWarning:null,errorMessage:null });
@@ -265,7 +265,7 @@ class RequestedDocs extends Component {
     uopdateReplyObj = (item, list) => {
         for (let obj of list) {
             if (obj.id === item.id) {
-                obj = item;
+                
             }
         }
         return list;
