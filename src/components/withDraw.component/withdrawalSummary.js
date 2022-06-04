@@ -595,7 +595,7 @@ const WithdrawalFiatSummary = ({
 										}
 									}}
 									style={{ width: "100%"  }}
-									onChange={(e) => handleChange(e, "code")}
+									onChange={(e) => handleChange(e)}
 									disabled={inputDisable}
 								/>
 								<div className="new-add c-pointer get-code text-yellow hy-align">
@@ -670,7 +670,7 @@ const WithdrawalFiatSummary = ({
 									style={{ width: "100%" }}
 									 disabled={emailDisable}
 									onClick={(event) => handleSendOtp(event.currentTarget.value)}
-									onChange={(e) => handleEmailChange(e, "Emailcode")}
+									onChange={(e) => handleEmailChange(e)}
 								/>
 								<div className="new-add c-pointer get-code text-yellow hy-align">
 										{!verifyEmailOtp && (
@@ -752,7 +752,7 @@ const WithdrawalFiatSummary = ({
 									className="cust-input custom-add-select mb-0"
 									placeholder={"Enter code"}
 									maxLength={6}
-									onChange={(e) => handleAuthenticator(e, "authenticator")}
+									onChange={(e) => handleAuthenticator(e)}
 									style={{ width: "100%" }}
 									disabled={authDisable == true}
 								/>

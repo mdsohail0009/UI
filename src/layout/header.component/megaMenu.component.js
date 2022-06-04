@@ -18,7 +18,6 @@ const LinkValue = (props) => {
         <Translate className="text-yellow fw-700 fs-16 d-inlineblock"
             content={props.content}
             component={Link}
-        // to="./#"
         />
     )
 }
@@ -75,9 +74,6 @@ class MegaMenu extends Component {
         })
     }
     showBuyDrawer = () => {
-        // this.setState({
-        //     buyDrawer: true
-        // })
         if (this.props.userConfig.isKYC) {
             this.setState({
                 buyDrawer: true
@@ -87,9 +83,6 @@ class MegaMenu extends Component {
         }
     }
     showSendDrawer = () => {
-        // this.setState({
-        //     sendDrawer: true
-        // })
         if (this.props.userConfig.isKYC) {
             this.setState({
                 sendDrawer: true
@@ -99,9 +92,6 @@ class MegaMenu extends Component {
         }
     }
     showSwapDrawer = () => {
-        // this.setState({
-        //     swapDrawer: true
-        // })
         if (this.props.userConfig.isKYC) {
             this.setState({
                 swapDrawer: true
@@ -111,9 +101,6 @@ class MegaMenu extends Component {
         }
     }
     showBuyFiatDrawer = () => {
-        // this.setState({
-        //     buyFiatDrawer: true,
-        // })
         if (this.props.userConfig.isKYC) {
             this.setState({
                 buyFiatDrawer: true
@@ -145,12 +132,6 @@ class MegaMenu extends Component {
             className="megamenu"
             closeIcon={<span className="icon xl closewhite" />}
         >
-
-            {/* before login megamenu */}
-
-            {/* <BusinessMenu/> */}
-
-            {/* mega menu login after */}
             <Carousel dots={false} className="mb-24 menu-carousel" ref={node => (this.carousel = node)}>
                 <div className="mega-menu">
                     <Row gutter={16} className="megamenu-link"   >
@@ -170,7 +151,6 @@ class MegaMenu extends Component {
                             <div className="wrapper">
                                 <div className="item-wrapper">
                                     <Translate className="text-white megamenu-label fw-500 mb-24 mt-0" content="personal" component={Title} />
-                                    {/* <Link className="pt-24"> Wallets</Link> */}
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="wallets" component={Paragraph} />
                                     <Translate className="text-white-30 fs-16 mb-0 fw-300" content="wallets_text" component={Paragraph} />
                                 </div>
@@ -215,7 +195,7 @@ class MegaMenu extends Component {
                         <Col lg={5} xl={4} className="mobile-none p-0">
 
                         </Col>
-                        <Col md={16} lg={16} lg={7} xl={6}>
+                        <Col md={16} lg={16}  xl={6}>
                             <Translate className="text-white megamenu-label  mb-16 fw-500 mt-0" content="connect" component={Title} />
                             <Translate className="text-white-30 fs-18 fw-300 mb-0" content="meet_our_team" component={Paragraph} />
                             <Translate className="text-white-30 fs-18 fw-300 mb-0" content="report_a_bug" component={Paragraph} />
@@ -285,9 +265,6 @@ class MegaMenu extends Component {
                                     <Translate className="text-white megamenu-label fw-500" content="support" component={Title} />
                                 </div>
                                 <div className="item-wrapper">
-                                    {/* <Link>Help Center</Link>
-                                    <Link>About</Link>
-                                    <Link>Social Networks</Link> */}
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="help_center" component={Paragraph} />
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="about" component={Paragraph} />
                                     <Translate className="fs-18 text-white-30 fw-200 mb-0" content="social_networks" component={Paragraph} />
@@ -311,9 +288,6 @@ class MegaMenu extends Component {
                             <div className="d-flex align-center">
                                 <Translate className="fs-18 text-white-30 fw-200 mb-0" content="chat" component={Paragraph} />
                                 <span className="icon lg chat"></span></div>
-                            {/* <Link>Report A Bug</Link>
-                            <Link>FAQ</Link>
-                            <Link>Chat <span className="icon lg chat"></span></Link> */}
                         </Col>
                         <Col lg={16} xl={1} className=" mobile-none p-0" />
                         <Col md={16} lg={16} xl={6} >
@@ -321,8 +295,6 @@ class MegaMenu extends Component {
                             <Translate content="medium_text" with={{ link }} component={Paragraph} className="text-white fs-16" />
                             <Translate className="fs-18 text-white-30 fw-200 mb-0" content="backup_wallet" component={Paragraph} />
                             <Translate className="fs-18 text-white-30 fw-200 mb-0" content="reset_wallet" component={Paragraph} />
-                            {/* <Link>Backup Wallet</Link>
-                            <Link>Reset Wallet</Link> */}
                             <div className="d-flex align-center">
                                 <Translate className="fs-18 mb-0 text-white-30 fw-300" content="always_ask_pin" component={Paragraph} />
                                 <Switch onChange={this.onChange} size="small" className="custom-toggle ml-12" />
@@ -345,7 +317,7 @@ class MegaMenu extends Component {
         )
     }
 }
-const connectStateToProps = ({ swapStore, userConfig,oidc }) => {
+const connectStateToProps = ({ swapStore, userConfig }) => {
     return { swapStore,userConfig: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {

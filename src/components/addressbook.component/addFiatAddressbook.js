@@ -279,7 +279,7 @@ const NewFiatAddress = (props) => {
 				props?.userConfig?.sk
 			);
 			saveObj.documents = {
-				id: withdrawEdit
+				id: (withdrawEdit!=null&&withdrawEdit!=undefined)
 					? withdrawEdit?.documents?.id
 					: "00000000-0000-0000-0000-000000000000",
 				transactionId: null,
