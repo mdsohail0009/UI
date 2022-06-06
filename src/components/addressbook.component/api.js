@@ -43,7 +43,7 @@ const getFileURL = (obj) => {
 
 const getInfoVal = (id, type) => {
 	return apiClient.get(
-		ApiControllers.depositWithdraw + `GetScoreChainInfo/${id}/${type}`
+		ApiControllers.deposit + `GetScoreChainInfo/${id}/${type}`
 	);
 };
 
