@@ -78,9 +78,21 @@ class RequestedDocs extends Component {
                 }
             });
         } else {
-            this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: response.data ||"Something went wrong please try again!" } } });
+            this.setState({ ...this.state, documentReplies: { ...this.state.documentReplies, [id]: { loading: false, data: [], error: this.isErrorDispaly(response) } } });
         }
     }
+    isErrorDispaly = (objValue) => {
+        if (objValue.data && typeof objValue.data === "string") {
+          return objValue.data;
+        } else if (
+          objValue.originalError &&
+          typeof objValue.originalError.message === "string"
+        ) {
+          return objValue.originalError.message;
+        } else {
+          return "Something went wrong please try again!";
+        }
+      };
     docPreview = async (file) => {
         let res = await getFileURL({ url: file.path });
         if (res.ok) {
@@ -325,12 +337,7 @@ class RequestedDocs extends Component {
     }
 
     filePreviewPath() {
-        if (this.state.previewPath.includes(".pdf")) {
-            //return "https://suissebasecors.herokuapp.com/" + this.state.previewPath;
             return this.state.previewPath;
-        } else {
-            return this.state.previewPath;
-        }
     }
 
 

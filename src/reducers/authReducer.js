@@ -1,4 +1,4 @@
-const { USER_FOUND, USER_EXPIRING, processSilentRenew, USER_EXPIRED, SILENT_RENEW_ERROR } = require("redux-oidc");
+const { USER_FOUND, USER_EXPIRING, USER_EXPIRED, SILENT_RENEW_ERROR } = require("redux-oidc");
 const USER_LOG_OUT = "userLogout";
 const GET_PROFILE_SUCCESS = "getProfileSuccess";
 const SET_DEVICE_TOKEN = "setDeviceToken";

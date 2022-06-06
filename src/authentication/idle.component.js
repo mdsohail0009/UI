@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { Button } from 'antd';
+import { Button,Modal } from 'antd';
 import App from '../components/app.component/App';
-import { Modal } from 'antd';
 import { userManager } from './index';
 import IdleTimer from 'react-idle-timer';
 import ConnectStateProps from '../utils/state.connect';
@@ -13,8 +12,6 @@ class IdleCmp extends Component {
         showIdleModal: false
     }
     handleOnIdle = () => {
-        // const {user,profile} = this.props;
-        // fetch(process.env.REACT_APP_AUTHORITY+"/connect/endsession?id_token_hint="+profile.id_token+"&post_logout_redirect_uri=http://localhost:3000")
         this.setState({ ...this.state, showIdleModal: true });
         this.timeInterval = setInterval(() => {
             if (this._count === 0) { clearInterval(this.timeInterval); userManager.signoutRedirect(); } else {
@@ -29,14 +26,6 @@ class IdleCmp extends Component {
         clearInterval(this.timeInterval); this._count = 15;
         this.setState({ ...this.state, counter: this._count, showIdleModal: false });
     }
-    handleOnActive = event => {
-
-
-    }
-
-    handleOnAction = event => {
-
-    }
 
     render() {
         const { showIdleModal, counter } = this.state;
@@ -45,9 +34,7 @@ class IdleCmp extends Component {
                 <IdleTimer
                     ref={ref => { this.idleTimer = ref }}
                     timeout={1000 * 60 * 10}
-                    onActive={this.handleOnActive}
                     onIdle={this.handleOnIdle}
-                    onAction={this.handleOnAction}
                     debounce={250}
                 />
                 <App />

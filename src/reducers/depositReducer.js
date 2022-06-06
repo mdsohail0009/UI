@@ -3,15 +3,11 @@ const FETCH_CURRENCIESWITHBANKDETAILS = "fetchcurrencieswithbankdetails";
 const FETCH_CURRENCIESWITHBANKDETAILS_REJECTED = "fetchcurrencieswithbankdetailsRejected";
 const FETCH_CURRENCIESWITHBANKDETAILS_SUCCESS = "fetchcurrencieswithbankdetailsSuccess";
 const SET_DEPOSITCURRENCY = 'setdepositCurrency';
-const HANDLE_FETCH = 'handleFetch';
 const UPDATE_DEPFIAT_OBJECT = 'updatdepfiatobject';
 const CLEAR_DEPFIAT_OBJECT = 'cleardepfiatobject';
 const SET_SAVEFIAT_OBJECT = 'setsavefiatobject';
 const SET_FIAT_FINAL_RES = "setFiatFinalRes";
 
-const handleFetch = (payload) => {
-    return { type: HANDLE_FETCH, payload }
-}
 const setFiatFinalRes = (payload) => {
     return { type: SET_FIAT_FINAL_RES, payload }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Radio, message, Spin } from 'antd';
+import { Typography, message, Spin } from 'antd';
 import Translate from 'react-translate-component';
 import { getData } from './api';
 import NumberFormat from 'react-number-format';
@@ -22,13 +22,11 @@ class Portfolio extends Component {
             loading: true,
             transactionData: []
         }
-        // this.gridRef = React.createRef();
     }
     getTransactionData = async () => {
         this.setState({ ...this.state, loading: true });
         let response = await getData(this.props.userProfileInfo?.id);
         if (response.ok) {
-            console.log(response.data)
             this.setState({ ...this.state, transactionData: response.data, loading: false });
         } else {
             message.destroy();
@@ -79,9 +77,8 @@ class Portfolio extends Component {
         }
     }
     render() {
-        const { Title } = Typography;
 
-        const { gridUrl, loading } = this.state;
+        const { loading } = this.state;
         return (
             <div className="mb-24">
                     <Translate content="menu_transactions_history" className="basicinfo" />

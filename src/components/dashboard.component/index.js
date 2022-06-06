@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col, Button, Carousel, Spin } from 'antd';
+import { Row, Col, Button, Carousel } from 'antd';
 import Portfolio from './portfolio.component';
 import MarketCap from './marketcap.component';
 import AlertConfirmation from '../shared/alertconfirmation';
@@ -20,7 +20,6 @@ class Home extends Component {
     componentDidMount() {
         this.getNotices();
         this.dashboardTrack();
-        //this.loginTrack();
     }
 
     dashboardTrack = () => {
