@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'antd';
+import { Alert, Button } from 'antd';
 import { setStep, setSubTitle, setWithdrawcrypto, setCryptoFinalRes } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
@@ -12,8 +12,10 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, t
   const [faceCapture, setFaceCapture] = useState(false);
   const [livefacerecognization, setLivefacerecognization] = useState({});
   const [isLoding, setIsLoding] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
   useEffect(() => { setFaceCapture(false) }, []);
   const saveWithdrwal = async () => {
+    setErrorMessage(null);
     setIsLoding(true)
     let saveObj = sendReceive.withdrawCryptoObj;
     saveObj.livefacerecognization = livefacerecognization?.applicantActionid;
@@ -29,6 +31,8 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, t
       dispatch(setSubTitle(""));
       changeStep('withdraw_crpto_success');
       publishBalanceRfresh("success");
+    } else {
+      setErrorMessage(withdrawal.data || withdrawal.data?.message || withdrawal.originalError?.message || "Something went wrong please try after sometime :)");
     }
 
   }
@@ -41,6 +45,7 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, t
   }
   return (
     <div>
+      {errorMessage != null && <Alert type='error' closable={false} message={errorMessage} showIcon />}
       <LiveNessSumsub onConfirm={confirmFaceLive} />
       {faceCapture && <Button
         disabled={isLoding}
