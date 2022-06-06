@@ -1093,7 +1093,7 @@ text-align: center !important;}
 .customaudit-select .ant-form-item-label > label::after{display: none;}
 [data-theme='DRT'] .header-logo img, [data-theme='LHT'] .header-logo img{display: none;}
 [data-theme='DRT'] .header-logo img.dark, [data-theme='LHT'] .header-logo img.light {display: inline-block;}
-.notifications-list .ant-list-item-meta-avatar{border-radius: 50%;width: 38px;height: 38px;text-align: center;line-height: 38px;}
+.notifications-list .ant-list-item-meta-avatar{border-radius: 50%;width: 38px;height: 38px;text-align: center;line-height: 38px;background-color: var(--bgDarkGreen);}
 .notifications-list .ant-list-item-meta-title{margin-bottom: 0 !important;}
 .notifications-list .ant-list-item-meta{align-items: center;}
 .notifications-list .ant-list-item{padding:16px 0; border-bottom: 1px solid var(--borderGrey) !important;}
