@@ -32,7 +32,7 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, t
       changeStep('withdraw_crpto_success');
       publishBalanceRfresh("success");
     } else {
-      setErrorMessage(withdrawal.data || withdrawal.data?.message || withdrawal.originalError?.message || "Something went wrong please try after sometime :)");
+      setErrorMessage(withdrawal.data?.message || withdrawal.data || withdrawal.originalError?.message || "Something went wrong please try after sometime :)");
     }
 
   }
