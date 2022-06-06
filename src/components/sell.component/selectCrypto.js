@@ -45,12 +45,14 @@ class SelectSellCrypto extends Component {
         }
     }
     clickMinamnt(type) {
-        let cryptoamnt;
+        let usdamnt; let cryptoamnt;
         let obj = Object.assign({}, this.props.sellData.coinDetailData)
         if (type === 'half') {
+            usdamnt = (obj.coinValueinNativeCurrency / 2).toString();
             cryptoamnt = (obj.coinBalance / 2)
             this.setState({ ...this.state, USDAmnt: "0", CryptoAmnt: cryptoamnt, minmaxTab: type, isSwap: true, });
         } else if (type === 'all') {
+            usdamnt = obj.coinValueinNativeCurrency ? obj.coinValueinNativeCurrency : 0;
             cryptoamnt = obj.coinBalance ? obj.coinBalance : 0;
             this.setState({ ...this.state, USDAmnt: "0", CryptoAmnt: cryptoamnt, minmaxTab: type, isSwap: true, });
         } else {
@@ -153,6 +155,7 @@ class SelectSellCrypto extends Component {
             screenName: "sell"
         });
         if (response.ok) {
+            const { isSwap: isSwaped, USDAmnt: localValue, CryptoAmnt: cryptoValue } = this.state;
             let _nativeValue = localValue, _cryptoValue = cryptoValue;
             const { data: value, config: { url } } = response;
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
