@@ -138,7 +138,7 @@ border-radius: 5px;}
 .icon.lg.documents-icon{background-position:-176px -329px;}
 .icon.lg.addressbook-icon{background-position: -140px -329px}
 .icon.lg.cases-icon{background-position:-210px -329px;}
-.icon.md.notifyIcon.deposit{background-position: -375px 0px;transform: rotateZ(235deg);}
+.icon.md.notifyIcon.depositfiat{background-position: -375px 0px;transform: rotateZ(235deg);}
 .icon.md.notifyIcon.deposits, .icon.md.notifyIcon.withdraw{background-position: -376px -1px;transform: rotateZ( 45deg);}
 .icon.md.notifyIcon.documents, .icon.md.notifyIcon.cutomers{background-position: -156px -71px;}
 .icon.md.notifyIcon.cases{background-position: -213px -332px;}
