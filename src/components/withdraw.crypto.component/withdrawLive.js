@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Alert, Button } from 'antd';
 import { setStep, setSubTitle, setWithdrawcrypto, setCryptoFinalRes } from '../../reducers/sendreceiveReducer';
 import { connect } from 'react-redux';
@@ -13,6 +13,7 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, t
   const [livefacerecognization, setLivefacerecognization] = useState({});
   const [isLoding, setIsLoding] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
+  const divRef = useRef(null);
   useEffect(() => { setFaceCapture(false) }, []);
   const saveWithdrwal = async () => {
     setErrorMessage(null);
@@ -33,6 +34,7 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, t
       publishBalanceRfresh("success");
     } else {
       setErrorMessage(withdrawal.data?.message || withdrawal.data || withdrawal.originalError?.message || "Something went wrong please try after sometime :)");
+      divRef.current.scrollIntoView();
     }
 
   }
@@ -44,7 +46,7 @@ const WithdrawaCryptolLive = ({ userConfig, sendReceive, changeStep, dispatch, t
     setLivefacerecognization(obj)
   }
   return (
-    <div>
+    <div div="divRef" ref={divRef}>
       {errorMessage != null && <Alert type='error' closable={false} message={errorMessage} showIcon />}
       <LiveNessSumsub onConfirm={confirmFaceLive} />
       {faceCapture && <Button
