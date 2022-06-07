@@ -577,4 +577,5 @@ export default {
 	personal_account:'Personal Account',
 	business_account:"Business Account",
 	empty: " ",
+	cards:"Cards",
 };

@@ -560,4 +560,5 @@ export default {
 	account_name: "Pangalan ng Makikinabang",
   personal_account:'Kaonty manokana',
   business_account:"Kaonty fandraharahana",
+  cards:"KARATRA",
 };
