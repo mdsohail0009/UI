@@ -57,7 +57,7 @@ class NewCards extends Component {
         </Row>}
         {!loading && cardStatus && <CardStatus onBack={() => {
           this.props.history.push("/cockpit");
-        }} status={"inprogress"} />}
+        }} status={cardStatus} />}
       </div>
     )
   }
