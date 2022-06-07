@@ -492,6 +492,9 @@ class Header extends Component {
       }
     }
   }
+  newCard = () => {
+    this.props.history.push("/newcards");
+  }
   showCards = () => {
     window.open(
       process.env.REACT_APP_CARDS_URL,
@@ -769,6 +772,13 @@ class Header extends Component {
                 this.props.dispatch(setHeaderTab(key.key));
               }}
             >
+              <Translate
+                content="cards"
+                component={Menu.Item}
+                key="1"
+                onClick={this.newCard}
+                className="list-item"
+              />
 
               <Translate
                 content="menu_payments"

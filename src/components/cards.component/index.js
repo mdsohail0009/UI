@@ -5,10 +5,14 @@ import {
   Row,
   Col,
 } from "antd";
-import card from "../../assets/images/card.png"
+import card from "../../assets/images/card.png";
 const { Title,Text } = Typography;
 
-class CardsN extends Component {
+thankYou = () =>{
+this.props.history.push("/thankyou");
+}
+
+class NewCards extends Component {
     render() {
       
         return (
@@ -19,7 +23,7 @@ class CardsN extends Component {
                 <Title level={2} className="mt-0">Suisse Card</Title>
                 <Text>Introducing The SuisseBase Rewards Visa® Signature Credit Card. The World's First Rewards Credit Card.</Text>
                 <div className="d-flex mt-24">
-                    <Button type="primary" className="primary-btn">Apply Now</Button>
+                    <Button type="primary" className="primary-btn" onClick={this.thankYou}>Apply Now</Button>
                     <Button type="primary" className="primary-btn cancel-btn ml-8">Back</Button>
                 </div>
             </Col>
@@ -34,4 +38,4 @@ class CardsN extends Component {
     }
 
 }
-export default CardsN;
+export default NewCards;
