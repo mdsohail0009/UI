@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import {
-  Form, Image,Typography,
+  Form, Image,Typography,Checkbox,
   Button,
   Row,
   Col,
 } from "antd";
+import Translate from "react-translate-component";
+import { Link } from "react-router-dom";
 import card from "../../assets/images/card.png";
-const { Title,Text } = Typography;
+import apiCalls from "../../api/apiCalls";
+
+const { Title,Text,Paragraph } = Typography;
 
 // thankYou = () =>{
 // this.props.history.push("/thankyou");
@@ -14,7 +18,7 @@ const { Title,Text } = Typography;
 
 class NewCards extends Component {
     render() {
-      
+        const link = <this.LinkValue content="terms_Use" />;
         return (
           <div className="main-container mt-36">
           <Row>
@@ -26,6 +30,33 @@ class NewCards extends Component {
                     <Button type="primary" className="pop-btn text-textDark" onClick={this.thankYou}>Apply Now</Button>
                     <Button type="primary" className="btn-back ml-16">Back</Button>
                 </div>
+                {/* <Form>
+                <Form.Item
+                    className="custom-forminput mb-36 agree"
+                    name="isAccept"
+                    valuePropName="checked"
+                    required
+                    rules={[
+                        {
+                          validator: (_, value) =>
+                            value ? Promise.resolve() : Promise.reject(new Error(apiCalls.convertLocalLang('agree_to_signup')
+                            )),
+                        },
+                      ]}
+                   
+                  >
+                    <span className="d-flex">
+                      <Checkbox className="ant-custumcheck" />
+                      <span className="withdraw-check"></span>
+                      <Translate
+                        content="agree_to_signup"
+                        with={{ link }}
+                        component={Paragraph}
+                        className="fs-14 text-white-30 ml-16 mb-4"
+                        style={{ flex: 1 }}
+                      />
+                    </span>
+                  </Form.Item></Form> */}
             </Col>
             <Col span={14}>
             <Image preview={false}
