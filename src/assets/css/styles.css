@@ -41,6 +41,8 @@ body, h1, h2, h3, h4, h5, h6, a, p div{font-family: 'SF Pro Text', sans-serif !i
 .portfolio-list .ant-list-split .ant-list-item .ant-list-item-meta-avatar{margin-top: 4px;}
 .dbchart-link{color: var(--textDark) !important;display: inline-block;background-color: var(--bgYellow); padding: 0 12px;margin-left: 8px;border-radius: 12px;line-height: 24px;}
 .btn-primary{background-color: var(--btnPrimary) !important;}
+.btn-back{background-color: transparent;border: 0;border-radius: 40px;height: 42px;text-transform: uppercase;transition: 0.3s ease;}
+.btn-back:hover{background-color: var(--bgDarkYellow);color: var(--bgDark);font-weight: 500;}
 .login-user, .side-drawer .side-drawer-header, .side-drawer-full .side-drawer-header, .wire-trans, .crypto-card-bottom{display: flex;justify-content: space-between;align-items: center;}
 .header-logo{list-style: none;display: inline-flex;padding-right: 0 !important;align-items: center;margin-bottom: 0;}
 .tlv-logo{height: 45px;}

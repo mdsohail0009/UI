@@ -493,7 +493,7 @@ class Header extends Component {
     }
   }
   newCard = () => {
-    this.props.history.push("/newcards");
+    this.props.history.push("/rewards");
   }
   showCards = () => {
     window.open(
