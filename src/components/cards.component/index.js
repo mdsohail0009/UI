@@ -24,7 +24,7 @@ class NewCards extends Component {
           <Row>
             <Col span={10}>
                 <Title level={3} className="fs-24 fw-600 mb-0 text-white px-4">New Card</Title>
-                <Title level={2} className="m-0 fw-600 text-white px-4">Suisse Card</Title>
+                <Title level={2} className="mb-8 m-0 fw-600 text-white px-4">Suisse Card</Title>
                 <Text className="text-white">Introducing The SuisseBase Rewards Visa® Signature Credit Card. The World's First Rewards Credit Card.</Text>
                 <div className="d-flex mt-24">
                     <Button type="primary" className="pop-btn text-textDark" onClick={this.thankYou}>Apply Now</Button>
