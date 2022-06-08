@@ -10,7 +10,7 @@ class CardStatus extends Component {
             rejected: ""
         },
         messages: {
-            inprogress: `Your application is In-Progress. you will receive an confirmation email on successfull approval.`,
+            inprogress: `Your application is In-Progress. you will receive an confirmation email on successful approval.`,
             rejected: "Your application has been rejected. Please contact admin for further information."
         }
     }
@@ -22,7 +22,7 @@ class CardStatus extends Component {
                     <Image width={80} preview={false} src={rejected} /> */}
                     <Image width={80} preview={false} src={this.state.images[this.props.status?.toLowerCase()] || success} />
                     <Title level={2}>{this.state.messages[this.props.status?.toLowerCase()]} </Title>
-                    <Text>Introducing The SuisseBase Rewards Visa® Signature Credit Card. The World's First Rewards Credit Card.Introducing The SuisseBase Rewards Visa® Signature Credit Card. The World's First Rewards Credit Card.</Text>
+                    <Text>Introducing The Suissebase Rewards Visa® Signature Credit Card. The World's First Rewards Credit Card.Introducing The Suissebase Rewards Visa® Signature Credit Card. The World's First Rewards Credit Card.</Text>
                     <div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="pop-btn text-textDark">BACK TO DASHBORD</Button>
                     </div>
                 </div>

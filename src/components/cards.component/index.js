@@ -13,6 +13,7 @@ import Loader from "../../Shared/loader";
 import CardStatus from "./thankyou";
 import { Redirect } from 'react-router-dom'
 import { applyCard } from "./api";
+import { setHeaderTab } from "../../reducers/buysellReducer";
 const { Title, Text } = Typography;
 class NewCards extends Component {
   state={
@@ -43,7 +44,7 @@ class NewCards extends Component {
           <Col span={10}>
             <Title level={3} className="fs-24 fw-600 mb-0 text-white px-4">New Card</Title>
             <Title level={2} className="mb-8 m-0 fw-600 text-white px-4">Suisse Card</Title>
-            <Text className="text-white">Introducing The SuisseBase Rewards Visa® Signature Credit Card. The World's First Rewards Credit Card.</Text>
+            <Text className="text-white">Introducing The Suissebase Rewards Visa® Signature Credit Card. The World's First Rewards Credit Card.</Text>
             <div className="d-flex mt-24">
               <Button loading={this.state.loading} type="primary" className="pop-btn text-textDark" onClick={()=>this.applyCard()}>Apply Now</Button>
               {/* <Button type="primary" className="btn-back ml-16">Back</Button> */}
@@ -56,6 +57,7 @@ class NewCards extends Component {
           </Col>
         </Row>}
         {!loading && cardStatus && <CardStatus onBack={() => {
+              this.props.dispatch(setHeaderTab(''));
           this.props.history.push("/cockpit");
         }} status={cardStatus} />}
       </div>

@@ -495,7 +495,7 @@ class Header extends Component {
   }
   newCard = () => {
     if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled)
-      this.props.history.push("/rewards");
+      this.props.history.push("/cards");
     else {
       const isKyc = !this.props.userConfig.isKYC;
       if (isKyc) {
