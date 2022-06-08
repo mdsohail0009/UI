@@ -94,18 +94,20 @@ const NewFiatAddress = (props) => {
 
 	useEffect(() => {
 		if (selectParty === true) {
-			form.setFieldsValue({ addressType: "3rdparty",bankType:'bank',accountNumber: "",
-			routingNumber: "",
-			bankName: "",
-			bankAddress: "",
-			country: "",
-			state: "",
-			zipCode: "", });
+			form.setFieldsValue({
+				addressType: "3rdparty", bankType: 'bank', accountNumber: "",
+				routingNumber: "",
+				bankName: "",
+				bankAddress: "",
+				country: "",
+				state: "",
+				zipCode: "",
+			});
 		} else {
 			form.setFieldsValue({
 				addressType: "1stparty",
 				beneficiaryAccountName: getName(),
-				bankType:'bank',accountNumber: "",
+				bankType: 'bank', accountNumber: "",
 				routingNumber: "",
 				bankName: "",
 				bankAddress: "",
@@ -116,7 +118,7 @@ const NewFiatAddress = (props) => {
 		}
 		if (
 			props?.addressBookReducer?.selectedRowData?.id !=
-				"00000000-0000-0000-0000-000000000000" &&
+			"00000000-0000-0000-0000-000000000000" &&
 			props?.addressBookReducer?.selectedRowData?.id
 		) {
 			loadDataAddress();
@@ -432,7 +434,7 @@ const NewFiatAddress = (props) => {
 				beneficiaryAccountName: props?.userConfig.isBusiness
 					? props?.userConfig.businessName
 					: props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
-					bankType:'bank'
+				bankType: 'bank'
 			});
 			setBankType('bank');
 			setSelectParty(false);
@@ -440,7 +442,7 @@ const NewFiatAddress = (props) => {
 			form.setFieldsValue({
 				addressType: "3rdparty",
 				beneficiaryAccountName: null,
-				bankType:'bank'
+				bankType: 'bank'
 			});
 			setBankType('bank');
 			setSelectParty(true);
@@ -760,8 +762,8 @@ const NewFiatAddress = (props) => {
 											message: apiCalls.convertLocalLang("is_required"),
 										},
 										{
-											pattern: bankType !== "iban"?bankNameRegex:IbanRegex,
-											message: bankType !== "iban"?"Invalid Bank account number":"Invalid IBAN",
+											pattern: bankType !== "iban" ? bankNameRegex : IbanRegex,
+											message: bankType !== "iban" ? "Invalid Bank account number" : "Invalid IBAN",
 										},
 									]}>
 									<Input
@@ -1012,8 +1014,7 @@ const NewFiatAddress = (props) => {
 										{!uploadIdentity && identityFile != null && (
 											<div className="docfile mr-0">
 												<span
-													className={`icon xl ${
-														(identityFile.documentName?.slice(-3) === "zip" &&
+													className={`icon xl ${(identityFile.documentName?.slice(-3) === "zip" &&
 															"file") ||
 														(identityFile.documentName?.slice(-3) !== "zip" &&
 															"") ||
@@ -1021,7 +1022,7 @@ const NewFiatAddress = (props) => {
 															"file") ||
 														(identityFile.documentName?.slice(-3) !== "pdf" &&
 															"image")
-													} mr-16`}
+														} mr-16`}
 												/>
 
 												<div
@@ -1075,14 +1076,13 @@ const NewFiatAddress = (props) => {
 													Please upload address proof here
 												</p>
 											</Dragger>
-											</>
+										</>
 										}
 									</Form.Item>
 									{!uploadAdress && addressFile != null && (
 										<div className="docfile mr-0">
 											<span
-												className={`icon xl ${
-													(addressFile?.documentName?.slice(-3) === "zip" &&
+												className={`icon xl ${(addressFile?.documentName?.slice(-3) === "zip" &&
 														"file") ||
 													(addressFile?.documentName?.slice(-3) !== "zip" &&
 														"") ||
@@ -1090,7 +1090,7 @@ const NewFiatAddress = (props) => {
 														"file") ||
 													(addressFile.documentName?.slice(-3) !== "pdf" &&
 														"image")
-												} mr-16`}
+													} mr-16`}
 											/>
 											<div
 												className="docdetails c-pointer"
@@ -1124,10 +1124,10 @@ const NewFiatAddress = (props) => {
 											value
 												? Promise.resolve()
 												: Promise.reject(
-														new Error(
-															apiCalls.convertLocalLang("agree_termsofservice")
-														)
-												  ),
+													new Error(
+														apiCalls.convertLocalLang("agree_termsofservice")
+													)
+												),
 									},
 								]}>
 								<Checkbox className="ant-custumcheck" />
@@ -1148,6 +1148,9 @@ const NewFiatAddress = (props) => {
 									marginBottom: "10px",
 								}}
 							/>
+							<div className="whitelist-note">
+							<Alert type="warning" message={`Note : Declaration form has been sent to ${fiatAddress?.email||"your email address"}. Please sign using link received in email to whitelist your address`} showIcon closable={false} />
+							</div>
 						</div>
 
 						<Form.Item className="text-center">

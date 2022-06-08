@@ -47,8 +47,7 @@ class RouteConfig extends Component {
         <Route path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
         <ReactRoute path='/cockpitCharts' component={DashboardCharts} />
-        <ReactRoute path='/rewards' component={RewardCard} />
-        <ReactRoute path='rewardcardstatus' component={RewardCardStatus} />
+        <ReactRoute path='/cards' component={RewardCard} />
         <ReactRoute
           path="/payments"
           render={({ match: { url } }) => (
