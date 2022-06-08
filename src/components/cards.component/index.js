@@ -29,7 +29,7 @@ class NewCards extends Component {
     this.props.dispatch(getStaus(this.props.userProfile?.id));
   }
   render() {
-    const { status: { cardStatus, cardURL }, loading, error } = this.props.cardsStore;
+    const { status: { cardStatus, cardURL }, loading, error } = this.props?.cardsStore;
     if (cardURL) {
       window.open(cardURL, "_blank");
       return <Redirect to={"/"} />

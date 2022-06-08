@@ -13,19 +13,19 @@ const getStaus = (memid) => {
         if (respose.ok) {
             dispatch(setStaus({ loading: false, status: respose.data }));
         } else {
-            dispatch(setStaus({ loading: false, error: respose.data }));
+            dispatch(setStaus({ loading: false, data: {}, error: respose.data }));
         }
     }
 }
 const initialState = {
     loading: true,
     status: "",
-    error:null
+    error: null
 }
-const cardsReducer = (state = initialState, {type,payload}) => {
+const cardsReducer = (state = initialState, { type, payload }) => {
     switch (type) {
         case SET_STATUS:
-            state = { loading: payload.loading, status: payload.status,error:payload.error };
+            state = { loading: payload.loading, status: payload.status, error: payload.error };
             return state;
         default:
             return state;
