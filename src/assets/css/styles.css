@@ -1152,4 +1152,4 @@ input[type=number]::-webkit-outer-spin-button {
     
     
 }
-.submission-sec{width: 540px;color: var(--bgWhite);}
+.submission-sec{width: 600px;color: var(--bgWhite);margin: 0 auto;}
