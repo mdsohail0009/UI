@@ -9,7 +9,7 @@ const getCryptos = () => {
 const getMemberfiat = (member_id) => {
     return apiClient.get(ApiControllers.wallets + 'Fiat/' + member_id);
 }
-const getSellamnt = (Value, isSwap, coin, isCrypto, memId, screenName, currencyCode) => {
+const getSellamnt = (Value, coin, isCrypto, memId, screenName, currencyCode) => {
     return apiClient.get(ApiControllers.master + `CryptoFiatConverter/${memId}/${coin}/${currencyCode}/${Value}/${isCrypto}/${screenName||null}`) ;
 }
 const getSellPreviewData = (sellObject) => {

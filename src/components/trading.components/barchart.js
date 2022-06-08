@@ -1,7 +1,7 @@
 import Highcharts from 'highcharts';
 import { useEffect } from 'react';
 
-const BarChart = ({ data, title, categories, id }) => {
+const BarChart = ({ data, categories, id }) => {
 
     useEffect(() => {
         Highcharts.chart((id || 'container'), {
@@ -38,7 +38,7 @@ const BarChart = ({ data, title, categories, id }) => {
                 }]
             }
         });
-    }, []);
+    }, []);// eslint-disable-line react-hooks/exhaustive-deps
     return <div id={id || "container"}></div>
 
 }

@@ -4,16 +4,16 @@ const getCryptoWithDrawWallets = ({ memberId }) => {
     return apiClient.get(ApiControllers.wallets + `Crypto/${memberId}`)
 }
 const withDrawCrypto = (obj) => {
-    return apiClient.post(ApiControllers.depositWithdraw + `Withdraw/Crypto`, obj)
+    return apiClient.post(ApiControllers.withdraw + `Withdraw/Crypto`, obj)
 }
 const getWithdrawmemberCrypto = ({ memberId }) => {
-    return apiClient.get(ApiControllers.depositWithdraw + `Withdraw/Crypto/${memberId}`)
+    return apiClient.get(ApiControllers.withdraw + `Withdraw/Crypto/${memberId}`)
 }
 const handleNewExchangeAPI = ({ memberId, amount, coin, address }) => {
-    return apiClient.get(ApiControllers.depositWithdraw + `Withdraw/Crypto/Confirm/${memberId}/${coin}/${amount}/${address}`);
+    return apiClient.get(ApiControllers.withdraw + `Withdraw/Crypto/Confirm/${memberId}/${coin}/${amount}/${address}`);
 }
 const handleFiatConfirm = (obj) => {
-    return apiClient.post(ApiControllers.depositWithdraw + `Withdraw/Fiat/Confirm`, obj);
+    return apiClient.post(ApiControllers.withdraw + `Withdraw/Fiat/Confirm`, obj);
 }
 const updateSecurity = (obj) => {
     return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);

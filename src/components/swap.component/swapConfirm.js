@@ -4,7 +4,6 @@ import { Typography } from 'antd';
 import Translate from 'react-translate-component';
 import SuccessMsg from './success';
 const { Title } = Typography;
-import apicalls from '../../api/apiCalls';
 class SwapConfirm extends Component {
     state = {
         success: false,

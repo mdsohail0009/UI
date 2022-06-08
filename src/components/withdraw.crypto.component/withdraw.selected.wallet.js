@@ -83,11 +83,16 @@ class CryptoWithDrawWallet extends Component {
         }
     }
     handlePreview = () => {
+
         const amt = parseFloat(this.state.CryptoAmnt);
         const { withdrawMaxValue, withdrawMinValue } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null });
-        if (!amt) {
+        if (this.state.CryptoAmnt === "") {
             this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('enter_amount') });
+            this.myRef.current.scrollIntoView();
+        }
+      else if (this.state.CryptoAmnt === "0" || amt === 0) {
+            this.setState({ ...this.state, error: " " + apicalls.convertLocalLang('amount_greater_zero') });
             this.myRef.current.scrollIntoView();
         }
         else if (amt < withdrawMinValue) {
@@ -246,7 +251,6 @@ class CryptoWithDrawWallet extends Component {
                             label={apicalls.convertLocalLang('sendTo')}
                         >
                             <div className="p-relative d-flex align-center">
-                                {/* <Input className="cust-input custom-add-select mb-0" placeholder="Enter address" value={this.state.walletAddress} */}
                                 <Input className="cust-input custom-add-select mb-0" placeholder={apicalls.convertLocalLang('enter_address')} value={this.state.walletAddress}
 
                                    disabled={true} onChange={({ currentTarget: { value } }) => { this.setState({ ...this.state, walletAddress: value }); this.props.clearAddress(null) }}
