@@ -16,16 +16,19 @@ import { applyCard } from "./api";
 import { setHeaderTab } from "../../reducers/buysellReducer";
 const { Title, Text } = Typography;
 class NewCards extends Component {
-  state={
-    loading:false
+  state = {
+    loading: false
   }
   componentDidMount() {
     this.props.dispatch(getStaus(this.props.userProfile?.id));
   }
+  componentWillUnmount() {
+    this.props.dispatch(setHeaderTab(''));
+  }
   async applyCard() {
-    this.setState({loading:true});
+    this.setState({ loading: true });
     await applyCard(this.props.userProfile?.id);
-    this.setState({loading:false});
+    this.setState({ loading: false });
 
     this.props.dispatch(getStaus(this.props.userProfile?.id));
   }
@@ -46,7 +49,7 @@ class NewCards extends Component {
             <Title level={2} className="mb-8 m-0 fw-600 text-white px-4">Suisse Card</Title>
             <Text className="text-white">Introducing The Suissebase Rewards Visa® Signature Credit Card. The World's First Rewards Credit Card.</Text>
             <div className="d-flex mt-24">
-              <Button loading={this.state.loading} type="primary" className="pop-btn text-textDark" onClick={()=>this.applyCard()}>Apply Now</Button>
+              <Button loading={this.state.loading} type="primary" className="pop-btn text-textDark" onClick={() => this.applyCard()}>Apply Now</Button>
               {/* <Button type="primary" className="btn-back ml-16">Back</Button> */}
             </div>
           </Col>
@@ -57,7 +60,7 @@ class NewCards extends Component {
           </Col>
         </Row>}
         {!loading && cardStatus && <CardStatus onBack={() => {
-              this.props.dispatch(setHeaderTab(''));
+          this.props.dispatch(setHeaderTab(''));
           this.props.history.push("/cockpit");
         }} status={cardStatus} />}
       </div>
