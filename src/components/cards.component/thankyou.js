@@ -11,9 +11,9 @@ class Cards1 extends Component {
             <div className="text-center submission-sec">
           
             <Image width={80} preview={false} src={success} />
-            <Title level={2}>Your Suisse Card Application Is Successfully Completed</Title>
-            <Text>Introducing The SuisseBase Rewards Visa® Signature Credit Card. The World's First Rewards Credit Card.Introducing The SuisseBase Rewards Visa® Signature Credit Card. The World's First Rewards Credit Card.</Text>
-                    <div className="my-25"><Button type="primary" className="primary-btn">BACK TO DASHBORD</Button>
+            <Title className="text-white" level={2}>Your Suisse Card Application Is Successfully Completed</Title>
+            <Text className="text-white">Introducing The SuisseBase Rewards Visa® Signature Credit Card. The World's First Rewards Credit Card.Introducing The SuisseBase Rewards Visa® Signature Credit Card. The World's First Rewards Credit Card.</Text>
+                    <div className="my-25"><Button type="primary" className="pop-btn text-textDark">BACK TO DASHBORD</Button>
 					</div>
           </div>
           </div>
