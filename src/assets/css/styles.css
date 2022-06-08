@@ -233,6 +233,7 @@ border-radius: 5px;}
 .crypto-list-tabs .ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textDark) !important; background: var(--bgYellow); border-radius: 30px;}
 .crypto-list-tabs .ant-tabs-ink-bar{display: none;}
 .pop-btn,.confirm-btn{font-size: 14px;}
+.pop-btn span{color: #000;}
 .confirm-btn{height: 48px;}
 .confirm-btn, .confirm-btn:hover, .confirm-btn:focus, .confirm-btn:active {background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2));  border-radius: 40px;text-transform: uppercase;font-weight: 700; transition: 0.5s ease; color: var(--textPureWhite) !important;border: 1px solid linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2)) !important;}
 .pop-btn{background-color: var(--bgYellow); border-color: var(--bgYellow); border-radius: 40px;height: 42px; text-transform: uppercase;font-weight: 700; transition: 0.3s ease;}
@@ -1152,5 +1153,5 @@ input[type=number]::-webkit-outer-spin-button {
     
     
 }
-.submission-sec{width: 600px;color: var(--bgWhite);margin: 0 auto;}
+.submission-sec{width: 620px;color: var(--bgWhite);margin: 0 auto;}
 .whitelist-note .ant-alert-message{font-weight: 500 !important;padding: 10px;}
