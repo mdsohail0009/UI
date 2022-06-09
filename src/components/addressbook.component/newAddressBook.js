@@ -86,7 +86,7 @@ const NewAddressBook = ({
 	const [addressState, setAddressState] = useState("");
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
-	const [error,setError]=useState(null);
+	const [error, setError] = useState(null);
 	useEffect(() => {
 		if (addressBookReducer?.cryptoValues) {
 			form.setFieldsValue({
@@ -102,7 +102,7 @@ const NewAddressBook = ({
 		} else {
 			if (
 				addressBookReducer?.selectedRowData?.id !=
-					"00000000-0000-0000-0000-000000000000" &&
+				"00000000-0000-0000-0000-000000000000" &&
 				addressBookReducer?.selectedRowData?.id
 			) {
 				loadDataAddress();
@@ -155,9 +155,9 @@ const NewAddressBook = ({
 			}
 			setIsLoading(false);
 		}
-		else{
+		else {
 			setIsLoading(false);
-			setErrorMsg("Something went wrong please try again!")	
+			setErrorMsg("Something went wrong please try again!")
 		}
 	};
 	const saveAddressBook = async (values) => {
@@ -205,7 +205,7 @@ const NewAddressBook = ({
 				message.success({
 					content: apiCalls.convertLocalLang("address_msg"),
 					className: "custom-msg",
-					duration:4
+					duration: 4
 				});
 				form.resetFields();
 				rejectCoinWallet();
@@ -214,7 +214,7 @@ const NewAddressBook = ({
 				setIsLoading(false);
 				setError("")
 			} else {
-				setError(response.data||"Something went wrong please try again!")
+				setError(response.data || "Something went wrong please try again!")
 				setErrorMsg(response.data);
 				setBtnDisabled(false);
 				setIsLoading(false);
@@ -363,7 +363,7 @@ const NewAddressBook = ({
 						showIcon
 					/>
 				)}
-					{error && (
+				{error && (
 					<Alert
 						type="error"
 						description={error}
@@ -482,10 +482,10 @@ const NewAddressBook = ({
 											value
 												? Promise.resolve()
 												: Promise.reject(
-														new Error(
-															apiCalls.convertLocalLang("agree_termsofservice")
-														)
-												  ),
+													new Error(
+														apiCalls.convertLocalLang("agree_termsofservice")
+													)
+												),
 									},
 								]}>
 								<Checkbox className="ant-custumcheck" />
@@ -505,6 +505,10 @@ const NewAddressBook = ({
 									marginBottom: "10px",
 								}}
 							/>
+							<div className="whitelist-note">
+								<Alert type="warning" message={`Note : Declaration form has been sent to ${cryptoAddress?.email || "your email address"}. Please sign using link received in email to whitelist your address`} showIcon closable={false} />
+							</div>
+
 						</div>
 
 						<div style={{ marginTop: "50px" }}>
