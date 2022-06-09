@@ -34,6 +34,14 @@ class NewCards extends Component {
   }
   render() {
     const { status: { cardStatus, cardURL }, loading, error } = this.props?.cardsStore;
+    const { isBusiness } = this.props.userProfile;
+    if (!isBusiness) {
+      return <div className="text-center submission-sec">
+        <Title level={2} className="text-white">You do not have access to this page </Title>
+        <div className="my-25 text-textDark"><Button onClick={() => this.props.history.push("/cockpit")} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBORD</Button>
+        </div>
+      </div>
+    }
     if (cardURL) {
       window.open(cardURL, "_blank");
       return <Redirect to={"/"} />
@@ -47,10 +55,10 @@ class NewCards extends Component {
           <Col span={10}>
             <Title level={3} className="fs-24 fw-600 mb-0 text-white px-4">New Card</Title>
             <Title level={2} className="mb-8 m-0 fw-600 text-white px-4">Suisse Card</Title>
-<Text className="text-white">Change “New Card” to “A card you control” and bring it below “Suisse Card”</Text>
+            <Text className="text-white">Change “New Card” to “A card you control” and bring it below “Suisse Card”</Text>
             <Text className="text-white"> Change “Suisse Card” to “Suissebase Corporate Expense Card”</Text>
             <Text className="text-white"> Change “Introducing…..Credit Card” to “Powered by Mastercard, a global pioneer in payment innovation and technology connecting billions of consumers, issuers, merchants, governments & businesses worldwide.”</Text>
-            
+
             <Title level={3} className="mb-8 fw-600 text-white px-4">The card offers a myriad range of features:</Title>
             <Text className="text-white">Top up and manage your corporate’s debit card all through the Suissebase platform</Text>
             <Text className="text-white">Issue your employees physical and virtual cards for secure local and international payments</Text>
