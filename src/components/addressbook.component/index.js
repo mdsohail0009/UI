@@ -18,9 +18,8 @@ import SelectCrypto from "./selectCrypto";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import apiCalls from "../../api/apiCalls";
-import { warning } from "../../utils/message";
 import Info from "../shared/info";
-
+import {downloadDeclForm} from './api'
 const { Title, Paragraph, Text } = Typography;
 
 class AddressBook extends Component {
@@ -192,7 +191,7 @@ class AddressBook extends Component {
 			field: "isWhitelisted",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted ? <a href="" onClick={() => {
+					{props.dataItem?.isWhitelisted ? <a  onClick={() => {
 						this.downloadDeclarationForm(props?.dataItem);
 					}} >Download</a> : "Not whitelisted"}
 				</td>
@@ -322,7 +321,7 @@ class AddressBook extends Component {
 			field: "isWhitelisted",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted ? <a href="" onClick={() => {
+					{props.dataItem?.isWhitelisted ? <a onClick={() => {
 						this.downloadDeclarationForm(props?.dataItem);
 					}} >Download</a> : "Not whitelisted"}
 				</td>
@@ -332,8 +331,11 @@ class AddressBook extends Component {
 			width: 200,
 		},
 	];
-	downloadDeclarationForm(dataItem){
-		debugger
+	async downloadDeclarationForm(dataItem){
+		const response = await downloadDeclForm(dataItem.id);
+		if(response.ok){
+			window.open(response.data,"_blank");
+		}
 	}
 	addressFiatView = ({ dataItem }) => {
 		this.props.history.push(`/addressFiatView/${dataItem.id}`);
