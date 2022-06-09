@@ -52,21 +52,21 @@ class NewCards extends Component {
         {error != null && <Alert type="error" showIcon closable={false} message={error} />}
         {loading && <Loader />}
         {!loading && !cardStatus && <Row>
-          <Col span={10}>
-            <Title level={2} className="mb-8 m-0 fw-600 text-white px-4">Suissebase Corporate Expense Card</Title>
-            <Title level={3} className="fs-24 fw-600 mb-0 text-white px-4">A card you control</Title>
+          <Col span={12}>
+            <Title level={2} className="mb-8 m-0 fw-600 text-white">Suissebase Corporate Expense Card</Title>
+            <Title level={3} className="fs-24 fw-600 mt-16 mb-8 text-white" style={{fontSize:'24px'}}>A card you control</Title>
             <Text className="text-white">Powered by Mastercard, a global pioneer in payment innovation and technology connecting billions of consumers, issuers, merchants, governments & businesses worldwide.</Text>
 
-            <Title level={3} className="mb-8 fw-600 text-white px-4">The card offers a myriad range of features:</Title>
-            <Text className="text-white">Top up and manage your corporate’s debit card all through the Suissebase platform</Text>
-            <Text className="text-white">Issue your employees physical and virtual cards for secure local and international payments</Text>
+            <Title level={3} className="mb-8 fw-600 text-white">The card offers a myriad range of features:</Title>
+            <Text className="text-white">Top up and manage your corporate’s debit card all through the Suissebase platform</Text><br />
+            <Text className="text-white">Issue your employees physical and virtual cards for secure local and international payments</Text><br />
             <Text className="text-white">Stay in control of the card’s security all with a tap of your fingers</Text>
             <div className="d-flex mt-24">
               <Button loading={this.state.loading} type="primary" className="pop-btn text-textDark" onClick={() => this.applyCard()}>Apply Now</Button>
               {/* <Button type="primary" className="btn-back ml-16">Back</Button> */}
             </div>
           </Col>
-          <Col span={14}>
+          <Col span={12}>
             <Image preview={false}
               src={card}
             />
