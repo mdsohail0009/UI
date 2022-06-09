@@ -187,19 +187,19 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
-		{
-			field: "isWhitelisted",
-			customCell: (props) => (
-				<td>
-					{props.dataItem?.isWhitelisted ? <a  onClick={() => {
-						this.downloadDeclarationForm(props?.dataItem);
-					}} >Download</a> : "Not whitelisted"}
-				</td>
-			),
-			title: apiCalls.convertLocalLang("whitelist"),
-			filter: false,
-			width: 200,
-		}
+		// {
+		// 	field: "isWhitelisted",
+		// 	customCell: (props) => (
+		// 		<td>
+		// 			{props.dataItem?.isWhitelisted ? <a  onClick={() => {
+		// 				this.downloadDeclarationForm(props?.dataItem);
+		// 			}} >Download</a> : "Not whitelisted"}
+		// 		</td>
+		// 	),
+		// 	title: apiCalls.convertLocalLang("whitelist"),
+		// 	filter: false,
+		// 	width: 200,
+		// }
 	];
 	columnsCrypto = [
 		{
@@ -317,19 +317,19 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
-		{
-			field: "isWhitelisted",
-			customCell: (props) => (
-				<td>
-					{props.dataItem?.isWhitelisted ? <a onClick={() => {
-						this.downloadDeclarationForm(props?.dataItem);
-					}} >Download</a> : "Not whitelisted"}
-				</td>
-			),
-			title: apiCalls.convertLocalLang("whitelist"),
-			filter: false,
-			width: 200,
-		},
+		// {
+		// 	field: "isWhitelisted",
+		// 	customCell: (props) => (
+		// 		<td>
+		// 			{props.dataItem?.isWhitelisted ? <a onClick={() => {
+		// 				this.downloadDeclarationForm(props?.dataItem);
+		// 			}} >Download</a> : "Not whitelisted"}
+		// 		</td>
+		// 	),
+		// 	title: apiCalls.convertLocalLang("whitelist"),
+		// 	filter: false,
+		// 	width: 200,
+		// },
 	];
 	async downloadDeclarationForm(dataItem){
 		const response = await downloadDeclForm(dataItem.id);
