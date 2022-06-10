@@ -22,11 +22,11 @@ class CardStatus extends Component {
     }
     render() {
         return (
-            <div className="main-container mt-36">
+            <div className="main-container">
                 <div className="text-center submission-sec">
                     <Image width={80} preview={false} src={this.state.images[this.props.status?.toLowerCase()] || success} />
-                    <Title level={2} className="text-white mt-24">{this.state.titles[this.props.status?.toLowerCase()]} </Title>
-                    <Text className="text-white">{this.state.messages[this.props.status?.toLowerCase()]}</Text>
+                    <Title level={2} className="text-white mt-16 mb-0 pb-8">{this.state.titles[this.props.status?.toLowerCase()]} </Title>
+                    <Text className="text-white-30">{this.state.messages[this.props.status?.toLowerCase()]}</Text>
                     <div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBORD</Button>
                     </div>
                 </div>
