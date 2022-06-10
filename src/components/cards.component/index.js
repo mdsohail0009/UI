@@ -58,9 +58,9 @@ class NewCards extends Component {
             <Text className="text-white">Powered by Mastercard, a global pioneer in payment innovation and technology connecting billions of consumers, issuers, merchants, governments & businesses worldwide.</Text>
 
             <Title level={3} className="mb-8 fw-600 text-white">The card offers a myriad range of features:</Title>
-            <Text className="text-white">Top up and manage your corporate’s debit card all through the Suissebase platform</Text><br />
-            <Text className="text-white">Issue your employees physical and virtual cards for secure local and international payments</Text><br />
-            <Text className="text-white">Stay in control of the card’s security all with a tap of your fingers</Text>
+            <Text className="text-white"><span className="mr-4">-</span> Top up and manage your corporate’s debit card all through the Suissebase platform</Text><br />
+            <Text className="text-white"><span className="mr-4">-</span> Issue your employees physical and virtual cards for secure local and international payments</Text><br />
+            <Text className="text-white"><span className="mr-4">-</span> Stay in control of the card’s security all with a tap of your fingers</Text>
             <div className="d-flex mt-24">
               <Button loading={this.state.loading} type="primary" className="pop-btn text-textDark" onClick={() => this.applyCard()}>Apply Now</Button>
               {/* <Button type="primary" className="btn-back ml-16">Back</Button> */}
