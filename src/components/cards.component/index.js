@@ -43,7 +43,10 @@ class NewCards extends Component {
       </div>
     }
     if (cardURL) {
-      window.open(cardURL, "_blank");
+      if (cardURL.startsWith("http") || cardURL.startsWith("https"))
+        window.open(cardURL, "_blank");
+      else
+        window.open(`https://${cardURL}`, "_blank");
       return <Redirect to={"/"} />
     }
 
@@ -54,7 +57,7 @@ class NewCards extends Component {
         {!loading && !cardStatus && <Row>
           <Col span={12}>
             <Title level={2} className="mb-8 m-0 fw-600 text-white">Suissebase Corporate Expense Card</Title>
-            <Title level={3} className="fs-24 fw-600 mt-16 mb-8 text-white" style={{fontSize:'24px'}}>A card you control</Title>
+            <Title level={3} className="fs-24 fw-600 mt-16 mb-8 text-white" style={{ fontSize: '24px' }}>A card you control</Title>
             <Text className="text-white">Powered by Mastercard, a global pioneer in payment innovation and technology connecting billions of consumers, issuers, merchants, governments & businesses worldwide.</Text>
 
             <Title level={3} className="mb-8 fw-600 text-white">The card offers a myriad range of features:</Title>
