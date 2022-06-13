@@ -1,15 +1,17 @@
 import React, { Component } from "react";
 
-import { Typography, Button, Alert, Form, Input, Tooltip,Checkbox } from "antd";
+import { Typography, Button, Alert, Form, Input, Tooltip, Checkbox } from "antd";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import Loader from "../../Shared/loader";
 import Currency from "../shared/number.formate";
 import { handleNewExchangeAPI, withDrawCrypto } from "../send.component/api";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
-import { setCryptoFinalRes,	setStep,
+import {
+	setCryptoFinalRes, setStep,
 	setSubTitle,
-	setWithdrawcrypto, } from "../../reducers/sendreceiveReducer";
+	setWithdrawcrypto,
+} from "../../reducers/sendreceiveReducer";
 
 import apiCalls from "../../api/apiCalls";
 import { publishBalanceRfresh } from "../../utils/pubsub";
@@ -71,10 +73,10 @@ class WithdrawSummary extends Component {
 		emailLoading: false,
 		emailVerifyLoading: false,
 		faLoading: false,
-    isEmailVerification:false,
-    isPhoneVerification:false,
-    isAuthenticatorVerification:false,
-	btnLoading:false
+		isEmailVerification: false,
+		isPhoneVerification: false,
+		isAuthenticatorVerification: false,
+		btnLoading: false
 	};
 
 	useDivRef = React.createRef();
@@ -84,56 +86,56 @@ class WithdrawSummary extends Component {
 		this.handleNewExchangeRate();
 		this.getVerifyData();
 
-		
+
 	}
 
-	
 
-   LinkValue = (props) => {
-    return (
-      <Translate
-        className="textpure-yellow text-underline c-pointer"
-        content={props.content}
-        component={Link}
-        onClick={() =>
-          window.open(
-            "https://www.iubenda.com/terms-and-conditions/42856099",
-            "_blank"
-          )
-        }
-      />
-    );
-  };
+
+	LinkValue = (props) => {
+		return (
+			<Translate
+				className="textpure-yellow text-underline c-pointer"
+				content={props.content}
+				component={Link}
+				onClick={() =>
+					window.open(
+						"https://www.iubenda.com/terms-and-conditions/42856099",
+						"_blank"
+					)
+				}
+			/>
+		);
+	};
 
 	startTimer = () => {
-	  let timeInterval;
-	  let count = 30;
-	  let timer = count-1;
-	  let seconds;
-    timeInterval = setInterval(()=> {
-	   seconds = parseInt(timer % 30);
-	     this.setState({...this.state,seconds:seconds})
-	    if (--timer < 0) {
-	      timer = count;
-	      clearInterval(timeInterval);
-	      this.setState({...this.state,disable:false,type:"Resend"})
-	    }
-	  }, 1000);
+		let timeInterval;
+		let count = 30;
+		let timer = count - 1;
+		let seconds;
+		timeInterval = setInterval(() => {
+			seconds = parseInt(timer % 30);
+			this.setState({ ...this.state, seconds: seconds })
+			if (--timer < 0) {
+				timer = count;
+				clearInterval(timeInterval);
+				this.setState({ ...this.state, disable: false, type: "Resend" })
+			}
+		}, 1000);
 	};
-	 startTimer2 = () => {
-	  let timeInterval2;
-	  let count2 = 30;
-	  let timer2 = count2 - 1;
-	  let seconds2;
-    timeInterval2 = setInterval(()=> {
-	    seconds2 = parseInt(timer2 % 30);
-	     this.setState({...this.state,seconds2:seconds2})
-	    if (--timer2 < 0) {
-	      timer2 = count2;
-	      clearInterval(timeInterval2);
-	      this.setState({...this.state,disable:false,type:"Resend"})
-	    }
-	  }, 1000);
+	startTimer2 = () => {
+		let timeInterval2;
+		let count2 = 30;
+		let timer2 = count2 - 1;
+		let seconds2;
+		timeInterval2 = setInterval(() => {
+			seconds2 = parseInt(timer2 % 30);
+			this.setState({ ...this.state, seconds2: seconds2 })
+			if (--timer2 < 0) {
+				timer2 = count2;
+				clearInterval(timeInterval2);
+				this.setState({ ...this.state, disable: false, type: "Resend" })
+			}
+		}, 1000);
 	};
 
 	trackEvent = () => {
@@ -211,7 +213,7 @@ class WithdrawSummary extends Component {
 				buttonText: "sentVerify",
 				inputDisable: false,
 				disable: true,
-				errorMsg:null,
+				errorMsg: null,
 				verificationText:
 					apiCalls.convertLocalLang("digit_code") + " " + this.maskedNumber,
 			});
@@ -245,7 +247,7 @@ class WithdrawSummary extends Component {
 				textDisable: true,
 				inputEmailDisable: false,
 				tooltipEmail: true,
-				errorMsg:null,
+				errorMsg: null,
 				emailVerificationText:
 					apiCalls.convertLocalLang("digit_code") + " " + "your Email Id ",
 			});
@@ -280,8 +282,8 @@ class WithdrawSummary extends Component {
 				verifyText: null,
 				emailText: null,
 				inputEmailDisable: true,
-        isEmailVerification:true,
-		errorMsg:null
+				isEmailVerification: true,
+				errorMsg: null
 
 			});
 		} else if (response.data == null) {
@@ -315,8 +317,8 @@ class WithdrawSummary extends Component {
 				verifyOtpText: null,
 				buttonText: null,
 				inputDisable: true,
-        isPhoneVerification:true,
-		errorMsg:null
+				isPhoneVerification: true,
+				errorMsg: null
 			});
 		} else if (response.data == null) {
 			this.setState({
@@ -367,8 +369,8 @@ class WithdrawSummary extends Component {
 				verifyAuth: true,
 				verifyAuthCode: true,
 				inputAuthDisable: true,
-        isAuthenticatorVerification:true,
-		errorMsg:null
+				isAuthenticatorVerification: true,
+				errorMsg: null
 			});
 		} else if (response.data == null) {
 			this.setState({
@@ -403,97 +405,97 @@ class WithdrawSummary extends Component {
 			});
 			this.useDivRef.current.scrollIntoView(0, 0);
 		}
-			else{
+		else {
 
-		  this.setState({...this.state,btnLoading:true})
-     
-        if (this.state.verifyData.isPhoneVerified) {
-          if (!this.state.isPhoneVerification) {
-            this.setState({
-              ...this.state,
-              errorMsg: "Please verify phone verification code",btnLoading:false
-            });
-            this.useDivRef.current.scrollIntoView(0, 0);
-            return;
-          }
-        }
-		if (this.state.verifyData.isEmailVerification) {
-			if (!this.state.isEmailVerification) {
-			  this.setState({
-				...this.state,
-				errorMsg: "Please verify email verification code",btnLoading:false
-			  });
-			  this.useDivRef.current.scrollIntoView(0, 0);
-			  return;
-			}
-		  }
-        if (this.state.verifyData.twoFactorEnabled) {
-          if (!this.state.isAuthenticatorVerification) {
-            this.setState({
-              ...this.state,
-              errorMsg: "Please verify authenticator code",btnLoading:false
-            });
-            this.useDivRef.current.scrollIntoView(0, 0);            
-            return;
-          }
-        }
-        if (
-          this.state.verifyData.isPhoneVerified == "" &&
-          this.state.verifyData.isEmailVerification == "" &&
-          this.state.verifyData.twoFactorEnabled == ""
-        ) {
-          this.setState({
-            ...this.state,
-            errorMsg:
-              "Without Verifications you can't withdraw. Please select withdraw verifications from security section",btnLoading:false
-          });
-        }
-				if (this.props.userProfile.isBusiness) {
-					let saveObj = this.props.sendReceive.withdrawCryptoObj;
-					let trackAuditLogData = this.props.trackAuditLogData;
-					trackAuditLogData.Action = "Save";
-					trackAuditLogData.Remarks = "Withdraw Crypto save";
-					saveObj.info = JSON.stringify(trackAuditLogData);
-					let withdrawal = await withDrawCrypto(saveObj);
-					if (withdrawal.ok) {
-						this.setState({...this.state,btnLoading:false})
-						this.props.dispatch(setCryptoFinalRes(withdrawal.data));
-						this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
-						this.props.dispatch(setWithdrawcrypto(null));
-						this.props.dispatch(setSubTitle(""));
-						this.props.changeStep("withdraw_crpto_success");
-						publishBalanceRfresh("success");
-					}
+			this.setState({ ...this.state, btnLoading: true })
 
-					 else {
-					  this.setState({
-					    ...this.state,
-					    errorMsg: this.isErrorDispaly(withdrawal),btnLoading:false
-					  });
-					}
-				} else {
-					this.props.dispatch(
-						setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
-					);
-					this.props.changeStep("withdraw_crypto_liveness");
+			if (this.state.verifyData.isPhoneVerified) {
+				if (!this.state.isPhoneVerification) {
+					this.setState({
+						...this.state,
+						errorMsg: "Please verify phone verification code", btnLoading: false
+					});
+					this.useDivRef.current.scrollIntoView(0, 0);
+					return;
 				}
+			}
+			if (this.state.verifyData.isEmailVerification) {
+				if (!this.state.isEmailVerification) {
+					this.setState({
+						...this.state,
+						errorMsg: "Please verify email verification code", btnLoading: false
+					});
+					this.useDivRef.current.scrollIntoView(0, 0);
+					return;
+				}
+			}
+			if (this.state.verifyData.twoFactorEnabled) {
+				if (!this.state.isAuthenticatorVerification) {
+					this.setState({
+						...this.state,
+						errorMsg: "Please verify authenticator code", btnLoading: false
+					});
+					this.useDivRef.current.scrollIntoView(0, 0);
+					return;
+				}
+			}
+			if (
+				this.state.verifyData.isPhoneVerified == "" &&
+				this.state.verifyData.isEmailVerification == "" &&
+				this.state.verifyData.twoFactorEnabled == ""
+			) {
 				this.setState({
 					...this.state,
 					errorMsg:
-						"We can not process this request, Since commission is more than or equal to requested amount",
+						"Without Verifications you can't withdraw. Please select withdraw verifications from security section", btnLoading: false
 				});
 			}
+			if (this.props.userProfile.isBusiness) {
+				let saveObj = this.props.sendReceive.withdrawCryptoObj;
+				let trackAuditLogData = this.props.trackAuditLogData;
+				trackAuditLogData.Action = "Save";
+				trackAuditLogData.Remarks = "Withdraw Crypto save";
+				saveObj.info = JSON.stringify(trackAuditLogData);
+				let withdrawal = await withDrawCrypto(saveObj);
+				if (withdrawal.ok) {
+					this.setState({ ...this.state, btnLoading: false })
+					this.props.dispatch(setCryptoFinalRes(withdrawal.data));
+					this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id));
+					this.props.dispatch(setWithdrawcrypto(null));
+					this.props.dispatch(setSubTitle(""));
+					this.props.changeStep("withdraw_crpto_success");
+					publishBalanceRfresh("success");
+				}
+
+				else {
+					this.setState({
+						...this.state,
+						errorMsg: this.isErrorDispaly(withdrawal), btnLoading: false
+					});
+				}
+			} else {
+				this.props.dispatch(
+					setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
+				);
+				this.props.changeStep("withdraw_crypto_liveness");
+			}
+			this.setState({
+				...this.state,
+				errorMsg:
+					"We can not process this request, Since commission is more than or equal to requested amount",
+			});
+		}
 	};
 	isErrorDispaly = (objValue) => {
 		if (objValue.data && typeof objValue.data === "string") {
-		  return objValue.data;
-		} else if (objValue.originalError &&typeof objValue.originalError.message === "string"
+			return objValue.data;
+		} else if (objValue.originalError && typeof objValue.originalError.message === "string"
 		) {
-		  return objValue.originalError.message;
+			return objValue.originalError.message;
 		} else {
-		  return "Something went wrong please try again!";
+			return "Something went wrong please try again!";
 		}
-	  };
+	};
 
 	fullNumber = this.props.userProfile?.phoneNumber;
 	last4Digits = this.fullNumber.slice(-4);
@@ -502,20 +504,19 @@ class WithdrawSummary extends Component {
 	address = this.props.sendReceive.withdrawCryptoObj?.toWalletAddress;
 	firstAddress = this.address.slice(0, 4);
 	lastAddress = this.address.slice(-4);
-	
-	
+
+
 
 	render() {
 		const { Paragraph, Text } = Typography;
 		const { seconds, disable, textDisable, seconds2 } = this.state;
-    const link = <this.LinkValue content="terms_service" />;
+		const link = <this.LinkValue content="terms_service" />;
 
 		const btnList = {
 			get_otp: (
 				<Translate
-					className={`pl-0 ml-0 text-yellow-50 ${
-						disable ? "c-notallowed" : ""
-					}`}
+					className={`pl-0 ml-0 text-yellow-50 ${disable ? "c-notallowed" : ""
+						}`}
 					content="get_code"
 				/>
 			),
@@ -580,13 +581,13 @@ class WithdrawSummary extends Component {
 				<div ref={this.useDivRef}></div>
 				{this.state.errorMsg && (
 					<Alert
-					    className="mb-12"
+						className="mb-12"
 						showIcon
 						onClose={() => this.state.errorMsg(null)}
 						description={this.state.errorMsg}
 						closable={false}
 						type="error"
-						/>
+					/>
 				)}
 				{this.state.loading ? (
 					<Loader />
@@ -626,9 +627,8 @@ class WithdrawSummary extends Component {
 								decimalPlaces={8}
 								prefix={""}
 								className="fw-400 text-white-30"
-								prefixText={`1 ${
-									this.props.sendReceive.withdrawCryptoObj?.walletCode
-								} = ${"USD"}`}
+								prefixText={`1 ${this.props.sendReceive.withdrawCryptoObj?.walletCode
+									} = ${"USD"}`}
 							/>
 						</div>
 						<div className="pay-list fs-14">
@@ -705,40 +705,40 @@ class WithdrawSummary extends Component {
 										</div>
 									}
 									rules={[{ required: true, message: "Is required" }]}
-									>
-										<div className="p-relative d-flex align-center">	
-									<Input
-										type="text"
-										className="cust-input custom-add-select mb-0"
-										placeholder={"Enter code"}
-										maxLength={6}
-										disabled={this.state.inputDisable}
-										onKeyDown={(event) => {
-											if (
-												event.currentTarget.value.length >= 6 &&
-												!(event.key == "Backspace" || event.key == "Delete")
-											) {
-												event.preventDefault();
-											} else if (/^\d+$/.test(event.key)) {
-												this.handleOtp(event.currentTarget.value);
-											} else if (
-												event.key == "Backspace" ||
-												event.key == "Delete"
-											) {
-											} 
-											else {
-												event.preventDefault();
-											}
-										}}
-										style={{ width: "100%" }}
-										onChange={(e) => this.handleChange(e, "code")}
-									/>
-									<div className="new-add c-pointer get-code text-yellow hy-align">
+								>
+									<div className="p-relative d-flex align-center">
+										<Input
+											type="text"
+											className="cust-input custom-add-select mb-0"
+											placeholder={"Enter code"}
+											maxLength={6}
+											disabled={this.state.inputDisable}
+											onKeyDown={(event) => {
+												if (
+													event.currentTarget.value.length >= 6 &&
+													!(event.key == "Backspace" || event.key == "Delete")
+												) {
+													event.preventDefault();
+												} else if (/^\d+$/.test(event.key)) {
+													this.handleOtp(event.currentTarget.value);
+												} else if (
+													event.key == "Backspace" ||
+													event.key == "Delete"
+												) {
+												}
+												else {
+													event.preventDefault();
+												}
+											}}
+											style={{ width: "100%" }}
+											onChange={(e) => this.handleChange(e, "code")}
+										/>
+										<div className="new-add c-pointer get-code text-yellow hy-align">
 											{!this.state.verifyTextotp && (
 												<Button
 													type="text"
 													loading={this.state.phoneLoading}
-													style={{color:"black"}}
+													style={{ color: "black" }}
 													onClick={this.getOTP}
 													disabled={this.state.disable}>
 													{btnList[this.state.buttonText]}
@@ -747,15 +747,15 @@ class WithdrawSummary extends Component {
 											{this.state.tooltipVisible == true && (
 												<Tooltip
 													placement="topRight"
-                          title={`Haven\'t received code? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
-													
+													title={`Haven\'t received code? Request new code in ${seconds} seconds. The code will expire after 30mins.`}>
+
 													<span className="icon md info mr-8" />
 												</Tooltip>
 											)}
 											<Button
 												type="text"
 												loading={this.state.phoneVerifyLoading}
-												style={{color:"black",margin:"0 auto"}}
+												style={{ color: "black", margin: "0 auto" }}
 												onClick={this.getOtpVerification}
 												disabled={this.state.verifyPhone == true}>
 												{verifyOtpText[this.state.verifyOtpText]}
@@ -764,7 +764,7 @@ class WithdrawSummary extends Component {
 												)}
 											</Button>
 										</div>
-										</div>
+									</div>
 								</Form.Item>
 							)}
 							{this.state.verifyData.isEmailVerification == true && (
@@ -789,26 +789,26 @@ class WithdrawSummary extends Component {
 										</div>
 									}
 									rules={[{ required: true, message: "Is required" }]}
-									>
-										<div className="p-relative d-flex align-center">
-									<Input
-										type="text"
-					
-										className="cust-input custom-add-select mb-0"
-										placeholder={"Enter code"}
-										maxLength={6}
-										style={{ width: "100%" }}
-										onClick={(event) =>
-											this.handleSendOtp(event.currentTarget.value)
-										}
-										onChange={(e) => this.handleEmailChange(e, "emailCodeVal")}
-										disabled={this.state.inputEmailDisable}
-									/>
-									<div className="new-add c-pointer get-code text-yellow hy-align">
+								>
+									<div className="p-relative d-flex align-center">
+										<Input
+											type="text"
+
+											className="cust-input custom-add-select mb-0"
+											placeholder={"Enter code"}
+											maxLength={6}
+											style={{ width: "100%" }}
+											onClick={(event) =>
+												this.handleSendOtp(event.currentTarget.value)
+											}
+											onChange={(e) => this.handleEmailChange(e, "emailCodeVal")}
+											disabled={this.state.inputEmailDisable}
+										/>
+										<div className="new-add c-pointer get-code text-yellow hy-align">
 											{!this.state.verifyEmailOtp && (
 												<Button
 													type="text"
-													style={{color:"black",margin:"0 auto"}}
+													style={{ color: "black", margin: "0 auto" }}
 													loading={this.state.emailLoading}
 													onClick={this.getEmail}>
 													{emailBtn[this.state.emailText]}
@@ -817,16 +817,16 @@ class WithdrawSummary extends Component {
 											{this.state.tooltipEmail == true && (
 												<Tooltip
 													placement="topRight"
-													 title={`Haven\'t received code? Request new code in ${seconds2} seconds. The code will expire after 30mins.`}>
-													
+													title={`Haven\'t received code? Request new code in ${seconds2} seconds. The code will expire after 30mins.`}>
+
 													<span className="icon md info mr-8" />
 												</Tooltip>
 											)}
-											
+
 
 											<Button
 												type="text"
-												style={{color:"black" , margin:"0 auto"}}
+												style={{ color: "black", margin: "0 auto" }}
 												loading={this.state.emailVerifyLoading}
 												onClick={(e) => this.getEmailVerification(e)}
 												disabled={this.state.verifyEmail == true}>
@@ -836,9 +836,9 @@ class WithdrawSummary extends Component {
 												)}
 											</Button>
 
-											
+
 										</div>
-										</div>
+									</div>
 								</Form.Item>
 							)}
 							{this.state.verifyData.twoFactorEnabled == true && (
@@ -879,24 +879,24 @@ class WithdrawSummary extends Component {
 											message: apiCalls.convertLocalLang("is_required"),
 										},
 									]}
-									>
-										<div className="p-relative d-flex align-center">
-									<Input
-										type="text"
-										className="cust-input custom-add-select mb-0"
-										placeholder={"Enter code"}
-										maxLength={6}
-										onChange={(e) =>
-											this.handleAuthenticator(e, "authenticator")
-										}
-										style={{ width: "100%" }}
-										disabled={this.state.inputAuthDisable == true}
-									/>
-									<div className="new-add c-pointer get-code text-yellow hy-align" >
+								>
+									<div className="p-relative d-flex align-center">
+										<Input
+											type="text"
+											className="cust-input custom-add-select mb-0"
+											placeholder={"Enter code"}
+											maxLength={6}
+											onChange={(e) =>
+												this.handleAuthenticator(e, "authenticator")
+											}
+											style={{ width: "100%" }}
+											disabled={this.state.inputAuthDisable == true}
+										/>
+										<div className="new-add c-pointer get-code text-yellow hy-align" >
 											<Button
 												type="text"
 												loading={this.state.faLoading}
-												style={{color:"black",margin:"0 auto"}}
+												style={{ color: "black", margin: "0 auto" }}
 												onClick={this.getAuthenticator}>
 												{this.state.verifyAuthCode ? (
 													<span className="icon md greenCheck" />
@@ -905,33 +905,33 @@ class WithdrawSummary extends Component {
 												)}
 											</Button>
 										</div>
-										</div>
+									</div>
 								</Form.Item>
 							)}
-               
-               <Form.Item
-                    className="custom-forminput mb-36 agree"
-                    name="isAccept"
-                    valuePropName="checked"
-                    required
-                  >
-                    <span className="d-flex">
-                      <Checkbox className="ant-custumcheck" />
-                      <span className="withdraw-check"></span>
-                      <Translate
-                        content="agree_to_suissebase"
-                        with={{ link }}
-                        component={Paragraph}
-                        className="fs-14 text-white-30 ml-16 mb-4"
-                        style={{ flex: 1 }}
-                      />
-                    </span>
-                  </Form.Item>
+
+							<Form.Item
+								className="custom-forminput mb-36 agree"
+								name="isAccept"
+								valuePropName="checked"
+								required
+							>
+								<span className="d-flex">
+									<Checkbox className="ant-custumcheck" />
+									<span className="withdraw-check"></span>
+									<Translate
+										content="agree_to_suissebase"
+										with={{ link }}
+										component={Paragraph}
+										className="fs-14 text-white-30 ml-16 mb-4"
+										style={{ flex: 1 }}
+									/>
+								</span>
+							</Form.Item>
 
 							<Button size="large" block className="pop-btn" htmlType="submit" loading={this.state.btnLoading}>
 								<Translate content="with_draw" component={Text} />
 							</Button>
-							
+
 						</Form>
 						<div className="text-center mt-16">
 							<Translate
