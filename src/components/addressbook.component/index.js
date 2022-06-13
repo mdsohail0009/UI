@@ -18,9 +18,8 @@ import SelectCrypto from "./selectCrypto";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import apiCalls from "../../api/apiCalls";
-import { warning } from "../../utils/message";
 import Info from "../shared/info";
-
+import {downloadDeclForm} from './api'
 const { Title, Paragraph, Text } = Typography;
 
 class AddressBook extends Component {
@@ -188,6 +187,19 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
+		// {
+		// 	field: "isWhitelisted",
+		// 	customCell: (props) => (
+		// 		<td>
+		// 			{props.dataItem?.isWhitelisted ? <a  onClick={() => {
+		// 				this.downloadDeclarationForm(props?.dataItem);
+		// 			}} >Download</a> : "Not whitelisted"}
+		// 		</td>
+		// 	),
+		// 	title: apiCalls.convertLocalLang("whitelist"),
+		// 	filter: false,
+		// 	width: 200,
+		// }
 	];
 	columnsCrypto = [
 		{
@@ -305,7 +317,26 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
+		// {
+		// 	field: "isWhitelisted",
+		// 	customCell: (props) => (
+		// 		<td>
+		// 			{props.dataItem?.isWhitelisted ? <a onClick={() => {
+		// 				this.downloadDeclarationForm(props?.dataItem);
+		// 			}} >Download</a> : "Not whitelisted"}
+		// 		</td>
+		// 	),
+		// 	title: apiCalls.convertLocalLang("whitelist"),
+		// 	filter: false,
+		// 	width: 200,
+		// },
 	];
+	async downloadDeclarationForm(dataItem){
+		const response = await downloadDeclForm(dataItem.id);
+		if(response.ok){
+			window.open(response.data,"_blank");
+		}
+	}
 	addressFiatView = ({ dataItem }) => {
 		this.props.history.push(`/addressFiatView/${dataItem.id}`);
 	};
@@ -721,7 +752,7 @@ class AddressBook extends Component {
 									className="text-white-30 fw-600 text-upper mb-4"
 									content={
 										this.props.addressBookReducer.stepTitles[
-											config[this.props.addressBookReducer.stepcode]
+										config[this.props.addressBookReducer.stepcode]
 										]
 									}
 									component={Paragraph}
@@ -730,7 +761,7 @@ class AddressBook extends Component {
 									className="text-white-50 mb-0 fw-300 fs-14 swap-subtitlte"
 									content={
 										this.props.addressBookReducer.stepSubTitles[
-											config[this.props.addressBookReducer.stepcode]
+										config[this.props.addressBookReducer.stepcode]
 										]
 									}
 									component={Paragraph}

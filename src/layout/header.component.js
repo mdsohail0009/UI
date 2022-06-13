@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import {Collapse,
+import {
+  Collapse,
   Layout,
   Menu,
   Modal,
@@ -12,7 +13,7 @@ import {Collapse,
   Carousel,
   Switch,
   Drawer,
-  Button,Popover
+  Button, Popover
 } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { Link, withRouter } from "react-router-dom";
@@ -492,6 +493,19 @@ class Header extends Component {
       }
     }
   }
+  newCard = () => {
+    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled)
+      this.props.history.push("/cards");
+    else {
+      const isKyc = !this.props.userConfig.isKYC;
+      if (isKyc) {
+        this.props.history.push("/notkyc");
+      } else {
+        this.showDocRequestError();
+      }
+    }
+
+  }
   showCards = () => {
     window.open(
       process.env.REACT_APP_CARDS_URL,
@@ -583,36 +597,36 @@ class Header extends Component {
                 </Panel>
               </Collapse>
             </li> */}
-             <li
-              // onClick={() => window.open('https://pyrros.instance.kyc-chain.com#/auth/signup/6120197cdc204d9ddb882e4d', '_blank')}
+            <li
+            // onClick={() => window.open('https://pyrros.instance.kyc-chain.com#/auth/signup/6120197cdc204d9ddb882e4d', '_blank')}
             >
-             <Popover placement="left"  content={<><div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
-                  <Link>
+              <Popover placement="left" content={<><div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/6120197cdc204d9ddb882e4d")}>
+                <Link>
                   <Translate
-                  content="personal_account"
-                  component={Text}
-                  className="text-white-30" key="1"
-                />
-                  </Link><span className="icon md rarrow-white ml-12" /></div>
-                  <div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
+                    content="personal_account"
+                    component={Text}
+                    className="text-white-30" key="1"
+                  />
+                </Link><span className="icon md rarrow-white ml-12" /></div>
+                <div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
                   <Link>
+                    <Translate
+                      content="business_account"
+                      component={Text}
+                      className="text-white-30" key="1"
+                    />
+                  </Link><span className="icon md rarrow-white ml-12" /></div></>} >
+                <Link>
                   <Translate
-                  content="business_account"
-                  component={Text}
-                  className="text-white-30" key="1"
-                /> 
-                </Link><span className="icon md rarrow-white ml-12" /></div></>} >
-              <Link>
-                <Translate
-                  content="get_your_own_iban"
-                  component={Text}
-                  className="text-white-30"
-                />
-                <span className="icon md rarrow-white" />
-              </Link>
-        
-      </Popover>
-      </li>
+                    content="get_your_own_iban"
+                    component={Text}
+                    className="text-white-30"
+                  />
+                  <span className="icon md rarrow-white" />
+                </Link>
+
+              </Popover>
+            </li>
 
             {/* <li
               onClick={() => window.open('https://pyrros.instance.kyc-chain.com#/auth/signup/6120197cdc204d9ddb882e4d', '_blank')}
@@ -694,7 +708,7 @@ class Header extends Component {
                     />
                   }
                 </li>
-                <li className=" px-33" style={{marginTop:"13px"}}>
+                <li className=" px-33" style={{ marginTop: "13px" }}>
                   <Translate
                     content="header_title"
                     onClick={this.routeToCockpit}
@@ -769,25 +783,32 @@ class Header extends Component {
                 this.props.dispatch(setHeaderTab(key.key));
               }}
             >
-
+              {this.props.userConfig.isBusiness && <Translate
+                content="cards"
+                component={Menu.Item}
+                key="8"
+                onClick={this.newCard}
+                className="list-item"
+              />
+              }
               <Translate
                 content="menu_payments"
                 component={Menu.Item}
-                key="1"
+                key="2"
                 onClick={this.showPayments}
                 className="list-item"
               />
               <Translate
                 content="menu_wallets"
                 component={Menu.Item}
-                key="2"
+                key="3"
                 onClick={this.showWalletsDrawer}
                 className="list-item"
               />
               <Translate
                 content="menu_buy_sell"
                 component={Menu.Item}
-                key="3"
+                key="4"
                 onClick={this.showBuyDrawer}
                 className="list-item"
               />

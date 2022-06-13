@@ -41,6 +41,8 @@ body, h1, h2, h3, h4, h5, h6, a, p div{font-family: 'SF Pro Text', sans-serif !i
 .portfolio-list .ant-list-split .ant-list-item .ant-list-item-meta-avatar{margin-top: 4px;}
 .dbchart-link{color: var(--textDark) !important;display: inline-block;background-color: var(--bgYellow); padding: 0 12px;margin-left: 8px;border-radius: 12px;line-height: 24px;}
 .btn-primary{background-color: var(--btnPrimary) !important;}
+.btn-back{background-color: transparent;border: 0;border-radius: 40px;height: 42px;text-transform: uppercase;transition: 0.3s ease;}
+.btn-back:hover{background-color: var(--bgDarkYellow);color: var(--bgDark);font-weight: 500;}
 .login-user, .side-drawer .side-drawer-header, .side-drawer-full .side-drawer-header, .wire-trans, .crypto-card-bottom{display: flex;justify-content: space-between;align-items: center;}
 .header-logo{list-style: none;display: inline-flex;padding-right: 0 !important;align-items: center;margin-bottom: 0;}
 .tlv-logo{height: 45px;}
@@ -231,6 +233,7 @@ border-radius: 5px;}
 .crypto-list-tabs .ant-tabs-tab-active .ant-tabs-tab-btn{color: var(--textDark) !important; background: var(--bgYellow); border-radius: 30px;}
 .crypto-list-tabs .ant-tabs-ink-bar{display: none;}
 .pop-btn,.confirm-btn{font-size: 14px;}
+.pop-btn span{color: #000;}
 .confirm-btn{height: 48px;}
 .confirm-btn, .confirm-btn:hover, .confirm-btn:focus, .confirm-btn:active {background-image: linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2));  border-radius: 40px;text-transform: uppercase;font-weight: 700; transition: 0.5s ease; color: var(--textPureWhite) !important;border: 1px solid linear-gradient(99.09deg, var(--btnGrad1), var(--btnGrad2)) !important;}
 .pop-btn{background-color: var(--bgYellow); border-color: var(--bgYellow); border-radius: 40px;height: 42px; text-transform: uppercase;font-weight: 700; transition: 0.3s ease;}
@@ -1150,3 +1153,5 @@ input[type=number]::-webkit-outer-spin-button {
     
     
 }
+.submission-sec{width: 620px;color: var(--bgWhite);margin: 0 auto;}
+.whitelist-note .ant-alert-message{font-weight: 500 !important;padding: 10px;}

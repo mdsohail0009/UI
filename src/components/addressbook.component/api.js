@@ -46,6 +46,9 @@ const getInfoVal = (id, type) => {
 		ApiControllers.depositWithdraw + `GetScoreChainInfo/${id}/${type}`
 	);
 };
+const downloadDeclForm=(addr_id)=>{
+	return apiClient.get(ApiControllers.depositWithdraw+`DownloadDocument/${addr_id}`);
+}
 
 export {
 	getCoinList,
@@ -58,4 +61,5 @@ export {
 	getAddress,
 	getFileURL,
 	getInfoVal,
+	downloadDeclForm
 };

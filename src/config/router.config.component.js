@@ -21,9 +21,10 @@ const Payments = React.lazy(() => import("../components/payments.component"));
 const PaymentDetails = React.lazy(() => import("../components/payments.component/paymentDetails"));
 const paymentsView = React.lazy(() => import("../components/payments.component/paymentsView"));
 const BeneficiaryDetails = React.lazy(() => import("../components/payments.component/beneficiaryDetails"));
-const AddressFiatView=React.lazy(()=>import("../components/addressbook.component/addressFiatView"))
-const AddressCryptoView=React.lazy(()=>import("../components/addressbook.component/addressCryptoView"))
-
+const AddressFiatView = React.lazy(() => import("../components/addressbook.component/addressFiatView"))
+const AddressCryptoView = React.lazy(() => import("../components/addressbook.component/addressCryptoView"))
+const RewardCard = React.lazy(() => import("../components/cards.component"));
+const RewardCardStatus = React.lazy(() => import("../components/cards.component/thankyou"));
 class RouteConfig extends Component {
   render() {
     return <Switch>
@@ -46,6 +47,7 @@ class RouteConfig extends Component {
         <Route path='/coindetails/:coinName' component={CoinDetails} />
         <ReactRoute path="/silent_redirect" component={SignInSilent} />
         <ReactRoute path='/cockpitCharts' component={DashboardCharts} />
+        <ReactRoute path='/cards' component={RewardCard} />
         <ReactRoute
           path="/payments"
           render={({ match: { url } }) => (

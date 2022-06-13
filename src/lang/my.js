@@ -558,6 +558,10 @@ export default {
 	sendTo: "Ipadala sa",
 	account_address: "Lugar ng pagbibigyan",
 	account_name: "Pangalan ng Makikinabang",
-  personal_account:'Kaonty manokana',
-  business_account:"Kaonty fandraharahana",
+	personal_account: 'Kaonty manokana',
+	business_account: "Kaonty fandraharahana",
+	cards: "KARATRA",
+	agree_to_signup: "Amin'ny fanindriana ny Sign Up, dia manaiky aho fa manaiky ny fifanarahana %(rohy)s Suissebase ary namaky ny Politika momba ny fiainana manokana",
+	terms_Use: "Fepetra fampiasana",
+	"whitelist": "senarai putih"
 };
