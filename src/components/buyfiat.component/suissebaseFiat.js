@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Drawer, Typography } from 'antd';
 import { buyFiatSteps as config } from './config';
 import Translate from 'react-translate-component';
-import { setStep } from '../../reducers/buysellReducer';
 import ConnectStateProps from '../../utils/state.connect';
 import FaitDeposit from '../../components/deposit.component/faitDeposit';
 import FaitdepositSummary from './faitdepositSummary';
@@ -12,7 +11,6 @@ import WithdrawalSummary from '../withDraw.component/withdrawalSummary';
 class SuissebaseFiat extends Component {
     state = {}
     closeDrawer = () => {
-        //this.props.dispatch(setStep("step1"))
         if (this.props.onClose) {
             this.props.onClose();
         }

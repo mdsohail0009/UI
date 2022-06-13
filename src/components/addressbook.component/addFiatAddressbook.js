@@ -27,10 +27,8 @@ import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
 import { Link } from "react-router-dom";
 import { bytesToSize } from "../../utils/service";
-import { getCountryStateLu, getStateLookup } from "../../api/apiServer";
 import { addressTabUpdate } from "../../reducers/addressBookReducer";
 import FilePreviewer from "react-file-previewer";
-import { logDOM } from "@testing-library/react";
 
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
@@ -77,8 +75,6 @@ const NewFiatAddress = (props) => {
 	const [identityFile, setIdentityFile] = useState(null);
 	const [declarationFile, setDeclarationFile] = useState(null);
 	const [isUploading, setUploading] = useState(false);
-	const [countryLu, setCountryLu] = useState([]);
-	const [stateLu, setStateLu] = useState([]);
 	const [addressState, setAddressState] = useState(null);
 	const [selectParty, setSelectParty] = useState(props?.checkThirdParty);
 	const [withdrawEdit, setWithdrawValues] = useState();
@@ -115,7 +111,7 @@ const NewFiatAddress = (props) => {
 			});
 		}
 		if (
-			props?.addressBookReducer?.selectedRowData?.id !=
+			props?.addressBookReducer?.selectedRowData?.id !==
 				"00000000-0000-0000-0000-000000000000" &&
 			props?.addressBookReducer?.selectedRowData?.id
 		) {
@@ -124,7 +120,7 @@ const NewFiatAddress = (props) => {
 		}
 		setBankType('bank');
 		addressbkTrack();
-	}, []);
+	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 	const getName = () => {
 		return props?.userConfig.isBusiness
 			? props?.userConfig.businessName
@@ -168,7 +164,7 @@ const NewFiatAddress = (props) => {
 				);
 			}
 			let fileInfo = response?.data?.documents?.details;
-			if (response?.data?.addressType === "1stparty" && fileInfo?.length != 0) {
+			if (response?.data?.addressType === "1stparty" && fileInfo?.length !== 0) {
 				setDeclarationFile(response?.data?.documents?.details[0]);
 				form.setFieldsValue({ file3: true });
 			} else {
@@ -181,11 +177,23 @@ const NewFiatAddress = (props) => {
 			form.setFieldsValue({ ...response.data });
 			setIsLoading(false);
 		} else {
-			setErrorMsg(response.data || "Something went wrong please try again!");
+			setErrorMsg(isErrorDispaly(response));
 			setIsLoading(false);
 			useDivRef.current.scrollIntoView();
 		}
 	};
+	const isErrorDispaly = (objValue) => {
+		if (objValue.data && typeof objValue.data === "string") {
+		  return objValue.data;
+		} else if (
+		  objValue.originalError &&
+		  typeof objValue.originalError.message === "string"
+		) {
+		  return objValue.originalError.message;
+		} else {
+		  return "Something went wrong please try again!";
+		}
+	  };
 	const handleWalletSelection = (walletId) => {
 		setFiatAddress({ toCoin: walletId });
 		form.setFieldsValue({ toCoin: walletId });
@@ -217,7 +225,11 @@ const NewFiatAddress = (props) => {
 			"fiat",
 			favaddrId
 		);
-		if (responsecheck.data != null) {
+		if (!values.isAgree) {
+			setBtnDisabled(false);
+			useDivRef.current.scrollIntoView();
+			setErrorMsg(apiCalls.convertLocalLang("agree_termsofservice"))
+		} else if (responsecheck.data !== null) {
 			setIsLoading(false);
 			setBtnDisabled(false);
 			useDivRef.current.scrollIntoView();
@@ -267,7 +279,7 @@ const NewFiatAddress = (props) => {
 				props?.userConfig?.sk
 			);
 			saveObj.documents = {
-				id: withdrawEdit
+				id: (withdrawEdit!=null&&withdrawEdit!=undefined)
 					? withdrawEdit?.documents?.id
 					: "00000000-0000-0000-0000-000000000000",
 				transactionId: null,
@@ -312,7 +324,7 @@ const NewFiatAddress = (props) => {
 				props?.dispatch(setHeaderTab(""));
 				props?.props?.history?.push("/userprofile");
 			} else {
-				setErrorMsg(response.data || "Something went wrong please try again!");
+				setErrorMsg(isErrorDispaly(response));
 				setIsLoading(false);
 				setBtnDisabled(false);
 				useDivRef.current.scrollIntoView();
@@ -347,6 +359,7 @@ const NewFiatAddress = (props) => {
 		setErrorWarning(null);
 		if (file.name.split(".").length > 2) {
 			useDivRef.current.scrollIntoView();
+			setErrorMsg(null);
 			setErrorWarning("File don't allow double extension");
 			return;
 		} else {
@@ -365,6 +378,7 @@ const NewFiatAddress = (props) => {
 					setUploadIdentity(true);
 					return true;
 				} else {
+					setErrorMsg(null);
 					setErrorWarning(
 						"File is not allowed. You can upload jpg, png, jpeg and PDF files"
 					);
@@ -387,6 +401,7 @@ const NewFiatAddress = (props) => {
 					setUploadAddress(true);
 					return true;
 				} else {
+					setErrorMsg(null);
 					setErrorWarning(
 						"File is not allowed. You can upload jpg, png, jpeg and PDF files"
 					);
@@ -408,6 +423,7 @@ const NewFiatAddress = (props) => {
 					setUploading(true);
 					return true;
 				} else {
+					setErrorMsg(null);
 					setErrorWarning("File is not allowed. You can upload only PDF file");
 					setUploading(false);
 					return Upload.LIST_IGNORE;
@@ -416,6 +432,7 @@ const NewFiatAddress = (props) => {
 		}
 	};
 	const radioChangeHandler = (e) => {
+		setErrorMsg(null);
 		setErrorWarning(null);
 		setUploading(false);
 		setUploadAddress(false);
@@ -450,7 +467,7 @@ const NewFiatAddress = (props) => {
 	const upLoadFiles = ({ file }, type) => {
 		let obj = {
 			documentName: `${file.name}`,
-			isChecked: file.name == "" ? false : true,
+			isChecked: file.name === "" ? false : true,
 			remarks: `${file.size}`,
 			state: null,
 			status: false,
@@ -509,11 +526,7 @@ const NewFiatAddress = (props) => {
 		}
 	};
 	const filePreviewPath = () => {
-		if (previewPath?.includes(".pdf")) {
 			return previewPath;
-		} else {
-			return previewPath;
-		}
 	};
 	const filePreviewModal = (
 		<Modal
@@ -884,8 +897,8 @@ const NewFiatAddress = (props) => {
 									label={
 										<Translate
 											content={
-												(props?.userConfig?.isBusiness && "company_name") ||
-												(!props?.userConfig?.isBusiness &&
+												(props?.userConfig?.isBusiness&& !selectParty && "company_name") ||
+												((!props?.userConfig?.isBusiness || selectParty)&&
 													"Recipient_full_name")
 											}
 											component={Form.label}
@@ -908,9 +921,9 @@ const NewFiatAddress = (props) => {
 										<Input
 											className="cust-input"
 											placeholder={
-												(props?.userConfig?.isBusiness &&
+												(props?.userConfig?.isBusiness && !selectParty&&
 													apiCalls.convertLocalLang("company_name")) ||
-												(!props?.userConfig?.isBusiness &&
+												((!props?.userConfig?.isBusiness || selectParty) &&
 													apiCalls.convertLocalLang("Recipient_full_name"))
 											}
 											value="naresh"
@@ -1009,7 +1022,7 @@ const NewFiatAddress = (props) => {
 												</p>
 											</Dragger>
 										}
-										{!uploadIdentity && identityFile != null && (
+										{!uploadIdentity && identityFile !== null && (
 											<div className="docfile mr-0">
 												<span
 													className={`icon xl ${
@@ -1078,7 +1091,7 @@ const NewFiatAddress = (props) => {
 											</>
 										}
 									</Form.Item>
-									{!uploadAdress && addressFile != null && (
+									{!uploadAdress && addressFile !== null && (
 										<div className="docfile mr-0">
 											<span
 												className={`icon xl ${
@@ -1118,20 +1131,8 @@ const NewFiatAddress = (props) => {
 								className="custom-forminput mt-36 agree"
 								name="isAgree"
 								valuePropName="checked"
-								rules={[
-									{
-										validator: (_, value) =>
-											value
-												? Promise.resolve()
-												: Promise.reject(
-														new Error(
-															apiCalls.convertLocalLang("agree_termsofservice")
-														)
-												  ),
-									},
-								]}>
+								>
 								<Checkbox className="ant-custumcheck" />
-								{/* <span className="withdraw-check"></span> */}
 							</Form.Item>
 							<Translate
 								content="agree_to_suissebase"
@@ -1148,6 +1149,9 @@ const NewFiatAddress = (props) => {
 									marginBottom: "10px",
 								}}
 							/>
+								{/* <div className="whitelist-note">
+							<Alert type="warning" message={`Note : Declaration form has been sent to ${fiatAddress?.email||"your email address"}. Please sign using link received in email to whitelist your address`} showIcon closable={false} />
+							</div> */}
 						</div>
 
 						<Form.Item className="text-center">

@@ -75,10 +75,23 @@ class SellSummary extends Component {
                     name: 'Sell', properties: { "Type": 'User', "Action": 'Save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Sell', "Remarks": obj.fromValue + " " + this.state.sellpreviewData.coin + " selled", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto' }
                 });
             } else {
-                this.setState({ ...this.state, loader: false,isLoading: false, disableConfirm: false, error: { valid: false, message: res.data || "Something went wrong please try again!", title: apicalls.convertLocalLang('sellCrypto')  } })
+                this.setState({ ...this.state, loader: false,isLoading: false, disableConfirm: false, error: { valid: false, message: this.isErrorDispaly(res),title: apicalls.convertLocalLang('sellCrypto') }  } )
             }
         }
     }
+    isErrorDispaly = (objValue) => {
+        if (objValue.data && typeof objValue.data === "string") {
+          return objValue.data;
+        } else if (
+          objValue.originalError &&
+          typeof objValue.originalError.message === "string"
+        ) {
+          return objValue.originalError.message;
+        } else {
+          return "Something went wrong please try again!";
+        }
+      };
+    
     render() {
         const { sellpreviewData } = this.state;
         const { amount, amountNativeCurrency, oneCoinValue, coin, currency } = sellpreviewData;
@@ -86,6 +99,7 @@ class SellSummary extends Component {
             <Alert
                 closable
                 type="error"
+                message={apicalls.convertLocalLang('sellCrypto')}
                 description={this.state.error}
                 onClose={() => this.setState({error:null})}
                 showIcon

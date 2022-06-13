@@ -28,7 +28,6 @@ class Cases extends Component {
                 <div className="gridLink" onClick={() => this.viewCase(props)}>
                 <Moment format="DD/MM/YYYY">
                     {props.dataItem.createdDate}
-                    {/* {new Date(props.dataItem.createdDate).toLocaleDateString()} */}
                 </Moment>
                 </div>
               </td>

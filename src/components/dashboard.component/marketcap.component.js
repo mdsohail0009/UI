@@ -2,7 +2,6 @@ import { Table, Tooltip, Input, Empty, Drawer, Typography } from 'antd';
 import { FullscreenOutlined, ReloadOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react';
 import Translate from 'react-translate-component';
-import Loader from '../../Shared/loader';
 import { fetchMarketCaps } from './api';
 import { detailInfoColumns, infoColumns } from './marketcap.columns';
 import apiCalls from '../../api/apiCalls';

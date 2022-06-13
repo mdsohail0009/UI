@@ -40,7 +40,7 @@ const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
         }
         else
         {
-            setErrorMsg("Something went wrong please try again!")
+            setErrorMsg(isErrorDispaly(res))
         }
     }
     const saveSettings = async () => {
@@ -63,11 +63,23 @@ const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
             
         }
         else{
-            setErrorMsg( res.data || "Something went wrong please try again!")
+            setErrorMsg(isErrorDispaly(res))
             setIsLoading(false);
             setBtnDisabled(false);
         }
     }
+    const isErrorDispaly = (objValue) => {
+        if (objValue.data && typeof objValue.data === "string") {
+          return objValue.data;
+        } else if (
+          objValue.originalError &&
+          typeof objValue.originalError.message === "string"
+        ) {
+          return objValue.originalError.message;
+        } else {
+          return "Something went wrong please try again!";
+        }
+      };
     const themeSwitch = async () => {
         setTheme(!theme)
         switcher({ theme: theme ? themes.DRT : themes.LHT });
