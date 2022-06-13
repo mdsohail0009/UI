@@ -376,6 +376,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .crypto-list .ant-list-item, .wallet-list .ant-list-item{padding:5px 0 0 2px !important}
 .recomoned-bg{background: var(--texthover);font-size: 12px;padding: 0 2px;line-height: 1.2;color: var(--textWhite);float: right;}
 .text-width{width: 250px;}
+.a-text{color: var(--bgBlue);}
 .pop-drpdwn-toogle{background: var(--bgDark);width: 50px; height: 50px; border-radius: 20px;text-align: center;line-height: 50px;}
 .alert-popup li{padding: 0;}
 .alert-popup{background: #E7F2E1;border-radius: 4px;border-radius: 6px;}
