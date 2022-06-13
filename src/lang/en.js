@@ -563,4 +563,5 @@ export default {
 	business_account:"Business Account",
 	empty: " ",
 	Recipient_Business_name: "Recipient Full Name/Business Name",
+	menu_tranfor: "Tranfor",
 };
