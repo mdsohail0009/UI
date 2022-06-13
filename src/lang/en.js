@@ -563,4 +563,8 @@ export default {
 	business_account:"Business Account",
 	empty: " ",
 	Recipient_Business_name: "Recipient Full Name/Business Name",
+	cards:"Cards",
+	agree_to_signup: "By clicking Sign Up, I here by acknowledge that I agree to Suissebase's %(link)s Agreement and I've read the Privacy Policy",
+	terms_Use: "Terms of Use",
+	"whitelist":"Declaration form"
 };
