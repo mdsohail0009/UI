@@ -1143,7 +1143,7 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 16px;
     padding: 0 16px !important;
 }
-.submission-sec{width: 620px;color: var(--bgWhite);margin: 0 auto;}
+.submission-sec{width: 850px;color: var(--bgWhite);margin: 0 auto;}
 .whitelist-note .ant-alert-message{font-weight: 500 !important;padding: 10px;}
 
 .hy-align{margin:auto 0; display: flex;align-items: center;}
