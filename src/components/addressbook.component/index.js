@@ -18,7 +18,7 @@ import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import apiCalls from "../../api/apiCalls";
 import Info from "../shared/info";
-
+import {downloadDeclForm} from './api'
 const { Paragraph, Text } = Typography;
 
 class AddressBook extends Component {
@@ -178,6 +178,19 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
+		// {
+		// 	field: "isWhitelisted",
+		// 	customCell: (props) => (
+		// 		<td>
+		// 			{props.dataItem?.isWhitelisted ? <a  onClick={() => {
+		// 				this.downloadDeclarationForm(props?.dataItem);
+		// 			}} >Download</a> : "Not whitelisted"}
+		// 		</td>
+		// 	),
+		// 	title: apiCalls.convertLocalLang("whitelist"),
+		// 	filter: false,
+		// 	width: 200,
+		// }
 	];
 	columnsCrypto = [
 		{
@@ -295,7 +308,26 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
+			// {
+		// 	field: "isWhitelisted",
+		// 	customCell: (props) => (
+		// 		<td>
+		// 			{props.dataItem?.isWhitelisted ? <a onClick={() => {
+		// 				this.downloadDeclarationForm(props?.dataItem);
+		// 			}} >Download</a> : "Not whitelisted"}
+		// 		</td>
+		// 	),
+		// 	title: apiCalls.convertLocalLang("whitelist"),
+		// 	filter: false,
+		// 	width: 200,
+		// },
 	];
+	async downloadDeclarationForm(dataItem){
+		const response = await downloadDeclForm(dataItem.id);
+		if(response.ok){
+			window.open(response.data,"_blank");
+		}
+	}
 	addressFiatView = ({ dataItem }) => {
 		this.props.history.push(`/addressFiatView/${dataItem.id}`);
 	};
@@ -436,7 +468,6 @@ class AddressBook extends Component {
 		}
 	};
 	editAddressBook = () => {
-		debugger
 		this.setState({...this.state, errorWorning: null,selection: [] });
 		let obj = this.state.selectedObj;
 		if (!this.state.isCheck) {
@@ -456,7 +487,7 @@ class AddressBook extends Component {
 		} else {
 			obj.walletCode = obj.coin;
 			this.props.rowSelectedData(obj);
-			if (obj.isPrimary) {
+			if (obj.isPrimary === false) {
 				this.props.history.push(`/payments/newbeneficiary/${obj.id}`);
 			} else {
 				if (this.state.cryptoFiat) {
