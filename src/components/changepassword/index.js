@@ -31,7 +31,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       form.resetFields();
     }
     trakEvet()
-  }, [userProfile]);
+  }, [userProfile]);// eslint-disable-line react-hooks/exhaustive-deps
   const trakEvet = () => {
     apiCalls.trackEvent({ "Type": 'User', "Action": 'Change password page view', "Username": userConfig?.userName, "MemeberId": userConfig?.id, "Feature": 'Change Password', "Remarks": 'Change password page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Change Password' });
   }
@@ -64,10 +64,21 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
       } else {
         setBtnDisabled(false);
         setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
-        passwordResponce(true, result.data || 'Something went wrong please try again!', false);
+        passwordResponce(true, isErrorDispaly(result), false);
       }
     }
   }
+  const isErrorDispaly = (objValue) => {
+		if (objValue.data && typeof objValue.data === "string") {
+		  return objValue.data;
+		} else if (objValue.originalError &&typeof objValue.originalError.message === "string"
+		) {
+		  return objValue.originalError.message;
+		} else {
+		  return "Something went wrong please try again!";
+		}
+	  };
+
   const passwordResponce = (isError, msg, isloading) => {
     setChangePasswordResponse({ error: isError, messsage: msg, isLoading: isloading });
   }
@@ -147,7 +158,6 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
                   )
                 } else if (!value || !(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/.test(value))) {
                   return Promise.reject(
-                    // "Password must be at least 8 characters long one uppercase with one lowercase, one numeric & special character"
                     "Password must have at least 8 characters and cannot contain common words or patterns. Try adding numbers, symbols, or characters to make your password longer and unique."
 
                   )
@@ -161,9 +171,6 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
                 }
               },
             },
-            // {
-            //   validator: validateContentRule
-            // }
           ]}
         >
 

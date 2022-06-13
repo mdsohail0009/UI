@@ -74,6 +74,7 @@ const Payments = (props) => {
         { field: "state", title: 'State', filter: true },
     ];
     const handleInputChange = (prop) => {
+      setErrorWarning(null);
         const rowChecked = prop.dataItem;
         let _selection = [...selection];
         let idx = _selection.indexOf(rowChecked.id);

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input, Typography, Spin ,Empty} from "antd";
+import { Drawer, Row, Col, Select, Button, Alert, Form, DatePicker, Modal, Tooltip, Input, Typography ,Empty} from "antd";
 import List from "../grid.component";
 import Loader from '../../Shared/loader'
 import { userNameLuSearch, getFeatureLuSearch, getAuditLogInfo } from './api';
@@ -363,7 +363,7 @@ class AuditLogs extends Component {
           className="side-drawer"
           destoryOnClose={true}
         >
-          {(isLoading && logRowData?.browser == null || logRowData?.location == null || logRowData?.ip == null || 
+          {(isLoading && (logRowData?.browser == null) || (logRowData?.location == null) || (logRowData?.ip == null )|| 
             logRowData?.deviceType == null) ? <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apicalls.convertLocalLang('No_data')} />
             : <><div className="coin-info">
             <Text>City</Text>

@@ -39,15 +39,10 @@ class TransactionsHistory extends Component {
 
 componentDidMount() {
     this.TransactionSearch();
-    // this.props.thref(this)
-    // apiCalls.trackEvent({ "Type": 'User', "Action": 'Transactions All page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Transactions', "Remarks": 'Transactions All page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Transactions' });
   }
   gridColumns = [
     {field: "date", title: "Date", filter: true, isShowTime: true, filterType: "date", locked: true, width: 210,
 },
-    // { field: "memberName", title: "Name", filter: true, width: 150, },
-    // { field: "userName", title: "User Name", filter: true, width: 200 },
-    // { field: "memberEmail", title: "Email", filter: true, width: 220 },
     { field: "docType", title: "Transaction", filter: true, width: 120, },
     { field: "fromWalletCode", title: "From Wallet Code", filter: true, width: 180, },
     { field: "fromValue", title: "From Value", width: 150, filter: true, footerCell: true, dataType: 'number', filterType: "numeric" },
@@ -63,7 +58,6 @@ componentDidMount() {
   TransactionSearch = async () => {
     let response = await getTransactionSearch();
     if (response.ok) {
-      console.log(response.data)
       this.setState({
         typeData: response.data.types,
         doctypeData: response.data.docTypes,
@@ -101,14 +95,6 @@ componentDidMount() {
 
 	
 	render() {
-		// const {
-		// 	BuySellURL,
-		// 	SwapURL,
-		// 	WithdrawURL,
-		// 	DepositURL,
-		// 	DepositCryptoURL,
-		// 	WithdrawCryptoURL,
-		// } = this.state;
 		const { Title } = Typography;
 		const { memberData, typeData, doctypeData, gridUrl, searchObj } = this.state;
 		const options1 = typeData.map((d) => (
@@ -180,13 +166,6 @@ componentDidMount() {
                             Search
                         </Button>
               </Col>
-                {/* <Button
-                            className="pop-btn px-24"
-                            style={{  height: 40 }}
-                            // onClick={this.handleSearch}
-                        >
-                          Excel Export
-                        </Button> */}
               
             </Row>
           </Form>
@@ -199,32 +178,6 @@ componentDidMount() {
          excelFileName = {'Transactions'}
 
         />
-				{/* <Modal
-					title="Crypto Currency"
-					visible={this.state.cryptoModal}
-					className="crypto-list"
-					destroyOnClose
-					closeIcon={
-						<Tooltip title="Close">
-							<span
-								className="icon md close-white c-pointer"
-								onClick={() =>
-									this.setState({ ...this.state, cryptoModal: false })
-								}
-							/>
-						</Tooltip>
-					}
-					footer={
-						<Button
-							className="primary-btn pop-btn"
-							onClick={() =>
-								this.setState({ ...this.state, cryptoModal: false })
-							}>
-							Close
-						</Button>
-					}>
-					<Info id={this.state.selectedId} type={this.state.selectedModal} />
-				</Modal> */}
 				</Drawer>
 			   </>
 			   

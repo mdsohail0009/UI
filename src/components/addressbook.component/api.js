@@ -1,25 +1,25 @@
 import { apiClient } from "../../api";
 import { ApiControllers } from "../../api/config";
 
-const favouriteFiatAddress = (member_id, type, coin_code) => {
+const favouriteFiatAddress = (accountId, type, coin) => {
 	return apiClient.get(
-		ApiControllers.depositWithdraw +
-			`Favourite/${member_id}/${type}/${coin_code}`
+		ApiControllers.addressbook +
+		`Favourite/${accountId}/${type}/${coin}`
 	);
 };
 const detailsAddress = (id) => {
 	return apiClient.get(
-		ApiControllers.depositWithdraw + `Withdraw/Favourite/${id}`
+		ApiControllers.addressbook + `Withdraw/Favourite/${id}`
 	);
 };
-const favouriteNameCheck = (member_id, name, type, favaddrId) => {
+const favouriteNameCheck = (accountId, name, type, favaddrId) => {
 	return apiClient.get(
-		ApiControllers.depositWithdraw +
-			`Favourite/${favaddrId}/${member_id}/${name}/${type}`
+		ApiControllers.addressbook +
+		`Favourite/${favaddrId}/${accountId}/${name}/${type}`
 	);
 };
 const saveAddress = (obj) => {
-	return apiClient.post(ApiControllers.depositWithdraw + `Favourite`, obj);
+	return apiClient.post(ApiControllers.addressbook + `Favourite`, obj);
 };
 const getCoinList = (type) => {
 	return apiClient.get(ApiControllers.markets + `Coins/${type}`);
@@ -34,7 +34,7 @@ const activeInactive = (obj) => {
 };
 const getAddress = (addreddId) => {
 	return apiClient.get(
-		ApiControllers.depositWithdraw + `Withdraw/Favourite/${addreddId}`
+		ApiControllers.addressbook + `Withdraw/Favourite/${addreddId}`
 	);
 };
 const getFileURL = (obj) => {
@@ -43,7 +43,7 @@ const getFileURL = (obj) => {
 
 const getInfoVal = (id, type) => {
 	return apiClient.get(
-		ApiControllers.depositWithdraw + `GetScoreChainInfo/${id}/${type}`
+		ApiControllers.deposit + `GetScoreChainInfo/${id}/${type}`
 	);
 };
 const downloadDeclForm=(addr_id)=>{

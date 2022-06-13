@@ -3,8 +3,6 @@ import { Typography, Menu, Dropdown } from 'antd';
 import Translate from 'react-translate-component';
 import { Link } from 'react-router-dom';
 import { userManager } from '../../authentication';
-import { store } from '../../store';
-import { clearUserInfo } from '../../reducers/configReduser';
 
 const { Title } = Typography;
 class SettingsMenu extends Component {

@@ -27,7 +27,7 @@ const AddressFiatView = (props) => {
 
 	useEffect(() => {
 		loadDataAddress();
-	}, []);
+	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 	const loadDataAddress = async () => {
 		setIsLoading(true);
 		let response = await getAddress(props?.match?.params?.id, "Fiat");
@@ -47,20 +47,15 @@ const AddressFiatView = (props) => {
 			setPreviewPath(res.data);
 		}
 	};
-	// const addressTypeNames = (type) =>{
-	//   const stepcodes = {
-	//             "1stparty" : "1st Party",
-	//             "3rd Party" : "3rd Party",
-	//    }
-	//    return stepcodes[type]
-	// }
 	const filePreviewPath = () => {
-		if (previewPath?.includes(".pdf")) {
 			return previewPath;
-		} else {
-			return previewPath;
-		}
+
 	};
+
+	const iban=fiatAddress?.bankType === "iban"? "IBAN": "Bank Account"
+
+	const iban1=fiatAddress?.bankType === "iban"? "IBAN": "Bank Account Number"
+
 	const filePreviewModal = (
 		<Modal
 			className="documentmodal-width"
@@ -148,18 +143,15 @@ const AddressFiatView = (props) => {
 												<div>
 													<label className="kpi-label">Bank Type</label>
 													<div className=" kpi-val">
-														{fiatAddress?.bankType === "iban"
-															? "IBAN"
-															: "Bank Account"}
+											
+															{iban}
 													</div>
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">
-														{fiatAddress?.bankType === "iban"
-															? "IBAN"
-															: "Bank Account Number"}
+															{iban1}
 													</label>
 													<div className=" kpi-val">
 														{fiatAddress?.accountNumber}
@@ -199,9 +191,9 @@ const AddressFiatView = (props) => {
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">
-														{(props?.userConfig?.isBusiness &&
+														{(props?.userConfig?.isBusiness && fiatAddress?.addressType !== "3rdparty"&&
 															"Business Name") ||
-															(!props?.userConfig?.isBusiness &&
+															((!props?.userConfig?.isBusiness || fiatAddress?.addressType === "3rdparty")&&
 																"Recipient Full Name")}
 													</label>
 													<div className="kpi-val">
@@ -227,12 +219,12 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>
-											{fiatAddress?.addressType == "3rdparty" && (
+											{fiatAddress?.addressType === "3rdparty" && (
 												<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 													<div>
 														<label className="kpi-label">Remarks</label>
 														<div className="kpi-val">
-															{fiatAddress?.remarks}
+															{fiatAddress?.remarks?fiatAddress?.remarks:'-'}
 														</div>
 													</div>
 												</Col>

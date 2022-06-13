@@ -18,9 +18,6 @@ const PieChart = ({ data }) => {
             title: {
                 text: ''
             },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
             credits: {
                 enabled: false
             },
@@ -51,7 +48,7 @@ const PieChart = ({ data }) => {
                 data: data || [],
             }]
         });
-    }, []);
+    }, []);// eslint-disable-line react-hooks/exhaustive-deps
     return <div id="piecontainer"></div>
 }
 
