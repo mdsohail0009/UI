@@ -14,13 +14,13 @@ class CardStatus extends Component {
             rejected: rejected,
         },
         messages: {
-            success: <div>We are currently reviewing your application and we will be in touch soon regarding the outcome of your application. If you have any questions, please contact our support at <Link className="a-text" to="#">support@suissebase.ch</Link></div>,
+            submitted: <div>We are currently reviewing your application and we will be in touch soon regarding the outcome of your application. If you have any questions, please contact our support at <Link className="a-text" to="#">support@suissebase.ch</Link></div>,
             // inprogress: 'We are in the process of reviewing the information for your application. We will notify you via email about the outcome of your application. If you have any questions, please contact our support at support@suissebase.ch ',
             inprogress: <div>We are in the process of reviewing the information for your application. We will notify you via email about the outcome of your application. If you have any questions, please contact our support at <Link className="a-text" to="#">support@suissebase.ch</Link> </div>,
             rejected: <div>We regret to inform you that we are presently unable to approve your application Suissebase Corporate Expense Card. If you have any questions, please contact our support at <Link className="a-text" to="#">support@suissebase.ch</Link></div>
         },
         titles:{
-            success: 'Thank you for applying for Suissebase Corporate Expense Card!',
+            submitted: 'Thank you for applying for Suissebase Corporate Expense Card!',
             inprogress: 'Suissebase Corporate Expense Card Application Status ',
             rejected:'Suissebase Corporate Expense Card Application Status '
         }
