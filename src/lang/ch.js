@@ -524,4 +524,8 @@ export default {
 	personal_account:'个人账户',
 	business_account:"商业账户",
 	Recipient_Business_name: "收件人全名/公司名称",
+	cards:"牌",
+	agree_to_signup:'通过单击注册，我在此确认我同意 Suissebase 的 %(link)s 协议并且我已阅读隐私政策',
+	terms_Use: "使用条款",
+	"whitelist":"白名單"
 };
