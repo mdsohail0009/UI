@@ -607,7 +607,7 @@ class Header extends Component {
                     component={Text}
                     className="text-white-30" key="1"
                   />
-                </Link><span className="icon md rarrow-white ml-12" /></div>
+                </Link><span className="icon c-pointer md rarrow-white ml-12" /></div>
                 <div onClick={() => window.open("https://pyrros.instance.kyc-chain.com/#/auth/signup/611b3ed20414885a6fc64fa7")}>
                   <Link>
                     <Translate
@@ -615,7 +615,7 @@ class Header extends Component {
                       component={Text}
                       className="text-white-30" key="1"
                     />
-                  </Link><span className="icon md rarrow-white ml-12" /></div></>} >
+                  </Link><span className="icon c-pointer md rarrow-white ml-12" /></div></>} >
                 <Link>
                   <Translate
                     content="get_your_own_iban"
