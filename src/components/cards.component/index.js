@@ -7,7 +7,7 @@ import {
   Alert,
 } from "antd";
 import card from "../../assets/images/card.png";
-import { getStaus } from "./cardsReducer";
+import { getStaus, setStaus } from "./cardsReducer";
 import ConnectStateProps from "../../utils/state.connect";
 import Loader from "../../Shared/loader";
 import CardStatus from "./thankyou";
@@ -27,10 +27,10 @@ class NewCards extends Component {
   }
   async applyCard() {
     this.setState({ loading: true });
-    await applyCard(this.props.userProfile?.id);
+    const respose = await applyCard(this.props.userProfile?.id);
     this.setState({ loading: false });
-
-    this.props.dispatch(getStaus(this.props.userProfile?.id));
+    this.props.dispatch(setStaus({ loading: false, status: respose.data }));
+   // this.props.dispatch(getStaus(this.props.userProfile?.id));
   }
   render() {
     const { status: { cardStatus, cardURL }, loading, error } = this.props?.cardsStore;
