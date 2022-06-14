@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Image, Typography, Button } from "antd";
 import success from "../../assets/images/success.png";
-import inprogress from "../../assets/images/pending.png";
+import inprogress from "../../assets/images/pending1.png";
 import rejected from "../../assets/images/reject.png";
 import { Link } from 'react-router-dom';
 const { Title, Text } = Typography;
@@ -14,10 +14,10 @@ class CardStatus extends Component {
             rejected: rejected,
         },
         messages: {
-            submitted: <div>We are currently reviewing your application and we will be in touch soon regarding the outcome of your application. If you have any questions, please contact our support at <Link className="a-text" to="#">support@suissebase.ch</Link></div>,
+            submitted: <div>We are currently reviewing your application and we will be in touch soon regarding the outcome of your application. If you have any questions, please contact our support at <Link className="a-text"></Link><a href="mailto:support@suissebase.ch">support@suissebase.ch</a></div>,
             // inprogress: 'We are in the process of reviewing the information for your application. We will notify you via email about the outcome of your application. If you have any questions, please contact our support at support@suissebase.ch ',
-            inprogress: <div>We are in the process of reviewing the information for your application. We will notify you via email about the outcome of your application. If you have any questions, please contact our support at <Link className="a-text" to="#">support@suissebase.ch</Link> </div>,
-            rejected: <div>We regret to inform you that we are presently unable to approve your application Suissebase Corporate Expense Card. If you have any questions, please contact our support at <Link className="a-text" to="#">support@suissebase.ch</Link></div>
+            inprogress: <div>We are in the process of reviewing the information for your application. We will notify you via email about the outcome of your application. If you have any questions, please contact our support at <Link className="a-text"></Link><a href="mailto:support@suissebase.ch">support@suissebase.ch</a></div>,
+            rejected: <div>We regret to inform you that we are presently unable to approve your application Suissebase Corporate Expense Card. If you have any questions, please contact our support at <Link className="a-text"></Link><a href="mailto:support@suissebase.ch">support@suissebase.ch</a></div>
         },
         titles:{
             submitted: 'Thank you for applying for Suissebase Corporate Expense Card!',
