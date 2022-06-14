@@ -308,7 +308,7 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
-			// {
+		// 	{
 		// 	field: "isWhitelisted",
 		// 	customCell: (props) => (
 		// 		<td>
