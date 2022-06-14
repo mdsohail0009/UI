@@ -783,14 +783,14 @@ class Header extends Component {
                 this.props.dispatch(setHeaderTab(key.key));
               }}
             >
-              {/* {this.props.userConfig.isBusiness && <Translate
+              {this.props.userConfig.isBusiness && process.env.REACT_APP_ISSHOWCARDS && <Translate
                 content="cards"
                 component={Menu.Item}
                 key="8"
                 onClick={this.newCard}
                 className="list-item"
               />
-              } */}
+              }
               <Translate
                 content="menu_payments"
                 component={Menu.Item}
