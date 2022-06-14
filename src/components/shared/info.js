@@ -2,21 +2,10 @@ import React, { useEffect, useState } from "react";
 import Loader from "../../Shared/loader";
 import apicalls from "../../api/apiCalls";
 
-import {
-	Typography,
-	Drawer,
-	Button,
-	Radio,
-	Tooltip,
-	Modal,
-	Alert,
-	Row,
-	Col,
-} from "antd";
+import {Typography,Alert,Row,Col,} from "antd";
 
 function Info({ id, type }) {
-	const { Title, Paragraph, Text } = Typography;
-
+	const {Text } = Typography;
 	const [loader, setLoader] = useState(false);
 	const [infoVal, setInfoVal] = useState(null);
 	const [error, setError] = useState(null);
@@ -27,16 +16,15 @@ function Info({ id, type }) {
 		setError(null);
 		setErrorType("error");
 		getInfoData(id, type);
-	}, []);
+	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 
 	const getInfoData = async (objId, objType) => {
-		console.log("Data", id, type);
 		setLoader(true);
 		let response = await apicalls.getInfoVal(objId, objType);
 		if (response.ok) {
 			setLoader(false);
 			if (response.data.length === 0) {
-				setError("To No data found");
+				setError("No Data Found");
 				setErrorType("info");
 			} else {
 				setInfoVal(response.data);
@@ -49,8 +37,7 @@ function Info({ id, type }) {
 	return (
 		<Loader style={{ padding: 0 }} spinning={loader}>
 			{error && (
-				<Alert
-					//closable
+				<Alert  
 					type={errorType}
 					description={error || "No data here"}
 					onClose={() => setError(null)}

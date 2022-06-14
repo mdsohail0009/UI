@@ -1,24 +1,13 @@
 import React, { Component } from 'react';
 import { Typography, Button, Spin } from 'antd';
-import { Link } from 'react-router-dom';
 import Currency from '../shared/number.formate';
 import { setStep, } from '../../reducers/buyFiatReducer';
 import { connect } from 'react-redux';
 import Translate from 'react-translate-component';
-import { setdepositCurrency, setFiatFinalRes } from '../../reducers/depositReducer'
-import { savedepositFiat, requestDepositFiat } from '../deposit.component/api';
+import { setFiatFinalRes } from '../../reducers/depositReducer'
+import { savedepositFiat } from '../deposit.component/api';
 import apiCalls from "../../api/apiCalls";
-import { apiClient } from '../../api';
-import UserProfile from '../userProfile.component/userProfile';
-const LinkValue = (props) => {
-    return (
-        <Translate className="textpure-yellow text-underline c-pointer"
-            content={props.content}
-            component={Link}
-            onClick={() => window.open("https://www.iubenda.com/terms-and-conditions/42856099", '_blank')}
-        />
-    )
-}
+
 
 class FiatSummary extends Component {
     constructor(props) {
@@ -56,7 +45,6 @@ class FiatSummary extends Component {
         Obj.benficiaryAccountAddrress = apiCalls.encryptValue(Obj.benficiaryAccountAddrress, this.props.userConfig?.sk)
         Obj.accountNumber = apiCalls.encryptValue(Obj.accountNumber, this.props.userConfig.sk)
         Obj.bankAddress = apiCalls.encryptValue(Obj.bankAddress, this.props.userConfig.sk)
-        // Obj.amount = apiCalls.encryptValue(Obj.amount, this.props.userConfig.sk)
 
         Obj.info = JSON.stringify(this.props.trackAuditLogData);
         let response = await savedepositFiat(Obj);
@@ -80,10 +68,6 @@ class FiatSummary extends Component {
                         <Translate content="bank_account_number" component={Text} className="fw-400 text-white" />
                         <Text className="fw-500 text-white-50">{depositFiatData?.accountNumber}</Text>
                     </div>
-                    {/* <div className="pay-list fs-14">
-                        <Translate content="Routing_number" component={Text} className="fw-400 text-white" />
-                        <Text className="fw-500 text-white-50">{depositFiatData?.routingNumber}</Text>
-                    </div> */}
                     <div className="pay-list fs-14">
                         <Translate content="Swift_BICcode" component={Text} className="fw-400 text-white" />
                         <Text className="fw-500 text-white-50">{depositFiatData?.networkCode}</Text>

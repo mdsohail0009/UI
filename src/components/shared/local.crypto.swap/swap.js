@@ -1,4 +1,4 @@
-import { Button, Input, Spin } from 'antd';
+import { Input, Spin } from 'antd';
 import Text from 'antd/lib/typography/Text';
 import React, { useState } from 'react';
 import NumberFormat from 'react-number-format';
@@ -31,7 +31,7 @@ const LocalCryptoSwapperCmp = ({ localAmt = 0, cryptoAmt = 0, localCurrency = "U
               paddingRight: "40px !important",
               marginBottom: 0
             }}
-            onPaste={() => {}}
+           
             onKeyPress={(e) => {
               e.currentTarget.style.fontSize = "30px";
             }}

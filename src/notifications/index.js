@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { List, Drawer, Typography, Alert, Empty } from "antd";
-import { getNotifications, readNotification } from "./api";
+import { getNotifications } from "./api";
 import ConnectStateProps from "../utils/state.connect";
 import Moment from "react-moment";
 import { setNotificationCount } from "../reducers/dashboardReducer";
 import Translate from "react-translate-component";
 import apiCalls from "../api/apiCalls";
-import apiClient from "../api/apiCalls";
 
 const { Text } = Typography;
 const Notifications = ({
@@ -14,7 +13,6 @@ const Notifications = ({
   showDrawer,
   userProfile,
   dispatch,
-  dashboard,
   userProfileInfo
 }) => {
   const [loading, setLoading] = useState(false);
@@ -22,7 +20,7 @@ const Notifications = ({
   const [error, setError] = useState(null);
   useEffect(() => {
     fetchNotifications();
-  }, []);
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
   const notificationsTrack = () => {
     apiCalls.trackEvent({
       Type: "User",
@@ -99,7 +97,7 @@ const Notifications = ({
             )
           }}
         >
-          {!loading && (!notifications || notifications.length == 0) && (
+          {!loading && (!notifications || notifications.length === 0) && (
             <Empty
               className="mt-36"
               image={Empty.PRESENTED_IMAGE_SIMPLE}

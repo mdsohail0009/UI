@@ -16,8 +16,6 @@ import WithdrawalSummary from '../withDraw.component/withdrawalSummary';
 import WithdrawalLive from '../withDraw.component/withdrawLive';
 import WithdrawalSuccess from '../withDraw.component/withdrwSuccess';
 import ConfirmMsg from './confirmMsg';
-import WithdrawFaitSummary from '../withDraw.component/withdrawalSummary'
-import { connect } from "react-redux";
 
 class MassPayment extends Component {
     state = {
@@ -26,13 +24,11 @@ class MassPayment extends Component {
     closeDrawer = () => {
         this.props.dispatch(setWithdrawfiatenaable(false))
         this.props.dispatch(rejectWithdrawfiat())
-        //this.props.dispatch(setStep("step1"))
         if (this.props.onClose) {
             this.props.onClose();
         }
         if (this.child)
             this.child.clearfiatValues();
-            //this.props.amountReset();
             this.props.dispatch(setClearAmount())
 
     }
@@ -61,7 +57,7 @@ withdrawFiatSummaryBack = () => {
             withdrwalfiatsummary: < WithdrawalSummary />,
             withdrwlive: < WithdrawalLive />,
             withdrwsuccess: < WithdrawalSuccess />,
-            withdrawfaitsummary:<WithdrawFaitSummary />
+            withdrawfaitsummary:<WithdrawalSummary />
         }
         return stepcodes[config[this.props.buyFiat.stepcode]]
     }
@@ -138,18 +134,3 @@ withdrawFiatSummaryBack = () => {
 }
 
  export default ConnectStateProps(MassPayment);
-// const connectStateToProps = ({ userConfig, sendReceive }) => {
-//     return { userConfig: userConfig.userProfileInfo, sendReceive }
-// }
-// const connectDispatchToProps = dispatch => {
-//     return {
-        
-//         amountReset: () => {
-//             dispatch(setClearAmount())
-//         },
-
-//         dispatch
-//     }
-
-// }
-// export default connect(connectStateToProps, connectDispatchToProps)(MassPayment);

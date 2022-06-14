@@ -56,7 +56,7 @@ class Summary extends Component {
 				{!error?.valid && (
 					<Alert
 						showIcon
-						type="info"
+						type="error"
 						message={error?.title || apicalls.convertLocalLang("buy_crypto")}
 						description={error?.message}
 						onClose={() => (onErrorClose ? onErrorClose() : "")}

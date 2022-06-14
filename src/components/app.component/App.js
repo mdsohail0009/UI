@@ -1,9 +1,8 @@
 import Layout from "../../layout";
 import { BrowserRouter as Router } from 'react-router-dom'
-import { Provider } from "react-redux";
 import { store } from "../../store";
 import { loadUser, OidcProvider } from 'redux-oidc';
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { userManager } from "../../authentication";
 import ErrorBoundary from "antd/lib/alert/ErrorBoundary";
 import { AppInsightsContext } from "@microsoft/applicationinsights-react-js";
@@ -29,7 +28,7 @@ function App(props) {
           }
         })
         startConnection(userProfileInfo?.id);
-        switcher({ theme: userProfileInfo?.theme == 'Light Theme' ? themes.LHT : themes.DRT });
+        switcher({ theme: userProfileInfo?.theme === 'Light Theme' ? themes.LHT : themes.DRT });
       } else {
         connectToHub();
       }
@@ -68,7 +67,7 @@ function App(props) {
 
     })
     connectToHub();
-  }, [])
+  }, [])// eslint-disable-line react-hooks/exhaustive-deps
   return (
     <OidcProvider userManager={userManager} store={store}>
       <Router basename={process.env.PUBLIC_URL}>

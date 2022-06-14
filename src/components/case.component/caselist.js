@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Row, Col, Alert } from "antd";
-// import { getDocList } from "./api";
 import Loader from "../loader.component";
 
 class CaseList extends Component {
