@@ -535,6 +535,7 @@ export default {
 	withdraw_verification: "Pagpapatunay sa Pag-withdraw",
 	Phone_verification: "Pag-verify ng Telepono",
 	Email_verification: "Pagpapatunay ng Email",
+	live_verification: "Fanamarinana mivantana",
 	addresslabel: "Label ng Address",
 	address_type: "Address Type",
 	addressState: "Alamat Sate",

@@ -324,7 +324,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                 />
               </div>
             </Col>
-            <Col md={7} xl={7} xxl={7}>
+            <Col md={5} xl={5} xxl={5}>
               <div className="d-flex align-center mt-16">
                 <label className="custom-checkbox p-relative c-pointer">
                   <Input
@@ -342,7 +342,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                 />
               </div>
             </Col>
-            <Col md={7} xl={7} xxl={7}>
+            <Col md={5} xl={5} xxl={5}>
               <div className="d-flex align-center mt-16">
                 <label className="custom-checkbox p-relative c-pointer">
                   <Input
@@ -359,8 +359,26 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                   className="mb-0 profile-label ml-8" style={{ flex: 1 }}
                 />
               </div>
+              </Col>
+              <Col md={5} xl={5} xxl={5}>
+              <div className="d-flex align-center mt-16">
+                <label className="custom-checkbox p-relative c-pointer">
+                  <Input
+                    name="check"
+                    type="checkbox"
+                    checked={email}
+                    onChange={(e) => handleInputChange(e, "live")}
+                  />
+                  <span></span>
+                </label>
+                <Translate
+                  content="live_verification"
+                  component={Paragraph.label}
+                  className="mb-0 profile-label ml-8" style={{ flex: 1 }}
+                />
+              </div>
             </Col>
-            <Col md={6} xl={6} xxl={6}>
+            <Col md={5} xl={5} xxl={5}>
               <div className="text-right">
               <Button
                         className="pop-btn px-36"
