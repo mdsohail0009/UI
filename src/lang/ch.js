@@ -524,11 +524,8 @@ export default {
 	personal_account:'个人账户',
 	business_account:"商业账户",
 	Recipient_Business_name: "收件人全名/公司名称",
-	menu_tranfor: "Tranfor",
-	tranfor_fromwlt:'From wallet',
-	tranfor_towlt:'To wallet',
-	tranfor_currencywlt:'Currency',
-	tranfor_Amount:'Amount',
-	transfor_btn_cnftransfor: 'Confirm Transfor',
-	return_to_transfor: "Back to Transfor",
+	cards:"牌",
+	agree_to_signup:'通过单击注册，我在此确认我同意 Suissebase 的 %(link)s 协议并且我已阅读隐私政策',
+	terms_Use: "使用条款",
+	"whitelist":"白名單"
 };
