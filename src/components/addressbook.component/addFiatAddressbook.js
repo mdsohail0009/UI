@@ -1149,9 +1149,9 @@ const NewFiatAddress = (props) => {
 									marginBottom: "10px",
 								}}
 							/>
-								<div className="whitelist-note">
-							<Alert type="warning" message={`Note : Declaration form has been sent to ${fiatAddress?.email||"your email address"}. Please sign using link received in email to whitelist your address`} showIcon closable={false} />
-							</div>
+								{!fiatAddress?.isWhitelisted &&<div className="whitelist-note">
+							<Alert type="warning" message={`Note : Declaration form will be sent to ${props?.userConfig?.email||fiatAddress?.email}. Please sign using link received in email to whitelist your address`} showIcon closable={false} />
+							</div>}
 						</div>
 
 						<Form.Item className="text-center">
