@@ -379,7 +379,7 @@ class Header extends Component {
   };
   showTrasforDrawer = () => {
     if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) {
-      this.props.dispatch(transforSetStep("swapcoins1"));
+      this.props.dispatch(transforSetStep("tranforcoin"));
       this.setState({
         ...this.state,
         transforDrawer: true,
@@ -457,7 +457,8 @@ class Header extends Component {
       transactionDrawer: false,
       notificationsDrawer: false,
       auditlogsDrawer: false,
-      Visibleprofilemenu: false
+      Visibleprofilemenu: false,
+      transforDrawer:false
     });
   };
   enableDisable2fa = (status) => {
@@ -827,7 +828,7 @@ class Header extends Component {
                 content="menu_tranfor"
                 component={Menu.Item}
                 key="4"
-                onClick={this.showSwapDrawer}
+                onClick={this.showTrasforDrawer}
                 className="list-item"
               />
               <Dropdown
