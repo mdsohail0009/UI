@@ -36,7 +36,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
     if (response.ok) {
       setPhone(response.data?.isPhoneVerified);
       setEmail(response.data?.isEmailVerification);
-      setLive(response.data?.IsLiveVerification);
+      setLive(response.data?.isLiveVerification);
       setFactor(response.data?.twoFactorEnabled)
       form.setFieldsValue(response.data);
     }
@@ -109,7 +109,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           "isEmailVerification": email,
           "IsPhoneVerified": phone,
           "TwoFactorEnabled":factor,
-          "IsLiveVerification": live
+          "isLiveVerification": live
       }
         const response = await apiCalls.updateSecurity(obj);
         if (response.ok) {
