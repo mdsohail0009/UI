@@ -18,7 +18,7 @@ class TransforSuccessMsg extends Component {
         const { Title, Paragraph, Text } = Typography;
         return (
             <>
-                <div className="success-pop text-center">
+                <div className="success-pop text-center pt-24">
                     <img src={success} className="confirm-icon" alt={"success"} />
                     <Translate content="success_msg" component={Title} className="text-white-30 fs-36 fw-200 mb-4" />
                     <Paragraph className="fs-14 text-white-30 fw-200"><Translate content="sucessText1" component={Text} className="fs-14 text-white-30 fw-200" /> {this.props.transforObj.transferAmount} {this.props.transforObj.walletCode} <Translate content="sucessText2" className="fs-14 text-white-30 fw-200" component={Text} /></Paragraph>

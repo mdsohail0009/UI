@@ -56,8 +56,8 @@ const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
               />
             )}
         <div>
-            <Row>
-                <Col xs={12} md={12} lg={12} xl={12} xxl={12}>
+            <Row className='my-8'>
+                <Col xs={12} md={12} lg={12} xl={12} xxl={12} className='px-8'>
                     <Text className="fs-14 text-white-50 fw-200">
                         <Translate
                             content="tranfor_fromwlt"
@@ -65,16 +65,13 @@ const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
                             className="fs-14 text-white-50 fw-200"
                         />
                     </Text>
-                </Col>
-                <Col xs={12} md={12} lg={12} xl={12} xxl={12}>
+                    <div>
                     <Text className="fs-20 text-white-30 mb-36">
                         {transforObj?.fromWalletType}
                     </Text>
+                    </div>
                 </Col>
-            </Row>
-
-            <Row>
-                <Col xs={12} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={12} md={12} lg={12} xl={12} xxl={12} className='px-8'>
                     <Text className="fs-14 text-white-50 fw-200">
                         <Translate
                             content="tranfor_towlt"
@@ -82,16 +79,15 @@ const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
                             className="fs-14 text-white-50 fw-200"
                         />
                     </Text>
-                </Col>
-                <Col xs={12} md={12} lg={12} xl={12} xxl={12}>
+                    <div>
                     <Text className="fs-20 text-white-30 mb-36">
                     {transforObj?.ToWalletType}
-                    </Text>
+                    </Text></div>
                 </Col>
             </Row>
 
-            <Row>
-                <Col xs={12} md={12} lg={12} xl={12} xxl={12}>
+            <Row className='my-8'>
+                <Col xs={12} md={12} lg={12} xl={12} xxl={12} className='px-8'>
                     <Text className="fs-14 text-white-50 fw-200">
                         <Translate
                             content="tranfor_currencywlt"
@@ -99,16 +95,13 @@ const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
                             className="fs-14 text-white-50 fw-200"
                         />
                     </Text>
-                </Col>
-                <Col xs={12} md={12} lg={12} xl={12} xxl={12}>
+                    <div>
                     <Text className="fs-20 text-white-30 mb-36">
                     {transforObj?.walletCode}
                     </Text>
+                    </div>
                 </Col>
-            </Row>
-           
-            <Row>
-            <Col xs={12} md={12} lg={12} xl={12} xxl={12}>
+            <Col xs={12} md={12} lg={12} xl={12} xxl={12} className='px-8'>
                 <Text className="fs-14 text-white-50 fw-200">
                     <Translate
                         content="tranfor_Amount"
@@ -116,17 +109,17 @@ const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
                         className="fs-14 text-white-50 fw-200"
                     />
                 </Text>
-                </Col>
-                <Col xs={12} md={12} lg={12} xl={12} xxl={12}>
+                <div>
                 <Currency
                     className="fs-20 text-white-30 mb-36"
                     defaultValue={transforObj?.transferAmount|0}
                     prefix={''}
                     suffixText={transforObj?.walletCode}
                 />
+                </div>
                 </Col>
             </Row>
-            <Row>
+            <Row className='my-8'>
                 <div className="d-flex p-16 mb-36 agree-check">
                     <label
                     >
@@ -155,7 +148,6 @@ const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
                     </Paragraph>
                 </div>
             </Row>
-            <Row >
                 <Button
                     htmlType="submit"
                     size="large"
@@ -166,7 +158,6 @@ const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
                 >
                     <Translate content="transfor_btn_cnftransfor" style={{ marginLeft: "15px" }} component={Form.label} />
                 </Button>
-            </Row>
         </div>
     </>)
 

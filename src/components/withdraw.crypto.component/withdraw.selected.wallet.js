@@ -246,7 +246,7 @@ class CryptoWithDrawWallet extends Component {
                     <Form>
                         <Form.Item
                             name="toWalletAddress"
-                            className="custom-forminput custom-label  mb-16"
+                            className="custom-forminput custom-label kpi-List  mb-16"
                             required
                             label={apicalls.convertLocalLang('sendTo')}
                         >
