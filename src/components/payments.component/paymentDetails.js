@@ -191,6 +191,10 @@ class PaymentDetails extends Component {
             if (PaymentDetail[i].checked === false) {
               PaymentDetail[i].RecordStatus = "Deleted";
             }
+             if(!PaymentDetail[i].amount){
+              this.setState({ ...this.state,errorWarning:null, errorMessage: "Please enter amount."  });
+              return
+            }
           }
           let response = await updatePayments(this.state.paymentsData);
           if (response.ok) {
