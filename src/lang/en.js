@@ -539,6 +539,7 @@ export default {
 	withdraw_verification: "Withdrawal Verification",
 	Phone_verification: "Phone Verification",
 	Email_verification: "Email Verification",
+	live_verification: "Live Verification",
 	get_email: "Click here to get code",
 	resend_email: "Click here to resend code",
 	sent_verification: "Verification code sent",

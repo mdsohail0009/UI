@@ -450,7 +450,7 @@ class WithdrawSummary extends Component {
 						"Without Verifications you can't withdraw. Please select withdraw verifications from security section", btnLoading: false
 				});
 			}
-			if (this.props.userProfile.isBusiness) {
+			if (this.props.userProfile.isBusiness||!this.state.verifyData?.isLiveVerification) {
 				let saveObj = this.props.sendReceive.withdrawCryptoObj;
 				let trackAuditLogData = this.props.trackAuditLogData;
 				trackAuditLogData.Action = "Save";
@@ -473,7 +473,9 @@ class WithdrawSummary extends Component {
 						errorMsg: this.isErrorDispaly(withdrawal), btnLoading: false
 					});
 				}
-			} else {
+			}
+			 else if(this.state.verifyData?.isLiveVerification){
+				debugger
 				this.props.dispatch(
 					setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
 				);
