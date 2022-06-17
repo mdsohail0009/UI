@@ -552,5 +552,12 @@ export default {
 	cards: "KARATRA",
 	agree_to_signup: "Amin'ny fanindriana ny Sign Up, dia manaiky aho fa manaiky ny fifanarahana %(rohy)s Suissebase ary namaky ny Politika momba ny fiainana manokana",
 	terms_Use: "Fepetra fampiasana",
-	"whitelist": "senarai putih"
+	whitelist: "senarai putih",
+	menu_tranfor: "Tranfor",
+	tranfor_fromwlt:'From wallet',
+	tranfor_towlt:'To wallet',
+	tranfor_currencywlt:'Currency',
+	tranfor_Amount:'Amount',
+	transfor_btn_cnftransfor: 'Confirm Transfor',
+	return_to_transfor: "Back to Transfor",
 };
