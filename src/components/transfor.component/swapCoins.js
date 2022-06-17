@@ -203,7 +203,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
                       htmlType="submit"
                       size="large"
                       block
-                      className="pop-btn"
+                      className="pop-btn mt-24"
                       loading={false}
                     >
                       <Translate content="transfor_btn_cnftransfor" style={{marginLeft:"15px"}} component={Form.label} />

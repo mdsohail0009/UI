@@ -566,7 +566,7 @@ export default {
 	business_account:"Business Account",
 	empty: " ",
 	Recipient_Business_name: "Recipient Full Name/Business Name",
-	menu_tranfor: "Tranfor",
+	menu_tranfor: "Transfor",
 	tranfor_fromwlt:'From wallet',
 	tranfor_towlt:'To wallet',
 	tranfor_currencywlt:'Currency',
