@@ -16,6 +16,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
   const [factor, setFactor] = useState(false)
   const [phone, setPhone] = useState(false)
   const [email, setEmail] = useState(false)
+  const [live, setLive] = useState(false)
   const [errorMsg, setErrorMsg] = useState(null);
   const useDivRef = React.useRef(null);
   const [isLoading,setIsLoading]=useState(false);
@@ -35,6 +36,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
     if (response.ok) {
       setPhone(response.data?.isPhoneVerified);
       setEmail(response.data?.isEmailVerification);
+      setLive(response.data?.IsLiveVerification);
       setFactor(response.data?.twoFactorEnabled)
       form.setFieldsValue(response.data);
     }
@@ -93,17 +95,21 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
     } else if (type === "factor") {
       setFactor(e.target.checked ? true : false)
     }
+    else if (type === "live") {
+      setLive(e.target.checked ? true : false)
+    }
   }
   const saveDetails=async()=>{
     setBtnDisabled(true)
     setIsLoading(false)
     setErrorMsg(null);
-      if ((email && phone)|| (email && factor) || (phone && factor) || (email && phone && factor)) {
+      if ((live && email) || (live && phone) || (live && factor) || (email && phone)|| (email && factor) || (phone && factor) || (email && phone && factor) ||(email && phone && live) ||(email && live && factor) ||(live && phone && factor)||(email && phone && factor && live)) {
         let obj={
           "MemberId": userConfig.id,
           "isEmailVerification": email,
           "IsPhoneVerified": phone,
-          "TwoFactorEnabled":factor
+          "TwoFactorEnabled":factor,
+          "IsLiveVerification": live
       }
         const response = await apiCalls.updateSecurity(obj);
         if (response.ok) {
@@ -116,7 +122,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           useDivRef.current.scrollIntoView();
           setIsLoading(false)
 
-        } else if(email||phone||factor===false){
+        } else if(email||phone||factor||live===false){
           useDivRef.current.scrollIntoView(0,0);
           setError(isErrorDispaly(response));
            setIsLoading(false)
@@ -366,7 +372,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                   <Input
                     name="check"
                     type="checkbox"
-                    checked={email}
+                    checked={live}
                     onChange={(e) => handleInputChange(e, "live")}
                   />
                   <span></span>
