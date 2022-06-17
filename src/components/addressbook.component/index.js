@@ -12,13 +12,13 @@ import { processSteps as config } from "./config";
 import NewAddressBook from "./newAddressBook";
 import List from "../grid.component";
 import NewFiatAddress from "./addFiatAddressbook";
-import { activeInactive } from "./api";
+import { activeInactive,downloadDeclForm } from "./api";
 import SelectCrypto from "./selectCrypto";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import apiCalls from "../../api/apiCalls";
 import Info from "../shared/info";
-import {downloadDeclForm} from './api'
+
 const { Paragraph, Text } = Typography;
 
 class AddressBook extends Component {
@@ -178,19 +178,19 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
-		{
-			field: "isWhitelisted",
-			customCell: (props) => (
-				<td>
-					{props.dataItem?.isWhitelisted ? <a  onClick={() => {
-						this.downloadDeclarationForm(props?.dataItem);
-					}} >Download</a> : "Not whitelisted"}
-				</td>
-			),
-			title: apiCalls.convertLocalLang("whitelist"),
-			filter: false,
-			width: 200,
-		}
+		// {
+		// 	field: "isWhitelisted",
+		// 	customCell: (props) => (
+		// 		<td>
+		// 			{props.dataItem?.isWhitelisted ? <a  onClick={() => {
+		// 				this.downloadDeclarationForm(props?.dataItem);
+		// 			}} >Download</a> : "Not whitelisted"}
+		// 		</td>
+		// 	),
+		// 	title: apiCalls.convertLocalLang("whitelist"),
+		// 	filter: false,
+		// 	width: 200,
+		// }
 	];
 	columnsCrypto = [
 		{
@@ -308,19 +308,19 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
-			{
-			field: "isWhitelisted",
-			customCell: (props) => (
-				<td>
-					{props.dataItem?.isWhitelisted ? <a onClick={() => {
-						this.downloadDeclarationForm(props?.dataItem);
-					}} >Download</a> : "Not whitelisted"}
-				</td>
-			),
-			title: apiCalls.convertLocalLang("whitelist"),
-			filter: false,
-			width: 200,
-		},
+		// {
+		// 	field: "isWhitelisted",
+		// 	customCell: (props) => (
+		// 		<td>
+		// 			{props.dataItem?.isWhitelisted ? <a onClick={() => {
+		// 				this.downloadDeclarationForm(props?.dataItem);
+		// 			}} >Download</a> : "Not whitelisted"}
+		// 		</td>
+		// 	),
+		// 	title: apiCalls.convertLocalLang("whitelist"),
+		// 	filter: false,
+		// 	width: 200,
+		// },
 	];
 	async downloadDeclarationForm(dataItem){
 		const response = await downloadDeclForm(dataItem.id);
@@ -367,7 +367,7 @@ class AddressBook extends Component {
 			this.setState({ modal: true });
 		}
 	};
-	handleCancel = (e) => {
+	handleCancel = () => {
 		this.setState({
 			...this.state,
 			modal: false,
@@ -436,7 +436,7 @@ class AddressBook extends Component {
 	};
 	addAddressBook = () => {
 		if (this.state.cryptoFiat) {
-			this.setState({ ...this.state, fiatDrawer: true });
+			this.setState({ ...this.state, fiatDrawer: true,errorWorning: null });
 			if (!this.state.fiatDrawer) {
 				apiCalls.trackEvent({
 					Type: "User",
@@ -452,7 +452,7 @@ class AddressBook extends Component {
 			}
 			this.props.clearFormValues();
 		} else {
-			this.setState({ ...this.state, visible: true });
+			this.setState({ ...this.state, visible: true,errorWorning: null });
 			apiCalls.trackEvent({
 				Type: "User",
 				Action: "Withdraw Crypto Address book add view",
@@ -725,7 +725,7 @@ class AddressBook extends Component {
 									className="text-white-30 fw-600 text-upper mb-4"
 									content={
 										this.props.addressBookReducer.stepTitles[
-											config[this.props.addressBookReducer.stepcode]
+										config[this.props.addressBookReducer.stepcode]
 										]
 									}
 									component={Paragraph}
@@ -734,7 +734,7 @@ class AddressBook extends Component {
 									className="text-white-50 mb-0 fw-300 fs-14 swap-subtitlte"
 									content={
 										this.props.addressBookReducer.stepSubTitles[
-											config[this.props.addressBookReducer.stepcode]
+										config[this.props.addressBookReducer.stepcode]
 										]
 									}
 									component={Paragraph}
