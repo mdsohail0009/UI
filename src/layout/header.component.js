@@ -27,6 +27,7 @@ import my from "../lang/my";
 import BuySell from "../components/buy.component";
 import SendReceive from "../components/send.component";
 import SwapCrypto from "../components/swap.component";
+import Transfor from "../components/transfor.component";
 import MassPayment from "../components/buyfiat.component";
 import { userManager } from "../authentication";
 import Changepassword from "../components/changepassword";
@@ -40,6 +41,9 @@ import {
   clearSwapData,
   setStep as swapSetStep
 } from "../reducers/swapReducer";
+import {
+  setStepcode as transforSetStep
+} from "../reducers/tranfor.Reducer";
 import { connect } from "react-redux";
 import DefaultUser from "../assets/images/defaultuser.jpg";
 import { setHeaderTab, setStep } from "../reducers/buysellReducer";
@@ -374,6 +378,27 @@ class Header extends Component {
       });
     }
   };
+  showTrasforDrawer = () => {
+    if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) {
+      this.props.dispatch(transforSetStep("tranforcoin"));
+      this.setState({
+        ...this.state,
+        transforDrawer: true,
+        Visibleprofilemenu: false
+      });
+    } else {
+      const isKyc = !this.props.userConfig.isKYC;
+      if (isKyc) {
+        this.props.history.push("/notkyc");
+      } else {
+        this.showDocRequestError();
+      }
+      this.setState({
+        ...this.state,
+        Visibleprofilemenu: false
+      });
+    }
+  };
   showBuyFiatDrawer = () => {
     if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled) {
       this.props.dispatch(byFiatSetStep("step1"));
@@ -433,7 +458,8 @@ class Header extends Component {
       transactionDrawer: false,
       notificationsDrawer: false,
       auditlogsDrawer: false,
-      Visibleprofilemenu: false
+      Visibleprofilemenu: false,
+      transforDrawer:false
     });
   };
   enableDisable2fa = (status) => {
@@ -819,6 +845,13 @@ class Header extends Component {
                 onClick={this.showSwapDrawer}
                 className="list-item"
               /> */}
+               <Translate
+                content="menu_tranfor"
+                component={Menu.Item}
+                key="4"
+                onClick={this.showTrasforDrawer}
+                className="list-item"
+              />
               <Dropdown
                 onClick={() =>
                   this.setState({ ...this.state, Visibleprofilemenu: false })
@@ -1401,6 +1434,11 @@ class Header extends Component {
         <SwapCrypto
           swapRef={(cd) => (this.child = cd)}
           showDrawer={this.state.swapDrawer}
+          onClose={() => this.closeDrawer()}
+        />
+        <Transfor
+          swapRef={(cd) => (this.child = cd)}
+          showDrawer={this.state.transforDrawer}
           onClose={() => this.closeDrawer()}
         />
         <MassPayment

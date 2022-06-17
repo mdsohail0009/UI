@@ -88,8 +88,11 @@ export default {
 	withdraw_summary_sub: "Send your currency address.",
 	verify_identity: "Verify your Identity",
 	swap_title: "New Swap",
+	transfor_title: "Transfor",
 	swap_desc:
 		"Instantly exchange your crypto into any currency we offer in your wallet.",
+	transfor_desc:
+		"Instantly exchange your crypto into any wallet	 we offer in your wallet.",
 	swap_from: "Swap From",
 	swap_to: "To Receive",
 	wallet_in_usd: "Wallet in USD",
@@ -566,5 +569,12 @@ export default {
 	cards:"Cards",
 	agree_to_signup: "By clicking Sign Up, I here by acknowledge that I agree to Suissebase's %(link)s Agreement and I've read the Privacy Policy",
 	terms_Use: "Terms of Use",
-	"whitelist":"Declaration form"
+	"whitelist":"Declaration form",
+	menu_tranfor: "Transfor",
+	tranfor_fromwlt:'From wallet',
+	tranfor_towlt:'To wallet',
+	tranfor_currencywlt:'Currency',
+	tranfor_Amount:'Amount',
+	transfor_btn_cnftransfor: 'Confirm Transfor',
+	return_to_transfor: "Back to Transfor",
 };

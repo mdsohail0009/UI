@@ -1147,4 +1147,5 @@ input[type=number]::-webkit-outer-spin-button {
 .submission-sec{width: 550px;color: var(--bgWhite);margin: 0 auto;}
 .whitelist-note .ant-alert-message{font-weight: 500 !important;padding: 10px;}
 
+.custom-forminput .ant-form-item-control .ant-form-item-explain-error{margin-left: 12px;}
 .hy-align{margin:auto 0; display: flex;align-items: center;}
