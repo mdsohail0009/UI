@@ -47,7 +47,7 @@ const getInfoVal = (id, type) => {
 	);
 };
 const downloadDeclForm=(addr_id)=>{
-	return apiClient.get(ApiControllers.depositWithdraw+`DownloadDocument/${addr_id}`);
+	return apiClient.get(ApiControllers.addressbook+`DownloadDocument/${addr_id}`);
 }
 
 export {
