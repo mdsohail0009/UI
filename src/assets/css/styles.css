@@ -1148,3 +1148,4 @@ input[type=number]::-webkit-outer-spin-button {
 .whitelist-note .ant-alert-message{font-weight: 500 !important;padding: 10px;}
 
 .hy-align{margin:auto 0; display: flex;align-items: center;}
+.custom-forminput .ant-select-show-search.ant-select:not(.ant-select-customize-input) .ant-select-selector input{text-align: center;}

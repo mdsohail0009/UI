@@ -15,8 +15,10 @@ import {
 	Radio,
 	Row,
 	Col,
+	AutoComplete,
+	Dropdown, Menu, Space
 } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined,DownOutlined, UserOutlined } from "@ant-design/icons";
 import { setStep, setHeaderTab } from "../../reducers/buysellReducer";
 import Translate from "react-translate-component";
 import { connect } from "react-redux";
@@ -30,16 +32,48 @@ import { bytesToSize } from "../../utils/service";
 import { addressTabUpdate } from "../../reducers/addressBookReducer";
 import FilePreviewer from "react-file-previewer";
 
+
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
 const { Dragger } = Upload;
 
+const handleButtonClick = (e) => {
+	message.info('Click on left button.');
+	console.log('click left button', e);
+  };
+  
+  const handleMenuClick = (e) => {
+	message.info('Click on menu item.');
+	console.log('click', e);
+  };
+  const menu = (
+	<Menu
+	  onClick={handleMenuClick}
+	  items={[
+		{
+		  label: '1st menu item',
+		  key: '1',
+		  icon: <UserOutlined />,
+		},
+		{
+		  label: '2nd menu item',
+		  key: '2',
+		  icon: <UserOutlined />,
+		},
+		{
+		  label: '3rd menu item',
+		  key: '3',
+		  icon: <UserOutlined />,
+		},
+	  ]}
+	/>
+  );
+
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount)?.trim();
 	const suffix = children?.slice(-suffixCount)?.trim();
-
-	return (
+		return (
 		<Text
 			className="mb-0 fs-14 docnames c-pointer d-block"
 			style={{ maxWidth: "100% !important" }}
@@ -681,207 +715,173 @@ const NewFiatAddress = (props) => {
 							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
 								<Form.Item
 									className="custom-forminput custom-label mb-0"
-									name="favouriteName"
-									required
+									name="favorite name"
 									label={
-										<Translate content="AddressLabel" component={Form.label} />
+										<Translate content="favorite_name" component={Form.label} />
 									}
-									rules={[
-										{
-											required: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-										{
-											whitespace: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-										{
-											validator: validateContentRule,
-										},
-									]}>
-									<Input
-										className="cust-input"
-										maxLength="20"
-										placeholder={apiCalls.convertLocalLang("AddressLabel")}
-									/>
+									
+									>
+									
+									 <AutoComplete
+									 className="cust-input text-center"
+        							placeholder="Favorite Name"
+     								 />
+									 
 								</Form.Item>
 							</Col>
 
 							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
 								<Form.Item
 									className="custom-forminput custom-label mb-0"
-									name="toCoin"
+									name="name"
+									required
 									label={
-										<Translate content="currency" component={Form.label} />
+										<Translate content="Fait_Name" component={Form.label} />
 									}
-									rules={[
-										{
-											required: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-									]}>
-									<WalletList
-										hideBalance={true}
-										valueFeild={"currencyCode"}
-										selectedvalue={fiatAddress?.toCoin}
-										placeholder={apiCalls.convertLocalLang("selectcurrency")}
-										onWalletSelect={(e) => handleWalletSelection(e)}
+									
+									>
+									<Input
+										className="cust-input"
+										maxLength="20"
+										placeholder="Name"
 									/>
 								</Form.Item>
 							</Col>
 							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
 								<Form.Item
 									className="custom-forminput custom-label mb-0"
+									name="email"
 									label={
-										<Translate content="bank_type" component={Form.label} />
+										<Translate content="email" component={Form.label} />
 									}
-									name="bankType"
-									required
-									rules={[
-										{
-											required: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-									]}>
-									<Select
-										dropdownClassName="select-drpdwn"
-										placeholder={apiCalls.convertLocalLang("bank_type")}
-										className="cust-input"
-										style={{ width: "100%" }}
-										bordered={false}
-										showArrow={true}
-										optionFilterProp="children"
-										onChange={(e) => changeBankType(e)}>
-										<Option value={"bank"}>{"Bank Account"}</Option>
-										<Option value={"iban"}>{"IBAN"}</Option>
-									</Select>
-								</Form.Item>
-							</Col>
-							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-								<Form.Item
-									className="custom-forminput custom-label mb-0"
-									name="accountNumber"
-									label={
-										bankType !== "iban"
-											? apiCalls.convertLocalLang("Bank_account")
-											: apiCalls.convertLocalLang("iban")
-									}
-									required
-									rules={[
-										{
-											required: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-										{
-											pattern: bankType !== "iban"?bankNameRegex:IbanRegex,
-											message: bankType !== "iban"?"Invalid Bank account number":"Invalid IBAN",
-										},
-									]}>
+									
+									>
 									<Input
 										className="cust-input"
-										maxLength={100}
-										placeholder={
-											bankType !== "iban"
-												? apiCalls.convertLocalLang("Bank_account")
-												: apiCalls.convertLocalLang("iban")
-										}
-										onBlur={
-											bankType === "iban"
-												? (val) => getIbanData(val.currentTarget.value)
-												: doNothing
-										}
+										maxLength="20"
+										placeholder="Email"
 									/>
 								</Form.Item>
 							</Col>
 							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
 								<Form.Item
 									className="custom-forminput custom-label mb-0"
-									name="routingNumber"
+									name="phone"
 									label={
-										<Translate
-											content="BIC_SWIFT_routing_number"
-											component={Form.label}
-										/>
+										<Translate content="Phone_No" component={Form.label} />
 									}
-									required
-									rules={[
-										{
-											required: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-										{
-											pattern: /^[A-Za-z0-9]+$/,
-											message: "Invalid BIC/SWIFT/Routing number",
-										},
-									]}>
+									
+									>
 									<Input
 										className="cust-input"
-										disabled={bankType === "iban" ? true : false}
-										maxLength={100}
-										placeholder={apiCalls.convertLocalLang(
-											"BIC_SWIFT_routing_number"
-										)}
-									/>
-								</Form.Item>
-							</Col>
-							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-								<Form.Item
-									className="custom-forminput custom-label mb-0"
-									name="bankName"
-									label={
-										<Translate content="Bank_name" component={Form.label} />
-									}
-									required
-									rules={[
-										{
-											required: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-										{
-											whitespace: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-										{
-											validator: validateContentRule,
-										},
-									]}>
-									<Input
-										className="cust-input"
-										disabled={bankType === "iban" ? true : false}
-										maxLength={200}
-										placeholder={apiCalls.convertLocalLang("Bank_name")}
+										maxLength="20"
+										placeholder="Phone Number"
 									/>
 								</Form.Item>
 							</Col>
 							<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
 								<Form.Item
 									className="custom-forminput custom-label mb-0"
-									name="bankAddress"
+									name="Address Line"
 									label={
-										<Translate content="Bank_address1" component={Form.label} />
+										<Translate content="Address_Line1" component={Form.label} />
 									}
 									required
-									rules={[
-										{
-											required: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-										{
-											whitespace: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-										{
-											validator: validateContentRule,
-										},
-									]}>
+									>
+									
+									<TextArea
+											placeholder="Address Line1"
+											className="cust-input pt-16 text-left"
+											autoSize={{ minRows: 2, maxRows: 2 }}
+											maxLength={100}></TextArea>
+								</Form.Item>
+							</Col>
+							<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+								<Form.Item
+									className="custom-forminput custom-label mb-0"
+									name="Address Line"
+									label={
+										<Translate content="Address_Line2" component={Form.label} />
+									}
+									required
+									>
+									
+									<TextArea
+											placeholder="Address Line2"
+											className="cust-input pt-16 text-left"
+											autoSize={{ minRows: 2, maxRows: 2 }}
+											maxLength={100}></TextArea>
+								</Form.Item>
+							</Col>
+							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+								<Form.Item
+									className="custom-forminput custom-label mb-0"
+									name="City"
+									required
+									label={
+										<Translate content="City" component={Form.label} />
+									}
+									
+									>
 									<Input
 										className="cust-input"
-										disabled={bankType === "iban" ? true : false}
-										maxLength={200}
-										placeholder={apiCalls.convertLocalLang("Bank_address1")}
+										maxLength="20"
+										placeholder="City"
 									/>
 								</Form.Item>
 							</Col>
+							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+								<Form.Item
+									className="custom-forminput custom-label mb-0"
+									name="State"
+									required
+									label={
+										<Translate content="State" component={Form.label} />
+									}
+									
+									>
+									<Input
+										className="cust-input"
+										maxLength="20"
+										placeholder="State"
+									/>
+								</Form.Item>
+							</Col>
+							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+								<Form.Item
+									className="custom-forminput custom-label mb-0"
+									name="Country"
+									required
+									label={
+										<Translate content="Country" component={Form.label} />
+									}
+									
+									>
+									<Input
+										className="cust-input"
+										maxLength="20"
+										placeholder="Country"
+									/>
+								</Form.Item>
+							</Col>
+							<Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+								<Form.Item
+									className="custom-forminput custom-label mb-0"
+									name="Post code"
+									required
+									label={
+										<Translate content="Post_code" component={Form.label} />
+									}
+									
+									>
+									<Input
+										className="cust-input"
+										maxLength="20"
+										placeholder="Post code"
+									/>
+								</Form.Item>
+							</Col>
+
 						</Row>
 						<Translate
 							content="Beneficiary_Details"
@@ -890,241 +890,16 @@ const NewFiatAddress = (props) => {
 						/>
 						<Row gutter={[16, 16]}>
 							<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-								<Form.Item
-									className="custom-label mb-0"
-									name="beneficiaryAccountName"
-									required
-									label={
-										<Translate
-											content={
-												(props?.userConfig?.isBusiness&& !selectParty && "company_name") ||
-												((!props?.userConfig?.isBusiness || selectParty)&&
-													"Recipient_full_name")
-											}
-											component={Form.label}
-										/>
-									}
-									rules={[
-										{
-											required: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-										{
-											whitespace: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-										{
-											validator: validateContentRule,
-										},
-									]}>
-									{selectParty ? (
-										<Input
-											className="cust-input"
-											placeholder={
-												(props?.userConfig?.isBusiness && !selectParty&&
-													apiCalls.convertLocalLang("company_name")) ||
-												((!props?.userConfig?.isBusiness || selectParty) &&
-													apiCalls.convertLocalLang("Recipient_full_name"))
-											}
-											value="naresh"
-										/>
-									) : (
-										<Input
-											className="cust-input"
-											value={"naresh"}
-											placeholder="Recipient full name"
-											disabled={true}
-										/>
-									)}
-								</Form.Item>
+								
+							<Dropdown.Button onClick={handleButtonClick} overlay={menu}>
+      							Dropdown
+    						</Dropdown.Button>
+
 							</Col>
-							<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-								<Form.Item
-									className="custom-forminput custom-label mb-0"
-									name="beneficiaryAccountAddress"
-									label={
-										<Translate
-											content="Recipient_address1"
-											component={Form.label}
-										/>
-									}
-									required
-									rules={[
-										{
-											required: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-										{
-											whitespace: true,
-											message: apiCalls.convertLocalLang("is_required"),
-										},
-										{
-											validator: validateContentRule,
-										},
-									]}>
-									<Input
-										className="cust-input"
-										maxLength={200}
-										placeholder={apiCalls.convertLocalLang(
-											"Recipient_address1"
-										)}
-									/>
-								</Form.Item>
-							</Col>
-							{selectParty && (
-								<Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-									<Form.Item
-										className="custom-label"
-										name="remarks"
-										label={
-											<Translate content="remarks" component={Form.label} />
-										}>
-										<TextArea
-											placeholder="Remarks"
-											className="cust-input pt-16"
-											autoSize={{ minRows: 3, maxRows: 3 }}
-											maxLength={300}></TextArea>
-									</Form.Item>
-								</Col>
-							)}
+							
 						</Row>
 
-						<Row gutter={[12, 12]}>
-							{selectParty === true && (
-								<Col xs={24} md={24} lg={12} xl={12} xxl={12}>
-									<Form.Item
-										name={"file1"}
-										className="mb-0"
-										rules={[
-											{
-												required: true,
-												message: "Please upload identity document",
-											},
-										]}>
-										{
-											<Dragger
-												accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-												className="upload mt-16"
-												multiple={false}
-												action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
-												showUploadList={false}
-												beforeUpload={(identityprop) => {
-													beforeUpload(identityprop, "IDENTITYPROOF");
-												}}
-												onChange={(identityprop) =>
-													upLoadFiles(identityprop, "IDENTITYPROOF")
-												}>
-												<p className="ant-upload-drag-icon mb-16">
-													<span className="icon xxxl doc-upload" />
-												</p>
-												<p className="ant-upload-text fs-18 mb-0">
-													Please upload identity document here
-												</p>
-											</Dragger>
-										}
-										{!uploadIdentity && identityFile !== null && (
-											<div className="docfile mr-0">
-												<span
-													className={`icon xl ${
-														(identityFile.documentName?.slice(-3) === "zip" &&
-															"file") ||
-														(identityFile.documentName?.slice(-3) !== "zip" &&
-															"") ||
-														(identityFile.documentName?.slice(-3) === "pdf" &&
-															"file") ||
-														(identityFile.documentName?.slice(-3) !== "pdf" &&
-															"image")
-													} mr-16`}
-												/>
-
-												<div
-													className="docdetails c-pointer"
-													onClick={() => docPreview(identityFile)}>
-													<EllipsisMiddle suffixCount={4}>
-														{identityFile.documentName}
-													</EllipsisMiddle>
-													<span className="fs-12 text-secondary">
-														{bytesToSize(identityFile.remarks)}
-													</span>
-												</div>
-											</div>
-										)}
-										{uploadIdentity && (
-											<div className="text-center mt-16">
-												<Spin />
-											</div>
-										)}
-									</Form.Item>
-								</Col>
-							)}
-							{selectParty === true && (
-								<Col xs={24} md={24} lg={12} xl={12} xxl={12}>
-									<Form.Item
-										name={"file2"}
-										className="mb-0"
-										rules={[
-											{
-												required: true,
-												message: "Please upload address proof",
-											},
-										]}>
-										{<>
-											<Dragger
-												accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
-												className="upload mt-16"
-												multiple={false}
-												action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
-												showUploadList={false}
-												beforeUpload={(addressprop) => {
-													beforeUpload(addressprop, "ADDRESSPROOF");
-												}}
-												onChange={(addressprop) =>
-													upLoadFiles(addressprop, "ADDRESSPROOF")
-												}>
-												<p className="ant-upload-drag-icon mb-16">
-													<span className="icon xxxl doc-upload" />
-												</p>
-												<p className="ant-upload-text fs-18 mb-0">
-													Please upload address proof here
-												</p>
-											</Dragger>
-											</>
-										}
-									</Form.Item>
-									{!uploadAdress && addressFile !== null && (
-										<div className="docfile mr-0">
-											<span
-												className={`icon xl ${
-													(addressFile?.documentName?.slice(-3) === "zip" &&
-														"file") ||
-													(addressFile?.documentName?.slice(-3) !== "zip" &&
-														"") ||
-													(addressFile.documentName?.slice(-3) === "pdf" &&
-														"file") ||
-													(addressFile.documentName?.slice(-3) !== "pdf" &&
-														"image")
-												} mr-16`}
-											/>
-											<div
-												className="docdetails c-pointer"
-												onClick={() => docPreview(addressFile)}>
-												<EllipsisMiddle suffixCount={4}>
-													{addressFile.documentName}
-												</EllipsisMiddle>
-												<span className="fs-12 text-secondary">
-													{bytesToSize(addressFile.remarks)}
-												</span>
-											</div>
-										</div>
-									)}
-									{uploadAdress && (
-										<div className="text-center mt-16">
-											<Spin />
-										</div>
-									)}
-								</Col>
-							)}
-						</Row>
+					
 
 						<div style={{ position: "relative" }}>
 							<Form.Item

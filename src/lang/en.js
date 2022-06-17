@@ -566,5 +566,15 @@ export default {
 	cards:"Cards",
 	agree_to_signup: "By clicking Sign Up, I here by acknowledge that I agree to Suissebase's %(link)s Agreement and I've read the Privacy Policy",
 	terms_Use: "Terms of Use",
-	"whitelist":"Declaration form"
+	whitelist:"Declaration form",
+	favorite_name: "Favorite Name",
+	Fait_Name:"Name",
+	email:"Email",
+	Phone_No:"Phone Number",
+	Address_Line1: "Address Line1",
+	Address_Line2: "Address Line2",
+	City: "City",
+	State: "State",
+	Country: "Country",
+	Post_code: "Post code",
 };
