@@ -25,7 +25,7 @@ import { setStep, setHeaderTab } from "../../reducers/buysellReducer";
 import Translate from "react-translate-component";
 import { connect } from "react-redux";
 import WalletList from "../shared/walletList";
-import { saveAddress, favouriteNameCheck, getAddress, getFileURL } from "./api";
+import { saveAddress, favouriteNameCheck, getAddress, getFileURL,payeeLu } from "./api";
 import Loader from "../../Shared/loader";
 import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
@@ -122,6 +122,7 @@ const NewFiatAddress = (props) => {
   const [bankType, setBankType] = useState("");
   const [errorWarning, setErrorWarning] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [payeeLookup, setPayeeLookup] = useState([])
   const bankNameRegex = /^[A-Za-z0-9]+$/;
   const IbanRegex = /^[A-Za-z0-9]{14,}$/;
 
@@ -162,6 +163,7 @@ const NewFiatAddress = (props) => {
     }
     setBankType("bank");
     addressbkTrack();
+    payeeLookUp()
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const getName = () => {
     return props?.userConfig.isBusiness
@@ -255,6 +257,15 @@ const NewFiatAddress = (props) => {
     setFiatAddress({ toCoin: walletId });
     form.setFieldsValue({ toCoin: walletId });
   };
+
+  const payeeLookUp=async(e,type)=>{
+     const data=e.target.value;
+  let response=await payeeLu();
+  if(response.ok){
+    console.log(response.data)
+  }
+  }
+
   const savewithdrawal = async (values) => {
     setIsLoading(false);
     setErrorMsg(null);
@@ -753,10 +764,24 @@ const NewFiatAddress = (props) => {
                     <Translate content="favorite_name" component={Form.label} />
                   }
                 >
-                  <AutoComplete
+                  {/* <AutoComplete
                     className="cust-input text-center"
                     placeholder="Favorite Name"
-                  />
+                  /> */}
+                  <Select
+                      showSearch
+                      className="cust-input"
+                      onKeyUp={(e) => this.handleSearch(e, "email")}
+                      onChange={(e) => this.payeeLookUp(e, "email")}
+                      placeholder="Select Customer Email"
+                      disabled={this.props.match.params.type === "disabled" ? true : false}
+                    >
+                      {payeeLookup.map((item, indx) => (
+                        <Option key={indx} value={item}>
+                          {item}
+                        </Option>
+                      ))}
+                    </Select>
                 </Form.Item>
               </Col>
 
@@ -957,6 +982,7 @@ const NewFiatAddress = (props) => {
                           className="cust-input text-left"
                           placeholder="Bank Name"
                         />
+                       
                       </Form.Item>
                     </Col>
 

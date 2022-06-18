@@ -21,8 +21,15 @@ const favouriteNameCheck = (accountId, name, type, favaddrId) => {
 const saveAddress = (obj) => {
 	return apiClient.post(ApiControllers.addressbook + `Favourite`, obj);
 };
+
+const savePayee = (obj) => {
+	return apiClient.post(ApiControllers.addressbook + `Payee`, obj);
+};
 const getCoinList = (type) => {
 	return apiClient.get(ApiControllers.markets + `Coins/${type}`);
+};
+const payeeLu = (accountId,type) => {
+	return apiClient.get(ApiControllers.addressbook + `PayeeLu/${accountId}/${type}`);
 };
 const getSelectedCoinDetails = (coin_code, member_id) => {
 	return apiClient.get(
@@ -35,6 +42,11 @@ const activeInactive = (obj) => {
 const getAddress = (addreddId) => {
 	return apiClient.get(
 		ApiControllers.addressbook + `Withdraw/Favourite/${addreddId}`
+	);
+};
+const getPayee = ({payeeId}) => {
+	return apiClient.get(
+		ApiControllers.addressbook + `payee/Withdraw/Favourite/${{payeeId}}`
 	);
 };
 const getFileURL = (obj) => {
@@ -59,7 +71,10 @@ export {
 	favouriteNameCheck,
 	activeInactive,
 	getAddress,
+	payeeLu,
 	getFileURL,
+	savePayee,
+	getPayee,
 	getInfoVal,
 	downloadDeclForm
 };
