@@ -78,7 +78,7 @@ class UserProfile extends Component {
                     <Translate content="case" className="f-16  mt-16" /></span>} key="6" >
                         {this.state.activeTab == 6 && <Cases />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg cases-icon mr-16" />
+                    <TabPane tab={<span><span className="icon lg bell-icon mr-16" />
                     <Translate content="notification" className="f-16  mt-16" /></span>} key="7" >
                         {this.state.activeTab == 7 && <NotificationScreen />}
                     </TabPane>
