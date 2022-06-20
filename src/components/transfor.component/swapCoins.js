@@ -17,6 +17,8 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
     const [currencyLu,setCurrencyLu] = useState([])
     const [loader,setLoader] = useState(true)
     const [balance,setBalance] = useState(0)
+    const [errormsg,setErrorMsg] = useState(null)
+    const useDivRef = React.useRef(null);
     const [form] = Form.useForm();
     // const [transfordata,setTransfordata] = useState(null)
 
@@ -33,7 +35,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
         }else{
             setLoader(false);
         }
-        let currencylures = await getCurrencyLu()
+        let currencylures = await getCurrencyLu(userProfile.id)
         if(currencylures.ok){
             setCurrencyLu(currencylures.data)
             currencyLoder=true;
@@ -47,10 +49,11 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
     }
     const showBalance = async(val) =>{
         const obj=form.getFieldValue()
-        console.log(obj)
-        let currencybalRes = await getcurrencyBalance();
-        if(currencybalRes.ok){
-            setBalance(currencybalRes.data)
+        if (obj.walletCode && obj.fromWalletType) {
+            let currencybalRes = await getcurrencyBalance(userProfile.id, obj.fromWalletType, obj.walletCode);
+            if (currencybalRes.ok) {
+                setBalance(currencybalRes.data)
+            }
         }
     }
     const handleFromchange = (val) =>{
@@ -62,6 +65,10 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
         }
     }
     const showSummary= async(values) =>{
+        if(parseFloat(values.transferAmount)>parseFloat(balance?.available)){
+            useDivRef.current.scrollIntoView();
+            return setErrorMsg('Insuficiant funds');
+        }
         let selectedWallet =  currencyLu.filter((type)=>type.walletCode == values.walletCode)
         values.memberWalletId = selectedWallet[0].walletId;
         values.membershipId = userProfile.id;
@@ -76,6 +83,16 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
 
     return (<>
     <Spin spinning={loader}>
+    <div ref={useDivRef}></div>
+    {errormsg !== null && (
+              <Alert
+                className="mb-12"
+                description={errormsg}
+                onClose={() => setErrorMsg(null)}
+                showIcon
+                type="error"
+              />
+            )}
         <div>
             <Form form={form} onFinish={showSummary}>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -160,7 +177,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
                             bordered={false}
                             showArrow={true}
                             optionFilterProp="children"
-                            // onChange={(e) => handleFromchange(e)}
+                            onChange={(e) => showBalance(e)}
                         >
                           {  currencyLu.map((wallet)=>{
                                 return <Option value={wallet.walletCode}>{wallet.walletName}</Option>
@@ -170,10 +187,16 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
                 </Col>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                     <Form.Item
-                        className="custom-forminput custom-label mb-0"
+                        className="custom-forminput custom-label mb-0 min-max-btn"
                         label={
-                            <Translate content="tranfor_Amount" component={Form.label} />
-                        }
+                            <>
+                              <Translate
+                                content="amount" component={Form.label} />
+                              <div className="minmax text-green">
+                                {"Avilable balance:"+(balance?.available||0) }
+                              </div>
+                            </>
+                          }
                         name="transferAmount"
                         rules={[
                             {
@@ -192,9 +215,9 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
                             allowNegative={false}
                             maxlength={13}
                             style={{ height: 44 }}
-                            onValueChange={({ e, value }) => {
-                                showBalance(value)
-                            }}
+                            // onValueChange={({ e, value }) => {
+                            //     showBalance(value)
+                            // }}
                         />
                     </Form.Item>
                 </Col>
