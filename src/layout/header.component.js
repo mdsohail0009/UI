@@ -264,11 +264,12 @@ class Header extends Component {
     this.userProfile = this.userProfile.bind(this);
   }
   userProfile() {
-    this.props.history.push("/userprofile");
-    this.setState({ ...this.state, Visibleprofilemenu: false });
-    if (this.props.oidc.user.profile?.sub) {
-      this.props.getmemeberInfoa(this.props.oidc.user.profile.sub);
-    }
+    // this.props.history.push("/userprofile");
+    // this.setState({ ...this.state, Visibleprofilemenu: false });
+    // if (this.props.oidc.user.profile?.sub) {
+    //   this.props.getmemeberInfoa(this.props.oidc.user.profile.sub);
+    // }
+    window.open(process.env.REACT_APP_PARTNER_UI_URL, "_blank")
   }
   next() {
     this.carousel.next();
