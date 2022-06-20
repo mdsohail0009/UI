@@ -269,7 +269,7 @@ class Header extends Component {
     // if (this.props.oidc.user.profile?.sub) {
     //   this.props.getmemeberInfoa(this.props.oidc.user.profile.sub);
     // }
-    window.open(process.env.REACT_APP_PARTNER_UI_URL, "_blank")
+    window.open(process.env.REACT_APP_ACCOUNT_UI_URL, "_blank")
   }
   next() {
     this.carousel.next();
