@@ -259,7 +259,7 @@ const NewFiatAddress = (props) => {
   };
 
   const payeeLookUp=async(e,type)=>{
-     const data=e.target.value;
+    //  const data=e.target.value;
   let response=await payeeLu();
   if(response.ok){
     console.log(response.data)
@@ -774,7 +774,7 @@ const NewFiatAddress = (props) => {
                       onKeyUp={(e) => this.handleSearch(e, "email")}
                       onChange={(e) => this.payeeLookUp(e, "email")}
                       placeholder="Select Customer Email"
-                      disabled={this.props.match.params.type === "disabled" ? true : false}
+                      // disabled={this.props.match.params.type === "disabled" ? true : false}
                     >
                       {payeeLookup.map((item, indx) => (
                         <Option key={indx} value={item}>
@@ -927,21 +927,23 @@ const NewFiatAddress = (props) => {
               component={Paragraph}
               className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
             />
-            <Row gutter={[16, 16]}>
-              <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+            <Row gutter={[16, 16]} className="justify-center">
+              <Col>
                 <Dropdown.Button
-                  className="btn-dropdown"
+                  className="btn-dropdown custom-dropdown "
                   onClick={showModal}
                   //  onClick={handleButtonClick}
                   overlay={menu}
                 >
-                  Dropdown <span className="icon md add-icon ml-8"></span>
-                </Dropdown.Button>
+                  Add New Bank <span className="icon md add-icon ml-8"></span>
+               </Dropdown.Button>
+               
               </Col>
-              <Modal
+              <Modal 
                 title="Add New Bank"
                 visible={isModalVisible}
                 onOk={handleOk}
+                width={800}
                 onCancel={handleCancel}
                 closeIcon={
                   <Tooltip title="Close">
@@ -975,12 +977,13 @@ const NewFiatAddress = (props) => {
                     <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                       <Form.Item
                         className="custom-forminput custom-label mb-0"
-                        name="Bank Name"
-                        label="Bank Name"
+                        name="Bank Label"
+                        label="Bank Label"
                       >
-                        <AutoComplete
+                        <Input
                           className="cust-input text-left"
-                          placeholder="Bank Name"
+                          maxLength="20"
+                          placeholder="Bank Label"
                         />
                        
                       </Form.Item>
@@ -1054,15 +1057,13 @@ const NewFiatAddress = (props) => {
                         name="Bank Name"
                         label="Bank Name"
                       >
-                        <Select
-                          defaultValue="All"
-                          className="cust-input text-left "
-                          dropdownClassName="select-drpdwn"
-                          showSearch
-                          placeholder="Select Type"
-                        >
+                         <Input
+                          className="cust-input text-left"
+                          maxLength="20"
+                          placeholder="Bank Name"
+                        />
                           {/* {options1} */}
-                        </Select>
+                        
                       </Form.Item>
                     </Col>
                     <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -1077,7 +1078,66 @@ const NewFiatAddress = (props) => {
                           placeholder="Address Type"
                         />
                       </Form.Item>
+                      
                     </Col>
+                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Form.Item
+                  className="custom-forminput custom-label mb-0"
+                  name="City"
+                  required
+                  label={<Translate content="City" component={Form.label} />}
+                >
+                  <Input
+                    className="cust-input"
+                    maxLength="20"
+                    placeholder="City"
+                  />
+                </Form.Item>
+                </Col>
+                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Form.Item
+                  className="custom-forminput custom-label mb-0"
+                  name="State"
+                  required
+                  label={<Translate content="State" component={Form.label} />}
+                >
+                  <Input
+                    className="cust-input"
+                    maxLength="20"
+                    placeholder="State"
+                  />
+                </Form.Item>
+              </Col>
+              <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Form.Item
+                  className="custom-forminput custom-label mb-0"
+                  name="Country"
+                  required
+                  label={<Translate content="Country" component={Form.label} />}
+                >
+                  <Input
+                    className="cust-input"
+                    maxLength="20"
+                    placeholder="Country"
+                  />
+                </Form.Item>
+              </Col>
+              <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Form.Item
+                  className="custom-forminput custom-label mb-0"
+                  name="Post code"
+                  required
+                  label={
+                    <Translate content="Post_code" component={Form.label} />
+                  }
+                >
+                  <Input
+                    className="cust-input"
+                    maxLength="20"
+                    placeholder="Post code"
+                  />
+                </Form.Item>
+              </Col>
                   </Row>
                 </Form>
               </Modal>
