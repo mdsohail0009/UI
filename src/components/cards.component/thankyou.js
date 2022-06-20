@@ -21,8 +21,8 @@ class CardStatus extends Component {
         },
         titles:{
             submitted: 'Thank you for applying for Suissebase Corporate Expense Card!',
-            inprogress: 'Suissebase Corporate Expense Card Application Status ',
-            rejected:'Suissebase Corporate Expense Card Application Status '
+            inprogress: 'Suissebase Corporate Expense Card Your application is being reviewed. ',
+            rejected:'Suissebase Corporate Expense Card Your application has not been approved.'
         }
     }
     render() {
