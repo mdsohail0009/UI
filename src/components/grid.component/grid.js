@@ -53,9 +53,9 @@ export function withState(WrappedGrid) {
         refreshGrid() {
             this.fetchData(this.state.dataState);
         }
-        componentWillUnmount() {
-            this.exportSubscriber.unsubscribe();
-      }
+    //     componentWillUnmount() {
+    //         this.exportSubscriber.unsubscribe();
+    //   }
         loadingPanel = (
             <div className="k-loading-mask">
                 <span className="k-loading-text">Loading</span>
