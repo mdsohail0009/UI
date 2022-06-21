@@ -849,7 +849,7 @@ class Header extends Component {
                <Translate
                 content="menu_tranfor"
                 component={Menu.Item}
-                key="4"
+                key="5"
                 onClick={this.showTrasforDrawer}
                 className="list-item"
               />
@@ -867,7 +867,7 @@ class Header extends Component {
                 <Translate
                   content="menu_send_receive"
                   component={Menu.Item}
-                  key="5"
+                  key="6"
                   className="mr-16"
                 />
               </Dropdown>
@@ -875,7 +875,7 @@ class Header extends Component {
               <Translate
                 content="menu_transactions_history"
                 component={Menu.Item}
-                key="6"
+                key="7"
                 onClick={this.showTransactionHistoryDrawer}
                 className="list-item"
               />
@@ -887,7 +887,7 @@ class Header extends Component {
                 className="list-item"
               />} */}
               <Menu.Item
-                key="7"
+                key="8"
                 className="notification-conunt"
                 onClick={this.showNotificationsDrawer}
               >
@@ -919,7 +919,7 @@ class Header extends Component {
                 overlayClassName="secureDropdown"
                 getPopupContainer={() => document.getElementById("area")}
               >
-                <Menu.Item key="8" className="ml-16">
+                <Menu.Item key="9" className="ml-16">
                   {this.props.userConfig?.imageURL != null && (
                     <img
                       src={
