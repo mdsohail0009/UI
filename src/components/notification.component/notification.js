@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import Translate from 'react-translate-component';
 import { Space, Table, Tag,Select,Switch} from 'antd';
+import {getNotifications, saveNotification} from "./api"
+import { setStep } from "../../reducers/buysellReducer";
+import { async } from 'rxjs';
+
 
 const { Option } = Select;
 const children = [];
@@ -100,8 +104,40 @@ const columns = [
 
 class NotificationScreen extends Component {
 
+  constructor(props){
+    super(props);
+    this.state={
+      notification:[],
+      notificationLu:[],
+      notic:[]
+    }
+  }
 
+  componentDidMount(){
+    this.getNotificationData()
+ 
+  }
+
+  getNotificationData=async()=>{
+    debugger
+    let respose=await getNotifications(this.props.userConfig.id);
+    console.log(respose.data)
+    this.setState({ ...this.state,notification: respose.data });
+
+
+  }
+ 
+  
+   handleChange = () => {
     
+  };
+  
+  onChange = () => {
+   
+  };
+
+
+
     render() {
         return (<>
             <div className="box basic-info">
@@ -118,24 +154,30 @@ class NotificationScreen extends Component {
                 </thead>
                 <tbody>
 
-                  {children?.map((item, i) => {
+                  {this.state.notic?.map((item, i) => {
                     return (
                       <>
                         <tr key={i}>
                           <td style={{ width: 200 }}> <span>{item.action}</span></td>
                           <td style={{ width: 350 }}>
-                            <div className="multiselect-textbox"> <Select
-                              mode="multiple"
-                              allowClear
-                              style={{
-                                width: '100%',
-                              }}
-                              placeholder="Please select"
-                              defaultValue={['Email', 'Notification']}
-                              onChange={this.handleChange}
-                            >
-                              {children}
-                            </Select></div>
+                            <div className="multiselect-textbox" > 
+                               <Select
+                          showSearch
+                          mode="multiple"
+                          className="cust-input multi-select"
+                          style={{width:"350px"}}
+                          placeholder="Select Assigned To"
+                          optionFilterProp="children"
+                          // onKeyUp={(e) => handleSearch(e, "AssignedTo")}
+                          // disabled={indx < caseObject.assignedTo.length - 1}
+                          // disabled={indx < caseObject.assignedTo.length - 1|| (props.match.params.type === "disabled" || caseObject.state !== "Submitted") ? true : false}
+                        >
+                          {this.state.notificationLu?.map((assign, idx) => (
+                            <Option key={idx} value={assign}>
+                              {assign.type}
+                            </Option>
+                          ))}
+                        </Select></div>
                           </td>
                           <td style={{ width: 100 }}><div>
                             <Switch defaultChecked onChange={this.onChange()} size="medium" className="custom-toggle" />
@@ -155,4 +197,23 @@ class NotificationScreen extends Component {
     }
 }
 
-export default NotificationScreen;
+const connectStateToProps = ({ userConfig
+}) => {
+return { userConfig: userConfig.userProfileInfo,
+};
+};
+
+
+
+const connectDispatchToProps = (dispatch) => {
+return {
+changeStep: (stepcode) => {
+dispatch(setStep(stepcode));
+},
+dispatch,
+};
+};
+
+
+
+export default connect( connectStateToProps,connectDispatchToProps)(NotificationScreen);
