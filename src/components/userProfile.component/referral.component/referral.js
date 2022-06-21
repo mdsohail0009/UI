@@ -90,7 +90,7 @@ class Referral extends Component {
 				<div className="box basic-info">
 
                     <div className="box contact-info coin-bal">
-					<Text className="basicinfo mb-0">Referral</Text>
+					<Text className="basicinfo mb-0">My Referral</Text>
 					<ul class="m-0 pl-0">
 						
 							<li className="fs-20 text-yellow c-pointer" onClick={()=>window.open(process.env.REACT_APP_PARTNER_UI_URL, "_blank")}>

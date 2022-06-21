@@ -536,5 +536,5 @@ export default {
 	tranfor_Amount:'Amount',
 	transfor_btn_cnftransfor: 'Confirm Transfor',
 	return_to_transfor: "Back to Transfor",
-	referr: "Referr",
+	referr: "My Referral",
 };
