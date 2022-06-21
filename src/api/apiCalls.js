@@ -156,6 +156,9 @@ const getInfoVal = (id, type) => {
 		ApiControllers.deposit + `GetScoreChainInfo/${id}/${type}`
 	);
 };
+const getReferalDetails = (memberId) =>{
+	return apiClient.get(ApiControllers.partner + `getReferralDetails/member/${memberId}`);
+}
 
 let apicalls = {
 	getportfolio,
@@ -187,5 +190,6 @@ let apicalls = {
 	getVerificationFields,
 	twofactor,
 	getInfoVal,
+	getReferalDetails
 };
 export default apicalls;

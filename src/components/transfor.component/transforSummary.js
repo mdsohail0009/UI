@@ -57,7 +57,7 @@ const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
             )}
         <div>
             <Row className='my-8'>
-                <Col xs={12} md={12} lg={12} xl={12} xxl={12} className='px-8'>
+                <Col xs={12} md={12} lg={12} xl={12} xxl={12} className='px-8 pb-8'>
                     <Text className="fs-14 text-white-50 fw-200">
                         <Translate
                             content="tranfor_fromwlt"
@@ -65,13 +65,16 @@ const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
                             className="fs-14 text-white-50 fw-200"
                         />
                     </Text>
+                    </Col>
+                <Col xs={12} md={12} lg={12} xl={12} xxl={12} className='px-8 pb-8'>
                     <div>
+                        
                     <Text className="fs-20 text-white-30 mb-36">
                         {transforObj?.fromWalletType}
                     </Text>
                     </div>
                 </Col>
-                <Col xs={12} md={12} lg={12} xl={12} xxl={12} className='px-8'>
+                <Col xs={12} md={12} lg={12} xl={12} xxl={12} className='px-8 pb-8'>
                     <Text className="fs-14 text-white-50 fw-200">
                         <Translate
                             content="tranfor_towlt"
@@ -79,6 +82,8 @@ const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
                             className="fs-14 text-white-50 fw-200"
                         />
                     </Text>
+                    </Col>
+                <Col xs={12} md={12} lg={12} xl={12} xxl={12} className='px-8 pb-8'>
                     <div>
                     <Text className="fs-20 text-white-30 mb-36">
                     {transforObj?.ToWalletType}
@@ -87,7 +92,7 @@ const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
             </Row>
 
             <Row className='my-8'>
-                <Col xs={12} md={12} lg={12} xl={12} xxl={12} className='px-8'>
+                <Col xs={12} md={12} lg={12} xl={12} xxl={12} className='px-8 pb-8'>
                     <Text className="fs-14 text-white-50 fw-200">
                         <Translate
                             content="tranfor_currencywlt"
@@ -95,13 +100,15 @@ const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
                             className="fs-14 text-white-50 fw-200"
                         />
                     </Text>
+                    </Col>
+                <Col xs={12} md={12} lg={12} xl={12} xxl={12} className='px-8 pb-8'>
                     <div>
                     <Text className="fs-20 text-white-30 mb-36">
                     {transforObj?.walletCode}
                     </Text>
                     </div>
                 </Col>
-            <Col xs={12} md={12} lg={12} xl={12} xxl={12} className='px-8'>
+            <Col xs={12} md={12} lg={12} xl={12} xxl={12} className='px-8 pb-8 pb-8'>
                 <Text className="fs-14 text-white-50 fw-200">
                     <Translate
                         content="tranfor_Amount"
@@ -109,10 +116,12 @@ const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
                         className="fs-14 text-white-50 fw-200"
                     />
                 </Text>
+                </Col>
+                <Col xs={12} md={12} lg={12} xl={12} xxl={12} className='px-8 pb-8'>
                 <div>
                 <Currency
                     className="fs-20 text-white-30 mb-36"
-                    defaultValue={transforObj?.transferAmount|0}
+                    defaultValue={transforObj?.transferAmount}
                     prefix={''}
                     suffixText={transforObj?.walletCode}
                 />
