@@ -780,7 +780,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .icon.md.USDS{background-position: -213px -102px;}
 
 @media (min-width: 320px){
-    .tlv-header{padding: 8px 16px !important;}
+    .tlv-header{padding: 8px 8px !important;}
     .header-dropdown{margin-right: 24px;}
     .megamenu-label{margin-top: 24px;}
     .header-right{display: block;}
@@ -847,6 +847,9 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .customaudit-select{margin-bottom: 16px;}
     .footer-links{text-align: center;}
     .enter-val-container input{font-size: 16px !important;padding: 0px 5px !important;}
+    .ant-tabs > .ant-tabs-nav .ant-tabs-nav-more{display: none;}
+    .ant-popover-inner-content div:hover{padding: 8px 21px;display: flex;align-items: center;}
+    .tlv-logo{height:40px;}
 }
 @media (max-width: 1024px){
     .custom-gridresponsive .ant-drawer-body{word-wrap: unset !important;}
