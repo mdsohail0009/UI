@@ -28,9 +28,7 @@ const savePayee = (obj) => {
 const getCoinList = (type) => {
 	return apiClient.get(ApiControllers.markets + `Coins/${type}`);
 };
-const payeeLu = (accountId,type) => {
-	return apiClient.get(ApiControllers.addressbook + `PayeeLu/${accountId}/${type}`);
-};
+
 const getSelectedCoinDetails = (coin_code, member_id) => {
 	return apiClient.get(
 		ApiControllers.buySell + `${member_id}/Coins/${coin_code}`
@@ -61,8 +59,34 @@ const getInfoVal = (id, type) => {
 const downloadDeclForm=(addr_id)=>{
 	return apiClient.get(ApiControllers.depositWithdraw+`DownloadDocument/${addr_id}`);
 }
+const getPayeeLu = (accountId, type) => {
+
+    return apiClient.get(
+
+        ApiControllers.addressbook + `PayeeLu/${accountId}/${type}`
+
+    );
+
+};
+
+const getFavData = (payeeId) => {
+
+    return apiClient.get(
+
+        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}`
+
+    );
+
+};
+const saveAddressBook = (obj) => {
+	return apiClient.post(ApiControllers.addressbook + `payee`, obj);
+};
+// https://devapi.suissebase.io/api/v1/addressbook/payee
 
 export {
+	getPayeeLu,
+	saveAddressBook,
+	getFavData,
 	getCoinList,
 	favouriteFiatAddress,
 	saveAddress,
@@ -71,10 +95,8 @@ export {
 	favouriteNameCheck,
 	activeInactive,
 	getAddress,
-	payeeLu,
 	getFileURL,
 	savePayee,
-	getPayee,
 	getInfoVal,
 	downloadDeclForm
 };
