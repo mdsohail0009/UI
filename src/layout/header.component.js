@@ -700,8 +700,8 @@ class Header extends Component {
             <div className="login-user">
               <ul className="header-logo pl-0">
                 <li className="visible-mobile pr-24 p-relative" onClick={this.showToggle}>
-                {!this.state.collapsed ?
-                     <span className="icon md close-white " />:<span className="icon lg hamburg " /> }
+                {this.state.collapsed ?
+                     <span className="icon lg hamburg " />:<span className="icon md close-white " /> }
                 </li>
                 <li className="mobile-logo ">
                   {
@@ -952,34 +952,33 @@ class Header extends Component {
                   content="header_title"
                   onClick={this.routeToCockpit}
                   component={Menu.Item}
-                  key="1"
                   className="list-item"
                 />
                 <Translate
                   content="menu_payments"
                   component={Menu.Item}
-                  key="2"
+                  key="1"
                   onClick={this.showPayments}
                   className="list-item"
                 />
                 <Translate
                   content="menu_wallets"
                   component={Menu.Item}
-                  key="3"
+                  key="2"
                   onClick={this.showWalletsDrawer}
                   className="list-item"
                 />
                 <Translate
                   content="menu_buy_sell"
                   component={Menu.Item}
-                  key="4"
+                  key="3"
                   onClick={this.showBuyDrawer}
                   className="list-item"
                 />
                 <Translate
                   content="menu_send_receive"
                   component={Menu.Item}
-                  key="5"
+                  key="4"
                   className="mr-16" />
                 <Menu>
                   <ul className="pl-0 drpdwn-list">
