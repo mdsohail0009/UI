@@ -147,21 +147,21 @@ const Payments = (props) => {
                 <Tooltip
                   placement="topRight"
                   title="Add Beneficiary">
-                  <Link className="icon md add-icon mr-0"></Link>
+                  <Link className="icon lg beneficiary-icon  mr-0"></Link>
                 </Tooltip>
               </li>
               <li onClick={addPayment} className="mr-16">
                 <Tooltip
                   placement="topRight"
                   title="Add Bill Payment">
-                  <Link className="icon md add-icon mr-0"></Link>
+                  <Link className="icon lg add-icon mr-0"></Link>
                 </Tooltip>
               </li>
               <li onClick={paymentsEdit}>
                 <Tooltip
                   placement="topRight"
                   title="Edit Bill Payment">
-                  <Link className="icon md edit-icon mr-0"></Link>
+                  <Link className="icon lg edit-icon mr-0"></Link>
                 </Tooltip>
               </li>
             </ul>

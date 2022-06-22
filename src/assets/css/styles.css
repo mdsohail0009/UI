@@ -184,12 +184,15 @@ border-radius: 5px;}
 .icon.md.user{background-position:-212px -70px;}
 .icon.md.calendar{background-position:-481px -36px;}
 .icon.md.status{background-position:-365px -69px}
-.icon.md.add-icon{background-position:-397px -71px;}
+.icon.md.add-icon{background-position:-397px -70px;}
 .icon.md.edit-icon{background-position:-336px -70px;}
+.icon.lg.edit-icon{background-position:-336px -70px;}
 .icon.md.email{background-position:-127px -70px;}
+.icon.lg.add-icon{background-position:-397px -70px;}
 .icon.xl.image{background-position:-47px -241px;}
 .icon.xl.file{background-position:-87px -241px;}
 .icon.xxxl.doc-upload{background-position:1px -398px;}
+.icon.lg.beneficiary-icon {background-position: -185px -130px;}
 .header-right li{padding: 0 !important;margin: 0 6px; font-size: 16px; color: var(--textWhite30) !important;}
 .header-dropdown{font-size: 24px; color: var(--textBlack) !important;}
 .mid-menu{display: flex; align-items: center;}
