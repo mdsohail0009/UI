@@ -63,16 +63,16 @@ const Payments = (props) => {
       )
     },
     {
-      field: "createdDate", title: 'Date', filter: true, filterType: "date",
+      field: "createdDate", title: 'Date', filter: true, filterType: "date",width: 300,
       customCell: (prop) => (
         <td><div className="gridLink" onClick={() => paymentsView(prop)}>
           <Moment format="DD/MM/YYYY">{moment(new Date(prop.dataItem.createdDate), "DD/MM/YYYY")}</Moment></div></td>)
     },
-    { field: "currency", title: 'Currency', filter: true },
-    { field: "totalAmount", title: 'Total Amount', filter: true },
-    { field: "approvedAmount", title: 'Approved Amount', filter: true },
-    { field: "count", title: 'Count', filter: true },
-    { field: "state", title: 'State', filter: true },
+    { field: "currency", title: 'Currency', filter: true,width: 300, },
+    { field: "totalAmount", title: 'Total Amount', filter: true, width: 300, },
+    { field: "approvedAmount", title: 'Approved Amount', filter: true, width: 300, },
+    { field: "count", title: 'Count', filter: true, width: 300, },
+    { field: "state", title: 'State', filter: true, width: 300, },
   ];
   const handleInputChange = (prop) => {
     setErrorWarning(null);

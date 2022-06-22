@@ -814,7 +814,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .enter-val{width: 200px;}
     .enter-val input{font-size: 22px !important;}
     .enter-val-container .text-yellow{font-size: 22px !important;}
-     .val-updown{top:6px !important}
+    .val-updown{top:6px !important}
     .enter-val-container{margin-right: 0px;justify-content: flex-start;margin-bottom: 16px;align-items: center;}
     .round-pills .ant-radio-button-wrapper{min-width: 85px !important; margin-bottom: 0 !important;}
     .pay-list .ant-typography{display: block;}
@@ -845,6 +845,8 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .transaction_resp .input-label{margin-left: 0 !important;}
     .search-bg{margin-top: 16px; border-radius: 10px;}
     .customaudit-select{margin-bottom: 16px;}
+    .footer-links{text-align: center;}
+    .enter-val-container input{font-size: 16px !important;padding: 0px 5px !important;}
 }
 @media (max-width: 1024px){
     .custom-gridresponsive .ant-drawer-body{word-wrap: unset !important;}
