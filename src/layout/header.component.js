@@ -303,7 +303,7 @@ class Header extends Component {
       this.props.dispatch(setStep("step1"));
       this.setState({
         buyDrawer: true,
-        Visibleprofilemenu: false, collapsed: false
+        Visibleprofilemenu: false, collapsed: false,isShowSider: false
       });
     } else {
       const isKyc = !this.props.userConfig.isKYC;
@@ -314,7 +314,7 @@ class Header extends Component {
       }
       this.setState({
         ...this.state,
-        Visibleprofilemenu: false, collapsed: false
+        Visibleprofilemenu: false, collapsed: false,isShowSider: false
       });
     }
   };
@@ -342,7 +342,7 @@ class Header extends Component {
     this.setState({
       transactionDrawer: true,
       Visibleprofilemenu: false,
-      collapsed: false
+      collapsed: false, isShowSider: false
     });
   };
   showNotificationsDrawer = () => {
@@ -403,7 +403,7 @@ class Header extends Component {
   showWalletsDrawer = () => {
     this.setState({
       ...this.state,
-      walletsDrawer: true, collapsed: false
+      walletsDrawer: true, collapsed: false,isShowSider: false
     });
   };
 
@@ -520,9 +520,9 @@ class Header extends Component {
   routeToCockpit = () => {
     this.props.dispatch(setHeaderTab(''));
     this.props.userConfig.isKYC ? this.props.history.push("/cockpit") : this.props.history.push("/notkyc")
+    this.setState({...this.state, isShowSider: false})
   }
   showToggle = () => {
-    debugger
     this.setState({ ...this.state, collapsed: !this.state.collapsed, isShowSider: true })
   }
   render() {
@@ -700,7 +700,7 @@ class Header extends Component {
             <div className="login-user">
               <ul className="header-logo pl-0">
                 <li className="visible-mobile pr-24 p-relative" onClick={this.showToggle}>
-                  {!this.state.collapsed ?
+                {!this.state.collapsed ?
                      <span className="icon md close-white " />:<span className="icon lg hamburg " /> }
                 </li>
                 <li className="mobile-logo ">
@@ -948,25 +948,31 @@ class Header extends Component {
                   this.props.dispatch(setHeaderTab(key.key));
                 }}
               >
-
+                <Translate
+                  content="header_title"
+                  onClick={this.routeToCockpit}
+                  component={Menu.Item}
+                  key="1"
+                  className="list-item"
+                />
                 <Translate
                   content="menu_payments"
                   component={Menu.Item}
-                  key="1"
+                  key="2"
                   onClick={this.showPayments}
                   className="list-item"
                 />
                 <Translate
                   content="menu_wallets"
                   component={Menu.Item}
-                  key="2"
+                  key="3"
                   onClick={this.showWalletsDrawer}
                   className="list-item"
                 />
                 <Translate
                   content="menu_buy_sell"
                   component={Menu.Item}
-                  key="3"
+                  key="4"
                   onClick={this.showBuyDrawer}
                   className="list-item"
                 />
