@@ -4,6 +4,6 @@ const getNotifications = ( MembershipId ) => {
 return apiClient.get(ApiControllers.common + `Notification/${MembershipId}`)
 }
 const saveNotification=(obj)=>{
-return apiClient.post(ApiControllers.common + `Notification`,obj)
+return apiClient.put(ApiControllers.common + `Notification`,obj)
 }
 export { getNotifications, saveNotification}
