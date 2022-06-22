@@ -10,7 +10,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children?.slice(0, children.length - suffixCount).trim();
     const suffix = children?.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docnames c-pointer d-block file-label fs-12 text-yellow fw-400"
+        <Text className="mb-0 fs-14 docname c-pointer d-block file-label fs-12 text-yellow fw-400"
             style={{ maxWidth: '100% !important' }} ellipsis={{ suffix }}>
             {start}
         </Text>
@@ -25,7 +25,7 @@ class PaymentsView extends Component {
             loading: false,
             amount:0
         }
-        this.useDivRef = React.createRef();   
+        this.useDivRef = React.createRef();
     }
     componentDidMount() {
         this.getPaymentsViewData();
@@ -87,8 +87,8 @@ class PaymentsView extends Component {
             }
       }
       filePreviewPath() {
-          return this.state.previewPath;
-      }
+        return this.state.previewPath;
+    }
     backToPayments = () => {
         this.props.history.push('/payments')
     }
@@ -103,12 +103,11 @@ class PaymentsView extends Component {
              <div ref={this.useDivRef}></div>
                 <div className="main-container">
                     <Title className="basicinfo mb-16"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
-                    <div className="box basic-info">
-                        <div>
-                        <table className='pay-grid'>
+                    <div className="box basic-info responsive_table">
+                        <table className='pay-grid view'>
                             <thead>
                                 <tr>
-                                    <th className="doc-def">Name</th>
+                                <th className="doc-def">Name</th>
                                     <th className="doc-def" style={{width: "300px"}}>Bank Name</th>
                                     <th>Bank Account Number/IBAN</th>
                                     <th>State</th>
@@ -127,10 +126,9 @@ class PaymentsView extends Component {
                                                    <Tooltip title= {item.bankname}>
                                           <span className='pay-docs'>{item.bankname}</span>
                                         </Tooltip>
-
                                                             <Text
                                                                 size="small"
-                                                                className="file-label doc-def" 
+                                                                className="file-label doc-def ml-8"
                                                             >
                                                                 {this.addressTypeNames(item.addressType)}
                                                             </Text>
@@ -147,7 +145,7 @@ class PaymentsView extends Component {
                                                                 </Popover>
                                                                 </div>
                                                 </td>
-                                                <td style={{width: "300px"}}>{item.accountnumber}</td>
+                                                <td>{item.accountnumber}</td>
                                                 <td>{item.state}</td>
                                                 <td>
                                                     <NumberFormat
@@ -178,8 +176,9 @@ class PaymentsView extends Component {
                                 })}
 
                                 {loading && <tr>
-                                    <td colSpan='5' className='text-center p-16'><Spin size='default' /></td></tr>}
+                                    <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>}
                             </tbody>
+
                             <tfoot>
                             {paymentsData?.length > 0 &&
                                     <tr>
@@ -187,7 +186,7 @@ class PaymentsView extends Component {
                                         <td></td>
                                         <td></td>
                                         <td >
-                                            <span className='text-white fs-24 ml-12'> Total:</span>
+                                            <span className='text-white fs-24 ml-8'> Total:</span>
                                         </td>
                                         <td><span className='text-white fs-24'> <NumberFormat className=" text-right"
                                             customInput={Text} thousandSeparator={true} prefix={""}
@@ -204,8 +203,7 @@ class PaymentsView extends Component {
                                 }
                             </tfoot>
                         </table>
-                        </div>
-                        {!loading ?
+                        {!loading &&
                         <div className="text-right mt-36">
                         {paymentsData?.length > 0 &&
                             <Button
@@ -216,7 +214,7 @@ class PaymentsView extends Component {
                                 Cancel
                             </Button>
                                 }
-                        </div>:""}
+                        </div>}
                     </div>
                 </div>
                 <Modal
