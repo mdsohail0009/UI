@@ -343,7 +343,8 @@ const handleChange=(e)=>{
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
       setErrorMsg(apiCalls.convertLocalLang("agree_termsofservice"));
-    } else if (responsecheck.data !== null) {
+    } 
+	else if (responsecheck.data !== null) {
       setIsLoading(false);
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
@@ -440,38 +441,38 @@ const handleChange=(e)=>{
 		inputScore:0,
 		outputScore:0,
 		recordStatus:"string",
-		documents : {
-			id:
-			  withdrawEdit != null && withdrawEdit != undefined
-				? withdrawEdit?.documents?.id
-				: "00000000-0000-0000-0000-000000000000",
-			transactionId: null,
-			adminId: "00000000-0000-0000-0000-000000000000",
-			date: null,
-			typeId: null,
-			memberId: props?.userConfig?.id,
-			caseTitle: null,
-			caseState: null,
-			remarks: null,
-			status: null,
-			state: null,
-			details: [],
-		  }
+		// documents : {
+		// 	id:
+		// 	  withdrawEdit != null && withdrawEdit != undefined
+		// 		? withdrawEdit?.documents?.id
+		// 		: "00000000-0000-0000-0000-000000000000",
+		// 	transactionId: null,
+		// 	adminId: "00000000-0000-0000-0000-000000000000",
+		// 	date: null,
+		// 	typeId: null,
+		// 	memberId: props?.userConfig?.id,
+		// 	caseTitle: null,
+		// 	caseState: null,
+		// 	remarks: null,
+		// 	status: null,
+		// 	state: null,
+		// 	details: [],
+		//   }
 	}
 	  saveObj.payeeAccountModels=[obj]
      
-      if (selectParty) {
-        if (identityFile) {
-          saveObj.documents.details.push(identityFile);
-        }
-        if (addressFile) {
-          saveObj.documents.details.push(addressFile);
-        }
-      } else {
-        if (declarationFile) {
-          saveObj.documents.details.push(declarationFile);
-        }
-      }
+    //   if (selectParty) {
+    //     if (identityFile) {
+    //       saveObj.documents.details.push(identityFile);
+    //     }
+    //     if (addressFile) {
+    //       saveObj.documents.details.push(addressFile);
+    //     }
+    //   } else {
+    //     if (declarationFile) {
+    //       saveObj.documents.details.push(declarationFile);
+    //     }
+    //   }
       let response = await saveAddressBook(saveObj);
 
       if (response.ok) {
@@ -1034,7 +1035,7 @@ const handleChange=(e)=>{
                
               </Col>
 
-			  <Row gutter={[12, 12]}>
+			  {/* <Row gutter={[12, 12]}>
 							{selectParty === true && (
 								<Col xs={24} md={24} lg={12} xl={12} xxl={12}>
 									<Form.Item
@@ -1169,7 +1170,7 @@ const handleChange=(e)=>{
 									)}
 								</Col>
 							)}
-						</Row>
+						</Row> */}
 
               <Modal 
                 title="Add New Bank"
