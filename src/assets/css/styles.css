@@ -907,6 +907,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
   
    .header-logo .visible-mobile::after{content: '';position: absolute;width: 1px;height: 27px;right: 0;top: -2px !important;background-color: var(--bgWhiteSpin);}
    .mobile-logo {padding-left: 20px;}
+  
 }
 @media (min-width: 768px){
     .tlv-header{height: 96px !important;border-radius: 0 !important;}
@@ -979,6 +980,8 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .portfolio-title{align-items: baseline;}
     .bill_payment{display: flex; align-items: center; justify-content: space-between;}
     .header-logo li:first-child::after{content: '';position: absolute;width: 1px;height: 27px;right: 0;top: 10px;background-color: var(--bgWhiteSpin);} 
+    .common-withdraow.withdraw-crypto{margin-right: 0px;}
+    .common-withdraow.withdraw-crypto input[type=text]{font-size: 22px !important;}
 }
 @media (min-width: 1200px){
     .custom-font{font-size:28px !important;}
@@ -1184,7 +1187,7 @@ input[type=number]::-webkit-outer-spin-button {
 .docdetails .docnames{font-weight: 700;color: var(--textWhite30); line-height: 16px;max-width: 150px !important;}
 .pay-docs{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 215px;word-break: inherit; display: inline-block; vertical-align: bottom;}
 .portfolio-title{display: flex; justify-content: space-between;}
-.common-withdraow input[type=text]{font-size: 16px !important;}
+/* .common-withdraow input[type=text]{font-size: 16px !important;} */
 .ant-collapse.profile-collapse, .profile-collapse .ant-collapse-content{background: transparent !important;border: 0 !important;}
 .drpdwn-list .ant-collapse > .ant-collapse-item{border-bottom: 0 !important;}
 .ant-collapse-icon-position-right.profile-collapse > .ant-collapse-item > .ant-collapse-header{padding: 10px 0 10px 10px;color: var(--textWhite30);font-size: 14px;font-weight: 300;}
