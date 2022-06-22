@@ -254,7 +254,7 @@ class Header extends Component {
       notificationsDrawer: false,
       auditlogsDrawer: false,
       Visibleprofilemenu: false,
-      collapsed: false,
+      collapsed: true,
     };
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
@@ -303,7 +303,7 @@ class Header extends Component {
       this.props.dispatch(setStep("step1"));
       this.setState({
         buyDrawer: true,
-        Visibleprofilemenu: false, collapsed: false,isShowSider: false
+        Visibleprofilemenu: false, collapsed: true,isShowSider: false
       });
     } else {
       const isKyc = !this.props.userConfig.isKYC;
@@ -323,7 +323,7 @@ class Header extends Component {
       this.props.dispatch(sendSetStep("step1"));
       this.setState({
         sendDrawer: true,
-        Visibleprofilemenu: false
+        Visibleprofilemenu: false,collapsed:true, isShowSider:false
       });
     } else {
       const isKyc = !this.props.userConfig.isKYC;
@@ -334,7 +334,7 @@ class Header extends Component {
       }
       this.setState({
         ...this.state,
-        Visibleprofilemenu: false
+        Visibleprofilemenu: false,collapsed:true, isShowSider:false
       });
     }
   };
@@ -342,7 +342,7 @@ class Header extends Component {
     this.setState({
       transactionDrawer: true,
       Visibleprofilemenu: false,
-      collapsed: false, isShowSider: false
+      collapsed: true, isShowSider: false
     });
   };
   showNotificationsDrawer = () => {
@@ -383,7 +383,7 @@ class Header extends Component {
       this.props.dispatch(setWithdrawfiatenaable(false));
       this.setState({
         buyFiatDrawer: true,
-        Visibleprofilemenu: false
+        Visibleprofilemenu: false, isShowSider:false, collapsed:true
       });
     } else {
       const isKyc = !this.props.userConfig.isKYC;
@@ -394,7 +394,7 @@ class Header extends Component {
       }
       this.setState({
         ...this.state,
-        Visibleprofilemenu: false
+        Visibleprofilemenu: false,isShowSider:false, collapsed:true
       });
     }
     this.props.dispatch(setdepositCurrency(null));
@@ -403,7 +403,7 @@ class Header extends Component {
   showWalletsDrawer = () => {
     this.setState({
       ...this.state,
-      walletsDrawer: true, collapsed: false,isShowSider: false
+      walletsDrawer: true, collapsed: true,isShowSider: false
     });
   };
 
@@ -496,7 +496,7 @@ class Header extends Component {
         this.showDocRequestError();
       }
     }
-    this.setState({ ...this.state, collapsed: false, isShowSider: false })
+    this.setState({ ...this.state, collapsed: true, isShowSider: false })
   }
   newCard = () => {
     if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled)
@@ -520,7 +520,7 @@ class Header extends Component {
   routeToCockpit = () => {
     this.props.dispatch(setHeaderTab(''));
     this.props.userConfig.isKYC ? this.props.history.push("/cockpit") : this.props.history.push("/notkyc")
-    this.setState({...this.state, isShowSider: false})
+    this.setState({...this.state,collapsed:true, isShowSider: false})
   }
   showToggle = () => {
     this.setState({ ...this.state, collapsed: !this.state.collapsed, isShowSider: true })
