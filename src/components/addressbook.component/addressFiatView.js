@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
 import Loader from "../../Shared/loader";
-import { getAddress, getFileURL } from "./api";
+import { getAddress, getFileURL,getFavData } from "./api";
 import { connect } from "react-redux";
 import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
@@ -29,8 +29,9 @@ const AddressFiatView = (props) => {
 		loadDataAddress();
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 	const loadDataAddress = async () => {
+		debugger
 		setIsLoading(true);
-		let response = await getAddress(props?.match?.params?.id, "Fiat");
+		let response = await getFavData(props?.match?.params?.id,  props?.userConfig?.id);
 		if (response.ok) {
 			setFiatAddress(response.data);
 			setIsLoading(false);

@@ -69,17 +69,18 @@ const getPayeeLu = (accountId, type) => {
 
 };
 
-const getFavData = (payeeId) => {
+
+const saveAddressBook = (obj) => {
+	return apiClient.post(ApiControllers.addressbook + `payee`, obj);
+};
+const getFavData = (payeeId,membershipId) => {
 
     return apiClient.get(
 
-        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}`
+        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${membershipId}`
 
     );
 
-};
-const saveAddressBook = (obj) => {
-	return apiClient.post(ApiControllers.addressbook + `payee`, obj);
 };
 // https://devapi.suissebase.io/api/v1/addressbook/payee
 
