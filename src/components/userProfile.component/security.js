@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Switch, Drawer, Button,  Form, Input, Alert, Row, Col,Spin } from "antd";
+import { Typography, Switch, Drawer, message, Button, Checkbox, Form, Input, Alert, Row, Col, Spin } from "antd";
 import Translate from "react-translate-component";
 import Changepassword from "../../components/changepassword";
 import { connect } from "react-redux";
 import { updatechange, withdrawVerifyObj } from "../../reducers/UserprofileReducer";
 import { store } from "../../store";
-import { success } from "../../utils/messages";
+import { success, warning, error } from "../../utils/messages";
 import Moment from "react-moment";
 import apiCalls from "../../api/apiCalls";
-import { LoadingOutlined } from "@ant-design/icons";
 const { Title, Paragraph, Text } = Typography;
 const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA }) => {
   const [form] = Form.useForm();
@@ -28,8 +27,8 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
   };
   useEffect(() => {
     securityTrack()
-    getVerifyData();
-  }, []) //eslint-disable-line react-hooks/exhaustive-deps
+    getVerifyData()
+  }, []);
   const getVerifyData = async () => {
     let response = await apiCalls.getVerificationFields(userConfig.id);
     if (response.ok) {
@@ -135,13 +134,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
          setIsLoading(false)
          setBtnDisabled(false);         
       }
- } 
- const antIcon = (
-  <LoadingOutlined
-      style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
-      spin
-  />
-);
+ }
   return (
     <>
       <div ref={useDivRef}></div>
@@ -266,7 +259,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
       </div>
       <Drawer
         title={[
-          <div className="side-drawer-header">
+          <div className="side-drawer-header change_password">
             <span />
             <div className="text-center fs-16">
               <Translate
@@ -307,7 +300,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         <Form>
           <Row gutter={[16, 16]}>
             <Col md={4} xl={4} xxl={4}>
-              <div className="d-flex align-center mt-16 ">
+              <div className="d-flex align-center mt-16">
                 <label className="custom-checkbox p-relative c-pointer">
                   <Input
                     name="check"
@@ -362,13 +355,9 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
             </Col>
             <Col md={6} xl={6} xxl={6}>
               <div className="text-right">
-              <Button
-                        className="pop-btn px-36"
-                        loading={btnDisabled}
-                        style={{ height: 44,minWidth: 100 }} onClick={() => saveDetails()}>
-                        {isLoading && <Spin indicator={antIcon} />}{" "}
-                        save
-                    </Button>
+                <Button className="pop-btn px-36" loading={isLoading} style={{ height: 44 }} onClick={() => saveDetails()} >
+                  save
+                </Button>
               </div>
             </Col>
           </Row>

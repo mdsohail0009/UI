@@ -2,6 +2,7 @@ import { Table, Tooltip, Input, Empty, Drawer, Typography } from 'antd';
 import { FullscreenOutlined, ReloadOutlined } from '@ant-design/icons'
 import React, { useEffect, useState } from 'react';
 import Translate from 'react-translate-component';
+import Loader from '../../Shared/loader';
 import { fetchMarketCaps } from './api';
 import { detailInfoColumns, infoColumns } from './marketcap.columns';
 import apiCalls from '../../api/apiCalls';
@@ -62,7 +63,7 @@ const MarketCap = ({ member }) => {
 
     return <>
         <div>
-            <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey",width: "760px"
+            <div className="full-screenable-node" style={{ overflow: "hidden", height: "100%", background: "daryGrey"
 }}>
                 <div className="d-flex justify-content mt-36">
                     <div>
