@@ -475,17 +475,23 @@ class WithdrawSummary extends Component {
 				}
 			}
 			 else if(this.state.verifyData?.isLiveVerification){
-				debugger
 				this.props.dispatch(
 					setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
 				);
 				this.props.changeStep("withdraw_crypto_liveness");
 			}
-			this.setState({
-				...this.state,
-				errorMsg:
-					"We can not process this request, Since commission is more than or equal to requested amount",
-			});
+			// this.setState({
+			// 	...this.state,
+			// 	errorMsg: this.isErrorDispaly(withdrawal), btnLoading: false
+			// });
+			if(!this.props.userProfile.isBusiness) {
+				this.setState({
+					...this.state,
+					errorMsg:
+						"We can not process this request, Since commission is more than or equal to requested amount",
+				});
+			}
+		
 		}
 	};
 	isErrorDispaly = (objValue) => {

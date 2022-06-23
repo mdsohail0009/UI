@@ -38,7 +38,7 @@ class NewCards extends Component {
     if (!isBusiness) {
       return <div className="text-center submission-sec">
         <Title level={2} className="text-white">You do not have access to this page </Title>
-        <div className="my-25 text-textDark"><Button onClick={() => this.props.history.push("/cockpit")} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBORD</Button>
+        <div className="my-25 text-textDark"><Button onClick={() => this.props.history.push("/cockpit")} type="primary" className="mt-36 pop-btn text-textDark">BACK TO COCKPIT</Button>
         </div>
       </div>
     }
