@@ -806,8 +806,6 @@ class Header extends Component {
                 this.props.dispatch(setHeaderTab(key.key));
               }}
             >
-             {console.log(this.props.userConfig.isBusiness && process.env.REACT_APP_ISSHOWCARDS == true)}
-              {console.log('process.env.REACT_APP_ISSHOWCARDS: '+process.env.REACT_APP_ISSHOWCARDS)}
               {this.props.userConfig.isBusiness && process.env.REACT_APP_ISSHOWCARDS == "true" && <Translate
                 content="cards"
                 component={Menu.Item}
