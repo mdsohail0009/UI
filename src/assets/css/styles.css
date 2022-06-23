@@ -1149,3 +1149,13 @@ input[type=number]::-webkit-outer-spin-button {
 
 .custom-forminput .ant-form-item-control .ant-form-item-explain-error{margin-left: 12px;}
 .hy-align{margin:auto 0; display: flex;align-items: center;}
+.user-list.ant-tabs > .ant-tabs-nav .ant-tabs-nav-operations{display: none;}
+.basic-info .ant-table{background: transparent;}
+.basic-info .ant-table-tbody > tr.ant-table-row:hover > td{background: var(--bgDarkGrey);}
+.basic-info .ant-table-thead > tr > th{border-bottom: transparent;}
+/* multi selection */
+.ant-select-multiple .ant-select-selection-item-remove, .ant-select-multiple .ant-select-selection-item-content{color:#ffffff !important;}
+.ant-select-item-option-active:not(.ant-select-item-option-disabled){background-color: var(--bgDarkGrey);color:#fff;}
+.ant-select-dropdown{background-color: var(--bgGloom);}
+.ant-select-item-option-selected:not(.ant-select-item-option-disabled){background-color: var(--bgDarkGrey);color:#fff;}
+.ant-select-item{color:#ffff;}
