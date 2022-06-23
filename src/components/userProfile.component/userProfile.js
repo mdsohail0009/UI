@@ -6,7 +6,7 @@ import AddressBook from '../addressbook.component';
 import QueryString from 'query-string'
 import Settings from './settings';
 import Cases from '../case.component/cases';
-import Referral from './referral.component/referral';
+import NotificationScreen from "../notification.component/notification";
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
 import {addressTabUpdate} from '../../reducers/addressBookReducer'
@@ -78,11 +78,10 @@ class UserProfile extends Component {
                     <Translate content="case" className="f-16  mt-16" /></span>} key="6" >
                         {this.state.activeTab == 6 && <Cases />}
                     </TabPane>
-                    <TabPane tab={<span><span className="icon lg referral-icon mr-16" />
-                    <Translate content="referr" className="f-16  mt-16" /></span>} key="7" >
-                        {this.state.activeTab == 7 && <Referral />}
+                    <TabPane tab={<span><span className="icon lg bell-icon mr-16" />
+                    <Translate content="notification" className="f-16  mt-16" /></span>} key="7" >
+                        {this.state.activeTab == 7 && <NotificationScreen />}
                     </TabPane>
-
                 </Tabs>
             </div>
         </>);
