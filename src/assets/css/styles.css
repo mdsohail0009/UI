@@ -795,7 +795,12 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .crypto-percent .percent{font-size: 16px;vertical-align: middle;margin-left: 4px;}
     .drawer-title{font-size: 28px !important;font-weight: 200 !important;color: var(--textWhite30) !important; margin: 16px 0 4px !important;}
     .buysell-toggle + .fs-36{font-size: 28px !important;}
-    .round-pills{ margin-bottom: 16px;}
+    .round-pills{ margin-bottom: 16px;}  
+    .footer-links a{margin-right: 30px;}
+}
+@media (min-width : 414px) {
+    .footer-links a{margin-right: 16px;}
+    .enter-val{margin-left: 4px;margin-right:4px}
 }
 @media (min-width: 576px){
     .fiat-total{display: flex;justify-content: space-between;text-align: center;}
@@ -814,7 +819,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .sidebar-push{margin: 62px 0 0 !important;}
     .copyright-block{display: flex; justify-content: space-between; align-items: center;padding-top: 12px;}
     .swap-subtitlte{width:235px}
-    .enter-val{width: 200px;}
+    .enter-val{margin-left: 4px;margin-right: 4px;}
     .enter-val input{font-size: 22px !important;}
     .enter-val-container .text-yellow{font-size: 22px !important;}
     .val-updown{top:6px !important}
@@ -979,7 +984,8 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .mobile-ml-8{margin-left: 8px;}
     .mobile-headerview{display: block;}
     .visible-mobile,.sideropen{display: none;}
-    .full-screenable-node{width: 760px;}
+    /* .full-screenable-node{width: 760px;} */
+    .full-screenable-node{width: 100%;}
     .portfolio-list h1{padding: 16px 0 16px;}
     .portfolio-data{display: flex;align-items: baseline;}
     .portfolio-title{align-items: baseline;}
