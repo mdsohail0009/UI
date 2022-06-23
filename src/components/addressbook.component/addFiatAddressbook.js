@@ -25,7 +25,7 @@ import { setStep, setHeaderTab } from "../../reducers/buysellReducer";
 import Translate from "react-translate-component";
 import { connect } from "react-redux";
 import WalletList from "../shared/walletList";
-import { saveAddress, favouriteNameCheck, getAddress, getFileURL,payeeLu } from "./api";
+import { saveAddress, favouriteNameCheck, getAddress, getFileURL,getPayeeLu,getFavData,saveAddressBook } from "./api";
 import Loader from "../../Shared/loader";
 import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
@@ -122,7 +122,8 @@ const NewFiatAddress = (props) => {
   const [bankType, setBankType] = useState("");
   const [errorWarning, setErrorWarning] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [payeeLookup, setPayeeLookup] = useState([])
+  const [PayeeLu,setPayeeLu] = useState([])
+	const[favorite,setFavorite]=useState({})
   const bankNameRegex = /^[A-Za-z0-9]+$/;
   const IbanRegex = /^[A-Za-z0-9]{14,}$/;
 
@@ -163,24 +164,14 @@ const NewFiatAddress = (props) => {
     }
     setBankType("bank");
     addressbkTrack();
-    payeeLookUp()
+    payeeLuData()
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const getName = () => {
     return props?.userConfig.isBusiness
       ? props?.userConfig.businessName
       : props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
   };
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
+  
 
   const addressbkTrack = () => {
     apiCalls.trackEvent({
@@ -211,14 +202,12 @@ const NewFiatAddress = (props) => {
       setWithdrawValues(response.data);
       setAddressState(response.data.addressState);
       setBankType(response.data.bankType);
-      if (
-        props?.addressBookReducer?.selectedRowData &&
-        props?.buyInfo.memberFiat?.data
-      ) {
-        handleWalletSelection(
-          props?.addressBookReducer?.selectedRowData?.currency
-        );
-      }
+    //   if (
+    //     props?.addressBookReducer?.selectedRowData &&
+    //     props?.buyInfo.memberFiat?.data
+    //   ) {
+        
+    //   }
       let fileInfo = response?.data?.documents?.details;
       if (
         response?.data?.addressType === "1stparty" &&
@@ -253,25 +242,82 @@ const NewFiatAddress = (props) => {
       return "Something went wrong please try again!";
     }
   };
-  const handleWalletSelection = (walletId) => {
-    setFiatAddress({ toCoin: walletId });
-    form.setFieldsValue({ toCoin: walletId });
+  const handleMenuClick = (e) => {
+	message.info("Click on menu item.");
+	// console.log("click", e);
+  };
+const menu = (
+	<Menu
+	  onClick={handleMenuClick}
+	  items={[
+		{
+		  label: "1st menu item",
+		  key: "1",
+		  icon: <UserOutlined />,
+		},
+		{
+		  label: "2nd menu item",
+		  key: "2",
+		  icon: <UserOutlined />,
+		},
+  
+		{
+		  label: "3rd menu item",
+		  key: "3",
+		  icon: <UserOutlined />,
+		},
+  
+	  ]}
+  
+	/>
+  
+  );
+//   const handleWalletSelection = (walletId) => {
+//     setFiatAddress({ toCoin: walletId });
+//     form.setFieldsValue({ toCoin: walletId });
+//   };
+
+  const showModal = () => {
+	setIsModalVisible(true);
+
+  };
+  const handleOk = () => {
+	setIsModalVisible(false);
   };
 
-  const payeeLookUp=async(e,type)=>{
-     const data=e.target.value;
-  let response=await payeeLu();
+  const handleCancel = () => {
+	setIsModalVisible(false);
+  };
+const payeeLuData=async()=>{
+	debugger
+	let response= await getPayeeLu(props?.userConfig?.id,"Fiat");
+	// console.log(response.data);
+	setPayeeLu(response.data)
+ 
+  }
+const getFav=async(id)=>{
+  debugger
+  let response=await getFavData(id)
   if(response.ok){
-    console.log(response.data)
+	let obj=response.data;
+	form.setFieldsValue(obj)
   }
-  }
+  console.log(response.data);
+}
+const handleChange=(e)=>{
+  debugger
+  let data=PayeeLu.find(item => item.name === e)
+	getFav(data.id)
+}
+// console.log(favorite) 
 
   const savewithdrawal = async (values) => {
+	debugger
     setIsLoading(false);
     setErrorMsg(null);
     setBtnDisabled(true);
     const type = "fiat";
-    values["id"] = props?.addressBookReducer?.selectedRowData?.id;
+    // values["id"] = props?.addressBookReducer?.selectedRowData?.id;
     values["membershipId"] = props?.userConfig?.id;
 
     if (!selectParty) {
@@ -297,85 +343,137 @@ const NewFiatAddress = (props) => {
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
       setErrorMsg(apiCalls.convertLocalLang("agree_termsofservice"));
-    } else if (responsecheck.data !== null) {
+    } 
+	else if (responsecheck.data !== null) {
       setIsLoading(false);
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
       return setErrorMsg("Address label already existed");
     } else {
       setBtnDisabled(true);
+	  
+	  values["favouriteName"] = namecheck;
+	  values["fullName"] = values.fullName;
+	  values["email"] = values.email;
+	  values["phoneNumber"] = values.phoneNumber;
+	  values["addressType"] = values.addressType;
+	  values["line1"] = values.line1;
+	  values["line2"] = values.line2;
+	  values["city"] = values.city;
+	  values["state"] = values.state;
+	  values["country"] = values.country;
+	  values["postalCode"] = values.postalCode;
+	  values["digitalSignId"] = values.digitalSignId;
+	  values["isDigitallySigned"] = values.isDigitallySigned;
+
       let saveObj = Object.assign({}, values);
 
-      saveObj.accountNumber = apiCalls.encryptValue(
-        saveObj.accountNumber,
-        props?.userConfig?.sk
-      );
-      saveObj.bankAddress = apiCalls.encryptValue(
-        saveObj.bankAddress,
-        props?.userConfig?.sk
-      );
-      saveObj.bankName = apiCalls.encryptValue(
-        saveObj.bankName,
-        props?.userConfig?.sk
-      );
-      saveObj.beneficiaryAccountAddress = apiCalls.encryptValue(
-        saveObj.beneficiaryAccountAddress,
-        props?.userConfig?.sk
-      );
-      saveObj.beneficiaryAccountName = apiCalls.encryptValue(
-        saveObj.beneficiaryAccountName,
-        props?.userConfig?.sk
-      );
-      saveObj.routingNumber = apiCalls.encryptValue(
-        saveObj.routingNumber,
-        props?.userConfig?.sk
-      );
-      saveObj.toWalletAddress = apiCalls.encryptValue(
-        saveObj.toWalletAddress,
-        props?.userConfig?.sk
-      );
-      saveObj.country = apiCalls.encryptValue(
-        saveObj.country,
-        props?.userConfig?.sk
-      );
-      saveObj.state = apiCalls.encryptValue(
-        saveObj.state,
-        props?.userConfig?.sk
-      );
-      saveObj.zipCode = apiCalls.encryptValue(
-        saveObj.zipCode,
-        props?.userConfig?.sk
-      );
-      saveObj.documents = {
-        id:
-          withdrawEdit != null && withdrawEdit != undefined
-            ? withdrawEdit?.documents?.id
-            : "00000000-0000-0000-0000-000000000000",
-        transactionId: null,
-        adminId: "00000000-0000-0000-0000-000000000000",
-        date: null,
-        typeId: null,
-        memberId: props?.userConfig?.id,
-        caseTitle: null,
-        caseState: null,
-        remarks: null,
-        status: null,
-        state: null,
-        details: [],
-      };
-      if (selectParty) {
-        if (identityFile) {
-          saveObj.documents.details.push(identityFile);
-        }
-        if (addressFile) {
-          saveObj.documents.details.push(addressFile);
-        }
-      } else {
-        if (declarationFile) {
-          saveObj.documents.details.push(declarationFile);
-        }
-      }
-      let response = await saveAddress(saveObj);
+	  saveObj.id ="00000000-0000-0000-0000-000000000000";
+    //   saveObj.accountNumber = apiCalls.encryptValue(
+    //     saveObj.accountNumber,
+    //     props?.userConfig?.sk
+    //   );
+    //   saveObj.bankAddress = apiCalls.encryptValue(
+    //     saveObj.bankAddress,
+    //     props?.userConfig?.sk
+    //   );
+    //   saveObj.bankName = apiCalls.encryptValue(
+    //     saveObj.bankName,
+    //     props?.userConfig?.sk
+    //   );
+    //   saveObj.beneficiaryAccountAddress = apiCalls.encryptValue(
+    //     saveObj.beneficiaryAccountAddress,
+    //     props?.userConfig?.sk
+    //   );
+    //   saveObj.beneficiaryAccountName = apiCalls.encryptValue(
+    //     saveObj.beneficiaryAccountName,
+    //     props?.userConfig?.sk
+    //   );
+    //   saveObj.routingNumber = apiCalls.encryptValue(
+    //     saveObj.routingNumber,
+    //     props?.userConfig?.sk
+    //   );
+    //   saveObj.toWalletAddress = apiCalls.encryptValue(
+    //     saveObj.toWalletAddress,
+    //     props?.userConfig?.sk
+    //   );
+    //   saveObj.country = apiCalls.encryptValue(
+    //     saveObj.country,
+    //     props?.userConfig?.sk
+    //   );
+    //   saveObj.state = apiCalls.encryptValue(
+    //     saveObj.state,
+    //     props?.userConfig?.sk
+    //   );
+    //   saveObj.zipCode = apiCalls.encryptValue(
+    //     saveObj.zipCode,
+    //     props?.userConfig?.sk
+    //   );
+	let obj={
+		id:"3fa85f64-5717-4562-b3fc-2c963f66afa6",
+		payeeId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+		accountId:"string",
+		contactId:"string",
+		programId:"string",
+		label:"string",
+		currencyType:"string",
+		walletAddress:"string",
+		walletCode:"string",
+		accountNumber:"string",
+		bankType:"string",
+		swiftRouteBICNumber:"string",
+		swiftCode:"string",
+		bankName:"string",
+		addressType:"string",
+		line1:"string",
+		line2:"string",
+		city:"string",
+		state:"string",
+		country:"string",
+		postalCode:"string",
+		isWhitelisting:true,
+		isAgree:true,
+		status:0,
+		createddate:"2022-06-22T10:09:41.487Z",
+		modifiedBy:"string",
+		remarks:"string",
+		addressState:"string",
+		inputScore:0,
+		outputScore:0,
+		recordStatus:"string",
+		// documents : {
+		// 	id:
+		// 	  withdrawEdit != null && withdrawEdit != undefined
+		// 		? withdrawEdit?.documents?.id
+		// 		: "00000000-0000-0000-0000-000000000000",
+		// 	transactionId: null,
+		// 	adminId: "00000000-0000-0000-0000-000000000000",
+		// 	date: null,
+		// 	typeId: null,
+		// 	memberId: props?.userConfig?.id,
+		// 	caseTitle: null,
+		// 	caseState: null,
+		// 	remarks: null,
+		// 	status: null,
+		// 	state: null,
+		// 	details: [],
+		//   }
+	}
+	  saveObj.payeeAccountModels=[obj]
+     
+    //   if (selectParty) {
+    //     if (identityFile) {
+    //       saveObj.documents.details.push(identityFile);
+    //     }
+    //     if (addressFile) {
+    //       saveObj.documents.details.push(addressFile);
+    //     }
+    //   } else {
+    //     if (declarationFile) {
+    //       saveObj.documents.details.push(declarationFile);
+    //     }
+    //   }
+      let response = await saveAddressBook(saveObj);
 
       if (response.ok) {
         setBtnDisabled(false);
@@ -757,28 +855,25 @@ const NewFiatAddress = (props) => {
             />
             <Row gutter={[16, 16]}>
               <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                <Form.Item
+			  <Form.Item
                   className="custom-forminput custom-label mb-0"
-                  name="favorite name"
+                  name="favouriteName"
                   label={
                     <Translate content="favorite_name" component={Form.label} />
                   }
                 >
-                  {/* <AutoComplete
-                    className="cust-input text-center"
-                    placeholder="Favorite Name"
-                  /> */}
+               
                   <Select
                       showSearch
                       className="cust-input"
-                      onKeyUp={(e) => this.handleSearch(e, "email")}
-                      onChange={(e) => this.payeeLookUp(e, "email")}
+                      // onKeyUp={(e) => handleSearch(e, "favourteNmae")}
+                      onChange={(e) => handleChange(e, "favourteNmae")}
                       placeholder="Select Customer Email"
-                      disabled={this.props.match.params.type === "disabled" ? true : false}
+                      // disabled={this.props.match.params.type === "disabled" ? true : false}
                     >
-                      {payeeLookup.map((item, indx) => (
-                        <Option key={indx} value={item}>
-                          {item}
+                      {PayeeLu.map((item, indx) => (
+                        <Option key={indx} value={item.name}>
+                          {item.name}
                         </Option>
                       ))}
                     </Select>
@@ -788,7 +883,7 @@ const NewFiatAddress = (props) => {
               <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className="custom-forminput custom-label mb-0"
-                  name="name"
+                  name="fullName"
                   required
                   label={
                     <Translate content="Fait_Name" component={Form.label} />
@@ -817,7 +912,7 @@ const NewFiatAddress = (props) => {
               <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className="custom-forminput custom-label mb-0"
-                  name="phone"
+                  name="phoneNumber"
                   label={
                     <Translate content="Phone_No" component={Form.label} />
                   }
@@ -832,7 +927,7 @@ const NewFiatAddress = (props) => {
               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                   className="custom-forminput custom-label mb-0"
-                  name="Address Line"
+                  name="line1"
                   label={
                     <Translate content="Address_Line1" component={Form.label} />
                   }
@@ -849,7 +944,7 @@ const NewFiatAddress = (props) => {
               <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                 <Form.Item
                   className="custom-forminput custom-label mb-0"
-                  name="Address Line"
+				  name="line2"
                   label={
                     <Translate content="Address_Line2" component={Form.label} />
                   }
@@ -866,7 +961,7 @@ const NewFiatAddress = (props) => {
               <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className="custom-forminput custom-label mb-0"
-                  name="City"
+                  name="city"
                   required
                   label={<Translate content="City" component={Form.label} />}
                 >
@@ -878,6 +973,361 @@ const NewFiatAddress = (props) => {
                 </Form.Item>
               </Col>
               <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Form.Item
+                  className="custom-forminput custom-label mb-0"
+                  name="state"
+                  required
+                  label={<Translate content="State" component={Form.label} />}
+                >
+                  <Input
+                    className="cust-input"
+                    maxLength="20"
+                    placeholder="State"
+                  />
+                </Form.Item>
+              </Col>
+              <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Form.Item
+                  className="custom-forminput custom-label mb-0"
+				  name="country"
+                  required
+                  label={<Translate content="Country" component={Form.label} />}
+                >
+                  <Input
+                    className="cust-input"
+                    maxLength="20"
+                    placeholder="Country"
+                  />
+                </Form.Item>
+              </Col>
+              <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Form.Item
+                  className="custom-forminput custom-label mb-0"
+				  name="postalCode"
+                  required
+                  label={
+                    <Translate content="Post_code" component={Form.label} />
+                  }
+                >
+                  <Input
+                    className="cust-input"
+                    maxLength="20"
+                    placeholder="Post code"
+                  />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Translate
+              content="Beneficiary_Details"
+              component={Paragraph}
+              className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
+            />
+            <Row gutter={[16, 16]} className="justify-center">
+              <Col>
+                <Dropdown.Button
+                  className="btn-dropdown custom-dropdown "
+                  onClick={showModal}
+                  //  onClick={handleButtonClick}
+                  overlay={menu}
+                >
+                  Add New Bank <span className="icon md add-icon ml-8"></span>
+               </Dropdown.Button>
+               
+              </Col>
+
+			  {/* <Row gutter={[12, 12]}>
+							{selectParty === true && (
+								<Col xs={24} md={24} lg={12} xl={12} xxl={12}>
+									<Form.Item
+										name={"file1"}
+										className="mb-0"
+										rules={[
+											{
+												required: true,
+												message: "Please upload identity document",
+											},
+										]}>
+										{
+											<Dragger
+												accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
+												className="upload mt-16"
+												multiple={false}
+												action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+												showUploadList={false}
+												beforeUpload={(identityprop) => {
+													beforeUpload(identityprop, "IDENTITYPROOF");
+												}}
+												onChange={(identityprop) =>
+													upLoadFiles(identityprop, "IDENTITYPROOF")
+												}>
+												<p className="ant-upload-drag-icon mb-16">
+													<span className="icon xxxl doc-upload" />
+												</p>
+												<p className="ant-upload-text fs-18 mb-0">
+													Please upload identity document here
+												</p>
+											</Dragger>
+										}
+										{!uploadIdentity && identityFile !== null && (
+											<div className="docfile mr-0">
+												<span
+													className={`icon xl ${
+														(identityFile.documentName?.slice(-3) === "zip" &&
+															"file") ||
+														(identityFile.documentName?.slice(-3) !== "zip" &&
+															"") ||
+														(identityFile.documentName?.slice(-3) === "pdf" &&
+															"file") ||
+														(identityFile.documentName?.slice(-3) !== "pdf" &&
+															"image")
+													} mr-16`}
+												/>
+
+												<div
+													className="docdetails c-pointer"
+													onClick={() => docPreview(identityFile)}>
+													<EllipsisMiddle suffixCount={4}>
+														{identityFile.documentName}
+													</EllipsisMiddle>
+													<span className="fs-12 text-secondary">
+														{bytesToSize(identityFile.remarks)}
+													</span>
+												</div>
+											</div>
+										)}
+										{uploadIdentity && (
+											<div className="text-center mt-16">
+												<Spin />
+											</div>
+										)}
+									</Form.Item>
+								</Col>
+							)}
+							{selectParty === true && (
+								<Col xs={24} md={24} lg={12} xl={12} xxl={12}>
+									<Form.Item
+										name={"file2"}
+										className="mb-0"
+										rules={[
+											{
+												required: true,
+												message: "Please upload address proof",
+											},
+										]}>
+										{<>
+											<Dragger
+												accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG"
+												className="upload mt-16"
+												multiple={false}
+												action={process.env.REACT_APP_UPLOAD_API + "UploadFile"}
+												showUploadList={false}
+												beforeUpload={(addressprop) => {
+													beforeUpload(addressprop, "ADDRESSPROOF");
+												}}
+												onChange={(addressprop) =>
+													upLoadFiles(addressprop, "ADDRESSPROOF")
+												}>
+												<p className="ant-upload-drag-icon mb-16">
+													<span className="icon xxxl doc-upload" />
+												</p>
+												<p className="ant-upload-text fs-18 mb-0">
+													Please upload address proof here
+												</p>
+											</Dragger>
+											</>
+										}
+									</Form.Item>
+									{!uploadAdress && addressFile !== null && (
+										<div className="docfile mr-0">
+											<span
+												className={`icon xl ${
+													(addressFile?.documentName?.slice(-3) === "zip" &&
+														"file") ||
+													(addressFile?.documentName?.slice(-3) !== "zip" &&
+														"") ||
+													(addressFile.documentName?.slice(-3) === "pdf" &&
+														"file") ||
+													(addressFile.documentName?.slice(-3) !== "pdf" &&
+														"image")
+												} mr-16`}
+											/>
+											<div
+												className="docdetails c-pointer"
+												onClick={() => docPreview(addressFile)}>
+												<EllipsisMiddle suffixCount={4}>
+													{addressFile.documentName}
+												</EllipsisMiddle>
+												<span className="fs-12 text-secondary">
+													{bytesToSize(addressFile.remarks)}
+												</span>
+											</div>
+										</div>
+									)}
+									{uploadAdress && (
+										<div className="text-center mt-16">
+											<Spin />
+										</div>
+									)}
+								</Col>
+							)}
+						</Row> */}
+
+              <Modal 
+                title="Add New Bank"
+                visible={isModalVisible}
+                onOk={handleOk}
+                width={800}
+                onCancel={handleCancel}
+                closeIcon={
+                  <Tooltip title="Close">
+                    <span
+                      className="icon md close-white c-pointer"
+                      onClick={() => setPreviewModal(false)}
+                    />
+                  </Tooltip>
+                }
+                footer={
+                  <div>
+                    <Button className="pop-cancel" style={{ margin: "0 8px" }}>
+                      Cancel
+                    </Button>
+                    <Button
+                      className="pop-btn px-24"
+                      style={{ margin: "0 8px" }}
+                    >
+                      Save
+                    </Button>
+                  </div>
+                }
+              >
+                <Form
+                  form={form}
+                  onFinish={savewithdrawal}
+                  autoComplete="off"
+                  initialValues={fiatAddress}
+                >
+                  <Row gutter={[16, 16]}>
+                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                      <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="Bank Label"
+                        label="Bank Label"
+                      >
+                        <Input
+                          className="cust-input text-left"
+                          maxLength="20"
+                          placeholder="Bank Label"
+                        />
+                       
+                      </Form.Item>
+                    </Col>
+
+                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                      <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="currencyType"
+                        label="Currency"
+                      >
+                      <Select
+                          defaultValue="All"
+                          //className="cust-input w-100 bgwhite"
+                          className="cust-input text-left "
+                          dropdownClassName="select-drpdwn"
+                          showSearch
+                          // onChange={(e) => this.handleChange(e, "type")}
+                          placeholder="Select Type"
+                        >
+                          {/* {options1} */}
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                      <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="bankType"
+                        label="Bank Type"
+                      >
+                        <Select
+                          defaultValue="All"
+                          className="cust-input text-left "
+                          dropdownClassName="select-drpdwn"
+                          showSearch
+                          placeholder="Select Type"
+                        >
+                          {/* {options1} */}
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                      <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="accountNumber"
+                        label="Account Number"
+                      >
+                        <Input
+                          className="cust-input text-left"
+                          maxLength="20"
+                          placeholder="Account Number"
+                        />
+                      </Form.Item>
+                    </Col>
+                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                      <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="SWIFI / BIC"
+                        label="SWIFI / BIC"
+                      >
+                        <Input
+                          className="cust-input text-left"
+                          maxLength="20"
+                          placeholder="SWIFI / BIC"
+                        />
+                      </Form.Item>
+                    </Col>
+                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                      <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="Bank Name"
+                        label="Bank Name"
+                      >
+                         <Input
+                          className="cust-input text-left"
+                          maxLength="20"
+                          placeholder="Bank Name"
+                        />
+                          {/* {options1} */}
+                        
+                      </Form.Item>
+                    </Col>
+                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                      <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="Address Type"
+                        label="Address Type"
+                      >
+                        <Input
+                          className="cust-input text-left"
+                          maxLength="20"
+                          placeholder="Address Type"
+                        />
+                      </Form.Item>
+                      
+                    </Col>
+                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Form.Item
+                  className="custom-forminput custom-label mb-0"
+                  name="City"
+                  required
+                  label={<Translate content="City" component={Form.label} />}
+                >
+                  <Input
+                    className="cust-input"
+                    maxLength="20"
+                    placeholder="City"
+                  />
+                </Form.Item>
+                </Col>
+                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                 <Form.Item
                   className="custom-forminput custom-label mb-0"
                   name="State"
@@ -921,163 +1371,6 @@ const NewFiatAddress = (props) => {
                   />
                 </Form.Item>
               </Col>
-            </Row>
-            <Translate
-              content="Beneficiary_Details"
-              component={Paragraph}
-              className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
-            />
-            <Row gutter={[16, 16]}>
-              <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
-                <Dropdown.Button
-                  className="btn-dropdown"
-                  onClick={showModal}
-                  //  onClick={handleButtonClick}
-                  overlay={menu}
-                >
-                  Dropdown <span className="icon md add-icon ml-8"></span>
-                </Dropdown.Button>
-              </Col>
-              <Modal
-                title="Add New Bank"
-                visible={isModalVisible}
-                onOk={handleOk}
-                onCancel={handleCancel}
-                closeIcon={
-                  <Tooltip title="Close">
-                    <span
-                      className="icon md close-white c-pointer"
-                      onClick={() => setPreviewModal(false)}
-                    />
-                  </Tooltip>
-                }
-                footer={
-                  <div>
-                    <Button className="pop-cancel" style={{ margin: "0 8px" }}>
-                      Cancel
-                    </Button>
-                    <Button
-                      className="pop-btn px-24"
-                      style={{ margin: "0 8px" }}
-                    >
-                      Save
-                    </Button>
-                  </div>
-                }
-              >
-                <Form
-                  form={form}
-                  onFinish={savewithdrawal}
-                  autoComplete="off"
-                  initialValues={fiatAddress}
-                >
-                  <Row gutter={[16, 16]}>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                      <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name="Bank Name"
-                        label="Bank Name"
-                      >
-                        <AutoComplete
-                          className="cust-input text-left"
-                          placeholder="Bank Name"
-                        />
-                       
-                      </Form.Item>
-                    </Col>
-
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                      <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name="Currency"
-                        label="Currency"
-                      >
-                      <Select
-                          defaultValue="All"
-                          //className="cust-input w-100 bgwhite"
-                          className="cust-input text-left "
-                          dropdownClassName="select-drpdwn"
-                          showSearch
-                          // onChange={(e) => this.handleChange(e, "type")}
-                          placeholder="Select Type"
-                        >
-                          {/* {options1} */}
-                        </Select>
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                      <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name="Bank Type"
-                        label="Bank Type"
-                      >
-                        <Select
-                          defaultValue="All"
-                          className="cust-input text-left "
-                          dropdownClassName="select-drpdwn"
-                          showSearch
-                          placeholder="Select Type"
-                        >
-                          {/* {options1} */}
-                        </Select>
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                      <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name="Account Number"
-                        label="Account Number"
-                      >
-                        <Input
-                          className="cust-input text-left"
-                          maxLength="20"
-                          placeholder="Account Number"
-                        />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                      <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name="SWIFI / BIC"
-                        label="SWIFI / BIC"
-                      >
-                        <Input
-                          className="cust-input text-left"
-                          maxLength="20"
-                          placeholder="SWIFI / BIC"
-                        />
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                      <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name="Bank Name"
-                        label="Bank Name"
-                      >
-                        <Select
-                          defaultValue="All"
-                          className="cust-input text-left "
-                          dropdownClassName="select-drpdwn"
-                          showSearch
-                          placeholder="Select Type"
-                        >
-                          {/* {options1} */}
-                        </Select>
-                      </Form.Item>
-                    </Col>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                      <Form.Item
-                        className="custom-forminput custom-label mb-0"
-                        name="Address Type"
-                        label="Address Type"
-                      >
-                        <Input
-                          className="cust-input text-left"
-                          maxLength="20"
-                          placeholder="Address Type"
-                        />
-                      </Form.Item>
-                    </Col>
                   </Row>
                 </Form>
               </Modal>
