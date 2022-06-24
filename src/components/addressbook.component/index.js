@@ -530,8 +530,16 @@ class AddressBook extends Component {
 			}
 		}
 	};
-	closeBuyDrawer = () => {
-		this.setState({ ...this.state, visible: false, fiatDrawer: false });
+	closeBuyDrawer = (obj) => {
+		debugger
+		let showCrypto=false,showFiat=false;
+		if(obj){
+			if(obj.isCrypto)
+            showCrypto = !obj?.close;
+			else
+			showFiat=!obj?.close;
+		};
+		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat });
 		this.props.rejectCoinWallet();
 		this.props.clearFormValues();
 		this.props.clearCrypto();
@@ -589,7 +597,7 @@ class AddressBook extends Component {
 	renderContent = () => {
 		const stepcodes = {
 			cryptoaddressbook: (
-				<NewAddressBook onCancel={() => this.closeBuyDrawer()} />
+				<NewAddressBook onCancel={(obj) => this.closeBuyDrawer(obj)} />
 			),
 			selectcrypto: <SelectCrypto />,
 		};
@@ -611,7 +619,7 @@ class AddressBook extends Component {
 		const stepcodes = {
 			cryptoaddressbook: (
 				<span
-					onClick={this.closeBuyDrawer}
+					onClick={()=>this.closeBuyDrawer()}
 					className="icon md close-white c-pointer"
 				/>
 			),
@@ -765,7 +773,7 @@ class AddressBook extends Component {
 								</Paragraph>
 							</div>
 							<span
-								onClick={this.closeBuyDrawer}
+								onClick={()=>this.closeBuyDrawer()}
 								className="icon md close-white c-pointer"
 							/>
 						</div>,
@@ -776,7 +784,7 @@ class AddressBook extends Component {
 					closeIcon={null}
 					className="side-drawer w-50p">
 					{this.state.fiatDrawer && (
-						<NewFiatAddress onCancel={() => this.closeBuyDrawer()} />
+						<NewFiatAddress onCancel={(obj) => this.closeBuyDrawer(obj)} />
 					)}
 				</Drawer>
 				<Modal

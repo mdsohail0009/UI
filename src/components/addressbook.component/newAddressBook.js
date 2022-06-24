@@ -9,6 +9,7 @@ import {
 	Typography,
 	Select,
 	Checkbox,
+	Image
 } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import {
@@ -24,8 +25,9 @@ import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
 import { Link } from "react-router-dom";
 import WAValidator from "multicoin-address-validator";
+import success from "../../assets/images/success.png";
 
-const { Text, Paragraph } = Typography;
+const { Text, Paragraph,Title } = Typography;
 const { Option } = Select;
 
 const LinkValue = (props) => {
@@ -61,7 +63,8 @@ const NewAddressBook = ({
 	const [btnDisabled, setBtnDisabled] = useState(false);
 	const [file, setFile] = useState(null);
 	const [addressState, setAddressState] = useState("");
-	const [error,setError]=useState(null);
+	const [error, setError] = useState(null);
+	const [isSignRequested, setSignRequested] = useState(false);
 	useEffect(() => {
 		if (addressBookReducer?.cryptoValues) {
 			form.setFieldsValue({
@@ -77,10 +80,11 @@ const NewAddressBook = ({
 		} else {
 			if (
 				addressBookReducer?.selectedRowData?.id !==
-					"00000000-0000-0000-0000-000000000000" &&
+				"00000000-0000-0000-0000-000000000000" &&
 				addressBookReducer?.selectedRowData?.id
 			) {
 				loadDataAddress();
+
 			}
 		}
 
@@ -115,6 +119,8 @@ const NewAddressBook = ({
 				...response.data,
 				toCoin: addressBookReducer?.selectedRowData?.coin,
 			});
+			debugger
+			setSignRequested(!response.data?.isWhitelisted);
 			const fileInfo = response?.data?.documents?.details[0];
 			if (fileInfo?.path) {
 				form.setFieldsValue({ file: true });
@@ -126,7 +132,7 @@ const NewAddressBook = ({
 			}
 			setIsLoading(false);
 		}
-		else{
+		else {
 			setIsLoading(false);
 			setErrorMsg(isErrorDispaly(response));
 
@@ -134,16 +140,16 @@ const NewAddressBook = ({
 	};
 	const isErrorDispaly = (objValue) => {
 		if (objValue.data && typeof objValue.data === "string") {
-		  return objValue.data;
+			return objValue.data;
 		} else if (
-		  objValue.originalError &&
-		  typeof objValue.originalError.message === "string"
+			objValue.originalError &&
+			typeof objValue.originalError.message === "string"
 		) {
-		  return objValue.originalError.message;
+			return objValue.originalError.message;
 		} else {
-		  return "Something went wrong please try again!";
+			return "Something went wrong please try again!";
 		}
-	  };
+	};
 	const saveAddressBook = async (values) => {
 		setIsLoading(false);
 		setBtnDisabled(true);
@@ -190,15 +196,16 @@ const NewAddressBook = ({
 			let response = await saveAddress(saveObj);
 			if (response.ok) {
 				setBtnDisabled(false);
+				setSignRequested(true);
 				message.success({
 					content: apiCalls.convertLocalLang("address_msg"),
 					className: "custom-msg",
-					duration:4
+					duration: 4
 				});
 				form.resetFields();
 				rejectCoinWallet();
 				InputFormValues(null);
-				onCancel();
+				onCancel({isCrypto:true,close:false});
 				setIsLoading(false);
 				setError("")
 			} else {
@@ -236,6 +243,16 @@ const NewAddressBook = ({
 			return Promise.reject("is required");
 		}
 	};
+	if (isSignRequested) {
+		return <div className="text-center">
+				<Image width={80} preview={false} src={ success} />
+				<Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent</Title>
+				 <Text className="text-white-30">{`Declaration form has been sent to ${userConfig?.email}. 
+				 Please sign using link received in email to whitelist your address`}</Text>
+				{/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
+			</div>
+
+	}
 	return (
 		<>
 			<div>
@@ -248,7 +265,7 @@ const NewAddressBook = ({
 						showIcon
 					/>
 				)}
-					{error && (
+				{error && (
 					<Alert
 						type="error"
 						description={error}
@@ -356,7 +373,7 @@ const NewAddressBook = ({
 								className="custom-forminput mt-36 agree"
 								name="isAgree"
 								valuePropName="checked"
-								>
+							>
 								<Checkbox className="ant-custumcheck" />
 							</Form.Item>
 							<Translate
@@ -374,10 +391,10 @@ const NewAddressBook = ({
 									marginBottom: "10px",
 								}}
 							/>
-								{!cryptoAddress?.isWhitelisted && <div className="whitelist-note">
+							{!cryptoAddress?.isWhitelisted && <div className="whitelist-note">
 								<Alert type="warning" message={`Note : Declaration form will be sent to ${userConfig?.email || cryptoAddress?.email}. Please sign using link received in email to whitelist your address`} showIcon closable={false} />
 							</div>}
-							
+
 						</div>
 
 						<div style={{ marginTop: "50px" }}>
