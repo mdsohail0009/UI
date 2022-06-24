@@ -409,7 +409,7 @@ const FaitWithdrawal = ({
                 />
               </div>
               <Form.Item
-                className="custom-forminput custom-label mb-24"
+                className="custom-forminput custom-label cur-res mb-24"
                 name="walletCode"
                 label={<Translate content="currency" component={Form.label} />}
               >

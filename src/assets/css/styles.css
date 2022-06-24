@@ -797,6 +797,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .buysell-toggle + .fs-36{font-size: 28px !important;}
     .round-pills{ margin-bottom: 16px;}  
     .footer-links a{margin-right: 30px;}
+    
 }
 @media (min-width : 414px) {
     .footer-links a{margin-right: 16px;}
@@ -915,6 +916,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
   
    .header-logo .visible-mobile::after{content: '';position: absolute;width: 1px;height: 27px;right: 0;top: -2px !important;background-color: var(--bgWhiteSpin);}
    .mobile-logo {padding-left: 20px;}
+   .custom-label .ant-form-item-label{margin-bottom: -10px !important;}
   
    /* .layout.ant-layout-has-sider .icon.lg.hamburg{width: 24px; height: 24px;background: var(--lightThemeIcons) no-repeat; display: inline-block; border-radius: 6px;background-position: -55px 2px; transform: scale(1.4);} */
    /* .layout .icon.md.close-white{width: 24px; height: 24px;background: var(--lightThemeIcons) no-repeat; display: inline-block; border-radius: 6px;background-position: -55px 2px; transform: scale(1.4);} */
