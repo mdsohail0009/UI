@@ -812,6 +812,7 @@ class Header extends Component {
                 key="8"
                 onClick={this.newCard}
                 className="list-item"
+                disabled={true}
               />
               }
               <Translate
