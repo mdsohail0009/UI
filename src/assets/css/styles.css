@@ -754,6 +754,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
 .delete-btn:hover{background-color: transparent !important; color:white;border:none;}
 .delete-btn:focus{border:none !important;}
 .ant-modal-footer .delete-btn{padding: 0 30px;}
+.pay-list{display: flex;justify-content: space-between;align-items: center;}
 /*--Zoho--*/
 .zsiq_flt_rel{width: 50px !important; height: 50px !important;bottom: 8px;right: -10px;}
 .zsiq_theme1 .siqico-chat:before{font-size: 20px !important; line-height: 50px !important;}
@@ -831,7 +832,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .val-updown{top:6px !important}
     .enter-val-container{margin-right: 0px;justify-content: flex-start;margin-bottom: 16px;align-items: center;}
     .round-pills .ant-radio-button-wrapper{min-width: 85px !important; margin-bottom: 0 !important;}
-    .pay-list .ant-typography{display: block;}
+    /* .pay-list .ant-typography{display: block;} */
     .coin.lg{transform: scale(0.8);}
     .card-icons{transform: scale(0.65);margin-right: -24px;}
     .portfolio-list .mobile-list .ant-list-item{display: flex;}
@@ -842,12 +843,13 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .display-flex{display: block; text-align: center;}
     .theme-switch{width: auto;}
     .profile-label{width: 150px;}
-    .address-icons{list-style: none; padding-left: 0; margin-bottom: 12px; margin-top: 12px; display: flex;float: right;margin-bottom: 12px !important; } 
+    .address-icons{list-style: none; padding-left: 0; margin-bottom: 12px; margin-top: 12px; display: flex;margin-bottom: 12px !important; } 
     .address-clear{clear: both; margin-top: 12px;}
     .customaudit-select .selectcustom-input{margin-left:0 !important}
     .customaudit-select .custom-btn{width: 100%;}
     .add-custom.ant-row{display: block !important;}
-    .k-pager-sizes {display: none;}
+    /* .k-pager-sizes {display: none;} */
+    .k-pager-info.k-label{display: none;}
     .mobile-headerview li{margin: 0 10px}
     .mobile-headerview li:nth-of-type(6), .mobile-headerview li:nth-of-type(7), .ant-menu-submenu-popup li:nth-of-type(2), .ant-menu-submenu-popup li:nth-of-type(3){display: none;}  
     .suisfiat-height{max-height: calc(100vh - -110px);}
@@ -923,10 +925,10 @@ font-size: 12px;font-weight: 500;height: 20px;}
   
    .header-logo .visible-mobile::after{content: '';position: absolute;width: 1px;height: 27px;right: 0;top: -2px !important;background-color: var(--bgWhiteSpin);}
    .mobile-logo {padding-left: 20px;}
-   .custom-label .ant-form-item-label{margin-bottom: -10px !important;}
+   .custom-label .ant-form-item-label{margin-bottom: 8px !important;}
    .amt-field .cust-input{width:150px;}
    .sidebar-push .ant-alert{align-items: baseline;}
-   
+   .custom-label.ant-form-item{margin-bottom: 16px;}
   
    /* .layout.ant-layout-has-sider .icon.lg.hamburg{width: 24px; height: 24px;background: var(--lightThemeIcons) no-repeat; display: inline-block; border-radius: 6px;background-position: -55px 2px; transform: scale(1.4);} */
    /* .layout .icon.md.close-white{width: 24px; height: 24px;background: var(--lightThemeIcons) no-repeat; display: inline-block; border-radius: 6px;background-position: -55px 2px; transform: scale(1.4);} */
@@ -953,7 +955,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .copyright{display: none !important;}
     .swap-subtitlte{width:250px}
     .enter-val-container{margin-right: 50px;margin-bottom: 8px;}
-    .pay-list{display: flex;justify-content: space-between;align-items: center;}
+
     .verify-options{padding: 24px 70px;}
     .side-drawer .ant-drawer-header{padding:20px !important}
     .markets-panel .custom-table .ant-table-body{height: 875px !important;padding: 0 4px 0 0;}
