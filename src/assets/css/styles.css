@@ -808,6 +808,11 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .crypto-percent .percent{font-size: 20px;margin-left: 6px;}
 }
 @media (max-width: 767px){
+    .custom-label .ant-form-item-label{padding-bottom: 0 !important;}
+    .mb-copy{width: 270px;}
+    .crypto-address .custom-display{margin-top: 20px;}
+    .ant-dropdown-placement-topRight > .ant-dropdown-arrow{top: -5px !important;}
+    .ant-dropdown-show-arrow.ant-dropdown-placement-topRight{top: 71px !important;}
     .crypto-card .ant-card-body{height: 175px;}
     .mid-menu{margin: 0 -16px;padding: 0 16px; background-color: var(--bgWhite);}
     .header-logo{padding-left: 0  !important;}
@@ -821,7 +826,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .swap-subtitlte{width:235px}
     .enter-val{margin-left: 4px;margin-right: 4px;}
     .enter-val input{font-size: 22px !important;}
-    .enter-val-container .text-yellow{font-size: 22px !important;}
+    .enter-val-container .text-yellow{font-size: 22px !important;margin-top: -20px;}
     .val-updown{top:6px !important}
     .enter-val-container{margin-right: 0px;justify-content: flex-start;margin-bottom: 16px;align-items: center;}
     .round-pills .ant-radio-button-wrapper{min-width: 85px !important; margin-bottom: 0 !important;}
@@ -836,7 +841,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .display-flex{display: block; text-align: center;}
     .theme-switch{width: auto;}
     .profile-label{width: 150px;}
-    .address-icons{list-style: none; padding-left: 0; margin-bottom: 12px; margin-top: 12px; display: flex; } 
+    .address-icons{list-style: none; padding-left: 0; margin-bottom: 12px; margin-top: 12px; display: flex;float: right;margin-bottom: 12px !important; } 
     .address-clear{clear: both; margin-top: 12px;}
     .customaudit-select .selectcustom-input{margin-left:0 !important}
     .customaudit-select .custom-btn{width: 100%;}

@@ -405,7 +405,7 @@ const FaitWithdrawal = ({
                 <Translate
                   content="Beneficiary_BankDetails"
                   component={Paragraph}
-                  className="mb-16 fs-14 text-white fw-500 text-upper"
+                  className="mb-16 fs-14 text-white fw-500 text-upper mt-16"
                 />
               </div>
               <Form.Item
