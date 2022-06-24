@@ -920,6 +920,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
    .mobile-logo {padding-left: 20px;}
    .custom-label .ant-form-item-label{margin-bottom: -10px !important;}
    .amt-field .cust-input{width:150px;}
+   .sidebar-push .ant-alert{align-items: baseline;}
    
   
    /* .layout.ant-layout-has-sider .icon.lg.hamburg{width: 24px; height: 24px;background: var(--lightThemeIcons) no-repeat; display: inline-block; border-radius: 6px;background-position: -55px 2px; transform: scale(1.4);} */
