@@ -367,7 +367,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
               </div>
               </Col>
               <Col md={5} xl={5} xxl={5}>
-              <div className="d-flex align-center mt-16">
+              {userConfig?.isBussiness && <div className="d-flex align-center mt-16">
                 <label className="custom-checkbox p-relative c-pointer">
                   <Input
                     name="check"
@@ -382,7 +382,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                   component={Paragraph.label}
                   className="mb-0 profile-label ml-8" style={{ flex: 1 }}
                 />
-              </div>
+              </div>}
             </Col>
             <Col md={5} xl={5} xxl={5}>
               <div className="text-right">
