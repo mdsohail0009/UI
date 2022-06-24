@@ -569,7 +569,7 @@ addressTypeNames = (type) =>{
                                       "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending")
                                       ? <>
                                         <td style={{width:'250px'}}>
-                                          <div className="d-flex">
+                                          <div className="d-flex amt-field">
                                             <Form.Item
                                               className="mb-0"
                                               rules={

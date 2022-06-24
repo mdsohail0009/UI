@@ -1138,7 +1138,7 @@ const NewFiatAddress = (props) => {
 								content="agree_to_suissebase"
 								with={{ link }}
 								component={Paragraph}
-								className="fs-14 text-white-30 ml-16 mb-4 mt-16"
+								className="fs-14 text-white-30 ml-16 mb-4 mt-16 mobile-content"
 								style={{
 									index: 50,
 									position: "absolute",
