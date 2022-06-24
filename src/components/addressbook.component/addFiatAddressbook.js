@@ -32,7 +32,7 @@ import { addressTabUpdate } from "../../reducers/addressBookReducer";
 import FilePreviewer from "react-file-previewer";
 import success from "../../assets/images/success.png";
 
-const { Text, Paragraph,Title } = Typography;
+const { Text, Paragraph, Title } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
 const { Dragger } = Upload;
@@ -318,16 +318,14 @@ const NewFiatAddress = (props) => {
 				setBtnDisabled(false);
 				setErrorMsg("");
 				useDivRef.current.scrollIntoView();
-				if (!isEdit) {
-					setSignRequested(true);
-				}
+				setSignRequested(true);
 				message.success({
 					content: apiCalls.convertLocalLang("address_msg"),
 					className: "custom-msg",
 					duration: 3,
 				});
 				form.resetFields();
-				props?.onCancel({isCrypto:false,close:isEdit?true:false});
+				props?.onCancel({ isCrypto: false, close: isEdit ? true : false });
 				setIsLoading(false);
 				props?.dispatch(addressTabUpdate(true));
 				props?.dispatch(setHeaderTab(""));
