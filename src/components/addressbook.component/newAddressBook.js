@@ -119,8 +119,8 @@ const NewAddressBook = ({
 				...response.data,
 				toCoin: addressBookReducer?.selectedRowData?.coin,
 			});
-			debugger
-			setSignRequested(!response.data?.isWhitelisted);
+			// debugger
+			// setSignRequested(!response.data?.isWhitelisted);
 			const fileInfo = response?.data?.documents?.details[0];
 			if (fileInfo?.path) {
 				form.setFieldsValue({ file: true });

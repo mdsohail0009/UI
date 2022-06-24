@@ -156,7 +156,7 @@ const NewFiatAddress = (props) => {
 			} else {
 				setSelectParty(false);
 			}
-			setSignRequested(!response?.data?.isWhitelisted)
+			// setSignRequested(!response?.data?.isWhitelisted)
 			setFiatAddress(response.data);
 			setWithdrawValues(response.data);
 			setAddressState(response.data.addressState);
