@@ -919,7 +919,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .tlv-header .ant-layout-sider{min-height: 100vh;}
     .sideropen .ant-menu-vertical,.ant-menu-vertical{border-right: 0 !important;}
     .sideropen .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{background-color: transparent;}
-    .sideropen .list-item.ant-menu-item-selected .ant-menu-title-content{min-width: 120px !important; padding: 8px 54px 8px 8px !important}
+    .sideropen .list-item.ant-menu-item-selected .ant-menu-title-content{min-width: 150px !important; padding: 8px 5px 8px 5px !important}
    .portfolio-data{display: block}
    .portfolio-list h1{padding: 0 0 6px;}
    .portfolio-list ul li{display: block !important;}

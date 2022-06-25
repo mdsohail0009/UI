@@ -857,7 +857,7 @@ class Header extends Component {
                   content="menu_send_receive"
                   component={Menu.Item}
                   key="5"
-                  className="mr-16"
+                  className="mr-16 list-item"
                 />
               </Dropdown>
 
@@ -979,7 +979,7 @@ class Header extends Component {
                   content="menu_send_receive"
                   component={Menu.Item}
                   key="4"
-                  className="mr-16" />
+                  className="mr-16 list-item" />
                 <Menu>
                   <ul className="pl-0 drpdwn-list">
                     <li onClick={this.showSendDrawer}>
