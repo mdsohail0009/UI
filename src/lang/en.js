@@ -579,5 +579,5 @@ export default {
 	transfor_btn_cnftransfor: 'Confirm Transfor',
 	return_to_transfor: "Back to Transfor",
 	referr: "My Referral",
-	notification: "Notification",
+	notification: "Notification Settings",
 };

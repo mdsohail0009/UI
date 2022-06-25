@@ -26,6 +26,8 @@ class NotificationScreen extends Component {
       action: false,
       noticObject: {},
       errorMsg: null,
+      btnDisabled: false,
+      
     };
   }
 
@@ -51,6 +53,8 @@ class NotificationScreen extends Component {
   };
 
   saveBankInfo = async () => {
+    window.scrollTo(0, 0)
+    this.setState({...this.state,btnDisabled:true})
     for (var y in this.state.notification) {
       if (
         this.state.notification[y].isAction &&
@@ -94,6 +98,7 @@ class NotificationScreen extends Component {
           (assign) => assign == item.notificationTypes[a].type
         );
         item.notificationTypes[a].values = data.length > 0 ? true : false;
+        
       }
     }
     for (let i in notificationLu) {
@@ -105,23 +110,27 @@ class NotificationScreen extends Component {
   };
 
   enableAction = (event, item) => {
+    debugger
     let notificationLu = this.state.notification;
     for (let i in notificationLu) {
       if (item.id == notificationLu[i].id) {
         notificationLu[i].isAction = event;
+        
       }
     }
     this.setState({ ...this.state, notification: notificationLu });
   };
+
   render() {
     return (
       <>
         {this.state.errorMsg && (
-          <Alert type="error" description={this.state.errorMsg} />
+          <Alert type="error" showIcon description={this.state.errorMsg} />
         )}
         <div className="box basic-info">
-          <Translate content="notification" className="basicinfo" />
+          <Translate content="notifications" className="basicinfo" />
           <div className="mt-16  box basic-info">
+            
             <Form
               name="advanced_search"
               initialValues={this.state.noticObject}
@@ -130,9 +139,9 @@ class NotificationScreen extends Component {
               ref={this.formRef}
               autoComplete="off"
             >
-              {this.state.isLoading ? (
-                <Loader />
-              ) : (
+               {this.state.isLoading ? (<div  colSpan="8" className="p-16 text-center">
+                <Loader  /></div>
+              ) : (<>
                 <table className="pay-grid">
                   <thead>
                     <tr>
@@ -149,9 +158,8 @@ class NotificationScreen extends Component {
                             <td height="50">
                               <span>{item.action}</span>
                             </td>
-
                             <td style={{ width: 350 }}>
-                              <div className="multiselect-textbox">
+                              <div className="multiselect-textbox" >
                                 <Form.Item
                                   required
                                   rules={[
@@ -169,8 +177,8 @@ class NotificationScreen extends Component {
                                   <Select
                                     showSearch
                                     mode="multiple"
-                                    className="cust-input multi-select"
-                                    style={{ width: "350px" }}
+                                    className={item.isAction ? "cust-input multi-select":"cust-input-light"}
+                                    style={{ width: "350px",marginBottom: "-17px" }}
                                     placeholder="Select Notification Type"
                                     optionFilterProp="children"
                                     onChange={(e) => this.handleChange(e, item)}
@@ -196,21 +204,20 @@ class NotificationScreen extends Component {
                                   onChange={(event) =>
                                     this.enableAction(event, item)
                                   }
+                                  
                                   checked={item.isAction}
                                   size="medium"
                                   className="custom-toggle"
-                                />
+                                   />
                               </div>
                             </td>
                           </tr>
                         </>
                       );
                     })}
-                  </tbody>
+                  </tbody>  
                 </table>
-              )}
-            </Form>
-            <div className="text-center">
+                <div className="text-center">
               <Button
                 htmlType="submit"
                 size="min"
@@ -218,11 +225,14 @@ class NotificationScreen extends Component {
                 onClick={() => {
                   this.saveBankInfo();
                 }}
+                loading={this.state.btnDisabled}
                 style={{ minWidth: 200, marginLeft: 462 }}
               >
                 <Translate content="Save_btn_text" />
               </Button>
-            </div>
+            </div></>)}
+              {/* )} */}
+            </Form>
           </div>
         </div>
       </>
