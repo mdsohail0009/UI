@@ -112,7 +112,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           success("Withdrawal verification details saved successfully")
           setErrorMsg(null)
           setError(null)
-          useDivRef.current.scrollIntoView();
+          // useDivRef.current.scrollIntoView();
           setIsLoading(false)
 
         } else if(email||phone||factor===false){
