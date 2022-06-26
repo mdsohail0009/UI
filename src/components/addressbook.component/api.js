@@ -75,9 +75,14 @@ const getPayeeLu = (accountId, type) => {
 
 };
 
+
+
 const getFavData = (payeeId,membershipId) => {
+
     return apiClient.get(
+
         ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${membershipId}`
+
     );
 };
 const saveAddressBook = (obj) => {
