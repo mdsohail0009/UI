@@ -132,6 +132,7 @@ border-radius: 5px;}
 .icon.md.lose-arw{background-position:-338px -34px}
 .icon.md.download{background-position:-627px -38px;}
 .icon.md.delete{background-position:-465px -102px;}
+.icon.md.delete-icon{background-position:-465px -102px;}
 .icon.lg.profile-icon{background-position: -4px -329px}
 .icon.lg.security-icon{background-position:-107px -330px}
 .icon.lg.settings-icon{background-position: -38px -330px}
@@ -620,7 +621,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .bankview-right{padding: 34px 34px 0 !important;background-color: var(--bgDarkGrey);border-radius: 30px;}
 .bankview-right .kpi-val{padding-bottom: 34px;}
 .kpi-List .ant-col{display: flex; margin-bottom: 34px;}
-.kpi-List .icon{margin: 6px 10px 0 0;}
+.kpi-List .icon{margin: 6px 10px 0 10px;}
 .kpi-List .icon + div{flex: 1;}
 .kpi-List .kpi-label{font-size: 12px;color: var(--textWhite50);}
 .kpi-List .kpi-val{font-size: 14px;font-weight: 500;color: var(--textWhite30);word-break: break-word;margin-right: 12px;}
