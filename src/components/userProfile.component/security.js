@@ -9,6 +9,7 @@ import { success } from "../../utils/messages";
 import Moment from "react-moment";
 import apiCalls from "../../api/apiCalls";
 import { LoadingOutlined } from "@ant-design/icons";
+import Loader from "../../Shared/loader";
 const { Title, Paragraph, Text } = Typography;
 const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA }) => {
   const [form] = Form.useForm();
@@ -32,12 +33,14 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
     getVerifyData();
   }, []) //eslint-disable-line react-hooks/exhaustive-deps
   const getVerifyData = async () => {
+    setIsLoading(true);
     let response = await apiCalls.getVerificationFields(userConfig.id);
     if (response.ok) {
       setPhone(response.data?.isPhoneVerified);
       setEmail(response.data?.isEmailVerification);
       setLive(response.data?.isLiveVerification);
       setFactor(response.data?.twoFactorEnabled)
+      setIsLoading(false);
       form.setFieldsValue(response.data);
     }
     else{
@@ -150,8 +153,12 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
 );
   return (
     <>
-      <div ref={useDivRef}></div>
-
+     
+      {isLoading ? (
+				<Loader />
+			) : (
+        <div>
+        <div ref={useDivRef}></div>
       {errorMsg !== null && (
         <Alert
           className="mb-12"
@@ -398,6 +405,8 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           </Row>
         </Form>
       </div>
+      </div>
+      )}
     </>
   );
 };
