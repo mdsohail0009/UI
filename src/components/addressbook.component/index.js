@@ -184,9 +184,9 @@ class AddressBook extends Component {
 			field: "isWhitelisted",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted && (!this.state.isDownloading ? <a onClick={() => {
+					{props.dataItem?.isWhitelisted && !this.state.isDownloading ? <a onClick={() => {
 						this.downloadDeclarationForm(props?.dataItem);
-					}} >Download</a> : (!this.state.isDownloading|| this.state.selectedDeclaration != props?.dataItem.id ? "Not whitelisted" : ""))}
+					}} >Download</a> : (!this.state.isDownloading|| this.state.selectedDeclaration != props?.dataItem.id ? "Not whitelisted" : "")}
 					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.id && <Spin size="small" />}
 				</td>
 			),
