@@ -99,7 +99,7 @@ class Referral extends Component {
 					</ul>
 				</div>
                     <div className="crypto-address mt-12">
-                    <Translate className="mb-0 fw-400 text-secondary" content="referral_id" component={Text} />
+                    <Text className="mb-0 fw-400 text-secondary" >Refferal code</Text>
                     <div className="mb-0 fw-600 text-white-30 walletadrs">{this.state.referaldata?.referralCode||'---'}</div>
                     <div className="mb-0 fw-600 text-white-30 walletadrs">
                         <CopyToClipboard text={this.state.referaldata?.referralCode||'---'}>
@@ -108,7 +108,7 @@ class Referral extends Component {
                     </div>
                 </div>
                 <div className="crypto-address mt-12">
-                    <Translate className="mb-0 fw-400 text-secondary" content="referral_link" component={Text} />
+                    <Text className="mb-0 fw-400 text-secondary" >Personal refferal link</Text>
                     <div className="mb-0 fw-600 text-white-30 walletadrs">{this.state.referaldata?.referrallink||'---'}</div>
                     <div className="mb-0 fw-600 text-white-30 walletadrs">
                         <CopyToClipboard text={this.state.referaldata?.referrallink||'---'}>
@@ -116,6 +116,16 @@ class Referral extends Component {
                         </CopyToClipboard>
                     </div>
                 </div>
+                <div className="crypto-address mt-12">
+                <Text className="mb-0 fw-400 text-secondary" >Business refferal link</Text>
+                    <div className="mb-0 fw-600 text-white-30 walletadrs">{this.state.referaldata?.ReferralBusinesslink||'---'}</div>
+                    <div className="mb-0 fw-600 text-white-30 walletadrs">
+                        <CopyToClipboard text={this.state.referaldata?.ReferralBusinesslink||'---'}>
+                            <Text copyable className="fs-20 text-white-30 custom-display"></Text>
+                        </CopyToClipboard>
+                    </div>
+                </div>
+                
 
                     <Dropdown overlay={this.shareMenu}>
                     <Button
