@@ -479,11 +479,11 @@ class WithdrawSummary extends Component {
 				);
 				this.props.changeStep("withdraw_crypto_liveness");
 			}
-			this.setState({
-				...this.state,
-				errorMsg:
-					"We can not process this request, Since commission is more than or equal to requested amount",
-			});
+			// this.setState({ 
+			// 	...this.state,
+			// 	errorMsg:
+			// 		"We can not process this request, Since commission is more than or equal to requested amount",
+			// });
 		}
 	};
 	isErrorDispaly = (objValue) => {
