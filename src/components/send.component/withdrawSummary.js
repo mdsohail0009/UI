@@ -193,6 +193,13 @@ class WithdrawSummary extends Component {
 		);
 		if (response.ok) {
 			this.setState({ ...this.state, verifyData: response.data });
+			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled)) {
+				this.setState({
+					...this.state,
+					errorMsg:
+						"Without Verifications you can't withdraw.Please select withdraw verifications from security section"
+				});
+			}
 		} else {
 			this.setState({
 				...this.state,
@@ -439,17 +446,17 @@ class WithdrawSummary extends Component {
 					return;
 				}
 			}
-			if (
-				this.state.verifyData.isPhoneVerified == "" &&
-				this.state.verifyData.isEmailVerification == "" &&
-				this.state.verifyData.twoFactorEnabled == ""
-			) {
-				this.setState({
-					...this.state,
-					errorMsg:
-						"Without Verifications you can't withdraw. Please select withdraw verifications from security section", btnLoading: false
-				});
-			}
+			// if (
+			// 	this.state.verifyData.isPhoneVerified == "" &&
+			// 	this.state.verifyData.isEmailVerification == "" &&
+			// 	this.state.verifyData.twoFactorEnabled == ""
+			// ) {
+			// 	this.setState({
+			// 		...this.state,
+			// 		errorMsg:
+			// 			"Without Verifications you can't withdraw. Please select withdraw verifications from security section", btnLoading: false
+			// 	});
+			// }
 			if (this.props.userProfile.isBusiness) {
 				let saveObj = this.props.sendReceive.withdrawCryptoObj;
 				let trackAuditLogData = this.props.trackAuditLogData;
