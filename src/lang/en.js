@@ -88,9 +88,13 @@ export default {
 	withdraw_summary_sub: "Send your currency address.",
 	verify_identity: "Verify your Identity",
 	swap_title: "New Swap",
+	transfor_title: "Transfor",
 	swap_desc:
 		"Instantly exchange your crypto into any currency we offer in your wallet.",
-	swap_from: "Swap From",
+	
+		transfor_desc:
+		"Instantly exchange your crypto into any wallet	 we offer in your wallet.",
+			swap_from: "Swap From",
 	swap_to: "To Receive",
 	wallet_in_usd: "Wallet in USD",
 	purchase_fiat: "Purchase a Fiat",
@@ -537,7 +541,9 @@ export default {
 	withdraw_verification: "Withdrawal Verification",
 	Phone_verification: "Phone Verification",
 	Email_verification: "Email Verification",
-	get_email: "Click here to get code",
+
+	live_verification: "Live Verification",
+		get_email: "Click here to get code",
 	resend_email: "Click here to resend code",
 	sent_verification: "Verification code sent",
 	verify_btn: "Click here to verify",
@@ -579,4 +585,13 @@ export default {
 	State: "State",
 	Country: "Country",
 	Post_code: "Post code",
+	menu_tranfor: "Transfor",
+	tranfor_fromwlt:'From wallet',
+	tranfor_towlt:'To wallet',
+	tranfor_currencywlt:'Currency',
+	tranfor_Amount:'Amount',
+	transfor_btn_cnftransfor: 'Confirm Transfor',
+	return_to_transfor: "Back to Transfor",
+	referr: "My Referral",
+	notification: "Notification Settings",
 };
