@@ -118,9 +118,9 @@ class Referral extends Component {
                 </div>
                 <div className="crypto-address mt-12">
                 <Text className="mb-0 fw-400 text-secondary" >Business refferal link</Text>
-                    <div className="mb-0 fw-600 text-white-30 walletadrs">{this.state.referaldata?.ReferralBusinesslink||'---'}</div>
+                    <div className="mb-0 fw-600 text-white-30 walletadrs">{this.state.referaldata?.referralBusinesslink||'---'}</div>
                     <div className="mb-0 fw-600 text-white-30 walletadrs">
-                        <CopyToClipboard text={this.state.referaldata?.ReferralBusinesslink||'---'}>
+                        <CopyToClipboard text={this.state.referaldata?.referralBusinesslink||'---'}>
                             <Text copyable className="fs-20 text-white-30 custom-display"></Text>
                         </CopyToClipboard>
                     </div>
