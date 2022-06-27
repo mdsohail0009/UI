@@ -128,6 +128,24 @@ const AddressCommonCom = (props) => {
   const withdraeTab = props?.addressBookReducer?.cryptoTab == true ? "Crypto" : "Fiat"
 
   const showModal = () => {
+    // form.resetFields();
+    form.setFieldsValue({
+      label: null,
+      currencyType: withdraeTab,
+      walletAddress: null,
+      walletCode: null,
+      accountNumber: null,
+      bankType: null,
+      swiftRouteBICNumber: null,
+      swiftCode: null,
+      bankName: null,
+      PayeeAccountLine1: null,
+      PayeeAccountLine2: null,
+      PayeeAccountCity: null,
+      PayeeAccountState: null,
+      PayeeAccountCountry:null,
+      PayeeAccountPostalCode: null,
+    })
     setIsModalVisible(true);
 
   };
@@ -226,12 +244,12 @@ const AddressCommonCom = (props) => {
       swiftCode: values.swiftCode,
       bankName: values.bankName,
       addressType: values.addressType,
-      line1: "Hafeezpet",
-      line2: "Hafeezpet",
-      city: values.city,
-      state: values.state,
-      country: values.country,
-      postalCode: values.postalCode,
+      PayeeAccountLine1: values.PayeeAccountLine1,
+      PayeeAccountLine2: values.PayeeAccountLine2,
+      PayeeAccountCity: values.PayeeAccountCity,
+      PayeeAccountState: values.PayeeAccountState,
+      PayeeAccountCountry: values.PayeeAccountCountry,
+      PayeeAccountPostalCode: values.PayeeAccountPostalCode,
       isWhitelisting: true,
       isAgree: true,
       status: 0,
@@ -256,6 +274,7 @@ const AddressCommonCom = (props) => {
     } else {
       modalData.push(obj)
     }
+   
     setIsModalVisible(false);
   }
   const handleDelete = (item) => {
@@ -269,6 +288,7 @@ const AddressCommonCom = (props) => {
 
   }
   const savewithdrawal = async (values) => {
+    debugger
     setIsLoading(false);
     setErrorMsg(null);
     setBtnDisabled(true);
@@ -769,7 +789,7 @@ const AddressCommonCom = (props) => {
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
-                          name="city"
+                          name="PayeeAccountCity"
                           required
                           rules={[{ required: true, message: 'Please input your username!' }]}
                           label={<Translate content="City" component={Form.label} />}
@@ -784,7 +804,7 @@ const AddressCommonCom = (props) => {
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
-                          name="state"
+                          name="PayeeAccountState"
                           required
                           rules={[{ required: true, message: 'Please input your username!' }]}
                           label={<Translate content="State" component={Form.label} />}
@@ -799,7 +819,7 @@ const AddressCommonCom = (props) => {
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
-                          name="country"
+                          name="PayeeAccountCountry"
                           required
                           rules={[{ required: true, message: 'Please input your username!' }]}
                           label={<Translate content="Country" component={Form.label} />}
@@ -814,7 +834,7 @@ const AddressCommonCom = (props) => {
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
-                          name="postalCode"
+                          name="PayeeAccountPostalCode"
                           required
                           rules={[{ required: true, message: 'Please input your username!' }]}
                           label={
@@ -829,6 +849,42 @@ const AddressCommonCom = (props) => {
                         </Form.Item>
 
                       </Col>
+                      <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                  <Form.Item
+                    className="custom-forminput custom-label mb-0"
+                    name="PayeeAccountLine1"
+                    required
+                    rules={[{ required: true, message: 'Please enter Address!' }]}
+                    label={
+                      <Translate content="Address_Line1" component={Form.label} />
+                    }
+                  >
+                    <TextArea
+                      placeholder="Address Line1"
+                      className="cust-input pt-16 text-left"
+                      autoSize={{ minRows: 2, maxRows: 2 }}
+                      maxLength={100}
+                    ></TextArea>
+                  </Form.Item>
+                </Col>
+                <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
+                  <Form.Item
+                    className="custom-forminput custom-label mb-0"
+                    name="PayeeAccountLine2"
+                    required
+                    rules={[{ required: true, message: 'Please enter Address!' }]}
+                    label={
+                      <Translate content="Address_Line2" component={Form.label} />
+                    }
+                  >
+                    <TextArea
+                      placeholder="Address Line2"
+                      className="cust-input pt-16 text-left"
+                      autoSize={{ minRows: 2, maxRows: 2 }}
+                      maxLength={100}
+                    ></TextArea>
+                  </Form.Item>
+                </Col>
                     </Row>
                     <div style={{ marginLeft: "447px", marginTop: "40px" }}>
                       <Button
@@ -865,9 +921,9 @@ const AddressCommonCom = (props) => {
                         </Row>
                         <Row>
                           <label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>
-                            {item.city}{","}{" "}
-                            {item.state}{","}{" "}
-                            {item.postalCode}{"."}{" "}</label>
+                            {item.PayeeAccountCity}{","}{" "}
+                            {item.PayeeAccountState}{","}{" "}
+                            {item.PayeeAccountPostalCode}{"."}{" "}</label>
                         </Row>
                       </Col>
                       <Col xs={4} sm={4} md={4} lg={4} xxl={4}>
