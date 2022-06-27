@@ -374,7 +374,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
               </div>
               </Col>
               <Col md={5} xl={5} xxl={5}>
-              {userConfig?.isBussiness && <div className="d-flex align-center mt-16">
+              {!userConfig?.isBussiness && <div className="d-flex align-center mt-16">
                 <label className="custom-checkbox p-relative c-pointer">
                   <Input
                     name="check"
