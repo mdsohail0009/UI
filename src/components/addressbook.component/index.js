@@ -4,15 +4,17 @@ import {
 	setAddressStep,
 	rejectCoin,
 	fetchUsersIdUpdate,
+	selectedTab,
 	clearValues,
 	clearCryptoValues,
 } from "../../reducers/addressBookReducer";
 import Translate from "react-translate-component";
 import { processSteps as config } from "./config";
 import NewAddressBook from "./newAddressBook";
+import AddressCommonCom from "./addressCommonCom";
 import List from "../grid.component";
 import NewFiatAddress from "./addFiatAddressbook";
-import { activeInactive,downloadDeclForm } from "./api";
+import { activeInactive,downloadDeclForm  } from "./api";
 import SelectCrypto from "./selectCrypto";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -367,7 +369,7 @@ class AddressBook extends Component {
 			this.setState({ modal: true });
 		}
 	};
-	handleCancel = () => {
+	handleCancel = (e) => {
 		this.setState({
 			...this.state,
 			modal: false,
@@ -450,10 +452,11 @@ class AddressBook extends Component {
 					FullFeatureName: "Address Book",
 				});
 			}
+			
 			this.props.clearFormValues();
 		} else {
 			this.setState({ ...this.state, visible: true,errorWorning: null });
-			apiCalls.trackEvent({
+			 apiCalls.trackEvent({
 				Type: "User",
 				Action: "Withdraw Crypto Address book add view",
 				Username: this.props.userProfileInfo?.userName,
@@ -497,7 +500,7 @@ class AddressBook extends Component {
 						selection: [],
 						isCheck: false,
 					});
-					apiCalls.trackEvent({
+					 apiCalls.trackEvent({
 						Type: "User",
 						Action: "Withdraw Fait  Address edit view",
 						Username: this.props.userProfileInfo?.userName,
@@ -509,7 +512,7 @@ class AddressBook extends Component {
 						FullFeatureName: "Address Book",
 					});
 				} else {
-					apiCalls.trackEvent({
+					 apiCalls.trackEvent({
 						Type: "User",
 						Action: "Withdraw Crypto  Address edit view",
 						Username: this.props.userProfileInfo?.userName,
@@ -545,6 +548,7 @@ class AddressBook extends Component {
 		this.props.changeStep("step1");
 	};
 	handleWithdrawToggle = (e) => {
+		
 		this.setState({
 			...this.state,
 			cryptoFiat: e.target.value === 2,
@@ -553,6 +557,7 @@ class AddressBook extends Component {
 			isCheck: false,
 			errorWorning:null
 		});
+		this.props.tabSelectedData(this.state.cryptoFiat);
 		if (this.state.cryptoFiat) {
 			apiCalls.trackEvent({
 				Type: "User",
@@ -588,8 +593,10 @@ class AddressBook extends Component {
 	};
 	renderContent = () => {
 		const stepcodes = {
-			cryptoaddressbook: (
-				<NewAddressBook onCancel={() => this.closeBuyDrawer()} />
+			cryptoaddressbook: (<>
+				 {/* <NewAddressBook onCancel={() => this.closeBuyDrawer()} /> */}
+				<AddressCommonCom onCancel={() => this.closeBuyDrawer()}/>
+				</>
 			),
 			selectcrypto: <SelectCrypto />,
 		};
@@ -725,7 +732,7 @@ class AddressBook extends Component {
 									className="text-white-30 fw-600 text-upper mb-4"
 									content={
 										this.props.addressBookReducer.stepTitles[
-										config[this.props.addressBookReducer.stepcode]
+											config[this.props.addressBookReducer.stepcode]
 										]
 									}
 									component={Paragraph}
@@ -734,7 +741,7 @@ class AddressBook extends Component {
 									className="text-white-50 mb-0 fw-300 fs-14 swap-subtitlte"
 									content={
 										this.props.addressBookReducer.stepSubTitles[
-										config[this.props.addressBookReducer.stepcode]
+											config[this.props.addressBookReducer.stepcode]
 										]
 									}
 									component={Paragraph}
@@ -747,7 +754,7 @@ class AddressBook extends Component {
 					closable={true}
 					visible={this.state.visible}
 					closeIcon={null}
-					className="side-drawer">
+					className="side-drawer w-50p">
 					{this.renderContent()}
 				</Drawer>
 				<Drawer
@@ -775,8 +782,10 @@ class AddressBook extends Component {
 					visible={this.state.fiatDrawer}
 					closeIcon={null}
 					className="side-drawer w-50p">
-					{this.state.fiatDrawer && (
-						<NewFiatAddress onCancel={() => this.closeBuyDrawer()} />
+					{this.state.fiatDrawer && (<>
+						{/* <NewFiatAddress onCancel={() => this.closeBuyDrawer()} /> */}
+						<AddressCommonCom onCancel={() => this.closeBuyDrawer()} />
+						</>
 					)}
 				</Drawer>
 				<Modal
@@ -863,6 +872,9 @@ const connectDispatchToProps = (dispatch) => {
 		},
 		rowSelectedData: (selectedRowData) => {
 			dispatch(fetchUsersIdUpdate(selectedRowData));
+		},
+		tabSelectedData:(cryptoTab)=>{
+			dispatch(selectedTab(cryptoTab))
 		},
 		clearFormValues: () => {
 			dispatch(clearValues());
