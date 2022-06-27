@@ -226,7 +226,7 @@ class FaitDeposit extends Component {
         {!this.state.showSuccessMsg && <div className="text-center"><Radio.Group
           onChange={this.handleBuySellToggle}
           value={this.state.tabValue}
-          className="buysell-toggle mb-16">
+          className="buysell-toggle  crypto-toggle">
           <Translate content="deposit" component={Radio.Button} value={1} />
           <Translate content="withdraw" component={Radio.Button} value={2} />
         </Radio.Group></div>}
