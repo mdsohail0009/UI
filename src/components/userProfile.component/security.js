@@ -31,7 +31,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
   useEffect(() => {
     securityTrack()
     getVerifyData();
-  }, []) //eslint-disable-line react-hooks/exhaustive-deps
+  }, []);//eslint-disable-line react-hooks/exhaustive-deps
   const getVerifyData = async () => {
     setIsLoading(true);
     let response = await apiCalls.getVerificationFields(userConfig.id);
@@ -106,7 +106,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
     setBtnDisabled(true)
     setIsLoading(false)
     setErrorMsg(null);
-      if ((live && email) || (live && phone) || (live && factor) || (email && phone)|| (email && factor) || (phone && factor) || (email && phone && factor) ||(email && phone && live) ||(email && live && factor) ||(live && phone && factor)||(email && phone && factor && live)) {
+    if ((live && email) || (live && phone) || (live && factor) || (email && phone)|| (email && factor) || (phone && factor) || (email && phone && factor) ||(email && phone && live) ||(email && live && factor) ||(live && phone && factor)||(email && phone && factor && live)) {
         let obj={
           "MemberId": userConfig.id,
           "isEmailVerification": email,
@@ -144,7 +144,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
          setIsLoading(false)
          setBtnDisabled(false);         
       }
- } 
+ }
  const antIcon = (
   <LoadingOutlined
       style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
@@ -153,12 +153,13 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
 );
   return (
     <>
-     
-      {isLoading ? (
+
+     {isLoading ? (
 				<Loader />
 			) : (
         <div>
         <div ref={useDivRef}></div>
+
       {errorMsg !== null && (
         <Alert
           className="mb-12"
@@ -279,7 +280,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
       </div>
       <Drawer
         title={[
-          <div className="side-drawer-header">
+          <div className="side-drawer-header change_password">
             <span />
             <div className="text-center fs-16">
               <Translate
@@ -320,7 +321,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         <Form>
           <Row gutter={[16, 16]}>
             <Col md={4} xl={4} xxl={4}>
-              <div className="d-flex align-center mt-16 ">
+              <div className="d-flex align-center mt-16">
                 <label className="custom-checkbox p-relative c-pointer">
                   <Input
                     name="check"
@@ -372,9 +373,9 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                   className="mb-0 profile-label ml-8" style={{ flex: 1 }}
                 />
               </div>
-              </Col>
-              <Col md={5} xl={5} xxl={5}>
-              {!userConfig?.isBusiness && <div className="d-flex align-center mt-16">
+            </Col>
+            <Col md={5} xl={5} xxl={5}>
+            {!userConfig?.isBusiness && <div className="d-flex align-center mt-16">
                 <label className="custom-checkbox p-relative c-pointer">
                   <Input
                     name="check"
