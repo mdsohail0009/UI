@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message } from "antd";
+import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message, Spin } from "antd";
 import {
 	setAddressStep,
 	rejectCoin,
@@ -18,7 +18,8 @@ import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import apiCalls from "../../api/apiCalls";
 import Info from "../shared/info";
-import {downloadDeclForm} from './api'
+import { downloadDeclForm } from './api'
+import Loader from "../../Shared/loader";
 const { Paragraph, Text } = Typography;
 
 class AddressBook extends Component {
@@ -49,6 +50,7 @@ class AddressBook extends Component {
 
 			gridUrlCrypto: process.env.REACT_APP_GRID_API + "Address/Crypto",
 			gridUrlFiat: process.env.REACT_APP_GRID_API + "Address/Fiat",
+			isDownloading: false
 		};
 		this.gridFiatRef = React.createRef();
 		this.gridCryptoRef = React.createRef();
@@ -182,9 +184,10 @@ class AddressBook extends Component {
 			field: "isWhitelisted",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted ? <a  onClick={() => {
+					{props.dataItem?.isWhitelisted && (!this.state.isDownloading ? <a onClick={() => {
 						this.downloadDeclarationForm(props?.dataItem);
-					}} >Download</a> : "Not whitelisted"}
+					}} >Download</a> : (!this.state.isDownloading|| this.state.selectedDeclaration != props?.dataItem.id ? "Not whitelisted" : ""))}
+					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.id && <Spin size="small" />}
 				</td>
 			),
 			title: apiCalls.convertLocalLang("whitelist"),
@@ -308,13 +311,14 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
-			{
+		{
 			field: "isWhitelisted",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted ? <a onClick={() => {
+					{props.dataItem?.isWhitelisted && !this.state.isDownloading ? <a onClick={() => {
 						this.downloadDeclarationForm(props?.dataItem);
-					}} >Download</a> : "Not whitelisted"}
+					}} >Download</a> : (!this.state.isDownloading || this.state.selectedDeclaration != props?.dataItem.id ? "Not whitelisted" : "")}
+					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.id && <Spin size="small" />}
 				</td>
 			),
 			title: apiCalls.convertLocalLang("whitelist"),
@@ -322,10 +326,12 @@ class AddressBook extends Component {
 			width: 200,
 		},
 	];
-	async downloadDeclarationForm(dataItem){
+	async downloadDeclarationForm(dataItem) {
+		this.setState({ ...this.state, isDownloading: true, selectedDeclaration: dataItem.id });
 		const response = await downloadDeclForm(dataItem.id);
-		if(response.ok){
-			window.open(response.data,"_blank");
+		if (response.ok) {
+			window.open(response.data, "_blank");
+			this.setState({ ...this.state, isDownloading: false, selectedDeclaration: null });
 		}
 	}
 	addressFiatView = ({ dataItem }) => {
@@ -362,7 +368,7 @@ class AddressBook extends Component {
 	};
 	statusUpdate = () => {
 		if (!this.state.isCheck) {
-			this.setState({...this.state, errorWorning: "Please select the one record" });
+			this.setState({ ...this.state, errorWorning: "Please select the one record" });
 		} else {
 			this.setState({ modal: true });
 		}
@@ -468,10 +474,10 @@ class AddressBook extends Component {
 		}
 	};
 	editAddressBook = () => {
-		this.setState({...this.state, errorWorning: null,selection: [] });
+		this.setState({ ...this.state, errorWorning: null, selection: [] });
 		let obj = this.state.selectedObj;
 		if (!this.state.isCheck) {
-			this.setState({...this.state, errorWorning: "Please select the one record" });
+			this.setState({ ...this.state, errorWorning: "Please select the one record" });
 		} else if (
 			obj.addressState === "Approved" ||
 			obj.addressState === "Rejected" ||
@@ -532,12 +538,12 @@ class AddressBook extends Component {
 	};
 	closeBuyDrawer = (obj) => {
 		debugger
-		let showCrypto=false,showFiat=false;
-		if(obj){
-			if(obj.isCrypto)
-            showCrypto = !obj?.close;
+		let showCrypto = false, showFiat = false;
+		if (obj) {
+			if (obj.isCrypto)
+				showCrypto = !obj?.close;
 			else
-			showFiat=!obj?.close;
+				showFiat = !obj?.close;
 		};
 		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat });
 		this.props.rejectCoinWallet();
@@ -559,7 +565,7 @@ class AddressBook extends Component {
 			selection: [],
 			selectedObj: {},
 			isCheck: false,
-			errorWorning:null
+			errorWorning: null
 		});
 		if (this.state.cryptoFiat) {
 			apiCalls.trackEvent({
@@ -619,7 +625,7 @@ class AddressBook extends Component {
 		const stepcodes = {
 			cryptoaddressbook: (
 				<span
-					onClick={()=>this.closeBuyDrawer()}
+					onClick={() => this.closeBuyDrawer()}
 					className="icon md close-white c-pointer"
 				/>
 			),
@@ -733,7 +739,7 @@ class AddressBook extends Component {
 									className="text-white-30 fw-600 text-upper mb-4"
 									content={
 										this.props.addressBookReducer.stepTitles[
-											config[this.props.addressBookReducer.stepcode]
+										config[this.props.addressBookReducer.stepcode]
 										]
 									}
 									component={Paragraph}
@@ -742,7 +748,7 @@ class AddressBook extends Component {
 									className="text-white-50 mb-0 fw-300 fs-14 swap-subtitlte"
 									content={
 										this.props.addressBookReducer.stepSubTitles[
-											config[this.props.addressBookReducer.stepcode]
+										config[this.props.addressBookReducer.stepcode]
 										]
 									}
 									component={Paragraph}
@@ -773,7 +779,7 @@ class AddressBook extends Component {
 								</Paragraph>
 							</div>
 							<span
-								onClick={()=>this.closeBuyDrawer()}
+								onClick={() => this.closeBuyDrawer()}
 								className="icon md close-white c-pointer"
 							/>
 						</div>,
