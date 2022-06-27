@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Typography, Button, Modal, Tooltip } from "antd";
 import Loader from "../../Shared/loader";
-import { getAddress, getFileURL } from "./api";
+import { getAddress, getFileURL,getFavData ,getViewData,} from "./api";
 import { connect } from "react-redux";
 import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
@@ -24,17 +24,21 @@ const AddressFiatView = (props) => {
 	const [fiatAddress, setFiatAddress] = useState({});
 	const [previewPath, setPreviewPath] = useState(null);
 	const [previewModal, setPreviewModal] = useState(false);
+	const[bankDetailes,setBankDetailes]=useState([]);
+	
 
 	useEffect(() => {
 		loadDataAddress();
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 	const loadDataAddress = async () => {
-		setIsLoading(true);
-		let response = await getAddress(props?.match?.params?.id, "Fiat");
+		debugger
+		setIsLoading(true)
+		let response = await getViewData(props?.match?.params?.id,  props?.userConfig?.id);
 		if (response.ok) {
 			setFiatAddress(response.data);
-			setIsLoading(false);
+			setBankDetailes(response.data.payeeAccountModels)
 		}
+		setIsLoading(false)
 	};
 	const backToAddressBook = () => {
 		props?.history?.push("/userprofile/?key=5");
@@ -53,7 +57,6 @@ const AddressFiatView = (props) => {
 	};
 
 	const iban=fiatAddress?.bankType === "iban"? "IBAN": "Bank Account"
-
 	const iban1=fiatAddress?.bankType === "iban"? "IBAN": "Bank Account Number"
 
 	const filePreviewModal = (
@@ -96,7 +99,6 @@ const AddressFiatView = (props) => {
 			/>
 		</Modal>
 	);
-
 	return (
 		<>
 			<div className="main-container">
@@ -114,7 +116,7 @@ const AddressFiatView = (props) => {
 										<Row className="kpi-List">
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">Address Label</label>
+													<label className="kpi-label">Favorite Name</label>
 													<div className=" kpi-val">
 														{fiatAddress?.favouriteName}
 													</div>
@@ -123,114 +125,148 @@ const AddressFiatView = (props) => {
 
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">Address Type</label>
+													<label className="kpi-label">Name</label>
 													<div className=" kpi-val">
-														{fiatAddress?.addressType}
+														{fiatAddress?.fullName}
 													</div>
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">Currency</label>
+													<label className="kpi-label">Email</label>
 													<div className="kpi-val">
 														<div className=" kpi-val">
-															{fiatAddress?.toCoin}
+															{fiatAddress?.email}
 														</div>
 													</div>
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">Bank Type</label>
-													<div className=" kpi-val">
+													<label className="kpi-label">Phone Number</label>
+													{ <div className=" kpi-val">{fiatAddress?.phoneNumber}
 											
-															{iban}
-													</div>
+													
+													</div> }
 												</div>
 											</Col>
+											
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">
-															{iban1}
+													Address Line1
 													</label>
-													<div className=" kpi-val">
-														{fiatAddress?.accountNumber}
-													</div>
+													{ <div className=" kpi-val">
+														{fiatAddress?.line1}
+													</div> }
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">
-														BIC/SWIFT/Routing Number
-													</label>
-													<div className=" kpi-val">
-														{fiatAddress?.routingNumber}
-													</div>
+													<label className="kpi-label">Address Line2</label>
+													{ <div className="kpi-val">{fiatAddress?.line2}</div> }
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">Bank Name</label>
-													<div className="kpi-val">{fiatAddress?.bankName}</div>
-												</div>
-											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
-													<label className="kpi-label">Bank Address</label>
+													<label className="kpi-label">City</label>
 													<div className="kpi-val">
-														{fiatAddress?.bankAddress}
+														{fiatAddress?.city}
 													</div>
 												</div>
 											</Col>
 										</Row>
-										<Title className="page-title text-white">
-											{" "}
-											BENEFICIARY DETAILS VIEW
-										</Title>
+										
 										<Row className="kpi-List">
+										
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">
-														{(props?.userConfig?.isBusiness && fiatAddress?.addressType !== "3rdparty"&&
-															"Business Name") ||
-															((!props?.userConfig?.isBusiness || fiatAddress?.addressType === "3rdparty")&&
-																"Recipient Full Name")}
-													</label>
+													<label className="kpi-label">State</label>
+													<div className=" kpi-val">{fiatAddress?.state}
+														
+													</div>
+												</div>
+											</Col>
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+												<div>
+													<label className="kpi-label">Country</label>
 													<div className="kpi-val">
-														{fiatAddress?.beneficiaryAccountName}
+														{fiatAddress?.country}
 													</div>
 												</div>
 											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
-													<label className="kpi-label">Recipient Address</label>
-													<div className=" kpi-val">
-														<div className="kpi-val">
-															{fiatAddress?.beneficiaryAccountAddress}
-														</div>
-													</div>
-												</div>
-											</Col>
-											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
-												<div>
-													<label className="kpi-label">Address State</label>
-													<div className="kpi-val">
-														{fiatAddress?.addressState}
-													</div>
-												</div>
-											</Col>
-											{fiatAddress?.addressType === "3rdparty" && (
+											
 												<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 													<div>
-														<label className="kpi-label">Remarks</label>
+														<label className="kpi-label">Post code</label>
 														<div className="kpi-val">
-															{fiatAddress?.remarks?fiatAddress?.remarks:'-'}
+															{fiatAddress?.postalCode}
 														</div>
 													</div>
 												</Col>
-											)}
 										</Row>
 										<Row>
+												{bankDetailes?.map((item, idx) => (
+													<div
+														style={{
+															border: "2px dashed var(--borderGrey)",
+															padding: "12px 16px",
+															borderRadius: 10,
+															marginBottom: 16,
+															width: "100%"
+														}}>
+														<Row gutter={[16, 16]} key={idx}>
+															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+																<Text className="fw-300 text-white-50 fs-12">
+																	Bank Name
+																</Text>
+																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																	{item.bankName}
+																</Title>
+															</Col>
+															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+																<Text className="fw-300 text-white-50 fs-12">
+																	Swift Code:
+																</Text>
+																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																	{item.swiftCode}
+																</Title>
+															</Col>
+															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+																<Text className="fw-300 text-white-50 fs-12">
+																	Swift Route BIC Number
+																</Text>
+															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																{item.swiftRouteBICNumber}
+															</Title>
+														</Col>
+														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+															<Text className="fw-300 text-white-50 fs-12">
+																State
+															</Text>
+															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																{item.state}
+															</Title>
+														</Col>
+														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+															<Text className="fw-300 text-white-50 fs-12">
+																Country
+															</Text>
+															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																{item.country}
+															</Title>
+														</Col>
+														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+															<Text className="fw-300 text-white-50 fs-12">
+																Postal Code
+															</Text>
+															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																{item.postalCode}
+															</Title>
+														</Col>
+													</Row>
+												</div>
+											))}
 											{fiatAddress?.documents?.details.map((file) => (
 												<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 													<div
