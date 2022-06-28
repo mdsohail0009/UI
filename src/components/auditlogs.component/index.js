@@ -60,7 +60,6 @@ class AuditLogs extends Component {
   gridColumns = [
     { field: "date", title: apicalls.convertLocalLang('Date'), filter: true, isShowTime: true, filterType: "date", width: 250 },
     { field: "feature", title: apicalls.convertLocalLang('Features'), filter: true, width: 250 },
-    { field: "userName", title: "User Name", filter: true, width: 200 },
     { field: "action", title: apicalls.convertLocalLang('Action'), width: 250, filter: true },
     { field: "description", title: "Description", filter: true, width: 500 },
     { field: "", title: "", width: 60, customCell: (props) => (<td><Tooltip title="View More"><div className="icon md info c-pointer" onClick={() => this.showMoreAuditLogs(props)}></div></Tooltip></td>) },
