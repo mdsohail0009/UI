@@ -319,6 +319,7 @@ export default {
 	withdrawCrypto: "Withdraw Crypto",
 	withdrawFiat: "Withdraw Fiat",
 	cryptoAddress: "Add Crypto Address",
+	cryptoAddressDetails:"Crypto Address Details",
 	fiatAddress: "Select Fiat Address",
 	cryptoAddressDetails:"Crypto Address Details",
 	withdraw_fiat_summary: "Withdraw Fiat Summary",

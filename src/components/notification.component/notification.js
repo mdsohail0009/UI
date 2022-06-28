@@ -53,19 +53,20 @@ class NotificationScreen extends Component {
   };
 
   saveBankInfo = async () => {
-    window.scrollTo(0, 0)
-    this.setState({...this.state,btnDisabled:true})
+   
+    // this.setState({...this.state,btnDisabled:true})
     for (var y in this.state.notification) {
       if (
         this.state.notification[y].isAction &&
         this.state.notification[y].selectedtypes.length < 1
-      ) {
+      ) {window.scrollTo(0, 0)
         return this.setState({
           ...this.state,
-          errorMsg: "Please select atleast one notification type",
+          errorMsg: "At least one notification type is required",
         });
       }
     }
+    // this.setState({...this.state,btnDisabled:true})
     let response = await saveNotification(this.state.notification);
     if (response.ok) {
       this.setState({
@@ -76,12 +77,13 @@ class NotificationScreen extends Component {
       });
       message.destroy();
       message.success({
-        content: "Notification details saved successfully",
+        content: "Notification settings saved successfully",
         className: "custom-msg",
         duration: 3,
       });
       this.setState({ ...this.state, errorMsg: null });
     } else {
+      
       this.setState({ ...this.state, errorMsg: this.isErrorDispaly(response) });
     }
   };
@@ -98,7 +100,6 @@ class NotificationScreen extends Component {
           (assign) => assign == item.notificationTypes[a].type
         );
         item.notificationTypes[a].values = data.length > 0 ? true : false;
-        
       }
     }
     for (let i in notificationLu) {
@@ -115,7 +116,6 @@ class NotificationScreen extends Component {
     for (let i in notificationLu) {
       if (item.id == notificationLu[i].id) {
         notificationLu[i].isAction = event;
-        
       }
     }
     this.setState({ ...this.state, notification: notificationLu });
@@ -130,7 +130,6 @@ class NotificationScreen extends Component {
         <div className="box basic-info">
           <Translate content="notifications" className="basicinfo" />
           <div className="mt-16  box basic-info">
-            
             <Form
               name="advanced_search"
               initialValues={this.state.noticObject}
@@ -204,7 +203,6 @@ class NotificationScreen extends Component {
                                   onChange={(event) =>
                                     this.enableAction(event, item)
                                   }
-                                  
                                   checked={item.isAction}
                                   size="medium"
                                   className="custom-toggle"
@@ -218,20 +216,26 @@ class NotificationScreen extends Component {
                   </tbody>  
                 </table>
                 <div className="text-center">
-              <Button
+              {/* <Button
                 htmlType="submit"
                 size="min"
                 className="pop-btn mt-36"
-                onClick={() => {
-                  this.saveBankInfo();
-                }}
+                
                 loading={this.state.btnDisabled}
                 style={{ minWidth: 200, marginLeft: 462 }}
               >
                 <Translate content="Save_btn_text" />
-              </Button>
+              </Button> */}
+               <Button
+                        htmlType="submit"
+                        size="large"
+                        className="pop-btn mt-36"
+                        // loading={btnDisabled}
+                        style={{ minWidth: 200, marginLeft: 462 }}>
+                        {/* {isLoading && <Spin indicator={antIcon} />}{" "} */}
+                        <Translate content="Save_btn_text" />
+                    </Button>
             </div></>)}
-              {/* )} */}
             </Form>
           </div>
         </div>

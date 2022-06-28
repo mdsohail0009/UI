@@ -170,52 +170,31 @@ const AddressCryptoView = (props) => {
 														<Row gutter={[16, 16]} key={idx}>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
-																	Bank Name
+																	Address Lable
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																	{item.bankName}
+																	{item.lable}
 																</Title>
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
-																	Swift Code:
+																	Wallet Code
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																	{item.swiftCode}
+																	{item.walletCode}
 																</Title>
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
-																	Swift Route BIC Number
+																	Wallet Address 
 																</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																{item.swiftRouteBICNumber}
+																{item.walletAddress}
 															</Title>
 														</Col>
-														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
-															<Text className="fw-300 text-white-50 fs-12">
-																State
-															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																{item.state}
-															</Title>
-														</Col>
-														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
-															<Text className="fw-300 text-white-50 fs-12">
-																Country
-															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																{item.country}
-															</Title>
-														</Col>
-														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
-															<Text className="fw-300 text-white-50 fs-12">
-																Postal Code
-															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																{item.postalCode}
-															</Title>
-														</Col>
+														
+														
+														
 													</Row>
 												</div>
 											))}
