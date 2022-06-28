@@ -320,6 +320,7 @@ export default {
 	withdrawFiat: "Withdraw Fiat",
 	cryptoAddress: "Add Crypto Address",
 	fiatAddress: "Select Fiat Address",
+	cryptoAddressDetails:"Crypto Address Details",
 	withdraw_fiat_summary: "Withdraw Fiat Summary",
 	withdraw_live: "Withdraw Face recognition",
 	confirm_withdraw: "Withdraw confirm",
