@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Upload, Modal,
-  Radio, Row, Col, AutoComplete, Dropdown, Menu, Space,
+  Radio, Row, Col, AutoComplete, Dropdown, Menu, Space,Cascader,InputNumber,
 } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { setStep, setHeaderTab } from "../../reducers/buysellReducer";
@@ -9,16 +9,17 @@ import Translate from "react-translate-component";
 import { connect } from "react-redux";
 import {
   favouriteNameCheck, getPayeeLu, getFavData, saveAddressBook, getBankDetails,
-  getBankDetailLu, uuidv4
+  getBankDetailLu, uuidv4,getCoinList
 } from "./api";
+import {getCountryStateLu} from "../../api/apiServer";
 import Loader from "../../Shared/loader";
 import apiCalls from "../../api/apiCalls";
 import { validateContentRule } from "../../utils/custom.validator";
 import { Link } from "react-router-dom";
 import { bytesToSize } from "../../utils/service";
-import { addressTabUpdate } from "../../reducers/addressBookReducer";
+import { addressTabUpdate,fetchAddressCrypto,setAddressStep } from "../../reducers/addressBookReducer";
 import FilePreviewer from "react-file-previewer";
-
+import WAValidator from "multicoin-address-validator";
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
@@ -45,6 +46,7 @@ const AddressCommonCom = (props) => {
   const [modalData, setModalData] = useState([])
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm();
+  const [bankDetailForm] = Form.useForm();
   const useDivRef = React.useRef(null);
   const [cryptoAddress, setCryptoAddress] = useState({});
   const [selectParty, setSelectParty] = useState(props?.checkThirdParty);
@@ -66,13 +68,23 @@ const AddressCommonCom = (props) => {
   const [screen, setScreen] = useState(props.data)
   const [editBankDetsils, setEditBankDetails] = useState(false)
   const [bankObj, setBankObj] = useState({})
-
-
+ const [bankChange,SetBankChange]=useState(null)
+const[coinDetails,setCoinDetails]=useState([])
+const [country,setCountry]=useState([])
+const [favouriteDetails,setFavouriteDetails]=useState({})
   const handleshowModal = (item) => {
+    debugger
     setEditBankDetails(true)
     let data = modalData.find((items) => items.id == item.id)
     setIsModalVisible(true);
     setBankObj(data)
+    if(props?.addressBookReducer?.cryptoTab == true){
+      form.setFieldsValue({
+        toCoin: data.walletCode,
+        toWalletAddress:data.walletAddress,
+        lable:data.lable
+      })
+    }
     form.setFieldsValue(data)
 
   }
@@ -117,8 +129,8 @@ const AddressCommonCom = (props) => {
     } else {
       bankDetailsLu("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
     }
-
-
+    selectCoin()
+    getCountry()
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const getName = () => {
     return props?.userConfig.isBusiness
@@ -129,12 +141,32 @@ const AddressCommonCom = (props) => {
 
   const showModal = () => {
     setIsModalVisible(true);
-
   };
   const handleOk = () => {
     setIsModalVisible(false);
   };
 
+  
+  const validateAddressType = (_, value) => {
+		if (value) {
+			let address = value;
+			let coinType = bankDetailForm.getFieldValue("toCoin");
+			if (coinType) {
+				const validAddress = WAValidator.validate(address, coinType, "both");
+				if (!validAddress) {
+					return Promise.reject(
+						"Address is not Valid, please enter a valid address according to the coin selected"
+					);
+				} else {
+					return Promise.resolve();
+				}
+			} else {
+				return Promise.reject("Please select a coin first");
+			}
+		} else {
+			return Promise.reject("is required");
+		}
+	};
   const handleCancel = () => {
     setIsModalVisible(false);
   };
@@ -172,7 +204,9 @@ const AddressCommonCom = (props) => {
   };
 
   const handleChange = (e) => {
+    debugger
     let data = PayeeLu.find(item => item.name === e)
+    // setFavouriteNameId(data.id)
     getFavs(data.id, props?.userConfig?.id)
   }
   const payeeLuData = async () => {
@@ -188,6 +222,7 @@ const AddressCommonCom = (props) => {
     }
   }
   const getFavs = async (id, membershipId) => {
+    debugger
     let response = await getFavData(id, membershipId)
     if (response.ok) {
       let obj = response.data;
@@ -195,6 +230,7 @@ const AddressCommonCom = (props) => {
       if (props?.addressBookReducer?.selectedRowData?.id) {
         setModalData(payeeObj)
       }
+      setFavouriteDetails(obj)
       form.setFieldsValue(obj)
     }
   }
@@ -213,21 +249,22 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
+    debugger
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
-      label: null,
+      label: values.label,
       currencyType: withdraeTab,
-      walletAddress: null,
-      walletCode: values.walletCode,
+      walletAddress: props?.addressBookReducer?.cryptoTab == true?values.toWalletAddress:values.walletAddress,
+      walletCode: props?.addressBookReducer?.cryptoTab == true?values.toCoin:values.walletCode,
       accountNumber: values.accountNumber,
       bankType: values.bankType,
       swiftRouteBICNumber: null,
       swiftCode: values.swiftCode,
       bankName: values.bankName,
       addressType: values.addressType,
-      line1: "Hafeezpet",
-      line2: "Hafeezpet",
+      line1: props?.addressBookReducer?.cryptoTab == true?values.PayeeAccountLine1:values.line1,
+      line2:props?.addressBookReducer?.cryptoTab == true?values.PayeeAccountLine2:values.line1,
       city: values.city,
       state: values.state,
       country: values.country,
@@ -248,10 +285,10 @@ const AddressCommonCom = (props) => {
       obj.payeeId = bankObj.payeeId
       for (let i in modalData) {
         if (modalData[i].id == obj.id) {
+          obj.recordStatus="Modified"
           modalData.splice(modalData[i], 1, obj);
           setEditBankDetails(false)
         }
-
       }
     } else {
       modalData.push(obj)
@@ -268,11 +305,16 @@ const AddressCommonCom = (props) => {
     }
 
   }
+const handleBankChange=(e)=>{
+  SetBankChange(e)
+  
+}
+
   const savewithdrawal = async (values) => {
+    debugger
     setIsLoading(false);
     setErrorMsg(null);
     setBtnDisabled(true);
-
     const type = withdraeTab;
     values["membershipId"] = props?.userConfig?.id;
     if (!selectParty) {
@@ -285,9 +327,9 @@ const AddressCommonCom = (props) => {
     values["addressState"] = addressState;
     let Id = "00000000-0000-0000-0000-000000000000";
     let favaddrId = props?.addressBookReducer?.selectedRowData
-      ? props?.addressBookReducer?.selectedRowData?.id
+      ? favouriteDetails.id
       : Id;
-    let namecheck = values.favouriteName.trim();
+    let namecheck = values.favouriteName;
     let responsecheck = await favouriteNameCheck(
       props?.userConfig?.id,
       namecheck,
@@ -319,8 +361,8 @@ const AddressCommonCom = (props) => {
       values["postalCode"] = values.postalCode;
       values["digitalSignId"] = values.digitalSignId;
       values["isDigitallySigned"] = values.isDigitallySigned;
+      values["id"]=favaddrId;
       let saveObj = Object.assign({}, values);
-      saveObj.id = "00000000-0000-0000-0000-000000000000";
       saveObj.payeeAccountModels = modalData
       let response = await saveAddressBook(saveObj);
 
@@ -336,6 +378,7 @@ const AddressCommonCom = (props) => {
         form.resetFields();
         props?.onCancel();
         setIsLoading(false);
+        props.InputFormValues(null);
         props?.dispatch(addressTabUpdate(true));
         props?.dispatch(setHeaderTab(""));
         props?.props?.history?.push("/userprofile");
@@ -347,6 +390,57 @@ const AddressCommonCom = (props) => {
       }
     }
   };
+
+  const handleIban=(e)=>{
+    getIbanData(e)
+  }
+
+  const getIbanData = async (Val) => {
+    form.setFieldsValue({
+      bankName: "",
+      bankAddress: "",
+      PayeeAccountState: null,
+      PayeeAccountCountry: null,
+      PayeeAccountPostalCode: "",
+      swiftCode: "",
+    });
+
+    if (Val && Val.length > 14) {
+      let response = await apiCalls.getIBANData(Val);
+      if (response.ok) {
+        const oldVal = form.getFieldValue();
+        form.setFieldsValue({
+          swiftCode: response.data.routingNumber || oldVal.routingNumber,
+          bankName: response.data.bankName || oldVal.bankName,
+          bankAddress: response.data.bankAddress || oldVal.bankAddress,
+          PayeeAccountPostalCode: response.data.zipCode || oldVal.zipCode,
+          PayeeAccountState: response.data.state || oldVal.state,
+          PayeeAccountCountry: response.data.country || oldVal.country,
+        });
+      }
+    }
+  };
+  const handleCoinChange=(e)=>{
+  console.log(e)
+  }
+  const selectCoin=async()=>{
+   let response=await getCoinList("All");
+   if(response.ok){
+    setCoinDetails(response.data)
+   }
+  }
+const handleCountryChange=(e)=>{
+ console.log(e)
+}
+const handleCountry=(e)=>{
+console.log(e)
+}
+const getCountry=async()=>{
+ let response=await getCountryStateLu();
+ if(response.ok){
+  setCountry(response.data)
+ }
+}
   const antIcon = (
     <LoadingOutlined
       style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
@@ -442,7 +536,7 @@ const AddressCommonCom = (props) => {
               </Form.Item>
 
               <Translate
-                content="Beneficiary_BankDetails"
+                content={props?.addressBookReducer?.cryptoTab == true?"Beneficiary_Details":"Beneficiary_BankDetails"}
                 component={Paragraph}
                 className="mb-16 fs-14 text-aqua fw-500 text-upper"
               />
@@ -455,20 +549,15 @@ const AddressCommonCom = (props) => {
                       <Translate content="favorite_name" component={Form.label} />
                     }
                   >
-
-                    <Select
-                      showSearch
-                      className="cust-input"
-                      onChange={(e) => handleChange(e, "favourteNmae")}
-                      placeholder="Select Customer Email"
-
-                    >
-                      {PayeeLu.map((item, indx) => (
-                        <Option key={indx} value={item.name}>
-                          {item.name}
-                        </Option>
-                      ))}
-                    </Select>
+                      <AutoComplete style={{ width: 350 }} className="cust-input"
+                      //  onChange={(e) => handleChange(e)}
+                      placeholder="Name">
+                        {PayeeLu.map((item, indx) => (
+                          <Option key={indx} value={item.name}>
+                            {item.name}
+                          </Option>
+                        ))}
+                      </AutoComplete>
                   </Form.Item>
                 </Col>
 
@@ -591,11 +680,20 @@ const AddressCommonCom = (props) => {
                     rules={[{ required: true, message: 'Please enter country!' }]}
                     label={<Translate content="Country" component={Form.label} />}
                   >
-                    <Input
-                      className="cust-input"
-                      maxLength="20"
-                      placeholder="Country"
-                    />
+                   
+                    <Select
+                                placeholder="Country"
+                                className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
+                                dropdownClassName="select-drpdwn"
+                                onChange={(e) => handleCountry(e)}
+                                bordered={false}
+                              >
+                                {country.map((item, indx) => (
+                                  <Option key={indx} value={item.name}>
+                                    {item.name}
+                                  </Option>
+                                ))}
+                              </Select>
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -622,22 +720,25 @@ const AddressCommonCom = (props) => {
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                   <div className="d-flex" style={{ marginTop: "10px", marginLeft: "10px" }}  >
                     <Translate
-                      content="Bank_Details"
+                      content={props?.addressBookReducer?.cryptoTab == true?"cryptoAddressDetails":"Bank_Details"}
                       component={Paragraph}
+                      style={{width:"400px"}}
                       className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
                     />
                     <Button
                       onClick={showModal}
-                      style={{ position: "relative", left: "11cm", height: "40px" }}
+                      style={{ position: "relative", left: "9.5cm", height: "40px" }}
                       className="pop-btn mb-36 mt-24"
                     >
-                      Add New Bank <span className="icon md add-icon ml-8"></span>
+                      
+                      {props?.addressBookReducer?.cryptoTab == true?"ADD CRYPTO ADDRESS":"Add New Bank"}
+                       <span className="icon md add-icon ml-8"></span>
                     </Button>
                   </div>
                 </Col>
 
                 <Modal
-                  title="Add New Bank"
+                  title={(props?.addressBookReducer?.cryptoTab == true)?"ADD CRYPTO ADDRESS":"Add New Bank"}
                   visible={isModalVisible}
                   onOk={handleOk}
                   width={800}
@@ -655,29 +756,145 @@ const AddressCommonCom = (props) => {
                     </div>
                   }
                 >
+                  
+
+{ props?.addressBookReducer?.cryptoTab == true ?
                   <Form
-                    form={form}
+						form={bankDetailForm}
+						initialValues={cryptoAddress}
+						onFinish={saveModalwithdrawal}
+						autoComplete="off">
+						<Form.Item
+							className="custom-label"
+							label={
+								<Translate content="AddressLabel" component={Form.label} />
+							}
+							name="lable"
+							required
+							rules={[
+								{
+									required: true,
+									message: apiCalls.convertLocalLang("is_required"),
+								},
+								{
+									whitespace: true,
+									message: apiCalls.convertLocalLang("is_required"),
+								},
+								{
+									validator: validateContentRule,
+								},
+							]}>
+							<Input
+								className="cust-input mb-0"
+								maxLength="20"
+								placeholder={apiCalls.convertLocalLang("Enteraddresslabel")}
+							/>
+						</Form.Item>
+						<Form.Item
+							className="custom-label"
+							name="toCoin"
+							label={<Translate content="Coin" component={Form.label} />}
+							rules={[
+								{
+									required: true,
+									message: apiCalls.convertLocalLang("is_required"),
+								},
+							]}>
+							
+							
+              	<Select
+								placeholder={apiCalls.convertLocalLang("Selectcoin")}
+								className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
+								dropdownClassName="select-drpdwn"
+                onChange={(e)=>handleCoinChange(e)}
+								bordered={false}
+								>
+							{coinDetails.map((item, indx) => (
+                        <Option key={indx} value={item.walletCode}>
+                          {item.walletCode}
+                        </Option>
+                      ))}
+							</Select>
+						</Form.Item>
+						<Form.Item
+							className="custom-label"
+							name="toWalletAddress"
+							label={<Translate content="address" component={Form.label} />}
+							required
+							rules={[
+								{
+									validator: validateAddressType,
+								},
+							]}>
+							<Input
+								className="cust-input mb-0"
+								maxLength="100"
+								placeholder={apiCalls.convertLocalLang("address")}
+							/>
+						</Form.Item>
+
+						<div style={{ position: "relative" }}>
+							<Form.Item
+								className="custom-forminput mt-36 agree"
+								name="isAgree"
+								valuePropName="checked"
+								>
+								<Checkbox className="ant-custumcheck" />
+							</Form.Item>
+							<Translate
+								content="agree_to_suissebase"
+								with={{ link }}
+								component={Paragraph}
+								className="fs-14 text-white-30 ml-16 mb-4 mt-16"
+								style={{
+									index: 100,
+									position: "absolute",
+									width: "420px",
+									top: -20,
+									left: 30,
+									paddingBottom: "10px",
+									marginBottom: "10px",
+								}}
+							/>
+						
+							
+						</div>
+
+						<div style={{ marginTop: "50px" }}>
+							<Button
+								htmlType="submit"
+								size="large"
+								block
+								className="pop-btn"
+								loading={btnDisabled}>
+								{isLoading && <Spin indicator={antIcon} />}{" "}
+								<Translate content="Save_btn_text" component={Text} />
+							</Button>
+						</div>
+					</Form>:<Form
+                    form={bankDetailForm}
                     onFinish={saveModalwithdrawal}
                     autoComplete="off"
                     initialValues={cryptoAddress}
                   >
                     <Row gutter={[16, 16]}>
-                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                      
+                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
-                          name="bankName"
-                          label="Bank Name"
+                          name="label"
+                          label="Bank Label"
                           required
                           rules={[{ required: true, message: 'Please input your username!' }]}
                         >
                           <Input
                             className="cust-input text-left"
                             maxLength="20"
-                            placeholder="Bank Name"
+                            placeholder="Bank Label"
                           />
+
                         </Form.Item>
                       </Col>
-
 
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
@@ -712,9 +929,10 @@ const AddressCommonCom = (props) => {
                             className="cust-input text-left "
                             dropdownClassName="select-drpdwn"
                             showSearch
-                            placeholder="Select Type"
+                            placeholder="Select Type" 
+                            onChange={(e) => handleBankChange(e)}
                           >
-                            <Option value="BANKTYPE">BANKTYPE</Option>
+                            <Option value="BANKTYPE">Bank Type </Option>
                             <Option value="IBAN">IBAN</Option>
                           </Select>
                         </Form.Item>
@@ -722,31 +940,18 @@ const AddressCommonCom = (props) => {
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
-                          name="label"
-                          label="Bank Label"
+                          name={bankChange=="IBAN"?"IBAN":"accountNumber"}
+                         
+                          label={ bankChange === "IBAN" ? "IBAN" :  "Bank Account Number" }
                           required
                           rules={[{ required: true, message: 'Please input your username!' }]}
+                           onBlur={(e) => handleIban(e.target.value)}
+                         
                         >
                           <Input
                             className="cust-input text-left"
                             maxLength="20"
-                            placeholder="Bank Label"
-                          />
-
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                          className="custom-forminput custom-label mb-0"
-                          name="accountNumber"
-                          label="Account Number"
-                          required
-                          rules={[{ required: true, message: 'Please input your username!' }]}
-                        >
-                          <Input
-                            className="cust-input text-left"
-                            maxLength="20"
-                            placeholder="Account Number"
+                            placeholder={ bankChange === "IBAN" ? "IBAN" :  "Bank Account Number" }
                           />
                         </Form.Item>
                       </Col>
@@ -765,11 +970,29 @@ const AddressCommonCom = (props) => {
                           />
                         </Form.Item>
                       </Col>
+                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                          className="custom-forminput custom-label mb-0"
+                          name="bankName"
+                          label="Bank Name"
+                          required
+                          rules={[{ required: true, message: 'Please input your username!' }]}
+                        >
+                          <Input
+                            className="cust-input text-left"
+                            maxLength="20"
+                            placeholder="Bank Name"
+                          />
+                        </Form.Item>
+                      </Col>
+                      
+                      
+                     
 
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
-                          name="city"
+                          name="PayeeAccountCity"
                           required
                           rules={[{ required: true, message: 'Please input your username!' }]}
                           label={<Translate content="City" component={Form.label} />}
@@ -784,7 +1007,7 @@ const AddressCommonCom = (props) => {
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
-                          name="state"
+                          name="PayeeAccountState"
                           required
                           rules={[{ required: true, message: 'Please input your username!' }]}
                           label={<Translate content="State" component={Form.label} />}
@@ -799,22 +1022,31 @@ const AddressCommonCom = (props) => {
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
-                          name="country"
+                          name="PayeeAccountCountry"
                           required
                           rules={[{ required: true, message: 'Please input your username!' }]}
                           label={<Translate content="Country" component={Form.label} />}
                         >
-                          <Input
-                            className="cust-input"
-                            maxLength="20"
-                            placeholder="Country"
-                          />
+                          
+                              <Select
+                                placeholder="Country"
+                                className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
+                                dropdownClassName="select-drpdwn"
+                                onChange={(e) => handleCountryChange(e)}
+                                bordered={false}
+                              >
+                                {country.map((item, indx) => (
+                                  <Option key={indx} value={item.name}>
+                                    {item.name}
+                                  </Option>
+                                ))}
+                              </Select>
                         </Form.Item>
                       </Col>
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
-                          name="postalCode"
+                          name="PayeeAccountPostalCode"
                           required
                           rules={[{ required: true, message: 'Please input your username!' }]}
                           label={
@@ -849,6 +1081,9 @@ const AddressCommonCom = (props) => {
                       </Button>
                     </div>
                   </Form>
+}
+
+
                 </Modal>
               </Row>
               {modalData.map((item, indx) => {
@@ -856,10 +1091,20 @@ const AddressCommonCom = (props) => {
                   return <Row gutter={14} style={{ paddingBottom: "15px" }}>
 
                     <div className="d-flex  kpi-List " key={indx} value={item} style={{ marginLeft: "20px", width: "100%", height: "65px", backgroundColor: "var(--bgDarkGrey)", borderRadius: "20px" }}>
+                    {(props?.addressBookReducer?.cryptoTab == true)?
+                      <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
+                      <Row>
+                        <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>
+                          {item.label}{","}{" "}
+                          {item.walletCode}{","}{" "}
+                          {item.walletAddress}{"."}</label></Col>
+                      </Row>
+                
+                    </Col>:
                       <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                         <Row>
                           <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>{item.bankName} {","}{" "}
-                            {item.accountNumber}{","}{" "}
+                            {bankChange=="IBAN"?item.routingNumber:item.accountNumber}{","}{" "}
                             {item.swiftCode}{"(Swift Code)"}{"."}</label></Col>
 
                         </Row>
@@ -870,6 +1115,9 @@ const AddressCommonCom = (props) => {
                             {item.postalCode}{"."}{" "}</label>
                         </Row>
                       </Col>
+              }
+                    
+
                       <Col xs={4} sm={4} md={4} lg={4} xxl={4}>
                         <div className="d-flex align-center " style={{ marginTop: "22px", left: "5cm", width: "100%", top: "15px", justifyContent: "center" }}>
                           <div onClick={() => handleshowModal(item)}><Tooltip
@@ -890,6 +1138,7 @@ const AddressCommonCom = (props) => {
                     </div>
 
 
+
                   </Row>
                 }
               })}
@@ -899,6 +1148,7 @@ const AddressCommonCom = (props) => {
                   name="isAgree"
                   valuePropName="checked"
                   required
+                  rules={[{ required: true, message: 'Please select checkbox!' }]}
                 >
                   <Checkbox className="ant-custumcheck" />
                 </Form.Item>
@@ -959,8 +1209,11 @@ const connectStateToProps = ({
 const connectDispatchToProps = (dispatch) => {
   return {
     changeStep: (stepcode) => {
-      dispatch(setStep(stepcode));
+      dispatch(setAddressStep(stepcode));
     },
+    InputFormValues: (cryptoValues) => {
+      			dispatch(fetchAddressCrypto(cryptoValues));
+      		},
     dispatch,
   };
 };

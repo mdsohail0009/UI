@@ -142,6 +142,7 @@ let initialState = {
     cryptoTab:true,
     getAddress: { loading: false, data: [] },
     stepcode: "step1",
+    step:"step2",
     stepTitles: {
         cryptoaddressbook: "cryptoAddress",
         selectcrypto: "cryptoAddress",
