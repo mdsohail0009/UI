@@ -77,7 +77,7 @@ class YourPortfolio extends Component {
               className="fs-24 text-white mb-0 fw-600 px-8"
             />
             <Currency prefix={"$"} defaultValue={totalCryptoValue}  className={`text-white-30 fs-16 m-0 ${totalCryptoValue < 0 ? 'text-red' : 'text-green'}`} style={{ lineHeight: '18px' }} />
-              <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500" style={{width:"20%"}}>
+              <Link to="/cockpitCharts" className="dbchart-link fs-14 fw-500">
                 <Translate content="cockpit" />
                 <span className="icon sm right-angle ml-4" />
               </Link>
