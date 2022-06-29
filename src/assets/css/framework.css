@@ -38,6 +38,8 @@
 .align-center{align-items: center;}
 .align-end{align-items: flex-end;}
 .justify-content{justify-content: space-between;}
+.justify-center{justify-content: center;}
+
 .text-underline{text-decoration: underline !important;}
 .valign-initial{vertical-align: initial;}
 
@@ -76,6 +78,7 @@
 .pl-0{padding-left: 0 !important;}
 .pr-0{padding-right: 0 !important;}
 .pr-30{padding-right: 30px !important;}
+.pr-24{padding-right: 24px !important;}
 .pl-30{padding-left: 30px !important;}
 .px-0{padding-left: 0 !important; padding-right: 0 !important;}
 .px-4{padding-left: 4px !important; padding-right: 4px !important;}

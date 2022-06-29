@@ -126,12 +126,11 @@ componentDidMount() {
           >
             <Row >
              
-              <Col sm={24} md={7} className="px-8">
+              <Col xs={24} sm={24} md={7} lg={7} xl={7} className="px-8 transaction_resp">
                 <Form.Item name="type" className="input-label mb-0" label="Type">
                   <Select
                     defaultValue="All"
-                    //className="cust-input w-100 bgwhite"
-                    className="cust-input mb-0"
+                    className="cust-input w-100 bgwhite"
                     dropdownClassName="select-drpdwn"
                     showSearch
                     onChange={(e) => this.handleChange(e, "type")}
@@ -141,12 +140,11 @@ componentDidMount() {
                   </Select>
                 </Form.Item>
               </Col>
-              <Col sm={24} md={7} className="px-8">
+              <Col xs={24} sm={24} md={7} lg={7} xl={7}  className="px-8 transaction_resp">
                 <Form.Item name="docType" className="input-label mb-0" label="Transaction">
                   <Select
                     defaultValue="All"
-                    // className="cust-input w-100 bgwhite"
-                    className="cust-input mb-0"
+                    className="cust-input w-100 bgwhite"
                     dropdownClassName="select-drpdwn"
                     showSearch
                     onChange={(e) => this.handleChange(e, "docType")}
@@ -156,7 +154,7 @@ componentDidMount() {
                   </Select>
                 </Form.Item>
               </Col>
-              <Col sm={24} md={3} className=" text-right">
+              <Col xs={24} sm={24} md={3} lg={3} xl={3}  className=" text-right transaction_resp">
                 <Button
                             className="pop-btn "
                             style={{  height: 40,marginTop:"35px" }}
@@ -176,7 +174,7 @@ componentDidMount() {
          columns={this.gridColumns}
          showExcelExport ={true}
          excelFileName = {'Transactions'}
-
+         
         />
 				</Drawer>
 			   </>

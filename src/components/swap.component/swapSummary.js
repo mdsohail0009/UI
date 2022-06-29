@@ -105,9 +105,9 @@ class SwapSummary extends Component {
                 this.props.changeStep('confirm');
                 this.setState({ ...this.state, loader: false, isLoading: false })
                 this.props.dispatch(fetchDashboardcalls(this.props.userProfile.id))
-                appInsights.trackEvent({
-                    name: 'Swap', properties: { "Type": 'User', "Action": 'Save swap', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Swap', "Remarks": (obj.fromValue + " " + obj.fromWalletName + " to " + obj.toValue + " " + obj.toWalletName), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap Crypto' }
-                });
+                // appInsights.trackEvent({
+                //     name: 'Swap', properties: { "Type": 'User', "Action": 'Save swap', "Username": this.props.userProfile.userName, "MemeberId": this.props.userProfile.id, "Feature": 'Swap', "Remarks": (obj.fromValue + " " + obj.fromWalletName + " to " + obj.toValue + " " + obj.toWalletName), "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap Crypto' }
+                // });
             } else {
                 
                 this.setState({ ...this.state, loader: false, isLoading: false, errorMessage: res.error || res.data })

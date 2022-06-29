@@ -450,7 +450,7 @@ class WithdrawSummary extends Component {
 						"Without Verifications you can't withdraw. Please select withdraw verifications from security section", btnLoading: false
 				});
 			}
-			if (this.props.userProfile.isBusiness) {
+			if (this.props.userProfile.isBusiness||!this.state.verifyData?.isLiveVerification) {
 				let saveObj = this.props.sendReceive.withdrawCryptoObj;
 				let trackAuditLogData = this.props.trackAuditLogData;
 				trackAuditLogData.Action = "Save";
@@ -473,17 +473,25 @@ class WithdrawSummary extends Component {
 						errorMsg: this.isErrorDispaly(withdrawal), btnLoading: false
 					});
 				}
-			} else {
+			}
+			 else if(this.state.verifyData?.isLiveVerification){
 				this.props.dispatch(
 					setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
 				);
 				this.props.changeStep("withdraw_crypto_liveness");
 			}
-			this.setState({
-				...this.state,
-				errorMsg:
-					"We can not process this request, Since commission is more than or equal to requested amount",
-			});
+			// this.setState({
+			// 	...this.state,
+			// 	errorMsg: this.isErrorDispaly(withdrawal), btnLoading: false
+			// });
+			if(!this.props.userProfile.isBusiness) {
+				this.setState({
+					...this.state,
+					errorMsg:
+						"We can not process this request, Since commission is more than or equal to requested amount",
+				});
+			}
+		
 		}
 	};
 	isErrorDispaly = (objValue) => {

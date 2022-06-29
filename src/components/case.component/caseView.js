@@ -16,7 +16,7 @@ import QueryString from 'query-string';
 import { validateContent } from "../../utils/custom.validator";
 import Translate from 'react-translate-component';
 import Mome from 'moment'
-import {  success } from '../../utils/messages';
+import { error, success, warning } from '../../utils/messages';
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
@@ -24,7 +24,7 @@ const EllipsisMiddle = ({ suffixCount, children }) => {
     const start = children.slice(0, children.length - suffixCount).trim();
     const suffix = children.slice(-suffixCount).trim();
     return (
-        <Text className="mb-0 fs-14 docnames c-pointer d-block"
+        <Text className="mb-0 fs-14 docname c-pointer d-block"
             style={{ maxWidth: '100%' }} ellipsis={{ suffix }}>
             {start}
         </Text>
@@ -49,8 +49,7 @@ class RequestedDocs extends Component {
         PreviewFilePath: null,
         caseData: {},
         commonModel: {},
-        assignedTo: [],
-        errorWarning:null
+        assignedTo: []
     }
     componentDidMount() {
         this.getCaseData(QueryString.parse(this.props.location.search).id);
@@ -112,12 +111,12 @@ class RequestedDocs extends Component {
             "documentDetailId": doc.id,
             "status": "Approved"
         });
-        this.setState({ ...this.state, isMessageError: null,errorWarning:null });
+        this.setState({ ...this.state, isMessageError: null });
         if (response.ok) {
             success('Document has been approved');
             this.loadDocReplies(doc.id);
         } else {
-            this.setState({ ...this.state, loading: false ,errorWarning:response.data});
+            warning(response.data);
         }
     }
     updateDocRepliesStatus = (doc, Status) => {
@@ -130,6 +129,7 @@ class RequestedDocs extends Component {
         this.setState({ ...this.state, docDetails: { ...this.state.docDetails, details: docDetails } });
     }
     docReject = async (doc) => {
+        debugger
         let item = this.isDocExist(this.state.docReplyObjs, doc.id);
         this.setState({ ...this.state, isMessageError: null });
         if (!validateContent(item?.reply)) {
@@ -148,21 +148,21 @@ class RequestedDocs extends Component {
         };
         item.path = itemPath();
         item.status = "Submitted";
-        item.repliedBy = `${(this.props.userProfileInfo?.isBusiness===true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
+        item.repliedBy = `${(this.props.userProfileInfo?.isBusiness==true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         item.info = JSON.stringify(this.props.trackAuditLogData);
-        this.setState({ ...this.state, isSubmitting: true,errorWarning:null,errorMessage:null });
+        this.setState({ ...this.state, isSubmitting: true });
         const response = await saveDocReply(item);
         if (response.ok) {
             success('Document has been submitted');
             this.updateDocRepliesStatus(doc, "Submitted");
             this.loadDocReplies(doc.id)
         } else {
-            this.setState({ ...this.state, loading: false ,errorWarning:response.data,errorMessage:null});
+            warning(response.data);
         }
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
-        this.setState({ ...this.state, docReplyObjs: objs, isSubmitting: false, isMessageError: null,errorWarning:null,errorMessage:null });
+        this.setState({ ...this.state, docReplyObjs: objs, isSubmitting: false, isMessageError: null });
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
     deleteDocument = async (doc, idx, isAdd) => {
@@ -182,9 +182,9 @@ class RequestedDocs extends Component {
             this.loadDocReplies(doc.id);
             let objs = [...this.state.docReplyObjs];
             objs = objs.filter(item1 => item1.docunetDetailId !== doc.id);
-            this.setState({ ...this.state, docReplyObjs: objs,errorWarning:null });
+            this.setState({ ...this.state, docReplyObjs: objs });
         } else {
-            this.setState({ ...this.state, loading: false ,errorWarning:response.data});
+            warning(response.data);
         }
     }
     isDocExist(lstObj, id) {
@@ -205,7 +205,7 @@ class RequestedDocs extends Component {
         }
     }
     handleUpload = ({ file }, doc) => {
-        this.setState({ ...this.state, errorMessage: null })
+        this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
         if (file.status === "done" && this.state.isValidFile) {
             let replyObjs = [...this.state.docReplyObjs];
             let item = this.isDocExist(replyObjs, doc.id);
@@ -231,41 +231,31 @@ class RequestedDocs extends Component {
                 obj.repliedBy = this.props.userProfileInfo?.firstName;
                 replyObjs.push(obj);
             }
-            this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false,  });
+            this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
         }
         else if (file.status === 'error') {
-            this.setState({ ...this.state,errorMessage:file.response || "Something went wrong please try again!" })
+            error(file.response);
+            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false })
         }
         else if (!this.state.isValidFile) {
-            this.setState({ ...this.state,});
+            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false });
         }
     }
-     isErrorDispaly = (objValue) => {
-		if (objValue.data && typeof objValue.data === "string") {
-		  return objValue.data;
-		} else if (
-		  objValue.originalError &&
-		  typeof objValue.originalError.message === "string"
-		) {
-		  return objValue.originalError.message;
-		} else {
-		  return "Something went wrong please try again!";
-		}
-	  };
     beforeUpload = (file) => {
         let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
         if (fileType[file.type]) {
-            this.setState({ ...this.state, isValidFile: true,errorMessage:null,errorWarning:null })
+            this.setState({ ...this.state, isValidFile: true, })
             return true
         } else {
-            this.setState({ ...this.state, isValidFile: false,errorMessage:null,errorWarning:"File is not allowed. You can upload jpg, png, jpeg and PDF files" });
+            error('File is not allowed. You can upload jpg, png, jpeg and PDF  files');
+            this.setState({ ...this.state, isValidFile: false, })
             return Upload.LIST_IGNORE;
         }
     }
     uopdateReplyObj = (item, list) => {
         for (let obj of list) {
             if (obj.id === item.id) {
-                
+                obj = item;
             }
         }
         return list;
@@ -300,12 +290,17 @@ class RequestedDocs extends Component {
     formatBytes(bytes, decimals = 2) {
         if (bytes === 0) return '0 Bytes';
         const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
         const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed()) + ' ' + sizes[i];
     }
     filePreviewPath() {
+        if (this.state.previewPath.includes(".pdf")) {
             return this.state.previewPath;
+        } else {
+            return this.state.previewPath;
+        }
     }
     getCaseData = async (id) => {
         this.setState({ ...this.state, loading: true });
@@ -314,9 +309,10 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, caseData: caseRes.data, commonModel: caseRes.data.commonModel, loading: false });
             this.getDocument(caseRes.data?.documents?.id);
         } else {
-            this.setState({ ...this.state, loading: false ,errorMessage:this.isErrorDispaly(caseRes) });
+            warning('Data not getting from the server!');
         }
     }
+    
     render() {
         const { caseData, commonModel } = this.state;
         if (this.state.loading) {
@@ -327,7 +323,7 @@ class RequestedDocs extends Component {
                 <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=6" />{caseData?.documents?.customerCaseTitle}</div>
                 <div className='case-stripe'>
                     <Row gutter={[16, 16]}>
-                        <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
                             <Text className='case-lbl'>Case Number</Text>
                             <div className='case-val'>{caseData.caseNumber}</div>
                         </Col>
@@ -335,7 +331,7 @@ class RequestedDocs extends Component {
                             <Text className='case-lbl'>Case Title</Text>
                             <div className='case-val'>{caseData.caseTitle}</div>
                         </Col>
-                        <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                        <Col xs={24} md={8} lg={8} xl={8} xxl={8}>
                             <Text className='case-lbl'>Case State</Text>
                             <div className='case-val'>{caseData.state}</div>
                         </Col>
@@ -343,13 +339,26 @@ class RequestedDocs extends Component {
                 </div>
                 <div className='case-ribbon mb-16'>
                     <Row gutter={[16, 16]}>
+                        {/* {commonModel && Object.entries(commonModel).map(([key, value], idx) => <Col key={idx} xs={key=='description'?24:24} md={key=='description'?24:12} lg={key=='description'?24:8} xl={key=='description'?24:6} xxl={key=='description'?24:6}>
+                            <div className="ribbon-item">
+                                <span className={`icon md ${key != null ? key : 'description'}`} />
+                                <div className='ml-16' style={{flex: 1}}>
+                                    <Text className='case-lbl text-captz'>{key}</Text>
+                                    <div className='case-val'style={{wordBreak:"break-all"}}>
+                                    {(value == null || value ==" ")? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
+                                       
+                                        </div>
+                                </div>
+                            </div>
+                        </Col>)} */}
                          {commonModel ? (
                 Object.entries(commonModel).map(([key, value], idx) => (
                   <Col
                     key={idx}
-                    xs={key == "Decription" ? 24 : 22}
-                    md={key == "Decription" ? 24 : 20}
-                    lg={key == "Decription" ? 24 : 12}
+                    xs={key == "Decription" ? 24 : 24}
+                    sm={key == "Decription" ? 24 : 12}
+                    md={key == "Decription" ? 24 : 12}
+                    lg={key == "Decription" ? 24 : 8}
                     xl={key == "Decription" ? 24 : 8}
                     xxl={key == "Decription" ? 24 : 6}
                   >
@@ -363,6 +372,9 @@ class RequestedDocs extends Component {
                         <Text className="fw-300 text-white-50 fs-12">
                           {key}
                         </Text>
+                        {/* <div className="fw-600 text-white-30 fs-16 l-height-normal">
+                        {(value == null || value ==" ")? '-' : (isNaN(value) ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
+                        </div> */}
                                 <div className='fw-600 text-white-30 fs-16 l-height-normal'style={{wordBreak:"break-all"}} >
                                     {(value == null || value == " ") ? '-' : (isNaN(value) || (key === 'Transaction Id') ? value : <NumberFormat value={value} decimalSeparator="." displayType={'text'} thousandSeparator={true} />)}
                                 </div>
@@ -377,6 +389,7 @@ class RequestedDocs extends Component {
                 </div>
                 <div className="px-16">
                     <Text className='fw-300 text-white-50 fs-12 '>Remarks</Text>
+                    {/* <div className='case-val'>{caseData.remarks ? caseData.remarks : '-'}</div> */}
                     <Title level={5} className='case-val'style={{ marginTop: '3px' }} maxLength={500} rows={4}>{caseData.remarks ? caseData.remarks : '-'}</Title>
                 </div>
                
@@ -395,7 +408,7 @@ class RequestedDocs extends Component {
                             }
                         }}
                             collapsible
-                            accordion className="accordian mb-24"
+                            accordion className="accordian mb-24 mb-togglespace "
                             defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
                             <Panel header={doc.documentName} key={idx + 1} extra={doc.state ? (<span className={`${doc.state ? doc.state.toLowerCase() + " staus-lbl" : ""}`}>{doc.state}</span>) : ""}>
                                 {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
@@ -432,13 +445,6 @@ class RequestedDocs extends Component {
                                         closable={false}
                                         style={{ marginBottom: 0, marginTop: '16px' }}
                                     />}
-                                    {this.state.errorWarning != null && <Alert
-                                        description={this.state.errorWarning}
-                                        type="warning"
-                                        showIcon
-                                        closable={false}
-                                        style={{ marginBottom: 0, marginTop: '16px' }}
-                                    />}
                                     <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}>
                                         <p className="ant-upload-drag-icon">
                                             <span className="icon xxxl doc-upload" />
@@ -461,13 +467,7 @@ class RequestedDocs extends Component {
                                         </div>)}
                                     </div>
                                     <div className="text-center my-36">
-                                    <Button
-								htmlType="submit"
-								size="large"
-								loading={this.state.isSubmitting}
-								className="pop-btn px-36" onClick={() => this.docReject(doc)}>
-								Submit
-							</Button>
+                                        <Button disabled={this.state.isSubmitting} className="pop-btn px-36" onClick={() => this.docReject(doc)}>Submit</Button>
                                     </div>
                                 </>}
                             </Panel>

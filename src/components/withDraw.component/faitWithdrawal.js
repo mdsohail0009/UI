@@ -81,7 +81,7 @@ const FaitWithdrawal = ({
   const useDivRef = React.useRef(null);
   const [addressShow, setAddressShow] = useState(true);
   const [amountLoading, setAmountLoading] = useState(false);
-
+  
   const [addressObj, setAddressObj] = useState({
     bankName: null,
     accountNumber: null,
@@ -405,11 +405,11 @@ const FaitWithdrawal = ({
                 <Translate
                   content="Beneficiary_BankDetails"
                   component={Paragraph}
-                  className="mb-16 fs-14 text-white fw-500 text-upper"
+                  className="mb-16 fs-14 text-white fw-500 text-upper mt-16"
                 />
               </div>
               <Form.Item
-                className="custom-forminput custom-label mb-24"
+                className="custom-forminput custom-label cur-res mb-24"
                 name="walletCode"
                 label={<Translate content="currency" component={Form.label} />}
               >
@@ -477,7 +477,7 @@ const FaitWithdrawal = ({
                     ]}
                     label={
                       <>
-                        <Translate
+                        <Translate className="input-label mb-0"
                           content="amount" component={Form.label} />
                         <div className="minmax">
                           <Translate
@@ -617,6 +617,13 @@ const FaitWithdrawal = ({
                     name="isAccept"
                     valuePropName="checked"
                     required
+                    rules={[
+                      {
+                        validator: (_, value) =>
+                          value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice')
+                          )),
+                      },
+                    ]}
                   >
                     <span className="d-flex">
                       <Checkbox className="ant-custumcheck" />
@@ -625,7 +632,7 @@ const FaitWithdrawal = ({
                         content="agree_to_suissebase"
                         with={{ link }}
                         component={Paragraph}
-                        className="fs-14 text-white-30 ml-16 mb-4"
+                        className="fs-14 text-white-30 ml-16 mb-0 mt-4"
                         style={{ flex: 1 }}
                       />
                     </span>

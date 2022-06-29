@@ -21,8 +21,8 @@ class CardStatus extends Component {
         },
         titles:{
             submitted: 'Thank you for applying for Suissebase Corporate Expense Card!',
-            inprogress: 'Suissebase Corporate Expense Card Application Status ',
-            rejected:'Suissebase Corporate Expense Card Application Status '
+            inprogress: 'Suissebase Corporate Expense Card Your application is being reviewed. ',
+            rejected:'Suissebase Corporate Expense Card Your application has not been approved.'
         }
     }
     render() {
@@ -32,7 +32,7 @@ class CardStatus extends Component {
                     <Image width={80} preview={false} src={this.state.images[this.props.status?.toLowerCase()] || success} />
                     <Title level={2} className="text-white my-16 mb-0">{this.state.titles[this.props.status?.toLowerCase()]} </Title>
                     <Text className="text-white-30">{this.state.messages[this.props.status?.toLowerCase()]}</Text>
-                    <div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button>
+                    <div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO COCKPIT</Button>
                     </div>
                 </div>
 
