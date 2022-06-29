@@ -82,10 +82,10 @@ const [favouriteDetails,setFavouriteDetails]=useState({})
       form.setFieldsValue({
         toCoin: data.walletCode,
         toWalletAddress:data.walletAddress,
-        lable:data.lable
+        label:data.label
       })
     }
-    form.setFieldsValue(data)
+    bankDetailForm.setFieldsValue(data)
 
   }
   useEffect(() => {
@@ -150,7 +150,7 @@ const [favouriteDetails,setFavouriteDetails]=useState({})
   const validateAddressType = (_, value) => {
 		if (value) {
 			let address = value;
-			let coinType = bankDetailForm.getFieldValue("toCoin");
+			let coinType = bankDetailForm.getFieldValue("walletCode");
 			if (coinType) {
 				const validAddress = WAValidator.validate(address, coinType, "both");
 				if (!validAddress) {
@@ -255,8 +255,8 @@ const [favouriteDetails,setFavouriteDetails]=useState({})
       payeeId: uuidv4(),
       label: values.label,
       currencyType: withdraeTab,
-      walletAddress: props?.addressBookReducer?.cryptoTab == true?values.toWalletAddress:values.walletAddress,
-      walletCode: props?.addressBookReducer?.cryptoTab == true?values.toCoin:values.walletCode,
+      walletAddress: values.walletAddress,
+      walletCode: values.walletCode,
       accountNumber: values.accountNumber,
       bankType: values.bankType,
       swiftRouteBICNumber: null,
@@ -265,10 +265,10 @@ const [favouriteDetails,setFavouriteDetails]=useState({})
       addressType: values.addressType,
       line1: props?.addressBookReducer?.cryptoTab == true?values.PayeeAccountLine1:values.line1,
       line2:props?.addressBookReducer?.cryptoTab == true?values.PayeeAccountLine2:values.line1,
-      city: values.city,
-      state: values.state,
-      country: values.country,
-      postalCode: values.postalCode,
+      payeeAccountCity: values.payeeAccountCity,
+      payeeAccountState: values.payeeAccountState,
+      payeeAccountCountry: values.payeeAccountCountry,
+      payeeAccountPostalCode: values.payeeAccountPostalCode,
       isWhitelisting: true,
       isAgree: true,
       status: 0,
@@ -396,26 +396,26 @@ const handleBankChange=(e)=>{
   }
 
   const getIbanData = async (Val) => {
-    form.setFieldsValue({
+    bankDetailForm.setFieldsValue({
       bankName: "",
       bankAddress: "",
-      PayeeAccountState: null,
-      PayeeAccountCountry: null,
-      PayeeAccountPostalCode: "",
+      payeeAccountState: null,
+      payeeAccountCountry: null,
+      payeeAccountPostalCode: "",
       swiftCode: "",
     });
 
     if (Val && Val.length > 14) {
       let response = await apiCalls.getIBANData(Val);
       if (response.ok) {
-        const oldVal = form.getFieldValue();
-        form.setFieldsValue({
+        const oldVal = bankDetailForm.getFieldValue();
+        bankDetailForm.setFieldsValue({
           swiftCode: response.data.routingNumber || oldVal.routingNumber,
           bankName: response.data.bankName || oldVal.bankName,
           bankAddress: response.data.bankAddress || oldVal.bankAddress,
-          PayeeAccountPostalCode: response.data.zipCode || oldVal.zipCode,
-          PayeeAccountState: response.data.state || oldVal.state,
-          PayeeAccountCountry: response.data.country || oldVal.country,
+          payeeAccountPostalCode: response.data.zipCode || oldVal.zipCode,
+          payeeAccountState: response.data.state || oldVal.state,
+          payeeAccountCountry: response.data.country || oldVal.country,
         });
       }
     }
@@ -549,7 +549,7 @@ const getCountry=async()=>{
                       <Translate content="favorite_name" component={Form.label} />
                     }
                   >
-                      <AutoComplete style={{ width: 350 }} className="cust-input"
+                      <AutoComplete style={{ width: 310 }} className="cust-input"
                       //  onChange={(e) => handleChange(e)}
                       placeholder="Name">
                         {PayeeLu.map((item, indx) => (
@@ -727,7 +727,7 @@ const getCountry=async()=>{
                     />
                     <Button
                       onClick={showModal}
-                      style={{ position: "relative", left: "9.5cm", height: "40px" }}
+                      style={{ position: "relative", left: "8.3cm", height: "40px" }}
                       className="pop-btn mb-36 mt-24"
                     >
                       
@@ -769,7 +769,7 @@ const getCountry=async()=>{
 							label={
 								<Translate content="AddressLabel" component={Form.label} />
 							}
-							name="lable"
+							name="label"
 							required
 							rules={[
 								{
@@ -792,7 +792,7 @@ const getCountry=async()=>{
 						</Form.Item>
 						<Form.Item
 							className="custom-label"
-							name="toCoin"
+							name="walletCode"
 							label={<Translate content="Coin" component={Form.label} />}
 							rules={[
 								{
@@ -818,7 +818,7 @@ const getCountry=async()=>{
 						</Form.Item>
 						<Form.Item
 							className="custom-label"
-							name="toWalletAddress"
+							name="walletAddress"
 							label={<Translate content="address" component={Form.label} />}
 							required
 							rules={[
@@ -992,7 +992,7 @@ const getCountry=async()=>{
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
-                          name="PayeeAccountCity"
+                          name="payeeAccountCity"
                           required
                           rules={[{ required: true, message: 'Please input your username!' }]}
                           label={<Translate content="City" component={Form.label} />}
@@ -1007,7 +1007,7 @@ const getCountry=async()=>{
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
-                          name="PayeeAccountState"
+                          name="payeeAccountState"
                           required
                           rules={[{ required: true, message: 'Please input your username!' }]}
                           label={<Translate content="State" component={Form.label} />}
@@ -1022,7 +1022,7 @@ const getCountry=async()=>{
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
-                          name="PayeeAccountCountry"
+                          name="payeeAccountCountry"
                           required
                           rules={[{ required: true, message: 'Please input your username!' }]}
                           label={<Translate content="Country" component={Form.label} />}
@@ -1046,7 +1046,7 @@ const getCountry=async()=>{
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
-                          name="PayeeAccountPostalCode"
+                          name="payeeAccountPostalCode"
                           required
                           rules={[{ required: true, message: 'Please input your username!' }]}
                           label={
@@ -1110,9 +1110,9 @@ const getCountry=async()=>{
                         </Row>
                         <Row>
                           <label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>
-                            {item.city}{","}{" "}
-                            {item.state}{","}{" "}
-                            {item.postalCode}{"."}{" "}</label>
+                            {item.payeeAccountCity}{","}{" "}
+                            {item.payeeAccountState}{","}{" "}
+                            {item.payeeAccountPostalCode}{"."}{" "}</label>
                         </Row>
                       </Col>
               }
