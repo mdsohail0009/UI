@@ -27,7 +27,6 @@ class NotificationScreen extends Component {
       noticObject: {},
       errorMsg: null,
       btnDisabled: false,
-      
     };
   }
 
@@ -53,8 +52,7 @@ class NotificationScreen extends Component {
   };
 
   saveBankInfo = async () => {
-   
-    // this.setState({...this.state,btnDisabled:true})
+    this.setState({...this.state,btnDisabled:true, isLoading: true})
     for (var y in this.state.notification) {
       if (
         this.state.notification[y].isAction &&
@@ -62,11 +60,11 @@ class NotificationScreen extends Component {
       ) {window.scrollTo(0, 0)
         return this.setState({
           ...this.state,
-          errorMsg: "At least one notification type is required",
+          errorMsg: "At least one notification type is required", isLoading: false,
         });
       }
     }
-    // this.setState({...this.state,btnDisabled:true})
+
     let response = await saveNotification(this.state.notification);
     if (response.ok) {
       this.setState({
@@ -74,6 +72,7 @@ class NotificationScreen extends Component {
         btnDisabled: false,
         btnLoading: false,
         errorMsg: null,
+        isLoading: false
       });
       message.destroy();
       message.success({
@@ -84,7 +83,7 @@ class NotificationScreen extends Component {
       this.setState({ ...this.state, errorMsg: null });
     } else {
       
-      this.setState({ ...this.state, errorMsg: this.isErrorDispaly(response) });
+      this.setState({ ...this.state, errorMsg: this.isErrorDispaly(response),isLoading: false });
     }
   };
   isErrorDispaly = ({ data }) => {
@@ -216,25 +215,14 @@ class NotificationScreen extends Component {
                   </tbody>  
                 </table>
                 <div className="text-center">
-              {/* <Button
-                htmlType="submit"
-                size="min"
-                className="pop-btn mt-36"
-                
-                loading={this.state.btnDisabled}
-                style={{ minWidth: 200, marginLeft: 462 }}
-              >
-                <Translate content="Save_btn_text" />
-              </Button> */}
-               <Button
+              {this.state.notification.length !== 0 && <Button
                         htmlType="submit"
                         size="large"
                         className="pop-btn mt-36"
-                        // loading={btnDisabled}
+                        loading={this.state.isLoading}
                         style={{ minWidth: 200, marginLeft: 462 }}>
-                        {/* {isLoading && <Spin indicator={antIcon} />}{" "} */}
                         <Translate content="Save_btn_text" />
-                    </Button>
+                    </Button>}
             </div></>)}
             </Form>
           </div>
