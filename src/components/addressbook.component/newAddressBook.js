@@ -246,7 +246,7 @@ const NewAddressBook = ({
 	if (isSignRequested) {
 		return <div className="text-center">
 				<Image width={80} preview={false} src={ success} />
-				<Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent</Title>
+				<Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
 				 <Text className="text-white-30">{`Declaration form has been sent to ${userConfig?.email}. 
 				 Please sign using link received in email to whitelist your address`}</Text>
 				{/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
