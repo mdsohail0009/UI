@@ -833,7 +833,7 @@ const getCountry=async()=>{
 							/>
 						</Form.Item>
 
-						<div style={{ position: "relative" }}>
+						{/* <div style={{ position: "relative" }}>
 							<Form.Item
 								className="custom-forminput mt-36 agree"
 								name="isAgree"
@@ -858,7 +858,7 @@ const getCountry=async()=>{
 							/>
 						
 							
-						</div>
+						</div> */}
 
 						<div style={{ marginTop: "50px" }}>
 							<Button
