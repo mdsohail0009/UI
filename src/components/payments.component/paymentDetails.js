@@ -520,7 +520,7 @@ addressTypeNames = (type) =>{
                                       )}
                                     </td>
                                     <td className="doc-def" style={{width:'350px'}}>
-                                      <div className="d-flex align-center justify-content">
+                                      <div className="d-flex align-center justify-content"  style={{width:'350px'}}>
                                         <span>
                                           <Tooltip title={item.bankname}>
                                             <span className='pay-docs'>{item.bankname}</span>
@@ -569,7 +569,7 @@ addressTypeNames = (type) =>{
                                       "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending")
                                       ? <>
                                         <td style={{width:'250px'}}>
-                                          <div className="d-flex">
+                                          <div className="d-flex amt-field">
                                             <Form.Item
                                               className="mb-0"
                                               rules={

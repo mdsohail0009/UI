@@ -323,7 +323,7 @@ class RequestedDocs extends Component {
                 <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=6" />{caseData?.documents?.customerCaseTitle}</div>
                 <div className='case-stripe'>
                     <Row gutter={[16, 16]}>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={5} xxl={6}>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
                             <Text className='case-lbl'>Case Number</Text>
                             <div className='case-val'>{caseData.caseNumber}</div>
                         </Col>
@@ -331,7 +331,7 @@ class RequestedDocs extends Component {
                             <Text className='case-lbl'>Case Title</Text>
                             <div className='case-val'>{caseData.caseTitle}</div>
                         </Col>
-                        <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                        <Col xs={24} md={8} lg={8} xl={8} xxl={8}>
                             <Text className='case-lbl'>Case State</Text>
                             <div className='case-val'>{caseData.state}</div>
                         </Col>
@@ -408,7 +408,7 @@ class RequestedDocs extends Component {
                             }
                         }}
                             collapsible
-                            accordion className="accordian mb-24"
+                            accordion className="accordian mb-24 mb-togglespace "
                             defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
                             <Panel header={doc.documentName} key={idx + 1} extra={doc.state ? (<span className={`${doc.state ? doc.state.toLowerCase() + " staus-lbl" : ""}`}>{doc.state}</span>) : ""}>
                                 {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
