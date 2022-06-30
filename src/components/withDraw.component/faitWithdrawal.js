@@ -85,7 +85,7 @@ const FaitWithdrawal = ({
   const [accountCurrency,setAccountCurrency]=useState([])
   const[accountHolderDetails,setAccountHolderDetails]=useState({})
   const [accountDetails,setAccountDetails]=useState({})
-  const[bankDetails,setBankDetails]=useState({})
+  const[bankDetails,setBankDetails]=useState([])
   const [addressObj, setAddressObj] = useState({
     bankName: null,
     accountNumber: null,
@@ -426,7 +426,9 @@ const AccountBankDetails=async(payeeId,currency)=>{
   }
   
 }
-
+const handleDetails=(e)=>{
+ console.log(e)
+}
 
   const renderModalContent = () => {
     const _types = {
@@ -512,24 +514,16 @@ const AccountBankDetails=async(payeeId,currency)=>{
                     }
                   >
                     <Select
+                      className="cust-input mb-0 custom-search"
                       dropdownClassName="select-drpdwn"
-                      className="cust-input"
-                      style={{ width: "100%" }}
-                      bordered={false}
-                      showArrow={true}
-                      onChange={(e) => handleAddressChange(e)}
-                      placeholder={
-                        <Translate
-                          content="SelectAddress"
-                          component={Form.label}
-                        />
-                      }
+                      onChange={(e) =>handleDetails(e)} 
+                      placeholder="Select account holder"
                     >
-                      {addressLu?.map((item, idx) => (
-                        <Option key={idx} value={item.name}>
-                          {item.name}
-                        </Option>
-                      ))}
+                      {bankDetails?.map((item, idx) => (
+										<Option key={idx} value={item.currencyCode}>
+											{item.currencyCode}
+										</Option>
+									))}
                     </Select>
                   </Form.Item>
 
