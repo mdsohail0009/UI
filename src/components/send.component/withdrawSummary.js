@@ -197,7 +197,7 @@ class WithdrawSummary extends Component {
 			this.setState({
 				...this.state,
 				errorMsg:
-					"Without Verifications you can't withdraw.Please select withdraw verifications from security section",
+					"Without verifications you can't withdraw. Please select withdraw verifications from security section",
 			});
 		}
 	};
@@ -447,7 +447,7 @@ class WithdrawSummary extends Component {
 				this.setState({
 					...this.state,
 					errorMsg:
-						"Without Verifications you can't withdraw. Please select withdraw verifications from security section", btnLoading: false
+						"Without verifications you can't withdraw. Please select withdraw verifications from security section", btnLoading: false
 				});
 			}
 			if (this.props.userProfile.isBusiness||!this.state.verifyData?.isLiveVerification) {

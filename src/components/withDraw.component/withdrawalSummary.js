@@ -219,7 +219,7 @@ const WithdrawalFiatSummary = ({
 			this.setState({
 				...this.state,
 				errorMsg:
-					"Without Verifications you can't withdraw. Please select withdraw verifications from security section",
+					"Without verifications you can't withdraw. Please select withdraw verifications from security section",
 			});
 		}
 
@@ -283,7 +283,7 @@ const WithdrawalFiatSummary = ({
 			setVerifyData(response.data);
 		} else {
 			setMsg(
-				"Without Verifications you can't withdraw.Please select withdraw verifications from security section"
+				"Without verifications you can't withdraw. Please select withdraw verifications from security section"
 			);
 		}
 	};
