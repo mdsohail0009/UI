@@ -288,7 +288,7 @@ const WithdrawalFiatSummary = ({
 			}
 		} else {
 			setMsg(
-				"Without Verifications you can't withdraw.Please select withdraw verifications from security section"
+				"Without verifications you can't withdraw.Please select withdraw verifications from security section"
 			);
 		}
 	};
