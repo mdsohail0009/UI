@@ -103,6 +103,10 @@ class SelectCrypto extends Component {
             this.myRef.current.scrollIntoView();
             return;
         }
+        if((localValue == 0 && cryptoValue == 0)){
+            this.setState({ ...this.state, error: "We can not process this request, Since commission is more than or equal to requested amount" });
+
+        }
         this.props.preview(this.state.selectedWallet, coin, (isSwaped ? cryptoValue : localValue), !isSwaped, this.props?.userProfileInfo.id);
         this.props.setStep('step3');
     }

@@ -27,6 +27,7 @@ class NotificationScreen extends Component {
       noticObject: {},
       errorMsg: null,
       btnDisabled: false,
+      btnLoader:false
     };
   }
 
@@ -52,7 +53,7 @@ class NotificationScreen extends Component {
   };
 
   saveBankInfo = async () => {
-    this.setState({...this.state,btnDisabled:true, isLoading: true})
+    this.setState({...this.state,btnDisabled:true, btnLoader: true})
     for (var y in this.state.notification) {
       if (
         this.state.notification[y].isAction &&
@@ -60,19 +61,20 @@ class NotificationScreen extends Component {
       ) {window.scrollTo(0, 0)
         return this.setState({
           ...this.state,
-          errorMsg: "At least one notification type is required", isLoading: false,
+          errorMsg: "At least one notification type is required", btnLoader: false,
         });
       }
     }
 
     let response = await saveNotification(this.state.notification);
+      
     if (response.ok) {
       this.setState({
         ...this.state,
         btnDisabled: false,
         btnLoading: false,
         errorMsg: null,
-        isLoading: false
+        btnLoader: false
       });
       message.destroy();
       message.success({
@@ -83,7 +85,7 @@ class NotificationScreen extends Component {
       this.setState({ ...this.state, errorMsg: null });
     } else {
       
-      this.setState({ ...this.state, errorMsg: this.isErrorDispaly(response),isLoading: false });
+      this.setState({ ...this.state, errorMsg: this.isErrorDispaly(response),btnLoader: false });
     }
   };
   isErrorDispaly = ({ data }) => {
@@ -110,7 +112,6 @@ class NotificationScreen extends Component {
   };
 
   enableAction = (event, item) => {
-    debugger
     let notificationLu = this.state.notification;
     for (let i in notificationLu) {
       if (item.id == notificationLu[i].id) {
@@ -148,10 +149,12 @@ class NotificationScreen extends Component {
                       <th style={{ width: 180 }}>Subscribe</th>
                     </tr>
                   </thead>
+                  {this.state.notification.length!== 0 ? <>
                   <tbody>
                     {this.state.notification?.map((item, i) => {
                       return (
                         <>
+                        
                           <tr key={i}>
                             <td height="50">
                               <span>{item.action}</span>
@@ -209,17 +212,31 @@ class NotificationScreen extends Component {
                               </div>
                             </td>
                           </tr>
-                        </>
-                      );
+                          </>
+                        
+                      )
                     })}
-                  </tbody>  
+                  </tbody> </>:<>
+                  <tbody>
+                          <tr>
+                            <td
+                              colSpan="8"
+                              className="p-16 text-center"
+                              style={{ color: "white", width: 300 }}
+                            >
+                              No records available
+                            </td>
+                          </tr>{" "}
+                        </tbody>
+</> }
                 </table>
+                
                 <div className="text-center">
               {this.state.notification.length !== 0 && <Button
                         htmlType="submit"
                         size="large"
                         className="pop-btn mt-36"
-                        loading={this.state.isLoading}
+                        loading={this.state.btnLoader}
                         style={{ minWidth: 200, marginLeft: 462 }}>
                         <Translate content="Save_btn_text" />
                     </Button>}
