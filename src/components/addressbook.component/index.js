@@ -19,6 +19,7 @@ import { connect } from "react-redux";
 import apiCalls from "../../api/apiCalls";
 import Info from "../shared/info";
 import { downloadDeclForm } from './api'
+import { DownloadOutlined } from '@ant-design/icons';
 import Loader from "../../Shared/loader";
 const { Paragraph, Text } = Typography;
 
@@ -184,9 +185,11 @@ class AddressBook extends Component {
 			field: "isWhitelisted",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted && (!this.state.isDownloading ? <a onClick={() => {
-						this.downloadDeclarationForm(props?.dataItem);
-					}} >Download</a> : (!this.state.isDownloading|| this.state.selectedDeclaration != props?.dataItem.id ? "Not whitelisted" : ""))}
+					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration != props?.dataItem.id) && <a onClick={() => {
+						if (!this.state.isDownloading)
+							this.downloadDeclarationForm(props?.dataItem);
+					}} ><DownloadOutlined /></a>}
+					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
 					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.id && <Spin size="small" />}
 				</td>
 			),
@@ -315,9 +318,11 @@ class AddressBook extends Component {
 			field: "isWhitelisted",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted && !this.state.isDownloading ? <a onClick={() => {
-						this.downloadDeclarationForm(props?.dataItem);
-					}} >Download</a> : (!this.state.isDownloading || this.state.selectedDeclaration != props?.dataItem.id ? "Not whitelisted" : "")}
+					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration != props?.dataItem.id) && <a onClick={() => {
+						if (!this.state.isDownloading)
+							this.downloadDeclarationForm(props?.dataItem);
+					}} ><DownloadOutlined /></a>}
+					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
 					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.id && <Spin size="small" />}
 				</td>
 			),
@@ -537,7 +542,6 @@ class AddressBook extends Component {
 		}
 	};
 	closeBuyDrawer = (obj) => {
-		debugger
 		let showCrypto = false, showFiat = false;
 		if (obj) {
 			if (obj.isCrypto)
