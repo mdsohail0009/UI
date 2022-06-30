@@ -1097,7 +1097,7 @@ const getCountry=async()=>{
                         <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>
                           {item.label}{","}{" "}
                           {item.walletCode}{","}{" "}
-                          {item.walletAddress}{"."}</label></Col>
+                          {item.walletAddress}</label></Col>
                       </Row>
                 
                     </Col>:
@@ -1105,14 +1105,14 @@ const getCountry=async()=>{
                         <Row>
                           <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>{item.bankName} {","}{" "}
                             {bankChange=="IBAN"?item.routingNumber:item.accountNumber}{","}{" "}
-                            {item.swiftCode}{"(Swift Code)"}{"."}</label></Col>
+                            {item.swiftCode}{"(Swift Code)"}</label></Col>
 
                         </Row>
                         <Row>
                           <label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>
                             {item.payeeAccountCity}{","}{" "}
                             {item.payeeAccountState}{","}{" "}
-                            {item.payeeAccountPostalCode}{"."}{" "}</label>
+                            {item.payeeAccountPostalCode}</label>
                         </Row>
                       </Col>
               }
