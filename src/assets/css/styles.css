@@ -579,7 +579,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .ant-modal-footer{padding:16px 24px;border-color: var(--borderGrey);}
 .cust-adon .ant-input-group, .cust-adon .ant-input-group .ant-input:focus, .cust-adon .ant-input, .cust-adon .ant-input-group-addon{border: none !important;box-shadow: none;padding: 0;background: transparent;}
 .cust-adon .ant-input{line-height: 45px !important;height: 47px !important;background-color: transparent !important; padding:0 1px !important;margin-bottom:0}
-.ant-drawer{z-index: 99 !important;}
+.ant-drawer{z-index: 999 !important;}
 .ant-modal-confirm-btns button:first-child{background-color: transparent;border: none;color: var(--textWhite30);}
 .ant-modal-confirm-btns button:nth-child(2){background-color: var(--bgYellow) !important;border: none;color: var(--textDark);border-radius: 16px;padding: 4px 30px}
 .ant-modal-confirm-btns button:first-child:hover{color: var(--textYellow);}
