@@ -311,6 +311,7 @@ export default {
 	remarks: "Remarks",
 	Country: "Country",
 	state: "State",
+	city:"city",
 	zipcode: "Zip code",
 	userName: "User Name",
 	manage_account: "Manage your Account",
