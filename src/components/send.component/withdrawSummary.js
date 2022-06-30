@@ -204,7 +204,7 @@ class WithdrawSummary extends Component {
 			this.setState({
 				...this.state,
 				errorMsg:
-					"Without Verifications you can't withdraw.Please select withdraw verifications from security section",
+					"Without verifications you can't withdraw.Please select withdraw verifications from security section",
 			});
 		}
 	};
@@ -480,12 +480,19 @@ class WithdrawSummary extends Component {
 						errorMsg: this.isErrorDispaly(withdrawal), btnLoading: false
 					});
 				}
-			} else {
+			}
+			else if(this.state.verifyData?.isLiveVerification){
 				this.props.dispatch(
 					setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
 				);
 				this.props.changeStep("withdraw_crypto_liveness");
 			}
+			//  else {
+			// 	this.props.dispatch(
+			// 		setSubTitle(apiCalls.convertLocalLang("Withdraw_liveness"))
+			// 	);
+			// 	this.props.changeStep("withdraw_crypto_liveness");
+			// }
 			// this.setState({ 
 			// 	...this.state,
 			// 	errorMsg:
