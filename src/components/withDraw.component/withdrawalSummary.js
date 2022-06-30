@@ -211,17 +211,17 @@ const WithdrawalFiatSummary = ({
 				return;
 			}
 		}
-		if (
-			verifyData.isPhoneVerified == "" &&
-			verifyData.isEmailVerification == "" &&
-			verifyData.twoFactorEnabled == ""
-		) {
-			this.setState({
-				...this.state,
-				errorMsg:
-					"Without verifications you can't withdraw. Please select withdraw verifications from security section",
-			});
-		}
+		// if (
+		// 	verifyData.isPhoneVerified == "" &&
+		// 	verifyData.isEmailVerification == "" &&
+		// 	verifyData.twoFactorEnabled == ""
+		// ) {
+		// 	this.setState({
+		// 		...this.state,
+		// 		errorMsg:
+		// 			"Without Verifications you can't withdraw. Please select withdraw verifications from security section",
+		// 	});
+		// }
 
 		let Obj = Object.assign({}, sendReceive.withdrawFiatObj);
 		Obj.accountNumber = apiCalls.encryptValue(
@@ -281,9 +281,14 @@ const WithdrawalFiatSummary = ({
 		let response = await apiCalls.getVerificationFields(userConfig.id);
 		if (response.ok) {
 			setVerifyData(response.data);
+			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled)) {
+				setMsg(
+					"Without Verifications you can't withdraw.Please select withdraw verifications from security section"
+				);
+			}
 		} else {
 			setMsg(
-				"Without verifications you can't withdraw. Please select withdraw verifications from security section"
+				"Without verifications you can't withdraw.Please select withdraw verifications from security section"
 			);
 		}
 	};
