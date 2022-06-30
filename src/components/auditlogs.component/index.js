@@ -33,7 +33,7 @@ class AuditLogs extends Component {
       message: "",
       searchObj: {
         timeSpan: "Last 1 Day",
-        userId: this.props.userProfile?.userId,
+        userId: this.props.userProfile?.id,
         feature: "All Features",
        // admin: "user",
        // user: "user",
