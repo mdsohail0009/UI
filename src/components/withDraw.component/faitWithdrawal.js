@@ -19,7 +19,7 @@ import NumberFormat from "react-number-format";
 import {
   withdrawSave,
   getCountryStateLu,
-  getStateLookup
+  getStateLookup,getAccountHolder,getAccountWallet,getAccountBankDetails
 } from "../../api/apiServer";
 import success from "../../assets/images/success.png";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
@@ -81,7 +81,12 @@ const FaitWithdrawal = ({
   const useDivRef = React.useRef(null);
   const [addressShow, setAddressShow] = useState(true);
   const [amountLoading, setAmountLoading] = useState(false);
-  
+  const [accountHolder,setAccountHolder]=useState([])
+  const [accountCurrency,setAccountCurrency]=useState([])
+  const[accountHolderDetails,setAccountHolderDetails]=useState({})
+  const [accountDetails,setAccountDetails]=useState({})
+  const[bankDetails,setBankDetails]=useState([])
+  const [details,setDetails]=useState([])
   const [addressObj, setAddressObj] = useState({
     bankName: null,
     accountNumber: null,
@@ -113,6 +118,8 @@ const FaitWithdrawal = ({
     getCountryLu();
     setLoading(false);
     fiatWithdrawTrack();
+    getAccountdetails()
+    
   }, []);
 
   const fiatWithdrawTrack = () => {
@@ -164,6 +171,8 @@ const FaitWithdrawal = ({
     }
 
   };
+
+ 
 
   const getAddressLu = async (obj, e) => {
     let selectedFiat = obj.currencyCode;
@@ -292,14 +301,18 @@ const FaitWithdrawal = ({
     setLoading(false);
     setErrorMsg(null);
     values["membershipId"] = userConfig.id;
-    values["memberWalletId"] = selectedWallet.id;
+    values["memberWalletId"] = accountDetails[0].id;
     values["beneficiaryAccountName"] = userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName;
     values["favouriteName"] =
-      values.favouriteName || addressDetails.favouriteName || addressInfo.favouriteName;
+      values.favouriteName || addressDetails.favouriteName || details[0].favouriteName;
     values["comission"] = "0.0";
-    values["bankName"] = addressInfo.bankName;
-    values["accountNumber"] = addressInfo.accountNumber;
-    values["routingNumber"] = addressInfo.routingNumber;
+    values["bankName"] = details[0].bankName;
+    values["accountNumber"] = details[0].accountNumber;
+        values["country"] = details[0].country;
+        values["state"] = details[0].state;
+            values["zipcode"] = details[0].zipcode;
+    values["routingNumber"] = details[0].routingNumber;
+    values["WalletCode"]=accountDetails[0].currencyCode
     const response = await handleFiatConfirm(values);
     if (response.ok) {
       setBtnDisabled(false);
@@ -378,6 +391,50 @@ const FaitWithdrawal = ({
       return Promise.reject(apicalls.convertLocalLang('is_required'));
     }
   };
+  const getAccountdetails=async()=>{
+    let response=await getAccountHolder(userConfig.id,"Fiat")
+    console.log(response.data)
+    setAccountHolder(response.data)
+  }
+ const handleAccountChange=(e)=>{
+  let data=accountHolder.find((item)=>item.name==e)
+  console.log(data)
+  setAccountHolderDetails(data)
+  AccountWallet(userConfig.id)
+  if(e !==data.name){
+    form.setFieldsValue({currencyCode:" "})
+    setAccountDetails(null)
+  }
+ }
+const AccountWallet=async(AccountId)=>{
+  let response=await getAccountWallet(AccountId)
+  if(response.ok){
+    console.log(response.data)
+    setAccountCurrency(response.data)
+  }
+  
+}
+const handleAccountWallet=(e)=>{
+ let data=accountCurrency.filter((item)=>item.currencyCode==e)
+ console.log(data)
+ setAccountDetails(data)
+ AccountBankDetails(accountHolderDetails.id,data[0].currencyCode)
+}
+
+const AccountBankDetails=async(payeeId,currency)=>{
+  let response=await getAccountBankDetails(payeeId,currency)
+  if(response.ok){
+    console.log(response.data)
+    setBankDetails(response.data)
+    //setAccountDetails(response.data)
+  }
+  
+}
+const handleDetails=(e)=>{
+ console.log(e)
+ let data=bankDetails.filter((item)=>item.bankName==e)
+ setDetails(data)
+}
 
   const renderModalContent = () => {
     const _types = {
@@ -405,27 +462,51 @@ const FaitWithdrawal = ({
                 <Translate
                   content="Beneficiary_BankDetails"
                   component={Paragraph}
-                  className="mb-16 fs-14 text-white fw-500 text-upper mt-16"
+                  className="mb-16 fs-14 text-white fw-500 text-upper"
                 />
               </div>
               <Form.Item
-                className="custom-forminput custom-label cur-res mb-24"
-                name="walletCode"
+                className="custom-forminput custom-label mb-24"
+                name="name"
+                label="Account Holder"
+              >
+                <Select
+                      className="cust-input mb-0 custom-search"
+                      dropdownClassName="select-drpdwn"
+                      onChange={(e) =>handleAccountChange(e)} 
+                      placeholder="Select account holder"
+                    >
+                      {accountHolder?.map((item, idx) => (
+										<Option key={idx} value={item.name}>
+											{item.name}
+										</Option>
+									))}
+                    </Select>
+              </Form.Item>
+              <Form.Item
+                className="custom-forminput custom-label mb-24"
+                name="currencyCode"
                 label={<Translate content="currency" component={Form.label} />}
               >
-                <WalletList
-                  valueFeild={"currencyCode"}
-                  selectedvalue={saveObj?.walletCode}
-                  placeholder={apicalls.convertLocalLang("SelectCurrency")}
-                  onWalletSelect={(e) => handleWalletSelection(e, true)}
-                />
+                <Select
+                      className="cust-input mb-0 custom-search"
+                      dropdownClassName="select-drpdwn"
+                      onChange={(e) =>handleAccountWallet(e)} 
+                      placeholder="Select account holder"
+                    >
+                      {accountCurrency?.map((item, idx) => (
+										<Option key={idx} value={item.currencyCode}>
+											{item.currencyCode}
+										</Option>
+									))}
+                    </Select>
               </Form.Item>
 
               {addressShow == false &&
                 <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="noaddress_msg" /></Text>
               }
 
-              {addressLu?.length > 1 &&
+              {accountDetails.length>0 &&
                 <div style={{ position: "relative" }}>
 
                   <Form.Item
@@ -439,31 +520,23 @@ const FaitWithdrawal = ({
                     }
                   >
                     <Select
+                      className="cust-input mb-0 custom-search"
                       dropdownClassName="select-drpdwn"
-                      className="cust-input"
-                      style={{ width: "100%" }}
-                      bordered={false}
-                      showArrow={true}
-                      onChange={(e) => handleAddressChange(e)}
-                      placeholder={
-                        <Translate
-                          content="SelectAddress"
-                          component={Form.label}
-                        />
-                      }
+                      onChange={(e) =>handleDetails(e)} 
+                      placeholder="Select account holder"
                     >
-                      {addressLu?.map((item, idx) => (
-                        <Option key={idx} value={item.name}>
-                          {item.name}
-                        </Option>
-                      ))}
+                      {bankDetails?.map((item, idx) => (
+										<Option key={idx} value={item.bankName}>
+											{item.bankName}
+										</Option>
+									))}
                     </Select>
                   </Form.Item>
 
                 </div>}
                 {amountLoading && <Loader />}
 
-              {addressInfo &&
+              {details.length>0 &&
                 <div className="fiatdep-info">
 
                   <Form.Item
@@ -526,12 +599,12 @@ const FaitWithdrawal = ({
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     content="SIGNU"
                     component={Text}
-                    with={{ value: addressInfo.bankName }}
+                     with={{ value: details[0].bankName }}
 
                   />
                   <Translate
                     className="fw-200 text-white-50 fs-14"
-                    content="Bank_account_iban"
+                    content="Bank_account"
                     component={Text}
                   />
                   <Translate
@@ -544,7 +617,7 @@ const FaitWithdrawal = ({
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     content="SIGNU"
                     component={Text}
-                    with={{ value: addressInfo.accountNumber }}
+                     with={{ value: details[0].accountNumber }}
                   />
                   <Translate
                     className="fw-200 text-white-50 fs-14"
@@ -561,55 +634,48 @@ const FaitWithdrawal = ({
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     content="SIGNU"
                     component={Text}
-                    with={{ value: addressInfo.routingNumber }}
+                    with={{value: details[0].swiftCode }}
                   />
                   <Translate
                     className="fw-200 text-white-50 fs-14"
-                    content="Bank_address1"
+                    content="city"
                     component={Text}
                   />
                   <Translate
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                    content="SIGNU"
                     component={Text}
-                    with={{ value: addressInfo.bankAddress }}
+                    with={{ value: details[0].city }}
                   />
-                  <Translate
-                    content="Beneficiary_Details"
-                    component={Paragraph}
-                    className="mb-16 fs-14 text-aqua fw-500 text-upper"
-                  />
+                  
 
-                  <Translate
-                    className="fw-200 text-white-50 fs-14"
-                    content={
-                      userConfig?.isBusiness&&addressInfo.addressType !== "3rdparty"
-                        ? "company_name"
-                        : "Recipient_full_name"
-                    }
-                    component={Text}
-                  />
+                  
                   <Translate
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                    content="SIGNU"
                     component={Text}
                     with={{
-                      value: userConfig?.isBusiness&&addressInfo.addressType !== "3rdparty"
-                        ? userConfig?.businessName
-                        : addressInfo.beneficiaryAccountName
+                      value: details[0].state
                     }}
                   />
 
                   <Translate
                     className="fw-200 text-white-50 fs-14"
-                    content="Recipient_address1"
+                    content="Country"
                     component={Text}
                   />
                   <Translate
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                    content="SIGNU"
                     component={Text}
-                    with={{ value: addressInfo.beneficiaryAccountAddress }}
+                    with={{ value: details[0].country }}
+                  />
+                   <Translate
+                    className="fw-200 text-white-50 fs-14"
+                    content="zipcode"
+                    component={Text}
+                  />
+                  <Translate
+                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                    component={Text}
+                    with={{ value: details[0].zipCode }}
                   />
 
                   <Form.Item
