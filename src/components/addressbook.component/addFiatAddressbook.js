@@ -1165,7 +1165,7 @@ const NewFiatAddress = (props) => {
 								}}
 							/>
 							{!fiatAddress?.isWhitelisted && <div className="whitelist-note">
-								<Alert type="warning" message={`Note : Declaration form will be sent to ${props?.userConfig?.email || fiatAddress?.email}. Please sign using link received in email to whitelist your address`} showIcon closable={false} />
+								<Alert type="warning" description={`Note : Declaration form will be sent to ${props?.userConfig?.email || fiatAddress?.email}. Please sign using link received in email to whitelist your address`} showIcon closable={false} />
 							</div>}
 						</div>
 
