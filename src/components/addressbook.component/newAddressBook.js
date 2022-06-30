@@ -256,8 +256,8 @@ const NewAddressBook = ({
 	return (
 		<>
 		{isLoading ? (
-						<Loader />
-					) : (
+			<Loader />
+		) : (
 			<div>
 				<div ref={useDivRef}></div>
 				{errorMsg && (
