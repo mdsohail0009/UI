@@ -255,6 +255,9 @@ const NewAddressBook = ({
 	}
 	return (
 		<>
+		{isLoading ? (
+						<Loader />
+					) : (
 			<div>
 				<div ref={useDivRef}></div>
 				{errorMsg && (
@@ -272,9 +275,7 @@ const NewAddressBook = ({
 						showIcon
 					/>
 				)}
-				{isLoading ? (
-					<Loader className="loader" />
-				) : (
+				
 					<Form
 						form={form}
 						initialValues={cryptoAddress}
@@ -409,8 +410,9 @@ const NewAddressBook = ({
 							</Button>
 						</div>
 					</Form>
-				)}
+				
 			</div>
+			)}
 		</>
 	);
 };
