@@ -392,7 +392,7 @@ const NewAddressBook = ({
 								}}
 							/>
 							{!cryptoAddress?.isWhitelisted && <div className="whitelist-note">
-								<Alert type="warning" message={`Note : Declaration form will be sent to ${userConfig?.email || cryptoAddress?.email}. Please sign using link received in email to whitelist your address`} showIcon closable={false} />
+								<Alert type="warning" description={`Note : Declaration form will be sent to ${userConfig?.email || cryptoAddress?.email}. Please sign using link received in email to whitelist your address`} showIcon closable={false} />
 							</div>}
 
 						</div>
