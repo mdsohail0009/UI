@@ -254,7 +254,7 @@ const FaitWithdrawal = ({
     if (isChange) form.setFieldsValue({ state: null });
   };
   const savewithdrawal = async (values) => {
-debugger
+
     setBtnDisabled(true)
     dispatch(setWFTotalValue(values.totalValue));
     if(!values.isAccept){
@@ -392,13 +392,11 @@ debugger
     }
   };
   const getAccountdetails=async()=>{
-    debugger
     let response=await getAccountHolder(userConfig.id,"Fiat")
     console.log(response.data)
     setAccountHolder(response.data)
   }
  const handleAccountChange=(e)=>{
-  debugger
   let data=accountHolder.find((item)=>item.name==e)
   console.log(data)
   setAccountHolderDetails(data)
@@ -409,7 +407,6 @@ debugger
   }
  }
 const AccountWallet=async(AccountId)=>{
-  debugger
   let response=await getAccountWallet(AccountId)
   if(response.ok){
     console.log(response.data)
@@ -418,7 +415,6 @@ const AccountWallet=async(AccountId)=>{
   
 }
 const handleAccountWallet=(e)=>{
-  debugger
  let data=accountCurrency.filter((item)=>item.currencyCode==e)
  console.log(data)
  setAccountDetails(data)
@@ -426,7 +422,6 @@ const handleAccountWallet=(e)=>{
 }
 
 const AccountBankDetails=async(payeeId,currency)=>{
-  debugger
   let response=await getAccountBankDetails(payeeId,currency)
   if(response.ok){
     console.log(response.data)
@@ -436,7 +431,6 @@ const AccountBankDetails=async(payeeId,currency)=>{
   
 }
 const handleDetails=(e)=>{
-  debugger
  console.log(e)
  let data=bankDetails.filter((item)=>item.bankName==e)
  setDetails(data)
