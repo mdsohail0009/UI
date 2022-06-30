@@ -58,7 +58,7 @@ const AddressCryptoView = (props) => {
 					) : (
 						<>
 							<Title className="page-title text-white">
-								BENEFICIARY BANK DETAILS VIEW
+								BENEFICIARY BANK DETAILS 
 							</Title>
 							{cryptoAddress && (
 								<Row gutter={8}>
@@ -125,9 +125,9 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-										</Row>
+										{/* </Row>
 										
-										<Row className="kpi-List">
+										<Row className="kpi-List"> */}
 										
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>

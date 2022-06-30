@@ -551,7 +551,7 @@ const getCountry=async()=>{
                   >
                       <AutoComplete style={{ width: 310 }} className="cust-input"
                       //  onChange={(e) => handleChange(e)}
-                      placeholder="Name">
+                      placeholder="Label Name">
                         {PayeeLu.map((item, indx) => (
                           <Option key={indx} value={item.name}>
                             {item.name}
@@ -566,7 +566,7 @@ const getCountry=async()=>{
                     className="custom-forminput custom-label mb-0"
                     name="fullName"
                     required
-                    rules={[{ required: true, message: 'Please enter Name!' }]}
+                    rules={[{ required: true, message: 'is required' }]}
                     label={
                       <Translate content="Fait_Name" component={Form.label} />
                     }
@@ -611,7 +611,7 @@ const getCountry=async()=>{
                     className="custom-forminput custom-label mb-0"
                     name="line1"
                     required
-                    rules={[{ required: true, message: 'Please enter Address!' }]}
+                    rules={[{ required: true, message: 'is required' }]}
                     label={
                       <Translate content="Address_Line1" component={Form.label} />
                     }
@@ -629,7 +629,7 @@ const getCountry=async()=>{
                     className="custom-forminput custom-label mb-0"
                     name="line2"
                     required
-                    rules={[{ required: true, message: 'Please enter Address!' }]}
+                    rules={[{ required: true, message: 'is required' }]}
                     label={
                       <Translate content="Address_Line2" component={Form.label} />
                     }
@@ -647,7 +647,7 @@ const getCountry=async()=>{
                     className="custom-forminput custom-label mb-0"
                     name="city"
                     required
-                    rules={[{ required: true, message: 'Please enter city!' }]}
+                    rules={[{ required: true, message: 'is required' }]}
                     label={<Translate content="City" component={Form.label} />}
                   >
                     <Input
@@ -662,7 +662,7 @@ const getCountry=async()=>{
                     className="custom-forminput custom-label mb-0"
                     name="state"
                     required
-                    rules={[{ required: true, message: 'Please enter state!' }]}
+                    rules={[{ required: true, message: 'is required' }]}
                     label={<Translate content="State" component={Form.label} />}
                   >
                     <Input
@@ -677,7 +677,7 @@ const getCountry=async()=>{
                     className="custom-forminput custom-label mb-0"
                     name="country"
                     required
-                    rules={[{ required: true, message: 'Please enter country!' }]}
+                    rules={[{ required: true, message: 'is required' }]}
                     label={<Translate content="Country" component={Form.label} />}
                   >
                    
@@ -701,7 +701,7 @@ const getCountry=async()=>{
                     className="custom-forminput custom-label mb-0"
                     name="postalCode"
                     required
-                    rules={[{ required: true, message: 'Please enter Postel Code!' }]}
+                    rules={[{ required: true, message: 'is required' }]}
                     label={
                       <Translate content="Post_code" component={Form.label} />
                     }
@@ -885,7 +885,7 @@ const getCountry=async()=>{
                           name="label"
                           label="Bank Label"
                           required
-                          rules={[{ required: true, message: 'Please input your username!' }]}
+                          rules={[{ required: true, message: 'is required' }]}
                         >
                           <Input
                             className="cust-input text-left"
@@ -902,7 +902,7 @@ const getCountry=async()=>{
                           name="walletCode"
                           label="Currency"
                           required
-                          rules={[{ required: true, message: 'Please input your username!' }]}
+                          rules={[{ required: true, message: 'is required' }]}
                         >
                           <Select
                             defaultValue="All"
@@ -922,7 +922,7 @@ const getCountry=async()=>{
                           name="bankType"
                           label="Bank Type"
                           required
-                          rules={[{ required: true, message: 'Please input your username!' }]}
+                          rules={[{ required: true, message: 'is required' }]}
                         >
                           <Select
                             defaultValue="All"
@@ -944,7 +944,7 @@ const getCountry=async()=>{
                          
                           label={ bankChange === "IBAN" ? "IBAN" :  "Bank Account Number" }
                           required
-                          rules={[{ required: true, message: 'Please input your username!' }]}
+                          rules={[{ required: true, message: 'is required' }]}
                            onBlur={(e) => handleIban(e.target.value)}
                          
                         >
@@ -961,7 +961,7 @@ const getCountry=async()=>{
                           name="swiftCode"
                           label="SWIFI / BIC"
                           required
-                          rules={[{ required: true, message: 'Please input your username!' }]}
+                          rules={[{ required: true, message: 'is required' }]}
                         >
                           <Input
                             className="cust-input text-left"
@@ -976,7 +976,7 @@ const getCountry=async()=>{
                           name="bankName"
                           label="Bank Name"
                           required
-                          rules={[{ required: true, message: 'Please input your username!' }]}
+                          rules={[{ required: true, message: 'is required' }]}
                         >
                           <Input
                             className="cust-input text-left"
@@ -994,7 +994,7 @@ const getCountry=async()=>{
                           className="custom-forminput custom-label mb-0"
                           name="payeeAccountCity"
                           required
-                          rules={[{ required: true, message: 'Please input your username!' }]}
+                          rules={[{ required: true, message: 'is required' }]}
                           label={<Translate content="City" component={Form.label} />}
                         >
                           <Input
@@ -1009,7 +1009,7 @@ const getCountry=async()=>{
                           className="custom-forminput custom-label mb-0"
                           name="payeeAccountState"
                           required
-                          rules={[{ required: true, message: 'Please input your username!' }]}
+                          rules={[{ required: true, message: 'is required' }]}
                           label={<Translate content="State" component={Form.label} />}
                         >
                           <Input
@@ -1024,7 +1024,7 @@ const getCountry=async()=>{
                           className="custom-forminput custom-label mb-0"
                           name="payeeAccountCountry"
                           required
-                          rules={[{ required: true, message: 'Please input your username!' }]}
+                          rules={[{ required: true, message: 'is required' }]}
                           label={<Translate content="Country" component={Form.label} />}
                         >
                           
@@ -1048,7 +1048,7 @@ const getCountry=async()=>{
                           className="custom-forminput custom-label mb-0"
                           name="payeeAccountPostalCode"
                           required
-                          rules={[{ required: true, message: 'Please input your username!' }]}
+                          rules={[{ required: true, message: 'is required' }]}
                           label={
                             <Translate content="Post_code" component={Form.label} />
                           }
