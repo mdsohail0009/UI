@@ -86,6 +86,7 @@ const FaitWithdrawal = ({
   const[accountHolderDetails,setAccountHolderDetails]=useState({})
   const [accountDetails,setAccountDetails]=useState({})
   const[bankDetails,setBankDetails]=useState([])
+  const [details,setDetails]=useState([])
   const [addressObj, setAddressObj] = useState({
     bankName: null,
     accountNumber: null,
@@ -253,7 +254,7 @@ const FaitWithdrawal = ({
     if (isChange) form.setFieldsValue({ state: null });
   };
   const savewithdrawal = async (values) => {
-
+debugger
     setBtnDisabled(true)
     dispatch(setWFTotalValue(values.totalValue));
     if(!values.isAccept){
@@ -300,14 +301,18 @@ const FaitWithdrawal = ({
     setLoading(false);
     setErrorMsg(null);
     values["membershipId"] = userConfig.id;
-    values["memberWalletId"] = selectedWallet.id;
+    values["memberWalletId"] = accountDetails[0].id;
     values["beneficiaryAccountName"] = userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName;
     values["favouriteName"] =
-      values.favouriteName || addressDetails.favouriteName || addressInfo.favouriteName;
+      values.favouriteName || addressDetails.favouriteName || details[0].favouriteName;
     values["comission"] = "0.0";
-    values["bankName"] = addressInfo.bankName;
-    values["accountNumber"] = addressInfo.accountNumber;
-    values["routingNumber"] = addressInfo.routingNumber;
+    values["bankName"] = details[0].bankName;
+    values["accountNumber"] = details[0].accountNumber;
+        values["country"] = details[0].country;
+        values["state"] = details[0].state;
+            values["zipcode"] = details[0].zipcode;
+    values["routingNumber"] = details[0].routingNumber;
+    values["WalletCode"]=accountDetails[0].currencyCode
     const response = await handleFiatConfirm(values);
     if (response.ok) {
       setBtnDisabled(false);
@@ -398,6 +403,10 @@ const FaitWithdrawal = ({
   console.log(data)
   setAccountHolderDetails(data)
   AccountWallet(userConfig.id)
+  if(e !==data.name){
+    form.setFieldsValue({currencyCode:" "})
+    setAccountDetails(null)
+  }
  }
 const AccountWallet=async(AccountId)=>{
   debugger
@@ -427,7 +436,10 @@ const AccountBankDetails=async(payeeId,currency)=>{
   
 }
 const handleDetails=(e)=>{
+  debugger
  console.log(e)
+ let data=bankDetails.filter((item)=>item.bankName==e)
+ setDetails(data)
 }
 
   const renderModalContent = () => {
@@ -520,8 +532,8 @@ const handleDetails=(e)=>{
                       placeholder="Select account holder"
                     >
                       {bankDetails?.map((item, idx) => (
-										<Option key={idx} value={item.currencyCode}>
-											{item.currencyCode}
+										<Option key={idx} value={item.bankName}>
+											{item.bankName}
 										</Option>
 									))}
                     </Select>
@@ -530,7 +542,7 @@ const handleDetails=(e)=>{
                 </div>}
                 {amountLoading && <Loader />}
 
-              {addressInfo &&
+              {details.length>0 &&
                 <div className="fiatdep-info">
 
                   <Form.Item
@@ -593,12 +605,12 @@ const handleDetails=(e)=>{
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     content="SIGNU"
                     component={Text}
-                    with={{ value: addressInfo.bankName }}
+                     with={{ value: details[0].bankName }}
 
                   />
                   <Translate
                     className="fw-200 text-white-50 fs-14"
-                    content="Bank_account_iban"
+                    content="Bank_account"
                     component={Text}
                   />
                   <Translate
@@ -611,7 +623,7 @@ const handleDetails=(e)=>{
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     content="SIGNU"
                     component={Text}
-                    with={{ value: addressInfo.accountNumber }}
+                     with={{ value: details[0].accountNumber }}
                   />
                   <Translate
                     className="fw-200 text-white-50 fs-14"
@@ -628,55 +640,48 @@ const handleDetails=(e)=>{
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     content="SIGNU"
                     component={Text}
-                    with={{ value: addressInfo.routingNumber }}
+                    with={{value: details[0].swiftCode }}
                   />
                   <Translate
                     className="fw-200 text-white-50 fs-14"
-                    content="Bank_address1"
+                    content="city"
                     component={Text}
                   />
                   <Translate
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                    content="SIGNU"
                     component={Text}
-                    with={{ value: addressInfo.bankAddress }}
+                    with={{ value: details[0].city }}
                   />
-                  <Translate
-                    content="Beneficiary_Details"
-                    component={Paragraph}
-                    className="mb-16 fs-14 text-aqua fw-500 text-upper"
-                  />
+                  
 
-                  <Translate
-                    className="fw-200 text-white-50 fs-14"
-                    content={
-                      userConfig?.isBusiness&&addressInfo.addressType !== "3rdparty"
-                        ? "company_name"
-                        : "Recipient_full_name"
-                    }
-                    component={Text}
-                  />
+                  
                   <Translate
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                    content="SIGNU"
                     component={Text}
                     with={{
-                      value: userConfig?.isBusiness&&addressInfo.addressType !== "3rdparty"
-                        ? userConfig?.businessName
-                        : addressInfo.beneficiaryAccountName
+                      value: details[0].state
                     }}
                   />
 
                   <Translate
                     className="fw-200 text-white-50 fs-14"
-                    content="Recipient_address1"
+                    content="Country"
                     component={Text}
                   />
                   <Translate
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                    content="SIGNU"
                     component={Text}
-                    with={{ value: addressInfo.beneficiaryAccountAddress }}
+                    with={{ value: details[0].country }}
+                  />
+                   <Translate
+                    className="fw-200 text-white-50 fs-14"
+                    content="zipcode"
+                    component={Text}
+                  />
+                  <Translate
+                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                    component={Text}
+                    with={{ value: details[0].zipCode }}
                   />
 
                   <Form.Item
