@@ -30,3 +30,21 @@ export const getSettingsLuData = () => {
 export const saveSettingsData = (obj) => {
     return apiClient.post(ApiControllers.accounts + "Settings", obj);
 }
+
+export const getAccountHolder=(accountId,type)=>{
+    return apiClient.get(ApiControllers.addressbook + `PayeeLu/${accountId}/${type}`);
+}
+
+export const getAccountWallet=(AccountId)=>{
+    return apiClient.get(ApiControllers.wallets + `Fiat/${AccountId}`);
+}
+
+export const getAccountBankDetails=(payeeId,currency)=>{
+    return apiClient.get(ApiControllers.addressbook + `PayeeLableLu/${payeeId}/${currency}`);
+}
+
+// https://tstapi.suissebase.io/api/v1/addressbook/PayeeLu/{accountId}/{type} Account holder names
+
+// https://tstapi.suissebase.io/api/v1/Wallets/Fiat/{AccountId}
+
+// https://tstapi.suissebase.io/api/v1/addressbook/PayeeLableLu/{payeeId}/{currency}

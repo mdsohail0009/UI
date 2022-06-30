@@ -19,7 +19,7 @@ import NumberFormat from "react-number-format";
 import {
   withdrawSave,
   getCountryStateLu,
-  getStateLookup
+  getStateLookup,getAccountHolder,getAccountWallet,getAccountBankDetails
 } from "../../api/apiServer";
 import success from "../../assets/images/success.png";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
@@ -81,7 +81,11 @@ const FaitWithdrawal = ({
   const useDivRef = React.useRef(null);
   const [addressShow, setAddressShow] = useState(true);
   const [amountLoading, setAmountLoading] = useState(false);
-  
+  const [accountHolder,setAccountHolder]=useState([])
+  const [accountCurrency,setAccountCurrency]=useState([])
+  const[accountHolderDetails,setAccountHolderDetails]=useState({})
+  const [accountDetails,setAccountDetails]=useState({})
+  const[bankDetails,setBankDetails]=useState({})
   const [addressObj, setAddressObj] = useState({
     bankName: null,
     accountNumber: null,
@@ -113,6 +117,8 @@ const FaitWithdrawal = ({
     getCountryLu();
     setLoading(false);
     fiatWithdrawTrack();
+    getAccountdetails()
+    
   }, []);
 
   const fiatWithdrawTrack = () => {
@@ -164,6 +170,8 @@ const FaitWithdrawal = ({
     }
 
   };
+
+ 
 
   const getAddressLu = async (obj, e) => {
     let selectedFiat = obj.currencyCode;
@@ -378,6 +386,47 @@ const FaitWithdrawal = ({
       return Promise.reject(apicalls.convertLocalLang('is_required'));
     }
   };
+  const getAccountdetails=async()=>{
+    debugger
+    let response=await getAccountHolder(userConfig.id,"Fiat")
+    console.log(response.data)
+    setAccountHolder(response.data)
+  }
+ const handleAccountChange=(e)=>{
+  debugger
+  let data=accountHolder.find((item)=>item.name==e)
+  console.log(data)
+  setAccountHolderDetails(data)
+  AccountWallet(userConfig.id)
+ }
+const AccountWallet=async(AccountId)=>{
+  debugger
+  let response=await getAccountWallet(AccountId)
+  if(response.ok){
+    console.log(response.data)
+    setAccountCurrency(response.data)
+  }
+  
+}
+const handleAccountWallet=(e)=>{
+  debugger
+ let data=accountCurrency.filter((item)=>item.currencyCode==e)
+ console.log(data)
+ setAccountDetails(data)
+ AccountBankDetails(accountHolderDetails.id,data[0].currencyCode)
+}
+
+const AccountBankDetails=async(payeeId,currency)=>{
+  debugger
+  let response=await getAccountBankDetails(payeeId,currency)
+  if(response.ok){
+    console.log(response.data)
+    setBankDetails(response.data)
+    //setAccountDetails(response.data)
+  }
+  
+}
+
 
   const renderModalContent = () => {
     const _types = {
@@ -410,22 +459,46 @@ const FaitWithdrawal = ({
               </div>
               <Form.Item
                 className="custom-forminput custom-label mb-24"
-                name="walletCode"
+                name="name"
+                label="Account Holder"
+              >
+                <Select
+                      className="cust-input mb-0 custom-search"
+                      dropdownClassName="select-drpdwn"
+                      onChange={(e) =>handleAccountChange(e)} 
+                      placeholder="Select account holder"
+                    >
+                      {accountHolder?.map((item, idx) => (
+										<Option key={idx} value={item.name}>
+											{item.name}
+										</Option>
+									))}
+                    </Select>
+              </Form.Item>
+              <Form.Item
+                className="custom-forminput custom-label mb-24"
+                name="currencyCode"
                 label={<Translate content="currency" component={Form.label} />}
               >
-                <WalletList
-                  valueFeild={"currencyCode"}
-                  selectedvalue={saveObj?.walletCode}
-                  placeholder={apicalls.convertLocalLang("SelectCurrency")}
-                  onWalletSelect={(e) => handleWalletSelection(e, true)}
-                />
+                <Select
+                      className="cust-input mb-0 custom-search"
+                      dropdownClassName="select-drpdwn"
+                      onChange={(e) =>handleAccountWallet(e)} 
+                      placeholder="Select account holder"
+                    >
+                      {accountCurrency?.map((item, idx) => (
+										<Option key={idx} value={item.currencyCode}>
+											{item.currencyCode}
+										</Option>
+									))}
+                    </Select>
               </Form.Item>
 
               {addressShow == false &&
                 <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="noaddress_msg" /></Text>
               }
 
-              {addressLu?.length > 1 &&
+              {accountDetails.length>0 &&
                 <div style={{ position: "relative" }}>
 
                   <Form.Item
