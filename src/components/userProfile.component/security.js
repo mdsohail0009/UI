@@ -321,11 +321,12 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
         <Form>
           <Row gutter={[16, 16]}>
             <Col md={4} xl={4} xxl={4}>
-              <div className="d-flex align-center mt-16">
-                <label className="custom-checkbox p-relative c-pointer">
+              <div className="d-flex align-center mt-16 ">
+                <label className="custom-checkbox p-relative">
                   <Input
                     name="check"
                     type="checkbox"
+                    className="c-pointer"
                     checked={factor}
                     onChange={(e) => handleInputChange(e, "factor")}
                   />
@@ -340,10 +341,11 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
             </Col>
             <Col md={5} xl={5} xxl={5}>
               <div className="d-flex align-center mt-16">
-                <label className="custom-checkbox p-relative c-pointer">
+                <label className="custom-checkbox p-relative">
                   <Input
                     name="check"
                     type="checkbox"
+                    className="c-pointer"
                     checked={phone}
                     onChange={(e) => handleInputChange(e, "phone")}
                   />
@@ -358,10 +360,11 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
             </Col>
             <Col md={5} xl={5} xxl={5}>
               <div className="d-flex align-center mt-16">
-                <label className="custom-checkbox p-relative c-pointer">
+                <label className="custom-checkbox p-relative">
                   <Input
                     name="check"
                     type="checkbox"
+                    className="c-pointer"
                     checked={email}
                     onChange={(e) => handleInputChange(e, "email")}
                   />
@@ -380,6 +383,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                   <Input
                     name="check"
                     type="checkbox"
+                    className="c-pointer"
                     checked={live}
                     onChange={(e) => handleInputChange(e, "live")}
                   />
