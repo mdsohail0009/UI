@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Translate from "react-translate-component";
-import { Typography, Button, message, Dropdown,Menu, Spin, Alert, Row, Col } from 'antd';
+import { Typography, Button, message, Dropdown,Menu, Spin, Alert, Row, Col ,Form} from 'antd';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import {
     EmailShareButton, EmailIcon,
@@ -36,7 +36,7 @@ class Referral extends Component {
     get shareMenu() {
         return <Menu className="share-adrs">
             <Menu.Item>
-                <WhatsappShareButton te url={this.state.referaldata?.referrallink||'---'} title={"Welcome to suissebase use this referral code to create an account "+(this.state.referaldata?.referralCode||'---') +(this.state.referaldata?.referralBusinesslink || '---') +". Click the below link to continue registration"} >
+                <WhatsappShareButton te url={this.state.referaldata?.referrallink||'---'} title={"Welcome to suissebase use this referral code to create an account "+(this.state.referaldata?.referralCode||'---') +" "+(this.state.referaldata?.referralBusinesslink || '---') +". Click the below link to continue registration"} >
                     <WhatsappIcon size={32} round={true} />
                 </WhatsappShareButton>
             </Menu.Item>
@@ -88,10 +88,11 @@ class Referral extends Component {
             showIcon
           />
         )}
+        
         <Spin spinning={this.state.isLoading}>
           <div className="box basic-info">
             <div className="box contact-info coin-bal">
-              <Text className="basicinfo mb-0">My Referral</Text>
+              <Text className="basicinfo mb-0" style={{ marginLeft: '-22px' }}>My Referral</Text>
               {/* <ul class="m-0 pl-0">
 						
 							<li className="fs-20 text-yellow c-pointer" onClick={()=>window.open(process.env.REACT_APP_PARTNER_UI_URL, "_blank")}>
@@ -102,6 +103,7 @@ class Referral extends Component {
                 htmlType="submit"
                 size="large"
                 className="pop-btn mb-36"
+                style={{marginRight:'-20px'}}
                 onClick={() =>
                   window.open(process.env.REACT_APP_PARTNER_UI_URL, "_blank")
                 }
@@ -110,7 +112,7 @@ class Referral extends Component {
               </Button>
             </div>
             <div className="crypto-address mt-12">
-              <Text className="mb-0 fw-400 text-secondary">Refferal code</Text>
+              <Text className="mb-0 fw-400 text-secondary">Referral code</Text>
               <div className="mb-0 fw-600 text-white-30 walletadrs">
                 {this.state.referaldata?.referralCode || "---"}
               </div>
@@ -127,7 +129,7 @@ class Referral extends Component {
             </div>
             <div className="crypto-address mt-12">
               <Text className="mb-0 fw-400 text-secondary">
-                Personal refferal link
+                Personal referral link
               </Text>
               <div className="mb-0 fw-600 text-white-30 walletadrs">
                 {this.state.referaldata?.referrallink || "---"}
@@ -145,7 +147,7 @@ class Referral extends Component {
             </div>
             <div className="crypto-address mt-12">
               <Text className="mb-0 fw-400 text-secondary">
-                Business refferal link
+                Business referral link
               </Text>
               <div className="mb-0 fw-600 text-white-30 walletadrs">
                 {this.state.referaldata?.referralBusinesslink || "---"}
@@ -173,6 +175,7 @@ class Referral extends Component {
             </Dropdown>
           </div>
         </Spin>
+        
       </>
     );
 	}
