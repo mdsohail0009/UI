@@ -688,7 +688,7 @@ const getCountry=async()=>{
                   >
                     <TextArea
                       placeholder="Address Line1"
-                      className="cust-input pt-16 text-left"
+                      className="cust-input text-left"
                       autoSize={{ minRows: 2, maxRows: 2 }}
                       maxLength={100}
                     ></TextArea>
@@ -711,7 +711,7 @@ const getCountry=async()=>{
                   >
                     <TextArea
                       placeholder="Address Line2"
-                      className="cust-input pt-16 text-left"
+                      className="cust-input text-left"
                       autoSize={{ minRows: 2, maxRows: 2 }}
                       maxLength={100}
                     ></TextArea>
