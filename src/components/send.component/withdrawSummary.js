@@ -193,11 +193,11 @@ class WithdrawSummary extends Component {
 		);
 		if (response.ok) {
 			this.setState({ ...this.state, verifyData: response.data });
-			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled)) {
+			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled || response.data.isLiveVerification)) {
 				this.setState({
 					...this.state,
 					errorMsg:
-						"Without Verifications you can't withdraw.Please select withdraw verifications from security section"
+						"Without verifications you can't withdraw.Please select withdraw verifications from security section"
 				});
 			}
 		} else {
@@ -412,6 +412,13 @@ class WithdrawSummary extends Component {
 			});
 			this.useDivRef.current.scrollIntoView(0, 0);
 		}
+		else if (!(this.state.verifyData.isEmailVerification || this.state.verifyData.isPhoneVerification || this.state.verifyData.twoFactorEnabled || this.state.verifyData.isLiveVerification)) {
+			this.setState({
+				...this.state,
+				errorMsg:
+					"Without verifications you can't withdraw.Please select withdraw verifications from security section"
+			});
+		}
 		else {
 
 			this.setState({ ...this.state, btnLoading: true })
@@ -457,7 +464,7 @@ class WithdrawSummary extends Component {
 			// 			"Without Verifications you can't withdraw. Please select withdraw verifications from security section", btnLoading: false
 			// 	});
 			// }
-			if (this.props.userProfile.isBusiness) {
+			if (this.props.userProfile.isBusiness||!this.state.verifyData?.isLiveVerification) {
 				let saveObj = this.props.sendReceive.withdrawCryptoObj;
 				let trackAuditLogData = this.props.trackAuditLogData;
 				trackAuditLogData.Action = "Save";
