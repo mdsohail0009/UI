@@ -182,8 +182,13 @@ const WithdrawalFiatSummary = ({
 	};
 
 	const saveWithdrwal = async (values) => {
+		if (!(verifyData.isEmailVerification || verifyData.isPhoneVerified || verifyData.twoFactorEnabled || verifyData.isLiveVerification)) {
+			setMsg(
+				"Without verifications you can't withdraw.Please select withdraw verifications from security section"
+			);
+			return;
+		}
 		setDisableSave(true);
-		
 		if (verifyData.isPhoneVerified) {
 			if (!isPhoneVerification) {
 				setDisableSave(false);
@@ -281,9 +286,9 @@ const WithdrawalFiatSummary = ({
 		let response = await apiCalls.getVerificationFields(userConfig.id);
 		if (response.ok) {
 			setVerifyData(response.data);
-			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled)) {
+			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled || response.data.isLiveVerification)) {
 				setMsg(
-					"Without Verifications you can't withdraw.Please select withdraw verifications from security section"
+					"Without verifications you can't withdraw.Please select withdraw verifications from security section"
 				);
 			}
 		} else {
