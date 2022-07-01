@@ -591,7 +591,8 @@ const getCountry=async()=>{
                       <AutoComplete style={{ width: 310 }}
                          onChange={(e) => handleChange(e)}
                       maxLength={20}className="cust-input"
-                      placeholder="Label Name">
+                      placeholder={favouriteDetails.favouriteName==null?"Label Name":"Label Name"}
+                      >
                         {PayeeLu.map((item, indx) => (
                           <Option key={indx} value={item.name}>
                             {item.name}
