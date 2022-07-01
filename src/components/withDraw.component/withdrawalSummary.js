@@ -288,12 +288,12 @@ const WithdrawalFiatSummary = ({
 			setVerifyData(response.data);
 			if (!(response.data.isEmailVerification || response.data.isPhoneVerification || response.data.twoFactorEnabled || response.data.isLiveVerification)) {
 				setMsg(
-					"Without verifications you can't withdraw.Please select withdraw verifications from security section"
+					"Without verifications you can't withdraw. Please select withdraw verifications from security section"
 				);
 			}
 		} else {
 			setMsg(
-				"Without verifications you can't withdraw.Please select withdraw verifications from security section"
+				"Without verifications you can't withdraw. Please select withdraw verifications from security section"
 			);
 		}
 	};
