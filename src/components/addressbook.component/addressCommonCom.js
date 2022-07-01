@@ -642,36 +642,7 @@ const getCountry=async()=>{
                     ></TextArea>
                   </Form.Item>
                 </Col>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                  <Form.Item
-                    className="custom-forminput custom-label mb-0"
-                    name="city"
-                    required
-                    rules={[{ required: true, message: 'is required' }]}
-                    label={<Translate content="City" component={Form.label} />}
-                  >
-                    <Input
-                      className="cust-input"
-                      maxLength="20"
-                      placeholder="City"
-                    />
-                  </Form.Item>
-                </Col>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                  <Form.Item
-                    className="custom-forminput custom-label mb-0"
-                    name="state"
-                    required
-                    rules={[{ required: true, message: 'is required' }]}
-                    label={<Translate content="State" component={Form.label} />}
-                  >
-                    <Input
-                      className="cust-input"
-                      maxLength="20"
-                      placeholder="State"
-                    />
-                  </Form.Item>
-                </Col>
+               
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                   <Form.Item
                     className="custom-forminput custom-label mb-0"
@@ -694,6 +665,36 @@ const getCountry=async()=>{
                                   </Option>
                                 ))}
                               </Select>
+                  </Form.Item>
+                </Col>
+                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                  <Form.Item
+                    className="custom-forminput custom-label mb-0"
+                    name="state"
+                    required
+                    rules={[{ required: true, message: 'is required' }]}
+                    label={<Translate content="State" component={Form.label} />}
+                  >
+                    <Input
+                      className="cust-input"
+                      maxLength="20"
+                      placeholder="State"
+                    />
+                  </Form.Item>
+                </Col>
+                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                  <Form.Item
+                    className="custom-forminput custom-label mb-0"
+                    name="city"
+                    required
+                    rules={[{ required: true, message: 'is required' }]}
+                    label={<Translate content="City" component={Form.label} />}
+                  >
+                    <Input
+                      className="cust-input"
+                      maxLength="20"
+                      placeholder="City"
+                    />
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -833,32 +834,7 @@ const getCountry=async()=>{
 							/>
 						</Form.Item>
 
-						{/* <div style={{ position: "relative" }}>
-							<Form.Item
-								className="custom-forminput mt-36 agree"
-								name="isAgree"
-								valuePropName="checked"
-								>
-								<Checkbox className="ant-custumcheck" />
-							</Form.Item>
-							<Translate
-								content="agree_to_suissebase"
-								with={{ link }}
-								component={Paragraph}
-								className="fs-14 text-white-30 ml-16 mb-4 mt-16"
-								style={{
-									index: 100,
-									position: "absolute",
-									width: "420px",
-									top: -20,
-									left: 30,
-									paddingBottom: "10px",
-									marginBottom: "10px",
-								}}
-							/>
-						
-							
-						</div> */}
+					
 
 						<div style={{ marginTop: "50px" }}>
 							<Button
@@ -989,36 +965,7 @@ const getCountry=async()=>{
                       
                      
 
-                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                          className="custom-forminput custom-label mb-0"
-                          name="payeeAccountCity"
-                          required
-                          rules={[{ required: true, message: 'is required' }]}
-                          label={<Translate content="City" component={Form.label} />}
-                        >
-                          <Input
-                            className="cust-input"
-                            maxLength="20"
-                            placeholder="City"
-                          />
-                        </Form.Item>
-                      </Col>
-                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                        <Form.Item
-                          className="custom-forminput custom-label mb-0"
-                          name="payeeAccountState"
-                          required
-                          rules={[{ required: true, message: 'is required' }]}
-                          label={<Translate content="State" component={Form.label} />}
-                        >
-                          <Input
-                            className="cust-input"
-                            maxLength="20"
-                            placeholder="State"
-                          />
-                        </Form.Item>
-                      </Col>
+                   
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
@@ -1041,6 +988,36 @@ const getCountry=async()=>{
                                   </Option>
                                 ))}
                               </Select>
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                          className="custom-forminput custom-label mb-0"
+                          name="payeeAccountState"
+                          required
+                          rules={[{ required: true, message: 'is required' }]}
+                          label={<Translate content="State" component={Form.label} />}
+                        >
+                          <Input
+                            className="cust-input"
+                            maxLength="20"
+                            placeholder="State"
+                          />
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                          className="custom-forminput custom-label mb-0"
+                          name="payeeAccountCity"
+                          required
+                          rules={[{ required: true, message: 'is required' }]}
+                          label={<Translate content="City" component={Form.label} />}
+                        >
+                          <Input
+                            className="cust-input"
+                            maxLength="20"
+                            placeholder="City"
+                          />
                         </Form.Item>
                       </Col>
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
