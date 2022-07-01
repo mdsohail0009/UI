@@ -153,15 +153,32 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
       bankDetailForm.setFieldsValue({label:" ",walletCode:" ",walletAddress:" "})
     }
     // else{
-    //   form.setFieldsValue({})
+    //   bankDetailForm.setFieldsValue({})
     // }
   };
   const handleOk = () => {
     setIsModalVisible(false);
   };
-
+  const handleCoinChange=(e)=>{
+    debugger
+    console.log(e)
+    let coinType = bankDetailForm.getFieldValue("walletCode");
+    if (coinType !==e) {
+      const validAddress = WAValidator.validate( coinType, "both");
+      if (!validAddress) {
+        return Promise.reject(
+          "Address is not Valid, please enter a valid address according to the coin selected"
+        );
+      } else {
+        return Promise.resolve();
+      }
+    } else {
+      return Promise.reject("Please select a coin first");
+    }
+    }
   
   const validateAddressType = (_, value) => {
+    debugger
 		if (value) {
 			let address = value.trim();
 			let coinType = bankDetailForm.getFieldValue("walletCode");
@@ -436,9 +453,7 @@ const handleBankChange=(e)=>{
       }
     }
   };
-  const handleCoinChange=(e)=>{
-  console.log(e)
-  }
+
   const selectCoin=async()=>{
    let response=await getCoinList("All");
    if(response.ok){
@@ -576,7 +591,8 @@ const getCountry=async()=>{
                       <AutoComplete 
                         // onChange={(e) => handleChange(e)}
                       maxLength={20}className="cust-input"
-                      placeholder="Label Name">
+                      placeholder={favouriteDetails.favouriteName==null?"Label Name":"Label Name"}
+                      >
                         {PayeeLu.map((item, indx) => (
                           <Option key={indx} value={item.name}>
                             {item.name}
@@ -829,15 +845,14 @@ const getCountry=async()=>{
                 <Modal
                   title={(props?.addressBookReducer?.cryptoTab == true)?"ADD CRYPTO ADDRESS":"Add New Bank"}
                   visible={isModalVisible}
-                  destroyOnClose={true}
                   onOk={handleOk}
                   width={800}
-                  onCancel={handleCancel}
+                  destroyOnClose={true}
                   closeIcon={
                     <Tooltip title="Close">
                       <span
                         className="icon md close-white c-pointer"
-                        onClick={() => setPreviewModal(false)}
+                        onClick={() => handleCancel()}
                       />
                     </Tooltip>
                     
@@ -878,7 +893,8 @@ const getCountry=async()=>{
 							<Input
 								className="cust-input mb-0"
 								maxLength="20"
-								placeholder={apiCalls.convertLocalLang("Enteraddresslabel")}
+                placeholder="Address Label"
+								//placeholder={apiCalls.convertLocalLang("Enteraddresslabel")}
 							/>
 						</Form.Item>
 						<Form.Item
@@ -894,7 +910,7 @@ const getCountry=async()=>{
 							
 							
               	<Select
-								placeholder={apiCalls.convertLocalLang("Selectcoin")}
+								 placeholder="Select Coin"
 								className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
 								dropdownClassName="select-drpdwn"
                 onChange={(e)=>handleCoinChange(e)}
@@ -920,7 +936,8 @@ const getCountry=async()=>{
 							<Input
 								className="cust-input mb-0"
 								maxLength="100"
-								placeholder={apiCalls.convertLocalLang("address")}
+                placeholder="Select Address"
+								// placeholder={apiCalls.convertLocalLang("address")}
 							/>
 						</Form.Item>
 
