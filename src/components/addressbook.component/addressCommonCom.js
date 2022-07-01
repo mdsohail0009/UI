@@ -368,7 +368,6 @@ const handleBankChange=(e)=>{
 
       if (response.ok) {
         setBtnDisabled(false);
-        setErrorMsg("");
         useDivRef.current.scrollIntoView();
         message.success({
           content: apiCalls.convertLocalLang("address_msg"),
@@ -549,8 +548,9 @@ const getCountry=async()=>{
                       <Translate content="favorite_name" component={Form.label} />
                     }
                   >
-                      <AutoComplete style={{ width: 310 }} className="cust-input"
+                      <AutoComplete style={{ width: 310 }}
                       //  onChange={(e) => handleChange(e)}
+                      maxLength={20}className="cust-input"
                       placeholder="Label Name">
                         {PayeeLu.map((item, indx) => (
                           <Option key={indx} value={item.name}>
@@ -652,19 +652,20 @@ const getCountry=async()=>{
                     label={<Translate content="Country" component={Form.label} />}
                   >
                    
-                    <Select
-                                placeholder="Country"
-                                className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
-                                dropdownClassName="select-drpdwn"
-                                onChange={(e) => handleCountry(e)}
-                                bordered={false}
-                              >
-                                {country.map((item, indx) => (
-                                  <Option key={indx} value={item.name}>
-                                    {item.name}
-                                  </Option>
-                                ))}
-                              </Select>
+                      <Select
+                        showSearch
+                        placeholder="Country"
+                        className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
+                        dropdownClassName="select-drpdwn"
+                        onChange={(e) => handleCountry(e)}
+                        bordered={false}
+                      >
+                        {country.map((item, indx) => (
+                          <Option key={indx} value={item.name}>
+                            {item.name}
+                          </Option>
+                        ))}
+                      </Select>
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -751,6 +752,7 @@ const getCountry=async()=>{
                         onClick={() => setPreviewModal(false)}
                       />
                     </Tooltip>
+                    
                   }
                   footer={
                     <div className="text-right mt-24">
