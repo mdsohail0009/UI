@@ -9,17 +9,19 @@ import Translate from "react-translate-component";
 import { connect } from "react-redux";
 import {
   favouriteNameCheck, getPayeeLu, getFavData, saveAddressBook, getBankDetails,
-  getBankDetailLu, uuidv4,getCoinList
+  getBankDetailLu, uuidv4,getCoinList,emailCheck
 } from "./api";
 import {getCountryStateLu} from "../../api/apiServer";
 import Loader from "../../Shared/loader";
 import apiCalls from "../../api/apiCalls";
-import { validateContentRule } from "../../utils/custom.validator";
+import apicalls from "../../api/apiCalls";
 import { Link } from "react-router-dom";
 import { bytesToSize } from "../../utils/service";
+import { validateContentRule } from "../../utils/custom.validator";
 import { addressTabUpdate,fetchAddressCrypto,setAddressStep } from "../../reducers/addressBookReducer";
 import FilePreviewer from "react-file-previewer";
 import WAValidator from "multicoin-address-validator";
+import NumberFormat from "react-number-format";
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
@@ -54,6 +56,7 @@ const AddressCommonCom = (props) => {
   const [errorMsg, setErrorMsg] = useState(null);
   const [errorWarning, setErrorWarning] = useState(null);
   const [isEdit, setEdit] = useState(false);
+  const [emailExist, setEmailExist] = useState(false);
   const [uploadAdress, setUploadAddress] = useState(false);
   const [uploadIdentity, setUploadIdentity] = useState(false);
   const [addressState, setAddressState] = useState(null);
@@ -117,9 +120,13 @@ const [favouriteDetails,setFavouriteDetails]=useState({})
       });
     }
 
-
+if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-000000000000" && props?.addressBookReducer?.selectedRowData?.id){
+  setEdit(true)
+}
     if (props?.addressBookReducer?.selectedRowData?.id) {
+      
       getFavs(props?.addressBookReducer?.selectedRowData?.id, props?.userConfig?.id)
+      
     } else {
       getFavs("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
     }
@@ -140,7 +147,14 @@ const [favouriteDetails,setFavouriteDetails]=useState({})
   const withdraeTab = props?.addressBookReducer?.cryptoTab == true ? "Crypto" : "Fiat"
 
   const showModal = () => {
+    debugger
     setIsModalVisible(true);
+    if(props?.addressBookReducer?.cryptoTab == true){
+      form.setFieldsValue({label:" ",walletCode:" ",walletAddress:" "})
+    }
+    // else{
+    //   form.setFieldsValue({})
+    // }
   };
   const handleOk = () => {
     setIsModalVisible(false);
@@ -189,6 +203,9 @@ const [favouriteDetails,setFavouriteDetails]=useState({})
           ? props?.userConfig.businessName
           : props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
         bankType: "bank",
+        fullName:props?.userConfig.firstName+props?.userConfig.lastName,
+        phoneNumber:props?.userConfig.phoneNo,
+        email:props?.userConfig.email
       });
       setBankType("bank");
       setSelectParty(false);
@@ -440,6 +457,7 @@ const getCountry=async()=>{
   setCountry(response.data)
  }
 }
+
   const antIcon = (
     <LoadingOutlined
       style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
@@ -547,9 +565,16 @@ const getCountry=async()=>{
                     label={
                       <Translate content="favorite_name" component={Form.label} />
                     }
+                    required
+                    rules={[{ required: true, message: 'is required' },{
+                      whitespace: true,
+                   },
+                   {
+                     validator: validateContentRule
+                   },]}
                   >
                       <AutoComplete style={{ width: 310 }}
-                      //  onChange={(e) => handleChange(e)}
+                        // onChange={(e) => handleChange(e)}
                       maxLength={20}className="cust-input"
                       placeholder="Label Name">
                         {PayeeLu.map((item, indx) => (
@@ -566,7 +591,12 @@ const getCountry=async()=>{
                     className="custom-forminput custom-label mb-0"
                     name="fullName"
                     required
-                    rules={[{ required: true, message: 'is required' }]}
+                    rules={[{ required: true, message: 'is required' },{
+                      whitespace: true,
+                   },
+                   {
+                     validator: validateContentRule
+                   },]}
                     label={
                       <Translate content="Fait_Name" component={Form.label} />
                     }
@@ -578,18 +608,29 @@ const getCountry=async()=>{
                     />
                   </Form.Item>
                 </Col>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                  <Form.Item
-                    className="custom-forminput custom-label mb-0"
-                    name="email"
-                    label={<Translate content="email" component={Form.label} />}
-                  >
-                    <Input
-                      className="cust-input"
-                      maxLength="20"
-                      placeholder="Email"
-                    />
-                  </Form.Item>
+                 <Col xs={24} sm={24} md={12} lg={8} xxl={6}>
+                    <Form.Item
+                        name="email"
+                        label="Email"
+                        className="input-label"
+                        type='email'
+                        rules={[
+                            { required: true, message: "Is required" },
+                            {
+                                validator(_, value) {
+                                    if (emailExist) {
+                                        return Promise.reject("Email already exist");
+                                    } else if (value && !(/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,15}(?:\.[a-z]{2})?)$/.test(value))) {
+                                        return Promise.reject("Enter valid email");
+                                    }
+                                    else {
+                                        return Promise.resolve();
+                                    }
+                                },
+                            },
+                        ]}>
+                        <Input  placeholder="Email" className="cust-input" maxLength={100} />
+                    </Form.Item>
                 </Col>
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                   <Form.Item
@@ -599,11 +640,19 @@ const getCountry=async()=>{
                       <Translate content="Phone_No" component={Form.label} />
                     }
                   >
-                    <Input
+                    {/* <Input
                       className="cust-input"
                       maxLength="20"
                       placeholder="Phone Number"
-                    />
+                    /> */}
+                      <NumberFormat
+                        className="cust-input value-field"
+                        customInput={Input}
+                        prefix={""}
+                        placeholder="Phone Number"
+                        allowNegative={false}
+                        maxlength={14}
+                      />
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -611,7 +660,12 @@ const getCountry=async()=>{
                     className="custom-forminput custom-label mb-0"
                     name="line1"
                     required
-                    rules={[{ required: true, message: 'is required' }]}
+                    rules={[{ required: true, message: 'is required' },{
+                      whitespace: true,
+                   },
+                   {
+                     validator: validateContentRule
+                   },]}
                     label={
                       <Translate content="Address_Line1" component={Form.label} />
                     }
@@ -629,7 +683,12 @@ const getCountry=async()=>{
                     className="custom-forminput custom-label mb-0"
                     name="line2"
                     required
-                    rules={[{ required: true, message: 'is required' }]}
+                    rules={[{ required: true, message: 'is required' },{
+                      whitespace: true,
+                   },
+                   {
+                     validator: validateContentRule
+                   },]}
                     label={
                       <Translate content="Address_Line2" component={Form.label} />
                     }
@@ -648,7 +707,12 @@ const getCountry=async()=>{
                     className="custom-forminput custom-label mb-0"
                     name="country"
                     required
-                    rules={[{ required: true, message: 'is required' }]}
+                    rules={[{ required: true, message: 'is required' },{
+                      whitespace: true,
+                   },
+                   {
+                     validator: validateContentRule
+                   },]}
                     label={<Translate content="Country" component={Form.label} />}
                   >
                    
@@ -673,7 +737,12 @@ const getCountry=async()=>{
                     className="custom-forminput custom-label mb-0"
                     name="state"
                     required
-                    rules={[{ required: true, message: 'is required' }]}
+                    rules={[{ required: true, message: 'is required' },{
+                      whitespace: true,
+                   },
+                   {
+                     validator: validateContentRule
+                   },]}
                     label={<Translate content="State" component={Form.label} />}
                   >
                     <Input
@@ -688,7 +757,12 @@ const getCountry=async()=>{
                     className="custom-forminput custom-label mb-0"
                     name="city"
                     required
-                    rules={[{ required: true, message: 'is required' }]}
+                    rules={[{ required: true, message: 'is required' },{
+                      whitespace: true,
+                   },
+                   {
+                     validator: validateContentRule
+                   },]}
                     label={<Translate content="City" component={Form.label} />}
                   >
                     <Input
@@ -703,16 +777,25 @@ const getCountry=async()=>{
                     className="custom-forminput custom-label mb-0"
                     name="postalCode"
                     required
-                    rules={[{ required: true, message: 'is required' }]}
+                    rules={[{ required: true, message: 'is required' },{
+                      whitespace: true,
+                   },
+                   {
+                     validator: validateContentRule
+                   },]}
                     label={
                       <Translate content="Post_code" component={Form.label} />
                     }
+                   
                   >
-                    <Input
-                      className="cust-input"
-                      maxLength="20"
-                      placeholder="Post code"
-                    />
+                    <NumberFormat
+                        className="cust-input value-field"
+                        customInput={Input}
+                        prefix={""}
+                        placeholder="Post code"
+                        allowNegative={false}
+                        maxlength={14}
+                      />
                   </Form.Item>
                 </Col>
               </Row>
@@ -742,6 +825,7 @@ const getCountry=async()=>{
                 <Modal
                   title={(props?.addressBookReducer?.cryptoTab == true)?"ADD CRYPTO ADDRESS":"Add New Bank"}
                   visible={isModalVisible}
+                  destroyOnClose={true}
                   onOk={handleOk}
                   width={800}
                   onCancel={handleCancel}
@@ -1105,6 +1189,7 @@ const getCountry=async()=>{
                             title={<Translate content="edit" />}>
                             <Link className="icon md edit-icon mr-0 fs-30"></Link>
                           </Tooltip></div>
+                          
                           <div onClick={() => handleDelete(item)} ><Tooltip
                             placement="topRight"
                             style={{ fontSize: "23px", marginRight: "10px" }}
@@ -1122,30 +1207,33 @@ const getCountry=async()=>{
                 }
               })}
               <div style={{ position: "relative" }}>
+                
                 <Form.Item
-                  className="custom-forminput mt-36 agree"
-                  name="isAgree"
-                  valuePropName="checked"
-                  required
-                  rules={[{ required: true, message: 'Please select checkbox!' }]}
-                >
-                  <Checkbox className="ant-custumcheck" />
-                </Form.Item>
-                <Translate
-                  content="agree_to_suissebase"
-                  with={{ link }}
-                  component={Paragraph}
-                  className="fs-14 text-white-30 ml-16 mb-4 mt-16"
-                  style={{
-                    index: 50,
-                    position: "absolute",
-                    width: "600px",
-                    top: -10,
-                    left: 30,
-                    paddingBottom: "10px",
-                    marginBottom: "10px",
-                  }}
-                />
+                    className="custom-forminput mb-36 agree"
+                    name="isAgree"
+                    valuePropName="checked"
+                    required
+                    rules={[
+                      {
+                        validator: (_, value) =>
+                          value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice')
+                          )),
+                      },
+                    ]}
+                  >
+                    <span className="d-flex">
+                      <Checkbox className="ant-custumcheck" />
+                      <span className="withdraw-check"></span>
+                      <Translate
+                        content="agree_to_suissebase"
+                        with={{ link }}
+                        component={Paragraph}
+                        className="fs-14 text-white-30 ml-16 mb-0 mt-4"
+                        style={{ flex: 1 }}
+                      />
+                    </span>
+                  </Form.Item>
+                
               </div>
 
               <Form.Item className="text-center">

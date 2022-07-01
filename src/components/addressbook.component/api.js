@@ -109,9 +109,16 @@ const getViewData = (payeeId,membershipId) => {
         ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${membershipId}`
     );
 };
-
+const emailCheck = (email,type) => {
+    if(type=='user'){
+        return apiClient.get(ApiControllers.accounts + 'IsExist/'+email+'/UserName');
+    }else{
+        return apiClient.get(ApiControllers.accounts +'IsExist/'+email+'/Email');
+    }
+}
 
 export {
+	emailCheck,
 	getPayeeLu,
 	getViewData,
 	getBankDetails,

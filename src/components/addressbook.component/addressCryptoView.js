@@ -68,7 +68,10 @@ const AddressCryptoView = (props) => {
 												<div>
 													<label className="kpi-label">Favorite Name</label>
 													<div className=" kpi-val">
-														{cryptoAddress?.favouriteName}
+														{cryptoAddress?.favouriteName === " " ||
+																		cryptoAddress?.favouriteName === null
+																		? "-"
+																		: cryptoAddress?.favouriteName}
 													</div>
 												</div>
 											</Col>
@@ -77,7 +80,10 @@ const AddressCryptoView = (props) => {
 												<div>
 													<label className="kpi-label">Name</label>
 													<div className=" kpi-val">
-														{cryptoAddress?.fullName}
+														{cryptoAddress?.fullName === " " ||
+																		cryptoAddress?.fullName === null
+																		? "-"
+																		: cryptoAddress?.fullName}
 													</div>
 												</div>
 											</Col>
@@ -86,7 +92,10 @@ const AddressCryptoView = (props) => {
 													<label className="kpi-label">Email</label>
 													<div className="kpi-val">
 														<div className=" kpi-val">
-															{cryptoAddress?.email}
+															{cryptoAddress?.email === " " ||
+																		cryptoAddress?.email === null
+																		? "-"
+																		: cryptoAddress?.email}
 														</div>
 													</div>
 												</div>
@@ -94,8 +103,11 @@ const AddressCryptoView = (props) => {
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Phone Number</label>
-													{ <div className=" kpi-val">{cryptoAddress?.phoneNumber}
-											
+													{ <div className=" kpi-val">
+													{cryptoAddress?.phoneNumber === " " ||
+																		cryptoAddress?.phoneNumber === null
+																		? "-"
+																		: cryptoAddress?.phoneNumber}
 													
 													</div> }
 												</div>
@@ -107,21 +119,32 @@ const AddressCryptoView = (props) => {
 													Address Line1
 													</label>
 													{ <div className=" kpi-val">
-														{cryptoAddress?.line1}
+														{cryptoAddress?.line1 === " " ||
+																		cryptoAddress?.line1 === null
+																		? "-"
+																		: cryptoAddress?.line1}
 													</div> }
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Address Line2</label>
-													{ <div className="kpi-val">{cryptoAddress?.line2}</div> }
+													{ <div className="kpi-val">
+													{cryptoAddress?.line2 === " " ||
+																		cryptoAddress?.line2 === null
+																		? "-"
+																		: cryptoAddress?.line2}
+													</div> }
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">City</label>
 													<div className="kpi-val">
-														{cryptoAddress?.city}
+														{cryptoAddress?.city === " " ||
+																		cryptoAddress?.city === null
+																		? "-"
+																		: cryptoAddress?.city}
 													</div>
 												</div>
 											</Col>
@@ -132,8 +155,11 @@ const AddressCryptoView = (props) => {
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">State</label>
-													<div className=" kpi-val">{cryptoAddress?.state}
-														
+													<div className=" kpi-val">
+													{cryptoAddress?.state === " " ||
+																		cryptoAddress?.state === null
+																		? "-"
+																		: cryptoAddress?.state}
 													</div>
 												</div>
 											</Col>
@@ -141,7 +167,10 @@ const AddressCryptoView = (props) => {
 												<div>
 													<label className="kpi-label">Country</label>
 													<div className="kpi-val">
-														{cryptoAddress?.country}
+														{cryptoAddress?.country === " " ||
+																		cryptoAddress?.country === null
+																		? "-"
+																		: cryptoAddress?.country}
 													</div>
 												</div>
 											</Col>
@@ -150,7 +179,10 @@ const AddressCryptoView = (props) => {
 													<div>
 														<label className="kpi-label">Post code</label>
 														<div className="kpi-val">
-															{cryptoAddress?.postalCode}
+															{cryptoAddress?.postalCode === " " ||
+																		cryptoAddress?.postalCode === null
+																		? "-"
+																		: cryptoAddress?.postalCode}
 														</div>
 													</div>
 												</Col>
@@ -173,23 +205,32 @@ const AddressCryptoView = (props) => {
 																	Address Lable
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																	{item.lable}
+																	{item.label === " " ||
+																		item.label === null
+																		? "-"
+																		: item.label}
 																</Title>
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
-																	Wallet Code
+																	Coin
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																	{item.walletCode}
+																	{item.walletCode === " " ||
+																		item.walletCode === null
+																		? "-"
+																		: item.walletCode}
 																</Title>
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
-																	Wallet Address 
+																	 Address 
 																</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																{item.walletAddress}
+																{item.walletAddress === " " ||
+																		item.walletAddress === null
+																		? "-"
+																		: item.walletAddress}
 															</Title>
 														</Col>
 														
