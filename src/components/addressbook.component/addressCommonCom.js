@@ -150,7 +150,7 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
     debugger
     setIsModalVisible(true);
     if(props?.addressBookReducer?.cryptoTab == true){
-      form.setFieldsValue({label:" ",walletCode:" ",walletAddress:" "})
+      bankDetailForm.setFieldsValue({label:" ",walletCode:" ",walletAddress:" "})
     }
     // else{
     //   form.setFieldsValue({})
@@ -163,7 +163,7 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
   
   const validateAddressType = (_, value) => {
 		if (value) {
-			let address = value;
+			let address = value.trim();
 			let coinType = bankDetailForm.getFieldValue("walletCode");
 			if (coinType) {
 				const validAddress = WAValidator.validate(address, coinType, "both");
