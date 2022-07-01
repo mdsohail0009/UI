@@ -415,7 +415,7 @@ const FaitWithdrawal = ({
               >
                 <WalletList
                   valueFeild={"currencyCode"}
-                  selectedvalue={saveObj?.walletCode}
+                 // selectedvalue={saveObj?.walletCode}
                   placeholder={apicalls.convertLocalLang("SelectCurrency")}
                   onWalletSelect={(e) => handleWalletSelection(e, true)}
                 />
