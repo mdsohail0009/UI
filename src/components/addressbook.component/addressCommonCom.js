@@ -558,7 +558,7 @@ const getCountry=async()=>{
                 className="mb-16 fs-14 text-aqua fw-500 text-upper"
               />
               <Row gutter={[16, 16]}>
-                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+              <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                   <Form.Item
                     className="custom-forminput custom-label mb-0"
                     name="favouriteName"
@@ -573,7 +573,7 @@ const getCountry=async()=>{
                      validator: validateContentRule
                    },]}
                   >
-                      <AutoComplete style={{ width: 310 }}
+                      <AutoComplete 
                         // onChange={(e) => handleChange(e)}
                       maxLength={20}className="cust-input"
                       placeholder="Label Name">
@@ -608,7 +608,7 @@ const getCountry=async()=>{
                     />
                   </Form.Item>
                 </Col>
-                 <Col xs={24} sm={24} md={12} lg={8} xxl={6}>
+                 <Col xs={24} sm={24} md={12} lg={12} xxl={12}>
                     <Form.Item
                         name="email"
                         label="Email"
@@ -802,24 +802,28 @@ const getCountry=async()=>{
 
               <Row gutter={[16, 16]} >
 
+                
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                  <div className="d-flex" style={{ marginTop: "10px", marginLeft: "10px" }}  >
                     <Translate
                       content={props?.addressBookReducer?.cryptoTab == true?"cryptoAddressDetails":"Bank_Details"}
                       component={Paragraph}
-                      style={{width:"400px"}}
+                      // style={{width:"400px"}}
                       className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
                     />
+                  </Col>
+                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                    
                     <Button
                       onClick={showModal}
-                      style={{ position: "relative", left: "8.3cm", height: "40px" }}
+                      style={{height: "40px" }}
                       className="pop-btn mb-36 mt-24"
                     >
                       
                       {props?.addressBookReducer?.cryptoTab == true?"ADD CRYPTO ADDRESS":"Add New Bank"}
-                       <span className="icon md add-icon ml-8"></span>
+                       <span className="icon md add-icon-black ml-8"></span>
                     </Button>
-                  </div>
+                    
+                 
                 </Col>
 
                 <Modal
@@ -1157,7 +1161,7 @@ const getCountry=async()=>{
                     {(props?.addressBookReducer?.cryptoTab == true)?
                       <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                       <Row>
-                        <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>
+                        <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "20px",marginLeft: "20px" }}>
                           {item.label}{","}{" "}
                           {item.walletCode}{","}{" "}
                           {item.walletAddress}</label></Col>
@@ -1172,7 +1176,7 @@ const getCountry=async()=>{
 
                         </Row>
                         <Row>
-                          <label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>
+                          <label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px"}}>
                             {item.payeeAccountCity}{","}{" "}
                             {item.payeeAccountState}{","}{" "}
                             {item.payeeAccountPostalCode}</label>
@@ -1183,14 +1187,14 @@ const getCountry=async()=>{
 
                       <Col xs={4} sm={4} md={4} lg={4} xxl={4}>
                         <div className="d-flex align-center " style={{ marginTop: "22px", left: "5cm", width: "100%", top: "15px", justifyContent: "center" }}>
-                          <div onClick={() => handleshowModal(item)}><Tooltip
+                          <div className="ml-12 mr-12" onClick={() => handleshowModal(item)}><Tooltip
                             placement="topRight"
                             style={{ fontSize: "23px", marginRight: "20px" }}
                             title={<Translate content="edit" />}>
                             <Link className="icon md edit-icon mr-0 fs-30"></Link>
                           </Tooltip></div>
                           
-                          <div onClick={() => handleDelete(item)} ><Tooltip
+                          <div className="ml-12 mr-12" onClick={() => handleDelete(item)} ><Tooltip
                             placement="topRight"
                             style={{ fontSize: "23px", marginRight: "10px" }}
                             title={<Translate content="delete" />}>
