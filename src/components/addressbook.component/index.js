@@ -107,7 +107,7 @@ class AddressBook extends Component {
 		},
 		{
 			field: "favouriteName",
-			title: apiCalls.convertLocalLang("AddressLabel"),
+			title: "Bank Label",
 			filter: true,
 			width: 300,
 			customCell: (props) => (
@@ -121,6 +121,7 @@ class AddressBook extends Component {
 				</td>
 			),
 		},
+	
 		{
 			field: "currency",
 			title: apiCalls.convertLocalLang("currency"),
@@ -147,27 +148,27 @@ class AddressBook extends Component {
 			width: 200,
 		},
 		{
-			field: "bankAddress",
+			field: "line1",
 			title: apiCalls.convertLocalLang("Bank_address1"),
 			filter: true,
 			width: 250,
 		},
-		{
-			field: "beneficiaryAccountName",
-			title:
-				(this.props?.userConfig?.isBusiness &&
-					apiCalls.convertLocalLang("Recipient_Business_name")) ||
-				(!this.props?.userConfig?.isBusiness &&
-					apiCalls.convertLocalLang("Recipient_full_name")),
-			filter: true,
-			width: 300,
-		},
-		{
-			field: "beneficiaryAccountAddress",
-			title: apiCalls.convertLocalLang("Recipient_address1"),
-			filter: true,
-			width: 250,
-		},
+		// {
+		// 	field: "beneficiaryAccountName",
+		// 	title:
+		// 		(this.props?.userConfig?.isBusiness &&
+		// 			apiCalls.convertLocalLang("Recipient_Business_name")) ||
+		// 		(!this.props?.userConfig?.isBusiness &&
+		// 			apiCalls.convertLocalLang("Recipient_full_name")),
+		// 	filter: true,
+		// 	width: 300,
+		// },
+		// {
+		// 	field: "beneficiaryAccountAddress",
+		// 	title: apiCalls.convertLocalLang("Recipient_address1"),
+		// 	filter: true,
+		// 	width: 250,
+		// },
 		{
 			field: "addressState",
 			title: apiCalls.convertLocalLang("addressState"),
@@ -337,6 +338,7 @@ class AddressBook extends Component {
 		this.props.history.push(`/addressCryptoView/${dataItem.id}`);
 	};
 	handleInputChange = (prop, e) => {
+		
 		this.setState({ ...this.state, errorWorning: null });
 		const rowObj = prop.dataItem;
 		const value =
@@ -345,7 +347,7 @@ class AddressBook extends Component {
 				: e.currentTarget.value;
 		const name = e.currentTarget.name;
 		let { selection } = this.state;
-		let idx = selection.indexOf(rowObj.id);
+		let idx = selection.indexOf(rowObj.payeeAccountId);
 		if (selection) {
 			selection = [];
 		}
