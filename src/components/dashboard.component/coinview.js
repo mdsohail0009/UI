@@ -170,11 +170,11 @@ class CoinView extends React.Component {
             this.loadCoinDetailData();
         }
         return <div className="main-container">
-            {this.state.loading ?(
+            {/* {this.state.loading ?(
                 <div className="text-center mt-16">
                 <Spin />
             </div>
-				):(
+				):( */}
             <>
             <div className="mb-36 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/cockpit" />{coinData?.name} ({coinData?.symbol.toUpperCase()})</div>
             <Row gutter={[24, 24]}>
@@ -298,7 +298,7 @@ class CoinView extends React.Component {
             <BuySell showDrawer={this.state.buyDrawer} onClose={() => this.closeDrawer()} />
             <SendReceive showDrawer={this.state.sendDrawer} onClose={() => this.closeDrawer()} />
             </>
-             )}  
+             {/* )}   */}
              </div >
     }
 }
