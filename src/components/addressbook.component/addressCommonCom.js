@@ -47,6 +47,7 @@ const AddressCommonCom = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [modalData, setModalData] = useState([])
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalDelete, setIsModalDelete] = useState(false);
   const [form] = Form.useForm();
   const [bankDetailForm] = Form.useForm();
   const useDivRef = React.useRef(null);
@@ -74,6 +75,7 @@ const AddressCommonCom = (props) => {
  const [bankChange,SetBankChange]=useState(null)
 const[coinDetails,setCoinDetails]=useState([])
 const [country,setCountry]=useState([])
+const [ibanValue,setIbanValue]=useState(null)
 const [favouriteDetails,setFavouriteDetails]=useState({})
   const handleshowModal = (item) => {
     debugger
@@ -201,6 +203,7 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
   const radioChangeHandler = (e) => {
     setErrorMsg(null);
     setErrorWarning(null);
@@ -239,9 +242,11 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
 
   const handleChange = (e) => {
     debugger
-    let data = PayeeLu.find(item => item.name === e)
-    // setFavouriteNameId(data.id)
-    getFavs(data.id, props?.userConfig?.id)
+   
+      let data = PayeeLu.find(item => item.name === e)
+    if(data.id !==" "){
+      getFavs(data.id, props?.userConfig?.id)
+    }
   }
   const payeeLuData = async () => {
     let response = await getPayeeLu(props?.userConfig?.id, withdraeTab);
@@ -263,6 +268,7 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
       let payeeObj = response.data.payeeAccountModels
       if (props?.addressBookReducer?.selectedRowData?.id) {
         setModalData(payeeObj)
+        form.setFieldsValue({isAgree:obj.isAgree})
       }
       setFavouriteDetails(obj)
       form.setFieldsValue(obj)
@@ -291,7 +297,7 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
       currencyType: withdraeTab,
       walletAddress: values.walletAddress,
       walletCode: values.walletCode,
-      accountNumber: values.accountNumber,
+      accountNumber: values.accountNumber||values.IBAN,
       bankType: values.bankType,
       swiftRouteBICNumber: null,
       swiftCode: values.swiftCode,
@@ -329,14 +335,22 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
     }
     setIsModalVisible(false);
   }
+  const handleDeleteModal=()=>{
+    setIsModalDelete(false)
+  }
   const handleDelete = (item) => {
-    for (let i in modalData) {
-      if (modalData[i].id == item.id) {
-        if (modalData[i].recordStatus == "Added") {
-          modalData.splice(i, 1)
-        } else { modalData[i].recordStatus = "Deleted" }
-      }
+    debugger
+    setIsModalDelete(true);
+    
+      for (let i in modalData) {
+        if (modalData[i].id == item.id) {
+          if (modalData[i].recordStatus == "Added") {
+            modalData.splice(i, 1)
+          } else { modalData[i].recordStatus = "Deleted" }
+        }
+      
     }
+    
 
   }
 const handleBankChange=(e)=>{
@@ -425,18 +439,22 @@ const handleBankChange=(e)=>{
   };
 
   const handleIban=(e)=>{
+    debugger
+    setIbanValue(e)
     getIbanData(e)
   }
 
   const getIbanData = async (Val) => {
-    bankDetailForm.setFieldsValue({
-      bankName: "",
-      bankAddress: "",
-      payeeAccountState: null,
-      payeeAccountCountry: null,
-      payeeAccountPostalCode: "",
-      swiftCode: "",
-    });
+    debugger
+      bankDetailForm.setFieldsValue({
+        bankName: "",
+        bankAddress: "",
+        payeeAccountState: null,
+        payeeAccountCountry: null,
+        payeeAccountPostalCode: "",
+        swiftCode: "",
+      });
+    
 
     if (Val && Val.length > 14) {
       let response = await apiCalls.getIBANData(Val);
@@ -568,12 +586,12 @@ const getCountry=async()=>{
               </Form.Item>
 
               <Translate
-                content={props?.addressBookReducer?.cryptoTab == true?"Beneficiary_Details":"Beneficiary_BankDetails"}
+                content="Beneficiary_Details"
                 component={Paragraph}
                 className="mb-16 fs-14 text-aqua fw-500 text-upper"
               />
               <Row gutter={[16, 16]}>
-              <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                   <Form.Item
                     className="custom-forminput custom-label mb-0"
                     name="favouriteName"
@@ -589,7 +607,7 @@ const getCountry=async()=>{
                    },]}
                   >
                       <AutoComplete 
-                        // onChange={(e) => handleChange(e)}
+                          onChange={(e) => handleChange(e)}
                       maxLength={20}className="cust-input"
                       placeholder={favouriteDetails.favouriteName==null?"Label Name":"Label Name"}
                       >
@@ -688,7 +706,7 @@ const getCountry=async()=>{
                   >
                     <TextArea
                       placeholder="Address Line1"
-                      className="cust-input text-left"
+                      className="cust-input  text-left"
                       autoSize={{ minRows: 2, maxRows: 2 }}
                       maxLength={100}
                     ></TextArea>
@@ -711,7 +729,7 @@ const getCountry=async()=>{
                   >
                     <TextArea
                       placeholder="Address Line2"
-                      className="cust-input text-left"
+                      className="cust-input  text-left"
                       autoSize={{ minRows: 2, maxRows: 2 }}
                       maxLength={100}
                     ></TextArea>
@@ -818,28 +836,24 @@ const getCountry=async()=>{
 
               <Row gutter={[16, 16]} >
 
-                
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                  <div className="d-flex" style={{ marginTop: "10px", marginLeft: "10px" }}  >
                     <Translate
-                      content={props?.addressBookReducer?.cryptoTab == true?"cryptoAddressDetails":"Bank_Details"}
+                      content={props?.addressBookReducer?.cryptoTab == true?"cryptoAddressDetails":"Beneficiary_BankDetails"}
                       component={Paragraph}
-                      // style={{width:"400px"}}
+                      style={{width:"400px"}}
                       className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
                     />
-                  </Col>
-                    <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                    
                     <Button
                       onClick={showModal}
-                      style={{height: "40px" }}
+                      style={{ position: "relative", left: "8.3cm", height: "40px" }}
                       className="pop-btn mb-36 mt-24"
                     >
-                      
-                      {props?.addressBookReducer?.cryptoTab == true?"ADD CRYPTO ADDRESS":"Add New Bank"}
-                       <span className="icon md add-icon-black ml-8"></span>
+                      Add bank details
+                      {/* {props?.addressBookReducer?.cryptoTab == true?"ADD CRYPTO ADDRESS":"Add bank details"} */}
+                       <span className="icon md add-icon ml-8"></span>
                     </Button>
-                    
-                 
+                  </div>
                 </Col>
 
                 <Modal
@@ -972,7 +986,6 @@ const getCountry=async()=>{
                         >
                           <Input
                             className="cust-input text-left"
-                            maxLength="20"
                             placeholder="Bank Label"
                           />
 
@@ -991,7 +1004,6 @@ const getCountry=async()=>{
                             defaultValue="All"
                             className="cust-input text-left "
                             dropdownClassName="select-drpdwn"
-                            showSearch
                             placeholder="Select Type"
                           >
                             <Option value="USD">USD</Option>
@@ -1008,14 +1020,13 @@ const getCountry=async()=>{
                           rules={[{ required: true, message: 'is required' }]}
                         >
                           <Select
-                            defaultValue="All"
+                            defaultValue="Bank Account"
                             className="cust-input text-left "
                             dropdownClassName="select-drpdwn"
-                            showSearch
                             placeholder="Select Type" 
                             onChange={(e) => handleBankChange(e)}
                           >
-                            <Option value="BANKTYPE">Bank Type </Option>
+                            <Option value="BANKTYPE">Bank Account</Option>
                             <Option value="IBAN">IBAN</Option>
                           </Select>
                         </Form.Item>
@@ -1025,32 +1036,42 @@ const getCountry=async()=>{
                           className="custom-forminput custom-label mb-0"
                           name={bankChange=="IBAN"?"IBAN":"accountNumber"}
                          
-                          label={ bankChange === "IBAN" ? "IBAN" :  "Bank Account Number" }
+                          label={ bankChange === "IBAN" ? "IBAN" :  "Bank Account Number / IBAN" }
                           required
                           rules={[{ required: true, message: 'is required' }]}
                            onBlur={(e) => handleIban(e.target.value)}
                          
                         >
-                          <Input
+                           <Input
                             className="cust-input text-left"
-                            maxLength="20"
-                            placeholder={ bankChange === "IBAN" ? "IBAN" :  "Bank Account Number" }
+                            placeholder="Bank Name"
                           />
+                           {/* <NumberFormat
+                        className="cust-input value-field"
+                        customInput={Input}
+                        prefix={""}
+                        placeholder={ bankChange === "IBAN" ? "IBAN" :  "Bank Account Number" }
+                        allowNegative={false}
+                        maxlength={14}
+                      /> */}
                         </Form.Item>
                       </Col>
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
                           name="swiftCode"
-                          label="SWIFI / BIC"
+                          label="BIC/SWIFT/Routing Number"
                           required
                           rules={[{ required: true, message: 'is required' }]}
                         >
-                          <Input
-                            className="cust-input text-left"
-                            maxLength="20"
-                            placeholder="SWIFI / BIC"
-                          />
+                          <NumberFormat
+                        className="cust-input value-field"
+                        customInput={Input}
+                        prefix={""}
+                        placeholder="SWIFI / BIC"
+                        allowNegative={false}
+                        maxlength={14}
+                      />
                         </Form.Item>
                       </Col>
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -1063,7 +1084,6 @@ const getCountry=async()=>{
                         >
                           <Input
                             className="cust-input text-left"
-                            maxLength="20"
                             placeholder="Bank Name"
                           />
                         </Form.Item>
@@ -1178,26 +1198,25 @@ const getCountry=async()=>{
                     {(props?.addressBookReducer?.cryptoTab == true)?
                       <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                       <Row>
-                        <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "20px",marginLeft: "20px" }}>
-                          {item.label}{","}{" "}
-                          {item.walletCode}{","}{" "}
-                          {item.walletAddress}</label></Col>
+                        <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>
+                          {item.currencyType}{","}{" "}
+                          {item.bankType}{","}{" "}
+                          {item.accountNumber}{","}{" "}
+                          {item.swiftCode}{","}{" "}
+                          {item.bankName}</label></Col>
                       </Row>
                 
                     </Col>:
                       <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                         <Row>
-                          <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>{item.bankName} {","}{" "}
-                            {bankChange=="IBAN"?item.routingNumber:item.accountNumber}{","}{" "}
-                            {item.swiftCode}{"(Swift Code)"}</label></Col>
-
-                        </Row>
-                        <Row>
-                          <label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px"}}>
-                            {item.payeeAccountCity}{","}{" "}
-                            {item.payeeAccountState}{","}{" "}
-                            {item.payeeAccountPostalCode}</label>
-                        </Row>
+                          <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>{item.currencyType} {","}{" "}
+                           {item.bankType}
+                            {item.accountNumber}{","}{" "}
+                            {item.swiftCode}{","}{" "}
+                            {item.bankName}
+                             </label> 
+                            </Col>
+                        </Row> 
                       </Col>
               }
                     
@@ -1211,7 +1230,7 @@ const getCountry=async()=>{
                             <Link className="icon md edit-icon mr-0 fs-30"></Link>
                           </Tooltip></div>
                           
-                          <div className="ml-12 mr-12" onClick={() => handleDelete(item)} ><Tooltip
+                          <div  className="ml-12 mr-12" onClick={() => handleDelete(item)} ><Tooltip
                             placement="topRight"
                             style={{ fontSize: "23px", marginRight: "10px" }}
                             title={<Translate content="delete" />}>
@@ -1227,9 +1246,54 @@ const getCountry=async()=>{
                   </Row>
                 }
               })}
+                <Modal
+                  title={
+                    "Confirm Activate?"
+                  }
+                  visible={isModalDelete}
+                  onOk={handleOk}
+                  width={400}
+                  destroyOnClose={true}
+                  closeIcon={
+                    <Tooltip title="Close">
+                      <span
+                        className="icon md close-white c-pointer"
+                        onClick={() => handleDeleteModal()}
+                      />
+                    </Tooltip>
+
+                  }
+                  footer={
+                    <>
+                      <Button
+                        className="pop-btn px-24"
+                        style={{ margin: "0 8px" }}
+                        onClick={() => handleDeleteModal()}>
+                        No
+                      </Button>
+                      <Button
+                        className="pop-btn px-24"
+                        style={{ margin: "0 8px" }}
+                        onClick={() => handleDeleteModal()}>
+                        yes
+                      </Button>
+                      
+                    </>
+                  }
+                >
+                  {/* {error != undefined && error != null && (
+                    <Alert type="error" className="mb-16" showIcon description={error} />
+                  )} */}
+                  <p className="fs-16 mb-0">
+                    Do you really want to Delete
+                    {/* {this.state.selectedObj?.status === "Active"
+                      ? "deactivate?"
+                      : "activate?"} */}
+                  </p>
+                </Modal>
               <div style={{ position: "relative" }}>
                 
-                <Form.Item
+                {/* <Form.Item
                     className="custom-forminput mb-36 agree"
                     name="isAgree"
                     valuePropName="checked"
@@ -1253,9 +1317,35 @@ const getCountry=async()=>{
                         style={{ flex: 1 }}
                       />
                     </span>
+                  </Form.Item> */}
+                  <div className="d-flex">
+                  <Form.Item
+                    className="custom-forminput mt-36 agree"
+                    name="isAgree"
+                    valuePropName="checked"
+                    required
+                  >
+                    <Checkbox className="ant-custumcheck" />
+                    
                   </Form.Item>
-                
-              </div>
+                  <Translate
+                    content="agree_to_suissebase"
+                    with={{ link }}
+                    component={Paragraph}
+                    className="fs-14 text-white-30 ml-16  mt-36"
+                    style={{
+                      index: 50,
+                      position: "absolute",
+                      width: "600px",
+                      top: 10,
+                      left: 30,
+                      paddingBottom: "10px",
+                      marginBottom: "10px",
+                    }}
+
+                  />
+                  </div>
+                </div>
 
               <Form.Item className="text-center">
                 <Button
