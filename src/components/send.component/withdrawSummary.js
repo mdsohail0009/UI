@@ -16,6 +16,7 @@ import {
 import apiCalls from "../../api/apiCalls";
 import { publishBalanceRfresh } from "../../utils/pubsub";
 import { Link } from "react-router-dom";
+import NumberFormat from "react-number-format";
 class WithdrawSummary extends Component {
 	state = {
 		onTermsChange: false,
@@ -76,7 +77,8 @@ class WithdrawSummary extends Component {
 		isEmailVerification: false,
 		isPhoneVerification: false,
 		isAuthenticatorVerification: false,
-		btnLoading: false
+		btnLoading: false,
+		agreeRed:true,
 	};
 
 	useDivRef = React.createRef();
@@ -347,7 +349,7 @@ class WithdrawSummary extends Component {
 	handleOtp = (val) => {
 		this.setState({
 			...this.state,
-			otp: val.code,
+			otp: val,
 			verifyOtpText: "verifyOtpBtn",
 			tooltipVisible: false,
 			buttonText: "",
@@ -396,7 +398,20 @@ class WithdrawSummary extends Component {
 		}
 	};
 	handleChange = (e) => {
-		this.setState({ ...this.state, otpCode: e.target.value });
+		if(e){
+			this.handleOtp(e)
+			this.setState({
+						...this.state,
+						otpCode: e,buttonText: "",
+						tooltipVisible: false,
+						verifyOtpText: "verifyOtpBtn",})
+		}else{
+			this.setState({
+				buttonText: "resendotp",
+				tooltipVisible: false,
+				verifyOtpText: null,
+			});
+		}
 	};
 	handleAuthenticator = (e) => {
 		this.setState({ ...this.state, authCode: e.target.value });
@@ -409,6 +424,7 @@ class WithdrawSummary extends Component {
 			this.setState({
 				...this.state,
 				errorMsg: apiCalls.convertLocalLang("agree_termsofservice"),
+				agreeRed:false,
 			});
 			this.useDivRef.current.scrollIntoView(0, 0);
 		}
@@ -421,7 +437,7 @@ class WithdrawSummary extends Component {
 		}
 		else {
 
-			this.setState({ ...this.state, btnLoading: true })
+			this.setState({ ...this.state, btnLoading: true,agreeRed:true })
 
 			if (this.state.verifyData.isPhoneVerified) {
 				if (!this.state.isPhoneVerification) {
@@ -530,7 +546,7 @@ class WithdrawSummary extends Component {
 
 	render() {
 		const { Paragraph, Text } = Typography;
-		const { seconds, disable, textDisable, seconds2 } = this.state;
+		const { seconds, disable, textDisable, seconds2,agreeRed } = this.state;
 		const link = <this.LinkValue content="terms_service" />;
 
 		const btnList = {
@@ -728,31 +744,18 @@ class WithdrawSummary extends Component {
 									rules={[{ required: true, message: "Is required" }]}
 								>
 									<div className="p-relative d-flex align-center">
-										<Input
-											type="text"
-											className="cust-input custom-add-select mb-0"
-											placeholder={"Enter code"}
-											maxLength={6}
+										<NumberFormat
+										customInput={Input}
+										thousandSeparator={false}
+										prefix={""}
+										decimalScale={0}
+										allowNegative={false}
+										className="cust-input custom-add-select mb-0"
+										placeholder={"Enter code"}
+										maxLength={6}
 											disabled={this.state.inputDisable}
-											onKeyDown={(event) => {
-												if (
-													event.currentTarget.value.length >= 6 &&
-													!(event.key == "Backspace" || event.key == "Delete")
-												) {
-													event.preventDefault();
-												} else if (/^\d+$/.test(event.key)) {
-													this.handleOtp(event.currentTarget.value);
-												} else if (
-													event.key == "Backspace" ||
-													event.key == "Delete"
-												) {
-												}
-												else {
-													event.preventDefault();
-												}
-											}}
 											style={{ width: "100%" }}
-											onChange={(e) => this.handleChange(e, "code")}
+											onValueChange={(e) => this.handleChange(e.value)}
 										/>
 										<div className="new-add c-pointer get-code text-yellow hy-align">
 											{!this.state.verifyTextotp && (
@@ -937,7 +940,7 @@ class WithdrawSummary extends Component {
 								required
 							>
 								<span className="d-flex">
-									<Checkbox className="ant-custumcheck" />
+								<Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red":" "}`} />
 									<span className="withdraw-check"></span>
 									<Translate
 										content="agree_to_suissebase"

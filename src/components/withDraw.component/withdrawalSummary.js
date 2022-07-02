@@ -14,6 +14,7 @@ import {
 	setWithdrawFinalRes,
 } from "../../reducers/sendreceiveReducer";
 import { LoadingOutlined } from "@ant-design/icons";
+import NumberFormat from "react-number-format";
 const WithdrawalFiatSummary = ({
 	sendReceive,
 	userConfig,
@@ -95,6 +96,12 @@ const WithdrawalFiatSummary = ({
 		verified: (
 			<Translate className="pl-0 ml-0 text-yellow-50" content="empty" />
 		),
+		verifyOtpBtn: (
+			<Translate
+				className={`pl-0 ml-0 text-yellow-50 `}
+				content="verify_button"
+			/>
+		)
 	};
 	const verifyOtp = {
 		verifyOtpBtn: (
@@ -293,7 +300,7 @@ const WithdrawalFiatSummary = ({
 			}
 		} else {
 			setMsg(
-				"Without verifications you can't withdraw. Please select withdraw verifications from security section"
+				"Without verifications you can't withdraw.Please select withdraw verifications from security section"
 			);
 		}
 	};
@@ -410,11 +417,19 @@ const WithdrawalFiatSummary = ({
 		}
 	};
 	const handleChange = (e) => {
-		setOtpCode(e.target.value);
+		if(e){
+			handleOtp(e)
+			setOtpCode(e)
+		}else{
+				setButtonText('resendotp');
+				setTooltipVisible(false);
+				setDisableSave(false);
+				setVerifyOtpText("");
+		}
 	};
 
 	const handleOtp = (val) => {
-		setOtp(val.code);
+		setOtp(val);
 		setVerifyOtpText("verifyOtpBtn");
 		setTooltipVisible(false);
 		setButtonText(null);
@@ -581,35 +596,21 @@ const WithdrawalFiatSummary = ({
 								
 								>
 									<div className="p-relative d-flex align-center">
-								<Input
-									type="text"
-									
-									className="cust-input custom-add-select mb-0"
-									placeholder={"Enter code"}
-									maxLength={6}
-									
-									onKeyDown={(event) => {
-										if (
-											event.currentTarget.value.length >= 6 &&
-											!(event.key == "Backspace" || event.key == "Delete")
-										) {
-											event.preventDefault();
-										} else if (/^\d+$/.test(event.key)) {
-											handleOtp(event.currentTarget.value);
-										} else if (
-											event.key == "Backspace" ||
-											event.key == "Delete"
-										) {
-										} else {
-											event.preventDefault();
-										}
-									}}
+								<NumberFormat
+											customInput={Input}
+											thousandSeparator={false}
+											prefix={""}
+											decimalScale={0}
+											allowNegative={false}
+											className="cust-input custom-add-select mb-0"
+											placeholder={"Enter code"}
+											maxLength={6}
 									style={{ width: "100%"  }}
-									onChange={(e) => handleChange(e)}
+									onValueChange={(e) => handleChange(e.value)}
 									disabled={inputDisable}
 								/>
 								<div className="new-add c-pointer get-code text-yellow hy-align">
-										{!verifyTextotp && (
+										{/* {!verifyTextotp && ( */}
 											<Button
 												type="text"
 												style={{color:"black"}}
@@ -618,7 +619,7 @@ const WithdrawalFiatSummary = ({
 												disabled={disable}>
 												{btnList[buttonText]}
 											</Button>
-										)}
+										{/* )} */}
 										{tooltipVisible === true && (
 											<Tooltip
 												placement="topRight"
