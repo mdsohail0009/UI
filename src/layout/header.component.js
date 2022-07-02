@@ -75,6 +75,7 @@ const LinkValue = (props) => {
   );
 };
 const { Title, Paragraph, Text } = Typography;
+const { Sider } = Layout;
 class Header extends Component {
   componentDidMount() {
     counterpart.setLocale(
@@ -256,7 +257,8 @@ class Header extends Component {
       transactionDrawer: false,
       notificationsDrawer: false,
       auditlogsDrawer: false,
-      Visibleprofilemenu: false
+      Visibleprofilemenu: false,
+      collapsed: true,
     };
     this.next = this.next.bind(this);
     this.previous = this.previous.bind(this);
@@ -269,7 +271,6 @@ class Header extends Component {
     if (this.props.oidc.user.profile?.sub) {
       this.props.getmemeberInfoa(this.props.oidc.user.profile.sub);
     }
-    // window.open(process.env.REACT_APP_ACCOUNT_UI_URL, "_blank")
   }
   next() {
     this.carousel.next();
@@ -306,7 +307,7 @@ class Header extends Component {
       this.props.dispatch(setStep("step1"));
       this.setState({
         buyDrawer: true,
-        Visibleprofilemenu: false
+        Visibleprofilemenu: false, collapsed: true,isShowSider: false
       });
     } else {
       const isKyc = !this.props.userConfig.isKYC;
@@ -317,7 +318,7 @@ class Header extends Component {
       }
       this.setState({
         ...this.state,
-        Visibleprofilemenu: false
+        Visibleprofilemenu: false, collapsed: false,isShowSider: false
       });
     }
   };
@@ -326,7 +327,7 @@ class Header extends Component {
       this.props.dispatch(sendSetStep("step1"));
       this.setState({
         sendDrawer: true,
-        Visibleprofilemenu: false
+        Visibleprofilemenu: false,collapsed:true, isShowSider:false
       });
     } else {
       const isKyc = !this.props.userConfig.isKYC;
@@ -337,14 +338,15 @@ class Header extends Component {
       }
       this.setState({
         ...this.state,
-        Visibleprofilemenu: false
+        Visibleprofilemenu: false,collapsed:true, isShowSider:false
       });
     }
   };
   showTransactionHistoryDrawer = () => {
     this.setState({
       transactionDrawer: true,
-      Visibleprofilemenu: false
+      Visibleprofilemenu: false,
+      collapsed: true, isShowSider: false
     });
   };
   showNotificationsDrawer = () => {
@@ -406,7 +408,7 @@ class Header extends Component {
       this.props.dispatch(setWithdrawfiatenaable(false));
       this.setState({
         buyFiatDrawer: true,
-        Visibleprofilemenu: false
+        Visibleprofilemenu: false, isShowSider:false, collapsed:true
       });
     } else {
       const isKyc = !this.props.userConfig.isKYC;
@@ -417,7 +419,7 @@ class Header extends Component {
       }
       this.setState({
         ...this.state,
-        Visibleprofilemenu: false
+        Visibleprofilemenu: false,isShowSider:false, collapsed:true
       });
     }
     this.props.dispatch(setdepositCurrency(null));
@@ -426,7 +428,7 @@ class Header extends Component {
   showWalletsDrawer = () => {
     this.setState({
       ...this.state,
-      walletsDrawer: true
+      walletsDrawer: true, collapsed: true,isShowSider: false
     });
   };
 
@@ -460,6 +462,7 @@ class Header extends Component {
       notificationsDrawer: false,
       auditlogsDrawer: false,
       Visibleprofilemenu: false,
+      isShowSider: false,
       transforDrawer:false
     });
   };
@@ -519,6 +522,7 @@ class Header extends Component {
         this.showDocRequestError();
       }
     }
+    this.setState({ ...this.state, collapsed: true, isShowSider: false })
   }
   newCard = () => {
     if (this.props.userConfig.isKYC && !this.props.userConfig.isDocsRequested && this.props.twoFA?.isEnabled)
@@ -542,6 +546,10 @@ class Header extends Component {
   routeToCockpit = () => {
     this.props.dispatch(setHeaderTab(''));
     this.props.userConfig.isKYC ? this.props.history.push("/cockpit") : this.props.history.push("/notkyc")
+    this.setState({...this.state,collapsed:true, isShowSider: false})
+  }
+  showToggle = () => {
+    this.setState({ ...this.state, collapsed: !this.state.collapsed, isShowSider: true })
   }
   render() {
     const link = <LinkValue content="medium" />;
@@ -717,7 +725,11 @@ class Header extends Component {
           <menuHeader className="tlv-header" id="area">
             <div className="login-user">
               <ul className="header-logo pl-0">
-                <li className="pr-30 p-relative">
+                <li className="visible-mobile pr-24 p-relative" onClick={this.showToggle}>
+                {this.state.collapsed ?
+                     <span className="icon lg hamburg " />:<span className="icon md close-white " /> }
+                </li>
+                <li className="mobile-logo ">
                   {
                     <img
                       src={logoWhite}
@@ -735,14 +747,15 @@ class Header extends Component {
                     />
                   }
                 </li>
-                <li className=" px-33" style={{ marginTop: "13px" }}>
+
+                <li className="mobile-user ml-8">
                   <Translate
                     content="header_title"
                     onClick={this.routeToCockpit}
                     component={Text}
-                    className="text-white-30 fs-16 c-pointer cp-link ml-8"
+                    className="text-white-30 fs-24 c-pointer cp-link mb-d-none"
                   />
-                  <Text className="text-white-30 fs-24">|</Text>
+                  <Text className="text-white-30 fs-24 ">|</Text>
                   <Translate
                     content="user_type"
                     with={{
@@ -751,7 +764,7 @@ class Header extends Component {
                         : "Personal"
                     }}
                     component={Text}
-                    className="text-white-30 fs-16 ml-16"
+                    className="text-white-30 fs-24 ml-16"
                   />
                 </li>
               </ul>
@@ -760,11 +773,20 @@ class Header extends Component {
                 mode="horizontal"
                 className="header-right mobile-header-right"
               >
-                <Menu.Item key="6">
+                <Menu.Item
+                  key="6"
+                  className="notification-conunt mr-8"
+                  onClick={this.showNotificationsDrawer}
+                >
                   <span
-                    className="icon md bell"
-                    onClick={this.showNotificationsDrawer}
-                  />
+                    className="icon md bell ml-4 p-relative"
+                    onClick={() => this.readNotification()}
+                  >
+                    {this.props.dashboard?.notificationCount != null &&
+                      this.props.dashboard?.notificationCount != 0 && (
+                        <span>{this.props.dashboard?.notificationCount}</span>
+                      )}
+                  </span>
                 </Menu.Item>
                 <Dropdown
                   overlay={userProfileMenu}
@@ -782,7 +804,7 @@ class Header extends Component {
                             ? this.props.userConfig?.imageURL
                             : DefaultUser
                         }
-                        className="user-profile"
+                        className="user-profile "
                         alt={"image"}
                       />
                     )}
@@ -810,14 +832,13 @@ class Header extends Component {
                 this.props.dispatch(setHeaderTab(key.key));
               }}
             >
-             {console.log(this.props.userConfig.isBusiness && process.env.REACT_APP_ISSHOWCARDS == "true")}
-              {console.log('process.env.REACT_APP_ISSHOWCARDS: '+process.env.REACT_APP_ISSHOWCARDS)}
               {this.props.userConfig.isBusiness && process.env.REACT_APP_ISSHOWCARDS == "true" && <Translate
                 content="cards"
                 component={Menu.Item}
                 key="8"
                 onClick={this.newCard}
                 className="list-item"
+                disabled={true}
               />
               }
               <Translate
@@ -848,7 +869,7 @@ class Header extends Component {
                 onClick={this.showSwapDrawer}
                 className="list-item"
               /> */}
-               <Translate
+                <Translate
                 content="menu_tranfor"
                 component={Menu.Item}
                 key="5"
@@ -870,7 +891,7 @@ class Header extends Component {
                   content="menu_send_receive"
                   component={Menu.Item}
                   key="6"
-                  className="mr-16"
+                  className="mr-16 list-item"
                 />
               </Dropdown>
 
@@ -947,8 +968,81 @@ class Header extends Component {
                 </Menu.Item>
               </Dropdown>
             </Menu>
+            {this.state.isShowSider && <Sider trigger={null}
+              collapsible
+              collapsed={this.state.collapsed}
+              collapsedWidth={0}
+              className={` ${this.state.collapsed ? '' : "sideropen"}`}>
+              <Menu
+                theme="light"
+                mode="vertical"
+                className="header-right"
+                selectedKeys={[this.props.buySell?.headerTab]}
+                onSelect={(key) => {
+                  this.props.dispatch(setHeaderTab(key.key));
+                }}
+              >
+                <Translate
+                  content="header_title"
+                  onClick={this.routeToCockpit}
+                  component={Menu.Item}
+                  className="list-item"
+                />
+                <Translate
+                  content="menu_payments"
+                  component={Menu.Item}
+                  key="1"
+                  onClick={this.showPayments}
+                  className="list-item"
+                />
+                <Translate
+                  content="menu_wallets"
+                  component={Menu.Item}
+                  key="2"
+                  onClick={this.showWalletsDrawer}
+                  className="list-item"
+                />
+                <Translate
+                  content="menu_buy_sell"
+                  component={Menu.Item}
+                  key="3"
+                  onClick={this.showBuyDrawer}
+                  className="list-item"
+                />
+                <Translate
+                  content="menu_send_receive"
+                  component={Menu.Item}
+                  key="4"
+                  className="mr-16 list-item" />
+                <Menu>
+                  <ul className="pl-0 drpdwn-list">
+                    <li onClick={this.showSendDrawer}>
+                      <Link>
+                        <Translate content="tab_crypto" conmponent={Text} />{" "}
+                        <span className="icon md rarrow-white" />
+                      </Link>
+                    </li>
+                    <li onClick={this.showBuyFiatDrawer}>
+                      <Link>
+                        <Translate content="tab_fiat" conmponent={Text} />{" "}
+                        <span className="icon md rarrow-white" />
+                      </Link>
+                    </li>
+                  </ul>
+                </Menu>
+
+                <Translate
+                  content="menu_transactions_history"
+                  component={Menu.Item}
+                  key="6"
+                  onClick={this.showTransactionHistoryDrawer}
+                  className="list-item"
+                />
+              </Menu>
+            </Sider>}
           </menuHeader>
         </Layout>
+
         <Modal
           title={[
             <div className="megamenu-title fs-24 text-white">

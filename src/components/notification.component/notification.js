@@ -26,6 +26,8 @@ class NotificationScreen extends Component {
       action: false,
       noticObject: {},
       errorMsg: null,
+      btnDisabled: false,
+      btnLoader:false
     };
   }
 
@@ -51,34 +53,39 @@ class NotificationScreen extends Component {
   };
 
   saveBankInfo = async () => {
+    this.setState({...this.state,btnDisabled:true, btnLoader: true})
     for (var y in this.state.notification) {
       if (
         this.state.notification[y].isAction &&
         this.state.notification[y].selectedtypes.length < 1
-      ) {
+      ) {window.scrollTo(0, 0)
         return this.setState({
           ...this.state,
-          errorMsg: "Please select atleast one notification type",
+          errorMsg: "At least one notification type is required", btnLoader: false,
         });
       }
     }
+
     let response = await saveNotification(this.state.notification);
+      
     if (response.ok) {
       this.setState({
         ...this.state,
         btnDisabled: false,
         btnLoading: false,
         errorMsg: null,
+        btnLoader: false
       });
       message.destroy();
       message.success({
-        content: "Notification details saved successfully",
+        content: "Notification settings saved successfully",
         className: "custom-msg",
         duration: 3,
       });
       this.setState({ ...this.state, errorMsg: null });
     } else {
-      this.setState({ ...this.state, errorMsg: this.isErrorDispaly(response) });
+      
+      this.setState({ ...this.state, errorMsg: this.isErrorDispaly(response),btnLoader: false });
     }
   };
   isErrorDispaly = ({ data }) => {
@@ -113,14 +120,15 @@ class NotificationScreen extends Component {
     }
     this.setState({ ...this.state, notification: notificationLu });
   };
+
   render() {
     return (
       <>
         {this.state.errorMsg && (
-          <Alert type="error" description={this.state.errorMsg} />
+          <Alert type="error" showIcon description={this.state.errorMsg} />
         )}
         <div className="box basic-info">
-          <Translate content="notification" className="basicinfo" />
+          <Translate content="notifications" className="basicinfo" />
           <div className="mt-16  box basic-info">
             <Form
               name="advanced_search"
@@ -130,9 +138,9 @@ class NotificationScreen extends Component {
               ref={this.formRef}
               autoComplete="off"
             >
-              {this.state.isLoading ? (
-                <Loader />
-              ) : (
+               {this.state.isLoading ? (<div  colSpan="8" className="p-16 text-center">
+                <Loader  /></div>
+              ) : (<>
                 <table className="pay-grid">
                   <thead>
                     <tr>
@@ -141,17 +149,18 @@ class NotificationScreen extends Component {
                       <th style={{ width: 180 }}>Subscribe</th>
                     </tr>
                   </thead>
+                  {this.state.notification.length!== 0 ? <>
                   <tbody>
                     {this.state.notification?.map((item, i) => {
                       return (
                         <>
+                        
                           <tr key={i}>
                             <td height="50">
                               <span>{item.action}</span>
                             </td>
-
                             <td style={{ width: 350 }}>
-                              <div className="multiselect-textbox">
+                              <div className="multiselect-textbox" >
                                 <Form.Item
                                   required
                                   rules={[
@@ -169,8 +178,8 @@ class NotificationScreen extends Component {
                                   <Select
                                     showSearch
                                     mode="multiple"
-                                    className="cust-input multi-select"
-                                    style={{ width: "350px" }}
+                                    className={item.isAction ? "cust-input multi-select":"cust-input-light"}
+                                    style={{ width: "350px",marginBottom: "-17px" }}
                                     placeholder="Select Notification Type"
                                     optionFilterProp="children"
                                     onChange={(e) => this.handleChange(e, item)}
@@ -199,30 +208,40 @@ class NotificationScreen extends Component {
                                   checked={item.isAction}
                                   size="medium"
                                   className="custom-toggle"
-                                />
+                                   />
                               </div>
                             </td>
                           </tr>
-                        </>
-                      );
+                          </>
+                        
+                      )
                     })}
-                  </tbody>
+                  </tbody> </>:<>
+                  <tbody>
+                          <tr>
+                            <td
+                              colSpan="8"
+                              className="p-16 text-center"
+                              style={{ color: "white", width: 300 }}
+                            >
+                              No records available
+                            </td>
+                          </tr>{" "}
+                        </tbody>
+</> }
                 </table>
-              )}
+                
+                <div className="text-center">
+              {this.state.notification.length !== 0 && <Button
+                        htmlType="submit"
+                        size="large"
+                        className="pop-btn mt-36"
+                        loading={this.state.btnLoader}
+                        style={{ minWidth: 200, marginLeft: 462 }}>
+                        <Translate content="Save_btn_text" />
+                    </Button>}
+            </div></>)}
             </Form>
-            <div className="text-center">
-              <Button
-                htmlType="submit"
-                size="min"
-                className="pop-btn mt-36"
-                onClick={() => {
-                  this.saveBankInfo();
-                }}
-                style={{ minWidth: 200, marginLeft: 462 }}
-              >
-                <Translate content="Save_btn_text" />
-              </Button>
-            </div>
           </div>
         </div>
       </>

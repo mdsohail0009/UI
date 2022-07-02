@@ -9,6 +9,7 @@ import { success } from "../../utils/messages";
 import Moment from "react-moment";
 import apiCalls from "../../api/apiCalls";
 import { LoadingOutlined } from "@ant-design/icons";
+import Loader from "../../Shared/loader";
 const { Title, Paragraph, Text } = Typography;
 const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA }) => {
   const [form] = Form.useForm();
@@ -30,14 +31,16 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
   useEffect(() => {
     securityTrack()
     getVerifyData();
-  }, []) //eslint-disable-line react-hooks/exhaustive-deps
+  }, []);//eslint-disable-line react-hooks/exhaustive-deps
   const getVerifyData = async () => {
+    setIsLoading(true);
     let response = await apiCalls.getVerificationFields(userConfig.id);
     if (response.ok) {
       setPhone(response.data?.isPhoneVerified);
       setEmail(response.data?.isEmailVerification);
       setLive(response.data?.isLiveVerification);
       setFactor(response.data?.twoFactorEnabled)
+      setIsLoading(false);
       form.setFieldsValue(response.data);
     }
     else{
@@ -103,7 +106,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
     setBtnDisabled(true)
     setIsLoading(false)
     setErrorMsg(null);
-      if ((live && email) || (live && phone) || (live && factor) || (email && phone)|| (email && factor) || (phone && factor) || (email && phone && factor) ||(email && phone && live) ||(email && live && factor) ||(live && phone && factor)||(email && phone && factor && live)) {
+    if ((live && email) || (live && phone) || (live && factor) || (email && phone)|| (email && factor) || (phone && factor) || (email && phone && factor) ||(email && phone && live) ||(email && live && factor) ||(live && phone && factor)||(email && phone && factor && live)) {
         let obj={
           "MemberId": userConfig.id,
           "isEmailVerification": email,
@@ -119,7 +122,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           success("Withdrawal verification details saved successfully")
           setErrorMsg(null)
           setError(null)
-          useDivRef.current.scrollIntoView();
+          // useDivRef.current.scrollIntoView();
           setIsLoading(false)
 
         } else if(email||phone||factor||live===false){
@@ -141,7 +144,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
          setIsLoading(false)
          setBtnDisabled(false);         
       }
- } 
+ }
  const antIcon = (
   <LoadingOutlined
       style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
@@ -150,7 +153,12 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
 );
   return (
     <>
-      <div ref={useDivRef}></div>
+
+     {isLoading ? (
+				<Loader />
+			) : (
+        <div>
+        <div ref={useDivRef}></div>
 
       {errorMsg !== null && (
         <Alert
@@ -272,7 +280,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
       </div>
       <Drawer
         title={[
-          <div className="side-drawer-header">
+          <div className="side-drawer-header change_password">
             <span />
             <div className="text-center fs-16">
               <Translate
@@ -314,10 +322,11 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           <Row gutter={[16, 16]}>
             <Col md={4} xl={4} xxl={4}>
               <div className="d-flex align-center mt-16 ">
-                <label className="custom-checkbox p-relative c-pointer">
+                <label className="custom-checkbox p-relative">
                   <Input
                     name="check"
                     type="checkbox"
+                    className="c-pointer"
                     checked={factor}
                     onChange={(e) => handleInputChange(e, "factor")}
                   />
@@ -332,10 +341,11 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
             </Col>
             <Col md={5} xl={5} xxl={5}>
               <div className="d-flex align-center mt-16">
-                <label className="custom-checkbox p-relative c-pointer">
+                <label className="custom-checkbox p-relative">
                   <Input
                     name="check"
                     type="checkbox"
+                    className="c-pointer"
                     checked={phone}
                     onChange={(e) => handleInputChange(e, "phone")}
                   />
@@ -350,10 +360,11 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
             </Col>
             <Col md={5} xl={5} xxl={5}>
               <div className="d-flex align-center mt-16">
-                <label className="custom-checkbox p-relative c-pointer">
+                <label className="custom-checkbox p-relative">
                   <Input
                     name="check"
                     type="checkbox"
+                    className="c-pointer"
                     checked={email}
                     onChange={(e) => handleInputChange(e, "email")}
                   />
@@ -365,13 +376,14 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                   className="mb-0 profile-label ml-8" style={{ flex: 1 }}
                 />
               </div>
-              </Col>
-              <Col md={5} xl={5} xxl={5}>
-              <div className="d-flex align-center mt-16">
+            </Col>
+            <Col md={5} xl={5} xxl={5}>
+            {!userConfig?.isBusiness && <div className="d-flex align-center mt-16">
                 <label className="custom-checkbox p-relative c-pointer">
                   <Input
                     name="check"
                     type="checkbox"
+                    className="c-pointer"
                     checked={live}
                     onChange={(e) => handleInputChange(e, "live")}
                   />
@@ -382,7 +394,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
                   component={Paragraph.label}
                   className="mb-0 profile-label ml-8" style={{ flex: 1 }}
                 />
-              </div>
+              </div>}
             </Col>
             <Col md={5} xl={5} xxl={5}>
               <div className="text-right">
@@ -398,6 +410,8 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
           </Row>
         </Form>
       </div>
+      </div>
+      )}
     </>
   );
 };
