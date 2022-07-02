@@ -141,6 +141,7 @@ border-radius: 5px;}
 .icon.lg.documents-icon{background-position:-176px -329px;}
 .icon.lg.addressbook-icon{background-position: -140px -329px}
 .icon.lg.cases-icon{background-position:-210px -329px;}
+.icon.lg.referral-icon{background-position:-242px -329px;}
 .icon.lg.hamburg{background-position: -55px 2px; transform: scale(1.4);}
 .icon.md.notifyIcon.deposit{background-position: -375px 0px;transform: rotateZ(235deg);}
 .icon.md.notifyIcon.deposits, .icon.md.notifyIcon.withdraw{background-position: -376px -1px;transform: rotateZ( 45deg);}
@@ -153,7 +154,8 @@ border-radius: 5px;}
 .user-labels.active .icon.lg.documents-icon, .user-labels:hover .icon.lg.documents-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.documents-icon,.ant-tabs-tab:hover .icon.lg.documents-icon{background-position:-176px -363px}
 .user-labels.active .icon.lg.addressbook-icon, .user-labels:hover .icon.lg.addressbook-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.addressbook-icon,.ant-tabs-tab:hover .icon.lg.addressbook-icon{background-position:-140px -363px}
 .user-labels.active .icon.lg.cases-icon, .user-labels:hover .icon.lg.cases-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.cases-icon,.ant-tabs-tab:hover .icon.lg.cases-icon{background-position:-210px -362px;}
-.user-labels.active .icon.lg.cases-icon, .user-labels:hover .icon.lg.cases-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.notification-icon,.ant-tabs-tab:hover .icon.lg.notification-icon{background-position: -184px -134px;}
+.user-labels.active .icon.lg.notification-icon, .user-labels:hover .icon.lg.notification-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.notification-icon,.ant-tabs-tab:hover .icon.lg.notification-icon{background-position: -184px -134px;}
+.user-labels.active .icon.lg.referral-icon, .user-labels:hover .icon.lg.referral-icon,.ant-tabs-tab.ant-tabs-tab-active .icon.lg.referral-icon,.ant-tabs-tab:hover .icon.lg.referral-icon{background-position:-244px -361px;}
 .icon.sm{width: 12px; height: 12px;}
 .icon.sm.downarrow{background-position: -107px -4px;}
 .icon.sm.uparrow{background-position: -87px -4px;}
