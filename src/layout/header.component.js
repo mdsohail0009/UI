@@ -988,6 +988,15 @@ class Header extends Component {
                   component={Menu.Item}
                   className="list-item"
                 />
+                  {this.props.userConfig.isBusiness && process.env.REACT_APP_ISSHOWCARDS == "true" && <Translate
+                content="cards"
+                component={Menu.Item}
+                key="8"
+                onClick={this.newCard}
+                className="list-item"
+                disabled={true}
+              />
+              }
                 <Translate
                   content="menu_payments"
                   component={Menu.Item}
@@ -1014,6 +1023,13 @@ class Header extends Component {
                   component={Menu.Item}
                   key="4"
                   className="mr-16 list-item" />
+                  <Translate
+                content="menu_tranfor"
+                component={Menu.Item}
+                key="5"
+                onClick={this.showTrasforDrawer}
+                className="list-item"
+                 />
                 <Menu>
                   <ul className="pl-0 drpdwn-list">
                     <li onClick={this.showSendDrawer}>
