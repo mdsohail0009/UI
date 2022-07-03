@@ -78,7 +78,6 @@ const [country,setCountry]=useState([])
 const [ibanValue,setIbanValue]=useState(null)
 const [favouriteDetails,setFavouriteDetails]=useState({})
   const handleshowModal = (item) => {
-    debugger
     setEditBankDetails(true)
     let data = modalData.find((items) => items.id == item.id)
     setIsModalVisible(true);
@@ -149,20 +148,16 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
   const withdraeTab = props?.addressBookReducer?.cryptoTab == true ? "Crypto" : "Fiat"
 
   const showModal = () => {
-    debugger
     setIsModalVisible(true);
     if(props?.addressBookReducer?.cryptoTab == true){
       bankDetailForm.setFieldsValue({label:" ",walletCode:" ",walletAddress:" "})
     }
-    // else{
-    //   bankDetailForm.setFieldsValue({})
-    // }
+    
   };
   const handleOk = () => {
     setIsModalVisible(false);
   };
   const handleCoinChange=(e)=>{
-    debugger
     console.log(e)
     let coinType = bankDetailForm.getFieldValue("walletCode");
     if (coinType !==e) {
@@ -180,7 +175,6 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
     }
   
   const validateAddressType = (_, value) => {
-    debugger
 		if (value) {
 			let address = value.trim();
 			let coinType = bankDetailForm.getFieldValue("walletCode");
@@ -241,10 +235,8 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
   };
 
   const handleChange = (e) => {
-    debugger
    
       let data = PayeeLu.find(item => item.name === e)
-      debugger
     if(data!==undefined){
       getFavs(data.id, props?.userConfig?.id)
     }
@@ -262,7 +254,6 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
     }
   }
   const getFavs = async (id, membershipId) => {
-    debugger
     let response = await getFavData(id, membershipId)
     if (response.ok) {
       let obj = response.data;
@@ -290,7 +281,6 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
   };
 
   const saveModalwithdrawal = (values) => {
-    debugger
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
@@ -342,7 +332,6 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
     setIsModalDelete(false)
   }
   const handleDelete = (item) => {
-    debugger
     setIsModalDelete(true);
     
       for (let i in modalData) {
@@ -362,7 +351,6 @@ const handleBankChange=(e)=>{
 }
 
   const savewithdrawal = async (values) => {
-    debugger
     setIsLoading(false);
     setErrorMsg(null);
     setBtnDisabled(true);
@@ -442,13 +430,11 @@ const handleBankChange=(e)=>{
   };
 
   const handleIban=(e)=>{
-    debugger
     setIbanValue(e)
     getIbanData(e)
   }
 
   const getIbanData = async (Val) => {
-    debugger
       bankDetailForm.setFieldsValue({
         bankName: "",
         bankAddress: "",
@@ -640,7 +626,6 @@ const getCountry=async()=>{
                   >
                     <Input
                       className="cust-input"
-                      maxLength="20"
                       placeholder="Name"
                     />
                   </Form.Item>
@@ -677,11 +662,7 @@ const getCountry=async()=>{
                       <Translate content="Phone_No" component={Form.label} />
                     }
                   >
-                    {/* <Input
-                      className="cust-input"
-                      maxLength="20"
-                      placeholder="Phone Number"
-                    /> */}
+                   
                       <NumberFormat
                         className="cust-input value-field"
                         customInput={Input}
@@ -754,7 +735,6 @@ const getCountry=async()=>{
                   >
                    
                       <Select
-                        showSearch
                         placeholder="Country"
                         className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                         dropdownClassName="select-drpdwn"
@@ -844,7 +824,6 @@ const getCountry=async()=>{
                     <Translate
                       content={props?.addressBookReducer?.cryptoTab == true?"cryptoAddressDetails":"Beneficiary_BankDetails"}
                       component={Paragraph}
-                      // style={{width:"400px"}}
                       className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
                     />
                     </Col>
@@ -854,7 +833,6 @@ const getCountry=async()=>{
                       style={{height: "40px" }}
                       className="pop-btn mb-36 mt-24"
                     >
-                      {/* Add bank details */}
                       {props?.cryptoTab == 1?"Add bank details":"ADD CRYPTO ADDRESS"}
                        <span className="icon md add-icon-black ml-8"></span>
                     </Button>
@@ -913,7 +891,6 @@ const getCountry=async()=>{
 								className="cust-input mb-0"
 								maxLength="20"
                 placeholder="Address Label"
-								//placeholder={apiCalls.convertLocalLang("Enteraddresslabel")}
 							/>
 						</Form.Item>
 						<Form.Item
@@ -957,7 +934,7 @@ const getCountry=async()=>{
 								className="cust-input mb-0"
 								maxLength="100"
                 placeholder="Select Address"
-								// placeholder={apiCalls.convertLocalLang("address")}
+							
 							/>
 						</Form.Item>
 
@@ -1057,7 +1034,7 @@ const getCountry=async()=>{
                       prefix={""}
                       placeholder={ bankChange === "IBAN" ? "IBAN" :  "Bank Account Number" }
                       allowNegative={false}
-                      maxlength={14}
+                     
                     />}  
                         </Form.Item>
                       </Col>
@@ -1074,14 +1051,7 @@ const getCountry=async()=>{
                            validator: validateContentRule
                          },]}
                         >
-                          {/* <NumberFormat
-                        className="cust-input value-field"
-                        customInput={Input}
-                        prefix={""}
-                        placeholder="SWIFI / BIC"
-                        allowNegative={false}
-                        maxlength={14}
-                      /> */}
+                         
                       <Input
                       className="cust-input text-left"
                       placeholder="Bank Name"
@@ -1220,7 +1190,7 @@ const getCountry=async()=>{
                       <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                         <Row>
                           <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>{item.currencyType} {","}{" "}
-                           {item.bankType}
+                           {item.bankType}{","}{" "}
                             {item.accountNumber}{","}{" "}
                             {item.swiftCode}{","}{" "}
                             {item.bankName}
@@ -1291,14 +1261,10 @@ const getCountry=async()=>{
                     </>
                   }
                 >
-                  {/* {error != undefined && error != null && (
-                    <Alert type="error" className="mb-16" showIcon description={error} />
-                  )} */}
+                
                   <p className="fs-16 mb-0">
                     Do you really want to Delete
-                    {/* {this.state.selectedObj?.status === "Active"
-                      ? "deactivate?"
-                      : "activate?"} */}
+                  
                   </p>
                 </Modal>
               <div style={{ position: "relative" }}>

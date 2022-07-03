@@ -153,22 +153,7 @@ class AddressBook extends Component {
 			filter: true,
 			width: 250,
 		},
-		// {
-		// 	field: "beneficiaryAccountName",
-		// 	title:
-		// 		(this.props?.userConfig?.isBusiness &&
-		// 			apiCalls.convertLocalLang("Recipient_Business_name")) ||
-		// 		(!this.props?.userConfig?.isBusiness &&
-		// 			apiCalls.convertLocalLang("Recipient_full_name")),
-		// 	filter: true,
-		// 	width: 300,
-		// },
-		// {
-		// 	field: "beneficiaryAccountAddress",
-		// 	title: apiCalls.convertLocalLang("Recipient_address1"),
-		// 	filter: true,
-		// 	width: 250,
-		// },
+	
 		{
 			field: "addressState",
 			title: apiCalls.convertLocalLang("addressState"),
