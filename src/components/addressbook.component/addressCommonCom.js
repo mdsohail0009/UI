@@ -735,6 +735,7 @@ const getCountry=async()=>{
                   >
                    
                       <Select
+                      showSearch
                         placeholder="Country"
                         className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                         dropdownClassName="select-drpdwn"
