@@ -204,7 +204,7 @@ class AddressBook extends Component {
 		},
 		{
 			field: "addressLable",
-			title: apiCalls.convertLocalLang("AddressLabel"),
+			title: "Favourite Name",
 			filter: true,
 			width: 300,
 			customCell: (props) => (
