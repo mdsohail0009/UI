@@ -97,7 +97,7 @@ const [favouriteDetails,setFavouriteDetails]=useState({})
 
     if (selectParty === true) {
       form.setFieldsValue({
-        addressType: "3rdparty",
+        addressType: "3r dparty",
         bankType: "bank",
         accountNumber: "",
         routingNumber: "",
@@ -109,7 +109,7 @@ const [favouriteDetails,setFavouriteDetails]=useState({})
       });
     } else {
       form.setFieldsValue({
-        addressType: "1stparty",
+        addressType: "1s tparty",
         beneficiaryAccountName: getName(),
         bankType: "bank",
         accountNumber: "",
@@ -218,7 +218,7 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
     setCryptoAddress(null);
     if (e.target.value === "1stparty") {
       form.setFieldsValue({
-        addressType: "1stparty",
+        addressType: "1st party",
         beneficiaryAccountName: props?.userConfig.isBusiness
           ? props?.userConfig.businessName
           : props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
@@ -231,7 +231,7 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
       setSelectParty(false);
     } else {
       form.setFieldsValue({
-        addressType: "3rdparty",
+        addressType: "3rd party",
         beneficiaryAccountName: null,
         bankType: "bank",
       });
@@ -244,7 +244,8 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
     debugger
    
       let data = PayeeLu.find(item => item.name === e)
-    if(data.id !==" "){
+      debugger
+    if(data!==undefined){
       getFavs(data.id, props?.userConfig?.id)
     }
   }
@@ -311,11 +312,12 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
       payeeAccountPostalCode: values.payeeAccountPostalCode,
       isWhitelisting: true,
       isAgree: true,
-      status: 0,
+      status: props?.addressBookReducer?.selectedRowData?.payeeAccountModels.status||1,
       createddate: "2022-06-22T10:09:41.487Z",
+      userCreated:props?.userConfig.firstName+props?.userConfig.lastName,
       modifiedBy: null,
       remarks: null,
-      addressState: null,
+      addressState: props?.addressBookReducer?.selectedRowData?.payeeAccountModels.addressState||null,
       inputScore: 0,
       outputScore: 0,
       recordStatus: "Added",
@@ -326,6 +328,7 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
       for (let i in modalData) {
         if (modalData[i].id == obj.id) {
           obj.recordStatus="Modified"
+          obj.modifiedBy=props?.userConfig.firstName+props?.userConfig.lastName
           modalData.splice(modalData[i], 1, obj);
           setEditBankDetails(false)
         }
@@ -837,23 +840,25 @@ const getCountry=async()=>{
               <Row gutter={[16, 16]} >
 
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                  <div className="d-flex" style={{ marginTop: "10px", marginLeft: "10px" }}  >
+
                     <Translate
                       content={props?.addressBookReducer?.cryptoTab == true?"cryptoAddressDetails":"Beneficiary_BankDetails"}
                       component={Paragraph}
-                      style={{width:"400px"}}
+                      // style={{width:"400px"}}
                       className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
                     />
+                    </Col>
+                    <Col xs={24} md={12} lg={12} xl={12} xxl={12} className="text-right">
                     <Button
                       onClick={showModal}
-                      style={{ position: "relative", left: "8.3cm", height: "40px" }}
+                      style={{height: "40px" }}
                       className="pop-btn mb-36 mt-24"
                     >
-                      Add bank details
-                      {/* {props?.addressBookReducer?.cryptoTab == true?"ADD CRYPTO ADDRESS":"Add bank details"} */}
-                       <span className="icon md add-icon ml-8"></span>
+                      {/* Add bank details */}
+                      {props?.cryptoTab == 1?"Add bank details":"ADD CRYPTO ADDRESS"}
+                       <span className="icon md add-icon-black ml-8"></span>
                     </Button>
-                  </div>
+                  
                 </Col>
 
                 <Modal
@@ -915,12 +920,12 @@ const getCountry=async()=>{
 							className="custom-label"
 							name="walletCode"
 							label={<Translate content="Coin" component={Form.label} />}
-							rules={[
-								{
-									required: true,
-									message: apiCalls.convertLocalLang("is_required"),
-								},
-							]}>
+							rules={[{ required: true, message: 'is required' },{
+                whitespace: true,
+             },
+             {
+               validator: validateContentRule
+             },]}>
 							
 							
               	<Select
@@ -942,11 +947,12 @@ const getCountry=async()=>{
 							name="walletAddress"
 							label={<Translate content="address" component={Form.label} />}
 							required
-							rules={[
-								{
-									validator: validateAddressType,
-								},
-							]}>
+							rules={[{ required: true, message: 'is required' },{
+                whitespace: true,
+             },
+             {
+               validator: validateContentRule
+             },]}>
 							<Input
 								className="cust-input mb-0"
 								maxLength="100"
@@ -1042,18 +1048,17 @@ const getCountry=async()=>{
                            onBlur={(e) => handleIban(e.target.value)}
                          
                         >
-                           <Input
-                            className="cust-input text-left"
-                            placeholder="Bank Name"
-                          />
-                           {/* <NumberFormat
-                        className="cust-input value-field"
-                        customInput={Input}
-                        prefix={""}
-                        placeholder={ bankChange === "IBAN" ? "IBAN" :  "Bank Account Number" }
-                        allowNegative={false}
-                        maxlength={14}
-                      /> */}
+                         {bankChange=="IBAN"?<Input
+                      className="cust-input text-left"
+                      placeholder="Bank Name"
+                    />:<NumberFormat
+                      className="cust-input value-field"
+                      customInput={Input}
+                      prefix={""}
+                      placeholder={ bankChange === "IBAN" ? "IBAN" :  "Bank Account Number" }
+                      allowNegative={false}
+                      maxlength={14}
+                    />}  
                         </Form.Item>
                       </Col>
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -1062,16 +1067,25 @@ const getCountry=async()=>{
                           name="swiftCode"
                           label="BIC/SWIFT/Routing Number"
                           required
-                          rules={[{ required: true, message: 'is required' }]}
+                          rules={[{ required: true, message: 'is required' },{
+                            whitespace: true,
+                         },
+                         {
+                           validator: validateContentRule
+                         },]}
                         >
-                          <NumberFormat
+                          {/* <NumberFormat
                         className="cust-input value-field"
                         customInput={Input}
                         prefix={""}
                         placeholder="SWIFI / BIC"
                         allowNegative={false}
                         maxlength={14}
-                      />
+                      /> */}
+                      <Input
+                      className="cust-input text-left"
+                      placeholder="Bank Name"
+                    />
                         </Form.Item>
                       </Col>
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
@@ -1089,10 +1103,6 @@ const getCountry=async()=>{
                         </Form.Item>
                       </Col>
                       
-                      
-                     
-
-                   
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
@@ -1293,31 +1303,7 @@ const getCountry=async()=>{
                 </Modal>
               <div style={{ position: "relative" }}>
                 
-                {/* <Form.Item
-                    className="custom-forminput mb-36 agree"
-                    name="isAgree"
-                    valuePropName="checked"
-                    required
-                    rules={[
-                      {
-                        validator: (_, value) =>
-                          value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice')
-                          )),
-                      },
-                    ]}
-                  >
-                    <span className="d-flex">
-                      <Checkbox className="ant-custumcheck" />
-                      <span className="withdraw-check"></span>
-                      <Translate
-                        content="agree_to_suissebase"
-                        with={{ link }}
-                        component={Paragraph}
-                        className="fs-14 text-white-30 ml-16 mb-0 mt-4"
-                        style={{ flex: 1 }}
-                      />
-                    </span>
-                  </Form.Item> */}
+               
                   <div className="d-flex">
                   <Form.Item
                     className="custom-forminput mt-36 agree"

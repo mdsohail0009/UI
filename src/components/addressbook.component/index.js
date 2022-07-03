@@ -148,7 +148,7 @@ class AddressBook extends Component {
 			width: 200,
 		},
 		{
-			field: "line1",
+			field: "bankAddress",
 			title: apiCalls.convertLocalLang("Bank_address1"),
 			filter: true,
 			width: 250,
@@ -786,7 +786,7 @@ class AddressBook extends Component {
 					className="side-drawer w-50p">
 					{this.state.fiatDrawer && (<>
 						{/* <NewFiatAddress onCancel={() => this.closeBuyDrawer()} /> */}
-						<AddressCommonCom onCancel={() => this.closeBuyDrawer()} />
+						<AddressCommonCom onCancel={() => this.closeBuyDrawer()}  cryptoTab={this.state.cryptoFiat}/>
 						</>
 					)}
 				</Drawer>
