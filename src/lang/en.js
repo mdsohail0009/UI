@@ -88,7 +88,7 @@ export default {
 	withdraw_summary_sub: "Send your currency address.",
 	verify_identity: "Verify your Identity",
 	swap_title: "New Swap",
-	transfor_title: "Transfer",
+	transfor_title: "Transfor",
 	swap_desc:
 		"Instantly exchange your crypto into any currency we offer in your wallet.",
 	
