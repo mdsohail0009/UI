@@ -150,11 +150,12 @@ const AddressCommonCom = (props) => {
 
   const showModal = () => {
     setIsModalVisible(true);
-    if (props?.addressBookReducer?.cryptoTab == true) {
-      bankDetailForm.setFieldsValue({ label: " ", walletCode: " ", walletAddress: " "})
-    }
+    // if (props?.addressBookReducer?.cryptoTab == true) {
+    //   bankDetailForm.setFieldsValue({ label:"", walletCode:"", walletAddress:""})
+    //   bankDetailForm.resetFields()
+    // }
     // else{
-    //   bankDetailForm.setFieldsValue({label: " ",walletCode: " ",bankType:" ",accountNumber: " ",IBAN: " ",swiftCode: " ",bankName: " ",payeeAccountCountry: " ",payeeAccountState: " ",payeeAccountCity: " ",payeeAccountPostalCode: " "})
+    //   bankDetailForm.setFieldsValue({label:"",walletCode:"",accountNumber:"",IBAN:"",swiftCode:"",bankName:"",payeeAccountCountry:"",payeeAccountState:"",payeeAccountCity:"",payeeAccountPostalCode:""})
     // }
 
   };
@@ -200,6 +201,7 @@ const AddressCommonCom = (props) => {
   };
   const handleCancel = () => {
     setIsModalVisible(false);
+    bankDetailForm.resetFields();
   };
 
   const radioChangeHandler = (e) => {
@@ -828,7 +830,7 @@ const AddressCommonCom = (props) => {
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
 
                   <Translate
-                    content={props?.addressBookReducer?.cryptoTab == true ? "cryptoAddressDetails" : "Beneficiary_BankDetails"}
+                    content={props?.cryptoTab == 1? "cryptoAddressDetails" : "Beneficiary_BankDetails"}
                     component={Paragraph}
                     className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
                   />
@@ -839,7 +841,7 @@ const AddressCommonCom = (props) => {
                     style={{ height: "40px" }}
                     className="pop-btn mb-36 mt-24"
                   >
-                    {props?.cryptoTab == 1 ? "Add bank details" : "ADD CRYPTO ADDRESS"}
+                    {props?.cryptoTab == 2 ? "Add bank details" : "ADD CRYPTO ADDRESS"}
                     <span className="icon md add-icon-black ml-8"></span>
                   </Button>
 
@@ -848,7 +850,7 @@ const AddressCommonCom = (props) => {
                 
              
               <Modal
-                  title={(props?.addressBookReducer?.cryptoTab == true) ? "ADD CRYPTO ADDRESS" : "ADD BANK DETAILS"}
+                  title={(props?.cryptoTab == 1 ) ? "ADD CRYPTO ADDRESS" : "ADD BANK DETAILS"}
                   visible={isModalVisible}
                   onOk={handleOk}
                   width={800}
@@ -869,7 +871,7 @@ const AddressCommonCom = (props) => {
                 >
 
 
-                  {props?.addressBookReducer?.cryptoTab == true ?
+                  {props?.cryptoTab == 1 &&
                     <Form
                       form={bankDetailForm}
                       initialValues={cryptoAddress}
@@ -898,7 +900,7 @@ const AddressCommonCom = (props) => {
                         <Input
                           className="cust-input mb-0"
                           maxLength="20"
-                          placeholder={apiCalls.convertLocalLang('AddressLabel')}
+                          placeholder='Address Label'
                         />
                       </Form.Item>
                       <Form.Item
@@ -922,11 +924,11 @@ const AddressCommonCom = (props) => {
 
 
                         <Select
-                          placeholder="Select Coin"
                           className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                           dropdownClassName="select-drpdwn"
                           onChange={(e) => validateAddressType(e)}
                           bordered={false}
+                          placeholder={apiCalls.convertLocalLang('selectcurrency')}
                         >
                           {coinDetails.map((item, indx) => (
                             <Option key={indx} value={item.walletCode}>
@@ -974,7 +976,8 @@ const AddressCommonCom = (props) => {
                           <Translate content="Save_btn_text" component={Text} />
                         </Button>
                       </div>
-                    </Form> : <Form
+                    </Form>} 
+                    {props?.cryptoTab == 2 && <Form
                       form={bankDetailForm}
                       onFinish={saveModalwithdrawal}
                       autoComplete="off"
@@ -1193,41 +1196,36 @@ const AddressCommonCom = (props) => {
                         </Col>
 
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                         
                           <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="payeeAccountCountry"
-                            required
-                            rules={[
-                                {
-                                    required: true,
-                                    message: "Is required"
-                                },
-                                {
-                                    whitespace: true,
-                                    message: apiCalls.convertLocalLang('is_required')
-                                },
-                                {
-                                    validator: validateContentRule
-                                }
-                            ]}
-                            label={<Translate content="Country" component={Form.label} />}
-                          >
+                    className="custom-forminput custom-label mb-0"
+                    name="payeeAccountCountry"
+                    required
+                    rules={[{ required: true, message: 'Is required' }, {
+                      whitespace: true,
+                    },
+                    {
+                      validator: validateContentRule
+                    },]}
+                    label={<Translate content="Country" component={Form.label} />}
+                  >
 
-                            <Select
-                            showSearch
-                              placeholder="Country"
-                              className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
-                              dropdownClassName="select-drpdwn"
-                              onChange={(e) => handleCountryChange(e)}
-                              bordered={false}
-                            >
-                              {country.map((item, indx) => (
-                                <Option key={indx} value={item.name}>
-                                  {item.name}
-                                </Option>
-                              ))}
-                            </Select>
-                          </Form.Item>
+                    <Select
+                      showSearch
+                     
+                      placeholder="Select Country"
+                      className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
+                      dropdownClassName="select-drpdwn"
+                      onChange={(e) => handleCountryChange(e)}
+                      bordered={false}
+                    >
+                      {country.map((item, indx) => (
+                        <Option key={indx} value={item.name}>
+                          {item.name}
+                        </Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                           <Form.Item
