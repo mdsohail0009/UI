@@ -22,7 +22,7 @@ import { addressTabUpdate,fetchAddressCrypto,setAddressStep } from "../../reduce
 import FilePreviewer from "react-file-previewer";
 import WAValidator from "multicoin-address-validator";
 import NumberFormat from "react-number-format";
-const { Text, Paragraph } = Typography;
+const { Paragraph, Text, Title } = Typography
 const { Option } = Select;
 const { TextArea } = Input;
 const { Dragger } = Upload;
@@ -74,7 +74,9 @@ const AddressCommonCom = (props) => {
  const [bankChange,SetBankChange]=useState(null)
 const[coinDetails,setCoinDetails]=useState([])
 const [country,setCountry]=useState([])
-const [favouriteDetails,setFavouriteDetails]=useState({})
+const [favouriteDetails,setFavouriteDetails]=useState({});
+const[isDelete,setIsDelete] = useState(false);
+const[deleteRecord,setDeletedItem] = useState();
   const handleshowModal = (item) => {
     debugger
     setEditBankDetails(true)
@@ -200,6 +202,8 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
 	};
   const handleCancel = () => {
     setIsModalVisible(false);
+    setIsDelete(false);
+    bankDetailForm.resetFields();
   };
   const radioChangeHandler = (e) => {
     setErrorMsg(null);
@@ -322,18 +326,23 @@ if(props?.addressBookReducer?.selectedRowData?.id !=="00000000-0000-0000-0000-00
           obj.recordStatus="Modified"
           modalData.splice(modalData[i], 1, obj);
           setEditBankDetails(false)
+          bankDetailForm.resetFields();
         }
       }
     } else {
       modalData.push(obj)
+      bankDetailForm.resetFields();
     }
     setIsModalVisible(false);
   }
   const handleDelete = (item) => {
+    debugger
     for (let i in modalData) {
       if (modalData[i].id == item.id) {
         if (modalData[i].recordStatus == "Added") {
           modalData.splice(i, 1)
+          setIsDelete(false);
+          bankDetailForm.resetFields();
         } else { modalData[i].recordStatus = "Deleted" }
       }
     }
@@ -426,6 +435,10 @@ const handleBankChange=(e)=>{
 
   const handleIban=(e)=>{
     getIbanData(e)
+  }
+  const setDeletedRecord = (item) =>{
+    setIsDelete(true);
+    setDeletedItem(item);
   }
 
   const getIbanData = async (Val) => {
@@ -1020,12 +1033,13 @@ const getCountry=async()=>{
                           </Select>
                         </Form.Item>
                       </Col>
+                      { bankChange=="IBAN" ? 
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
-                          name={bankChange=="IBAN"?"IBAN":"accountNumber"}
+                          name="IBAN"
                          
-                          label={ bankChange === "IBAN" ? "IBAN" :  "Bank Account Number" }
+                          label= "IBAN" 
                           required
                           rules={[{ required: true, message: 'is required' }]}
                            onBlur={(e) => handleIban(e.target.value)}
@@ -1034,10 +1048,30 @@ const getCountry=async()=>{
                           <Input
                             className="cust-input text-left"
                             maxLength="20"
-                            placeholder={ bankChange === "IBAN" ? "IBAN" :  "Bank Account Number" }
+                            placeholder= "IBAN" 
                           />
                         </Form.Item>
                       </Col>
+                      :
+                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                      <Form.Item
+                        className="custom-forminput custom-label mb-0"
+                        name="accountNumber"
+                       
+                        label="Bank Account Number"
+                        required
+                        rules={[{ required: true, message: 'is required' }]}
+                        //  onBlur={(e) => handleIban(e.target.value)}
+                       
+                      >
+                        <Input
+                          className="cust-input text-left"
+                          maxLength="20"
+                          placeholder= "Bank Account Number"
+                        />
+                      </Form.Item>
+                    </Col>
+                      }
                       <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                         <Form.Item
                           className="custom-forminput custom-label mb-0"
@@ -1211,7 +1245,8 @@ const getCountry=async()=>{
                             <Link className="icon md edit-icon mr-0 fs-30"></Link>
                           </Tooltip></div>
                           
-                          <div className="ml-12 mr-12" onClick={() => handleDelete(item)} ><Tooltip
+                          <div className="ml-12 mr-12" onClick={() => setDeletedRecord(item)} ><Tooltip
+                          // <div className="ml-12 mr-12" onClick={() => handleDelete(item)} ><Tooltip
                             placement="topRight"
                             style={{ fontSize: "23px", marginRight: "10px" }}
                             title={<Translate content="delete" />}>
@@ -1227,6 +1262,31 @@ const getCountry=async()=>{
                   </Row>
                 }
               })}
+                 <Modal
+          closable={false}
+          closeIcon={false}
+          visible={isDelete}
+          className="payments-modal"
+          footer={[
+            <>
+              <Button
+                className="pop-cancel"
+                onClick={handleCancel}>Cancel</Button>
+              <Button className="pop-btn px-36"
+                // className="primary-btn pop-btn"
+
+                onClick={() =>  handleDelete(deleteRecord)}>Ok</Button>
+            </>
+          ]}
+        >
+          <div className="fs-14 text-white-50">
+            <Title className='fs-18 text-white-50'><span class="icon lg info-icon"></span> Delete Payment?</Title>
+            <Paragraph className="fs-14 text-white-50 modal-para">Are you sure do you want to
+              delete Payment ?</Paragraph>
+
+
+          </div>
+        </Modal>
               <div style={{ position: "relative" }}>
                 
                 <Form.Item
