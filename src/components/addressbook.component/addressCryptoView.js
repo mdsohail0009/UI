@@ -233,6 +233,17 @@ const AddressCryptoView = (props) => {
 																		: item.walletAddress}
 															</Title>
 														</Col>
+														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+																<Text className="fw-300 text-white-50 fs-12">
+																	 Address State
+																</Text>
+															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																{item.addressState === " " ||
+																		item.addressState === null
+																		? "-"
+																		: item.addressState}
+															</Title>
+														</Col>
 														
 														
 														
