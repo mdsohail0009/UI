@@ -595,7 +595,7 @@ export default {
 	tranfor_currencywlt:'Currency',
 	tranfor_Amount:'Amount',
 	transfor_btn_cnftransfor: 'Confirm Transfer',
-	return_to_transfor: "Back to Transfer",
+	return_to_transfor: "Back to Transfor",
 	referr: "My Referral",
 	notification: "Notification Settings",
 };
