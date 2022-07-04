@@ -227,6 +227,14 @@ const AddressFiatView = (props) => {
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
+																	Currency
+																</Text>
+																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																	{item.walletCode}
+																</Title>
+															</Col>
+															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+																<Text className="fw-300 text-white-50 fs-12">
 																	Bank Type
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
@@ -235,7 +243,7 @@ const AddressFiatView = (props) => {
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
-																	Bank Account Number
+																	Bank Account Number/IBAN
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
 																	{item.accountNumber}
@@ -243,7 +251,7 @@ const AddressFiatView = (props) => {
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
-																	Swift Code/BIC
+																BIC/SWIFT/Routing Number
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
 																	{item.swiftCode}

@@ -552,6 +552,7 @@ export default {
 	verify_btn: "Click here to verify",
 	verify_button: "Click here to verify",
 	addresslabel: "Address Label",
+	currency:"Curency",
 	noaddress_msg: "Address Book details not available.",
 	address_type: "Address Type",
 	addressState: "Address State",
