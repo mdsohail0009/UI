@@ -644,7 +644,7 @@ const AddressCommonCom = (props) => {
                           if (emailExist) {
                             return Promise.reject("Email already exist");
                           } else if (value && !(/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,15}(?:\.[a-z]{2})?)$/.test(value))) {
-                            return Promise.reject("Enter valid email");
+                            return Promise.reject("Invalid email");
                           }
                           else {
                             return Promise.resolve();
