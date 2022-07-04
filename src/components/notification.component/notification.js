@@ -224,7 +224,7 @@ class NotificationScreen extends Component {
                               className="p-16 text-center"
                               style={{ color: "white", width: 300 }}
                             >
-                              No records available
+                              No notification settings available
                             </td>
                           </tr>{" "}
                         </tbody>
