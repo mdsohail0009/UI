@@ -193,7 +193,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
                               <Translate
                                 content="amount" component={Form.label} />
                               <div className="minmax text-green">
-                                {"Avilable balance:"+(balance?.available||0) }
+                                {"Available balance:"+(balance?.available||0) }
                               </div>
                             </>
                           }
