@@ -88,7 +88,7 @@ export default {
 	withdraw_summary_sub: "Send your currency address.",
 	verify_identity: "Verify your Identity",
 	swap_title: "New Swap",
-	transfor_title: "Transfor",
+	transfor_title: "Transfer",
 	swap_desc:
 		"Instantly exchange your crypto into any currency we offer in your wallet.",
 	
@@ -589,13 +589,13 @@ export default {
 	State: "State",
 	Country: "Country",
 	Post_code: "Postal Code",
-	menu_tranfor: "Transfor",
+	menu_tranfor: "Transfer",
 	tranfor_fromwlt:'From wallet',
 	tranfor_towlt:'To wallet',
 	tranfor_currencywlt:'Currency',
 	tranfor_Amount:'Amount',
-	transfor_btn_cnftransfor: 'Confirm Transfor',
-	return_to_transfor: "Back to Transfor",
+	transfor_btn_cnftransfor: 'Confirm Transfer',
+	return_to_transfor: "Back to Transfer",
 	referr: "My Referral",
 	notification: "Notification Settings",
 };
