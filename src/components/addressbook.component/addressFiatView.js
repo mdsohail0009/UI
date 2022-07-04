@@ -31,7 +31,6 @@ const AddressFiatView = (props) => {
 		loadDataAddress();
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 	const loadDataAddress = async () => {
-		debugger
 		setIsLoading(true)
 		let response = await getViewData(props?.match?.params?.id,  props?.userConfig?.id);
 		if (response.ok) {
@@ -108,7 +107,7 @@ const AddressFiatView = (props) => {
 					) : (
 						<>
 							<Title className="page-title text-white">
-								BENEFICIARY BANK DETAILS VIEW
+							BENEFICIARY DETAILS
 							</Title>
 							{fiatAddress && (
 								<Row gutter={8}>
@@ -175,9 +174,7 @@ const AddressFiatView = (props) => {
 													</div>
 												</div>
 											</Col>
-										</Row>
 										
-										<Row className="kpi-List">
 										
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
@@ -216,6 +213,38 @@ const AddressFiatView = (props) => {
 															width: "100%"
 														}}>
 														<Row gutter={[16, 16]} key={idx}>
+														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+																<Text className="fw-300 text-white-50 fs-12">
+																	Bank Label
+																</Text>
+																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																	{item.label}
+																</Title>
+															</Col>
+															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+																<Text className="fw-300 text-white-50 fs-12">
+																	Bank Type
+																</Text>
+																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																	{item.bankType}
+																</Title>
+															</Col>
+															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+																<Text className="fw-300 text-white-50 fs-12">
+																	Bank Account Number
+																</Text>
+																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																	{item.accountNumber}
+																</Title>
+															</Col>
+															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+																<Text className="fw-300 text-white-50 fs-12">
+																	Swift Code/BIC
+																</Text>
+																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																	{item.swiftCode}
+																</Title>
+															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
 																	Bank Name
@@ -226,44 +255,37 @@ const AddressFiatView = (props) => {
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
-																	Swift Code:
+																	Country
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																	{item.swiftCode}
+																	{item.payeeAccountCountry}
 																</Title>
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
-																	Swift Route BIC Number
+																	State
 																</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																{item.swiftRouteBICNumber}
+																{item.payeeAccountState}
 															</Title>
 														</Col>
 														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 															<Text className="fw-300 text-white-50 fs-12">
-																State
+																City
 															</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																{item.state}
+																{item.payeeAccountCity}
 															</Title>
 														</Col>
 														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 															<Text className="fw-300 text-white-50 fs-12">
-																Country
+																Post Code
 															</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																{item.country}
+																{item.payeeAccountPostalCode}
 															</Title>
 														</Col>
-														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
-															<Text className="fw-300 text-white-50 fs-12">
-																Postal Code
-															</Text>
-															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																{item.postalCode}
-															</Title>
-														</Col>
+														
 													</Row>
 												</div>
 											))}

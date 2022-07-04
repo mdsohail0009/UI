@@ -31,7 +31,6 @@ const AddressCryptoView = (props) => {
 		loadDataAddress();
 	}, []);// eslint-disable-line react-hooks/exhaustive-deps
 	const loadDataAddress = async () => {
-		debugger
 		setIsLoading(true)
 		let response = await getViewData(props?.match?.params?.id,  props?.userConfig?.id);
 		if (response.ok) {
@@ -148,9 +147,7 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
-										{/* </Row>
 										
-										<Row className="kpi-List"> */}
 										
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
