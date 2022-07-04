@@ -151,7 +151,9 @@ const AddressCommonCom = (props) => {
   const showModal = () => {
     setIsModalVisible(true);
     if (props?.addressBookReducer?.cryptoTab == true) {
-      bankDetailForm.setFieldsValue({ label: " ", walletCode: " ", walletAddress: " " })
+      bankDetailForm.setFieldsValue({ label: " ", walletCode: " ", walletAddress: " "})
+    }else{
+      bankDetailForm.setFieldsValue({label: " ",walletCode: " ",bankType:" ",accountNumber: " ",IBAN: " ",swiftCode: " ",bankName: " ",payeeAccountCountry: " ",payeeAccountState: " ",payeeAccountCity: " ",payeeAccountPostalCode: " "})
     }
 
   };
@@ -1024,30 +1026,44 @@ const AddressCommonCom = (props) => {
                             </Select>
                           </Form.Item>
                         </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        {bankChange == "IBAN"? <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                           <Form.Item
                             className="custom-forminput custom-label mb-0"
-                            name={bankChange == "IBAN" ? "IBAN" : "accountNumber"}
+                            name="IBAN"
 
-                            label={bankChange === "IBAN" ? "IBAN" : "Bank Account Number / IBAN"}
+                            label= "IBAN"
                             required
                             rules={[{ required: true, message: 'is required' }]}
                             onBlur={(e) => handleIban(e.target.value)}
 
                           >
-                            {bankChange == "IBAN" ? <Input
+                            <Input
                               className="cust-input text-left"
                               placeholder="Bank Name"
-                            /> : <NumberFormat
+                            /> 
+                          </Form.Item>
+                        </Col>:
+                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                          <Form.Item
+                            className="custom-forminput custom-label mb-0"
+                            name= "accountNumber"
+
+                            label= "Bank Account Number / IBAN"
+                            required
+                            rules={[{ required: true, message: 'is required' }]}
+                            // onBlur={(e) => handleIban(e.target.value)}
+
+                          >
+                            <NumberFormat
                               className="cust-input value-field"
                               customInput={Input}
                               prefix={""}
-                              placeholder={bankChange === "IBAN" ? "IBAN" : "Bank Account Number"}
+                              placeholder="Bank Account Number"
                               allowNegative={false}
 
-                            />}
+                            />
                           </Form.Item>
-                        </Col>
+                        </Col>}
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                           <Form.Item
                             className="custom-forminput custom-label mb-0"
@@ -1238,7 +1254,7 @@ const AddressCommonCom = (props) => {
               })}
               <Modal
                 title={
-                  "Confirm Activate?"
+                  "Confirm Delete?"
                 }
                 visible={isModalDelete}
                 onOk={handleOk}
