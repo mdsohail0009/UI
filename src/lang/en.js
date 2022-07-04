@@ -587,7 +587,7 @@ export default {
 	City: "City",
 	State: "State",
 	Country: "Country",
-	Post_code: "Post code",
+	Post_code: "Postal Code",
 	menu_tranfor: "Transfor",
 	tranfor_fromwlt:'From wallet',
 	tranfor_towlt:'To wallet',

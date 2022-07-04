@@ -589,7 +589,7 @@ const AddressCommonCom = (props) => {
                       <Translate content="favorite_name" component={Form.label} />
                     }
                     required
-                    rules={[{ required: true, message: 'is required' }, {
+                    rules={[{ required: true, message: 'Is required' }, {
                       whitespace: true,
                     },
                     {
@@ -615,7 +615,7 @@ const AddressCommonCom = (props) => {
                     className="custom-forminput custom-label mb-0"
                     name="fullName"
                     required
-                    rules={[{ required: true, message: 'is required' }, {
+                    rules={[{ required: true, message: 'Is required' }, {
                       whitespace: true,
                     },
                     {
@@ -659,6 +659,7 @@ const AddressCommonCom = (props) => {
                   <Form.Item
                     className="custom-forminput custom-label mb-0"
                     name="phoneNumber"
+                    rules={[{ required: true, message: 'Is required' }]}
                     label={
                       <Translate content="Phone_No" component={Form.label} />
                     }
@@ -679,7 +680,7 @@ const AddressCommonCom = (props) => {
                     className="custom-forminput custom-label mb-0"
                     name="line1"
                     required
-                    rules={[{ required: true, message: 'is required' }, {
+                    rules={[{ required: true, message: 'Is required' }, {
                       whitespace: true,
                     },
                     {
@@ -702,7 +703,7 @@ const AddressCommonCom = (props) => {
                     className="custom-forminput custom-label mb-0"
                     name="line2"
                     required
-                    rules={[{ required: true, message: 'is required' }, {
+                    rules={[{ required: true, message: 'Is required' }, {
                       whitespace: true,
                     },
                     {
@@ -726,7 +727,7 @@ const AddressCommonCom = (props) => {
                     className="custom-forminput custom-label mb-0"
                     name="country"
                     required
-                    rules={[{ required: true, message: 'is required' }, {
+                    rules={[{ required: true, message: 'Is required' }, {
                       whitespace: true,
                     },
                     {
@@ -756,7 +757,7 @@ const AddressCommonCom = (props) => {
                     className="custom-forminput custom-label mb-0"
                     name="state"
                     required
-                    rules={[{ required: true, message: 'is required' }, {
+                    rules={[{ required: true, message: 'Is required' }, {
                       whitespace: true,
                     },
                     {
@@ -776,7 +777,7 @@ const AddressCommonCom = (props) => {
                     className="custom-forminput custom-label mb-0"
                     name="city"
                     required
-                    rules={[{ required: true, message: 'is required' }, {
+                    rules={[{ required: true, message: 'Is required' }, {
                       whitespace: true,
                     },
                     {
@@ -796,7 +797,7 @@ const AddressCommonCom = (props) => {
                     className="custom-forminput custom-label mb-0"
                     name="postalCode"
                     required
-                    rules={[{ required: true, message: 'is required' }, {
+                    rules={[{ required: true, message: 'Is required' }, {
                       whitespace: true,
                     },
                     {
@@ -811,7 +812,7 @@ const AddressCommonCom = (props) => {
                       className="cust-input value-field"
                       customInput={Input}
                       prefix={""}
-                      placeholder="Post code"
+                      placeholder="Postal Code"
                       allowNegative={false}
                       maxlength={14}
                     />
@@ -879,11 +880,11 @@ const AddressCommonCom = (props) => {
                         rules={[
                           {
                             required: true,
-                            message: apiCalls.convertLocalLang("is_required"),
+                            message: 'Is required',
                           },
                           {
                             whitespace: true,
-                            message: apiCalls.convertLocalLang("is_required"),
+                            message: 'Is required',
                           },
                           {
                             validator: validateContentRule,
@@ -899,12 +900,10 @@ const AddressCommonCom = (props) => {
                         className="custom-label"
                         name="walletCode"
                         label={<Translate content="Coin" component={Form.label} />}
-                        rules={[{ required: true, message: 'is required' }, {
+                        rules={[{ required: true, message: 'Is required' }, {
                           whitespace: true,
                         },
-                        {
-                          validator: validateContentRule
-                        },]}>
+                        ]}>
 
 
                         <Select
@@ -926,12 +925,10 @@ const AddressCommonCom = (props) => {
                         name="walletAddress"
                         label={<Translate content="address" component={Form.label} />}
                         required
-                        rules={[{ required: true, message: 'is required' }, {
+                        rules={[{ required: true, message: 'Is required' }, {
                           whitespace: true,
                         },
-                        {
-                          validator: validateContentRule
-                        },]}>
+                        ]}>
                         <Input
                           className="cust-input mb-0"
                           maxLength="100"
@@ -967,7 +964,7 @@ const AddressCommonCom = (props) => {
                             name="label"
                             label="Bank Label"
                             required
-                            rules={[{ required: true, message: 'is required' }]}
+                            rules={[{ required: true, message: 'Is required' }]}
                           >
                             <Input
                               className="cust-input text-left"
@@ -983,7 +980,7 @@ const AddressCommonCom = (props) => {
                             name="walletCode"
                             label="Currency"
                             required
-                            rules={[{ required: true, message: 'is required' }]}
+                            rules={[{ required: true, message: 'Is required' }]}
                           >
                             <Select
                               defaultValue="All"
@@ -1002,7 +999,7 @@ const AddressCommonCom = (props) => {
                             name="bankType"
                             label="Bank Type"
                             required
-                            rules={[{ required: true, message: 'is required' }]}
+                            rules={[{ required: true, message: 'Is required' }]}
                           >
                             <Select
                               defaultValue="Bank Account"
@@ -1023,7 +1020,7 @@ const AddressCommonCom = (props) => {
 
                             label= "IBAN"
                             required
-                            rules={[{ required: true, message: 'is required' }]}
+                            rules={[{ required: true, message: 'Is required' }]}
                             onBlur={(e) => handleIban(e.target.value)}
 
                           >
@@ -1040,7 +1037,7 @@ const AddressCommonCom = (props) => {
 
                             label= "Bank Account Number / IBAN"
                             required
-                            rules={[{ required: true, message: 'is required' }]}
+                            rules={[{ required: true, message: 'Is required' }]}
                             // onBlur={(e) => handleIban(e.target.value)}
 
                           >
@@ -1060,7 +1057,7 @@ const AddressCommonCom = (props) => {
                             name="swiftCode"
                             label="BIC/SWIFT/Routing Number"
                             required
-                            rules={[{ required: true, message: 'is required' }, {
+                            rules={[{ required: true, message: 'Is required' }, {
                               whitespace: true,
                             },
                             {
@@ -1080,7 +1077,7 @@ const AddressCommonCom = (props) => {
                             name="bankName"
                             label="Bank Name"
                             required
-                            rules={[{ required: true, message: 'is required' }]}
+                            rules={[{ required: true, message: 'Is required' }]}
                           >
                             <Input
                               className="cust-input text-left"
@@ -1094,11 +1091,12 @@ const AddressCommonCom = (props) => {
                             className="custom-forminput custom-label mb-0"
                             name="payeeAccountCountry"
                             required
-                            rules={[{ required: true, message: 'is required' }]}
+                            rules={[{ required: true, message: 'Is required' }]}
                             label={<Translate content="Country" component={Form.label} />}
                           >
 
                             <Select
+                            showSearch
                               placeholder="Country"
                               className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                               dropdownClassName="select-drpdwn"
@@ -1118,7 +1116,7 @@ const AddressCommonCom = (props) => {
                             className="custom-forminput custom-label mb-0"
                             name="payeeAccountState"
                             required
-                            rules={[{ required: true, message: 'is required' }]}
+                            rules={[{ required: true, message: 'Is required' }]}
                             label={<Translate content="State" component={Form.label} />}
                           >
                             <Input
@@ -1133,7 +1131,7 @@ const AddressCommonCom = (props) => {
                             className="custom-forminput custom-label mb-0"
                             name="payeeAccountCity"
                             required
-                            rules={[{ required: true, message: 'is required' }]}
+                            rules={[{ required: true, message: 'Is required' }]}
                             label={<Translate content="City" component={Form.label} />}
                           >
                             <Input
@@ -1148,7 +1146,7 @@ const AddressCommonCom = (props) => {
                             className="custom-forminput custom-label mb-0"
                             name="payeeAccountPostalCode"
                             required
-                            rules={[{ required: true, message: 'is required' }]}
+                            rules={[{ required: true, message: 'Is required' }]}
                             label={
                               <Translate content="Post_code" component={Form.label} />
                             }

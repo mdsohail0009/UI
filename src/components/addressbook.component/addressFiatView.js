@@ -166,16 +166,18 @@ const AddressFiatView = (props) => {
 													{ <div className="kpi-val">{fiatAddress?.line2}</div> }
 												</div>
 											</Col>
+										
+										
+										
+											
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">City</label>
+													<label className="kpi-label">Country</label>
 													<div className="kpi-val">
-														{fiatAddress?.city}
+														{fiatAddress?.country}
 													</div>
 												</div>
 											</Col>
-										
-										
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">State</label>
@@ -186,22 +188,24 @@ const AddressFiatView = (props) => {
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">Country</label>
+													<label className="kpi-label">City</label>
 													<div className="kpi-val">
-														{fiatAddress?.country}
+														{fiatAddress?.city}
 													</div>
 												</div>
 											</Col>
-											
 												<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 													<div>
-														<label className="kpi-label">Post code</label>
+														<label className="kpi-label">Postal Code</label>
 														<div className="kpi-val">
 															{fiatAddress?.postalCode}
 														</div>
 													</div>
 												</Col>
 										</Row>
+										<Title className="page-title text-white">
+								BENEFICIARY BANK DETAILS 
+							</Title>
 										<Row>
 												{bankDetailes?.map((item, idx) => (
 													<div
@@ -279,7 +283,7 @@ const AddressFiatView = (props) => {
 														</Col>
 														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 															<Text className="fw-300 text-white-50 fs-12">
-																Post Code
+																Postal Code
 															</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
 																{item.payeeAccountPostalCode}

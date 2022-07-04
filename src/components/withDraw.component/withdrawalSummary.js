@@ -191,7 +191,7 @@ const WithdrawalFiatSummary = ({
 	const saveWithdrwal = async (values) => {
 		if (!(verifyData.isEmailVerification || verifyData.isPhoneVerified || verifyData.twoFactorEnabled || verifyData.isLiveVerification)) {
 			setMsg(
-				"Without verifications you can't withdraw.Please select withdraw verifications from security section"
+				"Without verifications you can't withdraw. Please select withdraw verifications from security section"
 			);
 			return;
 		}
@@ -300,7 +300,7 @@ const WithdrawalFiatSummary = ({
 			}
 		} else {
 			setMsg(
-				"Without verifications you can't withdraw.Please select withdraw verifications from security section"
+				"Without verifications you can't withdraw. Please select withdraw verifications from security section"
 			);
 		}
 	};
