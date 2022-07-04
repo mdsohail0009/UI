@@ -22,7 +22,7 @@ import { addressTabUpdate, fetchAddressCrypto, setAddressStep } from "../../redu
 import FilePreviewer from "react-file-previewer";
 import WAValidator from "multicoin-address-validator";
 import NumberFormat from "react-number-format";
-const { Paragraph, Text, Title } = Typography
+const { Text, Paragraph } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
 const { Dragger } = Upload;
@@ -199,8 +199,6 @@ const AddressCommonCom = (props) => {
   };
   const handleCancel = () => {
     setIsModalVisible(false);
-    setIsDelete(false);
-    bankDetailForm.resetFields();
   };
 
   const radioChangeHandler = (e) => {
@@ -326,12 +324,10 @@ const AddressCommonCom = (props) => {
           obj.modifiedBy = props?.userConfig.firstName + props?.userConfig.lastName
           modalData.splice(modalData[i], 1, obj);
           setEditBankDetails(false)
-          bankDetailForm.resetFields();
         }
       }
     } else {
       modalData.push(obj)
-      bankDetailForm.resetFields();
     }
     setIsModalVisible(false);
   }
@@ -341,8 +337,6 @@ const AddressCommonCom = (props) => {
       if (modalData[i].id == deleteItem.id) {
         if (modalData[i].recordStatus == "Added") {
           modalData.splice(i, 1)
-          setIsDelete(false);
-          bankDetailForm.resetFields();
         } else { modalData[i].recordStatus = "Deleted" }
       }
     }
@@ -439,10 +433,6 @@ const AddressCommonCom = (props) => {
   const handleIban = (e) => {
     setIbanValue(e)
     getIbanData(e)
-  }
-  const setDeletedRecord = (item) =>{
-    setIsDelete(true);
-    setDeletedItem(item);
   }
 
   const getIbanData = async (Val) => {
