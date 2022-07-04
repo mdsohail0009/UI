@@ -49,6 +49,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
     }
     const showBalance = async(val) =>{
         const obj=form.getFieldValue()
+
         if (obj.walletCode && obj.fromWalletType) {
             let currencybalRes = await getcurrencyBalance(userProfile.id, obj.fromWalletType, obj.walletCode);
             if (currencybalRes.ok) {
@@ -65,9 +66,14 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
         }
     }
     const showSummary= async(values) =>{
+        debugger
+        if((!values.transferAmount) || values.transferAmount=="0"){
+            useDivRef.current.scrollIntoView();
+            return setErrorMsg('Amount must be greater than zero.');
+        }
         if(parseFloat(values.transferAmount)>parseFloat(balance?.available)){
             useDivRef.current.scrollIntoView();
-            return setErrorMsg('Insuficiant funds');
+            return setErrorMsg('insufficient funds');
         }
         let selectedWallet =  currencyLu.filter((type)=>type.walletCode == values.walletCode)
         values.memberWalletId = selectedWallet[0].walletId;
