@@ -492,7 +492,7 @@ const handleDetails=(e)=>{
                       className="cust-input mb-0 custom-search"
                       dropdownClassName="select-drpdwn"
                       onChange={(e) =>handleAccountWallet(e)} 
-                      placeholder="Select account holder"
+                      placeholder="Select currency"
                     >
                       {accountCurrency?.map((item, idx) => (
 										<Option key={idx} value={item.currencyCode}>

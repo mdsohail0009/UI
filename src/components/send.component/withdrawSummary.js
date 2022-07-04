@@ -175,7 +175,7 @@ class WithdrawSummary extends Component {
 		});
 		if (response.ok) {
 			_obj["comission"] = response.data?.comission;
-			_obj.totalValue = response?.data?.amount;
+			_obj.totalValue = response?.data?.requestedAmount;
 			this.props?.dispatch(setWithdrawcrypto(_obj));
 			this.setState({
 				...this.state,
@@ -432,7 +432,7 @@ class WithdrawSummary extends Component {
 			this.setState({
 				...this.state,
 				errorMsg:
-					"Without verifications you can't withdraw.Please select withdraw verifications from security section"
+					"Without verifications you can't withdraw. Please select withdraw verifications from security section"
 			});
 		}
 		else {

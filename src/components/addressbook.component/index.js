@@ -582,7 +582,7 @@ class AddressBook extends Component {
 		const stepcodes = {
 			cryptoaddressbook: (<>
 				 {/* <NewAddressBook onCancel={() => this.closeBuyDrawer()} /> */}
-				<AddressCommonCom onCancel={() => this.closeBuyDrawer()}/>
+				<AddressCommonCom onCancel={() => this.closeBuyDrawer()} cryptoTab={1}/>
 				</>
 			),
 			selectcrypto: <SelectCrypto />,
@@ -771,7 +771,7 @@ class AddressBook extends Component {
 					className="side-drawer w-50p">
 					{this.state.fiatDrawer && (<>
 						{/* <NewFiatAddress onCancel={() => this.closeBuyDrawer()} /> */}
-						<AddressCommonCom onCancel={() => this.closeBuyDrawer()}  cryptoTab={this.state.cryptoFiat}/>
+						<AddressCommonCom onCancel={() => this.closeBuyDrawer()}  cryptoTab={2}/>
 						</>
 					)}
 				</Drawer>
