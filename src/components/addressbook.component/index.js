@@ -245,57 +245,57 @@ class AddressBook extends Component {
 			filter: true,
 			width: 380,
 		},
-		{
-			field: "inputScore",
-			title: "Input Score",
-			width: 150,
-			filter: true,
-			customCell: (props) => (
-				<td>
-					{props.dataItem.inputScore ? props.dataItem.inputScore : 0}
-					<Tooltip title="View More">
-						<span
-							className="icon md info c-pointer ml-8"
-							style={{ float: "right" }}
-							onClick={() =>
-								this.setState({
-									...this.state,
+		// {
+		// 	field: "inputScore",
+		// 	title: "Input Score",
+		// 	width: 150,
+		// 	filter: true,
+		// 	customCell: (props) => (
+		// 		<td>
+		// 			{props.dataItem.inputScore ? props.dataItem.inputScore : 0}
+		// 			<Tooltip title="View More">
+		// 				<span
+		// 					className="icon md info c-pointer ml-8"
+		// 					style={{ float: "right" }}
+		// 					onClick={() =>
+		// 						this.setState({
+		// 							...this.state,
 
-									cryptoModal: true,
-									selectedId: props.dataItem.id,
-									selectedModal: "Input",
-								})
-							}
-						/>
-					</Tooltip>
-				</td>
-			),
-		},
-		{
-			field: "outputScore",
-			title: "Output Score",
-			width: 150,
-			filter: true,
-			customCell: (props) => (
-				<td>
-					{props.dataItem.outputScore ? props.dataItem.outputScore : 0}
-					<Tooltip title="View More">
-						<span
-							className="icon md info c-pointer ml-8"
-							style={{ float: "right" }}
-							onClick={() =>
-								this.setState({
-									...this.state,
-									cryptoModal: true,
-									selectedId: props.dataItem.id,
-									selectedModal: "Output",
-								})
-							}
-						/>
-					</Tooltip>
-				</td>
-			),
-		},
+		// 							cryptoModal: true,
+		// 							selectedId: props.dataItem.id,
+		// 							selectedModal: "Input",
+		// 						})
+		// 					}
+		// 				/>
+		// 			</Tooltip>
+		// 		</td>
+		// 	),
+		// },
+		// {
+		// 	field: "outputScore",
+		// 	title: "Output Score",
+		// 	width: 150,
+		// 	filter: true,
+		// 	customCell: (props) => (
+		// 		<td>
+		// 			{props.dataItem.outputScore ? props.dataItem.outputScore : 0}
+		// 			<Tooltip title="View More">
+		// 				<span
+		// 					className="icon md info c-pointer ml-8"
+		// 					style={{ float: "right" }}
+		// 					onClick={() =>
+		// 						this.setState({
+		// 							...this.state,
+		// 							cryptoModal: true,
+		// 							selectedId: props.dataItem.id,
+		// 							selectedModal: "Output",
+		// 						})
+		// 					}
+		// 				/>
+		// 			</Tooltip>
+		// 		</td>
+		// 	),
+		// },
 		{
 			field: "coin",
 			title: apiCalls.convertLocalLang("Coin"),
