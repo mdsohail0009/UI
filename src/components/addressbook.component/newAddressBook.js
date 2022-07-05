@@ -193,6 +193,7 @@ const NewAddressBook = ({
 				saveObj.beneficiaryAccountName,
 				userConfig.sk
 			);
+			saveObj.documents = cryptoAddress?.documents;
 			let response = await saveAddress(saveObj);
 			if (response.ok) {
 				setBtnDisabled(false);
