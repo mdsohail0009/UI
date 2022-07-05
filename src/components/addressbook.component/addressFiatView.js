@@ -300,7 +300,7 @@ const AddressFiatView = (props) => {
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
-																BIC/SWIFT/Routing Numbersss
+																BIC/SWIFT/Routing Number
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
 																	
@@ -340,7 +340,7 @@ const AddressFiatView = (props) => {
 																</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
 																
-																{item.payeeAccountState === " " ||
+																{item.payeeAccountState === "" || item.payeeAccountState === " " ||
 																		item.payeeAccountState === null
 																		? "-"
 																		: item.payeeAccountState}
@@ -364,7 +364,7 @@ const AddressFiatView = (props) => {
 															</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
 																
-																{item.payeeAccountPostalCode === " " ||
+																{item.payeeAccountPostalCode === "" || item.payeeAccountPostalCode === " "||
 																		item.payeeAccountPostalCode === null
 																		? "-"
 																		: item.payeeAccountPostalCode}
