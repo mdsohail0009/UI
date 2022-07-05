@@ -260,7 +260,7 @@ const FaitWithdrawal = ({
     if(!values.isAccept){
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
-    setErrorMsg(apicalls.convertLocalLang("agree_termsofservice"))
+    setErrorMsg(apicalls.convertLocalLang("agree_terms"))
     }else{
     if (
       parseFloat(
@@ -361,7 +361,7 @@ const FaitWithdrawal = ({
     }
   };
   const clickMinamnt = (type) => {
-    let values = form.getFieldsValue();
+  let values = form.getFieldsValue();
     let wallet = buyInfo.memberFiat.data.filter((item) => {
       return values.walletCode === item.currencyCode;
     });
@@ -371,7 +371,8 @@ const FaitWithdrawal = ({
       setSaveObj(values);
       form.setFieldsValue({ ...values });
     } else if (type === "max") {
-      values.totalValue = avilableamt ? avilableamt.toString() : 0;
+      // values.totalValue = avilableamt ? avilableamt.toString() : 0;
+       values.totalValue = accountDetails[0] ? accountDetails[0].avilable.toString() : 0;
       setSaveObj(values);
       form.setFieldsValue({ ...values });
     }
@@ -393,14 +394,16 @@ const FaitWithdrawal = ({
   };
   const getAccountdetails=async()=>{
     let response=await getAccountHolder(userConfig.id,"Fiat")
-    console.log(response.data)
     setAccountHolder(response.data)
   }
  const handleAccountChange=(e)=>{
+ form.setFieldsValue({currencyCode:null,favouriteName:null})
+  setDetails(null);
+  setAccountDetails({});
+  setAddressShow(null);
   let data=accountHolder.find((item)=>item.name==e)
-  console.log(data)
   setAccountHolderDetails(data)
-  AccountWallet(userConfig.id)
+   AccountWallet(userConfig.id)
   if(e !==data.name){
     form.setFieldsValue({currencyCode:" "})
     setAccountDetails(null)
@@ -409,14 +412,15 @@ const FaitWithdrawal = ({
 const AccountWallet=async(AccountId)=>{
   let response=await getAccountWallet(AccountId)
   if(response.ok){
-    console.log(response.data)
-    setAccountCurrency(response.data)
+  setAccountCurrency(response.data)
   }
   
 }
 const handleAccountWallet=(e)=>{
+ form.setFieldsValue({favouriteName:null})
+  setAccountDetails({});
+  setDetails(null);
  let data=accountCurrency.filter((item)=>item.currencyCode==e)
- console.log(data)
  setAccountDetails(data)
  AccountBankDetails(accountHolderDetails.id,data[0].currencyCode)
 }
@@ -424,16 +428,21 @@ const handleAccountWallet=(e)=>{
 const AccountBankDetails=async(payeeId,currency)=>{
   let response=await getAccountBankDetails(payeeId,currency)
   if(response.ok){
-    console.log(response.data)
-    setBankDetails(response.data)
+   if(response.data.length == 0){
+      setAddressShow(false);
+    }
+    else{
+      setAddressShow(null);
+      setBankDetails(response.data)
+    }
     //setAccountDetails(response.data)
   }
   
 }
 const handleDetails=(e)=>{
- console.log(e)
- let data=bankDetails.filter((item)=>item.bankName==e)
+let data=bankDetails.filter((item)=>item.bankName==e)
  setDetails(data)
+ form.setFieldsValue({totalValue : ""});
 }
 
   const renderModalContent = () => {
@@ -442,6 +451,7 @@ const handleDetails=(e)=>{
         <>
           <div className="suisfiat-height auto-scroll">
             <div ref={useDivRef}></div>
+            
             {errorMsg !== null && (
               <Alert
                 className="mb-12"
@@ -506,7 +516,7 @@ const handleDetails=(e)=>{
                 <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="noaddress_msg" /></Text>
               }
 
-              {accountDetails.length>0 &&
+              {addressShow == null && accountDetails.length>0 &&
                 <div style={{ position: "relative" }}>
 
                   <Form.Item
@@ -523,7 +533,7 @@ const handleDetails=(e)=>{
                       className="cust-input mb-0 custom-search"
                       dropdownClassName="select-drpdwn"
                       onChange={(e) =>handleDetails(e)} 
-                      placeholder="Select account holder"
+                      placeholder="Select address book"
                     >
                       {bankDetails?.map((item, idx) => (
 										<Option key={idx} value={item.bankName}>
@@ -536,7 +546,7 @@ const handleDetails=(e)=>{
                 </div>}
                 {amountLoading && <Loader />}
 
-              {details.length>0 &&
+              {details?.length>0 &&
                 <div className="fiatdep-info">
 
                   <Form.Item
@@ -683,13 +693,13 @@ const handleDetails=(e)=>{
                     name="isAccept"
                     valuePropName="checked"
                     required
-                    rules={[
-                      {
-                        validator: (_, value) =>
-                          value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice')
-                          )),
-                      },
-                    ]}
+                    // rules={[
+                    //   {
+                    //     validator: (_, value) =>
+                    //       value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice')
+                    //       )),
+                    //   },
+                    // ]}
                   >
                     <span className="d-flex">
                       <Checkbox className="ant-custumcheck" />
