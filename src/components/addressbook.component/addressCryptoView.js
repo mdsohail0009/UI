@@ -57,7 +57,7 @@ const AddressCryptoView = (props) => {
 					) : (
 						<>
 							<Title className="page-title text-white">
-								BENEFICIARY BANK DETAILS 
+								BENEFICIARY DETAILS 
 							</Title>
 							{cryptoAddress && (
 								<Row gutter={8}>
@@ -136,18 +136,18 @@ const AddressCryptoView = (props) => {
 													</div> }
 												</div>
 											</Col>
+											
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">City</label>
+													<label className="kpi-label">Country</label>
 													<div className="kpi-val">
-														{cryptoAddress?.city === " " ||
-																		cryptoAddress?.city === null
+														{cryptoAddress?.country === " " ||
+																		cryptoAddress?.country === null
 																		? "-"
-																		: cryptoAddress?.city}
+																		: cryptoAddress?.country}
 													</div>
 												</div>
 											</Col>
-										
 										
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
@@ -160,21 +160,21 @@ const AddressCryptoView = (props) => {
 													</div>
 												</div>
 											</Col>
+											
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">Country</label>
+													<label className="kpi-label">City</label>
 													<div className="kpi-val">
-														{cryptoAddress?.country === " " ||
-																		cryptoAddress?.country === null
+														{cryptoAddress?.city === " " ||
+																		cryptoAddress?.city === null
 																		? "-"
-																		: cryptoAddress?.country}
+																		: cryptoAddress?.city}
 													</div>
 												</div>
 											</Col>
-											
 												<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 													<div>
-														<label className="kpi-label">Post code</label>
+														<label className="kpi-label">Postal Code</label>
 														<div className="kpi-val">
 															{cryptoAddress?.postalCode === " " ||
 																		cryptoAddress?.postalCode === null
@@ -185,6 +185,9 @@ const AddressCryptoView = (props) => {
 												</Col>
 											{/* )} */}
 										</Row>
+										<Title className="page-title text-white">
+								CRYPTO ADDRESS DETAILS 
+							</Title>
 										<Row>
 											
 												{bankDetailes?.map((item, idx) => (
@@ -228,6 +231,17 @@ const AddressCryptoView = (props) => {
 																		item.walletAddress === null
 																		? "-"
 																		: item.walletAddress}
+															</Title>
+														</Col>
+														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+																<Text className="fw-300 text-white-50 fs-12">
+																	 Address State
+																</Text>
+															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																{item.addressState === " " ||
+																		item.addressState === null
+																		? "-"
+																		: item.addressState}
 															</Title>
 														</Col>
 														

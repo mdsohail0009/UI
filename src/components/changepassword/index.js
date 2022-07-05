@@ -58,6 +58,7 @@ const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, tr
         message.success({ content: 'Password changed successfully', className: 'custom-msg',duration:3 });
         passwordResponce(false, '', false);
         form.resetFields();
+        
         onSubmit()
         getmemeberInfoa(userConfig.userId)
         apiClient.trackEvent({ "Action": 'Save', "Feature": 'Change password', "Remarks": "Password changed", "FullFeatureName": 'Change password', "userName": userConfig.userName, id: userConfig.id });
