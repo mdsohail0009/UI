@@ -661,11 +661,11 @@ const AddressCommonCom = (props) => {
                     />
                   </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={12} xxl={12}>
+                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                   <Form.Item
                     name="email"
                     label="Email"
-                    className="input-label"
+                    className="custom-forminput custom-label mb-0"
                     type='email'
                     rules={[
                       { required: true, message: "Is required" },
