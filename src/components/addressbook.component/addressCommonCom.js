@@ -211,6 +211,7 @@ const AddressCommonCom = (props) => {
     setIdentityFile(null);
     setAdressFile(null);
     setDeclarationFile(null);
+    setModalData([]);
     form.setFieldsValue({ file1: false, file2: false, file3: false });
     form.resetFields();
     setCryptoAddress(null);
