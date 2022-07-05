@@ -150,17 +150,20 @@ const AddressCommonCom = (props) => {
 
   const showModal = () => {
     setIsModalVisible(true);
-    if (props?.addressBookReducer?.cryptoTab == true) {
-      bankDetailForm.setFieldsValue({ label: " ", walletCode: " ", walletAddress: " "})
-    }else{
-      bankDetailForm.setFieldsValue({label: " ",walletCode: " ",bankType:" ",accountNumber: " ",IBAN: " ",swiftCode: " ",bankName: " ",payeeAccountCountry: " ",payeeAccountState: " ",payeeAccountCity: " ",payeeAccountPostalCode: " "})
-    }
+    // if (props?.addressBookReducer?.cryptoTab == true) {
+    //   bankDetailForm.setFieldsValue({ label:"", walletCode:"", walletAddress:""})
+    //   bankDetailForm.resetFields()
+    // }
+    // else{
+    //   bankDetailForm.setFieldsValue({label:"",walletCode:"",accountNumber:"",IBAN:"",swiftCode:"",bankName:"",payeeAccountCountry:"",payeeAccountState:"",payeeAccountCity:"",payeeAccountPostalCode:""})
+    // }
 
   };
   const handleOk = () => {
     setIsModalVisible(false);
   };
   const handleCoinChange = (e) => {
+    debugger
     console.log(e)
     let coinType = bankDetailForm.getFieldValue("walletCode");
     if (coinType !== e) {
@@ -178,6 +181,7 @@ const AddressCommonCom = (props) => {
   }
 
   const validateAddressType = (_, value) => {
+    debugger
     if (value) {
       let address = value.trim();
       let coinType = bankDetailForm.getFieldValue("walletCode");
@@ -199,6 +203,7 @@ const AddressCommonCom = (props) => {
   };
   const handleCancel = () => {
     setIsModalVisible(false);
+    bankDetailForm.resetFields();
   };
 
   const radioChangeHandler = (e) => {
@@ -215,20 +220,20 @@ const AddressCommonCom = (props) => {
     setCryptoAddress(null);
     if (e.target.value === "1stparty") {
       form.setFieldsValue({
-        addressType: "1st party",
+        addressType: "1stparty",
         beneficiaryAccountName: props?.userConfig.isBusiness
           ? props?.userConfig.businessName
           : props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
         bankType: "bank",
         fullName: props?.userConfig.firstName + props?.userConfig.lastName,
         phoneNumber: props?.userConfig.phoneNo,
-        email: props?.userConfig.email
+        email: props?.userConfig.email,
       });
       setBankType("bank");
       setSelectParty(false);
     } else {
       form.setFieldsValue({
-        addressType: "3rd party",
+        addressType: "3rdparty",
         beneficiaryAccountName: null,
         bankType: "bank",
       });
@@ -284,6 +289,7 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
+    debugger
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
@@ -305,23 +311,25 @@ const AddressCommonCom = (props) => {
       payeeAccountPostalCode: values.payeeAccountPostalCode,
       isWhitelisting: true,
       isAgree: true,
-      status: props?.addressBookReducer?.selectedRowData?.payeeAccountModels.status || 1,
+      status:  1,
       createddate: "2022-06-22T10:09:41.487Z",
       userCreated: props?.userConfig.firstName + props?.userConfig.lastName,
       modifiedBy: null,
       remarks: null,
-      addressState: props?.addressBookReducer?.selectedRowData?.payeeAccountModels.addressState || null,
+      addressState:  null,
       inputScore: 0,
       outputScore: 0,
       recordStatus: "Added",
     }
-    if (editBankDetsils == true) {
+    if (editBankDetsils == true ) {
       obj.id = bankObj.id
       obj.payeeId = bankObj.payeeId
       for (let i in modalData) {
         if (modalData[i].id == obj.id) {
           obj.recordStatus = "Modified"
           obj.modifiedBy = props?.userConfig.firstName + props?.userConfig.lastName
+          obj.status= props?.addressBookReducer?.selectedRowData?.status 
+          obj.addressState =  props?.addressBookReducer?.selectedRowData?.addressState 
           modalData.splice(modalData[i], 1, obj);
           setEditBankDetails(false)
         }
@@ -330,6 +338,10 @@ const AddressCommonCom = (props) => {
       modalData.push(obj)
     }
     setIsModalVisible(false);
+    bankDetailForm.resetFields();
+  }
+  const handleDeleteCancel = () => {
+    setIsModalDelete(false)
   }
   const handleDeleteModal = () => {
     setIsModalDelete(false)
@@ -348,7 +360,9 @@ const AddressCommonCom = (props) => {
   }
   const handleBankChange = (e) => {
     SetBankChange(e)
-
+  bankDetailForm.setFieldsValue({
+    IBAN:"",accountNumber:""
+  })
   }
 
   const savewithdrawal = async (values) => {
@@ -381,12 +395,13 @@ const AddressCommonCom = (props) => {
       useDivRef.current.scrollIntoView();
       setErrorMsg(apiCalls.convertLocalLang("agree_termsofservice"));
     }
-    else if (responsecheck.data !== null) {
-      setIsLoading(false);
-      setBtnDisabled(false);
-      useDivRef.current.scrollIntoView();
-      return setErrorMsg("Address label already existed");
-    } else {
+    // else if (responsecheck.data !== null) {
+    //   setIsLoading(false);
+    //   setBtnDisabled(false);
+    //   useDivRef.current.scrollIntoView();
+    //   return setErrorMsg("Address label already existed");
+    // }
+    else {
       setBtnDisabled(true);
       values["favouriteName"] = namecheck;
       values["fullName"] = values.fullName;
@@ -433,6 +448,7 @@ const AddressCommonCom = (props) => {
   const handleIban = (e) => {
     setIbanValue(e)
     getIbanData(e)
+    
   }
 
   const getIbanData = async (Val) => {
@@ -459,6 +475,10 @@ const AddressCommonCom = (props) => {
           payeeAccountCountry: response.data.country || oldVal.country,
         });
       }
+    }else{
+      bankDetailForm.setFieldsValue({
+        country:""
+      })
     }
   };
 
@@ -589,17 +609,24 @@ const AddressCommonCom = (props) => {
                       <Translate content="favorite_name" component={Form.label} />
                     }
                     required
-                    rules={[{ required: true, message: 'is required' }, {
-                      whitespace: true,
-                    },
-                    {
-                      validator: validateContentRule
-                    },]}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Is required"
+                      },
+                      {
+                        whitespace: true,
+                        message: apiCalls.convertLocalLang('is_required')
+                      },
+                      {
+                        validator: validateContentRule
+                      }
+                    ]}
                   >
                     <AutoComplete
                       onChange={(e) => handleChange(e)}
                       maxLength={20} className="cust-input"
-                      placeholder={favouriteDetails.favouriteName == null ? "Label Name" : "Label Name"}
+                      placeholder= {"Label Name" }
                     >
                       {PayeeLu.map((item, indx) => (
                         <Option key={indx} value={item.name}>
@@ -615,12 +642,19 @@ const AddressCommonCom = (props) => {
                     className="custom-forminput custom-label mb-0"
                     name="fullName"
                     required
-                    rules={[{ required: true, message: 'is required' }, {
-                      whitespace: true,
-                    },
-                    {
-                      validator: validateContentRule
-                    },]}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Is required"
+                      },
+                      {
+                        whitespace: true,
+                        message: apiCalls.convertLocalLang('is_required')
+                      },
+                      {
+                        validator: validateContentRule
+                      }
+                    ]}
                     label={
                       <Translate content="Fait_Name" component={Form.label} />
                     }
@@ -644,7 +678,7 @@ const AddressCommonCom = (props) => {
                           if (emailExist) {
                             return Promise.reject("Email already exist");
                           } else if (value && !(/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,15}(?:\.[a-z]{2})?)$/.test(value))) {
-                            return Promise.reject("Enter valid email");
+                            return Promise.reject("Invalid email");
                           }
                           else {
                             return Promise.resolve();
@@ -659,19 +693,30 @@ const AddressCommonCom = (props) => {
                   <Form.Item
                     className="custom-forminput custom-label mb-0"
                     name="phoneNumber"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Is required"
+                      },
+                      {
+                        whitespace: true,
+                        message: apiCalls.convertLocalLang('is_required')
+                      },
+                      {
+                        validator: validateContentRule
+                      }
+                    ]}
                     label={
                       <Translate content="Phone_No" component={Form.label} />
                     }
                   >
-
-                    <NumberFormat
-                      className="cust-input value-field"
-                      customInput={Input}
-                      prefix={""}
+                    <Input
+                      className="cust-input"
+                      maxLength="20"
                       placeholder="Phone Number"
                       allowNegative={false}
-                      maxlength={14}
                     />
+
                   </Form.Item>
                 </Col>
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
@@ -679,12 +724,19 @@ const AddressCommonCom = (props) => {
                     className="custom-forminput custom-label mb-0"
                     name="line1"
                     required
-                    rules={[{ required: true, message: 'is required' }, {
-                      whitespace: true,
-                    },
-                    {
-                      validator: validateContentRule
-                    },]}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Is required"
+                      },
+                      {
+                        whitespace: true,
+                        message: apiCalls.convertLocalLang('is_required')
+                      },
+                      {
+                        validator: validateContentRule
+                      }
+                    ]}
                     label={
                       <Translate content="Address_Line1" component={Form.label} />
                     }
@@ -702,12 +754,19 @@ const AddressCommonCom = (props) => {
                     className="custom-forminput custom-label mb-0"
                     name="line2"
                     required
-                    rules={[{ required: true, message: 'is required' }, {
-                      whitespace: true,
-                    },
-                    {
-                      validator: validateContentRule
-                    },]}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Is required"
+                      },
+                      {
+                        whitespace: true,
+                        message: apiCalls.convertLocalLang('is_required')
+                      },
+                      {
+                        validator: validateContentRule
+                      }
+                    ]}
                     label={
                       <Translate content="Address_Line2" component={Form.label} />
                     }
@@ -726,12 +785,19 @@ const AddressCommonCom = (props) => {
                     className="custom-forminput custom-label mb-0"
                     name="country"
                     required
-                    rules={[{ required: true, message: 'is required' }, {
-                      whitespace: true,
-                    },
-                    {
-                      validator: validateContentRule
-                    },]}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Is required"
+                      },
+                      {
+                        whitespace: true,
+                        message: apiCalls.convertLocalLang('is_required')
+                      },
+                      {
+                        validator: validateContentRule
+                      }
+                    ]}
                     label={<Translate content="Country" component={Form.label} />}
                   >
 
@@ -756,12 +822,19 @@ const AddressCommonCom = (props) => {
                     className="custom-forminput custom-label mb-0"
                     name="state"
                     required
-                    rules={[{ required: true, message: 'is required' }, {
-                      whitespace: true,
-                    },
-                    {
-                      validator: validateContentRule
-                    },]}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Is required"
+                      },
+                      {
+                        whitespace: true,
+                        message: apiCalls.convertLocalLang('is_required')
+                      },
+                      {
+                        validator: validateContentRule
+                      }
+                    ]}
                     label={<Translate content="State" component={Form.label} />}
                   >
                     <Input
@@ -776,12 +849,19 @@ const AddressCommonCom = (props) => {
                     className="custom-forminput custom-label mb-0"
                     name="city"
                     required
-                    rules={[{ required: true, message: 'is required' }, {
-                      whitespace: true,
-                    },
-                    {
-                      validator: validateContentRule
-                    },]}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Is required"
+                      },
+                      {
+                        whitespace: true,
+                        message: apiCalls.convertLocalLang('is_required')
+                      },
+                      {
+                        validator: validateContentRule
+                      }
+                    ]}
                     label={<Translate content="City" component={Form.label} />}
                   >
                     <Input
@@ -796,25 +876,30 @@ const AddressCommonCom = (props) => {
                     className="custom-forminput custom-label mb-0"
                     name="postalCode"
                     required
-                    rules={[{ required: true, message: 'is required' }, {
-                      whitespace: true,
-                    },
-                    {
-                      validator: validateContentRule
-                    },]}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Is required"
+                      },
+                      {
+                        whitespace: true,
+                        message: apiCalls.convertLocalLang('is_required')
+                      },
+                      {
+                        validator: validateContentRule
+                      }
+                    ]}
                     label={
                       <Translate content="Post_code" component={Form.label} />
                     }
 
                   >
-                    <NumberFormat
-                      className="cust-input value-field"
-                      customInput={Input}
-                      prefix={""}
-                      placeholder="Post code"
-                      allowNegative={false}
-                      maxlength={14}
+                    <Input
+                      className="cust-input"
+                      maxLength="10"
+                      placeholder="Postal Code"
                     />
+
                   </Form.Item>
                 </Col>
               </Row>
@@ -824,7 +909,7 @@ const AddressCommonCom = (props) => {
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
 
                   <Translate
-                    content={props?.addressBookReducer?.cryptoTab == true ? "cryptoAddressDetails" : "Beneficiary_BankDetails"}
+                    content={props?.cryptoTab == 1 ? "cryptoAddressDetails" : "Beneficiary_BankDetails"}
                     component={Paragraph}
                     className="mb-16 mt-24 fs-14 text-aqua fw-500 text-upper"
                   />
@@ -835,14 +920,16 @@ const AddressCommonCom = (props) => {
                     style={{ height: "40px" }}
                     className="pop-btn mb-36 mt-24"
                   >
-                    {props?.cryptoTab == 1 ? "Add bank details" : "ADD CRYPTO ADDRESS"}
+                    {props?.cryptoTab == 2 ? "Add bank details" : "ADD CRYPTO ADDRESS"}
                     <span className="icon md add-icon-black ml-8"></span>
                   </Button>
 
                 </Col>
 
+
+
                 <Modal
-                  title={(props?.addressBookReducer?.cryptoTab == true) ? "ADD CRYPTO ADDRESS" : "Add New Bank"}
+                  title={(props?.cryptoTab == 1) ? "ADD CRYPTO ADDRESS" : "ADD BANK DETAILS"}
                   visible={isModalVisible}
                   onOk={handleOk}
                   width={800}
@@ -863,7 +950,7 @@ const AddressCommonCom = (props) => {
                 >
 
 
-                  {props?.addressBookReducer?.cryptoTab == true ?
+                  {props?.cryptoTab == 1 &&
                     <Form
                       form={bankDetailForm}
                       initialValues={cryptoAddress}
@@ -879,11 +966,11 @@ const AddressCommonCom = (props) => {
                         rules={[
                           {
                             required: true,
-                            message: apiCalls.convertLocalLang("is_required"),
+                            message: 'Is required',
                           },
                           {
                             whitespace: true,
-                            message: apiCalls.convertLocalLang("is_required"),
+                            message: 'Is required',
                           },
                           {
                             validator: validateContentRule,
@@ -892,23 +979,23 @@ const AddressCommonCom = (props) => {
                         <Input
                           className="cust-input mb-0"
                           maxLength="20"
-                          placeholder="Address Label"
+                          placeholder='Address Label'
                         />
                       </Form.Item>
                       <Form.Item
                         className="custom-label"
                         name="walletCode"
                         label={<Translate content="Coin" component={Form.label} />}
-                        rules={[{ required: true, message: 'is required' }, {
-                          whitespace: true,
-                        },
-                        {
-                          validator: validateContentRule
-                        },]}>
+                        rules={[
+                          {
+                            required: true,
+                            message: apiCalls.convertLocalLang("is_required"),
+                          },
+                        ]}>
 
 
                         <Select
-                          placeholder="Select Coin"
+                          placeholder={apiCalls.convertLocalLang("Selectcoin")}
                           className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                           dropdownClassName="select-drpdwn"
                           onChange={(e) => handleCoinChange(e)}
@@ -926,19 +1013,119 @@ const AddressCommonCom = (props) => {
                         name="walletAddress"
                         label={<Translate content="address" component={Form.label} />}
                         required
-                        rules={[{ required: true, message: 'is required' }, {
-                          whitespace: true,
-                        },
-                        {
-                          validator: validateContentRule
-                        },]}>
+                        rules={[
+                          {
+                            validator: validateAddressType,
+                          },
+                        ]}>
+                        <Input
+                          className="cust-input mb-0"
+                          maxLength="100"
+                          placeholder={apiCalls.convertLocalLang("address")}
+                        />
+                      </Form.Item>
+                      {/* <Form.Item
+							className="custom-label"
+							name="walletCode"
+							label={<Translate content="Coin" component={Form.label} />}
+							rules={[
+								{
+									required: true,
+									message: apiCalls.convertLocalLang("is_required"),
+								},
+							]}>
+							
+							
+              	<Select
+								 placeholder="Select Coin"
+								className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
+								dropdownClassName="select-drpdwn"
+                onChange={(e)=>handleCoinChange(e)}
+								bordered={false}
+								>
+							{coinDetails.map((item, indx) => (
+                        <Option key={indx} value={item.walletCode}>
+                          {item.walletCode}
+                        </Option>
+                      ))}
+							</Select>
+						</Form.Item>
+						<Form.Item
+							className="custom-label"
+							name="walletAddress"
+							label={<Translate content="address" component={Form.label} />}
+							required
+							rules={[
+								{
+									validator: validateAddressType,
+								},
+							]}>
+							<Input
+								className="cust-input mb-0"
+								maxLength="100"
+                placeholder="Select Address"
+								// placeholder={apiCalls.convertLocalLang("address")}
+							/>
+						</Form.Item> */}
+                      {/* <Form.Item
+                        className="custom-label"
+                        name="walletCode"
+                        label={<Translate content="Coin" component={Form.label} />}
+                        required
+                        rules={[
+                            {
+                                required: true,
+                                message: "Is required"
+                            },
+                            {
+                                whitespace: true,
+                                message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                                validator: validateContentRule
+                            }
+                        ]}>
+
+
+                        <Select
+                          className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
+                          dropdownClassName="select-drpdwn"
+                          onChange={(e) => handleCoinChange(e)}
+                          bordered={false}
+                          placeholder={apiCalls.convertLocalLang('selectcurrency')}
+                        >
+                          {coinDetails.map((item, indx) => (
+                            <Option key={indx} value={item.walletCode}>
+                              {item.walletCode}
+                            </Option>
+                          ))}
+                        </Select>
+                      </Form.Item>
+                      <Form.Item
+                        className="custom-label"
+                        name="walletAddress"
+                        label={<Translate content="address" component={Form.label} />}
+                        required
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Is required"
+                                            },
+                                            {
+                                                whitespace: true,
+                                                message: apiCalls.convertLocalLang('is_required')
+                                            },
+                                            {
+                                                validator: validateAddressType
+                                            }
+                                        ]}>
                         <Input
                           className="cust-input mb-0"
                           maxLength="100"
                           placeholder="Select Address"
 
                         />
-                      </Form.Item>
+                      </Form.Item> */}
 
 
 
@@ -953,234 +1140,362 @@ const AddressCommonCom = (props) => {
                           <Translate content="Save_btn_text" component={Text} />
                         </Button>
                       </div>
-                    </Form> : <Form
-                      form={bankDetailForm}
-                      onFinish={saveModalwithdrawal}
-                      autoComplete="off"
-                      initialValues={cryptoAddress}
-                    >
-                      <Row gutter={[16, 16]}>
+                    </Form>}
+                  {props?.cryptoTab == 2 && <Form
+                    form={bankDetailForm}
+                    onFinish={saveModalwithdrawal}
+                    autoComplete="off"
+                    initialValues={cryptoAddress}
+                  >
+                    <Row gutter={[16, 16]}>
 
+                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                          className="custom-forminput custom-label mb-0"
+                          name="label"
+                          label="Bank Label"
+                          required
+                          rules={[
+                            {
+                              required: true,
+                              message: "Is required"
+                            },
+                            {
+                              whitespace: true,
+                              message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                              validator: validateContentRule
+                            }
+                          ]}
+                        >
+                          <Input
+                            className="cust-input text-left"
+                            placeholder="Bank Label"
+                          />
+
+                        </Form.Item>
+                      </Col>
+
+                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                          className="custom-forminput custom-label mb-0"
+                          name="walletCode"
+                          label="Currency"
+                          required
+                          rules={[
+                            {
+                              required: true,
+                              message: "Is required"
+                            },
+                            {
+                              whitespace: true,
+                              message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                              validator: validateContentRule
+                            }
+                          ]}
+                        >
+                          <Select
+                            className="cust-input text-left "
+                            dropdownClassName="select-drpdwn"
+                            placeholder={apiCalls.convertLocalLang('currency')}
+                          >
+                            <Option value="USD">USD</Option>
+                            <Option value="EUR">EUR</Option>
+                          </Select>
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                          className="custom-forminput custom-label mb-0"
+                          name="bankType"
+                          required
+                          rules={[{ required: false, message: 'Is required' }, {
+                            whitespace: true,
+                          },
+                          {
+                            validator: validateContentRule
+                          },]}
+                          label="Bank Type"
+                        >
+
+                          <Select
+                            showSearch
+                            defaultValue="BANKTYPE"
+                            placeholder="Select Type"
+                            className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
+                            dropdownClassName="select-drpdwn"
+                            onChange={(e) => handleBankChange(e)}
+                            bordered={false}
+                          >
+                            <Option value="BANKTYPE">Bank Account</Option>
+                            <Option value="IBAN">IBAN</Option>
+                          </Select>
+                        </Form.Item>
+
+                      </Col>
+                      {bankChange == "IBAN" ? <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                          className="custom-forminput custom-label mb-0"
+                          name="IBAN"
+
+                          label="IBAN"
+                          required
+                          rules={[
+                            {
+                              required: true,
+                              message: "Is required"
+                            },
+                            {
+                              whitespace: true,
+                              message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                              validator: validateContentRule
+                            }
+                          ]}
+                          onBlur={(e) => handleIban(e.target.value)}
+
+                        >
+                          <Input
+                            className="cust-input text-left"
+                            placeholder="IBAN"
+                          />
+                        </Form.Item>
+                      </Col> :
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                           <Form.Item
                             className="custom-forminput custom-label mb-0"
-                            name="label"
-                            label="Bank Label"
-                            required
-                            rules={[{ required: true, message: 'is required' }]}
-                          >
-                            <Input
-                              className="cust-input text-left"
-                              placeholder="Bank Label"
-                            />
+                            name="accountNumber"
 
-                          </Form.Item>
-                        </Col>
-
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                          <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="walletCode"
-                            label="Currency"
+                            label="Bank Account Number"
                             required
-                            rules={[{ required: true, message: 'is required' }]}
-                          >
-                            <Select
-                              defaultValue="All"
-                              className="cust-input text-left "
-                              dropdownClassName="select-drpdwn"
-                              placeholder="Select Type"
-                            >
-                              <Option value="USD">USD</Option>
-                              <Option value="EUR">EUR</Option>
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                          <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="bankType"
-                            label="Bank Type"
-                            required
-                            rules={[{ required: true, message: 'is required' }]}
-                          >
-                            <Select
-                              defaultValue="Bank Account"
-                              className="cust-input text-left "
-                              dropdownClassName="select-drpdwn"
-                              placeholder="Select Type"
-                              onChange={(e) => handleBankChange(e)}
-                            >
-                              <Option value="BANKTYPE">Bank Account</Option>
-                              <Option value="IBAN">IBAN</Option>
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                        {bankChange == "IBAN"? <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                          <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="IBAN"
-
-                            label= "IBAN"
-                            required
-                            rules={[{ required: true, message: 'is required' }]}
-                            onBlur={(e) => handleIban(e.target.value)}
-
-                          >
-                            <Input
-                              className="cust-input text-left"
-                              placeholder="Bank Name"
-                            /> 
-                          </Form.Item>
-                        </Col>:
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                          <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name= "accountNumber"
-
-                            label= "Bank Account Number / IBAN"
-                            required
-                            rules={[{ required: true, message: 'is required' }]}
-                            // onBlur={(e) => handleIban(e.target.value)}
+                            rules={[
+                              {
+                                required: true,
+                                message: "Is required"
+                              },
+                              {
+                                whitespace: true,
+                                message: apiCalls.convertLocalLang('is_required')
+                              },
+                              {
+                                validator: validateContentRule
+                              }
+                            ]}
+                          // onBlur={(e) => handleIban(e.target.value)}
 
                           >
                             <NumberFormat
                               className="cust-input value-field"
                               customInput={Input}
                               prefix={""}
+                              maxLength="500"
                               placeholder="Bank Account Number"
                               allowNegative={false}
 
                             />
                           </Form.Item>
                         </Col>}
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                          <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="swiftCode"
-                            label="BIC/SWIFT/Routing Number"
-                            required
-                            rules={[{ required: true, message: 'is required' }, {
+                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                          className="custom-forminput custom-label mb-0"
+                          name="swiftCode"
+                          label="BIC/SWIFT/Routing Number"
+                          required
+                          rules={[
+                            {
+                              required: true,
+                              message: "Is required"
+                            },
+                            {
+                              pattern: /^[A-Za-z0-9]+$/,
+                              message: "Invalid BIC/SWIFT/Routing number",
+                            },
+                            {
                               whitespace: true,
+                              message: apiCalls.convertLocalLang('is_required')
                             },
                             {
                               validator: validateContentRule
-                            },]}
-                          >
-
-                            <Input
-                              className="cust-input text-left"
-                              placeholder="Bank Name"
-                            />
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                          <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="bankName"
-                            label="Bank Name"
-                            required
-                            rules={[{ required: true, message: 'is required' }]}
-                          >
-                            <Input
-                              className="cust-input text-left"
-                              placeholder="Bank Name"
-                            />
-                          </Form.Item>
-                        </Col>
-
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                          <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="payeeAccountCountry"
-                            required
-                            rules={[{ required: true, message: 'is required' }]}
-                            label={<Translate content="Country" component={Form.label} />}
-                          >
-
-                            <Select
-                              placeholder="Country"
-                              className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
-                              dropdownClassName="select-drpdwn"
-                              onChange={(e) => handleCountryChange(e)}
-                              bordered={false}
-                            >
-                              {country.map((item, indx) => (
-                                <Option key={indx} value={item.name}>
-                                  {item.name}
-                                </Option>
-                              ))}
-                            </Select>
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                          <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="payeeAccountState"
-                            required
-                            rules={[{ required: true, message: 'is required' }]}
-                            label={<Translate content="State" component={Form.label} />}
-                          >
-                            <Input
-                              className="cust-input"
-                              maxLength="20"
-                              placeholder="State"
-                            />
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                          <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="payeeAccountCity"
-                            required
-                            rules={[{ required: true, message: 'is required' }]}
-                            label={<Translate content="City" component={Form.label} />}
-                          >
-                            <Input
-                              className="cust-input"
-                              maxLength="20"
-                              placeholder="City"
-                            />
-                          </Form.Item>
-                        </Col>
-                        <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
-                          <Form.Item
-                            className="custom-forminput custom-label mb-0"
-                            name="payeeAccountPostalCode"
-                            required
-                            rules={[{ required: true, message: 'is required' }]}
-                            label={
-                              <Translate content="Post_code" component={Form.label} />
                             }
-                          >
-                            <Input
-                              className="cust-input"
-                              maxLength="20"
-                              placeholder="Post code"
-                            />
-                          </Form.Item>
-
-                        </Col>
-                      </Row>
-                      <div style={{ marginLeft: "447px", marginTop: "40px" }}>
-                        <Button
-                          className="pop-btn px-36"
-                          style={{ margin: "0 8px" }}
-                          onClick={() => handleCancel()}>
-                          Cancel
-                        </Button>
-                        <Button
-                          htmlType="submit"
-                          size="large"
-                          className="pop-btn mb-36"
-                          loading={btnDisabled}
-                          style={{ minWidth: 150 }}
+                          ]}
                         >
-                          {isLoading && <Spin indicator={antIcon} />}{" "}
-                          <Translate content="Save_btn_text" />
-                        </Button>
-                      </div>
-                    </Form>
+
+                          <Input
+                            className="cust-input text-left"
+                            placeholder="Swift Code"
+                            maxLength="500"
+                          />
+                        </Form.Item>
+                      </Col>
+
+                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                          className="custom-forminput custom-label mb-0"
+                          name="bankName"
+                          label="Bank Name"
+                          required
+                          rules={[
+                            {
+                              required: true,
+                              message: "Is required"
+                            },
+                            {
+                              whitespace: true,
+                              message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                              validator: validateContentRule
+                            }
+                          ]}
+                        >
+                          <Input
+                            className="cust-input text-left"
+                            placeholder="Bank Name"
+                            maxLength="500"
+                          />
+                        </Form.Item>
+                      </Col>
+
+                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+
+                        <Form.Item
+                          className="custom-forminput custom-label mb-0"
+                          name="payeeAccountCountry"
+                          required
+                          rules={[{ required: true, message: 'Is required' }, {
+                            whitespace: true,
+                          },
+                          {
+                            validator: validateContentRule
+                          },]}
+                          label={<Translate content="Country" component={Form.label} />}
+                        >
+
+                          <Select
+                            showSearch
+
+                            placeholder="Select Country"
+                            className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
+                            dropdownClassName="select-drpdwn"
+                            onChange={(e) => handleCountryChange(e)}
+                            bordered={false}
+                          >
+                            {country.map((item, indx) => (
+                              <Option key={indx} value={item.name}>
+                                {item.name}
+                              </Option>
+                            ))}
+                          </Select>
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                          className="custom-forminput custom-label mb-0"
+                          name="payeeAccountState"
+                          required
+                          rules={[
+                            {
+                              required: true,
+                              message: "Is required"
+                            },
+                            {
+                              whitespace: true,
+                              message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                              validator: validateContentRule
+                            }
+                          ]}
+                          label={<Translate content="State" component={Form.label} />}
+                        >
+                          <Input
+                            className="cust-input"
+                            maxLength="20"
+                            placeholder="State"
+                          />
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                          className="custom-forminput custom-label mb-0"
+                          name="payeeAccountCity"
+                          required
+                          rules={[
+                            {
+                              required: true,
+                              message: "Is required"
+                            },
+                            {
+                              whitespace: true,
+                              message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                              validator: validateContentRule
+                            }
+                          ]}
+                          label={<Translate content="City" component={Form.label} />}
+                        >
+                          <Input
+                            className="cust-input"
+                            maxLength="20"
+                            placeholder="City"
+                          />
+                        </Form.Item>
+                      </Col>
+                      <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
+                        <Form.Item
+                          className="custom-forminput custom-label mb-0"
+                          name="payeeAccountPostalCode"
+                          required
+                          rules={[
+                            {
+                              required: true,
+                              message: "Is required"
+                            },
+                            {
+                              whitespace: true,
+                              message: apiCalls.convertLocalLang('is_required')
+                            },
+                            {
+                              validator: validateContentRule
+                            }
+                          ]}
+                          label={
+                            <Translate content="Post_code" component={Form.label} />
+                          }
+                        >
+                          <Input
+                            className="cust-input"
+                            maxLength="20"
+                            placeholder="Post code"
+                          />
+                        </Form.Item>
+
+                      </Col>
+                    </Row>
+                    <div style={{ marginLeft: "447px", marginTop: "40px" }}>
+                      <Button
+                        className="pop-btn px-36"
+                        style={{ margin: "0 8px" }}
+                        onClick={() => handleCancel()}>
+                        Cancel
+                      </Button>
+                      <Button
+                        htmlType="submit"
+                        size="large"
+                        className="pop-btn mb-36"
+                        loading={btnDisabled}
+                        style={{ minWidth: 150 }}
+                      >
+                        {isLoading && <Spin indicator={antIcon} />}{" "}
+                        <Translate content="Save_btn_text" />
+                      </Button>
+                    </div>
+                  </Form>
                   }
 
 
@@ -1191,7 +1506,7 @@ const AddressCommonCom = (props) => {
                   return <Row gutter={14} style={{ paddingBottom: "15px" }}>
 
                     <div className="d-flex  kpi-List " key={indx} value={item} style={{ marginLeft: "20px", width: "100%", height: "65px", backgroundColor: "var(--bgDarkGrey)", borderRadius: "20px" }}>
-                      {(props?.addressBookReducer?.cryptoTab == true) ?
+                      {(props?.cryptoTab == 2) ?
                         <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
                             <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>
@@ -1205,11 +1520,10 @@ const AddressCommonCom = (props) => {
                         </Col> :
                         <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
-                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>{item.currencyType} {","}{" "}
-                              {item.bankType}{","}{" "}
-                              {item.accountNumber}{","}{" "}
-                              {item.swiftCode}{","}{" "}
-                              {item.bankName}
+                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>
+                              {item.label}{","}{" "}
+                              {item.walletCode}{","}{" "}
+                              {item.walletAddress}
                             </label>
                             </Col>
                           </Row>
@@ -1244,7 +1558,7 @@ const AddressCommonCom = (props) => {
               })}
               <Modal
                 title={
-                  "Confirm Delete?"
+                  "Confirm Delete"
                 }
                 visible={isModalDelete}
                 onOk={handleOk}
@@ -1254,7 +1568,7 @@ const AddressCommonCom = (props) => {
                   <Tooltip title="Close">
                     <span
                       className="icon md close-white c-pointer"
-                      onClick={() => handleDeleteModal()}
+                      onClick={() => handleDeleteCancel()}
                     />
                   </Tooltip>
 
@@ -1264,7 +1578,7 @@ const AddressCommonCom = (props) => {
                     <Button
                       className="pop-btn px-24"
                       style={{ margin: "0 8px" }}
-                      onClick={() => handleDeleteModal()}>
+                      onClick={() => handleDeleteCancel()}>
                       No
                     </Button>
                     <Button
@@ -1279,7 +1593,7 @@ const AddressCommonCom = (props) => {
               >
 
                 <p className="fs-16 mb-0">
-                  Do you really want to Delete
+                  Do you really want to delete ?
 
                 </p>
               </Modal>

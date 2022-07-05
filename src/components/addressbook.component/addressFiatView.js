@@ -117,7 +117,10 @@ const AddressFiatView = (props) => {
 												<div>
 													<label className="kpi-label">Favorite Name</label>
 													<div className=" kpi-val">
-														{fiatAddress?.favouriteName}
+														{fiatAddress?.favouriteName === " " ||
+																		fiatAddress?.favouriteName === null
+																		? "-"
+																		: fiatAddress?.favouriteName}
 													</div>
 												</div>
 											</Col>
@@ -126,7 +129,10 @@ const AddressFiatView = (props) => {
 												<div>
 													<label className="kpi-label">Name</label>
 													<div className=" kpi-val">
-														{fiatAddress?.fullName}
+														{fiatAddress?.fullName === " " ||
+																		fiatAddress?.fullName === null
+																		? "-"
+																		: fiatAddress?.fullName}
 													</div>
 												</div>
 											</Col>
@@ -135,7 +141,10 @@ const AddressFiatView = (props) => {
 													<label className="kpi-label">Email</label>
 													<div className="kpi-val">
 														<div className=" kpi-val">
-															{fiatAddress?.email}
+															{fiatAddress?.email === " " ||
+																		fiatAddress?.email === null
+																		? "-"
+																		: fiatAddress?.email}
 														</div>
 													</div>
 												</div>
@@ -143,8 +152,11 @@ const AddressFiatView = (props) => {
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Phone Number</label>
-													{ <div className=" kpi-val">{fiatAddress?.phoneNumber}
-											
+													{ <div className=" kpi-val">
+													{fiatAddress?.phoneNumber === " " ||
+																		fiatAddress?.phoneNumber === null
+																		? "-"
+																		: fiatAddress?.phoneNumber}
 													
 													</div> }
 												</div>
@@ -156,52 +168,77 @@ const AddressFiatView = (props) => {
 													Address Line1
 													</label>
 													{ <div className=" kpi-val">
-														{fiatAddress?.line1}
+														{fiatAddress?.line1 === " " ||
+																		fiatAddress?.line1 === null
+																		? "-"
+																		: fiatAddress?.line1}
 													</div> }
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">Address Line2</label>
-													{ <div className="kpi-val">{fiatAddress?.line2}</div> }
+													{ <div className="kpi-val">
+														{fiatAddress?.line2 === " " ||
+																		fiatAddress?.line2 === null
+																		? "-"
+																		: fiatAddress?.line2}</div> }
 												</div>
 											</Col>
+										
+										
+										
+											
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">City</label>
+													<label className="kpi-label">Country</label>
 													<div className="kpi-val">
-														{fiatAddress?.city}
+														{fiatAddress?.country === " " ||
+																		fiatAddress?.country === null
+																		? "-"
+																		: fiatAddress?.country}
 													</div>
 												</div>
 											</Col>
-										
-										
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
 													<label className="kpi-label">State</label>
-													<div className=" kpi-val">{fiatAddress?.state}
+													<div className=" kpi-val">
+													{fiatAddress?.state === " " ||
+																		fiatAddress?.state === null
+																		? "-"
+																		: fiatAddress?.state}
 														
 													</div>
 												</div>
 											</Col>
 											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 												<div>
-													<label className="kpi-label">Country</label>
+													<label className="kpi-label">City</label>
 													<div className="kpi-val">
-														{fiatAddress?.country}
+														
+														{fiatAddress?.city === " " ||
+																		fiatAddress?.city === null
+																		? "-"
+																		: fiatAddress?.city}
 													</div>
 												</div>
 											</Col>
-											
 												<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
 													<div>
-														<label className="kpi-label">Post code</label>
+														<label className="kpi-label">Postal Code</label>
 														<div className="kpi-val">
-															{fiatAddress?.postalCode}
+															{fiatAddress?.postalCode === " " ||
+																		fiatAddress?.postalCode === null
+																		? "-"
+																		: fiatAddress?.postalCode}
 														</div>
 													</div>
 												</Col>
 										</Row>
+										<Title className="page-title text-white">
+								BENEFICIARY BANK DETAILS 
+							</Title>
 										<Row>
 												{bankDetailes?.map((item, idx) => (
 													<div
@@ -218,7 +255,23 @@ const AddressFiatView = (props) => {
 																	Bank Label
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																	{item.label}
+																	
+																	{item.label === " " ||
+																		item.label === null
+																		? "-"
+																		: item.label}
+																</Title>
+															</Col>
+															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+																<Text className="fw-300 text-white-50 fs-12">
+																	Currency
+																</Text>
+																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+																	
+																	{item.walletCode === " " ||
+																		item.walletCode === null
+																		? "-"
+																		: item.walletCode}
 																</Title>
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
@@ -226,23 +279,35 @@ const AddressFiatView = (props) => {
 																	Bank Type
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																	{item.bankType}
+																	
+																	{item.bankType === " " ||
+																		item.bankType === null
+																		? "-"
+																		: item.bankType}
 																</Title>
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
-																	Bank Account Number
+																	Bank Account Number/IBAN
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																	{item.accountNumber}
+																	
+																	{item.accountNumber === " " ||
+																		item.accountNumber === null
+																		? "-"
+																		: item.accountNumber}
 																</Title>
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
-																	Swift Code/BIC
+																BIC/SWIFT/Routing Number
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																	{item.swiftCode}
+																	
+																	{item.swiftCode === " " ||
+																		item.swiftCode === null
+																		? "-"
+																		: item.swiftCode}
 																</Title>
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
@@ -250,7 +315,11 @@ const AddressFiatView = (props) => {
 																	Bank Name
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																	{item.bankName}
+																	
+																	{item.bankName === " " ||
+																		item.bankName === null
+																		? "-"
+																		: item.bankName}
 																</Title>
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
@@ -258,7 +327,11 @@ const AddressFiatView = (props) => {
 																	Country
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																	{item.payeeAccountCountry}
+																	
+																	{item.payeeAccountCountry === " " ||
+																		item.payeeAccountCountry === null
+																		? "-"
+																		: item.payeeAccountCountry}
 																</Title>
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
@@ -266,7 +339,11 @@ const AddressFiatView = (props) => {
 																	State
 																</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																{item.payeeAccountState}
+																
+																{item.payeeAccountState === " " ||
+																		item.payeeAccountState === null
+																		? "-"
+																		: item.payeeAccountState}
 															</Title>
 														</Col>
 														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
@@ -274,15 +351,34 @@ const AddressFiatView = (props) => {
 																City
 															</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																{item.payeeAccountCity}
+																
+																{item.payeeAccountCity === " " ||
+																		item.payeeAccountCity === null
+																		? "-"
+																		: item.payeeAccountCity}
 															</Title>
 														</Col>
 														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 															<Text className="fw-300 text-white-50 fs-12">
-																Post Code
+																Postal Code
 															</Text>
 															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
-																{item.payeeAccountPostalCode}
+																
+																{item.payeeAccountPostalCode === " " ||
+																		item.payeeAccountPostalCode === null
+																		? "-"
+																		: item.payeeAccountPostalCode}
+															</Title>
+														</Col>
+														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+															<Text className="fw-300 text-white-50 fs-12">
+																Address State
+															</Text>
+															<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
+															{item.addressState === " " ||
+																		item.addressState === null
+																		? "-"
+																		: item.addressState}
 															</Title>
 														</Col>
 														
