@@ -7,7 +7,7 @@ import { tranforobj } from './config';
 import SwapCoins from './swapCoins';
 import TransforSummary from './transforSummary';
 import TransforSuccessMsg from './transforSuccess';
-import {setTransforObj} from '../../reducers/tranfor.Reducer'
+import {setTransforObj, setStepcode} from '../../reducers/tranfor.Reducer'
 
 const { Paragraph } = Typography
 class Transfor extends Component {
@@ -37,7 +37,7 @@ class Transfor extends Component {
     renderTitle = () => {
         const stepcodes = {
             tranforcoin: <span />,
-            tranforsummary: <span />,
+            tranforsummary: <span onClick={() => this.props.dispatch(setStepcode("tranforcoin"))} className="icon md lftarw-white c-pointer" />,
             tranforsuccess: <span />,
         }
         return stepcodes[tranforobj[this.props.TransforStore.stepcode]]

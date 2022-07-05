@@ -598,4 +598,5 @@ export default {
 	return_to_transfor: "Back to Transfer",
 	referr: "My Referral",
 	notification: "Notification Settings",
+	transforsucessText1: "Your transaction was success,",
 };
