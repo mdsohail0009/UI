@@ -300,14 +300,14 @@ const AddressFiatView = (props) => {
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
-																BIC/SWIFT/Routing Number
+																BIC/SWIFT/Routing Numbersss
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
 																	
-																	{item.swiftCode === " " ||
-																		item.swiftCode === null
+																	{item.swiftRouteBICNumber === " " ||
+																		item.swiftRouteBICNumber === null
 																		? "-"
-																		: item.swiftCode}
+																		: item.swiftRouteBICNumber}
 																</Title>
 															</Col>
 															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>

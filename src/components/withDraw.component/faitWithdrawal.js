@@ -644,9 +644,9 @@ let data=bankDetails.filter((item)=>item.bankName==e)
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     content="SIGNU"
                     component={Text}
-                    with={{value: details[0].swiftCode }}
+                    with={{value: details[0].swiftRouteBICNumber }}
                   />
-                  <Translate
+                  {/* <Translate
                     className="fw-200 text-white-50 fs-14"
                     content="city"
                     component={Text}
@@ -655,11 +655,11 @@ let data=bankDetails.filter((item)=>item.bankName==e)
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     component={Text}
                     with={{ value: details[0].city }}
-                  />
+                  /> */}
                   
 
                   
-                  <Translate
+                  {/* <Translate
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     component={Text}
                     with={{
@@ -671,8 +671,8 @@ let data=bankDetails.filter((item)=>item.bankName==e)
                     className="fw-200 text-white-50 fs-14"
                     content="Country"
                     component={Text}
-                  />
-                  <Translate
+                  /> */}
+                  {/* <Translate
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     component={Text}
                     with={{ value: details[0].country }}
@@ -686,7 +686,7 @@ let data=bankDetails.filter((item)=>item.bankName==e)
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     component={Text}
                     with={{ value: details[0].zipCode }}
-                  />
+                  /> */}
 
                   <Form.Item
                     className="custom-forminput mb-36 agree"
