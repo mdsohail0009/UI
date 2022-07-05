@@ -205,7 +205,7 @@ class RequestedDocs extends Component {
         }
     }
     handleUpload = ({ file }, doc) => {
-        this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
+    this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
         if (file.status === "done" && this.state.isValidFile) {
             let replyObjs = [...this.state.docReplyObjs];
             let item = this.isDocExist(replyObjs, doc.id);
@@ -234,8 +234,8 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
         }
         else if (file.status === 'error') {
-            error(file.response);
-            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false })
+            // error(file.response);
+            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false,errorMessage:file.response })
         }
         else if (!this.state.isValidFile) {
             this.setState({ ...this.state, uploadLoader: false, isSubmitting: false });
@@ -247,8 +247,8 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, isValidFile: true, })
             return true
         } else {
-            error('File is not allowed. You can upload jpg, png, jpeg and PDF  files');
-            this.setState({ ...this.state, isValidFile: false, })
+            // error('File is not allowed. You can upload jpg, png, jpeg and PDF  files');
+            this.setState({ ...this.state, isValidFile: false, errorMessage:'File is not allowed. You can upload jpg, png, jpeg and PDF  files'})
             return Upload.LIST_IGNORE;
         }
     }

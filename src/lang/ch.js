@@ -537,4 +537,5 @@ export default {
 	transfor_btn_cnftransfor: 'Confirm Transfor',
 	return_to_transfor: "Back to Transfor",
 	referr: "My Referral",
+	transforsucessText1: "Your order has been placed successfully,",
 };
