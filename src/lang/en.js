@@ -179,7 +179,7 @@ export default {
 	privacy_policy: "Privacy Policy",
 	logout: "Logout",
 	themes: "Themes",
-	notifications: "Notifications Settings",
+	notifications: "Notification Settings",
 	local_currency: "Local Currency",
 	language: "Language",
 	preferences: "Preferences",
