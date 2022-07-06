@@ -17,7 +17,7 @@ class SellSummary extends Component {
           isLoading: false,
            disableConfirm: false,
             isTermsAgree: false,
-             error: { valid: true, message: null } }
+             error: { valid: true, message: null,agreeRed:true } }
     componentDidMount() {
         this.fetchPreviewData()
         setTimeout(() => this.setState({ ...this.state, disableConfirm: true }), 12000)
@@ -44,16 +44,16 @@ class SellSummary extends Component {
         }
     }
     async saveSellData() {
-        this.setState({ ...this.state,loader:true, error: { valid: true, message: '' } })
+        this.setState({ ...this.state,loader:true, error: { valid: true, message: '',agreeRed:true } })
         if (!this.state.isTermsAgree) {
             this.setState({
                 ...this.state, error: {
-                    valid: false, message: apicalls.convertLocalLang('accept_terms'), title: apicalls.convertLocalLang('sellCrypto')
+                    valid: false, message: apicalls.convertLocalLang('accept_terms'), title: apicalls.convertLocalLang('sellCrypto'),agreeRed:false
                 }
             })
 
         } else {
-            this.setState({ ...this.state, isLoading: true, error: { valid: true, message: '' } })
+            this.setState({ ...this.state, isLoading: true, error: { valid: true, message: '',agreeRed:true } })
             let obj = Object.assign({}, this.props.sellData.sellsaveObject)
             obj.fromValue = this.state.sellpreviewData.amount
             obj.toValue = this.state.sellpreviewData.amountNativeCurrency
@@ -75,7 +75,7 @@ class SellSummary extends Component {
                 //     name: 'Sell', properties: { "Type": 'User', "Action": 'Save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Sell', "Remarks": obj.fromValue + " " + this.state.sellpreviewData.coin + " selled", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto' }
                 // });
             } else {
-                this.setState({ ...this.state, loader: false,isLoading: false, disableConfirm: false, error: { valid: false, message: this.isErrorDispaly(res),title: apicalls.convertLocalLang('sellCrypto') }  } )
+                this.setState({ ...this.state, loader: false,isLoading: false, disableConfirm: false, error: { valid: false, message: this.isErrorDispaly(res),title: apicalls.convertLocalLang('sellCrypto'),agreeRed:false }  } )
             }
         }
     }

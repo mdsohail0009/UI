@@ -78,6 +78,7 @@ const AddressCommonCom = (props) => {
   const [ibanValue, setIbanValue] = useState(null)
   const [favouriteDetails, setFavouriteDetails] = useState({})
   const [deleteItem, setDeleteItem] = useState()
+  const [agreeRed, setAgreeRed] = useState(true)
   const handleshowModal = (item) => {
     setEditBankDetails(true)
     let data = modalData.find((items) => items.id == item.id)
@@ -203,6 +204,7 @@ const AddressCommonCom = (props) => {
   };
 
   const radioChangeHandler = (e) => {
+    setAgreeRed(true);
     setErrorMsg(null);
     setErrorWarning(null);
     setUploading(false);
@@ -390,6 +392,7 @@ const AddressCommonCom = (props) => {
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
       setErrorMsg(apiCalls.convertLocalLang("agree_termsofservice"));
+      setAgreeRed(false);
     }
     // else if (responsecheck.data !== null) {
     //   setIsLoading(false);
@@ -416,7 +419,7 @@ const AddressCommonCom = (props) => {
       let saveObj = Object.assign({}, values);
       saveObj.payeeAccountModels = modalData
       let response = await saveAddressBook(saveObj);
-
+      setAgreeRed(true);
       if (response.ok) {
         setBtnDisabled(false);
         useDivRef.current.scrollIntoView();
@@ -1035,8 +1038,8 @@ const AddressCommonCom = (props) => {
 									message: apiCalls.convertLocalLang("is_required"),
 								},
 							]}>
-							
-							
+       
+       
               	<Select
 								 placeholder="Select Coin"
 								className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
@@ -1608,7 +1611,7 @@ const AddressCommonCom = (props) => {
                     valuePropName="checked"
                     required
                   >
-                    <Checkbox className="ant-custumcheck" />
+                    <Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red ":" "}`} />
 
                   </Form.Item>
                   <Translate
