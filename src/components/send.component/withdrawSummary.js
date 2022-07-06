@@ -648,7 +648,7 @@ class WithdrawSummary extends Component {
 							<Currency
 								defaultValue={this.state.usdAmount}
 								prefix={""}
-								decimalPlaces={8}
+								decimalPlaces={2}
 								type={"text"}
 								suffixText={"USD"}
 							/>
