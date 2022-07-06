@@ -865,7 +865,7 @@ const AddressCommonCom = (props) => {
                     >
                       <Select
                         showSearch
-                        placeholder="state"
+                        placeholder="State"
                         className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                         dropdownClassName="select-drpdwn"
                         onChange={(e) => handleState(e)}
@@ -1451,11 +1451,21 @@ const AddressCommonCom = (props) => {
                             ]}
                             label={<Translate content="State" component={Form.label} />}
                           >
-                            <Input
-                              className="cust-input"
-                              maxLength="20"
-                              placeholder="State"
-                            />
+                           <Select
+                        showSearch
+                        placeholder="State"
+                        className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
+                        dropdownClassName="select-drpdwn"
+                        onChange={(e) => handleState(e)}
+                        bordered={false}
+                      >
+                        {state?.map((item, indx) => (
+                          <Option key={indx} value={item.name}>
+                            {item.name}
+                          </Option>
+                        ))}
+
+                      </Select>
                           </Form.Item>
                         </Col>
                         <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
