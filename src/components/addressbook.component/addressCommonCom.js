@@ -1535,7 +1535,7 @@ const AddressCommonCom = (props) => {
                       {(props?.cryptoTab == 2) ?
                         <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
-                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "20px" }}>
+                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>
                               {item.currencyType}{","}{" "}
                               {item.bankType}{","}{" "}
                               {item.accountNumber}{","}{" "}
@@ -1546,7 +1546,7 @@ const AddressCommonCom = (props) => {
                         </Col> :
                         <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
-                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "20px" }}>
+                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>
                               {item.label}{","}{" "}
                               {item.walletCode}{","}{" "}
                               {item.walletAddress}
