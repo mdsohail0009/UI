@@ -270,6 +270,7 @@ const AddressCommonCom = (props) => {
         form.setFieldsValue({ isAgree: obj.isAgree })
       }
       setFavouriteDetails(obj)
+      obj.favouriteName = obj?.favouriteName === null ? "" : obj?.favouriteName
       form.setFieldsValue(obj)
     }
   }
