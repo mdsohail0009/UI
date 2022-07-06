@@ -236,6 +236,7 @@ const FaitWithdrawal = ({
     if (isChange) form.setFieldsValue({ state: null });
   };
   const savewithdrawal = async (values) => {
+    debugger
     setAgreeRed(true);
     setBtnDisabled(true)
     dispatch(setWFTotalValue(values.totalValue));
@@ -288,14 +289,14 @@ const FaitWithdrawal = ({
     values["memberWalletId"] = accountDetails[0].id;
     values["beneficiaryAccountName"] = userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName;
     values["favouriteName"] =
-      values.favouriteName || addressDetails.favouriteName || details[0].favouriteName;
+      values.favouriteName || addressDetails.favouriteName || bankDetails[0].favouriteName;
     values["comission"] = "0.0";
-    values["bankName"] = details[0].bankName;
-    values["accountNumber"] = details[0].accountNumber;
-        values["country"] = details[0].country;
-        values["state"] = details[0].state;
-            values["zipcode"] = details[0].zipcode;
-    values["routingNumber"] = details[0].routingNumber;
+    values["bankName"] = bankDetails[0].bankName;
+    values["accountNumber"] = bankDetails[0].accountNumber;
+        values["country"] = bankDetails[0].country;
+        values["state"] = bankDetails[0].state;
+            values["zipcode"] = bankDetails[0].zipcode;
+    values["routingNumber"] = bankDetails[0].routingNumber;
     values["WalletCode"]=accountDetails[0].currencyCode
     const response = await handleFiatConfirm(values);
     if (response.ok) {
@@ -428,7 +429,7 @@ const AccountBankDetails=async(payeeId,currency)=>{
 const handleDetails=(e)=>{
   debugger
 let data=bankDetails.filter((item)=>item.bankName==e)
-setBankDetails(data)
+setDetails(data)
  form.setFieldsValue({totalValue : ""});
 }
 // const handleDetails = async (e) => {
@@ -525,7 +526,7 @@ setBankDetails(data)
                 <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="noaddress_msg" /></Text>
            : <>
 
-              {addressShow == null && accountDetails.length>1 &&
+              {addressShow == null && accountDetails.length>0 &&
                 <div style={{ position: "relative" }}>
 
                   <Form.Item
@@ -555,7 +556,7 @@ setBankDetails(data)
                 </div>}
                 {amountLoading && <Loader />}
 
-              {bankDetails?.length>0 &&
+              {details?.length>0 &&
                 <div className="fiatdep-info">
 
                   <Form.Item
@@ -618,7 +619,7 @@ setBankDetails(data)
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     content="SIGNU"
                     component={Text}
-                     with={{ value: bankDetails[0].bankName }}
+                     with={{ value: details[0].bankName }}
 
                   />
                   <Translate
@@ -636,7 +637,7 @@ setBankDetails(data)
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     content="SIGNU"
                     component={Text}
-                     with={{ value: bankDetails[0].accountNumber }}
+                     with={{ value: details[0].accountNumber }}
                   />
                   <Translate
                     className="fw-200 text-white-50 fs-14"
@@ -653,7 +654,7 @@ setBankDetails(data)
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     content="SIGNU"
                     component={Text}
-                    with={{value: bankDetails[0].swiftRouteBICNumber }}
+                    with={{value: details[0].swiftRouteBICNumber }}
                   />
                   {/* <Translate
                     className="fw-200 text-white-50 fs-14"

@@ -81,7 +81,10 @@ const AddressCommonCom = (props) => {
   const [deleteItem, setDeleteItem] = useState()
   const [selectAddressType,setSelectAddressType]=useState("1stparty")
   const [agreeRed, setAgreeRed] = useState(true)
+
+
   const handleshowModal = (item) => {
+    debugger
     setEditBankDetails(true)
     let data = modalData.find((items) => items.id == item.id)
     setIsModalVisible(true);
@@ -320,7 +323,8 @@ const AddressCommonCom = (props) => {
       bankType: values.bankType,
       swiftRouteBICNumber: null,
       swiftCode: values.swiftCode,
-      swiftRouteBICNumber: values.swiftCode,      bankName: values.bankName,
+      swiftRouteBICNumber: values.swiftCode,
+      bankName: values.bankName,
       addressType: values.addressType,
       line1: props?.addressBookReducer?.cryptoTab == true ? values.PayeeAccountLine1 : values.line1,
       line2: props?.addressBookReducer?.cryptoTab == true ? values.PayeeAccountLine2 : values.line1,
