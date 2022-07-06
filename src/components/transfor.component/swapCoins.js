@@ -6,11 +6,15 @@ import Translate from "react-translate-component";
 import apiCalls from '../../api/apiCalls'
 import NumberFormat from 'react-number-format';
 import {setStepcode,setTransforObj} from '../../reducers/tranfor.Reducer'
+import Currency from '../shared/number.formate';
 const { Option } = Select;
 
-const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
+const  TranforCoins = ({userProfile,onClose,dispatch,transforObj}) =>{
     useEffect(()=>{
         loadApis();
+        if(transforObj){
+            form.setFieldsValue(transforObj)
+        }
     },[])
     const [fromWalletLu,setFromWalletLu] = useState([])
     const [toWalletLu,setToWalletLu] = useState([])
@@ -18,6 +22,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
     const [loader,setLoader] = useState(true)
     const [balance,setBalance] = useState(0)
     const [errormsg,setErrorMsg] = useState(null)
+    const [selectedwalletType,setSelectedwalletType] = useState(null)
     const useDivRef = React.useRef(null);
     const [form] = Form.useForm();
     // const [transfordata,setTransfordata] = useState(null)
@@ -41,6 +46,9 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
             currencyLoder=true;
             if(luLoader &&currencyLoder){
                 setLoader(false);
+                if(transforObj){
+                    showBalance()
+                }
             }
         }else{
             setLoader(false);
@@ -49,7 +57,10 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
     }
     const showBalance = async(val) =>{
         const obj=form.getFieldValue()
-
+        const selectedList = currencyLu.filter((item)=>item.walletCode==val)
+        if(selectedList.length>0){
+            setSelectedwalletType(selectedList[0].walletType);
+        }
         if (obj.walletCode && obj.fromWalletType) {
             let currencybalRes = await getcurrencyBalance(userProfile.id, obj.fromWalletType, obj.walletCode);
             if (currencybalRes.ok) {
@@ -66,18 +77,22 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
         }
     }
     const showSummary= async(values) =>{
-        debugger
-        if((!values.transferAmount) || values.transferAmount=="0"){
+        values.transferAmount = parseFloat(values.transferAmount.replace(',','')).toString()
+        if((!values.transferAmount)||values.transferAmount=='0'){
             useDivRef.current.scrollIntoView();
             return setErrorMsg('Amount must be greater than zero.');
         }
         if(parseFloat(values.transferAmount)>parseFloat(balance?.available)){
             useDivRef.current.scrollIntoView();
-            return setErrorMsg('insufficient funds');
+            return setErrorMsg('Insufficient funds');
         }
         let selectedWallet =  currencyLu.filter((type)=>type.walletCode == values.walletCode)
         values.memberWalletId = selectedWallet[0].walletId;
         values.membershipId = userProfile.id;
+        values.transferAmount = selectedwalletType=='Fiat'?( values.transferAmount.slice(0,(values.transferAmount.indexOf('.')>-1?(values.transferAmount.indexOf('.')+3):values.transferAmount.length)) ):values.transferAmount;
+        if(values.transferAmount.indexOf('.')==0){
+            values.transferAmount = '0'+values.transferAmount
+        }
         // console.log(values)
         // const res = saveTransfor(values);
         // if(res.ok){
@@ -198,8 +213,9 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
                             <>
                               <Translate
                                 content="amount" component={Form.label} />
-                              <div className="minmax text-green">
-                                {"Available balance:"+(balance?.available||0) }
+                              <div className="minmax">
+                                {/* {"Available balance:"+(balance?.available||0) } */}
+                                <Currency defaultValue={balance.available || 0} prefix={'Available balance: '} className={`fs-18 m-0 fw-600 ${balance.available < 0 ? 'text-red' : 'text-green'}`} />
                               </div>
                             </>
                           }
@@ -217,7 +233,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
                             thousandSeparator={true}
                             prefix={""}
                             placeholder="0.00"
-                            decimalScale={8}
+                            decimalScale={selectedwalletType=='Crypto'?8:2}
                             allowNegative={false}
                             maxlength={13}
                             style={{ height: 44 }}
@@ -244,14 +260,11 @@ const  TranforCoins = ({userProfile,onClose,dispatch}) =>{
     </>)
 
 } 
-const connectStateToProps = ({ userConfig }) => {
-    return { userProfile: userConfig.userProfileInfo }
+const connectStateToProps = ({ userConfig, TransforStore }) => {
+    return { userProfile: userConfig.userProfileInfo, transforObj:TransforStore.transforObj }
 }
 const connectDispatchToProps = dispatch => {
     return {
-        // changeStep: (stepcode) => {
-        //     dispatch(setStepcode(stepcode))
-        // },
         dispatch
     }
 }

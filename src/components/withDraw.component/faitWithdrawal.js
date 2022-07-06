@@ -98,6 +98,7 @@ const FaitWithdrawal = ({
     beneficiaryAccountAddress: null
   });
   const [addressInfo, setAddressInfo] = useState(null);
+  const [agreeRed, setAgreeRed] = useState(true)
   useEffect(() => {
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       handleWalletSelection(selectedWalletCode);
@@ -254,14 +255,16 @@ const FaitWithdrawal = ({
     if (isChange) form.setFieldsValue({ state: null });
   };
   const savewithdrawal = async (values) => {
-
+    setAgreeRed(true);
     setBtnDisabled(true)
     dispatch(setWFTotalValue(values.totalValue));
     if(!values.isAccept){
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
     setErrorMsg(apicalls.convertLocalLang("agree_terms"))
+    setAgreeRed(false);
     }else{
+      setAgreeRed(true);
     if (
       parseFloat(
         typeof values.totalValue === "string"
@@ -644,9 +647,9 @@ let data=bankDetails.filter((item)=>item.bankName==e)
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     content="SIGNU"
                     component={Text}
-                    with={{value: details[0].swiftCode }}
+                    with={{value: details[0].swiftRouteBICNumber }}
                   />
-                  <Translate
+                  {/* <Translate
                     className="fw-200 text-white-50 fs-14"
                     content="city"
                     component={Text}
@@ -655,11 +658,11 @@ let data=bankDetails.filter((item)=>item.bankName==e)
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     component={Text}
                     with={{ value: details[0].city }}
-                  />
+                  /> */}
                   
 
                   
-                  <Translate
+                  {/* <Translate
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     component={Text}
                     with={{
@@ -671,8 +674,8 @@ let data=bankDetails.filter((item)=>item.bankName==e)
                     className="fw-200 text-white-50 fs-14"
                     content="Country"
                     component={Text}
-                  />
-                  <Translate
+                  /> */}
+                  {/* <Translate
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     component={Text}
                     with={{ value: details[0].country }}
@@ -686,7 +689,7 @@ let data=bankDetails.filter((item)=>item.bankName==e)
                     className="fs-20 text-white-30 l-height-normal d-block mb-24"
                     component={Text}
                     with={{ value: details[0].zipCode }}
-                  />
+                  /> */}
 
                   <Form.Item
                     className="custom-forminput mb-36 agree"
@@ -702,7 +705,7 @@ let data=bankDetails.filter((item)=>item.bankName==e)
                     // ]}
                   >
                     <span className="d-flex">
-                      <Checkbox className="ant-custumcheck" />
+                    <Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red":" "}`} />
                       <span className="withdraw-check"></span>
                       <Translate
                         content="agree_to_suissebase"

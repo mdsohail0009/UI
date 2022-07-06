@@ -6,6 +6,7 @@ import Translate from "react-translate-component";
 import apiCalls from '../../api/apiCalls'
 import Currency from "../shared/number.formate";
 import {setStepcode} from '../../reducers/tranfor.Reducer'
+import { fetchDashboardcalls, fetchMarketCoinData } from '../../reducers/dashboardReducer';
 const { Option } = Select;
 const { Text, Paragraph } = Typography;
 
@@ -23,6 +24,8 @@ const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
             const res = await saveTransfor(values);
             if (res.ok) {
                 dispatch(setStepcode('tranforsuccess'))
+                dispatch(fetchDashboardcalls(userProfile.id))
+                dispatch(fetchMarketCoinData(true))
                 setBtnLoader(false)
             }else{
                 setBtnLoader(false)
@@ -123,7 +126,6 @@ const  TransforSummary = ({userProfile,onClose, transforObj,dispatch}) =>{
                     className="fs-20 text-white-30 mb-36"
                     defaultValue={transforObj?.transferAmount}
                     prefix={''}
-                    suffixText={transforObj?.walletCode}
                 />
                 </div>
                 </Col>

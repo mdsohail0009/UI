@@ -938,7 +938,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
   
    .header-logo .visible-mobile::after{content: '';position: absolute;width: 1px;height: 27px;right: 0;top: -2px !important;background-color: var(--bgWhiteSpin);}
    .mobile-logo {padding-left: 20px;}
-  
+   .custom-label .ant-form-item-label{margin-bottom: 8px !important;}
    .amt-field .cust-input{width:150px;}
    .sidebar-push .ant-alert{align-items: baseline;}
    .custom-label.ant-form-item{margin-bottom: 16px;}
@@ -1277,3 +1277,6 @@ input[type=number]::-webkit-outer-spin-button {
     .cust-input-light .ant-select-selection-item-content{
         color:#6e6e74 !important;
     }
+.checkbox-red {border-color:var(--textError) !important;}
+.check-red, .check-red .ant-checkbox{border-color:var(--textError) !important;}
+.check-red, .ant-custumcheck .ant-checkbox-checked , label:hover .ant-checkbox-checked, .ant-checkbox-checked::after{ border: 1px solid transparent !important;}

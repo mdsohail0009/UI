@@ -910,7 +910,7 @@ class Header extends Component {
                 className="list-item"
               />} */}
               <Menu.Item
-                key="8"
+                key="9"
                 className="notification-conunt"
                 onClick={this.showNotificationsDrawer}
               >
@@ -942,7 +942,7 @@ class Header extends Component {
                 overlayClassName="secureDropdown"
                 getPopupContainer={() => document.getElementById("area")}
               >
-                <Menu.Item key="9" className="ml-16">
+                <Menu.Item key="10" className="ml-16">
                   {this.props.userConfig?.imageURL != null && (
                     <img
                       src={
@@ -1018,18 +1018,18 @@ class Header extends Component {
                   onClick={this.showBuyDrawer}
                   className="list-item"
                 />
-                <Translate
-                  content="menu_send_receive"
-                  component={Menu.Item}
-                  key="4"
-                  className="mr-16 list-item" />
-                  <Translate
+                   <Translate
                 content="menu_tranfor"
                 component={Menu.Item}
-                key="5"
+                key="4"
                 onClick={this.showTrasforDrawer}
                 className="list-item"
                  />
+                 <Translate
+                  content="menu_send_receive"
+                  component={Menu.Item}
+                  key="5"
+                  className="mr-16 list-item" />
                 <Menu>
                   <ul className="pl-0 drpdwn-list">
                     <li onClick={this.showSendDrawer}>
