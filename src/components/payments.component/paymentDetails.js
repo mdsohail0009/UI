@@ -712,7 +712,7 @@ addressTypeNames = (type) =>{
                               className="p-16 text-center"
                               style={{ color: "white", width: 300 }}
                             >
-                              No bank details available
+                             <Loader />
                             </td>
                           </tr>{" "}
                         </tbody>

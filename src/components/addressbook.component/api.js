@@ -65,14 +65,10 @@ const getInfoVal = (id, type) => {
 const downloadDeclForm=(addr_id)=>{
 	return apiClient.get(ApiControllers.addressbook+`DownloadDocument/${addr_id}`);
 }
-const getPayeeLu = (accountId, type) => {
-
+const getPayeeLu = (accountId,type,is1stParty) => {
     return apiClient.get(
-
-        ApiControllers.addressbook + `PayeeLu/${accountId}/${type}`
-
+        ApiControllers.addressbook + `PayeeLu/${accountId}/${type}/${is1stParty}`
     );
-
 };
 
 

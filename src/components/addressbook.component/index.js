@@ -121,7 +121,12 @@ class AddressBook extends Component {
 				</td>
 			),
 		},
-	
+		{
+			field: "addressLable",
+			title: "Bank Lable",
+			filter: true,
+			width: 230,
+		},
 		{
 			field: "currency",
 			title: apiCalls.convertLocalLang("currency"),
@@ -203,7 +208,7 @@ class AddressBook extends Component {
 			),
 		},
 		{
-			field: "addressLable",
+			field: "favouriteName",
 			title: "Favourite Name",
 			filter: true,
 			width: 300,
@@ -220,6 +225,12 @@ class AddressBook extends Component {
 					</Text>
 				</td>
 			),
+		},
+		{
+			field: "addressLable",
+			title: "Address Lable",
+			filter: true,
+			width: 230,
 		},
 		{
 			field: "address",

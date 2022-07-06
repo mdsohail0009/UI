@@ -78,6 +78,7 @@ const AddressCommonCom = (props) => {
   const [ibanValue, setIbanValue] = useState(null)
   const [favouriteDetails, setFavouriteDetails] = useState({})
   const [deleteItem, setDeleteItem] = useState()
+  const [selectAddressType,setSelectAddressType]=useState(props?.checkThirdParty)
   const handleshowModal = (item) => {
     setEditBankDetails(true)
     let data = modalData.find((items) => items.id == item.id)
@@ -94,6 +95,7 @@ const AddressCommonCom = (props) => {
 
   }
   useEffect(() => {
+    debugger
     if (selectParty === true) {
       form.setFieldsValue({
         addressType: "3r dparty",
@@ -106,6 +108,7 @@ const AddressCommonCom = (props) => {
         state: "",
         zipCode: "",
       });
+      setSelectAddressType(false)
     } else {
       form.setFieldsValue({
         addressType: "1s tparty",
@@ -119,6 +122,7 @@ const AddressCommonCom = (props) => {
         state: "",
         zipCode: "",
       });
+      
     }
 
     if (props?.addressBookReducer?.selectedRowData?.id !== "00000000-0000-0000-0000-000000000000" && props?.addressBookReducer?.selectedRowData?.id) {
@@ -131,7 +135,9 @@ const AddressCommonCom = (props) => {
     } else {
       getFavs("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
     }
-    payeeLuData()
+    
+      payeeLuData()
+    
     if (props?.addressBookReducer?.selectedRowData?.id) {
       bankDetailsLu(props?.addressBookReducer?.selectedRowData?.id, props?.userConfig?.id)
     } else {
@@ -203,6 +209,7 @@ const AddressCommonCom = (props) => {
   };
 
   const radioChangeHandler = (e) => {
+    debugger
     setErrorMsg(null);
     setErrorWarning(null);
     setUploading(false);
@@ -247,7 +254,8 @@ const AddressCommonCom = (props) => {
     }
   }
   const payeeLuData = async () => {
-    let response = await getPayeeLu(props?.userConfig?.id, withdraeTab);
+    debugger
+    let response = await getPayeeLu(props?.userConfig?.id,withdraeTab,true);
     setPayeeLu(response.data)
 
   }
@@ -951,7 +959,7 @@ const AddressCommonCom = (props) => {
                 >
 
 
-                  {props?.cryptoTab == 1 &&
+                  {props?.cryptoTab == 1 ?
                     <Form
                       form={bankDetailForm}
                       initialValues={cryptoAddress}
@@ -1141,8 +1149,9 @@ const AddressCommonCom = (props) => {
                           <Translate content="Save_btn_text" component={Text} />
                         </Button>
                       </div>
-                    </Form>}
-                  {props?.cryptoTab == 2 && <Form
+                    </Form> : <Loader />}
+                  {props?.cryptoTab == 2 ?
+                  <Form
                     form={bankDetailForm}
                     onFinish={saveModalwithdrawal}
                     autoComplete="off"
@@ -1496,7 +1505,7 @@ const AddressCommonCom = (props) => {
                         <Translate content="Save_btn_text" />
                       </Button>
                     </div>
-                  </Form>
+                  </Form> : <Loader />
                   }
 
 
