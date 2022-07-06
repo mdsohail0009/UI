@@ -22,6 +22,7 @@ import { addressTabUpdate, fetchAddressCrypto, setAddressStep } from "../../redu
 import FilePreviewer from "react-file-previewer";
 import WAValidator from "multicoin-address-validator";
 import NumberFormat from "react-number-format";
+import { TumblrShareButton } from "react-share";
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
@@ -78,6 +79,8 @@ const AddressCommonCom = (props) => {
   const [ibanValue, setIbanValue] = useState(null)
   const [favouriteDetails, setFavouriteDetails] = useState({})
   const [deleteItem, setDeleteItem] = useState()
+  const [selectAddressType,setSelectAddressType]=useState("1stparty")
+  const [agreeRed, setAgreeRed] = useState(true)
   const handleshowModal = (item) => {
     setEditBankDetails(true)
     let data = modalData.find((items) => items.id == item.id)
@@ -94,6 +97,7 @@ const AddressCommonCom = (props) => {
 
   }
   useEffect(() => {
+    debugger
     if (selectParty === true) {
       form.setFieldsValue({
         addressType: "3r dparty",
@@ -131,7 +135,9 @@ const AddressCommonCom = (props) => {
     } else {
       getFavs("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
     }
-    payeeLuData()
+    
+       payeeLuData()
+    
     if (props?.addressBookReducer?.selectedRowData?.id) {
       bankDetailsLu(props?.addressBookReducer?.selectedRowData?.id, props?.userConfig?.id)
     } else {
@@ -203,6 +209,8 @@ const AddressCommonCom = (props) => {
   };
 
   const radioChangeHandler = (e) => {
+    debugger
+    setAgreeRed(true);
     setErrorMsg(null);
     setErrorWarning(null);
     setUploading(false);
@@ -228,6 +236,7 @@ const AddressCommonCom = (props) => {
       });
       setBankType("bank");
       setSelectParty(false);
+     
     } else {
       form.setFieldsValue({
         addressType: "3rdparty",
@@ -235,8 +244,12 @@ const AddressCommonCom = (props) => {
         bankType: "bank",
       });
       setBankType("bank");
-      setSelectParty(true);
+       setSelectParty(true);
+      setSelectAddressType("3rdparty")
     }
+
+    
+    payeeLuData()
   };
 
   const handleChange = (e) => {
@@ -247,8 +260,17 @@ const AddressCommonCom = (props) => {
     }
   }
   const payeeLuData = async () => {
-    let response = await getPayeeLu(props?.userConfig?.id, withdraeTab);
-    setPayeeLu(response.data)
+    debugger
+    if(!selectParty){
+      let response = await getPayeeLu(props?.userConfig?.id,withdraeTab,true);
+      setPayeeLu(response.data)
+    }else{
+      let response = await getPayeeLu(props?.userConfig?.id,withdraeTab,false);
+      setPayeeLu(response.data)
+    }
+     
+    
+   
 
   }
   const bankDetailsLu = async (id, membershipId) => {
@@ -268,6 +290,7 @@ const AddressCommonCom = (props) => {
         form.setFieldsValue({ isAgree: obj.isAgree })
       }
       setFavouriteDetails(obj)
+      obj.favouriteName = obj?.favouriteName === null ? "" : obj?.favouriteName
       form.setFieldsValue(obj)
     }
   }
@@ -297,7 +320,7 @@ const AddressCommonCom = (props) => {
       bankType: values.bankType,
       swiftRouteBICNumber: null,
       swiftCode: values.swiftCode,
-      bankName: values.bankName,
+      swiftRouteBICNumber: values.swiftCode,      bankName: values.bankName,
       addressType: values.addressType,
       line1: props?.addressBookReducer?.cryptoTab == true ? values.PayeeAccountLine1 : values.line1,
       line2: props?.addressBookReducer?.cryptoTab == true ? values.PayeeAccountLine2 : values.line1,
@@ -390,6 +413,7 @@ const AddressCommonCom = (props) => {
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
       setErrorMsg(apiCalls.convertLocalLang("agree_termsofservice"));
+      setAgreeRed(false);
     }
     // else if (responsecheck.data !== null) {
     //   setIsLoading(false);
@@ -416,7 +440,7 @@ const AddressCommonCom = (props) => {
       let saveObj = Object.assign({}, values);
       saveObj.payeeAccountModels = modalData
       let response = await saveAddressBook(saveObj);
-
+      setAgreeRed(true);
       if (response.ok) {
         setBtnDisabled(false);
         useDivRef.current.scrollIntoView();
@@ -624,7 +648,7 @@ const AddressCommonCom = (props) => {
                       maxLength={20} className="cust-input"
                       placeholder= "Favorite Name"
                     >
-                      {PayeeLu.map((item, indx) => (
+                      {PayeeLu?.map((item, indx) => (
                         <Option key={indx} value={item.name}>
                           {item.name}
                         </Option>
@@ -1035,8 +1059,8 @@ const AddressCommonCom = (props) => {
 									message: apiCalls.convertLocalLang("is_required"),
 								},
 							]}>
-							
-							
+       
+       
               	<Select
 								 placeholder="Select Coin"
 								className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
@@ -1142,7 +1166,8 @@ const AddressCommonCom = (props) => {
                         </Button>
                       </div>
                     </Form>}
-                  {props?.cryptoTab == 2 && <Form
+                  {props?.cryptoTab == 2 &&
+                  <Form
                     form={bankDetailForm}
                     onFinish={saveModalwithdrawal}
                     autoComplete="off"
@@ -1608,7 +1633,7 @@ const AddressCommonCom = (props) => {
                     valuePropName="checked"
                     required
                   >
-                    <Checkbox className="ant-custumcheck" />
+                    <Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red ":" "}`} />
 
                   </Form.Item>
                   <Translate

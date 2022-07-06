@@ -97,7 +97,7 @@ class AddressBook extends Component {
 							className="c-pointer"
 							name="isCheck"
 							type="checkbox"
-							checked={this.state.selection.indexOf(props.dataItem.id) > -1}
+							checked={this.state.selection.indexOf(props.dataItem.payeeAccountId) > -1}
 							onChange={(e) => this.handleInputChange(props, e)}
 						/>
 						<span></span>{" "}
@@ -107,7 +107,7 @@ class AddressBook extends Component {
 		},
 		{
 			field: "favouriteName",
-			title: "Bank Label",
+			title: "Favourite Name",
 			filter: true,
 			width: 300,
 			customCell: (props) => (
@@ -121,7 +121,12 @@ class AddressBook extends Component {
 				</td>
 			),
 		},
-	
+		{
+			field: "addressLable",
+			title: "Bank Label",
+			filter: true,
+			width: 230,
+		},
 		{
 			field: "currency",
 			title: apiCalls.convertLocalLang("currency"),
@@ -203,7 +208,7 @@ class AddressBook extends Component {
 			),
 		},
 		{
-			field: "addressLable",
+			field: "favouriteName",
 			title: "Favourite Name",
 			filter: true,
 			width: 300,
@@ -220,6 +225,12 @@ class AddressBook extends Component {
 					</Text>
 				</td>
 			),
+		},
+		{
+			field: "addressLable",
+			title: "Address Lable",
+			filter: true,
+			width: 230,
 		},
 		{
 			field: "address",
@@ -339,7 +350,7 @@ class AddressBook extends Component {
 		if (idx > -1) {
 			selection.splice(idx, 1);
 		} else {
-			selection.push(rowObj.id);
+			selection.push(rowObj.payeeAccountId);
 		}
 		this.setState({
 			...this.state,
