@@ -94,7 +94,6 @@ const AddressCommonCom = (props) => {
 
   }
   useEffect(() => {
-
     if (selectParty === true) {
       form.setFieldsValue({
         addressType: "3r dparty",
@@ -163,8 +162,6 @@ const AddressCommonCom = (props) => {
     setIsModalVisible(false);
   };
   const handleCoinChange = (e) => {
-    debugger
-    console.log(e)
     let coinType = bankDetailForm.getFieldValue("walletCode");
     if (coinType !== e) {
       const validAddress = WAValidator.validate(coinType, "both");
@@ -181,7 +178,6 @@ const AddressCommonCom = (props) => {
   }
 
   const validateAddressType = (_, value) => {
-    debugger
     if (value) {
       let address = value.trim();
       let coinType = bankDetailForm.getFieldValue("walletCode");
@@ -215,6 +211,7 @@ const AddressCommonCom = (props) => {
     setIdentityFile(null);
     setAdressFile(null);
     setDeclarationFile(null);
+    setModalData([]);
     form.setFieldsValue({ file1: false, file2: false, file3: false });
     form.resetFields();
     setCryptoAddress(null);
@@ -289,7 +286,6 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
-    debugger
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
@@ -626,7 +622,7 @@ const AddressCommonCom = (props) => {
                     <AutoComplete
                       onChange={(e) => handleChange(e)}
                       maxLength={20} className="cust-input"
-                      placeholder= {"Label Name" }
+                      placeholder= "Favorite Name"
                     >
                       {PayeeLu.map((item, indx) => (
                         <Option key={indx} value={item.name}>
@@ -665,11 +661,11 @@ const AddressCommonCom = (props) => {
                     />
                   </Form.Item>
                 </Col>
-                <Col xs={24} sm={24} md={12} lg={12} xxl={12}>
+                <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                   <Form.Item
                     name="email"
                     label="Email"
-                    className="input-label"
+                    className="custom-forminput custom-label mb-0"
                     type='email'
                     rules={[
                       { required: true, message: "Is required" },
@@ -719,6 +715,7 @@ const AddressCommonCom = (props) => {
 
                   </Form.Item>
                 </Col>
+                {withdraeTab === "Fiat" &&
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                   <Form.Item
                     className="custom-forminput custom-label mb-0"
@@ -748,7 +745,8 @@ const AddressCommonCom = (props) => {
                       maxLength={100}
                     ></TextArea>
                   </Form.Item>
-                </Col>
+                </Col>}
+                {withdraeTab === "Fiat" &&
                 <Col xs={24} md={24} lg={24} xl={24} xxl={24}>
                   <Form.Item
                     className="custom-forminput custom-label mb-0"
@@ -778,8 +776,8 @@ const AddressCommonCom = (props) => {
                       maxLength={100}
                     ></TextArea>
                   </Form.Item>
-                </Col>
-
+                </Col>}
+                {withdraeTab === "Fiat" &&
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                   <Form.Item
                     className="custom-forminput custom-label mb-0"
@@ -816,7 +814,8 @@ const AddressCommonCom = (props) => {
                       ))}
                     </Select>
                   </Form.Item>
-                </Col>
+                </Col>}
+                {withdraeTab === "Fiat" &&
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                   <Form.Item
                     className="custom-forminput custom-label mb-0"
@@ -843,7 +842,8 @@ const AddressCommonCom = (props) => {
                       placeholder="State"
                     />
                   </Form.Item>
-                </Col>
+                </Col>}
+                {withdraeTab === "Fiat" &&
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                   <Form.Item
                     className="custom-forminput custom-label mb-0"
@@ -870,7 +870,8 @@ const AddressCommonCom = (props) => {
                       placeholder="City"
                     />
                   </Form.Item>
-                </Col>
+                </Col>}
+                {withdraeTab === "Fiat" &&
                 <Col xs={24} md={12} lg={12} xl={12} xxl={12}>
                   <Form.Item
                     className="custom-forminput custom-label mb-0"
@@ -901,7 +902,7 @@ const AddressCommonCom = (props) => {
                     />
 
                   </Form.Item>
-                </Col>
+                </Col>}
               </Row>
 
               <Row gutter={[16, 16]} >
