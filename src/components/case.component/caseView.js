@@ -17,6 +17,7 @@ import { validateContent } from "../../utils/custom.validator";
 import Translate from 'react-translate-component';
 import Mome from 'moment'
 import { error, success, warning } from '../../utils/messages';
+import { LoadingOutlined } from "@ant-design/icons";
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
@@ -49,7 +50,8 @@ class RequestedDocs extends Component {
         PreviewFilePath: null,
         caseData: {},
         commonModel: {},
-        assignedTo: []
+        assignedTo: [],
+        btnLoading:false,
     }
     componentDidMount() {
         this.getCaseData(QueryString.parse(this.props.location.search).id);
@@ -151,7 +153,7 @@ class RequestedDocs extends Component {
         item.repliedBy = `${(this.props.userProfileInfo?.isBusiness==true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         item.info = JSON.stringify(this.props.trackAuditLogData);
-        this.setState({ ...this.state, isSubmitting: true });
+        this.setState({ ...this.state, btnLoading: true });
         const response = await saveDocReply(item);
         if (response.ok) {
             success('Document has been submitted');
@@ -162,7 +164,7 @@ class RequestedDocs extends Component {
         }
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
-        this.setState({ ...this.state, docReplyObjs: objs, isSubmitting: false, isMessageError: null });
+        this.setState({ ...this.state, docReplyObjs: objs, btnLoading: false, isMessageError: null });
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
     deleteDocument = async (doc, idx, isAdd) => {
@@ -204,6 +206,12 @@ class RequestedDocs extends Component {
             "isCustomer": true
         }
     }
+ antIcon = (
+		<LoadingOutlined
+			style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
+			spin
+		/>
+	  );
     handleUpload = ({ file }, doc) => {
     this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
         if (file.status === "done" && this.state.isValidFile) {
@@ -242,7 +250,7 @@ class RequestedDocs extends Component {
         }
     }
     beforeUpload = (file) => {
-        let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+   let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
         if (fileType[file.type]) {
             this.setState({ ...this.state, isValidFile: true, })
             return true
@@ -401,7 +409,7 @@ class RequestedDocs extends Component {
 
                             this.setState({
                                 ...this.state,
-                                collapse: !this.state.collapse,
+                                collapse: !this.state.collapse, errorMessage:null
                             });
                             if (key) {
                                 this.loadDocReplies(doc.id);
@@ -467,7 +475,9 @@ class RequestedDocs extends Component {
                                         </div>)}
                                     </div>
                                     <div className="text-center my-36">
-                                        <Button disabled={this.state.isSubmitting} className="pop-btn px-36" onClick={() => this.docReject(doc)}>Submit</Button>
+                                        <Button className="pop-btn px-36" onClick={() => this.docReject(doc)}>
+                                        {this.state.btnLoading && <Spin indicator={this.antIcon} />}
+                                        Submit</Button>
                                     </div>
                                 </>}
                             </Panel>
