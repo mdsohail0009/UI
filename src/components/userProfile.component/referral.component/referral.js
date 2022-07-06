@@ -131,10 +131,10 @@ class Referral extends Component {
               <Text className="mb-0 fw-400 text-secondary">
                 Personal referral link
               </Text>
-              <div className="mb-0 fw-600 text-white-30 walletadrs">
+              <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
                 {this.state.referaldata?.referrallink || "---"}
               </div>
-              <div className="mb-0 fw-600 text-white-30 walletadrs">
+              <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy" >
                 <CopyToClipboard
                   text={this.state.referaldata?.referrallink || "---"}
                 >
@@ -149,10 +149,10 @@ class Referral extends Component {
               <Text className="mb-0 fw-400 text-secondary">
                 Business referral link
               </Text>
-              <div className="mb-0 fw-600 text-white-30 walletadrs">
+              <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
                 {this.state.referaldata?.referralBusinesslink || "---"}
               </div>
-              <div className="mb-0 fw-600 text-white-30 walletadrs">
+              <div className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
                 <CopyToClipboard
                   text={this.state.referaldata?.referralBusinesslink || "---"}
                 >
