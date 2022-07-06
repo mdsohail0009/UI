@@ -824,7 +824,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .mb-bottom{margin-bottom: 150px;}
     .custom-label .ant-form-item-label{margin-bottom: -10px !important;} 
     .custom-label .ant-form-item-label{padding-bottom: 0 !important;}
-    .mb-copy{width: 270px;}
+    .mb-copy{width: 270px; word-break: break-all;}
     .crypto-address .custom-display{margin-top: 20px;}
     .ant-dropdown-placement-topRight > .ant-dropdown-arrow{top: -5px !important;}
     .ant-dropdown-show-arrow.ant-dropdown-placement-topRight{top: 71px !important;}

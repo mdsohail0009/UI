@@ -47,7 +47,7 @@ export function withState(WrappedGrid) {
             // });
         }
         numberWithCommas(x) {
-            return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+            return x;
         }
         refreshGrid() {
             this.fetchData(this.state.dataState);
