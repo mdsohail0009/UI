@@ -42,7 +42,7 @@ class AddressBook extends Component {
 
 			obj: {
 				id: [],
-				tableName: "Member.FavouriteAddress",
+				tableName: "Common.PayeeAccounts",
 				modifiedBy: "",
 				status: [],
 				type: "",
@@ -383,7 +383,7 @@ class AddressBook extends Component {
 	handleSatatuSave = async () => {
 		this.setState({ ...this.state, isLoading: true, btnDisabled: true });
 		let statusObj = this.state.obj;
-		statusObj.id.push(this.state.selectedObj.id);
+		statusObj.id.push(this.state.selectedObj.payeeAccountId);
 		statusObj.modifiedBy = this.props.oidc.user.profile.unique_name;
 		statusObj.status.push(this.state.selectedObj.status);
 		statusObj.type = this.state.cryptoFiat ? "fiat" : "crypto";
