@@ -472,8 +472,8 @@ addressTypeNames = (type) =>{
                 <table className="pay-grid">
                   <thead>
                     <tr>
-                      <th className="doc-def" style={{width:'250px'}}>Name</th>
-                      <th className="doc-def" style={{width:'350px'}}>Bank name</th>
+                    <th className="doc-def" style={{width:'250px'}}>Favourite Name</th>
+                      <th className="doc-def" style={{width:'350px'}}>Bank Name</th>
                       <th style={{width:'250px'}}>Bank Account Number/IBAN</th>
                       {(this.props.match.params.id !==
                         "00000000-0000-0000-0000-000000000000"
@@ -712,7 +712,7 @@ addressTypeNames = (type) =>{
                               className="p-16 text-center"
                               style={{ color: "white", width: 300 }}
                             >
-                              No bank details available
+                             <Loader />
                             </td>
                           </tr>{" "}
                         </tbody>
