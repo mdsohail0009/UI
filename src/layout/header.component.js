@@ -1000,35 +1000,35 @@ class Header extends Component {
                 <Translate
                   content="menu_payments"
                   component={Menu.Item}
-                  key="1"
+                  key="2"
                   onClick={this.showPayments}
                   className="list-item"
                 />
                 <Translate
                   content="menu_wallets"
                   component={Menu.Item}
-                  key="2"
+                  key="3"
                   onClick={this.showWalletsDrawer}
                   className="list-item"
                 />
                 <Translate
                   content="menu_buy_sell"
                   component={Menu.Item}
-                  key="3"
+                  key="4"
                   onClick={this.showBuyDrawer}
                   className="list-item"
                 />
                    <Translate
                 content="menu_tranfor"
                 component={Menu.Item}
-                key="4"
+                key="5"
                 onClick={this.showTrasforDrawer}
                 className="list-item"
                  />
                  <Translate
                   content="menu_send_receive"
                   component={Menu.Item}
-                  key="5"
+                  key="6"
                   className="mr-16 list-item" />
                 <Menu>
                   <ul className="pl-0 drpdwn-list">
@@ -1050,7 +1050,7 @@ class Header extends Component {
                 <Translate
                   content="menu_transactions_history"
                   component={Menu.Item}
-                  key="6"
+                  key="7"
                   onClick={this.showTransactionHistoryDrawer}
                   className="list-item"
                 />

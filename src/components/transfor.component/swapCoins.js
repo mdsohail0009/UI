@@ -16,6 +16,7 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj}) =>{
             form.setFieldsValue(transforObj)
         }
     },[])
+    
     const [fromWalletLu,setFromWalletLu] = useState([])
     const [toWalletLu,setToWalletLu] = useState([])
     const [currencyLu,setCurrencyLu] = useState([])
@@ -26,30 +27,37 @@ const  TranforCoins = ({userProfile,onClose,dispatch,transforObj}) =>{
     const useDivRef = React.useRef(null);
     const [form] = Form.useForm();
     // const [transfordata,setTransfordata] = useState(null)
-
+    useEffect(()=>{
+        if(transforObj && currencyLu.length>0){
+            showBalance(transforObj.walletCode)
+        }
+    },[currencyLu])
+    useEffect(()=>{
+        if(transforObj && fromWalletLu.length>0){
+            handleFromchange(transforObj.fromWalletType)
+        }
+    },[fromWalletLu])
     const loadApis = async()=>{
         let luLoader=false;
         let currencyLoder=false;
         let res = await gettransforLu()
         if(res.ok){
             setFromWalletLu(res.data)
-            luLoader=true;
-            if(luLoader &&currencyLoder){
-                setLoader(false);
-            }
+                luLoader = true;
+                if (luLoader && currencyLoder) {
+                    setLoader(false);
+                }
         }else{
             setLoader(false);
         }
         let currencylures = await getCurrencyLu(userProfile.id)
         if(currencylures.ok){
             setCurrencyLu(currencylures.data)
-            currencyLoder=true;
-            if(luLoader &&currencyLoder){
-                setLoader(false);
-                if(transforObj){
-                    showBalance()
+                currencyLoder=true;
+                if(luLoader &&currencyLoder){
+                    setLoader(false);
                 }
-            }
+           
         }else{
             setLoader(false);
         }
