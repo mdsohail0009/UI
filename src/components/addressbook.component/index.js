@@ -42,7 +42,7 @@ class AddressBook extends Component {
 
 			obj: {
 				id: [],
-				tableName: "Member.FavouriteAddress",
+				tableName: "Common.PayeeAccounts",
 				modifiedBy: "",
 				status: [],
 				type: "",
@@ -199,7 +199,7 @@ class AddressBook extends Component {
 							name="isCheck"
 							type="checkbox"
 							className="c-pointer"
-							checked={this.state.selection.indexOf(props.dataItem.id) > -1}
+							checked={this.state.selection.indexOf(props.dataItem.payeeAccountId) > -1}
 							onChange={(e) => this.handleInputChange(props, e)}
 						/>
 						<span></span>{" "}
@@ -228,7 +228,7 @@ class AddressBook extends Component {
 		},
 		{
 			field: "addressLable",
-			title: "Address Lable",
+			title: "Address Label",
 			filter: true,
 			width: 230,
 		},
@@ -383,7 +383,7 @@ class AddressBook extends Component {
 	handleSatatuSave = async () => {
 		this.setState({ ...this.state, isLoading: true, btnDisabled: true });
 		let statusObj = this.state.obj;
-		statusObj.id.push(this.state.selectedObj.id);
+		statusObj.id.push(this.state.selectedObj.payeeAccountId);
 		statusObj.modifiedBy = this.props.oidc.user.profile.unique_name;
 		statusObj.status.push(this.state.selectedObj.status);
 		statusObj.type = this.state.cryptoFiat ? "fiat" : "crypto";
