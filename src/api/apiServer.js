@@ -32,7 +32,7 @@ export const saveSettingsData = (obj) => {
 }
 
 export const getAccountHolder=(accountId,type)=>{
-    return apiClient.get(ApiControllers.addressbook + `PayeeLu/${accountId}/${type}`);
+    return apiClient.get(ApiControllers.addressbook + `WithdrawPayeeLu/${accountId}/${type}`);
 }
 
 export const getAccountWallet=(AccountId)=>{
@@ -48,3 +48,4 @@ export const getAccountBankDetails=(payeeId,currency)=>{
 // https://tstapi.suissebase.io/api/v1/Wallets/Fiat/{AccountId}
 
 // https://tstapi.suissebase.io/api/v1/addressbook/PayeeLableLu/{payeeId}/{currency}
+//https://tstapi.suissebase.io/api/v1/addressbook/WithdrawPayeeLu/{accountId}/{type}
