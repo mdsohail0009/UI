@@ -96,7 +96,6 @@ const AddressCommonCom = (props) => {
 
   }
   useEffect(() => {
-    debugger
     if (selectParty === true) {
       form.setFieldsValue({
         addressType: "3r dparty",
@@ -123,7 +122,7 @@ const AddressCommonCom = (props) => {
         state: "",
         zipCode: "",
       });
-      
+
     }
 
     if (props?.addressBookReducer?.selectedRowData?.id !== "00000000-0000-0000-0000-000000000000" && props?.addressBookReducer?.selectedRowData?.id) {
@@ -136,9 +135,7 @@ const AddressCommonCom = (props) => {
     } else {
       getFavs("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
     }
-    
-      payeeLuData()
-    
+    payeeLuData()
     if (props?.addressBookReducer?.selectedRowData?.id) {
       bankDetailsLu(props?.addressBookReducer?.selectedRowData?.id, props?.userConfig?.id)
     } else {
@@ -255,8 +252,7 @@ const AddressCommonCom = (props) => {
     }
   }
   const payeeLuData = async () => {
-    debugger
-    let response = await getPayeeLu(props?.userConfig?.id,withdraeTab,true);
+    let response = await getPayeeLu(props?.userConfig?.id, withdraeTab,true);
     setPayeeLu(response.data)
 
   }
@@ -307,6 +303,7 @@ const AddressCommonCom = (props) => {
       bankType: values.bankType,
       swiftRouteBICNumber: null,
       swiftCode: values.swiftCode,
+      swiftRouteBICNumber: values.swiftCode,
       bankName: values.bankName,
       addressType: values.addressType,
       line1: props?.addressBookReducer?.cryptoTab == true ? values.PayeeAccountLine1 : values.line1,
@@ -635,7 +632,7 @@ const AddressCommonCom = (props) => {
                       maxLength={20} className="cust-input"
                       placeholder= "Favorite Name"
                     >
-                      {PayeeLu.map((item, indx) => (
+                      {PayeeLu?.map((item, indx) => (
                         <Option key={indx} value={item.name}>
                           {item.name}
                         </Option>
@@ -1152,8 +1149,8 @@ const AddressCommonCom = (props) => {
                           <Translate content="Save_btn_text" component={Text} />
                         </Button>
                       </div>
-                    </Form> : <Loader />}
-                  {props?.cryptoTab == 2 ?
+                      </Form> : <Loader />}
+                      {props?.cryptoTab == 2 ?
                   <Form
                     form={bankDetailForm}
                     onFinish={saveModalwithdrawal}
@@ -1508,7 +1505,7 @@ const AddressCommonCom = (props) => {
                         <Translate content="Save_btn_text" />
                       </Button>
                     </div>
-                  </Form> : <Loader />
+                    </Form> : <Loader />
                   }
 
 
@@ -1522,7 +1519,7 @@ const AddressCommonCom = (props) => {
                       {(props?.cryptoTab == 2) ?
                         <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
-                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>
+                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "20px", marginLeft: "20px" }}>
                               {item.currencyType}{","}{" "}
                               {item.bankType}{","}{" "}
                               {item.accountNumber}{","}{" "}
@@ -1533,7 +1530,7 @@ const AddressCommonCom = (props) => {
                         </Col> :
                         <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
-                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>
+                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "20px", marginLeft: "20px" }}>
                               {item.label}{","}{" "}
                               {item.walletCode}{","}{" "}
                               {item.walletAddress}
