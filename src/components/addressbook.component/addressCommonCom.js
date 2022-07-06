@@ -84,7 +84,6 @@ const AddressCommonCom = (props) => {
   const [bilPay, setBilPay] = useState(null);
 
   const handleshowModal = (item) => {
-    debugger
     setEditBankDetails(true)
     let data = bankmodalData.find((items) => items.id == item.id)
     setIsModalVisible(true);
@@ -103,7 +102,8 @@ const AddressCommonCom = (props) => {
    
     if(window?.location?.pathname.includes('payments')){
       setBilPay("Fiat");
-    }    if (selectParty === true) {
+    }   
+     if (selectParty === true) {
       form.setFieldsValue({
         addressType: "3r dparty",
         bankType: "bank",
@@ -166,19 +166,8 @@ const AddressCommonCom = (props) => {
     setIsModalVisible(false);
   };
   const handleCoinChange = (e) => {
-    let coinType = bankDetailForm.getFieldValue("walletCode");
-    if (coinType !== e) {
-      const validAddress = WAValidator.validate(coinType, "both");
-      if (!validAddress) {
-        return Promise.reject(
-          "Address is not Valid, please enter a valid address according to the coin selected"
-        );
-      } else {
-        return Promise.resolve();
-      }
-    } else {
-      return Promise.reject("Please select a coin first");
-    }
+    bankDetailForm.validateFields(["walletAddress"],validateAddressType)
+    
   }
 
   const validateAddressType = (_, value) => {
@@ -209,7 +198,6 @@ const AddressCommonCom = (props) => {
 
 
   const radioChangeHandler = (e) => {
-    debugger
     if(e.target.value === "3rdparty"){
       payeeLuData(props?.userConfig?.id,withdraeTab,false);
     }else{
@@ -253,7 +241,6 @@ const AddressCommonCom = (props) => {
     }
   };
   const payeeLuData = async (id,tabName,type) => {
-    debugger
       let response = await getPayeeLu(props?.userConfig?.id,withdraeTab,(type==true||type==false)?type:true);
      if(response.ok){
       setPayeeLu(response.data)
@@ -269,6 +256,7 @@ const AddressCommonCom = (props) => {
   }
   
   const bankDetailsLu = async (id, membershipId) => {
+    debugger
     let response = await getBankDetailLu(id, membershipId)
     if (response.ok) {
       let obj = response.data;
@@ -1046,6 +1034,7 @@ const AddressCommonCom = (props) => {
                         name="walletAddress"
                         label={<Translate content="address" component={Form.label} />}
                         required
+                        
                         rules={[
                           {
                             validator: validateAddressType,
@@ -1057,108 +1046,7 @@ const AddressCommonCom = (props) => {
                           placeholder={apiCalls.convertLocalLang("address")}
                         />
                       </Form.Item>
-                      {/* <Form.Item
-							className="custom-label"
-							name="walletCode"
-							label={<Translate content="Coin" component={Form.label} />}
-							rules={[
-								{
-									required: true,
-									message: apiCalls.convertLocalLang("is_required"),
-								},
-							]}>
-       
-       
-              	<Select
-								 placeholder="Select Coin"
-								className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
-								dropdownClassName="select-drpdwn"
-                onChange={(e)=>handleCoinChange(e)}
-								bordered={false}
-								>
-							{coinDetails.map((item, indx) => (
-                        <Option key={indx} value={item.walletCode}>
-                          {item.walletCode}
-                        </Option>
-                      ))}
-							</Select>
-						</Form.Item>
-						<Form.Item
-							className="custom-label"
-							name="walletAddress"
-							label={<Translate content="address" component={Form.label} />}
-							required
-							rules={[
-								{
-									validator: validateAddressType,
-								},
-							]}>
-							<Input
-								className="cust-input mb-0"
-								maxLength="100"
-                placeholder="Select Address"
-								// placeholder={apiCalls.convertLocalLang("address")}
-							/>
-						</Form.Item> */}
-                      {/* <Form.Item
-                        className="custom-label"
-                        name="walletCode"
-                        label={<Translate content="Coin" component={Form.label} />}
-                        required
-                        rules={[
-                            {
-                                required: true,
-                                message: "Is required"
-                            },
-                            {
-                                whitespace: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                            },
-                            {
-                                validator: validateContentRule
-                            }
-                        ]}>
-
-
-                        <Select
-                          className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
-                          dropdownClassName="select-drpdwn"
-                          onChange={(e) => handleCoinChange(e)}
-                          bordered={false}
-                          placeholder={apiCalls.convertLocalLang('selectcurrency')}
-                        >
-                          {coinDetails.map((item, indx) => (
-                            <Option key={indx} value={item.walletCode}>
-                              {item.walletCode}
-                            </Option>
-                          ))}
-                        </Select>
-                      </Form.Item>
-                      <Form.Item
-                        className="custom-label"
-                        name="walletAddress"
-                        label={<Translate content="address" component={Form.label} />}
-                        required
-                                        rules={[
-                                            {
-                                                required: true,
-                                                message: "Is required"
-                                            },
-                                            {
-                                                whitespace: true,
-                                                message: apiCalls.convertLocalLang('is_required')
-                                            },
-                                            {
-                                                validator: validateAddressType
-                                            }
-                                        ]}>
-                        <Input
-                          className="cust-input mb-0"
-                          maxLength="100"
-                          placeholder="Select Address"
-
-                        />
-                      </Form.Item> */}
+                      
 
 
 
