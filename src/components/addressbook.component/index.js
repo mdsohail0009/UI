@@ -4,21 +4,23 @@ import {
 	setAddressStep,
 	rejectCoin,
 	fetchUsersIdUpdate,
+	selectedTab,
 	clearValues,
 	clearCryptoValues,
 } from "../../reducers/addressBookReducer";
 import Translate from "react-translate-component";
 import { processSteps as config } from "./config";
 import NewAddressBook from "./newAddressBook";
+import AddressCommonCom from "./addressCommonCom";
 import List from "../grid.component";
 import NewFiatAddress from "./addFiatAddressbook";
-import { activeInactive } from "./api";
+import { activeInactive,downloadDeclForm  } from "./api";
 import SelectCrypto from "./selectCrypto";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import apiCalls from "../../api/apiCalls";
 import Info from "../shared/info";
-import {downloadDeclForm} from './api'
+
 const { Paragraph, Text } = Typography;
 
 class AddressBook extends Component {
@@ -105,7 +107,7 @@ class AddressBook extends Component {
 		},
 		{
 			field: "favouriteName",
-			title: apiCalls.convertLocalLang("AddressLabel"),
+			title: "Favourite Name",
 			filter: true,
 			width: 300,
 			customCell: (props) => (
@@ -118,6 +120,12 @@ class AddressBook extends Component {
 					</Text>
 				</td>
 			),
+		},
+		{
+			field: "addressLable",
+			title: "Bank Lable",
+			filter: true,
+			width: 230,
 		},
 		{
 			field: "currency",
@@ -150,22 +158,7 @@ class AddressBook extends Component {
 			filter: true,
 			width: 250,
 		},
-		{
-			field: "beneficiaryAccountName",
-			title:
-				(this.props?.userConfig?.isBusiness &&
-					apiCalls.convertLocalLang("Recipient_Business_name")) ||
-				(!this.props?.userConfig?.isBusiness &&
-					apiCalls.convertLocalLang("Recipient_full_name")),
-			filter: true,
-			width: 300,
-		},
-		{
-			field: "beneficiaryAccountAddress",
-			title: apiCalls.convertLocalLang("Recipient_address1"),
-			filter: true,
-			width: 250,
-		},
+	
 		{
 			field: "addressState",
 			title: apiCalls.convertLocalLang("addressState"),
@@ -178,19 +171,19 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
-		// {
-		// 	field: "isWhitelisted",
-		// 	customCell: (props) => (
-		// 		<td>
-		// 			{props.dataItem?.isWhitelisted ? <a  onClick={() => {
-		// 				this.downloadDeclarationForm(props?.dataItem);
-		// 			}} >Download</a> : "Not whitelisted"}
-		// 		</td>
-		// 	),
-		// 	title: apiCalls.convertLocalLang("whitelist"),
-		// 	filter: false,
-		// 	width: 200,
-		// }
+		{
+			field: "isWhitelisted",
+			customCell: (props) => (
+				<td>
+					{props.dataItem?.isWhitelisted ? <a  onClick={() => {
+						this.downloadDeclarationForm(props?.dataItem);
+					}} >Download</a> : "Not whitelisted"}
+				</td>
+			),
+			title: apiCalls.convertLocalLang("whitelist"),
+			filter: false,
+			width: 200,
+		}
 	];
 	columnsCrypto = [
 		{
@@ -215,8 +208,8 @@ class AddressBook extends Component {
 			),
 		},
 		{
-			field: "addressLable",
-			title: apiCalls.convertLocalLang("AddressLabel"),
+			field: "favouriteName",
+			title: "Favourite Name",
 			filter: true,
 			width: 300,
 			customCell: (props) => (
@@ -232,6 +225,12 @@ class AddressBook extends Component {
 					</Text>
 				</td>
 			),
+		},
+		{
+			field: "addressLable",
+			title: "Address Lable",
+			filter: true,
+			width: 230,
 		},
 		{
 			field: "address",
@@ -308,19 +307,19 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
-		// 	{
-		// 	field: "isWhitelisted",
-		// 	customCell: (props) => (
-		// 		<td>
-		// 			{props.dataItem?.isWhitelisted ? <a onClick={() => {
-		// 				this.downloadDeclarationForm(props?.dataItem);
-		// 			}} >Download</a> : "Not whitelisted"}
-		// 		</td>
-		// 	),
-		// 	title: apiCalls.convertLocalLang("whitelist"),
-		// 	filter: false,
-		// 	width: 200,
-		// },
+		{
+			field: "isWhitelisted",
+			customCell: (props) => (
+				<td>
+					{props.dataItem?.isWhitelisted ? <a onClick={() => {
+						this.downloadDeclarationForm(props?.dataItem);
+					}} >Download</a> : "Not whitelisted"}
+				</td>
+			),
+			title: apiCalls.convertLocalLang("whitelist"),
+			filter: false,
+			width: 200,
+		},
 	];
 	async downloadDeclarationForm(dataItem){
 		const response = await downloadDeclForm(dataItem.id);
@@ -335,6 +334,7 @@ class AddressBook extends Component {
 		this.props.history.push(`/addressCryptoView/${dataItem.id}`);
 	};
 	handleInputChange = (prop, e) => {
+		
 		this.setState({ ...this.state, errorWorning: null });
 		const rowObj = prop.dataItem;
 		const value =
@@ -343,7 +343,7 @@ class AddressBook extends Component {
 				: e.currentTarget.value;
 		const name = e.currentTarget.name;
 		let { selection } = this.state;
-		let idx = selection.indexOf(rowObj.id);
+		let idx = selection.indexOf(rowObj.payeeAccountId);
 		if (selection) {
 			selection = [];
 		}
@@ -436,7 +436,7 @@ class AddressBook extends Component {
 	};
 	addAddressBook = () => {
 		if (this.state.cryptoFiat) {
-			this.setState({ ...this.state, fiatDrawer: true });
+			this.setState({ ...this.state, fiatDrawer: true,errorWorning: null });
 			if (!this.state.fiatDrawer) {
 				apiCalls.trackEvent({
 					Type: "User",
@@ -450,10 +450,11 @@ class AddressBook extends Component {
 					FullFeatureName: "Address Book",
 				});
 			}
+			
 			this.props.clearFormValues();
 		} else {
-			this.setState({ ...this.state, visible: true });
-			apiCalls.trackEvent({
+			this.setState({ ...this.state, visible: true,errorWorning: null });
+			 apiCalls.trackEvent({
 				Type: "User",
 				Action: "Withdraw Crypto Address book add view",
 				Username: this.props.userProfileInfo?.userName,
@@ -497,7 +498,7 @@ class AddressBook extends Component {
 						selection: [],
 						isCheck: false,
 					});
-					apiCalls.trackEvent({
+					 apiCalls.trackEvent({
 						Type: "User",
 						Action: "Withdraw Fait  Address edit view",
 						Username: this.props.userProfileInfo?.userName,
@@ -509,7 +510,7 @@ class AddressBook extends Component {
 						FullFeatureName: "Address Book",
 					});
 				} else {
-					apiCalls.trackEvent({
+					 apiCalls.trackEvent({
 						Type: "User",
 						Action: "Withdraw Crypto  Address edit view",
 						Username: this.props.userProfileInfo?.userName,
@@ -545,6 +546,7 @@ class AddressBook extends Component {
 		this.props.changeStep("step1");
 	};
 	handleWithdrawToggle = (e) => {
+		
 		this.setState({
 			...this.state,
 			cryptoFiat: e.target.value === 2,
@@ -553,6 +555,7 @@ class AddressBook extends Component {
 			isCheck: false,
 			errorWorning:null
 		});
+		this.props.tabSelectedData(this.state.cryptoFiat);
 		if (this.state.cryptoFiat) {
 			apiCalls.trackEvent({
 				Type: "User",
@@ -588,8 +591,10 @@ class AddressBook extends Component {
 	};
 	renderContent = () => {
 		const stepcodes = {
-			cryptoaddressbook: (
-				<NewAddressBook onCancel={() => this.closeBuyDrawer()} />
+			cryptoaddressbook: (<>
+				 {/* <NewAddressBook onCancel={() => this.closeBuyDrawer()} /> */}
+				<AddressCommonCom onCancel={() => this.closeBuyDrawer()} cryptoTab={1}/>
+				</>
 			),
 			selectcrypto: <SelectCrypto />,
 		};
@@ -747,7 +752,7 @@ class AddressBook extends Component {
 					closable={true}
 					visible={this.state.visible}
 					closeIcon={null}
-					className="side-drawer">
+					className="side-drawer w-50p">
 					{this.renderContent()}
 				</Drawer>
 				<Drawer
@@ -775,8 +780,10 @@ class AddressBook extends Component {
 					visible={this.state.fiatDrawer}
 					closeIcon={null}
 					className="side-drawer w-50p">
-					{this.state.fiatDrawer && (
-						<NewFiatAddress onCancel={() => this.closeBuyDrawer()} />
+					{this.state.fiatDrawer && (<>
+						{/* <NewFiatAddress onCancel={() => this.closeBuyDrawer()} /> */}
+						<AddressCommonCom onCancel={() => this.closeBuyDrawer()}  cryptoTab={2}/>
+						</>
 					)}
 				</Drawer>
 				<Modal
@@ -863,6 +870,9 @@ const connectDispatchToProps = (dispatch) => {
 		},
 		rowSelectedData: (selectedRowData) => {
 			dispatch(fetchUsersIdUpdate(selectedRowData));
+		},
+		tabSelectedData:(cryptoTab)=>{
+			dispatch(selectedTab(cryptoTab))
 		},
 		clearFormValues: () => {
 			dispatch(clearValues());

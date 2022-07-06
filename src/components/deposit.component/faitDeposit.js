@@ -371,7 +371,7 @@ class FaitDeposit extends Component {
                         content="reference"
                         component={Text}
                       />
-                      <Paragraph className="mb-0 fw-600 text-white-30 walletadrs">
+                      <Paragraph className="mb-0 fw-600 text-white-30 walletadrs mb-copy">
                         {BankInfo.depReferenceNo}
                         <CopyToClipboard text={BankInfo.depReferenceNo}>
                           <Text copyable={{ tooltips: [apicalls.convertLocalLang('copy'), apicalls.convertLocalLang('copied')] }} className="fs-20 text-white-30 custom-display"   ></Text>

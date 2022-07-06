@@ -30,24 +30,24 @@ const updateKyc = (userid) => {
 	return apiClient.put(ApiControllers.accounts + `${userid}/KYC`);
 };
 const trackEvent = (obj) => {
-	const {
-		userConfig: { userProfileInfo, trackAuditLogData },
-	} = store.getState();
-	let trackObj = {
-		id: "00000000-0000-0000-0000-000000000000",
-		date: "",
-		type: obj.Type,
-		featurePath: obj.FullFeatureName,
-		username: obj.userName,
-		memberId: userProfileInfo?.id,
-		feature: obj.Feature,
-		action: obj.Action,
-		remarks: obj.Remarks,
-		ipAddress: trackAuditLogData?.Ip,
-		countryName: trackAuditLogData?.Location?.countryName,
-		info: JSON.stringify(trackAuditLogData),
-	};
-	return apiClient.post(ApiControllers.master + `Auditlogs`, trackObj);
+	// const {
+	// 	userConfig: { userProfileInfo, trackAuditLogData },
+	// } = store.getState();
+	// let trackObj = {
+	// 	id: "00000000-0000-0000-0000-000000000000",
+	// 	date: "",
+	// 	type: obj.Type,
+	// 	featurePath: obj.FullFeatureName,
+	// 	username: obj.userName,
+	// 	memberId: userProfileInfo?.id,
+	// 	feature: obj.Feature,
+	// 	action: obj.Action,
+	// 	remarks: obj.Remarks,
+	// 	ipAddress: trackAuditLogData?.Ip,
+	// 	countryName: trackAuditLogData?.Location?.countryName,
+	// 	info: JSON.stringify(trackAuditLogData),
+	// };
+	// return apiClient.post(ApiControllers.master + `Auditlogs`, trackObj);
 };
 
 const getIpRegistery = () => {
@@ -156,6 +156,9 @@ const getInfoVal = (id, type) => {
 		ApiControllers.deposit + `GetScoreChainInfo/${id}/${type}`
 	);
 };
+const getReferalDetails = (memberId) =>{
+	return apiClient.get(ApiControllers.partner + `getReferralDetails/member/${memberId}`);
+}
 
 let apicalls = {
 	getportfolio,
@@ -165,7 +168,7 @@ let apicalls = {
 	updateKyc,
 	sumsubacesstokennew,
 	sumsublivenessacesstoken,
-	trackEvent,
+	 trackEvent,
 	sellMemberCrypto,
 	convertLocalLang,
 	getIBANData,
@@ -187,5 +190,6 @@ let apicalls = {
 	getVerificationFields,
 	twofactor,
 	getInfoVal,
+	getReferalDetails
 };
 export default apicalls;

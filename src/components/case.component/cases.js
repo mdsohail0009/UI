@@ -51,7 +51,7 @@ class Cases extends Component {
         const { gridUrl } = this.state;
 
         return (<>
-            <div className="box basic-info">
+            <div className="box basic-info mb-bottom">
                 <Translate content="case" className="basicinfo" />
                 <div className="mt-16">
                     <List url={gridUrl} ref={this.gridRef} columns={this.columnGrid} additionalParams={{ "memberId": this.props.userProfileInfo?.id }} />
