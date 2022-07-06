@@ -46,7 +46,7 @@ const LinkValue = (props) => {
 const link = <LinkValue content="terms_service" />;
 const AddressCommonCom = (props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [modalData, setModalData] = useState([])
+  const [bankmodalData, setModalData] = useState([])
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [form] = Form.useForm();
@@ -80,14 +80,13 @@ const AddressCommonCom = (props) => {
   const [ibanValue, setIbanValue] = useState(null)
   const [favouriteDetails, setFavouriteDetails] = useState({})
   const [deleteItem, setDeleteItem] = useState()
-  const [selectAddressType, setSelectAddressType] = useState(props?.checkThirdParty)
   const [agreeRed, setAgreeRed] = useState(true)
-
+  const [bilPay, setBilPay] = useState(null);
 
   const handleshowModal = (item) => {
     debugger
     setEditBankDetails(true)
-    let data = modalData.find((items) => items.id == item.id)
+    let data = bankmodalData.find((items) => items.id == item.id)
     setIsModalVisible(true);
     setBankObj(data)
     if (props?.addressBookReducer?.cryptoTab == true) {
@@ -101,7 +100,10 @@ const AddressCommonCom = (props) => {
 
   }
   useEffect(() => {
-    if (selectParty === true) {
+   
+    if(window?.location?.pathname.includes('payments')){
+      setBilPay("Fiat");
+    }    if (selectParty === true) {
       form.setFieldsValue({
         addressType: "3r dparty",
         bankType: "bank",
@@ -154,18 +156,11 @@ const AddressCommonCom = (props) => {
       ? props?.userConfig.businessName
       : props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
   };
-  const withdraeTab = props?.addressBookReducer?.cryptoTab == true ? "Crypto" : "Fiat"
+  const withdraeTab = bilPay ? "Fiat" : (props?.addressBookReducer?.cryptoTab == true ? "Crypto" : "Fiat");
 
   const showModal = () => {
     setIsModalVisible(true);
-    // if (props?.addressBookReducer?.cryptoTab == true) {
-    //   bankDetailForm.setFieldsValue({ label:"", walletCode:"", walletAddress:""})
-    //   bankDetailForm.resetFields()
-    // }
-    // else{
-    //   bankDetailForm.setFieldsValue({label:"",walletCode:"",accountNumber:"",IBAN:"",swiftCode:"",bankName:"",payeeAccountCountry:"",payeeAccountState:"",payeeAccountCity:"",payeeAccountPostalCode:""})
-    // }
-
+    
   };
   const handleOk = () => {
     setIsModalVisible(false);
@@ -211,7 +206,15 @@ const AddressCommonCom = (props) => {
     bankDetailForm.resetFields();
   };
 
+
+
   const radioChangeHandler = (e) => {
+    debugger
+    if(e.target.value === "3rdparty"){
+      payeeLuData(props?.userConfig?.id,withdraeTab,false);
+    }else{
+      payeeLuData(props?.userConfig?.id,withdraeTab,true);
+    }
     setAgreeRed(true);
     setErrorMsg(null);
     setErrorWarning(null);
@@ -222,10 +225,10 @@ const AddressCommonCom = (props) => {
     setAdressFile(null);
     setDeclarationFile(null);
     setModalData([]);
-    form.setFieldsValue({ file1: false, file2: false, file3: false });
     form.resetFields();
     setCryptoAddress(null);
     if (e.target.value === "1stparty") {
+     
       form.setFieldsValue({
         addressType: "1stparty",
         beneficiaryAccountName: props?.userConfig.isBusiness
@@ -238,6 +241,7 @@ const AddressCommonCom = (props) => {
       });
       setBankType("bank");
       setSelectParty(false);
+     
     } else {
       form.setFieldsValue({
         addressType: "3rdparty",
@@ -246,11 +250,16 @@ const AddressCommonCom = (props) => {
       });
       setBankType("bank");
       setSelectParty(true);
-      setSelectAddressType("3rdparty")
     }
-    payeeLuData()
   };
-
+  const payeeLuData = async (id,tabName,type) => {
+    debugger
+      let response = await getPayeeLu(props?.userConfig?.id,withdraeTab,(type==true||type==false)?type:true);
+     if(response.ok){
+      setPayeeLu(response.data)
+     }
+      
+  }
   const handleChange = (e) => {
 
     let data = PayeeLu.find(item => item.name === e)
@@ -258,16 +267,7 @@ const AddressCommonCom = (props) => {
       getFavs(data.id, props?.userConfig?.id)
     }
   }
-  const payeeLuData = async () => {
-    if(!selectParty){
-      let response = await getPayeeLu(props?.userConfig?.id,withdraeTab,true);
-      setPayeeLu(response.data)
-    }else{
-      let response = await getPayeeLu(props?.userConfig?.id,withdraeTab,false);
-      setPayeeLu(response.data)
-    }
-
-  }
+  
   const bankDetailsLu = async (id, membershipId) => {
     let response = await getBankDetailLu(id, membershipId)
     if (response.ok) {
@@ -339,18 +339,18 @@ const AddressCommonCom = (props) => {
     if (editBankDetsils == true ) {
       obj.id = bankObj.id
       obj.payeeId = bankObj.payeeId
-      for (let i in modalData) {
-        if (modalData[i].id == obj.id) {
+      for (let i in bankmodalData) {
+        if (bankmodalData[i].id == obj.id) {
           obj.recordStatus = "Modified"
           obj.modifiedBy = props?.userConfig.firstName + props?.userConfig.lastName
           obj.status= props?.addressBookReducer?.selectedRowData?.status
           obj.addressState =  props?.addressBookReducer?.selectedRowData?.addressState
-          modalData.splice(modalData[i], 1, obj);
+          bankmodalData[i]=obj
           setEditBankDetails(false)
         }
       }
     } else {
-      modalData.push(obj)
+      bankmodalData.push(obj)
     }
     setIsModalVisible(false);
     bankDetailForm.resetFields();
@@ -360,11 +360,11 @@ const AddressCommonCom = (props) => {
   }
   const handleDeleteModal = () => {
     setIsModalDelete(false)
-    for (let i in modalData) {
-      if (modalData[i].id == deleteItem.id) {
-        if (modalData[i].recordStatus == "Added") {
-          modalData.splice(i, 1)
-        } else { modalData[i].recordStatus = "Deleted" }
+    for (let i in bankmodalData) {
+      if (bankmodalData[i].id == deleteItem.id) {
+        if (bankmodalData[i].recordStatus == "Added") {
+          bankmodalData.splice(i, 1)
+        } else { bankmodalData[i].recordStatus = "Deleted" }
       }
     }
   }
@@ -411,12 +411,7 @@ const AddressCommonCom = (props) => {
       setErrorMsg(apiCalls.convertLocalLang("agree_termsofservice"));
       setAgreeRed(false);
     }
-    // else if (responsecheck.data !== null) {
-    //   setIsLoading(false);
-    //   setBtnDisabled(false);
-    //   useDivRef.current.scrollIntoView();
-    //   return setErrorMsg("Address label already existed");
-    // }
+   
     else {
       setBtnDisabled(true);
       values["favouriteName"] = namecheck;
@@ -434,7 +429,7 @@ const AddressCommonCom = (props) => {
       values["isDigitallySigned"] = values.isDigitallySigned;
       values["id"] = favaddrId;
       let saveObj = Object.assign({}, values);
-      saveObj.payeeAccountModels = modalData
+      saveObj.payeeAccountModels = bankmodalData
       let response = await saveAddressBook(saveObj);
       setAgreeRed(true);
       if (response.ok) {
@@ -1550,7 +1545,7 @@ const AddressCommonCom = (props) => {
 
                 </Modal>
               </Row>
-              {modalData.map((item, indx) => {
+              {bankmodalData.map((item, indx) => {
                 if (item.recordStatus !== "Deleted") {
                   return <Row gutter={14} style={{ paddingBottom: "15px" }}>
 
