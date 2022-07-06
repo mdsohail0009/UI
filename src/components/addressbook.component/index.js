@@ -107,7 +107,7 @@ class AddressBook extends Component {
 		},
 		{
 			field: "favouriteName",
-			title: "Bank Label",
+			title: "Favourite Name",
 			filter: true,
 			width: 300,
 			customCell: (props) => (

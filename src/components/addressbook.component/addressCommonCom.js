@@ -22,6 +22,7 @@ import { addressTabUpdate, fetchAddressCrypto, setAddressStep } from "../../redu
 import FilePreviewer from "react-file-previewer";
 import WAValidator from "multicoin-address-validator";
 import NumberFormat from "react-number-format";
+import { TumblrShareButton } from "react-share";
 const { Text, Paragraph } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
@@ -78,7 +79,7 @@ const AddressCommonCom = (props) => {
   const [ibanValue, setIbanValue] = useState(null)
   const [favouriteDetails, setFavouriteDetails] = useState({})
   const [deleteItem, setDeleteItem] = useState()
-  const [selectAddressType,setSelectAddressType]=useState(props?.checkThirdParty)
+  const [selectAddressType,setSelectAddressType]=useState("1stparty")
   const [agreeRed, setAgreeRed] = useState(true)
   const handleshowModal = (item) => {
     setEditBankDetails(true)
@@ -96,6 +97,7 @@ const AddressCommonCom = (props) => {
 
   }
   useEffect(() => {
+    debugger
     if (selectParty === true) {
       form.setFieldsValue({
         addressType: "3r dparty",
@@ -108,7 +110,6 @@ const AddressCommonCom = (props) => {
         state: "",
         zipCode: "",
       });
-      setSelectAddressType(false)
     } else {
       form.setFieldsValue({
         addressType: "1s tparty",
@@ -122,7 +123,6 @@ const AddressCommonCom = (props) => {
         state: "",
         zipCode: "",
       });
-
     }
 
     if (props?.addressBookReducer?.selectedRowData?.id !== "00000000-0000-0000-0000-000000000000" && props?.addressBookReducer?.selectedRowData?.id) {
@@ -135,7 +135,9 @@ const AddressCommonCom = (props) => {
     } else {
       getFavs("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
     }
-    payeeLuData()
+    
+       payeeLuData()
+    
     if (props?.addressBookReducer?.selectedRowData?.id) {
       bankDetailsLu(props?.addressBookReducer?.selectedRowData?.id, props?.userConfig?.id)
     } else {
@@ -207,6 +209,7 @@ const AddressCommonCom = (props) => {
   };
 
   const radioChangeHandler = (e) => {
+    debugger
     setAgreeRed(true);
     setErrorMsg(null);
     setErrorWarning(null);
@@ -233,6 +236,7 @@ const AddressCommonCom = (props) => {
       });
       setBankType("bank");
       setSelectParty(false);
+     
     } else {
       form.setFieldsValue({
         addressType: "3rdparty",
@@ -240,8 +244,12 @@ const AddressCommonCom = (props) => {
         bankType: "bank",
       });
       setBankType("bank");
-      setSelectParty(true);
+       setSelectParty(true);
+      setSelectAddressType("3rdparty")
     }
+
+    
+    payeeLuData()
   };
 
   const handleChange = (e) => {
@@ -252,8 +260,17 @@ const AddressCommonCom = (props) => {
     }
   }
   const payeeLuData = async () => {
-    let response = await getPayeeLu(props?.userConfig?.id, withdraeTab,true);
-    setPayeeLu(response.data)
+    debugger
+    if(!selectParty){
+      let response = await getPayeeLu(props?.userConfig?.id,withdraeTab,true);
+      setPayeeLu(response.data)
+    }else{
+      let response = await getPayeeLu(props?.userConfig?.id,withdraeTab,false);
+      setPayeeLu(response.data)
+    }
+     
+    
+   
 
   }
   const bankDetailsLu = async (id, membershipId) => {
@@ -303,8 +320,7 @@ const AddressCommonCom = (props) => {
       bankType: values.bankType,
       swiftRouteBICNumber: null,
       swiftCode: values.swiftCode,
-      swiftRouteBICNumber: values.swiftCode,
-      bankName: values.bankName,
+      swiftRouteBICNumber: values.swiftCode,      bankName: values.bankName,
       addressType: values.addressType,
       line1: props?.addressBookReducer?.cryptoTab == true ? values.PayeeAccountLine1 : values.line1,
       line2: props?.addressBookReducer?.cryptoTab == true ? values.PayeeAccountLine2 : values.line1,
@@ -959,7 +975,7 @@ const AddressCommonCom = (props) => {
                 >
 
 
-                  {props?.cryptoTab == 1 ?
+                  {props?.cryptoTab == 1 &&
                     <Form
                       form={bankDetailForm}
                       initialValues={cryptoAddress}
@@ -1149,8 +1165,8 @@ const AddressCommonCom = (props) => {
                           <Translate content="Save_btn_text" component={Text} />
                         </Button>
                       </div>
-                      </Form> : <Loader />}
-                      {props?.cryptoTab == 2 ?
+                    </Form>}
+                  {props?.cryptoTab == 2 &&
                   <Form
                     form={bankDetailForm}
                     onFinish={saveModalwithdrawal}
@@ -1505,7 +1521,7 @@ const AddressCommonCom = (props) => {
                         <Translate content="Save_btn_text" />
                       </Button>
                     </div>
-                    </Form> : <Loader />
+                  </Form>
                   }
 
 
@@ -1519,7 +1535,7 @@ const AddressCommonCom = (props) => {
                       {(props?.cryptoTab == 2) ?
                         <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
-                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "20px", marginLeft: "20px" }}>
+                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>
                               {item.currencyType}{","}{" "}
                               {item.bankType}{","}{" "}
                               {item.accountNumber}{","}{" "}
@@ -1530,7 +1546,7 @@ const AddressCommonCom = (props) => {
                         </Col> :
                         <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
-                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "20px", marginLeft: "20px" }}>
+                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px" }}>
                               {item.label}{","}{" "}
                               {item.walletCode}{","}{" "}
                               {item.walletAddress}
