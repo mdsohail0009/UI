@@ -82,6 +82,7 @@ const AddressCommonCom = (props) => {
   const [deleteItem, setDeleteItem] = useState()
   const [selectAddressType, setSelectAddressType] = useState(props?.checkThirdParty)
   const [agreeRed, setAgreeRed] = useState(true)
+  const [bilPay, setBilPay] = useState(null);
 
 
   const handleshowModal = (item) => {
@@ -101,6 +102,9 @@ const AddressCommonCom = (props) => {
 
   }
   useEffect(() => {
+    if(window?.location?.pathname.includes('payments')){
+      setBilPay("Fiat");
+    }
     if (selectParty === true) {
       form.setFieldsValue({
         addressType: "3r dparty",
@@ -154,7 +158,7 @@ const AddressCommonCom = (props) => {
       ? props?.userConfig.businessName
       : props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
   };
-  const withdraeTab = props?.addressBookReducer?.cryptoTab == true ? "Crypto" : "Fiat"
+  const withdraeTab = bilPay ? "Fiat" : (props?.addressBookReducer?.cryptoTab == true ? "Crypto" : "Fiat");
 
   const showModal = () => {
     setIsModalVisible(true);
