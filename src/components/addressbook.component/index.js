@@ -199,7 +199,7 @@ class AddressBook extends Component {
 							name="isCheck"
 							type="checkbox"
 							className="c-pointer"
-							checked={this.state.selection.indexOf(props.dataItem.id) > -1}
+							checked={this.state.selection.indexOf(props.dataItem.payeeAccountId) > -1}
 							onChange={(e) => this.handleInputChange(props, e)}
 						/>
 						<span></span>{" "}
@@ -228,7 +228,7 @@ class AddressBook extends Component {
 		},
 		{
 			field: "addressLable",
-			title: "Address Lable",
+			title: "Address Label",
 			filter: true,
 			width: 230,
 		},
