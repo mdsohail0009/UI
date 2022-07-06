@@ -8,6 +8,7 @@ import SwapCoins from './swapCoins';
 import TransforSummary from './transforSummary';
 import TransforSuccessMsg from './transforSuccess';
 import {setTransforObj, setStepcode} from '../../reducers/tranfor.Reducer'
+import { setHeaderTab } from "../../reducers/buysellReducer";
 
 const { Paragraph } = Typography
 class Transfor extends Component {
@@ -22,6 +23,7 @@ class Transfor extends Component {
     }
     closeBuyDrawer = () => {
         this.props.dispatch(setTransforObj(null))
+        this.props.dispatch(setHeaderTab('0'))
         if (this.props.onClose) {
             this.props.onClose();
         }

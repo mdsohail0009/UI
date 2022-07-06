@@ -98,6 +98,7 @@ const FaitWithdrawal = ({
     beneficiaryAccountAddress: null
   });
   const [addressInfo, setAddressInfo] = useState(null);
+  const [agreeRed, setAgreeRed] = useState(true)
   useEffect(() => {
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       handleWalletSelection(selectedWalletCode);
@@ -235,14 +236,16 @@ const FaitWithdrawal = ({
     if (isChange) form.setFieldsValue({ state: null });
   };
   const savewithdrawal = async (values) => {
-
+    setAgreeRed(true);
     setBtnDisabled(true)
     dispatch(setWFTotalValue(values.totalValue));
     if(!values.isAccept){
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
     setErrorMsg(apicalls.convertLocalLang("agree_terms"))
+    setAgreeRed(false);
     }else{
+      setAgreeRed(true);
     if (
       parseFloat(
         typeof values.totalValue === "string"
@@ -708,7 +711,7 @@ setBankDetails(data)
                     // ]}
                   >
                     <span className="d-flex">
-                      <Checkbox className="ant-custumcheck" />
+                    <Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red":" "}`} />
                       <span className="withdraw-check"></span>
                       <Translate
                         content="agree_to_suissebase"

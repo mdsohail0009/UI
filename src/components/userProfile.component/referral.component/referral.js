@@ -91,7 +91,7 @@ class Referral extends Component {
         
         <Spin spinning={this.state.isLoading}>
           <div className="box basic-info">
-            <div className="box contact-info coin-bal">
+            <div className="box contact-info coin-bal" style={{padding:"0 24px"}}>
               <Text className="basicinfo mb-0" style={{ marginLeft: '-22px' }}>My Referral</Text>
               {/* <ul class="m-0 pl-0">
 						
@@ -102,7 +102,7 @@ class Referral extends Component {
               <Button
                 htmlType="submit"
                 size="large"
-                className="pop-btn mb-36"
+                className="pop-btn"
                 style={{marginRight:'-20px'}}
                 onClick={() =>
                   window.open(process.env.REACT_APP_PARTNER_UI_URL, "_blank")
