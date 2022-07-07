@@ -399,6 +399,7 @@ addressTypeNames = (type) =>{
   render() {
     let total = 0;
     for(const idx in this.state.paymentsData){
+      this.state.paymentsData[idx].amount=isNaN(this.state.paymentsData[idx].amount)?0:this.state.paymentsData[idx].amount
       total += Number(this.state.paymentsData[idx].amount);
     }
     const { currencylu, paymentsData, loading,isUploading,uploadIndex } = this.state;

@@ -200,10 +200,12 @@ const AddressCommonCom = (props) => {
   };
 
   const radioChangeHandler = (e) => {
+    debugger
     if(e.target.value === "3rdparty"){
       payeeLuData(props?.userConfig?.id,withdraeTab,false);
     }else{
       payeeLuData(props?.userConfig?.id,withdraeTab,true);
+      getFavs("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
     }
     setAgreeRed(true);
     setErrorMsg(null);
@@ -264,6 +266,7 @@ const AddressCommonCom = (props) => {
     setIsLoading(false)
   }
   const getFavs = async (id, membershipId) => {
+    debugger
     let response = await getFavData(id, membershipId)
     if (response.ok) {
       let obj = response.data;
@@ -331,7 +334,7 @@ const AddressCommonCom = (props) => {
         if (bankmodalData[i].id == obj.id) {
           obj.recordStatus = "Modified"
           obj.modifiedBy = props?.userConfig.firstName + props?.userConfig.lastName
-          obj.status= props?.addressBookReducer?.selectedRowData?.status
+          obj.status= 1
           obj.addressState =  props?.addressBookReducer?.selectedRowData?.addressState
           bankmodalData[i]=obj
           setEditBankDetails(false)
@@ -464,7 +467,7 @@ const AddressCommonCom = (props) => {
       bankName: "",
       bankAddress: "",
       payeeAccountState: null,
-      payeeAccountCountry: null,
+      payeeAccountCountry:" ",
       payeeAccountPostalCode: "",
       swiftCode: "",
     });

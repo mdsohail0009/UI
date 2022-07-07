@@ -82,6 +82,9 @@ class Header extends Component {
       this.props.userConfig ? this.props.userConfig.language : "en"
     );
   }
+  componentWillUnmount(){
+    this.props.dispatch(setHeaderTab(""));
+  }
   securityMenu = (
     <Menu>
       <Translate

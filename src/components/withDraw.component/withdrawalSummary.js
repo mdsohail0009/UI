@@ -602,6 +602,7 @@ const WithdrawalFiatSummary = ({
 											prefix={""}
 											decimalScale={0}
 											allowNegative={false}
+											allowLeadingZeros={true}
 											className="cust-input custom-add-select mb-0"
 											placeholder={"Enter code"}
 											maxLength={6}

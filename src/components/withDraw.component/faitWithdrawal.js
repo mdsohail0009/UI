@@ -87,6 +87,7 @@ const FaitWithdrawal = ({
   const [accountDetails,setAccountDetails]=useState({})
   const[bankDetails,setBankDetails]=useState([])
   const [details,setDetails]=useState([])
+  const [selectRequired,setSelectRequired]=useState(true)
   const [addressObj, setAddressObj] = useState({
     bankName: null,
     accountNumber: null,
@@ -364,6 +365,7 @@ const FaitWithdrawal = ({
   };
 
   const validateAddressType = (_, value) => {
+    debugger
     if (value) {
       if (value == '.') {
         return Promise.reject(
@@ -415,46 +417,30 @@ const AccountBankDetails=async(payeeId,currency)=>{
   debugger
   let response=await getAccountBankDetails(payeeId,currency)
   if(response.ok){
-   if(response.data.length == 0){
-      setAddressShow(false);
-    }
-    else{
-      setAddressShow(null);
+    if(response.data.length>1){
+      if(response.data.length == 0){
+        setAddressShow(false);
+      }
+      else{
+        setAddressShow(null);
+        setBankDetails(response.data)
+      }
+    }else{
       setBankDetails(response.data)
+      setDetails(response.data)
     }
-    //setAccountDetails(response.data)
+  
   }
   
 }
 const handleDetails=(e)=>{
   debugger
+  setSelectRequired(false)
 let data=bankDetails.filter((item)=>item.bankName==e)
 setDetails(data)
  form.setFieldsValue({totalValue : ""});
 }
 
-// const handleDetails = async (e) => {
-//   debugger
-//   setAmountLoading(true)
-//   let val = addressLu.filter((item) => {
-//     if (item.name == e) {
-//       return item;
-//     }
-//   });
-//   form.setFieldsValue({ totalValue: "" });
-//   form.setFieldsValue({ isAccept: false });
-//   let recAddressDetails = await detailsAddress(val[0].id);
-//   if (recAddressDetails.ok) {
-//     bindEditableData(recAddressDetails.data);
-//     setAmountLoading(false)
-
-//   }
-// };
-// const bindEditableData = (obj) => {
-//   debugger
-//   setAddressInfo({ ...obj });
-//   form.setFieldsValue(obj);
-// };
   const renderModalContent = () => {
     const _types = {
       step1: (
@@ -527,7 +513,7 @@ setDetails(data)
                 <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="noaddress_msg" /></Text>
            : <>
 
-              {addressShow == null && accountDetails.length>0 &&
+              {addressShow == null && bankDetails.length>1 &&
                 <div style={{ position: "relative" }}>
 
                   <Form.Item
@@ -569,6 +555,7 @@ setDetails(data)
                         validator: validateAddressType
                       }
                     ]}
+                    
                     label={
                       <>
                         <Translate className="input-label mb-0"
@@ -657,60 +644,20 @@ setDetails(data)
                     component={Text}
                     with={{value: details[0].swiftRouteBICNumber }}
                   />
-                  {/* <Translate
-                    className="fw-200 text-white-50 fs-14"
-                    content="city"
-                    component={Text}
-                  />
-                  <Translate
-                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                    component={Text}
-                    with={{ value: details[0].city }}
-                  /> */}
                   
-
-                  
-                  {/* <Translate
-                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                    component={Text}
-                    with={{
-                      value: details[0].state
-                    }}
-                  />
-
-                  <Translate
-                    className="fw-200 text-white-50 fs-14"
-                    content="Country"
-                    component={Text}
-                  /> */}
-                  {/* <Translate
-                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                    component={Text}
-                    with={{ value: details[0].country }}
-                  />
-                   <Translate
-                    className="fw-200 text-white-50 fs-14"
-                    content="zipcode"
-                    component={Text}
-                  />
-                  <Translate
-                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                    component={Text}
-                    with={{ value: details[0].zipCode }}
-                  /> */}
 
                   <Form.Item
                     className="custom-forminput mb-36 agree"
                     name="isAccept"
                     valuePropName="checked"
                     required
-                    // rules={[
-                    //   {
-                    //     validator: (_, value) =>
-                    //       value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice')
-                    //       )),
-                    //   },
-                    // ]}
+                    rules={[
+                      {
+                        validator: (_, value) =>
+                          value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice')
+                          )),
+                      },
+                    ]}
                   >
                     <span className="d-flex">
                     <Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red":" "}`} />
