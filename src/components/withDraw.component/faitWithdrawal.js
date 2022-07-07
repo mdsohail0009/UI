@@ -432,6 +432,7 @@ let data=bankDetails.filter((item)=>item.bankName==e)
 setDetails(data)
  form.setFieldsValue({totalValue : ""});
 }
+
 // const handleDetails = async (e) => {
 //   debugger
 //   setAmountLoading(true)

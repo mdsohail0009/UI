@@ -446,7 +446,7 @@ const WithdrawalFiatSummary = ({
 			setAuthDisable(true);
 		} else if (response.data == null) {
 			useOtpRef.current.scrollIntoView(0, 0);
-			setMsg("Please enter authenticator verification code");
+			setMsg("Please enter authenticator code");
 		} else {
 			setVerifyAuth(false);
 			setAuthDisable(false);

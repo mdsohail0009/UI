@@ -384,7 +384,7 @@ class WithdrawSummary extends Component {
 		} else if (response.data == null) {
 			this.setState({
 				...this.state,
-				errorMsg: "Please enter authenticator verification code",
+				errorMsg: "Please enter authenticator code",
 			});
 		} else {
 			this.useDivRef.current.scrollIntoView(0, 0);

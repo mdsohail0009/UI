@@ -176,7 +176,7 @@ class PaymentsView extends Component {
                                 })}
 
                                 {loading && <tr>
-                                    <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>}
+                                    <td colSpan='6' className='text-center p-16'><Spin size='default' /></td></tr>}
                             </tbody>
 
                             <tfoot>
