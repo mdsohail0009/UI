@@ -152,12 +152,12 @@ class AddressBook extends Component {
 			filter: true,
 			width: 200,
 		},
-		{
-			field: "bankAddress",
-			title: apiCalls.convertLocalLang("Bank_address1"),
-			filter: true,
-			width: 250,
-		},
+		// {
+		// 	field: "bankAddress",
+		// 	title: apiCalls.convertLocalLang("Bank_address1"),
+		// 	filter: true,
+		// 	width: 250,
+		// },
 	
 		{
 			field: "addressState",
@@ -207,6 +207,7 @@ class AddressBook extends Component {
 				</td>
 			),
 		},
+	
 		{
 			field: "favouriteName",
 			title: "Favourite Name",
@@ -214,11 +215,8 @@ class AddressBook extends Component {
 			width: 300,
 			customCell: (props) => (
 				<td>
-					{" "}
-					<div
-						className="gridLink"
-						onClick={() => this.addressCryptoView(props)}>
-						{props.dataItem.addressLable}
+					<div className="gridLink" onClick={() => this.addressCryptoView(props)}>
+						{props.dataItem.favouriteName}
 					</div>
 					<Text className="file-label ml-8 fs-12">
 						{this.addressTypeNames(props?.dataItem?.addressType)}
@@ -228,7 +226,7 @@ class AddressBook extends Component {
 		},
 		{
 			field: "addressLable",
-			title: "Address Label",
+			title: "Bank Label",
 			filter: true,
 			width: 230,
 		},
