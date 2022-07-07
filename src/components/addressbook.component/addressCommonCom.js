@@ -1445,7 +1445,7 @@ const AddressCommonCom = (props) => {
                         <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
                             <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "20px", marginLeft: "20px" }}>
-                              {item.currencyType}{","}{" "}
+                              {item.walletCode}{","}{" "}
                               {item.bankType}{","}{" "}
                               {item.accountNumber}{","}{" "}
                               {item.swiftCode}{","}{" "}
