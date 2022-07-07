@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message } from "antd";
+import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message, Spin } from "antd";
 import {
 	setAddressStep,
 	rejectCoin,
@@ -20,6 +20,8 @@ import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import apiCalls from "../../api/apiCalls";
 import Info from "../shared/info";
+import { DownloadOutlined } from '@ant-design/icons';
+import Loader from "../../Shared/loader";
 
 const { Paragraph, Text } = Typography;
 
@@ -39,6 +41,7 @@ class AddressBook extends Component {
 			cryptoModal: false,
 			selectedModal: "",
 			errorWorning: null,
+			isDownloading: false,
 
 			obj: {
 				id: [],
@@ -54,6 +57,7 @@ class AddressBook extends Component {
 		};
 		this.gridFiatRef = React.createRef();
 		this.gridCryptoRef = React.createRef();
+		
 	}
 	componentDidMount() {
 		if (!this.state.cryptoFiat) {
@@ -175,9 +179,12 @@ class AddressBook extends Component {
 			field: "isWhitelisted",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted ? <a  onClick={() => {
-						this.downloadDeclarationForm(props?.dataItem);
-					}} >Download</a> : "Not whitelisted"}
+					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration != props?.dataItem.id) && <><a onClick={() => {
+						if (!this.state.isDownloading)
+							this.downloadDeclarationForm(props?.dataItem);
+					}} ><DownloadOutlined /></a> Whitelisted</>}
+					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
+					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.id && <Spin size="small" />}
 				</td>
 			),
 			title: apiCalls.convertLocalLang("whitelist"),
@@ -207,7 +214,6 @@ class AddressBook extends Component {
 				</td>
 			),
 		},
-	
 		{
 			field: "favouriteName",
 			title: "Favorite Name",
@@ -236,57 +242,57 @@ class AddressBook extends Component {
 			filter: true,
 			width: 380,
 		},
-		{
-			field: "inputScore",
-			title: "Input Score",
-			width: 150,
-			filter: true,
-			customCell: (props) => (
-				<td>
-					{props.dataItem.inputScore ? props.dataItem.inputScore : 0}
-					<Tooltip title="View More">
-						<span
-							className="icon md info c-pointer ml-8"
-							style={{ float: "right" }}
-							onClick={() =>
-								this.setState({
-									...this.state,
+		// {
+		// 	field: "inputScore",
+		// 	title: "Input Score",
+		// 	width: 150,
+		// 	filter: true,
+		// 	customCell: (props) => (
+		// 		<td>
+		// 			{props.dataItem.inputScore ? props.dataItem.inputScore : 0}
+		// 			<Tooltip title="View More">
+		// 				<span
+		// 					className="icon md info c-pointer ml-8"
+		// 					style={{ float: "right" }}
+		// 					onClick={() =>
+		// 						this.setState({
+		// 							...this.state,
 
-									cryptoModal: true,
-									selectedId: props.dataItem.id,
-									selectedModal: "Input",
-								})
-							}
-						/>
-					</Tooltip>
-				</td>
-			),
-		},
-		{
-			field: "outputScore",
-			title: "Output Score",
-			width: 150,
-			filter: true,
-			customCell: (props) => (
-				<td>
-					{props.dataItem.outputScore ? props.dataItem.outputScore : 0}
-					<Tooltip title="View More">
-						<span
-							className="icon md info c-pointer ml-8"
-							style={{ float: "right" }}
-							onClick={() =>
-								this.setState({
-									...this.state,
-									cryptoModal: true,
-									selectedId: props.dataItem.id,
-									selectedModal: "Output",
-								})
-							}
-						/>
-					</Tooltip>
-				</td>
-			),
-		},
+		// 							cryptoModal: true,
+		// 							selectedId: props.dataItem.id,
+		// 							selectedModal: "Input",
+		// 						})
+		// 					}
+		// 				/>
+		// 			</Tooltip>
+		// 		</td>
+		// 	),
+		// },
+		// {
+		// 	field: "outputScore",
+		// 	title: "Output Score",
+		// 	width: 150,
+		// 	filter: true,
+		// 	customCell: (props) => (
+		// 		<td>
+		// 			{props.dataItem.outputScore ? props.dataItem.outputScore : 0}
+		// 			<Tooltip title="View More">
+		// 				<span
+		// 					className="icon md info c-pointer ml-8"
+		// 					style={{ float: "right" }}
+		// 					onClick={() =>
+		// 						this.setState({
+		// 							...this.state,
+		// 							cryptoModal: true,
+		// 							selectedId: props.dataItem.id,
+		// 							selectedModal: "Output",
+		// 						})
+		// 					}
+		// 				/>
+		// 			</Tooltip>
+		// 		</td>
+		// 	),
+		// },
 		{
 			field: "coin",
 			title: apiCalls.convertLocalLang("Coin"),
@@ -309,9 +315,12 @@ class AddressBook extends Component {
 			field: "isWhitelisted",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted ? <a onClick={() => {
-						this.downloadDeclarationForm(props?.dataItem);
-					}} >Download</a> : "Not whitelisted"}
+					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration != props?.dataItem.id) &&<> <a onClick={() => {
+						if (!this.state.isDownloading)
+							this.downloadDeclarationForm(props?.dataItem);
+					}} ><DownloadOutlined /></a> Whitelisted</>}
+					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
+					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.id && <Spin size="small" />}
 				</td>
 			),
 			title: apiCalls.convertLocalLang("whitelist"),
@@ -319,10 +328,12 @@ class AddressBook extends Component {
 			width: 200,
 		},
 	];
-	async downloadDeclarationForm(dataItem){
+	async downloadDeclarationForm(dataItem) {
+		this.setState({ ...this.state, isDownloading: true, selectedDeclaration: dataItem.id });
 		const response = await downloadDeclForm(dataItem.id);
-		if(response.ok){
-			window.open(response.data,"_blank");
+		if (response.ok) {
+			window.open(response.data, "_blank");
+			this.setState({ ...this.state, isDownloading: false, selectedDeclaration: null });
 		}
 	}
 	addressFiatView = ({ dataItem }) => {
@@ -529,8 +540,15 @@ class AddressBook extends Component {
 			}
 		}
 	};
-	closeBuyDrawer = () => {
-		this.setState({ ...this.state, visible: false, fiatDrawer: false });
+	closeBuyDrawer = (obj) => {
+		let showCrypto = false, showFiat = false;
+		if (obj) {
+			if (obj.isCrypto)
+				showCrypto = !obj?.close;
+			else
+				showFiat = !obj?.close;
+		};
+		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat });
 		this.props.rejectCoinWallet();
 		this.props.clearFormValues();
 		this.props.clearCrypto();
@@ -591,7 +609,7 @@ class AddressBook extends Component {
 		const stepcodes = {
 			cryptoaddressbook: (<>
 				 {/* <NewAddressBook onCancel={() => this.closeBuyDrawer()} /> */}
-				<AddressCommonCom onCancel={() => this.closeBuyDrawer()} cryptoTab={1}/>
+				<AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1}/>
 				</>
 			),
 			selectcrypto: <SelectCrypto />,
@@ -614,7 +632,7 @@ class AddressBook extends Component {
 		const stepcodes = {
 			cryptoaddressbook: (
 				<span
-					onClick={this.closeBuyDrawer}
+				onClick={() => this.closeBuyDrawer()}
 					className="icon md close-white c-pointer"
 				/>
 			),
@@ -768,7 +786,7 @@ class AddressBook extends Component {
 								</Paragraph>
 							</div>
 							<span
-								onClick={this.closeBuyDrawer}
+								onClick={() => this.closeBuyDrawer()}
 								className="icon md close-white c-pointer"
 							/>
 						</div>,
@@ -780,7 +798,7 @@ class AddressBook extends Component {
 					className="side-drawer w-50p">
 					{this.state.fiatDrawer && (<>
 						{/* <NewFiatAddress onCancel={() => this.closeBuyDrawer()} /> */}
-						<AddressCommonCom onCancel={() => this.closeBuyDrawer()}  cryptoTab={2}/>
+						<AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)}  cryptoTab={2}/>
 						</>
 					)}
 				</Drawer>
