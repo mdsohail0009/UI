@@ -248,7 +248,7 @@ const AddressCommonCom = (props) => {
       
   }
   const handleChange = (e) => {
-
+    form.resetFields()
     let data = PayeeLu.find(item => item.name === e)
     if (data !== undefined) {
       getFavs(data.id, props?.userConfig?.id)
@@ -1444,7 +1444,7 @@ const AddressCommonCom = (props) => {
                       {(props?.cryptoTab == 2) ?
                         <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
-                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "20px", marginLeft: "20px" }}>
+                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px", marginLeft: "20px" }}>
                               {item.walletCode}{","}{" "}
                               {item.bankType}{","}{" "}
                               {item.accountNumber}{","}{" "}
@@ -1455,7 +1455,7 @@ const AddressCommonCom = (props) => {
                         </Col> :
                         <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
-                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "20px", marginLeft: "20px" }}>
+                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px", marginLeft: "20px" }}>
                               {item.label}{","}{" "}
                               {item.walletCode}{","}{" "}
                               {item.walletAddress}
