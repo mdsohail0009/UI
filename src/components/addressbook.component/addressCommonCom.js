@@ -245,7 +245,7 @@ const[newStates,setNewStates] = useState([]);
 }
 
   const handleChange = (e) => {
-    form.resetFields()
+    // form.resetFields()
     let data = PayeeLu.find(item => item.name === e)
     if (data !== undefined) {
       getFavs(data.id, props?.userConfig?.id)
