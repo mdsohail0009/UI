@@ -101,7 +101,6 @@ const AddressCommonCom = (props) => {
 
   }
   useEffect(() => {
-   debugger
     if(window?.location?.pathname.includes('payments')){
       setBilPay("Fiat");
     }   
@@ -258,7 +257,6 @@ const AddressCommonCom = (props) => {
   }
   
   const bankDetailsLu = async (id, membershipId) => {
-    debugger
     setIsLoading(true)
     let response = await getBankDetailLu(id, membershipId)
     if (response.ok) {
@@ -374,7 +372,6 @@ const AddressCommonCom = (props) => {
   }
 
   const savewithdrawal = async (values) => {
-    debugger
     setIsLoading(false);
     setErrorMsg(null);
     setBtnDisabled(true);
@@ -424,6 +421,7 @@ const AddressCommonCom = (props) => {
       values["id"] = favaddrId;
       let saveObj = Object.assign({}, values);
       saveObj.payeeAccountModels = bankmodalData
+      if(withdraeTab === "Crypto")
       saveObj.documents = cryptoAddress?.documents;
       let response = await saveAddressBook(saveObj);
       setAgreeRed(true);
@@ -437,8 +435,12 @@ const AddressCommonCom = (props) => {
           duration: 3,
         });
         form.resetFields();
-        props?.onCancel({ isCrypto: false, close: isEdit ? true : false });
-        //onCancel({isCrypto:true,close:false});
+        if(withdraeTab === "Fiat") {
+          props?.onCancel({ isCrypto: false, close: isEdit ? true : false });
+        }
+        else {
+           props?.onCancel({isCrypto:true, close:false});
+        }
         setIsLoading(false);
         props.InputFormValues(null);
         props?.dispatch(addressTabUpdate(true));
@@ -1578,8 +1580,8 @@ const AddressCommonCom = (props) => {
 
                   />
                 </div>
-                {!cryptoAddress?.isWhitelisted && <div className="whitelist-note">
-								<Alert type="warning" description={`Note : Declaration form will be sent to ${props?.userConfig?.email || cryptoAddress?.email}. Please sign using link received in email to whitelist your address`} showIcon closable={false} />
+                {!props?.addressBookReducer?.selectedRowData?.isWhitelisted && <div className="whitelist-note">
+								<Alert type="warning" description={`Note : Declaration form will be sent to ${props?.userConfig?.email || favouriteDetails?.email}. Please sign using link received in email to whitelist your address`} showIcon closable={false} />
 							</div>}
               </div>
 
