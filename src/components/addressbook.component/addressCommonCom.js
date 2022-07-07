@@ -83,11 +83,13 @@ const AddressCommonCom = (props) => {
   const [deleteItem, setDeleteItem] = useState()
   const [agreeRed, setAgreeRed] = useState(true)
   const [bilPay, setBilPay] = useState(null);
+  const[newStates,setNewStates] = useState([]);
   const [isSignRequested, setSignRequested] = useState(false);
 
   const handleshowModal = (item) => {
-    setEditBankDetails(true)
+  setEditBankDetails(true)
     let data = bankmodalData.find((items) => items.id == item.id)
+    handleCountryChange(data?.payeeAccountCountry);
     setIsModalVisible(true);
     setBankObj(data)
     if (props?.addressBookReducer?.cryptoTab == true) {
@@ -103,8 +105,8 @@ const AddressCommonCom = (props) => {
   useEffect(() => {
     if(window?.location?.pathname.includes('payments')){
       setBilPay("Fiat");
-    }   
-     if (selectParty === true) {
+    } 
+    if (selectParty === true) {
       form.setFieldsValue({
         addressType: "3r dparty",
         bankType: "bank",
@@ -161,14 +163,14 @@ const AddressCommonCom = (props) => {
 
   const showModal = () => {
     setIsModalVisible(true);
-    
-  };
+  
+ };
   const handleOk = () => {
     setIsModalVisible(false);
   };
   const handleCoinChange = (e) => {
     bankDetailForm.validateFields(["walletAddress"],validateAddressType)
-    
+ 
   }
 
   const validateAddressType = (_, value) => {
@@ -194,9 +196,8 @@ const AddressCommonCom = (props) => {
   const handleCancel = () => {
     setIsModalVisible(false);
     bankDetailForm.resetFields();
+    SetBankChange("BankAccount");
   };
-
-
 
   const radioChangeHandler = (e) => {
     if(e.target.value === "3rdparty"){
@@ -217,8 +218,7 @@ const AddressCommonCom = (props) => {
     form.resetFields();
     setCryptoAddress(null);
     if (e.target.value === "1stparty") {
-     
-      form.setFieldsValue({
+       form.setFieldsValue({
         addressType: "1stparty",
         beneficiaryAccountName: props?.userConfig.isBusiness
           ? props?.userConfig.businessName
@@ -230,7 +230,6 @@ const AddressCommonCom = (props) => {
       });
       setBankType("bank");
       setSelectParty(false);
-     
     } else {
       form.setFieldsValue({
         addressType: "3rdparty",
@@ -249,7 +248,6 @@ const AddressCommonCom = (props) => {
       
   }
   const handleChange = (e) => {
-
     let data = PayeeLu.find(item => item.name === e)
     if (data !== undefined) {
       getFavs(data.id, props?.userConfig?.id)
@@ -260,7 +258,6 @@ const AddressCommonCom = (props) => {
     setIsLoading(true)
     let response = await getBankDetailLu(id, membershipId)
     if (response.ok) {
-     
       let obj = response.data;
       setBankDetail(obj)
     }
@@ -303,7 +300,7 @@ const AddressCommonCom = (props) => {
       walletAddress: values.walletAddress,
       walletCode: values.walletCode,
       accountNumber: values.accountNumber || values.IBAN,
-      bankType: values.bankType,
+      bankType: values.bankType||"Bank Account",
       swiftRouteBICNumber: null,
       swiftCode: values.swiftCode,
       swiftRouteBICNumber: values.swiftCode,
@@ -345,6 +342,7 @@ const AddressCommonCom = (props) => {
     }
     setIsModalVisible(false);
     bankDetailForm.resetFields();
+    SetBankChange("BankAccount");
   }
   const handleDeleteCancel = () => {
     setIsModalDelete(false)
@@ -367,7 +365,7 @@ const AddressCommonCom = (props) => {
   const handleBankChange = (e) => {
     SetBankChange(e)
     bankDetailForm.setFieldsValue({
-      IBAN:"",accountNumber:""
+      IBAN:"",accountNumber:"",swiftCode:"",bankName:"",payeeAccountCountry:""
     })
   }
 
@@ -402,7 +400,7 @@ const AddressCommonCom = (props) => {
       setErrorMsg(apiCalls.convertLocalLang("agree_termsofservice"));
       setAgreeRed(false);
     }
-   
+ 
     else {
       setBtnDisabled(true);
       values["favouriteName"] = namecheck;
@@ -498,16 +496,23 @@ const AddressCommonCom = (props) => {
       setCoinDetails(response.data)
     }
   }
-  const handleCountryChange = (e) => {
-    console.log(e)
+  const handleCountryChange = (code,countryValues) => {
+    bankDetailForm.setFieldsValue({"payeeAccountState":null});
+    let Country = countryValues ? countryValues : country;
+    let states = Country?.filter((item) => item.name === code);
+    setNewStates(states[0]?.stateLookUp);
   }
   const handleCountry = (code,countryValues) => {
+    form.setFieldsValue({"state":null});
     let Country = countryValues ? countryValues : country;
     let states = Country?.filter((item) => item.name === code);
     setState(states[0]?.stateLookUp);
   }
   const handleState = (e) => {
     console.log(e);
+  }
+  const handleStateChange = () =>{
+
   }
   const getCountry = async () => {
     let response = await getCountryStateLu();
@@ -539,7 +544,7 @@ const AddressCommonCom = (props) => {
       <>
         <div ref={useDivRef}></div>
         {isLoading ? (
-          <Loader /> 
+          <Loader />
         ) : (
           <div className="addbook-height">
             <div ref={useDivRef}></div>
@@ -653,7 +658,7 @@ const AddressCommonCom = (props) => {
                     <AutoComplete
                       onChange={(e) => handleChange(e)}
                       maxLength={20} className="cust-input"
-                      placeholder= "Favorite Name"
+                      placeholder= "Favourite Name"
                     >
                       {PayeeLu?.map((item, indx) => (
                         <Option key={indx} value={item.name}>
@@ -721,17 +726,19 @@ const AddressCommonCom = (props) => {
                     className="custom-forminput custom-label mb-0"
                     name="phoneNumber"
                     rules={[
+                      { required: true, message: "Is required" },
                       {
-                        required: true,
-                        message: "Is required"
+                        validator(_, value) {
+                          if (emailExist) {
+                            return Promise.reject("Email already exist");
+                          } else if (value && !(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(value))) {
+                            return Promise.reject("Invalid Phone Number");
+                          }
+                          else {
+                            return Promise.resolve();
+                          }
+                        },
                       },
-                      {
-                        whitespace: true,
-                        message: apiCalls.convertLocalLang('is_required')
-                      },
-                      {
-                        validator: validateContentRule
-                      }
                     ]}
                     label={
                       <Translate content="Phone_No" component={Form.label} />
@@ -1165,15 +1172,14 @@ const AddressCommonCom = (props) => {
                           >
 
                             <Select
-                              showSearch
-                              defaultValue="BANKTYPE"
+                              defaultValue="Bank Account"
                               placeholder="Select Type"
                               className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                               dropdownClassName="select-drpdwn"
                               onChange={(e) => handleBankChange(e)}
                               bordered={false}
                             >
-                              <Option value="BANKTYPE">Bank Account</Option>
+                              <Option value="BankAccount">Bank Account</Option>
                               <Option value="IBAN">IBAN</Option>
                             </Select>
                           </Form.Item>
@@ -1360,10 +1366,10 @@ const AddressCommonCom = (props) => {
                         placeholder="State"
                         className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                         dropdownClassName="select-drpdwn"
-                        onChange={(e) => handleState(e)}
+                        onChange={(e) => handleStateChange(e)}
                         bordered={false}
                       >
-                        {state?.map((item, indx) => (
+                        {newStates?.map((item, indx) => (
                           <Option key={indx} value={item.name}>
                             {item.name}
                           </Option>
@@ -1462,7 +1468,7 @@ const AddressCommonCom = (props) => {
                       {(props?.cryptoTab == 2) ?
                         <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
-                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "20px", marginLeft: "20px" }}>
+                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px", marginLeft: "20px" }}>
                               {item.walletCode}{","}{" "}
                               {item.bankType}{","}{" "}
                               {item.accountNumber}{","}{" "}
@@ -1473,7 +1479,7 @@ const AddressCommonCom = (props) => {
                         </Col> :
                         <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
-                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "20px", marginLeft: "20px" }}>
+                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px", marginLeft: "20px" }}>
                               {item.label}{","}{" "}
                               {item.walletCode}{","}{" "}
                               {item.walletAddress}
