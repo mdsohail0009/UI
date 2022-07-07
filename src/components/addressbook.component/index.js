@@ -179,12 +179,12 @@ class AddressBook extends Component {
 			field: "isWhitelisted",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration != props?.dataItem.id) && <><a onClick={() => {
+					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration != props?.dataItem.payeeAccountId) && <><a onClick={() => {
 						if (!this.state.isDownloading)
 							this.downloadDeclarationForm(props?.dataItem);
 					}} ><DownloadOutlined /></a> Whitelisted</>}
 					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
-					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.id && <Spin size="small" />}
+					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.payeeAccountId && <Spin size="small" />}
 				</td>
 			),
 			title: apiCalls.convertLocalLang("whitelist"),
@@ -329,8 +329,8 @@ class AddressBook extends Component {
 		},
 	];
 	async downloadDeclarationForm(dataItem) {
-		this.setState({ ...this.state, isDownloading: true, selectedDeclaration: dataItem.id });
-		const response = await downloadDeclForm(dataItem.id);
+		this.setState({ ...this.state, isDownloading: true, selectedDeclaration: dataItem.payeeAccountId });
+		const response = await downloadDeclForm(dataItem.payeeAccountId);
 		if (response.ok) {
 			window.open(response.data, "_blank");
 			this.setState({ ...this.state, isDownloading: false, selectedDeclaration: null });
