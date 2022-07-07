@@ -194,6 +194,7 @@ const[newStates,setNewStates] = useState([]);
   const handleCancel = () => {
     setIsModalVisible(false);
     bankDetailForm.resetFields();
+    SetBankChange("BankAccount");
   };
  const radioChangeHandler = (e) => {
   if(e.target.value === "3rdparty"){
@@ -290,7 +291,6 @@ const[newStates,setNewStates] = useState([]);
   };
 
   const saveModalwithdrawal = (values) => {
-    debugger
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
@@ -341,6 +341,7 @@ const[newStates,setNewStates] = useState([]);
     }
     setIsModalVisible(false);
     bankDetailForm.resetFields();
+    SetBankChange("BankAccount");
   }
   const handleDeleteCancel = () => {
     setIsModalDelete(false)
@@ -705,19 +706,6 @@ const[newStates,setNewStates] = useState([]);
                   <Form.Item
                     className="custom-forminput custom-label mb-0"
                     name="phoneNumber"
-                    // rules={[
-                    //   {
-                    //     required: true,
-                    //     message: "Is required"
-                    //   },
-                    //   {
-                    //     whitespace: true,
-                    //     message: apiCalls.convertLocalLang('is_required')
-                    //   },
-                    //   {
-                    //     validator: validateContentRule
-                    //   }
-                    // ]}
                     rules={[
                       { required: true, message: "Is required" },
                       {
@@ -1164,8 +1152,7 @@ const[newStates,setNewStates] = useState([]);
                           >
 
                             <Select
-                              showSearch
-                              defaultValue="Bank Account"
+                            defaultValue="Bank Account"
                               placeholder="Select Type"
                               className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                               dropdownClassName="select-drpdwn"
