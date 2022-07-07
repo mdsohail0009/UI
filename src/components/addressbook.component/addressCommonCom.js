@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   Form, Typography, Input, Button, Alert, Spin, message, Select, Checkbox, Tooltip, Upload, Modal,
-  Radio, Row, Col, AutoComplete, Dropdown, Menu, Space, Cascader, InputNumber,
+  Radio, Row, Col, AutoComplete, Dropdown, Menu, Space, Cascader, InputNumber,Image
 } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { setStep, setHeaderTab } from "../../reducers/buysellReducer";
@@ -23,7 +23,8 @@ import FilePreviewer from "react-file-previewer";
 import WAValidator from "multicoin-address-validator";
 import NumberFormat from "react-number-format";
 import { TumblrShareButton } from "react-share";
-const { Text, Paragraph } = Typography;
+import success from "../../assets/images/success.png";
+const { Text, Paragraph, Title } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
 const { Dragger } = Upload;
@@ -82,6 +83,7 @@ const AddressCommonCom = (props) => {
   const [deleteItem, setDeleteItem] = useState()
   const [agreeRed, setAgreeRed] = useState(true)
   const [bilPay, setBilPay] = useState(null);
+  const [isSignRequested, setSignRequested] = useState(false);
 
   const handleshowModal = (item) => {
     setEditBankDetails(true)
@@ -99,7 +101,7 @@ const AddressCommonCom = (props) => {
 
   }
   useEffect(() => {
-   
+   debugger
     if(window?.location?.pathname.includes('payments')){
       setBilPay("Fiat");
     }   
@@ -372,6 +374,7 @@ const AddressCommonCom = (props) => {
   }
 
   const savewithdrawal = async (values) => {
+    debugger
     setIsLoading(false);
     setErrorMsg(null);
     setBtnDisabled(true);
@@ -421,18 +424,21 @@ const AddressCommonCom = (props) => {
       values["id"] = favaddrId;
       let saveObj = Object.assign({}, values);
       saveObj.payeeAccountModels = bankmodalData
+      saveObj.documents = cryptoAddress?.documents;
       let response = await saveAddressBook(saveObj);
       setAgreeRed(true);
       if (response.ok) {
         setBtnDisabled(false);
         useDivRef.current.scrollIntoView();
+        setSignRequested(true);
         message.success({
           content: apiCalls.convertLocalLang("address_msg"),
           className: "custom-msg",
           duration: 3,
         });
         form.resetFields();
-        props?.onCancel();
+        props?.onCancel({ isCrypto: false, close: isEdit ? true : false });
+        //onCancel({isCrypto:true,close:false});
         setIsLoading(false);
         props.InputFormValues(null);
         props?.dispatch(addressTabUpdate(true));
@@ -516,6 +522,16 @@ const AddressCommonCom = (props) => {
       spin
     />
   );
+  if (isSignRequested) {
+		return <div className="text-center">
+			<Image width={80} preview={false} src={success} />
+			<Title level={2} className="text-white-30 my-16 mb-0">Declaration form sent successfully</Title>
+			<Text className="text-white-30">{`Declaration form has been sent to ${props?.userConfig?.email}. 
+				 Please sign using link received in email to whitelist your address`}</Text>
+			{/*<div className="my-25"><Button onClick={() => this.props.onBack()} type="primary" className="mt-36 pop-btn text-textDark">BACK TO DASHBOARD</Button> */}
+		</div>
+
+	}
   return (
     <div>
       <>
@@ -1562,6 +1578,9 @@ const AddressCommonCom = (props) => {
 
                   />
                 </div>
+                {!cryptoAddress?.isWhitelisted && <div className="whitelist-note">
+								<Alert type="warning" description={`Note : Declaration form will be sent to ${props?.userConfig?.email || cryptoAddress?.email}. Please sign using link received in email to whitelist your address`} showIcon closable={false} />
+							</div>}
               </div>
 
               <Form.Item className="text-center">
