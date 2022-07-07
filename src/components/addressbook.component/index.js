@@ -107,7 +107,7 @@ class AddressBook extends Component {
 		},
 		{
 			field: "favouriteName",
-			title: "Favourite Name",
+			title: "Favorite Name",
 			filter: true,
 			width: 300,
 			customCell: (props) => (
@@ -210,7 +210,7 @@ class AddressBook extends Component {
 	
 		{
 			field: "favouriteName",
-			title: "Favourite Name",
+			title: "Favorite Name",
 			filter: true,
 			width: 300,
 			customCell: (props) => (
@@ -226,7 +226,7 @@ class AddressBook extends Component {
 		},
 		{
 			field: "addressLable",
-			title: "Bank Label",
+			title: "Address Label",
 			filter: true,
 			width: 230,
 		},

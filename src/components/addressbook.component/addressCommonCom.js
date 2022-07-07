@@ -194,6 +194,7 @@ const[newStates,setNewStates] = useState([]);
   const handleCancel = () => {
     setIsModalVisible(false);
     bankDetailForm.resetFields();
+    SetBankChange("BankAccount");
   };
  const radioChangeHandler = (e) => {
   if(e.target.value === "3rdparty"){
@@ -298,7 +299,7 @@ const[newStates,setNewStates] = useState([]);
       walletAddress: values.walletAddress,
       walletCode: values.walletCode,
       accountNumber: values.accountNumber || values.IBAN,
-      bankType: values.bankType,
+      bankType: values.bankType||"Bank Account",
       swiftRouteBICNumber: null,
       swiftCode: values.swiftCode,
       swiftRouteBICNumber: values.swiftCode,
@@ -340,6 +341,7 @@ const[newStates,setNewStates] = useState([]);
     }
     setIsModalVisible(false);
     bankDetailForm.resetFields();
+    SetBankChange("BankAccount");
   }
   const handleDeleteCancel = () => {
     setIsModalDelete(false)
@@ -362,7 +364,7 @@ const[newStates,setNewStates] = useState([]);
   const handleBankChange = (e) => {
     SetBankChange(e)
     bankDetailForm.setFieldsValue({
-      IBAN:"",accountNumber:""
+      IBAN:"",accountNumber:"",swiftCode:"",bankName:"",payeeAccountCountry:""
     })
   }
 
@@ -705,17 +707,19 @@ const[newStates,setNewStates] = useState([]);
                     className="custom-forminput custom-label mb-0"
                     name="phoneNumber"
                     rules={[
+                      { required: true, message: "Is required" },
                       {
-                        required: true,
-                        message: "Is required"
+                        validator(_, value) {
+                          if (emailExist) {
+                            return Promise.reject("Email already exist");
+                          } else if (value && !(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(value))) {
+                            return Promise.reject("Invalid Phone Number");
+                          }
+                          else {
+                            return Promise.resolve();
+                          }
+                        },
                       },
-                      {
-                        whitespace: true,
-                        message: apiCalls.convertLocalLang('is_required')
-                      },
-                      {
-                        validator: validateContentRule
-                      }
                     ]}
                     label={
                       <Translate content="Phone_No" component={Form.label} />
@@ -1148,15 +1152,14 @@ const[newStates,setNewStates] = useState([]);
                           >
 
                             <Select
-                              showSearch
-                              defaultValue="BANKTYPE"
+                            defaultValue="Bank Account"
                               placeholder="Select Type"
                               className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                               dropdownClassName="select-drpdwn"
                               onChange={(e) => handleBankChange(e)}
                               bordered={false}
                             >
-                              <Option value="BANKTYPE">Bank Account</Option>
+                              <Option value="BankAccount">Bank Account</Option>
                               <Option value="IBAN">IBAN</Option>
                             </Select>
                           </Form.Item>

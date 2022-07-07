@@ -52,6 +52,7 @@ class RequestedDocs extends Component {
         commonModel: {},
         assignedTo: [],
         btnLoading:false,
+        errorWarning: null,
     }
     componentDidMount() {
         this.getCaseData(QueryString.parse(this.props.location.search).id);
@@ -113,7 +114,7 @@ class RequestedDocs extends Component {
             "documentDetailId": doc.id,
             "status": "Approved"
         });
-        this.setState({ ...this.state, isMessageError: null });
+        this.setState({ ...this.state, isMessageError: null,errorWarning:null });
         if (response.ok) {
             success('Document has been approved');
             this.loadDocReplies(doc.id);
@@ -159,12 +160,13 @@ class RequestedDocs extends Component {
             success('Document has been submitted');
             this.updateDocRepliesStatus(doc, "Submitted");
             this.loadDocReplies(doc.id)
+            this.setState({errorWarning:null })
         } else {
             warning(response.data);
         }
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
-        this.setState({ ...this.state, docReplyObjs: objs, btnLoading: false, isMessageError: null });
+        this.setState({ ...this.state, docReplyObjs: objs, btnLoading: false, isMessageError: null});
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
     deleteDocument = async (doc, idx, isAdd) => {
@@ -243,20 +245,20 @@ class RequestedDocs extends Component {
         }
         else if (file.status === 'error') {
             // error(file.response);
-            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false,errorMessage:file.response })
+            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false,errorMessage:file.response,errorWarning:null })
         }
         else if (!this.state.isValidFile) {
             this.setState({ ...this.state, uploadLoader: false, isSubmitting: false });
         }
     }
     beforeUpload = (file) => {
+  this.setState({ ...this.state, errorWarning:null })
    let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
         if (fileType[file.type]) {
-            this.setState({ ...this.state, isValidFile: true, })
+            this.setState({ ...this.state, isValidFile: true,errorWarning:null })
             return true
         } else {
-            // error('File is not allowed. You can upload jpg, png, jpeg and PDF  files');
-            this.setState({ ...this.state, isValidFile: false, errorMessage:'File is not allowed. You can upload jpg, png, jpeg and PDF  files'})
+       this.setState({ ...this.state, isValidFile: false,errorWarning:"File is not allowed. You can upload jpg, png, jpeg and PDF  files"})
             return Upload.LIST_IGNORE;
         }
     }
@@ -453,6 +455,18 @@ class RequestedDocs extends Component {
                                         closable={false}
                                         style={{ marginBottom: 0, marginTop: '16px' }}
                                     />}
+                                    	{this.state.errorWarning !== undefined && this.state.errorWarning !== null && (
+											<div style={{ width: '100%' }}>
+												<Alert
+													className="w-100 mb-16"
+													type="warning"
+													description={this.state.errorWarning}
+													showIcon
+                                                    closable={false}
+                                                    style={{ marginBottom: 0, marginTop: '16px' }}
+												/>
+											</div>
+										)}
                                     <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}>
                                         <p className="ant-upload-drag-icon">
                                             <span className="icon xxxl doc-upload" />
@@ -475,8 +489,8 @@ class RequestedDocs extends Component {
                                         </div>)}
                                     </div>
                                     <div className="text-center my-36">
-                                        <Button className="pop-btn px-36" onClick={() => this.docReject(doc)}>
-                                        {this.state.btnLoading && <Spin indicator={this.antIcon} />}
+                                        <Button className="pop-btn px-36" onClick={() => this.docReject(doc)} loading={this.state.btnLoading}>
+
                                         Submit</Button>
                                     </div>
                                 </>}
