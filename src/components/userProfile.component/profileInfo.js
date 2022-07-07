@@ -104,12 +104,8 @@ class ProfileInfo extends Component {
 
   fileDownload = async () => {
     if (!this.props?.userConfig?.isKYC) {
-      message.destroy();
-      message.success({
-        content: "Please complete kyc",
-        className: "custom-msg",
-        duration: 3,
-      });
+      this.setState({ ...this.state, Loader: false,errorMessage:this.isErrorDispaly("Please complete KYC/KYB")});
+     
   }else{
     this.setState({ ...this.state, fileLoader: true });
     let res = await apiCalls.downloadKyc(this.props.userConfig?.id);
