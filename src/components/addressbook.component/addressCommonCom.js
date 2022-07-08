@@ -665,7 +665,7 @@ const AddressCommonCom = (props) => {
                     <AutoComplete
                       onChange={(e) => handleChange(e)}
                       maxLength={20} className="cust-input"
-                      placeholder= "Favourite Name"
+                      placeholder= "Favorite Name"
                     >
                       {PayeeLu?.map((item, indx) => (
                         <Option key={indx} value={item.name}>
