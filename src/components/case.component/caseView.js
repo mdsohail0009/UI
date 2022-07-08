@@ -411,7 +411,7 @@ class RequestedDocs extends Component {
 
                             this.setState({
                                 ...this.state,
-                                collapse: !this.state.collapse, errorMessage:null
+                                collapse: !this.state.collapse, errorMessage:null,errorWarning:null
                             });
                             if (key) {
                                 this.loadDocReplies(doc.id);
