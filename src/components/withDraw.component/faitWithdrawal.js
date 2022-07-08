@@ -297,7 +297,7 @@ const FaitWithdrawal = ({
         values["country"] = bankDetails[0].country;
         values["state"] = bankDetails[0].state;
             values["zipcode"] = bankDetails[0].zipcode;
-    values["routingNumber"] = bankDetails[0].routingNumber;
+    values["routingNumber"] = bankDetails[0].swiftRouteBICNumber || bankDetails[0].routingNumber;
     values["WalletCode"]=accountDetails[0].currencyCode
     const response = await handleFiatConfirm(values);
     if (response.ok) {
