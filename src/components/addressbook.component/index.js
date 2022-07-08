@@ -414,7 +414,7 @@ class AddressBook extends Component {
 				btnDisabled: false,
 				obj: {
 					id: [],
-					tableName: "Member.FavouriteAddress",
+					tableName: "Common.PayeeAccounts",
 					modifiedBy: "",
 					status: [],
 				},
@@ -442,7 +442,7 @@ class AddressBook extends Component {
 				btnDisabled: false,
 				obj: {
 					id: [],
-					tableName: "Member.FavouriteAddress",
+					tableName: "Common.PayeeAccounts",
 					modifiedBy: "",
 					status: [],
 				},
