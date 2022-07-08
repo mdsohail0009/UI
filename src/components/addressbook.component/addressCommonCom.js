@@ -460,7 +460,7 @@ const AddressCommonCom = (props) => {
   };
 
   const handleIban = (e) => {
-    setIbanValue(e)
+   setIbanValue(e)
     getIbanData(e)
 
   }
@@ -488,6 +488,7 @@ const AddressCommonCom = (props) => {
           payeeAccountState: response.data.state || oldVal.state,
           payeeAccountCountry: response.data.country || oldVal.country,
         });
+        handleCountryChange(response.data.country);
       }
     }else{
       bankDetailForm.setFieldsValue({
