@@ -203,6 +203,7 @@ const AddressCommonCom = (props) => {
 
   const radioChangeHandler = (e) => {
     debugger
+    form.setFieldsValue({fullName:""})
     if(e.target.value === "3rdparty"){
       payeeLuData(props?.userConfig?.id,withdraeTab,false);
     }else{
@@ -665,7 +666,7 @@ const AddressCommonCom = (props) => {
                     <AutoComplete
                       onChange={(e) => handleChange(e)}
                       maxLength={20} className="cust-input"
-                      placeholder= "Favourite Name"
+                      placeholder= "Favorite Name"
                     >
                       {PayeeLu?.map((item, indx) => (
                         <Option key={indx} value={item.name}>
