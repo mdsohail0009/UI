@@ -203,6 +203,7 @@ const AddressCommonCom = (props) => {
 
   const radioChangeHandler = (e) => {
     debugger
+    form.setFieldsValue({fullName:""})
     if(e.target.value === "3rdparty"){
       payeeLuData(props?.userConfig?.id,withdraeTab,false);
     }else{

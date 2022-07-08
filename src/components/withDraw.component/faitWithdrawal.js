@@ -436,7 +436,6 @@ const AccountBankDetails=async(payeeId,currency)=>{
 }
 const handleDetails=(e)=>{
   debugger
-  form.resetFields({totalValue:"",isAccept:""})
   setSelectRequired(true)
 let data=bankDetails.filter((item)=>item.bankName==e)
 setDetails(data)
