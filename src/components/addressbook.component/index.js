@@ -396,7 +396,7 @@ class AddressBook extends Component {
 		statusObj.id.push(this.state.selectedObj.payeeAccountId);
 		statusObj.modifiedBy = this.props.oidc.user.profile.unique_name;
 		if(this.state.selectedObj.status=="Active"){
-			statusObj.status.push("InActive")
+			statusObj.status.push("Active")
 		}else{
 			statusObj.status.push("InActive")
 		}

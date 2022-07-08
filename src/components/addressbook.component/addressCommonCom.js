@@ -473,7 +473,7 @@ const AddressCommonCom = (props) => {
       bankName: "",
       bankAddress: "",
       payeeAccountState: null,
-      payeeAccountCountry:" ",
+      payeeAccountCountry:null,
       payeeAccountPostalCode: "",
       swiftCode: "",
     });
@@ -513,7 +513,7 @@ const AddressCommonCom = (props) => {
     setNewStates(states[0]?.stateLookUp);
   }
   const handleCountry = (code,countryValues) => {
-    form.setFieldsValue({"state":null});
+   // form.setFieldsValue({"state":null});
     let Country = countryValues ? countryValues : country;
     let states = Country?.filter((item) => item.name === code);
     setState(states[0]?.stateLookUp);
@@ -1219,7 +1219,7 @@ const AddressCommonCom = (props) => {
 
                           >
                             <Input
-                              className="ust-input"
+                              className="cust-input"
                               placeholder="IBAN"
                             />
                           </Form.Item>
