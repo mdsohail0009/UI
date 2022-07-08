@@ -202,10 +202,11 @@ const AddressCommonCom = (props) => {
   };
 
   const radioChangeHandler = (e) => {
-    debugger
+  
     form.setFieldsValue({fullName:""})
     if(e.target.value === "3rdparty"){
       payeeLuData(props?.userConfig?.id,withdraeTab,false);
+      
     }else{
       payeeLuData(props?.userConfig?.id,withdraeTab,true);
       getFavs("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
@@ -219,7 +220,7 @@ const AddressCommonCom = (props) => {
     setIdentityFile(null);
     setAdressFile(null);
     setDeclarationFile(null);
-    setModalData([]);
+    // setModalData([]);
     form.resetFields();
     setCryptoAddress(null);
     if (e.target.value === "1stparty") {
@@ -269,7 +270,8 @@ const AddressCommonCom = (props) => {
     setIsLoading(false)
   }
   const getFavs = async (id, membershipId) => {
-    debugger
+ 
+    form.setFieldsValue({fullName:" "})
     let response = await getFavData(id, membershipId)
     if (response.ok) {
       let obj = response.data;
