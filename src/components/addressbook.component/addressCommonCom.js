@@ -92,6 +92,7 @@ const AddressCommonCom = (props) => {
     handleCountryChange(data?.payeeAccountCountry);
     setIsModalVisible(true);
     setBankObj(data)
+    SetBankChange(data?.bankType);
     if (props?.addressBookReducer?.cryptoTab == true) {
       form.setFieldsValue({
         toCoin: data.walletCode,
@@ -99,6 +100,7 @@ const AddressCommonCom = (props) => {
         label: data.label
       })
     }
+    data.IBAN = data?.bankType === "IBAN" ? data?.accountNumber : ""
     bankDetailForm.setFieldsValue(data)
 
   }
@@ -368,8 +370,9 @@ const AddressCommonCom = (props) => {
   const handleBankChange = (e) => {
     SetBankChange(e)
     bankDetailForm.setFieldsValue({
-      IBAN:"",accountNumber:"",swiftCode:"",bankName:"",payeeAccountCountry:""
+      IBAN:"",accountNumber:"",swiftCode:"",bankName:"",payeeAccountCountry:null,payeeAccountState:null
     })
+    setNewStates([]);
   }
 
   const savewithdrawal = async (values) => {

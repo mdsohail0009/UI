@@ -28,13 +28,15 @@ class UserProfile extends Component {
 }
     componentDidMount() {
       if(this.props?.match?.path === '/userprofile'){
-       this.props.dispatch(setHeaderTab(""));
+        let key = " "
+       this.props.dispatch(setHeaderTab( " "));
       }
         let activeKey = QueryString.parse(this.props.history.location.search)?.key;
         if (activeKey) {
             this.setState({ ...this.state, activeTab: activeKey });
         }
     }
+    
     handleProfile = () => {
         this.setState({ isProfile: true })
     }

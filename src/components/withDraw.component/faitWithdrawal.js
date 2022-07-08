@@ -87,7 +87,7 @@ const FaitWithdrawal = ({
   const [accountDetails,setAccountDetails]=useState({})
   const[bankDetails,setBankDetails]=useState([])
   const [details,setDetails]=useState([])
-  const [selectRequired,setSelectRequired]=useState(true)
+  const [selectRequired,setSelectRequired]=useState(null)
   const [addressObj, setAddressObj] = useState({
     bankName: null,
     accountNumber: null,
@@ -366,6 +366,7 @@ const FaitWithdrawal = ({
 
   const validateAddressType = (_, value) => {
     debugger
+    setSelectRequired(false)
     if (value) {
       if (value == '.') {
         return Promise.reject(
@@ -435,7 +436,8 @@ const AccountBankDetails=async(payeeId,currency)=>{
 }
 const handleDetails=(e)=>{
   debugger
-  setSelectRequired(false)
+  form.resetFields({totalValue:"",isAccept:""})
+  setSelectRequired(true)
 let data=bankDetails.filter((item)=>item.bankName==e)
 setDetails(data)
  form.setFieldsValue({totalValue : ""});
@@ -552,7 +554,7 @@ setDetails(data)
                     required
                     rules={[
                       {
-                        validator: validateAddressType
+                        validator: validateAddressType 
                       }
                     ]}
                     
