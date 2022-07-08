@@ -82,6 +82,9 @@ class Header extends Component {
       this.props.userConfig ? this.props.userConfig.language : "en"
     );
   }
+  componentWillUnmount(){
+    this.props.dispatch(setHeaderTab(""));
+  }
   securityMenu = (
     <Menu>
       <Translate
@@ -1562,7 +1565,7 @@ class Header extends Component {
           <TransactionsHistory
             showDrawer={this.state.transactionDrawer}
             onClose={() => {
-              this.closeDrawer(this.props.dispatch(setHeaderTab("")));
+              this.closeDrawer(this.props.dispatch(setHeaderTab(" ")));
               if (this.child1) {
                 this.child1.setKy();
               }

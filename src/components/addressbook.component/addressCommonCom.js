@@ -92,6 +92,7 @@ const AddressCommonCom = (props) => {
     handleCountryChange(data?.payeeAccountCountry);
     setIsModalVisible(true);
     setBankObj(data)
+    SetBankChange(data?.bankType);
     if (props?.addressBookReducer?.cryptoTab == true) {
       form.setFieldsValue({
         toCoin: data.walletCode,
@@ -99,6 +100,7 @@ const AddressCommonCom = (props) => {
         label: data.label
       })
     }
+    data.IBAN = data?.bankType === "IBAN" ? data?.accountNumber : ""
     bankDetailForm.setFieldsValue(data)
 
   }
@@ -200,10 +202,12 @@ const AddressCommonCom = (props) => {
   };
 
   const radioChangeHandler = (e) => {
+    debugger
     if(e.target.value === "3rdparty"){
       payeeLuData(props?.userConfig?.id,withdraeTab,false);
     }else{
       payeeLuData(props?.userConfig?.id,withdraeTab,true);
+      getFavs("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
     }
     setAgreeRed(true);
     setErrorMsg(null);
@@ -264,6 +268,7 @@ const AddressCommonCom = (props) => {
     setIsLoading(false)
   }
   const getFavs = async (id, membershipId) => {
+    debugger
     let response = await getFavData(id, membershipId)
     if (response.ok) {
       let obj = response.data;
@@ -331,7 +336,7 @@ const AddressCommonCom = (props) => {
         if (bankmodalData[i].id == obj.id) {
           obj.recordStatus = "Modified"
           obj.modifiedBy = props?.userConfig.firstName + props?.userConfig.lastName
-          obj.status= props?.addressBookReducer?.selectedRowData?.status
+          obj.status= 1
           obj.addressState =  props?.addressBookReducer?.selectedRowData?.addressState
           bankmodalData[i]=obj
           setEditBankDetails(false)
@@ -365,8 +370,9 @@ const AddressCommonCom = (props) => {
   const handleBankChange = (e) => {
     SetBankChange(e)
     bankDetailForm.setFieldsValue({
-      IBAN:"",accountNumber:"",swiftCode:"",bankName:"",payeeAccountCountry:""
+      IBAN:"",accountNumber:"",swiftCode:"",bankName:"",payeeAccountCountry:null,payeeAccountState:null
     })
+    setNewStates([]);
   }
 
   const savewithdrawal = async (values) => {
@@ -454,7 +460,7 @@ const AddressCommonCom = (props) => {
   };
 
   const handleIban = (e) => {
-    setIbanValue(e)
+   setIbanValue(e)
     getIbanData(e)
 
   }
@@ -464,7 +470,7 @@ const AddressCommonCom = (props) => {
       bankName: "",
       bankAddress: "",
       payeeAccountState: null,
-      payeeAccountCountry: null,
+      payeeAccountCountry:" ",
       payeeAccountPostalCode: "",
       swiftCode: "",
     });
@@ -482,6 +488,7 @@ const AddressCommonCom = (props) => {
           payeeAccountState: response.data.state || oldVal.state,
           payeeAccountCountry: response.data.country || oldVal.country,
         });
+        handleCountryChange(response.data.country);
       }
     }else{
       bankDetailForm.setFieldsValue({

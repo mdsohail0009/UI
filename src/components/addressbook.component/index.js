@@ -390,11 +390,17 @@ class AddressBook extends Component {
 		}
 	};
 	handleSatatuSave = async () => {
+		debugger
 		this.setState({ ...this.state, isLoading: true, btnDisabled: true });
 		let statusObj = this.state.obj;
 		statusObj.id.push(this.state.selectedObj.payeeAccountId);
 		statusObj.modifiedBy = this.props.oidc.user.profile.unique_name;
-		statusObj.status.push(this.state.selectedObj.status);
+		if(this.state.selectedObj.status=="Active"){
+			statusObj.status.push("InActive")
+		}else{
+			statusObj.status.push("InActive")
+		}
+		// statusObj.status.push(this.state.selectedObj.status);
 		statusObj.type = this.state.cryptoFiat ? "fiat" : "crypto";
 		statusObj.info = JSON.stringify(this.props.trackLogs);
 		let response = await activeInactive(statusObj);
@@ -408,7 +414,7 @@ class AddressBook extends Component {
 				btnDisabled: false,
 				obj: {
 					id: [],
-					tableName: "Member.FavouriteAddress",
+					tableName: "Common.PayeeAccounts",
 					modifiedBy: "",
 					status: [],
 				},
@@ -436,7 +442,7 @@ class AddressBook extends Component {
 				btnDisabled: false,
 				obj: {
 					id: [],
-					tableName: "Member.FavouriteAddress",
+					tableName: "Common.PayeeAccounts",
 					modifiedBy: "",
 					status: [],
 				},
