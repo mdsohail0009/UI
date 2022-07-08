@@ -237,7 +237,7 @@ const FaitWithdrawal = ({
     if (isChange) form.setFieldsValue({ state: null });
   };
   const savewithdrawal = async (values) => {
-    debugger
+
     setAgreeRed(true);
     setBtnDisabled(true)
     dispatch(setWFTotalValue(values.totalValue));
@@ -365,7 +365,7 @@ const FaitWithdrawal = ({
   };
 
   const validateAddressType = (_, value) => {
-    debugger
+   
     setSelectRequired(false)
     if (value) {
       if (value == '.') {
@@ -405,7 +405,7 @@ const AccountWallet=async(AccountId)=>{
   
 }
 const handleAccountWallet=(e)=>{
-  debugger
+
  form.setFieldsValue({favouriteName:null})
   setAccountDetails({});
   setDetails(null);
@@ -415,7 +415,7 @@ const handleAccountWallet=(e)=>{
 }
 
 const AccountBankDetails=async(payeeId,currency)=>{
-  debugger
+
   let response=await getAccountBankDetails(payeeId,currency)
   if(response.ok){
     if(response.data.length>1){
@@ -435,7 +435,7 @@ const AccountBankDetails=async(payeeId,currency)=>{
   
 }
 const handleDetails=(e)=>{
-  debugger
+
   setSelectRequired(true)
 let data=bankDetails.filter((item)=>item.bankName==e)
 setDetails(data)

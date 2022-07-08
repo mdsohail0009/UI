@@ -471,7 +471,7 @@ const AddressCommonCom = (props) => {
       bankName: "",
       bankAddress: "",
       payeeAccountState: null,
-      payeeAccountCountry:" ",
+      payeeAccountCountry:null,
       payeeAccountPostalCode: "",
       swiftCode: "",
     });
@@ -511,7 +511,7 @@ const AddressCommonCom = (props) => {
     setNewStates(states[0]?.stateLookUp);
   }
   const handleCountry = (code,countryValues) => {
-    form.setFieldsValue({"state":null});
+   // form.setFieldsValue({"state":null});
     let Country = countryValues ? countryValues : country;
     let states = Country?.filter((item) => item.name === code);
     setState(states[0]?.stateLookUp);
@@ -786,7 +786,7 @@ const AddressCommonCom = (props) => {
                     >
                       <TextArea
                         placeholder="Address Line1"
-                        className="cust-input  text-left"
+                        className="cust-input  "
                         autoSize={{ minRows: 2, maxRows: 2 }}
                         maxLength={100}
                       ></TextArea>
@@ -817,7 +817,7 @@ const AddressCommonCom = (props) => {
                     >
                       <TextArea
                         placeholder="Address Line2"
-                        className="cust-input  text-left"
+                        className="cust-input  "
                         autoSize={{ minRows: 2, maxRows: 2 }}
                         maxLength={100}
                       ></TextArea>
@@ -1128,7 +1128,7 @@ const AddressCommonCom = (props) => {
                             ]}
                           >
                             <Input
-                              className="cust-input text-left"
+                              className="cust-input  "
                               placeholder="Bank Label"
                             />
 
@@ -1156,7 +1156,7 @@ const AddressCommonCom = (props) => {
                             ]}
                           >
                             <Select
-                              className="cust-input text-left "
+                              className="cust-input  "
                               dropdownClassName="select-drpdwn"
                               placeholder={apiCalls.convertLocalLang('currency')}
                             >
@@ -1217,7 +1217,7 @@ const AddressCommonCom = (props) => {
 
                           >
                             <Input
-                              className="cust-input text-left"
+                              className="cust-input"
                               placeholder="IBAN"
                             />
                           </Form.Item>
@@ -1282,7 +1282,7 @@ const AddressCommonCom = (props) => {
                           >
 
                             <Input
-                              className="cust-input text-left"
+                              className="cust-input "
                               placeholder="Swift Code"
                               maxLength="500"
                             />
@@ -1310,7 +1310,7 @@ const AddressCommonCom = (props) => {
                             ]}
                           >
                             <Input
-                              className="cust-input text-left"
+                              className="cust-input"
                               placeholder="Bank Name"
                               maxLength="500"
                             />
