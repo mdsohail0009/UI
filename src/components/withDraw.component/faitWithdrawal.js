@@ -405,7 +405,7 @@ const AccountWallet=async(AccountId)=>{
   
 }
 const handleAccountWallet=(e)=>{
-
+debugger
  form.setFieldsValue({favouriteName:null})
   setAccountDetails({});
   setDetails(null);
@@ -415,7 +415,7 @@ const handleAccountWallet=(e)=>{
 }
 
 const AccountBankDetails=async(payeeId,currency)=>{
-
+debugger
   let response=await getAccountBankDetails(payeeId,currency)
   if(response.ok){
     if(response.data.length>1){
@@ -429,10 +429,14 @@ const AccountBankDetails=async(payeeId,currency)=>{
     }else{
       setBankDetails(response.data)
       setDetails(response.data)
+      setAddressShow(null);
     }
+    
   
   }
-  
+  if(response.data.length==0){
+    setAddressShow(false);
+  }
 }
 const handleDetails=(e)=>{
 
