@@ -202,15 +202,20 @@ const AddressCommonCom = (props) => {
   };
 
   const radioChangeHandler = (e) => {
-  
-    form.setFieldsValue({fullName:""})
+  debugger
+  // form.resetFields()
+    
+    // setIsLoading(true);
     if(e.target.value === "3rdparty"){
       payeeLuData(props?.userConfig?.id,withdraeTab,false);
       
     }else{
+      
       payeeLuData(props?.userConfig?.id,withdraeTab,true);
       getFavs("00000000-0000-0000-0000-000000000000", props?.userConfig?.id)
+      // setIsLoading(false);
     }
+    setIsLoading(false);
     setAgreeRed(true);
     setErrorMsg(null);
     setErrorWarning(null);
@@ -220,7 +225,7 @@ const AddressCommonCom = (props) => {
     setIdentityFile(null);
     setAdressFile(null);
     setDeclarationFile(null);
-    // setModalData([]);
+    setModalData([]);
     form.resetFields();
     setCryptoAddress(null);
     if (e.target.value === "1stparty") {
@@ -230,7 +235,7 @@ const AddressCommonCom = (props) => {
           ? props?.userConfig.businessName
           : props?.userConfig?.firstName + " " + props?.userConfig?.lastName,
         bankType: "bank",
-        fullName: props?.userConfig.firstName + props?.userConfig.lastName,
+         fullName:favouriteDetails.fullName,
         phoneNumber: props?.userConfig.phoneNo,
         email: props?.userConfig.email,
       });
@@ -270,9 +275,10 @@ const AddressCommonCom = (props) => {
     setIsLoading(false)
   }
   const getFavs = async (id, membershipId) => {
- 
-    form.setFieldsValue({fullName:" "})
+ debugger
+    // form.setFieldsValue({fullName:" "})
     let response = await getFavData(id, membershipId)
+    form.resetFields()
     if (response.ok) {
       let obj = response.data;
       let payeeObj = response.data.payeeAccountModels
@@ -373,7 +379,8 @@ const AddressCommonCom = (props) => {
   const handleBankChange = (e) => {
     SetBankChange(e)
     bankDetailForm.setFieldsValue({
-      IBAN:"",accountNumber:"",swiftCode:"",bankName:"",payeeAccountCountry:null,payeeAccountState:null
+      IBAN:"",accountNumber:"",swiftCode:"",bankName:"",payeeAccountCountry:null,payeeAccountState:null,
+      payeeAccountCity:null,payeeAccountPostalCode:null
     })
     setNewStates([]);
   }
@@ -693,9 +700,7 @@ const AddressCommonCom = (props) => {
                         whitespace: true,
                         message: apiCalls.convertLocalLang('is_required')
                       },
-                      {
-                        validator: validateContentRule
-                      }
+                      
                     ]}
                     label={
                       <Translate content="Fait_Name" component={Form.label} />
