@@ -104,7 +104,7 @@ class ProfileInfo extends Component {
 
   fileDownload = async () => {
     if (!this.props?.userConfig?.isKYC) {
-      this.setState({ ...this.state, Loader: false,errorMessage:this.isErrorDispaly("Please complete KYC/KYB")});
+      this.setState({ ...this.state, Loader: false,errorMessage:"Please complete KYC/KYB"});
      
   }else{
     this.setState({ ...this.state, fileLoader: true });
