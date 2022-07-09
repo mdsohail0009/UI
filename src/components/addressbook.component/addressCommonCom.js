@@ -202,10 +202,6 @@ const AddressCommonCom = (props) => {
   };
 
   const radioChangeHandler = (e) => {
-    debugger
-    // form.resetFields()
-
-    // setIsLoading(true);
     if (e.target.value === "3rdparty") {
       payeeLuData(props?.userConfig?.id, withdraeTab, false);
 
@@ -275,8 +271,6 @@ const AddressCommonCom = (props) => {
     setIsLoading(false)
   }
   const getFavs = async (id, membershipId) => {
-    debugger
-    // form.setFieldsValue({fullName:" "})
     let response = await getFavData(id, membershipId)
     form.resetFields()
     if (response.ok) {
@@ -293,7 +287,6 @@ const AddressCommonCom = (props) => {
     getCountry()
   }
   const handleCountry = (e) => {
-    debugger
     let code = e;
     form.setFieldsValue({ "state": null });
     let states = country?.filter((item) => item.name === code);
@@ -306,7 +299,6 @@ const AddressCommonCom = (props) => {
 
   }
   const getCountry = async () => {
-    debugger
     let response = await getCountryStateLu();
     if (response.ok) {
       setCountry(response.data);
