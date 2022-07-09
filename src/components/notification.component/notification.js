@@ -178,8 +178,8 @@ class NotificationScreen extends Component {
                                   <Select
                                     showSearch
                                     mode="multiple"
-                                    className={item.isAction ? "cust-input multi-select":"cust-input-light"}
-                                    style={{ width: "350px",marginBottom: "-17px" }}
+                                    className={item.isAction ? "cust-input multi-select custom-notify":"cust-input-light"}
+                                    style={{ width: "350px",marginBottom: "-17px"}}
                                     placeholder="Select Notification Type"
                                     optionFilterProp="children"
                                     onChange={(e) => this.handleChange(e, item)}
