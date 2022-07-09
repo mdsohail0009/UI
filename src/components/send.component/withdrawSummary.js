@@ -744,19 +744,21 @@ class WithdrawSummary extends Component {
 									rules={[{ required: true, message: "Is required" }]}
 								>
 									<div className="p-relative d-flex align-center">
+									
 										<NumberFormat
-										customInput={Input}
-										thousandSeparator={false}
-										prefix={""}
-										decimalScale={0}
-										allowNegative={false}
-										className="cust-input custom-add-select mb-0"
-										placeholder={"Enter code"}
-										maxLength={6}
-											disabled={this.state.inputDisable}
-											style={{ width: "100%" }}
-											onValueChange={(e) => this.handleChange(e.value)}
-										/>
+											customInput={Input}
+											thousandSeparator={false}
+											prefix={""}
+											decimalScale={0}
+											allowNegative={false}
+											allowLeadingZeros={true}
+											className="cust-input custom-add-select mb-0"
+											placeholder={"Enter code"}
+											maxLength={6}
+									style={{ width: "100%"  }}
+									onValueChange={(e) => this.handleChange(e.value)}
+									disabled={this.state.inputDisable}
+								/>
 										<div className="new-add c-pointer get-code text-yellow hy-align">
 											{!this.state.verifyTextotp && (
 												<Button
