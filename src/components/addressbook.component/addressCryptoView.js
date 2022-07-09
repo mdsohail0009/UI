@@ -111,6 +111,18 @@ const AddressCryptoView = (props) => {
 													</div> }
 												</div>
 											</Col>
+											<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+												<div>
+													<label className="kpi-label">Address Type</label>
+													{ <div className=" kpi-val">
+													{cryptoAddress?.addressType === " " ||
+																		cryptoAddress?.addressType === null
+																		? "-"
+																		: cryptoAddress?.addressType}
+													
+													</div> }
+												</div>
+											</Col>
 
 										</Row>
 										<Title className="page-title text-white">

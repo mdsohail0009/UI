@@ -235,6 +235,18 @@ const AddressFiatView = (props) => {
 														</div>
 													</div>
 												</Col>
+												<Col xs={24} sm={24} md={12} lg={8} xxl={8}>
+												<div>
+													<label className="kpi-label">Address Type</label>
+													{ <div className=" kpi-val">
+													{fiatAddress?.addressType === " " ||
+																		fiatAddress?.addressType === null
+																		? "-"
+																		: fiatAddress?.addressType}
+													
+													</div> }
+												</div>
+											</Col>
 										</Row>
 										<Title className="page-title text-white">
 								BENEFICIARY BANK DETAILS 
@@ -370,6 +382,7 @@ const AddressFiatView = (props) => {
 																		: item.payeeAccountPostalCode}
 															</Title>
 														</Col>
+														
 														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
 															<Text className="fw-300 text-white-50 fs-12">
 																Address State
