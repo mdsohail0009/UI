@@ -409,7 +409,7 @@ const FaitWithdrawal = ({
   const handleAccountWallet = (e) => {
     setErrorMsg(null);
     setAgreeRed(true);
-    form.setFieldsValue({ favouriteName: null })
+    form.setFieldsValue({ favouriteName: null, totalValue: null })
     setAccountDetails({});
     setDetails(null);
     let data = accountCurrency.filter((item) => item.currencyCode == e)
