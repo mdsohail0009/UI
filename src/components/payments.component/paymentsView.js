@@ -122,17 +122,17 @@ class PaymentsView extends Component {
                                           <td className="doc-def">{item?.beneficiaryAccountName}</td>
                                                 <td className="doc-def">
                                                     <div className='d-flex align-center justify-content'>
-                                                   <span>
-                                                   <Tooltip title= {item.bankname}>
-                                          <span className='pay-docs'>{item.bankname}</span>
-                                        </Tooltip>
+                                                   <div className='bill-payment'>
+                                                    <Tooltip title= {item.bankname}>
+                                                        <div className='pay-docs'>{item.bankname}</div>
+                                                    </Tooltip>
                                                             <Text
                                                                 size="small"
                                                                 className="file-label doc-def ml-8"
                                                             >
                                                                 {this.addressTypeNames(item.addressType)}
                                                             </Text>
-                                              </span>
+                                                            </div>
                                                             <Popover
                                                                     className='more-popover'
                                                                     content={this.popOverContent}

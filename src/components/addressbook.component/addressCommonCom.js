@@ -794,9 +794,15 @@ const AddressCommonCom = (props) => {
                         <Translate content="Address_Line1" component={Form.label} />
                       }
                     >
-                      <TextArea
+                      {/* <TextArea
                         placeholder="Address Line1"
-                        className="cust-input  "
+                        className="cust-input  cust-text-area"
+                        autoSize={{ minRows: 2, maxRows: 2 }}
+                        maxLength={100}
+                      ></TextArea> */}
+                       <TextArea
+                        placeholder="Address Line1"
+                        className="cust-input cust-text-area "
                         autoSize={{ minRows: 2, maxRows: 2 }}
                         maxLength={100}
                       ></TextArea>
@@ -827,7 +833,7 @@ const AddressCommonCom = (props) => {
                     >
                       <TextArea
                         placeholder="Address Line2"
-                        className="cust-input  "
+                        className="cust-input cust-text-area "
                         autoSize={{ minRows: 2, maxRows: 2 }}
                         maxLength={100}
                       ></TextArea>
@@ -1482,11 +1488,11 @@ const AddressCommonCom = (props) => {
                 if (item.recordStatus !== "Deleted") {
                   return <Row gutter={14} style={{ paddingBottom: "15px" }}>
 
-                    <div className="d-flex  kpi-List " key={indx} value={item} style={{ marginLeft: "20px", width: "100%", height: "65px", backgroundColor: "var(--bgDarkGrey)", borderRadius: "20px" }}>
+                    <div className="d-flex align-center  kpi-List " key={indx} value={item} style={{ marginLeft: "20px", width: "100%", height: "65px", backgroundColor: "var(--bgDarkGrey)", borderRadius: "20px" }}>
                       {(props?.cryptoTab == 2) ?
                         <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
-                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px", marginLeft: "20px" }}>
+                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px",  marginLeft: "20px" }}>
                               {item.walletCode}{","}{" "}
                               {item.bankType}{","}{" "}
                               {item.accountNumber}{","}{" "}
@@ -1497,7 +1503,7 @@ const AddressCommonCom = (props) => {
                         </Col> :
                         <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
-                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px", marginTop: "10px", marginLeft: "20px" }}>
+                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px",  marginLeft: "20px" }}>
                               {item.label}{","}{" "}
                               {item.walletCode}{","}{" "}
                               {item.walletAddress}
@@ -1509,7 +1515,7 @@ const AddressCommonCom = (props) => {
 
 
                       <Col xs={4} sm={4} md={4} lg={4} xxl={4}>
-                        <div className="d-flex align-center " style={{ marginTop: "22px", left: "5cm", width: "100%", top: "15px", justifyContent: "center" }}>
+                        <div className="d-flex align-center " style={{ marginTop: "22px", left: "5cm", width: "100%", top: "15px", justifyContent: "center" ,marginBottom: "24px"}}>
                           <div className="ml-12 mr-12" onClick={() => handleshowModal(item)}><Tooltip
                             placement="topRight"
                             style={{ fontSize: "23px", marginRight: "20px" }}
@@ -1553,13 +1559,13 @@ const AddressCommonCom = (props) => {
                 footer={
                   <>
                     <Button
-                      className="pop-btn px-24"
+                      className="pop-btn px-36 pop-btn-46"
                       style={{ margin: "0 8px" }}
                       onClick={() => handleDeleteCancel()}>
                       No
                     </Button>
                     <Button
-                      className="pop-btn px-24"
+                      className="pop-btn px-36 pop-btn-46"
                       style={{ margin: "0 8px" }}
                       onClick={() => handleDeleteModal()}>
                       yes
