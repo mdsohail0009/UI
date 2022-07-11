@@ -315,12 +315,12 @@ class AddressBook extends Component {
 			field: "isWhitelisted",
 			customCell: (props) => (
 				<td>
-					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration != props?.dataItem.id) &&<> <a onClick={() => {
+					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration != props?.dataItem.payeeAccountId) &&<> <a onClick={() => {
 						if (!this.state.isDownloading)
 							this.downloadDeclarationForm(props?.dataItem);
 					}} ><DownloadOutlined /></a> Whitelisted</>}
 					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
-					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.id && <Spin size="small" />}
+					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.payeeAccountId && <Spin size="small" />}
 				</td>
 			),
 			title: apiCalls.convertLocalLang("whitelist"),
