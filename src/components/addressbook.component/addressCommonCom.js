@@ -170,6 +170,7 @@ const AddressCommonCom = (props) => {
   };
   const handleOk = () => {
     setIsModalVisible(false);
+    setEditBankDetails(false)
   };
   const handleCoinChange = (e) => {
     bankDetailForm.validateFields(["walletAddress"], validateAddressType)
@@ -322,6 +323,7 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
+    debugger
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
@@ -378,6 +380,7 @@ const AddressCommonCom = (props) => {
     setIsModalDelete(false)
   }
   const handleDeleteModal = () => {
+    debugger
     setIsModalDelete(false)
     setEditBankDetails(false)
     for (let i in bankmodalData) {
