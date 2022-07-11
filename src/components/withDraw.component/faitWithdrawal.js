@@ -385,6 +385,8 @@ const FaitWithdrawal = ({
     setAccountHolder(response.data)
   }
  const handleAccountChange=(e)=>{
+  setErrorMsg(null);
+  setAgreeRed(true);
  form.setFieldsValue({currencyCode:null,favouriteName:null})
   setDetails(null);
   setAccountDetails({});
@@ -405,7 +407,8 @@ const AccountWallet=async(AccountId)=>{
   
 }
 const handleAccountWallet=(e)=>{
-debugger
+  setErrorMsg(null);
+  setAgreeRed(true);
  form.setFieldsValue({favouriteName:null})
   setAccountDetails({});
   setDetails(null);
@@ -415,7 +418,6 @@ debugger
 }
 
 const AccountBankDetails=async(payeeId,currency)=>{
-debugger
   let response=await getAccountBankDetails(payeeId,currency)
   if(response.ok){
     if(response.data.length>1){
