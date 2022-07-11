@@ -1,20 +1,32 @@
-import { apiClient, firebaseServer } from '.';
+import { apiClient } from '.';
 import { ApiControllers } from './config'
-export const sendNotification = ({ message, from, type, tokens }) => {
-    const obj = {
-        data: { user_id: from, type },
-        notification: {
-            title: "Suisse Base",
-            body: message
-        },
-        registration_ids: tokens
-    }
-    if (tokens && tokens.length > 0) {
-        firebaseServer.post("fcm/send", obj).then(response => {
-        });
-    }
-}
+
 export const changePassword = (obj) => {
 
-    return apiClient.post(ApiControllers.exchange + "changePassword", obj);
+    return apiClient.put(ApiControllers.accounts + "ChangePassword", obj);
+}
+export const withdrawRecepientNamecheck = (memberid, name) => {
+
+    return apiClient.get(ApiControllers.depositWithdraw + "FavouriteNameCheck?memberId=" + memberid + "&name=" + name);
+}
+export const getCountryStateLu = () => {
+
+    return apiClient.get(ApiControllers.common + "ControlCodes?codeCategory=country");
+}
+export const getStateLookup = (country) => {
+
+    return apiClient.get(ApiControllers.master + "States?countryName=" + country);
+}
+export const withdrawSave = (obj) => {
+
+    return apiClient.post(ApiControllers.withdraw + "Withdraw/Fiat", obj);
+}
+export const ProfileImageSave = (obj) => {
+    return apiClient.put(ApiControllers.accounts + "Avatar", obj);
+}
+export const getSettingsLuData = () => {
+    return apiClient.get(ApiControllers.accounts + "Settings");
+}
+export const saveSettingsData = (obj) => {
+    return apiClient.post(ApiControllers.accounts + "Settings", obj);
 }

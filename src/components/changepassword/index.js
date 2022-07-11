@@ -1,146 +1,205 @@
-import React, { Component, useEffect, useState } from 'react';
-import { Button, Input, Form, Divider, Row, Col, notification, Typography, Alert } from 'antd';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react';
+import { Button, Input, Form, notification, Typography, Alert, message,Spin } from 'antd';
+import { EyeInvisibleOutlined, EyeOutlined,LoadingOutlined } from '@ant-design/icons';
 import { setStep } from '../../reducers/buysellReducer';
 import Translate from 'react-translate-component';
 import { connect } from 'react-redux';
-//import connectStateProps from '../../shared/stateConnect';
-//import notify from '../../shared/components/notification';
 import { changePassword } from '../../api/apiServer';
+import { getmemeberInfo } from '../../reducers/configReduser';
+import apiClient from '../../api/apiCalls';
+import apiCalls from '../../api/apiCalls';
+import { validateContentRule, validateContent } from '../../utils/custom.validator'
+
 notification.config({
   placement: "topRight",
   rtl: true
 });
-const ChangePassword = ({ userConfig }) => {
+const ChangePassword = ({ userConfig, onSubmit, userProfile, getmemeberInfoa, trackAuditLogData }) => {
+  const [btnDisabled, setBtnDisabled] = useState(false);
   const [initialValues, setInitialValues] = useState({
     "Email": userConfig?.email,
     "CurrentPassword": "",
     "Password": "",
     "ConfirmPassword": ""
   })
-  const { Paragraph, Title, Text } = Typography;
+  const { Text } = Typography;
   const [form] = Form.useForm();
-  const [requiredMark, setRequiredMarkType] = useState('required');
   const [changePasswordResponse, setChangePasswordResponse] = useState({ error: false, messsage: "", isLoading: false });
-  const onFinishFailed = (error) => {
-
+  useEffect(() => {
+    if (userProfile && userProfile?.isNew) {
+      setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
+      form.resetFields();
+    }
+    trakEvet()
+  }, [userProfile]);// eslint-disable-line react-hooks/exhaustive-deps
+  const trakEvet = () => {
+    apiCalls.trackEvent({ "Type": 'User', "Action": 'Change password page view', "Username": userConfig?.userName, "MemeberId": userConfig?.id, "Feature": 'Change Password', "Remarks": 'Change password page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Change Password' });
   }
   const saveUserPass = async (values) => {
-    debugger
+    setBtnDisabled(true);
     if (values.CurrentPassword === values.Password) {
-      //notify({ message: "Error", type: "error", description: "New password and re entered password must same" });
-      setChangePasswordResponse({ error: true, messsage: "Current & New passwords should not be same!", isLoading: false });
-
-    }
-    else {
-      const result = await changePassword(initialValues);
+      setBtnDisabled(false)
+      setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
+      passwordResponce(true, "Current password and New password should not be same", false);
+    } else {
+      setBtnDisabled(true);
+      passwordResponce(false, '', false);
+      initialValues.info = JSON.stringify(trackAuditLogData)
+      let obj = Object.assign({}, initialValues);
+      obj.ConfirmPassword = apiClient.encryptValue(obj.ConfirmPassword, userConfig.sk)
+      obj.CurrentPassword = apiClient.encryptValue(obj.CurrentPassword, userConfig.sk)
+      obj.Password = apiClient.encryptValue(obj.Password, userConfig.sk)
+      obj.Email = apiClient.encryptValue(obj.Email, userConfig.sk)
+      obj.info = apiClient.encryptValue(obj.info, userConfig.sk)
+      const result = await changePassword(obj);
+      setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
       if (result.ok) {
-        setChangePasswordResponse({ error: false, messsage: 'Password changed successfully', isLoading: false });
+        setBtnDisabled(false);
+        message.success({ content: 'Password changed successfully', className: 'custom-msg',duration:3 });
+        passwordResponce(false, '', false);
         form.resetFields();
-      }
-      else {
-        setChangePasswordResponse({ error: true, messsage: result.data, isLoading: false });
+        onSubmit()
+        getmemeberInfoa(userConfig.userId)
+        apiClient.trackEvent({ "Action": 'Save', "Feature": 'Change password', "Remarks": "Password changed", "FullFeatureName": 'Change password', "userName": userConfig.userName, id: userConfig.id });
+      } else {
+        setBtnDisabled(false);
+        setChangePasswordResponse({ error: false, messsage: "", isLoading: false });
+        passwordResponce(true, isErrorDispaly(result), false);
       }
     }
   }
-  const clearValues = () => {
-    form.resetFields();
+  const isErrorDispaly = (objValue) => {
+		if (objValue.data && typeof objValue.data === "string") {
+		  return objValue.data;
+		} else if (objValue.originalError &&typeof objValue.originalError.message === "string"
+		) {
+		  return objValue.originalError.message;
+		} else {
+		  return "Something went wrong please try again!";
+		}
+	  };
 
+  const passwordResponce = (isError, msg, isloading) => {
+    setChangePasswordResponse({ error: isError, messsage: msg, isLoading: isloading });
   }
   const handleChange = (prop, val) => {
     let object = { ...initialValues };
     object[prop] = val.currentTarget.value;
     setInitialValues(object);
   }
+ const antIcon = (
+    <LoadingOutlined
+        style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
+        spin
+    />
+  );
   return (<>
-    <div className="custom-formcard mt-36">
+    <div className="mt-16">
       <Form form={form}
         initialValues={{
           "Email": userConfig?.email,
           "CurrentPassword": "",
           "Password": "",
           "ConfirmPassword": ""
-        }} onFinishFailed={onFinishFailed} onFinish={(values) => saveUserPass(values)} enableReinitialize>
+        }} onFinish={(values) => saveUserPass(values)} enableReinitialize>
         {changePasswordResponse.messsage !== "" && (
           <Typography>
             <Alert
               type={changePasswordResponse?.error ? "error" : "success"}
               showIcon
-              //message="Change Password"
               description={changePasswordResponse.messsage}
             />
           </Typography>
         )}
-        <Translate
-          content="Change_password"
-          component={Title}
-          className="mb-0 fs-24 text-white-30 fw-400"
-        />
-        <Translate
-          content="Choose_a_unique_password_to_protect_your_account"
-          component={Paragraph}
-          className="mt-36 mb-16 fs-14 text-white-30 fw-400"
-        />
+
         <div className="d-flex">
           <Translate
-            className="text-white input-label mb-0"
-            content="current_password"
+            className="text-white input-label"
+            content="current_pass_word"
             component={Text}
           />
-          <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
+          <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
         </div>
         <Form.Item
-          className="custom-forminput mb-16"
+          className="custom-forminput mb-24"
           name="CurrentPassword"
           required
           rules={[
-            { required: true, message: "Please enter current password" },
+            {
+              required: true, message: apiClient.convertLocalLang('current_pass_word_msg')
+            },
+            {
+              validator: validateContentRule
+            }
+
           ]}
         >
 
-            <Input.Password placeholder="Current Password" value={initialValues.CurrentPassword} className="text-left cust-input mb-8" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeTwoTone />)} />
+          <Input.Password placeholder={apiClient.convertLocalLang('Type_your_current_pass_word')} value={initialValues.CurrentPassword} className="text-left cust-input mb-8 pr-0 change-space" onChange={(e) => handleChange("CurrentPassword", e)} iconRender={visible => (visible ? <EyeOutlined style={{ color: '#fff' }} /> : <EyeInvisibleOutlined />)} />
         </Form.Item>
-        <div className="d-flex"> 
-            <Translate
-              className="text-white input-label mb-0"
-              content="new_password"
-              component={Text}
-            />
-            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-          </div>
+        <div className="d-flex">
+          <Translate
+            className="text-white input-label"
+            content="new_pass_word"
+            component={Text}
+          />
+          <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
+        </div>
         <Form.Item
           name="Password"
-          className="custom-forminput mb-16"
+          className="custom-forminput mb-24"
           required
           rules={[
-            { required: true, message: "Please enter new password" },
+            {
+              validator(rule, value) {
+                if (!value) {
+                  return Promise.reject(
+                    apiClient.convertLocalLang('new_pass_word_msg')
+                  )
+                } else if (!value || !(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&_]).{8,15}$/.test(value))) {
+                  return Promise.reject(
+                    "Password must have at least 8 characters and cannot contain common words or patterns. Try adding numbers, symbols, or characters to make your password longer and unique."
+
+                  )
+                } else if (!validateContent(value)) {
+                  return Promise.reject(
+                    "Please enter valid content"
+                  )
+                } else {
+                  return Promise.resolve();
+
+                }
+              },
+            },
           ]}
         >
 
           <Input.Password
-            placeholder="New Password"
+            placeholder={apiClient.convertLocalLang('Type_your_new_pass_word')}
             value={initialValues.Password}
             onChange={(e) => handleChange("Password", e)}
-            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeTwoTone />)}
+            className="text-left cust-input mb-8 pr-0 change-space pass-onhover" iconRender={visible => (visible ? <EyeOutlined style={{ color: '#fff' }} /> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
         <div className="d-flex">
-            <Translate
-              className="text-white input-label mb-0"
-              content="confirm_password"
-              component={Text}
-            />
-            <span style={{ color: "#fafcfe", paddingLeft: "2px" }}>*</span>
-          </div>
+          <Translate
+            className="text-white input-label"
+            content="confirm_pass_word"
+            component={Text}
+          />
+          <span style={{ color: "var(--textWhite30)", paddingLeft: "2px" }}>*</span>
+        </div>
         <Form.Item
           required
+          className="custom-forminput mb-24"
           name="ConfirmPassword"
           dependencies={["password"]}
           //hasFeedback
           rules={[
             {
               required: true,
-              message: "Please enter confirm password!",
+              message: apiClient.convertLocalLang('confirm_pass_word_msg'),
+
             },
             ({ getFieldValue }) => ({
               validator(rule, value) {
@@ -148,45 +207,57 @@ const ChangePassword = ({ userConfig }) => {
                   return Promise.resolve();
                 }
                 return Promise.reject(
-                  "Password does not match!"
+                  "Password does not match"
                 );
               },
-            }),
+            })
           ]}
         >
-          
+
           <Input.Password
-            placeholder="Confirm Password"
+            placeholder={apiClient.convertLocalLang('Re_type_your_new_pass_word')}
             value={initialValues.ConfirmPassword}
             onChange={(e) => handleChange("ConfirmPassword", e)}
-            className="text-left cust-input mb-8" iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeTwoTone />)}
+            className="text-left cust-input mb-8 pr-0 change-space" iconRender={visible => (visible ? <EyeOutlined style={{ color: '#fff' }} /> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
 
-        <Form.Item className="mb-0 mt-16">
+        <div style={{ marginTop: '50px' }} className="">
           <Button
-            loading={changePasswordResponse.isLoading}
+            // loading={changePasswordResponse.isLoading}
             htmlType="submit"
             size="large"
             block
             className="pop-btn"
-          >
-            Submit
+            loading={btnDisabled}
+          >{changePasswordResponse.isLoading && <Spin indicator={antIcon} />}{" "}
+            <Translate content="Save_btn_text" />
           </Button>
-        </Form.Item>
+          <Button
+            htmlType="button"
+            size="medium"
+            block
+            className="pwd-popup pop-cancel fs-14"
+            onClick={() => onSubmit()}>
+            <Translate content="cancel" />
+          </Button>
+        </div>
       </Form>
     </div>
   </>)
 }
 
-const connectStateToProps = ({ buySell, oidc, userConfig }) => {
-  return { buySell, userConfig: userConfig.userProfileInfo }
+const connectStateToProps = ({ buySell, userConfig, userProfile }) => {
+  return { buySell, trackAuditLogData: userConfig.trackAuditLogData, userConfig: userConfig.userProfileInfo, userProfile }
 }
 const connectDispatchToProps = dispatch => {
   return {
     changeStep: (stepcode) => {
       dispatch(setStep(stepcode))
-    }
+    },
+    getmemeberInfoa: (useremail) => {
+      dispatch(getmemeberInfo(useremail));
+    },
   }
 }
 export default connect(connectStateToProps, connectDispatchToProps)(ChangePassword);

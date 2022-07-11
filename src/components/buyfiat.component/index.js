@@ -1,51 +1,80 @@
 import React, { Component } from 'react';
 import { Drawer, Typography, Menu, Dropdown } from 'antd';
-import { EllipsisOutlined } from '@ant-design/icons';
 import { buyFiatSteps as config } from './config';
 import { setStep } from '../../reducers/buysellReducer';
-import connectStateProps from '../../utils/state.connect';
+import { rejectWithdrawfiat, setWithdrawfiatenaable,setClearAmount } from '../../reducers/sendreceiveReducer';
+import ConnectStateProps from '../../utils/state.connect';
 import Translate from 'react-translate-component';
-import BuyFiat from './buyFiat';
-import SelectFiat from './selectFiat';
-import AddCard from './addCard';
+import AddBuyFiatCard from './addCard';
 import SelectWallet from './selectWallet';
-import FiatSummary from './buyfiatSummary';
+import FiatDeposit from '../../components/deposit.component/faitDeposit';
 import BillingAddress from './fiatBillingAddress';
-import ConfirmMsg from './confirm'
+import FaitDepositSummary from './faitdepositSummary';
+import FiatSummary from './buyfiatSummary';
+import NewFiatAddress from '../addressbook.component/addFiatAddressbook';
+import WithdrawalSummary from '../withDraw.component/withdrawalSummary';
+import WithdrawalLive from '../withDraw.component/withdrawLive';
+import WithdrawalSuccess from '../withDraw.component/withdrwSuccess';
+import ConfirmMsg from './confirmMsg';
+
 class MassPayment extends Component {
     state = {
         withdraw: false,
     }
     closeDrawer = () => {
-        this.props.dispatch(setStep("step1"))
+        this.props.dispatch(setWithdrawfiatenaable(false))
+        this.props.dispatch(rejectWithdrawfiat())
         if (this.props.onClose) {
             this.props.onClose();
         }
+        if (this.child)
+            this.child.clearfiatValues();
+            this.props.dispatch(setClearAmount())
+
     }
     onHhandleClick = () => {
         this.props.changeStep("step3");
     }
+    onAddressClick = () => {
+        this.props.dispatch(setWithdrawfiatenaable(true))
+        this.props.dispatch(setStep("step1"))
+    }
+withdrawFiatSummaryBack = () => {
+    this.props.dispatch(setStep("step1"));
+    this.props.dispatch(setWithdrawfiatenaable(true));
+    this.props.dispatch(rejectWithdrawfiat());
+}
     renderContent = () => {
         const stepcodes = {
-            buyfiat: <BuyFiat activeTab={this.props.valNum}/>,
-            selectfiat: <SelectFiat />,
-            addcard: <AddCard />,
-            selectwallet: <SelectWallet />,
+            fiatdeposit: <FiatDeposit tab={this.props.tabData} fiatRef={(cd) => this.child = cd} />,
             faitsummary: <FiatSummary />,
+            fiatdepositsummary: <FaitDepositSummary />,
+            addcard: <AddBuyFiatCard />,
+            selectwallet: <SelectWallet />,
             billingaddress: <BillingAddress />,
-            confirmation: <ConfirmMsg />
+            confirmation: <ConfirmMsg />,
+            addAddress: <NewFiatAddress onCancel={() => this.onAddressClick()} />,
+            withdrwalfiatsummary: < WithdrawalSummary />,
+            withdrwlive: < WithdrawalLive />,
+            withdrwsuccess: < WithdrawalSuccess />,
+            withdrawfaitsummary:<WithdrawalSummary />
         }
         return stepcodes[config[this.props.buyFiat.stepcode]]
     }
     renderTitle = () => {
         const stepcodes = {
-            buyfiat: <span />,
-            selectfiat: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            fiatdeposit: <span />,
+            faitsummary: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            fiatdepositsummary: <span />,
             addcard: <span onClick={() => this.props.dispatch(setStep("step2"))} className="icon md lftarw-white c-pointer" />,
             selectwallet: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
-            faitsummary: <span />,
             billingaddress: <span onClick={() => this.props.dispatch(setStep("step3"))} className="icon md lftarw-white c-pointer" />,
             confirmation: <span />,
+            addAddress: <span onClick={() => this.onAddressClick()} className="icon md lftarw-white c-pointer" />,
+            withdrwalfiatsummary: <span onClick={() => this.props.dispatch(setStep("step1"))} className="icon md lftarw-white c-pointer" />,
+            withdrwlive: <span onClick={() => this.props.dispatch(setStep("step5"))} className="icon md lftarw-white c-pointer" />,
+            withdrwsuccess: null,
+            withdrawfaitsummary:<span onClick={this.withdrawFiatSummaryBack} className="icon md lftarw-white c-pointer" />,
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }
@@ -59,34 +88,36 @@ class MassPayment extends Component {
             </Menu>
         );
         const stepcodes = {
-            buyfiat: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
-            selectfiat: <span />,
+            fiatdeposit: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            faitsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            fiatdepositsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             addcard: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
             selectwallet: <Dropdown overlay={menu} overlayClassName="secureDropdown" arrow>
                 <a className="pop-drpdwn-toogle" onClick={e => e.preventDefault()}><span className="icon md h-more" /></a>
             </Dropdown>,
-            faitsummary: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+
             billingaddress: <sapn />,
-            confirmation: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />
+            confirmation: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            addAddress: <span />,
+            withdrwalfiatsummary: <span />,
+            withdrwlive: <span />,
+            withdrwsuccess: <span onClick={this.closeDrawer} className="icon md close-white c-pointer" />,
+            withdrawfaitsummary:<span onClick={this.closeDrawer} className="icon md close-white c-pointer" />
         }
         return stepcodes[config[this.props.buySell.stepcode]]
     }
     render() {
-        const { withdraw } = this.state;
         const { Paragraph } = Typography
         return (
             <Drawer
                 title={[
                     <div className="side-drawer-header">
                         {this.renderTitle()}
-                        <div className="text-center fs-14">
+                        <div className="text-center fs-16">
                             <Translate className="mb-0 text-white-30 fw-600 text-upper" content={this.props.buyFiat.stepTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
-                            <Translate className="text-white-50 mb-0 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
+                            <Translate className="text-white-50 mb-0 fs-14 fw-300" content={this.props.buyFiat.stepSubTitles[config[this.props.buyFiat.stepcode]]} component={Paragraph} />
                         </div>
                         {this.renderIcon()}
-                        {/* <Dropdown overlay={menu} overlayClassName="secureDropdown" arrow>
-                            <a className="pop-drpdwn-toogle" onClick={e => e.preventDefault()}><span className="icon md h-more" /></a>
-                        </Dropdown> */}
                     </div>
                 ]}
                 placement="right"
@@ -94,6 +125,7 @@ class MassPayment extends Component {
                 visible={this.props.showDrawer}
                 closeIcon={null}
                 className="side-drawer"
+                destroyOnClose={true}
             >
                 {this.renderContent()}
             </Drawer>
@@ -101,4 +133,4 @@ class MassPayment extends Component {
     }
 }
 
-export default connectStateProps(MassPayment);
+ export default ConnectStateProps(MassPayment);

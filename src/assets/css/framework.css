@@ -3,6 +3,7 @@
 .c-pointer{cursor: pointer !important;}
 .d-block{display: block !important;}
 .l-height-normal{line-height: normal !important;}
+.italic{font-style: italic !important;}
 
 /*----Font Sizes----*/
  .fs-10{font-size: 10px !important;}
@@ -51,25 +52,31 @@
 .text-red{color: var(--textRed) !important;}
 .text-secondary{color: var(--textSecondary) !important;}
 .text-yellow{color: var(--textYellow) !important;}
+.textpure-yellow{color: var(--bgDarkYellow) !important;}
 .text-defaultylw{color: var(--textDefautlYlw) !important;}
 .text-aqua{color: var(--textAqua) !important;}
 .text-purple{color: var(--textpurple) !important;}
 .bggrey{background-color: var(--bgGrey) !important;}
+.bgred{ background-color: var(--bgDarkRed) !important;border-color: var(--bgDarkRed) !important;}
+.bggreen{ background-color: var(--bgDarkGreen) !important;border-color: var(--bgDarkGreen) !important;}
+
 
 /*----Padding Utilities----*/
 .p-0{padding: 0 !important;}
 .p-16{padding: 16px !important;}
 .p-24{padding: 24px !important;}
 .p-28{padding: 28px;}
-.p-16{padding: 16px !important;}
 .pt-16{padding-top: 16px !important;}
 .pt-24{padding-top: 24px !important;}
 .pt-0{padding-top: 0 !important;}
 .pb-0{padding-bottom: 0 !important;}
 .pb-8{padding-bottom: 8px !important;}
 .pb-16{padding-bottom: 16px !important;}
+.pb-30{padding-bottom: 30px !important;}
 .pl-0{padding-left: 0 !important;}
+.pr-0{padding-right: 0 !important;}
 .pr-30{padding-right: 30px !important;}
+.pr-24{padding-right: 24px !important;}
 .pl-30{padding-left: 30px !important;}
 .px-0{padding-left: 0 !important; padding-right: 0 !important;}
 .px-4{padding-left: 4px !important; padding-right: 4px !important;}
@@ -93,7 +100,8 @@
 .mb-16{margin-bottom: 16px !important;}
 .mb-24{margin-bottom: 24px !important;}
 .mb-36{margin-bottom: 36px !important;}
-.mt-4{margin-top: 4px;}
+.mt-0{margin-top: 0px !important;}
+.mt-4{margin-top: 4px !important;}
 .mt-8{margin-top: 8px !important;}
 .mt-12{margin-top: 12px !important;}
 .mt-16{margin-top: 16px !important;}
@@ -141,7 +149,6 @@
     .fs-24{font-size: 24px !important;}
 }
 @media (min-width: 320px){
-    .fs-36{font-size: 28px !important;}
     .fs-24{font-size: 18px !important;}
     .fs-18{font-size: 16px !important;}
     .fs-20{font-size: 18px !important;}

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Row, Col, Typography, Button, Input, Carousel } from 'antd';
-import SuissebaseWallet from '../shared/suissebasewallet';
-import Translate from 'react-translate-component';
-import CryptoList from '../shared/cryptolist';
-import Portfolio from '../shared/portfolio';
-import Coins from '../shared/coins';
-import YourPortfolio from '../shared/yourportfolio';
-const { Search } = Input;
-const { Title, Paragraph } = Typography;
+import { Row, Col, Button, Carousel } from 'antd';
+import Portfolio from './portfolio.component';
+import MarketCap from './marketcap.component';
+import AlertConfirmation from '../shared/alertconfirmation';
+import { connect } from 'react-redux';
+import { fetchNotices } from '../../reducers/dashboardReducer';
+import Wallets from '../dashboard.component/wallets.component';
+import YourPortfolio from '../dashboard.component/yourportfolio.component';
+import apiCalls from '../../api/apiCalls';
+import Notices from './notices';
 
 class Home extends Component {
     state = {
@@ -16,22 +17,47 @@ class Home extends Component {
         visible: false,
         childrenDrawer: false,
     };
+    componentDidMount() {
+        this.getNotices();
+        this.dashboardTrack();
+    }
+
+    dashboardTrack = () => {
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Cockpit page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Cockpit page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
+    }
+    getNotices = async () => {
+        this.props.dispatch(fetchNotices(this.props.userProfileInfo.id))
+    }
     render() {
+        const { data: notices } = this.props.dashboard?.notices;
         return (
             <div className="main-container">
-                {/* <div className="mb-24">
-                    <AlertConfirmation />
-                </div> */}
-                <Row justify="center">
+                 {this.props?.twoFA &&((!this.props?.twoFA?.isEnabled) && (!this.props?.twoFA?.loading)) && <div>
+                        <AlertConfirmation type="error" title={"2FA"} showIcon description="Please enable two-factor authentication (2FA) by clicking on user profile in the top right hand corner and navigating to “Manage Your Account” > “Security” or by clicking on Enable 2FA."
+                            action={
+                                <Button size="small" type="text" onClick={() => this.props.history.push(`/userprofile?key=2`)}>
+                                    Enable 2FA
+                                </Button>
+                            } />
+                    </div>}
+                    {this.props.dashboard.notices.loading === false ? <Carousel className="docreq-slider" autoplay={true}>
+                    {notices?.map((notice, idx) => <div key={idx}>
+                        <AlertConfirmation type="error" title={notice.title} showIcon description="Our Compliance Team is requesting documents in line with your recent transaction, Please click View Details. Thank you for your patience."
+                            action={
+                                <Button size="small" type="text" onClick={() => this.props.history.push(`/cases?id=${notice.typeId}`)}>
+                                    View Details
+                                </Button>
+                            } />
+                    </div>)}
+                </Carousel> : ""}
+
+                <Row justify="center mt-36">
                     <Col xs={24} md={12} xl={10}>
                         <div className="markets-panel mb-36">
-                            <SuissebaseWallet />
+                            <Wallets />
                         </div>
-                        <div className="box markets-panel">
-                            <Translate content="markets_title" component={Title} className="fs-24 fw-600 mb-0 text-white-30" />
-                            <Translate content="markets_subtitle" component={Paragraph} className="text-white-30 fs-16 fw-200" />
-                            {/* <Translate content="search_currency" component={Search} size="middle" bordered={false} enterButton className="mt-24" /> */}
-                            <CryptoList isShowDrawer={true} />
+                        <div className="markets-panel">
+                            <YourPortfolio />
                         </div>
                     </Col>
                     <Col xs={24} md={12} xl={14}>
@@ -40,33 +66,19 @@ class Home extends Component {
                             crypto_value='0.00'
                             crypto_usd="0.00 BTC"
                             crypto_stock="0.0%" />
-
-                        <Carousel autoplay className="mb-24">
-                            <div className="p-28 carousel-card">
-                                <Translate content="db_slider_title" component={Title} className="fs-24 text-black mb-4" />
-                                <Translate content="db_slider_desc" component={Paragraph} className="fs-16 text-black mb-24" />
-                                <Translate content="db_slider_btn" component={Button} type="primary" className="custom-btn fs-14 prime mb-24" />
-                            </div>
-                            <div className="p-28 carousel-card">
-                                <Translate content="db_slider_title" component={Title} className="fs-24 text-black mb-4" />
-                                <Translate content="db_slider_desc" component={Paragraph} className="fs-16 text-black mb-24" />
-                                <Translate content="db_slider_btn" component={Button} type="primary" className="custom-btn fs-14 prime mb-24" />
-                            </div>
-                            <div className="p-28 carousel-card">
-                                <Translate content="db_slider_title" component={Title} className="fs-24 text-black mb-4" />
-                                <Translate content="db_slider_desc" component={Paragraph} className="fs-16 text-black mb-24" />
-                                <Translate content="db_slider_btn" component={Button} type="primary" className="custom-btn fs-14 prime mb-24" />
-                            </div>
-                        </Carousel>
-                        <YourPortfolio />
-                        <Coins />
+                        <Notices />
+                        <div className="markets-panel">
+                            <MarketCap />
+                        </div>
                     </Col>
                 </Row>
-            </div>
+            </div >
         );
 
 
     }
 }
-
-export default Home;
+const mapStateToProps = ({ userConfig, dashboard }) => {
+    return { userProfileInfo: userConfig.userProfileInfo, dashboard, twoFA: userConfig.twoFA }
+}
+export default connect(mapStateToProps, (dispatch) => { return { dispatch } })(Home);

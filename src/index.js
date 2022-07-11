@@ -1,17 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/app.component/App';
+import '@progress/kendo-theme-default/dist/all.css';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.css'
 import './assets/css/styles.css';
 import './assets/css/framework.css';
-import './assets/css/dark-theme.css';
-// import './assets/css/light-theme.css';
 import { ThemeSwitcherProvider } from 'react-css-theme-switcher';
+import IdleCmp from './authentication/idle.component';
+import { Provider } from 'react-redux';
+import { store } from './store';
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeSwitcherProvider defaultTheme="LHT" themeMap={{ DRT: "./assets/css/dark-theme.css", LHT: "./assets/css/light-theme.css" }}>
-      <App />
+    <ThemeSwitcherProvider defaultTheme="DRT" themeMap={{ DRT: "./dark-theme.css", LHT: "./light-theme.css" }}>
+     <Provider store={store}>
+      <IdleCmp />
+      </Provider>
+
     </ThemeSwitcherProvider>
   </React.StrictMode>,
   document.getElementById('root')

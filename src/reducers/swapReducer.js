@@ -9,6 +9,7 @@ const FETCH_MEMBERCOINS_SUCCESS = "fetchMemberCoinsSuccess";
 const FETCH_MEMBERCOINS = "fetchMemberCoins";
 const UPDATE_SWAPDATA = "updateSwapdata";
 const CLEAR_SWAPDATA = "clearSwapData";
+const SET_SWAP_FINAL_RES = "setSwapFinalRes";
 
 const setStep = (payload) => {
     return {
@@ -16,7 +17,12 @@ const setStep = (payload) => {
         payload
     }
 }
-
+const setSwapFinalRes = (payload) => {
+    return {
+        type: SET_SWAP_FINAL_RES,
+        payload
+    }
+}
 const clearStep = (payload) => {
     return {
         type: CLEAR_STEP,
@@ -55,24 +61,24 @@ const fetchMemberCoinsRejected = (paylaod) => {
 const clearSwapData = (paylaod) => {
     return {
         type: CLEAR_SWAPDATA,
-        payload: initialState
+        payload: {...initialState,stepcode:null}
     }
 }
 
 const getMemberCoins = (member_id) => {
     return async (dispatch) => {
-        dispatch(fetchMemberCoins({ key: "MemberCoins", loading: true, data: [] }));
+        dispatch(fetchMemberCoins());
         const response = await getportfolio(member_id);
         if (response.ok) {
             dispatch(fetchMemberCoinsSuccess(response.data, 'MemberCoins'));
         } else {
-            dispatch(fetchMemberCoinsRejected(response.data, 'MemberCoins'));
+            dispatch(fetchMemberCoinsRejected(response.data));
         }
     }
 }
 
 let initialState = {
-    stepcode: 'step1',
+    stepcode: null,
     stepTitles: {
         swapcoins: "swap_title",
         selectcrypto: 'swap_title',
@@ -85,7 +91,7 @@ let initialState = {
         swapsummary: 'swap_desc',
         toreceive: 'swap_desc'
     },
-    swapdata:{
+    swapdata: {
         fromCoin: null,
         receiveCoin: null,
         price: null,
@@ -95,19 +101,18 @@ let initialState = {
     },
     coinDetailData: {},
     coinReceiveDetailData: {},
-    fromCoinInputValue:null,
+    fromCoinInputValue: null,
     isLoading: true,
     MemberCoins: [],
+    swapFinalRes: {}
 }
 
 const SwapReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_STEP:
-            state = { ...state, stepcode: action.payload };
-            return state;
+            return { ...state, stepcode: action.payload };
         case CLEAR_STEP:
-            state = { ...state, stepcode: action.payload };
-            return state;
+            return { ...state, stepcode: action.payload };
         case UPDATE_COINDETAILS:
             return { ...state, coinDetailData: action.payload };
         case UPDATE_RECEIVECOINDETAILS:
@@ -128,10 +133,12 @@ const SwapReducer = (state = initialState, action) => {
         case CLEAR_SWAPDATA:
             state = { ...initialState }
             return state;
+        case SET_SWAP_FINAL_RES:
+            return { ...state, swapFinalRes: action.payload };
         default:
             return state;
     }
 }
 
 export default SwapReducer;
-export { setStep, clearStep , updateCoinDetails , updateReceiveCoinDetails , updateFromCoinInputValue , getMemberCoins, updateSwapdata, clearSwapData }
+export { setStep, clearStep, updateCoinDetails, updateReceiveCoinDetails, updateFromCoinInputValue, getMemberCoins, updateSwapdata, clearSwapData, setSwapFinalRes }
