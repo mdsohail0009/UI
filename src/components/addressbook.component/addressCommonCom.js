@@ -282,7 +282,6 @@ const AddressCommonCom = (props) => {
       }
       setFavouriteDetails(obj)
       obj.favouriteName = obj?.favouriteName === null ? "" : obj?.favouriteName;
-      obj.isAgree = props?.addressBookReducer?.selectedRowData?.id ? true : false;
       form.setFieldsValue(obj)
     }
     getCountry()
