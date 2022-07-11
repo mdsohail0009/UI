@@ -655,14 +655,14 @@ setDetails(data)
                     className="custom-forminput mb-36 agree"
                     name="isAccept"
                     valuePropName="checked"
-                    required
-                    rules={[
-                      {
-                        validator: (_, value) =>
-                          value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice')
-                          )),
-                      },
-                    ]}
+                    // required
+                    // rules={[
+                    //   {
+                    //     validator: (_, value) =>
+                    //       value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice')
+                    //       )),
+                    //   },
+                    // ]}
                   >
                     <span className="d-flex">
                     <Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red":" "}`} />
