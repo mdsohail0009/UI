@@ -751,7 +751,7 @@ const AddressCommonCom = (props) => {
                           if (emailExist) {
                             return Promise.reject("Email already exist");
                           } else if (value && !(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(value))) {
-                            return Promise.reject("Invalid Phone Number");
+                            return Promise.reject("Invalid phone number");
                           }
                           else {
                             return Promise.resolve();
