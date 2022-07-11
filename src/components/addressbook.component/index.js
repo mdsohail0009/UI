@@ -811,8 +811,8 @@ class AddressBook extends Component {
 				<Modal
 					title={
 						this.state.selectedObj.status === "Active"
-							? "Deactivate Account?"
-							: "Activate Account"
+							? "Confirm Deactivate?"
+							: "Confirm Activate"
 					}
 					visible={this.state.modal}
 					closeIcon={
