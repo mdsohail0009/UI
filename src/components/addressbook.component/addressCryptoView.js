@@ -162,7 +162,7 @@ const AddressCryptoView = (props) => {
 																		: item.walletCode}
 																</Title>
 															</Col>
-															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+															<Col xs={24} md={24} lg={14} xl={8} xxl={14}>
 																<Text className="fw-300 text-white-50 fs-12">
 																	 Address 
 																</Text>
