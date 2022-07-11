@@ -273,6 +273,7 @@ const AddressCommonCom = (props) => {
     setIsLoading(false)
   }
   const getFavs = async (id, membershipId) => {
+    debugger
     let response = await getFavData(id, membershipId)
     form.resetFields()
     if (response.ok) {
@@ -361,7 +362,7 @@ const AddressCommonCom = (props) => {
       obj.payeeId = bankObj.payeeId
       for (let i in bankmodalData) {
         if (bankmodalData[i].id == obj.id) {
-          obj.recordStatus = "Modified"
+          obj.recordStatus = obj.recordStatus != "Added"&& obj.recordStatus != "Deleted" ? "Modified" : obj.recordStatus;
           obj.modifiedBy = props?.userConfig.firstName + props?.userConfig.lastName
           obj.status = 1
           obj.addressState = props?.addressBookReducer?.selectedRowData?.addressState
@@ -406,6 +407,7 @@ const AddressCommonCom = (props) => {
   }
 
   const savewithdrawal = async (values) => {
+    debugger
     setIsLoading(false);
     setErrorMsg(null);
     setBtnDisabled(true);
