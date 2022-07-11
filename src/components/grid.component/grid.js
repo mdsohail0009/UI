@@ -46,12 +46,12 @@ export function withState(WrappedGrid) {
             // this.exportSubscriber = excellExportSubject.subscribe(() => {
             // });
         }
-        // numberWithCommas(x) {
-        //     return x;
-        // }
         numberWithCommas(x) {
-            return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+            return x;
         }
+        // numberWithCommas(x) {
+        //     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        // }
         refreshGrid() {
             this.fetchData(this.state.dataState);
         }

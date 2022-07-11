@@ -32,8 +32,12 @@ const LocalCryptoSwapper = (props, ref) => {
     const fetchConvertionValue = async ({ inputvalue, locCurrency, isSwap }) => {
         const coin = selectedCoin || sellData?.selectedCoin?.data?.coin;
         setConvertionLoad(true);
-        const _isSwap = (isSwap||isSwaped)
+        const _isSwap = (isSwap || isSwaped);
+        if (props.onConvertion) {
+            props.onConvertion(true);
+        }
         const response = await convertCurrencyDuplicate({ from: coin, to: locCurrency || localCurrency || "USD", value: (inputvalue || 0), isCrypto: !_isSwap, memId: props.memberId, screenName: props.screenName });
+      
         if (response.ok) {
             const { data: value, config: { url } } = response;
             const _obj = url.split("CryptoFiatConverter")[1].split("/");
@@ -44,11 +48,17 @@ const LocalCryptoSwapper = (props, ref) => {
                 if (!_isSwap) {
                     setCryptoValue(value || 0);
                 } else { setLocalValue(value || 0) }
-                onChange({ cryptoValue: _isSwap ? inputvalue : value, localValue: _isSwap ? value : inputvalue, isSwaped:_isSwap, isInputChange });
+                onChange({ cryptoValue: _isSwap ? inputvalue : value, localValue: _isSwap ? value : inputvalue, isSwaped: _isSwap, isInputChange });
                 setConvertionLoad(false);
+                if (props.onConvertion) {
+                    props.onConvertion(false);
+                }
             }
         } else {
             setConvertionLoad(false);
+            if (props.onConvertion) {
+                props.onConvertion(false);
+            }
         }
 
 

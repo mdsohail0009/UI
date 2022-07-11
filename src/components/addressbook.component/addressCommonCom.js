@@ -278,10 +278,10 @@ const AddressCommonCom = (props) => {
       let payeeObj = response.data.payeeAccountModels
       if (props?.addressBookReducer?.selectedRowData?.id) {
         setModalData(payeeObj)
-        form.setFieldsValue({ isAgree: obj.isAgree })
+        form.setFieldsValue({ isAgree: obj.isAgree   })
       }
       setFavouriteDetails(obj)
-      obj.favouriteName = obj?.favouriteName === null ? "" : obj?.favouriteName
+      obj.favouriteName = obj?.favouriteName === null ? "" : obj?.favouriteName;
       form.setFieldsValue(obj)
     }
     getCountry()
@@ -750,7 +750,7 @@ const AddressCommonCom = (props) => {
                           if (emailExist) {
                             return Promise.reject("Email already exist");
                           } else if (value && !(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(value))) {
-                            return Promise.reject("Invalid Phone Number");
+                            return Promise.reject("Invalid phone number");
                           }
                           else {
                             return Promise.resolve();
@@ -1196,11 +1196,11 @@ const AddressCommonCom = (props) => {
                           >
 
                             <Select
-                              defaultValue="Bank Account"
-                              placeholder="Select Type"
-                              className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
+                              className="cust-input mb-0 custom-search"
                               dropdownClassName="select-drpdwn"
+                              defaultValue="BankAccount"
                               onChange={(e) => handleBankChange(e)}
+                              placeholder="Select Type"
                               bordered={false}
                             >
                               <Option value="BankAccount">Bank Account</Option>
