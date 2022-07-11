@@ -73,7 +73,6 @@ export function withState(WrappedGrid) {
                         title="Export Excel"
                         className="k-button k-button-md k-rounded-md k-button-solid  mt-16 mb-16 mr-16 search-btn primary-btn excel-btn"
                         onClick={() => {
-                            debugger
                             if (this.excelRef) {
                                 if (this.excelRef?.current.save) {
                                     let workbook = this.excelRef.current.workbookOptions(); // get the workbook.
