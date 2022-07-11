@@ -37,7 +37,7 @@ class SelectAddress extends Component {
         if (!value) {
             filteraddresslabel = this.state.addressLu;
         } else {
-            filteraddresslabel = this.state.addressLu.filter(item => (item.name).toLowerCase().includes(value.toLowerCase()));
+            filteraddresslabel = this.state.addressLu.filter(item => (item.name)?.toLowerCase().includes(value.toLowerCase()));
         }
         this.setState({ ...this.state, filterObj: filteraddresslabel })
     }
