@@ -107,7 +107,7 @@ class PaymentsView extends Component {
                         <table className='pay-grid view'>
                             <thead>
                                 <tr>
-                                <th className="doc-def">Name</th>
+                                <th className="doc-def">Favorite Name</th>
                                     <th className="doc-def" style={{width: "300px"}}>Bank Name</th>
                                     <th>Bank Account Number/IBAN</th>
                                     <th>State</th>
