@@ -510,7 +510,7 @@ setDetails(data)
                     >
                       {accountCurrency?.map((item, idx) => (
 										<Option key={idx} value={item.currencyCode}>
-											{item.currencyCode}
+											{item.currencyCode} (Balance : <NumberFormat defaultValue={item.avilable}  displayType="text"  />)
 										</Option>
 									))}
                     </Select>
