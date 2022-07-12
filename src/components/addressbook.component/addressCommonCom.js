@@ -161,7 +161,7 @@ const AddressCommonCom = (props) => {
       ? props?.userConfig.businessName
       : props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
   };
-  const withdraeTab = bilPay ? "Fiat" : (props?.addressBookReducer?.cryptoTab == true ? "Crypto" : "Fiat");
+  const withdraeTab = bilPay ? "Fiat" : ((props?.addressBookReducer?.cryptoTab == true || props?.cryptoTab == 1) ? "Crypto" : "Fiat");
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -273,7 +273,6 @@ const AddressCommonCom = (props) => {
     setIsLoading(false)
   }
   const getFavs = async (id, membershipId) => {
-    debugger
     let response = await getFavData(id, membershipId)
     form.resetFields()
     if (response.ok) {
@@ -324,7 +323,6 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
-    debugger
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
@@ -355,7 +353,7 @@ const AddressCommonCom = (props) => {
       addressState: null,
       inputScore: 0,
       outputScore: 0,
-      recordStatus: "Added",
+      recordStatus: editBankDetsils == true ? "Modified" :"Added",
     }
     if (editBankDetsils == true) {
       obj.id = bankObj.id
@@ -381,7 +379,6 @@ const AddressCommonCom = (props) => {
     setIsModalDelete(false)
   }
   const handleDeleteModal = () => {
-    debugger
     setIsModalDelete(false)
     setEditBankDetails(false)
     for (let i in bankmodalData) {
@@ -407,7 +404,6 @@ const AddressCommonCom = (props) => {
   }
 
   const savewithdrawal = async (values) => {
-    debugger
     setIsLoading(false);
     setErrorMsg(null);
     setBtnDisabled(true);
