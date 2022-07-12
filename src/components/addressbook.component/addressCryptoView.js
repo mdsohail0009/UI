@@ -140,7 +140,7 @@ const AddressCryptoView = (props) => {
 															width: "100%"
 														}}>
 														<Row gutter={[16, 16]} key={idx}>
-															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+															<Col xs={24} md={24} lg={14} xl={4} xxl={4}>
 																<Text className="fw-300 text-white-50 fs-12">
 																	Address Lable
 																</Text>
@@ -151,7 +151,7 @@ const AddressCryptoView = (props) => {
 																		: item.label}
 																</Title>
 															</Col>
-															<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+															<Col xs={24} md={24} lg={14} xl={3} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
 																	Coin
 																</Text>
@@ -162,7 +162,7 @@ const AddressCryptoView = (props) => {
 																		: item.walletCode}
 																</Title>
 															</Col>
-															<Col xs={24} md={24} lg={14} xl={8} xxl={14}>
+															<Col xs={24} md={24} lg={14} xl={10} xxl={14}>
 																<Text className="fw-300 text-white-50 fs-12">
 																	 Address 
 																</Text>
@@ -173,7 +173,7 @@ const AddressCryptoView = (props) => {
 																		: item.walletAddress}
 															</Title>
 														</Col>
-														<Col xs={24} md={24} lg={14} xl={8} xxl={3}>
+														<Col xs={24} md={24} lg={14} xl={4} xxl={3}>
 																<Text className="fw-300 text-white-50 fs-12">
 																	 Address State
 																</Text>
