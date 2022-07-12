@@ -1491,7 +1491,7 @@ const AddressCommonCom = (props) => {
 
                 </Modal>
               </Row>
-              {bankmodalData.map((item, indx) => {
+              {bankmodalData?.map((item, indx) => {
                 if (item.recordStatus !== "Deleted") {
                   return <Row gutter={14} style={{ paddingBottom: "15px" }}>
 
