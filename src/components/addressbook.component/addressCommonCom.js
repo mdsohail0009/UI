@@ -706,6 +706,9 @@ const AddressCommonCom = (props) => {
                         whitespace: true,
                         message: apiCalls.convertLocalLang('is_required')
                       },
+                      {
+                        validator: validateContentRule
+                      }
 
                     ]}
                     label={
