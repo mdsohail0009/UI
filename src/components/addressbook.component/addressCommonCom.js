@@ -201,6 +201,7 @@ const AddressCommonCom = (props) => {
     setIsModalVisible(false);
     bankDetailForm.resetFields();
     SetBankChange("BankAccount");
+    setNewStates([]);
   };
 
   const radioChangeHandler = (e) => {
@@ -374,6 +375,7 @@ const AddressCommonCom = (props) => {
     setIsModalVisible(false);
     bankDetailForm.resetFields();
     SetBankChange("BankAccount");
+    setNewStates([]);
   }
   const handleDeleteCancel = () => {
     setIsModalDelete(false)
