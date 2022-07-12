@@ -161,7 +161,7 @@ const AddressCommonCom = (props) => {
       ? props?.userConfig.businessName
       : props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
   };
-  const withdraeTab = bilPay ? "Fiat" : (props?.addressBookReducer?.cryptoTab == true ? "Crypto" : "Fiat");
+  const withdraeTab = bilPay ? "Fiat" : ((props?.addressBookReducer?.cryptoTab == true || props?.cryptoTab == 1) ? "Crypto" : "Fiat");
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -170,6 +170,7 @@ const AddressCommonCom = (props) => {
   };
   const handleOk = () => {
     setIsModalVisible(false);
+    setEditBankDetails(false)
   };
   const handleCoinChange = (e) => {
     bankDetailForm.validateFields(["walletAddress"], validateAddressType)
@@ -352,14 +353,14 @@ const AddressCommonCom = (props) => {
       addressState: null,
       inputScore: 0,
       outputScore: 0,
-      recordStatus: "Added",
+      recordStatus: editBankDetsils == true ? "Modified" :"Added",
     }
     if (editBankDetsils == true) {
       obj.id = bankObj.id
       obj.payeeId = bankObj.payeeId
       for (let i in bankmodalData) {
         if (bankmodalData[i].id == obj.id) {
-          obj.recordStatus = "Modified"
+          obj.recordStatus = obj.recordStatus != "Added"&& obj.recordStatus != "Deleted" ? "Modified" : obj.recordStatus;
           obj.modifiedBy = props?.userConfig.firstName + props?.userConfig.lastName
           obj.status = 1
           obj.addressState = props?.addressBookReducer?.selectedRowData?.addressState
@@ -1486,7 +1487,7 @@ const AddressCommonCom = (props) => {
 
                 </Modal>
               </Row>
-              {bankmodalData.map((item, indx) => {
+              {bankmodalData?.map((item, indx) => {
                 if (item.recordStatus !== "Deleted") {
                   return <Row gutter={14} style={{ paddingBottom: "15px" }}>
 

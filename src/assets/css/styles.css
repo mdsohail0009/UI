@@ -627,8 +627,7 @@ height: 38px; color: var(--textWhite30);padding-left: 18px; border: 0; border-ra
 .ant-notification-notice{background-color: var(--bgDarkGrey);border-radius: 10px;font-size: 14px;}
 .bankview-right{padding: 34px 34px 0 !important;background-color: var(--bgDarkGrey);border-radius: 30px;}
 .bankview-right .kpi-val{padding-bottom: 34px;}
-.kpi-List .ant-col{display: flex; 
-    /* margin-bottom: 34px; */
+.kpi-List .ant-col{display: flex;  margin-bottom: 34px;
 }
 .kpi-List .icon{margin: 6px 10px 0 0;}
 .kpi-List .icon + div{flex: 1;}
