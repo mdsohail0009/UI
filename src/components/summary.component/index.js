@@ -182,7 +182,7 @@ class Summary extends Component {
 									this.props.onTermsChange(checked);
 								}}
 							/>
-							<span for="agree-check" />
+							<span for="agree-check" className={`${error?.agreeRed===false ? "checkbox-red":""}`} />
 						</label>
 						<Paragraph
 							className="fs-14 text-white-30 ml-16 mb-0"

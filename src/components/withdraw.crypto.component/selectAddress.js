@@ -37,14 +37,14 @@ class SelectAddress extends Component {
         if (!value) {
             filteraddresslabel = this.state.addressLu;
         } else {
-            filteraddresslabel = this.state.addressLu.filter(item => (item.name).toLowerCase().includes(value.toLowerCase()));
+            filteraddresslabel = this.state.addressLu.filter(item => (item.name)?.toLowerCase().includes(value.toLowerCase()));
         }
         this.setState({ ...this.state, filterObj: filteraddresslabel })
     }
     handleSelectAdd = (item) => {
         this.props.SelectedAddress(item)
         let obj = this.props.sendReceive.withdrawCryptoObj;
-        this.props.dispatch(setWithdrawcrypto({ ...obj, toWalletAddress: item.code }))
+        this.props.dispatch(setWithdrawcrypto({ ...obj, toWalletAddress: item.address }))
         this.props.changeStep('withdraw_crypto_selected');
     }
     render() {
@@ -62,8 +62,9 @@ class SelectAddress extends Component {
                             {filterObj?.map((item, idx) =>
                                 <li onClick={() => this.handleSelectAdd(item)} key={idx}
                                     className={item.name === this.props.sendReceive?.addressObj?.name ? "select" : " "}
-                                > <p className="fs-16 mb-0 "> <span className=" text-white-50 fs-14 fw-100"> Label:</span> {item.name}</p>
-                                    <p className="fs-16 mb-0"> <span className=" text-white-50 fs-14 fw-100"> Address:</span> {item.code}</p>
+                                > <p className="fs-16 mb-0 "> <span className=" text-white-50 fs-14 fw-100"> Account Holder:</span> {item.accountHolderName}</p>
+                                <p className="fs-16 mb-0 "> <span className=" text-white-50 fs-14 fw-100"> Label:</span> {item.lable}</p>
+                                    <p className="fs-16 mb-0"> <span className=" text-white-50 fs-14 fw-100"> Address:{item.address}</span></p>
                                 </li>
                             )}
                         </ul> </>}

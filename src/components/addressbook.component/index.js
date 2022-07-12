@@ -1,24 +1,28 @@
 import React, { Component } from "react";
-import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message } from "antd";
+import { Typography, Drawer, Button, Radio, Tooltip, Modal, Alert, message, Spin } from "antd";
 import {
 	setAddressStep,
 	rejectCoin,
 	fetchUsersIdUpdate,
+	selectedTab,
 	clearValues,
 	clearCryptoValues,
 } from "../../reducers/addressBookReducer";
 import Translate from "react-translate-component";
 import { processSteps as config } from "./config";
 import NewAddressBook from "./newAddressBook";
+import AddressCommonCom from "./addressCommonCom";
 import List from "../grid.component";
 import NewFiatAddress from "./addFiatAddressbook";
-import { activeInactive } from "./api";
+import { activeInactive,downloadDeclForm  } from "./api";
 import SelectCrypto from "./selectCrypto";
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import apiCalls from "../../api/apiCalls";
 import Info from "../shared/info";
-import {downloadDeclForm} from './api'
+import { DownloadOutlined } from '@ant-design/icons';
+import Loader from "../../Shared/loader";
+
 const { Paragraph, Text } = Typography;
 
 class AddressBook extends Component {
@@ -37,10 +41,11 @@ class AddressBook extends Component {
 			cryptoModal: false,
 			selectedModal: "",
 			errorWorning: null,
+			isDownloading: false,
 
 			obj: {
 				id: [],
-				tableName: "Member.FavouriteAddress",
+				tableName: "Common.PayeeAccounts",
 				modifiedBy: "",
 				status: [],
 				type: "",
@@ -52,6 +57,7 @@ class AddressBook extends Component {
 		};
 		this.gridFiatRef = React.createRef();
 		this.gridCryptoRef = React.createRef();
+		
 	}
 	componentDidMount() {
 		if (!this.state.cryptoFiat) {
@@ -95,7 +101,7 @@ class AddressBook extends Component {
 							className="c-pointer"
 							name="isCheck"
 							type="checkbox"
-							checked={this.state.selection.indexOf(props.dataItem.id) > -1}
+							checked={this.state.selection.indexOf(props.dataItem.payeeAccountId) > -1}
 							onChange={(e) => this.handleInputChange(props, e)}
 						/>
 						<span></span>{" "}
@@ -105,7 +111,7 @@ class AddressBook extends Component {
 		},
 		{
 			field: "favouriteName",
-			title: apiCalls.convertLocalLang("AddressLabel"),
+			title: "Favorite Name",
 			filter: true,
 			width: 300,
 			customCell: (props) => (
@@ -118,6 +124,12 @@ class AddressBook extends Component {
 					</Text>
 				</td>
 			),
+		},
+		{
+			field: "addressLable",
+			title: "Bank Label",
+			filter: true,
+			width: 230,
 		},
 		{
 			field: "currency",
@@ -144,28 +156,13 @@ class AddressBook extends Component {
 			filter: true,
 			width: 200,
 		},
-		{
-			field: "bankAddress",
-			title: apiCalls.convertLocalLang("Bank_address1"),
-			filter: true,
-			width: 250,
-		},
-		{
-			field: "beneficiaryAccountName",
-			title:
-				(this.props?.userConfig?.isBusiness &&
-					apiCalls.convertLocalLang("Recipient_Business_name")) ||
-				(!this.props?.userConfig?.isBusiness &&
-					apiCalls.convertLocalLang("Recipient_full_name")),
-			filter: true,
-			width: 300,
-		},
-		{
-			field: "beneficiaryAccountAddress",
-			title: apiCalls.convertLocalLang("Recipient_address1"),
-			filter: true,
-			width: 250,
-		},
+		// {
+		// 	field: "bankAddress",
+		// 	title: apiCalls.convertLocalLang("Bank_address1"),
+		// 	filter: true,
+		// 	width: 250,
+		// },
+	
 		{
 			field: "addressState",
 			title: apiCalls.convertLocalLang("addressState"),
@@ -178,19 +175,22 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
-		// {
-		// 	field: "isWhitelisted",
-		// 	customCell: (props) => (
-		// 		<td>
-		// 			{props.dataItem?.isWhitelisted ? <a  onClick={() => {
-		// 				this.downloadDeclarationForm(props?.dataItem);
-		// 			}} >Download</a> : "Not whitelisted"}
-		// 		</td>
-		// 	),
-		// 	title: apiCalls.convertLocalLang("whitelist"),
-		// 	filter: false,
-		// 	width: 200,
-		// }
+		{
+			field: "isWhitelisted",
+			customCell: (props) => (
+				<td>
+					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration != props?.dataItem.payeeAccountId) && <><a onClick={() => {
+						if (!this.state.isDownloading)
+							this.downloadDeclarationForm(props?.dataItem);
+					}} ><DownloadOutlined /></a> Whitelisted</>}
+					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
+					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.payeeAccountId && <Spin size="small" />}
+				</td>
+			),
+			title: apiCalls.convertLocalLang("whitelist"),
+			filter: false,
+			width: 200,
+		}
 	];
 	columnsCrypto = [
 		{
@@ -206,7 +206,7 @@ class AddressBook extends Component {
 							name="isCheck"
 							type="checkbox"
 							className="c-pointer"
-							checked={this.state.selection.indexOf(props.dataItem.id) > -1}
+							checked={this.state.selection.indexOf(props.dataItem.payeeAccountId) > -1}
 							onChange={(e) => this.handleInputChange(props, e)}
 						/>
 						<span></span>{" "}
@@ -215,17 +215,14 @@ class AddressBook extends Component {
 			),
 		},
 		{
-			field: "addressLable",
-			title: apiCalls.convertLocalLang("AddressLabel"),
+			field: "favouriteName",
+			title: "Favorite Name",
 			filter: true,
 			width: 300,
 			customCell: (props) => (
 				<td>
-					{" "}
-					<div
-						className="gridLink"
-						onClick={() => this.addressCryptoView(props)}>
-						{props.dataItem.addressLable}
+					<div className="gridLink" onClick={() => this.addressCryptoView(props)}>
+						{props.dataItem.favouriteName}
 					</div>
 					<Text className="file-label ml-8 fs-12">
 						{this.addressTypeNames(props?.dataItem?.addressType)}
@@ -234,62 +231,68 @@ class AddressBook extends Component {
 			),
 		},
 		{
+			field: "addressLable",
+			title: "Address Label",
+			filter: true,
+			width: 230,
+		},
+		{
 			field: "address",
 			title: apiCalls.convertLocalLang("address"),
 			filter: true,
 			width: 380,
 		},
-		{
-			field: "inputScore",
-			title: "Input Score",
-			width: 150,
-			filter: true,
-			customCell: (props) => (
-				<td>
-					{props.dataItem.inputScore ? props.dataItem.inputScore : 0}
-					<Tooltip title="View More">
-						<span
-							className="icon md info c-pointer ml-8"
-							style={{ float: "right" }}
-							onClick={() =>
-								this.setState({
-									...this.state,
+		// {
+		// 	field: "inputScore",
+		// 	title: "Input Score",
+		// 	width: 150,
+		// 	filter: true,
+		// 	customCell: (props) => (
+		// 		<td>
+		// 			{props.dataItem.inputScore ? props.dataItem.inputScore : 0}
+		// 			<Tooltip title="View More">
+		// 				<span
+		// 					className="icon md info c-pointer ml-8"
+		// 					style={{ float: "right" }}
+		// 					onClick={() =>
+		// 						this.setState({
+		// 							...this.state,
 
-									cryptoModal: true,
-									selectedId: props.dataItem.id,
-									selectedModal: "Input",
-								})
-							}
-						/>
-					</Tooltip>
-				</td>
-			),
-		},
-		{
-			field: "outputScore",
-			title: "Output Score",
-			width: 150,
-			filter: true,
-			customCell: (props) => (
-				<td>
-					{props.dataItem.outputScore ? props.dataItem.outputScore : 0}
-					<Tooltip title="View More">
-						<span
-							className="icon md info c-pointer ml-8"
-							style={{ float: "right" }}
-							onClick={() =>
-								this.setState({
-									...this.state,
-									cryptoModal: true,
-									selectedId: props.dataItem.id,
-									selectedModal: "Output",
-								})
-							}
-						/>
-					</Tooltip>
-				</td>
-			),
-		},
+		// 							cryptoModal: true,
+		// 							selectedId: props.dataItem.id,
+		// 							selectedModal: "Input",
+		// 						})
+		// 					}
+		// 				/>
+		// 			</Tooltip>
+		// 		</td>
+		// 	),
+		// },
+		// {
+		// 	field: "outputScore",
+		// 	title: "Output Score",
+		// 	width: 150,
+		// 	filter: true,
+		// 	customCell: (props) => (
+		// 		<td>
+		// 			{props.dataItem.outputScore ? props.dataItem.outputScore : 0}
+		// 			<Tooltip title="View More">
+		// 				<span
+		// 					className="icon md info c-pointer ml-8"
+		// 					style={{ float: "right" }}
+		// 					onClick={() =>
+		// 						this.setState({
+		// 							...this.state,
+		// 							cryptoModal: true,
+		// 							selectedId: props.dataItem.id,
+		// 							selectedModal: "Output",
+		// 						})
+		// 					}
+		// 				/>
+		// 			</Tooltip>
+		// 		</td>
+		// 	),
+		// },
 		{
 			field: "coin",
 			title: apiCalls.convertLocalLang("Coin"),
@@ -308,24 +311,29 @@ class AddressBook extends Component {
 			filter: true,
 			width: 100,
 		},
-		// 	{
-		// 	field: "isWhitelisted",
-		// 	customCell: (props) => (
-		// 		<td>
-		// 			{props.dataItem?.isWhitelisted ? <a onClick={() => {
-		// 				this.downloadDeclarationForm(props?.dataItem);
-		// 			}} >Download</a> : "Not whitelisted"}
-		// 		</td>
-		// 	),
-		// 	title: apiCalls.convertLocalLang("whitelist"),
-		// 	filter: false,
-		// 	width: 200,
-		// },
+		{
+			field: "isWhitelisted",
+			customCell: (props) => (
+				<td>
+					{props.dataItem?.isWhitelisted && (this.state.selectedDeclaration != props?.dataItem.payeeAccountId) &&<> <a onClick={() => {
+						if (!this.state.isDownloading)
+							this.downloadDeclarationForm(props?.dataItem);
+					}} ><DownloadOutlined /></a> Whitelisted</>}
+					{!props.dataItem?.isWhitelisted && "Not whitelisted"}
+					{this.state.isDownloading && this.state.selectedDeclaration == props?.dataItem.payeeAccountId && <Spin size="small" />}
+				</td>
+			),
+			title: apiCalls.convertLocalLang("whitelist"),
+			filter: false,
+			width: 200,
+		},
 	];
-	async downloadDeclarationForm(dataItem){
-		const response = await downloadDeclForm(dataItem.id);
-		if(response.ok){
-			window.open(response.data,"_blank");
+	async downloadDeclarationForm(dataItem) {
+		this.setState({ ...this.state, isDownloading: true, selectedDeclaration: dataItem.payeeAccountId });
+		const response = await downloadDeclForm(dataItem.payeeAccountId);
+		if (response.ok) {
+			window.open(response.data, "_blank");
+			this.setState({ ...this.state, isDownloading: false, selectedDeclaration: null });
 		}
 	}
 	addressFiatView = ({ dataItem }) => {
@@ -335,6 +343,7 @@ class AddressBook extends Component {
 		this.props.history.push(`/addressCryptoView/${dataItem.id}`);
 	};
 	handleInputChange = (prop, e) => {
+		
 		this.setState({ ...this.state, errorWorning: null });
 		const rowObj = prop.dataItem;
 		const value =
@@ -343,14 +352,14 @@ class AddressBook extends Component {
 				: e.currentTarget.value;
 		const name = e.currentTarget.name;
 		let { selection } = this.state;
-		let idx = selection.indexOf(rowObj.id);
+		let idx = selection.indexOf(rowObj.payeeAccountId);
 		if (selection) {
 			selection = [];
 		}
 		if (idx > -1) {
 			selection.splice(idx, 1);
 		} else {
-			selection.push(rowObj.id);
+			selection.push(rowObj.payeeAccountId);
 		}
 		this.setState({
 			...this.state,
@@ -381,11 +390,17 @@ class AddressBook extends Component {
 		}
 	};
 	handleSatatuSave = async () => {
+		debugger
 		this.setState({ ...this.state, isLoading: true, btnDisabled: true });
 		let statusObj = this.state.obj;
-		statusObj.id.push(this.state.selectedObj.id);
+		statusObj.id.push(this.state.selectedObj.payeeAccountId);
 		statusObj.modifiedBy = this.props.oidc.user.profile.unique_name;
-		statusObj.status.push(this.state.selectedObj.status);
+		if(this.state.selectedObj.status=="Active"){
+			statusObj.status.push("Active")
+		}else{
+			statusObj.status.push("InActive")
+		}
+		// statusObj.status.push(this.state.selectedObj.status);
 		statusObj.type = this.state.cryptoFiat ? "fiat" : "crypto";
 		statusObj.info = JSON.stringify(this.props.trackLogs);
 		let response = await activeInactive(statusObj);
@@ -399,7 +414,7 @@ class AddressBook extends Component {
 				btnDisabled: false,
 				obj: {
 					id: [],
-					tableName: "Member.FavouriteAddress",
+					tableName: "Common.PayeeAccounts",
 					modifiedBy: "",
 					status: [],
 				},
@@ -427,7 +442,7 @@ class AddressBook extends Component {
 				btnDisabled: false,
 				obj: {
 					id: [],
-					tableName: "Member.FavouriteAddress",
+					tableName: "Common.PayeeAccounts",
 					modifiedBy: "",
 					status: [],
 				},
@@ -436,7 +451,7 @@ class AddressBook extends Component {
 	};
 	addAddressBook = () => {
 		if (this.state.cryptoFiat) {
-			this.setState({ ...this.state, fiatDrawer: true });
+			this.setState({ ...this.state, fiatDrawer: true,errorWorning: null });
 			if (!this.state.fiatDrawer) {
 				apiCalls.trackEvent({
 					Type: "User",
@@ -450,10 +465,11 @@ class AddressBook extends Component {
 					FullFeatureName: "Address Book",
 				});
 			}
+			
 			this.props.clearFormValues();
 		} else {
-			this.setState({ ...this.state, visible: true });
-			apiCalls.trackEvent({
+			this.setState({ ...this.state, visible: true,errorWorning: null });
+			 apiCalls.trackEvent({
 				Type: "User",
 				Action: "Withdraw Crypto Address book add view",
 				Username: this.props.userProfileInfo?.userName,
@@ -497,7 +513,7 @@ class AddressBook extends Component {
 						selection: [],
 						isCheck: false,
 					});
-					apiCalls.trackEvent({
+					 apiCalls.trackEvent({
 						Type: "User",
 						Action: "Withdraw Fait  Address edit view",
 						Username: this.props.userProfileInfo?.userName,
@@ -509,7 +525,7 @@ class AddressBook extends Component {
 						FullFeatureName: "Address Book",
 					});
 				} else {
-					apiCalls.trackEvent({
+					 apiCalls.trackEvent({
 						Type: "User",
 						Action: "Withdraw Crypto  Address edit view",
 						Username: this.props.userProfileInfo?.userName,
@@ -530,8 +546,15 @@ class AddressBook extends Component {
 			}
 		}
 	};
-	closeBuyDrawer = () => {
-		this.setState({ ...this.state, visible: false, fiatDrawer: false });
+	closeBuyDrawer = (obj) => {
+		let showCrypto = false, showFiat = false;
+		if (obj) {
+			if (obj.isCrypto)
+				showCrypto = !obj?.close;
+			else
+				showFiat = !obj?.close;
+		};
+		this.setState({ ...this.state, visible: showCrypto, fiatDrawer: showFiat });
 		this.props.rejectCoinWallet();
 		this.props.clearFormValues();
 		this.props.clearCrypto();
@@ -545,6 +568,7 @@ class AddressBook extends Component {
 		this.props.changeStep("step1");
 	};
 	handleWithdrawToggle = (e) => {
+		
 		this.setState({
 			...this.state,
 			cryptoFiat: e.target.value === 2,
@@ -553,6 +577,7 @@ class AddressBook extends Component {
 			isCheck: false,
 			errorWorning:null
 		});
+		this.props.tabSelectedData(this.state.cryptoFiat);
 		if (this.state.cryptoFiat) {
 			apiCalls.trackEvent({
 				Type: "User",
@@ -588,8 +613,10 @@ class AddressBook extends Component {
 	};
 	renderContent = () => {
 		const stepcodes = {
-			cryptoaddressbook: (
-				<NewAddressBook onCancel={() => this.closeBuyDrawer()} />
+			cryptoaddressbook: (<>
+				 {/* <NewAddressBook onCancel={() => this.closeBuyDrawer()} /> */}
+				<AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)} cryptoTab={1}/>
+				</>
 			),
 			selectcrypto: <SelectCrypto />,
 		};
@@ -611,7 +638,7 @@ class AddressBook extends Component {
 		const stepcodes = {
 			cryptoaddressbook: (
 				<span
-					onClick={this.closeBuyDrawer}
+				onClick={() => this.closeBuyDrawer()}
 					className="icon md close-white c-pointer"
 				/>
 			),
@@ -747,7 +774,7 @@ class AddressBook extends Component {
 					closable={true}
 					visible={this.state.visible}
 					closeIcon={null}
-					className="side-drawer">
+					className="side-drawer w-50p">
 					{this.renderContent()}
 				</Drawer>
 				<Drawer
@@ -765,7 +792,7 @@ class AddressBook extends Component {
 								</Paragraph>
 							</div>
 							<span
-								onClick={this.closeBuyDrawer}
+								onClick={() => this.closeBuyDrawer()}
 								className="icon md close-white c-pointer"
 							/>
 						</div>,
@@ -775,15 +802,17 @@ class AddressBook extends Component {
 					visible={this.state.fiatDrawer}
 					closeIcon={null}
 					className="side-drawer w-50p">
-					{this.state.fiatDrawer && (
-						<NewFiatAddress onCancel={() => this.closeBuyDrawer()} />
+					{this.state.fiatDrawer && (<>
+						{/* <NewFiatAddress onCancel={() => this.closeBuyDrawer()} /> */}
+						<AddressCommonCom onCancel={(obj) => this.closeBuyDrawer(obj)}  cryptoTab={2}/>
+						</>
 					)}
 				</Drawer>
 				<Modal
 					title={
 						this.state.selectedObj.status === "Active"
-							? "Deactivate Account?"
-							: "Activate Account"
+							? "CONFIRM DEACTIVATE"
+							: "CONFIRM ACTIVATE"
 					}
 					visible={this.state.modal}
 					closeIcon={
@@ -863,6 +892,9 @@ const connectDispatchToProps = (dispatch) => {
 		},
 		rowSelectedData: (selectedRowData) => {
 			dispatch(fetchUsersIdUpdate(selectedRowData));
+		},
+		tabSelectedData:(cryptoTab)=>{
+			dispatch(selectedTab(cryptoTab))
 		},
 		clearFormValues: () => {
 			dispatch(clearValues());

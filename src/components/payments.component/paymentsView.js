@@ -107,7 +107,7 @@ class PaymentsView extends Component {
                         <table className='pay-grid view'>
                             <thead>
                                 <tr>
-                                <th className="doc-def">Name</th>
+                                <th className="doc-def">Favorite Name</th>
                                     <th className="doc-def" style={{width: "300px"}}>Bank Name</th>
                                     <th>Bank Account Number/IBAN</th>
                                     <th>State</th>
@@ -122,17 +122,17 @@ class PaymentsView extends Component {
                                           <td className="doc-def">{item?.beneficiaryAccountName}</td>
                                                 <td className="doc-def">
                                                     <div className='d-flex align-center justify-content'>
-                                                   <span>
-                                                   <Tooltip title= {item.bankname}>
-                                          <span className='pay-docs'>{item.bankname}</span>
-                                        </Tooltip>
+                                                   <div className='bill-payment'>
+                                                    <Tooltip title= {item.bankname}>
+                                                        <div className='pay-docs'>{item.bankname}</div>
+                                                    </Tooltip>
                                                             <Text
                                                                 size="small"
                                                                 className="file-label doc-def ml-8"
                                                             >
                                                                 {this.addressTypeNames(item.addressType)}
                                                             </Text>
-                                              </span>
+                                                            </div>
                                                             <Popover
                                                                     className='more-popover'
                                                                     content={this.popOverContent}
@@ -176,7 +176,7 @@ class PaymentsView extends Component {
                                 })}
 
                                 {loading && <tr>
-                                    <td colSpan='4' className='text-center p-16'><Spin size='default' /></td></tr>}
+                                    <td colSpan='6' className='text-center p-16'><Spin size='default' /></td></tr>}
                             </tbody>
 
                             <tfoot>

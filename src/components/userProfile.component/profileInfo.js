@@ -101,7 +101,12 @@ class ProfileInfo extends Component {
       return "Something went wrong please try again!";
     }
   };
+
   fileDownload = async () => {
+    if (!this.props?.userConfig?.isKYC) {
+      this.setState({ ...this.state, Loader: false,errorMessage:"Please complete KYC/KYB"});
+     
+  }else{
     this.setState({ ...this.state, fileLoader: true });
     let res = await apiCalls.downloadKyc(this.props.userConfig?.id);
     if (res.ok) {
@@ -114,6 +119,7 @@ class ProfileInfo extends Component {
       });
       this.setState({ ...this.state, fileLoader: false });
     }
+  }
   }
 
   render() {

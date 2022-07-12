@@ -17,6 +17,7 @@ import { validateContent } from "../../utils/custom.validator";
 import Translate from 'react-translate-component';
 import Mome from 'moment'
 import { error, success, warning } from '../../utils/messages';
+import { LoadingOutlined } from "@ant-design/icons";
 const { Panel } = Collapse;
 const { Text, Title } = Typography;
 const { Dragger } = Upload;
@@ -49,7 +50,9 @@ class RequestedDocs extends Component {
         PreviewFilePath: null,
         caseData: {},
         commonModel: {},
-        assignedTo: []
+        assignedTo: [],
+        btnLoading:false,
+        errorWarning: null,
     }
     componentDidMount() {
         this.getCaseData(QueryString.parse(this.props.location.search).id);
@@ -111,7 +114,7 @@ class RequestedDocs extends Component {
             "documentDetailId": doc.id,
             "status": "Approved"
         });
-        this.setState({ ...this.state, isMessageError: null });
+        this.setState({ ...this.state, isMessageError: null,errorWarning:null });
         if (response.ok) {
             success('Document has been approved');
             this.loadDocReplies(doc.id);
@@ -151,18 +154,19 @@ class RequestedDocs extends Component {
         item.repliedBy = `${(this.props.userProfileInfo?.isBusiness==true)?this.props.userProfileInfo?.businessName:this.props.userProfileInfo?.firstName}`;
         item.repliedDate = Mome().format("YYYY-MM-DDTHH:mm:ss");
         item.info = JSON.stringify(this.props.trackAuditLogData);
-        this.setState({ ...this.state, isSubmitting: true });
+        this.setState({ ...this.state, btnLoading: true });
         const response = await saveDocReply(item);
         if (response.ok) {
             success('Document has been submitted');
             this.updateDocRepliesStatus(doc, "Submitted");
             this.loadDocReplies(doc.id)
+            this.setState({errorWarning:null })
         } else {
             warning(response.data);
         }
         let objs = [...this.state.docReplyObjs];
         objs = objs.filter(obj => obj.docunetDetailId !== doc.id);
-        this.setState({ ...this.state, docReplyObjs: objs, isSubmitting: false, isMessageError: null });
+        this.setState({ ...this.state, docReplyObjs: objs, btnLoading: false, isMessageError: null});
         document.getElementsByClassName(`${doc.id.replace(/-/g, "")}`).value = "";
     }
     deleteDocument = async (doc, idx, isAdd) => {
@@ -204,8 +208,14 @@ class RequestedDocs extends Component {
             "isCustomer": true
         }
     }
+ antIcon = (
+		<LoadingOutlined
+			style={{ fontSize: 18, color: "#fff", marginRight: "16px" }}
+			spin
+		/>
+	  );
     handleUpload = ({ file }, doc) => {
-        this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
+    this.setState({ ...this.state, uploadLoader: true, isSubmitting: true, errorMessage: null })
         if (file.status === "done" && this.state.isValidFile) {
             let replyObjs = [...this.state.docReplyObjs];
             let item = this.isDocExist(replyObjs, doc.id);
@@ -234,21 +244,21 @@ class RequestedDocs extends Component {
             this.setState({ ...this.state, docReplyObjs: replyObjs, uploadLoader: false, isSubmitting: false });
         }
         else if (file.status === 'error') {
-            error(file.response);
-            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false })
+            // error(file.response);
+            this.setState({ ...this.state, uploadLoader: false, isSubmitting: false,errorMessage:file.response,errorWarning:null })
         }
         else if (!this.state.isValidFile) {
             this.setState({ ...this.state, uploadLoader: false, isSubmitting: false });
         }
     }
     beforeUpload = (file) => {
-        let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
+  this.setState({ ...this.state, errorWarning:null })
+   let fileType = { "image/png": true, 'image/jpg': true, 'image/jpeg': true, 'image/PNG': true, 'image/JPG': true, 'image/JPEG': true, 'application/pdf': true, 'application/PDF': true }
         if (fileType[file.type]) {
-            this.setState({ ...this.state, isValidFile: true, })
+            this.setState({ ...this.state, isValidFile: true,errorWarning:null })
             return true
         } else {
-            error('File is not allowed. You can upload jpg, png, jpeg and PDF  files');
-            this.setState({ ...this.state, isValidFile: false, })
+       this.setState({ ...this.state, isValidFile: false,errorWarning:"File is not allowed. You can upload jpg, png, jpeg and PDF  files"})
             return Upload.LIST_IGNORE;
         }
     }
@@ -323,7 +333,7 @@ class RequestedDocs extends Component {
                 <div className="mb-24 text-white-50 fs-24"><Link className="icon md leftarrow mr-16 c-pointer" to="/userprofile?key=6" />{caseData?.documents?.customerCaseTitle}</div>
                 <div className='case-stripe'>
                     <Row gutter={[16, 16]}>
-                        <Col xs={24} sm={12} md={8} lg={8} xl={5} xxl={6}>
+                        <Col xs={24} sm={12} md={8} lg={8} xl={8} xxl={8}>
                             <Text className='case-lbl'>Case Number</Text>
                             <div className='case-val'>{caseData.caseNumber}</div>
                         </Col>
@@ -331,7 +341,7 @@ class RequestedDocs extends Component {
                             <Text className='case-lbl'>Case Title</Text>
                             <div className='case-val'>{caseData.caseTitle}</div>
                         </Col>
-                        <Col xs={24} md={8} lg={8} xl={5} xxl={6}>
+                        <Col xs={24} md={8} lg={8} xl={8} xxl={8}>
                             <Text className='case-lbl'>Case State</Text>
                             <div className='case-val'>{caseData.state}</div>
                         </Col>
@@ -401,14 +411,14 @@ class RequestedDocs extends Component {
 
                             this.setState({
                                 ...this.state,
-                                collapse: !this.state.collapse,
+                                collapse: !this.state.collapse, errorMessage:null,errorWarning:null
                             });
                             if (key) {
                                 this.loadDocReplies(doc.id);
                             }
                         }}
                             collapsible
-                            accordion className="accordian mb-24"
+                            accordion className="accordian mb-24 mb-togglespace "
                             defaultActiveKey={['1']} expandIcon={() => <span className="icon md downangle" />}>
                             <Panel header={doc.documentName} key={idx + 1} extra={doc.state ? (<span className={`${doc.state ? doc.state.toLowerCase() + " staus-lbl" : ""}`}>{doc.state}</span>) : ""}>
                                 {this.state.documentReplies[doc.id]?.loading && <div className="text-center"><Spin size="large" /></div>}
@@ -445,6 +455,18 @@ class RequestedDocs extends Component {
                                         closable={false}
                                         style={{ marginBottom: 0, marginTop: '16px' }}
                                     />}
+                                    	{this.state.errorWarning !== undefined && this.state.errorWarning !== null && (
+											<div style={{ width: '100%' }}>
+												<Alert
+													className="w-100 mb-16"
+													type="warning"
+													description={this.state.errorWarning}
+													showIcon
+                                                    closable={false}
+                                                    style={{ marginBottom: 0, marginTop: '16px' }}
+												/>
+											</div>
+										)}
                                     <Dragger accept=".pdf,.jpg,.jpeg,.png, .PDF, .JPG, .JPEG, .PNG" className="upload mt-16" multiple={false} action={process.env.REACT_APP_UPLOAD_API + "UploadFile"} showUploadList={false} beforeUpload={(props) => { this.beforeUpload(props) }} onChange={(props) => { this.handleUpload(props, doc) }}>
                                         <p className="ant-upload-drag-icon">
                                             <span className="icon xxxl doc-upload" />
@@ -467,7 +489,9 @@ class RequestedDocs extends Component {
                                         </div>)}
                                     </div>
                                     <div className="text-center my-36">
-                                        <Button disabled={this.state.isSubmitting} className="pop-btn px-36" onClick={() => this.docReject(doc)}>Submit</Button>
+                                        <Button className="pop-btn px-36" onClick={() => this.docReject(doc)} loading={this.state.btnLoading}>
+
+                                        Submit</Button>
                                     </div>
                                 </>}
                             </Panel>

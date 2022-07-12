@@ -19,6 +19,7 @@ class BuySummary extends Component {
       error: { valid: true, error: null },
       isTermsAgreed: false,
       buyTerms: false,
+      agreeRed:true,
     };
   }
 
@@ -39,7 +40,7 @@ class BuySummary extends Component {
     });
   };
   pay = async () => {
-    this.setState({ ...this.state, error: { valid: true, message: null } });
+    this.setState({ ...this.state, error: { valid: true, message: null,agreeRed:true, } });
     if (this.state.isTermsAgreed) {
       const {
         id: toWalletId,
@@ -108,7 +109,7 @@ class BuySummary extends Component {
 
         this.setState({
           ...this.state,
-          error: { valid: false, message: this.isErrorDispaly(response) },
+          error: { valid: false, message: this.isErrorDispaly(response),agreeRed:true, }
         });
       }
       this.setState({ isLoading: false });
@@ -118,6 +119,7 @@ class BuySummary extends Component {
         error: {
           valid: false,
           message: apicalls.convertLocalLang("agree_terms"),
+          agreeRed:false,
         },
       });
     }
@@ -187,7 +189,7 @@ class BuySummary extends Component {
         onErrorClose={() =>
           this.setState({
             ...this.state,
-            error: { valid: true, message: null },
+            error: { valid: true, message: null,agreeRed:true },
           })
         }
       />

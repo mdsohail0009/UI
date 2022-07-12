@@ -3,6 +3,7 @@ import { toDataSourceRequestString, translateDataSourceResultGroups } from '@pro
 import { store } from '../../store'
 import moment from 'moment';
 import { ExcelExport } from '@progress/kendo-react-excel-export'
+// import { excellExportSubject } from './subscribir';
 const filterOperators = {
     'text': [
         { text: 'grid.filterContainsOperator', operator: 'contains' },
@@ -39,14 +40,24 @@ const filterOperators = {
 export function withState(WrappedGrid) {
     return class StatefullGrid extends React.Component {
         constructor(props) {
-            
             super(props);
             this.state = { dataState: { skip: 0, take: 10 }, additionalParams: null, data: [], isLoading: false };
             this.excelRef = React.createRef();
+            // this.exportSubscriber = excellExportSubject.subscribe(() => {
+            // });
         }
+        numberWithCommas(x) {
+            return x;
+        }
+        // numberWithCommas(x) {
+        //     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+        // }
         refreshGrid() {
             this.fetchData(this.state.dataState);
         }
+    //     componentWillUnmount() {
+    //         this.exportSubscriber.unsubscribe();
+    //   }
         loadingPanel = (
             <div className="k-loading-mask">
                 <span className="k-loading-text">Loading</span>
@@ -63,14 +74,35 @@ export function withState(WrappedGrid) {
                         className="k-button k-button-md k-rounded-md k-button-solid  mt-16 mb-16 mr-16 search-btn primary-btn excel-btn"
                         onClick={() => {
                             if (this.excelRef) {
-                                this.excelRef.current.save();
+                                if (this.excelRef?.current.save) {
+                                    let workbook = this.excelRef.current.workbookOptions(); // get the workbook.
+                                    workbook.sheets[0].rows.map((item, index) => {
+                                        if (item.type === "data") {
+                                            for (const i in this.props.columns) {
+                                                    const idx = this.props.columns.length === item.cells.length ? i : (i - 1);
+                                                    if (this.props.columns[i].filterType === "date") {
+                                                    if (item.cells[idx].value)
+                                                    item.cells[idx].value =moment( item.cells[idx].value).format("DD/MM/YYYY hh:mm a")
+                                                }
+                                                if (this.props.columns[i].filterType === "numeric") {
+                                                    if (item.cells[idx].value)
+                                                        item.cells[idx].value = this.numberWithCommas(item.cells[idx].value);
+                                                        item.cells[idx].textAlign="right";
+                                                    }
+                                            }
+                                        }
+                                    });
+                                    this.excelRef.current.save(workbook);
+                               }
+                    // this.excelRef.save(workbook);
                             }
+                            
                         }}
                     >
                         Export Excel
                     </button>
                     </div>}
-                    {this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName = {this.props?.excelFileName}>
+                    { this.props.showExcelExport ? <ExcelExport data={this.state.data} ref={this.excelRef} fileName = {this.props?.excelFileName}>
 
                         <WrappedGrid
                             sortable={true}

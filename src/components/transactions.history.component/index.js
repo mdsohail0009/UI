@@ -141,7 +141,7 @@ componentDidMount() {
                 </Form.Item>
               </Col>
               <Col xs={24} sm={24} md={7} lg={7} xl={7}  className="px-8 transaction_resp">
-                <Form.Item name="docType" className="input-label mb-0" label="Doc Type">
+                <Form.Item name="docType" className="input-label mb-0" label="Transaction">
                   <Select
                     defaultValue="All"
                     className="cust-input w-100 bgwhite"

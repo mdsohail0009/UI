@@ -19,7 +19,7 @@ import NumberFormat from "react-number-format";
 import {
   withdrawSave,
   getCountryStateLu,
-  getStateLookup, getAccountHolder, getAccountWallet, getAccountBankDetails
+  getStateLookup
 } from "../../api/apiServer";
 import success from "../../assets/images/success.png";
 import { fetchDashboardcalls } from "../../reducers/dashboardReducer";
@@ -57,7 +57,6 @@ const LinkValue = (props) => {
 };
 const { Option } = Select;
 const FaitWithdrawal = ({
-  member,
   selectedWalletCode,
   buyInfo,
   userConfig,
@@ -81,13 +80,7 @@ const FaitWithdrawal = ({
   const useDivRef = React.useRef(null);
   const [addressShow, setAddressShow] = useState(true);
   const [amountLoading, setAmountLoading] = useState(false);
-  const [accountHolder, setAccountHolder] = useState([])
-  const [accountCurrency, setAccountCurrency] = useState([])
-  const [accountHolderDetails, setAccountHolderDetails] = useState({})
-  const [accountDetails, setAccountDetails] = useState({})
-  const [bankDetails, setBankDetails] = useState([])
-  const [details, setDetails] = useState([])
-  const [selectRequired, setSelectRequired] = useState(null)
+
   const [addressObj, setAddressObj] = useState({
     bankName: null,
     accountNumber: null,
@@ -99,7 +92,6 @@ const FaitWithdrawal = ({
     beneficiaryAccountAddress: null
   });
   const [addressInfo, setAddressInfo] = useState(null);
-  const [agreeRed, setAgreeRed] = useState(true)
   useEffect(() => {
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       handleWalletSelection(selectedWalletCode);
@@ -120,8 +112,6 @@ const FaitWithdrawal = ({
     getCountryLu();
     setLoading(false);
     fiatWithdrawTrack();
-    getAccountdetails()
-
   }, []);
 
   const fiatWithdrawTrack = () => {
@@ -174,8 +164,6 @@ const FaitWithdrawal = ({
 
   };
 
-
-
   const getAddressLu = async (obj, e) => {
     let selectedFiat = obj.currencyCode;
     let recAddress = await favouriteFiatAddress(
@@ -207,7 +195,26 @@ const FaitWithdrawal = ({
       }
     }
   };
+  const handleAddressChange = async (e) => {
+    setAmountLoading(true)
+    let val = addressLu.filter((item) => {
+      if (item.name == e) {
+        return item;
+      }
+    });
+    form.setFieldsValue({ totalValue: "" });
+    form.setFieldsValue({ isAccept: false });
+    let recAddressDetails = await detailsAddress(val[0].id);
+    if (recAddressDetails.ok) {
+      bindEditableData(recAddressDetails.data);
+      setAmountLoading(false)
 
+    }
+  };
+  const bindEditableData = (obj) => {
+    setAddressInfo({ ...obj });
+    form.setFieldsValue(obj);
+  };
 
   const getCountryLu = async () => {
     let objj = sendReceive.withdrawFiatObj;
@@ -238,84 +245,77 @@ const FaitWithdrawal = ({
   };
   const savewithdrawal = async (values) => {
 
-    setAgreeRed(true);
     setBtnDisabled(true)
     dispatch(setWFTotalValue(values.totalValue));
-    if (!values.isAccept) {
+    if(!values.isAccept){
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
-      setErrorMsg(apicalls.convertLocalLang("agree_terms"))
-      setAgreeRed(false);
-    } else {
-      setAgreeRed(true);
-      if (
-        parseFloat(
-          typeof values.totalValue === "string"
-            ? values.totalValue.replace(/,/g, "")
-            : values.totalValue
-        ) > parseFloat(selectedWallet?.avilable)
-      ) {
-        useDivRef.current.scrollIntoView();
-        setBtnDisabled(false)
-        setLoading(false);
-        return setErrorMsg(apicalls.convertLocalLang("insufficient_balance"));
-      }
-      if (
-        parseFloat(
-          typeof values.totalValue === "string"
-            ? values.totalValue.replace(/,/g, "")
-            : values.totalValue
-        ) <= 0
-      ) {
-        useDivRef.current.scrollIntoView();
-        setBtnDisabled(false)
-        setLoading(false);
-        return setErrorMsg(apicalls.convertLocalLang("amount_greater_zero"));
-      }
-
-      let _totalamount = values.totalValue.toString();
-      if (
-        (_totalamount.indexOf(".") > -1 &&
-          _totalamount.split(".")[0].length >= 9) ||
-        (_totalamount.indexOf(".") < 0 && _totalamount.length >= 9)
-      ) {
-        useDivRef.current.scrollIntoView();
-        setBtnDisabled(false)
-        setLoading(false);
-        return setErrorMsg(apicalls.convertLocalLang("exceeded_amount"));
-      }
+    setErrorMsg(apicalls.convertLocalLang("agree_termsofservice"))
+    }else{
+    if (
+      parseFloat(
+        typeof values.totalValue === "string"
+          ? values.totalValue.replace(/,/g, "")
+          : values.totalValue
+      ) > parseFloat(selectedWallet?.avilable)
+    ) {
+      useDivRef.current.scrollIntoView();
+      setBtnDisabled(false)
       setLoading(false);
-      setErrorMsg(null);
-      values["membershipId"] = userConfig.id;
-      values["memberWalletId"] = accountDetails[0].id;
-      values["beneficiaryAccountName"] = userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName;
-      values["favouriteName"] =
-        values.favouriteName || addressDetails.favouriteName || bankDetails[0].favouriteName;
-      values["comission"] = "0.0";
-      values["bankName"] = bankDetails[0].bankName;
-      values["accountNumber"] = bankDetails[0].accountNumber;
-      values["country"] = bankDetails[0].country;
-      values["state"] = bankDetails[0].state;
-      values["zipcode"] = bankDetails[0].zipcode;
-      values["routingNumber"] = bankDetails[0].swiftRouteBICNumber || bankDetails[0].routingNumber;
-      values["WalletCode"] = accountDetails[0].currencyCode
-      const response = await handleFiatConfirm(values);
-      if (response.ok) {
-        setBtnDisabled(false);
-        setSaveObj(response.data);
-        dispatch(setWithdrawfiat(response.data));
-        changeStep("withdrawfaitsummary");
-        form.resetFields();
-        setLoading(false);
-      } else {
-        setBtnDisabled(false);
-        setLoading(false);
-        setErrorMsg(isErrorDispaly(response));
-      }
-      setLoading(false);
+      return setErrorMsg(apicalls.convertLocalLang("insufficient_balance"));
     }
+    if (
+      parseFloat(
+        typeof values.totalValue === "string"
+          ? values.totalValue.replace(/,/g, "")
+          : values.totalValue
+      ) <= 0
+    ) {
+      useDivRef.current.scrollIntoView();
+      setBtnDisabled(false)
+      setLoading(false);
+       return setErrorMsg(apicalls.convertLocalLang("amount_greater_zero"));   
+    }
+
+    let _totalamount = values.totalValue.toString();
+    if (
+      (_totalamount.indexOf(".") > -1 &&
+        _totalamount.split(".")[0].length >= 9) ||
+      (_totalamount.indexOf(".") < 0 && _totalamount.length >= 9)
+    ) {
+      useDivRef.current.scrollIntoView();
+      setBtnDisabled(false)
+      setLoading(false);
+      return setErrorMsg(apicalls.convertLocalLang("exceeded_amount"));
+    }
+    setLoading(false);
+    setErrorMsg(null);
+    values["membershipId"] = userConfig.id;
+    values["memberWalletId"] = selectedWallet.id;
+    values["beneficiaryAccountName"] = userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName;
+    values["favouriteName"] =
+      values.favouriteName || addressDetails.favouriteName || addressInfo.favouriteName;
+    values["comission"] = "0.0";
+    values["bankName"] = addressInfo.bankName;
+    values["accountNumber"] = addressInfo.accountNumber;
+    values["routingNumber"] = addressInfo.routingNumber;
+    const response = await handleFiatConfirm(values);
+    if (response.ok) {
+      setBtnDisabled(false);
+      setSaveObj(response.data);
+      dispatch(setWithdrawfiat(response.data));
+      changeStep("withdrawfaitsummary");
+      form.resetFields();
+      setLoading(false);
+    } else {
+      setBtnDisabled(false);
+      setLoading(false);
+      setErrorMsg(isErrorDispaly(response));
+    }
+    setLoading(false);
+  }
   };
-  const isErrorDispaly = (objValue) => {
+ const isErrorDispaly = (objValue) => {
     if (objValue.data && typeof objValue.data === "string") {
       return objValue.data;
     } else if (
@@ -357,16 +357,13 @@ const FaitWithdrawal = ({
       setSaveObj(values);
       form.setFieldsValue({ ...values });
     } else if (type === "max") {
-      // values.totalValue = avilableamt ? avilableamt.toString() : 0;
-      values.totalValue = accountDetails[0] ? accountDetails[0].avilable.toString() : 0;
+      values.totalValue = avilableamt ? avilableamt.toString() : 0;
       setSaveObj(values);
       form.setFieldsValue({ ...values });
     }
   };
 
   const validateAddressType = (_, value) => {
-
-    setSelectRequired(false)
     if (value) {
       if (value == '.') {
         return Promise.reject(
@@ -380,85 +377,16 @@ const FaitWithdrawal = ({
       return Promise.reject(apicalls.convertLocalLang('is_required'));
     }
   };
-  const getAccountdetails = async () => {
-    let response = await getAccountHolder(userConfig.id, "Fiat")
-    setAccountHolder(response.data)
-  }
-  const handleAccountChange = (e) => {
-    setErrorMsg(null);
-    setAgreeRed(true);
-    form.setFieldsValue({ currencyCode: null, favouriteName: null })
-    setDetails(null);
-    setAccountDetails({});
-    setAddressShow(null);
-    let data = accountHolder.find((item) => item.name == e)
-    setAccountHolderDetails(data)
-    AccountWallet(userConfig.id)
-    if (e !== data.name) {
-      form.setFieldsValue({ currencyCode: " " })
-      setAccountDetails(null)
-    }
-  }
-  const AccountWallet = async (AccountId) => {
-    let response = await getAccountWallet(AccountId)
-    if (response.ok) {
-      setAccountCurrency(response.data)
-    }
-
-  }
-  const handleAccountWallet = (e) => {
-    setErrorMsg(null);
-    setAgreeRed(true);
-    form.setFieldsValue({ favouriteName: null, totalValue: null })
-    setAccountDetails({});
-    setDetails(null);
-    let data = accountCurrency.filter((item) => item.currencyCode == e)
-    setAccountDetails(data)
-    AccountBankDetails(accountHolderDetails.id, data[0].currencyCode)
-  }
-
-  const AccountBankDetails = async (payeeId, currency) => {
-    let response = await getAccountBankDetails(payeeId, currency)
-    if (response.ok) {
-      if (response.data.length > 1) {
-        if (response.data.length == 0) {
-          setAddressShow(false);
-        }
-        else {
-          setAddressShow(null);
-          setBankDetails(response.data)
-        }
-      } else {
-        setBankDetails(response.data)
-        setDetails(response.data)
-        setAddressShow(null);
-      }
-
-
-    }
-    if (response.data.length == 0) {
-      setAddressShow(false);
-    }
-  }
-  const handleDetails = (e) => {
-
-    setSelectRequired(true)
-    let data = bankDetails.filter((item) => item.bankName == e)
-    setDetails(data)
-    form.setFieldsValue({ totalValue: "" });
-  }
 
   const renderModalContent = () => {
     const _types = {
       step1: (
         <>
-          <div className="suisfiat-height auto-scroll" style={{ marginTop: "10px" }}>
+          <div className="suisfiat-height auto-scroll">
             <div ref={useDivRef}></div>
-
             {errorMsg !== null && (
               <Alert
                 className="mb-12"
-                style={{ marginTop: "10px" }}
                 description={errorMsg}
                 onClose={() => setErrorMsg(null)}
                 showIcon
@@ -481,216 +409,239 @@ const FaitWithdrawal = ({
               </div>
               <Form.Item
                 className="custom-forminput custom-label mb-24"
-                name="name"
-                label="Account Holder"
-              >
-                <Select
-                  className="cust-input mb-0 custom-search"
-                  dropdownClassName="select-drpdwn"
-                  onChange={(e) => handleAccountChange(e)}
-                  placeholder="Select account holder"
-                >
-                  {accountHolder?.map((item, idx) => (
-                    <Option key={idx} value={item.name}>
-                      {item.name}
-                    </Option>
-                  ))}
-                </Select>
-              </Form.Item>
-              <Form.Item
-                className="custom-forminput custom-label mb-24"
-                name="currencyCode"
+                name="walletCode"
                 label={<Translate content="currency" component={Form.label} />}
               >
-                <Select
-                  className="cust-input mb-0 custom-search"
-                  dropdownClassName="select-drpdwn"
-                  onChange={(e) => handleAccountWallet(e)}
-                  placeholder="Select currency"
-                >
-                  {accountCurrency?.map((item, idx) => (
-                    <Option key={idx} value={item.currencyCode}>
-                      {item.currencyCode} Balance:<NumberFormat defaultValue={item.avilable} displayType="text" />
-                    </Option>
-                  ))}
-                </Select>
+                <WalletList
+                  valueFeild={"currencyCode"}
+                  selectedvalue={saveObj?.walletCode}
+                  placeholder={apicalls.convertLocalLang("SelectCurrency")}
+                  onWalletSelect={(e) => handleWalletSelection(e, true)}
+                />
               </Form.Item>
 
-              {addressShow == false ?
+              {addressShow === false &&
                 <Text className="fs-20 text-white-30 d-block" style={{ textAlign: 'center' }}><Translate content="noaddress_msg" /></Text>
-                : <>
+              }
 
-                  {addressShow == null && bankDetails.length > 1 &&
-                    <div style={{ position: "relative" }}>
+              {addressLu?.length > 1 &&
+                <div style={{ position: "relative" }}>
 
-                      <Form.Item
-                        className="custom-forminput custom-label mb-24"
-                        name="favouriteName"
-                        label={
+                  <Form.Item
+                    className="custom-forminput custom-label mb-24"
+                    name="favouriteName"
+                    label={
+                      <Translate
+                        content="address_book"
+                        component={Form.label}
+                      />
+                    }
+                  >
+                    <Select
+                      dropdownClassName="select-drpdwn"
+                      className="cust-input"
+                      style={{ width: "100%" }}
+                      bordered={false}
+                      showArrow={true}
+                      onChange={(e) => handleAddressChange(e)}
+                      placeholder={
+                        <Translate
+                          content="SelectAddress"
+                          component={Form.label}
+                        />
+                      }
+                    >
+                      {addressLu?.map((item, idx) => (
+                        <Option key={idx} value={item.name}>
+                          {item.name}
+                        </Option>
+                      ))}
+                    </Select>
+                  </Form.Item>
+
+                </div>}
+                {amountLoading && <Loader />}
+
+              {addressInfo &&
+                <div className="fiatdep-info">
+
+                  <Form.Item
+                    className="custom-forminput custom-label  mb-24 min-max-btn"
+                    name="totalValue"
+                    required
+                    rules={[
+                      {
+                        validator: validateAddressType
+                      }
+                    ]}
+                    label={
+                      <>
+                        <Translate
+                          content="amount" component={Form.label} />
+                        <div className="minmax">
                           <Translate
-                            content="address_book"
-                            component={Form.label}
+                            type="text"
+                            size="small"
+                            className="min-btn"
+                            content="min"
+                            component={Button}
+                            onClick={() => clickMinamnt("min")}
                           />
-                        }
-                      >
-                        <Select
-                          className="cust-input mb-0 custom-search"
-                          dropdownClassName="select-drpdwn"
-                          onChange={(e) => handleDetails(e)}
-                          placeholder="Select address book"
-                        >
-                          {bankDetails?.map((item, idx) => (
-                            <Option key={idx} value={item.bankName}>
-                              {item.bankName}
-                            </Option>
-                          ))}
-                        </Select>
-                      </Form.Item>
-
-                    </div>}
-                  {amountLoading && <Loader />}
-
-                  {details?.length > 0 &&
-                    <div className="fiatdep-info">
-
-                      <Form.Item
-                        className="custom-forminput custom-label  mb-24 min-max-btn"
-                        name="totalValue"
-                        required
-                        rules={[
-                          {
-                            validator: validateAddressType
-                          }
-                        ]}
-
-                        label={
-                          <>
-                            <Translate className="input-label mb-0"
-                              content="amount" component={Form.label} />
-                            <div className="minmax">
-                              <Translate
-                                type="text"
-                                size="small"
-                                className="min-btn"
-                                content="min"
-                                component={Button}
-                                onClick={() => clickMinamnt("min")}
-                              />
-                              <Translate
-                                type="text"
-                                size="small"
-                                className="min-btn"
-                                content="all"
-                                component={Button}
-                                onClick={() => clickMinamnt("max")}
-                              />
-                            </div>
-                          </>
-                        }
-                      >
-
-                        <NumberFormat
-                          className="cust-input mb-0"
-                          customInput={Input}
-                          thousandSeparator={true}
-                          prefix={""}
-                          placeholder="0.00"
-                          decimalScale={2}
-                          allowNegative={false}
-                          maxlength={13}
-                          onValueChange={({ value }) => {
-                            addressObj.Amount = value;
-                            form.setFieldsValue({ ...addressObj })
-                          }}
-                          value={addressObj.Amount} />
-                      </Form.Item>
-
-                      <Translate
-                        className="fw-200 text-white-50 fs-14"
-                        content="Bank_name"
-                        component={Text}
-                      />
-                      <Translate
-                        className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                        content="SIGNU"
-                        component={Text}
-                        with={{ value: details[0].bankName }}
-
-                      />
-                      <Translate
-                        className="fw-200 text-white-50 fs-14"
-                        content="Bank_account"
-                        component={Text}
-                      />
-                      <Translate
-                        copyable={{
-                          tooltips: [
-                            apicalls.convertLocalLang("copy"),
-                            apicalls.convertLocalLang("copied")
-                          ]
-                        }}
-                        className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                        content="SIGNU"
-                        component={Text}
-                        with={{ value: details[0].accountNumber }}
-                      />
-                      <Translate
-                        className="fw-200 text-white-50 fs-14"
-                        content="BIC_SWIFT_routing_number"
-                        component={Text}
-                      />
-                      <Translate
-                        copyable={{
-                          tooltips: [
-                            apicalls.convertLocalLang("copy"),
-                            apicalls.convertLocalLang("copied")
-                          ]
-                        }}
-                        className="fs-20 text-white-30 l-height-normal d-block mb-24"
-                        content="SIGNU"
-                        component={Text}
-                        with={{ value: details[0].swiftRouteBICNumber }}
-                      />
-
-
-                      <Form.Item
-                        className="custom-forminput mb-36 agree"
-                        name="isAccept"
-                        valuePropName="checked"
-                      // required
-                      // rules={[
-                      //   {
-                      //     validator: (_, value) =>
-                      //       value ? Promise.resolve() : Promise.reject(new Error(apicalls.convertLocalLang('agree_termsofservice')
-                      //       )),
-                      //   },
-                      // ]}
-                      >
-                        <span className="d-flex">
-                          <Checkbox className={`ant-custumcheck ${!agreeRed ? "check-red" : " "}`} />
-                          <span className="withdraw-check"></span>
                           <Translate
-                            content="agree_to_suissebase"
-                            with={{ link }}
-                            component={Paragraph}
-                            className="fs-14 text-white-30 ml-16 mb-0 mt-4"
-                            style={{ flex: 1 }}
+                            type="text"
+                            size="small"
+                            className="min-btn"
+                            content="all"
+                            component={Button}
+                            onClick={() => clickMinamnt("max")}
                           />
-                        </span>
-                      </Form.Item>
-                      <Form.Item className="mb-0 mt-16">
-                        <Button
-                          htmlType="submit"
-                          size="large"
-                          block
-                          className="pop-btn"
-                          loading={btnDisabled}
-                        >
-                          <Translate content="Confirm_fiat" style={{ marginLeft: "15px" }} component={Form.label} />
-                        </Button>
-                      </Form.Item>
-                    </div>}
-                </>}
+                        </div>
+                      </>
+                    }
+                  >
+
+                    <NumberFormat
+                      className="cust-input mb-0"
+                      customInput={Input}
+                      thousandSeparator={true}
+                      prefix={""}
+                      placeholder="0.00"
+                      decimalScale={2}
+                      allowNegative={false}
+                      maxlength={13}
+                      onValueChange={({ value }) => {
+                        addressObj.Amount = value;
+                        form.setFieldsValue({ ...addressObj })
+                      }}
+                      value={addressObj.Amount} />
+                  </Form.Item>
+
+                  <Translate
+                    className="fw-200 text-white-50 fs-14"
+                    content="Bank_name"
+                    component={Text}
+                  />
+                  <Translate
+                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                    content="SIGNU"
+                    component={Text}
+                    with={{ value: addressInfo.bankName }}
+
+                  />
+                  <Translate
+                    className="fw-200 text-white-50 fs-14"
+                    content="Bank_account_iban"
+                    component={Text}
+                  />
+                  <Translate
+                    copyable={{
+                      tooltips: [
+                        apicalls.convertLocalLang("copy"),
+                        apicalls.convertLocalLang("copied")
+                      ]
+                    }}
+                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                    content="SIGNU"
+                    component={Text}
+                    with={{ value: addressInfo.accountNumber }}
+                  />
+                  <Translate
+                    className="fw-200 text-white-50 fs-14"
+                    content="BIC_SWIFT_routing_number"
+                    component={Text}
+                  />
+                  <Translate
+                    copyable={{
+                      tooltips: [
+                        apicalls.convertLocalLang("copy"),
+                        apicalls.convertLocalLang("copied")
+                      ]
+                    }}
+                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                    content="SIGNU"
+                    component={Text}
+                    with={{ value: addressInfo.routingNumber }}
+                  />
+                  <Translate
+                    className="fw-200 text-white-50 fs-14"
+                    content="Bank_address1"
+                    component={Text}
+                  />
+                  <Translate
+                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                    content="SIGNU"
+                    component={Text}
+                    with={{ value: addressInfo.bankAddress }}
+                  />
+                  <Translate
+                    content="Beneficiary_Details"
+                    component={Paragraph}
+                    className="mb-16 fs-14 text-aqua fw-500 text-upper"
+                  />
+
+                  <Translate
+                    className="fw-200 text-white-50 fs-14"
+                    content={
+                      userConfig?.isBusiness&&addressInfo.addressType !== "3rdparty"
+                        ? "company_name"
+                        : "Recipient_full_name"
+                    }
+                    component={Text}
+                  />
+                  <Translate
+                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                    content="SIGNU"
+                    component={Text}
+                    with={{
+                      value: userConfig?.isBusiness&&addressInfo.addressType !== "3rdparty"
+                        ? userConfig?.businessName
+                        : addressInfo.beneficiaryAccountName
+                    }}
+                  />
+
+                  <Translate
+                    className="fw-200 text-white-50 fs-14"
+                    content="Recipient_address1"
+                    component={Text}
+                  />
+                  <Translate
+                    className="fs-20 text-white-30 l-height-normal d-block mb-24"
+                    content="SIGNU"
+                    component={Text}
+                    with={{ value: addressInfo.beneficiaryAccountAddress }}
+                  />
+
+                  <Form.Item
+                    className="custom-forminput mb-36 agree"
+                    name="isAccept"
+                    valuePropName="checked"
+                    required
+                  >
+                    <span className="d-flex">
+                      <Checkbox className="ant-custumcheck" />
+                      <span className="withdraw-check"></span>
+                      <Translate
+                        content="agree_to_suissebase"
+                        with={{ link }}
+                        component={Paragraph}
+                        className="fs-14 text-white-30 ml-16 mb-4"
+                        style={{ flex: 1 }}
+                      />
+                    </span>
+                  </Form.Item>
+                  <Form.Item className="mb-0 mt-16">
+                    <Button
+                      htmlType="submit"
+                      size="large"
+                      block
+                      className="pop-btn"
+                      loading={btnDisabled}
+                    >
+                      <Translate content="Confirm_fiat" style={{marginLeft:"15px"}} component={Form.label} />
+                    </Button>
+                  </Form.Item>
+                </div>}
+
             </Form>
           </div>
         </>
