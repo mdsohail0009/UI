@@ -31,8 +31,8 @@ export const saveSettingsData = (obj) => {
     return apiClient.post(ApiControllers.customers + "Settings", obj);
 }
 
-export const getAccountHolder=(accountId,type)=>{
-    return apiClient.get(ApiControllers.addressbook + `WithdrawPayeeLu/${accountId}/${type}`);
+export const getAccountHolder=(customerId,type)=>{
+    return apiClient.get(ApiControllers.addressbook + `WithdrawPayeeLu/${customerId}/${type}`);
 }
 
 export const getAccountWallet=(AccountId)=>{

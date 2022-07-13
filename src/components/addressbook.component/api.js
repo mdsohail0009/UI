@@ -18,10 +18,10 @@ const detailsAddress = (id) => {
 		ApiControllers.addressbook + `Withdraw/Favourite/${id}`
 	);
 };
-const favouriteNameCheck = (accountId, name, type, favaddrId) => {
+const favouriteNameCheck = (customerId, name, type, favaddrId) => {
 	return apiClient.get(
 		ApiControllers.addressbook +
-		`Favourite/${favaddrId}/${accountId}/${name}/${type}`
+		`Favourite/${favaddrId}/${customerId}/${name}/${type}`
 	);
 };
 const saveAddress = (obj) => {
@@ -65,19 +65,19 @@ const getInfoVal = (id, type) => {
 const downloadDeclForm=(addr_id)=>{
 	return apiClient.get(ApiControllers.addressbook+`DownloadDocument/${addr_id}`);
 }
-const getPayeeLu = (accountId,type,is1stParty) => {
+const getPayeeLu = (customerId,type,is1stParty) => {
     return apiClient.get(
-        ApiControllers.addressbook + `PayeeLu/${accountId}/${type}/${is1stParty}`
+        ApiControllers.addressbook + `PayeeLu/${customerId}/${type}/${is1stParty}`
     );
 };
 
 
 
-const getFavData = (payeeId,membershipId) => {
+const getFavData = (payeeId,customerId) => {
 
     return apiClient.get(
 
-        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${membershipId}`
+        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${customerId}`
 
     );
 };
