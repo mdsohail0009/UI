@@ -5,13 +5,16 @@ import { connect } from 'react-redux';
 import { userInfo, getmemeberInfo } from '../../reducers/configReduser';
 import { withRouter } from 'react-router-dom';
 import Loader from "../../Shared/loader";
+import eroor from '../../assets/images/pending.png';
+
 
 class LiveNessSumsub extends Component {
-    state = {loading:true,applicantId:null,applicantActionid:null}
+    state = {loading:true,applicantId:null,applicantActionid:null,liveError:false}
     componentDidMount() {
         this.launchWebSdk();  
     }
     launchWebSdk = async () => {
+        debugger
         apicalls.sumsublivenessacesstoken(this.props.userConfig.userId,"liveness_action",this.state.applicantActionid).then((res) => {
         let snsWebSdkInstance = snsWebSdk.init(
             res.data.token,
@@ -21,6 +24,9 @@ class LiveNessSumsub extends Component {
                 lang: "en",
                 email: this.props.userConfig.email,
                 phone: this.props.userConfig.phoneNo, // if available
+                onMessage: (type, payload) => {
+                    console.log('WebSDK onMessage', type, payload)
+                },
                 onError: (error) => {
                     console.log('WebSDK onError', error)
                 },
@@ -38,9 +44,14 @@ class LiveNessSumsub extends Component {
                 if(type === 'idCheck.onActionSubmitted'){
                     this.setState({...this.state, applicantActionid:payload.applicantActionId})
                 }
-                if(type === 'idCheck.onApplicantLoaded '){
+                if(type === 'idCheck.onApplicantLoaded'){
                     this.setState({...this.state, applicantId:payload.applicantId})
                 }  
+                if(type === 'idCheck.onError'){
+                    this.setState({...this.state, liveError:true})
+                }  
+            }).on('onError', (error) => {
+                console.log('onError', error)
             }).build()
             
         snsWebSdkInstance.launch('#sumsub-websdk-container')
@@ -49,10 +60,15 @@ class LiveNessSumsub extends Component {
     }
     
     render() {
+        const sumSubConfirms=<div className='sumSub-error text-white text-center'><img src={eroor} className="confirm-icon" alt={"error"} /><br/>
+        <span className='sumSub-review'>Face verification has not yet been completed,</span>
+        <p className='p-0' style={{wordBreak: 'break-all'}}>please contact our support.</p></div>
         return (
             <>
+            
             {this.state.loading && <Loader />}
-                <div id="sumsub-websdk-container"></div>
+            {!this.state.liveError &&<><div id="sumsub-websdk-container"></div></>}
+            {this.state.liveError &&<>{sumSubConfirms}</>}
             </>
         );
     }

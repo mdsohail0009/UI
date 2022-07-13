@@ -256,7 +256,9 @@ class PaymentDetails extends Component {
   };
 
   moreInfoPopover = async (id) => {
-    this.setState({ ...this.state, tooltipLoad: true });
+    setTimeout(() => {
+     this.setState({ ...this.state, tooltipLoad: true });
+    },200);
     let response = await getBankData(id);
     if (response.ok) {
       this.setState({
