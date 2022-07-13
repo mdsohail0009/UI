@@ -16,10 +16,10 @@ counterpart.registerTranslations('my', my);
 const { Footer: AntFooter } = Layout
 const { Text } = Typography;
 
-function Footer({ member }) {
+function Footer({ customer }) {
     const { status } = useThemeSwitcher();
     useEffect(() => {
-        counterpart.setLocale(member?.language ? member?.language : 'en');
+        counterpart.setLocale(customer?.language ? customer?.language : 'en');
     }, [])
     if (status == 'loading') {
         return <div>Loading styles...</div>;
@@ -48,6 +48,6 @@ function Footer({ member }) {
 
 }
 const connectStateToProps = ({ userConfig }) => {
-    return { member: userConfig.userProfileInfo }
+    return { customer: userConfig.userProfileInfo }
 }
 export default connect(connectStateToProps)(Footer)
