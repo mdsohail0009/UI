@@ -83,7 +83,7 @@ componentDidMount() {
       Type: "Admin",
       Action: "Transactions grid page view",
       Username: this.props.userConfig?.userName,
-      MemeberId: this.props.userConfig?.id,
+      customerId: this.props.userConfig?.id,
       Feature: "Transactions",
       Remarks: "Transactions grid page view",
       Duration: 1,

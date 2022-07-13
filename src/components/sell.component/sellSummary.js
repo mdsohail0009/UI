@@ -25,7 +25,7 @@ class SellSummary extends Component {
     }
     EventTrack = () => {
         apicalls.trackEvent({
-            "Type": 'User', "Action": 'Sell summary page view', "Username": this.props.customer?.userName, "MemeberId": this.props.customer?.id, "Feature": 'Sell', "Remarks": 'Sell Crypto coin summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto'
+            "Type": 'User', "Action": 'Sell summary page view', "Username": this.props.customer?.userName, "customerId": this.props.customer?.id, "Feature": 'Sell', "Remarks": 'Sell Crypto coin summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto'
         });
     }
     async fetchPreviewData() {

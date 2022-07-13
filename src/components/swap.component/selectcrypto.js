@@ -48,11 +48,11 @@ class SelectCrypto extends Component {
     swapTrack = () => {
         if (this.props.swapfrom) {
             apicalls.trackEvent({
-                "Type": 'User', "Action": 'From Swap page view', "Username": this.props.userProfile?.userName, "MemeberId": this.props.userProfile?.id, "Feature": 'Swap', "Remarks": 'From Swap coins', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap'
+                "Type": 'User', "Action": 'From Swap page view', "Username": this.props.userProfile?.userName, "customerId": this.props.userProfile?.id, "Feature": 'Swap', "Remarks": 'From Swap coins', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap'
             });
         } else {
             apicalls.trackEvent({
-                "Type": 'User', "Action": 'To Swap page view', "Username": this.props.userProfile?.userName, "MemeberId": this.props.userProfile?.id, "Feature": 'Swap', "Remarks": 'To Swap coins', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap'
+                "Type": 'User', "Action": 'To Swap page view', "Username": this.props.userProfile?.userName, "customerId": this.props.userProfile?.id, "Feature": 'Swap', "Remarks": 'To Swap coins', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap'
             });
         }
 

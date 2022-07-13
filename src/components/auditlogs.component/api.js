@@ -10,4 +10,4 @@ const getAuditLogInfo = (id) => {
     return apiClient.get(ApiControllers.master + `AuditlogInfo/${id}`);
 }
 
-export { userNameLuSearch, getFeatureLuSearch, getAuditLogInfo }
+export { userNameLuSearch, getFeatureLuSearch, getAuditLogInfo }    

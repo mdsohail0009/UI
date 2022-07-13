@@ -31,7 +31,7 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const settingsTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Settings page view', "Username": customer?.userName, "MemeberId": customer?.id, "Feature": 'Settings', "Remarks": 'Settings page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Settings' });
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Settings page view', "Username": customer?.userName, "customerId": customer?.id, "Feature": 'Settings', "Remarks": 'Settings page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Settings' });
     }
     const getSettingsLu = async () => {
         let res = await getSettingsLuData();

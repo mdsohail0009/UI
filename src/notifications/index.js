@@ -26,7 +26,7 @@ const Notifications = ({
       Type: "User",
       Action: "Notifications page view",
       Username: userProfileInfo?.userName,
-      MemeberId: userProfileInfo?.id,
+      customerId: userProfileInfo?.id,
       Feature: "Notifications",
       Remarks: "Notifications page view",
       Duration: 1,
