@@ -1650,8 +1650,8 @@ const connectDispatchToProps = (dispatch) => {
     updateSwapdataobj: (obj) => {
       dispatch(updateSwapdata(obj));
     },
-    clearSwapfullData: (member_id) => {
-      dispatch(clearSwapData(member_id));
+    clearSwapfullData: (customerid) => {
+      dispatch(clearSwapData(customerid));
     },
     getmemeberInfoa: (useremail) => {
       dispatch(getmemeberInfo(useremail));

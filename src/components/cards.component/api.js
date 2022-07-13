@@ -1,9 +1,9 @@
 import { apiClient } from "../../api"
 import { ApiControllers } from "../../api/config"
-const getCardStatus = (memid) => {
-    return apiClient.get(ApiControllers.customers + `Cards/${memid}`);
+const getCardStatus = (customerid) => {
+    return apiClient.get(ApiControllers.customers + `Cards/${customerid}`);
 }
-const applyCard = (memid) => {
-    return apiClient.put(ApiControllers.customers + `ApplyCards/${memid}`);
+const applyCard = (customerid) => {
+    return apiClient.put(ApiControllers.customers + `ApplyCards/${customerid}`);
 }
 export { getCardStatus, applyCard }

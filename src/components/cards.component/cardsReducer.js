@@ -6,10 +6,10 @@ const setStaus = (payload) => {
         payload
     }
 }
-const getStaus = (memid) => {
+const getStaus = (customerid) => {
     return async (dispatch) => {
         dispatch(setStaus({ loading: true, status: "", error: null }));
-        const respose = await getCardStatus(memid);
+        const respose = await getCardStatus(customerid);
         if (respose.ok) {
             dispatch(setStaus({ loading: false, status: respose.data }));
         } else {
