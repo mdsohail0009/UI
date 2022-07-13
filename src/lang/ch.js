@@ -529,14 +529,14 @@ export default {
 	agree_to_signup:'通过单击注册，我在此确认我同意 Suissebase 的 %(link)s 协议并且我已阅读隐私政策',
 	terms_Use: "使用条款",
 	"whitelist":"白名單",
-	menu_tranfor: "Tranfor",
+	menu_tranfor: "轉移",
 	tranfor_fromwlt:'From wallet',
 	tranfor_towlt:'To wallet',
 	tranfor_currencywlt:'Currency',
 	tranfor_Amount:'Amount',
 	transfor_btn_cnftransfor: 'Confirm Transfor',
 	return_to_transfor: "Back to Transfor",
-	referr: "My Referral",
+	referr: "我的推薦人",
 	transforsucessText1: "Your order has been placed successfully,",
 	case:"案例"
 };
