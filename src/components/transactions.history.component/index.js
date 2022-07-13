@@ -1,19 +1,13 @@
 import React, { Component } from "react";
 import {
 	Drawer,
-	Tabs,
-	Collapse,
 	Typography,
-	Tooltip,
-	Modal,
 	Button,
 	Row, Col, Select, Form
 } from "antd";
-import HistoryGridComponent from "./HistoryGridComponent";
 import { connect } from "react-redux";
 import Translate from "react-translate-component";
 import apiCalls from "../../api/apiCalls";
-import Info from "../shared/info";
 import List from "../grid.component";
 import {getTransactionSearch } from './api';
 const { Option } = Select;
@@ -170,11 +164,9 @@ componentDidMount() {
         </div>
         <List
          url={gridUrl} additionalParams={searchObj} ref={this.gridRef}
-         key={gridUrl}
          columns={this.gridColumns}
          showExcelExport ={true}
          excelFileName = {'Transactions'}
-         
         />
 				</Drawer>
 			   </>
