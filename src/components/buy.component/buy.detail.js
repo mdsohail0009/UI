@@ -168,8 +168,8 @@ const connectDispatchToProps = dispatch => {
         setStep: (stepcode) => {
             dispatch(changeStep(stepcode))
         },
-        preview: (wallet, coin, amount, isCrypto, memberId) => {
-            dispatch(fetchPreview({ coin, wallet, amount, isCrypto, memberId }))
+        preview: (wallet, coin, amount, isCrypto, customer_id) => {
+            dispatch(fetchPreview({ coin, wallet, amount, isCrypto, customer_id }))
         },
         setWallet: (wallet) => {
             dispatch(setWallet(wallet))
