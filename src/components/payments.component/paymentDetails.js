@@ -807,7 +807,9 @@ addressTypeNames = (type) =>{
         >
           <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />
         </Modal>
-        <Modal 
+        <Modal title="Delete Payment" 
+        destroyOnClose={true}
+        closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
           // closable={false}
           // closeIcon={false}
           visible={this.state.modal}
