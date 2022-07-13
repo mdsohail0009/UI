@@ -842,7 +842,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .swap-subtitlte{width:235px}
     .enter-val{margin-left: 4px;margin-right: 4px;}
     .enter-val input{font-size: 22px !important;}
-    .enter-val-container .text-yellow{font-size: 22px !important;margin-top: -20px;}
+    .enter-val-container .text-yellow{font-size: 22px !important;}
     .val-updown{top:6px !important}
     .enter-val-container{margin-right: 0px;justify-content: flex-start;margin-bottom: 16px;align-items: center;}
     .round-pills .ant-radio-button-wrapper{min-width: 85px !important; margin-bottom: 0 !important;}

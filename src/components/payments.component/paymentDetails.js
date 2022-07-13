@@ -805,9 +805,9 @@ addressTypeNames = (type) =>{
         >
           <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />
         </Modal>
-        <Modal
-          closable={false}
-          closeIcon={false}
+        <Modal 
+          // closable={false}
+          // closeIcon={false}
           visible={this.state.modal}
           className="payments-modal"
           footer={[
