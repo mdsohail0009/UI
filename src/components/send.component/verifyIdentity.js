@@ -40,7 +40,7 @@ class VerifyIDentity extends Component {
                             <Option value="philippines">Philippines(+63)</Option>
                             <Option value="india">India(+91)</Option>
                         </Select>
-                        <Input className="cust-input" placeholder="Your phone number" />
+                        <Input className="cust-input" placeholder="Your Phone Number" />
                         <Button size="large" block className="pop-btn" onClick={() => this.props.dispatch(setStep("step1"))}>Next</Button>
                     </form>
                 </div>

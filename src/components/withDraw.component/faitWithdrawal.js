@@ -488,7 +488,7 @@ const FaitWithdrawal = ({
                   className="cust-input mb-0 custom-search"
                   dropdownClassName="select-drpdwn"
                   onChange={(e) => handleAccountChange(e)}
-                  placeholder="Select account holder"
+                  placeholder="Select Account Holder"
                 >
                   {accountHolder?.map((item, idx) => (
                     <Option key={idx} value={item.name}>
@@ -506,7 +506,7 @@ const FaitWithdrawal = ({
                   className="cust-input mb-0 custom-search"
                   dropdownClassName="select-drpdwn"
                   onChange={(e) => handleAccountWallet(e)}
-                  placeholder="Select currency"
+                  placeholder="Select Currency"
                 >
                   {accountCurrency?.map((item, idx) => (
                     <Option key={idx} value={item.currencyCode}>
@@ -537,7 +537,7 @@ const FaitWithdrawal = ({
                           className="cust-input mb-0 custom-search"
                           dropdownClassName="select-drpdwn"
                           onChange={(e) => handleDetails(e)}
-                          placeholder="Select address book"
+                          placeholder="Select Address Book"
                         >
                           {bankDetails?.map((item, idx) => (
                             <Option key={idx} value={item.lable}>
@@ -803,7 +803,7 @@ const FaitWithdrawal = ({
         title="Withdraw"
         closeIcon={
           <Tooltip title="Close">
-            <span onClick={handleCancel} className="icon md close" />
+            <span onClick={handleCancel} className="icon md close c-pointer" />
           </Tooltip>
         }
         footer={[

@@ -1466,7 +1466,7 @@ const AddressCommonCom = (props) => {
                             <Input
                               className="cust-input"
                               maxLength="20"
-                              placeholder="Post code"
+                              placeholder="Post Code"
                             />
                           </Form.Item>
 
