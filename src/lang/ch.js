@@ -538,4 +538,5 @@ export default {
 	return_to_transfor: "Back to Transfor",
 	referr: "My Referral",
 	transforsucessText1: "Your order has been placed successfully,",
+	case:"案例"
 };

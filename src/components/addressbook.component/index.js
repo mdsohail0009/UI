@@ -50,7 +50,7 @@ class AddressBook extends Component {
 				status: [],
 				type: "",
 			},
-			memberId: this.props.userConfig.id,
+			customerId: this.props.userConfig.id,
 
 			gridUrlCrypto: process.env.REACT_APP_GRID_API + "Address/Crypto",
 			gridUrlFiat: process.env.REACT_APP_GRID_API + "Address/Fiat",
@@ -647,7 +647,7 @@ class AddressBook extends Component {
 		return stepcodes[config[this.props.addressBookReducer.stepcode]];
 	};
 	render() {
-		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, memberId, btnDisabled } =
+		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, customerId, btnDisabled } =
 			this.state;
 
 		return (
@@ -728,7 +728,7 @@ class AddressBook extends Component {
 							ref={this.gridFiatRef}
 							key={gridUrlFiat}
 							url={gridUrlFiat}
-							additionalParams={{ memberId: memberId }}
+							additionalParams={{ customerId: customerId }}
 						/>
 					) : (
 						<List
@@ -737,7 +737,7 @@ class AddressBook extends Component {
 							key={gridUrlCrypto}
 							ref={this.gridCryptoRef}
 							url={gridUrlCrypto}
-							additionalParams={{ memberId: memberId }}
+							additionalParams={{ customerId: customerId }}
 						/>
 					)}
 				</div>
