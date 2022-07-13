@@ -908,7 +908,7 @@ const AddressCommonCom = (props) => {
                     >
                       <Select
                         showSearch
-                        placeholder="State"
+                        placeholder="Select State"
                         className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                         dropdownClassName="select-drpdwn"
                         onChange={(e) => handleState(e)}
@@ -1399,7 +1399,7 @@ const AddressCommonCom = (props) => {
                           >
                             <Select
                               showSearch
-                              placeholder="State"
+                              placeholder="Select State"
                               className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                               dropdownClassName="select-drpdwn"
                               onChange={(e) => handleStateChange(e)}
@@ -1466,7 +1466,7 @@ const AddressCommonCom = (props) => {
                             <Input
                               className="cust-input"
                               maxLength="20"
-                              placeholder="Post Code"
+                              placeholder="Postal Code"
                             />
                           </Form.Item>
 
