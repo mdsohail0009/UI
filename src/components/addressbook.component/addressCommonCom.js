@@ -201,6 +201,7 @@ const AddressCommonCom = (props) => {
     setIsModalVisible(false);
     bankDetailForm.resetFields();
     SetBankChange("BankAccount");
+    setNewStates([]);
   };
 
   const radioChangeHandler = (e) => {
@@ -374,6 +375,7 @@ const AddressCommonCom = (props) => {
     setIsModalVisible(false);
     bankDetailForm.resetFields();
     SetBankChange("BankAccount");
+    setNewStates([]);
   }
   const handleDeleteCancel = () => {
     setIsModalDelete(false)
@@ -999,7 +1001,7 @@ const AddressCommonCom = (props) => {
                     style={{ height: "40px" }}
                     className="pop-btn mb-36 mt-24"
                   >
-                    {props?.cryptoTab == 2 ? "Add bank details" : "ADD CRYPTO ADDRESS"}
+                    {props?.cryptoTab == 2 ? "Add bank details" : (withdraeTab == "Fiat" ? "Add bank details" : "ADD CRYPTO ADDRESS")}
                     <span className="icon md add-icon-black ml-8"></span>
                   </Button>
 
@@ -1120,7 +1122,7 @@ const AddressCommonCom = (props) => {
                         </Button>
                       </div>
                     </Form>}
-                  {props?.cryptoTab == 2 &&
+                  {(props?.cryptoTab == 2 || withdraeTab == "Fiat") &&
                     <Form
                       form={bankDetailForm}
                       onFinish={saveModalwithdrawal}
