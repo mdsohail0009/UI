@@ -443,7 +443,7 @@ const FaitWithdrawal = ({
   const handleDetails = (e) => {
 
     setSelectRequired(true)
-    let data = bankDetails.filter((item) => item.bankName == e)
+    let data = bankDetails.filter((item) => item.lable == e)
     setDetails(data)
     form.setFieldsValue({ totalValue: "" });
   }
@@ -540,8 +540,8 @@ const FaitWithdrawal = ({
                           placeholder="Select address book"
                         >
                           {bankDetails?.map((item, idx) => (
-                            <Option key={idx} value={item.bankName}>
-                              {item.bankName}
+                            <Option key={idx} value={item.lable}>
+                              {item.lable}
                             </Option>
                           ))}
                         </Select>

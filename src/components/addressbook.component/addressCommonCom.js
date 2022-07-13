@@ -324,6 +324,7 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
+    debugger
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
@@ -369,9 +370,8 @@ const AddressCommonCom = (props) => {
           setEditBankDetails(false)
         }
       }
-    } else {
-      bankmodalData.push(obj)
-    }
+    } 
+    bankmodalData.push(obj)
     setIsModalVisible(false);
     bankDetailForm.resetFields();
     SetBankChange("BankAccount");
@@ -1257,6 +1257,10 @@ const AddressCommonCom = (props) => {
                                 {
                                   required: true,
                                   message: "Is required"
+                                },
+                                {
+                                  pattern: /^[A-Za-z0-9]+$/,
+                                  message: "Invalid Account Number",
                                 },
                                 {
                                   whitespace: true,
