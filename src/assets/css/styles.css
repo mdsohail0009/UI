@@ -842,7 +842,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .swap-subtitlte{width:235px}
     .enter-val{margin-left: 4px;margin-right: 4px;}
     .enter-val input{font-size: 22px !important;}
-    .enter-val-container .text-yellow{font-size: 22px !important;margin-top: -20px;}
+    .enter-val-container .text-yellow{font-size: 22px !important;}
     .val-updown{top:6px !important}
     .enter-val-container{margin-right: 0px;justify-content: flex-start;margin-bottom: 16px;align-items: center;}
     .round-pills .ant-radio-button-wrapper{min-width: 85px !important; margin-bottom: 0 !important;}
@@ -1212,6 +1212,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .c-notallowed{cursor:not-allowed}
 .sumSub-confirm{background: var(--bgGrey);color: var(--black); padding: 50px 40px 16px;width: 500px;height:350px;margin: 80px auto;border-radius: 14px;}
+.sumSub-error{background: var(--bgGrey);color: var(--black); padding: 50px 40px 16px;height:225px;margin: 80px auto;border-radius: 14px;}
 .sumSub-review{font-size: 22px;font-weight: 700;line-height: 1.29;}
 .select-crypto.cust-input .ant-input{text-align: center !important;padding: 0 !important;background-color: transparent !important;}
 .pay-doc .file-label{white-space: nowrap;max-width: 250px !important;overflow: hidden; text-overflow: ellipsis; width: 200px;word-break: inherit; display: inline-block; vertical-align: bottom;}

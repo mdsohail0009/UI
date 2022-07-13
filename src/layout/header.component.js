@@ -730,7 +730,7 @@ class Header extends Component {
               <ul className="header-logo pl-0">
                 <li className="visible-mobile pr-24 p-relative" onClick={this.showToggle}>
                 {this.state.collapsed ?
-                     <span className="icon lg hamburg " />:<span className="icon md close-white " /> }
+                     <span className="icon lg hamburg " />:<span className="icon md close-white c-pointer" /> }
                 </li>
                 <li className="mobile-logo ">
                   {

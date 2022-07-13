@@ -324,6 +324,7 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
+    debugger
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
@@ -369,9 +370,8 @@ const AddressCommonCom = (props) => {
           setEditBankDetails(false)
         }
       }
-    } else {
-      bankmodalData.push(obj)
-    }
+    } 
+    bankmodalData.push(obj)
     setIsModalVisible(false);
     bankDetailForm.resetFields();
     SetBankChange("BankAccount");
@@ -908,7 +908,7 @@ const AddressCommonCom = (props) => {
                     >
                       <Select
                         showSearch
-                        placeholder="State"
+                        placeholder="Select State"
                         className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                         dropdownClassName="select-drpdwn"
                         onChange={(e) => handleState(e)}
@@ -1259,6 +1259,10 @@ const AddressCommonCom = (props) => {
                                   message: "Is required"
                                 },
                                 {
+                                  pattern: /^[A-Za-z0-9]+$/,
+                                  message: "Invalid Account Number",
+                                },
+                                {
                                   whitespace: true,
                                   message: apiCalls.convertLocalLang('is_required')
                                 },
@@ -1395,7 +1399,7 @@ const AddressCommonCom = (props) => {
                           >
                             <Select
                               showSearch
-                              placeholder="State"
+                              placeholder="Select State"
                               className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                               dropdownClassName="select-drpdwn"
                               onChange={(e) => handleStateChange(e)}
@@ -1462,7 +1466,7 @@ const AddressCommonCom = (props) => {
                             <Input
                               className="cust-input"
                               maxLength="20"
-                              placeholder="Post code"
+                              placeholder="Postal Code"
                             />
                           </Form.Item>
 
