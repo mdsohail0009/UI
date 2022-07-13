@@ -161,7 +161,7 @@ const AddressCommonCom = (props) => {
       ? props?.userConfig.businessName
       : props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
   };
-  const withdraeTab = bilPay ? "Fiat" : (props?.addressBookReducer?.cryptoTab == true ? "Crypto" : "Fiat");
+  const withdraeTab = bilPay ? "Fiat" : ((props?.addressBookReducer?.cryptoTab == true || props?.cryptoTab == 1) ? "Crypto" : "Fiat");
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -201,6 +201,7 @@ const AddressCommonCom = (props) => {
     setIsModalVisible(false);
     bankDetailForm.resetFields();
     SetBankChange("BankAccount");
+    setNewStates([]);
   };
 
   const radioChangeHandler = (e) => {
@@ -273,7 +274,6 @@ const AddressCommonCom = (props) => {
     setIsLoading(false)
   }
   const getFavs = async (id, membershipId) => {
-    debugger
     let response = await getFavData(id, membershipId)
     form.resetFields()
     if (response.ok) {
@@ -324,7 +324,6 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
-    debugger
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
@@ -355,7 +354,7 @@ const AddressCommonCom = (props) => {
       addressState: null,
       inputScore: 0,
       outputScore: 0,
-      recordStatus: "Added",
+      recordStatus: editBankDetsils == true ? "Modified" :"Added",
     }
     if (editBankDetsils == true) {
       obj.id = bankObj.id
@@ -376,12 +375,12 @@ const AddressCommonCom = (props) => {
     setIsModalVisible(false);
     bankDetailForm.resetFields();
     SetBankChange("BankAccount");
+    setNewStates([]);
   }
   const handleDeleteCancel = () => {
     setIsModalDelete(false)
   }
   const handleDeleteModal = () => {
-    debugger
     setIsModalDelete(false)
     setEditBankDetails(false)
     for (let i in bankmodalData) {
@@ -407,7 +406,6 @@ const AddressCommonCom = (props) => {
   }
 
   const savewithdrawal = async (values) => {
-    debugger
     setIsLoading(false);
     setErrorMsg(null);
     setBtnDisabled(true);
@@ -710,6 +708,9 @@ const AddressCommonCom = (props) => {
                         whitespace: true,
                         message: apiCalls.convertLocalLang('is_required')
                       },
+                      {
+                        validator: validateContentRule
+                      }
 
                     ]}
                     label={
@@ -1000,7 +1001,7 @@ const AddressCommonCom = (props) => {
                     style={{ height: "40px" }}
                     className="pop-btn mb-36 mt-24"
                   >
-                    {props?.cryptoTab == 2 ? "Add bank details" : "ADD CRYPTO ADDRESS"}
+                    {props?.cryptoTab == 2 ? "Add bank details" : (withdraeTab == "Fiat" ? "Add bank details" : "ADD CRYPTO ADDRESS")}
                     <span className="icon md add-icon-black ml-8"></span>
                   </Button>
 
@@ -1121,7 +1122,7 @@ const AddressCommonCom = (props) => {
                         </Button>
                       </div>
                     </Form>}
-                  {props?.cryptoTab == 2 &&
+                  {(props?.cryptoTab == 2 || withdraeTab == "Fiat") &&
                     <Form
                       form={bankDetailForm}
                       onFinish={saveModalwithdrawal}
@@ -1491,15 +1492,15 @@ const AddressCommonCom = (props) => {
 
                 </Modal>
               </Row>
-              {bankmodalData.map((item, indx) => {
+              {bankmodalData?.map((item, indx) => {
                 if (item.recordStatus !== "Deleted") {
                   return <Row gutter={14} style={{ paddingBottom: "15px" }}>
 
-                    <div className="d-flex align-center  kpi-List " key={indx} value={item} style={{ marginLeft: "20px", width: "100%", height: "65px", backgroundColor: "var(--bgDarkGrey)", borderRadius: "20px" }}>
+                    <div className="d-flex align-center kpi-List" key={indx} value={item} style={{ marginLeft: "20px", width: "100%", height: "65px", backgroundColor: "var(--bgDarkGrey)", borderRadius: "20px" }}>
                       {(props?.cryptoTab == 2) ?
-                        <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
+                        <Col className="mb-0" xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
-                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px",  marginLeft: "20px" }}>
+                            <Col span={24} className="mb-0"><label className="kpi-label fs-16" style={{ fontSize: "20px",  marginLeft: "20px" }}>
                               {item.walletCode}{","}{" "}
                               {item.bankType}{","}{" "}
                               {item.accountNumber}{","}{" "}
@@ -1508,9 +1509,9 @@ const AddressCommonCom = (props) => {
                           </Row>
 
                         </Col> :
-                        <Col xs={20} sm={20} md={20} lg={20} xxl={20}>
+                        <Col className="mb-0" xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
-                            <Col span={24}><label className="kpi-label fs-16" style={{ fontSize: "20px",  marginLeft: "20px" }}>
+                            <Col span={24} className="mb-0"><label className="kpi-label fs-16" style={{ fontSize: "20px",  marginLeft: "20px" }}>
                               {item.label}{","}{" "}
                               {item.walletCode}{","}{" "}
                               {item.walletAddress}
@@ -1521,7 +1522,7 @@ const AddressCommonCom = (props) => {
                       }
 
 
-                      <Col xs={4} sm={4} md={4} lg={4} xxl={4}>
+                      <Col className="mb-0" xs={4} sm={4} md={4} lg={4} xxl={4}>
                         <div className="d-flex align-center " style={{ marginTop: "22px", left: "5cm", width: "100%", top: "15px", justifyContent: "center" ,marginBottom: "24px"}}>
                           <div className="ml-12 mr-12" onClick={() => handleshowModal(item)}><Tooltip
                             placement="topRight"
