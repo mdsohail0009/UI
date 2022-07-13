@@ -39,7 +39,7 @@ class SelectCrypto extends Component {
         this.EventTrack()
     }
     EventTrack = () => {
-        apicalls.trackEvent({ "Type": 'User', "Action": 'Buy coin page view', "Username": this.props.userProfileInfo.userName, "MemeberId": this.props.userProfileInfo.id, "Feature": 'Buy', "Remarks": 'Buy Crypto coin selection view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy Crypto' });
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Buy coin page view', "Username": this.props.userProfileInfo.userName, "customerId": this.props.userProfileInfo.id, "Feature": 'Buy', "Remarks": 'Buy Crypto coin selection view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy Crypto' });
     }
     fetchConvertionValue = async () => {
         const { coin } = this.props.buyInfo?.selectedCoin?.data;

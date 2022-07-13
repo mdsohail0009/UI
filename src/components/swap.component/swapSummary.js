@@ -31,7 +31,7 @@ class SwapSummary extends Component {
     }
     swapSummayTrack = () => {
         apiCalls.trackEvent({
-            "Type": 'User', "Action": 'Swap summary page view', "Username": this.props.userProfile?.userName, "MemeberId": this.props.userProfile?.id, "Feature": 'Swap', "Remarks": 'Swap summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap'
+            "Type": 'User', "Action": 'Swap summary page view', "Username": this.props.userProfile?.userName, "customerId": this.props.userProfile?.id, "Feature": 'Swap', "Remarks": 'Swap summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Swap'
         });
     }
     componentWillUnmount() {

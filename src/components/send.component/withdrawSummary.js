@@ -145,7 +145,7 @@ class WithdrawSummary extends Component {
 			Type: "User",
 			Action: "Withdraw Crypto summary page view",
 			Username: this.props.userProfile.userName,
-			MemeberId: this.props.userProfile.id,
+			customerId: this.props.userProfile.id,
 			Feature: "Withdraw Crypto",
 			Remarks: "Withdraw Crypto summary page view",
 			Duration: 1,

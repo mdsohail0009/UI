@@ -491,7 +491,7 @@ class Header extends Component {
       Type: "User",
       Action: "User Logged out",
       Username: null,
-      MemeberId: null,
+      customerId: null,
       Feature: "Logout",
       Remarks: "User Logged out",
       Duration: 1,
