@@ -5,9 +5,9 @@ export const changePassword = (obj) => {
 
     return apiClient.put(ApiControllers.customers + "ChangePassword", obj);
 }
-export const withdrawRecepientNamecheck = (memberid, name) => {
+export const withdrawRecepientNamecheck = (customerId, name) => {
 
-    return apiClient.get(ApiControllers.depositWithdraw + "FavouriteNameCheck?memberId=" + memberid + "&name=" + name);
+    return apiClient.get(ApiControllers.depositWithdraw + "FavouriteNameCheck?memberId=" + customerId + "&name=" + name);
 }
 export const getCountryStateLu = () => {
 

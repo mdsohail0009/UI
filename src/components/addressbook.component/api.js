@@ -7,10 +7,10 @@ const uuidv4 = () => {
     randumnumberval = buf.toString('hex')
     return (randumnumberval.substr(0, 8) + "-" + randumnumberval.substr(8, 4) + "-" + randumnumberval.substr(12, 4) + "-" + randumnumberval.substr(16, 4) + "-" + randumnumberval.substr(20, 12))
 }
-const favouriteFiatAddress = (accountId, type, coin) => {
+const favouriteFiatAddress = (customerId, type, coin) => {
 	return apiClient.get(
 		ApiControllers.addressbook +
-		`Favourite/${accountId}/${type}/${coin}`
+		`Favourite/${customerId}/${type}/${coin}`
 	);
 };
 const detailsAddress = (id) => {
