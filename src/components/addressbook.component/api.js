@@ -54,7 +54,7 @@ const getPayee = ({payeeId}) => {
 	);
 };
 const getFileURL = (obj) => {
-	return apiClient.post(ApiControllers.accounts + `FetchFile`, obj);
+	return apiClient.post(ApiControllers.customers + `FetchFile`, obj);
 };
 
 const getInfoVal = (id, type) => {
@@ -107,9 +107,9 @@ const getViewData = (payeeId,membershipId) => {
 };
 const emailCheck = (email,type) => {
     if(type=='user'){
-        return apiClient.get(ApiControllers.accounts + 'IsExist/'+email+'/UserName');
+        return apiClient.get(ApiControllers.customers + 'IsExist/'+email+'/UserName');
     }else{
-        return apiClient.get(ApiControllers.accounts +'IsExist/'+email+'/Email');
+        return apiClient.get(ApiControllers.customers +'IsExist/'+email+'/Email');
     }
 }
 

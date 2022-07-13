@@ -24,7 +24,7 @@ const getFavourite = (id) => {
     return apiClient.get(ApiControllers.depositWithdraw + `Withdraw/Favourite/${id}`);
 }
 const getFileURL = (obj) => {
-    return apiClient.post(ApiControllers.accounts + `FetchFile`, obj);
+    return apiClient.post(ApiControllers.customers + `FetchFile`, obj);
 };
 const creatPayment = (id) => {
     return apiClient.get(ApiControllers.massPayment + `payment/${id}`);
