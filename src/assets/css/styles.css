@@ -922,7 +922,12 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .bill_payment{display: block;}
     .sideropen{margin-left: -16px;padding: 12px;margin-top: 5px;border-radius: 0;min-height: 100vh;
         /* border-top-right-radius: 6px;border-bottom-right-radius: 6px; */
+        
     }
+    .coin-bal{display: block !important;}
+    .coin-bal ul{ margin-top: 16px !important; text-align: center;}
+    .wallet-mb{display: inline-block !important;}
+    .mb-list .ant-list-item{display: flex !important;}
     .tlv-header .ant-layout-sider{min-height: 100vh;}
     .sideropen .ant-menu-vertical,.ant-menu-vertical{border-right: 0 !important;}
     .sideropen .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{background-color: transparent;}
