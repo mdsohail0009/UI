@@ -48,8 +48,8 @@ class CryptoWithDrawWallet extends Component {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.props.dispatch(setSubTitle(apicalls.convertLocalLang('select_address')));
         let obj = {
-            "membershipId": this.props.userProfile.id,
-            "memberWalletId": id,
+            "customerId": this.props.userProfile.id,
+            "customerWalletId": id,
             "walletCode": coin,
             "toWalletAddress": this.state.walletAddress,
             "reference": "",
@@ -120,8 +120,8 @@ class CryptoWithDrawWallet extends Component {
         const { id, coin } = this.props.sendReceive?.cryptoWithdraw?.selectedWallet
         this.setState({ ...this.state, error: null, loading: true, isWithdrawSuccess: false });
         let obj = {
-            "membershipId": this.props.userProfile.id,
-            "memberWalletId": id,
+            "customerId": this.props.userProfile.id,
+            "customerWalletId": id,
             "walletCode": coin,
             "toWalletAddress": this.state.walletAddress,
             "reference": "",
