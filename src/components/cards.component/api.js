@@ -1,9 +1,9 @@
 import { apiClient } from "../../api"
 import { ApiControllers } from "../../api/config"
-const getCardStatus = (customerid) => {
-    return apiClient.get(ApiControllers.customers + `Cards/${customerid}`);
+const getCardStatus = (customer_id) => {
+    return apiClient.get(ApiControllers.customers + `Cards/${customer_id}`);
 }
-const applyCard = (customerid) => {
-    return apiClient.put(ApiControllers.customers + `ApplyCards/${customerid}`);
+const applyCard = (customer_id) => {
+    return apiClient.put(ApiControllers.customers + `ApplyCards/${customer_id}`);
 }
 export { getCardStatus, applyCard }

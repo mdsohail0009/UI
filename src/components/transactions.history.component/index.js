@@ -32,7 +32,7 @@ class TransactionsHistory extends Component {
         AccountId: this.props.member?.id
       },
       tranObj: {},
-      gridUrl: process.env.REACT_APP_GRID_API + `Transaction/Accounts`,
+      gridUrl: process.env.REACT_APP_GRID_API + `Transaction/Customers`,
     };
     this.gridRef = React.createRef();
   }

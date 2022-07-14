@@ -36,7 +36,7 @@ const LocalCryptoSwapper = (props, ref) => {
         if (props.onConvertion) {
             props.onConvertion(true);
         }
-        const response = await convertCurrencyDuplicate({ from: coin, to: locCurrency || localCurrency || "USD", value: (inputvalue || 0), isCrypto: !_isSwap, memId: props.memberId, screenName: props.screenName });
+        const response = await convertCurrencyDuplicate({ from: coin, to: locCurrency || localCurrency || "USD", value: (inputvalue || 0), isCrypto: !_isSwap, customer_id: props.memberId, screenName: props.screenName });
       
         if (response.ok) {
             const { data: value, config: { url } } = response;

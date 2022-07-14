@@ -83,10 +83,10 @@ const fetchGraphInfo = (member_id, type) => {
         }
     }
 }
-const fetchYourPortfoliodata = (member_id) => {
+const fetchYourPortfoliodata = (customer_id) => {
     return async (dispatch) => {
         dispatch(fetchDetailData({ key: "cryptoPortFolios", loading: true, data: [] }));
-        const response = await fetchYourPortfolio(member_id);
+        const response = await fetchYourPortfolio(customer_id);
         if (response.ok) {
             dispatch(setDetailData({ key: "cryptoPortFolios", loading: false, data: response.data }));
         } else {
@@ -94,10 +94,10 @@ const fetchYourPortfoliodata = (member_id) => {
         }
     }
 }
-const fetchNotices = (memberId) => {
+const fetchNotices = (customer_id) => {
     return async dispatch => {
         dispatch(handleNotices({ data: [], loading: true }));
-        const response = await getDashboardNotices(memberId);
+        const response = await getDashboardNotices(customer_id);
         if (response.ok) {
             dispatch(handleNotices({ data: response.data, loading: false }));
         } else {
