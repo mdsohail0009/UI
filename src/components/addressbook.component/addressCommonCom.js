@@ -258,10 +258,13 @@ const AddressCommonCom = (props) => {
 
   }
   const handleChange = (e) => {
+   
     let data = PayeeLu.find(item => item.name === e)
     if (data !== undefined) {
       getFavs(data.id, props?.userConfig?.id)
+    
     }
+   
   }
 
   const bankDetailsLu = async (id, customerId) => {
@@ -279,10 +282,12 @@ const AddressCommonCom = (props) => {
     if (response.ok) {
       let obj = response.data;
       let payeeObj = response.data.payeeAccountModels
+     
       if (props?.addressBookReducer?.selectedRowData?.id) {
         setModalData(payeeObj)
         form.setFieldsValue({ isAgree: obj.isAgree   })
       }
+      
       setFavouriteDetails(obj)
       obj.favouriteName = obj?.favouriteName === null ? "" : obj?.favouriteName;
       form.setFieldsValue(obj)
@@ -324,6 +329,7 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
+ 
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
@@ -406,6 +412,7 @@ const AddressCommonCom = (props) => {
   }
 
   const savewithdrawal = async (values) => {
+    
     setIsLoading(false);
     setErrorMsg(null);
     setBtnDisabled(true);
