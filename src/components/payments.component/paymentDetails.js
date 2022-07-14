@@ -160,7 +160,7 @@ class PaymentDetails extends Component {
     let obj = Object.assign({});
     obj.id = this.props.userConfig.id;
     obj.currency = this.state.currency;
-    obj.memberId = this.props.userConfig.id;
+    obj.CustomerId = this.props.userConfig.id;
     obj.createdBy = this.props.userConfig.userName;
     obj.modifiedBy = "";
     obj.paymentsDetails = objData;
@@ -378,26 +378,44 @@ addressTypeNames = (type) =>{
    }
    return stepcodes[type]
 }
+ 
   popOverContent = () => {
-    const { moreBankInfo, tooltipLoad } = this.state;
-    if (tooltipLoad) {
-      return <Spin />;
-    } else {
-      return (
-        <div className="more-popover">
-          <Text className="lbl">Address Label</Text>
-          <Text className="val">{moreBankInfo?.favouriteName}</Text>
-          <Text className="lbl">Bank Address</Text>
-          <Text className="val">{moreBankInfo?.bankAddress}</Text>
-          <Text className="lbl">BIC/SWIFT/Routing Number</Text>
-          <Text className="val">{moreBankInfo?.routingNumber}</Text>
-          <Text className="lbl">Recipient Address</Text>
-          <Text className="val">{moreBankInfo?.beneficiaryAccountAddress}</Text>
-        </div>
-      );
-    }
-  };
 
+    const { moreBankInfo, tooltipLoad } = this.state;
+
+    if (tooltipLoad) {
+
+      return <Spin />;
+
+    } else {
+
+      return (
+
+        <div className="more-popover">
+
+          <Text className="lbl">Address Label</Text>
+
+          <Text className="val">{moreBankInfo?.favouriteName}</Text>
+
+          <Text className="lbl">Bank Address</Text>
+
+          <Text className="val">{moreBankInfo?.bankAddress}</Text>
+
+          <Text className="lbl">BIC/SWIFT/Routing Number</Text>
+
+          <Text className="val">{moreBankInfo?.routingNumber}</Text>
+
+          <Text className="lbl">Recipient Address</Text>
+
+          <Text className="val">{moreBankInfo?.beneficiaryAccountAddress}</Text>
+
+        </div>
+
+      );
+
+    }
+
+  };
   render() {
     let total = 0;
     for(const idx in this.state.paymentsData){

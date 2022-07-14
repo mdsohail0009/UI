@@ -7,10 +7,10 @@ const uuidv4 = () => {
     randumnumberval = buf.toString('hex')
     return (randumnumberval.substr(0, 8) + "-" + randumnumberval.substr(8, 4) + "-" + randumnumberval.substr(12, 4) + "-" + randumnumberval.substr(16, 4) + "-" + randumnumberval.substr(20, 12))
 }
-const favouriteFiatAddress = (accountId, type, coin) => {
+const favouriteFiatAddress = (customerId, type, coin) => {
 	return apiClient.get(
 		ApiControllers.addressbook +
-		`Favourite/${accountId}/${type}/${coin}`
+		`Favourite/${customerId}/${type}/${coin}`
 	);
 };
 const detailsAddress = (id) => {
@@ -18,10 +18,10 @@ const detailsAddress = (id) => {
 		ApiControllers.addressbook + `Withdraw/Favourite/${id}`
 	);
 };
-const favouriteNameCheck = (accountId, name, type, favaddrId) => {
+const favouriteNameCheck = (customerId, name, type, favaddrId) => {
 	return apiClient.get(
 		ApiControllers.addressbook +
-		`Favourite/${favaddrId}/${accountId}/${name}/${type}`
+		`Favourite/${favaddrId}/${customerId}/${name}/${type}`
 	);
 };
 const saveAddress = (obj) => {
@@ -35,9 +35,9 @@ const getCoinList = (type) => {
 	return apiClient.get(ApiControllers.markets + `Coins/${type}`);
 };
 
-const getSelectedCoinDetails = (coin_code, member_id) => {
+const getSelectedCoinDetails = (coin_code, customerId) => {
 	return apiClient.get(
-		ApiControllers.buySell + `${member_id}/Coins/${coin_code}`
+		ApiControllers.buySell + `${customerId}/Coins/${coin_code}`
 	);
 };
 const activeInactive = (obj) => {
@@ -65,19 +65,19 @@ const getInfoVal = (id, type) => {
 const downloadDeclForm=(addr_id)=>{
 	return apiClient.get(ApiControllers.addressbook+`DownloadDocument/${addr_id}`);
 }
-const getPayeeLu = (accountId,type,is1stParty) => {
+const getPayeeLu = (customerId,type,is1stParty) => {
     return apiClient.get(
-        ApiControllers.addressbook + `PayeeLu/${accountId}/${type}/${is1stParty}`
+        ApiControllers.addressbook + `PayeeLu/${customerId}/${type}/${is1stParty}`
     );
 };
 
 
 
-const getFavData = (payeeId,membershipId) => {
+const getFavData = (payeeId,customerId) => {
 
     return apiClient.get(
 
-        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${membershipId}`
+        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${customerId}`
 
     );
 };
@@ -89,9 +89,9 @@ const getNewAddress = (payeeId) => {
 		ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}`
 	);
 };
-const getBankDetailLu = (payeeId,membershipId) => {
+const getBankDetailLu = (payeeId,customerId) => {
     return apiClient.get(
-        ApiControllers.addressbook + `PayeeAccountLu/${payeeId}/${membershipId}`
+        ApiControllers.addressbook + `PayeeAccountLu/${payeeId}/${customerId}`
     );
 };
 const getBankDetails = (payeeAccountId) => {
@@ -100,9 +100,9 @@ const getBankDetails = (payeeAccountId) => {
 	);
 };
 
-const getViewData = (payeeId,membershipId) => {
+const getViewData = (payeeId,customerId) => {
     return apiClient.get(
-        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${membershipId}`
+        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${customerId}`
     );
 };
 const emailCheck = (email,type) => {

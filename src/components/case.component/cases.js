@@ -54,7 +54,7 @@ class Cases extends Component {
             <div className="box basic-info mb-bottom">
                 <Translate content="case" className="basicinfo" />
                 <div className="mt-16">
-                    <List url={gridUrl} ref={this.gridRef} columns={this.columnGrid} additionalParams={{ "memberId": this.props.userProfileInfo?.id }} />
+                    <List url={gridUrl} ref={this.gridRef} columns={this.columnGrid} additionalParams={{ "customerId": this.props.userProfileInfo?.id }} />
                 </div>
             </div>
         </>

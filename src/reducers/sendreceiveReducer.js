@@ -97,7 +97,7 @@ const setAddress = (payload) => {
     payload
   };
 };
-const fetchWithDrawWallets = ({ memberId }) => {
+const fetchWithDrawWallets = ({ customerId }) => {
   return async (dispatch) => {
     dispatch(
       handleSendFetch({
@@ -105,7 +105,7 @@ const fetchWithDrawWallets = ({ memberId }) => {
         wallets: { loading: true, data: [], error: null }
       })
     );
-    const response = await getWithdrawmemberCrypto({ memberId });
+    const response = await getWithdrawmemberCrypto({ customerId });
     if (response.ok) {
       dispatch(
         handleSendFetch({

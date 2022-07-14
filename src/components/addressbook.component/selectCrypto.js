@@ -18,7 +18,7 @@ class SelectCrypto extends Component {
     useDivRef = React.createRef();
     componentDidMount() {
         this.coinList();
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Select the crypto coin view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Select the crypto coin view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Select the crypto coin view', "Username": this.props.userProfileInfo?.userName, "customerId": this.props.userProfileInfo?.id, "Feature": 'Address Book', "Remarks": 'Select the crypto coin view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Address Book' });
     }
     coinList = async () => {
         let fromlist = await getCoinList("All")      

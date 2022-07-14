@@ -15,23 +15,23 @@ import { LoadingOutlined } from "@ant-design/icons";
 counterpart.registerTranslations('en', en);
 counterpart.registerTranslations('ch', ch);
 counterpart.registerTranslations('my', my);
-const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
+const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
     const { switcher, themes } = useThemeSwitcher();
     const [btnDisabled, setBtnDisabled] = useState(false);
     const [form] = Form.useForm();
     const [SettingsLu, setSettingsLu] = useState('')
-    const [theme, setTheme] = useState(member?.theme === 'Light Theme' ? true : false);
-    const [settingsObj, setSettingsObj] = useState({ MemberId: '', Language: member?.language ? member.language : 'en', LCurrency: member?.lCurrency ? member.lCurrency : 'USD', Theme: member?.theme ? member.theme : null })
+    const [theme, setTheme] = useState(customer?.theme === 'Light Theme' ? true : false);
+    const [settingsObj, setSettingsObj] = useState({ customerId: '', Language: customer?.language ? customer.language : 'en', currency: customer?.currency ? customer.currency : 'USD', Theme: customer?.theme ? customer.theme : null })
     const [errorMsg,setErrorMsg]=useState(null);
     const [isLoading,setIsLoading]=useState(false);
     useEffect(() => {
         getSettingsLu()
-        switcher({ theme: member?.theme === 'Light Theme' ? themes.LHT : themes.DRT });
+        switcher({ theme: customer?.theme === 'Light Theme' ? themes.LHT : themes.DRT });
         settingsTrack();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const settingsTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Settings page view', "Username": member?.userName, "MemeberId": member?.id, "Feature": 'Settings', "Remarks": 'Settings page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Settings' });
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Settings page view', "Username": customer?.userName, "customerId": customer?.id, "Feature": 'Settings', "Remarks": 'Settings page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Settings' });
     }
     const getSettingsLu = async () => {
         let res = await getSettingsLuData();
@@ -47,7 +47,7 @@ const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
         setBtnDisabled(true);
         setIsLoading(false);
         settingsObj.Theme = theme ? 'Light Theme' : 'Dark Theme';
-        settingsObj.MemberId = member?.id;
+        settingsObj.customerId = customer?.id;
         settingsObj.info = JSON.stringify(trackAuditLogData);
         let res = await saveSettingsData(settingsObj);
         if (res.ok) {
@@ -55,7 +55,7 @@ const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
             setTimeout(() => setBtnDisabled(false), 2000);
             message.destroy()
             message.success({ content: <Translate content="settings_msg" />, className: 'custom-msg',duration:3 });
-            getmemeberInfoa(member.userId)
+            getmemeberInfoa(customer.userId)
             switcher({ theme: theme ? themes.LHT : themes.DRT });
             counterpart.setLocale(settingsObj.Language);
             setErrorMsg(null);
@@ -84,12 +84,12 @@ const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
         setTheme(!theme)
         switcher({ theme: theme ? themes.DRT : themes.LHT });
         settingsObj.Theme = !theme ? 'Light Theme' : 'Dark Theme';
-        settingsObj.MemberId = member?.id;
+        settingsObj.customerId = customer?.id;
         settingsObj.info = JSON.stringify(trackAuditLogData)
         let res = await saveSettingsData(settingsObj);
         if (res.ok) {
             message.destroy()
-            getmemeberInfoa(member.userId)
+            getmemeberInfoa(customer.userId)
             counterpart.setLocale(settingsObj.Language);
         }
     }
@@ -140,9 +140,9 @@ const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
                     <Text className="input-label"><Translate content="currency" /></Text>
                     <Form.Item
                         className="custom-forminput mb-24"
-                        name="LCurrency"
+                        name="currency"
                         required
-                        id="LCurrency"
+                        id="currency"
                         rules={[
                             { required: true, message: "Is required" },
                         ]}
@@ -150,7 +150,7 @@ const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
                         <Select placeholder="Select Currency" bordered={false}
                             className="cust-input cust-select mb-0"
                             dropdownClassName="select-drpdwn"
-                            onChange={(e) => { settingsObj.LCurrency = e; setSettingsObj(settingsObj); form.setFieldsValue({ ...settingsObj }) }}>
+                            onChange={(e) => { settingsObj.currency = e; setSettingsObj(settingsObj); form.setFieldsValue({ ...settingsObj }) }}>
                             {SettingsLu.currencyLookup?.map((item, idx) => <Option key={idx} value={item}>{item}
                             </Option>)}
                         </Select></Form.Item>
@@ -188,7 +188,7 @@ const Settings = ({ member, getmemeberInfoa, trackAuditLogData }) => {
     // }
 }
 const connectStateToProps = ({ userConfig }) => {
-    return { member: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
+    return { customer: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {

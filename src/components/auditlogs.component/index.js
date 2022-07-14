@@ -55,7 +55,7 @@ class AuditLogs extends Component {
     this.TransactionFeatureSearch(this.props.userProfile?.userName);
   };
   auditlogsTrack = () => {
-    apicalls.trackEvent({ "Type": 'User', "Action": 'Audit logs page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Audit Logs', "Remarks": 'Audit logs page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Audit Logs' });
+    apicalls.trackEvent({ "Type": 'User', "Action": 'Audit logs page view', "Username": this.props.userProfileInfo?.userName, "customerId": this.props.userProfileInfo?.id, "Feature": 'Audit Logs', "Remarks": 'Audit logs page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Audit Logs' });
   }
   gridColumns = [
     { field: "date", title: apicalls.convertLocalLang('Date'), filter: true, isShowTime: true, filterType: "date", width: 250 },

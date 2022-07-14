@@ -20,7 +20,7 @@ class SelectSellCrypto extends Component {
     }
     state = {
         USDAmnt: "", CryptoAmnt: "",
-        sellSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": null, "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 },
+        sellSaveData: { "id": "00000000-0000-0000-0000-000000000000", "customerId": null, "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 },
         isSwap: true,
         errorMessage: null,
         minmaxTab: 'min',
@@ -32,14 +32,14 @@ class SelectSellCrypto extends Component {
         this.EventTrack();
     }
     EventTrack = () => {
-        apicalls.trackEvent({ "Type": 'User', "Action": 'Sell coin page View', "Feature": 'Sell', "Remarks": "Sell Crypto coin selection view", "FullFeatureName": 'Sell Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Sell coin page View', "Feature": 'Sell', "Remarks": "Sell Crypto coin selection view", "FullFeatureName": 'Sell Crypto', "userName": this.props.customer?.userName, id: this.props.customer?.id });
     }
     fetchdefaultMinAmntValues = async () => {
         this.setState({ ...this.state, CryptoAmnt: this.props.sellData.coinDetailData?.sellMinValue });
     }
     setAmount = async ({ currentTarget }, fn, fnRes) => {
         this.setState({ ...this.state, [fn]: currentTarget.value })
-        let res = await getSellamnt(currentTarget.value, !this.state.isSwap, this.props.sellData.coinDetailData?.coin, this.props.member?.id, null);
+        let res = await getSellamnt(currentTarget.value, !this.state.isSwap, this.props.sellData.coinDetailData?.coin, this.props.customer?.id, null);
         if (res.ok) {
             this.setState({ ...this.state, [fnRes]: res.data })
         }
@@ -106,7 +106,7 @@ class SelectSellCrypto extends Component {
         }
         else {
             this.setState({ ...this.state, errorMessage: '' })
-            obj.membershipId = this.props.member?.id;
+            obj.customerId = this.props.customer?.id;
             obj.fromWalletId = this.props.sellData.coinDetailData.id
             obj.fromWalletCode = this.props.sellData.coinDetailData.coin
             obj.fromWalletName = this.props.sellData.coinDetailData.coinFullName
@@ -151,7 +151,7 @@ class SelectSellCrypto extends Component {
             to: this.state.sellSaveData.toWalletCode || "USD",
             value: (isSwaped ? cryptoValue : localValue) || 0,
             isCrypto: !isSwaped,
-            memId: this.props.member?.id,
+            customer_id: this.props.customer?.id,
             screenName: "sell"
         });
         if (response.ok) {
@@ -220,7 +220,7 @@ class SelectSellCrypto extends Component {
     }
 }
 const connectStateToProps = ({ buySell, sellInfo, userConfig }) => {
-    return { buySell, sellData: sellInfo, member: userConfig.userProfileInfo }
+    return { buySell, sellData: sellInfo, customer: userConfig.userProfileInfo }
 }
 const connectDispatchToProps = dispatch => {
     return {
