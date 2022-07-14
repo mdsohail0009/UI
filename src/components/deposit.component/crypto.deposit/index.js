@@ -20,7 +20,7 @@ const CryptoDeposit = ({ dispatch, userProfile, swapStore }) => {
         // ));
         dispatch(setSubTitle(` ${coin.coin}` + " " + "balance" +" "+ ":" +" "+ `${coin.coinBalance ? coin.coinBalance : '0'}`+`${" "}`+`${coin.coin}`
         ));
-        const response = await createCryptoDeposit({ memberId: userProfile?.id, walletCode: coin?.coin });
+        const response = await createCryptoDeposit({ customerId: userProfile?.id, walletCode: coin?.coin });
         if (response.ok) {
             dispatch(setWalletAddress(response.data));
             dispatch(fetchDashboardcalls(userProfile?.id));

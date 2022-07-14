@@ -36,17 +36,17 @@ const approveDoc = (obj) => {
 };
 const getDashboardNotices = (id) => {
   return clientApi.get(
-    ApiControllers.accounts + `Dashboard/Notifications/${id}`
+    ApiControllers.customers + `Dashboard/Notifications/${id}`
   );
 };
 const getFileURL = (obj) => {
-  return clientApi.post(ApiControllers.accounts + `FetchFile`, obj);
+  return clientApi.post(ApiControllers.customers + `FetchFile`, obj);
 };
 const getCase = (id) => {
-  return clientApi.get(ApiControllers.accounts + `Cases/${id}`);
+  return clientApi.get(ApiControllers.customers + `Cases/${id}`);
 };
 const getCaseLu = (name) => {
-  return clientApi.get(ApiControllers.accounts + `AdminUsers/${name}`)
+  return clientApi.get(ApiControllers.customers + `AdminUsers/${name}`)
 }
 export {
   sendRequest, uuidv4, getDocDetails, getDocumentReplies, saveDocReply, approveDoc, getDashboardNotices,

@@ -25,7 +25,7 @@ class SellSummary extends Component {
     }
     EventTrack = () => {
         apicalls.trackEvent({
-            "Type": 'User', "Action": 'Sell summary page view', "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Sell', "Remarks": 'Sell Crypto coin summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto'
+            "Type": 'User', "Action": 'Sell summary page view', "Username": this.props.customer?.userName, "customerId": this.props.customer?.id, "Feature": 'Sell', "Remarks": 'Sell Crypto coin summary page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto'
         });
     }
     async fetchPreviewData() {
@@ -69,10 +69,10 @@ class SellSummary extends Component {
                 this.props.sellResData(res.data);
                 this.props.changeStep('sellsuccess')
                 this.setState({ ...this.state, loader: false,isLoading: false, disableConfirm: false })
-                this.props.fetchDashboardData(this.props.member.id)
+                this.props.fetchDashboardData(this.props.customer.id)
                 this.props.fetchMarketCoinDataValue();
                 // appInsights.trackEvent({
-                //     name: 'Sell', properties: { "Type": 'User', "Action": 'Save', "Username": this.props.member.userName, "MemeberId": this.props.member.id, "Feature": 'Sell', "Remarks": obj.fromValue + " " + this.state.sellpreviewData.coin + " selled", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto' }
+                //     name: 'Sell', properties: { "Type": 'User', "Action": 'Save', "Username": this.props.customer.userName, "MemeberId": this.props.customer.id, "Feature": 'Sell', "Remarks": obj.fromValue + " " + this.state.sellpreviewData.coin + " selled", "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Sell Crypto' }
                 // });
             } else {
                 this.setState({ ...this.state, loader: false,isLoading: false, disableConfirm: false, error: { valid: false, message: this.isErrorDispaly(res),title: apicalls.convertLocalLang('sellCrypto'),agreeRed:false }  } )
@@ -127,15 +127,15 @@ class SellSummary extends Component {
 }
 
 const connectStateToProps = ({ buySell, sellInfo, userConfig }) => {
-    return { buySell, sellData: sellInfo, member: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
+    return { buySell, sellData: sellInfo, customer: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
-        fetchDashboardData: (member_id) => {
-            dispatch(fetchDashboardcalls(member_id))
+        fetchDashboardData: (customer_id) => {
+            dispatch(fetchDashboardcalls(customer_id))
         },
         fetchMarketCoinDataValue: () => {
             dispatch(fetchMarketCoinData(true))

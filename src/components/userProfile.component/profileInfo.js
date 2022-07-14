@@ -64,7 +64,7 @@ class ProfileInfo extends Component {
       Type: "User",
       Action: "Profile page view",
       Username: this.props.userProfileInfo?.userName,
-      MemeberId: this.props.userProfileInfo?.id,
+      customerId: this.props.userProfileInfo?.id,
       Feature: "Profile Info",
       Remarks: "Profile Info page view",
       Duration: 1,

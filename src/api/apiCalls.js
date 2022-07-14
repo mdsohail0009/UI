@@ -10,8 +10,8 @@ const getportfolio = (memID) => {
 const getCryptos = () => {
 	return apiClient.get(ApiControllers.buySell + "Coins");
 };
-const getMember = (useremail) => {
-	return apiClient.get(ApiControllers.accounts + "/" + useremail);
+const getMember = (customerid) => {
+	return apiClient.get(ApiControllers.customers + customerid);
 };
 const sumsubacesstoken = (userid, flow) => {
 return apiClient.get(
@@ -27,7 +27,7 @@ const sumsubacesstokennew = (userid) => {
 	return apiClient.get("Sumsub/KYBAccessToken?applicantId=" + userid);
 };
 const updateKyc = (userid) => {
-	return apiClient.put(ApiControllers.accounts + `${userid}/KYC`);
+	return apiClient.put(ApiControllers.customers + `${userid}/KYC`);
 };
 const trackEvent = (obj) => {
 	// const {
@@ -39,7 +39,7 @@ const trackEvent = (obj) => {
 	// 	type: obj.Type,
 	// 	featurePath: obj.FullFeatureName,
 	// 	username: obj.userName,
-	// 	memberId: userProfileInfo?.id,
+	// 	customerId: userProfileInfo?.id,
 	// 	feature: obj.Feature,
 	// 	action: obj.Action,
 	// 	remarks: obj.Remarks,
@@ -101,8 +101,8 @@ const getVerification = (AccountId, code) => {
 	);
 };
 
-const downloadKyc = (memberId) => {
-	return apiClient.get(ApiControllers.accounts + `DownloadFile/${memberId}`);
+const downloadKyc = (Customerid) => {
+	return apiClient.get(ApiControllers.customers + `DownloadFile/${Customerid}`);
 };
 const updateSecurity = (obj) => {
 	return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
@@ -148,7 +148,7 @@ const getVerificationFields = (memberId) => {
 	);
 };
 const twofactor = (id) => {
-	return apiClient.get(ApiControllers.accounts + `twofactor/${id}`);
+	return apiClient.get(ApiControllers.customers + `twofactor/${id}`);
 };
 
 const getInfoVal = (id, type) => {

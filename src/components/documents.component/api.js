@@ -23,10 +23,10 @@ const approveDoc = (obj) => {
     return clientApi.post(ApiControllers.documents + `Actions/Status`, obj)
 }
 const getDashboardNotices = (id) => {
-    return clientApi.get(ApiControllers.accounts + `Dashboard/Notifications/${id}`)
+    return clientApi.get(ApiControllers.customers + `Dashboard/Notifications/${id}`)
 }
 const getFileURL = (obj) => {
-    return clientApi.post(ApiControllers.accounts + `FetchFile`, obj)
+    return clientApi.post(ApiControllers.customers + `FetchFile`, obj)
 
 }
 export { sendRequest, uuidv4, getDocDetails, getDocumentReplies, saveDocReply, approveDoc, getDashboardNotices, getFileURL }

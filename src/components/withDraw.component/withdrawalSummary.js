@@ -179,7 +179,7 @@ const WithdrawalFiatSummary = ({
 			Type: "User",
 			Action: "Withdraw Fiat summary page view",
 			Username: userConfig?.userName,
-			MemeberId: userConfig?.id,
+			customerId: userConfig?.id,
 			Feature: "Withdraw Fiat",
 			Remarks: "Withdraw Fiat summary page view",
 			Duration: 1,

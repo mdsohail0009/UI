@@ -38,7 +38,7 @@ const NewAddressBook = (props) => {
       Type: "User",
       Action: "Withdraw Fiat Address Book Details page view ",
       Username: props?.userConfig?.id,
-      MemeberId: props?.userConfig?.id,
+      customerId: props?.userConfig?.id,
       Feature: "Withdraw Fiat",
       Remarks: "Withdraw Fiat Address book details view",
       Duration: 1,
