@@ -42,7 +42,7 @@ class AuditLogs extends Component {
       },
       logRowData: null,
       timeListSpan: ["Last 1 Day", "Last One Week", "Custom"],
-      gridUrl: process.env.REACT_APP_GRID_API + "AuditLogs/Customer",
+      gridUrl: process.env.REACT_APP_GRID_API + "AuditLogs/Accounts",
       featureName: ''
     };
     this.gridRef = React.createRef();
