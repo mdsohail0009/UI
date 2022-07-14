@@ -547,7 +547,7 @@ addressTypeNames = (type) =>{
                                           }
                                         >
                                           <span
-                                            className="icon md info c-pointer"
+                                            className="icon md info c-pointer ml-4"
                                             onClick={() =>
                                               this.moreInfoPopover(
                                                 item.addressId,

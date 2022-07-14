@@ -20,7 +20,7 @@ class Cases extends Component {
         {
             field: "createdDate",
             title: "Date",
-            width: 120,
+            width: 125,
             filter: true,
             filterType: "date",
             customCell: (props) => (
@@ -33,9 +33,9 @@ class Cases extends Component {
               </td>
             )
           },
-        {field: "caseNumber",title: "Case Number",filter: true, width: 150,},
-		{field: "customerCaseTitle",title: "Title",filter: true,},
-		{field: "state",title: "State",filter: true,width: 120,},
+        {field: "caseNumber",title: "Case Number",filter: true, width: 170,},
+		{field: "customerCaseTitle",title: "Title",filter: true,width: 355},
+		{field: "state",title: "State",filter: true,width: 140,},
 	];
      viewCase = ({dataItem}) => {
 		this.props.history.push("/cases?id=" + dataItem.id);
@@ -51,7 +51,7 @@ class Cases extends Component {
         const { gridUrl } = this.state;
 
         return (<>
-            <div className="box basic-info mb-bottom">
+            <div className="box basic-info">
                 <Translate content="case" className="basicinfo" />
                 <div className="mt-16">
                     <List url={gridUrl} ref={this.gridRef} columns={this.columnGrid} additionalParams={{ "memberId": this.props.userProfileInfo?.id }} />
