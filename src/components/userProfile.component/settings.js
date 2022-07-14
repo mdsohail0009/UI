@@ -21,7 +21,7 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
     const [form] = Form.useForm();
     const [SettingsLu, setSettingsLu] = useState('')
     const [theme, setTheme] = useState(customer?.theme === 'Light Theme' ? true : false);
-    const [settingsObj, setSettingsObj] = useState({ customerId: '', Language: customer?.language ? customer.language : 'en', LCurrency: customer?.lCurrency ? customer.lCurrency : 'USD', Theme: customer?.theme ? customer.theme : null })
+    const [settingsObj, setSettingsObj] = useState({ customerId: '', Language: customer?.language ? customer.language : 'en', currency: customer?.currency ? customer.currency : 'USD', Theme: customer?.theme ? customer.theme : null })
     const [errorMsg,setErrorMsg]=useState(null);
     const [isLoading,setIsLoading]=useState(false);
     useEffect(() => {
@@ -140,9 +140,9 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
                     <Text className="input-label"><Translate content="currency" /></Text>
                     <Form.Item
                         className="custom-forminput mb-24"
-                        name="LCurrency"
+                        name="currency"
                         required
-                        id="LCurrency"
+                        id="currency"
                         rules={[
                             { required: true, message: "Is required" },
                         ]}
@@ -150,7 +150,7 @@ const Settings = ({ customer, getmemeberInfoa, trackAuditLogData }) => {
                         <Select placeholder="Select Currency" bordered={false}
                             className="cust-input cust-select mb-0"
                             dropdownClassName="select-drpdwn"
-                            onChange={(e) => { settingsObj.LCurrency = e; setSettingsObj(settingsObj); form.setFieldsValue({ ...settingsObj }) }}>
+                            onChange={(e) => { settingsObj.currency = e; setSettingsObj(settingsObj); form.setFieldsValue({ ...settingsObj }) }}>
                             {SettingsLu.currencyLookup?.map((item, idx) => <Option key={idx} value={item}>{item}
                             </Option>)}
                         </Select></Form.Item>
