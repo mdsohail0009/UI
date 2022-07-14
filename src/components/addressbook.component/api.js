@@ -35,9 +35,9 @@ const getCoinList = (type) => {
 	return apiClient.get(ApiControllers.markets + `Coins/${type}`);
 };
 
-const getSelectedCoinDetails = (coin_code, member_id) => {
+const getSelectedCoinDetails = (coin_code, customerId) => {
 	return apiClient.get(
-		ApiControllers.buySell + `${member_id}/Coins/${coin_code}`
+		ApiControllers.buySell + `${customerId}/Coins/${coin_code}`
 	);
 };
 const activeInactive = (obj) => {
@@ -89,9 +89,9 @@ const getNewAddress = (payeeId) => {
 		ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}`
 	);
 };
-const getBankDetailLu = (payeeId,membershipId) => {
+const getBankDetailLu = (payeeId,customerId) => {
     return apiClient.get(
-        ApiControllers.addressbook + `PayeeAccountLu/${payeeId}/${membershipId}`
+        ApiControllers.addressbook + `PayeeAccountLu/${payeeId}/${customerId}`
     );
 };
 const getBankDetails = (payeeAccountId) => {
@@ -100,9 +100,9 @@ const getBankDetails = (payeeAccountId) => {
 	);
 };
 
-const getViewData = (payeeId,membershipId) => {
+const getViewData = (payeeId,customerId) => {
     return apiClient.get(
-        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${membershipId}`
+        ApiControllers.addressbook + `payee/Withdraw/Favourite/${payeeId}/${customerId}`
     );
 };
 const emailCheck = (email,type) => {
