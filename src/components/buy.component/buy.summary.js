@@ -54,7 +54,7 @@ class BuySummary extends Component {
       } = this.props.sellData?.selectedWallet;
       const obj = {
         id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        customerId: this.props?.member?.id,
+        customerId: this.props?.customer?.id,
         fromWalletId,
         fromWalletCode,
         fromWalletName,

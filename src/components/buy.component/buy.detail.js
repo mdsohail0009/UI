@@ -44,7 +44,7 @@ class SelectCrypto extends Component {
     fetchConvertionValue = async () => {
         const { coin } = this.props.buyInfo?.selectedCoin?.data;
         const { isSwaped, cryptoValue, localValue } = this.state.swapValues;
-        const value = await convertCurrency({ from: coin, to: "USD", value: isSwaped ? cryptoValue : localValue, isCrypto: !isSwaped, memId: this.props.userProfileInfo.id, screenName: "buy" })
+        const value = await convertCurrency({ from: coin, to: "USD", value: isSwaped ? cryptoValue : localValue, isCrypto: !isSwaped, customer_id: this.props.userProfileInfo.id, screenName: "buy" })
 
         this.setState({ ...this.state, disableConfirm: false, swapValues: { ...this.state.swapValues, [isSwaped ? "localValue" : "cryptoValue"]: value } })
     }
@@ -67,7 +67,7 @@ class SelectCrypto extends Component {
             to: this.state.selectedWallet?.currencyCode || "USD",
             value: (isSwaped ? cryptoValue : localValue) || 0,
             isCrypto: !isSwaped,
-            memId: this.props.userProfileInfo?.id,
+            customer_id: this.props.userProfileInfo?.id,
             screenName: "buy"
         });
         if (response.ok) {
