@@ -730,7 +730,7 @@ class Header extends Component {
               <ul className="header-logo pl-0">
                 <li className="visible-mobile pr-24 p-relative" onClick={this.showToggle}>
                 {this.state.collapsed ?
-                     <span className="icon lg hamburg " />:<span className="icon md close-white c-pointer" /> }
+                     <span className="icon lg hamburg " />:<span className="icon md close-white " /> }
                 </li>
                 <li className="mobile-logo ">
                   {
@@ -894,7 +894,7 @@ class Header extends Component {
                   content="menu_send_receive"
                   component={Menu.Item}
                   key="6"
-                  className="mr-16"
+                  className="mr-16 list-item"
                 />
               </Dropdown>
 

@@ -126,13 +126,15 @@ class PaymentsView extends Component {
                                                     <Tooltip title= {item.bankname}>
                                                         <div className='pay-docs'>{item.bankname}</div>
                                                     </Tooltip>
+                                                            
+                                                            </div>
+                                                            <div>
                                                             <Text
                                                                 size="small"
                                                                 className="file-label doc-def ml-8"
                                                             >
                                                                 {this.addressTypeNames(item.addressType)}
                                                             </Text>
-                                                            </div>
                                                             <Popover
                                                                     className='more-popover'
                                                                     content={this.popOverContent}
@@ -141,8 +143,9 @@ class PaymentsView extends Component {
                                                                     placement='top'
                                                                     onVisibleChange={() => this.handleVisibleChange()}
                                                                 >
-                                                                    <span className='icon md info c-pointer' onClick={() => this.moreInfoPopover(item.addressId)} />
+                                                                    <span className='icon md info c-pointer ml-4' onClick={() => this.moreInfoPopover(item.addressId)} />
                                                                 </Popover>
+                                                                </div>
                                                                 </div>
                                                 </td>
                                                 <td>{item.accountnumber}</td>
