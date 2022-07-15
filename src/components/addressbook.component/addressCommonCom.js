@@ -8,7 +8,7 @@ import { setStep, setHeaderTab } from "../../reducers/buysellReducer";
 import Translate from "react-translate-component";
 import { connect } from "react-redux";
 import {
-  favouriteNameCheck, getPayeeLu, getFavData, saveAddressBook, getBankDetails,
+  getPayeeLu, getFavData, saveAddressBook, getBankDetails,
   getBankDetailLu, uuidv4, getCoinList, emailCheck
 } from "./api";
 import { getCountryStateLu } from "../../api/apiServer";
@@ -431,12 +431,12 @@ const AddressCommonCom = (props) => {
       ? favouriteDetails.id
       : Id;
     let namecheck = values.favouriteName;
-    let responsecheck = await favouriteNameCheck(
-      props?.userConfig?.id,
-      namecheck,
-      withdraeTab,
-      favaddrId
-    );
+    // let responsecheck = await favouriteNameCheck(
+    //   props?.userConfig?.id,
+    //   namecheck,
+    //   withdraeTab,
+    //   favaddrId
+    // );
     if (!values.isAgree) {
       setBtnDisabled(false);
       useDivRef.current.scrollIntoView();
