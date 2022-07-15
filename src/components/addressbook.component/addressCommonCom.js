@@ -258,31 +258,36 @@ const AddressCommonCom = (props) => {
 
   }
   const handleChange = (e) => {
+   
     let data = PayeeLu.find(item => item.name === e)
     if (data !== undefined) {
       getFavs(data.id, props?.userConfig?.id)
+    
     }
+   
   }
 
-  const bankDetailsLu = async (id, membershipId) => {
+  const bankDetailsLu = async (id, customerId) => {
     setIsLoading(true)
-    let response = await getBankDetailLu(id, membershipId)
+    let response = await getBankDetailLu(id, customerId)
     if (response.ok) {
       let obj = response.data;
       setBankDetail(obj)
     }
     setIsLoading(false)
   }
-  const getFavs = async (id, membershipId) => {
-    let response = await getFavData(id, membershipId)
+  const getFavs = async (id, customerId) => {
+    let response = await getFavData(id, customerId)
     form.resetFields()
     if (response.ok) {
       let obj = response.data;
       let payeeObj = response.data.payeeAccountModels
+     
       if (props?.addressBookReducer?.selectedRowData?.id) {
         setModalData(payeeObj)
         form.setFieldsValue({ isAgree: obj.isAgree   })
       }
+      
       setFavouriteDetails(obj)
       obj.favouriteName = obj?.favouriteName === null ? "" : obj?.favouriteName;
       form.setFieldsValue(obj)
@@ -324,7 +329,7 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
-    debugger
+ 
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
@@ -370,8 +375,9 @@ const AddressCommonCom = (props) => {
           setEditBankDetails(false)
         }
       }
-    } 
-    bankmodalData.push(obj)
+    } else {
+      bankmodalData.push(obj)
+    }
     setIsModalVisible(false);
     bankDetailForm.resetFields();
     SetBankChange("BankAccount");
@@ -406,11 +412,12 @@ const AddressCommonCom = (props) => {
   }
 
   const savewithdrawal = async (values) => {
+    
     setIsLoading(false);
     setErrorMsg(null);
     setBtnDisabled(true);
     const type = withdraeTab;
-    values["membershipId"] = props?.userConfig?.id;
+    values["customerId"] = props?.userConfig?.id;
     if (!selectParty) {
       values["beneficiaryAccountName"] = props?.userConfig.isBusiness
         ? props?.userConfig.businessName
@@ -1259,10 +1266,6 @@ const AddressCommonCom = (props) => {
                                   message: "Is required"
                                 },
                                 {
-                                  pattern: /^[A-Za-z0-9]+$/,
-                                  message: "Invalid Account Number",
-                                },
-                                {
                                   whitespace: true,
                                   message: apiCalls.convertLocalLang('is_required')
                                 },
@@ -1501,7 +1504,7 @@ const AddressCommonCom = (props) => {
                   return <Row gutter={14} style={{ paddingBottom: "15px" }}>
 
                     <div className="d-flex align-center kpi-List" key={indx} value={item} style={{ marginLeft: "20px", width: "100%", height: "65px", backgroundColor: "var(--bgDarkGrey)", borderRadius: "20px" }}>
-                      {(props?.cryptoTab == 2 || withdraeTab == "Fiat") ?
+                      {(props?.cryptoTab == 2 || withdraeTab == "Fiat" ) ?
                         <Col className="mb-0" xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
                             <Col span={24} className="mb-0"><label className="kpi-label fs-16" style={{ fontSize: "20px",  marginLeft: "20px" }}>
