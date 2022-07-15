@@ -137,14 +137,14 @@ const verifyEmail = (AccountId, code) => {
 		ApiControllers.master + `EmailOTPVerification/${AccountId}/${code}`
 	);
 };
-const getAuthenticator = (Code, memberId) => {
+const getAuthenticator = (Code, customerId) => {
 	return apiClient.get(
-		ApiControllers.master + `VerifyAuthenticator/${Code}/${memberId}`
+		ApiControllers.master + `VerifyAuthenticator/${Code}/${customerId}`
 	);
 };
-const getVerificationFields = (memberId) => {
+const getVerificationFields = (customerId) => {
 	return apiClient.get(
-		ApiControllers.master + `Verificationfields/${memberId}`
+		ApiControllers.master + `Verificationfields/${customerId}`
 	);
 };
 const twofactor = (id) => {

@@ -20,7 +20,7 @@ class SwapSummary extends Component {
             errorMessage: null,
             agreeValue: false,
             commision: null,
-            swapSaveData: { "id": "00000000-0000-0000-0000-000000000000", "membershipId": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }
+            swapSaveData: { "id": "00000000-0000-0000-0000-000000000000", "customerId": "3fa85f64-5717-4562-b3fc-2c963f66afa6", "fromWalletId": null, "fromWalletCode": null, "fromWalletName": null, "fromValue": 0, "toWalletId": null, "toWalletCode": null, "toWalletName": null, "toValue": 0, "description": null, "comission": 0, "exicutedPrice": 0, "totalAmount": 0 }
         }
     }
     useDivRef = React.createRef();
@@ -82,7 +82,7 @@ class SwapSummary extends Component {
         else {
 
             let obj = Object.assign({}, this.state.swapSaveData);
-            obj.membershipId = this.props.userProfile.id;
+            obj.customerId = this.props.userProfile.id;
             obj.fromWalletId = this.props.swapStore.coinDetailData.id;
             obj.fromWalletCode = this.props.swapStore.coinDetailData.coin;
             obj.fromWalletName = this.props.swapStore.coinDetailData.coinFullName;

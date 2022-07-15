@@ -103,7 +103,7 @@ class CoinView extends React.Component {
         selectedObj.oneCoinValue = selectedObj.current_price;
         selectedObj.id = selectedObj.memberWalletId;
         selectedObj.withdrawMinValue = selectedObj.swapMinValue
-        this.props.dispatch(fetchWithDrawWallets({ memberId: this.props?.userProfile?.id }));
+        this.props.dispatch(fetchWithDrawWallets({ customerId: this.props?.userProfile?.id }));
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
         this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
         let coin = value.symbol.toUpperCase();
