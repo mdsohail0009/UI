@@ -44,11 +44,11 @@ const connectStateToProps = ({ swapStore, userConfig }) => {
 }
 const connectDispatchToProps = dispatch => {
     return {
-        fetchMemberCoins: (member_id) => {
-            dispatch(getMemberCoins(member_id))
+        fetchMemberCoins: (customer_id) => {
+            dispatch(getMemberCoins(customer_id))
         },
-        clearSwapfullData: (member_id) => {
-            dispatch(clearSwapData(member_id))
+        clearSwapfullData: (customer_id) => {
+            dispatch(clearSwapData(customer_id))
         },
         dispatch
     }

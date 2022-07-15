@@ -12,7 +12,7 @@ class TransforSuccessMsg extends Component {
         this.EventTrack();
     }
     EventTrack = () => {
-        apicalls.trackEvent({ "Type": 'User', "Action": 'Transfer success', "Username": this.props.member.userName, "customerId": this.props.member.id, "Feature": 'Transfer', "Remarks": 'Transfer success', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Transfer' });
+        apicalls.trackEvent({ "Type": 'User', "Action": 'Transfer success', "Username": this.props.customer.userName, "customerId": this.props.customer.id, "Feature": 'Transfer', "Remarks": 'Transfer success', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Transfer' });
     }
     render() {
         const { Title, Paragraph, Text } = Typography;
@@ -32,7 +32,7 @@ class TransforSuccessMsg extends Component {
     }
 }
 const connectStateToProps = ({ userConfig, TransforStore }) => {
-    return { member: userConfig.userProfileInfo,transforObj:TransforStore.transforObj }
+    return { customer: userConfig.userProfileInfo,transforObj:TransforStore.transforObj }
 }
 const connectDispatchToProps = dispatch => {
     return {

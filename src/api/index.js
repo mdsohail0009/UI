@@ -43,7 +43,7 @@ const _encrypt = (msg, key) => {
 apiClient.axiosInstance.interceptors.request.use((config) => {
     const { oidc: { user }, userConfig: { userProfileInfo } } = store.getState()
     config.headers.Authorization = `Bearer ${user.access_token}`
-    if (userProfileInfo?.id) config.headers.AuthInformation = userProfileInfo?.id ? _encrypt(`{MemberId:"${userProfileInfo?.id}"}`, userProfileInfo.sk) : ''
+    if (userProfileInfo?.id) config.headers.AuthInformation = userProfileInfo?.id ? _encrypt(`{CustomerId:"${userProfileInfo?.id}"}`, userProfileInfo.sk) : ''
     return config;
 })
 export { apiClient, coinGekoClient, identityClient, uploadClient, ipRegistry, sumsub }
