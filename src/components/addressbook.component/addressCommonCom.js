@@ -268,13 +268,13 @@ const AddressCommonCom = (props) => {
   }
 
   const bankDetailsLu = async (id, customerId) => {
-    setIsLoading(true)
-    let response = await getBankDetailLu(id, customerId)
-    if (response.ok) {
-      let obj = response.data;
-      setBankDetail(obj)
-    }
-    setIsLoading(false)
+    // setIsLoading(true)
+    // let response = await getBankDetailLu(id, customerId)
+    // if (response.ok) {
+    //   let obj = response.data;
+    //   setBankDetail(obj)
+    // }
+    // setIsLoading(false)
   }
   const getFavs = async (id, customerId) => {
     let response = await getFavData(id, customerId)
