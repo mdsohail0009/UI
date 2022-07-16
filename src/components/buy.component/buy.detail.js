@@ -139,7 +139,7 @@ class SelectCrypto extends Component {
                         cryptoAmt={cryptoValue}
                         localCurrency={this.state.selectedWallet?.currencyCode || "USD"}
                         cryptoCurrency={coin}
-                        onChange={(obj) => this.onValueChange(obj)} memberId={this.props.userProfileInfo?.id}
+                        onChange={(obj) => this.onValueChange(obj)} customerId={this.props.userProfileInfo?.id}
                         screenName='buy'
                         isSwaped={isSwaped}
                         onCurrencySwap={() => {

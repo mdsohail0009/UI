@@ -17,7 +17,7 @@ export function getDocObj(memId, path, docName,size, id, detailId) {
         "adminId": "00000000-0000-0000-0000-000000000000",
         "date": null,
         "type": null,
-        "memberId": memId,
+        "customerId": memId,
         "caseTitle": null,
         "caseState": null,
         "remarks": null,
