@@ -397,6 +397,7 @@ const FaitWithdrawal = ({
     if (e !== data.name) {
       form.setFieldsValue({ currencyCode: " " })
       setAccountDetails(null)
+    setBankDetails(null)
     }
   }
   const AccountWallet = async (AccountId) => {
@@ -441,7 +442,6 @@ const FaitWithdrawal = ({
     }
   }
   const handleDetails = (e) => {
-
     setSelectRequired(true)
     let data = bankDetails.filter((item) => item.bankName == e)
     setDetails(data)
