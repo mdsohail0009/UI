@@ -105,8 +105,8 @@ const connectDispatchToProps = dispatch => {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
-        fetchMemberCoins: (member_id) => {
-            dispatch(getMemberCoins(member_id))
+        fetchMemberCoins: (customer_id) => {
+            dispatch(getMemberCoins(customer_id))
         },
         dispatch
     }
