@@ -45,7 +45,7 @@ class Documents extends Component {
             <div className="box basic-info">
                 <Translate content="documents" className="basicinfo" />
                 <div className="mt-16">
-                    <List url={gridUrl} ref={this.gridRef} columns={this.gridColumns} additionalParams={{ "memberId": this.props.userProfileInfo?.id }} />
+                    <List url={gridUrl} ref={this.gridRef} columns={this.gridColumns} additionalParams={{ "customerId": this.props.userProfileInfo?.id }} />
                 </div>
             </div>
         </>
