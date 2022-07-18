@@ -397,12 +397,12 @@ class PaymentDetails extends Component {
         <div className="more-popover">
           <Text className="lbl">Address Label</Text>
           <Text className="val">{moreBankInfo?.favouriteName}</Text>
-          <Text className="lbl">Bank Address</Text>
-          <Text className="val">{moreBankInfo?.bankAddress}</Text>
+          {/* <Text className="lbl">Bank Address</Text>
+          <Text className="val">{moreBankInfo?.bankAddress}</Text> */}
           <Text className="lbl">BIC/SWIFT/Routing Number</Text>
           <Text className="val">{moreBankInfo?.routingNumber}</Text>
-          <Text className="lbl">Recipient Address</Text>
-          <Text className="val">{moreBankInfo?.beneficiaryAccountAddress}</Text>
+          {/* <Text className="lbl">Recipient Address</Text>
+          <Text className="val">{moreBankInfo?.beneficiaryAccountAddress}</Text> */}
         </div>
       );
     }
@@ -674,12 +674,14 @@ class PaymentDetails extends Component {
                                                 <Spin />
                                               </div> :
                                                 file.documentName !== null && (
-                                                  <div className='docdetails' onClick={() => this.docPreview(file)}>
-                                                    <Tooltip title={file.documentName}>
+                                                  <div className='docdetails' style={{width:"80px"}}>
+                                                     <div  onClick={() => this.docPreview(file)}>
+                                                    <Tooltip title={file.documentName} >
                                                       <EllipsisMiddle suffixCount={4}>
-                                                        {file.documentName}
+                                                      {file.documentName} 
                                                       </EllipsisMiddle>
                                                     </Tooltip>
+                                                  </div>
                                                   </div>
                                                 )}
                                             </>
