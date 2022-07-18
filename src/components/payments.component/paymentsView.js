@@ -108,7 +108,7 @@ class PaymentsView extends Component {
                             <thead>
                                 <tr>
                                 <th className="doc-def">Favorite Name</th>
-                                    <th className="doc-def" style={{width: "300px"}}>Bank Name</th>
+                                    <th className="doc-def" style={{width: "410px"}}>Bank Name</th>
                                     <th>Bank Account Number/IBAN</th>
                                     <th>State</th>
                                     <th>Amount</th>
@@ -119,35 +119,42 @@ class PaymentsView extends Component {
                                     return (
                                         <>
                                           {paymentsData.length > 0? <> <tr key={idx}>
-                                          <td className="doc-def">{item?.beneficiaryAccountName}</td>
-                                                <td className="doc-def">
-                                                    <div className='mb-flex-none visible-flex'>
-                                                   <div className='bill-payment'>
-                                                    <Tooltip title= {item.bankname}>
-                                                        <div className='pay-docs'>{item.bankname}</div>
-                                                    </Tooltip>
-                                                            
-                                                            </div>
-                                                            <div className="d-flex align-center">
-                                                            <Text
-                                                                size="small"
-                                                                className="file-label  ml-8"
-                                                            >
-                                                                {this.addressTypeNames(item.addressType)}
-                                                            </Text>
-                                                            <Popover
-                                                                    className='more-popover'
-                                                                    content={this.popOverContent}
-                                                                    trigger="click"
-                                                                    visible={item.visible}
-                                                                    placement='top'
-                                                                    onVisibleChange={() => this.handleVisibleChange()}
-                                                                >
-                                                                    <span className='icon md info c-pointer ml-4' onClick={() => this.moreInfoPopover(item.addressId)} />
-                                                                </Popover>
-                                                                </div>
-                                                                </div>
-                                                </td>
+                                          <td className="doc-def" >{item?.beneficiaryAccountName}</td>
+                                                <td className="doc-def" style={{ width: '350px' }}>
+                                      <div className="d-flex align-center justify-content" style={{ width: '350px' }}>
+                                        <span>
+                                          <Tooltip title={item.bankname}>
+                                            <span className='pay-docs'>{item.bankname}</span>
+                                          </Tooltip>
+                                          <Text
+                                            size="small"
+                                            className="file-label doc-def ml-8"
+                                          >
+                                            {this.addressTypeNames(item.addressType)}{" "}
+                                          </Text>
+
+                                        </span>
+                                        <Popover
+                                          className="more-popover"
+                                          content={this.popOverContent}
+                                          trigger="click"
+                                          visible={item.visible}
+                                          placement="top"
+                                          onVisibleChange={() =>
+                                            this.handleVisibleChange()
+                                          }
+                                        >
+                                          <span
+                                            className="icon md info c-pointer ml-4"
+                                            onClick={() =>
+                                              this.moreInfoPopover(
+                                                item.addressId,
+                                              )
+                                            }
+                                          />
+                                        </Popover>
+                                      </div>
+                                    </td>
                                                 <td>{item.accountnumber}</td>
                                                 <td>{item.state}</td>
                                                 <td>

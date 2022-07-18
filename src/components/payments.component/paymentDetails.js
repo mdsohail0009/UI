@@ -486,7 +486,7 @@ class PaymentDetails extends Component {
                   <thead>
                     <tr>
                       <th className="doc-def" style={{ width: '250px' }}>Favorite Name</th>
-                      <th className="doc-def" style={{ width: '350px' }}>Bank Name</th>
+                      <th className="doc-def" style={{ width: '410px' }}>Bank Name</th>
                       <th style={{ width: '250px' }}>Bank Account Number/IBAN</th>
                       {(this.props.match.params.id !==
                         "00000000-0000-0000-0000-000000000000"

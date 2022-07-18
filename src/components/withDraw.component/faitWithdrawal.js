@@ -565,7 +565,7 @@ const FaitWithdrawal = ({
 
                         label={
                           <>
-                            <Translate className="input-label mb-0"
+                            <Translate className="input-label ml-0 mb-0"
                               content="amount" component={Form.label} />
                             <div className="minmax">
                               <Translate
