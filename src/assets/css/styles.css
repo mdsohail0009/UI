@@ -1307,3 +1307,4 @@ input[type=number]::-webkit-outer-spin-button {
 .cust-input.cust-text-area{padding:26px 16px 0px 16px!important;}
 .bill-payment .pay-docs{width:100px;}
 .ant-popover-inner-content .more-popover:hover{background: #313c46 !important;margin:0;}
+.k-animation-container.k-animation-container-relative.k-animation-container-shown{z-index: 9999;}
