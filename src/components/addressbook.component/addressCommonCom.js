@@ -81,6 +81,7 @@ const AddressCommonCom = (props) => {
   const [bilPay, setBilPay] = useState(null);
   const [newStates, setNewStates] = useState([]);
   const [isSignRequested, setSignRequested] = useState(false);
+  const [recrdStatus, setRecrdStatus] = useState(null);
 
   const handleshowModal = (item) => {
     setEditBankDetails(true)
@@ -355,7 +356,7 @@ const AddressCommonCom = (props) => {
       addressState: null,
       inputScore: 0,
       outputScore: 0,
-      recordStatus: editBankDetsils == true ? "Modified" :"Added",
+      recordStatus: editBankDetsils == true ? (recrdStatus ? recrdStatus : "Modified") :"Added",
     }
     if (editBankDetsils == true) {
       obj.id = bankObj.id
@@ -367,11 +368,12 @@ const AddressCommonCom = (props) => {
           obj.status = 1
           obj.addressState = props?.addressBookReducer?.selectedRowData?.addressState
           bankmodalData[i] = obj
-          setEditBankDetails(false)
+          setEditBankDetails(false);
         }
       }
     } else {
       bankmodalData.push(obj)
+      setRecrdStatus(obj?.recordStatus);
     }
     setIsModalVisible(false);
     bankDetailForm.resetFields();
