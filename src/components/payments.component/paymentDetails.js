@@ -51,7 +51,7 @@ class PaymentDetails extends Component {
       modal: false,
       selectData: null,
       uploadIndex: null,
-      errorWarning:null
+      errorWarning: null
     };
     this.gridRef = React.createRef();
     this.useDivRef = React.createRef();
@@ -69,7 +69,7 @@ class PaymentDetails extends Component {
   };
 
   handleCurrencyChange = async (val) => {
-    this.setState({ ...this.state, currency: val, paymentsData: [] ,errorMessage:null,errorWarning:null});
+    this.setState({ ...this.state, currency: val, paymentsData: [], errorMessage: null, errorWarning: null });
     if ((this.state.currency = val)) {
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
@@ -100,6 +100,7 @@ class PaymentDetails extends Component {
     }
   };
   getPayments = async () => {
+    debugger
     this.setState({ ...this.state, loading: true });
     if (this.props.match.params.id === "00000000-0000-0000-0000-000000000000") {
       let response = await getPaymentsData(
@@ -154,7 +155,7 @@ class PaymentDetails extends Component {
       return item.amount;
     });
     let objAmount = objData.some((item) => {
-      return (item.recordStatus !== "Deleted" && (item.amount === null || item.amount <= 0));
+      return (item.recordStatus !== "Deleted" && (item.amount === null || item.amount <= 0 || !item.amount));
     });
 
     let obj = Object.assign({});
@@ -166,15 +167,15 @@ class PaymentDetails extends Component {
     obj.paymentsDetails = objData;
     if (obj.currency != null) {
       if (objAmount) {
-        this.setState({ ...this.state,errorWarning:null, errorMessage: "Amount must be greater than zero."  });
-      }else {
+        this.setState({ ...this.state, errorWarning: null, errorMessage: "Amount must be greater than zero." });
+      } else {
         this.setState({ btnDisabled: true });
         if (
           this.props.match.params.id === "00000000-0000-0000-0000-000000000000"
         ) {
           let response = await savePayments(obj);
           if (response.ok) {
-            this.setState({ btnDisabled: false,loading:false, });
+            this.setState({ btnDisabled: false, loading: false, });
             message.destroy();
             message.success({
               content: "Payment details saved successfully",
@@ -184,7 +185,7 @@ class PaymentDetails extends Component {
             this.props.history.push("/payments");
           } else {
             message.destroy();
-            this.setState({ ...this.state,btnDisabled: false ,loading:false,errorWarning:null, errorMessage: this.isErrorDispaly(response) })
+            this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: this.isErrorDispaly(response) })
           }
         }
         else {
@@ -193,14 +194,14 @@ class PaymentDetails extends Component {
             if (PaymentDetail[i].checked === false) {
               PaymentDetail[i].RecordStatus = "Deleted";
             }
-             if(!PaymentDetail[i].amount){
-              this.setState({ ...this.state,errorWarning:null, errorMessage: "Please enter amount."  });
+            if (!PaymentDetail[i].amount) {
+              this.setState({ ...this.state, errorWarning: null, errorMessage: "Please enter amount." });
               return
             }
           }
           let response = await updatePayments(this.state.paymentsData);
           if (response.ok) {
-            this.setState({ btnDisabled: false,loading:false });
+            this.setState({ btnDisabled: false, loading: false });
             message.destroy();
             message.success({
               content: "Payment details updated successfully",
@@ -210,12 +211,12 @@ class PaymentDetails extends Component {
             this.props.history.push("/payments");
           } else {
             message.destroy();
-            this.setState({ ...this.state,btnDisabled: false,loading:false,errorWarning:null,errorMessage:this.isErrorDispaly(response) });
+            this.setState({ ...this.state, btnDisabled: false, loading: false, errorWarning: null, errorMessage: this.isErrorDispaly(response) });
           }
         }
       }
     } else {
-      this.setState({ ...this.state,errorWarning:null, errorMessage: "Please select currency" });
+      this.setState({ ...this.state, errorWarning: null, errorMessage: "Please select currency" });
     }
   };
   isErrorDispaly = (objValue) => {
@@ -230,35 +231,35 @@ class PaymentDetails extends Component {
       return "Something went wrong please try again!";
     }
   };
-  deleteDetials = async (id,paymentsData) => {
-    
+  deleteDetials = async (id, paymentsData) => {
+
     let data = paymentsData;
     let isAtleastOneRecord = false;
     let indexno = '';
     for (let i in data) {
-        if (data[i].id === id.id) {
+      if (data[i].id === id.id) {
         indexno = i;
-        }else if(data[i].recordStatus!== "Deleted"){
-            isAtleastOneRecord = true
-        }
+      } else if (data[i].recordStatus !== "Deleted") {
+        isAtleastOneRecord = true
+      }
     }
-    if(isAtleastOneRecord){
-            data[indexno].recordStatus = "Deleted";
-          data[indexno].amount = "0";
-        this.setState({ ...this.state.paymentsData, paymentData: data,modal:false });
-    }else{
-        this.setState({
-            ...this.state,
-            errorMessage: "At least one record is required",modal:false
-          });
-          this.useDivRef.current.scrollIntoView();
+    if (isAtleastOneRecord) {
+      data[indexno].recordStatus = "Deleted";
+      data[indexno].amount = "0";
+      this.setState({ ...this.state.paymentsData, paymentData: data, modal: false });
+    } else {
+      this.setState({
+        ...this.state,
+        errorMessage: "At least one record is required", modal: false
+      });
+      this.useDivRef.current.scrollIntoView();
     }
   };
 
   moreInfoPopover = async (id) => {
     setTimeout(() => {
-     this.setState({ ...this.state, tooltipLoad: true });
-    },200);
+      this.setState({ ...this.state, tooltipLoad: true });
+    }, 200);
     let response = await getBankData(id);
     if (response.ok) {
       this.setState({
@@ -275,11 +276,11 @@ class PaymentDetails extends Component {
     this.setState({ ...this.state, visible: false });
   };
   beforeUpload = (file) => {
-    this.setState({ ...this.state,errorWarning:null,errorMessage:null });
-    if(file.name.split('.').length > 2){
-      this.setState({ ...this.state, isValidFile: true,isUploading:false,errorMessage:null,errorWarning:"File don't allow double extension" });
+    this.setState({ ...this.state, errorWarning: null, errorMessage: null });
+    if (file.name.split('.').length > 2) {
+      this.setState({ ...this.state, isValidFile: true, isUploading: false, errorMessage: null, errorWarning: "File don't allow double extension" });
       return
-  }
+    }
     let fileType = {
       "image/png": true,
       "image/jpg": true,
@@ -291,54 +292,55 @@ class PaymentDetails extends Component {
       "application/PDF": true,
     };
     if (fileType[file.type]) {
-      this.setState({ ...this.state, isValidFile: true,isUploading:true,errorWarning:null,errorMessage:null });
+      this.setState({ ...this.state, isValidFile: true, isUploading: true, errorWarning: null, errorMessage: null });
       return true;
     } else {
-      this.setState({ ...this.state, isValidFile: true,isUploading:false,errorMessage:null,errorWarning:"File is not allowed. You can upload jpg, png, jpeg and PDF files" });
+      this.setState({ ...this.state, isValidFile: true, isUploading: false, errorMessage: null, errorWarning: "File is not allowed. You can upload jpg, png, jpeg and PDF files" });
       return Upload.LIST_IGNORE;
     }
   };
-  handleUpload = ({ file }, item,i) => {
-    if(file.name.split('.').length > 2){
-    this.setState({...this.state,errorMessage:null,isUploading:false,uploadIndex:i });
+  handleUpload = ({ file }, item, i) => {
+    if (file.name.split('.').length > 2) {
+      this.setState({ ...this.state, errorMessage: null, isUploading: false, uploadIndex: i });
     }
-    else{
-      this.setState({...this.state,errorMessage:null,isUploading:true,uploadIndex:i });
+    else {
+      this.setState({ ...this.state, errorMessage: null, isUploading: true, uploadIndex: i });
 
     }
-    if(file?.status === "done" && this.state.isUploading){
-    let paymentDetialsData = this.state.paymentsData;
+    if (file?.status === "done" && this.state.isUploading) {
+      let paymentDetialsData = this.state.paymentsData;
 
-  let obj = {
-    "documentName": `${file.name}`,
-    "isChecked": file.name === "" ? false : true,
-    "remarks": `${file.size}`,
-    "state": null,
-    "status": false,
-    "path": `${file.response}`,
-    "size":`${file.size}`,
-}
-    for (let pay in paymentDetialsData) {
-      if (paymentDetialsData[pay].id === item.id) {
-        obj["id"]= paymentDetialsData[pay]?.documents?.details[0]?.id !==null ? paymentDetialsData[pay]?.documents?.details[0]?.id :"00000000-0000-0000-0000-000000000000"
-        obj["documentId"]=paymentDetialsData[pay]?.documents?.details[0]?.documentId !==null ? paymentDetialsData[pay]?.documents?.details[0]?.documentId :"00000000-0000-0000-0000-000000000000"
-        paymentDetialsData[pay].documents.details = [obj];
+      let obj = {
+        "documentName": `${file.name}`,
+        "isChecked": file.name === "" ? false : true,
+        "remarks": `${file.size}`,
+        "state": null,
+        "status": false,
+        "path": `${file.response}`,
+        "size": `${file.size}`,
       }
-    }
-    this.setState({...this.state, paymentsData: paymentDetialsData,loading: false,
-      isUploading:false
-     });
+      for (let pay in paymentDetialsData) {
+        if (paymentDetialsData[pay].id === item.id) {
+          obj["id"] = paymentDetialsData[pay]?.documents?.details[0]?.id !== null ? paymentDetialsData[pay]?.documents?.details[0]?.id : "00000000-0000-0000-0000-000000000000"
+          obj["documentId"] = paymentDetialsData[pay]?.documents?.details[0]?.documentId !== null ? paymentDetialsData[pay]?.documents?.details[0]?.documentId : "00000000-0000-0000-0000-000000000000"
+          paymentDetialsData[pay].documents.details = [obj];
+        }
+      }
+      this.setState({
+        ...this.state, paymentsData: paymentDetialsData, loading: false,
+        isUploading: false
+      });
 
-    
-}
+
+    }
   };
-  onModalOpen=(item)=>{
-    if(
-    item.state === "Approved" || item.state === "Cancelled" ||item.state === "Pending"){
+  onModalOpen = (item) => {
+    if (
+      item.state === "Approved" || item.state === "Cancelled" || item.state === "Pending") {
       this.setState({ ...this.state, modal: false, selectData: item })
-    }else{
-      this.setState({  ...this.state,modal: true,selectData:item })
-    }                                  
+    } else {
+      this.setState({ ...this.state, modal: true, selectData: item })
+    }
 
   }
   handleCancel = e => {
@@ -370,14 +372,14 @@ class PaymentDetails extends Component {
   }
   filePreviewPath() {
     return this.state.previewPath;
-}
-addressTypeNames = (type) =>{
-  const stepcodes = {
-            "1stparty" : "1st Party",
-            "3rdparty" : "3rd Party",
-   }
-   return stepcodes[type]
-}
+  }
+  addressTypeNames = (type) => {
+    const stepcodes = {
+      "1stparty": "1st Party",
+      "3rdparty": "3rd Party",
+    }
+    return stepcodes[type]
+  }
   popOverContent = () => {
     const { moreBankInfo, tooltipLoad } = this.state;
     if (tooltipLoad) {
@@ -400,11 +402,11 @@ addressTypeNames = (type) =>{
 
   render() {
     let total = 0;
-    for(const idx in this.state.paymentsData){
-      this.state.paymentsData[idx].amount=isNaN(this.state.paymentsData[idx].amount)?0:this.state.paymentsData[idx].amount
+    for (const idx in this.state.paymentsData) {
+      this.state.paymentsData[idx].amount = isNaN(this.state.paymentsData[idx].amount) ? 0 : this.state.paymentsData[idx].amount
       total += Number(this.state.paymentsData[idx].amount);
     }
-    const { currencylu, paymentsData, loading,isUploading,uploadIndex } = this.state;
+    const { currencylu, paymentsData, loading, isUploading, uploadIndex } = this.state;
     return (
       <>
         <div ref={this.useDivRef}></div>
@@ -419,7 +421,7 @@ addressTypeNames = (type) =>{
             </Title>
           </div>
           <div className="box basic-info text-white">
-          {this.state.errorMessage && (
+            {this.state.errorMessage && (
               <Alert
                 description={this.state.errorMessage}
                 type="error"
@@ -427,9 +429,9 @@ addressTypeNames = (type) =>{
                 showIcon
               />
             )}
-             {this.state.errorWarning  && (
+            {this.state.errorWarning && (
               <Alert
-                description={ this.state.errorWarning}
+                description={this.state.errorWarning}
                 type="warning"
                 onClose={() => this.handleAlert()}
                 showIcon
@@ -475,9 +477,9 @@ addressTypeNames = (type) =>{
                 <table className="pay-grid">
                   <thead>
                     <tr>
-                    <th className="doc-def" style={{width:'250px'}}>Favorite Name</th>
-                      <th className="doc-def" style={{width:'350px'}}>Bank Name</th>
-                      <th style={{width:'250px'}}>Bank Account Number/IBAN</th>
+                      <th className="doc-def" style={{ width: '250px' }}>Favorite Name</th>
+                      <th className="doc-def" style={{ width: '350px' }}>Bank Name</th>
+                      <th style={{ width: '250px' }}>Bank Account Number/IBAN</th>
                       {(this.props.match.params.id !==
                         "00000000-0000-0000-0000-000000000000"
                       )
@@ -485,14 +487,14 @@ addressTypeNames = (type) =>{
                           <th>State</th>
                         )}
 
-                      <th style={{width:'250px'}}>Amount</th>
+                      <th style={{ width: '250px' }}>Amount</th>
                     </tr>
                   </thead>
 
                   {loading ? (
                     <tbody>
                       <tr>
-                        <td colSpan="8"  className="p-16 text-center">
+                        <td colSpan="8" className="p-16 text-center">
                           <Loader />
                         </td>
                       </tr>{" "}
@@ -515,15 +517,15 @@ addressTypeNames = (type) =>{
                                         : true
                                     }
                                   >
-                                    <td className="doc-def" style={{width:'200px'}}>
+                                    <td className="doc-def" style={{ width: '200px' }}>
                                       {item?.beneficiaryAccountName ? (
                                         <>{item?.beneficiaryAccountName}</>
                                       ) : (
                                         <span>{" - - "}</span>
                                       )}
                                     </td>
-                                    <td className="doc-def" style={{width:'350px'}}>
-                                      <div className="d-flex align-center justify-content"  style={{width:'350px'}}>
+                                    <td className="doc-def" style={{ width: '350px' }}>
+                                      <div className="d-flex align-center justify-content" style={{ width: '350px' }}>
                                         <span>
                                           <Tooltip title={item.bankname}>
                                             <span className='pay-docs'>{item.bankname}</span>
@@ -557,7 +559,7 @@ addressTypeNames = (type) =>{
                                         </Popover>
                                       </div>
                                     </td>
-                                    <td style={{width:'250px'}}>
+                                    <td style={{ width: '250px' }}>
                                       <Tooltip title={item.accountnumber}>
                                         <span className=''>{item.accountnumber}</span>
 
@@ -571,7 +573,7 @@ addressTypeNames = (type) =>{
                                     {(this.props.match.params.id ===
                                       "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending")
                                       ? <>
-                                        <td style={{width:'250px'}}>
+                                        <td style={{ width: '250px' }}>
                                           <div className="d-flex amt-field">
                                             <Form.Item
                                               className="mb-0"
@@ -656,7 +658,7 @@ addressTypeNames = (type) =>{
                                                 </span>
                                               )}
                                           </div>
-                                                
+
                                           {item.documents?.details.map((file) => (
                                             <>
                                               {uploadIndex === i && isUploading ? <div className="text-center" >
@@ -717,7 +719,7 @@ addressTypeNames = (type) =>{
                               className="p-16 text-center"
                               style={{ color: "white", width: 300 }}
                             >
-                             <Loader />
+                              <span>No data found</span>
                             </td>
                           </tr>{" "}
                         </tbody>
@@ -809,9 +811,9 @@ addressTypeNames = (type) =>{
         >
           <FilePreviewer hideControls={true} file={{ url: this.state.previewPath ? this.filePreviewPath() : null, mimeType: this.state?.previewPath?.includes(".pdf") ? 'application/pdf' : '' }} />
         </Modal>
-        <Modal title="Delete Payment" 
-        destroyOnClose={true}
-        closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
+        <Modal title="Delete Payment"
+          destroyOnClose={true}
+          closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
           // closable={false}
           // closeIcon={false}
           visible={this.state.modal}

@@ -12,7 +12,6 @@ class FiatBillingAddress extends Component {
         }
     }
     showPayDrawer = () => {
-        console.log(this.state);
     }
 
     render() {

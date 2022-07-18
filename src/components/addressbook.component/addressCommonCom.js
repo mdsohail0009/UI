@@ -301,7 +301,6 @@ const AddressCommonCom = (props) => {
     setState(states[0]?.stateLookUp);
   }
   const handleState = (e) => {
-    console.log(e);
   }
   const handleStateChange = () => {
 

@@ -510,7 +510,7 @@ const FaitWithdrawal = ({
                 >
                   {accountCurrency?.map((item, idx) => (
                     <Option key={idx} value={item.currencyCode}>
-                      {item.currencyCode} Balance:<NumberFormat value={item.avilable} displayType="text" />
+                      {item.currencyCode} Balance: <NumberFormat value={item.avilable} displayType="text" />
                     </Option>
                   ))}
                 </Select>
