@@ -142,7 +142,7 @@ const AddressCryptoView = (props) => {
 														<Row gutter={[16, 16]} key={idx}>
 															<Col xs={24} md={24} lg={14} xl={4} xxl={4}>
 																<Text className="fw-300 text-white-50 fs-12">
-																	Address Lable
+																	Address Label
 																</Text>
 																<Title level={5} className="m-0 mb-8 l-height-normal" style={{color:"white"}}>
 																	{item.label === " " ||

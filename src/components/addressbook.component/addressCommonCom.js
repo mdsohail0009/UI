@@ -267,17 +267,17 @@ const AddressCommonCom = (props) => {
    
   }
 
-  const bankDetailsLu = async (id, customerId) => {
+  const bankDetailsLu = async (id, membershipId) => {
     setIsLoading(true)
-    let response = await getBankDetailLu(id, customerId)
+    let response = await getBankDetailLu(id, membershipId)
     if (response.ok) {
       let obj = response.data;
       setBankDetail(obj)
     }
     setIsLoading(false)
   }
-  const getFavs = async (id, customerId) => {
-    let response = await getFavData(id, customerId)
+  const getFavs = async (id, membershipId) => {
+    let response = await getFavData(id, membershipId)
     form.resetFields()
     if (response.ok) {
       let obj = response.data;
@@ -417,7 +417,7 @@ const AddressCommonCom = (props) => {
     setErrorMsg(null);
     setBtnDisabled(true);
     const type = withdraeTab;
-    values["customerId"] = props?.userConfig?.id;
+    values["membershipId"] = props?.userConfig?.id;
     if (!selectParty) {
       values["beneficiaryAccountName"] = props?.userConfig.isBusiness
         ? props?.userConfig.businessName
