@@ -158,7 +158,7 @@ const AddressCommonCom = (props) => {
       ? props?.userConfig.businessName
       : props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
   };
-  const withdraeTab = bilPay ? "Fiat" : ((props?.addressBookReducer?.cryptoTab == true || props?.cryptoTab == 1) ? "Crypto" : "Fiat");
+  const withdraeTab = bilPay ? "Fiat" : (props?.cryptoTab == 1 ? "Crypto" : "Fiat");
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -1254,7 +1254,6 @@ const AddressCommonCom = (props) => {
                             <Form.Item
                               className="custom-forminput custom-label mb-0"
                               name="accountNumber"
-
                               label="Bank Account Number"
                               required
                               rules={[
@@ -1274,7 +1273,6 @@ const AddressCommonCom = (props) => {
                                   validator: validateContentRule
                                 }
                               ]}
-                            // onBlur={(e) => handleIban(e.target.value)}
 
                             >
                               <NumberFormat
