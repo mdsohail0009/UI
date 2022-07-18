@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Typography, Button, Form, Spin, Input, Alert, Tooltip } from "antd";
 import Currency from "../shared/number.formate";
@@ -330,9 +331,11 @@ const WithdrawalFiatSummary = ({
 	};
 	const getEmailVerification = async (values) => {
 		setValidData(true);
+		setEmailVerifyLoading(true)
 		let response = await apiCalls.verifyEmail(userConfig.id, emailCode);
 		if (response.ok) {
 			setEmailDisable(true);
+			setEmailVerifyLoading(false)
 			setIsEmailVerification(true);
 			setEmail(true);
 			setVerifyEmailOtp(true);
@@ -396,10 +399,12 @@ const WithdrawalFiatSummary = ({
 
 	const getOtpVerification = async () => {
 		setValidData(true);
+		setPhoneVerifyLoading(true)
 		let response = await apiCalls.getVerification(userConfig.id, otpCode);
 		if (response.ok) {
 			setMsg(null)
 			setVerifyPhone(true);
+			setPhoneVerifyLoading(false)
 			setIsPhoneVerification(true);
 			setVerifyTextOtp(true);
 			setVerifyOtpText(null);
@@ -437,9 +442,11 @@ const WithdrawalFiatSummary = ({
 	};
 	const getAuthenticator = async () => {
 		setValidData(true);
+		setAuthLoading(true)
 		let response = await apiCalls.getAuthenticator(authCode, userConfig.userId);
 		if (response.ok) {
 			setMsg(null)
+			setAuthLoading(false)
 			setVerifyAuth(true);
 			setIsAuthenticatorVerification(true);
 			setVerifyAuthCode(true);
