@@ -894,7 +894,7 @@ class Header extends Component {
                   content="menu_send_receive"
                   component={Menu.Item}
                   key="6"
-                  className="mr-16 list-item"
+                  className="mr-16"
                 />
               </Dropdown>
 
