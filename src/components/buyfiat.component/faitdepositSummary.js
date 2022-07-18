@@ -24,7 +24,6 @@ class FaitdepositSummary extends Component {
         });
     }
     showPayCardDrawer = () => {
-        console.log(this.state);
     }
     returnToFiatDep = () => {
         this.props.changeStep("step1");
@@ -33,8 +32,6 @@ class FaitdepositSummary extends Component {
     render() {
         const { Paragraph, Title, Text } = Typography;
         const { depFiatSaveObj: fd } = this.props.depositInfo;
-        console.log(this.props.depositInfo)
-
         return (
             <>
                 <div className="success-pop text-center">
