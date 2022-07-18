@@ -670,20 +670,17 @@ class PaymentDetails extends Component {
                                             <Spin />
                                           </div> : item.documents?.details.map((file) => (
                                             <>
-                                              {(uploadIndex == i && isUploading) ? <div className="text-center" >
-                                                <Spin />
-                                              </div> :
-                                                file.documentName !== null && (
-                                                  <div className='docdetails' style={{width:"80px"}}>
-                                                     <div  onClick={() => this.docPreview(file)}>
-                                                    <Tooltip title={file.documentName} >
-                                                      <EllipsisMiddle suffixCount={4}>
-                                                      {file.documentName} 
-                                                      </EllipsisMiddle>
-                                                    </Tooltip>
-                                                  </div>
-                                                  </div>
-                                                )}
+                                              file.documentName !== null && (
+                                              <div className='docdetails' style={{ width: "80px" }}>
+                                                <div onClick={() => this.docPreview(file)}>
+                                                  <Tooltip title={file.documentName} >
+                                                    <EllipsisMiddle suffixCount={4}>
+                                                      {file.documentName}
+                                                    </EllipsisMiddle>
+                                                  </Tooltip>
+                                                </div>
+                                              </div>
+                                              )
                                             </>
                                           ))}
                                           { }
