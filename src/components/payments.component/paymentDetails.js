@@ -100,7 +100,6 @@ class PaymentDetails extends Component {
     }
   };
   getPayments = async () => {
-    debugger
     this.setState({ ...this.state, loading: true });
     if (this.props.match.params.id === "00000000-0000-0000-0000-000000000000") {
       let response = await getPaymentsData(
@@ -157,7 +156,14 @@ class PaymentDetails extends Component {
     let objAmount = objData.some((item) => {
       return (item.recordStatus !== "Deleted" && (item.amount === null || item.amount <= 0 || !item.amount));
     });
-
+    let PaymentDetail = this.state.paymentsData;
+    for (var i in PaymentDetail) {
+      if (!PaymentDetail[i].amount) {
+        this.setState({ ...this.state, errorWarning: null, errorMessage: "Please enter amount." });
+        window.scrollTo(0, 0);
+        return
+      }
+    }
     let obj = Object.assign({});
     obj.id = this.props.userConfig.id;
     obj.currency = this.state.currency;
@@ -292,8 +298,10 @@ class PaymentDetails extends Component {
       "application/PDF": true,
     };
     if (fileType[file.type]) {
-      this.setState({ ...this.state, isValidFile: true, isUploading: true, errorWarning: null, errorMessage: null });
-      return true;
+      this.setState({ ...this.state, isValidFile: true, isUploading: true, errorWarning: null, errorMessage: null }, () => {
+        return true;
+      });
+
     } else {
       this.setState({ ...this.state, isValidFile: true, isUploading: false, errorMessage: null, errorWarning: "File is not allowed. You can upload jpg, png, jpeg and PDF files" });
       return Upload.LIST_IGNORE;
@@ -658,10 +666,11 @@ class PaymentDetails extends Component {
                                                 </span>
                                               )}
                                           </div>
-
-                                          {item.documents?.details.map((file) => (
+                                          {(uploadIndex == i && isUploading) ? <div className="text-center" >
+                                            <Spin />
+                                          </div> : item.documents?.details.map((file) => (
                                             <>
-                                              {uploadIndex === i && isUploading ? <div className="text-center" >
+                                              {(uploadIndex == i && isUploading) ? <div className="text-center" >
                                                 <Spin />
                                               </div> :
                                                 file.documentName !== null && (
@@ -675,6 +684,7 @@ class PaymentDetails extends Component {
                                                 )}
                                             </>
                                           ))}
+                                          { }
                                         </td>
                                       </> : <td>
                                         <NumberFormat
@@ -685,11 +695,11 @@ class PaymentDetails extends Component {
                                         />
                                         <br />
 
-                                        {item.documents?.details.map((file) =>
+                                        {(uploadIndex == i && isUploading) ? <div className="text-center" >
+                                          <Spin />
+                                        </div> : item.documents?.details.map((file) =>
                                           <>
-                                            {uploadIndex === i && isUploading ? <div className="text-center" >
-                                              <Spin />
-                                            </div> :
+                                            {
                                               file.documentName !== null && (
                                                 <div className='docdetails' onClick={() => this.docPreview(file)}>
                                                   <Tooltip title={file.documentName}>
