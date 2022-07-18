@@ -155,7 +155,7 @@ class PaymentDetails extends Component {
       return item.amount;
     });
     let objAmount = objData.some((item) => {
-      return (item.recordStatus !== "Deleted" && (item.amount === null || item.amount <= 0));
+      return (item.recordStatus !== "Deleted" && (item.amount === null || item.amount <= 0 || !item.amount));
     });
 
     let obj = Object.assign({});
@@ -717,7 +717,7 @@ class PaymentDetails extends Component {
                               className="p-16 text-center"
                               style={{ color: "white", width: 300 }}
                             >
-                              <Loader />
+                              <span>No data found</span>
                             </td>
                           </tr>{" "}
                         </tbody>
