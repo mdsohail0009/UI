@@ -566,7 +566,7 @@ const FaitWithdrawal = ({
 
                         label={
                           <>
-                            <Translate className="input-label mb-0"
+                            <Translate className="input-label ml-0 mb-0"
                               content="amount" component={Form.label} />
                             <div className="minmax">
                               <Translate
@@ -620,7 +620,7 @@ const FaitWithdrawal = ({
                       />
                       <Translate
                         className="fw-200 text-white-50 fs-14"
-                        content="Bank_account"
+                        content="Bank_account_iban"
                         component={Text}
                       />
                       <Translate
