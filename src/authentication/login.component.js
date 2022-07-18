@@ -14,11 +14,9 @@ class Login extends Component {
 
     }
      onFinish = (values) => {
-        console.log('Success:', values);
       };
     
        onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
       };
     render() {
 
