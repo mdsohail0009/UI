@@ -84,7 +84,7 @@ class FiatWallets extends Component {
                     itemLayout="horizontal"
                     dataSource={wallets.data}
                     bordered={false}
-                    className="mobile-list"
+                    className="mobile-list mb-list"
                     loading={wallets.loading}
                     renderItem={item =>
                         <List.Item className="py-10 px-0">
@@ -92,7 +92,7 @@ class FiatWallets extends Component {
                                 avatar={<Image preview={false} src={item.imagePath} />}
                                 title={<div className="fs-16 mt-12 fw-600 text-upper text-white-30 l-height-normal">{item.walletCode}</div>}
                             />
-                            <div className="text-right">
+                            <div className="text-right wallet-mb">
                                 <Currency className="fs-16 text-white-30 m-0" defaultValue={item.amount} prefix={(item?.walletCode == "USD" ? "$" : null) || (item?.walletCode == "GBP" ? "£" : null) || (item?.walletCode == "EUR" ? "€" : null)} decimalPlaces={8} type={"text"} style={{ lineHeight: '12px' }} />
                             </div>
                         </List.Item>}

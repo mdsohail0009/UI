@@ -258,10 +258,13 @@ const AddressCommonCom = (props) => {
 
   }
   const handleChange = (e) => {
+   
     let data = PayeeLu.find(item => item.name === e)
     if (data !== undefined) {
       getFavs(data.id, props?.userConfig?.id)
+    
     }
+   
   }
 
   const bankDetailsLu = async (id, membershipId) => {
@@ -279,10 +282,12 @@ const AddressCommonCom = (props) => {
     if (response.ok) {
       let obj = response.data;
       let payeeObj = response.data.payeeAccountModels
+     
       if (props?.addressBookReducer?.selectedRowData?.id) {
         setModalData(payeeObj)
         form.setFieldsValue({ isAgree: obj.isAgree   })
       }
+      
       setFavouriteDetails(obj)
       obj.favouriteName = obj?.favouriteName === null ? "" : obj?.favouriteName;
       form.setFieldsValue(obj)
@@ -296,7 +301,6 @@ const AddressCommonCom = (props) => {
     setState(states[0]?.stateLookUp);
   }
   const handleState = (e) => {
-    console.log(e);
   }
   const handleStateChange = () => {
 
@@ -324,6 +328,7 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
+ 
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
@@ -406,6 +411,7 @@ const AddressCommonCom = (props) => {
   }
 
   const savewithdrawal = async (values) => {
+    
     setIsLoading(false);
     setErrorMsg(null);
     setBtnDisabled(true);
@@ -908,7 +914,7 @@ const AddressCommonCom = (props) => {
                     >
                       <Select
                         showSearch
-                        placeholder="State"
+                        placeholder="Select State"
                         className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                         dropdownClassName="select-drpdwn"
                         onChange={(e) => handleState(e)}
@@ -1395,7 +1401,7 @@ const AddressCommonCom = (props) => {
                           >
                             <Select
                               showSearch
-                              placeholder="State"
+                              placeholder="Select State"
                               className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                               dropdownClassName="select-drpdwn"
                               onChange={(e) => handleStateChange(e)}
@@ -1462,7 +1468,7 @@ const AddressCommonCom = (props) => {
                             <Input
                               className="cust-input"
                               maxLength="20"
-                              placeholder="Post code"
+                              placeholder="Postal Code"
                             />
                           </Form.Item>
 
@@ -1497,7 +1503,7 @@ const AddressCommonCom = (props) => {
                   return <Row gutter={14} style={{ paddingBottom: "15px" }}>
 
                     <div className="d-flex align-center kpi-List" key={indx} value={item} style={{ marginLeft: "20px", width: "100%", height: "65px", backgroundColor: "var(--bgDarkGrey)", borderRadius: "20px" }}>
-                      {(props?.cryptoTab == 2) ?
+                      {(props?.cryptoTab == 2 || withdraeTab == "Fiat" ) ?
                         <Col className="mb-0" xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
                             <Col span={24} className="mb-0"><label className="kpi-label fs-16" style={{ fontSize: "20px",  marginLeft: "20px" }}>

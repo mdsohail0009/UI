@@ -754,7 +754,7 @@ const FaitWithdrawal = ({
         title="Withdraw"
         closeIcon={
           <Tooltip title="Close">
-            <span onClick={handleCancel} className="icon md close" />
+            <span onClick={handleCancel} className="icon md close c-pointer" />
           </Tooltip>
         }
         footer={[

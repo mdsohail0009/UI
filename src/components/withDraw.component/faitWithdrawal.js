@@ -443,7 +443,7 @@ const FaitWithdrawal = ({
   const handleDetails = (e) => {
 
     setSelectRequired(true)
-    let data = bankDetails.filter((item) => item.bankName == e)
+    let data = bankDetails.filter((item) => item.lable == e)
     setDetails(data)
     form.setFieldsValue({ totalValue: "" });
   }
@@ -476,7 +476,7 @@ const FaitWithdrawal = ({
                 <Translate
                   content="Beneficiary_BankDetails"
                   component={Paragraph}
-                  className="mb-16 fs-14 text-white fw-500 text-upper"
+                  className="mb-8 fs-14 text-white fw-500 text-upper mt-16"
                 />
               </div>
               <Form.Item
@@ -488,7 +488,7 @@ const FaitWithdrawal = ({
                   className="cust-input mb-0 custom-search"
                   dropdownClassName="select-drpdwn"
                   onChange={(e) => handleAccountChange(e)}
-                  placeholder="Select account holder"
+                  placeholder="Select Account Holder"
                 >
                   {accountHolder?.map((item, idx) => (
                     <Option key={idx} value={item.name}>
@@ -506,11 +506,11 @@ const FaitWithdrawal = ({
                   className="cust-input mb-0 custom-search"
                   dropdownClassName="select-drpdwn"
                   onChange={(e) => handleAccountWallet(e)}
-                  placeholder="Select currency"
+                  placeholder="Select Currency"
                 >
                   {accountCurrency?.map((item, idx) => (
                     <Option key={idx} value={item.currencyCode}>
-                      {item.currencyCode} Balance:<NumberFormat value={item.avilable} displayType="text" />
+                      {item.currencyCode} Balance: <NumberFormat value={item.avilable} displayType="text" />
                     </Option>
                   ))}
                 </Select>
@@ -537,11 +537,11 @@ const FaitWithdrawal = ({
                           className="cust-input mb-0 custom-search"
                           dropdownClassName="select-drpdwn"
                           onChange={(e) => handleDetails(e)}
-                          placeholder="Select address book"
+                          placeholder="Select Address Book"
                         >
                           {bankDetails?.map((item, idx) => (
-                            <Option key={idx} value={item.bankName}>
-                              {item.bankName}
+                            <Option key={idx} value={item.lable}>
+                              {item.lable}
                             </Option>
                           ))}
                         </Select>
@@ -803,7 +803,7 @@ const FaitWithdrawal = ({
         title="Withdraw"
         closeIcon={
           <Tooltip title="Close">
-            <span onClick={handleCancel} className="icon md close" />
+            <span onClick={handleCancel} className="icon md close c-pointer" />
           </Tooltip>
         }
         footer={[

@@ -23,7 +23,6 @@ const AddressFiatView=(props)=> {
 		loadDataAddress();
 	}, []);
     const loadDataAddress = async () => {
-    console.log(props?.addressBookReducer)
         setIsLoading(true)
         let response = await getAddress(props.match.params.id, 'fiat');
         if (response.ok) {
@@ -36,7 +35,6 @@ const AddressFiatView=(props)=> {
             setSelectParty(false);
         }
             setFiatAddress(response.data);
-            console.log(response.data);
             setWithdrawValues(response.data);
             setAddressState(response.data.addressState);
             let fileInfo = response?.data?.documents?.details;
