@@ -637,7 +637,7 @@ const WithdrawalFiatSummary = ({
 										)}
 										<Button
 											type="text"
-											loading={phoneVerifyLoading}
+											 loading={phoneVerifyLoading}
 											style={{color:"black", margin:"0 auto"}}
 											onClick={getOtpVerification}
 											disabled={verifyPhone === true}>
