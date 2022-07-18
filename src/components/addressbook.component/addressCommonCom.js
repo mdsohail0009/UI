@@ -1258,7 +1258,11 @@ const AddressCommonCom = (props) => {
                               rules={[
                                 {
                                   required: true,
-                                  message: "Is required"
+                                  message: "Invalid  Bank Account Number"
+                                },
+                                {
+                                  pattern: /^[A-Za-z0-9]+$/,
+                                  message: "Invalid  Bank Account Number",
                                 },
                                 {
                                   whitespace: true,
