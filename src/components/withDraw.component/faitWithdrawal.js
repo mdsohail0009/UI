@@ -289,7 +289,7 @@ const FaitWithdrawal = ({
       setLoading(false);
       setErrorMsg(null);
       values["customerId"] = userConfig.id;
-      values["customerWalletId"] = accountDetails[0].id;
+      values["MemberWalletId"] = accountDetails[0].id;
       values["beneficiaryAccountName"] = userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName;
       values["favouriteName"] =
         values.favouriteName || addressDetails.favouriteName || bankDetails[0].favouriteName;
