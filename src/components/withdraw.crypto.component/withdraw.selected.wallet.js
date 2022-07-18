@@ -121,7 +121,7 @@ class CryptoWithDrawWallet extends Component {
         this.setState({ ...this.state, error: null, loading: true, isWithdrawSuccess: false });
         let obj = {
             "customerId": this.props.userProfile.id,
-            "customerWalletId": id,
+            "MemberWalletId": id,
             "walletCode": coin,
             "toWalletAddress": this.state.walletAddress,
             "reference": "",
