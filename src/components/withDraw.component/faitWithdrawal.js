@@ -385,19 +385,23 @@ const FaitWithdrawal = ({
     setAccountHolder(response.data)
   }
   const handleAccountChange = (e) => {
+    debugger
+
     setErrorMsg(null);
     setAgreeRed(true);
     form.setFieldsValue({ currencyCode: null, favouriteName: null })
     setDetails(null);
     setAccountDetails({});
     setAddressShow(null);
+    setBankDetails([])
     let data = accountHolder.find((item) => item.name == e)
     setAccountHolderDetails(data)
     AccountWallet(userConfig.id)
     if (e !== data.name) {
       form.setFieldsValue({ currencyCode: " " })
+      // setBankDetails(null)
       setAccountDetails(null)
-    setBankDetails(null)
+    
     }
   }
   const AccountWallet = async (AccountId) => {
