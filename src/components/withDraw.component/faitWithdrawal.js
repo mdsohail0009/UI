@@ -397,6 +397,7 @@ const FaitWithdrawal = ({
     if (e !== data.name) {
       form.setFieldsValue({ currencyCode: " " })
       setAccountDetails(null)
+    setBankDetails(null)
     }
   }
   const AccountWallet = async (AccountId) => {
@@ -619,7 +620,7 @@ const FaitWithdrawal = ({
                       />
                       <Translate
                         className="fw-200 text-white-50 fs-14"
-                        content="Bank_account"
+                        content="Bank_account_iban"
                         component={Text}
                       />
                       <Translate

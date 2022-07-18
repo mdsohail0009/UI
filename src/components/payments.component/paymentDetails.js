@@ -154,16 +154,9 @@ class PaymentDetails extends Component {
       return item.amount;
     });
     let objAmount = objData.some((item) => {
-      return (item.recordStatus !== "Deleted" && (item.amount === null || item.amount <= 0 || !item.amount));
+      return (item.recordStatus !== "Deleted" && (item.amount === null || item.amount <= 0));
     });
-    let PaymentDetail = this.state.paymentsData;
-    for (var i in PaymentDetail) {
-      if (!PaymentDetail[i].amount) {
-        this.setState({ ...this.state, errorWarning: null, errorMessage: "Please enter amount." });
-        window.scrollTo(0, 0);
-        return
-      }
-    }
+
     let obj = Object.assign({});
     obj.id = this.props.userConfig.id;
     obj.currency = this.state.currency;
@@ -298,10 +291,8 @@ class PaymentDetails extends Component {
       "application/PDF": true,
     };
     if (fileType[file.type]) {
-      this.setState({ ...this.state, isValidFile: true, isUploading: true, errorWarning: null, errorMessage: null }, () => {
-        return true;
-      });
-
+      this.setState({ ...this.state, isValidFile: true, isUploading: true, errorWarning: null, errorMessage: null });
+      return true;
     } else {
       this.setState({ ...this.state, isValidFile: true, isUploading: false, errorMessage: null, errorWarning: "File is not allowed. You can upload jpg, png, jpeg and PDF files" });
       return Upload.LIST_IGNORE;
@@ -666,24 +657,24 @@ class PaymentDetails extends Component {
                                                 </span>
                                               )}
                                           </div>
-                                          {(uploadIndex == i && isUploading) ? <div className="text-center" >
+
+                                          {uploadIndex === i && isUploading ? <div className="text-center" >
                                             <Spin />
                                           </div> : item.documents?.details.map((file) => (
                                             <>
-                                                {file.documentName !== null && (
-                                                  <div className='docdetails' style={{width:"80px"}}>
-                                                     <div  onClick={() => this.docPreview(file)}>
+                                              {file.documentName !== null && (
+                                                <div className='docdetails' style={{ width: "80px" }}>
+                                                  <div onClick={() => this.docPreview(file)}>
                                                     <Tooltip title={file.documentName} >
                                                       <EllipsisMiddle suffixCount={4}>
-                                                      {file.documentName} 
+                                                        {file.documentName}
                                                       </EllipsisMiddle>
                                                     </Tooltip>
                                                   </div>
-                                                  </div>
-                                                )}
+                                                </div>
+                                              )}
                                             </>
                                           ))}
-                                          { }
                                         </td>
                                       </> : <td>
                                         <NumberFormat
@@ -694,20 +685,20 @@ class PaymentDetails extends Component {
                                         />
                                         <br />
 
-                                        {(uploadIndex == i && isUploading) ? <div className="text-center" >
+                                        {uploadIndex === i && isUploading ? <div className="text-center" >
                                           <Spin />
                                         </div> : item.documents?.details.map((file) =>
                                           <>
-                                            {
-                                              file.documentName !== null && (
-                                                <div className='docdetails' onClick={() => this.docPreview(file)}>
-                                                  <Tooltip title={file.documentName}>
-                                                    <EllipsisMiddle suffixCount={4}>
-                                                      {file.documentName}
-                                                    </EllipsisMiddle>
-                                                  </Tooltip>
-                                                </div>
-                                              )}
+
+                                            {file.documentName !== null && (
+                                              <div className='docdetails' onClick={() => this.docPreview(file)}>
+                                                <Tooltip title={file.documentName}>
+                                                  <EllipsisMiddle suffixCount={4}>
+                                                    {file.documentName}
+                                                  </EllipsisMiddle>
+                                                </Tooltip>
+                                              </div>
+                                            )}
                                           </>
 
                                         )}
@@ -726,7 +717,7 @@ class PaymentDetails extends Component {
                               className="p-16 text-center"
                               style={{ color: "white", width: 300 }}
                             >
-                              <span>No data found</span>
+                              <Loader />
                             </td>
                           </tr>{" "}
                         </tbody>
