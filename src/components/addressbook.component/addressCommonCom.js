@@ -474,7 +474,7 @@ const AddressCommonCom = (props) => {
         });
         form.resetFields();
         if (withdraeTab === "Fiat") {
-          props?.onCancel({ isCrypto: false, close: isEdit ? true : false });
+          props?.onCancel({ isCrypto: false, close: false });
         }
         else {
           props?.onCancel({ isCrypto: true, close: false });

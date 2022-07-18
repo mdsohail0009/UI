@@ -130,6 +130,7 @@
 .mx-30{margin-left: 30px !important;margin-right: 30px !important;}
 .my-16{margin-top: 16px !important;margin-bottom: 16px !important;}
 /* .my-36{margin-top: 36px !important;margin-bottom: 36px !important;} */
+.ml-0{margin-left: 0px !important;}
 
 @media (min-width:1400px) {
     .my-36{margin-top: 36px !important;margin-bottom: 36px !important;}
