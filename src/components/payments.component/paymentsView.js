@@ -103,8 +103,8 @@ class PaymentsView extends Component {
              <div ref={this.useDivRef}></div>
                 <div className="main-container">
                     <Title className="basicinfo mb-16"><Translate content="menu_payments" component={Text} className="basicinfo" /></Title>
-                    <div className="box basic-info responsive_table">
-                        <table className='pay-grid view'>
+                    <div className="box basic-info responsive_table bg-none">
+                        <table className='pay-grid view mb-view'>
                             <thead>
                                 <tr>
                                 <th className="doc-def">Favorite Name</th>
@@ -121,17 +121,17 @@ class PaymentsView extends Component {
                                           {paymentsData.length > 0? <> <tr key={idx}>
                                           <td className="doc-def">{item?.beneficiaryAccountName}</td>
                                                 <td className="doc-def">
-                                                    <div className='d-flex align-center justify-content'>
+                                                    <div className='mb-flex-none visible-flex'>
                                                    <div className='bill-payment'>
                                                     <Tooltip title= {item.bankname}>
                                                         <div className='pay-docs'>{item.bankname}</div>
                                                     </Tooltip>
                                                             
                                                             </div>
-                                                            <div>
+                                                            <div className="d-flex align-center">
                                                             <Text
                                                                 size="small"
-                                                                className="file-label doc-def ml-8"
+                                                                className="file-label  ml-8"
                                                             >
                                                                 {this.addressTypeNames(item.addressType)}
                                                             </Text>
@@ -206,6 +206,7 @@ class PaymentsView extends Component {
                                 }
                             </tfoot>
                         </table>
+                        </div>
                         {!loading &&
                         <div className="text-right mt-36">
                         {paymentsData?.length > 0 &&
@@ -218,7 +219,7 @@ class PaymentsView extends Component {
                             </Button>
                                 }
                         </div>}
-                    </div>
+                   
                 </div>
                 <Modal
             className="documentmodal-width"
