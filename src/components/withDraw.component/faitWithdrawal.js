@@ -397,6 +397,7 @@ const FaitWithdrawal = ({
     if (e !== data.name) {
       form.setFieldsValue({ currencyCode: " " })
       setAccountDetails(null)
+    setBankDetails(null)
     }
   }
   const AccountWallet = async (AccountId) => {

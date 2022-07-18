@@ -161,7 +161,7 @@ class PaymentsView extends Component {
                                                     {item.documents?.details.map((file) =>
                                                    <>
                                                    {file.documentName !== null && (
-                                                     <div className='docdetails' onClick={() => this.filePreview(file)}>
+                                                     <div className='docdetails'  style={{width:"80px"}} onClick={() => this.filePreview(file)}>
                                                      <Tooltip title={file.documentName}>
                                                      <EllipsisMiddle  suffixCount={4}>
                                                        {file.documentName}
