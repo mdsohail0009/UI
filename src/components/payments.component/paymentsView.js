@@ -68,7 +68,7 @@ class PaymentsView extends Component {
         } else {
             return (<div className='more-popover'>
                 <Text className='lbl'>Bank Label</Text>
-                <Text className='val'>{moreBankInfo?.BankLabel}</Text>
+                <Text className='val'>{moreBankInfo?.bankLabel}</Text>
                 {/* <Text className='lbl'>Bank Address</Text>
                 <Text className='val'>{moreBankInfo?.bankAddress}</Text> */}
                 <Text className='lbl'>BIC/SWIFT/Routing Number</Text>
