@@ -62,9 +62,9 @@ class SelectAddress extends Component {
                             {filterObj?.map((item, idx) =>
                                 <li onClick={() => this.handleSelectAdd(item)} key={idx}
                                     className={item.name === this.props.sendReceive?.addressObj?.name ? " " : " "}
-                                > <p className="fs-16 mb-0 "> <span className=" text-white-50 fs-14 fw-100"> Account Holder:</span> {item.accountHolderName}</p>
-                                <p className="fs-16 mb-0 "> <span className=" text-white-50 fs-14 fw-100"> Label:</span> {item.lable}</p>
-                                    <p className="fs-16 mb-0"> <span className=" text-white-50 fs-14 fw-100"> Address:</span> {item.address}</p>
+                                > <p className="fs-16 mb-0 "> <span className=" text-white-50 fs-12 fw-100"> Account Holder:</span><span className=" text-white-50 fs-10 fw-500"> {item.accountHolderName}</span></p>
+                                <p className="fs-16 mb-0 "> <span className=" text-white-50 fs-12 fw-100"> Label:</span><span className=" text-white-50 fs-10 fw-500"> {item.lable}</span></p>
+                                <p className="fs-16 mb-0 "> <span className=" text-white-50 fs-12 fw-100"> Address: </span> <span className=" text-white-50 fs-10 fw-500"> {item.address}</span></p>
                                 </li>
                             )}
                         </ul> </>}

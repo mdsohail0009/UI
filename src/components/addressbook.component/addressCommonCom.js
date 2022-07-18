@@ -19,16 +19,12 @@ import { Link } from "react-router-dom";
 import { bytesToSize } from "../../utils/service";
 import { validateContentRule } from "../../utils/custom.validator";
 import { addressTabUpdate, fetchAddressCrypto, setAddressStep } from "../../reducers/addressBookReducer";
-import FilePreviewer from "react-file-previewer";
 import WAValidator from "multicoin-address-validator";
 import NumberFormat from "react-number-format";
-import { TumblrShareButton } from "react-share";
 import success from "../../assets/images/success.png";
 const { Text, Paragraph, Title } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
-const { Dragger } = Upload;
-
 const LinkValue = (props) => {
   return (
     <Translate
@@ -1262,7 +1258,11 @@ const AddressCommonCom = (props) => {
                               rules={[
                                 {
                                   required: true,
-                                  message: "Is required"
+                                  message: "Invalid  Bank Account Number"
+                                },
+                                {
+                                  pattern: /^[A-Za-z0-9]+$/,
+                                  message: "Invalid  Bank Account Number",
                                 },
                                 {
                                   whitespace: true,
