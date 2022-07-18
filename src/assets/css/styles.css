@@ -1064,6 +1064,7 @@ font-size: 12px;font-weight: 500;height: 20px;}
     .suisfiat-container, .suisfiat-height{max-height: calc(100vh - 195px);}
     .addCryptoList{max-height: calc(100vh - 218px); overflow-y: auto; }
     .round-pills .ant-radio-button-wrapper,.default-radio .ant-radio-button-wrapper{min-width: 120px;}
+    .round-pills .ant-radio-button-wrapper{min-width: 136px;}
     .dep-withdraw{max-height: calc(100vh - 260px);}
     .crypto-card .ant-card-body{padding: 33px;height: 231px;}
     .crypto-percent{font-size: 60px;line-height: normal;}
@@ -1307,4 +1308,5 @@ input[type=number]::-webkit-outer-spin-button {
 .cust-input.cust-text-area{padding:26px 16px 0px 16px!important;}
 .bill-payment .pay-docs{width:100px;}
 .ant-popover-inner-content .more-popover:hover{background: #313c46 !important;margin:0;}
+.enter-val.enter-vel-field{width:100%}
 .k-animation-container.k-animation-container-relative.k-animation-container-shown{z-index: 9999;}
