@@ -19,16 +19,12 @@ import { Link } from "react-router-dom";
 import { bytesToSize } from "../../utils/service";
 import { validateContentRule } from "../../utils/custom.validator";
 import { addressTabUpdate, fetchAddressCrypto, setAddressStep } from "../../reducers/addressBookReducer";
-import FilePreviewer from "react-file-previewer";
 import WAValidator from "multicoin-address-validator";
 import NumberFormat from "react-number-format";
-import { TumblrShareButton } from "react-share";
 import success from "../../assets/images/success.png";
 const { Text, Paragraph, Title } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
-const { Dragger } = Upload;
-
 const LinkValue = (props) => {
   return (
     <Translate
@@ -85,6 +81,7 @@ const AddressCommonCom = (props) => {
   const [bilPay, setBilPay] = useState(null);
   const [newStates, setNewStates] = useState([]);
   const [isSignRequested, setSignRequested] = useState(false);
+  const [recrdStatus, setRecrdStatus] = useState(null);
 
   const handleshowModal = (item) => {
     setEditBankDetails(true)
@@ -359,7 +356,7 @@ const AddressCommonCom = (props) => {
       addressState: null,
       inputScore: 0,
       outputScore: 0,
-      recordStatus: editBankDetsils == true ? "Modified" :"Added",
+      recordStatus: editBankDetsils == true ? (recrdStatus ? recrdStatus : "Modified") :"Added",
     }
     if (editBankDetsils == true) {
       obj.id = bankObj.id
@@ -371,11 +368,12 @@ const AddressCommonCom = (props) => {
           obj.status = 1
           obj.addressState = props?.addressBookReducer?.selectedRowData?.addressState
           bankmodalData[i] = obj
-          setEditBankDetails(false)
+          setEditBankDetails(false);
         }
       }
     } else {
       bankmodalData.push(obj)
+      setRecrdStatus(obj?.recordStatus);
     }
     setIsModalVisible(false);
     bankDetailForm.resetFields();
@@ -1262,7 +1260,11 @@ const AddressCommonCom = (props) => {
                               rules={[
                                 {
                                   required: true,
-                                  message: "Is required"
+                                  message: "Invalid  Bank Account Number"
+                                },
+                                {
+                                  pattern: /^[A-Za-z0-9]+$/,
+                                  message: "Invalid  Bank Account Number",
                                 },
                                 {
                                   whitespace: true,
