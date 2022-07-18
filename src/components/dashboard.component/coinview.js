@@ -96,6 +96,7 @@ class CoinView extends React.Component {
         })
     }
     showSendReceiveDrawer = (e, value) => {
+        debugger
         let selectedObj = { ...value };
         selectedObj.coin = selectedObj.symbol.toUpperCase();
         selectedObj.coinBalance = selectedObj.avilableBalance

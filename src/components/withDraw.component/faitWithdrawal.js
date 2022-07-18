@@ -32,14 +32,14 @@ import {
   setWithdrawfiat,
   rejectWithdrawfiat,
   setWithdrawFinalRes,
-  setWFTotalValue
+  setWFTotalValue,
+  setSelectedWithDrawWallet
 } from "../../reducers/sendreceiveReducer";
 import WithdrawalSummary from "./withdrawalSummary";
 import WithdrawalLive from "./withdrawLive";
 import apicalls from "../../api/apiCalls";
 import { handleFiatConfirm } from "../send.component/api";
 import Loader from '../../Shared/loader';
-
 const LinkValue = (props) => {
   return (
     <Translate
@@ -101,6 +101,7 @@ const FaitWithdrawal = ({
   const [addressInfo, setAddressInfo] = useState(null);
   const [agreeRed, setAgreeRed] = useState(true)
   useEffect(() => {
+    debugger
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       handleWalletSelection(selectedWalletCode);
     } else if (buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj) {
@@ -114,6 +115,7 @@ const FaitWithdrawal = ({
     if (sendReceive?.wFTotalValue) {
       form.setFieldsValue({ totalValue: sendReceive?.wFTotalValue });
     }
+    // form.setFieldsValue({currencyCode:setSelectedWithDrawWallet.selectedWallet})
   }, [buyInfo.memberFiat?.data]);
 
   useEffect(() => {
