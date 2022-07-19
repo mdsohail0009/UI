@@ -717,7 +717,7 @@ class PaymentDetails extends Component {
                               className="p-16 text-center"
                               style={{ color: "white", width: 300 }}
                             >
-                              <Loader />
+                             No Data Found
                             </td>
                           </tr>{" "}
                         </tbody>
