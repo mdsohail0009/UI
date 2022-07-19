@@ -82,7 +82,6 @@ const AddressCommonCom = (props) => {
   const [newStates, setNewStates] = useState([]);
   const [isSignRequested, setSignRequested] = useState(false);
   const [recrdStatus, setRecrdStatus] = useState(null);
-
   const handleshowModal = (item) => {
     setEditBankDetails(true)
     let data = bankmodalData.find((items) => items.id == item.id)
@@ -496,7 +495,6 @@ const AddressCommonCom = (props) => {
   const handleIban = (e) => {
     setIbanValue(e)
     getIbanData(e)
-
   }
 
   const getIbanData = async (Val) => {
