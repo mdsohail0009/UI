@@ -47,7 +47,12 @@ export function withState(WrappedGrid) {
             // });
         }
         numberWithCommas(x) {
-            return x;
+            x= (typeof x)=='string'?x:x.toString();
+            var arParts = x.split('.');
+            var intPart = parseInt(arParts[0]).toLocaleString();
+            var decPart = (arParts.length > 1 ? arParts[1] : '');
+            
+            return '' + intPart + (decPart?('.' + decPart):'');
         }
         // numberWithCommas(x) {
         //     return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
