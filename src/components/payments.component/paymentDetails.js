@@ -51,7 +51,8 @@ class PaymentDetails extends Component {
       modal: false,
       selectData: null,
       uploadIndex: null,
-      errorWarning: null
+      errorWarning: null,
+      isloading:false,
     };
     this.gridRef = React.createRef();
     this.useDivRef = React.createRef();
@@ -69,7 +70,7 @@ class PaymentDetails extends Component {
   };
 
   handleCurrencyChange = async (val) => {
-    this.setState({ ...this.state, currency: val, paymentsData: [], errorMessage: null, errorWarning: null });
+    this.setState({ ...this.state, currency: val, paymentsData: [], errorMessage: null, errorWarning: null,loading:true });
     if ((this.state.currency = val)) {
       let response = await getPaymentsData(
         "00000000-0000-0000-0000-000000000000",
@@ -255,25 +256,8 @@ class PaymentDetails extends Component {
     }
   };
 
-  moreInfoPopover = async (id) => {
-    setTimeout(() => {
-      this.setState({ ...this.state, tooltipLoad: true });
-    }, 200);
-    let response = await getBankData(id);
-    if (response.ok) {
-      this.setState({
-        ...this.state,
-        moreBankInfo: response.data,
-        visible: true,
-        tooltipLoad: false,
-      });
-    } else {
-      this.setState({ ...this.state, visible: false, tooltipLoad: false });
-    }
-  };
-  handleVisibleChange = () => {
-    this.setState({ ...this.state, visible: false });
-  };
+ 
+ 
   beforeUpload = (file) => {
     this.setState({ ...this.state, errorWarning: null, errorMessage: null });
     if (file.name.split('.').length > 2) {
@@ -379,21 +363,37 @@ class PaymentDetails extends Component {
     }
     return stepcodes[type]
   }
+  moreInfoPopover = async (id) => {
+    this.setState({...this.state,isloading:true});
+    let response = await getBankData(id);
+    if (response.ok) {
+      this.setState({
+        ...this.state,
+        moreBankInfo: response.data,
+        visible: true,
+        isloading:true
+      });
+    } else {
+      this.setState({ ...this.state, visible: false, isloading: false });
+    }
+  };
+  handleVisibleChange = () => {
+    this.setState({ ...this.state, visible: false });
+    if(this.state.visible== false){
+      this.setState({ ...this.state, isloading: false });
+    }
+  };
   popOverContent = () => {
-    const { moreBankInfo, tooltipLoad } = this.state;
-    if (tooltipLoad) {
+    const { moreBankInfo, tooltipLoad,isloading } = this.state;
+    if (!isloading) {
       return <Spin />;
     } else {
       return (
         <div className="more-popover">
           <Text className="lbl">Bank Label</Text>
           <Text className="val">{moreBankInfo?.bankLabel}</Text>
-          {/* <Text className="lbl">Bank Address</Text>
-          <Text className="val">{moreBankInfo?.bankAddress}</Text> */}
           <Text className="lbl">BIC/SWIFT/Routing Number</Text>
           <Text className="val">{moreBankInfo?.routingNumber}</Text>
-          {/* <Text className="lbl">Recipient Address</Text>
-          <Text className="val">{moreBankInfo?.beneficiaryAccountAddress}</Text> */}
         </div>
       );
     }
@@ -717,7 +717,7 @@ class PaymentDetails extends Component {
                               className="p-16 text-center"
                               style={{ color: "white", width: 300 }}
                             >
-                              <Loader />
+                             No Data Found
                             </td>
                           </tr>{" "}
                         </tbody>
