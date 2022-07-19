@@ -33,9 +33,9 @@ class Cases extends Component {
               </td>
             )
           },
-        {field: "caseNumber",title: "Case Number",filter: true, width: 170,},
-		{field: "customerCaseTitle",title: "Title",filter: true,width: 355},
-		{field: "state",title: "State",filter: true,width: 140,},
+        {field: "caseNumber",title: "Case Number",filter: true, width: 200,},
+		{field: "customerCaseTitle",title: "Title",filter: true,width: 362},
+		{field: "state",title: "State",filter: true,width: 200,},
 	];
      viewCase = ({dataItem}) => {
 		this.props.history.push("/cases?id=" + dataItem.id);
