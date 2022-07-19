@@ -23,7 +23,8 @@ class PaymentsView extends Component {
             paymentsData: [],
             currency:'USD',
             loading: false,
-            amount:0
+            amount:0,
+            isloading:false,
         }
         this.useDivRef = React.createRef();
     }
@@ -48,36 +49,40 @@ class PaymentsView extends Component {
         }
     }
     moreInfoPopover = async (id) => {
-        this.setState({ ...this.state, tooltipLoad: true });
+        this.setState({...this.state,isloading:true});
         let response = await getBankData(id);
         if (response.ok) {
-            this.setState({
-                ...this.state, moreBankInfo: response.data, visible: true, tooltipLoad: false
-            });
+          this.setState({
+            ...this.state,
+            moreBankInfo: response.data,
+            visible: true,
+            isloading:true
+          });
         } else {
-            this.setState({ ...this.state, visible: false, tooltipLoad: false });
+          this.setState({ ...this.state, visible: false, isloading: false });
         }
+      };
+     handleVisibleChange = () => {
+    this.setState({ ...this.state, visible: false });
+    if(this.state.visible== false){
+      this.setState({ ...this.state, isloading: false });
     }
-    handleVisibleChange = () => {
-        this.setState({ ...this.state, visible: false });
+  };
+  popOverContent = () => {
+    const { moreBankInfo, tooltipLoad,isloading } = this.state;
+    if (!isloading) {
+      return <Spin />;
+    } else {
+      return (
+        <div className="more-popover">
+          <Text className="lbl">Bank Label</Text>
+          <Text className="val">{moreBankInfo?.bankLabel}</Text>
+          <Text className="lbl">BIC/SWIFT/Routing Number</Text>
+          <Text className="val">{moreBankInfo?.routingNumber}</Text>
+        </div>
+      );
     }
-    popOverContent = () => {
-        const { moreBankInfo, tooltipLoad } = this.state;
-        if (tooltipLoad) {
-            return <Spin />
-        } else {
-            return (<div className='more-popover'>
-                <Text className='lbl'>Bank Label</Text>
-                <Text className='val'>{moreBankInfo?.bankLabel}</Text>
-                {/* <Text className='lbl'>Bank Address</Text>
-                <Text className='val'>{moreBankInfo?.bankAddress}</Text> */}
-                <Text className='lbl'>BIC/SWIFT/Routing Number</Text>
-                <Text className='val'>{moreBankInfo?.routingNumber}</Text>
-                {/* <Text className='lbl'>Recipient Address</Text>
-                <Text className='val'>{moreBankInfo?.beneficiaryAccountAddress}</Text> */}
-            </div>)
-        }
-    }
+  };
     filePreview = async (file) => {
         let res = await getFileURL({ url: file.path });
         if (res.ok) {
