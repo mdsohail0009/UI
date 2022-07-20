@@ -1,8 +1,8 @@
 import { apiClient } from '../../api';
 import { ApiControllers } from '../../api/config'
 
-const getCurrencyLu = (memberId) => {
-    return apiClient.get(ApiControllers.wallets + `Fiat/${memberId}`);
+const getCurrencyLu = (customer_id) => {
+    return apiClient.get(ApiControllers.wallets + `Fiat/${customer_id}`);
 }
 
 const savePayments = (obj) => {
@@ -11,8 +11,8 @@ const savePayments = (obj) => {
 const updatePayments = (obj) => {
     return apiClient.put(ApiControllers.massPayment + "UpdateUserpayments", obj);
 }
-const getPaymentsData = (id, memberId,currency) => {
-    return apiClient.get(ApiControllers.massPayment + `payments/${id}/${memberId}/${currency}`);
+const getPaymentsData = (id, customerId,currency) => {
+    return apiClient.get(ApiControllers.massPayment + `payments/${id}/${customerId}/${currency}`);
 }
 const getBankData = (addressId) => {
     return apiClient.get(ApiControllers.massPayment + `BankDetails/${addressId}`);
@@ -24,7 +24,7 @@ const getFavourite = (id) => {
     return apiClient.get(ApiControllers.depositWithdraw + `Withdraw/Favourite/${id}`);
 }
 const getFileURL = (obj) => {
-    return apiClient.post(ApiControllers.accounts + `FetchFile`, obj);
+    return apiClient.post(ApiControllers.customers + `FetchFile`, obj);
 };
 const creatPayment = (id) => {
     return apiClient.get(ApiControllers.massPayment + `payment/${id}`);

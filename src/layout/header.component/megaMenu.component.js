@@ -331,8 +331,8 @@ const connectDispatchToProps = dispatch => {
         updateSwapdataobj: (obj) => {
             dispatch(updateSwapdata(obj))
         },
-        clearSwapfullData: (member_id) => {
-            dispatch(clearSwapData(member_id))
+        clearSwapfullData: (customer_id) => {
+            dispatch(clearSwapData(customer_id))
         },
         dispatch
     }

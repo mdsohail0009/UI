@@ -34,7 +34,7 @@ class CoinView extends React.Component {
     } 
 
     coinViewTrack = () => {
-        apiCalls.trackEvent({ "Type": 'User', "Action": 'Coin page view', "Username": this.props.userProfileInfo?.userName, "MemeberId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Coin page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
+        apiCalls.trackEvent({ "Type": 'User', "Action": 'Coin page view', "Username": this.props.userProfileInfo?.userName, "customerId": this.props.userProfileInfo?.id, "Feature": 'Cockpit', "Remarks": 'Coin page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Cockpit' });
     }
     loadCoinDetailData = async () => {
         this.setState({ ...this.state, loading: true})
@@ -96,6 +96,7 @@ class CoinView extends React.Component {
         })
     }
     showSendReceiveDrawer = (e, value) => {
+        debugger
         let selectedObj = { ...value };
         selectedObj.coin = selectedObj.symbol.toUpperCase();
         selectedObj.coinBalance = selectedObj.avilableBalance
@@ -103,7 +104,7 @@ class CoinView extends React.Component {
         selectedObj.oneCoinValue = selectedObj.current_price;
         selectedObj.id = selectedObj.memberWalletId;
         selectedObj.withdrawMinValue = selectedObj.swapMinValue
-        this.props.dispatch(fetchWithDrawWallets({ memberId: this.props?.userProfile?.id }));
+        this.props.dispatch(fetchWithDrawWallets({ customerId: this.props?.userProfile?.id }));
         this.props.dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
         this.props.dispatch(setSubTitle(apiCalls.convertLocalLang("selectCurrencyinWallet")));
         let coin = value.symbol.toUpperCase();

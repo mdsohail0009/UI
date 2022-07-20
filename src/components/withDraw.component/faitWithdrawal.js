@@ -32,14 +32,14 @@ import {
   setWithdrawfiat,
   rejectWithdrawfiat,
   setWithdrawFinalRes,
-  setWFTotalValue
+  setWFTotalValue,
+  setSelectedWithDrawWallet
 } from "../../reducers/sendreceiveReducer";
 import WithdrawalSummary from "./withdrawalSummary";
 import WithdrawalLive from "./withdrawLive";
 import apicalls from "../../api/apiCalls";
 import { handleFiatConfirm } from "../send.component/api";
 import Loader from '../../Shared/loader';
-
 const LinkValue = (props) => {
   return (
     <Translate
@@ -101,6 +101,7 @@ const FaitWithdrawal = ({
   const [addressInfo, setAddressInfo] = useState(null);
   const [agreeRed, setAgreeRed] = useState(true)
   useEffect(() => {
+    debugger
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       handleWalletSelection(selectedWalletCode);
     } else if (buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj) {
@@ -114,6 +115,7 @@ const FaitWithdrawal = ({
     if (sendReceive?.wFTotalValue) {
       form.setFieldsValue({ totalValue: sendReceive?.wFTotalValue });
     }
+    // form.setFieldsValue({currencyCode:setSelectedWithDrawWallet.selectedWallet})
   }, [buyInfo.memberFiat?.data]);
 
   useEffect(() => {
@@ -129,7 +131,7 @@ const FaitWithdrawal = ({
       Type: "User",
       Action: "Withdraw Fiat page view",
       Username: userConfig.userName,
-      MemeberId: userConfig.id,
+      customerId: userConfig.id,
       Feature: "Withdraw Fiat",
       Remarks: "	Withdraw Fiat page view",
       Duration: 1,
@@ -286,8 +288,8 @@ const FaitWithdrawal = ({
       }
       setLoading(false);
       setErrorMsg(null);
-      values["membershipId"] = userConfig.id;
-      values["memberWalletId"] = accountDetails[0].id;
+      values["customerId"] = userConfig.id;
+      values["MemberWalletId"] = accountDetails[0].id;
       values["beneficiaryAccountName"] = userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName;
       values["favouriteName"] =
         values.favouriteName || addressDetails.favouriteName || bankDetails[0].favouriteName;
@@ -397,6 +399,7 @@ const FaitWithdrawal = ({
     if (e !== data.name) {
       form.setFieldsValue({ currencyCode: " " })
       setAccountDetails(null)
+    setBankDetails(null)
     }
   }
   const AccountWallet = async (AccountId) => {
@@ -441,7 +444,6 @@ const FaitWithdrawal = ({
     }
   }
   const handleDetails = (e) => {
-
     setSelectRequired(true)
     let data = bankDetails.filter((item) => item.bankName == e)
     setDetails(data)

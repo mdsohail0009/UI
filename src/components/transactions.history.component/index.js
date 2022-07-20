@@ -22,17 +22,17 @@ class TransactionsHistory extends Component {
     super(props);
     this.state = {
       isLoading: false,
-      memberData: [],
+      customerData: [],
       typeData: [],
       doctypeData: [],
       value: "",
       searchObj: {
         type: "All",
         docType: "All",
-        AccountId: this.props.member?.id
+        customerId: this.props.customer?.id
       },
       tranObj: {},
-      gridUrl: process.env.REACT_APP_GRID_API + `Transaction/Accounts`,
+      gridUrl: process.env.REACT_APP_GRID_API + `Transaction/Customers`,
     };
     this.gridRef = React.createRef();
   }
@@ -65,13 +65,14 @@ componentDidMount() {
     }
   };
   handleChange = (value, prop) => {
+    debugger
     var val = "";
-    let { memberData, searchObj } = this.state;
-    if (prop == "memberId") {
-      let index = memberData.findIndex(function (o) { return o.name == value; });
-      val = memberData[index].id;
+    let { customerData, searchObj } = this.state;
+    if (prop == "customerId") {
+      let index = customerData.findIndex(function (o) { return o.name == value; });
+      val = customerData[index].id;
     }
-    searchObj[prop] = prop == "memberId" ? val : value;
+    searchObj[prop] = prop == "customerId" ? val : value;
     this.setState({ ...this.state, searchObj });
   };
   handleSearch = (values) => {
@@ -83,7 +84,7 @@ componentDidMount() {
       Type: "Admin",
       Action: "Transactions grid page view",
       Username: this.props.userConfig?.userName,
-      MemeberId: this.props.userConfig?.id,
+      customerId: this.props.userConfig?.id,
       Feature: "Transactions",
       Remarks: "Transactions grid page view",
       Duration: 1,
@@ -96,7 +97,7 @@ componentDidMount() {
 	
 	render() {
 		const { Title } = Typography;
-		const { memberData, typeData, doctypeData, gridUrl, searchObj } = this.state;
+		const { customerData, typeData, doctypeData, gridUrl, searchObj } = this.state;
 		const options1 = typeData.map((d) => (
 		  <Option key={d.value} value={d.name}>{d.name}</Option>
 		));
@@ -120,7 +121,7 @@ componentDidMount() {
         >
         <div>
           <Form
-            initialValues={this.state.memberData}
+            initialValues={this.state.customerData}
             className="ant-advanced-search-form form form-bg search-bg pt-8"
             autoComplete="off"
           >
@@ -183,6 +184,6 @@ componentDidMount() {
   }
 }
 const connectStateToProps = ({ userConfig }) => {
-	return { member: userConfig.userProfileInfo };
+	return { customer: userConfig.userProfileInfo };
 };
 export default connect(connectStateToProps)(TransactionsHistory);

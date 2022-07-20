@@ -322,7 +322,7 @@ class PaymentsView extends Component {
             "bankAddress": apiCalls.encryptValue(values.bankAddress, this.props.userConfig?.sk),
             "beneficiaryAccountAddress": apiCalls.encryptValue(values.beneficiaryAccountAddress, this.props.userConfig?.sk),
             "id": this.props.match.params.id,
-            "membershipId": this.props.userConfig?.id,
+            "customerId": this.props.userConfig?.id,
             "beneficiaryAccountName": apiCalls.encryptValue(values.beneficiaryAccountName, this.props.userConfig?.sk),
             "type": "fiat",
             "documents": {
@@ -331,7 +331,7 @@ class PaymentsView extends Component {
                 "adminId": "00000000-0000-0000-0000-000000000000",
                 "date": null,
                 "type": null,
-                "memberId": "00000000-0000-0000-0000-000000000000",
+                "customerId": "00000000-0000-0000-0000-000000000000",
                 "caseTitle": null,
                 "caseState": null,
                 "remarks": null,

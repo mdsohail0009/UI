@@ -13,7 +13,7 @@ const WithdrawCrypto = ({ dispatch, userProfile, sendReceive }) => {
         loadData();
     }, []);// eslint-disable-line react-hooks/exhaustive-deps
     const loadData = () => {
-        dispatch(fetchWithDrawWallets({ memberId: userProfile?.id }));
+        dispatch(fetchWithDrawWallets({ customerId: userProfile?.id }));
         dispatch(handleSendFetch({ key: "cryptoWithdraw", activeTab: null }));
         dispatch(setSubTitle(apicalls.convertLocalLang("selectCurrencyinWallet")));
     }

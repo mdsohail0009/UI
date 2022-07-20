@@ -50,7 +50,7 @@ class AddressBook extends Component {
 				status: [],
 				type: "",
 			},
-			memberId: this.props.userConfig.id,
+			customerId: this.props.userConfig.id,
 
 			gridUrlCrypto: process.env.REACT_APP_GRID_API + "Address/Crypto",
 			gridUrlFiat: process.env.REACT_APP_GRID_API + "Address/Fiat",
@@ -65,7 +65,7 @@ class AddressBook extends Component {
 				Type: "User",
 				Action: "Withdraw Crypto Address book grid view",
 				Username: this.props.userProfileInfo?.userName,
-				MemeberId: this.props.userProfileInfo?.id,
+				customerId: this.props.userProfileInfo?.id,
 				Feature: "Address Book",
 				Remarks: "Withdraw Crypto Address book grid view",
 				Duration: 1,
@@ -77,7 +77,7 @@ class AddressBook extends Component {
 				Type: "User",
 				Action: "Withdraw Fiat Address book add view",
 				Username: this.props.userProfileInfo?.userName,
-				MemeberId: this.props.userProfileInfo?.id,
+				customerId: this.props.userProfileInfo?.id,
 				Feature: "Address Book",
 				Remarks: "Withdraw Fiat Address book add view",
 				Duration: 1,
@@ -457,7 +457,7 @@ class AddressBook extends Component {
 					Type: "User",
 					Action: "Withdraw Fiat Address book add view",
 					Username: this.props.userProfileInfo?.userName,
-					MemeberId: this.props.userProfileInfo?.id,
+					customerId: this.props.userProfileInfo?.id,
 					Feature: "Address Book",
 					Remarks: "Withdraw Fiat Address book add view",
 					Duration: 1,
@@ -473,7 +473,7 @@ class AddressBook extends Component {
 				Type: "User",
 				Action: "Withdraw Crypto Address book add view",
 				Username: this.props.userProfileInfo?.userName,
-				MemeberId: this.props.userProfileInfo?.id,
+				customerId: this.props.userProfileInfo?.id,
 				Feature: "Address Book",
 				Remarks: "Withdraw Crypto Address book add view",
 				Duration: 1,
@@ -517,7 +517,7 @@ class AddressBook extends Component {
 						Type: "User",
 						Action: "Withdraw Fait  Address edit view",
 						Username: this.props.userProfileInfo?.userName,
-						MemeberId: this.props.userProfileInfo?.id,
+						customerId: this.props.userProfileInfo?.id,
 						Feature: "Address Book",
 						Remarks: "Withdraw Fiat Address edit view",
 						Duration: 1,
@@ -529,7 +529,7 @@ class AddressBook extends Component {
 						Type: "User",
 						Action: "Withdraw Crypto  Address edit view",
 						Username: this.props.userProfileInfo?.userName,
-						MemeberId: this.props.userProfileInfo?.id,
+						customerId: this.props.userProfileInfo?.id,
 						Feature: "Address Book",
 						Remarks: "Withdraw Crypto Address edit view",
 						Duration: 1,
@@ -583,7 +583,7 @@ class AddressBook extends Component {
 				Type: "User",
 				Action: "Withdraw Crypto Address book grid view",
 				Username: this.props.userProfileInfo?.userName,
-				MemeberId: this.props.userProfileInfo?.id,
+				customerId: this.props.userProfileInfo?.id,
 				Feature: "Address Book",
 				Remarks: "Withdraw Crypto Address book grid view",
 				Duration: 1,
@@ -595,7 +595,7 @@ class AddressBook extends Component {
 				Type: "User",
 				Action: "Withdraw Fiat Address book grid view",
 				Username: this.props.userProfileInfo?.userName,
-				MemeberId: this.props.userProfileInfo?.id,
+				customerId: this.props.userProfileInfo?.id,
 				Feature: "Address Book",
 				Remarks: "Withdraw Fiat Address book grid view",
 				Duration: 1,
@@ -647,7 +647,7 @@ class AddressBook extends Component {
 		return stepcodes[config[this.props.addressBookReducer.stepcode]];
 	};
 	render() {
-		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, memberId, btnDisabled } =
+		const { cryptoFiat, gridUrlCrypto, gridUrlFiat, customerId, btnDisabled } =
 			this.state;
 
 		return (
@@ -728,7 +728,7 @@ class AddressBook extends Component {
 							ref={this.gridFiatRef}
 							key={gridUrlFiat}
 							url={gridUrlFiat}
-							additionalParams={{ memberId: memberId }}
+							additionalParams={{ customerId: customerId }}
 						/>
 					) : (
 						<List
@@ -737,7 +737,7 @@ class AddressBook extends Component {
 							key={gridUrlCrypto}
 							ref={this.gridCryptoRef}
 							url={gridUrlCrypto}
-							additionalParams={{ memberId: memberId }}
+							additionalParams={{ customerId: customerId }}
 						/>
 					)}
 				</div>
