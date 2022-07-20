@@ -32,14 +32,14 @@ import {
   setWithdrawfiat,
   rejectWithdrawfiat,
   setWithdrawFinalRes,
-  setWFTotalValue,
-  setSelectedWithDrawWallet
+  setWFTotalValue
 } from "../../reducers/sendreceiveReducer";
 import WithdrawalSummary from "./withdrawalSummary";
 import WithdrawalLive from "./withdrawLive";
 import apicalls from "../../api/apiCalls";
 import { handleFiatConfirm } from "../send.component/api";
 import Loader from '../../Shared/loader';
+
 const LinkValue = (props) => {
   return (
     <Translate
@@ -101,7 +101,6 @@ const FaitWithdrawal = ({
   const [addressInfo, setAddressInfo] = useState(null);
   const [agreeRed, setAgreeRed] = useState(true)
   useEffect(() => {
-    debugger
     if (buyInfo.memberFiat?.data && selectedWalletCode) {
       handleWalletSelection(selectedWalletCode);
     } else if (buyInfo.memberFiat?.data && sendReceive.withdrawFiatObj) {
@@ -115,7 +114,6 @@ const FaitWithdrawal = ({
     if (sendReceive?.wFTotalValue) {
       form.setFieldsValue({ totalValue: sendReceive?.wFTotalValue });
     }
-    // form.setFieldsValue({currencyCode:setSelectedWithDrawWallet.selectedWallet})
   }, [buyInfo.memberFiat?.data]);
 
   useEffect(() => {
@@ -289,7 +287,7 @@ const FaitWithdrawal = ({
       setLoading(false);
       setErrorMsg(null);
       values["customerId"] = userConfig.id;
-      values["MemberWalletId"] = accountDetails[0].id;
+      values["memberWalletId"] = accountDetails[0].id;
       values["beneficiaryAccountName"] = userConfig.isBusiness ? userConfig.businessName : userConfig.firstName + " " + userConfig.lastName;
       values["favouriteName"] =
         values.favouriteName || addressDetails.favouriteName || bankDetails[0].favouriteName;
@@ -393,13 +391,15 @@ const FaitWithdrawal = ({
     setDetails(null);
     setAccountDetails({});
     setAddressShow(null);
+    setBankDetails([])
     let data = accountHolder.find((item) => item.name == e)
     setAccountHolderDetails(data)
     AccountWallet(userConfig.id)
     if (e !== data.name) {
       form.setFieldsValue({ currencyCode: " " })
+      // setBankDetails(null)
       setAccountDetails(null)
-    setBankDetails(null)
+    
     }
   }
   const AccountWallet = async (AccountId) => {
@@ -445,7 +445,7 @@ const FaitWithdrawal = ({
   }
   const handleDetails = (e) => {
     setSelectRequired(true)
-    let data = bankDetails.filter((item) => item.bankName == e)
+    let data = bankDetails.filter((item) => item.lable == e)
     setDetails(data)
     form.setFieldsValue({ totalValue: "" });
   }
@@ -478,7 +478,7 @@ const FaitWithdrawal = ({
                 <Translate
                   content="Beneficiary_BankDetails"
                   component={Paragraph}
-                  className="mb-16 fs-14 text-white fw-500 text-upper"
+                  className="mb-8 fs-14 text-white fw-500 text-upper mt-16"
                 />
               </div>
               <Form.Item
@@ -490,7 +490,7 @@ const FaitWithdrawal = ({
                   className="cust-input mb-0 custom-search"
                   dropdownClassName="select-drpdwn"
                   onChange={(e) => handleAccountChange(e)}
-                  placeholder="Select account holder"
+                  placeholder="Select Account Holder"
                 >
                   {accountHolder?.map((item, idx) => (
                     <Option key={idx} value={item.name}>
@@ -508,11 +508,11 @@ const FaitWithdrawal = ({
                   className="cust-input mb-0 custom-search"
                   dropdownClassName="select-drpdwn"
                   onChange={(e) => handleAccountWallet(e)}
-                  placeholder="Select currency"
+                  placeholder="Select Currency"
                 >
                   {accountCurrency?.map((item, idx) => (
                     <Option key={idx} value={item.currencyCode}>
-                      {item.currencyCode} Balance:<NumberFormat value={item.avilable} displayType="text" />
+                      {item.currencyCode} Balance: {{"USD":"$",EUR:"€"}[item?.currencyCode]}<NumberFormat thousandSeparator="," value={item.avilable} displayType="text" />
                     </Option>
                   ))}
                 </Select>
@@ -539,11 +539,11 @@ const FaitWithdrawal = ({
                           className="cust-input mb-0 custom-search"
                           dropdownClassName="select-drpdwn"
                           onChange={(e) => handleDetails(e)}
-                          placeholder="Select address book"
+                          placeholder="Select Address Book"
                         >
                           {bankDetails?.map((item, idx) => (
-                            <Option key={idx} value={item.bankName}>
-                              {item.bankName}
+                            <Option key={idx} value={item.lable}>
+                              {item.lable}
                             </Option>
                           ))}
                         </Select>
@@ -567,7 +567,7 @@ const FaitWithdrawal = ({
 
                         label={
                           <>
-                            <Translate className="input-label mb-0"
+                            <Translate className="input-label ml-0 mb-0"
                               content="amount" component={Form.label} />
                             <div className="minmax">
                               <Translate
@@ -621,7 +621,7 @@ const FaitWithdrawal = ({
                       />
                       <Translate
                         className="fw-200 text-white-50 fs-14"
-                        content="Bank_account"
+                        content="Bank_account_iban"
                         component={Text}
                       />
                       <Translate
@@ -805,7 +805,7 @@ const FaitWithdrawal = ({
         title="Withdraw"
         closeIcon={
           <Tooltip title="Close">
-            <span onClick={handleCancel} className="icon md close" />
+            <span onClick={handleCancel} className="icon md close c-pointer" />
           </Tooltip>
         }
         footer={[

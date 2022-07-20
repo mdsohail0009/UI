@@ -19,16 +19,12 @@ import { Link } from "react-router-dom";
 import { bytesToSize } from "../../utils/service";
 import { validateContentRule } from "../../utils/custom.validator";
 import { addressTabUpdate, fetchAddressCrypto, setAddressStep } from "../../reducers/addressBookReducer";
-import FilePreviewer from "react-file-previewer";
 import WAValidator from "multicoin-address-validator";
 import NumberFormat from "react-number-format";
-import { TumblrShareButton } from "react-share";
 import success from "../../assets/images/success.png";
 const { Text, Paragraph, Title } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
-const { Dragger } = Upload;
-
 const LinkValue = (props) => {
   return (
     <Translate
@@ -85,7 +81,7 @@ const AddressCommonCom = (props) => {
   const [bilPay, setBilPay] = useState(null);
   const [newStates, setNewStates] = useState([]);
   const [isSignRequested, setSignRequested] = useState(false);
-
+  const [recrdStatus, setRecrdStatus] = useState(null);
   const handleshowModal = (item) => {
     setEditBankDetails(true)
     let data = bankmodalData.find((items) => items.id == item.id)
@@ -161,7 +157,7 @@ const AddressCommonCom = (props) => {
       ? props?.userConfig.businessName
       : props?.userConfig?.firstName + " " + props?.userConfig?.lastName;
   };
-  const withdraeTab = bilPay ? "Fiat" : ((props?.addressBookReducer?.cryptoTab == true || props?.cryptoTab == 1) ? "Crypto" : "Fiat");
+  const withdraeTab = bilPay ? "Fiat" : (props?.cryptoTab == 1 ? "Crypto" : "Fiat");
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -301,7 +297,6 @@ const AddressCommonCom = (props) => {
     setState(states[0]?.stateLookUp);
   }
   const handleState = (e) => {
-    console.log(e);
   }
   const handleStateChange = () => {
 
@@ -360,7 +355,7 @@ const AddressCommonCom = (props) => {
       addressState: null,
       inputScore: 0,
       outputScore: 0,
-      recordStatus: editBankDetsils == true ? "Modified" :"Added",
+      recordStatus: editBankDetsils == true ? (recrdStatus ? recrdStatus : "Modified") :"Added",
     }
     if (editBankDetsils == true) {
       obj.id = bankObj.id
@@ -372,11 +367,12 @@ const AddressCommonCom = (props) => {
           obj.status = 1
           obj.addressState = props?.addressBookReducer?.selectedRowData?.addressState
           bankmodalData[i] = obj
-          setEditBankDetails(false)
+          setEditBankDetails(false);
         }
       }
     } else {
       bankmodalData.push(obj)
+      setRecrdStatus(obj?.recordStatus);
     }
     setIsModalVisible(false);
     bankDetailForm.resetFields();
@@ -477,7 +473,7 @@ const AddressCommonCom = (props) => {
         });
         form.resetFields();
         if (withdraeTab === "Fiat") {
-          props?.onCancel({ isCrypto: false, close: isEdit ? true : false });
+          props?.onCancel({ isCrypto: false, close: false });
         }
         else {
           props?.onCancel({ isCrypto: true, close: false });
@@ -499,7 +495,6 @@ const AddressCommonCom = (props) => {
   const handleIban = (e) => {
     setIbanValue(e)
     getIbanData(e)
-
   }
 
   const getIbanData = async (Val) => {
@@ -915,7 +910,7 @@ const AddressCommonCom = (props) => {
                     >
                       <Select
                         showSearch
-                        placeholder="State"
+                        placeholder="Select State"
                         className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                         dropdownClassName="select-drpdwn"
                         onChange={(e) => handleState(e)}
@@ -1257,13 +1252,16 @@ const AddressCommonCom = (props) => {
                             <Form.Item
                               className="custom-forminput custom-label mb-0"
                               name="accountNumber"
-
                               label="Bank Account Number"
                               required
                               rules={[
                                 {
                                   required: true,
-                                  message: "Is required"
+                                  message: "Invalid  Bank Account Number"
+                                },
+                                {
+                                  pattern: /^[A-Za-z0-9]+$/,
+                                  message: "Invalid  Bank Account Number",
                                 },
                                 {
                                   whitespace: true,
@@ -1273,7 +1271,6 @@ const AddressCommonCom = (props) => {
                                   validator: validateContentRule
                                 }
                               ]}
-                            // onBlur={(e) => handleIban(e.target.value)}
 
                             >
                               <NumberFormat
@@ -1402,7 +1399,7 @@ const AddressCommonCom = (props) => {
                           >
                             <Select
                               showSearch
-                              placeholder="State"
+                              placeholder="Select State"
                               className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                               dropdownClassName="select-drpdwn"
                               onChange={(e) => handleStateChange(e)}
@@ -1469,7 +1466,7 @@ const AddressCommonCom = (props) => {
                             <Input
                               className="cust-input"
                               maxLength="20"
-                              placeholder="Post code"
+                              placeholder="Postal Code"
                             />
                           </Form.Item>
 
@@ -1504,7 +1501,7 @@ const AddressCommonCom = (props) => {
                   return <Row gutter={14} style={{ paddingBottom: "15px" }}>
 
                     <div className="d-flex align-center kpi-List" key={indx} value={item} style={{ marginLeft: "20px", width: "100%", height: "65px", backgroundColor: "var(--bgDarkGrey)", borderRadius: "20px" }}>
-                      {(props?.cryptoTab == 2 ) ?
+                      {(props?.cryptoTab == 2 || withdraeTab == "Fiat" ) ?
                         <Col className="mb-0" xs={20} sm={20} md={20} lg={20} xxl={20}>
                           <Row>
                             <Col span={24} className="mb-0"><label className="kpi-label fs-16" style={{ fontSize: "20px",  marginLeft: "20px" }}>
