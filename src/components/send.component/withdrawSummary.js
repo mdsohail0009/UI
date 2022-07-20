@@ -277,6 +277,7 @@ class WithdrawSummary extends Component {
 	};
 
 	getEmailVerification = async () => {
+		this.setState({...this.state,emailVerifyLoading:true})
 		let response = await apiCalls.verifyEmail(
 			this.props.userProfile.id,
 			this.state.emailCodeVal
@@ -284,6 +285,7 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
+				emailVerifyLoading:false,
 				EmailCode: response.data,
 				verifyEmail: true,
 				verifyEmailOtp: true,
@@ -313,6 +315,7 @@ class WithdrawSummary extends Component {
 	};
 
 	getOtpVerification = async () => {
+		this.setState({...this.state,phoneVerifyLoading:true})
 		let response = await apiCalls.getVerification(
 			this.props.userProfile.id,
 			this.state.otpCode
@@ -320,6 +323,7 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
+				phoneVerifyLoading:false,
 				OtpVerification: response.data,
 				verifyPhone: true,
 				verifyTextotp: true,
@@ -367,6 +371,7 @@ class WithdrawSummary extends Component {
 	};
 
 	getAuthenticator = async () => {
+		this.setState({...this.state,faLoading:true})
 		let response = await apiCalls.getAuthenticator(
 			this.state.authCode,
 			this.props.userProfile.userId
@@ -374,6 +379,7 @@ class WithdrawSummary extends Component {
 		if (response.ok) {
 			this.setState({
 				...this.state,
+				faLoading:false,
 				authenticator: response.data,
 				verifyAuth: true,
 				verifyAuthCode: true,
