@@ -94,7 +94,7 @@ class UserProfile extends Component {
             </div>
             <div className="main-container visible-mobile">
             <div className="mb-36 text-white-50 fs-24"><div>Scroll Right to Check Actions<span className="icon sm rightarrow mr-16 c-pointer" /></div></div>
-            <Tabs tabPosition="top" className="user-list pt-16" activeKey={this.state.activeTab} onChange={(key) => this.setState({ ...this.state, activeTab: key })}>
+            <Tabs tabPosition="top" className="user-list user-tablist pt-16" activeKey={this.state.activeTab} onChange={(key) => this.setState({ ...this.state, activeTab: key })}>
                     <TabPane tab={<span>
                         <span className="icon lg profile-icon mr-16" />
                         <Translate content="ProfileInfo" component={Tabs.TabPane.tab} /></span>} key="1">

@@ -451,7 +451,8 @@ class AddressBook extends Component {
 	};
 	addAddressBook = () => {
 		if (this.state.cryptoFiat) {
-			this.setState({ ...this.state, fiatDrawer: true,errorWorning: null });
+			this.setState({ ...this.state, fiatDrawer: true,errorWorning: null,selection: [],
+				isCheck: false, });
 			if (!this.state.fiatDrawer) {
 				apiCalls.trackEvent({
 					Type: "User",
@@ -468,7 +469,8 @@ class AddressBook extends Component {
 			
 			this.props.clearFormValues();
 		} else {
-			this.setState({ ...this.state, visible: true,errorWorning: null });
+			this.setState({ ...this.state, visible: true,errorWorning: null, selection: [],
+				isCheck: false, });
 			 apiCalls.trackEvent({
 				Type: "User",
 				Action: "Withdraw Crypto Address book add view",

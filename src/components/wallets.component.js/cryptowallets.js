@@ -74,14 +74,14 @@ class CryptoWallets extends Component {
                 <div className="wallet-head">
                     <Translate content="crypto" component={Title} className="fs-20 m-0 fw-500 text-white" />
                 </div>
-                <List className="mobile-list"
+                <List className="mobile-list mb-list"
                     itemLayout="horizontal"
                     dataSource={cryptoPortFolios.data}
                     loading={cryptoPortFolios.loading}
                     locale={{ emptyText: <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={apiCalls.convertLocalLang('No_data')} /> }}
                     renderItem={item => (
                         <List.Item extra={
-                            <div className="text-right">
+                            <div className="text-right wallet-mb">
                                 <Currency defaultValue={item.coinBalance} type={"text"} prefix={""} className="text-white-30" />
                                 <Currency defaultValue={item.coinValueinNativeCurrency} type={"text"} className={`fs-16 ${item.coinValueinNativeCurrency > 0 ? "text-green" : "text-red"}`} />
                             </div>

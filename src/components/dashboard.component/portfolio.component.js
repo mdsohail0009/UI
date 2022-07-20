@@ -28,7 +28,6 @@ class Portfolio extends Component {
         this.setState({ ...this.state, loading: true });
         let response = await getData(this.props.userProfileInfo?.id);
         if (response.ok) {
-            console.log(response.data)
             this.setState({ ...this.state, transactionData: response.data, loading: false });
         } else {
             message.destroy();
@@ -51,14 +50,14 @@ class Portfolio extends Component {
           return (
             <>
               <NumberFormat
-                style={{ color: "white" }}
+                // style={{ color: "white" }}
                 value={list[0]}
                 decimalSeparator="."
                 displayType={"text"}
                 thousandSeparator={true}
               />/
               <NumberFormat
-                style={{ color: "white" }}
+                // style={{ color: "white" }}
                 value={list[1]}
                 decimalSeparator="."
                 displayType={"text"}
@@ -69,7 +68,7 @@ class Portfolio extends Component {
         } else {
           return (
             <NumberFormat
-              style={{ color: "white" }}
+            //   style={{ color: "white" }}
               value={item.value}
               decimalSeparator="."
               displayType={"text"}
