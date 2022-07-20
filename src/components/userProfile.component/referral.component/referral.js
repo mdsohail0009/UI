@@ -92,7 +92,7 @@ class Referral extends Component {
         <Spin spinning={this.state.isLoading}>
           <div className="box basic-info">
             <div
-              className="box contact-info coin-bal"
+              className="box mb-flex contact-info coin-bal"
               style={{ padding: "0 24px" }}
             >
               {/* <Text className="basicinfo mb-0" style={{ marginLeft: '-22px' }}>My Referral</Text> */}
@@ -172,11 +172,12 @@ class Referral extends Component {
               </div>
             </div>
 
-            <Dropdown overlay={this.shareMenu}>
+            <Dropdown overlay={this.shareMenu} trigger={['click']}>
               <Button
                 style={{ borderRadius: 25, height: 50 }}
                 className="mt-36 text-upper share-btn fw-600 fs-14"
                 block
+                onClick={e => e.preventDefault()}
               >
                 Share
               </Button>
