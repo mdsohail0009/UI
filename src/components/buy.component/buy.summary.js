@@ -30,8 +30,8 @@ class BuySummary extends Component {
     apicalls.trackEvent({
       Type: "User",
       Action: "Buy summary page view",
-      Username: this.props.member.userName,
-      MemeberId: this.props.member.id,
+      Username: this.props.customer.userName,
+      customerId: this.props.customer.id,
       Feature: "Buy",
       Remarks: "Buy Crypto coin summary",
       Duration: 1,
@@ -54,7 +54,7 @@ class BuySummary extends Component {
       } = this.props.sellData?.selectedWallet;
       const obj = {
         id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-        membershipId: this.props?.member?.id,
+        customerId: this.props?.customer?.id,
         fromWalletId,
         fromWalletCode,
         fromWalletName,
@@ -88,15 +88,15 @@ class BuySummary extends Component {
       if (response.ok) {
         this.props.dispatch(setBuyFinalRes(response.data));
         this.props.setStep("success");
-        this.props.fetchDashboardData(this.props.member.id);
+        this.props.fetchDashboardData(this.props.customer.id);
         this.props.fetchMarketCoinDataValue();
         appInsights.trackEvent({
           name: "Buy",
           properties: {
             Type: "User",
             Action: "Save ",
-            Username: this.props?.member.userName,
-            MemeberId: this.props?.member.id,
+            Username: this.props?.customer.userName,
+            customerId: this.props?.customer.id,
             Feature: "Buy",
             Remarks: obj.toValue + " " + obj.toWalletName + " buy success",
             Duration: 1,
@@ -175,7 +175,7 @@ class BuySummary extends Component {
             coin,
             isCrypto ? amountNativeCurrency : amount,
             isCrypto,
-            this.props.member.id
+            this.props.customer.id
           )
         }
         onCancel={() => this.props.setStep("step1")}
@@ -197,18 +197,18 @@ class BuySummary extends Component {
   }
 }
 const connectStateToProps = ({ buySell, buyInfo, userConfig }) => {
-    return { buySell, sellData: buyInfo, member: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
+    return { buySell, sellData: buyInfo, customer: userConfig.userProfileInfo, trackAuditLogData: userConfig.trackAuditLogData }
 }
 const connectDispatchToProps = dispatch => {
     return {
         setStep: (stepcode) => {
             dispatch(changeStep(stepcode))
         },
-        refreshDetails: (wallet, coin, amount, isCrypto, memberid) => {
-            dispatch(fetchPreview({ coin, wallet, amount, isCrypto, memberId: memberid }))
+        refreshDetails: (wallet, coin, amount, isCrypto, customer_id) => {
+            dispatch(fetchPreview({ coin, wallet, amount, isCrypto, customer_id: customer_id }))
         },
-        fetchDashboardData: (member_id) => {
-            dispatch(fetchDashboardcalls(member_id))
+        fetchDashboardData: (customer_id) => {
+            dispatch(fetchDashboardcalls(customer_id))
         },
         fetchMarketCoinDataValue: () => {
             dispatch(fetchMarketCoinData(true))

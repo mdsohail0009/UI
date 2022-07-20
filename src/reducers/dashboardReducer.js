@@ -41,19 +41,19 @@ const fetchMarketCoinData =(payload) => {
         payload
     }
 }
-const fetchDashboardcalls = (member_id) => {
+const fetchDashboardcalls = (customer_id) => {
   publishTransactionRefresh()
     return async (dispatch) => {
-        dispatch(fetchMemberWalletsData(member_id))
-        dispatch(fetchPortfolioData(member_id))
-        dispatch(fetchYourPortfoliodata(member_id))
+        dispatch(fetchMemberWalletsData(customer_id))
+        dispatch(fetchPortfolioData(customer_id))
+        dispatch(fetchYourPortfoliodata(customer_id))
 
     }
 }
-const fetchMemberWalletsData = (member_id) => {
+const fetchMemberWalletsData = (customer_id) => {
     return async (dispatch) => {
         dispatch(fetchDetailData({ key: "wallets", loading: true, data: [] }));
-        const response = await fetchMemberWallets(member_id);
+        const response = await fetchMemberWallets(customer_id);
         if (response.ok) {
             dispatch(setDetailData({ key: "wallets", loading: false, data: response.data }));
         } else {
@@ -61,10 +61,10 @@ const fetchMemberWalletsData = (member_id) => {
         }
     }
 }
-const fetchPortfolioData = (member_id) => {
+const fetchPortfolioData = (customer_id) => {
     return async (dispatch) => {
         dispatch(fetchDetailData({ key: "portFolio", loading: true, data: {} }));
-        const response = await fetchPortfolio(member_id);
+        const response = await fetchPortfolio(customer_id);
         if (response.ok) {
             dispatch(setDetailData({ key: "portFolio", loading: false, data: response.data }));
         } else {
@@ -72,10 +72,10 @@ const fetchPortfolioData = (member_id) => {
         }
     }
 }
-const fetchGraphInfo = (member_id, type) => {
+const fetchGraphInfo = (customer_id, type) => {
     return async (dispatch) => {
         dispatch(setDetailData({ key: "portFolioGraph", loading: true, data: [] }));
-        const response = await getPortfolioGraph(member_id, type);
+        const response = await getPortfolioGraph(customer_id, type);
         if (response.ok) {
             dispatch(setDetailData({ key: "portFolioGraph", loading: false, data: { BTC: response.data.map(item => { return { time: item.datetime, value: item.value } }) } }));
         } else {
@@ -83,10 +83,10 @@ const fetchGraphInfo = (member_id, type) => {
         }
     }
 }
-const fetchYourPortfoliodata = (member_id) => {
+const fetchYourPortfoliodata = (customer_id) => {
     return async (dispatch) => {
         dispatch(fetchDetailData({ key: "cryptoPortFolios", loading: true, data: [] }));
-        const response = await fetchYourPortfolio(member_id);
+        const response = await fetchYourPortfolio(customer_id);
         if (response.ok) {
             dispatch(setDetailData({ key: "cryptoPortFolios", loading: false, data: response.data }));
         } else {
@@ -94,10 +94,10 @@ const fetchYourPortfoliodata = (member_id) => {
         }
     }
 }
-const fetchNotices = (memberId) => {
+const fetchNotices = (customer_id) => {
     return async dispatch => {
         dispatch(handleNotices({ data: [], loading: true }));
-        const response = await getDashboardNotices(memberId);
+        const response = await getDashboardNotices(customer_id);
         if (response.ok) {
             dispatch(handleNotices({ data: response.data, loading: false }));
         } else {

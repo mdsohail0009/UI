@@ -145,7 +145,7 @@ class WithdrawSummary extends Component {
 			Type: "User",
 			Action: "Withdraw Crypto summary page view",
 			Username: this.props.userProfile.userName,
-			MemeberId: this.props.userProfile.id,
+			customerId: this.props.userProfile.id,
 			Feature: "Withdraw Crypto",
 			Remarks: "Withdraw Crypto summary page view",
 			Duration: 1,
@@ -168,7 +168,7 @@ class WithdrawSummary extends Component {
 			this.props.sendReceive.withdrawCryptoObj;
 		let _obj = { ...this.props.sendReceive.withdrawCryptoObj };
 		const response = await handleNewExchangeAPI({
-			memberId: this.props?.userProfile?.id,
+			customerId: this.props?.userProfile?.id,
 			amount: totalValue,
 			address: toWalletAddress,
 			coin: walletCode,

@@ -29,7 +29,7 @@ class CryptoComponent extends Component {
         this.props.dispatch(fetchCoins("All"));
         if (this.props.buySell.tabKey == 1) {
             apiClient.trackEvent({ "Type": 'User', "Action": 'Buy page view', "Feature": 'Buy', "Remarks": "Buy coin selection", "FullFeatureName": 'Buy Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
-            apiClient.trackEvent({ "Type": 'User', "Action": `Buy All coins page view`, "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Buy', "Remarks": `Buy All coins page view`, "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy Crypto' });
+            apiClient.trackEvent({ "Type": 'User', "Action": `Buy All coins page view`, "Username": this.props.member?.userName, "customerId": this.props.member?.id, "Feature": 'Buy', "Remarks": `Buy All coins page view`, "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy Crypto' });
         } else if (this.props.buySell.tabKey == 2) {
             apiClient.trackEvent({ "Type": 'User', "Action": 'Sell page view', "Feature": 'Sell', "Remarks": "Sell coin selection", "FullFeatureName": 'Sell Crypto', "userName": this.props.member?.userName, id: this.props.member?.id });
         }
@@ -48,7 +48,7 @@ class CryptoComponent extends Component {
     handleCoinSelection = (selectedCoin) => {
         this.props.getCoinDetails(selectedCoin.walletCode, this.props.member?.id);
         this.props.setSelectedCoin(selectedCoin);
-        convertCurrency({ from: selectedCoin.walletCode, to: "USD", value: 1, isCrypto: false, memId: this.props.member?.id, screenName: null }).then(val => {
+        convertCurrency({ from: selectedCoin.walletCode, to: "USD", value: 1, isCrypto: false, customer_id: this.props.member?.id, screenName: null }).then(val => {
             this.props.setExchangeValue({ key: selectedCoin.walletCode, value: val });
         })
         this.props.changeStep("step2");
@@ -74,7 +74,7 @@ class CryptoComponent extends Component {
                         const types = {
                             1: "All", 2: "Gainers", 3: "Losers"
                         };
-                        apiClient.trackEvent({ "Type": 'User', "Action": `Buy ${types[key]} coins page view`, "Username": this.props.member?.userName, "MemeberId": this.props.member?.id, "Feature": 'Buy', "Remarks": `Buy ${types[key]} coins page view`, "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy Crypto' });
+                        apiClient.trackEvent({ "Type": 'User', "Action": `Buy ${types[key]} coins page view`, "Username": this.props.member?.userName, "customerId": this.props.member?.id, "Feature": 'Buy', "Remarks": `Buy ${types[key]} coins page view`, "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Buy Crypto' });
                         this.props.dispatch(fetchCoins(types[key]));
                         this.ref.current.clearSearch();
                     }}>
@@ -103,8 +103,8 @@ const connectDispatchToProps = dispatch => {
         changeStep: (stepcode) => {
             dispatch(setStep(stepcode))
         },
-        getCoinDetails: (coin, memid) => {
-            dispatch(fetchSelectedCoinDetails(coin, memid));
+        getCoinDetails: (coin, customer_id) => {
+            dispatch(fetchSelectedCoinDetails(coin, customer_id));
         },
         setSelectedCoin: (coinWallet) => {
             dispatch(setCoin(coinWallet));

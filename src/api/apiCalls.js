@@ -10,8 +10,8 @@ const getportfolio = (memID) => {
 const getCryptos = () => {
 	return apiClient.get(ApiControllers.buySell + "Coins");
 };
-const getMember = (useremail) => {
-	return apiClient.get(ApiControllers.accounts + "/" + useremail);
+const getMember = (customerid) => {
+	return apiClient.get(ApiControllers.customers + customerid);
 };
 const sumsubacesstoken = (userid, flow) => {
 return apiClient.get(
@@ -27,7 +27,7 @@ const sumsubacesstokennew = (userid) => {
 	return apiClient.get("Sumsub/KYBAccessToken?applicantId=" + userid);
 };
 const updateKyc = (userid) => {
-	return apiClient.put(ApiControllers.accounts + `${userid}/KYC`);
+	return apiClient.put(ApiControllers.customers + `${userid}/KYC`);
 };
 const trackEvent = (obj) => {
 	// const {
@@ -39,7 +39,7 @@ const trackEvent = (obj) => {
 	// 	type: obj.Type,
 	// 	featurePath: obj.FullFeatureName,
 	// 	username: obj.userName,
-	// 	memberId: userProfileInfo?.id,
+	// 	customerId: userProfileInfo?.id,
 	// 	feature: obj.Feature,
 	// 	action: obj.Action,
 	// 	remarks: obj.Remarks,
@@ -65,29 +65,29 @@ const getIBANData = (ibannumber) => {
 	);
 };
 
-const getdshKpis = (userid) => {
-	return apiClient.get(ApiControllers.dashboard + `KPI/${userid}`);
+const getdshKpis = (customer_id) => {
+	return apiClient.get(ApiControllers.dashboard + `KPI/${customer_id}`);
 };
-const getdshcumulativePnl = (userid, days) => {
+const getdshcumulativePnl = (customer_id, days) => {
 	return apiClient.get(
-		ApiControllers.dashboard + `CumulativePNL/${userid}/${days}`
+		ApiControllers.dashboard + `CumulativePNL/${customer_id}/${days}`
 	);
 };
-const getAssetNetwroth = (userid, days) => {
+const getAssetNetwroth = (customer_id, days) => {
 	return apiClient.get(
-		ApiControllers.dashboard + `AssetsNetWorth/${userid}/${days}`
+		ApiControllers.dashboard + `AssetsNetWorth/${customer_id}/${days}`
 	);
 };
-const getAssetAllowcation = (userid, days) => {
+const getAssetAllowcation = (customer_id, days) => {
 	return apiClient.get(
-		ApiControllers.dashboard + `AssetAllocation/${userid}/${days}`
+		ApiControllers.dashboard + `AssetAllocation/${customer_id}/${days}`
 	);
 };
-const getprofits = (userid, days) => {
-	return apiClient.get(ApiControllers.dashboard + `Profits/${userid}/${days}`);
+const getprofits = (customer_id, days) => {
+	return apiClient.get(ApiControllers.dashboard + `Profits/${customer_id}/${days}`);
 };
-const getdailypnl = (userid, days) => {
-	return apiClient.get(ApiControllers.dashboard + `DailyPNL/${userid}/${days}`);
+const getdailypnl = (customer_id, days) => {
+	return apiClient.get(ApiControllers.dashboard + `DailyPNL/${customer_id}/${days}`);
 };
 
 const getCode = (AccountId, isResendOTP) => {
@@ -101,8 +101,8 @@ const getVerification = (AccountId, code) => {
 	);
 };
 
-const downloadKyc = (memberId) => {
-	return apiClient.get(ApiControllers.accounts + `DownloadFile/${memberId}`);
+const downloadKyc = (Customerid) => {
+	return apiClient.get(ApiControllers.customers + `DownloadFile/${Customerid}`);
 };
 const updateSecurity = (obj) => {
 	return apiClient.put(ApiControllers.master + "UpdateSecurity", obj);
@@ -137,18 +137,18 @@ const verifyEmail = (AccountId, code) => {
 		ApiControllers.master + `EmailOTPVerification/${AccountId}/${code}`
 	);
 };
-const getAuthenticator = (Code, memberId) => {
+const getAuthenticator = (Code, customerId) => {
 	return apiClient.get(
-		ApiControllers.master + `VerifyAuthenticator/${Code}/${memberId}`
+		ApiControllers.master + `VerifyAuthenticator/${Code}/${customerId}`
 	);
 };
-const getVerificationFields = (memberId) => {
+const getVerificationFields = (customerId) => {
 	return apiClient.get(
-		ApiControllers.master + `Verificationfields/${memberId}`
+		ApiControllers.master + `Verificationfields/${customerId}`
 	);
 };
 const twofactor = (id) => {
-	return apiClient.get(ApiControllers.accounts + `twofactor/${id}`);
+	return apiClient.get(ApiControllers.customers + `twofactor/${id}`);
 };
 
 const getInfoVal = (id, type) => {
@@ -156,8 +156,8 @@ const getInfoVal = (id, type) => {
 		ApiControllers.deposit + `GetScoreChainInfo/${id}/${type}`
 	);
 };
-const getReferalDetails = (memberId) =>{
-	return apiClient.get(ApiControllers.partner + `getReferralDetails/member/${memberId}`);
+const getReferalDetails = (customerId) =>{
+	return apiClient.get(ApiControllers.partner + `getReferralDetails/customer/${customerId}`);
 }
 
 let apicalls = {

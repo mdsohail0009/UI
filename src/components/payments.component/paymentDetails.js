@@ -161,7 +161,7 @@ class PaymentDetails extends Component {
     let obj = Object.assign({});
     obj.id = this.props.userConfig.id;
     obj.currency = this.state.currency;
-    obj.memberId = this.props.userConfig.id;
+    obj.CustomerId = this.props.userConfig.id;
     obj.createdBy = this.props.userConfig.userName;
     obj.modifiedBy = "";
     obj.paymentsDetails = objData;

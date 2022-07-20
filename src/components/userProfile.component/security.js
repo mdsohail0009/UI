@@ -64,7 +64,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
       Type: "User",
       Action: "Security page view",
       Username: userProfileInfo?.userName,
-      MemeberId: userProfileInfo?.id,
+      customerId: userProfileInfo?.id,
       Feature: "Security",
       Remarks: "Security page view",
       Duration: 1,
@@ -108,7 +108,7 @@ const Security = ({ userConfig, userProfileInfo, fetchWithdrawVerifyObj,twoFA })
     setErrorMsg(null);
     if ((live && email) || (live && phone) || (live && factor) || (email && phone)|| (email && factor) || (phone && factor) || (email && phone && factor) ||(email && phone && live) ||(email && live && factor) ||(live && phone && factor)||(email && phone && factor && live)) {
         let obj={
-          "MemberId": userConfig.id,
+          "customerId": userConfig.id,
           "isEmailVerification": email,
           "IsPhoneVerified": phone,
           "TwoFactorEnabled":factor,

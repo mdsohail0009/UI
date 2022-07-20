@@ -20,7 +20,7 @@ class FaitdepositSummary extends Component {
     }
     fiatSummaryTrack = () => {
         apiCalls.trackEvent({
-            "Type": 'User', "Action": 'Deposit Fiat success page view', "Username": this.props.userConfig?.userName, "MemeberId": this.props.userConfig?.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit Fiat success page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat'
+            "Type": 'User', "Action": 'Deposit Fiat success page view', "Username": this.props.userConfig?.userName, "customerId": this.props.userConfig?.id, "Feature": 'Deposit Fiat', "Remarks": 'Deposit Fiat success page view', "Duration": 1, "Url": window.location.href, "FullFeatureName": 'Deposit Fiat'
         });
     }
     showPayCardDrawer = () => {
