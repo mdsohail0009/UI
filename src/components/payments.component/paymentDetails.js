@@ -691,7 +691,7 @@ class PaymentDetails extends Component {
                                           <>
 
                                             {file.documentName !== null && (
-                                              <div className='docdetails' onClick={() => this.docPreview(file)}>
+                                              <div className='docdetails'style={{ width: "80px" }} onClick={() => this.docPreview(file)}>
                                                 <Tooltip title={file.documentName}>
                                                   <EllipsisMiddle suffixCount={4}>
                                                     {file.documentName}

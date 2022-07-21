@@ -641,7 +641,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 									disabled={inputDisable}
 								/>
 								<div className="new-add c-pointer get-code text-yellow hy-align">
-										{/* {!verifyTextotp && ( */}
+										{!verifyTextotp && (
 											<Button
 												type="text"
 												style={{color:"black"}}
@@ -650,7 +650,7 @@ const [emailCodeVerificationStage,setEmailrCodeVerificationStage]=useState('getE
 												disabled={disable}>
 												{btnList[buttonText]}
 											</Button>
-										{/* )} */}
+										 )} 
 										{tooltipVisible === true && (
 											<Tooltip
 												placement="topRight"
