@@ -40,10 +40,8 @@ const AddressFiatView = (props) => {
 		setIsLoading(false)
 	};
 	const backToAddressBook = () => {
-		debugger
-		props?.dispatch(addressTabUpdate(true));
 		props?.history?.push("/userprofile/?key=5");
-		//props?.dispatch(selectedTab(false));
+		props?.dispatch(addressTabUpdate(true));
 		
 	};
 

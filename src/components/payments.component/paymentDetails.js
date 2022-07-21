@@ -811,7 +811,7 @@ class PaymentDetails extends Component {
         </Modal>
         <Modal title="Delete Payment"
           destroyOnClose={true}
-          closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.docPreviewClose} /></Tooltip>}
+          closeIcon={<Tooltip title="Close"><span className="icon md c-pointer close" onClick={this.handleCancel} /></Tooltip>}
           // closable={false}
           // closeIcon={false}
           visible={this.state.modal}
