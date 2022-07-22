@@ -35,6 +35,10 @@ class UserProfile extends Component {
         if (activeKey) {
             this.setState({ ...this.state, activeTab: activeKey });
         }
+        if (this.props.addressBookReducer.addressTab) {
+            this.setState({...this.state,activeTab:"5",activeWithdrawFiat: true});
+            this.props.dispatch(addressTabUpdate(false));
+           }
     }
     
     handleProfile = () => {
@@ -50,11 +54,8 @@ class UserProfile extends Component {
     render() {
   
         const { tabPosition } = this.state;
-        if (this.props.addressBookReducer.addressTab) {
-           this.setState({...this.state,activeTab:"5",activeWithdrawFiat: true});
-           this.props.dispatch(addressTabUpdate(false));
-          }
-       
+      
+         
         return (<>
 
             <div className="main-container hidden-mobile">
