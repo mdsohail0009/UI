@@ -5,7 +5,7 @@ import { getAddress, getFileURL,getFavData ,getViewData,} from "./api";
 import { connect } from "react-redux";
 import FilePreviewer from "react-file-previewer";
 import { bytesToSize } from "../../utils/service";
-
+import { addressTabUpdate,setAddressStep,selectedTab} from "../../reducers/addressBookReducer";
 const { Title, Text } = Typography;
 const EllipsisMiddle = ({ suffixCount, children }) => {
 	const start = children?.slice(0, children.length - suffixCount).trim();
@@ -41,6 +41,8 @@ const AddressFiatView = (props) => {
 	};
 	const backToAddressBook = () => {
 		props?.history?.push("/userprofile/?key=5");
+		props?.dispatch(addressTabUpdate(true));
+		
 	};
 
 	const docPreview = async (file) => {
@@ -467,5 +469,13 @@ const connectStateToProps = ({
 		addressBookReducer,
 	};
 };
-
-export default connect(connectStateToProps)(AddressFiatView);
+const connectDispatchToProps = (dispatch) => {
+	return {
+	  changeStep: (stepcode) => {
+		dispatch(setAddressStep(stepcode));
+	  },
+	  
+	  dispatch,
+	};
+  }
+export default connect(connectStateToProps, connectDispatchToProps)(AddressFiatView);
