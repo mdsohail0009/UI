@@ -327,7 +327,6 @@ const AddressCommonCom = (props) => {
   };
 
   const saveModalwithdrawal = (values) => {
- debugger
     let obj = {
       id: uuidv4(),
       payeeId: uuidv4(),
@@ -411,7 +410,6 @@ const AddressCommonCom = (props) => {
   }
 
   const savewithdrawal = async (values) => {
-    debugger
     setIsLoading(false);
     setErrorMsg(null);
     setBtnDisabled(true);
