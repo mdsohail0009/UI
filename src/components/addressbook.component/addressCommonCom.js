@@ -1344,9 +1344,9 @@ const AddressCommonCom = (props) => {
                               {
                                 validator(_, value) {
                                   if (emailExist) {
-                                    return Promise.reject("Invalid  Bank Account Number");
+                                    return Promise.reject("Invalid BIC/SWIFT/Routing number");
                                   } else if (value && !(/^[A-Za-z0-9]+$/.test(value))) {
-                                    return Promise.reject("Invalid  Bank Account Number");
+                                    return Promise.reject("Invalid BIC/SWIFT/Routing number");
                                   }
                                   else {
                                     return Promise.resolve();
