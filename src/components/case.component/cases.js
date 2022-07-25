@@ -34,7 +34,7 @@ class Cases extends Component {
             )
           },
         {field: "caseNumber",title: "Case Number",filter: true, width: 200,},
-		{field: "customerCaseTitle",title: "Title",filter: true,width: 362},
+		{field: "customerCaseTitle",title: "Title",filter: true,width: 450},
 		{field: "state",title: "State",filter: true,width: 200,},
 	];
      viewCase = ({dataItem}) => {
