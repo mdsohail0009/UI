@@ -684,7 +684,7 @@ class AddressBook extends Component {
 							/>
 						</Radio.Group>
 						<ul
-							className="address-icons"
+							className="address-icons mb-right"
 							style={{
 								listStyle: "none",
 								paddingLeft: 0,
