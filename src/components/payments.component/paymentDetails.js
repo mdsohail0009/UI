@@ -734,8 +734,11 @@ class PaymentDetails extends Component {
                             {/* <td></td> */}
                           </>
                         }
-                        {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000"|| this.props.match.params.state == "Approved"|| this.props.match.params.state == "Cancelled") ? <td></td>:<td></td>}
+                        {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000"|| this.props.match.params.state == "Approved"|| this.props.match.params.state == "Cancelled") && <>
                         <td></td>
+                        </> }
+                        <td></td>
+                      
                         <td>
                           <span className="text-white fs-24 ml-8"> Total:</span>
                         </td>
