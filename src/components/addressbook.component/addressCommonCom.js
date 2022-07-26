@@ -1238,18 +1238,21 @@ const AddressCommonCom = (props) => {
 
                             label="IBAN"
                             required
+                           
                             rules={[
+                              { required: true, message: "Is required" },
                               {
-                                required: true,
-                                message: "Is required"
+                                validator(_, value) {
+                                  if (emailExist) {
+                                    return Promise.reject("Invalid  IBAN Number");
+                                  } else if (value && !(/^[A-Za-z0-9]+$/.test(value))) {
+                                    return Promise.reject("Invalid  IBAN Number");
+                                  }
+                                  else {
+                                    return Promise.resolve();
+                                  }
+                                },
                               },
-                              {
-                                whitespace: true,
-                                message: apiCalls.convertLocalLang('is_required')
-                              },
-                              {
-                                validator: validateContentRule
-                              }
                             ]}
                             onBlur={(e) => handleIban(e.target.value)}
 
@@ -1266,23 +1269,7 @@ const AddressCommonCom = (props) => {
                               name="accountNumber"
                               label="Bank Account Number"
                               required
-                              // rules={[
-                              //   {
-                              //     required: true,
-                              //     message: "Invalid  Bank Account Number"
-                              //   },
-                              //   {
-                              //     pattern: /^[A-Za-z0-9]+$/,
-                              //     message: "Invalid  Bank Account Number",
-                              //   },
-                              //   {
-                              //     whitespace: true,
-                              //     message: apiCalls.convertLocalLang('is_required')
-                              //   },
-                              //   {
-                              //     validator: validateContentRule
-                              //   }
-                              // ]}
+                             
                               rules={[
                                 { required: true, message: "Is required" },
                                 {
@@ -1300,15 +1287,7 @@ const AddressCommonCom = (props) => {
                               ]}
 
                             >
-                              {/* <NumberFormat
-                                className="cust-input value-field"
-                                customInput={Input}
-                                prefix={""}
-                                maxLength="500"
-                                placeholder="Bank Account Number"
-                                allowNegative={false}
-
-                              /> */}
+                            
                               <Input
                               className="cust-input "
                               placeholder="Bank Account Number"
@@ -1322,23 +1301,7 @@ const AddressCommonCom = (props) => {
                             name="swiftCode"
                             label="BIC/SWIFT/Routing Number"
                             required
-                            // rules={[
-                            //   {
-                            //     required: true,
-                            //     message: "Is required"
-                            //   },
-                            //   {
-                            //     pattern: /^[A-Za-z0-9]+$/,
-                            //     message: "Invalid BIC/SWIFT/Routing number",
-                            //   },
-                            //   {
-                            //     whitespace: true,
-                            //     message: apiCalls.convertLocalLang('is_required')
-                            //   },
-                            //   {
-                            //     validator: validateContentRule
-                            //   }
-                            // ]}
+                         
                             rules={[
                               { required: true, message: "Is required" },
                               {
@@ -1409,7 +1372,6 @@ const AddressCommonCom = (props) => {
 
                             <Select
                               showSearch
-
                               placeholder="Select Country"
                               className="cust-input select-crypto cust-adon mb-0 text-center c-pointer"
                               dropdownClassName="select-drpdwn"

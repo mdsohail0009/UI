@@ -101,6 +101,7 @@ class PaymentDetails extends Component {
     }
   };
   getPayments = async () => {
+    debugger
     this.setState({ ...this.state, loading: true });
     if (this.props.match.params.id === "00000000-0000-0000-0000-000000000000") {
       let response = await getPaymentsData(
@@ -728,13 +729,12 @@ class PaymentDetails extends Component {
                     <tfoot>
                       <tr>
                         {(this.props.match.params.id ===
-                          "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending") && <>
+                          "00000000-0000-0000-0000-000000000000" || this.props.match.params.state === "Submitted" || this.props.match.params.state === "Pending"|| this.props.match.params.state == "Approved"|| this.props.match.params.state == "Cancelled") && <>
                             <td></td>
                             {/* <td></td> */}
                           </>
                         }
-                        {this.props.match.params.id !==
-                          "00000000-0000-0000-0000-000000000000" && <td></td>}
+                        {(this.props.match.params.id !== "00000000-0000-0000-0000-000000000000"|| this.props.match.params.state == "Approved"|| this.props.match.params.state == "Cancelled") ? <td></td>:<td></td>}
                         <td></td>
                         <td>
                           <span className="text-white fs-24 ml-8"> Total:</span>
